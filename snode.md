@@ -1986,11 +1986,11 @@ At the network layer, SNode.C distinguishes among several communication families
 
 The current README presents five primary network families and associates them with dedicated namespaces:
 
-- IPv4 → `net::in`
-- IPv6 → `net::in6`
-- Unix domain sockets → `net::un`
-- Bluetooth RFCOMM → `net::rc`
-- Bluetooth L2CAP → `net::l2` fileciteturn48file0
+- IPv4 $\rightarrow$ `net::in`
+- IPv6 $\rightarrow$ `net::in6`
+- Unix domain sockets $\rightarrow$ `net::un`
+- Bluetooth RFCOMM $\rightarrow$ `net::rc`
+- Bluetooth L2CAP $\rightarrow$ `net::l2` fileciteturn48file0
 
 This is already a very important design choice.
 
@@ -2207,10 +2207,10 @@ This is where the framework’s higher-level protocol support becomes visible.
 
 The current README identifies several application-layer families and namespaces:
 
-- HTTP → `web::http`
-- WebSocket → `web::websocket`
-- Express-like web layer → `express`
-- MQTT → `iot::mqtt` fileciteturn48file0
+- HTTP $\rightarrow$ `web::http`
+- WebSocket $\rightarrow$ `web::websocket`
+- Express-like web layer $\rightarrow$ `express`
+- MQTT $\rightarrow$ `iot::mqtt` fileciteturn48file0
 
 The current top-level build also confirms these as real supported component families, with targets for HTTP, Express-based HTTP server combinations, WebSocket server/client, MQTT server/client, and MQTT over WebSocket. fileciteturn47file0
 
@@ -2289,11 +2289,11 @@ net::in::stream::legacy::SocketClient<MyFactory>
 
 should be read as:
 
-- `net::in` → IPv4 family,
-- `stream` → connection-oriented stream transport,
-- `legacy` → unencrypted connection handling,
-- `SocketClient` → client instance role,
-- `MyFactory` → per-connection application-context producer.
+- `net::in` $\rightarrow$ IPv4 family,
+- `stream` $\rightarrow$ connection-oriented stream transport,
+- `legacy` $\rightarrow$ unencrypted connection handling,
+- `SocketClient` $\rightarrow$ client instance role,
+- `MyFactory` $\rightarrow$ per-connection application-context producer.
 
 A similar type such as:
 

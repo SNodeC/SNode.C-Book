@@ -5,8 +5,8 @@ documentclass: book
 classoption:
   - openany
 numbersections: true
-mainfont: "DejaVu Sans"
-sansfont: "DejaVu Sans"
+mainfont: "Noto Sans"
+sansfont: "Noto Sans"
 monofont: "DejaVu Sans Mono"
 geometry: margin=25mm
 papersize: a4
