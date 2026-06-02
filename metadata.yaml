@@ -1,0 +1,15 @@
+---
+title: "SNode.C — Building Layered Network Applications in Modern C++"
+author: "Volker Christian"
+documentclass: book
+papersize: a4
+fontsize: 11pt
+mainfont: "TeX Gyre Heros"
+sansfont: "TeX Gyre Heros"
+monofont: "DejaVu Sans Mono"
+geometry:
+  - margin=25mm
+toc: true
+toc-depth: 3
+numbersections: true
+---
