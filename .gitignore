@@ -1,1 +1,8 @@
 /build/
+/.cmake/
+/.qtcreator/
+/CMakeFiles/
+/CMakeCache.txt
+/build.ninja
+/cmake_install.cmake
+/qtcsettings.cmake
