@@ -7,7 +7,7 @@ classoption:
 numbersections: true
 mainfont: "Noto Sans"
 sansfont: "Noto Sans"
-monofont: "DejaVu Sans Mono"
+monofont: "Noto Sans Mono"
 geometry: margin=25mm
 papersize: a4
 toc: true
@@ -25,7 +25,7 @@ header-includes: |
   \usepackage{xcolor}
   \usepackage{listings}
   \usepackage{fontspec}
-  \newfontfamily\codefont{DejaVu Sans Mono}
+  \newfontfamily\codefont{Noto Sans Mono}
   \definecolor{codebg}{HTML}{F8F8F8}
   \definecolor{codeframe}{HTML}{D0D0D0}
   \definecolor{codekeyword}{HTML}{0000CC}
