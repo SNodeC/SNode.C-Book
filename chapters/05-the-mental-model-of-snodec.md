@@ -66,9 +66,9 @@ It explains why configuration, callbacks, retry logic, reconnect behavior, flow 
 
 These three models are not separate frameworks. They are three views of the same design.
 
-### The runtime model
+#### The runtime model
 
-#### The runtime is a central coordinator, not an afterthought
+##### The runtime is a central coordinator, not an afterthought
 
 At the top of the runtime picture sits `core::SNodeC`.
 
@@ -103,13 +103,13 @@ You are declaring an intention to the runtime. The runtime, together with the fl
 
 That is why the later call to `core::SNodeC::start()` is so important. It is not a ceremonial extra line. It is the point at which the runtime begins processing the scheduled communication activity.
 
-#### The four recurring roles in almost every SNode.C application
+##### The four recurring roles in almost every SNode.C application
 
 A reader can understand a surprising amount of SNode.C by keeping four roles in mind.
 
 The echo pair from Chapter 3 has already shown these roles in a small form. There was a server or client object, a factory, a context, and the runtime that made the whole application move. This chapter now names the pattern more explicitly, so the reader can recognize it again in later protocols.
 
-##### The instance
+###### The instance
 
 The instance is the configured communication role.
 
@@ -121,7 +121,7 @@ An instance is not the application protocol itself.
 
 It is the *carrier* of that protocol into the runtime.
 
-##### The connection
+###### The connection
 
 The connection is the concrete communication relationship to a peer.
 
@@ -131,7 +131,7 @@ That tells us something subtle but important.
 
 SNode.C does not treat a connection as an invisible transport tunnel. It treats it as a visible runtime object with lifecycle, state, addresses, duration, and measurable behavior.
 
-##### The context
+###### The context
 
 The context is the application protocol endpoint attached to one connection.
 
@@ -145,7 +145,7 @@ This leads to one of the most important mental rules in the framework:
 
 That division is the opposite of the common beginner mistake of putting everything into the server or client object.
 
-##### The factory
+###### The factory
 
 The factory creates the context.
 
@@ -157,11 +157,11 @@ A server may accept many peers over time. Each of those peers needs its own cont
 
 The same idea applies to clients whenever a connection object is established and the application endpoint needs to attach to it.
 
-#### The main flow: from application startup to peer interaction
+##### The main flow: from application startup to peer interaction
 
 We can now describe the normal flow of a SNode.C stream application in a way that remains accurate across many specific variants.
 
-##### Phase 1: Framework initialization
+###### Phase 1: Framework initialization
 
 The application starts by calling:
 
@@ -171,13 +171,13 @@ core::SNodeC::init(argc, argv);
 
 This is the moment when the framework runtime, configuration handling, and surrounding machinery are prepared.
 
-##### Phase 2: Instance creation
+###### Phase 2: Instance creation
 
 The application creates one or more server or client handles.
 
 Through these handles, it creates configured communication roles. These roles may be anonymous or named. In practice, named instances are especially important because they fit naturally with the framework's configuration model.
 
-##### Phase 3: Intent is registered
+###### Phase 3: Intent is registered
 
 The application calls `listen(...)` on servers and `connect(...)` on clients.
 
@@ -185,7 +185,7 @@ Mentally, this phase should be understood as *registration of communication inte
 
 The stream server and client templates delegate the flow to their flow controllers, and the flow-controller path schedules the real work for a runtime tick. During that registration, the framework retains the necessary shared configuration and shared context state. This is why the local server or client handle seen in Chapter 3 may go out of scope after `listen(...)` or `connect(...)` without making the registered flow disappear.
 
-##### Phase 4: Runtime execution begins
+###### Phase 4: Runtime execution begins
 
 The application calls:
 
@@ -195,7 +195,7 @@ core::SNodeC::start();
 
 The runtime now begins processing events and advancing the communication lifecycle. It advances the registered communication roles, not merely the lifetime of whichever local handle variable was used to register them.
 
-##### Phase 5: A connection object comes into existence
+###### Phase 5: A connection object comes into existence
 
 For a server, this happens when a peer is accepted.
 
@@ -203,13 +203,13 @@ For a client, this happens when the connection attempt succeeds.
 
 At this stage, the connection object becomes available, and connection-level callbacks such as `onConnect`, `onConnected`, and `onDisconnect` can run.
 
-##### Phase 6: A context is created and attached
+###### Phase 6: A context is created and attached
 
 The framework uses the `SocketContextFactory` to create a `SocketContext` for the connection.
 
 Now application protocol logic has a home.
 
-##### Phase 7: Application behavior reacts to events
+###### Phase 7: Application behavior reacts to events
 
 The context receives lifecycle calls such as `onConnected()` and `onDisconnected()`, and protocol-specific callbacks handle incoming data or higher-level events.
 
@@ -217,7 +217,7 @@ At that point, the application protocol is alive.
 
 This seven-phase flow is one of the best compact mental models for the framework.
 
-#### Communication roles are durable; contexts are per connection
+##### Communication roles are durable; contexts are per connection
 
 One common source of confusion in event-driven frameworks is the distinction between long-lived communication roles, short-lived local handles, and per-connection protocol objects.
 
@@ -247,13 +247,13 @@ Because the framework needs a mechanism to produce a fresh per-connection protoc
 
 Once you see this, the structure stops looking arbitrary.
 
-### The layer model
+#### The layer model
 
-#### The meaning of “layer-based” in everyday use
+##### The meaning of “layer-based” in everyday use
 
 The framework's layering can be described in many ways, but for practical work the following four-level view is the most useful.
 
-##### Network family
+###### Network family
 
 This answers the question:
 
@@ -279,7 +279,7 @@ That last point is important.
 
 For the application writer, Bluetooth is not merely a strange exception. It is another lower communication family that can carry the same instance/context/factory pattern when the selected SNode.C module supports the required communication form.
 
-##### Transport form
+###### Transport form
 
 In the main parts of SNode.C discussed here, this is the `stream` model.
 
@@ -291,7 +291,7 @@ The application still thinks in terms of connections and contexts.
 
 The lower layer decides how peers are addressed and how bytes physically travel.
 
-##### Connection handling
+###### Connection handling
 
 This is where the framework manages concrete peer communication.
 
@@ -303,7 +303,7 @@ TLS changes important security properties. It introduces certificates, handshake
 
 But it does not force the application writer to abandon the basic mental model of instances, connections, factories, and contexts.
 
-##### Application protocol
+###### Application protocol
 
 This is where protocol behavior lives.
 
@@ -321,7 +321,7 @@ The value of this layered model is not merely neat taxonomy. Its value is *trans
 
 If you understand where a concern belongs, you can often change one layer without mentally rebuilding the others from scratch.
 
-#### Why lower-layer changes often leave the application shape intact
+##### Why lower-layer changes often leave the application shape intact
 
 This is one of the deepest practical strengths of SNode.C.
 
@@ -348,9 +348,9 @@ we are not abandoning the learned model.
 
 We are exercising it.
 
-### The operational model
+#### The operational model
 
-#### Configuration is not a side channel; it is part of the model
+##### Configuration is not a side channel; it is part of the model
 
 In some frameworks, configuration feels bolted on. There is a runtime model, and then somewhere else there is a pile of settings.
 
@@ -372,7 +372,7 @@ This is why named instances matter so much.
 
 The instance is not only a variable in a C++ program. It is also a configuration-bearing unit the framework can reason about operationally.
 
-#### Connection callbacks and context callbacks are related but not identical
+##### Connection callbacks and context callbacks are related but not identical
 
 A subtle but important mental distinction is the difference between connection-level callbacks attached to the instance and lifecycle methods implemented inside the context.
 
@@ -393,7 +393,7 @@ Or, even shorter:
 
 This distinction becomes especially helpful once TLS, certificate inspection, higher-level protocols, structured web behavior, and MQTT behavior enter the picture.
 
-#### Retry, reconnect, and flow control are part of the mental model too
+##### Retry, reconnect, and flow control are part of the mental model too
 
 It is easy to think of retry logic as an operational detail that can be postponed until “production hardening.”
 
@@ -411,7 +411,7 @@ It is a managed communication role with lifecycle, flow observation, retry behav
 
 Second, a production-minded SNode.C application does not usually need to reinvent basic lifecycle control from scratch. The framework expects such concerns to exist and gives them a structural place.
 
-#### The framework is event-driven, but still measurable and concrete
+##### The framework is event-driven, but still measurable and concrete
 
 Some event-driven systems feel abstract because everything is described in callbacks and nothing feels inspectable.
 
