@@ -433,8 +433,8 @@ It allows the reader to think in events without losing touch with the physical r
 
 The server and client mental models are nearly parallel. Seeing them side by side is more useful than reading the same sentence twice.
 
-| Aspect | Server instance | Client instance |
-|---|---|---|
+| **Aspect** | **Server instance** | **Client instance** |
+|--|---|---|
 | Main intention | Listen for peers | Connect to a peer |
 | Public entry point | `listen(...)` | `connect(...)` |
 | Runtime role | Registers a listening intention | Registers a connection intention |
