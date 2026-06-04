@@ -23,7 +23,7 @@ function(make_pandoc_target target_name output_file)
     ${target_name}
     COMMAND "${CMAKE_COMMAND}" -E make_directory "${BUILD_DIR}"
     COMMAND "${PANDOC}" ${ARGN} --from "${PANDOC_FROM}"
-            --top-level-division=part -o "${BUILD_DIR}/${output_file}"
+            --top-level-division=part -o "${BUILD_DIR}/${output_file}.tex"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     VERBATIM)
 endfunction()
@@ -32,29 +32,30 @@ function(make_pandoc_pdf_target target_name output_file)
   add_custom_target(
     ${target_name}
     COMMAND "${CMAKE_COMMAND}" -E make_directory "${BUILD_DIR}"
-    COMMAND "rm" "-f" "${BUILD_DIR}/${output_file}.temp"
+    COMMAND "cp" "-fa" "${BUILD_DIR}/${output_file}.pdf"
+            "${BUILD_DIR}/${output_file}-old.pdf" || echo ""
     COMMAND
       "${PANDOC}" ${ARGN} --from "${PANDOC_FROM}" --to pdf
       --top-level-division=part --pdf-engine "${PDF_ENGINE}" -o
-      "${BUILD_DIR}/${output_file}.temp"
-    COMMAND "rm" "-f" "${BUILD_DIR}/${output_file}"
-    COMMAND "cp" "${BUILD_DIR}/${output_file}.temp"
-            "${BUILD_DIR}/${output_file}"
+      "${BUILD_DIR}/${output_file}-temp.pdf"
+    COMMAND "rm" "-f" "${BUILD_DIR}/${output_file}.pdf" || echo ""
+    COMMAND "mv" "${BUILD_DIR}/${output_file}-temp.pdf"
+            "${BUILD_DIR}/${output_file}.pdf" || echo ""
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     VERBATIM)
 endfunction()
 
-make_pandoc_pdf_target(pdf "snodec-book.pdf" metadata.yaml ${BOOK_FILES})
+make_pandoc_pdf_target(pdf "snodec-book" metadata.yaml ${BOOK_FILES})
 
-make_pandoc_pdf_target(pdf-existing "snodec-book-existing-only.pdf"
-                       metadata.yaml ${EXISTING_FILES})
+make_pandoc_pdf_target(pdf-existing "snodec-book-existing-only" metadata.yaml
+                       ${EXISTING_FILES})
 
-make_pandoc_target(tex "snodec-book.tex" metadata.yaml ${BOOK_FILES})
+make_pandoc_target(tex "snodec-book" metadata.yaml ${BOOK_FILES})
 
-make_pandoc_target(tex-existing "snodec-book-existing-only.tex" metadata.yaml
+make_pandoc_target(tex-existing "snodec-book-existing-only" metadata.yaml
                    ${EXISTING_FILES})
 
-make_pandoc_pdf_target(proposal "book-proposal-package.pdf" metadata.yaml
+make_pandoc_pdf_target(proposal "book-proposal-package" metadata.yaml
                        proposal/book-proposal-package.md)
 
 add_custom_target(book ALL DEPENDS pdf)
