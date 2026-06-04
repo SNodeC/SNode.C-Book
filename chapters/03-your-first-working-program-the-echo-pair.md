@@ -1,4 +1,5 @@
 ## Your First Working Program: The Echo Pair
+
 ### Why we begin with echo
 
 A first example should be small enough that the reader can hold the whole program in mind at once.
@@ -16,7 +17,7 @@ An echo application is not interesting because reflecting bytes is a sophisticat
 
 That is enough to reveal the skeleton of the framework.
 
-The current SNode.C repository contains a real echo application under `src/apps/echo`. It is already more general than a textbook example: it builds multiple echo variants for different network families and for both legacy and TLS transports. That is excellent for the framework, but too much for a first teaching chapter.
+The SNode.C repository contains a real echo application under `src/apps/echo`. It is already more general than a textbook example. It builds multiple echo variants for different network families and for both legacy and TLS stream modes. That is excellent for the framework, but too much for a first teaching chapter.
 
 So in this chapter we do something deliberate: we take the **current repository design** as the source of truth, but present it first in its simplest useful form.
 
@@ -30,9 +31,11 @@ We therefore start with the conceptual minimum:
 
 Later chapters will show how the very same structure extends outward to IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, TLS, HTTP, WebSocket, and MQTT.
 
-### What the current repository already shows
+The important point is not that echo is useful as an application. The important point is that echo is a clear first window into the framework.
 
-Before writing our own small version, it is helpful to understand what the current repository does.
+### What the repository already shows
+
+Before writing our own small version, it is helpful to understand what the repository does.
 
 The live echo application in the repository is organized around four ideas:
 
@@ -41,17 +44,19 @@ The live echo application in the repository is organized around four ideas:
 3. a client-side `EchoClientSocketContextFactory`,
 4. separate executable entry points for server and client.
 
-The current implementation actually goes one step further. Instead of writing a completely separate context class for the server and another one for the client, it uses a single `EchoSocketContext` with a `Role` enum to distinguish whether the connection endpoint acts as a server or a client. The client role sends the first message in `onConnected()`, and both roles reflect received data in `onReceivedFromPeer()`.
+The implementation goes one step further. Instead of writing a completely separate context class for the server and another one for the client, it uses a single `EchoSocketContext` with a `Role` enum to distinguish whether the connection endpoint acts as a server or a client. The client role sends the first message in `onConnected()`, and both roles reflect received data in `onReceivedFromPeer()`.
 
 That is a neat design choice for a real repository because it removes duplication without destroying clarity.
 
-The repository also builds multiple echo executables automatically. In the current codebase, the echo subdirectory generates legacy and TLS variants and combines them with network families such as IPv4, IPv6, and Unix domain sockets. When BlueZ is available, Bluetooth L2CAP and Bluetooth RFCOMM variants are added as well.
+The repository also builds multiple echo executables automatically. The echo subdirectory generates legacy and TLS variants and combines them with network families such as IPv4, IPv6, and Unix domain sockets. When BlueZ is available, Bluetooth L2CAP and Bluetooth RFCOMM variants are added as well.
 
 That gives us a very important insight early:
 
 > In SNode.C, the *shape* of the application remains stable while the lower communication family can change.
 
 This is one of the central lessons of the whole framework.
+
+For teaching, however, we narrow the example. The repository echo application is a reference implementation with generated and configured variants. The chapter version is an intentionally reduced IPv4 stream legacy version that exposes the same shape without asking the reader to understand the full build matrix immediately.
 
 ### The architectural pattern we are about to implement
 
@@ -64,6 +69,8 @@ The instance is the outer communication object.
 On the server side it is a `SocketServer`. On the client side it is a `SocketClient`.
 
 These objects know how to open and manage the underlying communication endpoint, but they do **not** themselves define the application protocol logic.
+
+They are the handles through which the application configures and registers a communication role.
 
 #### The factory
 
@@ -85,18 +92,26 @@ That is enough to form a complete working application protocol.
 
 ### The current API shape we will use
 
-Because this book is based on the **current** repository rather than the older README alone, we will mirror the present API style.
+Because this book is based on the current repository rather than the older README alone, we will mirror the present API style.
 
 Two details matter immediately.
 
 First, the current code uses `getConfig()->...` rather than `getConfig()....`.
 
-Second, the framework still supports convenient overloads such as:
+Second, the framework supports convenient overloads such as:
 
 - `listen(port, backlog, callback)` for the server, and
 - `connect(host, port, callback)` for the client.
 
-The in-repo echo application often uses named instances plus the parameterless `listen(callback)` and `connect(callback)` forms, relying on prior instance configuration. For teaching, however, the direct overloads are easier to read the first time. They remain fully aligned with the current API.
+The in-repository echo application often uses named instances plus the parameterless `listen(callback)` and `connect(callback)` forms, relying on prior instance configuration. For teaching, however, the direct overloads are easier to read the first time. They remain aligned with the current API and make the address and port visible directly in the first example.
+
+This distinction matters when you compare the book example with the repository.
+
+The book example shows the smallest readable form.
+
+The repository example shows the more general configured form.
+
+They are not competing designs. They are two views of the same framework pattern.
 
 ### A minimal current-style echo context
 
@@ -153,11 +168,15 @@ private:
 #endif
 ```
 
-There are two things to notice immediately.
+There are three things to notice immediately.
 
 First, the factory interface is very small. It only has to implement `create(...)`.
 
 Second, the `SocketConnection` object is passed into the context constructor. That is the bridge between the application protocol and the physical connection managed by the framework.
+
+Third, the example includes `onSignal(...)`. We include `onSignal(...)` because the current context interface expects it; this chapter does not use signal handling further.
+
+That last sentence is important. Signal handling is not part of the first conceptual lesson. It appears here only because we want the example to remain close to the current interface shape.
 
 ### Implementing the behavior
 
@@ -227,7 +246,9 @@ This code is already enough to teach several fundamental ideas.
 
 The framework calls `onConnected()`, `onDisconnected()`, `onSignal()`, and `onReceivedFromPeer()` automatically.
 
-That means the application protocol is expressed as a set of reactions to lifecycle events.
+That means the application protocol is expressed as a set of reactions to lifecycle and data events.
+
+The user does not write a blocking loop that waits for data manually.
 
 #### The client starts the conversation
 
@@ -308,7 +329,13 @@ Second, the server is a **named instance**: `"echoserver"`.
 
 That name is not cosmetic. It becomes meaningful later when configuration, logging, and command-line integration enter the story.
 
-Third, the `listen(8080, 5, callback)` overload is a convenient form that configures the port and backlog and then activates the underlying listening behavior.
+Third, the `listen(8080, 5, callback)` overload is a convenient form. It sets the port and backlog on the server configuration and then registers the listening intention.
+
+It is tempting to say that `listen(...)` “does the listening.” For a blocking socket wrapper, that might be a reasonable intuition. For SNode.C, the better intuition is slightly different:
+
+> `listen(...)` configures and registers the listening role. The actual listening flow is advanced by the runtime and the flow-controller path.
+
+That distinction will matter later when we discuss retries, configuration, and lifetime.
 
 ### Writing the current-style IPv4 legacy client
 
@@ -365,6 +392,39 @@ This mirrors the server structure closely, which is exactly what we want at this
 
 The symmetry is not accidental. SNode.C is designed so that server and client applications share as much conceptual structure as possible.
 
+The client uses `connect("localhost", 8080, callback)` as the readable first form. Just as with `listen(...)`, the call should be understood as registration of a communication intention, not as a blocking procedure that completes the whole communication session on the caller's stack.
+
+### A note on object lifetime after `listen(...)` and `connect(...)`
+
+The examples above keep the `server` and `client` variables in scope until `core::SNodeC::start()` returns. That is a clear and harmless first style.
+
+However, it is not the whole ownership story.
+
+In SNode.C, the local `SocketServer` or `SocketClient` object is best understood as a handle used to configure and register a communication role. After `listen(...)` or `connect(...)` has been called, the scheduled communication activity is carried by the framework's shared configuration and shared flow-controller context.
+
+That means the local object may go out of scope after the call to `listen(...)` or `connect(...)`. The active flow does not depend on the original stack variable in the same way a traditional blocking socket wrapper would.
+
+This is a subtle but important point.
+
+The following style is therefore conceptually valid in SNode.C:
+
+```cpp
+{
+    EchoServer server("echoserver");
+    server.listen(8080, 5, onStatus);
+}
+
+return core::SNodeC::start();
+```
+
+The local `server` variable is gone before the runtime starts, but the registered listening flow can still be advanced because the framework has retained the necessary shared state.
+
+For a first chapter, keeping the object in scope is easier to read. Later, when we discuss configuration, flow controllers, retries, and reconnect behavior, this distinction becomes more important.
+
+The mental rule is:
+
+> The local server or client object is the registration handle; the flow-controller/shared-context path carries the active communication flow.
+
 ### What happens when the program runs
 
 Let us now follow the program as a sequence of events.
@@ -373,13 +433,17 @@ Let us now follow the program as a sequence of events.
 
 The server instance is created.
 
-When `listen(...)` is called, the server prepares its listening socket and announces its status through the callback. If everything succeeds, the state becomes `OK`.
+When `listen(...)` is called, the server configuration receives the address information and backlog, and the listening intention is registered with the framework.
+
+The actual listening flow is then advanced by the runtime and the flow-controller path. If everything succeeds, the status callback receives `core::socket::State::OK`.
 
 #### Client startup
 
 The client instance is created.
 
-When `connect(...)` is called, the client attempts to establish a connection to the server and reports the result through its own status callback.
+When `connect(...)` is called, the client configuration receives the remote host and port, and the connection intention is registered with the framework.
+
+The actual connection flow is then advanced by the runtime and the flow-controller path. If everything succeeds, the status callback receives `core::socket::State::OK`.
 
 #### Per-connection context creation
 
@@ -403,6 +467,32 @@ That method reads the available bytes and sends them back.
 
 The result is an endless ping-pong exchange unless one side is stopped or the connection closes.
 
+This is intentional for the first example.
+
+The purpose is not to design a useful echo protocol. The purpose is to make callbacks, reading, writing, and runtime activity visible. Later examples will use more controlled application behavior.
+
+### What you should observe
+
+When the server is started, it should report that it is listening on the configured address and port.
+
+When the client is started, it should report that it connected to the server.
+
+The client sends the first message from `onConnected()`.
+
+After that, both sides reflect incoming data, so the log output should show repeated data movement until one process is stopped or the connection closes.
+
+For this first experiment, that repeated exchange is useful. It proves that:
+
+- the runtime is active,
+- the server accepted a connection,
+- the client established a connection,
+- factories created contexts,
+- `onConnected()` was called,
+- `onReceivedFromPeer()` was called,
+- bytes moved in both directions.
+
+That is exactly what this chapter is meant to demonstrate.
+
 ### What this small example already teaches
 
 Even this very small echo pair teaches a surprising amount.
@@ -412,6 +502,8 @@ Even this very small echo pair teaches a surprising amount.
 The server and client instances are not where the protocol itself lives.
 
 They manage setup, connection creation, and integration with the runtime.
+
+They also serve as handles for configuration and registration.
 
 #### The context is the protocol endpoint
 
@@ -431,6 +523,16 @@ The framework is not driven by a blocking application loop that the user writes 
 
 Instead, the user expresses protocol behavior through lifecycle methods and lets the runtime call them at the right time.
 
+#### The flow controller owns the active flow
+
+After `listen(...)` or `connect(...)`, the active communication flow is carried through shared state managed by the framework.
+
+This is why the local server or client object can be understood as a registration handle rather than as the long-lived owner of all communication activity.
+
+For many simple programs, this distinction can remain invisible.
+
+For more advanced programs, it is essential.
+
 #### The lower layer is visible but not overwhelming
 
 We are already using a specific lower layer: IPv4 stream legacy.
@@ -441,13 +543,15 @@ That balance is one of the most characteristic traits of SNode.C.
 
 ### Why the repository implementation is slightly more advanced
 
-The current in-repo echo application does not stop at the minimal form shown above.
+The current in-repository echo application does not stop at the minimal form shown above.
 
-It generalizes the same idea in two important ways.
+It generalizes the same idea in several important ways.
 
 First, it builds multiple combinations of network family and stream mode automatically. That means one conceptual echo application can become many executables.
 
-Second, its TLS variants attach additional connection callbacks to inspect certificate and handshake information. This shows that the same structural pattern scales from a plain echo demo up to secure communication.
+Second, it uses model helper functions such as `getServer()` and `getClient()` to return already shaped server and client objects. The main applications can then call the parameterless `listen(callback)` and `connect(callback)` forms because the relevant configuration has already been attached to the instance.
+
+Third, its TLS variants attach additional connection callbacks to inspect certificate and handshake information. This shows that the same structural pattern scales from a plain echo demo up to secure communication.
 
 This is worth emphasizing:
 
@@ -462,54 +566,34 @@ You may have noticed that we created named instances:
 - `EchoServer server("echoserver");`
 - `EchoClient client("echoclient");`
 
-This already prepares the ground for one of the framework’s most distinctive features: its unified configuration model.
+This already prepares the ground for one of the framework's most distinctive features: its unified configuration model.
 
 In later chapters we will see that named instances can be configured through code, the command line, and configuration files. The current repository echo application leans into that by often using parameterless `listen(callback)` and `connect(callback)` forms once the configuration has already been attached to the instance.
 
-In this chapter, however, we deliberately used the direct `listen(...)` and `connect(...)` overloads because they keep the essential communication flow visible.
+In this chapter, however, the direct overloads are better for teaching because they show the port and target host exactly where the reader first expects to see them.
 
-That is the better teaching order.
+The two styles are connected:
 
-### How this chapter prepares the next ones
+- direct overloads are easy to read in a first example,
+- configured named instances scale better once examples become larger,
+- both styles still use the same underlying instance/context/factory pattern.
 
-With only a few files, we now have a complete mental anchor for SNode.C.
+### What to remember
 
-We have seen:
+The echo pair is small, but it already contains the core idea of SNode.C.
 
-- a concrete server instance,
-- a concrete client instance,
-- a context factory,
-- a context,
-- the runtime entry points,
-- the first communication lifecycle.
+Remember:
 
-This gives us everything we need for the next conceptual step.
+- the server and client objects register communication roles;
+- `listen(...)` and `connect(...)` configure and register intentions, not complete blocking communication sessions;
+- the flow-controller/shared-context path carries the active communication flow;
+- the factory creates one context per connection;
+- the context contains the protocol behavior;
+- the runtime advances the event-driven application;
+- the lower layer can change without destroying the application shape.
 
-In the chapters that follow, we will ask deeper questions:
+This is why starting with echo is not childish.
 
-- What exactly is the runtime doing for us?
-- Why is the framework structured into network, transport, connection, and application layers?
-- What remains the same if the lower communication family changes?
-- What changes when we move to IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP?
-- What changes when TLS is inserted?
+It gives the reader a small program in which the framework's architecture is already visible.
 
-Because we now have a concrete program in mind, those questions will no longer feel abstract.
-
-### Closing perspective
-
-A first chapter with code should leave the reader with a feeling of orientation, not intimidation.
-
-The echo pair does exactly that.
-
-It shows that SNode.C is not a chaotic universe of unrelated classes. It is a framework with a regular, teachable pattern:
-
-- instance,
-- factory,
-- context,
-- event-driven lifecycle.
-
-Once that pattern is understood, the rest of the framework becomes far easier to approach.
-
-The next layers, transports, protocol families, and higher-level APIs will add capability — but they will not destroy the shape we have just learned.
-
-That is the right sign that we have started in the right place.
+In the next chapters we will read the codebase more carefully, refine the mental model, and then begin changing the lower layers around the same basic application shape.
