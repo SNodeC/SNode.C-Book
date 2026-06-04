@@ -107,11 +107,15 @@ That is why the later call to `core::SNodeC::start()` is so important. It is not
 
 A reader can understand a surprising amount of SNode.C by keeping four roles in mind.
 
+The echo pair from Chapter 3 has already shown these roles in a small form. There was a server or client object, a factory, a context, and the runtime that made the whole application move. This chapter now names the pattern more explicitly, so the reader can recognize it again in later protocols.
+
 ##### The instance
 
-The instance is the outer communication object.
+The instance is the configured communication role.
 
-This is a `SocketServer` or a `SocketClient`. It owns configuration, participates in the runtime lifecycle, and is responsible for initiating listening or connecting behavior.
+In user code this role is usually introduced through a `SocketServer` or a `SocketClient` object. That object is the handle through which the application configures and registers listening or connecting behavior.
+
+This distinction is important. In this chapter, the word *instance* does not merely mean "the local C++ variable currently in scope." It means the configured communication role that participates in the runtime. After `listen(...)` or `connect(...)` has registered the role, the active flow can be carried by the framework's shared configuration and flow-controller context.
 
 An instance is not the application protocol itself.
 
@@ -169,9 +173,9 @@ This is the moment when the framework runtime, configuration handling, and surro
 
 ##### Phase 2: Instance creation
 
-The application creates one or more instances.
+The application creates one or more server or client handles.
 
-These may be anonymous or named. In practice, named instances are especially important because they fit naturally with the framework's configuration model.
+Through these handles, it creates configured communication roles. These roles may be anonymous or named. In practice, named instances are especially important because they fit naturally with the framework's configuration model.
 
 ##### Phase 3: Intent is registered
 
@@ -179,7 +183,7 @@ The application calls `listen(...)` on servers and `connect(...)` on clients.
 
 Mentally, this phase should be understood as *registration of communication intent* rather than as a complete synchronous action.
 
-The stream server and client templates delegate the flow to their flow controllers, and the flow-controller path schedules the real work for a runtime tick.
+The stream server and client templates delegate the flow to their flow controllers, and the flow-controller path schedules the real work for a runtime tick. During that registration, the framework retains the necessary shared configuration and shared context state. This is why the local server or client handle seen in Chapter 3 may go out of scope after `listen(...)` or `connect(...)` without making the registered flow disappear.
 
 ##### Phase 4: Runtime execution begins
 
@@ -189,7 +193,7 @@ The application calls:
 core::SNodeC::start();
 ```
 
-The runtime now begins processing events and advancing the communication lifecycle.
+The runtime now begins processing events and advancing the communication lifecycle. It advances the registered communication roles, not merely the lifetime of whichever local handle variable was used to register them.
 
 ##### Phase 5: A connection object comes into existence
 
@@ -213,15 +217,17 @@ At that point, the application protocol is alive.
 
 This seven-phase flow is one of the best compact mental models for the framework.
 
-#### Instances are durable; contexts are per connection
+#### Communication roles are durable; contexts are per connection
 
-One common source of confusion in event-driven frameworks is the distinction between long-lived outer objects and short- or medium-lived per-connection objects.
+One common source of confusion in event-driven frameworks is the distinction between long-lived communication roles, short-lived local handles, and per-connection protocol objects.
 
 SNode.C's model becomes much clearer once you explicitly separate these.
 
-The instance is usually durable.
+The local `SocketServer` or `SocketClient` object is the handle used to configure and register a role. Keeping that handle in scope is clear and harmless, and many examples do exactly that. But the registered role is represented internally through shared configuration and shared flow-controller state. It is not the same thing as the lifetime of one local C++ variable.
 
-A server instance may live for the whole lifetime of the process. A client instance may also persist, especially if reconnect behavior is configured.
+The configured communication role is usually durable.
+
+A server role may live for the whole lifetime of the process. A client role may also persist, especially if reconnect behavior is configured.
 
 A context, by contrast, is attached to one specific connection. It lives with that connection and ends with it.
 
@@ -237,7 +243,7 @@ Because it is expressed relative to one concrete peer connection.
 
 Why does the factory sit between the two?
 
-Because the framework needs a mechanism to produce a fresh per-connection protocol endpoint from the longer-lived instance.
+Because the framework needs a mechanism to produce a fresh per-connection protocol endpoint from the longer-lived communication role.
 
 Once you see this, the structure stops looking arbitrary.
 
@@ -432,6 +438,7 @@ The server and client mental models are nearly parallel. Seeing them side by sid
 | Main intention | Listen for peers | Connect to a peer |
 | Public entry point | `listen(...)` | `connect(...)` |
 | Runtime role | Registers a listening intention | Registers a connection intention |
+| Local handle | Used to configure and register the role | Used to configure and register the role |
 | Flow support | Server-side flow controller | Client-side flow controller |
 | Connection creation | Peer is accepted | Connection attempt succeeds |
 | Context creation | Factory creates one context per accepted connection | Factory creates one context for the established connection |
@@ -449,10 +456,11 @@ If we turn the whole framework into a compact verbal diagram, it looks like this
 ```text
 Application startup
   -> core::SNodeC::init(...)
-  -> create configured instances
-      -> SocketServer / SocketClient
+  -> create server/client handles
+      -> configure communication roles
           -> Config
-          -> FlowController
+          -> FlowController / shared context
+              -> retain registered flow state
               -> schedule communication work
               -> observe retry/reconnect/termination
           -> SocketConnection
@@ -471,7 +479,7 @@ It tells the reader where each kind of thought belongs.
 
 When thinking about startup, look at the runtime.
 
-When thinking about listening or connecting, look at the instance and the flow controller.
+When thinking about listening or connecting, look at the configured role, the local handle that registers it, and the flow controller that carries the active flow.
 
 When thinking about peer state, look at the connection.
 
@@ -489,9 +497,10 @@ Remember:
 
 - The runtime drives progress.
 - Instances declare communication roles.
+- Local server/client objects are handles for configuring and registering those roles.
 - Configuration belongs naturally to instances.
 - `listen(...)` and `connect(...)` register communication intent.
-- Flow controllers schedule and supervise communication flows.
+- Flow controllers and shared context state carry active communication flows.
 - Connections represent concrete peers.
 - Factories create per-connection contexts.
 - Contexts implement protocol behavior.
@@ -501,6 +510,8 @@ Remember:
 - Retry, reconnect, flow control, and metrics are part of the normal model, not optional decorations.
 
 This is the mental model to carry into the next chapters.
+
+It also explains why the echo pair from Chapter 3 was more than a small demonstration. That example already contained the pattern: a handle registered a role, a factory created a context, a connection carried peer communication, and the runtime advanced the flow.
 
 Later chapters will add more concrete APIs, more protocols, more configuration detail, and more complete examples. But those details should attach themselves to this structure.
 
