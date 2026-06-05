@@ -622,7 +622,7 @@ This chapter has shown how endpoint identity enters the live communication story
 
 That prepares the next chapter.
 
-Now that the general server/client/connection model is clear, the book can choose a primary concrete teaching path. Chapter 10 does that by focusing on IPv4 and IPv6.
+Now that the general server/client/connection model is clear, the next chapter applies the model to IPv4 and IPv6. Chapter 10 does that by focusing on IPv4 and IPv6.
 
 IPv4 and IPv6 are close enough to be taught together, but different enough to show why SNode.C separates lower communication families carefully.
 
