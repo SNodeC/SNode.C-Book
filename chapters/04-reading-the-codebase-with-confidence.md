@@ -8,7 +8,7 @@ That example was intentionally narrow. It used IPv4, stream transport, the legac
 
 The real SNode.C repository is larger.
 
-It contains the runtime core, network-family layers, stream abstractions, legacy and TLS connection layers, HTTP, WebSocket, MQTT, Express-like routing, database support, IoT-oriented pieces, examples, build modules, and packaging support.
+It contains the runtime core, lower communication layers, protocol layers, examples, build modules, and packaging support.
 
 A reader who opens the repository without a map may feel that everything is connected to everything else.
 
@@ -520,7 +520,7 @@ Then ask:
 
 This is the correct way to read variant-heavy framework code.
 
-It is also the reason this book treats Bluetooth RFCOMM and Bluetooth L2CAP together with IPv4, IPv6, and Unix domain sockets. They are not unrelated exceptions. They are lower communication families participating in the same architectural reading strategy.
+It also applies to the Bluetooth variants. Treat them as lower communication families participating in the same architectural reading strategy, not as unrelated exceptions.
 
 ### Read headers before implementation files
 
