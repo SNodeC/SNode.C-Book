@@ -139,55 +139,23 @@ At the same time, this book will not give every item in the list the same amount
 
 ### The central pattern you will meet again and again
 
-Although the book will introduce details gradually, it is worth previewing the core pattern now.
+Although the book will introduce details gradually, it is useful to preview the recurring shape now.
 
-In SNode.C, many applications are shaped around a small set of recurring roles:
+Many SNode.C applications involve a server or client instance, a context factory, a per-connection context, and the runtime that coordinates event-driven flow.
 
-- a server or client instance,
-- a context factory,
-- a context object representing a concrete application protocol endpoint,
-- and the framework runtime that coordinates the event-driven flow.
+At this point, that is only a preview. Chapter 3 shows the pattern in code, and Chapter 5 names it as the formal mental model.
 
-This pattern is powerful because it separates concerns.
-
-The instance manages the outer communication setup.
-
-The factory creates per-connection protocol objects.
-
-The context contains the behavior that actually reacts to peer events and processes data.
-
-At this point, the pattern is only a preview. It will become much more concrete later, especially when the book develops the mental model of SNode.C in detail.
-
-For now, the important point is that the framework is regular.
-
-Once a reader understands the recurring roles, much of the framework stops feeling like a long list of unrelated names. It starts to feel like a small number of ideas appearing in different protocol settings.
-
-That regularity is one of SNode.C's greatest strengths.
+For now, the important point is simply that SNode.C is regular: the same few roles reappear in different protocol settings.
 
 ### Why starting with echo is not childish
 
-Some readers see an echo example and immediately think: this is too simple to matter.
+Some readers see an echo example and think it is too simple to matter.
 
 That reaction is understandable, but mistaken.
 
-A good echo application is not interesting because reflecting bytes is useful in itself. It is interesting because it exposes the skeleton of a communication framework with very little distraction.
+A good echo application is a microscope. It exposes server and client creation, context creation, callback flow, data input and output, runtime startup, and the boundary between framework logic and application logic with very little distraction.
 
-An echo pair lets us observe:
-
-- how a server and client are instantiated,
-- how a context is created,
-- when callbacks happen,
-- how data is read from and sent to a peer,
-- how the event loop becomes active,
-- where application logic begins and framework logic ends.
-
-In other words, the echo example is a microscope.
-
-It lets us observe the framework before HTTP, WebSocket, MQTT, routing, persistence, and deployment enter the picture.
-
-That is why the book starts small.
-
-The small example is not the final goal. It is the first clear view of the structure.
+Chapter 3 gives the full first example. Here it is enough to understand why the book starts small: the small example is the first clear view of the structure.
 
 ### From motivation to a working environment
 
