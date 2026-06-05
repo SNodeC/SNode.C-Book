@@ -1,63 +1,67 @@
 ## Unix Domain Sockets
-### Why Unix domain sockets deserve a separate chapter
 
-After IPv4 and IPv6, Unix domain sockets are the next best family to study.
+### From host-plus-port to local path identity
 
-They are an excellent teaching step because they force the reader to change one important lower-layer assumption without changing the larger framework model.
+Chapter 10 compared IPv4 and IPv6 as two host-plus-port families.
 
-With IPv4 and IPv6, endpoint identity is built around host and port.
+This chapter keeps the same SNode.C server/client/connection model but changes the endpoint identity:
 
-With Unix domain sockets, endpoint identity is built around a local path.
+```text
+host + port
+  -> local Unix-domain path
+```
 
-That is a major semantic shift.
+That is a significant lower-family shift.
 
-But it is *not* a shift in the overall SNode.C architecture.
+With IPv4 and IPv6, an endpoint is described by an address and a port. With Unix domain sockets, an endpoint is described primarily by a local path.
 
-You still have:
+The larger SNode.C model remains recognizable:
 
 - a server or client instance,
-- a factory,
-- a context,
-- a connection,
+- a socket-context factory,
+- a socket context,
+- a concrete connection,
 - runtime integration,
 - status callbacks,
+- connection lifecycle callbacks,
 - and the same broad stream-based communication story.
 
-That makes Unix domain sockets one of the cleanest demonstrations of what the framework’s layering really buys you.
+This shows that SNode.C's role model is not tied to host-plus-port addressing.
 
-### What changes — and what does not
+### Same model, different endpoint identity
 
-This chapter should be read with one central question in mind:
+The transition from IPv4/IPv6 to Unix domain sockets can be summarized as follows.
 
-> What happens when the lower-family identity stops being host-plus-port and becomes a filesystem-like local path?
+| Aspect | IPv4 / IPv6 | Unix domain sockets |
+|---|---|---|
+| Namespace | `net::in`, `net::in6` | `net::un` |
+| Endpoint identity | host + port | local path |
+| Server bind value | local host + port | local socket path |
+| Client target | remote host + port | remote socket path |
+| Optional local bind | local host and/or port | local socket path |
+| Runtime model | same | same |
+| Server/client role model | same | same |
+| Context/factory model | same | same |
 
-The answer is pleasingly balanced.
+The key point is the controlled change.
 
-What changes:
+The lower communication family changes.
 
-- the address family,
-- the endpoint identity,
-- bind/connect values,
-- some deployment habits,
-- the meaning of local and remote addresses.
+The endpoint identity changes.
 
-What does not fundamentally change:
+The application architecture does not need to be reinvented.
 
-- the instance/factory/context/runtime pattern,
-- the stream communication model,
-- the distinction between status callbacks and connection lifecycle callbacks,
-- the role of the `SocketConnection`,
-- the meaning of legacy versus TLS at the connection layer.
+### The Unix-domain address model
 
-That is exactly why Unix domain sockets belong here in the book.
+The Unix-domain address class is:
 
-They make the layer model tangible without forcing the reader to relearn the whole framework.
+```cpp
+net::un::SocketAddress
+```
 
-### The Unix domain address model
+It is intentionally simpler than the IPv4 and IPv6 address classes.
 
-The current `net::un::SocketAddress` class is intentionally much simpler than the IPv4 and IPv6 address classes.
-
-It is built around:
+Its conceptual surface includes:
 
 - default construction,
 - construction from a `sunPath`,
@@ -66,86 +70,103 @@ It is built around:
 - `setSunPath(...)` and `getSunPath()`,
 - and string rendering.
 
-That is exactly the right surface.
+This simpler surface reflects the family.
 
-A Unix domain socket endpoint is not “a host with a strange name.”
+A Unix-domain endpoint is not a host with a strange name. It is a local IPC endpoint identified primarily by a path.
 
-It is a local IPC endpoint identified primarily by a path.
+#### Path as endpoint identity
 
-This difference is the first major thing the reader must internalize.
+When using Unix domain sockets, the path should be understood as endpoint identity in the local IPC space.
 
-### Locality is the defining idea
+A typical endpoint may look like:
 
-A Unix domain socket is not about reaching a remote network host.
+```text
+/tmp/my-service.sock
+```
 
-It is about local interprocess communication on the same machine.
+In application code this may appear as:
 
-That has several practical consequences.
+```cpp
+net::un::SocketAddress address("/tmp/my-service.sock");
+```
 
-First, the endpoint identity is more operating-system-local in character.
+The path is not merely a filename in the everyday document sense. It is the name through which local processes identify the communication endpoint.
 
-Second, deployment questions change. Instead of asking “Which interface and port should I expose?”, the reader often asks “Which path should represent this service locally?”
+This avoids two common wrong instincts:
 
-Third, the mental model of communication becomes more service-local and machine-local.
+- treating Unix domain sockets as IP sockets without a network,
+- or treating the socket path as an ordinary file with no communication semantics.
 
-This makes Unix domain sockets especially attractive for:
+The better view is:
+
+```text
+path
+  -> local endpoint identity
+      -> stream communication endpoint
+```
+
+#### Default construction and empty path
+
+Default construction is meaningful in the Unix-domain address model.
+
+In the terminology used in Chapter 8, an empty Unix-domain path acts as the wildcard or deferred endpoint indicator.
+
+That gives SNode.C a way to represent an address object whose concrete path has not yet been made specific.
+
+The important point is not to turn this into a long operating-system detour. The important point is consistency:
+
+| Family | Default / wildcard shape |
+|---|---|
+| IPv4 | `0.0.0.0`, port `0` |
+| IPv6 | `::`, port `0` |
+| Unix domain sockets | empty path |
+
+The wildcard idea transfers.
+
+The concrete representation changes.
+
+#### Locality as the defining idea
+
+A Unix domain socket is local interprocess communication.
+
+It is not used to reach a peer on another machine over an IP network.
+
+This changes the deployment questions.
+
+With IPv4 or IPv6 one often asks:
+
+- Which interface should listen?
+- Which port should be exposed?
+- Which remote host should be contacted?
+
+With Unix domain sockets one more often asks:
+
+- Which local path represents this service?
+- Which local processes are allowed to connect?
+- Where does this endpoint belong in the local service layout?
+- Who owns the lifecycle of that path?
+
+Unix domain sockets are therefore especially useful for:
 
 - local service boundaries,
-- toolchains and helper daemons,
+- helper daemons,
 - internal process-to-process APIs,
 - development setups where network exposure is unnecessary,
-- tightly local embedded or appliance-like systems.
+- appliance-like or embedded systems where components communicate locally.
 
-SNode.C’s value here is that it lets the reader use this different lower-family identity without abandoning the rest of the framework model.
+The lower-family choice is not decorative. It changes the operational shape of the system.
 
-### The server-side convenience API
+### Server and client use
 
-The live `net::un::stream::SocketServer` wrapper is very compact.
+The stream Unix-domain wrappers follow the same SNode.C pattern as the IPv4 and IPv6 wrappers.
 
-Its convenience forms are centered around Unix socket paths:
+The convenience calls set family-specific configuration and then delegate to the general `listen(onStatus)` or `connect(onStatus)` path.
 
-- `listen(const std::string& sunPath, ...)`
-- `listen(const std::string& sunPath, int backlog, ...)`
+The difference is that the configured value is now a Unix-domain path.
 
-and these overloads work by setting `Local::setSunPath(...)` and then delegating to the general `listen(onStatus)` path.
+#### Server-side `listen(...)`
 
-This is fully consistent with the teaching pattern we saw earlier for IPv4 and IPv6.
-
-The convenience function is not a separate world.
-
-It is simply a readable way to fill the instance configuration for the correct address family.
-
-That is one of the framework’s most elegant recurring ideas.
-
-### The client-side convenience API
-
-The live `net::un::stream::SocketClient` wrapper is equally revealing.
-
-Its convenience forms are:
-
-- `connect(const std::string& sunPath, ...)`
-- `connect(const std::string& sunPath, const std::string& bindSunPath, ...)`
-
-This already teaches two important things.
-
-First, the remote side of a Unix domain client is naturally expressed as a path.
-
-Second, the local side can also be explicitly expressed as a path if desired.
-
-This is a very nice example of how SNode.C preserves the local/remote distinction even in a family where the endpoint identity is path-based rather than host-based.
-
-The reader should notice that the conceptual pattern is unchanged:
-
-- remote endpoint identity still matters,
-- local endpoint identity can still matter,
-- the instance still expresses the outer communication role,
-- the runtime still executes the actual connection lifecycle.
-
-### The shape of a Unix-domain server
-
-A Unix-domain stream server typically feels very much like the IPv4 and IPv6 servers already seen in this book.
-
-In spirit, the code still looks like this:
+A Unix-domain stream server typically looks like this in outline:
 
 ```cpp
 using LocalServer = net::un::stream::legacy::SocketServer<MyFactory>;
@@ -154,20 +175,36 @@ LocalServer server("local-service");
 server.listen("/tmp/my-service.sock", 5, onStatus);
 ```
 
-The important thing is not the exact snippet. The important thing is the stability of the pattern.
+The server is still a server role.
 
-- There is still a named instance.
-- There is still a convenience `listen(...)` call.
-- There is still a status callback.
-- There is still a runtime start afterwards.
+The call is still a `listen(...)` call.
 
-The lower-family identity has changed, but the application architecture has not.
+The status callback still reports outer role status.
 
-### The shape of a Unix-domain client
+The difference is the endpoint identity:
 
-A Unix-domain client is just as instructive.
+```text
+IPv4 / IPv6:
+local host + local port
 
-In spirit, it looks like this:
+Unix domain:
+local socket path
+```
+
+The server-side convenience overloads are path-centered:
+
+| Surface call | Configuration effect |
+|---|---|
+| `listen(sunPath, ...)` | `Local::setSunPath(sunPath)` |
+| `listen(sunPath, backlog, ...)` | `Local::setSunPath(sunPath)` + backlog |
+
+This mirrors the Chapter 10 pattern.
+
+A readable convenience call fills the instance configuration for the correct lower family and then uses the same underlying role machinery.
+
+#### Client-side `connect(...)`
+
+A Unix-domain stream client has the same overall shape:
 
 ```cpp
 using LocalClient = net::un::stream::legacy::SocketClient<MyFactory>;
@@ -176,239 +213,240 @@ LocalClient client("local-client");
 client.connect("/tmp/my-service.sock", onStatus);
 ```
 
-or, if a local bind path is also needed:
+If the client also needs an explicit local bind path, the call can express that too:
 
 ```cpp
 client.connect("/tmp/my-service.sock", "/tmp/my-client.sock", onStatus);
 ```
 
-Again, the pattern is the real lesson.
+The client-side convenience overloads are also path-centered:
 
-The client is still an outer role. The path merely replaces host-plus-port as the endpoint identity.
+| Surface call | Configuration effect |
+|---|---|
+| `connect(sunPath, ...)` | `Remote::setSunPath(sunPath)` |
+| `connect(sunPath, bindSunPath, ...)` | `Remote::setSunPath(sunPath)` + `Local::setSunPath(bindSunPath)` |
 
-### Why Unix domain sockets are such a good transfer exercise
+This keeps the local/remote distinction visible.
 
-Unix domain sockets are the first family in the book where the endpoint identity stops looking like internet communication.
+The remote path is the service endpoint the client wants to reach.
 
-That is why this chapter matters so much.
+The optional local path describes the client's own local endpoint identity.
 
-It lets the reader test whether they have really understood the framework.
+#### Local and remote paths
 
-A reader who secretly still thinks:
+Path-based endpoint identity does not remove the local/remote distinction.
 
-> “SNode.C is basically a TCP framework with extras”
+It changes what local and remote mean.
 
-will feel this chapter as a disruption.
+For a Unix-domain server:
 
-A reader who has really internalized the layer model will feel this chapter differently:
+```text
+local path
+  -> path on which the server listens
+```
 
-> “Ah, the family changed. The rest of the communication architecture remains recognizable.”
+For a Unix-domain client:
 
-That second reaction is exactly what we want.
+```text
+remote path
+  -> service path to connect to
 
-### Paths are endpoints, not filenames in disguise
+optional local path
+  -> explicit local endpoint for the client side
+```
 
-It is useful to say this explicitly.
+This continues Chapter 9's connection model.
 
-When using Unix domain sockets, the path should be thought of as the *endpoint identity* in the local IPC space.
+A connection can still have bind, local, and remote address views. The address family has changed, but directional endpoint thinking remains useful.
 
-That does not mean the path is “just a file” in the everyday human sense.
+### What remains stable
 
-It means the framework is using filesystem-like naming to identify a local communication endpoint.
+Unix domain sockets change endpoint identity, but they do not require a different application architecture.
 
-This matters because readers often bring the wrong instinct to Unix domain sockets.
+#### Server/client/connection/context model
 
-They either over-network them mentally, or over-filesystem them mentally.
+The same core roles remain:
 
-The better view is more precise:
+| Role | Meaning with Unix domain sockets |
+|---|---|
+| `SocketServer` | listens on a local Unix-domain path |
+| `SocketClient` | connects to a Unix-domain service path |
+| `SocketConnection` | represents one concrete peer relationship |
+| `SocketContextFactory` | creates a context for a connection |
+| `SocketContext` | implements application protocol behavior |
 
-- the path is the endpoint identity,
-- the family is local IPC,
-- the transport is still stream-oriented,
-- the higher architecture is unchanged.
+The server is still the outer listening role.
 
-### Local and remote still matter here
+The client is still the outer connecting role.
 
-One might think that once both sides are “just paths,” the local/remote distinction becomes less meaningful.
+The connection is still the concrete peer relationship.
 
-That would be a mistake.
+The context is still the protocol endpoint attached to that connection.
 
-The live client wrapper is a good reminder that the distinction still matters. The remote side is the target service path, while the optional local side can also be given an explicit bind path.
+This is why moving from IPv4 to Unix domain sockets should not feel like moving to a different framework.
 
-So even in Unix-domain communication, SNode.C keeps the directional structure clear:
+#### Context and protocol logic
 
-- the server has a local listening path,
-- the client has a remote service path,
-- the client may also choose a local endpoint path.
+A `SocketContext` implementing a small request/response or streaming protocol does not need to become fundamentally Unix-domain-specific just because it runs over:
 
-This is a subtle but important continuity with the earlier IP-family chapters.
-
-### Why Unix domain sockets often feel simpler than IP
-
-Many developers find Unix domain sockets pleasantly simple once they stop expecting them to behave like IP networking.
-
-That simplicity comes from several sources.
-
-There is no remote host lookup. There is no interface selection in the IP sense. There is no port number to manage.
-
-Instead, the endpoint identity is usually a local path that is immediately legible in deployment terms.
-
-This simplicity makes Unix domain sockets excellent for local service architectures.
-
-And it also makes them excellent teaching material, because they highlight how much of the framework is independent of IP-specific concepts.
-
-### Why Unix domain sockets are not a replacement for IP
-
-At the same time, the book should not romanticize them.
-
-Unix domain sockets are not “better networking.”
-
-They are a different lower-family choice.
-
-They are extremely useful when communication is local to one machine.
-
-They are not the right family when one process must communicate with a peer on another machine over a network.
-
-SNode.C handles this very well by making the family choice explicit rather than pretending one communication family can represent all situations equally well.
-
-That explicitness helps the reader choose well.
-
-### The context and protocol logic do not need to become Unix-specific
-
-This is one of the chapter’s most important lessons.
-
-A `SocketContext` implementing a small request/response or streaming protocol does not need to become fundamentally “Unix-domain logic” just because it is now running over `net::un::stream::legacy`.
+```cpp
+net::un::stream::legacy
+```
 
 What changes is the carrier.
 
 What often remains stable is:
 
-- how the protocol reacts to `onConnected()`,
+- how the protocol reacts to connection establishment,
 - how it reads data,
 - how it sends data,
 - how it handles disconnection,
 - how it thinks in terms of one connection and one context.
 
-That is exactly why the framework’s separation between lower layers and protocol behavior is so valuable.
+The protocol context may inspect the address if it wants to log or display endpoint information, but the protocol logic itself can often remain the same.
 
-### Legacy and TLS still make sense here
+#### Legacy and TLS
 
-The earlier layer chapter already taught that `legacy` and `tls` are connection-layer variants, not separate application worlds.
+Chapter 7 introduced `legacy` and `tls` as connection-layer variants.
 
-Unix domain sockets fit into that same picture.
+Unix domain sockets fit into that same layer story.
 
-That means the reader should not think of Unix domain sockets as a special branch that somehow escapes the rest of the framework’s layering discipline.
+A Unix-domain stream component can participate in the same pattern:
 
-They are simply another network family that can still participate in the same transport and connection-layer story.
+```text
+net::un
+  -> stream
+      -> legacy or TLS
+```
 
-This is a good place to remind the reader that SNode.C’s power comes from consistency of architectural treatment, not only from the number of supported families.
+This matters because Unix domain sockets are not a special branch outside the framework.
 
-### Deployment habits are different here
+In SNode.C's terminology, they are another lower communication family in the network-layer part of the stack, while stream transport and connection-layer handling remain recognizable.
 
-Unix domain sockets change not only code values but operational instincts.
+### What changes operationally
 
-Instead of asking:
+Unix domain sockets are local, path-based endpoints.
 
-- Which IP address should I bind?
-- Which port should I expose?
+That changes deployment habits.
 
-you more often ask:
+#### Deployment habits
 
-- Which path should represent this service?
-- Who will connect to it locally?
-- How should this endpoint fit into my local service layout?
+With IP sockets, operational thinking often starts with:
 
-That shift is very healthy for the reader.
+```text
+address
+port
+interface
+network reachability
+```
 
-It helps make the lower-layer choice feel real rather than decorative.
+With Unix domain sockets, operational thinking starts with:
 
-### A note about cleanup and path ownership thinking
+```text
+local path
+local process boundary
+local access expectations
+path ownership
+path cleanup
+```
 
-Even without going deep into operating-system mechanics, a teaching book should encourage the correct mindset here.
+That is a real design difference.
 
-When a communication endpoint is identified by a path, lifecycle thinking naturally includes questions of local path management.
+Unix domain sockets are often the right choice when the communication should stay inside one machine. They are not the right choice when the peer must be reached over a network.
 
-That is simply a consequence of the family’s semantics.
+SNode.C makes that family choice explicit instead of hiding it behind one generic endpoint abstraction.
 
-SNode.C does not erase that reality, and it should not.
+#### Path ownership and cleanup thinking
 
-The correct lesson is not that Unix domain sockets are complicated.
+When an endpoint is identified by a path, responsible design includes path lifecycle thinking.
 
-The correct lesson is that the family expresses locality differently, and responsible application design should respect that.
+An application should be clear about:
 
-### Why this chapter prepares the Bluetooth chapters well
+- where the socket path is placed,
+- which process creates it,
+- which process is allowed to use it,
+- what happens when the service stops,
+- what happens if an old path is left behind.
 
-Unix domain sockets are also a useful bridge to the Bluetooth chapters.
+This does not mean Unix domain sockets are complicated.
 
-Why?
+It means the family expresses locality through path identity, and application design should respect that.
 
-Because they help the reader break the mental monopoly of host-plus-port identity without immediately jumping into Bluetooth-specific terminology such as device addresses, channels, and PSMs.
+#### Unix domain sockets are not a replacement for IP
 
-Once a reader has learned:
+Unix domain sockets are not "better IP."
 
-- “an endpoint can be a path”
+They are a different lower-family choice.
 
-it becomes much easier to later accept:
+They are excellent when communication is local to one machine. They are not suitable when a process must communicate with a peer on another machine over a network.
 
-- “an endpoint can be a Bluetooth address plus a channel,”
-- or “a Bluetooth address plus a PSM.”
+The right question is therefore not:
 
-So this chapter is a conceptual stepping stone, not just a feature chapter.
+```text
+Are Unix domain sockets better than IP?
+```
 
-### Stream Unix domain sockets and the broader framework
+The better question is:
 
-One more point is worth making explicitly.
+```text
+Is this communication local enough that path-based IPC is the right lower family?
+```
 
-The current top-level build also includes a `net-un-dgram` component, which is a reminder that Unix domain communication in the framework is not limited in principle to one communication style only.
+### Stream focus and a datagram note
 
-But for the book’s main architectural teaching path, stream Unix domain sockets are the right place to focus, because they preserve the same server/client/connection/context model that the reader already knows.
+This chapter focuses on stream Unix domain sockets.
 
-That keeps the learning curve smooth.
+That is intentional for architectural continuity.
 
-### Common misunderstandings about Unix domain sockets in SNode.C
+Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
 
-It helps to clear away a few misunderstandings explicitly.
+The build also contains a `net-un-dgram` component. That is useful to know, but it is not the focus here. Datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8-12.
 
-#### Misunderstanding 1: “Unix domain sockets are just IP sockets without a network.”
+### Preparing the Bluetooth shift
 
-Corrected view: they are a different network family with path-based endpoint identity and local-IPC semantics.
+Unix domain sockets are also a useful bridge to Bluetooth.
 
-#### Misunderstanding 2: “Changing from IPv4 to Unix domain requires a new application architecture.”
+IPv4 and IPv6 showed host-plus-port endpoint identity.
 
-Corrected view: in SNode.C, the instance/factory/context/runtime pattern remains stable; the lower-family endpoint identity changes.
+Unix domain sockets showed path-based local endpoint identity.
 
-#### Misunderstanding 3: “A path-based endpoint means local/remote no longer matter.”
+Bluetooth will introduce endpoint identities that are different again:
 
-Corrected view: the distinction still matters, and the live client wrapper makes this explicit by supporting both remote and optional local Unix-domain paths.
+```text
+Bluetooth address + RFCOMM channel
+Bluetooth address + L2CAP PSM
+```
 
-#### Misunderstanding 4: “Unix domain sockets are only a side feature.”
+After Unix domain sockets, that shift should feel less surprising.
 
-Corrected view: they are a first-class family in the same layer model as IPv4, IPv6, RFCOMM, and L2CAP.
+The server/client/connection/context model remains available, while the lower-family address semantics change again.
 
-#### Misunderstanding 5: “Using a local family means the connection model becomes fundamentally different.”
+### What to remember
 
-Corrected view: with stream Unix domain sockets, the framework still expresses the same server/client/connection/context pattern.
+Remember:
+
+- Unix domain sockets replace host-plus-port identity with local path identity.
+- The namespace is `net::un`.
+- The address class is `net::un::SocketAddress`.
+- The path is the local IPC endpoint identity.
+- Default construction corresponds to an empty path as wildcard or deferred endpoint identity.
+- `listen(sunPath, ...)` configures the server's local Unix-domain path.
+- `connect(sunPath, ...)` configures the client's remote Unix-domain service path.
+- `connect(sunPath, bindSunPath, ...)` also configures the client's local path.
+- Local and remote still matter, even when both are path-based.
+- The server/client/connection/context model remains stable.
+- Deployment thinking shifts toward local path placement, access, ownership, and cleanup.
+- Unix domain sockets are a local IPC family, not a replacement for network communication.
+- The next lower-family shift is Bluetooth address plus channel or PSM.
 
 ### Closing perspective
 
-Unix domain sockets are one of the most satisfying chapters in the whole lower-layer part of the book because they prove that the framework’s architecture is genuinely portable across endpoint identities.
+Chapter 10 showed that IPv4 and IPv6 are closely related host-plus-port families.
 
-The reader has now seen three different kinds of lower-family thinking:
+This chapter changed the endpoint identity to a Unix-domain path while keeping the same broad SNode.C role model.
 
-- IPv4,
-- IPv6,
-- and path-based local IPC.
+The next chapter changes the endpoint identity again.
 
-And yet the larger framework picture has remained recognizable throughout.
+Bluetooth RFCOMM and L2CAP are neither host-plus-port nor path-based. They use Bluetooth device addresses together with family-specific service selectors.
 
-That is exactly the sign of a good architectural model.
-
-The lower family can change radically while the communication roles, runtime integration, and application-protocol structure remain stable.
-
-That is what SNode.C is teaching.
-
-And now the reader is ready for the next step:
-
-endpoint identities that are neither host-plus-port nor path-based, but Bluetooth-specific.
-
-That means RFCOMM comes next.
+That makes Bluetooth the next controlled variation in the lower-layer part of the book.
