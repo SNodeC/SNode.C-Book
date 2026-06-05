@@ -177,7 +177,7 @@ Moving from IPv4 to IPv6 should not feel like changing the application architect
 
 The stable core remains the same.
 
-| Aspect | IPv4 | IPv6 | Teaching point |
+| Aspect | IPv4 | IPv6 | Architectural point |
 |---|---|---|---|
 | Server role | `SocketServer` | `SocketServer` | role model stays |
 | Client role | `SocketClient` | `SocketClient` | role model stays |
