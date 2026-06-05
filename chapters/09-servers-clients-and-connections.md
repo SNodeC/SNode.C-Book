@@ -1,499 +1,629 @@
 ## Servers, Clients, and Connections
+
 ### Why these three belong in one chapter
 
-By now, the reader has seen three important ideas from different angles.
+Chapter 8 explained what endpoint identity means in SNode.C.
 
-From the first code chapter, we learned that a SNode.C application is built around server or client instances, factories, and contexts.
+This chapter explains which runtime roles use those endpoint identities.
 
-From the mental-model chapter, we learned that the instance is the outer communication role and the context is the per-connection protocol endpoint.
+A server binds to an address and accepts peers. A client connects to a remote address. A connection represents the concrete peer relationship that comes into existence when those operations succeed.
 
-From the runtime chapter, we learned that these roles live inside a coordinated event-driven system.
+That means servers, clients, and connections should not be studied as three unrelated types. They are three levels of one communication story.
 
-What still needs to become fully concrete is the relationship among three runtime entities:
+A first picture is:
 
-- the **server instance**,
-- the **client instance**,
-- and the **connection object** that represents a concrete peer relationship.
+```text
+SocketServer / SocketClient
+  -> registers listen/connect intent
+      -> accept/connect machinery
+          -> SocketConnection
+              -> SocketContextFactory
+                  -> SocketContext
+                      -> protocol behavior
+```
 
-This chapter brings them together.
+This diagram connects several earlier chapters.
 
-The reason they belong in one chapter is simple: in SNode.C, these are not three unrelated types. They are three levels of one communication story.
+Chapter 3 showed the first echo pair.
 
-- The server or client instance declares and manages a communication role.
-- The connection object represents one actual peer relationship.
-- The context attaches protocol behavior to that connection.
+Chapter 5 introduced the instance/factory/context mental model.
 
-Once the reader sees these levels clearly, a large part of the framework stops feeling large.
+Chapter 6 explained the runtime that advances registered communication work.
 
-### The outer roles: `SocketServer` and `SocketClient`
+Chapter 8 explained endpoint identity.
+
+This chapter brings those pieces together and asks:
+
+> What is the relationship between the outer server or client role and the concrete connection objects that appear at runtime?
+
+### The three-level communication story
+
+The central distinction is simple:
+
+| Role | Lifetime / scope | Main responsibility |
+|---|---|---|
+| `SocketServer` | configured communication role | listen, accept peers, create connection stories |
+| `SocketClient` | configured communication role | connect, retry/reconnect, create connection stories |
+| `SocketConnection` | one concrete peer relationship | addresses, data flow, timeouts, metrics |
+| `SocketContextFactory` | bridge from role to context | creates a context for a connection |
+| `SocketContext` | per-connection protocol endpoint | application protocol behavior |
+
+This table prevents a common confusion.
+
+A server or client object is not itself the live peer connection. It is the configured outer role. The connection is the concrete peer relationship that arises under that role. The context is the application protocol endpoint attached to that connection.
+
+These boundaries matter because they keep responsibilities clear.
+
+### Server and client instances as outer roles
 
 At the outermost application-facing level, SNode.C offers two principal stream-role templates:
 
-- `core::socket::stream::SocketServer<...>`
-- `core::socket::stream::SocketClient<...>`  
+```cpp
+core::socket::stream::SocketServer<...>
+core::socket::stream::SocketClient<...>
+```
 
-Concrete user-facing types are then formed by layering network family, transport, and connection handling around those core ideas, for example:
+Concrete user-facing types are then formed by combining the lower communication family, transport form, and connection handling mode. Examples include:
 
-- `net::in::stream::legacy::SocketServer<MyFactory>`
-- `net::in::stream::legacy::SocketClient<MyFactory>`
-- `net::rc::stream::tls::SocketServer<MyFactory>`
-- `net::l2::stream::legacy::SocketClient<MyFactory>`
+```cpp
+net::in::stream::legacy::SocketServer<MyFactory>
+net::in::stream::legacy::SocketClient<MyFactory>
+net::rc::stream::tls::SocketServer<MyFactory>
+net::l2::stream::legacy::SocketClient<MyFactory>
+```
 
-The important conceptual point is this:
+The important conceptual point is:
 
-> A server or client instance is not itself the protocol endpoint.
+> A server or client instance is not the protocol endpoint.
 
 It is the configured communication role that participates in the runtime, creates or accepts concrete connections, and arranges for contexts to be attached to them.
 
-That distinction is the heart of the whole chapter.
+The protocol endpoint lives in the context.
 
-### What a server instance really is
+The concrete peer relationship lives in the connection.
 
-The current `core::socket::stream::SocketServer` template makes the server role very explicit.
+#### Local handle and runtime participant
 
-It is built around:
+This chapter also uses the local-handle distinction introduced earlier.
 
-- a configuration object,
-- a socket-context factory,
-- a flow controller,
-- connection lifecycle callbacks (`onConnect`, `onConnected`, `onDisconnect`),
-- and the logic required to initiate listening, accept peers, and create concrete connection objects. 
+A local `SocketServer` or `SocketClient` object is the handle used to configure and register the role. After `listen(...)` or `connect(...)`, the active runtime story continues through shared configuration, flow-controller state, accept/connect machinery, and connection objects.
 
-So the right mental description of a server is not merely:
+This explains why the outer object should not be mentally reduced to one connection.
 
-> “an object that listens on a port.”
+The instance is the durable role.
 
-That is true, but incomplete.
+The connection is the concrete episode.
+
+### Server instances
+
+A server instance is not merely "an object that listens on a port."
+
+That description is true but incomplete.
 
 A more accurate description is:
 
-> a configured runtime-managed role that begins listening through the event loop, accepts peers through the appropriate lower-layer machinery, creates per-connection protocol endpoints through a factory, and coordinates connection lifecycle behavior.
+> A server is a configured runtime-managed role that registers listening intent, starts accept machinery through the runtime, accepts peers through the selected lower layer, creates connection objects, and attaches contexts through a factory.
 
-That sounds long, but every part matters.
+That sounds longer, but each part corresponds to a real responsibility.
 
-### What a client instance really is
+#### Listening as registered intent
 
-The current `core::socket::stream::SocketClient` template has a closely parallel structure.
+Calling `listen(...)` should be understood as registering listening intent.
 
-It also carries:
+The call does not mean that all listening and accepting work happens immediately on the caller's stack. It enters the flow-controller path and lets the runtime advance the work.
 
-- configuration,
-- a socket-context factory,
-- a flow controller,
-- lifecycle callbacks,
-- runtime integration,
-- and logic for initiating concrete peer connections. It additionally makes reconnect behavior especially visible in the client-side flow. 
+This matters because retry logic, status reporting, accept-event observation, and context creation all belong to the managed runtime story.
 
-So the right mental description of a client is not merely:
+#### Accepting peers
 
-> “an object that connects somewhere.”
+When the server role succeeds in listening, peers can be accepted.
 
-The more accurate description is:
+Each accepted peer becomes a concrete `SocketConnection`.
 
-> a configured runtime-managed role that begins connection attempts through the event loop, establishes concrete peer relationships through the chosen lower layers, attaches protocol endpoints through a factory, and can coordinate retry and reconnect behavior over time.
+That connection is not the server itself. It is one peer relationship under the server role.
 
-This is why clients in SNode.C feel more substantial than a single blocking `connect()` call wrapped in a class.
+A server may therefore create many connection stories over its lifetime.
 
-They are not just one attempt.
+This is one of the reasons the framework keeps the outer role and the concrete connection separate.
 
-They are communication roles with lifecycle.
+#### Server lifecycle callbacks
 
-### Symmetry matters: server and client are conceptually parallel
+The server role can expose lifecycle callbacks such as:
 
-One of the nicest things about the framework is how much structural symmetry exists between server and client.
+```text
+onConnect
+onConnected
+onDisconnect
+```
+
+These callbacks receive a `SocketConnection*`.
+
+That is important. They are not merely status messages about the server as a whole; they are hooks into the lifecycle of a concrete connection under the server role.
+
+Typical uses include:
+
+- logging local and remote addresses,
+- inspecting connection properties,
+- observing timing or metrics,
+- adding operational diagnostics,
+- applying role-level setup that should not live in the application protocol context.
+
+These callbacks should not be confused with context callbacks. The server lifecycle callback observes or supervises a connection. The context implements application protocol behavior over that connection.
+
+### Client instances
+
+A client instance is not merely "an object that connects somewhere."
+
+Again, that description is true but incomplete.
+
+A more accurate description is:
+
+> A client is a configured runtime-managed role that registers connection intent, starts connect machinery through the runtime, establishes peer relationships through the selected lower layer, attaches contexts through a factory, and can coordinate retry and reconnect behavior over time.
+
+That is why a SNode.C client is more substantial than a blocking `connect()` call wrapped in a class.
+
+It is a communication role with lifecycle.
+
+#### Connecting as registered intent
+
+Calling `connect(...)` registers connection intent.
+
+The remote endpoint comes from the address semantics described in Chapter 8. The runtime then advances the actual connection attempt through the selected lower layer.
+
+This is the client-side counterpart of the server's listening story.
+
+A client role may produce one connection, no connection, or several connection episodes over time if retry or reconnect behavior is configured.
+
+#### Client lifecycle callbacks
+
+Like the server role, the client role can expose lifecycle callbacks:
+
+```text
+onConnect
+onConnected
+onDisconnect
+```
+
+These also receive a concrete `SocketConnection*`.
+
+The callbacks are structurally parallel to the server side, but the operational meaning differs because the client initiates the connection and may later reconnect.
+
+This symmetry helps the reader transfer understanding from server code to client code.
+
+### Symmetry and difference
+
+Server and client roles are conceptually parallel.
 
 Both:
 
 - are configured instances,
 - participate in the runtime,
-- own a socket-context factory,
+- carry a socket-context factory,
 - expose connection lifecycle callbacks,
-- ultimately lead to concrete `SocketConnection` objects,
-- and attach application behavior through contexts.  
+- lead to concrete `SocketConnection` objects,
+- attach application behavior through contexts.
 
-This symmetry is pedagogically excellent.
+The differences are also real:
 
-It means the reader does not need two unrelated mental models.
+| Aspect | Server role | Client role |
+|---|---|---|
+| Outer intention | listen | connect |
+| Peer creation | accepts peers | initiates connection attempts |
+| Common long-term shape | one role, many accepted connections | one role, potentially many attempts or reconnect episodes |
+| Retry focus | listening retry | connect retry and reconnect |
+| Primary address concern | local bind address | remote peer address, optional local bind address |
 
-The differences are real — a server listens and accepts; a client initiates and may reconnect — but the deeper structure is shared.
+The reader should keep both ideas at once.
 
-That shared structure is one of the reasons SNode.C scales so well in the mind.
+The structure is shared.
 
-### The connection object: where communication becomes concrete
+The direction of communication setup is different.
 
-If the instance is the outer role, then the `SocketConnection` is the concrete peer relationship.
+#### Retry, reconnect, and role lifetime
 
-The current abstract `core::socket::stream::SocketConnection` class shows that very clearly. It exposes operations and information such as:
+Server and client roles both involve flow control, but the client side makes reconnect especially visible.
 
-- descriptor access via `getFd()`,
-- data transfer via `sendToPeer(...)` and `readFromPeer(...)`,
-- streaming support,
-- shutdown and close operations,
-- local, remote, and bind address access,
-- timeout control,
-- total sent/queued/read/processed metrics,
-- online-since and online-duration information,
-- instance name and connection name,
-- and the attached socket context. 
+A server-side flow can retry listening when configured.
 
-This is an extraordinarily informative interface.
+A client-side flow can retry connecting when the initial attempt fails, and it can reconnect later after a connection has ended when reconnect behavior is configured.
 
-It shows that a connection in SNode.C is not a thin hidden pipe.
+The distinction is:
 
-It is a runtime object with:
+| Role | Retry/reconnect focus |
+|---|---|
+| Server | retry listening when configured |
+| Client | retry connection attempts and optionally reconnect after disconnect |
 
-- identity,
-- timing,
-- addresses,
-- data flow,
-- protocol attachment,
-- and operational metrics.
+This belongs in the client/server role discussion, not in the application protocol context.
 
-That is exactly the right level of visibility for a serious networking framework.
+The context should not have to become a reconnect manager.
 
-### A connection is not the same as a context
+### `SocketConnection`: the concrete peer relationship
 
-This distinction is one of the most important in the whole book.
+If the server or client instance is the outer role, the `SocketConnection` is the concrete peer relationship.
 
-A connection object represents the **managed communication relationship**.
+This is where communication becomes tangible.
 
-A context object represents the **application protocol endpoint attached to that relationship**.
+The connection object carries:
 
-The current `SocketConnection` abstraction makes this explicit by exposing `setSocketContext(...)` and `getSocketContext()`. The current `SocketContext` abstraction, in turn, works through a `SocketConnection` pointer and exposes protocol-facing actions such as `sendToPeer(...)`, `readFromPeer(...)`, timeout management, shutdown, close, and metrics access through that relationship.  
+| Category | Examples |
+|---|---|
+| Descriptor identity | `getFd()` |
+| Context attachment | `setSocketContext(...)`, `getSocketContext()` |
+| Addresses | `getBindAddress()`, `getLocalAddress()`, `getRemoteAddress()` |
+| Data flow | `sendToPeer(...)`, `readFromPeer(...)`, `streamToPeer(...)`, `streamEof()` |
+| Shutdown and closing | `shutdownRead()`, `shutdownWrite()`, `close()` |
+| Timeouts | `setTimeout(...)`, `setReadTimeout(...)`, `setWriteTimeout(...)` |
+| Metrics | `getTotalSent()`, `getTotalQueued()`, `getTotalRead()`, `getTotalProcessed()` |
+| Time information | `getOnlineSince()`, `getOnlineDuration()` |
+| Naming | `getInstanceName()`, `getConnectionName()` |
 
-So the correct mental model is:
+The connection is therefore not a hidden pipe. It is a visible runtime object with identity, timing, addresses, data flow, protocol attachment, and operational metrics.
 
-- the **connection** owns the concrete peer communication state,
-- the **context** expresses what your protocol wants to do over that state.
+#### Connection versus context
 
-This separation is not academic.
+A connection object represents the managed communication relationship.
 
-It is the reason the framework can remain both reusable and clear.
+A context object represents the application protocol endpoint attached to that relationship.
 
-### Addresses live on the connection, not only on the instance
+The correct mental model is:
 
-Chapter 8 taught us about address semantics.
+```text
+SocketConnection
+  -> concrete peer relationship
+  -> addresses, timeouts, metrics, data path
 
-Here, we can now place those addresses more precisely.
+SocketContext
+  -> application protocol behavior
+  -> reacts to lifecycle and input events through the connection
+```
 
-The current `SocketConnection` interface exposes three related address concepts:
+This distinction should be kept clear.
 
-- `getBindAddress()`
-- `getLocalAddress()`
-- `getRemoteAddress()` 
+The context works through the connection, but it is not the connection.
 
-This is a very nice design because it tells the reader that endpoint identity is not only a startup concern.
+The connection carries the peer relationship, but it is not the application protocol.
 
-It remains meaningful throughout the life of the connection.
+This separation is one of the reasons SNode.C applications can remain readable as they grow.
 
-#### Why three address views are useful
+#### Addresses on the connection
 
-A beginner might wonder why one would need more than one address accessor.
+Chapter 8 explained what address objects mean.
 
-But in real systems, these distinctions matter.
+Here we see where they appear during connection lifetime.
 
-- The **bind address** describes the address requested or used for binding.
-- The **local address** describes the actual local endpoint of the connection.
-- The **remote address** describes the peer endpoint.
+A `SocketConnection` exposes three address views:
 
-Keeping these separate is especially helpful for:
+```cpp
+getBindAddress()
+getLocalAddress()
+getRemoteAddress()
+```
 
-- wildcard binding,
-- client-side automatic local endpoint selection,
-- diagnostics,
-- and understanding what the OS ultimately chose.
+These are not redundant.
 
-### Connection naming and instance naming
+The **bind address** describes the address requested or used for binding.
 
-The current `SocketConnection` abstraction exposes both `getInstanceName()` and `getConnectionName()`. 
+The **local address** describes the actual local endpoint of the connection.
 
-This is another small but very useful design choice.
+The **remote address** describes the peer endpoint.
 
-It reinforces the difference between:
+Keeping these separate is useful for wildcard binding, client-side automatic local endpoint selection, diagnostics, and understanding what the operating system ultimately chose.
 
-- the longer-lived configured communication role,
-- and the specific concrete peer relationship that came into being under that role.
+The address model from Chapter 8 therefore does not end at startup. It remains visible on the live connection.
 
-This becomes especially helpful in logs and diagnostics.
+#### Data flow
 
-A server instance may live for a long time and handle many peers.
+The connection is where data flow belongs.
 
-Each of those peers is not the server instance itself. It is one connection under that instance.
+The core operations include:
 
-Giving both levels names helps the reader and operator keep that distinction clear.
+```cpp
+sendToPeer(...)
+readFromPeer(...)
+streamToPeer(...)
+streamEof()
+shutdownRead()
+shutdownWrite()
+close()
+```
 
-### Data flow belongs to the connection level
+User code often calls these through the context. That is exactly the right shape: the context expresses protocol behavior, while the connection provides the communication relationship through which that behavior acts.
 
-The current `SocketConnection` interface exposes the core communication primitives:
+This keeps protocol code from owning transport machinery directly.
 
-- `sendToPeer(...)`
-- `streamToPeer(...)`
-- `streamEof()`
-- `readFromPeer(...)`
-- `shutdownRead()`
-- `shutdownWrite()`
-- `close()` 
+#### Timeouts
 
-This tells us something fundamental.
+Timeouts belong naturally on the connection.
 
-Although user code often *calls* these through the context, the underlying communication relationship is where those operations truly belong.
+A server instance may live for a long time. A specific peer connection may be idle, slow, stalled, or temporarily write-blocked.
 
-That makes sense.
+Those are different runtime concerns.
 
-A protocol endpoint should not need to own the transport machinery itself. It should be able to act *through* the connection.
+Connection-level timeout operations let the framework express that difference:
 
-This is one of the reasons the context class feels clean rather than overloaded.
+```cpp
+setTimeout(...)
+setReadTimeout(...)
+setWriteTimeout(...)
+```
 
-### Metrics and durations are not an afterthought
+This also connects back to Chapter 6: timers and event processing make timeout behavior part of the runtime, not a manual sleep loop in protocol code.
 
-The current `SocketConnection` interface also exposes:
+#### Metrics and duration
 
-- total sent,
-- total queued,
-- total read,
-- total processed,
-- online-since,
-- online-duration. 
+A connection is also measurable.
 
-This is one of the places where SNode.C feels more operationally mature than a simple teaching framework.
+Useful connection-level quantities include:
 
-The connection object is not only a route for bytes.
+```cpp
+getTotalSent()
+getTotalQueued()
+getTotalRead()
+getTotalProcessed()
+getOnlineSince()
+getOnlineDuration()
+```
 
-It is also a measurable runtime object.
-
-This matters because real networking work often depends on being able to answer questions like:
+These answer operational questions:
 
 - How long was this peer connected?
-- How much data was queued but not yet sent?
-- How much data was read versus processed?
+- How much data was queued?
+- How much data was actually sent?
+- How much data was read?
+- How much data was processed?
 
-By keeping these notions on the connection, the framework makes them feel like natural properties of a peer relationship rather than external accounting hacks.
+By keeping these notions on the connection, SNode.C treats them as natural properties of a peer relationship rather than as external accounting hacks.
 
-### Timeouts belong to the connection, too
+#### Naming
 
-The current `SocketConnection` abstraction supports:
+A connection also exposes both:
 
-- `setTimeout(...)`
-- `setReadTimeout(...)`
-- `setWriteTimeout(...)` 
+```cpp
+getInstanceName()
+getConnectionName()
+```
 
-This is worth pausing on.
+The instance name belongs to the longer-lived configured role.
 
-A timeout is not merely a property of the server or client instance in the abstract. It is often a property of one concrete peer relationship.
+The connection name belongs to the concrete peer relationship.
 
-That is exactly why timeout management belongs naturally on the connection object.
+This distinction helps logs and diagnostics, especially for servers that accept many peers over time.
 
-A server instance may live for hours or days. A particular peer connection may be idle, stalled, or slow.
+### Callback layers
 
-Those are different timescales and different runtime concerns.
+Chapter 9 needs one especially clear distinction: not all callbacks report the same kind of event.
 
-The framework’s separation reflects that very well.
+SNode.C has several callback layers.
 
-### Lifecycle callbacks live at the instance level
+| Callback type | Receives | Meaning |
+|---|---|---|
+| listen/connect status callback | `SocketAddress`, `State` | outer role status |
+| instance lifecycle callback | `SocketConnection*` | lifecycle of one connection |
+| context callback | context method call | protocol behavior on that connection |
 
-The current `SocketServer` and `SocketClient` templates both expose connection lifecycle callback hooks:
+This table is one of the most important practical tools in the chapter.
 
-- `onConnect`
-- `onConnected`
-- `onDisconnect`
+It prevents three different ideas from being collapsed into one vague "callback" concept.
 
-and corresponding setters such as `setOnConnect(...)`, `setOnConnected(...)`, and `setOnDisconnect(...)`. The templates also show that these callbacks receive the concrete `SocketConnection*` as their argument.  
+#### Status callbacks
 
-This is extremely important for the mental model.
+The status callbacks used with `listen(...)` and `connect(...)` report the outcome or state of the outer communication attempt.
 
-These callbacks are *not* the same thing as the context’s protocol-facing lifecycle methods.
+They receive:
 
-They are instance-level hooks into connection lifecycle.
+```cpp
+SocketAddress
+core::socket::State
+```
 
-That means they are often the right place for concerns such as:
+The address identifies the relevant endpoint.
 
-- connection inspection,
-- address logging,
-- TLS object inspection,
-- per-connection setup that belongs to the role rather than the protocol,
-- operational diagnostics.
+The state describes the role-level outcome.
 
-### `onConnect` versus `onConnected`
+This is different from a connection lifecycle callback. A status callback may tell us whether listening or connecting succeeded, failed, was disabled, or should not be retried. It does not by itself represent protocol behavior.
 
-This is one of the places where the framework’s naming is especially useful.
+#### `core::socket::State`
 
-The instance-level callbacks distinguish between:
+`core::socket::State` is richer than a Boolean.
 
-- `onConnect`
-- `onConnected`
+Its principal values include:
 
-and the current templates show both as separate phases.  
+```text
+OK
+DISABLED
+ERROR
+FATAL
+NO_RETRY
+```
 
-That distinction matters.
+It also carries explanatory information through functions such as `what()` and `where()`.
 
-A connection may have come into existence at a lower operational level before it is fully ready for protocol-level use in the stronger sense, especially when TLS or similar setup stages matter.
+For Chapter 9, the important point is not to turn `State` into its own topic. The important point is:
 
-This is exactly the kind of nuance that a serious framework should preserve.
+> Status callbacks report role-level outcomes using a richer state object, not just true or false.
 
-So the reader should not collapse these into one mental event too quickly.
+That is enough to understand why the status callback API has the shape it has.
 
-They may coincide closely in some cases, but they are not conceptually identical.
+#### Connection lifecycle callbacks
 
-### `onDisconnect` belongs to the connection story, not only cleanup
+Instance-level lifecycle callbacks such as:
 
-The current server and client templates use `onDisconnect` not only as a closure signal but also as a place where connection-level diagnostics are emitted, including addresses, online duration, queue totals, sent totals, read totals, processed totals, and deltas.  
+```text
+onConnect
+onConnected
+onDisconnect
+```
 
-This is a nice reminder that disconnect is not just “the end.”
+receive a `SocketConnection*`.
 
-It is also a moment of interpretation.
+They observe the lifecycle of a concrete peer relationship under the server or client role.
 
-A well-designed disconnect hook lets you understand what kind of relationship just ended.
+They are useful for connection inspection, address logging, operational diagnostics, and role-level setup.
 
-That is why the framework treats it as a significant lifecycle point rather than a trivial destructor-like event.
+They are not the same as status callbacks.
 
-### Status reporting is different from connection callbacks
+They are also not the same as context callbacks.
 
-In addition to lifecycle callbacks, server and client instances report **status** through the `listen(...)` and `connect(...)` status callbacks.
+#### `onConnect` versus `onConnected`
 
-These callbacks receive a `SocketAddress` and a `core::socket::State`. Chapters 3 and 5 already used these callbacks in concrete echo examples, and the current convenience overloads for specific families still route through this status-reporting mechanism.    
+The framework exposes both `onConnect` and `onConnected` as separate lifecycle hooks.
 
-This is not the same as a connection lifecycle callback.
+This means the reader should not collapse them into one undifferentiated event.
 
-The mental difference is:
+A connection may pass through more than one meaningful stage between lower-level creation and full readiness for protocol-level use. TLS and other setup stages make this distinction especially important in later chapters.
 
-- **status callbacks** tell you how the instance’s outer communication attempt or listening state went,
-- **connection lifecycle callbacks** tell you about the lifecycle of one concrete connection object.
+For now, the safe mental rule is:
 
-This distinction is subtle, but very important.
+> Treat `onConnect` and `onConnected` as separate lifecycle hooks; do not assume they are interchangeable just because they may appear close together in simple examples.
 
-### The meaning of `core::socket::State`
+#### `onDisconnect`
 
-The current `core::socket::State` class makes the status model explicit. It defines the principal values:
+`onDisconnect` is not merely a destructor-like cleanup moment.
 
-- `OK`
-- `DISABLED`
-- `ERROR`
-- `FATAL`
-- `NO_RETRY`
+It is often the place where a completed connection story becomes interpretable.
 
-and also carries `what()` and `where()` information, along with bitwise-combination behavior. 
+At disconnect time, useful information such as addresses, online duration, queued bytes, sent bytes, read bytes, and processed bytes can be logged or inspected.
 
-This means instance status in SNode.C is not just a Boolean success flag.
+That makes disconnect a meaningful lifecycle point, not just the end of an object.
 
-It is a richer object that can communicate:
+#### Context callbacks
 
-- success,
-- disablement,
-- recoverable versus fatal failure,
-- retry-related nuance,
-- and explanatory text or origin information.
+Context callbacks are different again.
 
-That is a very practical design.
+They are protocol-facing methods on the per-connection context.
 
-A listen or connect status callback that only reported “true/false” would be far less informative.
+Typical examples include lifecycle and input handling methods such as:
 
-### Servers and clients as factories of connection stories
+```text
+onConnected()
+onDisconnected()
+onReceivedFromPeer()
+```
 
-A useful way to summarize the model is this:
+The exact set depends on the context abstraction being used, but the boundary is stable:
 
-- a server is a **factory of accepted connection stories**,
-- a client is a **factory of initiated connection stories**.
+> Instance callbacks observe connection lifecycle; context callbacks implement protocol behavior.
 
-That may sound poetic, but it is actually precise.
+This is the same distinction introduced earlier, but Chapter 9 is where it becomes operationally concrete.
 
-Each instance can give rise to one or more concrete peer relationships over time.
-
-Each of those relationships is represented by a `SocketConnection` object.
-
-Each of those connections can have a context attached.
-
-Each connection has its own lifecycle, addresses, timeouts, and metrics.
-
-Once a reader really sees the framework this way, many design decisions that first looked elaborate begin to feel natural.
-
-### Where the context factory fits in this chapter
+### Where the context factory fits
 
 Even though this chapter focuses on servers, clients, and connections, the factory is still part of the story.
 
-The current `SocketServer` and `SocketClient` templates both store a shared pointer to the `SocketContextFactory` in their internal shared context structures, and the `SocketConnection` abstraction also has the machinery needed to attach a context using such a factory.   
+The factory is the bridge from outer role to per-connection protocol endpoint.
 
-That means the factory is the bridge between:
+The server or client role carries the factory.
 
-- the longer-lived outer role,
-- and the concrete per-connection protocol endpoint.
+When a concrete connection is created, the factory creates a context for that connection.
 
-This is exactly why it belongs conceptually between instance and context.
+The context then expresses the application protocol behavior.
+
+The sequence is:
+
+```text
+SocketServer / SocketClient
+  -> SocketConnection
+      -> SocketContextFactory
+          -> SocketContext
+```
+
+This is why the factory belongs conceptually between instance and context.
+
+Without the factory, the framework would have no clean way to create one protocol endpoint per connection.
 
 ### Why the instance should stay relatively clean
 
 A common design mistake in networking code is to overfill the outer server or client object with protocol behavior.
 
-SNode.C’s structure encourages a better habit.
+SNode.C encourages a cleaner division of labor:
 
-The instance should mainly carry:
+| Responsibility | Belongs mainly to |
+|---|---|
+| Communication role and configuration | server/client instance |
+| Listening or connecting lifecycle | server/client instance and flow controller |
+| Concrete peer relationship | connection |
+| Addresses, data flow, timeouts, metrics | connection |
+| Application protocol behavior | context |
+| Context creation | factory |
 
-- communication role,
-- configuration,
-- lifecycle callbacks,
-- integration with the runtime,
-- and connection orchestration.
+This division keeps applications readable.
 
-The context should carry the application protocol behavior.
+The instance should not become the protocol implementation.
 
-The connection should carry the concrete peer relationship and data path.
+The context should not become the reconnect manager.
 
-That is a beautiful division of labor.
+The connection should not become the application protocol.
 
-When followed well, it keeps applications readable even as they become more capable.
+Each role has a reason to exist.
 
-### One server, many connections; one client, many attempts over time
-
-Another important mental distinction is temporal.
+### One role, many connection stories
 
 A server instance may accept many concrete peer connections over its lifetime.
 
-A client instance may make one connection, reconnect later, or retry several times before succeeding, depending on configuration and runtime circumstances. The current client template makes reconnect logic especially visible through its internal flow-controller use. 
+A client instance may make one connection, retry several times before succeeding, reconnect after disconnect, or remain disconnected depending on configuration and runtime circumstances.
 
-This means the instance should not be mentally reduced to any one connection.
+Therefore, an instance should not be reduced mentally to a single connection.
 
-That is one of the reasons the framework separates them so clearly.
+The instance is the durable role.
 
-The instance is the durable role. The connection is the concrete episode.
+The connection is the concrete episode.
 
-### Common misunderstandings about servers, clients, and connections
+This is also why connection metrics and names matter. They describe a specific episode, not merely the server or client role as a whole.
 
-It helps to clear away a few misunderstandings explicitly.
+### How this chapter connects the earlier model
 
-#### Misunderstanding 1: “The server or client object is the same thing as the live peer connection.”
+We can now combine the earlier ideas into one operational picture:
 
-Corrected view: the server or client instance is the outer role; the concrete peer relationship is represented by a `SocketConnection` object.
+```text
+endpoint identity
+  -> address object
+      -> server/client role configuration
+          -> listen/connect status
+              -> connection lifecycle
+                  -> SocketConnection
+                      -> SocketContextFactory
+                          -> SocketContext
+                              -> protocol behavior
+```
 
-#### Misunderstanding 2: “The context and the connection are the same object with different names.”
+This picture is deliberately compact.
 
-Corrected view: the connection manages the peer relationship; the context expresses the application protocol attached to that relationship.
+It shows why the chapter had to follow address semantics.
 
-#### Misunderstanding 3: “Status callbacks and connection lifecycle callbacks report the same kind of thing.”
+Before Chapter 8, `listen(...)` and `connect(...)` might look like they just receive strings, numbers, or paths.
 
-Corrected view: status callbacks report outer instance state for listen/connect activity, while lifecycle callbacks report events in the life of one concrete connection.
+After Chapter 8, they receive endpoint descriptions.
 
-#### Misunderstanding 4: “The client is only a one-shot connect wrapper.”
+After this chapter, those endpoint descriptions are connected to the roles and connection objects that make communication happen.
 
-Corrected view: the client is a runtime-managed communication role that can participate in retry and reconnect behavior over time. 
+### What to remember
 
-#### Misunderstanding 5: “Metrics and timeouts are secondary add-ons.”
+Remember:
 
-Corrected view: they are part of the connection abstraction itself and therefore belong to the main model. 
+- A server or client instance is the outer configured communication role.
+- A `SocketConnection` is one concrete peer relationship.
+- A `SocketContext` is the application protocol endpoint attached to that connection.
+- A `SocketContextFactory` creates contexts for connections.
+- `listen(...)` and `connect(...)` register outer role intent.
+- Status callbacks report outer role status using `SocketAddress` and `State`.
+- Lifecycle callbacks observe concrete connections through `SocketConnection*`.
+- Context callbacks implement protocol behavior.
+- Bind, local, and remote addresses remain visible on the connection.
+- Data flow, timeouts, metrics, duration, and naming belong naturally to the connection.
+- One server role may produce many connection stories.
+- One client role may retry or reconnect over time.
 
 ### Closing perspective
 
-A networking framework becomes much easier to use once the reader can clearly separate:
+Chapter 8 made endpoint identity explicit.
 
-- the configured outer role,
-- the concrete peer relationship,
-- and the protocol behavior attached to that relationship.
+This chapter has shown how endpoint identity enters the live communication story through server roles, client roles, and connection objects.
 
-SNode.C does this very well.
+That prepares the next chapter.
 
-- `SocketServer` and `SocketClient` represent the outer roles.
-- `SocketConnection` represents the live peer relationship.
-- `SocketContext` represents the application endpoint attached to that relationship.
-- `core::socket::State` provides a richer language for outer status reporting.    
+Now that the general server/client/connection model is clear, the book can choose a primary concrete teaching path. Chapter 10 does that by focusing on IPv4 and IPv6.
 
-Once those distinctions are stable, the next steps in the book become much more concrete.
+IPv4 and IPv6 are close enough to be taught together, but different enough to show why SNode.C separates lower communication families carefully.
 
-We can now move naturally into the family-specific chapters on IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP, because we already know what larger runtime roles these families will inhabit.
+With the role model and address model in place, the move to concrete IPv4 and IPv6 examples should feel like a controlled specialization rather than a new framework.
