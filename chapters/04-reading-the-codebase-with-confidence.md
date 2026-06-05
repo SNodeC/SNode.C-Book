@@ -461,6 +461,27 @@ helps an external project link against the required framework part.
 
 The naming relationship is intentional.
 
+The same layer stack can therefore appear in three related forms:
+
+```text
+source path:
+src/net/in/stream/legacy
+
+C++ namespace / type path:
+net::in::stream::legacy
+
+CMake component name:
+net-in-stream-legacy
+```
+
+Read these as three views of the same architectural position:
+
+```text
+network family: IPv4 / in
+transport form: stream
+connection handling: legacy
+```
+
 The directory path helps humans navigate the source.
 
 The component name helps CMake consume the built framework.
