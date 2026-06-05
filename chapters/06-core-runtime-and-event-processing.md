@@ -2,15 +2,7 @@
 
 ### Why this chapter matters
 
-In Chapter 3, we wrote the first working echo pair. That chapter showed the visible application-level shape:
-
-- create a server or client handle,
-- attach a context factory,
-- call `listen(...)` or `connect(...)`,
-- implement protocol behavior in a `SocketContext`,
-- and start the runtime with `core::SNodeC::start()`.
-
-In Chapter 5, we turned that experience into a mental model. We separated instances, connections, contexts, factories, layers, and operational concerns.
+Chapter 3 showed the first working echo pair, and Chapter 5 turned that experience into a mental model of instances, connections, contexts, factories, layers, and operational concerns.
 
 That model is necessary, but it still leaves an important question open.
 
@@ -269,16 +261,9 @@ The listen or connect operation enters the flow-controller path. The flow contro
 
 That is why the local object may go out of scope after registration while the communication role can still be advanced by the runtime.
 
-The mental distinction is:
+The mental distinction is the same one introduced earlier: the local C++ object is the registration handle; the runtime participant is the shared state and event machinery observed and advanced by the event loop.
 
-- the **local C++ object** is the handle used to configure and register the role;
-- the **runtime participant** is the shared state and event machinery that continues to be observed and advanced by the event loop.
-
-This distinction is subtle, but it prevents many wrong intuitions.
-
-SNode.C is not a blocking socket wrapper with a long-lived local socket object doing all the work on the caller's stack.
-
-It is an event-driven runtime with registered participants.
+This distinction prevents the wrong intuition that SNode.C is a blocking socket wrapper tied to one caller stack.
 
 ### From runtime intent to event delivery
 
@@ -692,13 +677,7 @@ It stops the event loop from doing the work it exists to do.
 
 #### Remember that `listen(...)` and `connect(...)` register intent
 
-This point connects directly back to Chapters 3 and 5.
-
-The public call configures and registers a communication role.
-
-The flow-controller/shared-context path and the event loop advance the actual work.
-
-That is why SNode.C feels different from a simple blocking wrapper around sockets.
+The public call configures and registers a communication role; the flow-controller/shared-context path and the event loop advance the actual work.
 
 #### Understand where descriptor activity, timers, and queued work meet
 
