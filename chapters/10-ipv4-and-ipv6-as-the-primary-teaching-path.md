@@ -1,207 +1,368 @@
 ## IPv4 and IPv6 as the Primary Teaching Path
+
 ### Why IPv4 and IPv6 come first
 
-SNode.C supports more than one lower communication family.
+Chapter 9 separated the general roles:
 
-That is one of its strengths.
+- server,
+- client,
+- connection,
+- context factory,
+- and context.
 
-But when teaching the framework, it is still wise to begin with IPv4 and IPv6 before moving to Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP.
+This chapter now chooses the first concrete lower-family pair through which those roles should be taught:
 
-This is not because the other families are secondary.
+```text
+IPv4 and IPv6
+```
 
-It is because IPv4 and IPv6 offer the clearest first view of the framework’s layered design while still staying close to what many readers already know.
+SNode.C supports more than one lower communication family. That is one of its strengths.
 
-They give us a path that is both familiar and revealing.
+But for teaching, IPv4 and IPv6 are the right first pair. They are familiar enough that most readers already understand the broad ideas of hosts, addresses, ports, listening servers, and remote peers. At the same time, they are different enough to show why SNode.C treats the lower communication family as an explicit architectural choice.
 
-They are familiar because most readers already understand the broad ideas of host names, addresses, ports, listening servers, and remote peers.
+IPv4 and IPv6 are therefore not chosen because Unix domain sockets or Bluetooth are secondary.
 
-They are revealing because SNode.C does not simply treat them as “normal sockets.” It presents them through the same instance, connection, context, and configuration patterns that govern the rest of the framework.
+They are chosen because they provide the clearest first controlled variation:
 
-That makes IPv4 and IPv6 the best primary teaching path.
+```text
+same server/client/connection model
+same factory/context/runtime model
+different lower-family semantics
+```
 
-### Why IPv4 and IPv6 are especially good teaching families in SNode.C
+This makes them the primary teaching path for Part III.
 
-The live repository makes one very important thing clear: the IPv4 and IPv6 stream server/client APIs are intentionally very parallel.
+### The shared teaching path
 
-There is a `net::in::stream::SocketServer` and `SocketClient` for IPv4, and a `net::in6::stream::SocketServer` and `SocketClient` for IPv6. In both families, the convenience overloads work by filling the instance configuration and then delegating to the more general parameterless `listen(...)` or `connect(...)` path. That is a beautiful teaching design, because it lets the reader see that the “easy” API and the “configured” API are really one model rather than two separate worlds.    
+For both IPv4 and IPv6, the outer application shape stays the same.
 
-This is one of the clearest demonstrations of SNode.C’s architecture.
-
-A convenience overload is not magic. It is usually just a readable front door into the configuration model.
-
-That is exactly what a teaching framework should do.
-
-### The shared teaching pattern
-
-For both IPv4 and IPv6, the outer application pattern is the same.
-
-You still have:
+A typical stream application still has:
 
 - a `SocketServer` or `SocketClient` instance,
 - a `SocketContextFactory`,
 - a `SocketContext`,
-- a runtime started through `core::SNodeC::start()`.
+- a status callback for `listen(...)` or `connect(...)`,
+- connection lifecycle callbacks if needed,
+- and a runtime started through `core::SNodeC::start()`.
 
-Nothing about moving from IPv4 to IPv6 changes that shape.
+Nothing about moving from IPv4 to IPv6 changes that basic shape.
 
-This is the first major lesson of the chapter.
+That is the first major lesson of the chapter:
 
 > The instance/factory/context/runtime pattern is more fundamental than the specific IP family.
 
-That is why IPv4 and IPv6 are such good teaching companions. They let the reader practice “same shape, different lower-family semantics” in a way that is easier to grasp than jumping immediately to a path-based Unix domain socket or a Bluetooth family.
+IPv4 and IPv6 let the reader practice this idea without immediately changing endpoint identity as radically as Unix domain sockets or Bluetooth do.
 
-### The concrete type names already teach the layers
+#### Same server/client/context shape
 
-Let us start with the concrete legacy stream server/client types.
+The server/client distinction from Chapter 9 remains stable.
 
-For IPv4, a minimal pair typically looks like:
+An IPv4 server role and an IPv6 server role are both server roles.
+
+An IPv4 client role and an IPv6 client role are both client roles.
+
+The connection remains the concrete peer relationship.
+
+The context remains the application protocol endpoint attached to that connection.
+
+So the first teaching comparison is not:
+
+```text
+IPv4 code versus completely different IPv6 code
+```
+
+It is:
+
+```text
+one SNode.C communication model
+  -> specialized through IPv4
+  -> specialized through IPv6
+```
+
+That is a much better mental model.
+
+#### Parallel type names
+
+The type names show the parallelism immediately.
+
+For IPv4, a minimal legacy stream pair often begins like this:
 
 ```cpp
 using EchoServer4 = net::in::stream::legacy::SocketServer<MyFactory>;
 using EchoClient4 = net::in::stream::legacy::SocketClient<MyFactory>;
 ```
 
-For IPv6, the parallel pair looks like:
+For IPv6, the parallel pair is:
 
 ```cpp
 using EchoServer6 = net::in6::stream::legacy::SocketServer<MyFactory>;
 using EchoClient6 = net::in6::stream::legacy::SocketClient<MyFactory>;
 ```
 
-These type names are already doing educational work.
+The first visible change is the network-family namespace:
 
-The only thing that changes in the example above is the network family namespace:
+```text
+net::in   -> IPv4
+net::in6  -> IPv6
+```
 
-- `net::in` for IPv4,
-- `net::in6` for IPv6.
+The rest of the layered name remains recognizably stable:
 
-Everything else in the layered story remains recognizably stable:
+```text
+stream
+  -> legacy
+      -> SocketServer / SocketClient
+          -> MyFactory
+```
 
-- `stream` transport,
-- `legacy` connection handling,
-- `SocketServer` or `SocketClient` outer role.
+This is exactly the kind of comparison Chapter 7 prepared the reader to make.
 
-This stability is the main reason to teach the two families together.
+#### Parallel address classes
 
-### The address classes are parallel on purpose
+Chapter 8 introduced address semantics.
 
-Chapter 8 already introduced the address classes.
+Now we can use that model to compare the two IP families.
 
-Now we can use them to explain why the IPv4/IPv6 teaching path works so well.
+| Family | Address class | Basic endpoint shape |
+|---|---|---|
+| IPv4 | `net::in::SocketAddress` | host plus port |
+| IPv6 | `net::in6::SocketAddress` | host plus port |
 
-The live `net::in::SocketAddress` and `net::in6::SocketAddress` classes have a very similar conceptual interface:
+The class names differ because the endpoint families differ.
 
-- default constructor,
-- host-only constructor,
-- port-only constructor,
-- host-plus-port constructor,
-- construction from an existing `sockaddr`,
-- `Hints`,
-- `init(...)`,
-- `useNext()`,
-- `setHost(...)` / `getHost()`,
-- `setPort(...)` / `getPort()`,
-- canonical-name access,
-- string rendering,
-- endpoint formatting.  
+The basic shape is similar because both families use a host-plus-port model.
 
-This is a huge pedagogical advantage.
+This gives the reader useful confidence: one address pattern transfers across both IP families.
 
-It means the reader can learn one address pattern and then apply it to both IP families.
+But the similarity should not be exaggerated. IPv4 and IPv6 have different textual forms, different wildcard forms, and different deployment questions.
 
-At the same time, the framework does not pretend that the families are identical. The default wildcard host differs, the operational semantics differ, and later the dual-stack question appears. But the shared surface gives the reader confidence before the deeper differences matter.
+The right lesson is:
 
-### Default construction: `0.0.0.0` and `::`
+> The API shape is intentionally parallel where that helps, but the endpoint families remain distinct.
 
-One of the best places to compare IPv4 and IPv6 is the meaning of their default addresses.
+#### Parallel convenience overloads
 
-In the live headers:
+The stream wrappers make the teaching path especially clear.
 
-- IPv4 defaults to host `0.0.0.0` and port `0`,
-- IPv6 defaults to host `::` and port `0`.  
+The IPv4 and IPv6 server wrappers provide parallel `listen(...)` convenience overloads. These overloads set local configuration such as host, port, and backlog, then delegate to the general `listen(onStatus)` path.
 
-This is exactly the kind of detail a teaching chapter should slow down for.
+Likewise, the IPv4 and IPv6 client wrappers provide parallel `connect(...)` convenience overloads. These overloads set remote host and port, optionally set local bind information, then delegate to the general `connect(onStatus)` path.
 
-These are not random defaults.
+So the convenience API is not a separate communication model.
 
-They express wildcard local addresses in their respective families.
+It is a readable front door into the same instance-configuration model.
 
-That means:
+The pattern can be summarized like this:
 
-- a server can listen without being tied to one specific interface,
-- a client can allow the local side to be selected automatically,
-- and the framework can model “not yet concretely chosen” without using fake null values.
+| Surface call expresses | Configuration effect |
+|---|---|
+| `listen(port, ...)` | local port |
+| `listen(port, backlog, ...)` | local port + backlog |
+| `listen(host, port, ...)` | local host + local port |
+| `listen(host, port, backlog, ...)` | local host + local port + backlog |
+| `connect(host, port, ...)` | remote host + remote port |
+| `connect(host, port, bindHost, ...)` | remote endpoint + local host |
+| `connect(host, port, bindPort, ...)` | remote endpoint + local port |
+| `connect(host, port, bindHost, bindPort, ...)` | remote endpoint + full local bind endpoint |
 
-This is one of the first important moments where the reader sees that SNode.C is teaching good socket semantics, not hiding them.
+This table is more important than the exact overload count.
 
-### The convenience `listen(...)` overloads reveal the teaching model
+It shows the architectural idea:
 
-The current IPv4 and IPv6 stream server wrappers are extremely informative here.
+> Easy-looking calls set configuration and then use the same underlying role machinery.
 
-For IPv4, the live convenience overloads include forms such as:
+### What stays the same
 
-- `listen(uint16_t port, ...)`
-- `listen(uint16_t port, int backlog, ...)`
-- `listen(const std::string& ipOrHostname, uint16_t port, ...)`
-- `listen(const std::string& ipOrHostname, uint16_t port, int backlog, ...)` 
+Moving from IPv4 to IPv6 should not feel like changing the application architecture.
 
-For IPv6, the same conceptual overloads exist with the same overall structure. 
+The stable core remains the same.
 
-The most important thing is not the overload count itself.
+| Aspect | IPv4 | IPv6 | Teaching point |
+|---|---|---|---|
+| Server role | `SocketServer` | `SocketServer` | role model stays |
+| Client role | `SocketClient` | `SocketClient` | role model stays |
+| Connection object | `SocketConnection` | `SocketConnection` | concrete peer relationship stays |
+| Context factory | same pattern | same pattern | context creation transfers |
+| Protocol context | same class can often be used | same class can often be used | protocol logic transfers |
+| Runtime | same event-driven model | same event-driven model | runtime understanding transfers |
+| Status callback | `SocketAddress`, `State` | `SocketAddress`, `State` | outer role status model stays |
+| Lifecycle callbacks | connection callbacks | connection callbacks | connection lifecycle model stays |
 
-The most important thing is what these functions actually do.
+This is the main transfer lesson.
 
-They set fields on the configuration object:
+If the application protocol is written in a `SocketContext`, it does not automatically become an "IPv4 protocol" or an "IPv6 protocol." It is application behavior carried over a lower communication family.
 
-- local host,
-- local port,
-- backlog,
+What changes is the lower family and therefore the endpoint representation, bind/connect configuration, and deployment environment.
 
-and then call the parameterless `listen(onStatus)` path.
+What often remains stable is the protocol class, the factory structure, the connection lifecycle, the runtime, and the overall server/client model.
 
-That is a major teaching point.
+#### Runtime and role model
 
-The reader should understand this as:
+The runtime is not replaced when the network family changes.
 
-> IPv4 and IPv6 convenience APIs are readable shorthands for the same underlying instance-configuration model.
+An IPv4 server and an IPv6 server still participate in the same kind of event-driven runtime. They still register communication intent. They still produce connection objects. They still attach contexts through factories.
 
-This is one of the cleanest examples in the framework of architecture showing through the surface API.
+That is why IPv4 and IPv6 are such good teaching companions: they let the reader see that the runtime and role model are stronger than one address family.
 
-### The convenience `connect(...)` overloads tell the same story
+#### Factory, context, and protocol logic
 
-The live IPv4 and IPv6 client wrappers mirror the server-side idea.
+The factory/context pattern also transfers.
 
-For IPv4, the current wrapper supports forms such as:
+A simple echo protocol implemented as a `SocketContext` can often be used with both IPv4 and IPv6 roles. The context does not need to care whether the peer endpoint was represented by an IPv4 or IPv6 address unless the application protocol itself wants to inspect or display that address.
 
-- `connect(host, port, ...)`
-- `connect(host, port, bindHost, ...)`
-- `connect(host, port, bindPort, ...)`
-- `connect(host, port, bindHost, bindPort, ...)` 
+This separation keeps protocol logic from being unnecessarily tied to one lower family.
 
-For IPv6, the same conceptual forms are present. 
+#### Status and lifecycle callbacks
 
-And again, these are not alternate models of connection.
+Chapter 9 distinguished status callbacks from connection lifecycle callbacks.
 
-They are configuration-setting fronts for the general connect path.
+That distinction still applies here.
 
-This is one of the reasons it makes sense to teach IPv4 and IPv6 before more exotic families.
+A `listen(...)` or `connect(...)` status callback reports outer role status.
 
-The reader can see a very stable connection story:
+Lifecycle callbacks observe concrete connections.
 
-- remote host and port define the peer,
-- optional local bind information can refine the local side,
-- the status callback reports the outer result,
-- and the rest of the lifecycle continues through the runtime as usual.
+Context callbacks implement protocol behavior.
 
-### Why IPv4 is still the easiest first concrete example
+Moving from IPv4 to IPv6 does not collapse those callback layers. The lower-family namespace changes, but the callback model remains the same.
 
-Although this chapter teaches IPv4 and IPv6 together, IPv4 remains the easiest first concrete example.
+### What changes
+
+The stable structure does not mean IPv4 and IPv6 are identical.
+
+They are not.
+
+The chapter should teach the difference calmly and precisely.
+
+#### Namespace and address family
+
+The most visible code change is the namespace:
+
+```text
+net::in
+  -> IPv4
+
+net::in6
+  -> IPv6
+```
+
+This is not cosmetic. It tells the reader that the lower communication family has changed.
+
+The address class changes too:
+
+```cpp
+net::in::SocketAddress
+net::in6::SocketAddress
+```
+
+Both are host-plus-port address classes, but they belong to different endpoint families.
+
+#### Textual address form and wildcard form
+
+The textual address form changes.
+
+IPv4 examples often use addresses such as:
+
+```text
+127.0.0.1
+0.0.0.0
+```
+
+IPv6 examples often use addresses such as:
+
+```text
+::1
+::
+```
+
+The wildcard form also changes:
+
+| Family | Wildcard host | Wildcard port |
+|---|---|---|
+| IPv4 | `0.0.0.0` | `0` |
+| IPv6 | `::` | `0` |
+
+Chapter 8 already explained address semantics in detail. Here the important point is simply that the wildcard idea transfers, but its concrete family representation changes.
+
+The reader should not think:
+
+```text
+IPv6 is just IPv4 with longer text.
+```
+
+IPv6 has its own address family and its own operational questions, even though the SNode.C API is intentionally parallel.
+
+#### Local and remote configuration
+
+The convenience overloads also make local/remote roles visible.
+
+For a server, the most important early configuration is local:
+
+```text
+local host
+local port
+backlog
+```
+
+For a client, the most important early configuration is remote:
+
+```text
+remote host
+remote port
+```
+
+and, optionally:
+
+```text
+local bind host
+local bind port
+```
+
+This directly continues Chapter 8 and Chapter 9.
+
+Chapter 8 explained what endpoint identity means.
+
+Chapter 9 explained how servers and clients use endpoint identity.
+
+Chapter 10 shows that IPv4 and IPv6 use the same local/remote role distinction with different address-family semantics.
+
+#### IPv6-only, IPv4-mapped, and dual-stack thinking
+
+IPv6 introduces one additional teaching point: deployment can involve IPv6-only behavior, IPv4-mapped IPv6 addresses, or platform-specific dual-stack behavior.
+
+This topic should not overwhelm the first example.
+
+But it should not be hidden either.
+
+The reader should understand that an IPv6 endpoint is not only about writing a different address string. It may also raise configuration and platform questions about whether IPv4 traffic is intentionally included, excluded, or represented through IPv4-mapped IPv6 addresses.
+
+That is one reason SNode.C keeps IPv6 as its own family instead of treating it as an overloaded IPv4 mode.
+
+### Teaching sequence
+
+A good teaching sequence should make transfer visible without overwhelming the reader.
+
+For this book, the best sequence is:
+
+1. show a minimal IPv4 legacy pair,
+2. show the corresponding IPv6 legacy pair,
+3. point out what changed in code,
+4. point out what did not change in architecture,
+5. later revisit the same comparison under TLS.
+
+This sequence keeps the lower-family comparison sharp.
+
+It also prepares later chapters: after IPv4 and IPv6, Unix domain sockets and Bluetooth can be introduced as more different endpoint families while the server/client/connection model remains familiar.
+
+#### Start with IPv4
+
+IPv4 remains the easiest first concrete example for many readers.
 
 That is not because it is more important.
 
-It is because its textual representation and everyday expectations are simpler for many readers.
+It is because its notation and everyday expectations are familiar.
 
-A first minimal server often looks like this in spirit:
+A minimal IPv4 server may look like this in outline:
 
 ```cpp
 using EchoServer4 = net::in::stream::legacy::SocketServer<MyFactory>;
@@ -210,7 +371,7 @@ EchoServer4 server("echo4");
 server.listen(8080, 5, onStatus);
 ```
 
-and the matching client like this:
+The matching client may look like this:
 
 ```cpp
 using EchoClient4 = net::in::stream::legacy::SocketClient<MyFactory>;
@@ -219,232 +380,119 @@ EchoClient4 client("echo4");
 client.connect("localhost", 8080, onStatus);
 ```
 
-This is a teaching sweet spot.
+This is a good first concrete path because the reader sees host plus port, server plus client, status callback, and runtime integration without yet needing to deal with IPv6 notation or dual-stack questions.
 
-The reader sees host plus port, server plus client, status plus runtime, but without yet having to think about the distinct psychological hurdles of IPv6 textual notation.
+#### Move immediately to IPv6
 
-### Why IPv6 should follow immediately after IPv4
+IPv6 should follow soon after the first stable IPv4 picture.
 
-If a book waits too long before introducing IPv6, readers unconsciously begin to think of IPv4 as the “real” case and everything else as special handling.
+If IPv6 appears too late, readers may start to think of IPv4 as the normal case and IPv6 as an advanced appendix. That would be the wrong lesson for SNode.C.
 
-That would be a mistake in a book about SNode.C.
+The IPv6 version should feel deliberately close:
 
-Because the live API is so parallel between the two families, the right teaching move is to introduce IPv6 almost immediately after the first stable IPv4 picture.
+```cpp
+using EchoServer6 = net::in6::stream::legacy::SocketServer<MyFactory>;
 
-This helps the reader notice the correct pattern:
+EchoServer6 server("echo6");
+server.listen(8080, 5, onStatus);
+```
 
-- the framework shape remains stable,
-- the lower-family semantics shift,
-- and the API remains intentionally familiar.
+and:
 
-This is a much better lesson than teaching IPv4 in depth and then later treating IPv6 as an appendix.
+```cpp
+using EchoClient6 = net::in6::stream::legacy::SocketClient<MyFactory>;
 
-### The first true difference: textual and conceptual address form
+EchoClient6 client("echo6");
+client.connect("::1", 8080, onStatus);
+```
 
-Once the reader has absorbed the structural symmetry, the next step is to become honest about the differences.
+The teaching moment is the comparison:
 
-The first difference is the simplest one:
+```text
+net::in   -> net::in6
+localhost -> ::1 or another IPv6-capable host name/address
+```
 
-IPv4 and IPv6 do not merely differ by “using different numbers.”
+The outer structure remains stable.
 
-They carry different address forms, different wildcard forms, and sometimes different operational assumptions.
+#### Compare what changed and what did not
 
-That means a reader should not think:
+After the IPv4 and IPv6 examples are shown side by side, the reader should be asked to compare them.
 
-> IPv6 is just IPv4 with longer text.
+What changed?
 
-The framework does not make that mistake.
+- the network-family namespace,
+- the address class,
+- address text,
+- wildcard representation,
+- possible IPv6-specific deployment questions.
 
-It gives IPv4 and IPv6 separate namespaces and separate address classes, even though the high-level usage pattern stays intentionally close.
+What did not change?
 
-That is exactly the right balance.
+- server role,
+- client role,
+- context factory,
+- context class shape,
+- runtime startup,
+- status callback model,
+- connection lifecycle model,
+- layered reading of the type name.
 
-### The second true difference: dual-stack thinking
+This comparison is the real teaching result.
 
-A major practical teaching point enters with IPv6.
+The goal is not only to teach IPv4 and IPv6. The goal is to teach controlled variation across lower communication families.
 
-The current README explicitly notes that SNode.C supports IPv6 in both single- and dual-stack forms, and the configuration documentation also calls out an `ipv6-only` option for IPv6 server and client instances. 
+### Same and different at a glance
 
-This is the moment where the book should gently slow down.
+The following table summarizes the chapter.
 
-Dual-stack behavior is one of those topics that often confuses readers when it is postponed until debugging time.
+| Aspect | IPv4 | IPv6 | Teaching point |
+|---|---|---|---|
+| Namespace | `net::in` | `net::in6` | lower family changes |
+| Address class | `net::in::SocketAddress` | `net::in6::SocketAddress` | family-specific endpoint identity |
+| Address shape | host + port | host + port | interface is parallel |
+| Wildcard host | `0.0.0.0` | `::` | representation differs |
+| Server type | `SocketServer` | `SocketServer` | role model stays |
+| Client type | `SocketClient` | `SocketClient` | role model stays |
+| Protocol context | same class often possible | same class often possible | protocol logic transfers |
+| Convenience API | sets config, delegates | sets config, delegates | easy API and configured API are one model |
+| Extra concern | simpler first case | IPv6-only / IPv4-mapped / dual-stack questions | deployment semantics differ |
 
-So the conceptual lesson should be stated early:
+This table should be read with Chapters 8 and 9 in mind.
 
-> An IPv6 endpoint is not only about IPv6 text syntax. It may also raise the question of whether one socket should handle only IPv6 or both IPv6 and IPv4, depending on OS behavior and configuration.
+Chapter 8 explains the address row.
 
-That is one of the reasons IPv6 deserves its own family and not just an overloaded IPv4 mode.
+Chapter 9 explains the role and connection rows.
 
-### Same pattern, different deployment instincts
+This chapter shows why IPv4 and IPv6 are the first concrete comparison pair.
 
-Another important teaching distinction is not in the API itself but in how developers tend to think when deploying.
+### What to remember
 
-With IPv4, many readers instinctively think in terms of:
+Remember:
 
-- localhost testing,
-- private LAN addresses,
-- simple externally reachable services.
-
-With IPv6, the same reader should be encouraged to think more explicitly about:
-
-- family selection,
-- wildcard meaning,
-- whether the instance is intended to be IPv6-only,
-- and how address resolution may behave.
-
-SNode.C’s design supports both, but the book must help the reader bring the right questions to each family.
-
-### Why both families still use the same protocol logic
-
-At this point, the most important transfer lesson should be stated directly.
-
-If you write a protocol in a `SocketContext`, that protocol does not suddenly become an “IPv4 protocol” or an “IPv6 protocol.”
-
-What changes is the lower communication family and therefore:
-
-- address representation,
-- bind/connect configuration,
-- and some environmental behavior.
-
-What often remains the same is:
-
-- the context class,
-- the factory structure,
-- the event-driven lifecycle,
-- the outer instance role,
-- the status-callback model,
-- and the connection abstraction.
-
-This is the real reason IPv4 and IPv6 are the primary teaching path.
-
-They let the reader feel this transfer very clearly without needing to jump into a wholly different kind of endpoint identity such as a Unix path or Bluetooth address.
-
-### A helpful teaching sequence for examples
-
-For this book, the best sequence is not to write one enormous dual-family example immediately.
-
-A better sequence is:
-
-1. show a minimal IPv4 legacy pair,
-2. show the corresponding IPv6 legacy pair,
-3. point out what changed in code,
-4. point out what did **not** change in architecture,
-5. then revisit the two again later under TLS.
-
-This sequence keeps the lower-family comparison sharp without overwhelming the reader.
-
-### A small but useful lesson from the live wrappers
-
-The live wrappers make another nice teaching point visible.
-
-Because the convenience overloads directly set fields such as `Local::setPort(...)`, `Local::setHost(...)`, `Remote::setHost(...)`, and `Remote::setPort(...)`, the reader can see that SNode.C thinks in terms of **local** and **remote** address roles even for the simplest IP examples.    
-
-That is another reason to teach IP families first.
-
-The local/remote distinction is easiest to internalize when the endpoint identity is still the familiar host-plus-port shape.
-
-### What changes when we move from IPv4 to IPv6 in code
-
-A reader often wants a direct answer to this question.
-
-In a typical minimal SNode.C teaching example, the code-level changes from IPv4 to IPv6 are often surprisingly small.
-
-Usually they involve:
-
-- changing the family namespace from `net::in` to `net::in6`,
-- using the IPv6 `SocketAddress` type,
-- adjusting literal host names or addresses as needed,
-- and possibly considering IPv6-only versus dual-stack configuration.
-
-That is intentionally modest.
-
-The framework is trying to preserve architectural transfer, not force needless rewrites.
-
-### What does **not** change when we move from IPv4 to IPv6
-
-This question is even more important.
-
-In the normal teaching path, the following do **not** fundamentally change:
-
-- how the runtime is initialized,
-- how the event loop is started,
-- what a server or client instance is,
-- what a context factory is,
-- what a context does,
-- how connection lifecycle callbacks fit in,
-- how status callbacks fit in,
-- how the layered type names are read.
-
-This stable core is the real lesson.
-
-If the reader finishes this chapter with only one durable insight, it should be this one.
-
-### A note about learning order and confidence
-
-There is a psychological reason to keep IPv4 and IPv6 together but not identical.
-
-If the book presents IPv6 as if it were mysterious and special, readers become nervous.
-
-If the book presents IPv6 as if it were literally no different from IPv4, readers become overconfident and later confused.
-
-The correct teaching tone is calm and precise:
-
-- the two families are close enough that transfer should feel natural,
-- but different enough that the family still matters.
-
-That is exactly the kind of balance SNode.C’s API encourages.
-
-### A subtle live-code note
-
-There is one small reason this chapter is especially worth grounding in the current repository.
-
-The live IPv4 and IPv6 stream wrappers are almost exact mirrors, but not mechanically identical in every line. That is a useful reminder for advanced readers: always treat the current source as the final authority for exact overload behavior.
-
-For the book’s teaching path, however, the important truth remains unchanged:
-
-the two families are architecturally parallel enough to serve as the best primary comparison pair in the framework.
-
-### Common misunderstandings about IPv4 and IPv6 in SNode.C
-
-It helps to clear away a few misunderstandings explicitly.
-
-#### Misunderstanding 1: “IPv4 is the normal case and IPv6 is an advanced variant.”
-
-Corrected view: both are first-class families in the framework, and they should be learned as parallel primary cases.
-
-#### Misunderstanding 2: “Moving from IPv4 to IPv6 requires a new application architecture.”
-
-Corrected view: in SNode.C, the instance/factory/context/runtime pattern remains the same; the lower-family semantics change.
-
-#### Misunderstanding 3: “Convenience overloads are a separate API model.”
-
-Corrected view: they are readable fronts for the same underlying instance configuration model.
-
-#### Misunderstanding 4: “IPv6 is just IPv4 with longer addresses.”
-
-Corrected view: IPv6 has its own address family, wildcard semantics, and dual-stack questions, even though the high-level API remains intentionally similar.
-
-#### Misunderstanding 5: “Once I understand host and port, I understand the whole story.”
-
-Corrected view: host and port are only the visible tip; status reporting, local/remote roles, wildcarding, and family selection still matter.
+- IPv4 and IPv6 are the primary teaching pair because they are familiar and structurally parallel.
+- IPv4 is not the only "normal" case; IPv6 is also a first-class lower communication family.
+- The visible namespace change is `net::in` to `net::in6`.
+- Both families use a host-plus-port address shape.
+- Their wildcard forms differ: `0.0.0.0` for IPv4 and `::` for IPv6.
+- The server/client/factory/context/runtime model stays the same.
+- The same protocol context can often be used across both families.
+- Convenience `listen(...)` and `connect(...)` overloads set configuration and delegate to the general path.
+- IPv6 adds questions around IPv6-only use, IPv4-mapped addresses, and dual-stack behavior.
+- The point of the comparison is controlled variation: same architecture, different lower-family semantics.
 
 ### Closing perspective
 
-IPv4 and IPv6 are the best primary teaching path in SNode.C because they let the reader learn the right lesson at the right level.
+Chapter 9 established the general server/client/connection model.
 
-They are similar enough to make transfer visible. They are different enough to keep the network family concept honest. And the current repository’s live wrappers make that teaching strategy especially strong, because their convenience APIs are structurally parallel and transparently tied to the same configuration model.
+This chapter specialized that model through IPv4 and IPv6.
 
-This is exactly the kind of chapter that should strengthen confidence.
+The next chapter changes the lower-family assumption more strongly.
 
-The reader should leave it thinking:
+Unix domain sockets keep the same broad SNode.C role model, but endpoint identity is no longer host plus port. It becomes local socket-path identity.
 
-- I understand why IPv4 is the easiest first concrete example.
-- I understand why IPv6 should follow immediately.
-- I understand what changes between them.
-- And most importantly, I understand what does **not** change.
+That makes Unix domain sockets the right next step.
 
-That is the right preparation for the next two family chapters.
+The reader can now ask:
 
-Once IPv4 and IPv6 are secure in the mind, the reader is ready to see just how far the same framework model extends when endpoint identity is no longer host-plus-port at all.
-
-That is where Unix domain sockets come next.
+> What happens when the server/client/connection model remains familiar, but the network-layer address is no longer internet-shaped?
