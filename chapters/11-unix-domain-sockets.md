@@ -400,7 +400,7 @@ That is intentional for architectural continuity.
 
 Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
 
-The build also contains a `net-un-dgram` component. That is useful to know, but it is not the focus here. Datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8-12.
+The build also contains a `net-un-dgram` component. That is useful to know, but it is not the focus here. Datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8–12.
 
 ### Preparing the Bluetooth shift
 
