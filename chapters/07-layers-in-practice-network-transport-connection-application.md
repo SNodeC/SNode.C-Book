@@ -442,6 +442,36 @@ In SNode.C, it does.
 
 The `src` build adds major framework regions such as `core`, `net`, `web`, `express`, `database`, `iot`, and `apps`. The supported component list includes core stream components, concrete network stream components, HTTP, Express, WebSocket, MQTT, and MQTT-over-WebSocket components.
 
+A small example makes the relationship visible:
+
+```text
+C++ namespace / type path:
+net::in::stream::legacy
+
+CMake component name:
+net-in-stream-legacy
+
+Meaning:
+network family: IPv4 / in
+transport form: stream
+connection handling: legacy
+```
+
+The same pattern also appears in the TLS variant:
+
+```text
+C++ namespace / type path:
+net::in::stream::tls
+
+CMake component name:
+net-in-stream-tls
+
+Meaning:
+network family: IPv4 / in
+transport form: stream
+connection handling: TLS
+```
+
 This matters because the layer model is not only a diagram in prose.
 
 It affects how code is organized, how components are built, and how external projects link against the framework.
