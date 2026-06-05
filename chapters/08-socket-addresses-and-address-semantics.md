@@ -31,13 +31,9 @@ SNode.C has a common template base:
 net::SocketAddress<SockAddrT>
 ```
 
-That base already tells us something important.
+That base already tells us something important: a SNode.C address is not just a string plus a number. It is backed by a concrete socket-address structure and length, and it still participates in the framework's broader socket-address abstraction.
 
-A SNode.C address is not just a string plus a number. It is backed by a concrete socket-address structure and length, and it still participates in the framework's broader socket-address abstraction.
-
-The shared base gives the framework a common pattern.
-
-The family-specific classes preserve the differences.
+The shared base gives the framework a common pattern, while the family-specific classes preserve the differences.
 
 That is exactly the right architectural compromise:
 
@@ -55,9 +51,7 @@ The concrete address families are:
 | Bluetooth RFCOMM | `net::rc::SocketAddress` | Bluetooth address plus channel |
 | Bluetooth L2CAP | `net::l2::SocketAddress` | Bluetooth address plus PSM |
 
-This table is the concrete continuation of Chapter 7.
-
-Chapter 7 said that the network layer chooses the endpoint family. This table shows how that choice becomes C++ API.
+This table is the concrete continuation of Chapter 7: the network layer chooses the endpoint family, and the table shows how that choice becomes C++ API.
 
 #### IPv4: host plus port
 
@@ -83,7 +77,7 @@ Its conceptual surface includes:
 
 This is richer than a naive "string plus number" wrapper.
 
-The default IPv4 host is:
+Its default host is:
 
 ```text
 0.0.0.0
@@ -109,7 +103,7 @@ A server-side wildcard port binding might be expressed as:
 net::in::SocketAddress local(8080);
 ```
 
-The important point is not to memorize every constructor. The important point is to understand what the constructor expresses about endpoint identity.
+The point is not to memorize every constructor, but to understand what each constructor expresses about endpoint identity.
 
 #### IPv6: similar shape, different semantics
 
@@ -133,9 +127,7 @@ It has a surface very similar to the IPv4 class:
 - `useNext()`,
 - and string rendering.
 
-That similarity is useful. It teaches the reader that IPv4 and IPv6 share a host-plus-port shape in SNode.C.
-
-But similar API does not mean identical operational semantics.
+That similarity is useful because it teaches the reader that IPv4 and IPv6 share a host-plus-port shape in SNode.C. But similar API does not mean identical operational semantics.
 
 The default IPv6 host is:
 
@@ -157,11 +149,7 @@ A concrete IPv6 endpoint might look like:
 net::in6::SocketAddress remote("::1", 8080);
 ```
 
-The reader should resist two opposite mistakes.
-
-The first mistake is to treat IPv6 as completely unrelated to IPv4.
-
-The second mistake is to treat IPv6 as merely IPv4 with longer strings.
+The reader should resist two opposite mistakes: treating IPv6 as completely unrelated to IPv4, or treating it as merely IPv4 with longer strings.
 
 The better view is:
 
@@ -194,11 +182,9 @@ net::un::SocketAddress local("/tmp/snodec.sock");
 
 Default construction uses an empty path string. In SNode.C's address model, that empty string acts as the wildcard indicator for Unix domain socket addressing.
 
-This is conceptually different from IP addressing.
+This is conceptually different from IP addressing. There is no remote host plus port pair; there is a local operating-system endpoint identity. A Unix domain socket is not just another IP socket with different syntax.
 
-There is no remote host plus port pair. There is a local operating-system endpoint identity. A Unix domain socket is not just another IP socket with different syntax.
-
-That is why Unix domain sockets are pedagogically useful: they break the habit of thinking that every network endpoint is internet-shaped.
+That makes Unix domain sockets pedagogically useful: they break the habit of thinking that every network endpoint is internet-shaped.
 
 #### RFCOMM: Bluetooth address plus channel
 
@@ -220,9 +206,7 @@ Its conceptual surface includes:
 - `setChannel(...)` and `getChannel()`,
 - and string rendering.
 
-An RFCOMM endpoint is not host plus port.
-
-It is better understood as:
+An RFCOMM endpoint is not host plus port. It is better understood as:
 
 ```text
 Bluetooth device address
@@ -288,11 +272,7 @@ Default construction again uses the wildcard Bluetooth address conceptually repr
 
 with PSM `0` until a more specific PSM is configured.
 
-RFCOMM and L2CAP both belong to the Bluetooth world, but their service selectors are not the same thing.
-
-RFCOMM uses a channel.
-
-L2CAP uses a PSM.
+RFCOMM and L2CAP both belong to the Bluetooth world, but their service selectors are not the same thing: RFCOMM uses a channel, while L2CAP uses a PSM.
 
 That is why SNode.C gives them distinct address classes instead of hiding both behind one ambiguous Bluetooth endpoint type. Similar Bluetooth vocabulary does not mean identical endpoint semantics.
 
@@ -304,11 +284,9 @@ These patterns should be learned as concepts, not as a list of signatures.
 
 #### Default construction and wildcard meaning
 
-Default construction is meaningful.
+Default construction is meaningful; it is not just uninitialized data.
 
-It is not just uninitialized data.
-
-Across the supported families, default construction expresses a wildcard-like or deferred endpoint identity:
+Across the supported families, it expresses a wildcard-like or deferred endpoint identity:
 
 | Family | Default / wildcard shape |
 |---|---|
@@ -413,9 +391,7 @@ Once this is understood, address classes stop feeling like static data container
 
 ### Address semantics and the layer model
 
-This chapter is the concrete continuation of Chapter 7.
-
-The address classes are where the network layer becomes tangible.
+This chapter is the concrete continuation of Chapter 7: the address classes are where the network layer becomes tangible.
 
 They show:
 
@@ -440,9 +416,7 @@ Their address classes expose resolution-oriented API pieces:
 - `useNext()`,
 - canonical-name access.
 
-This reflects the fact that internet-style host names may resolve to more than one candidate endpoint.
-
-A name such as:
+This reflects the fact that internet-style host names may resolve to more than one candidate endpoint. A name such as:
 
 ```text
 example.org
@@ -497,9 +471,7 @@ Chapter 7 taught the communication layer stack.
 
 This chapter made the network layer concrete by studying endpoint identity.
 
-That prepares the next step.
-
-Once we understand what an address means, we can return to server and client roles with better precision. `listen(...)` and `connect(...)` do not merely receive arbitrary strings or numbers. They receive family-specific endpoint descriptions.
+That prepares the next step. Once we understand what an address means, we can return to server and client roles with better precision. `listen(...)` and `connect(...)` do not merely receive arbitrary strings or numbers; they receive family-specific endpoint descriptions.
 
 A server binds to an endpoint identity.
 
