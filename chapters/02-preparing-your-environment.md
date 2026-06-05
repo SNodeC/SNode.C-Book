@@ -62,9 +62,7 @@ Fourth, it must allow us to **compile small applications against installed SNode
 
 Fifth, it should make optional lower layers visible, especially Bluetooth RFCOMM and Bluetooth L2CAP when BlueZ development files are available.
 
-This last point is important.
-
-Bluetooth is not treated as a marginal appendix in this book. It is part of the lower-layer family discussion together with IPv4, IPv6, and Unix domain sockets. A first environment does not have to use Bluetooth immediately, but it should be prepared in a way that does not hide it accidentally.
+This last point is important. Bluetooth does not have to be used immediately, but the environment should not hide it accidentally.
 
 ### Compiler and CMake expectations
 
