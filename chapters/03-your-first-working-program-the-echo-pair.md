@@ -29,7 +29,7 @@ We therefore start with the conceptual minimum:
 - one echo server,
 - one echo client.
 
-Later chapters will show how the very same structure extends outward to IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, TLS, HTTP, WebSocket, and MQTT.
+Later chapters will show how the same structure extends to other lower layers, security modes, and higher-level protocols.
 
 The important point is not that echo is useful as an application. The important point is that echo is a clear first window into the framework.
 
