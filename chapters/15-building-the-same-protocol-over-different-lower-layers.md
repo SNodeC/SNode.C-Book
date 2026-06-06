@@ -28,7 +28,7 @@ endpoint configuration
   -> changes with the address family
 ```
 
-This is the transfer point of Part IV.
+This is where the separations from Chapters 13 and 14 become useful across lower families.
 
 The protocol does not become independent of all lower-layer reality. Address identity, deployment, platform support, and security assumptions still matter.
 
