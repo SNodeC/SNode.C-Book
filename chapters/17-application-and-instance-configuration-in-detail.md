@@ -1,254 +1,350 @@
 ## Application and Instance Configuration in Detail
-### Why this chapter follows the philosophy chapter
 
-Chapter 16 explained the idea behind SNode.C’s configuration system.
+### From configuration philosophy to configuration anatomy
 
-This chapter now becomes more concrete.
+Chapter 16 introduced configuration as one of the main ways an instance becomes a concrete communication role.
 
-If the previous chapter answered the question
+This chapter looks at the practical structure of that model.
 
-> Why is configuration a first-class architectural system in SNode.C?
+The core hierarchy is:
 
-then this chapter answers the question
+```text
+application
+  -> instance
+      -> section
+          -> option
+```
 
-> How is that system actually organized when I use it in practice?
+The application is the executable-level operational shell.
 
-That means we now move from philosophy to anatomy.
+An instance is one configured communication role inside that application.
 
-We will look at the configuration model in three nested levels:
+A section is one scoped part of that instance configuration.
 
-- application configuration,
-- instance configuration,
-- section configuration.
+An option is one concrete value inside such a scope.
 
-That three-level structure is one of the reasons the framework stays manageable even when applications become larger or run multiple communication roles in one process.
+This chapter follows that hierarchy.
 
-### The three nested scopes
+### The configuration hierarchy
 
-A practical way to understand SNode.C configuration is to imagine three concentric circles.
+The configuration model is easiest to read from the outside inward.
+
+| Scope | Addressed by | Typical concerns |
+|---|---|---|
+| application | executable-level options | config file, logging, daemonization, help, generated command line |
+| instance | named server/client instance | disabled state, role identity, section collection |
+| section | `local`, `remote`, `connection`, `socket`, `server`, `tls` | concrete endpoint or behavioral settings |
+| option | individual setting | host, port, timeout, retry, backlog, certificate path |
+
+This hierarchy is not only a way to organize documentation.
+
+It is the practical shape used by the framework.
+
+It appears in code, on the command line, and in configuration files.
 
 #### Application scope
 
-This is the scope of the executable as a whole.
+Application scope belongs to the executable as a whole.
 
-It includes concerns such as:
-
-- configuration file handling,
-- writing or showing current configuration,
-- daemonization,
-- logging,
-- help and command-line printing,
-- application-wide runtime behavior.
-
-#### Instance scope
-
-This is the scope of one named server or client instance.
-
-It includes concerns such as:
-
-- instance identity,
-- enable/disable state,
-- instance-specific role behavior,
-- the collection of sections that shape that role.
-
-#### Section scope
-
-This is the scope of a specific aspect of one instance.
+It contains concerns that are not specific to one network endpoint.
 
 Examples include:
 
-- `local`
-- `remote`
-- `connection`
-- `socket`
-- `server`
-- `tls`
-
-This layered structure is not cosmetic. It is the actual practical anatomy of the configuration model.
-
-### Application configuration: the outer operational shell
-
-The README’s current help examples make the application level very clear.
-
-At the application scope, options include things like:
-
-- config-file selection,
-- config-file writing,
-- killing a daemon,
+- selecting a configuration file,
+- writing a configuration file,
 - showing current configuration,
-- printing generated command lines,
-- version and help,
-- log level,
-- verbose level,
-- quiet mode,
-- log-file path,
+- printing a generated command line,
+- showing help and version information,
+- logging level and log-file handling,
 - daemonization,
 - user and group selection for daemonized runs.
 
-This tells us something important.
+These options form the operational envelope in which all configured communication roles live.
 
-Application configuration in SNode.C is not about network addresses directly.
+#### Instance scope
 
-It is about the **operational envelope** in which all configured instances live.
+Instance scope belongs to one named server or client instance.
 
-That is exactly the right boundary.
+It contains concerns such as:
 
-### Why application configuration stays above the instances
+- instance identity,
+- server/client role identity,
+- disabled state,
+- configurability,
+- and the set of sections that shape the role.
 
-It is useful to say this explicitly.
+An instance is therefore not just a C++ object with some fields.
 
-Application-level options should not be confused with instance-level communication behavior.
+In the configuration model, a named instance is an addressable communication role.
+
+#### Section scope
+
+Section scope belongs to one aspect of one instance.
+
+Common sections include:
+
+- `local`,
+- `remote`,
+- `connection`,
+- `socket`,
+- `server`,
+- `tls`.
+
+A section groups options by responsibility.
+
+The `local` section describes the local side.
+
+The `remote` section describes the peer side.
+
+The `connection` section describes established connection behavior.
+
+The `socket` section describes socket-level behavior.
+
+The `server` section describes server-role behavior.
+
+The `tls` section describes TLS-related connection-layer behavior.
+
+#### Same hierarchy in code, CLI, and files
+
+The same hierarchy appears in three views:
+
+| View | Example shape |
+|---|---|
+| C++ API | `instance.getConfig()->Local::setPort(8080)` |
+| command line | `app instance section --option value` |
+| configuration file | `instance.section.option = value` |
+
+The syntax changes.
+
+The hierarchy remains the same.
+
+That consistency is the main reason the detailed configuration model remains understandable.
+
+### Application configuration
+
+Application configuration shapes the operational shell of the executable.
+
+It should not be confused with the configuration of one communication role.
+
+Application-level options answer questions such as:
+
+- Which configuration file should be read?
+- Should a configuration file be written?
+- Should the current configuration be shown?
+- Should a generated command line be printed?
+- Should the application run as a daemon?
+- Which log level should be used?
+- Which log file should be used?
+- Should the process run under a specific user or group?
+- Should help or version information be displayed?
+
+These are not address-family questions.
+
+They do not say which port a server listens on or which peer a client connects to.
+
+They shape the executable as an operating program.
+
+#### Operational shell of the executable
+
+The application scope is above all instances.
+
+That boundary matters.
 
 For example:
 
-- log-file path is an application-level operational concern,
-- daemonization is an application-level operational concern,
-- config-file reading and writing are application-level operational concerns.
+| Application-level concern | Why it belongs at application scope |
+|---|---|
+| configuration-file path | it controls how the executable reads or writes configuration |
+| `--show-config` | it displays the current model |
+| generated command line | it describes how to reproduce the current configuration |
+| logging | it affects the executable's operational visibility |
+| daemonization | it affects process behavior |
+| user/group selection | it affects process permissions |
 
-By contrast:
+These settings are shared by the application process.
 
-- listening port,
-- remote host,
-- backlog,
-- retry behavior,
-- TLS certificates for a particular instance,
+They are not owned by one server or client role.
 
-are instance-facing or section-facing concerns.
+#### Persistent and non-persistent application options
 
-This separation is one of the reasons the framework’s command line remains intelligible.
+Application options can be persistent or non-persistent.
 
-### Instance configuration: the communication role itself
+Persistent options may be written into configuration files.
 
-At the next level down sits the instance.
+Non-persistent options affect the current run only.
 
-The current live `ConfigInstance` interface and implementation show that an instance has at least these important configuration-facing ideas:
+That distinction prevents operational commands from becoming durable configuration by accident.
 
-- an instance name,
-- a role (`SERVER` or `CLIENT`),
-- an explicit disabled state,
-- participation in the subcommand hierarchy,
-- integration with config display and command-line generation,
-- and destruction hooks.
+For example, a log level may be persistent.
 
-This already tells us how the framework thinks.
+A request to show help or write a configuration file is normally run-specific.
 
-An instance is not a random object with some fields.
+The distinction keeps the configuration file focused on lasting application behavior.
 
-It is a **named configurable role** inside the application.
+### Instance configuration
 
-That is why instance configuration sits at the center of the model.
+Instance configuration shapes one communication role.
 
-### Named instance identity in practice
+A named instance is where the configuration model becomes concrete.
 
-The instance name is one of the most important configuration facts in the whole framework.
+It has an identity, a role, optional disabled state, and a collection of sections.
 
-Why?
+#### Named configurable communication roles
 
-Because it is the thing that ties together:
+A named instance such as:
 
-- the C++ object,
-- the CLI subcommand path,
-- the config-file key prefix,
-- the help output,
-- the operational identity seen by the user.
+```cpp
+EchoServer echoServer("echo");
+```
 
-Once a reader understands this, named instances stop feeling like syntactic decoration.
+becomes addressable by the configuration system.
 
-They become what they really are:
+The name can appear:
 
-the main addressing mechanism of the configuration system.
+- in command-line help,
+- in command-line overrides,
+- in generated command lines,
+- in shown configuration,
+- and in configuration-file keys.
 
-### Disabling an instance is more important than it first looks
+That is why named instances matter.
 
-The current live implementation of `ConfigInstance` makes one subtle but very practical point visible.
+They connect the C++ object to the operational surface of the application.
 
-When an instance is disabled, required options are forced to become unrequired for that instance.
+#### Role identity: server or client
 
-This is excellent operational behavior.
+An instance also has role identity.
 
-It means a disabled instance can remain present in the application and in the configuration model without blocking startup just because some otherwise-required settings are absent.
+In the configuration model, that means an instance is constructed as a server role or a client role.
 
-This matters especially in:
+This is not merely descriptive text.
 
-- multi-instance applications,
-- deployments where only some carriers are active,
-- optional Bluetooth or TLS roles,
-- staged rollout scenarios,
-- local development where some instances are intentionally inactive.
+It influences how the instance appears in help output and how its configuration is interpreted.
 
-A weaker framework would make disablement clumsy here. SNode.C treats it as a real configuration state.
+A server role is normally shaped around listening and accepting.
 
-### Sections: the most important practical organizing device
+A client role is normally shaped around connecting.
 
-If instance identity is the main address of the configuration system, then sections are its main organizing device.
+Both can share the same broad hierarchy, but their most important sections differ.
 
-The current README shows this very clearly in help output and config examples.
+For a server, `local` is usually central.
 
-For a typical server instance, sections can include:
+For a client, `remote` is usually central.
 
-- `local`
-- `remote`
-- `connection`
-- `socket`
-- `server`
-- `tls`
+#### Anonymous versus named instances
 
-For a client instance, a similar but role-appropriate set exists.
+Chapter 16 distinguished anonymous and named instances.
 
-These sections are one of the best design choices in the framework because they group configuration by behavioral concern rather than by implementation accident.
+Chapter 17 mostly concerns named instances, because named instances are addressable from the command line and from configuration files.
 
-### `ConfigSection` confirms the section model structurally
+An anonymous instance may still be useful for an internal helper client or a temporary helper server.
 
-The live `ConfigSection` abstraction and its template implementation reinforce this beautifully.
+But once a communication role should be configured, disabled, persisted, inspected, or controlled from outside the source code, a named instance is usually the right model.
 
-A section is attached to a `ConfigInstance`, derives from the subcommand infrastructure, and constructs its description from the section type’s own name and description metadata.
+#### Disablement and requiredness
 
-This means sections are not only documented categories. They are actual structural nodes in the configuration hierarchy.
+Disablement is a first-class instance state.
 
-That is exactly why the help system, CLI nesting, and configuration-file key structure all align so naturally.
+It is not only a Boolean label.
 
-### The `local` section
+In SNode.C, disabling an instance also affects requiredness: an inactive role can remain present without blocking startup because required options for that disabled instance can be forced to become unrequired.
 
-The `local` section is one of the most important sections in the whole system.
+That is important for multi-instance programs.
 
-It describes the local side of the communication role.
+An executable may contain several possible communication roles, while only some of them are active in a particular deployment.
 
-Depending on the family, this may mean:
+The configuration can then express:
 
-- host and port,
-- path,
-- Bluetooth address and channel,
-- Bluetooth address and PSM.
+```text
+this role exists
+  -> but it is currently disabled
+```
 
-For a server instance, the `local` section is especially central because it usually describes the binding side of the server.
+That is cleaner than removing the role from the application or inventing separate ad hoc flags.
 
-For a client instance, it describes the local endpoint if that endpoint should be explicitly shaped instead of left wildcarded.
+### Section configuration
 
-This is one of the clearest examples of a section organizing real architectural meaning.
+Sections are the most important practical organizing device inside an instance.
 
-### The `remote` section
+A section is a structural scope.
 
-The `remote` section is the natural complement to `local`.
+It groups options that belong to one aspect of the communication role.
 
-It describes the peer side of the communication role.
+A compact overview is:
 
-For a client instance, this is often the most visibly important section because it answers the question:
+| Section | Main meaning |
+|---|---|
+| `local` | local endpoint or bind side |
+| `remote` | peer endpoint or connect side |
+| `connection` | behavior of established connections |
+| `socket` | socket-level behavior, retry, and reuse settings |
+| `server` | listen and accept behavior |
+| `tls` | TLS connection-layer configuration |
 
-> Where is the peer I want to connect to?
+Not every instance uses every section with the same importance.
 
-For a server instance, `remote` can still matter in the broader connection model even if it is not always configured as explicitly in the simplest listen scenarios.
+Some sections appear only for particular role and layer combinations.
 
-This section helps preserve one of the framework’s most important conceptual distinctions:
+The structure is shared, but the practical emphasis depends on the concrete instance.
 
-local side and remote side are not the same thing.
+#### The `local` section
 
-That remains true across all supported lower families.
+The `local` section describes the local side of the communication role.
 
-### The `connection` section
+For a server, it is usually the most important endpoint section because it describes where the server binds or listens.
 
-The `connection` section gathers options that shape the behavior of established peer relationships.
+For a client, it may describe an explicit local bind side if the application does not want to leave that side wildcarded.
 
-From the README’s current examples, this includes things like:
+The concrete fields depend on the lower family.
+
+| Lower family | Typical local fields |
+|---|---|
+| IPv4 / IPv6 | host and port |
+| Unix domain sockets | path |
+| RFCOMM | Bluetooth address and channel |
+| L2CAP | Bluetooth address and PSM |
+
+The idea is stable:
+
+```text
+local
+  -> this side of the connection
+```
+
+The concrete option names depend on the lower family.
+
+#### The `remote` section
+
+The `remote` section describes the peer side.
+
+For a client, it is usually central because it answers:
+
+```text
+Where should this client connect?
+```
+
+For example, an IPv4 client may need a remote host and port.
+
+A Unix-domain client may need a remote path.
+
+A Bluetooth client may need a Bluetooth address plus channel or PSM.
+
+For a server, remote-side information may be less prominent in simple listen scenarios.
+
+The important conceptual distinction still holds:
+
+```text
+local side
+  != remote side
+```
+
+That distinction remains useful across address families.
+
+#### The `connection` section
+
+The `connection` section describes behavior of established peer relationships.
+
+Typical concerns include:
 
 - read timeout,
 - write timeout,
@@ -256,277 +352,488 @@ From the README’s current examples, this includes things like:
 - write block size,
 - termination timeout.
 
-This is an excellent section boundary.
+These are not endpoint identity values.
 
-These settings are not primarily about address identity. They are not primarily about listen/connect activation. They are about the behavior of the connection once it exists.
+They apply after a connection exists.
 
-That makes the section easy to reason about.
+That makes the section boundary clear:
 
-### The `socket` section
+```text
+connection
+  -> behavior of the established connection
+```
 
-The `socket` section collects options that shape socket behavior more broadly.
+#### The `socket` section
 
-The README examples show options such as:
+The `socket` section describes socket-level behavior around creation, retry, and reuse.
 
-- reuse-address,
-- retry,
-- retry-on-fatal,
-- retry-timeout,
-- retry-tries,
-- retry-base,
-- retry-jitter,
-- retry-limit,
-- accept-timeout,
-- reuse-port,
-- and family-specific additions such as `ipv6-only` where applicable.
+Typical concerns include:
 
-This section is one of the clearest demonstrations that SNode.C treats operational behavior seriously.
+- address reuse,
+- retry behavior,
+- retry on fatal errors,
+- retry timeout,
+- retry attempts,
+- exponential backoff,
+- jitter,
+- retry limit,
+- role- or family-specific socket options.
 
-These are not afterthoughts.
+The exact set depends on the concrete instance.
 
-They are configuration-visible properties of the communication role.
+The section groups behavior that is closer to the socket and flow-control machinery than to the application protocol.
 
-### The `server` section
+#### The `server` section
 
-For server instances, the `server` section naturally collects server-role-specific options.
+The `server` section belongs to server-role behavior.
 
-The README examples show values such as:
+Typical concerns include:
 
 - backlog,
-- accepts-per-tick.
+- accepting behavior,
+- accept-per-tick style limits where supported.
 
-This is exactly the right place for such settings.
+These settings are not generic connection options.
 
-They are not generic connection settings. They are not address settings. They are not TLS settings.
+They are about the listening and accepting side of a server role.
 
-They belong to the listening/accepting behavior of the server role itself.
+That is why they belong in a server-specific section.
 
-Again, the section boundary reflects real behavioral responsibility.
+#### The `tls` section
 
-### The `tls` section
+The `tls` section belongs to TLS connection-layer configuration.
 
-Where TLS is present, the `tls` section provides one of the most important examples of the configuration model’s usefulness.
-
-The README shows that this section can carry settings such as:
+Typical examples include:
 
 - certificate chain,
 - certificate key,
-- certificate key password,
-- CA certificate,
-- CA certificate directory,
-- cipher list,
-- SSL/TLS options,
-- initialization and shutdown timeouts,
-- SNI-related settings.
+- CA certificate or directory,
+- cipher and option settings,
+- SNI-related settings,
+- TLS initialization or shutdown timeouts.
 
-This is a particularly strong example because TLS is not a minor tweak. It is a serious connection-layer specialization.
+TLS is not a minor socket flag.
 
-And yet the configuration system still handles it in the same structured section model.
+It is a connection-layer specialization.
 
-That is architectural consistency at work.
+Grouping TLS configuration under `tls` keeps that concern separate from endpoint identity, socket retry behavior, and application protocol behavior.
 
-### Section names reflect responsibility, not implementation internals
+Chapter 19 discusses TLS in depth.
 
-One of the most elegant things about these sections is that they are named in the language of responsibility.
+Here the important point is the section boundary.
 
-- `local`
-- `remote`
-- `connection`
-- `socket`
-- `server`
-- `tls`
+### Three views of the same model
 
-These are not low-level implementation-detail names.
+Chapter 16 established that SNode.C has three input paths into one model.
 
-They are conceptual names.
+Chapter 17 makes the practical consequence visible.
 
-That makes the configuration model much easier to teach.
+The same hierarchy can be read in code, on the command line, and in configuration files.
 
-A good technical book should point this out explicitly, because naming is one of the hidden reasons a framework either feels clear or muddy.
+#### C++ API view
 
-### Using configuration through the C++ API in detail
+In the C++ API, the hierarchy is visible through the configuration object and its section-qualified operations.
 
-The README already established the broad idea that instances expose configuration through `getConfig()`.
+Schematic examples are:
 
-This chapter adds a more practical reading habit.
+```cpp
+instance.getConfig()->Local::setPort(8080);
+instance.getConfig()->Remote::setHost("localhost");
+instance.getConfig()->Remote::setPort(8080);
+```
 
-When using the C++ API directly, think in the same section terms the CLI and config file use.
+`getConfig()` returns a pointer, so the examples use `->`.
 
-That means examples naturally take forms such as:
+The section qualification is useful when local and remote meaning must remain visible.
 
-- `getConfig()->Local::...`
-- `getConfig()->Remote::...`
-- socket-related setters,
-- server-related setters,
-- TLS-related setters.
+In server-side cases, a shorter form is also valid because there is no local/remote ambiguity:
 
-This is one of the reasons the current convenience wrappers are so educational: they are often visibly just filling the relevant parts of the same configuration object.
+```cpp
+instance.getConfig()->setPort(8080);
+```
 
-So even in code, the section model still helps you think clearly.
+The important habit is to think in sections even when the C++ syntax permits a shorter call.
 
-### Using configuration on the command line in detail
+#### Command-line view
 
-At the command-line level, the same hierarchy becomes visible textually.
+On the command line, the hierarchy becomes a path:
 
-The README examples show that the user progressively enters:
+```shell
+echoserver echo local --port 8080
+```
 
-- the application,
-- then the instance name,
-- then optionally a section,
-- then the options of that section.
+This can be read as:
 
-This means the command line is not a flat bag of flags.
+```text
+application: echoserver
+instance:    echo
+section:     local
+option:      port
+value:       8080
+```
 
-It is a path through the configuration hierarchy.
+The command line is therefore not just a flat collection of flags.
 
-That is one of the reasons the CLI is so readable once understood.
+It is a textual traversal of the configuration hierarchy.
 
-### Using configuration files in detail
+##### Command-line configuration as guided traversal
 
-At the configuration-file level, the same hierarchy becomes visible as dotted keys.
+The command-line interface is also a guided configuration surface.
 
-The README examples make this very explicit with keys such as:
+It can help the user discover the model step by step instead of requiring the full structure to be known in advance:
 
-- `echo.local.port = 8080`
-- `echo.remote.host = "localhost"`
-- `echo.remote.port = 8080`
+```shell
+echoserver --help
+echoserver echo --help
+echoserver echo local --help
+```
 
-This is one of the most satisfying parts of the framework.
+This mirrors the hierarchy:
 
-The same hierarchy appears in:
+```text
+application help
+  -> instance help
+      -> section help
+          -> option details
+```
 
-- object structure,
-- command-line nesting,
-- config-file keys.
+The command line can also print command-line representations of the current configuration.
 
-That level of consistency is rare, and it is one of the reasons SNode.C is so teachable.
+The `--command-line` option supports views such as `standard`, `required`, `full`, and `default`.
 
-### Required configuration and progressive disclosure
+Together with `--show-config` and `--write-config`, this makes the command line more than a parser: it becomes a way to inspect, reproduce, and persist the configuration of an application.
 
-The README’s examples of parameterless `listen()` and `connect()` for named instances show another excellent design feature.
+##### Guided errors for missing configuration
 
-When required configuration is missing, the framework reports the missing structure progressively:
+The same guided behavior appears when required configuration is missing.
 
-- application requires instance,
-- instance requires section,
-- section requires option.
+A parameterless `listen()` or `connect()` can fail in a way that points the user back into the hierarchy:
 
-This is more than nice error handling.
+```text
+application
+  -> instance
+      -> section
+          -> required option
+```
 
-It is a way of teaching the hierarchy at runtime.
+A compact server-side session shows the idea.
 
-A user who starts with too little configuration is guided toward the correct structure step by step.
+Here the executable is `echoserver` and the named server instance is `echo`:
 
-That is exactly what a well-designed configuration system should do.
+```shell
+$ echoserver
+[RequiresError] echoserver requires echo
 
-### Application-level persistence versus instance-level persistence
+$ echoserver echo
+[RequiresError] echoserver:echo requires local
 
-Another helpful detail from the README is the distinction between persistent and non-persistent options.
+$ echoserver echo local
+[RequiresError] echoserver:echo:local requires --port
 
-This becomes especially useful in a detailed chapter because it prevents a common misunderstanding.
+$ echoserver echo local --port
+[ArgumentMismatch] --port: 1 required port:UINT in [0 - 65535] missing
 
-Not everything that can be specified on the command line is necessarily something that should be written into the long-term configuration of the application.
+$ echoserver echo local --port 8080
+2026-06-06 18:04:05 0000000000001 echo: listening on '0.0.0.0:8080 (0.0.0.0)'
+```
 
-SNode.C makes this distinction visible.
+The exact timestamp and tick counter are run-specific.
 
-That helps the user understand what belongs in the durable description of a communication role and what belongs only to one execution context.
+The important point is the direction.
 
-### Default values and commented config output
+The CLI leads from application, to instance, to section, to option.
 
-The README’s generated config output shows another subtle but excellent design choice.
+A named client instance follows the same idea, but the required section is usually `remote` rather than `local`.
 
-Options that currently have default values — including values configured in code — appear commented in the generated configuration display.
+The CLI therefore teaches the structure while it reports the missing values.
 
-This is a very helpful operational feature.
+##### Startup guidance, not arbitrary live reconfiguration
 
-It lets the user see:
+This command-line guidance belongs to startup and run configuration.
 
-- what the framework knows,
-- what the defaults are,
-- what has been overridden,
-- and what could be persisted explicitly.
+It should not be confused with arbitrary post-start interactive reconfiguration of instances created later at runtime.
 
-That makes configuration files not only editable but educational.
+As Chapter 16 explained, command-line and file configuration apply to startup-known instances. Runtime-created instances must be shaped through the C++ API.
 
-### Multi-instance applications become realistic here
+That boundary keeps the model clear:
 
-This chapter is also the point where the reader should start seeing how well the configuration model supports multi-instance applications.
+```text
+startup-known roles
+  -> guided by code, command line, and configuration files
 
-Because each instance has:
+runtime-created roles
+  -> configured by code
+```
+
+#### Configuration-file view
+
+In a configuration file, the same hierarchy becomes a dotted key:
+
+```ini
+echo.local.port = 8080
+echo.remote.host = "localhost"
+echo.remote.port = 8080
+```
+
+The dotted key is the file representation of:
+
+```text
+instance
+  -> section
+      -> option
+```
+
+The syntax is different from the command line.
+
+The model is the same.
+
+### Required values and progressive disclosure
+
+Parameterless `listen()` and `connect()` rely on configuration that is already present.
+
+If required configuration is missing, the error path can reveal the missing part of the hierarchy.
+
+For a server, a missing port can be understood as:
+
+```text
+application
+  -> instance
+      -> local
+          -> port
+```
+
+For a client, missing peer information can be understood as:
+
+```text
+application
+  -> instance
+      -> remote
+          -> host / port
+```
+
+This is more than error reporting.
+
+It reinforces the structure of the configuration model.
+
+#### Parameterless activation
+
+A parameterless call such as:
+
+```cpp
+echoServer.listen(onStatus);
+```
+
+or:
+
+```cpp
+echoClient.connect(onStatus);
+```
+
+means that the instance should already have the required values.
+
+Those values may come from:
+
+- C++ API defaults,
+- a configuration file,
+- command-line arguments,
+- or a combination of those according to the precedence rule.
+
+Activation then uses the shaped instance.
+
+It does not need to repeat the endpoint values at the call site.
+
+#### Missing configuration points back into the hierarchy
+
+When a required value is absent, the missing value is not arbitrary.
+
+It belongs to a scope.
+
+A missing server port belongs to the `local` section of a server instance.
+
+A missing client host belongs to the `remote` section of a client instance.
+
+A missing TLS certificate belongs to the `tls` section of a TLS instance.
+
+That makes error reporting easier to understand.
+
+It also makes the configuration model easier to learn by use.
+
+### Persistence and generated configuration
+
+Configuration is also about durable operational state.
+
+Persistent options can be written to configuration files.
+
+Non-persistent options affect the current run only.
+
+#### Application-level and instance-level persistence
+
+Persistence can apply at different levels.
+
+Application-level persistent options describe lasting executable behavior, such as logging choices.
+
+Instance-level persistent options describe lasting role behavior, such as whether a named instance is disabled.
+
+Section-level persistent options describe lasting details of that role, such as endpoint values or retry settings.
+
+The hierarchy remains:
+
+```text
+application
+  -> instance
+      -> section
+          -> option
+```
+
+Persistence does not create a new model.
+
+It stores the same model.
+
+#### Commented defaults as inspection
+
+Generated configuration output can show defaults and configured values.
+
+Default values may appear commented.
+
+That is useful because it lets the operator see:
+
+- which options exist,
+- which values are defaults,
+- which values have been supplied,
+- which values could be made explicit.
+
+A generated configuration file is therefore not only a file to edit.
+
+It is also a readable map of the current configuration space.
+
+### Multi-instance applications
+
+The detailed configuration model becomes especially valuable when one executable contains more than one communication role.
+
+Each named instance can have:
 
 - its own name,
-- its own sections,
+- its own server/client role identity,
 - its own disabled state,
-- its own role-specific configuration,
+- its own sections,
+- its own endpoint values,
+- its own socket behavior,
+- and its own TLS or non-TLS configuration where applicable.
 
-one executable can host several communication roles without collapsing into chaos.
+This lets one process host several roles without collapsing the configuration into an unstructured list of flags.
 
-This is not a side benefit.
+A multi-instance application can therefore be read as:
 
-It is one of the major reasons the configuration model is worth studying carefully.
+```text
+application
+  -> instance A
+      -> sections for A
 
-### A practical rule for reading configuration
+  -> instance B
+      -> sections for B
 
-A good reading habit is this:
+  -> instance C
+      -> sections for C
+```
 
-When you look at a SNode.C configuration, do not start by scanning values randomly.
+#### Switching between instances on the command line
 
-Start by asking three questions in order:
+On the command line, switching between instances is done by naming the next instance.
+
+All section names and options following an instance name belong to that instance until another instance name is encountered.
+
+For example:
+
+```shell
+myapp instance1 local --port 8001 socket --retry true \
+      instance2 local --port 8002 socket --retry false
+```
+
+This configures `instance1` first, then switches to `instance2`.
+
+Within one instance, a later section name changes the active section for that same instance.
+
+The structure is still:
+
+```text
+application
+  -> instance
+      -> section
+          -> option
+```
+
+Only the active instance and active section change as the command line is read from left to right.
+
+### Reading a configuration
+
+A good reading order is simple.
+
+Do not start by scanning values randomly.
+
+Read from the outside inward.
+
+Ask:
 
 1. What are the application-wide operational settings?
-2. Which instances exist and which of them are enabled?
-3. For each instance, how are its sections shaping the role?
+2. Which named instances exist?
+3. Which instances are enabled or disabled?
+4. For each enabled instance, which sections shape the role?
+5. Which concrete options inside those sections differ from defaults?
 
-This reading order matches the architecture and prevents confusion.
+This reading order mirrors the architecture.
 
-### Common misunderstandings about application and instance configuration
+It helps separate process-level concerns from communication-role concerns.
 
-It helps to clear away a few misunderstandings explicitly.
+It also helps distinguish endpoint identity, socket behavior, connection behavior, and security configuration.
 
-#### Misunderstanding 1: “Application configuration and instance configuration are basically the same thing.”
+### What to remember
 
-Corrected view: application configuration shapes the operational shell of the executable, while instance configuration shapes one concrete communication role.
+Remember:
 
-#### Misunderstanding 2: “Sections are optional organizational sugar.”
-
-Corrected view: sections are structural parts of the configuration model and map directly to behavioral responsibility.
-
-#### Misunderstanding 3: “Disablement is just a Boolean convenience flag.”
-
-Corrected view: disablement is a first-class instance state that meaningfully affects requiredness and multi-instance operation.
-
-#### Misunderstanding 4: “The CLI hierarchy is different from the config-file hierarchy.”
-
-Corrected view: they are two textual views of the same underlying model.
-
-#### Misunderstanding 5: “The detailed config model is only for deployment, not for design.”
-
-Corrected view: the configuration structure reflects the architecture itself and therefore helps with design as well as operation.
-
-### A good one-paragraph summary of the chapter
-
-Application and instance configuration in SNode.C are organized as a nested hierarchy in which the executable defines the operational shell, each named server or client instance becomes a separately configurable communication role, and each role is then shaped through sections such as `local`, `remote`, `connection`, `socket`, `server`, and `tls`. The same hierarchy appears consistently in the C++ API, the command line, and configuration files, which is why the model remains understandable even as applications grow more complex.
-
-That is the heart of the chapter.
+- Application configuration shapes the executable's operational shell.
+- Instance configuration shapes one named communication role.
+- Section configuration shapes one aspect of that role.
+- The hierarchy is application, instance, section, option.
+- Named instances are addressable in command-line and configuration-file views.
+- Disablement is a first-class instance state and affects requiredness.
+- `local` and `remote` preserve endpoint-side semantics.
+- `connection`, `socket`, `server`, and `tls` describe different behavioral scopes.
+- The C++ API, command line, and configuration file are three views of the same hierarchy.
+- The command line can guide users through application, instance, section, and option scopes.
+- `--command-line`, `--show-config`, and `--write-config` make configuration inspectable, reproducible, and persistent.
+- Required-configuration errors point back into the same hierarchy.
+- Generated configuration can serve as an inspectable map of available options.
+- Multi-instance applications stay readable because each named role has its own sections.
+- On the command line, naming another instance switches the following sections and options to that instance.
+- Chapter 18 turns from configured structure to runtime visibility.
 
 ### Closing perspective
 
-This chapter has taken the configuration philosophy from Chapter 16 and turned it into a working anatomical map.
+Chapter 16 explained why configuration is architectural in SNode.C.
 
-The reader should now be able to see configuration not as a list of flags, but as a structured description of:
+Chapter 17 showed the working anatomy of that configuration model.
 
-- the application shell,
-- the named communication roles inside it,
-- and the behavioral sections that shape those roles.
+The central structure is:
 
-That is an important milestone.
+```text
+application
+  -> instance
+      -> section
+          -> option
+```
 
-It means the reader is now prepared to understand operational behavior much more concretely.
+The application scope describes the executable's operational shell.
 
-And that naturally leads to the next chapter.
+The instance scope describes one communication role.
 
-Once an application and its instances are configured, the next practical question is:
+The section scope describes one part of that role.
 
-How do we observe them, diagnose them, and understand what they are doing at runtime?
+The option scope contains the concrete value.
 
-That means logging, diagnostics, and runtime visibility come next.
+With that structure in place, configuration is no longer a flat list of flags.
+
+It is a readable description of how the application and its communication roles are shaped.
+
+The next chapter turns to runtime visibility.
+
+Once roles are configured and activated, the next question is how to observe them, diagnose them, and understand what they are doing while the application runs.
