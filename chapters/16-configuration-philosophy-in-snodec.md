@@ -1,233 +1,197 @@
 ## Configuration Philosophy in SNode.C
-### Why configuration deserves a philosophy chapter
 
-In many frameworks, configuration is treated as a necessary afterthought.
+### From lower-family transfer to configured communication roles
 
-There is the “real” runtime and API model, and then somewhere else there is a separate pile of flags, files, and ad hoc settings.
+Chapter 15 showed that protocol behavior can often remain stable while lower-family instance types and endpoint configuration change.
 
-SNode.C is different.
+That makes configuration visible.
 
-Configuration is not merely attached to the framework from the outside. It is part of the architecture itself.
+A protocol may remain in the same `SocketContext`.
 
-That is one of the reasons the framework scales well from small examples to more serious applications.
+A factory may remain small.
 
-A server or client instance in SNode.C is not just a runtime object with a few helper methods.
+But the concrete application still has to decide:
 
-It is a **configured communication role**.
+- which instance exists,
+- whether it is a server or a client,
+- which lower family it uses,
+- which local or remote endpoint it should use,
+- whether TLS or legacy connection handling is selected,
+- whether the instance is enabled,
+- and which values can be changed without rebuilding the application.
 
-This matters a great deal for teaching.
+This chapter turns to that model.
 
-It means that the reader should not think of configuration as something optional that happens “later, when deployment begins.”
+The central idea is:
 
-The correct mental model is stronger:
+> In SNode.C, configuration is one of the main ways an instance becomes a concrete communication role.
 
-> In SNode.C, the configuration model is one of the main ways an instance becomes a concrete communication role.
+A `SocketServer` or `SocketClient` is not only a runtime object with a few options attached.
 
-That is why this chapter comes immediately after the architectural and protocol-shape chapters.
+It is a configured role in the application.
 
-Once the reader understands how the protocol is written, the next question is naturally:
+Configuration gives that role its concrete shape.
 
-How is the instance shaped, named, enabled, disabled, parameterized, and overridden in practice?
+### The central configuration idea
 
-That is the job of configuration.
+Configuration in SNode.C is not a separate afterthought beside the framework architecture.
 
-### The three configuration paths
+It is part of the architecture.
 
-The current README states the configuration philosophy very clearly.
+The same instance that participates in the runtime, owns a role, creates connections, and uses contexts also has a configuration identity.
 
-SNode.C supports three configuration paths:
+That identity can be shaped through several input paths, but those paths feed one configuration model.
 
-- configuration through the C++ API,
-- configuration through command-line options,
-- configuration through configuration files.
+#### A configured communication role
 
-Most importantly, the README also states that these are not three unrelated systems. Internally they use the same underlying configuration system based on CLI11. 
+A configured communication role combines several things:
 
-This is one of the most important ideas in the whole framework.
+| Part | Meaning |
+|---|---|
+| instance identity | which role is being configured |
+| role identity | server or client |
+| lower-family shape | IPv4, IPv6, Unix domain sockets, RFCOMM, L2CAP, and connection variant |
+| endpoint values | host, port, path, channel, PSM, or related local/remote values |
+| section structure | scoped configuration areas such as `local`, `remote`, `connection`, `socket`, `server`, `tls` |
+| operational state | enabled or disabled, persistent or run-specific options |
+| activation | `listen(...)` or `connect(...)` using already supplied configuration |
 
-It means the reader does not need three separate mental models.
+This is why configuration belongs here in the book.
 
-Instead, the reader can think of one configuration universe with three different input paths.
+The previous chapters established the architectural roles.
 
-That is elegant, practical, and highly teachable.
+This chapter explains how those roles become concrete enough to run.
 
-### Why one unified configuration system is such a strong design choice
+#### One model, several entry paths
 
-A unified configuration model gives SNode.C several major strengths.
+SNode.C has three main configuration input paths:
 
-First, it reduces conceptual duplication.
+| Input path | Main use |
+|---|---|
+| C++ API | in-code defaults and programmatic shaping |
+| command line | run-specific override, discovery, and operational control |
+| configuration file | persistent instance behavior |
 
-The same settings do not have to be imagined as “code settings,” “CLI settings,” and “file settings” in three disconnected ways.
+These are not three unrelated configuration worlds.
 
-Second, it makes named instances especially powerful.
+They are three ways to feed one underlying configuration model.
 
-The same instance can be described:
+That matters because the same conceptual object can be shaped in code, overridden on the command line, and persisted in a file without changing its identity.
 
-- directly in code,
-- overridden on the command line,
-- or persisted in a config file.
+### Three input paths, one configuration model
 
-Third, it turns configuration into a first-class architectural tool rather than a deployment hack.
+The three input paths have different strengths.
 
-That is why the framework can support both small anonymous demo applications and larger named multi-instance applications without changing its conceptual identity.
+They should be understood together.
 
-### The precedence rule is part of the philosophy
+#### Configuration through the C++ API
 
-The current README gives an explicit precedence order:
+The C++ API is the most direct configuration path.
 
-- command-line configuration takes precedence over configuration-file configuration,
-- configuration-file configuration takes precedence over C++ API configuration. 
+A server or client instance exposes its configuration object, and the application can set values on it directly.
 
-This is a very useful rule to teach early.
+For an IPv4 server, a minimal example may look like:
 
-It means the reader can reason about overrides calmly.
+```cpp
+EchoServer echoServer;
 
-The in-code configuration gives defaults or baseline intent. The configuration file can persist instance behavior. The command line can override it for a particular run.
+echoServer.getConfig()->Local::setPort(8001);
+```
 
-This precedence order is not just an implementation note.
+In this case, the explicit `Local::` qualification is valid, but it is not required. The same server-side port can also be configured as:
 
-It is a design statement about how the framework expects applications to be operated.
+```cpp
+echoServer.getConfig()->setPort(8001);
+```
 
-### Named instances are central to the configuration story
+`getConfig()` returns a pointer to the configuration object, so the examples use `->`.
 
-One of the most important configuration ideas in SNode.C is the difference between:
+The `Local::` qualification is optional here because this IPv4 server configuration does not expose two competing `setPort(...)` meanings at this call site. There is no local-versus-remote ambiguity for the server-side port in this example.
 
-- anonymous instances,
-- and named instances.
+The important point is that code can provide baseline configuration.
 
-The current README explains this clearly: when the default constructor is used, the instance is anonymous; when an instance name is provided, the instance becomes named, and command-line arguments plus configuration-file entries are created automatically for it. 
+Convenience overloads such as:
 
-This is a beautiful design choice.
+```cpp
+listen(8001, onStatus)
+```
 
-It means configuration capabilities emerge naturally from instance identity.
+or:
 
-A named instance is not just a nicer variable name.
+```cpp
+connect("localhost", 8001, onStatus)
+```
 
-It becomes a real configuration address inside the application.
+also participate in this idea.
 
-That is why the book has repeatedly encouraged named instances for serious applications.
+They are readable API calls, but conceptually they also fill configuration values before the instance is activated.
 
-### What a `ConfigInstance` reveals about the model
+In-code configuration is therefore useful for:
 
-The current live `net::config::ConfigInstance` header reinforces this picture in a very concrete way.
+- small teaching examples,
+- reasonable defaults,
+- programmatically selected values,
+- tests and experiments,
+- application-level decisions known at construction time.
 
-It shows that a configuration instance:
+It is not a second-class configuration path.
 
-- has an instance name,
-- has a role (`SERVER` or `CLIENT`),
-- can be disabled,
-- can be made configurable,
-- supports an on-destroy callback,
-- and exposes static CLI-trigger helpers for help, config display, and command-line generation. It also derives from `utils::SubCommand`, which is a strong hint that configuration is structurally integrated into a CLI/subcommand model rather than bolted on externally. 
+It is one native way to shape an instance.
 
-This is one of the places where the live code deepens the README nicely.
+#### Configuration through the command line
 
-A configuration instance is not just a passive bag of values.
+Command-line configuration gives an already compiled application a way to be shaped at startup.
 
-It participates in a structured configuration and command-line hierarchy.
+That is especially important for named instances.
 
-### Sections are not documentation convenience — they are structural
+A named server instance such as:
 
-The current live `net::config::ConfigSection` abstraction is small, but very revealing.
+```cpp
+EchoServer echoServer("echo");
+```
 
-It also derives from `utils::SubCommand`, and it exists to attach a section object to a `ConfigInstance`. 
+can appear as an addressable configuration role on the command line.
 
-This tells us something important.
+Under that instance, sections expose the available configuration scopes.
 
-The familiar section names that appear in the README’s command-line and config-file examples — such as:
+A typical hierarchy is:
 
-- `local`
-- `remote`
-- `connection`
-- `socket`
-- `server`
-- `tls`
+```text
+application
+  -> instance
+      -> section
+          -> option
+```
 
-are not merely chapter headings in the documentation.
+The command line is therefore not only a way to override values.
 
-They are part of the structure of the configuration model itself. 
+It is also a discovery surface.
 
-This is exactly the kind of architectural consistency a teaching book should highlight.
+A user can ask for help at different levels:
 
-The same section idea appears in:
+```shell
+echoserver --help
+echoserver echo --help
+echoserver echo local --help
+```
 
-- the command-line hierarchy,
-- the configuration-file key structure,
-- and the conceptual breakdown of instance behavior.
+Each level reveals another part of the configuration model.
 
-### Configuration through the C++ API
+That makes the configuration space inspectable instead of hidden.
 
-The README explains that every `SocketServer` and `SocketClient` instance provides a configuration object accessible through `getConfig()`, and that configuration can be performed directly in code by setting appropriate values on that object. It also explicitly notes that convenience methods such as `listen(port, ...)` or `connect(host, port, ...)` are effectively doing some of this configuration work automatically. 
+#### Configuration through configuration files
 
-This is one of the most important practical bridges in the whole framework.
+Configuration files persist the same model.
 
-The reader should understand that the convenience overloads are often just readable entry points into the same configuration system.
+They do not introduce a second configuration language with a different worldview.
 
-That means in-code configuration is not a separate second-class path.
-
-It is one of the native ways to shape an instance.
-
-### In-code configuration is especially valuable for teaching and defaults
-
-There are several situations where configuration through the C++ API is especially useful.
-
-#### Small teaching examples
-
-For early chapters and minimal demos, configuring values directly in code keeps the communication picture visible.
-
-#### Reasonable defaults
-
-Applications often want to ship with sensible baseline values already encoded in the source.
-
-#### Programmatic shaping
-
-Sometimes the application logic itself determines what default configuration should be applied.
-
-This is one of the reasons the in-code path is architecturally important rather than merely convenient.
-
-It lets application design and configuration design meet cleanly.
-
-### Command-line configuration and why it fits the architecture so well
-
-The README’s help-screen examples show that command-line configuration in SNode.C follows a structured hierarchy.
-
-There are application-wide options, instance-level options, and section-level options. Named instances appear explicitly as command-line subcommands, and sections under those instances likewise form their own subordinate configuration scopes. 
-
-This is not only practical.
-
-It mirrors the architecture very well.
-
-At the top is the application. Under it are the instances. Under each instance are the configuration sections that shape different aspects of that communication role.
-
-That is exactly the kind of CLI structure one would hope for in a framework that already thinks in terms of instances and sections.
-
-### The command line is not only for overrides — it is a discovery tool
-
-The README’s examples make another point clear.
-
-Command-line help is not just there to parse arguments. It is a way to *discover the shape of the configuration model itself*. The nested `--help` examples for application, instance, and section scopes show exactly this. 
-
-This is pedagogically powerful.
-
-A user can explore the configuration space of an application by asking for help at different levels:
-
-- application level,
-- named instance level,
-- section level.
-
-That makes the configuration system self-revealing instead of opaque.
-
-### Configuration files are part of the same model, not an export format only
-
-The README also makes clear that configuration files are not a second independent configuration language.
-
-They follow the same structural model as the CLI and the instance/section design. The file keys use the shape:
+Their key structure follows the same hierarchy:
 
 ```ini
 instancename.sectionname.optionname = value
 ```
 
-Examples in the README such as:
+For example:
 
 ```ini
 echo.local.port = 8080
@@ -235,200 +199,459 @@ echo.remote.host = "localhost"
 echo.remote.port = 8080
 ```
 
-show this very directly. 
+This is the file form of the same application/instance/section/option structure exposed by the command line.
 
-This is excellent design.
+The configuration file is therefore both:
 
-The configuration-file format is not inventing a new worldview. It is persisting the worldview the framework already has.
+- an operational artifact,
+- and an inspectable map of the configured application.
 
-### Persistence and non-persistence are explicit
+### Precedence and instance creation timing
 
-Another helpful design point in the README is the distinction between persistent and non-persistent options. Help output makes that distinction visible, and configuration files store the persistent side of the model. 
+The precedence rule is part of the configuration philosophy.
 
-That is a small but meaningful sign of maturity.
+The order is:
 
-Not every operational option should necessarily become part of the persistent configuration story.
+```text
+command line
+  > configuration file
+      > C++ API
+```
 
-By making the distinction visible, the framework helps the user understand which settings describe enduring instance behavior and which describe one run of the application.
+That means:
 
-### The config file is generated, inspectable, and shaped by the same hierarchy
+| Source | Typical role |
+|---|---|
+| C++ API | baseline defaults or programmatic intent |
+| configuration file | persistent operational configuration |
+| command line | run-specific override |
 
-The README shows that configuration files can be written automatically, shown on screen, and follow the same instance/section structure that the command line exposes. It also notes that options with default values, including values configured in code, appear commented in the generated output. 
+This is a useful operational model.
 
-This is a very helpful teaching feature.
+The application can encode reasonable defaults.
 
-A generated config file is not just something to edit later. It is also a readable map of what the framework believes the configuration space looks like.
+The configuration file can store deployment choices.
 
-That makes the framework easier to learn and easier to operate.
+The command line can override them for one run.
 
-### Anonymous instances versus named instances in practice
+#### Instance creation timing
 
-At this point, the book should give a practical rule of thumb.
+There is also an important timing boundary.
 
-Anonymous instances are often appropriate for:
+Command-line and configuration-file configuration apply to server and client instances that exist before the SNode.C event loop is started.
 
-- very small demos,
-- one-off experiments,
-- the earliest teaching examples.
+Instances created later at runtime cannot be retroactively addressed by the command line or by a configuration file that was already read.
 
-Named instances are usually preferable for:
+Those later instances must be configured through the C++ API.
 
-- anything that should be configurable from outside the binary,
-- anything with multiple instances,
-- anything that should support command-line or file-based operation,
-- anything that the user expects to persist or inspect operationally.
+This distinction is important because it separates two cases:
 
-This is not dogma, but it is a very useful design instinct.
+```text
+startup-known configured roles
+  -> code, file, and command line can participate
 
-### The role field is philosophically important
+runtime-created roles
+  -> C++ API configuration is the available path
+```
 
-The live `ConfigInstance` class includes an explicit `Role` enum with `SERVER` and `CLIENT`. 
+That is not a weakness.
 
-That may seem like a small implementation detail, but it actually reflects the framework’s whole philosophy very well.
+It is the natural boundary between startup configuration and runtime object creation.
 
-Configuration in SNode.C is not just about raw parameters.
+### Named instances as configuration addresses
 
-It is configuration of a **communication role**.
+One of the most important ideas in the configuration model is the difference between anonymous and named instances.
 
-That is exactly why a configuration instance has role identity, instance identity, sections, disablement, and CLI integration.
+An anonymous instance exists as an object in code.
 
-Once the reader sees configuration this way, the framework becomes much easier to understand.
+A named instance also becomes addressable by the configuration system.
 
-### Disablement is a first-class configuration concept
+That is the key distinction.
 
-The live `ConfigInstance` class explicitly supports `getDisabled()` and `setDisabled(...)`. 
+#### Anonymous and named instances
 
-The README also repeatedly shows `--disabled` as an instance-level option. 
+A useful rule of thumb is:
 
-This is a much stronger design than treating disablement as some ad hoc application flag.
+| Anonymous instance | Named instance |
+|---|---|
+| internal helper clients | externally operated communication roles |
+| temporary or embedded helper servers | independently configurable server roles |
+| no external configuration address needed | persistent or inspectable behavior |
+| tiny demos | operational applications |
+| one-off experiments | command-line and file control |
+| simplest code | multi-instance applications |
 
-It means the framework recognizes that a configured communication role may legitimately exist in the application but be disabled at runtime or by configuration.
+Anonymous instances are useful for communication roles that are intentionally internal to the program and should not become independently addressable through the external configuration model.
 
-That is especially valuable for:
+This is especially common for helper clients.
 
-- multi-instance applications,
-- optional carriers such as Bluetooth,
+For example, an application may need to fetch data from a known remote resource as part of its own internal behavior. If that communication role should not be configured, disabled, persisted, or inspected independently, an anonymous client is often the clearer choice.
+
+Anonymous servers can also make sense, but the case is narrower.
+
+They are reasonable for temporary local test servers, embedded loopback-only services, or helper servers whose endpoint is fixed by the surrounding program.
+
+Externally operated server roles are usually better expressed as named instances, because servers often need deployment-facing control over bind address, port, path, channel, enablement, and persistent configuration.
+
+#### A name is not only a label
+
+A name such as:
+
+```cpp
+EchoServer echoServer("echo");
+```
+
+does more than make the C++ object easier to read.
+
+It gives the instance an address in the configuration hierarchy.
+
+That address can appear:
+
+- in command-line help,
+- in command-line overrides,
+- in generated command lines,
+- in shown configuration,
+- and in configuration-file keys.
+
+The name becomes part of the operational surface of the application.
+
+That is why named instances are central for serious applications.
+
+#### Disablement as instance-level configuration
+
+A configured communication role may exist but be inactive.
+
+SNode.C treats this as a first-class configuration idea.
+
+A named instance can be disabled instead of being removed from the application.
+
+That is useful for:
+
+- multi-instance programs,
+- optional carriers,
 - staged deployment,
-- development/test toggles,
-- field debugging.
+- development and testing,
+- field diagnostics,
+- temporarily disabling a communication role without rebuilding.
 
-This is one of those small ideas that becomes very powerful in real systems.
+The important idea is:
 
-### Parameterless `listen()` and `connect()` are the clearest proof of the philosophy
+```text
+configured role exists
+  -> configuration may decide whether it participates
+```
 
-The README gives a particularly important teaching example here.
+This is cleaner than scattering ad hoc application flags across the program.
 
-It shows that named instances can be activated with parameterless `listen()` and `connect()` forms, provided the necessary configuration has already been supplied through code, command line, or configuration file. It also shows how the framework reports missing required configuration progressively when those methods are used without sufficient configured values. 
+### Sections as structural scopes
 
-This is one of the clearest demonstrations of the framework’s configuration philosophy.
+Sections are not only headings in documentation.
 
-A parameterless `listen()` or `connect()` means:
+They are structural scopes in the configuration hierarchy.
 
-> the instance already knows enough about its role to act.
+The common section names make this visible:
 
-That is an extremely elegant architectural statement.
+- `local`,
+- `remote`,
+- `connection`,
+- `socket`,
+- `server`,
+- `tls`.
 
-The instance is not being fed ad hoc values at the last moment. It is already a shaped communication role.
+A section groups options that belong to a particular part of the communication role.
 
-### Configuration is hierarchical because communication roles are hierarchical
+#### Section hierarchy
 
-The more one studies the configuration model, the more its shape makes sense.
+The shape is:
 
-At the application level, there are application-wide concerns such as logging, daemonization, config-file management, and config display.
+```text
+application
+  -> instance
+      -> section
+          -> option
+```
 
-At the instance level, there are per-role concerns such as disablement or general instance identity.
+For a named instance `echo`, examples include:
 
-At the section level, there are more specific concerns such as:
+```text
+echo local --port 8080
+echo remote --host localhost --port 8080
+```
 
-- `local`
-- `remote`
-- `connection`
-- `socket`
-- `server`
-- `tls` 
+or in configuration-file form:
 
-This hierarchy is not arbitrary.
+```ini
+echo.local.port = 8080
+echo.remote.host = "localhost"
+echo.remote.port = 8080
+```
 
-It reflects the actual architecture of a communication role.
+The command-line hierarchy and the configuration-file hierarchy express the same structure.
 
-That is why the configuration system feels natural once it is understood.
+#### Local and remote sections
 
-### Why CLI11 matters, but should stay in the background for the reader
+The `local` and `remote` sections are especially important because they connect directly to the address semantics from Chapters 8–12.
 
-The current README states that the unified configuration system is based on CLI11. The live `ConfigInstance` and `ConfigSection` types, both deriving from `utils::SubCommand`, reinforce that command/subcommand structure in the code.   
+For a server, local configuration usually describes the endpoint to bind or listen on.
 
-This is good to know, but the teaching emphasis should remain on the architectural meaning rather than on the implementation library itself.
+For a client, remote configuration usually describes the peer endpoint to connect to, while local configuration may describe an explicit bind side.
 
-For the book, the most useful point is not “CLI11 does X.”
+The exact fields depend on the lower family:
 
-The most useful point is:
+| Family | Typical endpoint fields |
+|---|---|
+| IPv4 / IPv6 | host and port |
+| Unix domain sockets | path |
+| RFCOMM | Bluetooth address and channel |
+| L2CAP | Bluetooth address and PSM |
 
-> SNode.C’s configuration model is structurally unified and hierarchically organized, and that is one of the reasons it stays coherent across code, CLI, and file configuration.
+The section model lets these differences remain structured without changing the larger configuration idea.
+
+#### Connection, socket, server, and TLS sections
+
+Other sections describe other parts of the communication role.
+
+For example:
+
+| Section | Typical scope |
+|---|---|
+| `connection` | established connection behavior, timeouts, read/write behavior |
+| `socket` | socket-level behavior such as retry or reuse options |
+| `server` | server-specific behavior |
+| `tls` | TLS-related connection-layer configuration |
+
+Chapter 17 can go into these details more concretely.
+
+For Chapter 16, the important point is the structure:
+
+```text
+sections are scopes
+not loose option groups
+```
+
+### Configuration as discovery and persistence
+
+A good configuration system should not only accept values.
+
+It should help users discover what can be configured.
+
+SNode.C does this through command-line help, configuration display, command-line generation, and generated configuration files.
+
+#### Help output as discovery
+
+Because named instances and sections participate in the command-line hierarchy, help output can reveal the configuration model step by step.
+
+At application level, help shows application-wide options and available instances.
+
+At instance level, help shows instance-level options and sections.
+
+At section level, help shows the options for that section.
+
+This makes the configuration system self-describing.
+
+The user does not have to guess the entire option universe at once.
+
+#### Persistent and non-persistent options
+
+Not every option should be written into a configuration file.
+
+Some options describe lasting behavior.
+
+Others describe one run.
+
+SNode.C makes that distinction visible by separating persistent and non-persistent options.
+
+The practical rule is:
+
+```text
+persistent options
+  -> may be stored in configuration files
+
+non-persistent options
+  -> affect the current run only
+```
+
+This is useful because it prevents operational commands such as help, display, or one-time control actions from being confused with enduring instance configuration.
+
+#### Generated and shown configuration
+
+Generated configuration files are not only convenient output.
+
+They show the configuration model in file form.
+
+A generated file can contain:
+
+- application-level options,
+- instance-level options,
+- section-level options,
+- default values,
+- values supplied in code,
+- values overridden by file or command line,
+- comments describing the available options.
+
+That makes the file both editable and educational.
+
+It is an inspectable artifact of the same hierarchy used by the command line and the C++ API.
+
+### Parameterless `listen()` and `connect()`
+
+Parameterless activation is one of the clearest expressions of the configuration philosophy.
+
+A call such as:
+
+```cpp
+echoServer.listen(onStatus);
+```
+
+or:
+
+```cpp
+echoClient.connect(onStatus);
+```
+
+means:
+
+> The instance should already know enough about its configured role to act.
+
+The endpoint values may have been supplied by:
+
+- C++ API calls,
+- a configuration file,
+- command-line arguments,
+- or a combination of those according to the precedence rule.
+
+The call itself does not need to repeat them.
+
+#### Configured enough to act
+
+For a server, being configured enough may mean that the local endpoint is known.
+
+For a client, being configured enough may mean that the remote endpoint is known, and possibly also a local bind side.
+
+For TLS instances, it may also mean that required TLS-related configuration is available.
+
+The exact requirements depend on the concrete instance type.
+
+The architectural idea is stable:
+
+```text
+configuration shapes the instance
+activation uses the shaped instance
+```
+
+#### Missing configuration is reported structurally
+
+When required configuration is missing, the error path should point back into the same hierarchy.
+
+For example, a missing server port is not just a random failure.
+
+It belongs to a particular instance and section:
+
+```text
+application
+  -> instance
+      -> local
+          -> port
+```
+
+A missing client host or port likewise belongs to the remote section of a particular client instance.
+
+This is why parameterless activation is a strong proof point.
+
+It works only because the instance has a structured configuration identity.
+
+### CLI11 as implementation foundation
+
+SNode.C uses CLI11 as part of the implementation foundation for this unified model.
+
+That matters, but it should stay in the background of the chapter.
+
+The book does not need to turn into a CLI11 manual here.
+
+The architectural point is:
+
+```text
+SNode.C exposes one hierarchical configuration model
+through code, command line, and files.
+```
+
+CLI11 helps implement that model.
+
+The important thing for the SNode.C reader is the resulting structure:
+
+```text
+application
+  -> named instance
+      -> section
+          -> option
+```
 
 ### Configuration as architectural leverage
 
-Now we can state the deepest lesson of the chapter.
+Configuration is not only operational convenience.
 
-The real power of SNode.C’s configuration system is not merely convenience.
+It is architectural leverage.
 
-It is leverage.
+Because configuration can shape an instance without rewriting protocol code, the same application structure can often be reused across deployments.
 
-Because the same instance can be shaped through code, overridden on the command line, and persisted in a file, the same protocol endpoint logic can often be reused across many practical deployment scenarios with very little architectural disturbance.
+A protocol may remain in the context.
 
-This is one of the reasons the earlier cross-family chapter works so well.
+The factory may keep creating the same kind of endpoint.
 
-The protocol endpoint can stay stable while the communication role is reshaped by configuration.
+The lower-family instance type and endpoint values may change.
 
-That is a very strong architectural property.
+Configuration is one of the places where that variation becomes explicit.
 
-### Common misunderstandings about configuration in SNode.C
+This connects directly back to Chapter 15.
 
-It helps to clear away a few misunderstandings explicitly.
+Lower-family transfer is practical only if the changing parts have somewhere clear to live.
 
-#### Misunderstanding 1: “Configuration is only about deployment details after the code is written.”
+In SNode.C, configuration is one of those places.
 
-Corrected view: in SNode.C, configuration is part of how an instance becomes a concrete communication role.
+### What to remember
 
-#### Misunderstanding 2: “Code configuration, command-line configuration, and config files are separate systems.”
+Remember:
 
-Corrected view: they are three input paths into one unified configuration model. 
-
-#### Misunderstanding 3: “Named instances are just nicer labels.”
-
-Corrected view: named instances become real configuration addresses in the CLI and config-file model.  
-
-#### Misunderstanding 4: “Sections are documentation categories only.”
-
-Corrected view: sections are structural parts of the configuration model itself.  
-
-#### Misunderstanding 5: “Parameterless `listen()` or `connect()` are convenience oddities.”
-
-Corrected view: they are a strong expression of the framework’s philosophy that a configured instance should already know enough to act. 
-
-### A good one-paragraph summary of the chapter
-
-SNode.C treats configuration as a first-class architectural system in which a server or client instance becomes a concrete configured communication role. Code, command line, and configuration files are not separate configuration worlds but three entry paths into one unified, hierarchical model structured around applications, named instances, and sections, with clear precedence rules and explicit support for role identity, disablement, discovery, and persistence.
-
-That is the heart of the chapter.
+- Configuration is part of how an instance becomes a concrete communication role.
+- SNode.C has three input paths into one configuration model: C++ API, command line, and configuration file.
+- The precedence order is command line, then configuration file, then C++ API.
+- Command-line and file configuration apply to startup-known instances; runtime-created instances are configured through the C++ API.
+- Named instances become configuration addresses.
+- Anonymous instances are useful for small demos and experiments.
+- Sections are structural scopes, not only documentation categories.
+- The hierarchy is application, instance, section, option.
+- Persistent options can be written to configuration files.
+- Non-persistent options describe the current run.
+- Help output and shown/generated configuration make the model discoverable.
+- Disablement means a configured role may exist but remain inactive.
+- Parameterless `listen()` and `connect()` show that a configured instance can already know enough to act.
+- Chapter 17 moves from this philosophy to concrete application, instance, and section configuration.
 
 ### Closing perspective
 
-This chapter marks the transition from architectural purity to operational maturity.
+Part V begins with configuration because the previous chapters made configuration unavoidable.
 
-Up to now, the book has focused on:
+A protocol endpoint can be stable.
 
-- runtime,
-- roles,
-- connections,
-- contexts,
-- factories,
-- lower communication families,
-- and protocol portability.
+A factory can remain small.
 
-Now the reader has seen how these communication roles are actually shaped and operated in practice.
+A lower-family instance can change.
 
-That is why configuration in SNode.C deserves to be understood philosophically and not merely procedurally.
+Endpoint identity and deployment values still have to be supplied somewhere.
 
-It is one of the framework’s central unifying ideas.
+Chapter 16 introduced the model that gives those values a coherent place.
 
-And once that idea is secure, the next chapter can go one level deeper into the concrete details of application and instance configuration, section by section, so the reader can move from philosophical understanding to precise operational mastery.
+The result is:
+
+```text
+application
+  -> named communication roles
+      -> sections
+          -> options
+```
+
+Those options can be supplied through code, command line, or files, with clear precedence and clear operational meaning.
+
+The next chapter goes one level deeper.
+
+It looks at application, instance, and section configuration in detail.
