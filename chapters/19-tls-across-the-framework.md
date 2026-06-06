@@ -1,158 +1,408 @@
 ## TLS Across the Framework
-### Why TLS belongs here in the book
 
-TLS is one of the best architectural tests in the whole framework.
+### From visible runtime behavior to secure connection handling
 
-If SNode.C’s layering is real, then TLS should not feel like a separate world.
+Chapter 18 showed how configured communication roles become visible at runtime.
 
-It should feel like a meaningful change in one layer of the communication model while the larger application structure remains recognizable.
+Chapter 19 begins the next part of the book by adding secure connection handling to the same architecture.
 
-That is exactly what the framework does.
+TLS does not introduce a second application model.
 
-This chapter therefore is not only about certificates and encrypted transport. It is about one of the most important architectural promises SNode.C makes to the reader:
+It changes the connection layer.
 
-> security can be inserted into the connection layer without forcing the whole application model to collapse and be rebuilt.
+That is the central idea of this chapter:
 
-That is a very strong promise.
+> TLS changes the connection layer; it does not replace the application architecture.
 
-And it is one of the reasons SNode.C is especially suitable for serious networked systems rather than only toy examples.
+A TLS-enabled SNode.C application still has:
 
-### The big picture: TLS is a connection-layer choice
+- server and client roles,
+- named instances,
+- configuration sections,
+- factories,
+- contexts,
+- connection lifecycle,
+- runtime diagnostics.
 
-Earlier chapters already introduced the layered model:
+What changes is the connection handling between the lower transport and the application protocol.
 
-- network family,
-- transport form,
-- connection handling,
-- application protocol.
+### TLS as a connection-layer specialization
 
-TLS belongs above the lower communication family and transport form, but below the application protocol.
+The layered model is:
+
+```text
+network family
+  -> transport form
+      -> connection handling
+          -> application protocol
+```
+
+TLS belongs in the connection-handling position.
+
+It sits above the lower communication family and transport form.
+
+It sits below the application protocol.
 
 That means:
 
-- IPv4 can be carried with legacy connection handling or TLS connection handling,
-- IPv6 can be carried with legacy connection handling or TLS connection handling,
-- Unix domain sockets can still participate in the same connection-layer distinction,
-- and even Bluetooth-facing families still fit into the same architectural story.
+```text
+IPv4 stream
+  -> legacy connection handling
+      -> protocol context
 
-This is one of the most important conceptual lessons in the entire book.
+IPv4 stream
+  -> TLS connection handling
+      -> protocol context
+```
 
-TLS is not “an application protocol feature.” TLS is not “a different runtime.” TLS is a connection-layer specialization.
+The lower family still exists.
 
-### The live code confirms the architecture very clearly
+The server/client role still exists.
 
-The current live TLS wrappers for IPv4 make this beautifully explicit.
+The context still implements the protocol conversation.
 
-The TLS server type is not a wholly separate hand-built application class. It is a type alias built by combining:
+TLS adds secure connection handling between those parts.
 
-- the existing `net::in::stream::SocketServer` shell,
-- a TLS `SocketAcceptor`,
-- and a TLS-specific configuration type.
+A more general view is:
 
-The TLS client type is built in the same style from:
+```text
+lower communication family
+  -> stream transport
+      -> legacy or TLS connection layer
+          -> SocketContext
+```
 
-- the existing `net::in::stream::SocketClient` shell,
-- a TLS `SocketConnector`,
-- and a TLS-specific configuration type.
+Where a TLS wrapper exists for a lower family, the same pattern applies.
 
-This is exactly the kind of code shape a teaching book hopes to find.
+The architectural model is not limited to IPv4, but concrete support depends on the available TLS wrapper for that family.
 
-It means the framework is not merely *described* as layered.
+### Legacy and TLS streams side by side
 
-It is actually implemented that way.
+A compact comparison makes the teaching point visible.
 
-### What changes when TLS is inserted
+| Concern | Legacy stream | TLS stream |
+|---|---|---|
+| outer server/client role | same model | same model |
+| lower family | IPv4, IPv6, Unix, etc. | still present |
+| connection machinery | legacy reader/writer | TLS reader/writer |
+| setup work | socket/connect/listen | socket/connect/listen plus TLS handshake |
+| shutdown work | socket shutdown/close | socket shutdown/close plus TLS shutdown / close-notify handling |
+| configuration | `local` / `remote` / `socket` / `server` | `local` / `remote` / `socket` / `server` plus `tls` |
+| context behavior | protocol endpoint | usually unchanged |
+| diagnostics | lifecycle/counters/errors | lifecycle/counters/errors plus TLS-specific handshake/shutdown failures |
 
-TLS changes real things.
+This table is the chapter in miniature.
 
-A mature chapter should be very honest about that.
+TLS adds real work.
 
-When TLS is inserted, the following kinds of concerns become real:
+It does not erase the surrounding framework structure.
 
-- certificate material,
-- private key material,
-- trust anchors or CA configuration,
-- handshake success and failure,
-- SSL/TLS initialization and shutdown timeouts,
+### The wrapper shape in code
+
+The code shape confirms the model.
+
+The TLS server is not a completely separate hand-built server type.
+
+It reuses the ordinary IPv4 stream server shell and changes the connection-layer pieces.
+
+In simplified form, the shape is:
+
+```cpp
+using SocketServer =
+    net::in::stream::SocketServer<
+        core::socket::stream::tls::SocketAcceptor,
+        net::in::stream::tls::config::ConfigSocketServer,
+        SocketContextFactoryT,
+        Args...>;
+```
+
+The client has the same idea:
+
+```cpp
+using SocketClient =
+    net::in::stream::SocketClient<
+        core::socket::stream::tls::SocketConnector,
+        net::in::stream::tls::config::ConfigSocketClient,
+        SocketContextFactoryT,
+        Args...>;
+```
+
+The important parts are:
+
+| Part | Meaning |
+|---|---|
+| `net::in::stream::SocketServer` / `SocketClient` | existing outer server/client shell |
+| TLS `SocketAcceptor` / `SocketConnector` | TLS-aware connection-layer creation |
+| TLS config type | configuration extended with TLS settings |
+| `SocketContextFactoryT` | same factory pattern as before |
+| context type | protocol endpoint, usually unchanged |
+
+This is the architectural payoff.
+
+The outer role remains familiar.
+
+The connection machinery changes.
+
+The protocol endpoint can often remain the same.
+
+### What TLS changes
+
+TLS changes real parts of the communication path.
+
+It adds concerns that do not exist in a plain legacy stream.
+
+The most important ones are:
+
+- certificate chain,
+- private key,
+- optional key password,
+- CA certificate or CA directory,
 - peer validation policy,
-- SNI and name-related concerns,
-- error handling at the encryption boundary.
+- SNI-related behavior,
+- cipher or protocol policy,
+- TLS initialization timeout,
+- TLS shutdown timeout,
+- handshake success and failure,
+- close-notify and shutdown behavior,
+- TLS-specific diagnostics.
 
-These are not superficial details.
+These are not superficial options.
 
-They are exactly why TLS belongs in a dedicated chapter.
+They are part of secure connection handling.
 
-But it is equally important to notice what often remains stable.
+TLS is therefore not just “turn encryption on.”
 
-### What often does **not** change
+It adds identity, trust, handshake, shutdown, and failure behavior to the connection layer.
 
-When a legacy application is moved to TLS in SNode.C, many architectural elements often remain surprisingly stable:
+### What usually stays stable
 
-- the server or client outer role,
-- the instance/factory/context pattern,
-- the runtime story,
-- the connection lifecycle shape,
-- the protocol endpoint logic,
-- the basic server/client relationship,
-- the use of `sendToPeer(...)` and `readFromPeer(...)` through the context.
+TLS often leaves the higher-level application structure unchanged.
 
-This is exactly the payoff of the framework’s design.
+The following parts usually remain recognizable:
 
-A reader should not conclude that TLS is trivial.
+- server/client role,
+- instance name,
+- configuration hierarchy,
+- factory pattern,
+- context pattern,
+- connection lifecycle vocabulary,
+- protocol endpoint logic,
+- use of `sendToPeer(...)`,
+- use of `readFromPeer(...)`.
 
-But the reader *should* conclude that TLS does not require a fresh architectural worldview.
+This is why TLS is teachable inside the same architecture.
 
-That is the right lesson.
+The reader does not need to learn a new framework model.
 
-### The TLS wrappers are intentionally parallel to the legacy ones
+The reader needs to understand where the secure connection layer fits.
 
-A particularly important teaching point is the structural parallelism between legacy and TLS wrappers.
+### The TLS connection object as the layer boundary
 
-In the live code, the TLS wrappers reuse the outer server/client shell and simply change the connection-layer machinery and config type.
+The TLS connection object is the clearest boundary.
 
-That means the reader can still think in familiar terms:
+It is still a stream `SocketConnection`.
 
-- create a server or client instance,
-- configure it,
-- attach a context factory,
-- activate `listen()` or `connect()`,
-- let the runtime create concrete peer connections,
-- let the context implement protocol behavior.
+But it is specialized with TLS-aware machinery:
 
-This is the same broad shape the reader has already learned.
+- TLS reader,
+- TLS writer,
+- SSL startup,
+- SSL handshake,
+- SSL shutdown,
+- TLS initialization timeout,
+- TLS shutdown timeout,
+- access to the underlying `SSL*`.
 
-That continuity is one of the strongest features of the framework.
+The connection remains the connection.
 
-### The TLS connection object proves the layer boundary
+The reader/writer behavior and internal lifecycle become TLS-aware.
 
-The live `core::socket::stream::tls::SocketConnection` is one of the clearest architectural pieces in the codebase.
+This is the right layer for encryption.
 
-It is still a `SocketConnection`, but it is specialized with:
+The context can still talk to the peer through the same conceptual operations.
 
-- a TLS reader,
-- a TLS writer,
-- SSL startup and shutdown logic,
-- handshake behavior,
-- SSL timeouts,
-- and access to the underlying `SSL*`.
+The connection layer handles the secure transport details.
 
-This is a wonderful confirmation of the framework’s structure.
+#### `getSSL()` as TLS-specific access
 
-The connection object remains the connection object.
+The TLS connection exposes access to the underlying `SSL*`.
 
-But its reader/writer machinery and internal lifecycle are now TLS-aware.
+That is useful, but it should be understood carefully.
 
-That is exactly how a cleanly layered system should handle encryption.
+`getSSL()` is an escape hatch at the TLS connection boundary.
 
-### TLS should not leak prematurely into the context
+It is appropriate when TLS properties genuinely matter.
 
-This is one of the most important design rules of the chapter.
+Examples include:
 
-A `SocketContext` should only become TLS-aware when the protocol logic genuinely needs TLS-specific information.
+- certificate inspection,
+- auditing,
+- peer identity checks,
+- TLS-specific diagnostics,
+- application behavior that depends on TLS details.
 
-In many applications, the protocol endpoint does not need to care.
+It should not make every ordinary protocol context TLS-dependent by default.
 
-It still needs only to:
+A protocol context should care about TLS only when TLS has protocol meaning.
+
+### TLS configuration and the `tls` section
+
+TLS configuration is added to the existing configuration model.
+
+It does not create a separate configuration universe.
+
+The IPv4 TLS server configuration is built by layering TLS configuration on top of the normal IPv4 stream server configuration.
+
+The IPv4 TLS client configuration follows the same pattern for clients.
+
+Conceptually:
+
+```text
+family-specific stream configuration
+  + TLS configuration
+      -> TLS-enabled stream configuration
+```
+
+This matches the section model from Chapters 16 and 17.
+
+A TLS-enabled instance still has the ordinary sections that describe endpoint identity and socket behavior.
+
+It additionally has a `tls` section for secure connection handling.
+
+```text
+instance
+  -> local
+  -> remote
+  -> socket
+  -> server
+  -> connection
+  -> tls
+```
+
+The `tls` section groups TLS-specific concerns such as:
+
+- certificate chain,
+- private key,
+- key password,
+- CA certificate,
+- CA directory,
+- cipher or protocol policy,
+- SNI behavior,
+- peer validation policy,
+- initialization timeout,
+- shutdown timeout.
+
+This section boundary matters.
+
+Endpoint identity stays in `local` and `remote`.
+
+Socket and retry behavior stay in `socket`.
+
+Server-specific listen behavior stays in `server`.
+
+TLS-specific security and handshake policy belongs in `tls`.
+
+### TLS adds work between connection creation and readiness
+
+TLS changes the connection timeline.
+
+A plain stream connection can often be described simply:
+
+```text
+transport connection exists
+  -> connection is ready
+      -> protocol context works
+```
+
+TLS adds handshake work:
+
+```text
+transport connection exists
+  -> TLS handshake starts
+      -> TLS handshake succeeds
+          -> secure connection is ready
+              -> protocol context works
+```
+
+This is why the lifecycle distinction between early connection creation and full readiness matters.
+
+A useful reading is:
+
+| Boundary | Meaning |
+|---|---|
+| `onConnect` | connection object exists |
+| TLS handshake | secure connection setup is in progress |
+| `onConnected` | connection is ready for protocol work |
+| context `onConnected()` | protocol endpoint can begin its conversation |
+
+TLS does not make the lifecycle impossible to understand.
+
+It makes the middle part more meaningful.
+
+### TLS also affects shutdown
+
+TLS also adds work at the end of a connection.
+
+A legacy stream shutdown may be mostly socket shutdown and close behavior.
+
+A TLS stream may also need TLS shutdown behavior, including close-notify handling.
+
+A useful model is:
+
+```text
+protocol wants to close
+  -> connection begins shutdown
+      -> TLS shutdown / close-notify handling
+          -> underlying socket shutdown / close
+              -> disconnect summary
+```
+
+This matters because failures and timeouts can occur during shutdown as well as during setup.
+
+A TLS-enabled connection therefore has two important TLS-sensitive phases:
+
+```text
+startup
+  -> handshake
+
+shutdown
+  -> TLS shutdown / close-notify
+```
+
+Both phases belong to the connection layer.
+
+Both phases are relevant for diagnostics.
+
+### TLS does not erase the lower family
+
+A TLS connection is still carried over a lower communication family.
+
+The lower family does not disappear just because the connection is encrypted.
+
+The application may still need to know whether the carrier beneath TLS is:
+
+- IPv4,
+- IPv6,
+- Unix domain sockets,
+- or another supported lower family with a TLS wrapper.
+
+This affects endpoint configuration, address semantics, deployment shape, and diagnostics.
+
+TLS specializes connection handling above the lower transport.
+
+It does not replace the lower transport.
+
+That is why the earlier lower-family chapters still matter.
+
+### Protocol contexts should stay TLS-independent when possible
+
+A `SocketContext` should usually describe the application protocol.
+
+It should not become TLS-heavy unless TLS has protocol meaning.
+
+For many protocols, the conversation is the same after the secure connection is ready.
+
+The context still needs to:
 
 - react to `onConnected()`,
 - read from the peer,
@@ -160,282 +410,146 @@ It still needs only to:
 - maintain protocol state,
 - respond to disconnects.
 
-That means TLS should usually remain primarily a connection-layer and configuration concern rather than being injected into ordinary protocol logic everywhere.
+That means the same protocol endpoint may often work over legacy and TLS streams.
 
-This is one of the ways SNode.C protects the clarity of application code.
+The instance type and configuration decide whether the connection is secure.
 
-### But TLS-specific inspection still has a real place
+The context implements the conversation.
 
-At the same time, a good framework should not hide TLS completely.
+#### When protocol logic should care about TLS
 
-There are real cases where the application or operator needs visibility into:
-
-- which certificate was presented,
-- whether handshake succeeded,
-- which SSL object exists on the connection,
-- whether peer validation passed or failed,
-- or what TLS-specific timeout or shutdown behavior occurred.
-
-The live TLS connection class exposes `getSSL()`, which is a strong signal that SNode.C does not forbid such visibility. It simply keeps it at the right layer.
-
-That is exactly the right compromise.
-
-TLS-specific inspection is possible when it matters, but it does not have to contaminate every ordinary protocol endpoint.
-
-### The TLS config types show the intended composition model
-
-The current live IPv4 TLS config types reinforce the same point very elegantly.
-
-`net::in::stream::tls::config::ConfigSocketServer` is built as a TLS-config specialization on top of the non-TLS IPv4 stream server config.
-
-`net::in::stream::tls::config::ConfigSocketClient` is built the same way on top of the non-TLS IPv4 stream client config.
-
-This is exactly what the architecture chapters argued should happen.
-
-TLS configuration is not a whole separate application-configuration universe.
-
-It is an added specialization layered on top of an already meaningful communication-role configuration.
-
-That is one of the strongest structural confirmations in the codebase.
-
-### The `tls` section in configuration is one of the clearest section boundaries
-
-The earlier configuration chapters introduced the section model:
-
-- `local`
-- `remote`
-- `connection`
-- `socket`
-- `server`
-- `tls`
-
-TLS is one of the most satisfying examples of why the section model works so well.
-
-The `tls` section groups exactly the settings that belong to the TLS specialization rather than scattering them across unrelated parts of the configuration model.
-
-This means the reader can think clearly:
-
-- the communication role still has its local and remote identity,
-- it still has connection and socket behavior,
-- and it additionally has TLS-specific settings when encrypted operation is desired.
-
-That is architectural clarity in practical configuration form.
-
-### The most important TLS settings conceptually
-
-A teaching chapter does not need to turn into a long OpenSSL option catalog.
-
-What matters most is the conceptual grouping of the main TLS concerns.
-
-A TLS-enabled instance usually needs to think about:
-
-- certificate chain,
-- certificate key,
-- key password if relevant,
-- CA certificate or CA directory,
-- cipher or protocol policy,
-- SSL/TLS initialization timeout,
-- SSL/TLS shutdown timeout,
-- SNI-related behavior,
-- peer validation policy.
-
-That list is important not because every application needs every item equally, but because it teaches the reader what kind of change TLS really introduces.
-
-TLS is not “just turn encryption on.”
-
-It is a serious connection-layer policy and identity configuration.
-
-### Why handshake behavior changes the mental timeline slightly
-
-In legacy communication, it is easy for beginners to think of connection establishment as a single simple transition.
-
-TLS makes the timeline slightly richer.
-
-A physical or transport-level connection can exist, and then TLS handshake activity must still complete before the connection is fully ready in the stronger sense relevant to secure communication.
-
-This is one of the reasons the framework’s distinction between `onConnect` and `onConnected` is so valuable.
-
-Even without turning the chapter into a deep state-machine analysis, the reader should understand this much:
-
-TLS adds meaningful intermediate work to the path from lower-layer connection to fully usable secure endpoint.
-
-That is another reason it belongs at the connection layer.
-
-### TLS and server/client symmetry
-
-Another satisfying property of the framework is that TLS does not destroy the larger server/client symmetry.
-
-A TLS server is still fundamentally:
-
-- a server role,
-- a configuration-bearing instance,
-- a factory of secure per-connection endpoints.
-
-A TLS client is still fundamentally:
-
-- a client role,
-- a configuration-bearing instance,
-- an initiator of secure per-connection endpoints.
-
-TLS enriches and complicates the connection layer, but it does not break the higher structural symmetry.
-
-That is exactly what a good layered design should accomplish.
-
-### TLS and diagnostics become even more important together
-
-The diagnostics chapter becomes especially relevant here.
-
-Once TLS enters the picture, visibility matters even more.
-
-Why?
-
-Because secure communication failures are often more subtle than plain socket failures.
-
-A developer may need to understand:
-
-- whether the transport connection existed at all,
-- whether handshake began,
-- whether handshake succeeded,
-- whether peer trust failed,
-- whether certificates were missing or mismatched,
-- whether timeout occurred during initialization or shutdown.
-
-This is why SNode.C’s layered visibility model is so useful.
-
-The framework already provides:
-
-- instance-level lifecycle hooks,
-- connection-level counters and addresses,
-- TLS-specific connection access,
-- logger levels and verbose levels,
-- configuration display and command-line generation.
-
-Those pieces become especially valuable in TLS scenarios.
-
-### TLS does not erase the lower family beneath it
-
-A subtle but very important point belongs here.
-
-Once TLS is active, the reader should not start imagining that the lower family has disappeared.
-
-It has not.
-
-A TLS connection is still carried over some lower communication family and transport form.
-
-That means it still matters whether the carrier beneath TLS is:
-
-- IPv4,
-- IPv6,
-- Unix domain,
-- RFCOMM,
-- or L2CAP.
-
-TLS does not abolish those distinctions.
-
-It specializes the connection layer that sits above them.
-
-That is one of the reasons the earlier lower-family chapters were so important.
-
-### The cleanest migration story: legacy first, TLS second
-
-From a teaching perspective, the best migration pattern is usually:
-
-1. understand the legacy application first,
-2. understand its context and factory clearly,
-3. understand its lower-family configuration clearly,
-4. then introduce TLS as a connection-layer upgrade.
-
-This is much better than teaching TLS as the primary first exposure.
-
-Why?
-
-Because the reader can then see very clearly what TLS changed and what it did not change.
-
-That makes the architecture much easier to trust.
-
-### When protocol logic really should care about TLS
-
-Although most of the chapter has emphasized clean separation, there are honest cases where protocol logic or higher-layer behavior really does care about TLS.
+There are also honest cases where higher-level logic should care about TLS.
 
 Examples include:
 
 - protocols whose identity model depends on peer certificates,
-- application behavior that adapts to secure versus insecure modes,
-- logging or auditing that must record TLS properties,
-- applications that expose certificate or handshake details to higher layers.
+- applications that audit TLS properties,
+- applications that adapt behavior depending on secure versus insecure transport,
+- systems that expose certificate or handshake details to higher layers,
+- protocols that bind authorization to TLS peer identity.
 
-In those cases, the design should still remain disciplined.
+In those cases, TLS-specific meaning may rise into protocol logic.
 
-Do not let every ordinary context become TLS-heavy by default.
+But it should rise deliberately.
 
-Instead, let TLS-specific meaning rise into the protocol only when the protocol genuinely requires it.
+Do not make every ordinary context TLS-aware just because the transport is TLS.
 
-That is the right balance between abstraction and honesty.
+### TLS and diagnostics
 
-### A good rule of thumb for writing TLS-capable applications in SNode.C
+TLS makes diagnostics more important.
 
-A very useful design rule is this:
+A plain socket failure is already meaningful.
 
-Write the protocol endpoint as if secure and insecure transport are the same conversation whenever that is honestly true.
+A TLS failure may involve several additional questions:
+
+- Did the lower transport connection exist?
+- Did the TLS handshake start?
+- Did the handshake succeed?
+- Was certificate material present?
+- Was the peer trusted?
+- Did SNI select the expected context?
+- Did initialization timeout?
+- Did shutdown timeout?
+- Was close-notify received or treated as EOF?
+
+Chapter 18’s visibility model applies directly.
+
+Use configuration display to inspect TLS settings.
+
+Use ordinary logs for lifecycle events.
+
+Use `PLOG` or TLS-specific error reporting where system or library context matters.
+
+Use `VLOG` for handshake, shutdown, certificate, and trust diagnostics that are too detailed for normal output.
+
+Use connection identity and counters to connect TLS events to a concrete peer relationship.
+
+TLS does not require a new diagnostic philosophy.
+
+It makes the existing one more important.
+
+### A useful teaching path: legacy first, TLS second
+
+The clearest way to understand TLS in SNode.C is:
+
+```text
+legacy stream first
+  -> then TLS stream
+```
+
+First understand the legacy application:
+
+- server or client role,
+- instance configuration,
+- factory,
+- context,
+- lower-family endpoint,
+- connection lifecycle.
+
+Then introduce TLS as a connection-layer upgrade.
+
+This lets the reader see what changed and what stayed stable.
+
+It also avoids presenting TLS as a completely new application architecture.
+
+TLS is easier to understand when the non-TLS shape is already clear.
+
+### A rule of thumb for TLS-capable applications
+
+A useful rule is:
+
+> Write the protocol endpoint as if secure and insecure transport are the same conversation whenever that is honestly true.
 
 Then let:
 
 - the instance type,
 - the connection-layer wrapper,
-- and the TLS section of the configuration
+- the TLS configuration,
+- and the diagnostics
 
 carry the secure-transport differences.
 
-Only promote TLS details into the protocol logic when the protocol semantics truly require them.
+Only promote TLS details into protocol logic when the protocol semantics require it.
 
-This one rule will keep a great deal of application code cleaner.
+This keeps application code cleaner.
 
-### Common misunderstandings about TLS in SNode.C
+It also keeps the architecture readable.
 
-It helps to clear away a few misunderstandings explicitly.
+### What to remember
 
-#### Misunderstanding 1: “TLS creates a completely separate application architecture.”
+Remember:
 
-Corrected view: in SNode.C, TLS is primarily a connection-layer specialization built on the same outer server/client structure.
-
-#### Misunderstanding 2: “If TLS is enabled, the protocol endpoint must become TLS-heavy.”
-
-Corrected view: most ordinary protocol logic should remain focused on the application conversation unless TLS-specific semantics genuinely matter.
-
-#### Misunderstanding 3: “TLS hides the lower communication family.”
-
-Corrected view: the lower family still matters; TLS sits above it as connection-layer handling.
-
-#### Misunderstanding 4: “TLS configuration is a separate side system.”
-
-Corrected view: TLS configuration is layered into the same configuration model through the `tls` section and TLS-specific config types built on top of non-TLS config.
-
-#### Misunderstanding 5: “A secure connection becomes opaque and harder to reason about.”
-
-Corrected view: the framework keeps TLS visible at the right layer, including connection-level SSL access and configuration-level policy control.
-
-### A good one-paragraph summary of the chapter
-
-TLS in SNode.C is best understood as a connection-layer specialization that reuses the same outer server/client shells, the same runtime model, and the same instance/factory/context pattern while adding secure reader/writer machinery, handshake behavior, certificate and trust configuration, and TLS-specific timing and policy concerns. This lets secure and insecure variants of the same broad application remain architecturally close without pretending that the security differences are trivial.
-
-That is the heart of the chapter.
+- TLS is a connection-layer specialization.
+- TLS changes the connection layer; it does not replace the application architecture.
+- The lower communication family still exists beneath TLS.
+- TLS changes reader/writer behavior, handshake, shutdown, certificate/trust configuration, and failure modes.
+- TLS usually does not change the context/factory pattern.
+- Protocol contexts should remain TLS-independent unless TLS has protocol meaning.
+- TLS configuration belongs in the `tls` section.
+- TLS server/client wrappers preserve the ordinary server/client model.
+- `getSSL()` gives TLS-specific access at the connection boundary.
+- TLS diagnostics require configuration, lifecycle, connection, and TLS-specific visibility.
+- TLS affects both startup and shutdown.
+- Chapter 20 continues with timeouts, retries, and failure modes.
 
 ### Closing perspective
 
-This chapter is one of the strongest confirmations of SNode.C’s architecture.
+Chapter 19 showed how secure connection handling fits into the same architecture.
 
-The framework does not merely *say* that it is layered.
+TLS is serious.
 
-It demonstrates that layering concretely by allowing TLS to enter as a serious, visible, but well-contained specialization.
+It introduces handshake behavior, shutdown behavior, certificate material, trust policy, and new failure modes.
 
-That is exactly what readers need in a modern communication framework.
+But it remains contained in the connection layer and its configuration.
 
-They need security that is real, but not architecturally chaotic.
+That balance is the important architectural lesson.
 
-SNode.C provides that.
+```text
+same application shape
+  -> TLS-aware connection handling
+      -> secure protocol conversation
+```
 
-And once the reader understands TLS this way, the next major topic becomes natural.
+The next chapter continues with communication over time.
 
-After secure transport, the next thing the reader must understand is how the framework behaves when communication is slow, interrupted, delayed, retried, or partially failing over time.
-
-That means the next chapter is about timeouts, retries, and failure modes.
+It looks at timeouts, retries, and failure modes.
