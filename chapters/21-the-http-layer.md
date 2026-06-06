@@ -1,431 +1,580 @@
 ## The HTTP Layer
-### Why HTTP appears here in the book
 
-By the time the reader reaches this chapter, the book has already built a strong lower-layer foundation.
+### From robust streams to HTTP messages
 
-We have covered:
+Chapter 20 completed the foundation for robust communication over time.
 
-- runtime and event processing,
-- communication roles,
-- contexts and factories,
+It described activation, establishment, connected operation, interruption, timeout, retry, reconnect, shutdown, and failure state.
+
+Chapter 21 moves upward.
+
+The communication model remains in place, but the application-facing meaning changes.
+
+At the stream level, application code often works close to received data and protocol-specific byte interpretation.
+
+At the HTTP level, the framework raises the application-facing unit to:
+
+```text
+request
+  -> response
+```
+
+That is the central idea of this chapter:
+
+> HTTP raises the application-facing meaning from stream data to request and response objects without replacing the lower SNode.C architecture.
+
+A HTTP server or client still depends on:
+
+- the runtime,
+- configured server or client instances,
 - lower communication families,
-- TLS,
-- timeouts, retries, and failure behavior.
+- stream transport,
+- legacy or TLS connection handling,
+- contexts,
+- factories,
+- configuration,
+- diagnostics,
+- timeouts and failure behavior.
 
-That preparation matters.
+HTTP does not erase those parts.
 
-It means HTTP can now be introduced in the right way.
+It builds on them.
 
-HTTP should not appear as a magical world that replaces everything underneath.
+### HTTP in the SNode.C layer model
 
-In SNode.C, HTTP is a higher layer built on top of the communication architecture the reader already understands.
+The layer model now looks like this:
 
-That is exactly why it belongs here.
+```text
+lower communication family
+  -> stream transport
+      -> legacy or TLS connection handling
+          -> HTTP protocol layer
+              -> request / response application logic
+```
 
-The goal of this chapter is therefore not merely to say that SNode.C has HTTP support.
+The earlier chapters taught the lower part of this structure.
 
-The goal is to show that the HTTP layer is one of the clearest examples of the framework’s larger design philosophy:
+Chapter 21 introduces the first major web-facing protocol layer above it.
 
-> a richer protocol layer can be built above the same server/client/context/runtime structure without erasing the lower layers beneath it.
+The transfer question therefore changes direction.
 
-### The HTTP module is broader than “server and client”
+Earlier chapters often asked:
 
-The current live `src/web/http` module already tells an important story through its structure alone.
+```text
+Can the same application protocol move across different lower layers?
+```
 
-It includes:
+This chapter asks:
 
-- parsing,
-- content decoding,
-- MIME-type handling,
-- HTTP utility code,
-- core HTTP server and client wrappers,
-- EventSource support,
-- and generic HTTP upgrade support.
+```text
+Can the same lower architecture support a richer protocol layer?
+```
 
-It also provides both legacy and TLS variants across multiple lower communication families.
+For HTTP, the answer is yes.
 
-This is very important.
+The lower architecture stays visible.
 
-It means the HTTP layer in SNode.C is not just a tiny convenience wrapper for sending plain text over sockets.
+The protocol meaning becomes richer.
 
-It is a real protocol layer with its own internal machinery.
+### Plain stream and HTTP side by side
 
-That is exactly what the book should emphasize.
+A compact comparison shows the transition.
 
-### HTTP sits above the stream connection model
+| Concern | Plain stream layer | HTTP layer |
+|---|---|---|
+| lower family | IPv4, IPv6, Unix domain, RFCOMM where supported | still present |
+| connection handling | legacy or TLS stream connection | still legacy or TLS underneath |
+| application-facing unit | bytes or custom stream protocol data | HTTP request and response |
+| context role | custom protocol endpoint | HTTP-aware protocol endpoint |
+| factory role | creates stream contexts | creates HTTP contexts |
+| configuration | instance / local / remote / socket / TLS | same base plus HTTP-specific configuration where needed |
+| diagnostics | connection lifecycle and counters | same plus HTTP parsing and request/response meaning |
+| extension point | protocol code in the context | routing, SSE, WebSocket upgrade, higher web layers |
 
-The easiest way to place HTTP correctly is to say what it is **not**.
+This is the same architectural pattern at a higher semantic level.
 
-HTTP is not a replacement for the server/client outer role pattern. HTTP is not a replacement for the event-driven runtime. HTTP is not a replacement for the connection abstraction.
+The application is no longer forced to decide where an HTTP request begins and ends.
 
-Instead, HTTP is a protocol layer that *uses* all of those.
+The HTTP layer takes responsibility for that protocol interpretation.
 
-That means a HTTP server in SNode.C is still, structurally:
+### Server-side HTTP: from bytes to ready requests
 
-- a server instance,
-- running on a lower communication family,
-- over a stream transport,
-- with legacy or TLS connection handling,
-- under the same runtime and flow-control model.
+At the plain stream level, the protocol endpoint may react to incoming bytes.
 
-The difference is that the per-connection protocol endpoint is now HTTP-aware.
+At the HTTP server level, the central application-facing event is different:
 
-That is the architectural heart of the chapter.
+```text
+a complete HTTP request is ready
+```
 
-### The live server wrapper shows the layer composition beautifully
+The HTTP layer consumes stream data, parses HTTP, creates request/response objects, and calls the application at the HTTP level.
 
-The current live `web::http::legacy::in::Server` alias is a very elegant example.
+This changes what the application code sees.
 
-It does not define a whole new universe of server machinery.
+It does not change the runtime model underneath.
 
-Instead, it aliases an HTTP server template built on top of the lower IPv4 legacy stream server shell.
+#### The HTTP server wrapper
 
-That is already a major lesson.
+The generic HTTP server wrapper has a simple shape:
 
-The HTTP layer is not bypassing the lower framework.
+```cpp
+web::http::server::Server<LowerSocketServerT>
+```
 
-It is composing with it.
+The lower server template supplies the server role.
 
-The generic `web::http::server::Server` template makes this even clearer. It turns an ordinary lower-layer server template into an HTTP server by plugging in a HTTP-specific `SocketContextFactory` and by centering the application-facing handler on HTTP request/response objects.
+The HTTP wrapper supplies the HTTP context factory.
 
-This is exactly the architectural payoff one hopes for in a layered framework.
+In simplified form:
 
-### The server-side application shape changes in one important way
+```cpp
+SocketServerT<
+    web::http::server::SocketContextFactory,
+    std::function<void(std::shared_ptr<Request>,
+                       std::shared_ptr<Response>)>>
+```
 
-When the reader first sees the HTTP server layer, the most noticeable change is this:
+This means:
 
-The application-facing callback is no longer primarily about raw bytes.
+| Part | Meaning |
+|---|---|
+| `SocketServerT` | the lower server shell |
+| `web::http::server::SocketContextFactory` | creates HTTP server contexts |
+| `Request` | parsed HTTP request visible to the application |
+| `Response` | HTTP response object visible to the application |
+| application callback | runs when HTTP request handling can begin |
 
-Instead, it is about:
+A concrete IPv4 legacy HTTP server is then just one specialization of this idea:
 
-- a `Request`,
-- and a `Response`.
+```cpp
+using Server =
+    web::http::server::Server<
+        net::in::stream::legacy::SocketServer>;
+```
 
-This is the right level shift.
+The lower layer is still present.
 
-At the lower stream level, the protocol endpoint cares about bytes, buffering, and message boundaries.
+The HTTP layer plugs into it.
 
-At the HTTP layer, the endpoint now cares about higher-level HTTP meaning.
+#### Request and response as the application-facing unit
 
-This is one of the most important conceptual transitions in the whole book.
+The server-side application callback receives HTTP objects, not raw transport data.
 
-The lower communication model stays the same underneath, but the application-facing unit of meaning becomes richer.
+Conceptually:
 
-### The server handler becomes “request ready” rather than “bytes arrived”
+```text
+stream data arrives
+  -> HTTP parser consumes stream data
+      -> HTTP request becomes available
+          -> application receives Request and Response
+```
 
-The live HTTP server template centers its main application-facing behavior around an `onRequestReady` callback receiving shared request and response objects.
+That is the main semantic shift.
 
-That is a very strong architectural move.
+The application no longer has to treat every connection as an uninterpreted stream.
 
-It means the HTTP layer is doing real protocol work for the user:
+It can respond to HTTP meaning.
 
-- interpreting incoming data as HTTP,
-- constructing a higher-level request representation,
-- and handing the application a response object in the same semantic world.
+The server-side HTTP context still derives from the stream context model.
 
-The reader should notice what this means.
+It overrides stream-context lifecycle and receive behavior, but it uses that lower behavior to deliver HTTP requests.
 
-At the plain stream level, the user often writes `onReceivedFromPeer()` logic.
+That is the right boundary:
 
-At the HTTP server level, that low-level concern has moved downward into the HTTP layer itself, and the user is now handed an already meaningful HTTP event.
+```text
+stream context machinery
+  -> receives data
 
-That is exactly how a good higher protocol layer should behave.
+HTTP server context
+  -> interprets HTTP
 
-### The HTTP client layer is also a real protocol layer
+application handler
+  -> handles Request and Response
+```
 
-The same design idea appears on the client side.
+### Client-side HTTP: from connection to requests and responses
 
-The current live `web::http::legacy::in::Client` alias builds an HTTP client on top of the lower IPv4 legacy stream client shell.
+The HTTP client follows the same general pattern.
 
-The generic `web::http::client::Client` template shows even more structure:
+It is not just a raw client that writes a manually assembled request line.
 
-- it plugs in a HTTP client `SocketContextFactory`,
-- it works with `MasterRequest`, `Request`, and `Response` concepts,
-- it supports callbacks for HTTP-connected and HTTP-disconnected behavior,
-- and it installs an additional `ConfigHTTP` subcommand into the configuration hierarchy.
+It is a client-side HTTP protocol layer built on a lower client role.
 
-This is very informative.
+Conceptually:
 
-It shows that the HTTP client is not simply “a raw client that happens to send a GET line.”
+```text
+lower client role
+  -> HTTP client SocketContextFactory
+      -> MasterRequest
+          -> Request / Response
+```
 
-It is a structured protocol client with its own higher-level request model and its own HTTP-specific configuration concerns.
+The lower client still establishes and maintains the connection.
 
-### The client layer reveals an important idea about protocol-specific config
+The HTTP layer gives the application a request/response-oriented client surface.
 
-One especially useful live-code detail in the HTTP client template is the creation of an additional `ConfigHTTP` subcommand under the instance configuration.
+#### The HTTP client wrapper
 
-That is an excellent confirmation of the book’s earlier configuration chapters.
+The generic HTTP client wrapper has the shape:
 
-The framework does not force protocol-specific settings into random unrelated sections.
+```cpp
+web::http::client::Client<LowerSocketClientT>
+```
 
-Instead, once the communication role becomes an HTTP client, a HTTP-specific config layer can be attached to that role in a structured way.
+It uses a HTTP client `SocketContextFactory` on top of the lower socket client template.
 
-This is a beautiful example of how the configuration model stays extensible without losing its hierarchical clarity.
+The code shape includes:
 
-### The Host header detail is more revealing than it first appears
+- a lower `SocketClientT`,
+- `web::http::client::SocketContextFactory`,
+- `MasterRequest`,
+- `Request`,
+- `Response`,
+- HTTP-connected and HTTP-disconnected callbacks,
+- access to the instance configuration.
 
-The live HTTP client template also performs a small but meaningful piece of logic in `setOnConnect(...)`: if the HTTP configuration’s host header is empty, it derives a default host header value from the remote socket address.
+The important teaching point is the same as on the server side:
 
-This is a small but very instructive design detail.
+```text
+lower client role
+  -> remains responsible for connection behavior
 
-Why?
+HTTP client layer
+  -> adds HTTP request/response meaning
+```
 
-Because it shows the HTTP layer doing a protocol-specific adaptation on top of the lower connection model without requiring the application to manually reinvent that logic every time.
+#### `MasterRequest`, `Request`, and `Response`
 
-That is exactly the kind of responsibility a higher protocol layer should take on.
+The client side has to represent more than one raw write.
 
-The lower connection still exists. The higher protocol adds HTTP meaning on top.
+It needs to manage the relationship between a client connection and one or more HTTP requests and responses.
 
-### The HTTP layer is also a parsing and decoding layer
+That is why the HTTP client vocabulary contains:
 
-The HTTP module’s current file layout makes another important point visible.
+| Concept | Role |
+|---|---|
+| `MasterRequest` | connection-level or client-side request coordination |
+| `Request` | concrete HTTP request |
+| `Response` | concrete HTTP response |
 
-The layer includes:
+The exact internal mechanics belong to the implementation and reference documentation.
 
-- a parser,
-- content decoder machinery,
-- field decoding,
+For this chapter, the important point is the semantic level.
+
+The client is now expressed in HTTP terms.
+
+#### HTTP-specific configuration
+
+The HTTP client adds an HTTP-specific configuration subcommand to the existing instance configuration hierarchy.
+
+That subcommand is named:
+
+```text
+http
+```
+
+It contains HTTP behavior such as:
+
+- host-header handling,
+- pipelined request behavior.
+
+This continues the configuration model from Chapters 16 and 17.
+
+HTTP-specific configuration is not a random side channel.
+
+It is attached to the configured communication role.
+
+The HTTP layer can also derive HTTP meaning from lower connection configuration where appropriate.
+
+For example, if the HTTP host header is empty, the client setup can derive a default host header from the remote socket address.
+
+That is a small but useful example of responsibility placement:
+
+```text
+remote endpoint
+  -> belongs to lower configuration
+
+Host header
+  -> belongs to HTTP configuration
+
+HTTP client layer
+  -> may derive the HTTP default from the lower endpoint
+```
+
+The application does not need to repeat that adaptation in every client.
+
+### What the HTTP layer adds
+
+The HTTP layer adds more than server and client aliases.
+
+It contains the machinery needed to turn stream communication into HTTP message semantics.
+
+| Added concern | Meaning |
+|---|---|
+| parser | turns stream data into HTTP message structure |
+| content decoder | handles transfer/content decoding |
+| request/response types | expose HTTP meaning to application code |
+| status and header utilities | model HTTP metadata |
+| MIME handling | supports content-type decisions for served content |
+| upgrade machinery | allows HTTP to negotiate another protocol |
+| EventSource support | builds streaming-style behavior on HTTP |
+
+This is why HTTP is a real protocol layer in SNode.C.
+
+It is not merely a convenience function for writing a few text lines to a socket.
+
+#### Parsing and decoding
+
+HTTP arrives over a stream.
+
+A stream does not know HTTP message boundaries by itself.
+
+The HTTP layer therefore needs parsing and decoding machinery.
+
+That includes concerns such as:
+
+- request parsing,
+- header field processing,
 - chunked transfer decoding,
-- HTTP/1.0 response decoding,
 - identity decoding,
-- content-type and MIME helpers.
+- HTTP/1.0 response decoding,
+- content decoding.
 
-This is worth emphasizing.
+These are HTTP-layer responsibilities.
 
-The HTTP layer is not just a request/response type definition.
+They are what allow the application-facing server callback to receive a `Request` and `Response` instead of raw stream fragments.
 
-It contains the actual machinery needed to turn stream-oriented communication into HTTP message semantics.
+#### MIME handling
 
-That is exactly why the application-facing layer can safely move upward from bytes to request/response objects.
+MIME handling is practical HTTP support for serving content.
 
-### Why MIME handling belongs here too
+A server often needs to associate a file or resource with a content type.
 
-The presence of `MimeTypes` and libmagic-related support in the module is another sign that the HTTP layer is intended to support practical web serving rather than only abstract message exchange.
+SNode.C includes MIME support and can use libmagic when available for better type detection.
 
-This matters because HTTP servers often need to reason about content type, not just status code and body text.
+This belongs in the HTTP layer because content type is HTTP meaning.
 
-A teaching book should point this out because it helps the reader see that the HTTP layer in SNode.C is already concerned with the realities of actual web behavior.
+It should not be mixed into the lower socket layer.
 
-That will matter even more in the chapters on Express-like routing, SSE, and WebSocket.
+At the same time, MIME handling is not the central architectural transition of this chapter.
 
-### HTTP is where protocol upgrades begin to matter
+The central transition is still:
 
-One of the most interesting parts of the current HTTP module is the presence of:
+```text
+stream data
+  -> HTTP request/response meaning
+```
 
-- `SocketContextUpgrade`
-- upgrade factories,
-- and a `SocketContextUpgradeFactorySelector`.
+#### Status, headers, and utilities
 
-This is a very important architectural clue.
+HTTP also needs ordinary protocol utilities:
 
-It means the HTTP layer is not treated only as an endpoint in itself.
+- status code handling,
+- header and field helpers,
+- content-type representation,
+- case-insensitive HTTP maps,
+- utility functions for HTTP syntax and behavior.
 
-It is also treated as a launch point from which other higher-level protocols may be negotiated.
+These pieces are part of the protocol layer.
 
-That is exactly the correct place for protocol upgrade logic.
+They keep HTTP concerns grouped with HTTP rather than spreading them through application code.
 
-HTTP often serves as the protocol layer in which the decision is made to remain HTTP or to move upward into something else.
+### Lower families and connection handling still matter
 
-SNode.C’s architecture clearly reflects that.
+Using HTTP does not make the lower carrier disappear.
 
-### Upgrade support is generic, not only a WebSocket trick
+The HTTP module provides variants across lower families and connection-handling choices.
 
-A good book should be careful here.
+The current header list includes, among others:
 
-The presence of generic upgrade machinery means the framework is not hard-wiring the idea of “upgrade” to one single protocol.
+- IPv4 legacy and TLS variants,
+- IPv6 legacy and TLS variants,
+- Unix domain legacy and TLS variants,
+- RFCOMM legacy and TLS variants,
+- EventSource variants over several of those combinations.
 
-Instead, the HTTP layer exposes a structured mechanism for selecting and loading protocol-upgrade factories.
+This is important because it prevents a common misconception:
 
-That is a strong architectural choice.
+```text
+HTTP
+  -> therefore only IPv4 TCP
+```
 
-It means HTTP is treated as an application-layer protocol that can either remain itself or become the entry point to richer behaviors above it.
+That is not the SNode.C model.
 
-Later chapters will make this much more concrete through WebSocket and protocol stacks above it.
+The model is:
 
-But the current HTTP chapter should already make the idea visible.
+```text
+lower family
+  -> stream
+      -> legacy or TLS
+          -> HTTP
+```
 
-### EventSource support proves the HTTP layer is not purely request/response
+HTTP is the higher protocol layer.
 
-The current module also includes HTTP EventSource support across several lower-family and legacy/TLS combinations.
+The lower family and connection layer still define how the peer relationship is carried.
 
-This is important for two reasons.
+### HTTP as a bridge to higher web protocols
 
-First, it reminds the reader that HTTP can support more than a simple one-request/one-response mental model.
+HTTP is also a bridge.
 
-Second, it shows that the HTTP layer is already preparing the way for real-time and streaming-style higher application behavior.
+It is not only an endpoint protocol.
 
-The live `legacy/in/EventSource.h` makes this especially tangible. It builds a client-side EventSource facility on top of the HTTP client layer and even includes URL parsing logic for HTTP origins and paths.
+It can become the place where an application moves upward into more specialized web behavior.
 
-That is a nice sign that the HTTP layer is not minimal in a narrow sense. It is already designed to support real browser-adjacent and streaming use cases.
+Two examples are especially important for the next chapters:
 
-### The lower family still matters beneath HTTP
+- upgrade support,
+- EventSource support.
 
-A point worth repeating from earlier architecture chapters now becomes especially important.
+#### Upgrade support
 
-Even when the reader starts thinking in HTTP terms, the lower communication family does not disappear.
+HTTP upgrade support belongs in the HTTP layer because HTTP is where the upgrade decision is negotiated.
 
-The live module structure makes this very visible by providing:
+SNode.C provides generic upgrade machinery, including upgrade contexts, upgrade factories, and a selector for upgrade factories.
 
-- legacy and TLS variants,
-- IPv4 and IPv6 variants,
-- Unix domain variants,
-- and even Bluetooth-family variants in the HTTP header list.
+This prepares the later WebSocket chapter.
 
-This is one of the most impressive things about the HTTP layer in SNode.C.
+The point here is not to teach WebSocket yet.
 
-It shows that the framework does not equate “HTTP” with “IPv4 TCP only.”
+The point is to show where the upgrade boundary lives:
 
-Instead, HTTP is treated as a higher layer that can sit above different lower carriers.
+```text
+HTTP request/response layer
+  -> upgrade decision
+      -> another protocol layer may take over
+```
 
-That is exactly the architectural consistency the earlier chapters prepared the reader to appreciate.
+That is a clean architectural boundary.
 
-### HTTP server and client still live inside the same runtime model
+#### EventSource and streaming-style HTTP
 
-The introduction of request/response objects should not mislead the reader into thinking that the runtime model has changed fundamentally.
+EventSource support shows that HTTP is not limited to a short request/response exchange.
 
-It has not.
+It can also carry streaming-style behavior.
 
-A HTTP server or client in SNode.C still lives inside:
+The HTTP module includes EventSource variants across several lower-family and legacy/TLS combinations.
 
-- the same event-driven runtime,
-- the same connection lifecycle,
-- the same timeout/retry/reconnect environment,
-- the same configuration model,
-- the same diagnostics shell.
+There is also client-side EventSource construction that can work from an origin/path or URL-shaped input.
 
-The difference is not the destruction of the lower framework.
+Chapter 23 treats Server-Sent Events and real-time HTTP in detail.
 
-The difference is that the protocol endpoint meaning has become richer.
+Here, the important point is placement:
 
-That is the right way to understand higher-level protocol support in SNode.C.
+```text
+EventSource
+  -> belongs naturally near HTTP
+      -> because it uses HTTP semantics for streaming-style behavior
+```
 
-### The right way to teach HTTP after the lower layers
+### What remains from the lower architecture
 
-At this point, the book should make one pedagogical point explicit.
+A HTTP server still has much in common with the earlier echo server.
 
-Teaching HTTP *after* the lower layers is not making the reader wait unnecessarily.
-
-It is what makes the HTTP layer easier to understand correctly.
-
-If the reader had begun with HTTP, they might have mistaken:
-
-- request/response for the whole communication story,
-- handler callbacks for the whole runtime model,
-- and HTTP convenience for the whole framework.
-
-Because the lower layers were taught first, the reader can now see HTTP in its right place:
-
-as a genuine higher layer that uses and benefits from the lower architecture already built.
-
-That is a much stronger understanding.
-
-### What a HTTP server still has in common with the echo server
-
-This is one of the most satisfying transfer questions in the whole book.
-
-A reader should ask:
-
-What does a HTTP server still have in common with the earlier echo server?
-
-The answer is: quite a lot.
-
-Both still involve:
+Both involve:
 
 - a named communication role,
 - a server instance,
-- a context factory under the hood,
+- a context factory,
 - per-connection protocol endpoints,
 - runtime-driven lifecycle,
-- lower-family and connection-layer choices,
-- diagnostics and configuration.
+- lower-family choices,
+- legacy or TLS connection handling,
+- configuration,
+- diagnostics.
 
-What has changed is the semantic level at which the application-facing handler operates.
+What changes is the semantic level of the application handler.
 
-That is the perfect architectural evolution.
+The echo-style context may interpret stream data directly.
 
-### What a HTTP client still has in common with the earlier plain client
+The HTTP server handler receives request and response objects.
 
-The same transfer works on the client side.
+The same transfer applies to clients.
 
-A HTTP client still shares with earlier plain clients:
+A HTTP client still has:
 
 - an outer client role,
-- configuration of local and remote identity beneath it,
+- local and remote endpoint configuration underneath,
 - connection establishment,
 - lifecycle callbacks,
-- retry and reconnect possibilities,
+- retry and reconnect behavior where configured,
 - runtime integration.
 
-What changes is that the application is now expressed in terms of HTTP requests, HTTP responses, and HTTP-specific connection behavior.
+What changes is that the application works in HTTP terms.
 
-That is exactly how the higher layer should enrich the lower one.
+The lower architecture remains visible.
 
-### Why the HTTP chapter is a bridge chapter
+### Chapter 21 as a bridge chapter
 
-This chapter is important not only because HTTP itself matters.
+Chapter 21 is a bridge between two parts of the book.
 
-It is important because it is a bridge.
+Earlier chapters taught:
 
-It connects:
+```text
+runtime
+  -> lower families
+      -> stream connections
+          -> contexts and factories
+              -> configuration and diagnostics
+                  -> TLS and robust failure behavior
+```
 
-- the lower communication architecture,
-- to the richer web-facing application layers.
+This chapter raises that structure to HTTP.
 
-Without the HTTP layer, later chapters on:
+Later chapters move higher again:
 
-- Express-like routing,
-- SSE,
-- WebSocket,
-- and higher protocol compositions,
+```text
+HTTP
+  -> Express-like routing and middleware
+  -> Server-Sent Events
+  -> WebSocket upgrade
+```
 
-would feel much more abrupt.
+That is why Chapter 21 should not become a complete HTTP reference.
 
-With this chapter in place, the climb from transport and connection thinking to richer web application thinking becomes natural.
+Its job is to show where HTTP sits in SNode.C.
 
-### Common misunderstandings about the HTTP layer in SNode.C
+It teaches the architectural transition from streams to HTTP messages.
 
-It helps to clear away a few misunderstandings explicitly.
+### What to remember
 
-#### Misunderstanding 1: “HTTP in SNode.C is just a thin GET/POST helper.”
+Remember:
 
-Corrected view: the current module includes parsing, decoding, MIME support, request/response abstractions, EventSource support, and generic upgrade machinery.
-
-#### Misunderstanding 2: “Once I use HTTP, the lower layers stop mattering.”
-
-Corrected view: HTTP is still carried by the same lower communication families, connection layers, runtime, and configuration model.
-
-#### Misunderstanding 3: “HTTP server/client wrappers are a completely separate framework.”
-
-Corrected view: they are built by plugging HTTP-specific factories and semantics into the existing lower socket shells.
-
-#### Misunderstanding 4: “Upgrade is only a WebSocket quirk.”
-
-Corrected view: the current HTTP layer exposes generic upgrade machinery, which is a broader architectural idea.
-
-#### Misunderstanding 5: “EventSource belongs somewhere else entirely.”
-
-Corrected view: its presence in the HTTP module is a strong reminder that the HTTP layer already supports real-time and streaming-style higher behaviors.
-
-### A good one-paragraph summary of the chapter
-
-The HTTP layer in SNode.C is a real protocol layer built above the existing stream-based communication architecture. It reuses the same outer server/client shells, runtime model, lower communication families, connection-layer choices, and configuration hierarchy, while adding HTTP-specific parsing, decoding, request/response semantics, MIME handling, EventSource support, and generic protocol-upgrade machinery. This lets the application move from byte-oriented protocol endpoints to HTTP-oriented handler logic without losing the architectural clarity established in the lower layers.
-
-That is the heart of the chapter.
+- HTTP is a higher protocol layer above the stream connection model.
+- HTTP does not replace the runtime, instance, connection, context, configuration, or diagnostic model.
+- HTTP raises the application-facing unit from stream data to request/response objects.
+- HTTP server wrappers plug an HTTP context factory into lower server shells.
+- HTTP client wrappers plug an HTTP context factory into lower client shells.
+- HTTP-specific configuration extends the existing configuration hierarchy.
+- Parsing and decoding belong to the HTTP layer.
+- MIME handling is practical support for serving content.
+- Upgrade support makes HTTP a negotiation point for higher protocols.
+- EventSource shows that HTTP can support streaming-style behavior.
+- Lower-family and legacy/TLS choices still matter beneath HTTP.
+- Chapter 22 moves from HTTP protocol support to the Express-like application framework.
 
 ### Closing perspective
 
-This chapter is one of the most satisfying in the book because it shows the framework growing upward without losing its shape.
+Chapter 21 showed how SNode.C raises stream communication to HTTP request/response semantics.
 
-The reader now sees clearly that SNode.C can move from:
+The lower architecture remains in place:
 
-- raw stream communication,
-- to structured higher protocol behavior,
-- without abandoning the same core ideas of runtime, roles, contexts, factories, configuration, and diagnostics.
+```text
+runtime
+  -> instance
+      -> connection
+          -> context
+              -> configuration and diagnostics
+```
 
-That is exactly what the book has been building toward.
+The meaning exposed to application code becomes richer:
 
-And now the next step becomes natural.
+```text
+stream data
+  -> HTTP request and response
+```
 
-Once the reader understands HTTP as a real protocol layer, the book can move to the more application-facing web abstraction that sits above it:
+The next chapter moves one level higher again.
 
-the Express-like framework layer.
+Chapter 22 introduces the Express-like framework, where HTTP handling becomes routing, middleware, and application structure.
