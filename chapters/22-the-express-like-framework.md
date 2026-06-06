@@ -140,7 +140,7 @@ class WebAppT
 };
 ```
 
-This is the architectural center of the chapter.
+This composition explains how HTTP request handling becomes Express-like application flow.
 
 | Type | Role |
 |---|---|
@@ -526,42 +526,21 @@ They are reusable application behaviors.
 
 That is middleware territory.
 
-#### Authentication as middleware
+#### Authentication, static serving, virtual hosts, request visibility, and JSON handling
 
-Basic authentication is naturally middleware.
+Basic authentication, static serving, virtual-host routing, verbose request reporting, and JSON handling are examples of reusable application behavior.
 
-It can be attached where it is needed in the route structure.
+They can be attached through middleware instead of being baked into the lower socket layer, the HTTP parser, or every individual route handler.
 
-It can participate in the same request flow as other middleware.
+Static serving may involve root directories, index handling, fall-through behavior, headers, cookies, and connection-state decisions after the response.
 
-It does not have to be baked into the lower socket layer or into every route handler.
+`VHost` belongs here because host-based dispatch is web-application routing behavior.
 
-#### Static serving as middleware
+`VerboseRequest` belongs here because request visibility is useful across routes but should not be duplicated inside every handler.
 
-Static file serving is also naturally middleware.
+JSON middleware belongs to the same group of reusable request-processing behavior when the required JSON dependency is available at build time.
 
-It is application behavior built on top of HTTP.
-
-It may involve:
-
-- a root directory,
-- index handling,
-- fall-through behavior,
-- response headers,
-- cookies,
-- connection-state decisions after the response.
-
-Those are web-serving concerns.
-
-They belong at the Express-like layer.
-
-#### JSON middleware
-
-JSON middleware support belongs to the same group of reusable request-processing behavior.
-
-It is part of the Express-like module when the required JSON dependency is available at build time.
-
-The important architectural point is simple:
+The architectural point is:
 
 ```text
 common request-processing behavior
