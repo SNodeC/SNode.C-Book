@@ -1,399 +1,645 @@
 ## Server-Sent Events and Real-Time HTTP
-### Why SSE deserves its own chapter
 
-Once a reader has understood the HTTP layer and the Express-like application layer, the next natural question is how SNode.C handles real-time communication over the web stack.
+### From request / response to event streams
 
-The first answer is **Server-Sent Events**.
+Chapter 22 showed how HTTP handling becomes application structure through routing, middleware, and request/response facades.
 
-This is a very good topic for a dedicated chapter because SSE sits in a particularly interesting place in the architecture.
+Chapter 23 keeps the application inside the HTTP world, but changes the response shape.
 
-It is:
+One request opens a response stream that can remain open while the server sends event records over time.
 
-- richer than ordinary one-request/one-response HTTP,
-- simpler than full bidirectional WebSocket communication,
-- and still fundamentally part of the HTTP world.
+That is the central idea of this chapter:
 
-That makes SSE a perfect teaching bridge.
+> Server-Sent Events keep the application inside HTTP while changing the response from a short message into a long-lived event stream.
 
-It shows how SNode.C handles long-lived streaming-style HTTP behavior without discarding the same runtime, connection, and protocol-layer discipline established in the earlier chapters.
+SSE is useful because it is still HTTP.
 
-### What makes SSE architecturally interesting
+It does not require a full bidirectional protocol when the application only needs server-to-client updates.
 
-A good book should resist the temptation to reduce SSE to a browser API feature.
+It sits between ordinary request/response HTTP and WebSocket:
 
-In SNode.C, SSE is more interesting than that.
+```text
+ordinary HTTP
+  -> one request, one response
 
-It is a test of whether the framework can support a HTTP-based interaction that is:
+Server-Sent Events
+  -> one request, one long-lived event response
 
-- long-lived,
-- one-way from server to client,
-- incrementally delivered over time,
-- event-structured rather than request/response-finalized immediately,
-- and subject to reconnect and retry behavior.
+WebSocket
+  -> HTTP upgrade, then bidirectional messaging
+```
 
-That is exactly the kind of interaction that reveals whether the lower runtime and connection model are genuinely strong.
+This makes SSE a good bridge between the HTTP/Express chapters and the WebSocket chapter.
 
-SNode.C handles this well because it never pretended that HTTP had to mean “short request, short response, end of story.”
+### SSE in the SNode.C web stack
 
-### SSE is still HTTP, not a separate protocol world
+The stack now looks like this:
 
-One of the most important conceptual points of the chapter is this:
+```text
+lower communication family
+  -> stream transport
+      -> legacy or TLS connection handling
+          -> HTTP request / response
+              -> long-lived event-stream response
+                  -> application MessageEvent handling
+```
 
-SSE is still part of the HTTP layer.
+SSE does not bypass the lower architecture.
 
-It does not replace HTTP. It does not bypass HTTP. It does not abolish the request/response model entirely.
+It still depends on:
 
-Instead, it stretches HTTP into a long-lived streaming form in which the server continues to emit event data over one response stream.
+- the runtime,
+- a lower communication family,
+- stream transport,
+- legacy or TLS connection handling,
+- HTTP client/server behavior,
+- connection lifecycle,
+- retry and reconnect policy,
+- diagnostics.
 
-This is exactly why SSE belongs after the HTTP and Express-like chapters.
+The application-facing unit changes again.
 
-The reader should see it as a specialization of the HTTP layer, not as a jump into a completely new communication universe.
+Earlier chapters showed these semantic lifts:
 
-### The live code confirms that SSE is a real built-in facility
+```text
+stream bytes
+  -> HTTP Request / Response
 
-The current live HTTP module already showed a very important sign: EventSource support is part of the module structure itself.
+HTTP request
+  -> Express Request / Response facades
 
-That means SSE is not being treated only as an external usage pattern or a code snippet. It is built into the framework’s HTTP client tooling.
+SSE lines
+  -> MessageEvent
+```
 
-This is one of the reasons the chapter can be written with confidence.
+That is the main continuity.
 
-The framework has a real SSE client-side facility, not merely a vague statement that SSE should be possible in principle.
+SSE is another layer that gives the application a more meaningful unit of work.
 
-### The EventSource abstraction mirrors the browser mental model — but in SNode.C terms
+### Ordinary HTTP, SSE, and WebSocket side by side
 
-The current live `web::http::client::tools::EventSource` abstraction is especially illuminating.
+A compact comparison helps place SSE.
 
-It includes:
+| Concern | Ordinary HTTP | Server-Sent Events | WebSocket |
+|---|---|---|---|
+| connection shape | request / response | request / long-lived response stream | upgraded bidirectional connection |
+| direction | usually client request, server response | server to client events | both directions |
+| protocol world | HTTP | HTTP | starts with HTTP upgrade, then WebSocket |
+| application unit | response | event | message / frame |
+| typical use | documents, APIs, files | notifications, dashboards, feeds | bidirectional interaction |
+| complexity | lowest | moderate | higher |
 
-- a `ReadyState` enum with `CONNECTING`, `OPEN`, and `CLOSED`,
-- a `MessageEvent` structure with event type, data, last event ID, and origin,
-- `onMessage(...)`,
-- `addEventListener(...)`,
-- `removeEventListeners(...)`,
-- `onOpen(...)`,
-- `onError(...)`,
-- `readyState()`,
-- `lastEventId()`,
-- `retry()` and `retry(...)`,
-- and `close()`.
+SSE is not WebSocket with fewer features.
 
-This is a very strong design choice.
+It is a different fit.
 
-It gives the user a clear event-stream model without abandoning the larger SNode.C runtime and connection architecture underneath.
+It is useful when the server should push events and the client does not need to send messages back over the same long-lived channel.
 
-### Why ready state matters so much for SSE
+### SSE as long-lived HTTP
 
-The presence of an explicit ready-state model is one of the most important architectural signals in the live code.
+SSE begins as HTTP.
 
-SSE is not a one-shot interaction.
+The client sends a HTTP request for an event-stream endpoint.
 
-Its lifecycle matters.
+If the server accepts the request and responds with an event-stream response, the response remains open.
 
-The distinction among:
+A useful model is:
 
-- connecting,
-- open,
-- closed,
+```text
+HTTP request
+  -> HTTP response starts
+      -> response remains open
+          -> server sends event records over time
+              -> client dispatches MessageEvent objects
+```
 
-is exactly what the user needs in order to reason about an ongoing event stream.
+The response is still a HTTP response.
 
-This is also why SSE is such a useful bridge chapter.
+The difference is that it is not immediately completed.
 
-It introduces the reader to a higher-level long-lived communication state model while still staying inside the HTTP world.
+It becomes a long-lived stream of event records.
 
-### The `MessageEvent` abstraction lifts SSE above raw lines
+#### One request, one open response stream
 
-The live `MessageEvent` structure is also important.
+Ordinary HTTP often looks like this:
 
-It exposes:
+```text
+request
+  -> response
+      -> done
+```
 
-- event type,
-- data,
-- last event ID,
-- origin.
+SSE changes the response phase:
 
-That means the framework is not making the user parse raw SSE text lines manually in ordinary use.
+```text
+request
+  -> response starts
+      -> event
+      -> event
+      -> event
+      -> ...
+```
 
-It is lifting the wire format into a meaningful event object.
+This makes SSE suitable for live updates without repeatedly polling the server.
 
-This is the same kind of higher-layer move the earlier HTTP and Express chapters already prepared the reader to appreciate.
+The server can keep the response open and emit changes as they happen.
 
-The lower wire format still exists underneath. The application-facing unit of meaning becomes richer.
+#### Server-to-client event direction
 
-### The live parser confirms SSE is treated seriously
+SSE is one-way by design.
 
-The current live `EventSourceT` code is especially valuable because it shows that the framework is doing real SSE parsing work internally.
+The long-lived stream carries events from server to client.
 
-It handles concepts such as:
+That makes it useful for:
 
-- `data` lines,
-- `event` lines,
-- `id` lines,
-- `retry` lines,
-- dispatching of accumulated messages,
-- updating last-event ID,
-- and guarding against oversized pending data or lines.
-
-This is exactly what a real SSE layer should do.
-
-It confirms that SSE in SNode.C is not decorative. It is a real protocol-aware facility built on top of the HTTP client layer.
-
-### SSE is one-way, and that is a feature, not a limitation
-
-A good teaching chapter should say this explicitly.
-
-SSE is not “WebSocket minus half the features.”
-
-Its one-way character is often exactly what makes it useful.
-
-For many applications, the server needs to push updates, but the client does not need full bidirectional message exchange over the same long-lived channel.
-
-This makes SSE a very elegant fit for cases such as:
-
-- activity streams,
 - dashboards,
 - notifications,
-- state updates,
 - monitoring views,
+- activity streams,
+- state updates,
 - incremental event feeds.
 
-That is one of the reasons the framework benefits from supporting SSE as a real HTTP-based facility rather than forcing every real-time use case upward into WebSocket immediately.
+The client can still make ordinary HTTP requests elsewhere in the application.
 
-### The EventSource client is built on the same HTTP client shell
+SSE simply gives one endpoint a long-lived server-to-client update channel.
 
-The live `EventSourceT<Client>` template confirms one of the most important architectural lessons in the whole chapter.
+#### Why one-way is useful
 
-The SSE client is not built outside the HTTP layer.
+One-way streaming keeps the model simpler than bidirectional messaging.
 
-It is built **on top of** a HTTP client type.
+The application can use SSE when the main requirement is:
 
-That means the EventSource tool inherits the strengths of the larger architecture:
+```text
+server state changes
+  -> client view updates
+```
 
-- the same outer client role,
-- the same lower-family choices under the HTTP layer,
-- the same runtime integration,
-- the same connect/disconnect lifecycle,
-- the same timeout/retry/reconnect story.
+That is common in monitoring and dashboard applications.
 
-This is exactly the kind of compositional architecture the book has been emphasizing from the start.
+If both sides need to send independent messages over the same long-lived channel, WebSocket becomes the more natural fit.
 
-### Connection lifecycle still matters underneath SSE
+Chapter 24 will treat that case.
 
-One of the most useful things the live EventSource client code makes visible is that SSE does not abolish the normal connection lifecycle.
+### Client-side EventSource and server-side SSE endpoints
 
-The implementation still uses:
+It is useful to distinguish the two sides carefully.
 
-- connect callbacks,
-- connected callbacks,
-- disconnect callbacks,
-- and a underlying `SocketConnection`.
+On the client side, SNode.C provides an `EventSource` abstraction.
 
-That is a crucial architectural point.
+On the server side, SSE is expressed as long-lived HTTP response streaming from the web/HTTP application layer.
 
-Even though the application-facing model is now “event stream,” the real-time stream is still carried by the same lower communication lifecycle.
+That means this chapter has two related views:
 
-This is why the earlier chapters on connections, diagnostics, timeouts, and retry behavior were so important.
+| Side | SNode.C view |
+|---|---|
+| client side | built-in `EventSource` tool on top of a HTTP client |
+| server side | HTTP/Express endpoint that keeps a response open and writes event-stream data |
 
-SSE becomes much easier to understand once the reader knows what it is sitting on top of.
+The inspected code strongly exposes the client-side facility.
 
-### SSE and retry behavior belong together naturally
+The server-side pattern belongs naturally to HTTP or Express-like application code.
 
-The live EventSource implementation makes another very important design point visible.
+Do not confuse those two surfaces.
 
-It integrates retry and reconnect behavior directly into the client-side SSE logic.
+### The EventSource client abstraction
 
-The shared state tracks a retry interval, updates it from incoming `retry:` fields, and uses it to configure reconnect/retry timing on the underlying client configuration.
+The client-side `EventSource` abstraction gives the application an event-stream model.
 
-This is an excellent architectural move.
+It provides:
 
-It means the framework is not treating SSE as “just read lines forever.”
+| EventSource concept | Meaning |
+|---|---|
+| `ReadyState` | stream lifecycle: connecting, open, closed |
+| `MessageEvent` | application-facing event object |
+| `onMessage(...)` | default message listener |
+| `addEventListener(...)` | custom event-type listener |
+| `removeEventListeners(...)` | remove listeners for a type |
+| `onOpen(...)` | stream open notification |
+| `onError(...)` | stream error notification |
+| `lastEventId()` | last event ID known to the client |
+| `retry()` / `retry(...)` | current retry interval |
+| `close()` | intentional shutdown |
 
-It is treating SSE as a long-lived communication pattern with real lifecycle expectations, including recovery after interruption.
+This is the same design pattern the previous chapters prepared.
 
-That is exactly the right posture.
+The lower stream and HTTP details still exist.
 
-### `lastEventId` is not a small detail
+The application receives a higher-level event-stream surface.
 
-The live EventSource model also exposes `lastEventId()` and processes `id:` fields from the stream.
+#### ReadyState as lifecycle
 
-This is worth emphasizing.
+SSE is not a one-shot request.
 
-In a streaming event system, continuity matters.
+It has a lifecycle.
 
-Remembering the last seen event ID is part of how the client can maintain meaningful continuity across reconnects.
+The ready-state model expresses that lifecycle:
 
-This is another sign that the framework is not only implementing the surface appearance of SSE.
+| Ready state | Meaning |
+|---|---|
+| `CONNECTING` | the stream is not open yet or is reconnecting |
+| `OPEN` | the event stream is active |
+| `CLOSED` | the application has closed it or it will not reconnect |
 
-It is supporting the actual semantics that make SSE useful as a real-time stream.
+This is a runtime concept, not only a browser-style convenience.
 
-### Open and error listeners express the real-time lifecycle cleanly
+A long-lived stream needs a way to say whether it is connecting, open, or closed.
 
-The live API supports:
+That state also matters for diagnostics and application decisions.
 
-- `onOpen(...)`
-- `onError(...)`
-- custom event listeners,
-- generic message listeners.
+#### MessageEvent as application-facing unit
 
-This is exactly the right event-facing model for SSE.
+The `MessageEvent` object is the semantic lift from SSE wire fields to application meaning.
 
-It lets the application think in terms of stream lifecycle and stream meaning rather than in terms of raw response fragments.
+It contains:
 
-Once again, the framework is lifting the wire-level interaction into a more meaningful layer for the application.
+| Field | Meaning |
+|---|---|
+| `type` | `"message"` or a custom event type |
+| `data` | event payload |
+| `lastEventId` | event ID associated with this event |
+| `origin` | stream origin |
 
-That is the same architectural move we already saw in HTTP request/response and in Express request/response facades.
+The application should not normally parse raw event-stream lines.
 
-### The HTTP request still exists at stream start
+It should react to events.
 
-An important architectural nuance should not be lost.
+Conceptually:
 
-Even though the client eventually becomes an event-stream consumer, the live EventSource implementation still begins with a HTTP request step.
+```text
+raw SSE fields
+  -> MessageEvent
+      -> type, data, lastEventId, origin
+```
 
-It explicitly requests an EventSource endpoint and then, if successful, continues by consuming stream data through a long-lived receive callback.
+This is the SSE equivalent of the earlier request/response lifts.
 
-This is exactly the right way to think about SSE.
+#### Message, custom event, open, and error listeners
 
-It begins as HTTP. It becomes long-lived streaming HTTP. It remains inside the same HTTP-based semantic world.
+The EventSource client has several listener surfaces:
 
-That continuity is one of the major reasons SSE is such a good bridge chapter.
+| Listener | Meaning |
+|---|---|
+| `onMessage(...)` | receive default `"message"` events |
+| `addEventListener(...)` | receive events with a named event type |
+| `onOpen(...)` | observe successful stream opening |
+| `onError(...)` | observe stream errors or interruptions |
 
-### SSE and Express fit together very naturally
+This lets the application express event-stream behavior directly:
 
-Although the live client-side EventSource code sits in the HTTP client tooling, the earlier Express-like chapter helps us see why SSE is especially attractive higher in the stack.
+```text
+stream opened
+  -> start showing live state
 
-A web application often wants to expose:
+message event arrived
+  -> update application state
 
-- normal routes,
+custom event arrived
+  -> dispatch by event type
+
+stream error occurred
+  -> show degraded or reconnecting state
+```
+
+The lower HTTP receive loop remains underneath.
+
+The application-facing model is event-based.
+
+#### Close as intentional shutdown
+
+`close()` is important because not every disconnect is a failure.
+
+A user or application may intentionally stop the stream.
+
+The client-side implementation marks the stream closed, disables reconnect/retry behavior, and shuts down the write side if a socket connection is present.
+
+The conceptual distinction is:
+
+```text
+stream interrupted
+  -> may reconnect
+
+stream closed intentionally
+  -> should not reconnect
+```
+
+That matches the retry/reconnect vocabulary from Chapter 20.
+
+### SSE begins as an HTTP request
+
+Even though the application eventually receives events, SSE starts as HTTP.
+
+The client sends a request for the event-stream endpoint.
+
+A simplified request shape is:
+
+```text
+GET /events HTTP/1.1
+Accept: text/event-stream
+Cache-Control: no-cache
+Connection: keep-alive
+```
+
+The exact path depends on the application.
+
+The important point is that the client does not start with a new non-HTTP protocol.
+
+It asks HTTP for an event stream.
+
+#### Event-stream request setup
+
+The client-side HTTP request for SSE sets HTTP/1.1 behavior and event-stream headers.
+
+The key header is:
+
+```text
+Accept: text/event-stream
+```
+
+This tells the server that the client expects a server-sent event stream.
+
+The request also uses:
+
+```text
+Cache-Control: no-cache
+Connection: keep-alive
+```
+
+These settings match the long-lived streaming nature of the interaction.
+
+#### Stream validation
+
+The client should not treat every HTTP response as an event stream.
+
+It validates that the response is actually a server-sent event stream.
+
+The important check is:
+
+```text
+response Content-Type contains text/event-stream
+```
+
+If the response is not an event stream, the client closes the connection and reports an error.
+
+This is important operational behavior.
+
+It prevents a normal HTML page, redirect, error page, or unrelated response from being interpreted as SSE data.
+
+### Parsing the event stream
+
+Once the stream is open, the client receives bytes over time.
+
+The parser turns those bytes into event records.
+
+A useful model is:
+
+```text
+incoming stream bytes
+  -> pending buffer
+      -> lines
+          -> fields
+              -> accumulated event
+                  -> dispatch on blank line
+```
+
+This is why SSE is more than “read text forever.”
+
+The stream has field semantics.
+
+The parser has to accumulate, interpret, and dispatch.
+
+#### SSE fields
+
+A compact field table is enough for this chapter.
+
+| Field | Effect |
+|---|---|
+| `data` | append payload line |
+| `event` | set custom event type |
+| `id` | update event ID buffer if valid |
+| `retry` | update retry timing |
+| blank line | dispatch accumulated event |
+| comment line | ignored |
+
+Multiple `data:` lines belong to the same event until a blank line dispatches it.
+
+The default event type is `"message"` when no custom `event:` field is present.
+
+The `id:` field participates in continuity.
+
+The `retry:` field participates in reconnection timing.
+
+#### Dispatch on blank line
+
+SSE dispatch is line-oriented.
+
+The parser accumulates fields until it sees the event boundary.
+
+The event boundary is a blank line.
+
+At that point:
+
+```text
+accumulated data
+  -> MessageEvent
+      -> listeners
+```
+
+If there is no accumulated data, no message event needs to be delivered.
+
+This keeps event dispatch tied to the SSE wire format.
+
+#### Size guards and malformed streams
+
+A long-lived stream must not allow unbounded pending data.
+
+The implementation guards against overly large pending lines and overly large accumulated data.
+
+If parsing fails, the stream can be closed.
+
+This is part of making SSE operationally usable.
+
+Long-lived inputs need limits.
+
+### Retry and continuity
+
+SSE interacts naturally with retry and reconnect behavior.
+
+This should be read through the vocabulary of Chapter 20.
+
+SSE has protocol-level retry information.
+
+SNode.C maps that information into the underlying client reconnect/retry configuration.
+
+That means the event-stream layer and the client role cooperate.
+
+#### The `retry:` field
+
+A server may send a `retry:` field.
+
+The value is interpreted as a retry interval.
+
+When accepted, it updates the EventSource retry value and the underlying client reconnect/retry timing.
+
+Conceptually:
+
+```text
+retry: 5000
+  -> EventSource retry interval becomes 5000 ms
+      -> client reconnect/retry timing is updated
+```
+
+This is not a generic transport timeout.
+
+It is SSE protocol information that influences recovery behavior.
+
+#### Last-Event-ID
+
+The `id:` field updates the client-side event ID buffer.
+
+When an event is dispatched, the last event ID can be remembered.
+
+On a later request, the client can send:
+
+```text
+Last-Event-ID: ...
+```
+
+if a last event ID is known.
+
+This gives the server a continuity hint after reconnect.
+
+The exact server behavior depends on the application, but the client-side mechanism is important.
+
+It lets an event stream carry continuity information across interruptions.
+
+### Express-like applications and SSE endpoints
+
+Express-like applications are a natural place to expose SSE endpoints.
+
+They already organize:
+
+- routes,
+- middleware,
+- authentication,
 - static assets,
-- API endpoints,
-- and one or more long-lived event streams.
+- application APIs,
+- response behavior.
 
-SSE fits beautifully into that picture.
+An SSE endpoint can be one route in that application.
 
-It allows the same web application to remain primarily HTTP-shaped while still supporting real-time push behavior.
+Server-side code can keep the HTTP response open and write event-stream records over time.
 
-This is one of the reasons SSE is often easier to adopt than WebSocket in applications that do not truly need symmetric bidirectional messaging.
+The built-in `EventSource` facility discussed in this chapter is the client-side counterpart.
 
-### Why SSE is often simpler than WebSocket
+The two sides meet at the HTTP/SSE boundary:
 
-This chapter should prepare the reader for the next chapter without getting ahead of it too much.
+```text
+server route
+  -> emits text/event-stream response
 
-A useful comparison is this:
+client EventSource
+  -> requests text/event-stream
+      -> parses events
+          -> dispatches MessageEvent objects
+```
 
-SSE is often simpler than WebSocket when the communication pattern is:
+This is a useful pairing, but it is not the same abstraction on both sides.
 
-- server to client,
-- event-oriented,
-- long-lived,
-- and fundamentally still HTTP-shaped.
+### Lower layers and diagnostics still matter
 
-The framework’s current architecture supports that simplicity well.
+SSE is a high-level event-stream behavior.
 
-A SSE client can remain inside the HTTP world and benefit from HTTP-level semantics and tooling.
+It still depends on lower-layer behavior.
 
-That is a major practical advantage.
+The event stream can be affected by:
 
-### The lower communication family still exists beneath SSE
-
-As with the HTTP and Express layers, the lower family does not disappear just because the application is now thinking about event streams.
-
-The live HTTP module structure already showed legacy and TLS variants and several lower-family combinations.
-
-That means SSE in SNode.C still sits above:
-
-- a chosen lower communication family,
-- a stream transport,
+- DNS or address selection,
+- lower-family endpoint configuration,
 - legacy or TLS connection handling,
-- the normal runtime lifecycle.
+- HTTP response validation,
+- read/write behavior,
+- disconnects,
+- retry and reconnect timing,
+- intentional close,
+- parser errors,
+- server-side application behavior.
 
-This point is worth repeating because it keeps the architectural picture honest.
+For SSE, the operator often needs to know:
 
-SSE is a high-level streaming behavior, but it is still carried by the same layered communication model underneath.
+- whether the HTTP connection was established,
+- whether the SSE response opened,
+- whether the stream entered `OPEN`,
+- whether an error listener fired,
+- whether reconnect is expected,
+- which retry interval is active,
+- which last event ID is known,
+- whether the stream was closed intentionally.
 
-### Why diagnostics matter even more for long-lived SSE streams
+This connects directly to the diagnostic model from Chapter 18 and the retry/reconnect model from Chapter 20.
 
-The diagnostics chapter becomes especially important here.
+SSE does not need a new operational philosophy.
 
-A long-lived event stream is not easy to reason about if the framework cannot show:
+It needs the existing one applied to a long-lived HTTP stream.
 
-- whether it connected,
-- whether it opened successfully as an SSE stream,
-- whether it encountered an error,
-- whether it is reconnecting,
-- what the current retry interval is,
-- which last event ID is in effect,
-- and whether the stream was closed intentionally or by failure.
+### Real-time-style HTTP
 
-The live EventSource implementation helps here because it already logs important lifecycle points such as connect, disconnect, stream start, and stream mismatch/error cases.
+The chapter title says “real-time HTTP.”
 
-That is exactly the kind of visibility a real-time HTTP facility should have.
+In practice, SSE is best understood as real-time-style or live-update HTTP.
 
-### SSE is a perfect example of the framework’s compositional strength
+It is not a deterministic hard real-time mechanism.
 
-At this point, the chapter should make one larger observation explicit.
+It is a practical web mechanism for delivering events over a long-lived HTTP response.
 
-SSE in SNode.C is a perfect example of how the framework composes higher-level behavior from lower-level building blocks.
+That makes it useful for user interfaces and monitoring systems where updates should arrive as the server produces them.
 
-The EventSource client combines:
+Use cases include:
 
-- the lower connection model,
-- the HTTP client layer,
-- SSE-specific parsing and state management,
-- listener registration,
-- and retry/reconnect coordination.
+- sensor dashboards,
+- status pages,
+- notification feeds,
+- build or deployment logs,
+- monitoring views,
+- application activity streams.
 
-That is a very strong demonstration of compositional design.
+The timing behavior still depends on the network, server, client, buffering, and reconnect policy.
 
-The framework is not forcing one gigantic all-knowing abstraction.
+### What to remember
 
-It is building a useful real-time facility by layering well-defined responsibilities.
+Remember:
 
-### Common misunderstandings about SSE in SNode.C
-
-It helps to clear away a few misunderstandings explicitly.
-
-#### Misunderstanding 1: “SSE is just HTTP polling with nicer formatting.”
-
-Corrected view: SSE is long-lived streaming HTTP with event semantics, not repeated ordinary polling.
-
-#### Misunderstanding 2: “SSE belongs outside the main HTTP architecture.”
-
-Corrected view: in SNode.C, SSE is clearly built on top of the HTTP client layer and remains inside the HTTP world.
-
-#### Misunderstanding 3: “Because SSE is one-way, it is merely a limited substitute for WebSocket.”
-
-Corrected view: its one-way nature is often exactly what makes it elegant and appropriate for notification and monitoring use cases.
-
-#### Misunderstanding 4: “A EventSource client is only a convenience wrapper.”
-
-Corrected view: the live implementation contains real SSE parsing, ready-state handling, event dispatch, retry handling, and last-event-ID tracking.
-
-#### Misunderstanding 5: “Once an event stream is open, the lower runtime and connection lifecycle stop mattering.”
-
-Corrected view: SSE continues to rely on the same lower runtime, connection, retry, timeout, and diagnostics model underneath.
-
-### A good one-paragraph summary of the chapter
-
-Server-Sent Events in SNode.C are a real-time HTTP specialization built on top of the existing HTTP client layer and the same lower connection architecture beneath it. The live EventSource facility provides ready-state handling, event dispatch, `lastEventId` tracking, retry control, error/open listeners, and SSE field parsing, allowing long-lived one-way event streams to be modeled as meaningful application events without abandoning the same runtime, connection, and diagnostics discipline that governs the rest of the framework.
-
-That is the heart of the chapter.
+- SSE is long-lived HTTP event streaming.
+- SSE remains inside the HTTP world.
+- One request opens a response stream that can carry many events.
+- SSE is one-way from server to client.
+- SNode.C provides a client-side `EventSource` abstraction.
+- Server-side SSE is expressed as long-lived HTTP response streaming.
+- `ReadyState` represents stream lifecycle.
+- `MessageEvent` raises SSE fields into event objects.
+- `data`, `event`, `id`, and `retry` fields have distinct meanings.
+- A blank line dispatches an accumulated event.
+- `retry` updates reconnect/retry timing.
+- `Last-Event-ID` supports stream continuity.
+- SSE begins as a HTTP request with `Accept: text/event-stream`.
+- The client validates the event-stream response.
+- Lower runtime, HTTP client behavior, connection lifecycle, diagnostics, and retry behavior still matter.
+- Chapter 24 moves to WebSocket and bidirectional upgraded communication.
 
 ### Closing perspective
 
-This chapter shows the web stack becoming genuinely dynamic.
+Chapter 23 showed how HTTP can remain open as a one-way event stream.
 
-The reader has now seen that SNode.C can support:
+That gives SNode.C a real-time-style web mechanism without leaving the HTTP layer.
 
-- ordinary HTTP request/response,
-- structured Express-like application composition,
-- and long-lived streaming HTTP via SSE,
+The path now looks like this:
 
-all while remaining inside the same deeper communication architecture.
+```text
+HTTP request / response
+  -> Express-like application structure
+      -> Server-Sent Events
+          -> long-lived one-way event streaming
+```
 
-That is exactly the kind of upward scalability that makes the framework interesting.
+The next chapter turns to WebSocket.
 
-And now the next chapter becomes natural.
-
-Once the reader understands one-way real-time HTTP streaming, the next real-time step is the protocol layer that goes further and enables full bidirectional messaging over upgraded HTTP connections:
-
-WebSocket.
+There, HTTP upgrade leads to a bidirectional message-oriented connection.
