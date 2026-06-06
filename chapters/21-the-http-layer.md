@@ -505,7 +505,7 @@ What changes is that the application works in HTTP terms.
 
 The lower architecture remains visible.
 
-### Chapter 21 as a bridge chapter
+### From HTTP to higher web layers
 
 Chapter 21 is a bridge between two parts of the book.
 
