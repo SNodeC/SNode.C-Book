@@ -516,23 +516,30 @@ application
           -> required option
 ```
 
-A compact server-side session shows the idea:
+A compact server-side session shows the idea.
+
+Here the executable is `echoserver` and the named server instance is `echo`:
 
 ```shell
 $ echoserver
 [RequiresError] echoserver requires echo
 
 $ echoserver echo
-[RequiresError] echo requires local
+[RequiresError] echoserver:echo requires local
 
 $ echoserver echo local
-[RequiresError] local requires --port
+[RequiresError] echoserver:echo:local requires --port
+
+$ echoserver echo local --port
+[ArgumentMismatch] --port: 1 required port:UINT in [0 - 65535] missing
 
 $ echoserver echo local --port 8080
-echo: listening on '0.0.0.0:8080'
+2026-06-06 18:04:05 0000000000001 echo: listening on '0.0.0.0:8080 (0.0.0.0)'
 ```
 
-The exact wording of the diagnostics is less important than the direction.
+The exact timestamp and tick counter are run-specific.
+
+The important point is the direction.
 
 The CLI leads from application, to instance, to section, to option.
 
