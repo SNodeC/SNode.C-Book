@@ -476,7 +476,7 @@ The command line is therefore not just a flat collection of flags.
 
 It is a textual traversal of the configuration hierarchy.
 
-#### Command-line configuration as guided traversal
+##### Command-line configuration as guided traversal
 
 The command-line interface is also a guided configuration surface.
 
@@ -503,7 +503,7 @@ The `--command-line` option supports views such as `standard`, `required`, `full
 
 Together with `--show-config` and `--write-config`, this makes the command line more than a parser: it becomes a way to inspect, reproduce, and persist the configuration of an application.
 
-#### Guided errors for missing configuration
+##### Guided errors for missing configuration
 
 The same guided behavior appears when required configuration is missing.
 
@@ -547,7 +547,7 @@ A named client instance follows the same idea, but the required section is usual
 
 The CLI therefore teaches the structure while it reports the missing values.
 
-#### Startup guidance, not arbitrary live reconfiguration
+##### Startup guidance, not arbitrary live reconfiguration
 
 This command-line guidance belongs to startup and run configuration.
 
