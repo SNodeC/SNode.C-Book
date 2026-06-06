@@ -24,7 +24,7 @@ A `SocketContext` implements the protocol behavior for that relationship.
 
 A `SocketContextFactory` creates the context that belongs to that connection.
 
-That is the construction boundary this chapter is about.
+That is the creation boundary this chapter is about.
 
 ### What a `SocketContextFactory` is
 
@@ -54,7 +54,7 @@ The three roles should remain distinct:
 |---|---|
 | `SocketConnection` | concrete peer relationship |
 | `SocketContext` | protocol behavior for one connection |
-| `SocketContextFactory` | construction policy for creating a context for a connection |
+| `SocketContextFactory` | context creation for a concrete connection |
 
 This table continues the distinction from Chapter 13.
 
@@ -174,7 +174,7 @@ The boundary is:
 
 ```text
 Factory
-  -> construction policy
+  -> context creation
 
 Context
   -> protocol behavior
@@ -186,7 +186,7 @@ A factory can legitimately choose which concrete context type to create.
 
 For many simple applications, there is exactly one concrete context type.
 
-In that case, the factory is almost mechanical:
+In that case, the factory is almost mechanical. In schematic form:
 
 ```cpp
 SocketContext* create(SocketConnection* connection) override {
@@ -215,7 +215,7 @@ Examples include:
 
 This is a legitimate factory responsibility.
 
-The factory can hold or capture stable dependencies and pass them into each newly created context.
+The factory can receive, hold, or capture stable dependencies and pass them into each newly created context.
 
 The discipline is to keep those dependencies meaningful.
 
@@ -238,7 +238,7 @@ enum class Role {
 };
 ```
 
-Then the factory can make the role explicit:
+Then the factory can make the role explicit. In schematic form:
 
 ```cpp
 SocketContext* create(SocketConnection* connection) override {
@@ -264,7 +264,7 @@ The factory still remains construction-oriented.
 
 #### Keeping construction readable and unsurprising
 
-A good factory is often intentionally uninteresting.
+A good factory is often intentionally simple.
 
 That is a strength.
 
@@ -389,6 +389,94 @@ The raw pointer belongs to this construction boundary.
 
 It is not an invitation to unmanaged lifetime design elsewhere in the application.
 
+### Passing shared application state
+
+Real applications often need shared services.
+
+A small factory does not mean an isolated factory.
+
+It may capture or store references to shared resources such as:
+
+- immutable protocol configuration,
+- a thread-safe statistics object,
+- a reference-counted service interface,
+- a dispatcher,
+- a logger abstraction,
+- or an application model needed by the protocol.
+
+#### Factory constructor arguments from server and client
+
+The stream server and stream client templates make this dependency path explicit.
+
+Both the `SocketServer` and the `SocketClient` template accept an argument pack:
+
+```cpp
+typename... Args
+```
+
+Those arguments are forwarded to the concrete `SocketContextFactory` constructor when the server or client instance creates its shared factory object.
+
+In schematic form, the pattern is:
+
+```cpp
+std::make_shared<SocketContextFactory>(
+    std::forward<Args>(args)...
+)
+```
+
+In other words, the argument pack allows the factory to be preconfigured when the server or client instance is constructed.
+
+
+This means the server or client constructor can provide the stable information the factory needs.
+
+That information may then be stored in the factory and used later when `create(connection)` is called.
+
+The flow is:
+
+```text
+SocketServer / SocketClient constructor arguments
+  -> SocketContextFactory constructor
+      -> stored factory state
+          -> create(connection)
+              -> SocketContext constructor arguments
+```
+
+This is an important distinction.
+
+The argument pack does not mean that arbitrary runtime behavior should be pushed into the factory.
+
+It means that stable construction data can enter the factory at the point where the server or client instance is created.
+
+Used well, this keeps dependency flow explicit:
+
+```text
+instance construction
+  -> factory construction
+      -> context construction
+```
+
+The factory remains construction-oriented.
+
+It simply receives the data it needs to create the right context objects later.
+
+The important distinction is between explicit dependency passing and uncontrolled service location.
+
+Good dependency passing looks like:
+
+```text
+This context needs this service to implement this protocol.
+```
+
+Uncontrolled service location looks like:
+
+```text
+The context can reach everything through the factory.
+```
+
+The first is a design choice.
+
+The second erodes the boundary.
+
 ### Factory design patterns
 
 There is not only one correct factory shape.
@@ -400,12 +488,13 @@ The right design depends on what needs to vary at construction time.
 | separate server/client factories | the role distinction should be visible and simple |
 | parameterized factory | the context type is the same and only stable constructor data differs |
 | context-type-selecting factory | a small, explicit selection among endpoint types is needed |
+| preconfigured role factory | higher-level endpoint roles should be fixed at instance construction |
 
-All three patterns can be valid.
+All four patterns can be valid.
 
 The same rule applies to all of them:
 
-> The selection should remain construction policy, not protocol execution.
+> The selection should remain a construction-time decision, not protocol execution.
 
 #### Separate server/client factories
 
@@ -427,7 +516,7 @@ Small duplication is often acceptable when it makes the communication roles clea
 
 A single reusable factory type may also be appropriate.
 
-For example, the role or configuration object may be a constructor argument of the factory itself:
+For example, the role or configuration object may be a constructor argument of the factory itself. In schematic form:
 
 ```cpp
 class EchoSocketContextFactory : public SocketContextFactory {
@@ -447,7 +536,29 @@ private:
 
 This can be a clean design when the factory remains easy to read and the variation is stable.
 
-The factory is still only expressing construction policy.
+The factory is still only expressing a creation decision.
+
+#### What preconfigured factories make possible
+
+Preconfigured factories allow the same framework mechanism to create different communication roles without changing the surrounding server/client machinery.
+
+A server or client instance can pass stable role and dependency information into the factory constructor. The factory can then use that information whenever it creates a context for a new connection.
+
+This can be used for simple role distinctions, such as server-side versus client-side contexts, but also for higher-level endpoint roles:
+
+- model-side endpoints,
+- view-side endpoints,
+- controller-side endpoints,
+- publisher endpoints,
+- subscriber endpoints,
+- command endpoints,
+- event endpoints,
+- gateway endpoints,
+- adapter endpoints.
+
+The important point in this chapter is still the mechanism, not the full pattern catalogue.
+
+A factory does not implement MVC, publish/subscribe, or gateway behavior by itself. It creates the correctly preconfigured context objects that participate in such patterns.
 
 #### Context-type-selecting factories
 
@@ -462,39 +573,6 @@ But the selection should remain simple.
 If the factory begins reading from the peer, interpreting protocol frames, or managing state transitions, it has crossed into protocol behavior.
 
 That belongs in the context.
-
-### Passing shared application state
-
-Real applications often need shared services.
-
-A small factory does not mean an isolated factory.
-
-It may capture or store references to shared resources such as:
-
-- immutable protocol configuration,
-- a thread-safe statistics object,
-- a reference-counted service interface,
-- a dispatcher,
-- a logger abstraction,
-- or an application model needed by the protocol.
-
-The important distinction is between explicit dependency passing and uncontrolled service location.
-
-Good dependency passing looks like:
-
-```text
-This context needs this service to implement this protocol.
-```
-
-Uncontrolled service location looks like:
-
-```text
-The context can reach everything through the factory.
-```
-
-The first is a design choice.
-
-The second erodes the boundary.
 
 ### The strongest factory test
 
@@ -520,8 +598,6 @@ A factory that is hard to skim is often doing more than construction.
 
 Chapter 15 will show how the same protocol can be carried over different lower communication families.
 
-Chapter 14 is the necessary bridge to that idea.
-
 The separation is:
 
 ```text
@@ -529,7 +605,7 @@ SocketContext
   -> protocol behavior
 
 SocketContextFactory
-  -> construction policy
+  -> context creation
 
 SocketServer / SocketClient
   -> lower-family-specific communication role
@@ -537,13 +613,7 @@ SocketServer / SocketClient
 
 Once this separation is clear, the same context logic can often be reused while different server/client types choose different lower families.
 
-The factory is the place where the correct context is created for whichever connection the lower-family role produces.
-
-That makes it part of the portability story.
-
-Not because it performs the protocol.
-
-Because it keeps protocol construction separate from the lower-layer role.
+The factory supports that portability story because it keeps context creation separate from the lower-layer role. It does not perform the protocol itself.
 
 ### What to remember
 
@@ -554,6 +624,7 @@ Remember:
 - A fresh context should be created for each connection.
 - The factory may choose a context type.
 - The factory may pass stable dependencies into the context.
+- Server/client constructor argument packs can be forwarded into the factory constructor as stable construction data.
 - Role decisions can belong in the factory when they affect construction.
 - The factory should not parse protocol data or control protocol flow.
 - The factory should not manage retry, reconnect, runtime flow, or lower-level event processing.
@@ -588,8 +659,4 @@ The context remains the protocol endpoint.
 
 The factory remains the construction bridge.
 
-The next chapter can now use this separation directly.
-
-If protocol behavior lives in the context and context creation lives in the factory, the same protocol can be carried over different lower communication families without changing its essential shape.
-
-That is the next step.
+The next chapter can now use this separation directly: the same protocol can be carried over different lower communication families without changing its essential shape.
