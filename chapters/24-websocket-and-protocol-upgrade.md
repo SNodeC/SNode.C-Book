@@ -216,7 +216,7 @@ The protocol interpretation has changed.
 
 ### `SocketContextUpgrade` as the boundary object
 
-The strongest code-shaped concept in this chapter is `SocketContextUpgrade`.
+The central code-shaped concept in this chapter is `SocketContextUpgrade`.
 
 In the generic upgrade model, it represents the boundary between HTTP negotiation and the selected upgraded protocol context.
 
