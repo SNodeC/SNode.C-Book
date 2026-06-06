@@ -1,531 +1,721 @@
 ## Logging, Diagnostics, and Runtime Introspection
-### Why visibility deserves its own chapter
 
-A networking framework is only pleasant to use when the user can see what it is doing.
+### From configured roles to visible runtime behavior
 
-This is especially true for an event-driven framework.
+Chapter 17 showed how a SNode.C application is shaped through configuration.
 
-In a blocking program with one visible call chain, a developer can often reconstruct behavior mentally from the source alone. In an event-driven system, that becomes much harder. Connections appear, callbacks fire, timers expire, retries happen, and peer state changes over time.
+The structure was:
 
-Without good runtime visibility, even well-designed software begins to feel mysterious.
+```text
+application
+  -> instance
+      -> section
+          -> option
+```
 
-SNode.C takes visibility seriously.
+Once those configured roles are active, the next question is:
 
-That is one of its underappreciated strengths.
+> How can we see what the application is doing?
 
-The framework does not merely provide communication roles and protocol endpoints. It also provides a structured operational shell in which the application can:
+That is the subject of this chapter.
 
-- emit logs at controlled levels,
-- distinguish normal logging from verbose tracing,
-- write logs to file,
-- run quietly when required,
-- show current configuration,
-- print generated command lines,
-- expose addresses, durations, and counters through the connection model,
-- and structure runtime reporting around real lifecycle boundaries.
+SNode.C is event-driven.
 
-This chapter explains how to think about those mechanisms as part of the architecture rather than as debugging leftovers.
+Connections are accepted or established later.
 
-### Logging is not decoration in an event-driven framework
+Callbacks fire later.
 
-It is worth saying this directly.
+Timers expire later.
 
-In SNode.C, logging is not just a way to print messages for developers.
+Retries may happen later.
 
-It is part of how the framework becomes understandable in motion.
+Contexts react to peer data later.
 
-A good log line can tell the reader or operator:
+This makes runtime visibility essential.
 
-- which instance is active,
-- which address it is listening on,
-- which peer connected,
-- whether the connection is fully ready,
-- how long it stayed online,
-- how much data passed through it,
-- why a retry happened,
-- why an instance is disabled,
-- whether TLS initialization succeeded,
-- or whether a configuration decision changed runtime behavior.
+The source code may explain what can happen, but logging and diagnostics show what did happen in one concrete run.
 
-That means logging in SNode.C should be treated as a first-class architectural aid.
+### The runtime visibility model
 
-### The live logging surface: `Logger`, `LOG`, `PLOG`, `VLOG`
+Runtime visibility in SNode.C is broader than printing log lines.
 
-The current live logging header shows a compact but expressive surface.
+A useful model has four parts:
 
-At the core sits `logger::Logger`, which exposes functions such as:
+| Visibility source | What it answers |
+|---|---|
+| configuration visibility | What shape did the application start with? |
+| log visibility | Which lifecycle events, decisions, and failures occurred? |
+| connection visibility | Which peer, address, counters, and durations are involved? |
+| protocol visibility | What did the protocol endpoint decide? |
 
-- `init()`
-- `setLogLevel(...)`
-- `setVerboseLevel(...)`
-- `logToFile(...)`
-- `disableLogToFile()`
-- `setQuiet(...)`
-- `setTickResolver(...)`
-- `setDisableColor(...)`
-- `getDisableColor()`
-- `shouldLog(...)`
-- `shouldVerbose(...)`
+These sources belong together.
 
-On top of that, the framework provides the main logging macros:
+A surprising runtime behavior may come from protocol code.
 
-- `LOG(level)`
-- `PLOG(level)`
-- `VLOG(level)`
+It may also come from configuration, disabled instances, address selection, retry behavior, TLS setup, or peer lifecycle.
 
-This already gives a very clear operational vocabulary.
+A good diagnostic style therefore does not start with random print statements.
 
-There is a normal log level system, a separate verbose system, a file-logging path, a quiet mode, optional color control, and errno-aware logging through `PLOG`.
+It asks where the relevant responsibility lives.
 
-That is exactly the kind of logging surface a networking framework should have.
+#### Configuration visibility
 
-### Normal log levels and verbose levels are not the same thing
+Configuration visibility answers questions such as:
 
-One of the nicest things about the live logger interface is that it distinguishes two related but different ideas.
+- Which instances exist?
+- Which instances are enabled?
+- Which local or remote endpoint values are active?
+- Which retry or timeout values are in effect?
+- Which TLS settings are configured?
+- Which command line would reproduce this run?
 
-#### Normal log levels
+Chapter 17 explained the configuration hierarchy.
 
-The logging subsystem uses ordinary levels such as:
+In this chapter, the same mechanisms are treated as diagnostic artifacts.
 
-- TRACE
-- DEBUG
-- INFO
-- WARNING
-- ERROR
-- FATAL
-- VERBOSE
+#### Log visibility
 
-These are broad severity or importance categories.
+Log visibility answers questions such as:
 
-#### Verbose levels
+- Which important lifecycle events occurred?
+- Which warnings or errors happened?
+- Which system call or system boundary failed?
+- Which retry was scheduled?
+- Which instance started listening or connecting?
+- Which connection was created, became ready, or disconnected?
 
-At the same time, the framework also provides a separate verbose-level mechanism through `VLOG(level)` and `setVerboseLevel(...)`.
+The logger gives those events a controlled output path.
 
-This is very useful for runtime introspection.
+#### Connection visibility
 
-It means the reader can think of two axes at once:
+Connection visibility answers questions such as:
 
-- severity,
-- and verbosity depth.
+- Which instance owns this connection?
+- What is the connection name?
+- What are the bind, local, and remote addresses?
+- How much data was queued?
+- How much data was sent?
+- How much data was read?
+- How much data was processed?
+- How long was the connection online?
 
-That allows a much more refined style than simply flooding the output with `INFO` messages whenever more detail is wanted.
+This information belongs to the connection model, not to arbitrary application-side bookkeeping.
 
-### The right mental model for `LOG`, `PLOG`, and `VLOG`
+#### Protocol visibility
 
-A good practical reading of the three macros is this:
+Protocol visibility answers questions such as:
 
-- `LOG(...)` is for ordinary structured runtime reporting,
-- `PLOG(...)` is for ordinary structured runtime reporting that should include errno context,
-- `VLOG(...)` is for progressively more detailed explanatory or tracing output.
+- Which protocol state was entered?
+- Was the first message sent?
+- Was a frame accepted or rejected?
+- Why did the protocol close the connection?
+- Which application-level event was produced?
 
-This is a very healthy separation.
+This belongs in the `SocketContext`, because the context is where protocol behavior lives.
 
-It encourages the reader and framework user to think carefully about what kind of information a message really is.
+### The logging surface
 
-Is it:
+SNode.C exposes three main logging forms:
 
-- a normal important lifecycle fact,
-- an error with system context,
-- or a higher-detail diagnostic trace?
+| Form | Purpose |
+|---|---|
+| `LOG(level)` | ordinary runtime reporting through the normal log-level ladder |
+| `PLOG(level)` | runtime reporting with system-error context |
+| `VLOG(level)` | optional diagnostic depth controlled by the verbose level |
 
-That is exactly the right question.
+These three forms should not be used interchangeably.
 
-### Why `PLOG` matters in system-level code
+They express different kinds of visibility.
 
-A networking framework inevitably touches system calls and system-level failures.
+#### `LOG(level)`
 
-In that world, a plain text error string is often not enough.
+`LOG(level)` is for ordinary runtime reporting.
 
-That is why `PLOG(...)` is important.
+The level describes the operational importance or severity of the message.
 
-It signals that the log entry should preserve errno-related context.
+A useful interpretation is:
 
-This is especially valuable when diagnosing problems such as:
+| Level | Typical use |
+|---|---|
+| `FATAL` | unrecoverable framework or application condition |
+| `ERROR` | failed operation or serious runtime problem |
+| `WARNING` | unexpected but recoverable condition |
+| `INFO` | important normal lifecycle or operational fact |
+| `DEBUG` | developer-facing state change or decision |
+| `TRACE` | very low-level ordinary lifecycle or state reporting |
+
+`TRACE` is still part of the ordinary log-level ladder.
+
+It is not the same thing as `VLOG`.
+
+A `TRACE` message is a low-level normal log event.
+
+A `VLOG` message is diagnostic detail selected by verbose depth.
+
+#### `PLOG(level)`
+
+`PLOG(level)` is for failures near a system or library boundary where system-error context matters.
+
+Typical cases include:
 
 - bind failures,
 - connect failures,
-- permission issues,
-- path or filesystem problems,
-- descriptor-level problems,
-- platform-specific communication failures.
+- accept failures,
+- read or write errors,
+- descriptor failures,
+- filesystem/path problems,
+- permission problems,
+- TLS/library calls that expose useful system context.
 
-A good diagnostics chapter should say this plainly:
+`PLOG` should not be used merely because a message is an error.
 
-When the failure originates near the system boundary, preserving system error context is often the difference between useful diagnostics and guesswork.
+It should be used when the system error context is part of the diagnosis.
 
-### Why `VLOG` matters so much in SNode.C
+A useful rule is:
 
-For a framework like SNode.C, `VLOG` is especially valuable.
+```text
+Use PLOG when errno/system context helps explain the failure.
+```
 
-Why?
+#### `VLOG(level)`
 
-Because much of the framework’s interesting behavior is not exceptional.
+`VLOG(level)` is for optional diagnostic depth.
 
-It is normal runtime flow.
+It is controlled by the verbose level, not by the ordinary log-level ladder.
 
-Examples include:
+A useful convention is:
 
-- connection establishment,
-- callback progression,
-- protocol lifecycle transitions,
-- data received and sent,
-- retries,
-- timed waits,
-- instance disablement,
-- parameterless activation through already-loaded configuration.
+| Verbose level | Typical use |
+|---|---|
+| `VLOG(1)` | common flow tracing during debugging |
+| `VLOG(2)` | detailed lifecycle, address, and configuration diagnostics |
+| `VLOG(3)` | counters, deltas, buffer sizes, parser details, repeated flow internals |
+| `VLOG(4+)` | very high-volume or highly specialized internal traces |
 
-These are not always `ERROR` or even `INFO` in the strong sense. But they are often very useful when the reader wants to understand *what the application is doing right now*.
+This keeps ordinary logs readable while still allowing deep inspection when needed.
 
-That is exactly the sweet spot for `VLOG`.
+The distinction is:
 
-### Runtime visibility begins at configuration time
+```text
+LOG level
+  -> how important or severe is this message?
 
-A very important SNode.C idea is that diagnostics do not begin only once sockets are already running.
+VLOG level
+  -> how deep into the flow do we want to look?
+```
 
-They begin with the application’s operational shell.
+### Log levels and verbose levels
 
-The current configuration model already provides several visibility-oriented tools at the application and instance levels, such as:
+SNode.C uses two related visibility controls.
 
-- showing the current configuration,
-- printing generated command lines,
-- writing configuration files,
-- helping the user discover missing required settings progressively.
+They should be read as two axes.
 
-This means runtime introspection in SNode.C begins before the first connection is even accepted or established.
+The first axis is the ordinary log level.
 
-That is a sign of a thoughtful design.
+It controls the operational class of a message:
 
-The framework helps the user understand:
+```text
+TRACE
+DEBUG
+INFO
+WARNING
+ERROR
+FATAL
+```
 
-- what was configured,
-- why a given instance can or cannot start,
-- how the current configuration differs from defaults,
-- and which command-line or config-file path corresponds to that state.
+The second axis is the verbose level.
 
-### The config shell and the log shell belong together
+It controls diagnostic depth:
 
-The current `utils::Config` and `ConfigRoot` interfaces also reinforce that operational shell idea.
+```text
+VLOG(1)
+VLOG(2)
+VLOG(3)
+...
+```
 
-At the application level, the runtime keeps track of:
+This separation prevents two common problems.
 
-- application name,
-- config directory,
-- log directory,
-- pid directory,
-- daemonization and log-file options,
-- log level and verbose level,
-- quiet mode,
-- version,
-- config writing and killing behavior.
+First, normal logs do not have to become noisy just because detailed diagnostics exist.
 
-This is a very strong signal.
+Second, deep diagnostics do not have to be disguised as `DEBUG` or `TRACE` messages.
 
-SNode.C is not merely “a socket framework that happens to print logs.”
+The result is cleaner:
 
-It has a coherent application shell in which configuration, log routing, and lifecycle behavior are tied together.
+```text
+ordinary lifecycle and severity
+  -> LOG / PLOG
 
-That is why the framework feels operationally mature.
+optional diagnostic depth
+  -> VLOG
+```
 
-### File logging and quiet mode are architectural, not cosmetic
+### Operational output modes
 
-The live logger and config surfaces both make file logging and quiet mode explicit.
+Logging also has operational modes.
 
-That is important.
+A network application may run in different environments:
 
-A serious network application is often used in more than one operational mode.
-
-For example:
-
-- interactive foreground development,
-- foreground debugging with richer verbosity,
+- foreground development,
+- foreground debugging,
 - daemonized background operation,
-- file-oriented logging for later inspection,
-- quiet operation with only essential reporting.
+- file-oriented logging,
+- quiet operation,
+- colored terminal output,
+- monochrome output for files, pipes, or constrained consoles.
 
-A framework that ignores these modes forces every application author to reinvent them.
+These are not cosmetic details.
 
-SNode.C instead makes them part of the operational shell.
+They decide whether the diagnostics are usable in the environment where the program actually runs.
 
-That is exactly the right choice.
+A useful model is:
 
-### Color, monochrome, and readability
+| Mode | Purpose |
+|---|---|
+| foreground logging | immediate human feedback |
+| file logging | later inspection and deployment diagnostics |
+| quiet mode | suppress nonessential console output |
+| color output | improve terminal readability |
+| monochrome output | improve logs in files, pipes, and plain consoles |
 
-The live logger exposes color-control functionality through `setDisableColor(...)` and `getDisableColor()`, and the config shell also includes a monochrome-related option at the application level.
+The important point is that output mode belongs to the application shell.
 
-This may seem minor, but it is actually part of good diagnostics design.
+It is not the responsibility of every server, client, connection, or context to invent its own logging destination.
 
-A log should be readable in the environment where it is used.
+### Logging should follow responsibility boundaries
 
-Sometimes that means terminal color. Sometimes that means disabling color for redirected output, files, pipelines, or constrained consoles.
+The central rule is:
 
-A mature framework respects both.
+> Log from the layer that has the right responsibility.
 
-### The connection model already carries introspection data
+SNode.C already has clear architectural boundaries.
 
-A major SNode.C strength is that runtime introspection is not limited to external logging facilities.
+Logging should follow them.
 
-The connection model itself carries visibility information.
+| Boundary | Good log content |
+|---|---|
+| application | startup, shutdown, config file, log file, daemonization |
+| instance | listen/connect activation, disabled state, retry scheduling |
+| connection | addresses, lifecycle events, counters, duration |
+| context | protocol-specific state and decisions |
 
-The live `SocketConnection` and `SocketContext` surfaces expose information such as:
+This avoids a common failure mode: placing all messages wherever they are convenient to print.
 
-- local, remote, and bind addresses,
-- total sent,
+A log line is most useful when its location matches the meaning of the message.
+
+#### Application-level logging
+
+Application-level logs should describe the operational shell.
+
+Examples:
+
+- configuration file selected,
+- logging initialized,
+- daemonization started,
+- process user/group applied,
+- shutdown requested,
+- application terminated.
+
+These messages belong above the communication roles.
+
+#### Instance-level logging
+
+Instance-level logs should describe server/client role activity.
+
+Examples:
+
+- server starts listening,
+- client starts connecting,
+- retry is scheduled,
+- instance is disabled,
+- listen/connect fails or succeeds.
+
+These messages belong to the configured communication role.
+
+#### Connection-level logging
+
+Connection-level logs should describe one peer relationship.
+
+Examples:
+
+- connection object created,
+- connection became ready,
+- peer disconnected,
+- local and remote addresses,
+- online duration,
+- queued/sent/read/processed totals.
+
+These messages belong to the connection episode.
+
+#### Context-level logging
+
+Context-level logs should describe protocol meaning.
+
+Examples:
+
+- protocol conversation begins,
+- first application message is sent,
+- protocol frame accepted,
+- protocol frame rejected,
+- protocol state changes,
+- protocol closes the session intentionally.
+
+The context should not duplicate generic socket facts that the connection layer already knows.
+
+It should add protocol meaning.
+
+### Visibility at lifecycle boundaries
+
+Lifecycle boundaries are natural diagnostic points.
+
+They correspond to meaningful transitions in the framework.
+
+#### Listen and connect activation
+
+The first useful visibility point is activation.
+
+For a server, this means listen activation.
+
+For a client, this means connect activation.
+
+A good instance-level log can answer:
+
+- Which instance is activating?
+- Which endpoint is involved?
+- Was activation successful?
+- Will a retry be scheduled?
+- Is the failure recoverable or fatal?
+
+This belongs to instance-level visibility.
+
+#### `onConnect` and `onConnected`
+
+For stream connections, there is a useful distinction between early connection creation and full readiness.
+
+A diagnostic style can reflect that distinction:
+
+| Boundary | Meaning |
+|---|---|
+| `onConnect` | connection object exists |
+| `onConnected` | connection is fully ready |
+| `onDisconnect` | connection episode can be summarized |
+
+`onConnect` and `onConnected` are good places for lifecycle visibility.
+
+They can show instance name, connection name, local address, and remote address.
+
+The amount of detail should depend on the output channel.
+
+The lifecycle event itself can be an ordinary log message.
+
+Detailed address and state dumps can be verbose diagnostics.
+
+#### `onDisconnect` summaries
+
+Disconnect is a natural summary boundary.
+
+At that point, the whole connection episode is known.
+
+A good disconnect summary may include:
+
+- connection name,
+- local address,
+- remote address,
+- online since,
+- online duration,
 - total queued,
+- total sent,
+- write delta,
 - total read,
 - total processed,
-- online-since,
-- online-duration,
-- connection and instance identity.
+- read delta.
 
-This is extremely important.
+The event itself is a lifecycle fact.
 
-It means the framework’s runtime objects are not opaque.
+The detailed counters and deltas are diagnostic depth.
 
-The log system can report facts because the runtime model itself already knows meaningful facts.
+That makes `onDisconnect` a good example of the `LOG` / `VLOG` split:
 
-That is one of the reasons diagnostics in SNode.C can be clear instead of improvised.
+```text
+LOG(DEBUG)
+  -> connection disconnected
 
-### Lifecycle callbacks are natural visibility points
+VLOG(2)
+  -> addresses and duration
 
-Earlier chapters already established the difference between:
+VLOG(3)
+  -> counters and deltas
+```
 
-- instance-level lifecycle callbacks such as `onConnect`, `onConnected`, `onDisconnect`,
-- and context-level lifecycle methods such as `onConnected()` and `onDisconnected()`.
+This keeps normal debug output readable while preserving deeper information when needed.
 
-This chapter adds a crucial operational lesson:
+#### Context-level protocol events
 
-These are also the framework’s most natural visibility points.
+The context is the right place for protocol-aware diagnostics.
 
-Why?
+For example, an echo protocol may log when it sends the first client-side message.
 
-Because they correspond to real semantic transitions.
+A WebSocket context may log when a frame is accepted or rejected.
 
-A good diagnostics style in SNode.C often means:
+An MQTT context may log when protocol state changes.
 
-- log or trace when the connection object first exists,
-- log or trace when it becomes fully ready,
-- log or trace when the protocol endpoint begins meaningful work,
-- log or trace when the peer disconnects,
-- and when useful, include the connection’s counters, addresses, and durations.
+These messages should use the vocabulary of the protocol, not the vocabulary of the socket layer.
 
-This yields logs that reflect the architecture rather than arbitrary print statements.
+That keeps the logs aligned with the architecture:
 
-### The live templates already use `onDisconnect` diagnostically
+```text
+connection layer
+  -> connection facts
 
-One especially nice detail from the live server and client templates is that `onDisconnect` is not treated as a trivial closing hook. The templates already use it to report operational information such as addresses, online duration, queue totals, sent totals, read totals, processed totals, and deltas.
+context layer
+  -> protocol meaning
+```
 
-That is exactly the right instinct.
+### Configuration as a diagnostic source
 
-Disconnect is not merely “the connection ended.”
+Many runtime surprises are configuration surprises.
 
-It is also the moment when the entire episode can be summarized meaningfully.
+Before assuming that protocol code is wrong, inspect the effective configuration.
 
-A good network framework should make that easy, and SNode.C does.
+Useful questions include:
 
-### The context is also an introspection surface
+- Is the expected instance enabled?
+- Is it listening on the expected local endpoint?
+- Is the client connecting to the expected remote endpoint?
+- Is retry enabled?
+- Are timeout values what the operator expects?
+- Is TLS configured with the expected files and options?
+- Is the application running in quiet mode?
+- Is logging going to the expected destination?
 
-The context class is not only where protocol behavior lives.
+This is why configuration display belongs in a diagnostics chapter.
 
-It is also often the best place to express protocol-aware diagnostics.
+It shows the shape that the runtime is actually using.
 
-For example:
+#### Showing effective configuration
 
-- when the protocol conversation begins,
-- when the first message is sent,
-- when a protocol frame is accepted or rejected,
-- when state changes occur,
-- when a peer behaves unexpectedly,
-- when the protocol intentionally closes the session.
+Showing the effective configuration answers:
 
-This means the best diagnostics style usually combines:
+```text
+What did this application actually start with?
+```
 
-- instance-level connection visibility,
-- connection-level counters and addresses,
-- context-level protocol meaning.
+That is often more useful than reading the source or guessing which defaults applied.
 
-That three-layer view produces logs that are both operationally useful and pedagogically clear.
+It can reveal:
 
-### Showing current configuration is a diagnostic tool, not only a convenience
+- changed port values,
+- changed host values,
+- disabled instances,
+- non-default retry settings,
+- missing TLS values,
+- changed logging behavior.
 
-The current configuration system’s `show-config` behavior deserves special attention in this chapter.
+#### Generated command lines
 
-A displayed configuration is one of the most useful debugging artifacts in the framework.
+Generated command lines are also diagnostic artifacts.
 
-Why?
+They answer:
 
-Because many runtime surprises are actually configuration surprises.
+```text
+How can this configuration be reproduced?
+```
 
-Examples include:
+They are useful for:
 
-- wrong local address or port,
-- wrong remote address,
-- disabled instance,
-- retry unexpectedly enabled or disabled,
-- backlog not what the operator expected,
-- TLS certificates not configured as assumed,
-- daemon or log-file behavior differing from expectation.
+- bug reports,
+- deployment notes,
+- comparing expected and effective configuration,
+- sharing a minimal reproduction,
+- moving a working setup from one machine to another.
 
-A good operational habit in SNode.C is therefore simple:
+The generated command line is not only convenience output.
 
-When behavior is surprising, inspect the effective configuration before assuming the protocol code is wrong.
+It is a textual representation of the effective configuration.
 
-### Generated command lines are also diagnostic artifacts
+### Connection metrics and identity
 
-The command-line generation mechanism described earlier is also part of runtime introspection.
+The connection model carries important diagnostic information.
 
-A printed command line tells the reader or operator:
+A useful table is:
 
-- what the framework believes the current option set is,
-- which values are required,
-- which non-default values matter,
-- how to reconstruct the current operational state textually.
+| Connection information | Diagnostic value |
+|---|---|
+| instance name | which configured role owns this connection |
+| connection name | which concrete connection episode is being described |
+| bind address | which bind-side endpoint was used |
+| local address | which local endpoint is visible |
+| remote address | which peer endpoint is visible |
+| total queued | how much output was queued |
+| total sent | how much output reached the writer |
+| total read | how much input was read |
+| total processed | how much input was consumed by the context |
+| online since | when the connection became active |
+| online duration | how long the connection lived |
 
-This is especially useful when:
+These values make diagnostics concrete.
 
-- reproducing a bug,
-- sharing an operational setup,
-- documenting a deployment,
-- comparing expected and effective configuration.
+They also reduce guesswork.
 
-That is why command-line generation belongs in this chapter as much as in the configuration chapters.
+A log line that includes the right identity and counters can explain a runtime episode much better than a generic message such as:
 
-### Logging style should follow responsibility boundaries
+```text
+connection closed
+```
 
-One of the strongest practical rules for SNode.C diagnostics is this:
+A better diagnostic shape is:
 
-Log from the layer that has the right responsibility.
+```text
+connection closed
+  -> which instance?
+  -> which peer?
+  -> how long?
+  -> how much data?
+  -> was anything left queued or unprocessed?
+```
 
-For example:
+### Runtime introspection is broader than logging
 
-- application-level logs for application shell and daemon/log-file behavior,
-- instance-level logs for listen/connect activation and role-level events,
-- connection-level logs for peer identity, counters, and lifecycle episode summaries,
-- context-level logs for protocol behavior and protocol state transitions.
+In this chapter, runtime introspection means practical runtime visibility.
 
-This is much better than putting every message in one arbitrary place.
+It is not a separate magical subsystem.
 
-It means the logs themselves reflect the architecture.
+It is the combined ability to inspect:
 
-That makes them easier to read and easier to trust.
+- effective configuration,
+- generated command lines,
+- ordinary logs,
+- verbose logs,
+- system-error logs,
+- connection identity,
+- connection counters,
+- connection durations,
+- protocol-level context decisions.
 
-### Too much logging is a real failure mode
+This broader view is important.
 
-A diagnostics chapter should also say what *not* to do.
+Different problems require different visibility sources.
 
-It is entirely possible to destroy visibility by over-logging.
+A wrong port is a configuration problem.
+
+A failed bind is a system-boundary problem.
+
+A repeated retry is an instance-level flow problem.
+
+A peer closing unexpectedly is a connection-lifecycle problem.
+
+A rejected frame is a protocol problem.
+
+A good diagnostic style uses the right visibility source for the problem.
+
+### Too much logging is a failure mode
+
+More logging is not automatically better diagnostics.
+
+Too much logging can make a system harder to understand.
 
 This happens when:
 
-- normal data flow is logged at too high a level,
 - high-frequency events flood the output,
-- protocol meaning is hidden under repetitive noise,
-- verbose details are emitted as normal informational messages,
-- logs become too large to be read as structured episodes.
+- detailed flow internals appear at ordinary log levels,
+- protocol meaning is hidden under repetitive counters,
+- errors and normal flow are mixed without structure,
+- every layer logs the same fact,
+- verbose diagnostics are always enabled by default.
 
-That is why the distinction between `LOG` and `VLOG` matters so much.
+The solution is not to remove diagnostics.
 
-A good SNode.C application should make routine deep tracing available without forcing it into the normal operational output all the time.
+The solution is to place them at the right level.
 
-### A good log line should answer a real question
+Use ordinary logs for important lifecycle and severity.
 
-A useful discipline is this:
+Use verbose logs for optional depth.
 
-Before adding a log line, ask what question it would answer at runtime.
+Use system-error logs when system context matters.
+
+Use context logs for protocol meaning.
+
+### A good log line answers a question
+
+Before adding a log line, ask what runtime question it answers.
 
 Examples:
 
 - Which instance is active?
-- What address is it listening on?
+- Which endpoint is being used?
 - Which peer connected?
-- Is the connection really ready or only created?
-- Why did the connection close?
+- Did the connection become fully ready?
+- Why is a retry scheduled?
+- Which system call failed?
 - How much data moved?
-- Which protocol transition just occurred?
-- Which configuration state led to this behavior?
+- Which protocol transition occurred?
+- Which configuration state caused this behavior?
 
-If a log line answers none of these kinds of questions, it may not deserve to exist.
+If the message does not answer a useful question, it probably adds noise.
 
-This is a very practical way to keep logs readable.
+This rule is simple, but it keeps logs readable.
 
-### Runtime introspection is broader than logging alone
+### A practical diagnostic workflow
 
-By now the chapter should make one larger point clear.
+A useful SNode.C diagnostic workflow is:
 
-Runtime introspection in SNode.C includes at least four different kinds of visibility:
+1. Inspect the effective configuration.
+2. Confirm which instances exist and which are enabled.
+3. Check ordinary lifecycle logs.
+4. Check warnings and errors.
+5. Use `PLOG` output to understand system-boundary failures.
+6. Increase verbose level only when more detail is needed.
+7. Inspect connection identity, addresses, counters, and duration.
+8. Use context-level logs for protocol meaning.
 
-- log output,
-- current configuration display,
-- generated command lines,
-- connection/context metrics and identity.
+This is not a rigid law.
 
-This is a broader and healthier view than simply equating “introspection” with “print messages.”
+It is a useful rhythm.
 
-It means the user has multiple ways to understand the system depending on what kind of problem they are solving.
+It starts with the configured shape, then follows the runtime behavior, and only then increases diagnostic depth.
 
-### A practical diagnostic workflow in SNode.C
+### What to remember
 
-A useful operational workflow often looks like this:
+Remember:
 
-1. check the effective configuration,
-2. confirm which instances are enabled,
-3. use ordinary logs to see role-level lifecycle,
-4. increase verbose level when more detail is needed,
-5. inspect connection-level identities, counters, and durations,
-6. inspect protocol-level context logging only where the protocol meaning requires it.
-
-This is not a hard law.
-
-But it is a very good starting diagnostic rhythm for real applications.
-
-### Common misunderstandings about logging and diagnostics in SNode.C
-
-It helps to clear away a few misunderstandings explicitly.
-
-#### Misunderstanding 1: “Logging is secondary because the code is clear.”
-
-Corrected view: in an event-driven framework, runtime visibility is essential because control flow is distributed across lifecycle events and time.
-
-#### Misunderstanding 2: “More logging is always better diagnostics.”
-
-Corrected view: useful diagnostics require structured, responsibility-aware visibility, not a flood of undifferentiated output.
-
-#### Misunderstanding 3: “Configuration display is unrelated to diagnostics.”
-
-Corrected view: many runtime surprises are configuration surprises, so showing the effective configuration is a core diagnostic tool.
-
-#### Misunderstanding 4: “Only the logger provides introspection.”
-
-Corrected view: introspection also comes from connection metrics, addresses, durations, generated command lines, and the configuration shell.
-
-#### Misunderstanding 5: “Protocol logging should be placed wherever convenient.”
-
-Corrected view: logging is clearest when it follows the same responsibility boundaries as the architecture itself.
-
-### A good one-paragraph summary of the chapter
-
-SNode.C treats runtime visibility as part of the architecture. Its logger surface, verbose-level mechanism, errno-aware logging, file logging, quiet mode, current-configuration display, generated command lines, and connection/context metrics together form a coherent diagnostics model in which the user can understand not only that something happened, but which configured communication role did it, with which peer identity, under which effective configuration, and with what protocol meaning.
-
-That is the heart of the chapter.
+- Runtime visibility is essential in an event-driven framework.
+- Visibility in SNode.C comes from configuration, logs, connections, and contexts.
+- `LOG(level)` is for ordinary runtime reporting through the log-level ladder.
+- `PLOG(level)` is for system-boundary failures where system-error context matters.
+- `VLOG(level)` is for optional diagnostic depth.
+- `TRACE` is a normal log level, not the same thing as verbose logging.
+- Log levels and verbose levels are two different visibility axes.
+- Logging should follow responsibility boundaries.
+- Configuration display and generated command lines are diagnostic artifacts.
+- Connection objects expose identity, addresses, counters, and duration.
+- Lifecycle callbacks are natural visibility boundaries.
+- `onDisconnect` is a natural connection-episode summary point.
+- Context logs should express protocol meaning.
+- Too much logging can reduce visibility.
+- A good log line answers a real runtime question.
 
 ### Closing perspective
 
-A good framework becomes easier to trust when it is easy to observe.
+Part V moved from configuration to operational visibility.
 
-SNode.C earns trust here because its diagnostics story is not improvised.
+Chapter 16 explained the configuration philosophy.
 
-The framework has:
+Chapter 17 showed the anatomy of application, instance, section, and option configuration.
 
-- a real application shell,
-- a real configuration shell,
-- a real logging surface,
-- real runtime object identities,
-- real connection counters and durations,
-- and natural lifecycle boundaries at which visibility can be attached cleanly.
+Chapter 18 showed how configured roles become visible while they run.
 
-That is exactly what an event-driven network framework should offer.
+The result is a practical operational model:
 
-And once the reader understands that visibility model, the next practical step becomes natural.
+```text
+configured application
+  -> named communication roles
+      -> visible lifecycle events
+          -> connection facts
+              -> protocol meaning
+```
 
-Now that configuration and diagnostics are secure, the book can turn more directly toward reliability and secure operation.
+This closes the configuration and operational-behavior part of the book.
 
-That means TLS, timeouts, retries, and failure behavior are the next major themes.
+The next part turns to secure and robust communication.
+
+Chapter 19 begins with TLS across the framework.
