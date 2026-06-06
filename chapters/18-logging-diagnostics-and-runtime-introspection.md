@@ -31,7 +31,7 @@ Retries may happen later.
 
 Contexts react to peer data later.
 
-This makes runtime visibility essential.
+That makes runtime visibility essential.
 
 The source code may explain what can happen, but logging and diagnostics show what did happen in one concrete run.
 
@@ -123,9 +123,7 @@ SNode.C exposes three main logging forms:
 | `PLOG(level)` | runtime reporting with system-error context |
 | `VLOG(level)` | optional diagnostic depth controlled by the verbose level |
 
-These three forms should not be used interchangeably.
-
-They express different kinds of visibility.
+These forms express different kinds of visibility and should not be used interchangeably.
 
 #### `LOG(level)`
 
@@ -208,11 +206,7 @@ VLOG level
 
 SNode.C uses two related visibility controls.
 
-They should be read as two axes.
-
-The first axis is the ordinary log level.
-
-It controls the operational class of a message:
+The ordinary log level controls operational class:
 
 ```text
 TRACE
@@ -223,9 +217,7 @@ ERROR
 FATAL
 ```
 
-The second axis is the verbose level.
-
-It controls diagnostic depth:
+The verbose level controls diagnostic depth:
 
 ```text
 VLOG(1)
@@ -234,13 +226,9 @@ VLOG(3)
 ...
 ```
 
-This separation prevents two common problems.
+This separation keeps normal logs readable without forcing deep diagnostics into `DEBUG` or `TRACE`.
 
-First, normal logs do not have to become noisy just because detailed diagnostics exist.
-
-Second, deep diagnostics do not have to be disguised as `DEBUG` or `TRACE` messages.
-
-The result is cleaner:
+The result is:
 
 ```text
 ordinary lifecycle and severity
@@ -254,21 +242,9 @@ optional diagnostic depth
 
 Logging also has operational modes.
 
-A network application may run in different environments:
+A network application may run in the foreground, as a daemon, with file logging, in quiet mode, with colored terminal output, or in monochrome output for files and pipes.
 
-- foreground development,
-- foreground debugging,
-- daemonized background operation,
-- file-oriented logging,
-- quiet operation,
-- colored terminal output,
-- monochrome output for files, pipes, or constrained consoles.
-
-These are not cosmetic details.
-
-They decide whether the diagnostics are usable in the environment where the program actually runs.
-
-A useful model is:
+These are not cosmetic details. They decide whether diagnostics are usable in the environment where the program actually runs.
 
 | Mode | Purpose |
 |---|---|
@@ -482,15 +458,9 @@ Useful questions include:
 - Is the expected instance enabled?
 - Is it listening on the expected local endpoint?
 - Is the client connecting to the expected remote endpoint?
-- Is retry enabled?
-- Are timeout values what the operator expects?
-- Is TLS configured with the expected files and options?
-- Is the application running in quiet mode?
-- Is logging going to the expected destination?
+- Are retry, timeout, TLS, quiet-mode, and log-destination settings what the operator expects?
 
-This is why configuration display belongs in a diagnostics chapter.
-
-It shows the shape that the runtime is actually using.
+Configuration display belongs in a diagnostics chapter because it shows the shape that the runtime is actually using.
 
 #### Showing effective configuration
 
@@ -500,38 +470,19 @@ Showing the effective configuration answers:
 What did this application actually start with?
 ```
 
-That is often more useful than reading the source or guessing which defaults applied.
-
-It can reveal:
-
-- changed port values,
-- changed host values,
-- disabled instances,
-- non-default retry settings,
-- missing TLS values,
-- changed logging behavior.
+It can reveal changed endpoint values, disabled instances, non-default retry settings, missing TLS values, or changed logging behavior.
 
 #### Generated command lines
 
-Generated command lines are also diagnostic artifacts.
-
-They answer:
+Generated command lines answer:
 
 ```text
 How can this configuration be reproduced?
 ```
 
-They are useful for:
+They are useful for bug reports, deployment notes, comparing expected and effective configuration, sharing a minimal reproduction, or moving a working setup to another machine.
 
-- bug reports,
-- deployment notes,
-- comparing expected and effective configuration,
-- sharing a minimal reproduction,
-- moving a working setup from one machine to another.
-
-The generated command line is not only convenience output.
-
-It is a textual representation of the effective configuration.
+The generated command line is a textual representation of the effective configuration.
 
 ### Connection metrics and identity
 
@@ -578,21 +529,7 @@ connection closed
 
 In this chapter, runtime introspection means practical runtime visibility.
 
-It is not a separate magical subsystem.
-
-It is the combined ability to inspect:
-
-- effective configuration,
-- generated command lines,
-- ordinary logs,
-- verbose logs,
-- system-error logs,
-- connection identity,
-- connection counters,
-- connection durations,
-- protocol-level context decisions.
-
-This broader view is important.
+It is the combined ability to inspect effective configuration, generated command lines, ordinary logs, verbose logs, system-error logs, connection identity, counters, durations, and protocol-level context decisions.
 
 Different problems require different visibility sources.
 
