@@ -1,482 +1,731 @@
 ## Timeouts, Retries, and Failure Modes
-### Why this chapter matters so much
 
-A networking framework is not truly useful only when everything works.
+### Communication over time
 
-Its real quality shows itself when communication is slow, partial, flaky, interrupted, misconfigured, or unexpectedly absent.
+Chapter 19 showed how TLS adds secure connection handling to the same SNode.C architecture.
 
-That is where many networking designs begin to unravel.
+That included two time-sensitive phases:
 
-SNode.C is especially interesting here because failure handling is not bolted on afterward. It is built into the runtime, connection, configuration, and flow-control story from the beginning.
+```text
+startup
+  -> TLS handshake
 
-This chapter therefore is not a chapter about error cases in the narrow sense.
+shutdown
+  -> TLS shutdown / close-notify
+```
 
-It is a chapter about how the framework treats communication as something that unfolds over time, may fail in stages, may need to be retried, may need to be reconnected, and may need to be bounded by timeouts.
+Chapter 20 widens the view.
 
-That is exactly the kind of realism a serious network framework should provide.
+It looks at communication as something that unfolds over time.
 
-### Three distinct concerns that should not be mixed up
+A communication role may be activated.
 
-The title of the chapter groups three ideas together, but the reader should not collapse them into one thing.
+A connection may be established.
 
-#### Timeouts
+A peer may become ready.
 
-Timeouts answer the question:
+A protocol may exchange data.
 
-> How long should a particular phase or activity be allowed to continue before the framework or protocol treats it as stalled or failed?
+A write may stall.
 
-#### Retries
+A read may time out.
 
-Retries answer the question:
+A connection may close.
 
-> If an operation fails before a stable connection has been established or maintained, should the framework attempt the operation again later?
+A client may reconnect.
 
-#### Failure modes
+A role may retry activation.
 
-Failure modes answer the broader question:
+A role may stop.
 
-> In what ways can communication fail or end, and how should the framework and the application understand those endings?
+These are not side cases.
 
-Keeping these three ideas distinct is one of the best ways to stay clear-minded when designing or debugging SNode.C applications.
+They are part of the normal shape of networked software.
 
-### The framework treats time as a first-class part of communication
+The central model of this chapter is:
 
-Earlier chapters already established that SNode.C has:
+```text
+activation
+  -> establishment
+      -> connected operation
+          -> interruption / timeout / failure
+              -> retry, reconnect, shutdown, or stop
+```
 
-- a real event loop,
-- timer integration,
-- connection lifecycle management,
-- and configuration-visible timeout settings.
+Timeouts, retries, reconnects, shutdown behavior, and failure states are different ways of describing communication over time.
 
-This chapter now connects those pieces into one practical lesson.
+### The core distinctions
 
-SNode.C does not treat time as incidental.
+The title of the chapter names three ideas:
 
-The framework assumes that communication roles may need to reason about:
+```text
+timeouts
+retries
+failure modes
+```
 
-- how long to wait for establishment,
-- how long to wait for reads,
-- how long to wait for writes,
-- how long to keep retrying,
-- how long to pause before reconnecting,
-- how long shutdown should be allowed to take,
-- and when the absence of progress should be interpreted as failure.
+But a robust SNode.C application also needs two related ideas:
 
-That is one of the reasons the framework feels operationally serious.
+```text
+reconnect
+shutdown
+```
 
-### Timeouts live at more than one layer
+A useful overview is:
 
-One of the easiest mistakes a reader can make is to imagine “the timeout” as one global concept.
+| Concern | Question it answers | Typical owner |
+|---|---|---|
+| timeout | How long may this phase wait? | connection, context, TLS, or role configuration |
+| retry | Should a failed attempt be tried again? | server/client flow controller |
+| reconnect | Should a client role return after disconnect? | client flow controller |
+| failure state | What kind of outcome happened? | status/state model |
+| disablement | Is this role intentionally inactive? | configuration/instance |
+| shutdown | How should an active connection end? | connection, TLS, or protocol |
 
-In reality, SNode.C supports timeout thinking at several layers.
+These concerns are related, but they should not be collapsed into one concept.
 
-#### Connection-level timeouts
+#### Timeout
 
-The connection and context surfaces support timeouts directly, including general timeouts as well as read and write timeouts.
+A timeout bounds waiting.
 
-These govern the life of one concrete peer relationship.
+It answers:
+
+```text
+How long may this phase continue without progress?
+```
+
+The phase may be a read, a write, a connection attempt, a retry delay, a reconnect delay, TLS initialization, TLS shutdown, or a protocol-specific waiting phase.
+
+#### Retry
+
+A retry belongs to a failed attempt.
+
+It answers:
+
+```text
+Should this role try the failed operation again later?
+```
+
+A server may retry listening.
+
+A client may retry connecting.
+
+Retry policy belongs to the outer communication role, not to arbitrary protocol code.
+
+#### Reconnect
+
+Reconnect belongs to the lifecycle of an ongoing client role.
+
+It answers:
+
+```text
+After a client connection has ended, should the client role restore the relationship?
+```
+
+That is different from retry.
+
+Retry belongs to failed attempts.
+
+Reconnect belongs to the lifecycle of an ongoing client role.
+
+#### Failure state
+
+A failure state describes what kind of outcome occurred.
+
+It answers:
+
+```text
+Did this succeed, fail, fail fatally, become disabled, or carry retry-control information?
+```
+
+The state model gives operational outcomes more vocabulary than a Boolean result.
+
+#### Shutdown
+
+Shutdown describes how an active connection ends.
+
+It answers:
+
+```text
+How should this connection close?
+```
+
+For a plain stream, shutdown may mostly be socket shutdown and close behavior.
+
+For TLS, shutdown may also involve TLS shutdown and close-notify handling.
+
+For a protocol, shutdown may have application meaning as well.
+
+### Where timeouts live
+
+There is no single global timeout.
+
+Timeouts belong to several different parts of the communication lifecycle.
+
+| Timeout area | Meaning |
+|---|---|
+| connection timeout | bound a concrete peer relationship |
+| read timeout | bound waiting for input |
+| write timeout | bound stalled output |
+| retry timeout | delay before trying role activation again |
+| reconnect timeout | delay before restoring a client role |
+| TLS init timeout | bound secure startup |
+| TLS shutdown timeout | bound secure shutdown |
+| protocol timeout | express protocol-specific waiting |
+
+This layered timeout model is useful because different waits have different meanings.
+
+A read timeout is not the same as a retry delay.
+
+A TLS shutdown timeout is not the same as a protocol response timeout.
+
+A reconnect timeout is not the same as a failed connect-attempt retry.
+
+The names matter because the responsibility boundaries matter.
+
+#### Connection, read, and write timeouts
+
+At the concrete connection level, a program may need to bound:
+
+- total inactivity,
+- waiting for input,
+- blocked outgoing progress.
+
+These concerns belong to the peer relationship.
+
+A protocol context may use them because the protocol often knows what kind of waiting is meaningful.
+
+For example:
+
+```text
+no frame arrived in time
+outgoing data could not progress
+this session remained inactive too long
+```
+
+Those are connection-level timing facts with protocol consequences.
 
 #### Role-level retry timing
 
-The server and client instance templates integrate retry timing, retry scaling, jitter, and retry limits into their role-level flow behavior.
+Retry timing belongs to the server or client role.
 
-These govern the outer communication role’s willingness to try again after certain failures.
+It answers:
 
-#### Client-side reconnect timing
+```text
+When should this role try again after a failed activation attempt?
+```
 
-The client side adds a distinct reconnect delay for restoring a previously established communication role after disconnection.
+For a server, that may mean retrying listen.
 
-#### TLS-related timing
+For a client, that may mean retrying connect.
 
-The TLS layer adds its own initialization and shutdown timing concerns.
+This is role-level behavior because it concerns the communication role as a whole.
 
-This layered timeout picture is not a complication to fear.
+It should not be hidden inside one protocol context.
 
-It is exactly the right reflection of the real communication lifecycle.
+#### Client reconnect timing
 
-### The live server template: retries are built in, not improvised
+Reconnect timing belongs to a client role that is expected to remain present over time.
 
-The current live `SocketServer` template is especially illuminating here.
+It answers:
 
-The server template integrates a `ServerFlowController`, schedules real listen work into the runtime, and contains explicit retry logic in its `realListen(...)` path.
+```text
+After a previously established client connection ended, when should the client try to restore it?
+```
 
-When a listen attempt reports a retry-eligible failure, the server logic consults configuration values such as:
+This is not merely another word for retry.
 
-- whether retry is enabled,
-- whether retry on fatal is allowed,
-- how many tries are allowed,
-- the base retry timeout,
-- retry scaling,
-- jitter,
-- and retry limits.
+It describes the long-term lifecycle of a client role.
 
-It then arms a retry timer and reports the retry through logging.
+#### TLS timing
 
-This is exactly the right design.
+TLS adds timed phases to the connection lifecycle.
 
-A listening role is not simply “try once and hope.”
+Chapter 19 described those phases:
 
-It is a flow-controlled communication role with explicit retry policy.
+```text
+TLS startup
+  -> handshake
 
-### The live client template: retry and reconnect are distinct
+TLS shutdown
+  -> close-notify / shutdown behavior
+```
 
-The current live `SocketClient` template teaches an even more refined lesson.
+Chapter 20 treats them as part of the broader time model.
 
-It integrates both:
+TLS initialization and TLS shutdown can both need time bounds.
 
-- retry logic for failed connect attempts,
-- and reconnect logic for re-establishing a role after a previously connected session has ended.
+Both can fail.
 
-These are not the same thing.
+Both belong to the connection layer.
 
-That distinction is one of the most important lessons in the chapter.
+#### Protocol-level timing
 
-Retry is about:
-
-- trying again after failure to establish or maintain the current attempt.
-
-Reconnect is about:
-
-- restoring the communication role after a disconnection event in a client that is supposed to remain an ongoing participant.
-
-The live template handles these through separate flow-control behavior and separate timer arming.
-
-That is a very strong design choice.
-
-### Why retry and reconnect should not be confused
-
-A good practical way to remember the difference is this:
-
-- **retry** belongs to the failure of an attempt,
-- **reconnect** belongs to the lifecycle of a role.
-
-A client that should remain present over time may reconnect even after previously successful operation.
-
-A retry, by contrast, is usually about a failed step that has not yet reached stable ongoing participation.
-
-This distinction matters because applications often need different policies for these two cases.
-
-SNode.C’s design respects that.
-
-### Failure is part of the state model, not only an exception path
-
-The current `core::socket::State` class is one of the clearest signs that SNode.C treats failure as a structured part of the model.
-
-The state values include:
-
-- `OK`
-- `DISABLED`
-- `ERROR`
-- `FATAL`
-- `NO_RETRY`
-
-and the state can carry explanatory detail via `what()` and `where()`.
-
-This is extremely useful.
-
-It means that the framework does not reduce operational outcomes to a Boolean “worked / did not work.”
-
-Instead, it lets a communication role report:
-
-- normal activation,
-- intentional disablement,
-- recoverable failure,
-- fatal failure,
-- and retry-related control information.
-
-That richer vocabulary is essential in a framework that wants to support practical operational behavior.
-
-### `NO_RETRY` is a particularly interesting part of the model
-
-One especially subtle detail in the live server and client templates is how they handle `NO_RETRY`.
-
-The status callback receives a state that may carry the `NO_RETRY` bit, and the templates explicitly inspect and then strip that flag before deciding whether retry behavior should continue.
-
-This is a very mature design.
-
-It means the framework can distinguish between:
-
-- a state that looks like an error in a broad sense,
-- and a state that should or should not trigger automatic retry behavior.
-
-That is much better than forcing every failure to either always retry or never retry.
-
-### The connection/context side of timeout control
-
-At the context and connection level, the framework provides direct timeout-setting operations.
-
-This is important because some timing concerns are genuinely protocol-local.
+Some timeouts have protocol meaning.
 
 Examples include:
 
-- how long to wait for a peer to send the next frame,
-- how long to tolerate stalled writes,
-- how long a phase of the conversation may remain inactive,
-- how long the protocol is willing to keep a half-finished session alive.
+- waiting for a response,
+- waiting for the next frame,
+- bounding an upload phase,
+- bounding a download phase,
+- limiting an application-level handshake,
+- closing idle sessions.
 
-This is one of the reasons the timeout API belongs both to the connection and to the context-facing surface.
+A protocol timeout should correspond to a protocol expectation.
 
-The connection is the concrete timed relationship. The context is often the place where protocol timing meaning is decided.
+It should not be added merely because a system feels unreliable.
 
-### General timeouts versus read/write timeouts
+### Retry and reconnect
 
-The live connection/context-facing API exposes:
+Retry and reconnect are the most important distinction in this chapter.
 
-- general timeout setting,
-- read timeout setting,
-- write timeout setting.
+They are close enough to be confused, but different enough that the distinction matters.
 
-That is a particularly good design because it avoids the false assumption that “waiting too long” is one undifferentiated event.
+| Mechanism | Situation | Meaning |
+|---|---|---|
+| retry | an attempt failed | try the attempt again later |
+| reconnect | a client connection ended after being established | restore the ongoing client role |
 
-A protocol may care differently about:
+This distinction keeps the application model honest.
 
-- peer silence,
-- blocked outgoing progress,
-- or total inactivity.
+A failed initial connect attempt is not the same situation as a client that was connected for an hour and then lost its peer.
 
-The framework allows those concerns to be expressed with more nuance than one single coarse timeout value.
+A server that cannot bind its listening endpoint is not in the same situation as a protocol context that decides to close a connection.
 
-That is exactly what a mature communication framework should do.
+#### Server retry
 
-### Retry scaling, base, limit, and jitter
+A server role may retry listen activation when configured to do so.
 
-One of the nicest operational details in the live server and client templates is the retry-time calculation logic.
+The retry decision belongs to the server role.
 
-The framework does not merely wait a fixed amount of time and try again mechanically.
+It depends on:
 
-It uses:
+- whether retry is enabled,
+- whether the failure state allows retry,
+- whether retry-on-fatal is enabled for fatal states,
+- whether the retry count limit has been reached,
+- what retry delay should be used,
+- whether retry is still enabled when the timer fires.
 
-- a retry timeout,
-- scaling via retry base,
-- an optional retry limit,
-- and jitter.
+The server does not need protocol code to reinvent this behavior.
 
-This is worth slowing down for.
+The listen role carries retry policy.
 
-It means SNode.C understands that repeated retries are part of a time-distributed operational policy, not just a loop.
+#### Client retry
 
-That is especially important in real systems where:
+A client role may retry connect activation when a connect attempt fails.
 
-- immediate repeated retries are wasteful,
-- synchronized retries are undesirable,
-- increasingly spaced retries are healthier,
-- and upper bounds are often needed.
+That retry path is similar in spirit to server retry:
 
-### Jitter is a sign of seriousness
+```text
+connect attempt fails
+  -> state is reported
+      -> retry policy is checked
+          -> retry timer may be armed
+              -> connect is attempted again
+```
 
-A technical book should point out why jitter matters.
+This still belongs to the outer client role.
 
-Retry jitter prevents perfectly synchronized repeated behavior when many instances or roles behave similarly.
+The protocol context does not yet represent a stable peer conversation.
 
-Even in smaller systems, jitter is often valuable because it breaks rigid retry rhythms that can otherwise produce surprisingly unhelpful operational patterns.
+#### Client reconnect
 
-The fact that the live templates already integrate jitter directly into retry timing is a sign that the framework is designed with real systems in mind, not only the happy path.
+Reconnect is different.
 
-### Retry tries and retry limit express two different kinds of bound
+A client reconnect path starts after a connection existed and then ended.
 
-The configuration model distinguishes among several ways to bound retry behavior.
+The client role may still be intended to remain active.
 
-That is useful because they answer different questions.
+In that case, reconnect behavior can schedule a later attempt to restore the relationship:
 
-- retry tries answer: how many times should we keep trying?
-- retry limit answers: how large may the scaled retry timeout become?
+```text
+connected client role
+  -> disconnect
+      -> reconnect policy checked
+          -> reconnect timer armed
+              -> connect is attempted again
+```
 
-These are different operational controls.
+This is why reconnect belongs to the lifecycle of the client role.
 
-One limits attempt count. The other limits growth of delay.
+It is not just another failed connect attempt.
 
-That is exactly the kind of distinction that makes a framework configurable in practice rather than only in principle.
+### Server and client symmetry and difference
 
-### Failure can happen before, during, or after stable communication
+Servers and clients share a broad role model.
 
-A good failure-model chapter should make this timeline explicit.
+Both are configured communication roles.
 
-Communication can fail:
+Both participate in the runtime.
 
-- before the role is fully activated,
-- during establishment,
-- during secure initialization,
-- during ordinary read/write activity,
-- during shutdown,
-- after long successful runtime.
+Both can use flow-control machinery.
 
-SNode.C’s design supports this richer timeline well.
+Both may retry role activation.
 
-That is why it has:
+But they are not identical.
 
-- state-aware status reporting,
-- flow-control-driven retry logic,
-- reconnect logic,
-- timeout controls,
-- and connection-level duration/counter reporting.
+A server is normally a listening role.
 
-The framework expects communication to have episodes, not only one binary outcome.
+A client is normally an initiating role.
 
-### The role of the flow controllers
+That difference matters for reconnect.
 
-The live templates also make the flow-controller idea much more concrete.
+A server can retry listening when listen activation fails.
 
-The server and client do not handle retry and reconnect in an ad hoc way. They delegate to `ServerFlowController` and `ClientFlowController`, which observe accept/connect event receivers, track retry/reconnect enablement, and arm the relevant timers.
+A client can retry connecting when connect activation fails, and it can reconnect later after a previously established connection ends.
 
-This is a very good architecture decision.
+A useful summary is:
 
-It means retry and reconnect policy are not scattered randomly through protocol code.
+| Role | Retry focus | Reconnect focus |
+|---|---|---|
+| server | retry listen activation | normally not applicable |
+| client | retry connect activation | restore client role after disconnect |
 
-They are centralized in role-appropriate flow-control machinery.
+This belongs to role behavior, not to application protocol behavior.
 
-That keeps the outer communication role coherent and prevents ordinary protocol endpoints from having to reinvent outer lifecycle policy.
+### Retry timing policy
 
-### Timeouts and retries are not a substitute for good protocol behavior
+Retry timing is more than “try again.”
 
-At this point, an important warning belongs in the chapter.
+It is a policy.
 
-The framework’s rich timeout and retry model is not a substitute for writing a sensible protocol endpoint.
+A retry policy may need to answer several questions:
 
-A poor protocol design will not become good simply because:
+| Setting | Question |
+|---|---|
+| retry timeout | What is the base wait? |
+| retry base | How does the wait grow? |
+| retry limit | What is the maximum wait? |
+| retry jitter | How much random variation is added? |
+| retry tries | How many attempts are allowed? |
+| retry on fatal | May fatal states be retried? |
 
-- retries are enabled,
-- reconnect is enabled,
-- or timeout values are configured.
+Together, these settings prevent retry behavior from becoming an uncontrolled loop.
 
-Those features help the communication role behave robustly in time.
+They also let retry behavior adapt to deployment needs.
 
-They do not replace the need for:
+#### Scaling and limits
 
-- honest receive processing,
-- meaningful protocol state transitions,
-- clear closure conditions,
-- sensible error interpretation.
+Retry scaling lets repeated attempts be spaced out over time.
 
-This distinction is worth stating explicitly.
+A retry limit can cap the maximum delay.
 
-### Protocol-level timeout use should remain meaningful
+That gives the role a bounded retry rhythm:
 
-Earlier chapters already noted that a context may set timeouts when the protocol truly cares.
+```text
+try
+  -> wait
+      -> try again
+          -> wait longer
+              -> try again
+```
 
-This chapter adds a refinement.
+without allowing the delay to grow without bound.
 
-A good protocol endpoint should use timeout controls for real semantic reasons, such as:
+#### Jitter
+
+Jitter adds controlled variation to retry timing.
+
+That matters when many roles or many processes may retry around the same time.
+
+Without jitter, repeated retry behavior can become synchronized.
+
+With jitter, the retry pattern becomes less rigid.
+
+Jitter is part of retry timing policy, not a separate mechanism.
+
+#### Retry tries
+
+Retry tries bound the number of attempts.
+
+This answers a different question from retry limit.
+
+A retry limit bounds delay growth.
+
+Retry tries bound attempt count.
+
+Both can matter.
+
+#### Retry on fatal
+
+Fatal failure does not automatically answer the retry question.
+
+A fatal state describes severity.
+
+Retry-on-fatal describes policy.
+
+Some deployments may want a role to stop after a fatal failure.
+
+Others may want delayed reattempts even after fatal outcomes.
+
+The framework separates the failure category from the retry policy.
+
+That separation keeps the behavior configurable instead of hard-coded.
+
+### `NO_RETRY` as retry-control information
+
+`NO_RETRY` is part of the failure-control vocabulary.
+
+It should be understood carefully.
+
+It is not a separate ordinary outcome like `OK` or `ERROR`.
+
+It is retry-control information attached to a state.
+
+It lets a status report remain an error or fatal condition while still telling role-level retry logic not to continue automatically.
+
+Conceptually:
+
+```text
+ERROR | NO_RETRY
+  -> report an error
+  -> do not automatically retry
+```
+
+The useful distinction is:
+
+```text
+what happened?
+  -> ERROR / FATAL / DISABLED / OK
+
+what should retry logic do?
+  -> retry allowed or retry suppressed
+```
+
+This avoids forcing every failure into one of two crude categories:
+
+```text
+always retry
+never retry
+```
+
+### Failure states
+
+Failure handling is easier to understand when the state vocabulary is explicit.
+
+| State | Meaning |
+|---|---|
+| `OK` | operation succeeded |
+| `DISABLED` | role is intentionally inactive |
+| `ERROR` | recoverable failure or ordinary error |
+| `FATAL` | severe failure |
+| `NO_RETRY` | retry-control flag |
+
+This model is richer than a Boolean result.
+
+A communication role can report that it succeeded.
+
+It can report that it is disabled.
+
+It can report a recoverable error.
+
+It can report a fatal error.
+
+It can also carry retry-control information.
+
+That matters because operational behavior depends on more than success or failure.
+
+#### Disablement is not failure
+
+`DISABLED` is a state, but it is not an error state.
+
+It represents intentional non-participation.
+
+That distinction matters in multi-instance applications.
+
+An executable may contain several possible roles, while only some are active in a particular deployment.
+
+A disabled role should not be confused with a broken role.
+
+The configuration says:
+
+```text
+this role exists
+  -> but it is intentionally inactive
+```
+
+That is different from:
+
+```text
+this role tried to participate
+  -> and failed
+```
+
+#### Failure can happen in different phases
+
+Failure can occur at many points in the lifecycle.
+
+| Phase | Example failure |
+|---|---|
+| before activation | missing required configuration |
+| activation | bind or connect fails |
+| establishment | connect or TLS handshake fails |
+| connected operation | read timeout, write timeout, peer close |
+| shutdown | socket or TLS shutdown timeout |
+| after disconnect | reconnect decision or reconnect failure |
+
+This is why a single error category is not enough.
+
+Communication has phases.
+
+Failures belong to phases.
+
+The diagnostic question is not only:
+
+```text
+Did it fail?
+```
+
+The better question is:
+
+```text
+Where in the lifecycle did it fail, and what policy applies there?
+```
+
+### Flow controllers as role-level owners
+
+Retry and reconnect policy belong to role-level flow control.
+
+That is why server and client flow controllers matter.
+
+They keep outer lifecycle behavior out of ordinary protocol contexts.
+
+A useful boundary is:
+
+```text
+server/client flow controller
+  -> activation, retry, reconnect timing
+
+connection/context
+  -> peer relationship and protocol behavior
+```
+
+This prevents two design mistakes.
+
+The first mistake is putting retry and reconnect policy into every protocol context.
+
+The second mistake is forcing the outer role to understand protocol semantics it does not own.
+
+The flow controller keeps the role coherent.
+
+The context keeps the protocol coherent.
+
+### Protocol-level timeout use
+
+Timeout controls are useful only when they express meaningful waiting.
+
+A protocol endpoint should use timeouts for protocol reasons, such as:
 
 - waiting for a response phase,
 - guarding against peer silence,
 - bounding an upload or download phase,
-- limiting a handshake-like application step.
+- limiting an application-level handshake,
+- closing an idle session.
 
-Timeouts should not become random attempts to “make the system more robust.”
+A timeout should answer a real protocol question.
 
-A timeout only helps when it corresponds to a meaningful protocol expectation.
+For example:
 
-### Failure visibility is as important as failure handling
+```text
+If no complete frame arrives within this time, the peer is no longer following the expected conversation.
+```
 
-The diagnostics chapter becomes especially relevant here.
+That is meaningful.
 
-It is not enough for the framework to retry or reconnect.
+By contrast:
 
-The operator must also be able to understand:
+```text
+Add some timeout because the network is unreliable.
+```
 
-- what failed,
-- how it failed,
-- whether retry is happening,
+is not precise enough.
+
+Timeouts improve robustness when they match the lifecycle and semantics of the protocol.
+
+### Failure visibility
+
+A retry or reconnect system must be observable.
+
+The operator should be able to answer:
+
+- which role failed,
+- which endpoint was involved,
+- what state was reported,
+- whether retry was scheduled,
 - how long until the next retry,
-- whether reconnect is happening,
+- whether reconnect was scheduled,
 - why a timeout occurred,
-- whether the instance is disabled or merely failing.
+- whether the role was disabled rather than failing.
 
-The live server and client templates already log retry and reconnect timing, and they also summarize connection episodes on disconnect.
+This connects directly to Chapter 18.
 
-That is exactly the right operational posture.
+Configuration display shows intended behavior.
 
-### Disablement is not failure
+Ordinary logs show lifecycle events.
 
-One subtle but important practical point should be made clearly.
+`PLOG` and system/TLS diagnostics explain boundary failures.
 
-A disabled instance is not a failed instance.
+`VLOG` can show deeper timing and retry decisions.
 
-The framework models `DISABLED` as a real state alongside `ERROR` and `FATAL`.
+Connection metrics show what happened during one peer episode.
 
-That is a healthy distinction.
+Failure handling without visibility is difficult to operate.
 
-It prevents the application and operator from conflating:
+### The architectural rule
 
-- intentional non-participation,
-- and unsuccessful participation.
+A compact rule keeps the chapter together:
 
-This matters a great deal in multi-instance systems, staged deployments, and optional-role scenarios.
+```text
+role-level configuration and flow controllers
+  -> retry and reconnect policy
 
-### Fatal failure and retry-on-fatal
+connection/context layer
+  -> protocol-meaningful timeout use
 
-The live retry logic also highlights a very mature distinction.
+status and logging surfaces
+  -> failure visibility
+```
 
-Fatal failure does not automatically mean “retry forever” or “never retry again.”
+This boundary keeps the architecture balanced.
 
-Instead, retry behavior consults the `retry-on-fatal` policy.
+It prevents protocol code from swallowing outer operational policy.
 
-That is a good design because fatality is not only a technical category — it is also a policy question.
+It prevents outer role logic from pretending to understand protocol semantics.
 
-Some fatal states should stop the role. Others may justify delayed automated reattempt depending on deployment expectations.
+It keeps failure behavior visible.
 
-The framework lets that policy be expressed rather than hard-coding one answer.
+### What to remember
 
-### The cleanest practical design rule
+Remember:
 
-A good practical rule for SNode.C applications is this:
-
-- let the **role-level configuration and flow controllers** decide retry and reconnect policy,
-- let the **connection/context layer** decide protocol-meaningful timeout use,
-- and let the **status and logging surfaces** make failure behavior visible.
-
-This one rule keeps the architecture balanced.
-
-It prevents protocol code from swallowing outer operational policy, and it prevents outer role logic from pretending to understand protocol semantics it does not own.
-
-### Common misunderstandings about timeouts, retries, and failures
-
-It helps to clear away a few misunderstandings explicitly.
-
-#### Misunderstanding 1: “Retry and reconnect are basically the same mechanism.”
-
-Corrected view: retry concerns failure of attempts; reconnect concerns restoring an ongoing client role after disconnection.
-
-#### Misunderstanding 2: “A timeout is just one number somewhere in the system.”
-
-Corrected view: timeouts exist at multiple layers and may mean different things depending on whether they govern connection phases, reads, writes, or secure initialization/shutdown.
-
-#### Misunderstanding 3: “Failure is just `ERROR`.”
-
-Corrected view: the state model distinguishes among `DISABLED`, `ERROR`, `FATAL`, and retry-related control such as `NO_RETRY`.
-
-#### Misunderstanding 4: “Turning on retries makes the application robust.”
-
-Corrected view: retries help communication roles recover over time, but they do not replace good protocol design.
-
-#### Misunderstanding 5: “If an instance is disabled, something is wrong.”
-
-Corrected view: disablement is an intentional configuration state, not necessarily an operational failure.
-
-### A good one-paragraph summary of the chapter
-
-SNode.C treats timeouts, retries, and failure modes as core parts of the communication model rather than as incidental error handling. Connection and context layers expose timeout controls for meaningful protocol timing, server and client flow controllers implement structured retry behavior, the client role adds distinct reconnect behavior, and the state model distinguishes among normal operation, intentional disablement, recoverable failure, fatal failure, and retry control. This lets the framework represent communication as a time-distributed lifecycle rather than a single binary event.
-
-That is the heart of the chapter.
+- Communication unfolds over time.
+- Timeout, retry, reconnect, shutdown, and failure state are different concepts.
+- Timeouts exist at several layers.
+- Retry belongs to failed attempts.
+- Reconnect belongs to the lifecycle of an ongoing client role.
+- Server and client roles both use flow-control machinery.
+- Client roles add reconnect behavior.
+- Retry timing can be bounded, scaled, jittered, and limited by attempt count.
+- Fatal failure and retry policy are separate concerns.
+- `State` distinguishes `OK`, `DISABLED`, `ERROR`, `FATAL`, and retry control.
+- `DISABLED` is not failure.
+- `NO_RETRY` controls retry behavior without erasing the failure state.
+- Protocol timeouts should express protocol meaning.
+- Failure handling must remain visible through configuration, status, logs, and connection diagnostics.
+- Chapter 21 moves upward into HTTP.
 
 ### Closing perspective
 
-This chapter completes an important practical turn in the book.
+Chapter 20 completed the foundation for robust communication over time.
 
-The reader now understands not only:
+Chapter 19 showed how secure connection handling fits into the architecture.
 
-- how communication roles are structured,
-- how protocols are written,
-- how lower families are chosen,
-- how TLS is inserted,
-- and how diagnostics work,
+Chapter 20 showed how communication roles behave when time, failure, retry, reconnect, and shutdown become part of the story.
 
-but also how the framework behaves when communication unfolds imperfectly over time.
+That completes Part VI.
 
-That is a major milestone.
+The next part moves upward into web-facing protocols.
 
-It means the book can now begin to climb upward again toward the higher-level protocol families with a much stronger operational foundation underneath.
-
-The next large step is therefore natural.
-
-Now that the reader understands the lower communication model, secure transport, and failure behavior, the book can move into the web-facing layers and show how HTTP builds on all of this without discarding the same architectural discipline.
+Chapter 21 begins with HTTP, where the same runtime, connection, context, configuration, and diagnostic ideas reappear at the web-protocol layer.
