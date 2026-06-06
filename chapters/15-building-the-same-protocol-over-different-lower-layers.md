@@ -1,120 +1,286 @@
 ## Building the Same Protocol over Different Lower Layers
-### Why this chapter is the architectural payoff
 
-Up to this point, the book has done a great deal of patient groundwork.
+### From context/factory separation to lower-family transfer
 
-We have learned:
+Chapter 13 separated protocol behavior from the surrounding communication machinery.
 
-- the mental model of SNode.C,
-- the runtime model,
-- the layer model,
-- the communication-role model,
-- the address semantics of the major lower families,
-- and the proper roles of `SocketContext` and `SocketContextFactory`.
+Chapter 14 separated context creation from protocol behavior.
 
-All of that preparation leads naturally to one central architectural question:
+This chapter uses both separations together.
 
-> Can the same protocol logic really be carried across different lower layers without losing its shape?
+The central question is:
 
-This chapter answers that question.
+> What happens when the same protocol endpoint is carried by different lower communication families?
 
-And the answer is: yes — within the scope where the protocol logic genuinely belongs above the lower-family identity.
+The short answer is:
 
-This is one of the most important chapters in the whole book, because it turns the framework’s architectural claims into something the reader can actually feel.
+```text
+protocol behavior
+  -> can often remain in the same SocketContext
 
-If this chapter works, the reader will no longer experience SNode.C as a collection of separate APIs.
+context creation
+  -> can often remain in a small SocketContextFactory
 
-They will start experiencing it as one coherent communication architecture whose lower carrier can change while the protocol endpoint model remains remarkably stable.
+lower-family role
+  -> changes through the concrete SocketServer / SocketClient type
 
-### What this chapter does — and does not — claim
+endpoint configuration
+  -> changes with the address family
+```
 
-It is important to begin with honesty.
+This is the transfer point of Part IV.
 
-This chapter does **not** claim that every protocol can be moved unchanged across every lower family.
+The protocol does not become independent of all lower-layer reality. Address identity, deployment, platform support, and security assumptions still matter.
 
-That would be simplistic and false.
+But when the protocol behavior is properly placed in the `SocketContext`, and when construction choices are kept in the `SocketContextFactory`, much more can transfer than one might first expect.
 
-Lower-family choices really do matter.
+### The transfer model
 
-They affect:
+The basic transfer model is:
 
-- address identity,
-- bind/connect configuration,
-- deployment assumptions,
-- platform availability,
-- security posture,
-- operational expectations.
+```text
+SocketContext
+  -> protocol behavior
 
-What this chapter *does* claim is more precise and more valuable:
+SocketContextFactory
+  -> context creation and role preconfiguration
 
-> When the protocol logic is properly kept in the `SocketContext`, and when the lower-family differences are genuinely lower-layer concerns, the same essential protocol behavior can often be carried across very different lower communication families with surprisingly little architectural change.
+SocketServer / SocketClient
+  -> lower-family-specific outer communication role
 
-That is exactly what SNode.C is built to make possible.
+SocketAddress / configuration
+  -> lower-family-specific endpoint identity
+```
 
-### The repository’s echo application already demonstrates the principle
+This keeps three questions separate.
 
-The live repository itself already contains the right teaching clue.
+| Question | Best home |
+|---|---|
+| What does the protocol do on one connection? | `SocketContext` |
+| Which context should be created for this connection? | `SocketContextFactory` |
+| Which lower communication family carries the connection? | `SocketServer` / `SocketClient` instance type and configuration |
 
-The echo application is not implemented as one isolated example for one socket family only. Instead, the repo organizes echo as a stable protocol idea that can be combined with multiple lower communication families and with both legacy and TLS connection handling.
+This separation is the reason the same protocol can often be moved across lower families without rewriting the protocol itself.
 
-This is not an accident.
+### What can transfer
 
-It is a statement of framework philosophy.
+Not everything transfers.
 
-The protocol behavior remains conceptually stable. The lower carrier changes. The build and type system assemble the combinations.
-
-That is exactly the architectural lesson this chapter aims to make explicit and teachable.
-
-### The central distinction: protocol shape versus carrier details
-
-To understand this chapter well, the reader must separate two things very clearly.
+But several important parts often can.
 
 #### Protocol shape
 
-The protocol shape includes questions like:
+The protocol shape includes questions such as:
 
 - Who sends first?
 - What happens when data arrives?
-- How are messages interpreted?
+- How are bytes interpreted?
 - When is a response sent?
 - What state is remembered per connection?
-- When does the connection close?
+- What causes the connection to close?
 
 These are context-level questions.
 
 They belong to the application protocol endpoint.
 
-#### Carrier details
+A well-written `SocketContext` can answer these questions without immediately depending on whether the connection came from IPv4, IPv6, Unix domain sockets, RFCOMM, or L2CAP.
 
-Carrier details include questions like:
+#### Context behavior
 
-- Is the endpoint identified by host and port?
-- Is it identified by a Unix path?
-- Is it identified by Bluetooth address and channel?
-- Is it identified by Bluetooth address and PSM?
-- Is TLS inserted in the connection layer?
+The following parts often remain stable:
 
-These are lower-layer questions.
+- lifecycle handling in `onConnected()` and `onDisconnected()`,
+- input handling in `onReceivedFromPeer()`,
+- per-connection protocol state,
+- use of `sendToPeer(...)`,
+- use of `readFromPeer(...)`,
+- timeout and close decisions that are protocol-driven,
+- metrics interpreted in protocol terms.
 
-They matter greatly, but they are not the same kind of question as protocol shape.
+This does not mean the context must never inspect lower-family information.
 
-SNode.C’s architecture is strong precisely because it helps the reader keep those categories apart.
+It means lower-family details should enter the context only when they are part of the protocol's meaning.
 
-### The protocol endpoint should not care too early about the carrier
+#### Factory construction policy
 
-A good `SocketContext` is often much more portable across lower layers than readers first expect.
+The factory may also transfer.
 
-Why?
+If the same context type is suitable across several lower families, the factory can remain small and familiar.
 
-Because the context usually works through a connection-facing interface that already abstracts the essential peer operations:
+It may still create:
 
-- read from peer,
-- send to peer,
-- set timeouts,
-- close or half-close,
-- observe metrics.
+```cpp
+new EchoSocketContext(connection, Role::Server)
+```
 
-That means the context does not usually need to know whether the bytes arrived via:
+or:
+
+```cpp
+new EchoSocketContext(connection, Role::Client)
+```
+
+The outer instance type changes.
+
+The context creation shape can remain recognizable.
+
+This is why Chapters 13 and 14 came before this chapter: a well-factored context and a disciplined factory make lower-family transfer much easier.
+
+### What must change
+
+Lower-family transfer is not the same as pretending all families are identical.
+
+Several things usually change.
+
+#### Instance type
+
+The concrete outer type changes with the lower family.
+
+Examples include:
+
+```cpp
+net::in::stream::legacy::SocketServer<MyFactory>
+net::in6::stream::legacy::SocketServer<MyFactory>
+net::un::stream::legacy::SocketServer<MyFactory>
+net::rc::stream::legacy::SocketServer<MyFactory>
+net::l2::stream::legacy::SocketServer<MyFactory>
+```
+
+and the corresponding client types.
+
+The role model remains:
+
+```text
+server
+client
+connection
+context
+factory
+```
+
+But the namespace and lower-family component change.
+
+#### Address and endpoint configuration
+
+The endpoint identity changes with the lower family.
+
+| Lower family | Endpoint identity |
+|---|---|
+| IPv4 | host + port |
+| IPv6 | host + port |
+| Unix domain sockets | local path |
+| RFCOMM | Bluetooth address + channel |
+| L2CAP | Bluetooth address + PSM |
+
+This changes the values passed to convenience calls, configuration objects, command-line options, and deployment scripts.
+
+The local/remote distinction remains useful.
+
+The concrete address form changes.
+
+#### Deployment assumptions
+
+Deployment also changes.
+
+| Lower family | Deployment consequence |
+|---|---|
+| IPv4 | network reachability, interface exposure, firewall and routing questions |
+| IPv6 | IPv6 addressing, dual-stack or IPv6-only behavior, address notation |
+| Unix domain sockets | local IPC, path ownership, path cleanup, local permissions |
+| RFCOMM | Bluetooth stack availability, device pairing/discovery concerns, RFCOMM channel semantics |
+| L2CAP | Bluetooth stack availability, PSM semantics, device-near communication assumptions |
+
+These differences are real.
+
+The protocol may transfer.
+
+The deployment does not become identical.
+
+### Echo as the smallest transfer example
+
+The echo application gives the smallest useful example.
+
+The protocol behavior lives in one context type:
+
+```cpp
+EchoSocketContext::EchoSocketContext(SocketConnection* socketConnection, Role role)
+```
+
+The role is stored in the context.
+
+When the connection becomes ready, the client role starts the exchange:
+
+```cpp
+if (role == Role::CLIENT) {
+    sendToPeer("Hello peer! Nice to see you!!!");
+}
+```
+
+When data arrives, the context reads a chunk, sends the same bytes back, and reports the processed amount:
+
+```cpp
+const std::size_t chunklen = readFromPeer(chunk, 4096);
+
+if (chunklen > 0) {
+    sendToPeer(chunk, chunklen);
+}
+
+return chunklen;
+```
+
+The factories then create role-specific contexts:
+
+```cpp
+return new EchoSocketContext(socketConnection, EchoSocketContext::Role::SERVER);
+```
+
+and:
+
+```cpp
+return new EchoSocketContext(socketConnection, EchoSocketContext::Role::CLIENT);
+```
+
+This is the important shape:
+
+```text
+same context type
+  -> role-specific construction
+      -> same receive behavior
+          -> different possible outer carriers
+```
+
+Echo is only a small microscope.
+
+The larger lesson is that protocol behavior can remain stable when it is placed in the context and when family-specific concerns stay outside the protocol core.
+
+### One protocol, several carriers
+
+A compact comparison makes the transfer visible.
+
+| Carrier | Endpoint identity | What changes | What may remain |
+|---|---|---|---|
+| IPv4 | host + port | address/configuration/deployment | context, factory shape, protocol behavior |
+| IPv6 | host + port | address form, IPv6 semantics, deployment | context, factory shape, protocol behavior |
+| Unix domain sockets | local path | local IPC path and lifecycle | context, factory shape, protocol behavior |
+| RFCOMM | Bluetooth address + channel | Bluetooth stack and channel semantics | context, factory shape, protocol behavior |
+| L2CAP | Bluetooth address + PSM | Bluetooth stack and PSM semantics | context, factory shape, protocol behavior |
+
+The table should not be read as a promise that every protocol works unchanged everywhere.
+
+It should be read as a design test.
+
+If the protocol's meaning is independent of the lower-family identity, the context can often remain stable.
+
+If the protocol's meaning depends on lower-family identity, the context may need to specialize.
+
+### Designing for lower-family transfer
+
+A protocol that should travel well across lower families should be designed with clear boundaries.
+
+#### Keep endpoint identity out of core protocol behavior unless it matters
+
+If the protocol does not conceptually care whether the peer is identified by host/port, path, channel, or PSM, then those details should not dominate the context.
+
+For example, an echo protocol does not inherently care whether the peer arrived through:
 
 - IPv4,
 - IPv6,
@@ -122,306 +288,285 @@ That means the context does not usually need to know whether the bytes arrived v
 - RFCOMM,
 - or L2CAP.
 
-As long as the protocol really lives at the application level, the lower carrier can often remain outside the context’s immediate concern.
+The context can think in terms of:
 
-This is one of the deepest architectural strengths of the framework.
+```text
+connection became ready
+data arrived
+data was processed
+response was sent
+connection ended
+```
 
-### The same echo protocol over different families
+That is the correct level for many application protocols.
 
-The echo example is the cleanest way to make this concrete.
+#### Keep per-connection state in the context
 
-The essential echo protocol shape is tiny:
+Connection-local protocol state belongs in the context.
 
-- a context exists for one connection,
-- if this endpoint is the client role, it may start by sending a message,
-- when data arrives, it reads the data,
-- it sends the data back,
-- it reacts to connection and disconnection lifecycle events.
+That makes the protocol endpoint portable because the state travels with the connection, not with the outer instance or lower-family setup.
 
-None of those steps inherently require knowledge of whether the carrier is IPv4, IPv6, Unix domain, RFCOMM, or L2CAP.
+Good context state is:
 
-That is the entire point.
+- explicit,
+- protocol-named,
+- connection-local where possible,
+- and independent of lower-family details unless those details are part of protocol meaning.
 
-The same protocol endpoint shape can be carried by different lower families because the context operates through the connection abstraction rather than through raw family-specific socket handling.
+#### Keep lower-family setup in the instance and configuration
 
-### What actually changes when the lower layer changes
+The lower-family-specific setup belongs outside the protocol core.
 
-Now let us be concrete about what *does* change.
+This includes:
 
-#### The instance type
+- choosing `net::in`, `net::in6`, `net::un`, `net::rc`, or `net::l2`,
+- choosing legacy or TLS connection handling,
+- setting address, path, channel, or PSM values,
+- configuring local and remote endpoints,
+- selecting deployment-specific options.
 
-The outer instance type changes to reflect the chosen lower family.
+These choices are real and important.
 
-Examples:
+They should not be hidden inside the protocol behavior unless the protocol truly needs them.
 
-- `net::in::stream::legacy::SocketServer<...>`
-- `net::in6::stream::legacy::SocketServer<...>`
-- `net::un::stream::legacy::SocketServer<...>`
-- `net::rc::stream::legacy::SocketServer<...>`
-- `net::l2::stream::legacy::SocketServer<...>`
+#### Use factories for role and construction differences
 
-and the corresponding client types.
+Factories are the right place to keep construction differences visible.
 
-#### The address configuration
+A server-side context may receive:
 
-The values passed through convenience APIs or configuration change accordingly:
+```cpp
+Role::Server
+```
 
-- host and port for IPv4 and IPv6,
-- path for Unix domain sockets,
-- Bluetooth address and channel for RFCOMM,
-- Bluetooth address and PSM for L2CAP.
+A client-side context may receive:
 
-#### Deployment assumptions
+```cpp
+Role::Client
+```
 
-The reader’s operational mindset changes:
+A publisher-side endpoint may receive:
 
-- local IPC for Unix domain sockets,
-- Bluetooth stack availability for RFCOMM and L2CAP,
-- dual-stack questions for IPv6,
-- interface exposure questions for IP families.
+```cpp
+Role::Publisher
+```
 
-These are real differences.
+A command-sink endpoint may receive:
 
-But notice what has *not* yet changed.
+```cpp
+Role::CommandSink
+```
 
-The protocol endpoint model itself is still intact.
+The point is not the exact enum.
 
-### What often does **not** change
+The point is the boundary:
 
-This is the more important half of the chapter.
+```text
+factory
+  -> creates the right endpoint
 
-When the protocol is properly factored, the following often remain stable:
+context
+  -> behaves as that endpoint
+```
 
-- the `SocketContext` type,
-- the broad `SocketContextFactory` idea,
-- the use of lifecycle hooks such as `onConnected()` and `onDisconnected()`,
-- the receive-processing logic in `onReceivedFromPeer()`,
-- the per-connection state structure,
-- the use of `sendToPeer(...)`,
-- the use of `readFromPeer(...)`,
-- the event-driven runtime story.
+### Preconfigured factories and endpoint roles
 
-This stable remainder is the real architectural treasure.
+Chapter 14 explained that server and client constructors can forward an argument pack into the factory constructor.
 
-Without it, every new lower family would feel like a new framework.
+That makes it possible to preconfigure factories with stable role and dependency information.
 
-With it, the reader starts to feel genuine transfer.
+This matters for lower-family transfer because the same mechanism can create role-specific endpoints over different carriers.
 
-### The right way to design for portability across lower layers
+Examples include:
 
-A reader who wants the same protocol logic to travel well across different lower carriers should follow a few principles.
+- producer / consumer,
+- command source / command sink,
+- event source / event receiver,
+- requester / request handler,
+- model-side / view-side / controller-side endpoints.
 
-#### Keep endpoint identity out of the core protocol behavior unless it truly matters
+This chapter uses those roles only lightly.
 
-If the protocol does not conceptually care whether the peer is known by host/port, path, channel, or PSM, then the context should not be overfilled with lower-family assumptions.
+The mechanism matters here because it supports transfer:
 
-#### Keep per-connection protocol state in the context
+```text
+same endpoint role
+  -> preconfigured factory
+      -> context created for each connection
+          -> lower family selected by outer instance
+```
 
-This makes the endpoint logic portable because it remains connection-local and protocol-local.
+The broader discussion of higher-level communication patterns belongs later.
 
-#### Keep carrier-specific setup in instance configuration and factory selection
+Chapter 35 returns to patterns such as publisher/subscriber, request/response, command/event, gateway, adapter, bridge, local proxy, protocol translator, and device façade. Here the focus is narrower: how context/factory separation lets one protocol shape survive lower-family changes.
 
-That is where lower-family differences belong most naturally.
+### Same protocol shape does not mean same deployment
 
-#### Let the connection abstraction do its job
+This distinction is essential.
 
-Use the context through the connection-facing surface rather than reaching around it conceptually toward family-specific socket handling.
+The same protocol shape may run over several lower families, but the resulting systems are not operationally identical.
 
-This is exactly the separation SNode.C is designed to support.
+An IPv4 service may be reachable over a LAN or wider network.
 
-### The factory often changes less than expected
+An IPv6 service raises IPv6 addressing and deployment questions.
 
-Another satisfying architectural lesson is that the factory may need less change than the reader first imagines.
+A Unix-domain service is local to one host and depends on path placement and local access.
 
-If the same context type is appropriate across several lower families, the factory can remain nearly identical.
+An RFCOMM service depends on Bluetooth stack support and RFCOMM channel semantics.
 
-Sometimes the only thing that changes is the outer instance type used by the application.
+An L2CAP service depends on Bluetooth stack support and PSM semantics.
 
-Sometimes even the server-side and client-side factory classes remain the same tiny role-specific creators they were before.
+TLS adds its own certificate, trust, and connection-layer deployment questions.
 
-This is one of the reasons Chapters 13 and 14 came before this chapter.
+So the correct statement is not:
 
-A well-factored context and a disciplined factory make lower-layer portability dramatically easier.
+```text
+The lower family does not matter.
+```
 
-### Family-portable does not mean deployment-identical
+The correct statement is:
 
-A very important caution belongs here.
+```text
+The lower family matters, but it does not always have to rewrite the protocol endpoint.
+```
 
-Even when the same protocol logic can be reused cleanly, the resulting applications are not therefore “the same deployment.”
+That is the balance SNode.C is designed to make practical.
 
-For example:
+### When reuse should stop
 
-- an IPv4 variant may be reachable across a LAN or wider network,
-- a Unix domain variant is local to the host,
-- an RFCOMM variant depends on Bluetooth communication semantics and Bluetooth-stack availability,
-- an L2CAP variant does likewise with different endpoint semantics.
+Lower-family transfer is useful only when it preserves clarity.
 
-So the reader should not confuse **architectural portability** with **operational sameness**.
+There are cases where reuse should stop.
 
-The framework supports the first. It does not deny the second.
+#### Family-specific semantics may be part of the protocol
 
-That is the right balance.
+A protocol may genuinely depend on a lower-family detail.
 
-### A useful mental exercise: one protocol, five carriers
+For example, a Bluetooth-oriented protocol may care about device identity in a way that is not equivalent to an IP address or a Unix-domain path.
 
-At this point, the reader should be encouraged to perform a deliberate mental exercise.
+A local IPC protocol may depend on path placement or local access assumptions.
 
-Take one small protocol endpoint — perhaps an echo-like request/response protocol, or a framed text command protocol — and ask:
+If those details are part of the protocol's meaning, hiding them would be dishonest.
 
-- What would remain unchanged over IPv4?
-- What would remain unchanged over IPv6?
-- What would remain unchanged over Unix domain sockets?
-- What would remain unchanged over RFCOMM?
-- What would remain unchanged over L2CAP?
+In that case, the context should be allowed to know what it needs to know.
 
-Then ask the complementary question:
+#### Deployment-specific protocols may deserve separate contexts
 
-- What would I have to reconfigure or redeploy differently in each case?
+Sometimes two deployments look similar at first but differ enough that one shared context becomes awkward.
 
-If the reader can answer those two sets of questions clearly, then they have really understood the framework.
+A local diagnostic Unix-domain service may have different assumptions than a network-facing service.
 
-### When a protocol should *not* be forced across every lower layer
+A Bluetooth device-near endpoint may have different lifecycle expectations than an IP service.
 
-A mature design chapter should also say what **not** to do.
+If one context becomes full of conditionals trying to cover all deployments, separate contexts may be clearer.
 
-There are times when portability across lower layers becomes the wrong goal.
+#### Small duplication can be healthier than over-abstraction
 
-For example:
+Experienced C++ developers often try to remove duplication aggressively.
 
-- if the protocol itself assumes properties that belong to one family only,
-- if the deployment model is inherently tied to one carrier,
-- if the protocol depends on identity or addressing details that are family-specific,
-- or if readability would be damaged by over-generalizing the code.
+That is not always the right instinct here.
 
-In such cases, the right design may not be “one context everywhere.”
+A small amount of explicit outer-layer difference can be healthier than a giant abstraction that erases meaningful distinctions.
 
-The real architectural lesson is not blind reuse.
-
-It is *clean factoring*.
-
-Clean factoring lets the reader see when reuse is natural and when divergence is honest.
-
-### A small amount of duplication is often healthy
-
-This point is especially important for experienced C++ developers.
-
-Sometimes the best way to carry the same protocol across several lower layers is not to produce one ultra-clever abstraction that tries to erase every difference.
-
-Sometimes it is better to keep:
+A good design may have:
 
 - one stable protocol context,
-- small clear family-specific instance declarations,
-- perhaps tiny role-specific or family-specific entry-point code,
-- and explicit outer configuration.
+- small family-specific instance declarations,
+- clear family-specific configuration,
+- small role-specific factories,
+- and explicit deployment choices.
 
-This kind of small duplication is often much healthier than over-abstraction.
+This is not failure.
 
-SNode.C’s design supports this very well because the major responsibilities are already separated cleanly.
+It is clean factoring.
 
-### The chapter’s most important code-design lesson
+### What remains stable and what changes
 
-If the same protocol logic should run across several lower families, write the context so that it thinks in terms of:
+The following table summarizes the chapter.
 
-- peer communication,
-- protocol messages,
-- protocol state,
-- connection lifecycle,
+| Concern | Often stable | Often changes |
+|---|---|---|
+| Protocol behavior | `SocketContext` logic | only when family semantics matter |
+| Context creation | factory shape and role construction | factory constructor data or selected context type |
+| Outer role | server/client/connection model | concrete namespace and instance type |
+| Endpoint identity | local/remote distinction | host/port, path, channel, PSM |
+| Runtime model | event-driven lifecycle | operational startup/configuration details |
+| Deployment | broad application intent | reachability, locality, platform, security assumptions |
 
-and *not* in terms of:
+This table is the practical transfer model.
 
-- IP literals,
-- Unix paths,
-- Bluetooth channels,
-- Bluetooth PSM values,
+Reuse is strongest when the stable column stays honest and the changing column is not hidden.
 
-unless those things are truly part of the protocol semantics.
+### Configuration becomes visible here
 
-This may be the single most important practical design lesson in the whole chapter.
+Lower-family transfer naturally makes configuration more visible.
 
-### The role of configuration becomes more visible here
+A family transfer may change:
 
-As protocols move across lower families, one design choice in SNode.C becomes even more valuable:
-
-configuration is a first-class part of the model.
-
-That means the same broad application can often be carried into a different lower-family deployment by changing:
-
-- the selected instance type,
-- instance configuration values,
+- selected instance type,
+- local endpoint values,
+- remote endpoint values,
+- role-specific factory arguments,
+- TLS or legacy selection,
+- named instance configuration,
 - startup arguments,
-- or named-instance config-file settings,
+- deployment files.
 
-while leaving the protocol endpoint behavior largely unchanged.
+That is why the next part of the book turns to configuration.
 
-This is one of the reasons the framework’s configuration model matters so much. It is not only operational convenience. It is architectural leverage.
+Configuration is not merely operational convenience. It is one of the places where architectural variation becomes explicit.
 
-### The deeper lesson: SNode.C teaches communication roles, not only transports
+This chapter shows why configuration matters.
 
-By now the reader should be able to see something deeper than mere API reuse.
+Chapter 16 begins to explain its philosophy.
 
-SNode.C is not teaching only “how to use sockets of different kinds.”
+### What to remember
 
-It is teaching how to think in terms of:
+Remember:
 
-- communication roles,
-- per-connection endpoints,
-- protocol-local behavior,
-- runtime-driven lifecycle,
-- and lower-carrier substitution where appropriate.
-
-That is a much more durable skill than simply learning one convenience overload after another.
-
-This chapter is where that becomes most visible.
-
-### Common misunderstandings about cross-layer protocol reuse
-
-It helps to clear away a few misunderstandings explicitly.
-
-#### Misunderstanding 1: “If the same protocol can run across several lower layers, then the lower layers do not matter.”
-
-Corrected view: the lower layers matter greatly for endpoint identity, configuration, deployment, and operational assumptions. The point is not that they do not matter. The point is that they do not always have to infect the protocol logic.
-
-#### Misunderstanding 2: “The right abstraction is always one giant family-erasing protocol class.”
-
-Corrected view: clean factoring matters more than maximal flattening. A little explicit outer-layer difference is often healthier than over-generalization.
-
-#### Misunderstanding 3: “If a context ever mentions family-specific details, then the architecture has failed.”
-
-Corrected view: sometimes protocol behavior truly does care about lower-layer details. The goal is not dogma. The goal is honest separation where it makes sense.
-
-#### Misunderstanding 4: “Cross-family reuse means deployment is the same everywhere.”
-
-Corrected view: architectural reuse and deployment sameness are different things. The first may hold while the second clearly does not.
-
-#### Misunderstanding 5: “This chapter is only about echo.”
-
-Corrected view: echo is only the teaching microscope. The real lesson is about how protocol endpoint logic can remain stable while the lower carrier changes.
-
-### A good one-paragraph summary of the chapter
-
-A protocol in SNode.C can often be carried across several lower communication families when its behavior is properly factored into a per-connection `SocketContext`, its creation policy is kept clean in a `SocketContextFactory`, and its family-specific concerns remain where they belong — in instance type selection, configuration, and deployment — rather than leaking prematurely into the protocol endpoint itself.
-
-That is the architectural heart of the chapter.
+- Lower-family transfer is possible when protocol behavior is properly placed in `SocketContext`.
+- The factory creates the right context for each connection.
+- Preconfigured factories can express role-specific endpoints.
+- The server/client instance type usually changes with the lower family.
+- Address and endpoint configuration change with the lower family.
+- Deployment assumptions still matter.
+- The same context can often be reused if the protocol does not depend on lower-family semantics.
+- The same factory shape can often be reused if context construction remains stable.
+- Small family-specific outer code is often healthier than over-generalized abstraction.
+- Reuse should stop when it hides real semantic differences.
+- Chapter 35 returns later to higher-level communication patterns.
+- Chapter 16 begins the configuration view because lower-family transfer makes configuration visible.
 
 ### Closing perspective
 
-This chapter is the culmination of the entire lower-layer and endpoint-design sequence.
+Part IV moved from raw connections to application protocol structure.
 
-The reader has now seen why the framework’s architecture matters so much.
+Chapter 13 explained the protocol endpoint.
 
-It matters because it allows the same essential protocol shape to survive meaningful changes in the lower communication carrier.
+Chapter 14 explained context creation.
 
-That is not a trick. It is not accidental. It is the direct result of the framework’s clean separation of:
+This chapter showed how those two separations make lower-family transfer possible.
 
-- outer role,
-- connection,
-- context,
-- factory,
-- runtime,
-- and lower-layer family identity.
+The result is the central pattern:
 
-Once the reader feels that clearly, SNode.C becomes much easier to trust and much easier to extend.
+```text
+SocketContext
+  -> protocol behavior
 
-And that is the perfect moment to move into the next major phase of the book.
+SocketContextFactory
+  -> construction and role preconfiguration
 
-Now that protocol logic, endpoint design, and lower-layer transfer are secure, we can turn toward the framework’s configuration philosophy and show how these applications are actually shaped, named, and operated in practice.
+SocketServer / SocketClient
+  -> lower-family-specific outer role
+
+configuration
+  -> endpoint identity and deployment shape
+```
+
+With that structure in place, SNode.C is no longer just a set of socket-family APIs.
+
+It becomes a communication architecture in which protocol behavior, context creation, lower-family selection, and operational configuration each have a clear place.
+
+The next part begins the configuration view.
+
+It shows how applications are shaped, named, and operated in practice.
