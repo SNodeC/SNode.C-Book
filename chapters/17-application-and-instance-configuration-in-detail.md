@@ -480,23 +480,11 @@ It is a textual traversal of the configuration hierarchy.
 
 The command-line interface is also a guided configuration surface.
 
-It can help the user discover the model step by step instead of requiring the full structure to be known in advance.
-
-At application level, help can show application-wide options and available named instances:
+It can help the user discover the model step by step instead of requiring the full structure to be known in advance:
 
 ```shell
 echoserver --help
-```
-
-At instance level, help can show instance-level options and available sections:
-
-```shell
 echoserver echo --help
-```
-
-At section level, help can show concrete options for that section:
-
-```shell
 echoserver echo local --help
 ```
 
@@ -511,35 +499,15 @@ application help
 
 The command line can also print command-line representations of the current configuration.
 
-The `--command-line` option supports different views, such as:
+The `--command-line` option supports views such as `standard`, `required`, `full`, and `default`.
 
-```text
-standard
-required
-full
-default
-```
-
-These views are useful for different questions:
-
-| View | Useful question |
-|---|---|
-| `standard` | Which relevant non-default or required values describe this run? |
-| `required` | Which values must be supplied? |
-| `full` | What would the full configured command line look like? |
-| `default` | What would the command line look like with default values? |
-
-Together with `--show-config` and `--write-config`, this makes the command line more than a parser.
-
-It becomes a way to inspect, reproduce, and persist the configuration of an application.
+Together with `--show-config` and `--write-config`, this makes the command line more than a parser: it becomes a way to inspect, reproduce, and persist the configuration of an application.
 
 #### Guided errors for missing configuration
 
 The same guided behavior appears when required configuration is missing.
 
-A parameterless `listen()` or `connect()` can fail in a way that points the user back into the hierarchy.
-
-For example, the user may be guided from:
+A parameterless `listen()` or `connect()` can fail in a way that points the user back into the hierarchy:
 
 ```text
 application
@@ -548,19 +516,7 @@ application
           -> required option
 ```
 
-This matters because the error does not merely say that something is wrong.
-
-It shows where the missing value belongs.
-
-A missing server port belongs to the `local` section of a server instance.
-
-A missing client host or port belongs to the `remote` section of a client instance.
-
-That is guided configuration by structure.
-
-A short command-line session makes the idea visible.
-
-For a named server instance `echo`, a parameterless `listen()` may require the local port to be supplied. Starting with too little information can guide the user through the missing hierarchy:
+A compact server-side session shows the idea:
 
 ```shell
 $ echoserver
@@ -572,42 +528,15 @@ $ echoserver echo
 $ echoserver echo local
 [RequiresError] local requires --port
 
-$ echoserver echo local --port
-[ArgumentMismatch] --port: 1 required port:UINT in [0 - 65535] missing
-
 $ echoserver echo local --port 8080
 echo: listening on '0.0.0.0:8080'
 ```
 
-The important point is not the exact wording of every diagnostic line.
+The exact wording of the diagnostics is less important than the direction.
 
-The important point is the direction:
+The CLI leads from application, to instance, to section, to option.
 
-```text
-application
-  -> instance
-      -> section
-          -> option
-```
-
-A named client instance follows the same idea, but the required section is usually `remote`:
-
-```shell
-$ echoclient
-[RequiresError] echoclient requires echo
-
-$ echoclient echo
-[RequiresError] echo requires remote
-
-$ echoclient echo remote
-[RequiresError] remote requires --port
-
-$ echoclient echo remote --port 8080
-[RequiresError] remote requires --host
-
-$ echoclient echo remote --port 8080 --host localhost
-echo: connected to 'localhost:8080'
-```
+A named client instance follows the same idea, but the required section is usually `remote` rather than `local`.
 
 The CLI therefore teaches the structure while it reports the missing values.
 
@@ -813,29 +742,9 @@ myapp instance1 local --port 8001 socket --retry true \
       instance2 local --port 8002 socket --retry false
 ```
 
-This can be read as:
+This configures `instance1` first, then switches to `instance2`.
 
-```text
-instance1
-  local
-    port = 8001
-  socket
-    retry = true
-
-instance2
-  local
-    port = 8002
-  socket
-    retry = false
-```
-
-Within one instance, switching between sections works the same way.
-
-After `local`, a later `socket` section changes the active section for the same instance.
-
-After `instance2`, the following sections and options belong to `instance2`.
-
-This is why the command line remains usable even when one executable contains several named communication roles.
+Within one instance, a later section name changes the active section for that same instance.
 
 The structure is still:
 
@@ -847,8 +756,6 @@ application
 ```
 
 Only the active instance and active section change as the command line is read from left to right.
-
-That is the practical payoff of the hierarchy.
 
 ### Reading a configuration
 
