@@ -1,438 +1,618 @@
 ## WebSocket and Protocol Upgrade
-### Why this chapter follows SSE
 
-The progression from HTTP to SSE to WebSocket is one of the cleanest conceptual climbs in the whole book.
+### From event streams to upgraded bidirectional communication
 
-First, the reader learned that HTTP in SNode.C is a genuine higher protocol layer built on the same lower communication architecture.
+Chapter 23 showed how HTTP can remain open as a one-way event stream.
 
-Then SSE showed how long-lived, one-way streaming behavior can remain inside the HTTP world.
+Chapter 24 shows the next step.
 
-Now WebSocket takes the next step.
+HTTP can also negotiate an upgrade.
 
-It does something more radical.
+After a successful upgrade, the same underlying connection no longer behaves as ordinary request/response HTTP.
 
-It begins in HTTP, but it does not remain ordinary HTTP.
+It continues as a WebSocket connection.
 
-Instead, it uses HTTP as the protocol layer in which an **upgrade** is negotiated, and then it continues as a different message-oriented communication mode above the upgraded connection.
+That is the central idea of this chapter:
 
-That makes WebSocket one of the most revealing chapters in the entire book.
+> WebSocket starts in HTTP, but after the upgrade the connection is handled as a bidirectional message-oriented WebSocket connection.
 
-It shows how SNode.C handles a protocol that is both:
+This makes WebSocket different from both ordinary HTTP and Server-Sent Events.
 
-- deeply connected to HTTP,
-- and clearly beyond HTTP once the upgrade succeeds.
+```text
+ordinary HTTP
+  -> one request, one response
 
-### The key architectural idea: HTTP as an upgrade gateway
+Server-Sent Events
+  -> one request, one long-lived event response
 
-The earlier HTTP chapter already introduced a crucial idea.
+WebSocket
+  -> HTTP upgrade
+      -> bidirectional message-oriented connection
+```
 
-In SNode.C, HTTP is not treated only as a terminal application protocol.
+The key word is:
 
-It is also treated as a place where the decision can be made to remain HTTP or to move upward into a different communication mode.
+```text
+upgrade
+```
 
-That is why the HTTP layer exposes generic upgrade machinery.
+The connection keeps its lower transport identity.
 
-WebSocket is the clearest example of that machinery in action.
+The protocol identity changes.
 
-This is one of the framework’s most elegant architectural features.
+### WebSocket in the SNode.C web stack
 
-It means the user does not need to think of WebSocket as something unrelated to HTTP.
+The stack now looks like this:
 
-Instead, the correct mental model is:
+```text
+lower communication family
+  -> stream transport
+      -> legacy or TLS connection handling
+          -> HTTP request / response
+              -> upgrade negotiation
+                  -> WebSocket frames
+                      -> subprotocol semantics
+```
 
-- begin in HTTP,
-- negotiate the upgrade,
-- then continue as WebSocket over the same underlying connection.
+This is still the same layered architecture.
 
-That is exactly the right layer placement.
+WebSocket does not erase the lower communication family.
 
-### The live module structure confirms the architecture
+It does not erase TLS.
 
-The current live `src/web/websocket` module structure makes this very clear.
+It does not erase HTTP.
 
-The module is organized around:
+It uses HTTP as the gateway into a different communication mode.
 
-- a base WebSocket layer,
-- a HTTP socket-context upgrade abstraction for WebSocket,
-- subprotocol support,
-- subprotocol factory selection,
-- transmitter and receiver support,
-- and separate server-side and client-side upgrade machinery.
+After the upgrade, the application no longer works in ordinary request/response terms.
 
-This is not a small helper library.
+It works with WebSocket messages, frames, control frames, and a selected WebSocket subprotocol.
 
-It is a real protocol layer above HTTP upgrade.
+A compact model is:
 
-That is exactly why the book should treat WebSocket as its own architectural chapter rather than just one example inside HTTP.
+```text
+HTTP request
+  -> upgrade negotiation
+      -> upgraded connection
+          -> WebSocket frames
+              -> subprotocol semantics
+```
 
-### The WebSocket layer is built around HTTP upgrade, not beside it
+### HTTP, SSE, and WebSocket side by side
 
-The current live `web::websocket::SocketContextUpgrade` template is one of the strongest architecture-confirming files in the whole repository.
+The position of WebSocket becomes clearer when placed next to ordinary HTTP and SSE.
 
-It derives from:
+| Concern | Ordinary HTTP | SSE | WebSocket |
+|---|---|---|---|
+| start | HTTP request | HTTP request | HTTP request with upgrade |
+| after start | response completes | response remains open | protocol changes after upgrade |
+| direction | request / response | server to client | bidirectional |
+| unit | response | event | frame / message |
+| connection role | HTTP connection | long-lived HTTP response | upgraded connection |
+| typical use | APIs, pages, files | feeds, dashboards, notifications | interactive bidirectional protocols |
+| next semantic layer | usually application response | event handling | subprotocol |
 
-- the HTTP `SocketContextUpgrade` abstraction,
-- and a WebSocket `SubProtocolContext`.
+SSE remains inside HTTP.
 
-This is an extraordinarily good design signal.
+WebSocket begins in HTTP and then moves to WebSocket frame handling.
 
-It means WebSocket in SNode.C is explicitly modeled as:
+That distinction is the main reason WebSocket deserves its own chapter.
 
-- a HTTP-based upgrade,
-- into a WebSocket-specific protocol context.
+### Generic protocol upgrade in SNode.C
 
-That is exactly the right abstraction boundary.
+The first idea in this chapter is not WebSocket itself.
 
-The framework is not pretending that WebSocket is “just HTTP with frames.”
+The first idea is generic protocol upgrade.
 
-Nor is it pretending that WebSocket has nothing to do with HTTP.
+SNode.C treats HTTP as a possible gateway into another protocol context.
 
-It is modeling the real transition explicitly.
+Conceptually:
 
-### Why `SocketContextUpgrade` is the right abstraction name
+```text
+HTTP request
+  -> upgrade negotiation
+      -> selected upgraded protocol context
+          -> protocol-specific handling
+```
 
-The name matters.
+The selected upgraded protocol does not have to be WebSocket.
 
-A upgrade context is not the same as an ordinary HTTP context and not the same as a bare stream context.
+WebSocket is the concrete upgraded protocol discussed in this chapter, but the architectural mechanism is broader.
 
-It sits precisely at the boundary where the protocol identity changes.
+Another protocol can use the same upgrade boundary when the application provides the corresponding upgrade factory and upgraded context.
 
-That is why `SocketContextUpgrade` is such a strong architectural term.
+That gives the general model:
 
-It tells the reader:
+```text
+same lower connection
+  -> HTTP negotiation
+      -> different protocol context
+```
 
-- a lower conversation already exists,
-- a protocol transition is being negotiated,
-- and the new context continues over the existing communication relationship in a richer protocol form.
+The connection keeps its lower transport identity.
 
-This is one of the cleanest examples in the entire framework of naming that reflects architectural truth.
+The protocol identity changes.
 
-### WebSocket remains a connection-oriented real-time layer
+That is the important SNode.C idea.
 
-SSE already showed long-lived one-way HTTP streaming.
+#### HTTP as the negotiation layer
 
-WebSocket goes further by enabling full bidirectional messaging above the upgraded connection.
+Before an upgrade succeeds, the interaction is still HTTP.
 
-This means the reader should now shift from thinking in terms of:
+The client sends a HTTP request.
 
-- request and response,
+The request carries upgrade information.
 
-or even:
+The server evaluates the request.
 
-- event stream from server to client,
+The response either confirms the transition or rejects it.
 
-to thinking in terms of:
+During this phase, HTTP request and response objects still matter.
 
-- framed message exchange,
-- control frames,
-- subprotocol semantics,
-- upgraded connection lifecycle.
+They carry the negotiation information.
 
-That is a real conceptual shift.
+They also provide diagnostics when the upgrade fails.
 
-But importantly, it is still a shift **within the same overall runtime and connection architecture**.
+This makes HTTP the negotiation layer:
 
-### The live upgrade context shows the WebSocket responsibilities clearly
+```text
+HTTP before upgrade
+  -> request headers
+  -> upgrade negotiation
+  -> response confirming or rejecting the upgrade
+```
 
-The current `web::websocket::SocketContextUpgrade` template carries exactly the methods one would expect from a serious WebSocket layer.
+#### Same connection, new protocol context
 
-It handles things such as:
+Upgrade is not just a handshake detail.
 
-- sending messages,
-- sending message start, continuation, and end frames,
-- ping,
-- pong,
-- close,
-- frame-chunk sending and reading,
-- connection lifecycle callbacks,
-- received-frame processing,
-- payload counters,
-- online timing information.
+It is the boundary where the connection keeps its transport identity but changes its protocol identity.
 
-This is a very strong sign that WebSocket is treated as a real protocol layer with its own lifecycle and frame semantics, not as a loosely improvised wrapper.
+A useful sentence is:
 
-### Why frame handling belongs here and not in the application layer
+```text
+same lower connection
+  -> different protocol context
+```
 
-A useful architectural question is:
+That is why the upgrade boundary belongs in the architecture, not only in protocol helper code.
 
-Why not simply expose raw WebSocket frames directly to every application?
+The lower connection remains relevant.
 
-The answer is exactly the same answer we saw at the HTTP layer.
+The attached protocol context changes.
 
-A higher protocol layer should absorb the wire-format and framing concerns that are intrinsic to the protocol itself, so that applications can think at the next meaningful semantic level.
+### WebSocket as the concrete upgrade in this chapter
 
-That is why the WebSocket upgrade layer knows about:
+WebSocket is the concrete upgrade target discussed here.
 
+For WebSocket, the generic model becomes:
+
+```text
+HTTP request
+  -> upgrade negotiation
+      -> WebSocket SocketContextUpgrade
+          -> WebSocket frames
+              -> WebSocket subprotocol
+```
+
+After the WebSocket upgrade succeeds, ordinary HTTP request/response handling is no longer the application-facing model.
+
+The upgraded connection is handled as WebSocket.
+
+That means the protocol layer now cares about:
+
+- frames,
 - message boundaries,
-- ping/pong,
-- close frames,
 - fragmentation,
-- payload accounting.
-
-Those are protocol responsibilities of the WebSocket layer itself.
-
-Applications should only be forced to think about them directly when their own semantics genuinely require it.
-
-### Server and client support are real, separate layers
-
-The current module structure also makes clear that SNode.C does not treat WebSocket as a one-sided server feature.
-
-There are dedicated client and server submodules.
-
-Their current build structure shows separate libraries for:
-
-- `websocket-server`
-- `websocket-client`
-
-each built on top of the shared websocket base layer and the corresponding HTTP server/client layer underneath.
-
-This is exactly what a real protocol layer should provide.
-
-A server-side upgrade and a client-side upgrade are related, but not identical.
-
-The architecture respects that.
-
-### The client/server split still preserves the larger symmetry
-
-Even though the client and server WebSocket submodules are separate, the framework still preserves the larger symmetry the reader has seen throughout the book.
-
-Both sides still involve:
-
-- an outer communication role,
-- a upgraded context,
-- a runtime-driven lifecycle,
-- a continuing connection,
-- protocol-facing behavior above the lower HTTP layer.
-
-This is one of the great strengths of the framework.
-
-The details become richer, but the broad architectural symmetry never disappears.
-
-### Subprotocols are one of the most important WebSocket ideas in SNode.C
-
-One of the live module’s most distinctive architectural features is its explicit treatment of WebSocket subprotocols.
-
-This is not a small detail.
-
-It is one of the most important design choices in the whole layer.
-
-The current module includes:
-
-- `SubProtocol`
-- `SubProtocolContext`
-- `SubProtocolFactory`
-- `SubProtocolFactorySelector`
-
-That means the framework is not treating “WebSocket application logic” as one giant undifferentiated callback.
-
-Instead, it is acknowledging that different higher-level message protocols may ride on top of WebSocket, and that these deserve structured selection and encapsulation.
-
-That is excellent design.
-
-### Why subprotocol selection matters so much
-
-A WebSocket connection is often not the final semantic layer.
-
-It is often a carrier for one more specific message protocol.
-
-By modeling subprotocols explicitly, SNode.C makes that truth visible rather than hiding it.
-
-This is the same architectural honesty the framework has shown throughout the book.
-
-It says:
-
-- WebSocket is one layer,
-- subprotocol semantics may be another,
-- and the framework can help you keep those levels distinct.
-
-This is especially important for compositions such as MQTT over WebSocket, which later chapters will revisit.
-
-### The live subprotocol selector reveals a dynamic architecture
-
-The current `SubProtocolFactorySelector` also shows another important SNode.C pattern.
-
-It supports:
-
-- selecting subprotocol factories by name,
-- linking factories directly,
-- optionally allowing dynamic loading,
-- unloading factories again,
-- and distinguishing server and client roles.
-
-This is a very rich architectural move.
-
-It means the framework treats WebSocket subprotocol selection as a pluggable layer rather than hard-coded application branching.
-
-That is exactly the kind of extensibility a full-stack communication framework should have.
-
-### WebSocket is where the upgrade chapter becomes a plugin chapter too
-
-This point is worth making explicitly.
-
-The generic HTTP upgrade machinery from the previous chapter becomes especially concrete here.
-
-At the HTTP layer, we saw that upgrades were a generic capability.
-
-At the WebSocket layer, we now see one of the most important real uses of that capability:
-
-- upgrade from HTTP,
-- then selection of a WebSocket-level subprotocol,
-- optionally with dynamic linking or loading.
-
-That is a beautiful example of layered extensibility.
-
-The framework is not only supporting WebSocket. It is supporting WebSocket as a carrier for further extensible protocol meaning.
-
-### Control frames reveal that WebSocket is more than message text
-
-The live upgrade context includes explicit support for:
-
 - ping,
 - pong,
 - close,
-- and the corresponding frame-level operations.
+- payload counters,
+- subprotocol behavior.
 
-This is important for teaching.
+The connection is still the same peer relationship underneath.
 
-It prevents the reader from imagining WebSocket as “just text messages over a long-lived channel.”
+The protocol interpretation has changed.
 
-WebSocket is a framed protocol with its own control semantics.
+### `SocketContextUpgrade` as the boundary object
 
-That is exactly why it deserves a protocol layer of its own rather than being reduced to raw send/receive calls.
+The strongest code-shaped concept in this chapter is `SocketContextUpgrade`.
 
-### WebSocket still depends on the lower runtime and failure model
+In the generic upgrade model, it represents the boundary between HTTP negotiation and the selected upgraded protocol context.
 
-One of the strongest recurring lessons in the book should be repeated here.
+For WebSocket, it represents the upgraded boundary between HTTP and WebSocket.
 
-Even when the application is now thinking in upgraded WebSocket messages, the lower layers have not disappeared.
+In SNode.C this boundary includes a subprotocol type.
 
-A WebSocket session still depends on:
+In simplified form, the generic WebSocket upgrade context has this shape:
 
-- the lower communication family,
-- the connection layer,
-- optional TLS,
-- the event-driven runtime,
-- timeout and failure behavior,
-- diagnostics and configuration.
+```cpp
+template <typename SubProtocolT, typename RequestT, typename ResponseT>
+class SocketContextUpgrade
+    : public web::http::SocketContextUpgrade<RequestT, ResponseT>
+    , public SubProtocolContext {
+    // WebSocket framing and subprotocol boundary
+};
+```
 
-This matters because WebSocket problems often present themselves at several layers at once.
+That inheritance is the chapter in code form.
 
-A upgrade may fail at the HTTP level. A secure handshake may fail below it. A connection may stall or close. A subprotocol may reject a message.
+| Base / role | Meaning |
+|---|---|
+| HTTP `SocketContextUpgrade` | remembers that the transition begins at HTTP upgrade |
+| `SubProtocolContext` | gives the upgraded connection its WebSocket subprotocol surface |
+| `SocketConnection` | continues carrying the same peer relationship |
+| `Request` / `Response` | represent the HTTP upgrade negotiation side |
 
-SNode.C is valuable here precisely because these layers remain architecturally visible.
+The object sits exactly where the protocol identity changes.
 
-### Why the WebSocket layer is a perfect demonstration of SNode.C’s philosophy
+It is not an ordinary HTTP context.
 
-At this point, the chapter should step back and say what the reader has really seen.
+It is not a plain stream context.
 
-WebSocket is one of the best demonstrations of SNode.C’s entire design philosophy.
+It is an upgraded context.
 
-Why?
+#### Same connection, new protocol identity
 
-Because it shows all of the following at once:
+The upgrade does not create a completely unrelated connection.
 
-- lower families remain visible,
-- HTTP is a real higher protocol layer,
-- protocol upgrade is modeled explicitly,
-- upgraded contexts continue over the same connection story,
-- subprotocols are given their own architectural place,
-- dynamic extensibility is supported,
-- and runtime/diagnostic discipline remains intact.
+It changes what the existing connection means.
 
-This is not only feature richness.
+Before the upgrade:
 
-It is architectural consistency.
+```text
+connection
+  -> HTTP request / response context
+```
 
-### The right way to teach WebSocket after HTTP and SSE
+After the upgrade:
 
-A good teaching sequence matters here.
+```text
+same connection
+  -> WebSocket socket-context upgrade
+      -> WebSocket frames
+          -> subprotocol behavior
+```
 
-If the reader had encountered WebSocket before:
+This is important for diagnostics and application reasoning.
 
-- plain stream communication,
-- HTTP,
-- SSE,
-- and the generic upgrade model,
+The connection name, lower endpoint, TLS behavior, timeout behavior, and runtime lifecycle still matter.
 
-then much of the WebSocket architecture would have felt abrupt or magical.
+What changes is the protocol context attached to the connection.
 
-Now it does not.
+#### HTTP upgrade context plus WebSocket subprotocol context
 
-Now the reader can see WebSocket in the correct place:
+The generic WebSocket upgrade context combines two responsibilities.
 
-- richer than SSE because it is bidirectional,
-- richer than plain HTTP because it upgrades beyond ordinary request/response,
-- but still rooted in the same lower communication and runtime architecture.
+The HTTP upgrade side describes where the transition comes from.
 
-That is exactly the right conceptual placement.
+The WebSocket/subprotocol side describes what the connection becomes after the transition.
 
-### WebSocket applications do not have to abandon HTTP thinking entirely
+That is why the class combines:
 
-A subtle but important point belongs here.
+```text
+HTTP upgrade context
+  + WebSocket subprotocol context
+```
 
-Because WebSocket begins as HTTP upgrade, the application architecture often still lives close to a web application context.
+This keeps the layer boundary explicit.
 
-That means a realistic SNode.C application may combine:
+The framework does not pretend WebSocket is merely another HTTP callback.
 
-- ordinary HTTP routes,
-- Express-like middleware and routing,
-- SSE endpoints,
-- and one or more WebSocket upgrade paths.
+It also does not pretend WebSocket is unrelated to HTTP.
 
-This is one of the reasons the web stack in SNode.C feels coherent rather than fragmented.
+### WebSocket messages and frames
 
-These layers can coexist naturally because they are architecturally related.
+After the upgrade, the application-facing model changes again.
 
-### Common misunderstandings about WebSocket in SNode.C
+Earlier chapters showed:
 
-It helps to clear away a few misunderstandings explicitly.
+```text
+HTTP
+  -> request / response
 
-#### Misunderstanding 1: “WebSocket in SNode.C is just another HTTP callback style.”
+SSE
+  -> event
 
-Corrected view: it is a real protocol-upgrade layer above HTTP, with its own upgraded context, framing, control messages, and subprotocol architecture.
+WebSocket
+  -> message / frame
+```
 
-#### Misunderstanding 2: “Upgrade is just a handshake detail, not a design boundary.”
+The WebSocket layer must understand message and frame structure.
 
-Corrected view: the upgrade boundary is one of the most important architectural transitions in the whole web stack, and SNode.C models it explicitly.
+It provides operations for:
 
-#### Misunderstanding 3: “WebSocket applications should talk directly in raw frames.”
+- sending complete messages,
+- starting a message,
+- sending continuation frames,
+- ending a message,
+- reading and writing frame chunks,
+- reacting to message start,
+- reacting to message data,
+- reacting to message end,
+- reacting to message errors.
 
-Corrected view: the framework already gives framing, control handling, and subprotocol structure their own place so that application semantics can sit higher when appropriate.
+This belongs in the WebSocket layer.
 
-#### Misunderstanding 4: “Subprotocols are just optional naming extras.”
+Applications should not have to reimplement WebSocket framing in every protocol.
 
-Corrected view: in SNode.C they are treated as a real higher semantic layer above WebSocket and are supported through structured factory selection.
+#### Data and continuation frames
 
-#### Misunderstanding 5: “Once the connection is upgraded, the lower runtime and connection story no longer matter.”
+A compact view of frame categories is:
 
-Corrected view: upgraded communication still relies on the same lower runtime, connection lifecycle, TLS, timeout, retry, and diagnostics model underneath.
+| WebSocket concern | Meaning |
+|---|---|
+| text frame | text message data |
+| binary frame | binary message data |
+| continuation | fragmented message continuation |
+| ping | liveness / control probe |
+| pong | ping response / control signal |
+| close | protocol-level closing signal |
 
-### A good one-paragraph summary of the chapter
+Text and binary frames carry application data.
 
-WebSocket in SNode.C is modeled as a real HTTP-based protocol upgrade layer. The framework begins in HTTP, performs an explicit upgrade into a WebSocket socket-context upgrade, and then continues with framed bidirectional messaging, control-frame handling, and an additional subprotocol layer selected through structured factories. This lets WebSocket remain architecturally connected to the same lower communication, runtime, configuration, and diagnostics model while still expressing a very different higher-level interaction mode from ordinary HTTP or SSE.
+Continuation frames allow fragmented messages.
 
-That is the heart of the chapter.
+The WebSocket layer keeps those protocol details in one place.
+
+#### Ping, pong, and close
+
+Ping, pong, and close are WebSocket protocol concerns.
+
+They should not be reimplemented as ordinary application messages.
+
+A ping is a control signal.
+
+A pong is a control response.
+
+A close frame is a protocol-level closing signal.
+
+This distinction matters because it keeps application semantics separate from WebSocket protocol mechanics.
+
+An application protocol carried over WebSocket may define its own messages.
+
+It should not have to reinvent WebSocket liveness and closing behavior.
+
+### Server-side and client-side upgrade paths
+
+Server and client WebSocket support are related, but not identical.
+
+Both sides use the same broad idea:
+
+```text
+HTTP upgrade
+  -> WebSocket socket-context upgrade
+      -> selected WebSocket subprotocol
+```
+
+But they enter the transition from different roles.
+
+| Side | Upgrade role |
+|---|---|
+| server | accepts HTTP upgrade and selects from requested subprotocols |
+| client | initiates HTTP upgrade and requests a subprotocol |
+| both | continue over an upgraded WebSocket context |
+
+The server side receives a set of requested subprotocol names and selects what it can support.
+
+The client side requests a named subprotocol and then continues if the upgrade succeeds.
+
+This mirrors earlier server/client distinctions in the book.
+
+The symmetry remains.
+
+The responsibilities differ.
+
+### The WebSocket module structure
+
+The module structure also reflects the layering.
+
+| Module | Meaning |
+|---|---|
+| `websocket` | shared WebSocket base: receiver, transmitter, subprotocol context and factory infrastructure |
+| `websocket-server` | server-side HTTP upgrade and subprotocol selection |
+| `websocket-client` | client-side HTTP upgrade and subprotocol selection |
+
+The base layer contains shared WebSocket concerns such as:
+
+- receiver,
+- transmitter,
+- socket-context upgrade,
+- subprotocol,
+- subprotocol context,
+- subprotocol factory,
+- subprotocol factory selector.
+
+The server and client layers build on that base and connect it to the corresponding HTTP server or HTTP client side.
+
+This module split is useful because the protocol is shared while the upgrade roles differ.
+
+### Subprotocols as the next semantic layer
+
+WebSocket is not the final semantic layer in SNode.C.
+
+It is a bidirectional message channel with a subprotocol layer.
+
+That subprotocol gives the WebSocket channel its application/message semantics.
+
+A useful model is:
+
+```text
+WebSocket
+  -> upgraded message carrier
+
+WebSocket subprotocol
+  -> application/message semantics carried over WebSocket
+```
+
+This distinction is important.
+
+Without the subprotocol layer, all WebSocket application logic would collapse into one undifferentiated callback.
+
+SNode.C keeps the levels separate by making the subprotocol part of the WebSocket upgrade structure.
+
+#### `SubProtocol` and `SubProtocolContext`
+
+The WebSocket layer provides explicit subprotocol infrastructure.
+
+The naming is important:
+
+| Concept | Meaning |
+|---|---|
+| `SubProtocolContext` | WebSocket-facing context surface for sending messages, ping, pong, close, and accessing counters |
+| `SubProtocol` | protocol-specific behavior riding over WebSocket |
+| `SubProtocolFactory` | creates subprotocol instances |
+| `SubProtocolFactorySelector` | selects the right factory for a requested name and role |
+
+This keeps WebSocket mechanics and application-message semantics separated.
+
+WebSocket provides the upgraded carrier.
+
+The subprotocol defines what the messages mean.
+
+#### Factories and selectors
+
+Subprotocol selection keeps application protocols out of hard-coded WebSocket branching.
+
+A selector can choose a subprotocol factory by name.
+
+It also knows whether the selection happens in a server or client role.
+
+A compact view is:
+
+| Selector concern | Meaning |
+|---|---|
+| name | which subprotocol is requested |
+| role | server or client selection context |
+| linked factory | known at build/link time |
+| dynamic loading | optional runtime extension |
+| unload | cleanup of dynamically loaded factories |
+
+This is enough for Chapter 24.
+
+The details of plugin architecture and dynamic loading belong later.
+
+Here, the teaching point is that subprotocols are structured and selectable.
+
+They are not just string labels.
+
+#### Linked and dynamically loaded subprotocols
+
+A subprotocol may be linked directly into the application or provided through a dynamically loaded factory.
+
+That matters because WebSocket can become a carrier for protocols that are not all built into one executable.
+
+The architecture allows a later layer to decide:
+
+```text
+which subprotocol name was requested?
+  -> which factory can provide it?
+      -> which protocol behavior should run on this upgraded connection?
+```
+
+This is a clean extension point.
+
+The central lesson remains simple:
+
+```text
+WebSocket is the upgraded carrier.
+The subprotocol gives that carrier its application meaning.
+```
+
+### Lower layers and diagnostics still matter
+
+A WebSocket problem may belong to several layers.
+
+It may be caused by:
+
+- lower endpoint selection,
+- TLS configuration,
+- HTTP upgrade negotiation,
+- WebSocket framing,
+- subprotocol selection,
+- subprotocol message handling,
+- timeout or failure behavior,
+- application shutdown.
+
+That is why the earlier diagnostic chapters still matter.
+
+Useful operational questions include:
+
+- Did the lower connection exist?
+- Did TLS succeed, if TLS was used?
+- Did the HTTP upgrade request reach the server?
+- Was the upgrade accepted or rejected?
+- Which subprotocol was requested?
+- Which subprotocol was selected?
+- Did frame parsing fail?
+- Was a close frame sent or received?
+- Did the application close intentionally?
+- Did the lower connection fail unexpectedly?
+
+WebSocket does not need a separate diagnostic philosophy.
+
+It needs the existing layered diagnostic model applied at the upgrade boundary and above it.
+
+### From WebSocket to MQTT
+
+WebSocket also prepares the next part of the book.
+
+The next chapter moves to MQTT.
+
+MQTT is a message-oriented protocol family.
+
+It can be used directly in SNode.C, and later it can also reappear over WebSocket.
+
+The connection to this chapter is:
+
+```text
+WebSocket
+  -> upgraded bidirectional message channel
+
+MQTT over WebSocket
+  -> MQTT semantics carried as a WebSocket subprotocol
+```
+
+That later combination becomes easier to understand after Chapter 24.
+
+WebSocket provides the upgraded message channel.
+
+MQTT provides the protocol semantics.
+
+### What to remember
+
+Remember:
+
+- WebSocket begins with HTTP upgrade.
+- SNode.C's upgrade mechanism is generic; WebSocket is one concrete upgraded protocol.
+- After upgrade, ordinary HTTP request/response handling is replaced by WebSocket frame handling.
+- Upgrade changes protocol identity while keeping the underlying connection.
+- SNode.C models this boundary with `SocketContextUpgrade`.
+- WebSocket is bidirectional, unlike SSE.
+- WebSocket has message frames and control frames.
+- Ping, pong, and close are WebSocket protocol concerns.
+- Server and client upgrade paths are related but distinct.
+- In SNode.C, WebSocket uses a subprotocol layer above the upgraded WebSocket carrier.
+- Subprotocol factories and selectors keep that layer structured.
+- WebSocket can carry protocols that are linked directly or loaded dynamically.
+- Lower runtime, TLS, connection lifecycle, timeouts, diagnostics, and configuration still matter.
+- Chapter 25 moves from web protocols to MQTT.
 
 ### Closing perspective
 
-This chapter brings the web stack in the book to one of its richest points.
+Chapter 24 showed how HTTP upgrade leads to bidirectional WebSocket communication.
 
-The reader has now seen how SNode.C can climb from:
+The path through Part VII now reads:
 
-- lower communication families,
-- into HTTP,
-- into Express-like application composition,
-- into one-way real-time HTTP streaming with SSE,
-- and now into full bidirectional upgraded communication with WebSocket.
+```text
+HTTP request / response
+  -> Express-like application structure
+      -> Server-Sent Events
+          -> long-lived one-way event streaming
+              -> WebSocket
+                  -> upgraded bidirectional message communication
+```
 
-And throughout that entire climb, the architectural shape has remained understandable.
+That completes the main web-protocol climb.
 
-That is the great achievement of the framework.
-
-The next chapter now follows naturally.
-
-Once WebSocket is understood, the book can turn to one of the most important application-layer families beyond the web stack itself:
-
-MQTT.
-
-That will show how SNode.C handles message-oriented communication in a different protocol world while preserving the same architectural discipline yet again.
+Chapter 25 moves to MQTT, a message-oriented protocol family that can use SNode.C directly and later reappear over WebSocket.
