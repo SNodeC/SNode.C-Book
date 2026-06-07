@@ -20,7 +20,7 @@ The central sentence is:
 
 > MQTT over WebSocket in SNode.C is MQTT expressed as a WebSocket subprotocol on top of the HTTP upgrade stack.
 
-This sentence contains the whole architectural story.
+The sentence defines the composition precisely.
 
 MQTT-over-WebSocket is not ordinary native MQTT.
 
@@ -62,7 +62,7 @@ lower communication family
                           -> MQTT protocol semantics
 ```
 
-This is one of the richer stacks in the framework.
+This stack combines several layers that were introduced separately.
 
 It remains understandable because the book has already introduced the parts separately:
 
@@ -286,7 +286,7 @@ The WebSocket role type keeps server and client behavior explicit.
 | client alias | MQTT over a client-side WebSocket subprotocol role |
 | shared template | common MQTT-over-WebSocket bridge logic |
 
-This is the useful balance.
+This keeps reuse and role clarity together.
 
 The protocol bridge is not duplicated.
 
