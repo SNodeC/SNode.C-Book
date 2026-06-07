@@ -78,7 +78,7 @@ It belongs to the application-state architecture.
 
 ### What SNode.C currently supports
 
-The database support in SNode.C should be described carefully.
+The database support in SNode.C has a concrete scope.
 
 The current concrete database module is MariaDB-focused.
 
@@ -88,7 +88,7 @@ The accurate statement is:
 
 > SNode.C currently provides a MariaDB integration layer shaped to work inside the same event-driven runtime discipline as the rest of the framework.
 
-That narrower statement is also stronger.
+This narrower statement keeps the chapter aligned with the implementation.
 
 It lets the chapter focus on what the code actually provides:
 
@@ -125,7 +125,7 @@ The module contains:
 - asynchronous commands,
 - sync-style metadata commands.
 
-That module structure tells the reader how to think about this part of the framework.
+The module structure presents this part of the framework as concrete MariaDB support integrated with the runtime.
 
 It is concrete database support for MariaDB, integrated into SNode.C’s runtime style.
 
@@ -357,7 +357,7 @@ MariaDB socket descriptor
 
 The internal `MariaDBConnection` privately participates in read, write, and exceptional-condition event receiving.
 
-That is the key reason database support belongs in this book.
+This makes the database layer part of the same event-driven architecture as the network layers.
 
 It shows how database work can fit into the same event-driven discipline as network work.
 
@@ -436,7 +436,7 @@ command
               -> success/error callback
 ```
 
-This is one of the most important API patterns in this chapter.
+This pattern is central to the database API.
 
 The application describes ordered database work.
 
