@@ -135,6 +135,21 @@ The protocol identity changes.
 
 That is the important SNode.C idea.
 
+Seen this way, WebSocket is not introduced as a special mechanism first.
+
+The reader first sees the reusable upgrade pattern:
+
+```text
+HTTP negotiation
+  -> selected upgraded protocol context
+```
+
+Only after that does WebSocket appear as the concrete protocol used in this chapter.
+
+This order matters because it prevents WebSocket from looking like a hard-coded exception in the HTTP layer.
+
+It shows that HTTP upgrade is a reusable boundary, and WebSocket is one important protocol that uses that boundary.
+
 #### HTTP as the negotiation layer
 
 Before an upgrade succeeds, the interaction is still HTTP.
@@ -236,6 +251,24 @@ class SocketContextUpgrade
 ```
 
 That inheritance is the chapter in code form.
+
+The first base class keeps the object connected to the HTTP upgrade world.
+
+The second base class gives the object the WebSocket/subprotocol surface that becomes relevant after the upgrade.
+
+The template parameters keep both sides visible at the type level:
+
+```text
+Request / Response
+  -> HTTP negotiation side
+
+SubProtocolT
+  -> upgraded WebSocket meaning
+```
+
+The object therefore lives exactly at the transition point.
+
+It is still able to explain where the connection came from, and it also provides the surface needed for the protocol that now takes over.
 
 | Base / role | Meaning |
 |---|---|
@@ -435,6 +468,14 @@ It is a bidirectional message channel with a subprotocol layer.
 
 That subprotocol gives the WebSocket channel its application/message semantics.
 
+A raw WebSocket message is not yet a complete application idea.
+
+It may be a chat message, a telemetry update, a dashboard command, an MQTT packet, or something else.
+
+The WebSocket layer provides the upgraded bidirectional carrier.
+
+The subprotocol says what the messages on that carrier mean and how they should be interpreted.
+
 A useful model is:
 
 ```text
@@ -517,6 +558,18 @@ The central lesson remains simple:
 ```text
 WebSocket is the upgraded carrier.
 The subprotocol gives that carrier its application meaning.
+```
+
+This is also why the later MQTT-over-WebSocket chapter will not feel like a separate trick.
+
+The reader will already have the necessary model:
+
+```text
+WebSocket
+  -> upgraded carrier
+
+MQTT
+  -> protocol semantics carried by that carrier
 ```
 
 ### Lower layers and diagnostics still matter
