@@ -414,6 +414,13 @@ It does not reproduce the full repository build matrix yet.
 ```cmake
 cmake_minimum_required(VERSION 3.18)
 
+project(echo-pair LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy)
+
 add_library(echosocketcontext STATIC
     EchoSocketContext.cpp
     EchoSocketContext.h
@@ -423,14 +430,19 @@ target_include_directories(echosocketcontext
     PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
+target_link_libraries(echosocketcontext
+    PUBLIC
+        snodec::net-in-stream-legacy
+)
+
 add_executable(echoserver
     echoserver.cpp
 )
 
 target_link_libraries(echoserver
     PRIVATE
-        net-in-stream-legacy
         echosocketcontext
+        snodec::net-in-stream-legacy
 )
 
 add_executable(echoclient
@@ -439,8 +451,8 @@ add_executable(echoclient
 
 target_link_libraries(echoclient
     PRIVATE
-        net-in-stream-legacy
         echosocketcontext
+        snodec::net-in-stream-legacy
 )
 ```
 
@@ -464,10 +476,16 @@ echoclient.cpp
   -> echoclient
 ```
 
-Both executables link against the same context library and against the same IPv4 / stream / legacy SNode.C layer:
+The build first imports the installed SNode.C package and requests the IPv4 / stream / legacy component:
+
+```cmake
+find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy)
+```
+
+Both executables link against the same context library and against the imported SNode.C target:
 
 ```text
-net-in-stream-legacy
+snodec::net-in-stream-legacy
 ```
 
 That is important.
