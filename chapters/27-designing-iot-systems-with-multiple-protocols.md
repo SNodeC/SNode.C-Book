@@ -1,490 +1,808 @@
 ## Designing IoT Systems with Multiple Protocols
-### Why this chapter belongs here
 
-Up to this point, the book has treated the main protocol families one at a time.
+### From protocol composition to system boundaries
 
-That was the right teaching order.
+Chapter 26 showed one concrete cross-stack composition:
 
-The reader has now seen:
+```text
+HTTP upgrade
+  -> WebSocket
+      -> WebSocket subprotocol
+          -> MQTT
+```
 
-- lower communication families such as IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP,
-- the HTTP and Express-like web stack,
-- SSE and WebSocket,
-- MQTT and MQTT over WebSocket,
-- and the configuration, diagnostics, TLS, and failure models that surround them.
+Chapter 27 widens the view.
 
-The next natural question is no longer:
+An IoT system usually contains several communication boundaries, and each boundary may deserve a different protocol choice.
 
-> How does this one protocol family work?
+The central sentence is:
 
-It is now:
+> A multi-protocol IoT system is clear when each protocol is assigned to an honest boundary.
 
-> How do real IoT systems combine several of these protocol families at once?
+This chapter is not about using every protocol everywhere.
 
-That is the question of this chapter.
+It is about deciding where each protocol belongs.
 
-This is an especially important step because IoT systems are rarely single-protocol systems.
+The earlier chapters introduced the protocol families one at a time:
 
-A real IoT system often contains several distinct communication boundaries at the same time:
+- lower communication families,
+- Unix domain sockets,
+- Bluetooth RFCOMM and L2CAP,
+- HTTP,
+- Express-like applications,
+- SSE,
+- WebSocket,
+- MQTT,
+- MQTT over WebSocket,
+- TLS,
+- configuration,
+- diagnostics,
+- timeouts and failure behavior.
 
-- device-near communication,
-- local machine control,
-- message-broker integration,
-- web-facing administration,
-- real-time observation,
-- and persistence or external service integration.
+Chapter 27 asks how these pieces can form a system.
 
-SNode.C is interesting precisely because it can hold those different boundaries inside one architectural language.
+The question is no longer only:
 
-### IoT systems are defined by boundaries, not gadgets
+```text
+How does this protocol work?
+```
 
-A teaching book should be careful not to reduce IoT to sensors and boards.
+The question becomes:
 
-Those matter, of course.
+```text
+Which system boundary does this protocol serve?
+```
 
-But from a systems perspective, IoT is better understood as a boundary problem.
+### IoT systems are boundary systems
 
-A IoT system usually needs to bridge several different worlds:
+IoT should not be reduced to sensors and boards.
 
-- physical devices,
-- local host processes,
-- brokered machine messaging,
-- human-facing dashboards or web APIs,
-- and external services or databases.
+Sensors and boards matter, but they do not define the communication architecture by themselves.
 
-That means IoT architecture is often really the art of choosing which protocol belongs at which boundary.
+The architecture is defined by the boundaries where information crosses from one role, process, machine, user interface, or service into another.
 
-This is one of the reasons SNode.C is such a strong framework for the topic.
+An IoT system often bridges several worlds:
 
-Its architecture is already organized around explicit layers, roles, and boundaries.
+```text
+physical device
+  -> local host process
+      -> message integration
+          -> human-facing interface
+              -> persistence or external service
+```
 
-### The current repository already points toward multi-protocol IoT design
+Each arrow is a boundary.
 
-The repository’s structure strongly suggests this broader use case.
+Each boundary may need a different protocol family.
 
-The project presents itself not only as a generic networking framework, but as a framework with a strong M2M and IoT orientation. It explicitly highlights support for HTTP, WebSocket, MQTT, MQTT over WebSocket, Bluetooth RFCOMM, Bluetooth L2CAP, Unix domain sockets, and a reference ecosystem in MQTTSuite. ([github.com](https://github.com/SNodeC/snode.c?utm_source=chatgpt.com))
+This is why multi-protocol design is normal in IoT systems.
 
-That matters for this chapter.
+It is not automatically a sign of complexity gone wrong.
 
-It means the idea of multi-protocol IoT systems is not something we have to invent from outside the repository.
+The design becomes unclear only when protocol choices are placed dishonestly.
 
-It is already implicit in the framework’s stated scope and supported protocol families. ([github.com](https://github.com/SNodeC/snode.c?utm_source=chatgpt.com))
+### Recurring boundary roles in IoT systems
 
-### The first rule of IoT design in SNode.C: one boundary, one honest protocol choice
+A useful starting point is to name the recurring roles.
 
-The most important design rule of this chapter is simple.
+| Role | Question |
+|---|---|
+| device-facing role | How does the system talk to device-near components? |
+| local-control role | How do same-host processes coordinate? |
+| integration role | How does the system exchange machine messages? |
+| observation role | How do humans or monitoring consumers see state changes? |
+| administration role | How is the system configured, controlled, and inspected? |
 
-Do not choose one protocol and force it everywhere out of convenience.
+These roles are not fixed classes in the framework.
 
-Instead, ask what each boundary of the system actually needs.
+They are design positions.
 
-For example:
+A concrete application may combine some of them.
 
-- a device-near Bluetooth boundary may want RFCOMM or L2CAP,
-- a local control boundary may want Unix domain sockets,
-- a telemetry and integration boundary may want MQTT,
-- a browser-facing observation boundary may want HTTP, SSE, or WebSocket,
-- a management boundary may want Express-like routing above HTTP.
+A larger deployment may split them across several processes.
 
-This is exactly the kind of thinking the earlier architectural-judgment chapter prepared the reader for.
-
-### A good IoT system often contains at least four distinct protocol roles
-
-A surprisingly large number of IoT systems can be described using four recurring role types.
+The important point is that the roles are different conversations.
 
 #### Device-facing role
 
-This role talks toward hardware or device-near components.
+The device-facing role talks toward hardware or device-near components.
 
-In SNode.C terms, that may involve:
+This may involve:
 
-- RFCOMM,
-- L2CAP,
-- or sometimes a local stream-based service on the host that itself talks to hardware.
+- Bluetooth RFCOMM,
+- Bluetooth L2CAP,
+- a custom stream protocol,
+- a serial or local helper process,
+- or another device-near boundary.
+
+The device-facing role is usually close to physical constraints.
+
+It may care about commissioning, local range, device identity, pairing, sampling, or hardware-specific timing.
+
+#### Local-control role
+
+The local-control role connects cooperating processes on the same machine.
+
+It may be used for:
+
+- command tools,
+- helper processes,
+- service supervision,
+- local administration,
+- process separation,
+- device-facing adapters.
+
+Unix domain sockets are often a good fit here.
+
+They express a local boundary without pretending that the interaction is a remote network service.
 
 #### Integration role
 
-This role exports or imports machine messages.
+The integration role exchanges machine messages.
 
-In many systems, MQTT is the most natural fit here.
+MQTT is often a strong fit here because it provides:
+
+- publish/subscribe flow,
+- topic-based routing,
+- brokered distribution,
+- decoupled producers and consumers,
+- machine-to-machine message exchange.
+
+This role often becomes the integration spine of the system.
+
+It should not automatically become every other boundary.
 
 #### Observation role
 
-This role lets humans or monitoring systems observe current state and changes.
+The observation role exposes state and change to humans, dashboards, or monitoring consumers.
 
-That may involve:
+This may involve:
 
-- HTTP,
-- SSE,
-- WebSocket,
-- or an Express-like web application.
+- HTTP status endpoints,
+- SSE streams,
+- WebSocket connections,
+- dashboard views,
+- metrics pages,
+- activity feeds.
 
-#### Control or administration role
+Observation is not the same as control.
 
-This role is where configuration, commands, diagnostics, and service-local management often live.
+It often needs a live or near-live view, but it does not necessarily need bidirectional command semantics.
 
-That may involve:
+#### Administration role
 
-- HTTP/Express,
-- Unix domain sockets,
-- or another explicit local service boundary.
+The administration role configures, controls, and inspects the system.
 
-This four-role picture is not universal, but it is a very strong starting point for thinking clearly about IoT systems in SNode.C.
+It may involve:
 
-### The most important IoT lesson: telemetry, control, and observation are not the same conversation
+- HTTP/Express endpoints,
+- authentication middleware,
+- command-line configuration,
+- local Unix-domain control,
+- diagnostic pages,
+- management APIs.
 
-Many weak IoT architectures become confusing because they collapse several kinds of communication into one channel.
+This role is often operator-facing.
 
-For example, the same path may be used for:
+It should be explicit because administration errors can affect the whole system.
 
-- low-level device exchange,
-- high-level telemetry publishing,
-- user-facing observation,
-- and administrative control.
+### Choosing protocol families for boundaries
 
-That usually makes the system harder to evolve.
+A boundary-oriented design asks what each boundary needs before choosing a protocol.
 
-A stronger design keeps these conversations distinct.
+A compact mapping is:
 
-Telemetry is not the same thing as control. Control is not the same thing as observation. Device-facing exchange is not the same thing as web-facing interaction.
+| System boundary | Typical protocol family | Reason |
+|---|---|---|
+| device-near edge | Bluetooth RFCOMM/L2CAP, custom stream service | close to hardware or local device exchange |
+| local control | Unix domain sockets | same-host control, helper processes, local security |
+| integration spine | MQTT | brokered machine-to-machine messaging |
+| management surface | HTTP / Express-like layer | structured human/operator APIs |
+| live observation | SSE | server-to-client updates |
+| interactive browser link | WebSocket | bidirectional live interaction |
+| bridge boundary | MQTT over WebSocket | MQTT semantics through a WebSocket path |
+| persistence boundary | database/client integration | durable state or external services |
 
-This is one of the greatest strengths of SNode.C’s architecture.
+This table is not a rulebook.
 
-It encourages the reader to model these as different roles, often with different protocols.
+It is a starting point.
 
-### MQTT is often the spine, not the whole body
+The decision should always come back to the boundary:
 
-In real IoT systems, MQTT is often the most natural integration backbone.
+```text
+What crosses this boundary?
+Who consumes it?
+How long does it live?
+Does it need bidirectional flow?
+Does it need brokered distribution?
+Does it need local-only access?
+Does it need operator visibility?
+Does it need persistence?
+```
 
-That is why the framework’s MQTT support is so central.
+Those questions usually lead to a clearer protocol choice than starting with a favorite protocol and forcing it everywhere.
 
-MQTT is excellent when the system wants:
+### A constellation of protocol stacks
+
+An IoT system in SNode.C is often not one vertical stack.
+
+It is a constellation of stacks.
+
+For example:
+
+```text
+device edge stack
+  -> Bluetooth / custom stream
+
+integration stack
+  -> MQTT
+
+admin stack
+  -> HTTP / Express
+
+observation stack
+  -> SSE
+
+interactive stack
+  -> WebSocket
+
+local-control stack
+  -> Unix domain socket
+```
+
+These stacks are not redundant duplicates.
+
+They are different conversations at different system boundaries.
+
+That is the main reason SNode.C can be useful in larger IoT designs.
+
+It gives different protocol families a shared architectural language:
+
+- runtime lifecycle,
+- roles,
+- instances,
+- contexts,
+- factories,
+- configuration,
+- logging,
+- diagnostics,
+- timeouts,
+- failure handling.
+
+The protocol surfaces can differ.
+
+The architectural discipline can remain coherent.
+
+### Telemetry, control, observation, and administration are different conversations
+
+Many weak IoT architectures become confusing because they collapse several conversations into one channel.
+
+A stronger design keeps the differences visible.
+
+| Conversation | Meaning |
+|---|---|
+| telemetry | reports measured or derived state |
+| control | asks the system or a device to do something |
+| observation | presents state or change to a human or monitoring consumer |
+| device exchange | talks to hardware or device-near services |
+| administration | changes how the system is operated |
+
+These conversations may share data.
+
+They should not automatically share the same protocol boundary.
+
+For example:
+
+```text
+sensor reading
+  -> device-facing exchange
+      -> internal state update
+          -> MQTT telemetry publish
+              -> SSE dashboard update
+                  -> database persistence
+```
+
+This is one piece of information moving through several roles.
+
+Each role can have a different protocol surface.
+
+That is not necessarily duplication.
+
+It may be the clearest design.
+
+### MQTT as an integration spine, not the whole system
+
+MQTT is often a good integration spine.
+
+It is not automatically the whole system.
+
+MQTT is strong when the system needs:
 
 - asynchronous publish/subscribe flow,
 - decoupled producers and consumers,
 - brokered message routing,
-- topic-based integration.
+- topic-based integration,
+- machine-to-machine message exchange.
 
-But MQTT is often not the whole system.
+That makes MQTT a natural fit for telemetry and integration boundaries.
 
-A browser-facing dashboard may still prefer HTTP, SSE, or WebSocket. A device-near component may still prefer Bluetooth. A local management plane may still prefer Unix domain sockets.
+But other boundaries may need other tools.
 
-This chapter should therefore teach a very important balance:
+A browser-facing dashboard may prefer HTTP, SSE, or WebSocket.
 
-MQTT is often the messaging spine of a IoT system, but not necessarily the only protocol body around it.
+A local management plane may prefer Unix domain sockets.
 
-### HTTP and Express are often the management and human-facing shell
+A device-near boundary may prefer Bluetooth or a custom stream service.
 
-The earlier web chapters now become very practical.
+A persistence boundary may involve a database or external service client.
 
-In a IoT system, HTTP and the Express-like layer are often not used for the same reason as MQTT.
+The useful design rule is:
 
-They are often used because they are excellent at:
+```text
+Use MQTT where brokered machine messaging is the real boundary.
+Do not force MQTT to replace every other boundary.
+```
 
-- exposing management endpoints,
-- serving dashboards,
-- presenting REST-like control surfaces,
-- structuring admin applications,
-- organizing authentication and middleware.
+### HTTP and Express as management and operator-facing surfaces
 
-This is a very common and healthy multi-protocol shape:
+HTTP and the Express-like layer often fit management and operator-facing boundaries.
 
-- MQTT for machine-to-machine message flow,
-- HTTP/Express for human-facing or operator-facing interaction.
+They are useful for:
 
-That division of labor is often much clearer than trying to force one of those families into the other’s job.
+- dashboards,
+- status pages,
+- management APIs,
+- REST-like control surfaces,
+- authentication middleware,
+- static assets,
+- structured routing,
+- human-facing application organization.
 
-### SSE and WebSocket are observation and interaction tools, not broker replacements
+A useful distinction is:
 
-The earlier real-time web chapters also fit naturally into IoT design now.
+```text
+MQTT
+  -> machine-facing integration
 
-A monitoring dashboard often wants one of two things:
+HTTP / Express
+  -> operator-facing structure
+```
 
-- server-to-client streaming updates,
-- or richer bidirectional browser interaction.
+This distinction is not absolute.
 
-That means:
+It is a design pattern.
 
-- SSE is often a good fit for live metrics, state changes, activity feeds, and alerts,
-- WebSocket is often a good fit when the browser must also send richer real-time control or interaction messages.
+A compact comparison:
 
-Neither of these should usually be confused with the MQTT integration spine itself.
+| Concern | Often better fit |
+|---|---|
+| publish telemetry | MQTT |
+| subscribe to machine events | MQTT |
+| serve dashboard page | HTTP / Express |
+| expose admin API | HTTP / Express |
+| authenticate an operator request | Express middleware |
+| show current status | HTTP endpoint or dashboard |
+| stream live state to a UI | SSE |
+| interactive live browser session | WebSocket |
 
-They are often presentation or interaction boundaries layered alongside it.
+This division of labor is often clearer than forcing MQTT to become the web interface or forcing HTTP to become the integration broker.
 
-This is exactly the kind of multi-protocol separation that keeps IoT systems understandable.
+### SSE and WebSocket as live observation and interaction surfaces
 
-### MQTT over WebSocket is a bridge boundary, not a universal default
+SSE and WebSocket become useful when the human-facing or monitoring-facing side needs live behavior.
 
-Because the framework supports MQTT over WebSocket, a reader may be tempted to overuse it.
+SSE is often a good fit when updates flow mainly from server to client:
 
-That would be a mistake.
+- live metrics,
+- state changes,
+- activity feeds,
+- alerts,
+- dashboard updates.
 
-MQTT over WebSocket is extremely valuable when the system genuinely needs MQTT semantics at a web-upgrade boundary.
+WebSocket is often a good fit when the interaction is bidirectional:
 
-But it should not become the automatic answer for every MQTT-related design question.
+- browser control sessions,
+- live command channels,
+- collaborative dashboards,
+- interactive monitoring tools,
+- custom bidirectional protocols.
+
+SSE and WebSocket are often presentation or interaction boundaries.
+
+They do not automatically replace the MQTT integration role.
+
+A clear design may use all of these:
+
+```text
+device data
+  -> MQTT integration
+
+dashboard view
+  -> HTTP / Express
+
+live dashboard updates
+  -> SSE
+
+interactive browser control
+  -> WebSocket
+```
+
+The protocols are not competing when the boundaries are different.
+
+### MQTT-over-WebSocket as a bridge boundary
+
+MQTT-over-WebSocket is useful when MQTT semantics must travel through a WebSocket-oriented path.
+
+It is not a universal default.
 
 A good decision rule is:
 
-- use native MQTT where the integration boundary is naturally MQTT,
-- use MQTT over WebSocket where the surrounding environment is already web- or WebSocket-oriented and MQTT semantics still need to survive there.
+```text
+use native MQTT
+  -> when the integration boundary is naturally MQTT
 
-This is another example of the chapter’s main theme:
+use MQTT over WebSocket
+  -> when the surrounding path is WebSocket-oriented
+     and MQTT semantics must survive there
+```
 
-choose the honest protocol boundary, not merely the most reusable-sounding one.
+This follows directly from Chapter 26.
 
-### Bluetooth belongs at the edge, not everywhere
+MQTT-over-WebSocket is a bridge boundary.
 
-The Bluetooth chapters become much more meaningful when viewed through real IoT design.
+It connects:
 
-Bluetooth RFCOMM and L2CAP are especially strong when the system has a genuine device-near edge.
+```text
+MQTT semantics
+  -> WebSocket subprotocol
+      -> HTTP upgrade path
+```
 
-That might include:
+That is useful when the system genuinely needs that composition.
 
-- local configuration of devices,
-- near-field communication with an appliance,
-- radio-linked peer exchange near a sensor node,
-- device commissioning or service roles close to hardware.
+It should not be used only because it sounds more general.
 
-But Bluetooth usually does not replace the integration spine or the management shell of the whole system.
+Honest boundary placement matters more than maximum reuse of one path.
 
-It usually belongs at one particular boundary of the system.
+### Bluetooth at the device edge
 
-That is why SNode.C’s support for Bluetooth as one family among several is so valuable.
+Bluetooth belongs where the system is close to devices.
 
-It encourages proper boundary placement instead of architectural overreach.
+RFCOMM and L2CAP are useful near boundaries such as:
 
-### Unix domain sockets are often the cleanest local control plane
+- local device exchange,
+- commissioning,
+- nearby peer communication,
+- appliance or sensor interaction,
+- device-local service roles.
 
-A very common IoT design need is a local control or management plane on the same host.
+Bluetooth usually should not become the integration spine of the whole system.
 
-For that, Unix domain sockets are often a very strong fit.
+It normally belongs at one system edge.
 
-They are especially attractive when:
+A common design is:
 
-- a local helper process should talk to a broker or bridge process,
-- a device-facing role and a web-facing role should stay separate but communicate locally,
-- a command tool should control a long-running service on the same machine,
-- local security and deployment simplicity matter more than remote reachability.
+```text
+Bluetooth device edge
+  -> local adapter role
+      -> MQTT integration
+          -> dashboard / storage / external services
+```
 
-This is an example of a protocol-family choice that often improves a IoT system by making a boundary more honest.
+This keeps the local device-specific boundary separate from the wider integration boundary.
 
-Not every local interaction needs to pretend to be a network service.
+### Unix domain sockets for local control
 
-### A healthy multi-protocol IoT stack in SNode.C often looks like a layered constellation
+Unix domain sockets are often a clean same-host boundary.
 
-A very useful mental picture is this:
+They fit situations such as:
 
-A IoT system in SNode.C is often not one vertical stack, but a constellation of stacks.
+- a command-line tool controlling a long-running service,
+- a helper process talking to a broker or bridge process,
+- a device-facing adapter communicating with a local integration service,
+- a web-facing role coordinating with a local service,
+- local administration without remote exposure.
+
+This is a good example of an honest boundary.
+
+Not every local interaction needs to be a network service.
+
+Not every control path needs HTTP.
+
+A Unix-domain control plane can make a system simpler by keeping local coordination local.
+
+### One process or several cooperating applications
+
+Multi-protocol does not require one process that contains every role.
+
+Sometimes one process with several named roles is the right design.
+
+Often several focused cooperating applications are clearer.
 
 For example:
 
-- one role may be `net::rc` or `net::l2` plus a custom device protocol,
-- one role may be native MQTT,
-- one role may be HTTP plus Express middleware,
-- one role may be HTTP plus SSE,
-- one role may be HTTP upgrade plus WebSocket,
-- one role may be Unix-domain local control.
+```text
+device-facing process
+  -> talks to hardware or Bluetooth
 
-These are not redundant duplicates.
+integration process
+  -> publishes/subscribes via MQTT
 
-They are different conversations at different system boundaries.
+web-facing process
+  -> serves dashboard and admin endpoints
 
-That is exactly how the framework is meant to be used in richer system design.
+bridge process
+  -> maps between protocol families
+```
 
-### Multi-protocol does not mean “all protocols in one process”
+The right choice depends on deployment, failure isolation, configuration, resource limits, and operational clarity.
 
-A good systems chapter should be operationally honest.
+The goal is not to maximize consolidation.
 
-A multi-protocol IoT system does not always mean one universal process containing every boundary.
+The goal is to choose process boundaries that preserve system clarity.
 
-Sometimes that is the right design.
+SNode.C supports both styles because the same architectural ideas apply at both levels:
 
-But very often, a healthier system uses several cooperating applications, each focused on one clearer role constellation.
+```text
+one process with several roles
+  or
+several cooperating processes
+```
 
-For example:
+### Configuration as a map of roles
 
-- a broker-facing service,
-- a web-facing admin or dashboard service,
-- a bridge or adapter process,
-- a device-facing process.
-
-The framework supports both approaches.
-
-The key is not to maximize consolidation blindly.
-
-The key is to choose operational boundaries that preserve clarity.
-
-### Configuration becomes especially powerful in multi-protocol IoT systems
-
-The earlier configuration chapters become much more important here.
-
-In a multi-protocol IoT system, configuration is often the thing that makes the architecture legible.
+In a multi-protocol system, configuration becomes a map of roles.
 
 It can express:
 
 - which roles exist,
 - which roles are enabled,
-- which lower families they use,
-- where MQTT peers or brokers live,
+- which protocol family each role uses,
+- which endpoints each role binds or connects to,
+- which TLS material belongs to which role,
+- which MQTT peers or brokers are used,
 - which web interfaces are exposed,
-- which TLS materials belong to which role,
-- which retry or reconnect policies apply to which boundary.
+- which retry or reconnect policies apply,
+- which local-control sockets exist.
 
-This is why SNode.C’s named-instance configuration model scales so well into IoT design.
+This connects directly to Chapters 16 and 17.
 
-The configuration can become a readable map of the system rather than only a pile of options.
+Named instances and structured configuration make the system more legible.
 
-### Observability matters more in IoT systems because the boundaries multiply
+A configuration file should not be only a pile of values.
 
-The diagnostics chapter also deepens here.
+In a multi-protocol IoT system, it should help answer:
 
-A multi-protocol IoT system is harder to reason about than a single-protocol example because failures can happen at several boundaries at once.
+```text
+Which boundary is this?
+Which role owns it?
+Which protocol family serves it?
+How does it fail?
+How is it observed?
+```
 
-For example:
+### Observability across multiple boundaries
 
-- the Bluetooth edge may be unavailable,
-- the MQTT broker may be unreachable,
-- the HTTP admin interface may be healthy while the integration role is failing,
-- the dashboard stream may stall while control endpoints still answer.
+More boundaries mean more possible failure points.
 
-This is exactly why explicit role naming, per-role logging, connection metrics, current-config display, and clear lifecycle reporting matter so much.
+That makes observability part of the architecture.
 
-A good IoT design is not only about protocol choice.
+Useful questions include:
 
-It is also about making those choices observable at runtime.
+| Question | Example |
+|---|---|
+| Is the device edge alive? | Bluetooth or local device service state |
+| Is local control working? | Unix-domain socket and helper process state |
+| Is the broker reachable? | MQTT connection and session state |
+| Is the dashboard reachable? | HTTP application state |
+| Is the live stream active? | SSE or WebSocket state |
+| Which role is failing? | role-specific logs, metrics, counters, and configuration |
 
-### Failure policy should match the role, not the system slogan
+This connects to Chapter 18.
 
-One of the easiest mistakes in IoT design is to apply one blanket reliability policy everywhere.
+In a multi-protocol system, diagnostics should be role-specific.
 
-For example:
+It should be possible to see that:
 
-- “everything retries forever,”
-- or “everything fails fast.”
+```text
+HTTP admin is healthy
+MQTT integration is reconnecting
+Bluetooth edge is disabled
+SSE dashboard stream is active
+local control socket is unavailable
+```
 
-That is usually wrong.
+Those are different operational facts.
 
-A better rule is:
+They should not be hidden behind one generic “online/offline” flag.
 
-match retry, reconnect, timeout, and disablement policy to the role.
+### Failure policy by role
 
-For example:
+Failure policy should match the role.
 
-- a MQTT integration client may reasonably reconnect for a long time,
-- a local admin socket may fail fast and clearly,
-- a browser-facing SSE role may tolerate transient restarts differently,
-- a Bluetooth commissioning role may be optional and disabled by default.
+A single global rule such as:
 
-SNode.C’s role-oriented configuration and failure model are especially strong here because they let the system express different temporal behavior at different boundaries.
+```text
+everything retries forever
+```
 
-### The best IoT designs reuse protocol cores but not necessarily protocol surfaces
+or:
 
-Chapter 15 taught that protocol logic can survive movement across lower carriers.
+```text
+everything fails fast
+```
 
-In IoT systems, that lesson becomes more subtle.
+is usually too crude.
 
-A strong design often reuses:
+Different roles often need different behavior.
 
-- device-state models,
-- protocol parsing cores,
-- message mapping logic,
-- topic or event semantics,
-- shared domain rules,
+| Role | Typical failure policy |
+|---|---|
+| MQTT integration client | reconnect for a long time |
+| local admin socket | fail fast and visibly |
+| SSE dashboard | reconnect or show degraded state |
+| WebSocket control session | close clearly and let the UI recover |
+| Bluetooth commissioning | optional / disabled until needed |
+| web admin interface | fail clearly, do not hide configuration errors |
 
-while still giving different external surfaces to different roles.
+This connects to Chapter 20.
 
-For example, the same underlying state changes may be:
+Timeouts, retries, reconnects, disablement, and shutdown should belong to the role that owns the boundary.
+
+A system becomes more understandable when each boundary has its own temporal behavior.
+
+### Reusing meaning across different surfaces
+
+The same domain state may be exposed through different surfaces.
+
+That is not duplication if each surface belongs to a different boundary.
+
+For example, the same sensor state may be:
 
 - published to MQTT,
-- exposed via HTTP,
+- shown through an HTTP status endpoint,
 - streamed through SSE,
-- reflected into a Bluetooth-facing role,
-- or made available through a Unix-domain control interface.
+- used in a WebSocket control session,
+- written to a database,
+- exposed through a local Unix-domain command,
+- reflected into a Bluetooth-facing commissioning role.
 
-That is not duplication of meaning.
+The meaning is shared.
 
-It is distribution of meaning across honest boundaries.
+The surfaces are different.
 
-### A practical design recipe for multi-protocol IoT systems in SNode.C
+A useful distinction is:
 
-A useful recipe is this:
+```text
+shared domain meaning
+  -> several honest protocol surfaces
+```
 
-1. identify the real system boundaries,
-2. decide which boundaries are device-facing, local-control, integration, and human-facing,
-3. choose the simplest honest protocol family for each boundary,
-4. keep the roles explicit and name them clearly,
-5. let MQTT carry machine-message integration when that is the natural fit,
-6. let HTTP/Express carry administration and web structure when that is the natural fit,
-7. use SSE or WebSocket only where live interaction truly needs them,
-8. keep Bluetooth and Unix-domain roles at the boundaries where they are actually strongest,
-9. let configuration, diagnostics, and failure policy remain role-specific rather than globally muddy.
+This is better than forcing one protocol surface to serve every consumer.
 
-This is not the only valid method, but it is a very strong design discipline.
+It also helps keep protocol-specific behavior out of the domain model.
 
-### The chapter’s deepest lesson: protocol diversity is not architectural chaos
+### Practical design recipe
 
-The most important idea in the whole chapter is this:
+A practical recipe for multi-protocol IoT design is:
 
-A IoT system with several protocols is not necessarily chaotic.
+1. Identify the real system boundaries.
+2. Name the roles.
+3. Choose the simplest honest protocol family for each role.
+4. Keep telemetry, control, observation, administration, and device exchange distinct.
+5. Configure and diagnose per role.
+6. Match timeout, retry, reconnect, and shutdown policy to the role.
+7. Split into several processes when that improves clarity.
+8. Reuse domain meaning without forcing every surface to use the same protocol.
 
-It becomes chaotic only when the protocols are chosen or placed dishonestly.
+This is not the only valid method.
 
-SNode.C is powerful because it gives those protocol families a shared architectural language.
+It is a design discipline.
 
-That means a system can be diverse in protocol surface while still remaining coherent in:
+It helps prevent two common mistakes:
 
-- runtime model,
-- role structure,
+```text
+one protocol everywhere
+```
+
+and:
+
+```text
+many protocols without clear boundaries
+```
+
+The first mistake hides real differences.
+
+The second mistake creates accidental complexity.
+
+The better path is:
+
+```text
+different protocols
+  -> clear roles
+      -> explicit boundaries
+          -> coherent system
+```
+
+### Protocol diversity is not architectural chaos
+
+Protocol diversity becomes chaotic only when boundaries are unclear.
+
+When each protocol belongs to a clear role, a multi-protocol system can remain coherent.
+
+This is the main lesson of the chapter.
+
+An IoT system may use:
+
+- Bluetooth near the device edge,
+- Unix domain sockets for local control,
+- MQTT for integration,
+- HTTP/Express for administration,
+- SSE for live observation,
+- WebSocket for bidirectional interaction,
+- MQTT-over-WebSocket for bridge boundaries,
+- database support for persistence.
+
+That is a diverse system.
+
+It is not automatically a messy system.
+
+The difference is whether each protocol has a reason to be there.
+
+SNode.C helps because many different protocol families still share the same architectural language:
+
+- roles,
+- instances,
+- contexts,
+- factories,
 - configuration,
 - diagnostics,
-- connection lifecycle thinking,
-- and system composition style.
+- runtime lifecycle,
+- failure behavior.
 
-That is the real reason this framework is so well suited to multi-protocol IoT work.
+Protocol diversity is manageable when those shared concepts remain visible.
 
-### Common misunderstandings about multi-protocol IoT design in SNode.C
+### What to remember
 
-It helps to clear away a few misunderstandings explicitly.
+Remember:
 
-#### Misunderstanding 1: “A IoT system should pick one protocol family and use it everywhere.”
-
-Corrected view: strong IoT systems usually assign different protocol families to different boundaries of the system.
-
-#### Misunderstanding 2: “MQTT is the whole IoT architecture.”
-
-Corrected view: MQTT is often the integration spine, but many systems still need Bluetooth, local IPC, HTTP, SSE, WebSocket, or Express-based management surfaces alongside it.
-
-#### Misunderstanding 3: “If several protocols are present, the design has become messy.”
-
-Corrected view: multiple protocols are often the honest result of multiple system boundaries; the real design question is whether each protocol is placed where it belongs.
-
-#### Misunderstanding 4: “MQTT over WebSocket should replace either MQTT or WebSocket everywhere.”
-
-Corrected view: it is a bridge boundary for specific situations, not a universal default.
-
-#### Misunderstanding 5: “Multi-protocol means one process must contain everything.”
-
-Corrected view: SNode.C supports both multi-role single executables and systems composed of several focused cooperating applications.
-
-### A good one-paragraph summary of the chapter
-
-Designing IoT systems with SNode.C means assigning the right protocol family to each real system boundary rather than forcing one favorite protocol everywhere. Bluetooth families often belong at the device edge, Unix domain sockets often belong at the local control plane, MQTT often serves as the machine-to-machine integration spine, and HTTP, Express, SSE, or WebSocket often shape human-facing administration and observation surfaces. The framework’s value is that these different boundaries can still be expressed with one coherent architectural language of roles, layers, configuration, diagnostics, and runtime lifecycle.
-
-That is the heart of the chapter.
+- IoT architecture is defined by communication boundaries, not only devices.
+- A protocol should be chosen for the boundary it serves.
+- Telemetry, control, observation, administration, and device exchange are different conversations.
+- MQTT is often an integration spine, not the whole system.
+- HTTP/Express often fits management and operator-facing surfaces.
+- SSE and WebSocket often fit live observation and interaction.
+- MQTT-over-WebSocket is a bridge boundary, not a universal default.
+- Bluetooth belongs near device edges.
+- Unix domain sockets often fit same-host control.
+- Multi-protocol does not require one process.
+- Configuration becomes a map of roles.
+- Diagnostics and failure policy should be role-specific.
+- The same domain meaning may appear through several protocol surfaces.
+- Protocol diversity is not chaos when boundaries are clear.
+- Part IX moves from protocol/system design to persistence and complete systems.
 
 ### Closing perspective
 
-This chapter is the point where the book’s protocol chapters come together into real IoT architecture.
+Chapter 27 completed the protocol-facing IoT design view.
 
-The reader has now seen that SNode.C does not merely support many protocols independently.
+The path through Part VIII was:
 
-It supports using them together without losing architectural clarity.
+```text
+MQTT as protocol family
+  -> MQTT over WebSocket as protocol composition
+      -> multi-protocol IoT systems as boundary design
+```
 
-That is exactly what a mature IoT framework should do.
+The important conclusion is simple:
 
-And with that, the book is ready to move into the next major phase of the original index.
+```text
+clear boundary
+  -> honest protocol choice
+      -> observable role
+          -> maintainable system
+```
 
-Once a multi-protocol IoT system has been designed, the next natural questions are about what such systems remember and persist over time.
+Chapter 28 now moves to persistence and application state.
 
-That means the next chapter should turn toward persistence and state.
+It asks where system information lives after messages, events, requests, and device exchanges have been processed.
