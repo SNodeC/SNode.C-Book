@@ -1,418 +1,518 @@
 ## MQTT over WebSocket
-### Why this chapter deserves to stand on its own
 
-The previous chapter introduced MQTT as a full application-layer family in SNode.C.
+### MQTT carried by the WebSocket upgrade stack
 
-It already hinted at something especially interesting:
+Chapter 25 introduced MQTT as a message-oriented protocol family in SNode.C.
 
-MQTT in the framework does not exist only in a native direct form.
+It showed two central forms:
 
-It also exists as a WebSocket-carried protocol.
+```text
+native MQTT
+  -> MQTT above a stream connection
 
-That composition deserves its own chapter because it is one of the clearest demonstrations of SNode.C’s architectural reach.
+MQTT over WebSocket
+  -> MQTT above a WebSocket subprotocol
+```
 
-MQTT over WebSocket is not just a convenience feature.
+Chapter 26 focuses on the second form.
 
-It is a multi-layer composition in which all of the following remain visible and meaningful:
-
-- the lower communication family,
-- the stream transport,
-- legacy or TLS connection handling,
-- the HTTP layer,
-- the HTTP upgrade boundary,
-- the WebSocket layer,
-- the WebSocket subprotocol layer,
-- and finally the MQTT protocol family itself.
-
-That is a remarkable stack.
-
-And yet in SNode.C it still remains teachable.
-
-This chapter explains why.
-
-### The composition in one sentence
-
-A good short definition is this:
+The central sentence is:
 
 > MQTT over WebSocket in SNode.C is MQTT expressed as a WebSocket subprotocol on top of the HTTP upgrade stack.
 
-That sentence is simple, but it contains the whole architectural story.
+This sentence contains the whole architectural story.
 
-It tells us that MQTT over WebSocket is not:
+MQTT-over-WebSocket is not ordinary native MQTT.
 
-- ordinary native MQTT,
-- ordinary HTTP,
-- ordinary WebSocket without higher meaning,
-- or some ad hoc mixture of the three.
+It is not ordinary HTTP.
 
-It is a layered composition with a very clear semantic order.
+It is not plain WebSocket without higher protocol meaning.
 
-### Why MQTT-over-WebSocket exists at all
+It is a layered composition:
 
-A good technical book should pause on this question.
+```text
+HTTP upgrade
+  -> WebSocket
+      -> WebSocket subprotocol
+          -> MQTT semantics
+```
 
-Why would a framework support MQTT over WebSocket instead of only native MQTT?
+That composition matters because every layer still has a responsibility.
 
-Because real systems often need MQTT semantics in environments where WebSocket is the more natural higher transport carrier.
+HTTP negotiates the upgrade.
 
-That can happen when:
+WebSocket provides the upgraded bidirectional message carrier.
 
-- the communication path already lives inside a web-facing architecture,
-- a browser-adjacent or web infrastructure context matters,
-- upgrade-based routing is already present,
-- or protocol interoperability in a HTTP/WebSocket environment is desired.
+The WebSocket subprotocol layer gives WebSocket messages a selected protocol meaning.
 
-The important point for the book is not to over-theorize the deployment scenarios.
+MQTT provides packet, session, topic, keep-alive, and publish-flow semantics.
 
-The important point is to see what the framework is proving architecturally:
+### The composition in one model
 
-> the MQTT protocol family can remain itself while being carried over a richer, web-upgraded transport path.
+The full stack can be read from bottom to top:
 
-That is exactly the kind of layered portability SNode.C was designed to support.
+```text
+lower communication family
+  -> stream transport
+      -> legacy or TLS connection handling
+          -> HTTP request / response
+              -> HTTP upgrade
+                  -> WebSocket
+                      -> WebSocket subprotocol role
+                          -> MQTT protocol semantics
+```
 
-### The live build structure makes the composition explicit
+This is one of the richer stacks in the framework.
 
-The current live build structure is especially instructive here.
+It remains understandable because the book has already introduced the parts separately:
 
-On the server side, the codebase builds both:
+- lower communication families,
+- stream transport,
+- legacy and TLS connection handling,
+- HTTP request/response,
+- generic protocol upgrade,
+- WebSocket frames and subprotocols,
+- MQTT as a message-oriented protocol family.
 
-- `mqtt-server`
-- and `mqtt-server-websocket`
+Chapter 26 combines them.
 
-On the client side, it builds both:
+The result is not a flattened protocol.
 
-- `mqtt-client`
-- and `mqtt-client-websocket`
+It is a composed stack.
 
-This is already a strong architectural statement.
+Each layer continues to explain a different part of the behavior.
 
-The framework is not treating MQTT-over-WebSocket as an application example glued together somewhere outside the protocol layers.
+### Native MQTT and MQTT-over-WebSocket side by side
 
-It is building it as an explicit supported protocol composition.
+Chapter 25 introduced native MQTT first.
 
-That is exactly the right design choice.
+That remains the simpler model.
 
-### The same MQTT protocol core participates in both worlds
+Chapter 26 now sharpens the contrast.
 
-One of the most satisfying architectural facts in the live code is that the MQTT-over-WebSocket story does not require a second completely separate MQTT semantics layer.
+| Concern | Native MQTT | MQTT over WebSocket |
+|---|---|---|
+| carrier | stream connection | WebSocket connection after HTTP upgrade |
+| endpoint composition | stream `SocketContext` plus `MqttContext` | WebSocket subprotocol role plus `MqttContext` |
+| HTTP layer | absent | used for upgrade negotiation |
+| WebSocket layer | absent | present and still meaningful |
+| MQTT semantics | sessions, packets, topics, publish flow | same MQTT semantics |
+| failure surface | stream and MQTT layers | HTTP upgrade, WebSocket, subprotocol, and MQTT layers |
 
-Instead, the framework keeps a shared MQTT protocol core and then composes it differently depending on the carrier.
+The MQTT protocol family remains the same.
 
-That is exactly what a good full-stack framework should do.
+The carrier changes.
 
-A reader should see this as the high-level analogue of an earlier lesson from the lower families:
+That is the main distinction.
 
-- the same protocol meaning,
-- carried over a different lower path.
+A useful compact model is:
 
-Now, however, the carrier difference is higher in the stack:
+```text
+native MQTT
+  -> MQTT semantics above stream connection
 
-- native MQTT directly over the lower stream connection,
-- or MQTT as a WebSocket subprotocol.
+MQTT over WebSocket
+  -> MQTT semantics above WebSocket subprotocol
 
-### The live `SubProtocol` class is the key architectural bridge
+same protocol family
+  -> different carrier path
+```
 
-The most important live file for understanding this composition is `iot::mqtt::SubProtocol`.
+### Why carry MQTT over WebSocket?
 
-It is templated on a WebSocket subprotocol role type and combines that role with MQTT-specific protocol behavior through `MqttContext`.
+MQTT-over-WebSocket exists because some systems want MQTT semantics while using a WebSocket-capable communication path.
 
-This is a very powerful design.
+That can matter when:
 
-It means the framework is not creating a separate bespoke MQTT-over-WebSocket code path for every use case.
+- the communication path already lives inside web-facing infrastructure,
+- an HTTP upgrade path is already available,
+- browser-adjacent environments matter,
+- WebSocket routing or deployment is already accepted,
+- or MQTT needs to participate in a system that otherwise uses HTTP and WebSocket boundaries.
 
-Instead, it defines a reusable MQTT subprotocol layer that can sit on top of a WebSocket subprotocol role.
+The important point is not to over-theorize the deployment cases.
 
-That is exactly what layered architecture should look like.
+The important point is the architectural result:
 
-### Server and client forms are almost beautifully small
+```text
+MQTT remains MQTT
+  while the carrier changes from native stream to WebSocket
+```
 
-The live server and client headers make this even more concrete.
+This is a higher-stack version of a recurring SNode.C idea.
 
-On the server side:
+The framework lets protocol meaning survive movement across different carriers.
 
-- `iot::mqtt::server::SubProtocol`
+### The MQTT WebSocket subprotocol type
 
-is simply an alias of:
+The code-shaped center of this chapter is the generic MQTT WebSocket subprotocol type.
 
-- `iot::mqtt::SubProtocol<web::websocket::server::SubProtocol>`
+In simplified form, its shape is:
 
-And on the client side:
+```cpp
+template <typename WSSubProtocolRoleT>
+class SubProtocol
+    : public WSSubProtocolRoleT
+    , private iot::mqtt::MqttContext {
+    // MQTT over WebSocket bridge
+};
+```
 
-- `iot::mqtt::client::SubProtocol`
+This is the chapter in code form.
 
-is the corresponding alias of:
+The WebSocket role gives the carrier behavior.
 
-- `iot::mqtt::SubProtocol<web::websocket::client::SubProtocol>`
+`MqttContext` gives the MQTT-facing send/receive bridge.
 
-This is one of the most elegant architectural moves in the whole codebase.
+The combined type becomes an MQTT-over-WebSocket endpoint.
 
-The composition is almost perfectly visible in the type itself.
+| Part | Meaning |
+|---|---|
+| `WSSubProtocolRoleT` | server-side or client-side WebSocket subprotocol role |
+| `MqttContext` | MQTT-facing send/receive/end/close bridge |
+| `SubProtocol<WSSubProtocolRoleT>` | MQTT protocol behavior carried over a WebSocket subprotocol |
+| `OnReceivedFromPeerEvent` | integration of MQTT receive processing into the event-driven runtime |
 
-That is exactly the kind of thing a book like this should celebrate, because it shows that the abstractions are not only theoretical. They are paying off directly in the current live design.
+This is the same style of composition the previous chapters prepared.
 
-### Why this type alias design is so good
+The lower layer supplies a carrier.
 
-The beauty of the two alias definitions is that they preserve both:
+The protocol layer supplies meaning.
 
-- reuse,
-- and role clarity.
+The context bridge makes the two cooperate.
 
-The generic MQTT-over-WebSocket logic is shared. The server/client role distinction remains explicit.
+#### WebSocket role plus `MqttContext`
 
-That is often the ideal outcome in a communication framework.
+The template parameter keeps the WebSocket role open.
 
-Too much reuse would blur the roles. Too little reuse would duplicate the protocol layer wastefully.
+The same generic MQTT-over-WebSocket logic can be used with a server-side WebSocket subprotocol role or with a client-side WebSocket subprotocol role.
 
-Here the balance is excellent.
+That gives reuse without losing role clarity.
 
-### The composition stack should be read from bottom to top
+The composition can be read as:
 
-A very helpful reading habit for this chapter is to read the stack in upward order.
+```text
+WebSocket role
+  -> connection, frame, message, and subprotocol carrier behavior
 
-For MQTT over WebSocket, the stack is conceptually:
+MqttContext
+  -> MQTT-facing receive/send/end/close behavior
 
-1. lower communication family,
-2. stream transport,
-3. legacy or TLS connection handling,
-4. HTTP layer,
-5. HTTP upgrade,
-6. WebSocket layer,
-7. WebSocket subprotocol role,
-8. MQTT semantics.
+MQTT SubProtocol
+  -> protocol bridge between both sides
+```
 
-This is one of the richest protocol stacks in the framework, but it is still understandable because each layer has already been introduced earlier in the book.
+This is not a second MQTT implementation.
 
-That is exactly why the chapter works best here rather than earlier.
+It is MQTT protocol behavior attached to a different carrier.
 
-### MQTT-over-WebSocket does not erase MQTT identity
+#### WebSocket message flow into MQTT receive flow
 
-One possible misunderstanding is worth addressing directly.
+WebSocket delivers messages and message fragments.
 
-A reader might worry that once MQTT is carried over WebSocket, it somehow stops being “real MQTT” and becomes just a web-flavored message stream.
+MQTT needs a byte-oriented protocol receive path.
 
-The live architecture shows the opposite.
+The MQTT subprotocol bridges those two views.
 
-Because MQTT-over-WebSocket is built through a real MQTT subprotocol layer, the MQTT identity remains explicit.
+A useful model is:
 
-The packet model, session thinking, publish-related behavior, and MQTT protocol semantics are not dissolved into generic WebSocket message handling.
+```text
+WebSocket message callbacks
+  -> MQTT subprotocol buffer
+      -> MqttContext recv()
+          -> MQTT packet deserialization
+              -> MQTT packet handling
+```
 
-That is exactly the right design outcome.
+This explains why the type needs both sides.
 
-### WebSocket does not disappear either
+The WebSocket side reacts to message start, message data, message end, and message errors.
 
-The converse is also true.
+The MQTT side receives bytes, deserializes MQTT control packets, and delivers MQTT protocol behavior.
 
-WebSocket does not disappear simply because MQTT is riding on top of it.
+The bridge keeps WebSocket framing and MQTT packet semantics distinct.
 
-The WebSocket layer still matters.
+#### Runtime event integration
 
-It still provides:
+The MQTT-over-WebSocket adapter is not only static type composition.
 
-- the upgraded context,
-- framing,
-- control messages,
-- client/server WebSocket roles,
-- and the subprotocol layer boundary.
+It also has to fit into the event-driven runtime.
 
-This is an important lesson because it teaches the reader to think about composite stacks without flattening them.
+That is why the subprotocol includes runtime-facing behavior such as:
 
-A good framework makes each layer visible enough that the reader can reason about where a concern belongs.
-
-SNode.C does that very well here.
-
-### MQTT-over-WebSocket is one of the strongest arguments for the subprotocol architecture
-
-The previous WebSocket chapter introduced subprotocols conceptually.
-
-This chapter now shows why they matter so much.
-
-Without a real subprotocol architecture, MQTT-over-WebSocket would likely become one of two bad things:
-
-- a hard-coded special case inside the WebSocket layer,
-- or an application-level tangle that duplicates protocol-handling logic.
-
-SNode.C avoids both.
-
-By giving WebSocket subprotocols their own structured place, the framework lets MQTT-over-WebSocket be expressed as a normal, clean extension of the WebSocket layer.
-
-That is excellent architectural practice.
-
-### The live code also shows that runtime events still matter here
-
-The live `iot::mqtt::SubProtocol` is not just a static adapter.
-
-It includes:
-
-- connection callbacks,
+- connection handling,
+- disconnection handling,
+- signal handling,
 - message-start handling,
 - message-data handling,
 - message-end handling,
-- disconnection handling,
-- signal handling,
-- and a dedicated `OnReceivedFromPeerEvent` event receiver.
+- message-error handling,
+- an event receiver for peer data processing.
 
-This is very important for understanding the runtime story.
+The important point is:
 
-MQTT-over-WebSocket is not simply “messages show up somehow.”
+```text
+WebSocket delivers protocol data over time.
+MQTT processing must be scheduled inside the same event-driven runtime.
+```
 
-It is a runtime-driven protocol composition.
+The adapter keeps that connection explicit.
 
-The earlier chapters on event processing, contexts, diagnostics, and failure behavior remain relevant all the way up this stack.
+### Server-side and client-side aliases
 
-That is one of the strongest themes of the book, and this chapter confirms it beautifully.
+The generic MQTT WebSocket subprotocol type is specialized through simple role aliases.
 
-### Why the extra event receiver is architecturally interesting
+On the server side:
 
-The dedicated `OnReceivedFromPeerEvent` inside the generic MQTT subprotocol is especially revealing.
+```cpp
+using SubProtocol =
+    iot::mqtt::SubProtocol<web::websocket::server::SubProtocol>;
+```
 
-It shows that the composition is not only about reusing types. It is also about fitting MQTT protocol processing into the event-driven model cleanly.
+On the client side:
 
-This is exactly the kind of detail that proves the stack has been designed, not merely glued together.
+```cpp
+using SubProtocol =
+    iot::mqtt::SubProtocol<web::websocket::client::SubProtocol>;
+```
 
-A full-stack communication framework must ensure that each composed layer still behaves properly inside the runtime. The live code here gives strong evidence that SNode.C is doing that work seriously.
+The generic MQTT-over-WebSocket logic is shared.
 
-### The client/server packaging tells the operator story too
+The WebSocket role type keeps server and client behavior explicit.
 
-The presence of distinct installable artifacts for:
+| Alias side | Meaning |
+|---|---|
+| server alias | MQTT over a server-side WebSocket subprotocol role |
+| client alias | MQTT over a client-side WebSocket subprotocol role |
+| shared template | common MQTT-over-WebSocket bridge logic |
 
-- MQTT native client/server,
-- and MQTT-over-WebSocket client/server,
+This is the useful balance.
 
-is also important operationally.
+The protocol bridge is not duplicated.
 
-It tells the reader that the framework expects these to be real deployment choices, not just internal source-layout distinctions.
+The server/client distinction is not hidden.
 
-That matters because one of the strengths of SNode.C is that its architectural distinctions are often mirrored in:
+### Each layer keeps its responsibility
 
-- code structure,
-- type structure,
-- build structure,
-- and deployment packaging.
+MQTT-over-WebSocket is easy to misunderstand if the stack is flattened.
 
-That consistency is one of the reasons the framework is so teachable.
+Each layer has a different job.
 
-### Native MQTT and MQTT-over-WebSocket are siblings, not parent and child
+| Layer | Responsibility |
+|---|---|
+| lower family / stream | peer communication path |
+| TLS, if used | secure connection handling |
+| HTTP | upgrade negotiation |
+| WebSocket | upgraded bidirectional carrier, framing, control messages |
+| WebSocket subprotocol role | selected protocol surface above WebSocket |
+| MQTT | packet, session, topic, keep-alive, and publish-flow semantics |
 
-A subtle but useful way to frame the architecture is this:
+This table is the chapter’s main operational reminder.
 
-Native MQTT and MQTT-over-WebSocket are sibling ways of carrying the same protocol family.
+MQTT does not dissolve into WebSocket.
 
-One is not simply a “special version” of the other in a shallow sense.
+WebSocket does not disappear under MQTT.
 
-They are two different compositions:
+HTTP still matters because it negotiated the upgrade.
 
-- one direct,
-- one layered through WebSocket and HTTP upgrade.
+The lower connection still matters because it carries the whole stack.
 
-This matters because it helps the reader avoid the wrong mental model.
+This is exactly why the layered model is useful.
 
-MQTT-over-WebSocket is not merely “native MQTT with extra headers.”
+It gives each concern a place.
 
-It is a distinct protocol stack composition that happens to preserve the MQTT application-layer semantics above it.
+### Native MQTT and MQTT-over-WebSocket as sibling compositions
 
-### When the protocol stays the same but the carrier changes
+Native MQTT and MQTT-over-WebSocket are sibling compositions of the same MQTT protocol family.
 
-This chapter is also one of the best places to reconnect with Chapter 15.
+One places MQTT above a stream connection.
 
-There we asked how the same protocol shape can survive movement across lower carriers.
+The other places MQTT above a WebSocket subprotocol role.
 
-MQTT-over-WebSocket now shows that the same principle applies even when the carrier change happens high in the stack.
+That is different from thinking of MQTT-over-WebSocket as “native MQTT with a few extra headers.”
 
-The MQTT family remains MQTT.
+The two forms have different carrier paths:
 
-But the carrying stack becomes:
+```text
+native MQTT
+  -> lower stream connection
+      -> MQTT
 
-- native direct stream-based transport,
-- or HTTP upgrade into WebSocket and then MQTT as a subprotocol.
+MQTT over WebSocket
+  -> HTTP upgrade
+      -> WebSocket
+          -> WebSocket subprotocol
+              -> MQTT
+```
 
-This is a richer and more advanced version of the same architectural lesson.
+But both preserve the MQTT protocol identity.
 
-That makes the chapter especially satisfying.
+That identity includes:
 
-### Diagnostics and failure behavior remain multi-layered here
+- control packets,
+- fixed headers,
+- sessions,
+- topics,
+- keep-alive behavior,
+- publish and acknowledgement flow.
 
-A good operations-minded chapter should also say this plainly.
+This connects back to Chapter 15.
 
-MQTT-over-WebSocket problems can occur at several different layers:
+Chapter 15 showed that protocol meaning can survive movement across carriers.
+
+MQTT-over-WebSocket is the higher-stack version of that idea.
+
+### Build and deployment artifacts
+
+The build structure mirrors the architectural structure.
+
+| Artifact | Meaning |
+|---|---|
+| `mqtt-server` | native / broker-oriented server MQTT role |
+| `mqtt-client` | native client MQTT role |
+| `mqtt-server-websocket` | server-side MQTT WebSocket subprotocol |
+| `mqtt-client-websocket` | client-side MQTT WebSocket subprotocol |
+
+This matters because MQTT-over-WebSocket is not just an application example outside the framework.
+
+It is represented as a dedicated protocol composition in the module structure.
+
+The same distinction appears in several places:
+
+```text
+type structure
+  -> generic subprotocol template and role aliases
+
+module structure
+  -> native MQTT and WebSocket-carried MQTT artifacts
+
+runtime structure
+  -> WebSocket message flow feeding MQTT receive processing
+```
+
+That consistency helps the reader reason about the feature.
+
+### Diagnostics across the composed stack
+
+A failure in MQTT-over-WebSocket may belong to several layers.
+
+It may be caused by:
 
 - lower connection establishment,
-- TLS if present,
-- HTTP upgrade,
-- WebSocket control and framing,
+- TLS configuration,
+- HTTP upgrade negotiation,
+- WebSocket framing or control behavior,
 - subprotocol selection,
-- MQTT protocol behavior itself.
+- MQTT packet parsing,
+- MQTT session behavior,
+- MQTT keep-alive behavior,
+- application shutdown.
 
-That is not a weakness.
+This is not a weakness.
 
-It is simply the reality of a composed stack.
+It is the reality of a composed stack.
 
-And it is exactly why SNode.C’s emphasis on visibility, runtime structure, and layer clarity matters so much.
+The diagnostic question is:
 
-A framework like this must make the stack understandable when something goes wrong.
+```text
+At which layer did the failure occur?
+```
 
-The current architecture is well suited to that.
+Examples:
 
-### Why this composition matters so much for integration systems
+```text
+Could not connect
+  -> lower endpoint, transport, TLS, or configuration
 
-MQTT-over-WebSocket is one of the clearest examples of the framework’s usefulness in real integration systems.
+Upgrade rejected
+  -> HTTP / WebSocket upgrade boundary
 
-It connects two worlds that are often treated separately:
+Subprotocol not selected
+  -> WebSocket subprotocol negotiation
 
-- message-oriented MQTT systems,
-- and web/upgraded WebSocket infrastructures.
+Frame error
+  -> WebSocket layer
 
-SNode.C does not force the user to treat those worlds as disconnected.
+Malformed MQTT packet
+  -> MQTT protocol layer
 
-It provides a structured way to compose them.
+Session or keep-alive problem
+  -> MQTT lifecycle layer
+```
 
-That is precisely the kind of capability that matters in broader IoT, dashboard, integration, and broker-adjacent systems.
+This is where the earlier chapters on diagnostics, timeouts, and failure modes remain useful.
 
-### Common misunderstandings about MQTT over WebSocket in SNode.C
+MQTT-over-WebSocket does not need a new operational philosophy.
 
-It helps to clear away a few misunderstandings explicitly.
+It needs the existing layered diagnostic model applied to a deeper stack.
 
-#### Misunderstanding 1: “MQTT-over-WebSocket is just native MQTT with a different port.”
+### From protocol composition to IoT systems
 
-Corrected view: it is a layered composition through HTTP upgrade and the WebSocket subprotocol architecture.
+MQTT-over-WebSocket matters for integration systems because it connects MQTT semantics with web-upgrade infrastructure.
 
-#### Misunderstanding 2: “Once MQTT rides on WebSocket, the MQTT layer becomes less important.”
+That makes it a useful example before moving to broader IoT system design.
 
-Corrected view: SNode.C keeps MQTT protocol identity explicit through its dedicated MQTT subprotocol layer.
+Chapter 26 shows one concrete cross-stack composition:
 
-#### Misunderstanding 3: “Once MQTT is present, the WebSocket layer becomes irrelevant.”
+```text
+MQTT
+  -> carried as WebSocket subprotocol
+      -> reached through HTTP upgrade
+```
 
-Corrected view: the WebSocket layer still matters for upgrade, framing, control messages, and subprotocol hosting.
+Chapter 27 widens the view.
 
-#### Misunderstanding 4: “This composition is only an application example, not a first-class framework feature.”
+It asks how systems combine several protocol families at once:
 
-Corrected view: the live build produces dedicated client/server MQTT-over-WebSocket artifacts, and the composition is modeled explicitly in the type and module structure.
+- MQTT,
+- HTTP,
+- WebSocket,
+- Bluetooth,
+- lower IP or local communication choices,
+- dashboards,
+- gateways,
+- sensors,
+- brokers,
+- integrations.
 
-#### Misunderstanding 5: “This chapter is only about transport tricks.”
+The next chapter is therefore not only about another protocol.
 
-Corrected view: it is really about how SNode.C composes protocol layers while keeping each layer’s identity intact.
+It is about system composition.
 
-### A good one-paragraph summary of the chapter
+### What to remember
 
-MQTT over WebSocket in SNode.C is a first-class layered protocol composition in which MQTT is expressed as a WebSocket subprotocol above the HTTP upgrade stack. The framework preserves MQTT protocol semantics through a dedicated generic `iot::mqtt::SubProtocol` layer, specializes it cleanly for WebSocket client and server roles, and packages it explicitly on both sides. This allows the same MQTT family to be carried either natively or through the web-upgrade stack without collapsing the architectural distinction among HTTP, WebSocket, subprotocol hosting, and MQTT itself.
+Remember:
 
-That is the heart of the chapter.
+- MQTT-over-WebSocket carries MQTT as a WebSocket subprotocol.
+- HTTP still matters because it negotiates the upgrade.
+- WebSocket still matters because it provides the upgraded message carrier.
+- MQTT still matters because it provides packet, session, topic, keep-alive, and publish-flow semantics.
+- The core code shape is WebSocket subprotocol role plus `MqttContext`.
+- Server and client aliases reuse the same generic MQTT subprotocol template with different WebSocket role types.
+- Native MQTT and MQTT-over-WebSocket are sibling compositions of the same MQTT protocol family.
+- Runtime events and WebSocket message callbacks feed MQTT receive processing.
+- Failures can belong to several layers.
+- Chapter 27 moves from protocol composition to multi-protocol IoT system design.
 
 ### Closing perspective
 
-This chapter is one of the strongest demonstrations yet that SNode.C is a framework for protocol architecture, not only for protocol usage.
+Chapter 26 showed one concrete cross-stack composition:
 
-The reader has now seen a stack in which:
+```text
+HTTP upgrade
+  -> WebSocket
+      -> WebSocket subprotocol
+          -> MQTT
+```
 
-- HTTP matters,
-- upgrade matters,
-- WebSocket matters,
-- subprotocols matter,
-- and MQTT still remains itself above all of them.
+The important point is that no layer disappears.
 
-That is exactly the kind of layered clarity a serious communication framework should provide.
+HTTP negotiates the upgrade.
 
-And once the reader understands this composition, the next step becomes very natural.
+WebSocket carries bidirectional messages.
 
-Now that MQTT, WebSocket, HTTP, Bluetooth, and the lower carrier choices are all in view, the book can finally ask the more realistic systems question:
+The WebSocket subprotocol layer provides the selected protocol surface.
 
-how an IoT system combines several of these protocol families at once without losing architectural clarity.
+MQTT gives the messages their protocol meaning.
+
+Chapter 27 now widens the view from one composition to systems that combine several protocol families at once.
