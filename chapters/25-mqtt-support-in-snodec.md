@@ -123,7 +123,7 @@ It includes concerns such as:
 - native socket-context integration,
 - WebSocket subprotocol integration.
 
-That tells the reader how to think about the layer.
+This defines the layer as a protocol family rather than as a single endpoint application.
 
 MQTT is treated as a protocol family.
 
@@ -147,7 +147,7 @@ A useful view is:
 | `Session` | MQTT session state |
 | `Topic` | topic representation |
 
-This is the right level for a framework.
+At this level, the shared protocol vocabulary is available to both server and client roles.
 
 The common protocol vocabulary is shared.
 
@@ -454,7 +454,7 @@ WebSocket subprotocol role
       -> MQTT-over-WebSocket endpoint
 ```
 
-That symmetry is the key teaching point.
+The symmetry is the important architectural point.
 
 The carrier changes.
 
