@@ -29,7 +29,7 @@ We therefore start with the conceptual minimum:
 - one echo server,
 - one echo client.
 
-Later chapters will show how the same structure extends to other lower layers, security modes, and higher-level protocols.
+Later chapters will show how the very same structure extends outward to IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, TLS, HTTP, WebSocket, and MQTT.
 
 The important point is not that echo is useful as an application. The important point is that echo is a clear first window into the framework.
 
@@ -393,6 +393,115 @@ This mirrors the server structure closely, which is exactly what we want at this
 The symmetry is not accidental. SNode.C is designed so that server and client applications share as much conceptual structure as possible.
 
 The client uses `connect("localhost", 8080, callback)` as the readable first form. Just as with `listen(...)`, the call should be understood as registration of a communication intention, not as a blocking procedure that completes the whole communication session on the caller's stack.
+
+### Building the simplified echo pair
+
+The chapter now has four source files:
+
+```text
+EchoSocketContext.h
+EchoSocketContext.cpp
+echoserver.cpp
+echoclient.cpp
+```
+
+To make the example complete, we also need a small `CMakeLists.txt`.
+
+This is the deliberately reduced teaching version for the IPv4 / stream / legacy echo pair.
+
+It does not reproduce the full repository build matrix yet.
+
+```cmake
+cmake_minimum_required(VERSION 3.18)
+
+add_library(echosocketcontext STATIC
+    EchoSocketContext.cpp
+    EchoSocketContext.h
+)
+
+target_include_directories(echosocketcontext
+    PRIVATE ${PROJECT_SOURCE_DIR}
+)
+
+add_executable(echoserver
+    echoserver.cpp
+)
+
+target_link_libraries(echoserver
+    PRIVATE
+        net-in-stream-legacy
+        echosocketcontext
+)
+
+add_executable(echoclient
+    echoclient.cpp
+)
+
+target_link_libraries(echoclient
+    PRIVATE
+        net-in-stream-legacy
+        echosocketcontext
+)
+```
+
+The small build file follows the same structure as the code.
+
+First, it builds the shared protocol model:
+
+```text
+EchoSocketContext.h
+EchoSocketContext.cpp
+  -> echosocketcontext
+```
+
+Then it builds the two application entry points:
+
+```text
+echoserver.cpp
+  -> echoserver
+
+echoclient.cpp
+  -> echoclient
+```
+
+Both executables link against the same context library and against the same IPv4 / stream / legacy SNode.C layer:
+
+```text
+net-in-stream-legacy
+```
+
+That is important.
+
+The server and client do not contain separate protocol implementations.
+
+They share the same echo context and differ only in their outer role:
+
+```text
+server executable
+  -> SocketServer role
+
+client executable
+  -> SocketClient role
+```
+
+The full repository echo application generalizes this build idea.
+
+It creates several executable variants by combining different network families and different stream modes.
+
+The teaching version keeps only one combination visible:
+
+```text
+IPv4
+  -> stream
+      -> legacy
+```
+
+Later chapters will return to the larger build matrix.
+
+For now, the important point is simple:
+
+> A SNode.C application is not complete until the source files, the selected framework layer, and the executable targets are connected by the build system.
+
 
 ### A note on object lifetime after `listen(...)` and `connect(...)`
 
