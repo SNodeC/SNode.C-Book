@@ -30,6 +30,14 @@ A SNode.C system may contain one executable with several named roles. It may als
 
 A system is not simply a larger single application.
 
+That is an important distinction.
+
+A larger application may still have one main role, one deployment boundary, and one dominant operational shape.
+
+A system introduces a different kind of complexity: role constellations, deployment boundaries, protocol boundaries, state ownership, and operational topology.
+
+Those are architectural concerns, not only size concerns.
+
 A system usually introduces at least some of the following:
 
 - more than one communication role,
@@ -236,13 +244,15 @@ device-near-link
   -> Bluetooth-facing lower communication in device-near contexts
 ```
 
-The book has already introduced these families individually. The system-level lesson is that they can coexist without forcing a different programming model for each one.
+The previous chapters introduced these communication families one by one. The system-level lesson is that they can coexist without forcing a different programming model for each one.
 
 This is one of SNode.C’s practical strengths: different boundaries can remain different, while the architecture remains consistent.
 
 ### One executable or several services?
 
 A SNode.C system does not have to be packaged in exactly one way.
+
+A serious system is not defined by being one binary, and it is not automatically improved by being split into many processes.
 
 Sometimes one executable with several roles is the best design. Sometimes several cooperating executables are better.
 
@@ -341,13 +351,15 @@ Once names like `admin-http`, `mqtt-ingest`, and `local-control` exist, the rest
 - diagnostics can be localized,
 - and deployment discussions can use the same vocabulary as the code.
 
-Configuration is no longer only setup. It becomes part of the system description.
+Configuration is no longer only setup.
+
+At system scale, it can become one of the clearest descriptions of the system's role constellation and boundaries.
 
 ### Diagnostics become system observability
 
 At application scale, diagnostics help a developer understand one program.
 
-At system scale, diagnostics become observability across role boundaries.
+In a system, diagnostics become observability across role boundaries.
 
 The important questions change:
 
@@ -375,7 +387,7 @@ A system still may need external monitoring, dashboards, metrics storage, or log
 
 At application scale, retry and reconnect behavior may look like local communication policy.
 
-At system scale, it becomes topology policy.
+In a system, it becomes topology policy.
 
 The architect now asks:
 
@@ -399,7 +411,7 @@ The important point is that failure behavior belongs to the role and the boundar
 
 Chapter 15 introduced an important idea: protocol logic can often remain stable while lower carriers change.
 
-At system scale, that idea becomes a design strategy.
+In a system, that idea becomes a design strategy.
 
 A system is easier to evolve when:
 
@@ -443,7 +455,7 @@ That is why the system-building perspective matters. It separates the communicat
 
 Chapter 29 showed that application targets reveal application shape.
 
-At system scale, the build structure also reveals the system surface.
+In a system, the build structure also reveals the system surface.
 
 Separate libraries and executables tell the reader something about:
 
@@ -482,7 +494,7 @@ It is a way to prevent system design from collapsing into a pile of features.
 
 A framework can tolerate some inconsistency in tiny examples.
 
-At system scale, inconsistency becomes expensive.
+In a system, inconsistency becomes expensive.
 
 This is why SNode.C’s consistency matters:
 
@@ -498,37 +510,17 @@ That consistency allows a reader, maintainer, or operator to keep thinking clear
 
 This is the real transition from applications to systems.
 
-### Common misunderstandings about systems in SNode.C
-
-A few misunderstandings are worth clearing away explicitly.
-
-#### Misunderstanding 1: “A system is just a bigger version of one application.”
-
-A system introduces role constellations, deployment boundaries, protocol boundaries, state ownership, and operational topology. Those are architectural concerns, not only size concerns.
-
-#### Misunderstanding 2: “System design means hiding the role structure.”
-
-In SNode.C, systems are usually easier to design and operate when the role structure remains explicit and named.
-
-#### Misunderstanding 3: “A serious system should always be one binary.”
-
-The framework supports both multi-role single executables and systems built from several cooperating executables or services.
-
-#### Misunderstanding 4: “Configuration is only for individual application settings.”
-
-At system scale, configuration becomes one of the clearest descriptions of the system’s role constellation and boundaries.
-
 ### What to remember
 
 - A system is not just a bigger application.
 - A SNode.C system is best understood as a constellation of named communication roles.
+- Explicit role names help code, configuration, logs, diagnostics, and deployment discussion use the same vocabulary.
 - A system may be one executable with several roles or several cooperating executables.
 - Protocol choice is boundary-specific, not necessarily system-wide.
 - Configuration can describe system architecture, not only application setup.
 - Persistence introduces state ownership at the system level.
 - Diagnostics become observability across role boundaries.
 - Failure behavior becomes topology-aware.
-- Build targets reveal part of the system surface.
 - Chapter 31 applies this vocabulary to MQTTSuite as a concrete reference ecosystem.
 
 ### Closing perspective
