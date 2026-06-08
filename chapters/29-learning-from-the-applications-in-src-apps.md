@@ -316,7 +316,7 @@ IPv4 network family
   + generic/core stream machinery
 ```
 
-A higher-level component name hides the internal link list, but it does not hide the design structure.
+A higher-level component name abstracts the internal link list, but it still exposes the design structure.
 
 The diagram is not a linker command.
 
@@ -347,10 +347,6 @@ The important point is not that the application knows the whole graph.
 The important point is that it selects the components that define its public face: the HTTP application layer and the concrete transport carrier.
 
 The remaining dependencies belong to those selected components.
-
-The same pattern appears in external projects.
-
-Only the target names change.
 
 When reading another SNode.C application, start with the executable target, then read the linked protocol/application component, the selected transport component, and any optional feature components.
 
@@ -1057,27 +1053,14 @@ The build system records them.
 
 ### What to remember
 
-Remember:
-
 - `src/apps` shows how framework layers become executable targets.
 - The chapter studies selected applications, not every target in the directory.
 - In SNode.C, the build target often reveals the application architecture before the entry point is opened.
-- The executable entry point is often an assembly point.
-- `snode.c` is the main web application-shell example.
-- `express-compat-server` is a secondary compatibility-oriented web example.
-- The echo family generalizes the Chapter 3 echo pair into several executable variants.
-- `jsonserver` and `jsonclient` show a server/client HTTP split and optional JSON support.
-- `testpost` is useful as a focused HTTP POST example with legacy and TLS-capable linkage.
-- `testpipe` shows a small core/runtime utility shape.
-- `database/testmariadb` makes the MariaDB API from Chapter 28 concrete.
-- Optional dependencies affect which application targets exist.
-- Reading an application means reading both its CMake target and its C++ entry point.
-- Linked components show the selected protocol/application layer, selected transport carrier, and optional feature components.
-- A high-level protocol application links the protocol/application component and the selected transport component, both in-tree and externally.
-- The direct link line is short, but the component-owned dependency graph may be deep.
+- A high-level protocol application links the protocol/application component and the selected transport component.
 - In-tree applications use local target names; external applications use the corresponding installed `snodec::...` target names.
-- Direct linkage to `snodec::core` is only needed when the application directly uses `core` as its public component, as in a core-only utility.
-- Each SNode.C component target carries its necessary lower-level dependencies, so an application should not repeat lower-level implementation components manually.
+- The direct link line is short, but the component-owned dependency graph may be deep.
+- The executable entry point is usually an assembly point.
+- The echo family, JSON examples, `testpost`, `testpipe`, and `database/testmariadb` show different application shapes.
 - Chapter 30 moves from individual applications to systems.
 
 ### Closing perspective
