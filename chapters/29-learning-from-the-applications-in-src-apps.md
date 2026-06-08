@@ -84,7 +84,11 @@ The goal is not to catalogue a directory.
 
 The goal is to learn how SNode.C applications are assembled.
 
-### Selected application targets in the repository
+### Build targets as the first reading layer
+
+Before opening the C++ entry point, the build target already tells part of the application story.
+
+#### Selected application targets in the repository
 
 A first reading pass should start with the build targets.
 
@@ -155,7 +159,7 @@ It shows the direct application-facing components selected by the executable.
 
 The next section reads this link line in detail.
 
-### Linked components reveal application shape
+#### Linked components reveal application shape
 
 A SNode.C application can often be understood by reading the components it links.
 
@@ -245,16 +249,10 @@ my-ipv4-legacy-webapp
 |   |-- snodec::http-server
 |   |   `-- snodec::http
 |   |       |-- snodec::core-socket-stream
-|   |       |   |-- snodec::core-socket
-|   |       |   |   `-- snodec::core
-|   |       |   |       `-- snodec::utils
-|   |       |   |           `-- snodec::logger
-|   |       |   `-- snodec::net
-|   |       |       `-- snodec::core-socket
-|   |       |           `-- snodec::core
-|   |       |               `-- snodec::utils
-|   |       |                   `-- snodec::logger
-|   |       |-- snodec::logger
+|   |       |   `-- snodec::core-socket
+|   |       |       `-- snodec::core
+|   |       |           `-- snodec::utils
+|   |       |               `-- snodec::logger
 |   |       `-- libmagic, if available
 |   `-- nlohmann-json support
 `-- snodec::net-in-stream-legacy
@@ -269,15 +267,10 @@ my-ipv4-legacy-webapp
     |                               `-- snodec::logger
     `-- snodec::core-socket-stream-legacy
         `-- snodec::core-socket-stream
-            |-- snodec::core-socket
-            |   `-- snodec::core
-            |       `-- snodec::utils
-            |           `-- snodec::logger
-            `-- snodec::net
-                `-- snodec::core-socket
-                    `-- snodec::core
-                        `-- snodec::utils
-                            `-- snodec::logger
+            `-- snodec::core-socket
+                `-- snodec::core
+                    `-- snodec::utils
+                        `-- snodec::logger
 ```
 
 The two top-level branches are still the important part.
@@ -354,7 +347,59 @@ Only then open the C++ entry point.
 
 A direct application link line should describe the application face, not repeat every implementation layer below it.
 
-### The executable as an assembly point
+#### The build system records application architecture
+
+The build system is part of the application story.
+
+In SNode.C, CMake targets often reveal the application structure before the C++ entry point is opened.
+
+The build file records:
+
+| Build element | Architectural meaning |
+|---|---|
+| executable target | the runnable program |
+| linked libraries | selected protocol/application, transport, and feature components |
+| conditional target creation | optional feature dependency |
+| install rule | deployment-facing executable |
+| subdirectory discovery | application families and grouped examples |
+
+For example, the JSON server target is only built when JSON support is available:
+
+```cmake
+if(NLOHMANN_JSON_FOUND)
+    add_executable(jsonserver jsonserver.cpp)
+    target_link_libraries(
+        jsonserver
+        PRIVATE
+            http-server-express
+            net-in-stream-legacy
+    )
+endif()
+```
+
+This is an application-level fact, not only a build-system detail.
+
+It means:
+
+```text
+JSON support available
+  -> JSON server example becomes part of the build
+
+JSON support unavailable
+  -> target is not produced
+```
+
+The same idea appears with the database example.
+
+The database demonstration is built only when MariaDB support is available.
+
+Optional dependencies therefore influence the set of applications that exist in the build.
+
+### Entry points as assembly points
+
+After the build target has established the application face, the entry point shows how the selected pieces are assembled.
+
+#### The executable as an assembly point
 
 In many SNode.C applications, the executable entry point is not the place where the whole framework is reimplemented.
 
@@ -407,43 +452,7 @@ The executable is not a giant custom abstraction.
 
 It wires framework pieces and application behavior together.
 
-#### Routes and middleware as application structure
-
-In an Express-style SNode.C application, routes and middleware are not only convenience syntax.
-
-They are part of the application structure.
-
-A route such as:
-
-```cpp
-app.get("/health", [] APPLICATION(req, res) {
-    res->json({{"ok", true}});
-});
-```
-
-means:
-
-```text
-HTTP GET request
-  -> route match
-      -> application callback
-          -> JSON response
-```
-
-Middleware adds another layer:
-
-```text
-incoming request
-  -> middleware
-      -> route handler
-          -> response
-```
-
-This is why the same application can remain readable even when it grows.
-
-The entry point expresses a composition of behavior rather than a manually written event loop.
-
-### `snode.c` as application-shell example
+#### `snode.c` as application-shell example
 
 The `snode.c` target is the best main example for application-shell structure.
 
@@ -482,7 +491,7 @@ For a reader, that path is more useful than memorizing individual API calls.
 
 It shows how to approach a SNode.C application file.
 
-### `express-compat-server` as compatibility-oriented example
+#### `express-compat-server` as compatibility-oriented example
 
 `express-compat-server` links the same broad layer family as `snode.c`:
 
@@ -511,55 +520,11 @@ The point is not to study both applications deeply.
 
 The point is to show that the same layer composition can serve different application intentions.
 
-### The build system records application architecture
+### Application families and focused examples
 
-The build system is part of the application story.
+The selected examples show different application shapes without turning the chapter into a directory catalogue.
 
-In SNode.C, CMake targets often reveal the application structure before the C++ entry point is opened.
-
-The build file records:
-
-| Build element | Architectural meaning |
-|---|---|
-| executable target | the runnable program |
-| linked libraries | selected protocol/application, transport, and feature components |
-| conditional target creation | optional feature dependency |
-| install rule | deployment-facing executable |
-| subdirectory discovery | application families and grouped examples |
-
-For example, the JSON server target is only built when JSON support is available:
-
-```cmake
-if(NLOHMANN_JSON_FOUND)
-    add_executable(jsonserver jsonserver.cpp)
-    target_link_libraries(
-        jsonserver
-        PRIVATE
-            http-server-express
-            net-in-stream-legacy
-    )
-endif()
-```
-
-This is an application-level fact, not only a build-system detail.
-
-It means:
-
-```text
-JSON support available
-  -> JSON server example becomes part of the build
-
-JSON support unavailable
-  -> target is not produced
-```
-
-The same idea appears with the database example.
-
-The database demonstration is built only when MariaDB support is available.
-
-Optional dependencies therefore influence the set of applications that exist in the build.
-
-### Echo as an application family
+#### Echo as an application family
 
 Chapter 3 introduced a deliberately simplified echo pair:
 
@@ -593,78 +558,7 @@ This is one of the most useful application patterns in the repository.
 
 It shows how SNode.C can keep the protocol core stable while changing the outer communication boundary.
 
-#### From the Chapter 3 echo pair to the repository echo matrix
-
-The Chapter 3 teaching version keeps one visible combination:
-
-```text
-IPv4
-  -> stream
-      -> legacy
-```
-
-The repository echo build expands the same shape:
-
-```text
-network family
-  -> stream mode
-      -> client/server role
-          -> executable target
-```
-
-A simplified form is:
-
-```text
-echosocketcontext
-  -> shared protocol behavior
-
-echoserver-legacy-in
-  -> server role, legacy stream, IPv4
-
-echoclient-legacy-in
-  -> client role, legacy stream, IPv4
-
-echoserver-tls-in
-  -> server role, TLS stream, IPv4
-
-echoclient-tls-in
-  -> client role, TLS stream, IPv4
-```
-
-Other configured families follow the same pattern.
-
-The important lesson is not the number of generated targets.
-
-The important lesson is that the executable matrix mirrors real architectural choices.
-
-#### One protocol model, several executable variants
-
-A common mistake is to assume that one universal executable is always the most mature design.
-
-That is not always true.
-
-Sometimes explicit executable variants are clearer.
-
-The echo family shows a reasonable split:
-
-```text
-protocol behavior
-  -> shared library / model
-
-carrier and stream choice
-  -> executable variant
-
-role
-  -> client or server target
-```
-
-This makes the build output easier to inspect.
-
-It also makes testing easier because each executable has a concrete role.
-
-The build structure becomes documentation.
-
-### JSON server and JSON client
+#### JSON server and JSON client
 
 The JSON examples are useful because they show a clean server/client split.
 
@@ -699,27 +593,7 @@ It also shows optional feature availability.
 
 The server target depends on JSON support being present, while the client demonstrates an outgoing HTTP request shape.
 
-#### What the JSON examples teach
-
-The JSON examples teach several small but useful lessons:
-
-| Lesson | Example side |
-|---|---|
-| server-side middleware can prepare request data | `jsonserver` |
-| an application route can access parsed JSON-like state | `jsonserver` |
-| an HTTP client can construct a request in a callback | `jsonclient` |
-| response handling belongs to the client callback | `jsonclient` |
-| optional dependencies affect available targets | build system |
-
-The examples should not be presented as full application architecture.
-
-They are focused examples.
-
-That is their value.
-
-They isolate a client/server HTTP exchange and make the framework shape visible.
-
-### `testpost` as focused HTTP POST example
+#### `testpost` as focused HTTP POST example
 
 `testpost` should be presented as a focused example, not as a polished application.
 
@@ -763,7 +637,7 @@ This example should remain compact in the manuscript.
 
 The point is the application shape, not the details of the HTML upload form.
 
-### `testpipe` as a small core utility
+#### `testpipe` as a small core utility
 
 `testpipe` is useful because it does not depend on HTTP, MQTT, WebSocket, or database support.
 
@@ -815,7 +689,7 @@ initialize runtime
           -> start runtime
 ```
 
-### `database/testmariadb` after the persistence chapter
+#### `database/testmariadb` after the persistence chapter
 
 Chapter 28 introduced the MariaDB integration layer.
 
@@ -871,7 +745,11 @@ It is not a recommended production persistence architecture.
 
 Its value is that it makes the Chapter 28 API concrete.
 
-### Application categories in `src/apps`
+### Reading applications in `src/apps`
+
+The examples lead to a practical reading method for unfamiliar SNode.C applications.
+
+#### Application categories in `src/apps`
 
 The selected examples can be grouped by what they teach.
 
@@ -889,7 +767,7 @@ This grouping is more useful than a flat directory list.
 
 It tells the reader what to study and why.
 
-### Small applications and larger applications differ by composition depth
+#### Small applications and larger applications differ by composition depth
 
 Small applications and larger applications often use the same pattern.
 
@@ -921,7 +799,7 @@ select layers
               -> start runtime
 ```
 
-### Optional dependencies and application availability
+#### Optional dependencies and application availability
 
 Some applications only exist when optional dependencies are available.
 
@@ -960,7 +838,7 @@ available framework capability
           -> deployed application
 ```
 
-### Reading a SNode.C application: a practical recipe
+#### Reading a SNode.C application: a practical recipe
 
 When reading a SNode.C application, use a repeatable method.
 
@@ -1005,7 +883,7 @@ Both files are part of the application.
 
 The reader should also distinguish local in-tree target names from installed `snodec::...` imported targets.
 
-### Build structure and operational clarity
+#### Build structure and operational clarity
 
 A build target does not only produce a binary.
 
