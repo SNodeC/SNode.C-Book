@@ -6,9 +6,19 @@ Chapter 29 showed how SNode.C framework pieces become executable applications.
 
 That was the necessary first step.
 
-But a communication framework becomes most useful when applications are no longer seen as isolated endpoints. They become parts of larger arrangements: several roles, several protocols, several deployment boundaries, and one coherent system architecture.
+An executable is still an important architectural object. It has a build target, an entry point, linked components, instance names, configuration, and runtime behavior.
 
-The question now changes from:
+But a communication framework becomes most useful when applications are no longer seen only as isolated endpoints.
+
+They become parts of larger arrangements:
+
+- several communication roles,
+- several protocol families,
+- several deployment boundaries,
+- several state boundaries,
+- and one coherent operational architecture.
+
+The question changes from:
 
 ```text
 How is one executable assembled?
@@ -20,58 +30,47 @@ to:
 How do several roles become a system?
 ```
 
-This chapter introduces that system-level view.
+A SNode.C system may be one executable with several named roles. It may also be several cooperating executables. It may run on one host, across several processes, or across several machines.
 
-It does not replace the application-level thinking from Chapter 29. It builds on it. The executable remains important, the CMake target remains important, and the entry point remains important. But the architectural unit of thought becomes larger.
+The word *system* does not automatically mean a distributed cloud of services.
 
-A SNode.C system may contain one executable with several named roles. It may also contain several cooperating executables. It may run on one host, across several processes, or across several machines. The word *system* does not automatically mean a distributed cloud of services. It means that the design is now understood as a constellation of roles and boundaries rather than as a single application in isolation.
+It means that the design is now understood as a constellation of roles and boundaries rather than as one application in isolation.
 
-### A system is not just a bigger application
+### From applications to role constellations
 
 A system is not simply a larger single application.
 
-That is an important distinction.
+That distinction matters.
 
 A larger application may still have one main role, one deployment boundary, and one dominant operational shape.
 
-A system introduces a different kind of complexity: role constellations, deployment boundaries, protocol boundaries, state ownership, and operational topology.
+A system introduces a different kind of complexity:
+
+```text
+roles
+  -> boundaries
+      -> protocols
+          -> state ownership
+              -> operational topology
+```
 
 Those are architectural concerns, not only size concerns.
 
-A system usually introduces at least some of the following:
-
-- more than one communication role,
-- more than one protocol family,
-- more than one deployment boundary,
-- more than one executable or service,
-- more than one state boundary,
-- and more than one operational concern.
-
-This changes the architectural viewpoint.
-
-The developer no longer asks only:
+A useful first question is therefore:
 
 ```text
-Which framework class do I instantiate here?
+Which roles exist?
 ```
 
-The system architect also asks:
+not only:
 
 ```text
-Which role owns this boundary?
-Which protocol belongs at this boundary?
-Which part owns state?
-Which part should be restarted independently?
-Which part must be observable independently?
+Which classes are instantiated?
 ```
 
-This is the natural continuation of the book so far. Earlier chapters introduced roles, lower families, protocol layers, configuration, diagnostics, persistence, and application assembly. This chapter asks how those ideas cooperate.
+#### A concrete system sketch
 
-### A concrete system sketch
-
-A useful way to make the transition concrete is to sketch a small SNode.C-based system.
-
-Imagine a monitoring and integration system with these roles:
+A small SNode.C-based monitoring and integration system might contain these roles:
 
 ```text
 admin-http
@@ -100,9 +99,11 @@ operator tool
   -> local-control
 ```
 
-This is not yet MQTTSuite. Chapter 31 will study MQTTSuite as a concrete reference ecosystem.
+This sketch is deliberately generic.
 
-The sketch is deliberately generic. It shows the type of thinking that becomes necessary once applications become systems:
+Chapter 31 will make the idea concrete with MQTTSuite.
+
+Here, the sketch only introduces the way of thinking:
 
 ```text
 admin-http
@@ -124,15 +125,17 @@ database-state
   -> persistence boundary
 ```
 
-The system is not defined by one large binary name. It is defined by the roles that cooperate.
+The system is not defined by one large binary name.
 
-Some of those roles may live inside one executable. Some may be separate services. That is an architectural decision, not a limitation imposed by the framework.
+It is defined by the roles that cooperate.
 
-### Systems begin as named role constellations
+Some roles may live inside one executable. Some may be separate services. That is an architectural decision, not a limitation imposed by the framework.
+
+#### Named roles
 
 One of the most useful mental models for SNode.C systems is the **named role constellation**.
 
-A role constellation is a set of communication roles that have clear names, clear boundaries, and clear responsibilities.
+A role constellation is a set of communication roles with clear names, clear boundaries, and clear responsibilities.
 
 For example:
 
@@ -153,7 +156,9 @@ local-control
   -> exposes host-local control or diagnostics
 ```
 
-This is where SNode.C’s named-instance model becomes more than a configuration convenience. Names become system vocabulary.
+This is where SNode.C's named-instance model becomes more than a configuration convenience.
+
+Names become system vocabulary.
 
 A named instance can identify:
 
@@ -164,15 +169,64 @@ A named instance can identify:
 - the deployment responsibility,
 - and the runtime behavior that should be observed.
 
-This is why explicit role structure matters.
+Named roles are not noise.
+
+They help code, configuration, logs, diagnostics, and deployment discussion use the same vocabulary.
 
 A web-facing administration role should remain visibly different from a broker-facing MQTT role. A local control interface should remain visibly different from a public network interface. A streaming observation role should remain visibly different from a transactional control role.
 
 When the roles are explicit, the system becomes easier to reason about.
 
-### Systems often combine protocol families
+#### One executable or several services
 
-Chapter 27 discussed multi-protocol IoT thinking. Chapter 30 uses the same idea at the system-architecture level, but it does not repeat the IoT discussion.
+A SNode.C system does not have to be packaged in exactly one way.
+
+A serious system is not defined by being one binary, and it is not automatically improved by being split into many processes.
+
+Sometimes one executable with several roles is the best design. Sometimes several cooperating executables are better.
+
+The choice should be guided by operational clarity.
+
+| Choose one executable when... | Choose several executables when... |
+|---|---|
+| the roles share one lifecycle | roles need independent restart |
+| deployment should remain simple | privileges differ between roles |
+| the roles are tightly coupled | scaling needs differ |
+| failure of one role reasonably means failure of the whole application | failure domains should be separated |
+| configuration should be managed as one unit | deployment boundaries should be explicit |
+| local communication inside one process is sufficient | process or host boundaries are part of the architecture |
+
+This is not a moral distinction.
+
+A single executable is not automatically less serious. Several services are not automatically more architectural.
+
+The right boundary is the one that makes the system easier to deploy, operate, diagnose, and evolve.
+
+### Boundaries define the system
+
+A system is easier to understand when it is designed from boundaries first.
+
+Useful boundary questions include:
+
+- Which roles are internal only?
+- Which roles are public or externally reachable?
+- Which roles are browser-facing?
+- Which roles are machine-to-machine?
+- Which roles are local to one host?
+- Which roles require TLS?
+- Which roles require retry or reconnect behavior?
+- Which roles own durable state?
+- Which roles should be observable independently?
+
+The result is not only a set of features.
+
+It is a set of explicit boundaries.
+
+#### Protocol boundaries
+
+Chapter 27 discussed multi-protocol IoT thinking.
+
+Chapter 30 uses the same idea at the system-architecture level without repeating the IoT discussion.
 
 The system-level question is not:
 
@@ -196,29 +250,11 @@ A system may legitimately use:
 - IPv4 or IPv6 stream carriers for network-facing roles,
 - TLS where the boundary requires encryption and authentication support.
 
-The point is not to use many protocols for decoration. The point is to choose the protocol family that matches each boundary.
+The point is not to use many protocols for decoration.
 
-### Systems are built from boundaries, not only features
+The point is to choose the protocol family that matches each boundary.
 
-Good systems are often designed from boundaries first.
-
-Useful boundary questions include:
-
-- Which roles are internal only?
-- Which roles are public or externally reachable?
-- Which roles are browser-facing?
-- Which roles are machine-to-machine?
-- Which roles are local to one host?
-- Which roles require TLS?
-- Which roles require retry or reconnect behavior?
-- Which roles own durable state?
-- Which roles should be observable independently?
-
-SNode.C supports this style because its architecture keeps lower communication family, connection handling, protocol layer, configuration, diagnostics, and role identity visible.
-
-The result is not only a set of features. It is a set of explicit boundaries.
-
-### Local, networked, and upgraded boundaries can coexist
+#### Local, networked, and upgraded boundaries
 
 A single system can mix different boundary types coherently.
 
@@ -244,36 +280,13 @@ device-near-link
   -> Bluetooth-facing lower communication in device-near contexts
 ```
 
-The previous chapters introduced these communication families one by one. The system-level lesson is that they can coexist without forcing a different programming model for each one.
+The previous chapters introduced these communication families one by one.
 
-This is one of SNode.C’s practical strengths: different boundaries can remain different, while the architecture remains consistent.
+The system-level lesson is that they can coexist without forcing a different programming model for each one.
 
-### One executable or several services?
+Different boundaries can remain different while the architecture remains consistent.
 
-A SNode.C system does not have to be packaged in exactly one way.
-
-A serious system is not defined by being one binary, and it is not automatically improved by being split into many processes.
-
-Sometimes one executable with several roles is the best design. Sometimes several cooperating executables are better.
-
-The choice should be guided by operational clarity.
-
-| Choose one executable when... | Choose several executables when... |
-|---|---|
-| the roles share one lifecycle | roles need independent restart |
-| deployment should remain simple | privileges differ between roles |
-| the roles are tightly coupled | scaling needs differ |
-| failure of one role reasonably means failure of the whole application | failure domains should be separated |
-| configuration should be managed as one unit | deployment boundaries should be explicit |
-| local communication inside one process is sufficient | process or host boundaries are part of the architecture |
-
-This is not a moral distinction.
-
-A single executable is not automatically less serious. Several services are not automatically more architectural.
-
-The right boundary is the one that makes the system easier to deploy, operate, diagnose, and evolve.
-
-### Stateful and stateless roles
+#### Stateful and stateless roles
 
 System design also requires a clear distinction between stateful and stateless roles.
 
@@ -289,7 +302,9 @@ A stateful role owns information that must survive beyond one request or one con
 - integration progress,
 - or persistent domain data.
 
-Chapter 28 introduced persistence as an application-state boundary. At system scale, persistence becomes a system ownership question:
+Chapter 28 introduced persistence as an application-state boundary.
+
+In a system, persistence becomes an ownership question:
 
 ```text
 Which role owns the state?
@@ -299,9 +314,15 @@ Which roles only observe it?
 Which failure mode can leave it inconsistent?
 ```
 
-This is why persistence belongs before this chapter. Without state ownership, a system sketch remains incomplete.
+Without state ownership, a system sketch remains incomplete.
 
-### Configuration becomes system design
+### System operation
+
+Once roles and boundaries are visible, operation becomes more concrete.
+
+Configuration, diagnostics, failure behavior, and build structure no longer describe isolated applications only. They describe the system surface.
+
+#### Configuration
 
 At the application level, configuration shapes one communication role.
 
@@ -353,9 +374,9 @@ Once names like `admin-http`, `mqtt-ingest`, and `local-control` exist, the rest
 
 Configuration is no longer only setup.
 
-At system scale, it can become one of the clearest descriptions of the system's role constellation and boundaries.
+It can become one of the clearest descriptions of the system's role constellation and boundaries.
 
-### Diagnostics become system observability
+#### Diagnostics
 
 At application scale, diagnostics help a developer understand one program.
 
@@ -371,7 +392,7 @@ Which named instance failed?
 Which part of the system is still healthy?
 ```
 
-SNode.C already contains the ingredients for this kind of visibility:
+SNode.C already contains ingredients for this kind of visibility:
 
 - named instances,
 - role-oriented configuration,
@@ -381,9 +402,13 @@ SNode.C already contains the ingredients for this kind of visibility:
 - generated command-line structure,
 - runtime status information.
 
-A system still may need external monitoring, dashboards, metrics storage, or log aggregation. SNode.C does not replace those tools. But it gives the system a clear internal vocabulary that those tools can build on.
+A system may still need external monitoring, dashboards, metrics storage, or log aggregation.
 
-### Failure behavior becomes topology-aware
+SNode.C does not replace those tools.
+
+It gives the system a clear internal vocabulary that those tools can build on.
+
+#### Failure behavior
 
 At application scale, retry and reconnect behavior may look like local communication policy.
 
@@ -407,7 +432,27 @@ A local control interface may not need the same failure behavior as an external 
 
 The important point is that failure behavior belongs to the role and the boundary, not only to the socket.
 
-### Protocol cores should remain stable
+#### Build structure
+
+Chapter 29 showed that application targets reveal application shape.
+
+In a system, the build structure also reveals the system surface.
+
+Separate libraries and executables tell the reader something about:
+
+- what can be deployed independently,
+- what is reusable as a protocol or support component,
+- what is a higher-level composition,
+- which optional features depend on external libraries,
+- and which application targets represent runnable roles.
+
+The build system does not describe the whole runtime topology.
+
+Configuration, deployment, and operation complete that picture.
+
+But the build system gives the first map.
+
+### Stable protocol cores and domain code
 
 Chapter 15 introduced an important idea: protocol logic can often remain stable while lower carriers change.
 
@@ -423,13 +468,11 @@ carrier / deployment boundary
   -> can change around it
 ```
 
-For example, a message-oriented domain protocol may begin as a native internal service. Later it may also be exposed through a WebSocket path, a HTTP-facing endpoint, or a MQTT integration boundary.
+For example, a message-oriented domain protocol may begin as a native internal service. Later it may also be exposed through a WebSocket path, an HTTP-facing endpoint, or an MQTT integration boundary.
 
 The system remains easier to evolve if the protocol logic is not fused unnecessarily to one carrier or deployment shape.
 
 This is where the earlier layer discipline pays off.
-
-### Systems mix framework code and domain code
 
 SNode.C gives the architect communication roles, protocol layers, configuration structure, diagnostics, runtime behavior, and reusable web and messaging facilities.
 
@@ -447,27 +490,9 @@ Real systems still need:
 - user-facing behavior,
 - and deployment-specific decisions.
 
-The framework’s job is to give that domain logic a clear communication architecture to live in.
+The framework's job is to give that domain logic a clear communication architecture to live in.
 
-That is why the system-building perspective matters. It separates the communication structure from the domain decisions without pretending that either one can replace the other.
-
-### The build system becomes a map of the system surface
-
-Chapter 29 showed that application targets reveal application shape.
-
-In a system, the build structure also reveals the system surface.
-
-Separate libraries and executables tell the reader something about:
-
-- what can be deployed independently,
-- what is reusable as a protocol or support component,
-- what is a higher-level composition,
-- which optional features depend on external libraries,
-- and which application targets represent runnable roles.
-
-The build system does not describe the whole runtime topology. Configuration, deployment, and operation complete that picture.
-
-But the build system gives the first map.
+That separates communication structure from domain decisions without pretending that either one can replace the other.
 
 ### Reading a SNode.C system
 
@@ -490,13 +515,11 @@ This checklist is not a rigid method.
 
 It is a way to prevent system design from collapsing into a pile of features.
 
-### Systems are where consistency matters most
-
 A framework can tolerate some inconsistency in tiny examples.
 
 In a system, inconsistency becomes expensive.
 
-This is why SNode.C’s consistency matters:
+This is why SNode.C's consistency matters:
 
 - roles remain visible,
 - lower families remain explicit,
@@ -506,7 +529,7 @@ This is why SNode.C’s consistency matters:
 - failure policy remains role-oriented,
 - and build targets still expose important architectural choices.
 
-That consistency allows a reader, maintainer, or operator to keep thinking clearly even when several communication styles are present at once.
+That consistency allows a developer, maintainer, or operator to keep thinking clearly even when several communication styles are present at once.
 
 This is the real transition from applications to systems.
 
@@ -527,7 +550,7 @@ This is the real transition from applications to systems.
 
 This chapter moved from executable applications to communication systems.
 
-The reader now has the vocabulary needed to discuss:
+The vocabulary is now in place:
 
 - roles,
 - boundaries,
@@ -542,4 +565,4 @@ That vocabulary is deliberately generic. It is not tied to one reference product
 
 The next chapter applies it to a concrete ecosystem.
 
-Chapter 31 studies MQTTSuite as a reference system built from SNode.C ideas: not merely as a set of programs, but as an example of how communication roles, MQTT messaging, integration, bridging, configuration, and deployment can form a coherent system architecture.
+Chapter 31 studies MQTTSuite as a reference system built from SNode.C ideas: not merely as a set of programs, but as an example of how communication roles, MQTT messaging, integration, bridging, configuration, persistence, and deployment can form a coherent system architecture.
