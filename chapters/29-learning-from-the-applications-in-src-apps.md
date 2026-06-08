@@ -1,402 +1,1103 @@
 ## Learning from the Applications in `src/apps`
-### Why this chapter is the next logical step
 
-By this point in the book, the reader has seen the framework from many angles.
+### From framework pieces to application structure
 
-We have covered:
+Chapter 28 introduced persistence as an application-state boundary.
 
-- the runtime,
-- the communication-role model,
+Chapter 29 now turns to the applications in `src/apps`.
+
+The question changes from:
+
+```text
+What does this layer mean?
+```
+
+to:
+
+```text
+How do the layers become executable programs?
+```
+
+This is an important shift.
+
+Up to this point, the book has introduced many framework pieces separately:
+
+- runtime initialization,
+- communication roles,
 - contexts and factories,
 - lower communication families,
 - configuration,
 - diagnostics,
 - TLS,
-- timeouts and retries,
+- timeouts and failure behavior,
 - HTTP,
 - the Express-like layer,
 - SSE,
 - WebSocket,
 - MQTT,
-- and MQTT over WebSocket.
+- MQTT over WebSocket,
+- database support.
 
-That is already a large amount of architecture.
+The applications in `src/apps` show how those pieces are assembled.
 
-The natural next question is therefore not another protocol question.
+The central sentence for this chapter is:
 
-It is a system-building question:
+> In SNode.C, the build target often reveals the application architecture before the entry point is opened.
 
-> How do these pieces become real applications?
+That is the main reason `src/apps` is useful as study material.
 
-This chapter answers that question.
+It shows not only C++ entry points, but also executable targets, linked libraries, optional dependencies, and installable application shapes.
 
-It is the point where the framework stops being only a collection of layers in the reader’s mind and becomes a practical toolkit for composing whole programs.
+### `src/apps` as study material
 
-### The repository itself already answers the question
+The applications in `src/apps` should not all be read in the same way.
 
-One of the nicest things about SNode.C is that the repository does not only contain framework libraries.
+Some are application shells.
 
-It also contains actual applications and application examples.
+Some are focused examples.
 
-That is very important pedagogically.
+Some are utility or test-style programs.
 
-It means the transition from framework theory to runnable program structure is not something the book has to invent. The repository already demonstrates it.
+Some demonstrate a protocol family.
 
-The current live `src/apps/CMakeLists.txt` makes this especially visible. It builds a range of actual executables such as:
+Some demonstrate a build pattern.
 
-- `snode.c`
-- `express-compat-server`
-- `testpost`
-- `jsonserver`
-- `jsonclient`
-- `warema-jalousien`
-- `testpipe`
-- `configtest`
+For this chapter, we will not discuss every target in the directory.
 
-and then descends into application subdirectories such as the echo applications. This is a strong sign that the framework is meant to become programs, not just libraries in isolation. 
+Instead, we select a representative set:
 
-### A real SNode.C application is usually a composition of layers, not one giant class
+| Example | Why it is useful here |
+|---|---|
+| `snode.c` | application shell with Express-style web structure, routes, SSE, and timer use |
+| `express-compat-server` | compatibility-oriented Express behavior example |
+| echo family | one protocol model packaged across several carriers and stream modes |
+| `jsonserver` / `jsonclient` | HTTP server/client split and optional JSON-related target |
+| `testpost` | focused HTTP POST example with legacy and TLS stream linkage |
+| `testpipe` | small core/runtime utility showing pipe-based event handling |
+| `database/testmariadb` | MariaDB demonstration after the persistence chapter |
 
-This is one of the most important practical lessons in the whole book.
+The selection is broad enough to show different application shapes.
 
-A real application in SNode.C is usually not “one big server object.”
+It is also narrow enough to keep the chapter readable.
 
-It is a composition of:
+The goal is not to catalogue a directory.
 
-- a chosen lower communication family,
-- a transport and connection handling choice,
-- a protocol layer,
-- one or more contexts and factories,
-- instance configuration,
-- application-shell behavior such as logging and config display,
-- and finally some executable entry point that binds these together.
+The goal is to learn how SNode.C applications are assembled.
 
-That is the correct mental model.
+### Selected application targets in the repository
 
-A SNode.C application is not assembled by throwing everything into `main()`.
+A first reading pass should start with the build targets.
 
-It is assembled by selecting and composing the layers the framework already provides.
+The top-level `src/apps/CMakeLists.txt` creates executables and links them against selected SNode.C targets.
 
-### The application shell is part of the application, not only a wrapper
+This file is an in-source-tree build file.
 
-The earlier configuration and diagnostics chapters already prepared this idea.
+That distinction matters.
 
-A real SNode.C application is not just the protocol endpoint logic.
+Inside the SNode.C source tree, the application targets can link against local CMake target names such as:
 
-It also includes:
+```text
+core
+http-server-express
+net-in-stream-legacy
+http-client
+db-mariadb
+```
 
-- initialization,
-- configuration hierarchy,
-- logging policy,
-- daemon or foreground behavior,
-- instance naming,
-- and operational observability.
+An application outside the SNode.C source tree should use the installed package interface instead:
 
-This is why so many of the repository’s real applications link not only protocol libraries but also core application-shell components such as `core` and the relevant HTTP or networking layers. 
+```cmake
+find_package(snodec REQUIRED
+    COMPONENTS
+        http-server-express
+        net-in-stream-legacy
+)
 
-A good application in SNode.C should therefore be understood as:
+target_link_libraries(my-ipv4-legacy-webapp
+    PRIVATE
+        snodec::http-server-express
+        snodec::net-in-stream-legacy
+)
+```
 
-- protocol behavior,
-- plus operational shell,
-- plus explicit composition of layers.
+The namespace is not cosmetic.
 
-That is the framework’s style.
+It tells CMake that the application is using exported SNode.C component targets, not internal targets from the SNode.C build tree.
 
-### The echo applications are the clearest minimal application family
+The direct component choices are the same as in the in-tree example.
 
-The live `src/apps/echo/CMakeLists.txt` remains one of the best examples in the repository.
+The external form uses the installed `snodec::...` namespace.
 
-It shows how a single small protocol idea — echo — becomes a **family of runnable applications**.
+A simplified view of the selected application targets is:
 
-The build logic composes:
+| Application target | In-tree target shape visible in `src/apps` | What it teaches |
+|---|---|---|
+| `snode.c` | `http-server-express` + `net-in-stream-legacy` | web application shell over IPv4 legacy stream |
+| `express-compat-server` | `http-server-express` + `net-in-stream-legacy` | Express-style compatibility behavior |
+| `testpost` | `http-server-express` + `net-in-stream-legacy` + `net-in-stream-tls` | HTTP POST handling and legacy/TLS application composition |
+| `jsonserver` | `http-server-express` + `net-in-stream-legacy`, built when JSON support is available | JSON-capable HTTP server example |
+| `jsonclient` | `http-client` + `net-in-stream-legacy` | outgoing HTTP request/response example |
+| `testpipe` | core-only utility target | pipe event behavior inside the runtime |
+| `database/testmariadb` | MariaDB database target | MariaDB API and persistence demonstration |
+| echo family | shared echo context plus generated stream/network variants | one protocol model across carriers and stream modes |
 
-- multiple lower communication families,
-- both legacy and TLS stream handling,
-- a shared `echosocketcontext` library,
-- and distinct server/client executables for each combination.
+The target name tells the reader what executable is produced.
 
-This is a wonderful example of the framework’s philosophy becoming application structure. 
+The link line shows which application-facing component or local target is selected.
 
-The reader should notice what is happening here.
+The conditional build rules show which optional components must be available.
 
-The protocol idea is stable. The carrier and connection layer vary. The executable packaging reflects those variations explicitly.
+The install rules show which executables become part of the application installation set.
 
-That is exactly what “from framework pieces to real applications” means in SNode.C.
+The link line should not be misread as a manual list of every lower layer.
 
-### One protocol, many executables is a real design pattern in the repository
+It shows the direct application-facing components selected by the executable.
 
-The echo applications are not interesting only as demos.
+The next section reads this link line in detail.
 
-They illustrate a general application design pattern in SNode.C:
+### Linked components reveal application shape
 
-> keep the protocol core stable, then instantiate different runnable roles or carriers as separate executables where that improves clarity.
+A SNode.C application can often be understood by reading the components it links.
 
-This is a very healthy design instinct.
+For high-level protocol applications, the normal direct link shape is:
 
-It avoids the trap of one over-generalized binary that tries to hide all structural choices behind huge runtime branching.
+```text
+protocol/application component
+  + selected transport component
+```
 
-Sometimes that is appropriate. But very often, especially for teaching, testing, and operational clarity, explicit executable variants are the better design.
+This rule applies both inside the SNode.C source tree and outside it.
 
-The repository’s echo family demonstrates that principle well. 
+Only the target names change:
+
+```text
+in-tree target names
+  -> http-server-express
+  -> net-in-stream-legacy
+
+installed/exported target names
+  -> snodec::http-server-express
+  -> snodec::net-in-stream-legacy
+```
+
+Consider this in-tree build fragment:
+
+```cmake
+add_executable(snode.c main.cpp)
+
+target_link_libraries(
+    snode.c
+    PUBLIC
+        http-server-express
+        net-in-stream-legacy
+)
+```
+
+It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream carrier.
+
+The equivalent external form uses exported `snodec::...` targets:
+
+```cmake
+find_package(snodec REQUIRED
+    COMPONENTS
+        http-server-express
+        net-in-stream-legacy
+)
 
-### The executable is often the smallest part conceptually
+add_executable(my-ipv4-legacy-webapp
+    main.cpp
+)
 
-This is an important practical realization for readers coming from more monolithic application styles.
+target_link_libraries(my-ipv4-legacy-webapp
+    PRIVATE
+        snodec::http-server-express
+        snodec::net-in-stream-legacy
+)
+```
+
+The direct application face is the same in both cases, but the target names belong to different build contexts:
+
+```text
+HTTP/Express application layer
+  in-tree target:  http-server-express
+  external target: snodec::http-server-express
 
-In SNode.C, the executable entry point is often conceptually smaller than the framework pieces it wires together.
+IPv4 legacy stream carrier
+  in-tree target:  net-in-stream-legacy
+  external target: snodec::net-in-stream-legacy
+```
 
-The executable usually does things like:
+The `snodec::...` form is not another dependency step.
 
-- initialize the runtime,
-- create one or more named instances,
-- select the appropriate factory and context types,
-- activate listening or connection behavior,
-- and then start the runtime.
+It is the installed/exported target name used outside the SNode.C source tree.
 
-That is often all.
+The application does not need to list the lower dependency chain behind those components, because the selected component targets already declare the further SNode.C components they need.
 
-The rich behavior lives in:
+The direct link line is short, but the component-owned dependency graph is deeper.
 
-- the protocol layers,
-- the context classes,
-- the factories,
-- the configuration model,
-- and the reusable middleware or helper modules.
+For this example, the public component-dependency graph can be expanded as a tree like this.
 
-This is one of the reasons SNode.C applications can remain surprisingly readable even when their capabilities grow.
+System libraries and non-SNode.C implementation details are intentionally not expanded; some are only shown as named leaf dependencies.
 
-### Small apps and serious apps differ mainly in composition depth
+```text
+my-ipv4-legacy-webapp
+|-- snodec::http-server-express
+|   |-- snodec::http-server
+|   |   `-- snodec::http
+|   |       |-- snodec::core-socket-stream
+|   |       |   |-- snodec::core-socket
+|   |       |   |   `-- snodec::core
+|   |       |   |       `-- snodec::utils
+|   |       |   |           `-- snodec::logger
+|   |       |   `-- snodec::net
+|   |       |       `-- snodec::core-socket
+|   |       |           `-- snodec::core
+|   |       |               `-- snodec::utils
+|   |       |                   `-- snodec::logger
+|   |       |-- snodec::logger
+|   |       `-- libmagic, if available
+|   `-- nlohmann-json support
+`-- snodec::net-in-stream-legacy
+    |-- snodec::net-in-stream
+    |   `-- snodec::net-in-phy-stream
+    |       `-- snodec::net-in-phy
+    |           `-- snodec::net-in
+    |               `-- snodec::net
+    |                   `-- snodec::core-socket
+    |                       `-- snodec::core
+    |                           `-- snodec::utils
+    |                               `-- snodec::logger
+    `-- snodec::core-socket-stream-legacy
+        `-- snodec::core-socket-stream
+            |-- snodec::core-socket
+            |   `-- snodec::core
+            |       `-- snodec::utils
+            |           `-- snodec::logger
+            `-- snodec::net
+                `-- snodec::core-socket
+                    `-- snodec::core
+                        `-- snodec::utils
+                            `-- snodec::logger
+```
 
-A useful way to think about SNode.C applications is this:
+The two top-level branches are still the important part.
 
-Small applications and serious applications are often not different in architectural kind.
+They show the two direct decisions of the application:
 
-They are different in **composition depth**.
+```text
+http-server-express
+  -> the Express-style HTTP server/application layer
 
-A very small app may combine only:
+net-in-stream-legacy
+  -> the selected IPv4 legacy stream carrier
+```
 
-- one instance,
-- one factory,
-- one context,
-- one lower family.
+The HTTP branch remains the protocol/application branch. It may still carry lower implementation dependencies, such as stream context machinery, when the HTTP implementation needs them.
 
-A more serious app may combine:
+The transport branch remains the selected carrier branch. Lower dependencies may overlap internally, but that does not change the application-facing rule.
 
-- several named instances,
-- richer configuration,
-- HTTP or Express layers,
-- authentication and static middleware,
-- TLS,
-- WebSocket upgrades,
-- MQTT or MQTT-over-WebSocket,
-- file logging and diagnostic controls.
+The same way of reading applies inside `net-in-stream-legacy` itself.
 
-But the basic style remains the same.
+It is a composed SNode.C component:
 
-This is one of the deepest strengths of the framework.
+```text
+net-in-stream-legacy
+  -> net-in-stream
+  -> core-socket-stream-legacy
+```
 
-It scales by composition rather than by forcing a change of programming model.
+The component name therefore stands for a layered composition:
 
-### Applications often become “role constellations”
+```text
+IPv4 network family
+  + stream transport shape
+  + legacy stream operation
+  + physical network side
+  + generic/core stream machinery
+```
 
-Once the reader starts thinking beyond one tiny demo, a particularly useful mental model appears.
+A higher-level component name hides the internal link list, but it does not hide the design structure.
 
-A real SNode.C application is often best understood not as one role, but as a **constellation of roles**.
+The diagram is not a linker command.
 
-For example, a program may combine:
+It is a teaching view of the public dependency graph.
 
-- one server role for incoming communication,
-- one client role for outgoing communication,
-- one HTTP/Express role for administration,
-- one MQTT role for integration,
-- optional WebSocket or SSE behavior for observation or live updates.
+The important build model is:
 
-The configuration model, named instances, and application shell make exactly this kind of role constellation manageable.
+```text
+application
+  -> link the direct protocol/application component
+  -> link the selected transport component
+      -> CMake propagates those components' public dependencies
+```
 
-This is one of the reasons the earlier configuration chapters mattered so much.
+This keeps the boundary honest:
 
-### The repository apps show breadth, not only depth
+```text
+Which high-level protocol/application component does this application use?
+Which transport/carrier component does this application use?
+  -> link those direct components
 
-The current `src/apps/CMakeLists.txt` is revealing in another way too.
+What do those components need internally?
+  -> their targets declare it
+```
 
-It does not contain only one style of application.
+The important point is not that the application knows the whole graph.
 
-It contains:
+The important point is that it selects the components that define its public face: the HTTP application layer and the concrete transport carrier.
 
-- HTTP/Express-facing applications,
-- test and utility apps,
-- JSON examples,
-- configuration-focused apps,
-- and the echo family.
+The remaining dependencies belong to those selected components.
 
-That breadth matters.
+The same pattern appears in external projects.
 
-It tells the reader that SNode.C is not only optimized for one showcase scenario.
+Only the target names change.
 
-It is a framework whose pieces can become very different kinds of executables depending on what the user wants to assemble. 
+When reading another SNode.C application, start with the executable target, then read the linked protocol/application component, the selected transport component, and any optional feature components.
 
-### The build system is part of the application story
+Only then open the C++ entry point.
 
-A good systems book should say this explicitly.
+A direct application link line should describe the application face, not repeat every implementation layer below it.
 
-In a framework like SNode.C, the build system is not merely a technical afterthought.
+### The executable as an assembly point
 
-It is one of the places where architectural choices become concrete.
+In many SNode.C applications, the executable entry point is not the place where the whole framework is reimplemented.
 
-The repository’s application CMake files show that clearly:
+It is the assembly point.
 
-- linked libraries reflect layer choices,
-- executable names reflect role and carrier choices,
-- install targets reflect deployment shape,
-- optional dependencies reflect feature availability.
+A typical entry point answers questions such as:
 
-This is especially visible in the echo family, where compile-time composition produces a matrix of concrete server/client applications across carriers and stream modes. 
+- How is the runtime initialized?
+- Which application object or communication role is created?
+- Which middleware, routes, contexts, or factories are registered?
+- Which instance names are used?
+- Which listen or connect action is registered?
+- How is the runtime started?
 
-That is exactly what one would hope to see in a well-structured framework repository.
+The `snode.c` application is a good example.
 
-### A real application often chooses clarity over maximal genericity
+A compact form of its structure is:
 
-This chapter is a good place to repeat an important design lesson from earlier chapters.
+```cpp
+int main(int argc, char* argv[]) {
+    core::SNodeC::init(argc, argv);
 
-A real application does not always become better by collapsing every variation into one universal executable or one giant abstraction.
+    const express::legacy::in::WebApp app;
 
-Often, the better design is:
+    app.use(express::middleware::VerboseRequest());
 
-- a stable protocol core,
-- clear outer role selection,
-- explicit executable packaging,
-- named configuration-bearing instances,
-- and a build layout that makes the intended variants visible.
+    app.get("/health", [] APPLICATION(req, res) {
+        res->json({{"ok", true}});
+    });
 
-That is exactly the style the repository examples encourage.
+    return core::SNodeC::start();
+}
+```
 
-This is one of the reasons the framework remains teachable even while being powerful.
+This small shape already shows application assembly:
 
-### The application shell makes programs operable, not only runnable
+```text
+runtime initialization
+  -> web application object
+      -> middleware
+          -> route
+              -> runtime start
+```
 
-It is worth emphasizing the distinction between *runnable* and *operable*.
+The real file contains more routes, nested routers, SSE behavior, and timer-driven output.
 
-Many frameworks can help you make a runnable server.
+But the assembly principle is already visible in the small excerpt.
 
-Fewer help you make an operable application.
+The executable is not a giant custom abstraction.
 
-SNode.C’s application shell contributes a great deal here through:
+It wires framework pieces and application behavior together.
 
-- configuration hierarchy,
-- log control,
-- daemonization support,
-- config display and generation,
-- named instances,
-- and diagnostics.
+#### Routes and middleware as application structure
 
-This means that when framework pieces become real applications, they also become easier to operate, inspect, and evolve.
+In an Express-style SNode.C application, routes and middleware are not only convenience syntax.
 
-That is a major practical advantage.
+They are part of the application structure.
 
-### From protocol examples to system examples
+A route such as:
 
-A nice way to understand the book’s progression is this.
+```cpp
+app.get("/health", [] APPLICATION(req, res) {
+    res->json({{"ok", true}});
+});
+```
 
-The earlier chapters were often protocol examples.
+means:
 
-This chapter begins the shift toward system examples.
+```text
+HTTP GET request
+  -> route match
+      -> application callback
+          -> JSON response
+```
 
-That means the emphasis changes from:
+Middleware adds another layer:
 
-- how one protocol layer works,
+```text
+incoming request
+  -> middleware
+      -> route handler
+          -> response
+```
 
-to:
+This is why the same application can remain readable even when it grows.
 
-- how several framework pieces become one coherent executable system.
+The entry point expresses a composition of behavior rather than a manually written event loop.
 
-That is an important change in viewpoint.
+### `snode.c` as application-shell example
 
-Readers who understand this shift are usually ready to move from learning the framework to actually building with it.
+The `snode.c` target is the best main example for application-shell structure.
 
-### A practical recipe for assembling a SNode.C application
+It combines:
 
-A useful practical recipe is this:
+```text
+snode.c
+  -> Express-like HTTP application layer
+  -> IPv4 legacy stream carrier
+```
 
-1. decide the communication role or roles,
-2. choose the lower family and connection handling,
-3. choose the protocol layer,
-4. write the `SocketContext` or higher-layer handler logic,
-5. keep the factory small and explicit,
-6. name the instances and shape their configuration,
-7. make diagnostics and operational controls visible,
-8. choose whether one executable or several explicit variants is clearer,
-9. let the build structure reflect the architecture.
+Its entry point demonstrates several useful patterns:
 
-This recipe is not a rigid rule, but it is a very strong starting pattern for real SNode.C applications.
+- an Express-style `WebApp`,
+- middleware installation,
+- route registration,
+- nested routers,
+- JSON responses,
+- SSE output,
+- timer-driven repeated sending,
+- runtime start.
 
-### Why real applications often look calmer than the framework itself
+A useful reading model is:
 
-This is a reassuring point for readers.
+```text
+build target
+  -> linked layers
+      -> application object
+          -> middleware and routes
+              -> runtime start
+```
 
-A framework book necessarily discusses many layers, types, modules, and combinations.
+This is the path from CMake to application behavior.
 
-That can make the framework feel larger than any one application will actually be.
+For a reader, that path is more useful than memorizing individual API calls.
 
-In practice, a well-designed application often looks calmer than the framework that made it possible.
+It shows how to approach a SNode.C application file.
 
-Why?
+### `express-compat-server` as compatibility-oriented example
 
-Because the application only needs to assemble the subset of the framework that its own role constellation requires.
+`express-compat-server` links the same broad layer family as `snode.c`:
 
-That is exactly how a good framework should feel:
+```text
+http-server-express
+net-in-stream-legacy
+```
 
-rich in possibility, but selective in actual use.
+Its role in the manuscript should be secondary.
 
-### The most important design instinct for real applications
+It is useful because it shows that the Express-like layer is not only used by one application shell.
 
-If the chapter had to teach only one practical instinct, it would be this:
+It can also be used for behavior comparison, compatibility checking, and focused route/middleware experiments.
 
-> Build applications by composing clear roles and layers, not by collapsing everything into one giant custom abstraction.
+A good way to present it is:
 
-That instinct is the bridge from framework understanding to framework mastery.
+```text
+snode.c
+  -> application-shell example
 
-It is also the instinct most strongly reinforced by the current repository examples.
+express-compat-server
+  -> compatibility / behavior-comparison example
+```
 
-### Common misunderstandings about “real applications” in SNode.C
+The point is not to study both applications deeply.
 
-It helps to clear away a few misunderstandings explicitly.
+The point is to show that the same layer composition can serve different application intentions.
 
-#### Misunderstanding 1: “A real application must hide the framework structure.”
+### The build system records application architecture
 
-Corrected view: in SNode.C, real applications usually become clearer when their role and layer structure remains visible.
+The build system is part of the application story.
 
-#### Misunderstanding 2: “One binary with every variation hidden inside is always the most mature design.”
+In SNode.C, CMake targets often reveal the application structure before the C++ entry point is opened.
 
-Corrected view: explicit executable variants are often healthier and clearer, especially when the carrier or role differences are meaningful.
+The build file records:
 
-#### Misunderstanding 3: “Examples like echo are too small to teach real application structure.”
+| Build element | Architectural meaning |
+|---|---|
+| executable target | the runnable program |
+| linked libraries | selected protocol/application, transport, and feature components |
+| conditional target creation | optional feature dependency |
+| install rule | deployment-facing executable |
+| subdirectory discovery | application families and grouped examples |
 
-Corrected view: the echo family is valuable precisely because it already demonstrates executable composition across multiple carriers and modes. 
+For example, the JSON server target is only built when JSON support is available:
 
-#### Misunderstanding 4: “The executable entry point is where most of the application logic should live.”
+```cmake
+if(NLOHMANN_JSON_FOUND)
+    add_executable(jsonserver jsonserver.cpp)
+    target_link_libraries(
+        jsonserver
+        PRIVATE
+            http-server-express
+            net-in-stream-legacy
+    )
+endif()
+```
 
-Corrected view: in SNode.C, the executable entry point is often just the assembly point; the deeper logic lives in contexts, factories, protocol layers, and configuration.
+This is an application-level fact, not only a build-system detail.
 
-#### Misunderstanding 5: “Applications begin only once frameworks stop and custom code starts.”
+It means:
 
-Corrected view: in SNode.C, the application emerges by composing framework pieces with custom protocol and role logic into an operational shell.
+```text
+JSON support available
+  -> JSON server example becomes part of the build
 
-### A good one-paragraph summary of the chapter
+JSON support unavailable
+  -> target is not produced
+```
 
-Real applications in SNode.C are built by composing the framework’s existing pieces into explicit communication-role constellations. The repository’s live application and echo build structure shows that this usually means selecting the appropriate lower carrier and connection mode, attaching stable protocol and factory logic, shaping named configurable instances, and letting the build and executable structure reflect those choices clearly. In other words, SNode.C applications are not monoliths hidden behind one entry point; they are deliberate assemblies of roles, layers, and operational shell behavior. 
+The same idea appears with the database example.
+
+The database demonstration is built only when MariaDB support is available.
+
+Optional dependencies therefore influence the set of applications that exist in the build.
+
+### Echo as an application family
+
+Chapter 3 introduced a deliberately simplified echo pair:
+
+```text
+EchoSocketContext
+  -> echoserver
+  -> echoclient
+  -> IPv4 / stream / legacy
+```
+
+The repository echo family generalizes the same idea.
+
+The full echo application structure uses:
+
+- a shared echo protocol model,
+- generated server executables,
+- generated client executables,
+- several network families,
+- legacy and TLS stream modes,
+- compile definitions for the selected combination.
+
+The key idea is:
+
+```text
+stable protocol behavior
+  -> several executable variants
+      -> different carrier and stream choices
+```
+
+This is one of the most useful application patterns in the repository.
+
+It shows how SNode.C can keep the protocol core stable while changing the outer communication boundary.
+
+#### From the Chapter 3 echo pair to the repository echo matrix
+
+The Chapter 3 teaching version keeps one visible combination:
+
+```text
+IPv4
+  -> stream
+      -> legacy
+```
+
+The repository echo build expands the same shape:
+
+```text
+network family
+  -> stream mode
+      -> client/server role
+          -> executable target
+```
+
+A simplified form is:
+
+```text
+echosocketcontext
+  -> shared protocol behavior
+
+echoserver-legacy-in
+  -> server role, legacy stream, IPv4
+
+echoclient-legacy-in
+  -> client role, legacy stream, IPv4
+
+echoserver-tls-in
+  -> server role, TLS stream, IPv4
+
+echoclient-tls-in
+  -> client role, TLS stream, IPv4
+```
+
+Other configured families follow the same pattern.
+
+The important lesson is not the number of generated targets.
+
+The important lesson is that the executable matrix mirrors real architectural choices.
+
+#### One protocol model, several executable variants
+
+A common mistake is to assume that one universal executable is always the most mature design.
+
+That is not always true.
+
+Sometimes explicit executable variants are clearer.
+
+The echo family shows a reasonable split:
+
+```text
+protocol behavior
+  -> shared library / model
+
+carrier and stream choice
+  -> executable variant
+
+role
+  -> client or server target
+```
+
+This makes the build output easier to inspect.
+
+It also makes testing easier because each executable has a concrete role.
+
+The build structure becomes documentation.
+
+### JSON server and JSON client
+
+The JSON examples are useful because they show a clean server/client split.
+
+The server side combines the Express-like HTTP server layer with the selected stream carrier and JSON middleware.
+
+A compact model is:
+
+```text
+jsonserver
+  -> HTTP server / Express-like layer
+      -> JSON middleware
+          -> POST route
+              -> JSON body access
+                  -> response
+```
+
+The client side combines the HTTP client layer with the selected stream carrier.
+
+A compact model is:
+
+```text
+jsonclient
+  -> HTTP client
+      -> POST request
+          -> JSON body
+              -> response callback
+```
+
+This pair is good manuscript material because it shows both sides of an HTTP interaction.
+
+It also shows optional feature availability.
+
+The server target depends on JSON support being present, while the client demonstrates an outgoing HTTP request shape.
+
+#### What the JSON examples teach
+
+The JSON examples teach several small but useful lessons:
+
+| Lesson | Example side |
+|---|---|
+| server-side middleware can prepare request data | `jsonserver` |
+| an application route can access parsed JSON-like state | `jsonserver` |
+| an HTTP client can construct a request in a callback | `jsonclient` |
+| response handling belongs to the client callback | `jsonclient` |
+| optional dependencies affect available targets | build system |
+
+The examples should not be presented as full application architecture.
+
+They are focused examples.
+
+That is their value.
+
+They isolate a client/server HTTP exchange and make the framework shape visible.
+
+### `testpost` as focused HTTP POST example
+
+`testpost` should be presented as a focused example, not as a polished application.
+
+It demonstrates an HTTP POST-oriented surface and links both legacy and TLS stream support.
+
+A useful model is:
+
+```text
+legacy web app
+  -> GET form
+      -> POST body handling
+
+TLS web app
+  -> reuses legacy app behavior
+      -> listens on TLS-capable endpoint
+```
+
+The source structure is useful because it shows two related application roles in one file:
+
+```text
+express::legacy::in::WebApp
+  -> legacy HTTP endpoint
+
+express::tls::in::WebApp
+  -> TLS HTTP endpoint
+```
+
+The TLS app reuses the legacy app behavior.
+
+That makes `testpost` useful for Chapter 29 because it shows application composition rather than only route syntax.
+
+It also connects back to Chapter 19:
+
+```text
+same application behavior
+  -> legacy carrier
+  -> TLS carrier
+```
+
+This example should remain compact in the manuscript.
+
+The point is the application shape, not the details of the HTML upload form.
+
+### `testpipe` as a small core utility
+
+`testpipe` is useful because it does not depend on HTTP, MQTT, WebSocket, or database support.
+
+It links only against the core layer.
+
+That makes it a small example of runtime-managed utility behavior.
+
+A compact model is:
+
+```text
+core runtime
+  -> Pipe
+      -> PipeSink callback
+          -> PipeSource send
+              -> runtime start
+```
+
+A small excerpt captures the idea:
+
+```cpp
+core::SNodeC::init(argc, argv);
+
+const core::pipe::Pipe pipe(
+    [](core::pipe::PipeSource& source,
+       core::pipe::PipeSink& sink) {
+        sink.setOnData([&source](const char* chunk, std::size_t len) {
+            source.send(chunk, len);
+        });
+
+        source.send("Hello World!");
+    },
+    [](int errnum) {
+        PLOG(ERROR) << "Pipe not created";
+    });
+
+return core::SNodeC::start();
+```
+
+This example is useful because it reminds the reader that applications are not only servers.
+
+SNode.C also contains core utilities and runtime-managed helpers.
+
+The same pattern appears again:
+
+```text
+initialize runtime
+  -> create runtime object
+      -> register callbacks
+          -> start runtime
+```
+
+### `database/testmariadb` after the persistence chapter
+
+Chapter 28 introduced the MariaDB integration layer.
+
+Chapter 29 can now show how a database demonstration becomes an application target.
+
+The database example is located under a dedicated application subdirectory:
+
+```text
+src/apps/database
+```
+
+It is built only when MariaDB support is available.
+
+Its build shape is compact:
+
+```cmake
+if(LIBMARIADB_FOUND)
+    add_executable(testmariadb testmariadb.cpp)
+    target_link_libraries(testmariadb PRIVATE db-mariadb)
+endif()
+```
+
+This is a good continuation from Chapter 28.
+
+The target does not need HTTP, MQTT, or WebSocket to teach persistence.
+
+It directly demonstrates:
+
+- database connection configuration,
+- `MariaDBConnectionDetails`,
+- `MariaDBClient`,
+- state-change callbacks,
+- `exec(...)`,
+- `query(...)`,
+- affected-row metadata,
+- command chaining,
+- timers that trigger database work.
+
+A compact application model is:
+
+```text
+configuration
+  -> MariaDBConnectionDetails
+      -> MariaDBClient
+          -> command sequence
+              -> callback result/error handling
+                  -> timer-driven repeated queries
+```
+
+The important point is that `testmariadb` is a focused demonstration target.
+
+It is not a recommended production persistence architecture.
+
+Its value is that it makes the Chapter 28 API concrete.
+
+### Application categories in `src/apps`
+
+The selected examples can be grouped by what they teach.
+
+| Category | Examples | What to learn |
+|---|---|---|
+| web application shell | `snode.c` | runtime + Express-style application assembly |
+| compatibility / behavior comparison | `express-compat-server` | another application using the same broad web stack |
+| generated application family | echo family | one protocol model across several executable variants |
+| HTTP client/server examples | `jsonserver`, `jsonclient` | server/client split and optional JSON support |
+| HTTP POST / TLS-capable example | `testpost` | legacy/TLS application composition |
+| core runtime utility | `testpipe` | core-only runtime object and callbacks |
+| database demonstration | `database/testmariadb` | MariaDB API and event-integrated persistence |
+
+This grouping is more useful than a flat directory list.
+
+It tells the reader what to study and why.
+
+### Small applications and larger applications differ by composition depth
+
+Small applications and larger applications often use the same pattern.
+
+They differ in composition depth.
+
+| Application depth | Typical composition |
+|---|---|
+| minimal utility | runtime + one core object + callbacks |
+| small server | runtime + server role + context/factory or route |
+| web app | runtime + HTTP/Express + middleware/routes |
+| client/server pair | server target + client target + shared protocol expectation |
+| generated family | stable model + build matrix of roles/carriers |
+| persistence demo | runtime + database client + command callbacks |
+| system-facing app | several roles + configuration + persistence + diagnostics |
+
+This keeps the mental model stable.
+
+A larger application is not necessarily a different kind of thing.
+
+It may simply compose more roles, more layers, and more operational behavior.
+
+The recurring structure is:
+
+```text
+select layers
+  -> create application object or role
+      -> register behavior
+          -> expose configuration
+              -> start runtime
+```
+
+### Optional dependencies and application availability
+
+Some applications only exist when optional dependencies are available.
+
+This is not only a CMake technicality.
+
+It is part of the application model.
+
+Examples:
+
+```text
+JSON support available
+  -> JSON server target can be built
+
+MariaDB support available
+  -> database demonstration target can be built
+```
+
+This prepares the reader for later build and deployment chapters.
+
+A deployed system may not contain every possible SNode.C component.
+
+It contains the components enabled by:
+
+- selected modules,
+- available dependencies,
+- build configuration,
+- install rules,
+- deployment purpose.
+
+The application tree therefore teaches a practical lesson:
+
+```text
+available framework capability
+  -> build target
+      -> installable executable
+          -> deployed application
+```
+
+### Reading a SNode.C application: a practical recipe
+
+When reading a SNode.C application, use a repeatable method.
+
+1. Start with its CMake target.
+2. Look at the linked libraries.
+3. Identify the executable entry point.
+4. Find runtime initialization.
+5. Identify named instances or application objects.
+6. Find contexts/factories, routes, middleware, or command objects.
+7. Look for configuration hooks.
+8. Look for diagnostics and state callbacks.
+9. Check whether optional dependencies affect the target.
+10. Ask whether the target is a main application, focused example, utility, or demonstration.
+
+This recipe works well because SNode.C applications are often explicit about their layers.
+
+The build target and the entry point usually agree.
+
+For example:
+
+```text
+in-tree:  target_link_libraries(... http-server-express net-in-stream-legacy ...)
+external: target_link_libraries(... snodec::http-server-express snodec::net-in-stream-legacy ...)
+  -> expect an HTTP / Express-style application over an IPv4 legacy stream carrier
+
+in-tree:  target_link_libraries(... http-client net-in-stream-legacy ...)
+external: target_link_libraries(... snodec::http-client snodec::net-in-stream-legacy ...)
+  -> expect outgoing HTTP client behavior over an IPv4 legacy stream carrier
+
+in-tree:  target_link_libraries(... db-mariadb ...)
+external: target_link_libraries(... snodec::db-mariadb ...)
+  -> expect MariaDB client and command flow
+
+in-tree:  target_link_libraries(... core ...)
+external: target_link_libraries(... snodec::core ...)
+  -> expect runtime/core utility behavior
+```
+
+The reader should learn to move between CMake and C++.
+
+Both files are part of the application.
+
+The reader should also distinguish local in-tree target names from installed `snodec::...` imported targets.
+
+### Build structure and operational clarity
+
+A build target does not only produce a binary.
+
+It also makes a choice visible.
+
+For example:
+
+```text
+one executable per carrier/role combination
+```
+
+may be clearer than:
+
+```text
+one universal executable with every carrier hidden behind runtime branching
+```
+
+The echo family demonstrates this.
+
+A separate generated target can make each variant easier to test, install, run, and explain.
+
+The JSON examples demonstrate a different form of clarity:
+
+```text
+server target
+  -> server-side behavior
+
+client target
+  -> client-side behavior
+```
+
+The database example demonstrates feature-dependent clarity:
+
+```text
+MariaDB available
+  -> database target exists
+
+MariaDB unavailable
+  -> database target is absent
+```
+
+These are application-design decisions.
+
+The build system records them.
+
+### What to remember
+
+Remember:
+
+- `src/apps` shows how framework layers become executable targets.
+- The chapter studies selected applications, not every target in the directory.
+- In SNode.C, the build target often reveals the application architecture before the entry point is opened.
+- The executable entry point is often an assembly point.
+- `snode.c` is the main web application-shell example.
+- `express-compat-server` is a secondary compatibility-oriented web example.
+- The echo family generalizes the Chapter 3 echo pair into several executable variants.
+- `jsonserver` and `jsonclient` show a server/client HTTP split and optional JSON support.
+- `testpost` is useful as a focused HTTP POST example with legacy and TLS-capable linkage.
+- `testpipe` shows a small core/runtime utility shape.
+- `database/testmariadb` makes the MariaDB API from Chapter 28 concrete.
+- Optional dependencies affect which application targets exist.
+- Reading an application means reading both its CMake target and its C++ entry point.
+- Linked components show the selected protocol/application layer, selected transport carrier, and optional feature components.
+- A high-level protocol application links the protocol/application component and the selected transport component, both in-tree and externally.
+- The direct link line is short, but the component-owned dependency graph may be deep.
+- In-tree applications use local target names; external applications use the corresponding installed `snodec::...` target names.
+- Direct linkage to `snodec::core` is only needed when the application directly uses `core` as its public component, as in a core-only utility.
+- Each SNode.C component target carries its necessary lower-level dependencies, so an application should not repeat lower-level implementation components manually.
+- Chapter 30 moves from individual applications to systems.
 
 ### Closing perspective
 
-This chapter marks another important transition in the book.
+Chapter 29 showed how repository applications turn framework layers into executable programs.
 
-The reader has now gone beyond understanding layers and protocols individually.
+The path is:
 
-They have begun to see how those pieces become real programs.
+```text
+framework layer
+  -> linked library
+      -> application object or role
+          -> executable target
+              -> installable program
+```
 
-That is a major milestone.
+This is the bridge from framework knowledge to application reading.
 
-And once the application-assembly viewpoint is clear, the next step becomes very natural.
+Chapter 30 now widens the view from individual applications to systems.
 
-A real framework is not only judged by its pieces, but by how well those pieces can be shaped into larger systems.
+It asks how several applications, roles, deployment boundaries, and operational relationships can form a larger SNode.C-based system.
 
-That means the next chapter can turn from the application tree to MQTTSuite as a reference ecosystem — the point where SNode.C, MQTT tooling, bridge patterns, and integration applications can be studied as a concrete multi-application family.
+Chapter 31 will then study MQTTSuite as a concrete reference ecosystem.
