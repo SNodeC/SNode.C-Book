@@ -304,11 +304,22 @@ System libraries, generated helper targets, private implementation details, and 
 
 Bluetooth RFCOMM (`net-rc`) and L2CAP (`net-l2`) branches, if available, are shown as optional branches in the graph.
 
-Some targets appear more than once because the public dependency graph has shared paths. The ASCII drawing is tree-shaped for readability, but it represents selected paths through the public dependency graph.
+Some targets have more than one relevant public path. The ASCII drawing is tree-shaped for readability, but it represents selected paths through the public dependency graph.
 
 ```text
 logger
 `-- utils
+    |-- websocket
+    |   |-- websocket-server
+    |   |   |-- http-server, shared path
+    |   |   `-- mqtt-server-websocket
+    |   |       `-- mqtt-server, shared path
+    |   |
+    |   `-- websocket-client
+    |       |-- http-client, shared path
+    |       `-- mqtt-client-websocket
+    |           `-- mqtt-client, shared path
+    |
     `-- core
         |-- db-mariadb
         |   `-- libmariadb, if available
@@ -322,84 +333,80 @@ logger
         |   |   |   |-- net-rc-stream-legacy, if available
         |   |   |   `-- net-l2-stream-legacy, if available
         |   |   |
-        |   |   `-- core-socket-stream-tls
-        |   |       |-- net-in-stream-tls
-        |   |       |-- net-in6-stream-tls
-        |   |       |-- net-un-stream-tls
-        |   |       |-- net-rc-stream-tls, if available
-        |   |       `-- net-l2-stream-tls, if available
+        |   |   |-- core-socket-stream-tls
+        |   |   |   |-- net-in-stream-tls
+        |   |   |   |-- net-in6-stream-tls
+        |   |   |   |-- net-un-stream-tls
+        |   |   |   |-- net-rc-stream-tls, if available
+        |   |   |   `-- net-l2-stream-tls, if available
+        |   |   |
+        |   |   `-- http
+        |   |       |-- libmagic, if available
+        |   |       |
+        |   |       |-- http-server
+        |   |       |   `-- http-server-express
+        |   |       |       |-- nlohmann-json support
+        |   |       |       |-- http-server-express-legacy-in
+        |   |       |       |   `-- net-in-stream-legacy
+        |   |       |       |-- http-server-express-legacy-in6
+        |   |       |       |   `-- net-in6-stream-legacy
+        |   |       |       |-- http-server-express-legacy-un
+        |   |       |       |   `-- net-un-stream-legacy
+        |   |       |       |-- http-server-express-legacy-rc, if available
+        |   |       |       |   `-- net-rc-stream-legacy
+        |   |       |       |-- http-server-express-tls-in
+        |   |       |       |   `-- net-in-stream-tls
+        |   |       |       |-- http-server-express-tls-in6
+        |   |       |       |   `-- net-in6-stream-tls
+        |   |       |       |-- http-server-express-tls-un
+        |   |       |       |   `-- net-un-stream-tls
+        |   |       |       `-- http-server-express-tls-rc, if available
+        |   |       |           `-- net-rc-stream-tls
+        |   |       |
+        |   |       `-- http-client
         |   |
-        |   |-- net
-        |   |   |-- net-in
-        |   |   |   `-- net-in-phy
-        |   |   |       `-- net-in-phy-stream
-        |   |   |           `-- net-in-stream
-        |   |   |               |-- net-in-stream-legacy
-        |   |   |               `-- net-in-stream-tls
-        |   |   |
-        |   |   |-- net-in6
-        |   |   |   `-- net-in6-phy
-        |   |   |       `-- net-in6-phy-stream
-        |   |   |           `-- net-in6-stream
-        |   |   |               |-- net-in6-stream-legacy
-        |   |   |               `-- net-in6-stream-tls
-        |   |   |
-        |   |   |-- net-un
-        |   |   |   |-- net-un-phy-stream
-        |   |   |   |   `-- net-un-stream
-        |   |   |   |       |-- net-un-stream-legacy
-        |   |   |   |       `-- net-un-stream-tls
-        |   |   |   `-- net-un-dgram
-        |   |   |
-        |   |   |-- net-rc, if available
-        |   |   |   `-- net-rc-phy
-        |   |   |       `-- net-rc-phy-stream
-        |   |   |           `-- net-rc-stream
-        |   |   |               |-- net-rc-stream-legacy
-        |   |   |               `-- net-rc-stream-tls
-        |   |   |
-        |   |   `-- net-l2, if available
-        |   |       `-- net-l2-phy
-        |   |           `-- net-l2-phy-stream
-        |   |               `-- net-l2-stream
-        |   |                   |-- net-l2-stream-legacy
-        |   |                   `-- net-l2-stream-tls
-        |   |
-        |   `-- http
-        |       |-- libmagic, if available
+        |   `-- net
+        |       |-- net-in
+        |       |   `-- net-in-phy
+        |       |       `-- net-in-phy-stream
+        |       |           `-- net-in-stream
+        |       |               |-- net-in-stream-legacy
+        |       |               `-- net-in-stream-tls
         |       |
-        |       |-- http-server
-        |       |   `-- http-server-express
-        |       |       |-- nlohmann-json support
-        |       |       |-- http-server-express-legacy-in
-        |       |       |   `-- net-in-stream-legacy
-        |       |       |-- http-server-express-legacy-in6
-        |       |       |   `-- net-in6-stream-legacy
-        |       |       |-- http-server-express-legacy-un
-        |       |       |   `-- net-un-stream-legacy
-        |       |       |-- http-server-express-legacy-rc, if available
-        |       |       |   `-- net-rc-stream-legacy
-        |       |       |-- http-server-express-tls-in
-        |       |       |   `-- net-in-stream-tls
-        |       |       |-- http-server-express-tls-in6
-        |       |       |   `-- net-in6-stream-tls
-        |       |       |-- http-server-express-tls-un
-        |       |       |   `-- net-un-stream-tls
-        |       |       `-- http-server-express-tls-rc, if available
-        |       |           `-- net-rc-stream-tls
+        |       |-- net-in6
+        |       |   `-- net-in6-phy
+        |       |       `-- net-in6-phy-stream
+        |       |           `-- net-in6-stream
+        |       |               |-- net-in6-stream-legacy
+        |       |               `-- net-in6-stream-tls
         |       |
-        |       |-- http-client
+        |       |-- net-un
+        |       |   |-- net-un-phy-stream
+        |       |   |   `-- net-un-stream
+        |       |   |       |-- net-un-stream-legacy
+        |       |   |       `-- net-un-stream-tls
+        |       |   `-- net-un-dgram
         |       |
-        |       |-- websocket-server
-        |       |   `-- mqtt-server-websocket
+        |       |-- net-rc, if available
+        |       |   `-- net-rc-phy
+        |       |       `-- net-rc-phy-stream
+        |       |           `-- net-rc-stream
+        |       |               |-- net-rc-stream-legacy
+        |       |               `-- net-rc-stream-tls
         |       |
-        |       `-- websocket-client
-        |           `-- mqtt-client-websocket
+        |       `-- net-l2, if available
+        |           `-- net-l2-phy
+        |               `-- net-l2-phy-stream
+        |                   `-- net-l2-stream
+        |                       |-- net-l2-stream-legacy
+        |                       `-- net-l2-stream-tls
         |
         `-- mqtt
             |-- mqtt-fast
             |-- mqtt-server
+            |   `-- mqtt-server-websocket, shared path
             `-- mqtt-client
+                `-- mqtt-client-websocket, shared path
 ```
 
 The graph view is useful because it makes two things visible at once.
@@ -413,7 +420,9 @@ logger
           -> core-socket
 ```
 
-Second, higher-level components do not all grow from one single branch. HTTP, MQTT, database support, network families, and concrete transport compositions all attach to the lower framework surface in different ways.
+Second, the graph has shared public paths. For example, `websocket-server` belongs to the WebSocket side and also reaches the HTTP server side. The MQTT-over-WebSocket targets similarly connect the MQTT role with the WebSocket role.
+
+Third, higher-level components do not all grow from one single branch. HTTP, MQTT, database support, network families, and concrete transport compositions all attach to the lower framework surface in different ways.
 
 That is the component architecture the build exposes.
 
@@ -612,7 +621,7 @@ The combined target becomes the usable carrier component.
 
 #### Legacy and TLS variants
 
-The separation between legacy and TLS stream targets is one of the most important build lessons.
+The separation between legacy and TLS stream targets is central to the build model.
 
 TLS is not hidden behind one global Boolean that silently changes the meaning of every target.
 
@@ -731,7 +740,7 @@ http-server-express-tls-in6
 http-server-express-tls-un
 ```
 
-and to optional Bluetooth-family targets where available.
+and to optional Bluetooth RFCOMM targets where available.
 
 This is the same dependency-hygiene rule in another form:
 
@@ -1067,11 +1076,11 @@ The build target often reveals the architecture before the implementation file i
 - CMake is an architectural surface in SNode.C, not only a build-script language.
 - The top-level build creates the project shell; `src/CMakeLists.txt` exposes the framework surface.
 - Compiler, warning, and linker policies are part of the maintenance strategy.
-- Multiplexer libraries can be selected by the build and, where useful, overridden process-locally with `LD_PRELOAD` for deployment experiments or diagnostics.
+- Multiplexer libraries are build-selectable and can also be overridden process-locally with `LD_PRELOAD`.
 - Component targets should own their dependencies.
 - The public target graph can be read from `logger` upward to understand the component surface and its shared paths.
 - `PUBLIC`, `PRIVATE`, and `INTERFACE` describe dependency hygiene.
-- `core-socket-stream` belongs to the core/socket side and depends on `core-socket`, not on `net`.
+- `core-socket-stream` belongs to the core/socket side of the component graph.
 - Concrete network-family targets combine family identity with legacy or TLS stream operation.
 - The base `http-server-express` target owns the HTTP-server dependency; concrete Express carrier targets select the carrier plus the base Express component.
 - External applications should use exported `snodec::...` targets through `find_package(snodec COMPONENTS ...)`.
