@@ -48,15 +48,9 @@ mqttcli
 mqttstore
 ```
 
-That layout is already a system lesson.
+That layout is already a system lesson: shared infrastructure belongs in libraries, operational roles become executables, and application boundaries remain visible.
 
-Shared infrastructure belongs in libraries.
-
-Operational roles become executables.
-
-Application boundaries remain visible.
-
-A system does not always mean one executable. Sometimes a system becomes clearer when several focused tools share the same architectural vocabulary.
+A system does not always mean one executable. Sometimes several focused tools sharing the same architectural vocabulary make the system clearer.
 
 MQTTSuite demonstrates that clearly.
 
@@ -108,9 +102,7 @@ The applications can be summarized like this:
 | `mqttstore` | MQTT-to-MariaDB persistence service | MQTT publishes can become durable and queryable state |
 | `mqtt-mapping` | shared mapping support where needed | selected applications can share integration semantics |
 
-The table is more useful than a feature list.
-
-It shows that MQTTSuite is organized around roles.
+The table shows the suite as a set of roles rather than as a flat feature list.
 
 #### Reading the repository
 
@@ -213,7 +205,7 @@ administration layer
   -> controlled runtime management of mapping behavior
 ```
 
-This is the kind of layered thinking the previous chapters have been building toward.
+This is the same layered thinking used throughout the framework.
 
 ### Broker surface: MQTT plus web administration
 
@@ -248,13 +240,13 @@ Those are different boundaries, but they form one coherent broker application.
 
 #### MQTT server role
 
-The broker is first of all a MQTT broker.
+The broker is first of all an MQTT broker.
 
 It exposes direct MQTT listener roles such as:
 
 ```text
 plain MQTT/TCP listeners
-TLS-protected MQTT/TCP listeners
+MQTT/TCP listeners with TLS
 Unix-domain MQTT listeners, where enabled
 ```
 
@@ -273,7 +265,7 @@ That connects several earlier chapters:
 ```text
 MQTT server layer
   -> plain MQTT/TCP listeners
-  -> TLS-protected MQTT/TCP listeners
+  -> MQTT/TCP listeners with TLS
   -> Unix-domain MQTT listeners, where enabled
 
 HTTP layer
@@ -372,7 +364,7 @@ MQTTBroker accepts and distributes client traffic.
 
 MQTTIntegrator interprets and transforms traffic.
 
-The distinction is exactly the kind of role clarity this part of the book has been developing.
+The distinction is the same kind of role clarity developed throughout this part.
 
 #### Administration for integration
 
@@ -393,7 +385,7 @@ shared mapping support
   -> domain-specific integration rules
 ```
 
-This is a useful reference pattern.
+This is a common reference pattern.
 
 A long-running integration service often needs both a machine-facing protocol role and an operator-facing administration role.
 
@@ -464,7 +456,7 @@ The optional lower SNode.C components simply show that the bridge role is not co
 
 A SNode.C-based bridge can remain an MQTT bridge while the lower connectivity options vary.
 
-That is exactly what a layered framework should make possible.
+This is the kind of variation a layered framework can support.
 
 ### Operational and persistence edges
 
@@ -495,7 +487,7 @@ They still benefit from the same configuration, transport, TLS, WebSocket, and r
 
 #### MQTTStore
 
-MQTTStore connects this chapter back to Chapter 28.
+MQTTStore brings the persistence boundary into the ecosystem.
 
 It is the persistence-facing member of the ecosystem.
 
@@ -565,7 +557,7 @@ That requires design choices:
 - which SQL types should represent the projected values,
 - and how raw storage and projected state relate to each other.
 
-This reinforces Chapter 28.
+The projection model makes persistence a system design concern.
 
 Persistence is not just another helper function.
 
@@ -575,7 +567,7 @@ It is a system boundary with its own design rules.
 
 The applications differ, but the recurring surfaces remain familiar.
 
-That is one of the strengths of MQTTSuite as a reference ecosystem.
+This is why MQTTSuite works well as a reference ecosystem.
 
 #### Transport vocabulary
 
@@ -617,7 +609,7 @@ MQTT client or server components
 optional lower carriers where available
 ```
 
-This continues a recurring lesson of the book.
+The same build-system lesson appears here again.
 
 The build system is not merely mechanics.
 
