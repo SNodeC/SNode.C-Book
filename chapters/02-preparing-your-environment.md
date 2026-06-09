@@ -75,7 +75,7 @@ Optional technologies should also be visible when available. Bluetooth RFCOMM an
 
 SNode.C is a modern C++ framework.
 
-The current build expects CMake and a C++20-capable compiler. A recent GCC or Clang installation is therefore the right baseline. On a Debian-style system, GCC 12 or newer and Clang 13 or newer are reasonable minimum expectations for the commands shown in this book.
+The build expects CMake and a C++20-capable compiler. A recent GCC or Clang installation is therefore the right baseline. On a Debian-style system, GCC 12 or newer and Clang 13 or newer are reasonable minimum expectations for the commands shown in this book.
 
 Check the available tools first:
 
@@ -140,7 +140,7 @@ This creates:
 ~/projects/snode.c/
 ```
 
-The SNode.C framework repository currently uses `master` as its primary branch. Check the current branch with:
+The SNode.C framework repository uses `master` as its primary branch. Check the active branch with:
 
 ```sh
 cd ~/projects/snode.c
@@ -378,7 +378,7 @@ The term `legacy` is important. In this naming context it denotes the non-TLS st
 
 Later chapters will introduce additional component names for IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, TLS variants, HTTP, WebSocket, MQTT, and database support.
 
-Do not try to memorize all names now. Learn the shape instead. SNode.C component names are a compact form of architectural information.
+Do not try to memorize all names at this stage. Learn the shape instead. SNode.C component names are a compact form of architectural information.
 
 ### Source tree, build tree, install tree
 
