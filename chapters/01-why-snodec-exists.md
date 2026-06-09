@@ -197,7 +197,7 @@ The context contains the application protocol behavior for one connection.
 
 The runtime coordinates event-driven progress.
 
-At this point, this is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. For now, the important point is that SNode.C is regular: the same few roles reappear in different protocol settings.
+This is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. The important point is that SNode.C is regular: the same few roles reappear in different protocol settings.
 
 That regularity is one of the reasons the framework is teachable.
 
