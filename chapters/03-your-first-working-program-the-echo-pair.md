@@ -26,11 +26,11 @@ The rest of the book will add other network families, TLS, HTTP, WebSocket, MQTT
 
 ### What the repository already contains
 
-The SNode.C repository already contains a full echo application under `src/apps/echo`.
+The SNode.C repository contains a full echo application under `src/apps/echo`.
 
-That repository example is more general than the first teaching version in this chapter. It uses a shared echo model and builds several variants by combining network-family and stream-mode choices. In the current repository, the echo context lives in `src/apps/echo/model/EchoSocketContext.h` and `EchoSocketContext.cpp`, and the server and client entry points live in `src/apps/echo/echoserver.cpp` and `echoclient.cpp`.
+The repository example is more general than the first teaching version in this chapter. It uses a shared echo model and builds several variants by combining network-family and stream-mode choices. The echo context is implemented in `src/apps/echo/model/EchoSocketContext.h` and `EchoSocketContext.cpp`; the server and client entry points are `src/apps/echo/echoserver.cpp` and `echoclient.cpp`.
 
-The repository design is important because it demonstrates that the echo application is not tied to one hard-coded socket kind. The same application model can be combined with different lower layers.
+That design is important because it demonstrates that the echo application is not tied to one hard-coded socket kind. The same application model can be combined with different lower layers.
 
 For a first chapter, however, that full matrix would hide the essential pattern. We therefore use a deliberately reduced version:
 
@@ -172,7 +172,7 @@ The factories implement `create(...)`. They are small because their job is small
 
 The `Role` enum lets one context class serve both sides. The server and client share the same echo behavior, but the client must send the first message. The role tells the context whether it should initiate the ping-pong when the connection becomes active.
 
-The `onSignal(...)` override is included because it is part of the current context interface used by the repository echo example. Signal handling is not the conceptual focus of this chapter.
+The `onSignal(...)` override is included because it belongs to the context interface used by the repository echo example. Signal handling is not the conceptual focus of this chapter.
 
 ### Implementing the echo behavior
 
@@ -425,7 +425,7 @@ The connection registration is visible in the code:
 client.connect("localhost", 8080, callback);
 ```
 
-Again, this should not be read as a blocking call that performs the entire communication on the current stack. It registers the connection intention. The runtime then performs the actual event-driven work.
+Again, this should not be read as a blocking call that performs the entire communication on the caller's stack. It registers the connection intention. The runtime then performs the actual event-driven work.
 
 The symmetry between server and client is intentional:
 
