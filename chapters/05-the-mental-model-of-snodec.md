@@ -556,4 +556,13 @@ metrics
 
 Together they form the working mental model of SNode.C.
 
+### What to remember
+
+- SNode.C is best understood as an event-driven, layer-based framework built from recurring roles.
+- `core::SNodeC` owns the visible runtime lifecycle; `listen(...)` and `connect(...)` register communication intent that the runtime advances.
+- A server or client instance is a configured communication role, while a connection is a concrete peer relationship.
+- A `SocketContextFactory` creates per-connection contexts, and a `SocketContext` is where protocol behavior belongs.
+- The practical layer stack is network family, transport form, connection handling, and application protocol.
+- Configuration, callbacks, retry behavior, flow control, diagnostics, and metrics are part of the operational model, not decoration around it.
+
 The next chapters will open the model from the inside. Chapter 6 looks more closely at the core runtime and event processing. Chapter 7 then turns the layer model into practical reading and design guidance for network, transport, connection, and application boundaries.
