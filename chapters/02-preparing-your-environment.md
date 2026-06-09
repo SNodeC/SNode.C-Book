@@ -431,6 +431,15 @@ Do I have a separate playground directory for later external experiments?
 
 If the answer to these questions is yes, the environment is ready for the first program.
 
+### What to remember
+
+- Keep the source tree, build tree, install tree, and playground project separate; each has a different purpose.
+- Use an out-of-tree build so generated files and compiled binaries do not obscure the source tree.
+- A local install prefix makes external examples predictable because headers, libraries, and CMake package files live in one known place.
+- Component names such as `net-in-stream-legacy` encode architectural position; `legacy` means the non-TLS stream connection variant.
+- Runtime output is part of the learning process. Do not silence diagnostics before the first examples are understood.
+- The environment is ready when the framework builds, example programs can be found and run, and an external playground project can consume the installed package.
+
 ### Closing perspective
 
 A good development environment is not only about making the compiler happy.
