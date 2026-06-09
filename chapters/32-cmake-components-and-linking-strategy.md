@@ -28,9 +28,9 @@ This chapter is therefore not a generic CMake tutorial.
 
 It is about how SNode.C uses CMake to preserve architectural clarity.
 
-### The build tree as architecture
+### The build structure as architecture
 
-A beginner may look at a CMake tree and see only commands:
+A beginner may look at a CMake build structure and see only commands:
 
 - `add_library`,
 - `target_link_libraries`,
@@ -42,11 +42,11 @@ Those commands matter.
 
 But in a framework like SNode.C, the more important question is:
 
-> What does the build tree reveal about the architecture?
+> What does the build structure reveal about the architecture?
 
 The answer is: a great deal.
 
-The build tree shows which parts are lower runtime infrastructure, which parts are protocol layers, which parts are transport/family compositions, which parts are optional features, and which parts are applications.
+The build structure shows which parts are lower runtime infrastructure, which parts are protocol layers, which parts are transport/family compositions, which parts are optional features, and which parts are applications.
 
 #### Top-level project shell
 
@@ -288,7 +288,7 @@ role: client
 carrier composition: WebSocket
 ```
 
-A target name should let the reader infer the role of the component before opening the source file.
+A target name should make the role of the component visible before the source file is opened.
 
 SNode.C largely follows that principle.
 
@@ -296,13 +296,15 @@ SNode.C largely follows that principle.
 
 The public component graph can also be read from the bottom upward.
 
-The following graph view starts at `logger`, because `logger` is the lowest common SNode.C target in many public dependency paths. From there, the view expands through `utils`, `core`, socket layers, network families, HTTP/Express, WebSocket, MQTT, and database support.
+The following graph view starts at `logger`, because `logger` is the lowest shared SNode.C target that many public dependency paths eventually reach. From there, the view expands through `utils`, `core`, socket layers, network families, HTTP/Express, WebSocket, MQTT, and database support.
 
-This is a public component-target view, not a complete list of source files.
+This is a public component-target graph view, not a complete list of source files.
 
 System libraries, generated helper targets, private implementation details, and some optional platform-specific components are either omitted or shown only as short leaf notes.
 
-Some targets appear more than once because the public dependency graph has shared paths. The repetition is used only to keep the architectural paths readable.
+Bluetooth RFCOMM (`net-rc`) and L2CAP (`net-l2`) branches, if available, are shown as optional branches in the graph.
+
+Some targets appear more than once because the public dependency graph has shared paths. The ASCII drawing is tree-shaped for readability, but it represents selected paths through the public dependency graph.
 
 ```text
 logger
@@ -413,7 +415,7 @@ logger
 
 Second, higher-level components do not all grow from one single branch. HTTP, MQTT, database support, network families, and concrete transport compositions all attach to the lower framework surface in different ways.
 
-That is the real component architecture.
+That is the component architecture the build exposes.
 
 #### Namespaced targets are the consumer-facing interface
 
@@ -429,7 +431,7 @@ The namespace is not cosmetic.
 
 It tells an external application that the target is an exported SNode.C component, not a local helper target from the application's own build tree.
 
-A consumer should be able to write:
+An external consumer can write:
 
 ```cmake
 target_link_libraries(myapp
@@ -472,7 +474,7 @@ The central rule is simple:
 
 > The target that needs a dependency should declare it.
 
-That is why a consumer should not manually repeat the whole lower dependency chain.
+That is why a consumer-facing link line does not manually repeat the whole lower dependency chain.
 
 A direct link line should describe the application face:
 
@@ -545,6 +547,8 @@ process-local override
 ```
 
 Both mechanisms change the low-level waiting backend, not the application-facing event-driven model.
+
+The `LD_PRELOAD` form is mainly useful for process-local deployment experiments, diagnostics, or platform-specific operation.
 
 #### Core socket stream layers
 
@@ -954,7 +958,7 @@ Those lower dependencies belong to the selected SNode.C component targets.
 
 The list of supported components should not be treated as a menu from which every application selects everything.
 
-A consumer should select the components that describe the application face:
+A consumer-facing link line selects the components that describe the application face:
 
 ```text
 protocol/application component
@@ -1063,9 +1067,9 @@ The build target often reveals the architecture before the implementation file i
 - CMake is an architectural surface in SNode.C, not only a build-script language.
 - The top-level build creates the project shell; `src/CMakeLists.txt` exposes the framework surface.
 - Compiler, warning, and linker policies are part of the maintenance strategy.
-- Multiplexer libraries can be selected by the build and, where useful, overridden process-locally with `LD_PRELOAD`.
+- Multiplexer libraries can be selected by the build and, where useful, overridden process-locally with `LD_PRELOAD` for deployment experiments or diagnostics.
 - Component targets should own their dependencies.
-- The public target graph can be read from `logger` upward to understand the component surface.
+- The public target graph can be read from `logger` upward to understand the component surface and its shared paths.
 - `PUBLIC`, `PRIVATE`, and `INTERFACE` describe dependency hygiene.
 - `core-socket-stream` belongs to the core/socket side and depends on `core-socket`, not on `net`.
 - Concrete network-family targets combine family identity with legacy or TLS stream operation.
