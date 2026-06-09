@@ -26,11 +26,11 @@ The rest of the book will add other network families, TLS, HTTP, WebSocket, MQTT
 
 ### What the repository already contains
 
-The SNode.C repository contains a full echo application under `src/apps/echo`.
+The SNode.C repository already contains a full echo application under `src/apps/echo`.
 
 The repository example is more general than the first teaching version in this chapter. It uses a shared echo model and builds several variants by combining network-family and stream-mode choices. The echo context is implemented in `src/apps/echo/model/EchoSocketContext.h` and `EchoSocketContext.cpp`; the server and client entry points are `src/apps/echo/echoserver.cpp` and `echoclient.cpp`.
 
-That design is important because it demonstrates that the echo application is not tied to one hard-coded socket kind. The same application model can be combined with different lower layers.
+The repository design is important because it demonstrates that the echo application is not tied to one hard-coded socket kind. The same application model can be combined with different lower layers.
 
 For a first chapter, however, that full matrix would hide the essential pattern. We therefore use a deliberately reduced version:
 
@@ -648,17 +648,12 @@ This does not make the low-level details disappear. It organizes where they belo
 
 ### What to remember
 
-The first working example is small, but it already contains the core pattern.
-
-A SNode.C server or client instance represents a communication role.
-
-A `SocketContextFactory` creates one context per established connection.
-
-A `SocketContext` contains the application protocol behavior for that connection.
-
-`listen(...)` and `connect(...)` register communication intentions. The runtime advances the actual event-driven work.
-
-The same structure that works for IPv4 legacy streams can later be recognized again when the lower family, stream mode, or application protocol changes.
+- The first working example is small, but it already contains the core SNode.C application pattern.
+- A server or client instance represents a communication role; it is not the application protocol itself.
+- A `SocketContextFactory` creates one context for each established connection.
+- A `SocketContext` contains the application protocol behavior for that connection.
+- `listen(...)` and `connect(...)` register communication intentions; the runtime advances the actual event-driven work.
+- The same structure used for IPv4 legacy streams can later be recognized again when the lower family, stream mode, or application protocol changes.
 
 ### Closing perspective
 
