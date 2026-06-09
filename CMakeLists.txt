@@ -35,14 +35,14 @@ function(make_pandoc_pdf_target target_name output_file)
     ${target_name}
     COMMAND "${CMAKE_COMMAND}" -E make_directory "${BUILD_DIR}"
     COMMAND "cp" "-fa" "${BUILD_DIR}/${output_file}.pdf"
-            "${BUILD_DIR}/${output_file}-old.pdf"
+            "${BUILD_DIR}/${output_file}-old.pdf" || echo ""
     COMMAND
       "${PANDOC}" ${ARGN} --syntax-highlighting=idiomatic --from
       "${PANDOC_FROM}" --to pdf --top-level-division=part --pdf-engine
       "${PDF_ENGINE}" -o "${BUILD_DIR}/${output_file}-temp.pdf"
-    COMMAND "rm" "-f" "${BUILD_DIR}/${output_file}.pdf"
+    COMMAND "rm" "-f" "${BUILD_DIR}/${output_file}.pdf" || echo ""
     COMMAND "mv" "${BUILD_DIR}/${output_file}-temp.pdf"
-            "${BUILD_DIR}/${output_file}.pdf"
+            "${BUILD_DIR}/${output_file}.pdf" || echo ""
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     VERBATIM)
 endfunction()
