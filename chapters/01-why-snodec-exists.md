@@ -197,7 +197,7 @@ The context contains the application protocol behavior for one connection.
 
 The runtime coordinates event-driven progress.
 
-This is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. The important point is that SNode.C is regular: the same few roles reappear in different protocol settings.
+At this point, this is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. The important point is that SNode.C is regular: the same few roles reappear in different protocol settings.
 
 That regularity is one of the reasons the framework is teachable.
 
@@ -216,6 +216,14 @@ The purpose of the first echo pair is not to impress the reader with a sophistic
 Chapter 3 gives the first full example.
 
 Here it is enough to understand why the book starts small: the small example gives the first clear view of the structure.
+
+### What to remember
+
+- SNode.C is introduced in this book as an architectural teaching object, not merely as a collection of APIs.
+- Its value comes from recurring roles: runtime, server or client instance, connection, factory, and per-connection context.
+- The framework separates lower communication choices from application protocol behavior, so the same mental model can survive changes in network family, transport, or protocol layer.
+- The first echo example is deliberately small because it exposes the shape of the framework without hiding it behind protocol complexity.
+- MQTTSuite becomes important later as a reference ecosystem, but the book first builds the framework model that makes such systems understandable.
 
 ### From motivation to a working environment
 
