@@ -566,6 +566,15 @@ A practical reading workflow for SNode.C is:
 
 This workflow is not only useful for beginners. It is also useful when extending the framework. A new feature should have a clear place in the same map.
 
+### What to remember
+
+- Read SNode.C as a set of layers and recurring roles, not as a flat pile of source files.
+- CMake files are navigation aids: they reveal subdirectories, targets, dependencies, components, and install boundaries.
+- Long namespace and component names usually encode architecture: layer area, network family, transport form, connection mode, and role.
+- Example applications show framework usage, but they are not the framework core; separate application decisions from reusable framework patterns.
+- A reliable reading path starts from an application, finds the instance, factory, and context, then follows aliases into `net` and abstractions into `core`.
+- Variant-heavy code becomes easier to read once you ask what stayed structurally the same and what changed because a lower layer changed.
+
 ### Transition to the architecture chapters
 
 Part I began with motivation, prepared the build environment, built the first echo pair, and now established a way to read the source tree.
