@@ -4,11 +4,11 @@
 
 Chapter 5 introduced the mental model of SNode.C.
 
-Chapter 6 explained the runtime machinery that keeps registered communication roles, events, timers, descriptor activity, and callbacks moving.
+Chapter 6 then explained how the runtime advances registered instances. Descriptor readiness, timers, queued work, callbacks, and flow-controller progress are not scattered side effects. They are coordinated by the runtime core.
 
-This chapter now asks a different question:
+This chapter turns to a different question:
 
-> What kind of communication work is the runtime moving through the framework?
+> What kind of communication work is the runtime advancing?
 
 The answer is the communication layer stack.
 
@@ -21,11 +21,13 @@ network family
           -> application protocol
 ```
 
-Chapter 5 introduced this as part of the general mental model. This chapter uses it in practice. Its purpose is not to repeat the theory of layering, but to show how the layer model appears in names, components, code paths, and architectural decisions.
+This is not a decorative diagram. It is the reason long SNode.C names are readable, why components can be selected systematically, and why the same application shape can move from IPv4 to IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, non-TLS streams, TLS streams, HTTP, WebSocket, MQTT, or MQTT over WebSocket without turning into unrelated code.
 
-The reader should leave this chapter able to look at a long SNode.C type name or component name and understand what it says about the communication stack.
+Chapter 5 introduced this stack as part of the general mental model. Chapter 6 showed how registered instances make progress inside the runtime. This chapter explains how the communication choices behind those instances are named, built, and composed.
 
-### The four-layer picture
+The goal is not to repeat a textbook theory of layering. The goal is more practical: after this chapter, a reader should be able to look at a SNode.C type name, component name, or source-tree path and understand what it says about the communication stack.
+
+### The communication stack in four layers
 
 For practical work, SNode.C can be read through four communication layers.
 
@@ -34,82 +36,86 @@ For practical work, SNode.C can be read through four communication layers.
 | Network | Which endpoint family are we using? | IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP |
 | Transport | What communication form is assumed? | `stream` |
 | Connection | How is the concrete peer relationship handled? | `legacy`, `tls` |
-| Application | What protocol or framework behavior runs above the connection? | custom context, HTTP, WebSocket, Express-like routing, MQTT |
+| Application | What protocol behavior runs above the connection? | custom context, HTTP, WebSocket, Express-like routing, MQTT |
 
-This four-layer view is not a replacement for the runtime model from Chapter 6. The runtime model explains how work is scheduled and dispatched. The communication layer model explains what kind of communication work is being structured.
+This four-layer view is not a replacement for the runtime model from Chapter 6.
 
-#### Runtime model versus communication layer model
+The runtime model explains how work is scheduled and dispatched. It talks about the event loop, descriptor readiness, timers, queued work, timeout processing, signals, and cleanup.
 
-The runtime supports the communication layers, but it is not itself one of those four communication layers.
+The communication layer model explains what kind of communication structure that work belongs to. It answers different questions: Which endpoint family? Which transport form? Which connection machinery? Which application protocol?
 
-A useful distinction is:
+That distinction is important because both models meet in every real application.
+
+A registered instance is advanced by the runtime. But the instance is not abstract runtime vapor. It is an IPv4 stream legacy client, an IPv6 TLS server, a Unix-domain HTTP endpoint, a Bluetooth RFCOMM stream endpoint, a WebSocket endpoint, an MQTT participant, or another concrete combination. The runtime moves the work; the layer stack tells us what kind of work it is.
+
+A compact separation is:
 
 | Concern | Where it belongs |
 |---|---|
 | Event loop, descriptor readiness, timers, queued work | Runtime core |
 | IPv4 versus IPv6 versus Unix versus Bluetooth | Network layer |
 | Stream-oriented peer communication | Transport layer |
-| Legacy versus TLS, handshakes, encryption | Connection layer |
+| Non-TLS versus TLS connection handling | Connection layer |
 | HTTP, WebSocket, MQTT, or custom protocol behavior | Application layer |
 | Factory and context classes | Application-facing protocol endpoint machinery |
 
-This distinction prevents a common confusion.
+This prevents a common confusion.
 
 The runtime tells us *how work is moved*.
 
 The communication layer stack tells us *what kind of communication structure that work belongs to*.
 
-### Reading names and components as layer descriptions
+### Names are maps of architecture
 
 The fastest practical way to understand SNode.C layering is to read names from left to right.
 
-A long type or component name is not just a long name. In many cases, it is a compressed description of the communication stack.
+A long SNode.C name is usually not long by accident. In many cases, it is a compressed description of the communication stack. The name does not merely identify a class. It records a set of architectural decisions.
 
-#### Type names as layered statements
-
-Consider:
+Consider this type:
 
 ```cpp
 net::in::stream::legacy::SocketClient<MyFactory>
 ```
 
-This is not an arbitrary type name. It is a layered statement.
+Read it as a sentence:
 
-| Fragment | Meaning |
-|---|---|
-| `net` | network-facing framework region |
-| `in` | IPv4 family |
-| `stream` | stream transport |
-| `legacy` | unencrypted connection handling |
-| `SocketClient` | client communication role |
-| `MyFactory` | factory that creates the per-connection context |
+```text
+network-facing code
+  -> IPv4 family
+      -> stream transport
+          -> non-TLS stream connection variant
+              -> client-side handle type
+                  -> factory for per-connection contexts
+```
 
-A similar type:
+The visible `SocketClient` object in application code is still the handle, in the sense established in Chapters 5 and 6. It is the object through which the application names, configures, and registers the client-side instance. The name of the type tells us which lower-layer choices that instance will use when the runtime advances it.
+
+A similar server type can be read the same way:
 
 ```cpp
 net::rc::stream::tls::SocketServer<MyFactory>
 ```
 
-can be read as:
+This says:
 
-| Fragment | Meaning |
-|---|---|
-| `net` | network-facing framework region |
-| `rc` | Bluetooth RFCOMM family |
-| `stream` | stream transport |
-| `tls` | TLS connection handling |
-| `SocketServer` | server communication role |
-| `MyFactory` | factory that creates the per-connection context |
+```text
+network-facing code
+  -> Bluetooth RFCOMM family
+      -> stream transport
+          -> TLS connection handling
+              -> server-side handle type
+                  -> factory for per-connection contexts
+```
 
-Once the reader learns this habit, long SNode.C names become less intimidating. They become compact descriptions of architectural position.
+Once this habit is learned, long names become useful instead of intimidating. They are not random C++ namespace growth. They are compact layer descriptions.
 
 The rule is simple:
 
-> Read a SNode.C communication type as a stack description, not as a random C++ name.
+> Read a SNode.C communication type as a stack description before reading it as an isolated API name.
 
 #### Component names tell the same story
 
-SNode.C's installable CMake components also encode architecture.
+SNode.C's installable CMake components encode the same architectural discipline.
 
 A component such as:
 
@@ -119,12 +125,12 @@ net-in-stream-legacy
 
 can be read as:
 
-| Fragment | Meaning |
-|---|---|
-| `net` | network-facing component family |
-| `in` | IPv4 |
-| `stream` | stream transport |
-| `legacy` | unencrypted connection handling |
+```text
+net       network-facing component family
+in        IPv4
+stream    stream transport
+legacy    non-TLS stream connection variant
+```
 
 Likewise:
 
@@ -137,27 +143,26 @@ means:
 ```text
 IPv6
   -> stream
-      -> TLS
+      -> TLS connection handling
 ```
 
-The source tree and the package components are not identical views, but they express the same architectural idea.
+The source-tree view and the component view are not identical, because one serves the C++ reader and the other serves the build system. But they express the same idea.
 
-- A namespace such as `net::in::stream::legacy` helps the C++ reader.
-- A component such as `net-in-stream-legacy` helps the CMake user.
+A namespace such as `net::in::stream::legacy` helps the C++ reader locate a type in the layer stack. A component such as `net-in-stream-legacy` helps the CMake user select the corresponding build product.
 
-Both are maps.
+These names are examples of the naming discipline, not a vocabulary test. The reader does not need to memorize every component in one sitting. The useful habit is to ask:
 
-### The network layer
+> Which layer decisions are encoded in this name?
 
-The network layer answers:
+That question turns long names into maps.
+
+### The network layer: endpoint identity
+
+The network layer answers the first concrete communication question:
 
 > Which kind of endpoint identity are we using?
 
-This is the layer where SNode.C chooses among lower communication families.
-
-#### Choosing the communication family
-
-SNode.C treats several lower communication families as first-class participants in the same architecture.
+This is where SNode.C chooses among lower communication families.
 
 | Family | Namespace fragment | Typical endpoint identity |
 |---|---|---|
@@ -167,65 +172,53 @@ SNode.C treats several lower communication families as first-class participants 
 | Bluetooth RFCOMM | `net::rc` | Bluetooth device address and RFCOMM channel |
 | Bluetooth L2CAP | `net::l2` | Bluetooth device address and L2CAP PSM |
 
-This side-by-side treatment is important.
+This side-by-side treatment is one of the important architectural features of SNode.C.
 
-It does not mean the families are identical. They differ in addressing, binding, connecting, operating-system behavior, permissions, deployment, and practical use cases.
+It does not mean these families are identical. They are not. IPv4 and IPv6 use network addresses and ports. Unix domain sockets live in a local operating-system namespace. Bluetooth RFCOMM and L2CAP use Bluetooth-specific addressing and deployment assumptions. Binding, connecting, permissions, diagnostics, and operational behavior can differ significantly.
 
-But they are still treated as lower communication families within one framework story.
+The design point is subtler:
 
-That is the balance SNode.C aims for:
+> SNode.C reuses the application shape without pretending that endpoint semantics are the same.
 
-> Reuse the pattern, but respect the family-specific semantics.
+That is exactly the balance a layered framework should aim for. It lets the reader carry a mental model from one family to another, while still respecting family-specific facts.
 
 #### Address semantics belong here
 
-The network layer becomes concrete through address types.
+The network layer becomes concrete through address types and address semantics.
 
-An IPv4 endpoint is not the same thing as an IPv6 endpoint. A Unix domain socket path is not the same thing as a Bluetooth device address plus channel or PSM.
+An IPv4 endpoint is not the same thing as an IPv6 endpoint. A Unix domain socket path is not the same thing as a Bluetooth device address plus channel or PSM. SNode.C does not erase those differences behind one vague endpoint abstraction.
 
-SNode.C does not hide that difference behind one vague endpoint abstraction. Each family has its own address semantics.
+That is good design.
 
-This is good design.
+A framework that hides all endpoint identity behind a single general address type may look simpler at first, but the simplification can become misleading. Real systems need to know whether they are binding a TCP port, opening a local socket path, or addressing a Bluetooth service.
 
-It allows the framework to reuse higher-level patterns while still preserving the truth that endpoint identity is family-specific.
+SNode.C keeps the family-specific meaning visible while still preserving the higher-level pattern.
 
-This is also why Chapter 8 follows naturally from this chapter. Once the reader understands that the network layer chooses an endpoint family, the next question is:
+This is why Chapter 8 follows naturally from this chapter. Once the reader understands that the network layer chooses an endpoint family, the next question is unavoidable:
 
 > What exactly does an address mean in each family?
 
 That is the topic of socket addresses and address semantics.
 
-### The transport layer
+### The transport layer: communication form
 
 Above the network family sits the transport form.
 
-For the parts of SNode.C discussed here, the central transport form is:
+For the early and central parts of this book, the important transport form is:
 
 ```text
 stream
 ```
 
-#### What `stream` gives us
+A stream transport gives the framework a stable model for connection-oriented byte communication. It lets SNode.C speak about establishing a peer relationship, reading and writing byte sequences, observing connection lifetime, shutting down, applying timeouts, and inserting TLS below the application protocol.
 
-A stream transport gives the framework a stable model for:
+This does not mean every communication form is the same. It means that the stream abstraction gives many SNode.C examples a common conceptual base.
 
-- establishing a peer relationship,
-- maintaining a connection over time,
-- reading and writing byte sequences,
-- observing connection lifetime,
-- handling shutdown,
-- applying timeouts,
-- and inserting TLS at the connection layer.
+The network layer decides what kind of endpoint identity is used.
 
-This does not mean every possible communication form is the same. It means that the stream abstraction gives many SNode.C examples a common conceptual base.
+The transport layer decides what kind of communication relationship is assumed.
 
-The network family decides what kind of endpoint we use.
-
-The transport layer decides what kind of communication relationship we assume.
-
-#### Where family and transport meet
-
-When network family and transport form are combined, we get namespaces such as:
+When these two decisions are combined, the result appears directly in namespaces such as:
 
 ```text
 net::in::stream
@@ -235,46 +228,46 @@ net::rc::stream
 net::l2::stream
 ```
 
-This is the first point where the layer model becomes directly visible in code.
+This is the first place where the layer model becomes visible in code.
 
-A reader can now ask:
+A reader can ask:
 
-> Am I looking at IPv4 stream communication, Unix-domain stream communication, or Bluetooth stream communication?
+```text
+Am I looking at IPv4 stream communication?
+IPv6 stream communication?
+Unix-domain stream communication?
+Bluetooth RFCOMM stream communication?
+Bluetooth L2CAP stream communication?
+```
 
-That question is more useful than asking only:
+That question is more useful than asking only which socket class is involved. It places the code in the communication stack.
 
-> Which socket class is this?
-
-The type name tells you where you are in the layer stack.
-
-### The connection layer
+### The connection layer: managing the peer relationship
 
 The network layer chooses the endpoint family.
 
 The transport layer chooses the communication form.
 
-The connection layer answers:
+The connection layer answers a different question:
 
 > How is the concrete peer relationship handled while it exists?
 
-#### Managing the peer relationship
-
-In SNode.C's stream-oriented model, the important connection-layer distinction is:
+In the stream-oriented SNode.C model, the central connection-layer distinction is:
 
 ```text
 legacy
 tls
 ```
 
-`legacy` means unencrypted connection handling.
+`legacy` means the non-TLS stream connection variant.
 
 `tls` means TLS-secured connection handling.
 
-This distinction is not the same as the transport distinction.
+The word `legacy` is important to read correctly. In this book it does not mean obsolete. It is the established SNode.C name for the stream variant that does not add TLS at the connection layer.
 
-The transport layer says that communication is stream-oriented. The connection layer says how the active peer relationship is managed, including whether TLS is involved.
+This distinction is not the same as the transport distinction. The transport layer says that communication is stream-oriented. The connection layer says how the active peer relationship is managed, including whether TLS is part of that management.
 
-That difference matters because TLS changes real behavior:
+TLS changes real behavior:
 
 - handshake sequence,
 - certificate material,
@@ -282,17 +275,16 @@ That difference matters because TLS changes real behavior:
 - SNI or hostname-related concerns,
 - timing,
 - failure modes,
-- and sometimes logging or diagnostics.
+- logging and diagnostics.
 
 Yet TLS should not force the application writer to abandon the whole application model.
 
-#### Legacy versus TLS as a layer change
-
-One of SNode.C's useful architectural properties is that moving from `legacy` to `tls` is a connection-layer change, not a complete application rewrite.
+That is the useful architectural point. Moving from `legacy` to `tls` is a connection-layer change, not a complete application rewrite.
 
 Often, the application keeps:
 
-- the same server/client role shape,
+- the same server/client handle shape,
+- the same registered-instance model,
 - the same factory/context pattern,
 - the same broad protocol behavior,
 - the same runtime model,
@@ -300,13 +292,11 @@ Often, the application keeps:
 
 What changes is the connection machinery below the application protocol.
 
-That is exactly what a good layer model should achieve. It isolates the change without pretending that TLS is trivial.
-
-TLS is not just a flag. It has operational and security consequences. But architecturally, it belongs in the connection layer.
+That is exactly what a good layer model should achieve. It isolates the change without pretending that TLS is trivial. TLS is not just a flag. It has operational and security consequences. But architecturally, it belongs in the connection layer.
 
 #### Practical connection-layer combinations
 
-The component structure reflects the layer model.
+The component structure reflects this separation.
 
 Core stream connection components include:
 
@@ -315,7 +305,7 @@ core-socket-stream-legacy
 core-socket-stream-tls
 ```
 
-Concrete network stream components include, for example:
+Concrete network stream components combine network family, stream transport, and connection handling. Examples include:
 
 ```text
 net-in-stream-legacy
@@ -326,7 +316,7 @@ net-un-stream-legacy
 net-un-stream-tls
 ```
 
-Bluetooth-related stream components are represented conditionally in the build configuration, because their availability depends on Bluetooth support being enabled in the build environment. Conceptually, they follow the same pattern:
+Bluetooth-related stream components follow the same conceptual pattern where Bluetooth support and the corresponding build options are available:
 
 ```text
 net-rc-stream-legacy
@@ -335,25 +325,21 @@ net-l2-stream-legacy
 net-l2-stream-tls
 ```
 
-The important point is the pattern:
+The exact availability of Bluetooth components depends on the build environment and enabled options. The architectural reading strategy remains the same:
 
 ```text
 network family
   -> stream transport
-      -> legacy or TLS connection handling
+      -> non-TLS or TLS connection handling
 ```
 
-The exact availability of Bluetooth components depends on the build environment and enabled options. The architectural reading strategy remains the same.
-
-### The application layer
+### The application layer: protocol behavior
 
 Above the connection layer sits the application layer.
 
-This is where actual protocol behavior lives.
+This is where communication receives meaning.
 
-#### Protocol behavior above the connection
-
-For small custom protocols, the application layer may be a `SocketContext` derived class written by the user.
+For a small custom protocol, the application layer may be a `SocketContext` derived class written by the user. The context reacts to lifecycle and data events for one concrete connection. That is what the echo example did in Chapter 3.
 
 For higher-level framework support, the application layer may involve:
 
@@ -361,18 +347,27 @@ For higher-level framework support, the application layer may involve:
 - WebSocket,
 - Express-like routing,
 - MQTT,
-- MQTT over WebSocket,
-- or later database-backed application state.
+- or MQTT over WebSocket.
 
-The important point is not merely that these features exist.
+Later chapters also show how application protocols can be connected to persistent application state. That persistence belongs to the larger application architecture; it is not itself another communication layer in this stack.
 
-The important point is that they do not erase the lower layers.
+The architectural lesson is that higher protocols do not erase the lower layers.
 
 A web server is not just web code. It is web behavior carried by some lower communication stack.
 
-An MQTT application is not just MQTT code. It is MQTT behavior carried by a connection, which is carried by a transport, which is carried by a network family.
+An MQTT application is not just MQTT code. It is MQTT behavior carried by a connection, which is carried by a transport, which is carried by a network family. MQTT over WebSocket adds another important lesson: an application protocol can itself be carried through another application-layer protocol structure while still relying on the lower stack below it.
 
-That is the practical value of the layer model.
+This is the practical value of the layer model. It lets the reader ask precise questions:
+
+```text
+Which lower family carries this service?
+Is TLS below the protocol?
+Is MQTT native over a stream connection, or carried through WebSocket?
+Where does the context sit?
+Which parts would change if the lower family changed?
+```
+
+Those questions are more useful than treating HTTP, WebSocket, MQTT, and custom protocols as unrelated feature islands.
 
 #### Application-layer components
 
@@ -394,7 +389,7 @@ mqtt-server-websocket
 mqtt-client-websocket
 ```
 
-Express-based HTTP server components also encode lower choices, for example:
+Express-based HTTP server components can also encode lower choices, for example:
 
 ```text
 http-server-express-legacy-in
@@ -407,11 +402,11 @@ http-server-express-tls-rc
 http-server-express-tls-un
 ```
 
-Again, the lesson is not to memorize every name at once.
+Again, the point is not to memorize every name at once. The point is to read component names as architectural statements.
 
-The lesson is to read the component name as an architectural statement.
+A component name tells the reader which higher framework behavior is selected and, in many cases, which lower communication stack carries it.
 
-#### The application layer is not unrelated to sockets
+#### The application layer is still connected to sockets
 
 A common beginner mistake is to imagine a sharp psychological break:
 
@@ -422,7 +417,7 @@ above: web code or MQTT code
 
 SNode.C helps the reader avoid that mistake.
 
-HTTP, WebSocket, Express-like APIs, and MQTT are application-layer behaviors carried by lower layers.
+HTTP, WebSocket, Express-like APIs, and MQTT are application-layer behaviors carried by lower layers. They may introduce their own vocabulary, abstractions, and configuration surfaces, but they do not float above the network stack as independent magic.
 
 A reader who understands the lower layers can ask better questions:
 
@@ -440,7 +435,7 @@ A useful way to test an architectural description is to ask whether the build sy
 
 In SNode.C, it does.
 
-The `src` build adds major framework regions such as `core`, `net`, `web`, `express`, `database`, `iot`, and `apps`. The supported component list includes core stream components, concrete network stream components, HTTP, Express, WebSocket, MQTT, and MQTT-over-WebSocket components.
+The `src` build adds major framework regions such as `core`, `net`, `web`, `express`, `database`, `iot`, and `apps`. The supported components include core stream components, concrete network stream components, HTTP, Express, WebSocket, MQTT, and MQTT-over-WebSocket components.
 
 A small example makes the relationship visible:
 
@@ -454,10 +449,10 @@ net-in-stream-legacy
 Meaning:
 network family: IPv4 / in
 transport form: stream
-connection handling: legacy
+connection handling: non-TLS stream connection variant
 ```
 
-The same pattern also appears in the TLS variant:
+The same pattern appears in the TLS variant:
 
 ```text
 C++ namespace / type path:
@@ -472,9 +467,7 @@ transport form: stream
 connection handling: TLS
 ```
 
-This matters because the layer model is not only a diagram in prose.
-
-It affects how code is organized, how components are built, and how external projects link against the framework.
+This matters because the layer model is not only a diagram in prose. It affects how code is organized, how components are built, and how external projects link against the framework.
 
 A reader who learns the layer names is also learning how to navigate the build.
 
@@ -499,12 +492,13 @@ Some things change:
 - required environment,
 - permissions or operating-system behavior,
 - deployment pattern,
-- some configuration details.
+- configuration details,
+- diagnostics and failure modes.
 
 But other things remain stable:
 
 - the event-driven runtime,
-- the communication role,
+- the registered instance as the communication role advanced by the runtime,
 - the factory/context pattern,
 - the broad connection lifecycle,
 - the idea that TLS belongs to the connection layer,
@@ -512,15 +506,19 @@ But other things remain stable:
 
 That stable remainder is the value of the layer model.
 
+It is not that lower carriers are interchangeable in every practical detail. They are not. The value is that the reader can separate what changed from what did not.
+
+That is transfer.
+
 #### Where Bluetooth fits
 
-Bluetooth must appear in this chapter because RFCOMM and L2CAP are not exceptions to the model. They are confirmations of it.
+Bluetooth belongs in this chapter because RFCOMM and L2CAP are not exceptions to the model.
 
 They show that SNode.C's layer design is not only about internet-facing communication such as IPv4 and IPv6. It also covers device-near communication families.
 
-This is especially important for IoT, embedded, and machine-to-machine systems.
+This is especially important for IoT, embedded, and machine-to-machine systems. Such systems often need to combine local device communication, network transport, web interfaces, message-oriented integration, and deployment constraints. Treating Bluetooth as a strange appendix would weaken the architectural lesson. Treating it as a lower communication family makes the model stronger.
 
-However, Bluetooth does not need to be justified every time it appears. Once the reader understands that RFCOMM and L2CAP are lower communication families in the same architectural model, the later chapters can discuss their concrete address and API details without treating them as special outsiders.
+However, Bluetooth does not need to be justified every time it appears. Once the reader understands that RFCOMM and L2CAP are lower communication families in the same architectural model, later chapters can discuss their concrete address and API details without treating them as special outsiders.
 
 ### Layers are real, but not walls
 
@@ -552,16 +550,20 @@ The correct model is:
 
 That is a more honest and more useful systems view.
 
+The layer model should therefore not be used as an excuse to ignore operational reality. It should be used to ask better questions. If TLS is added, ask which connection-layer behavior changes. If IPv4 is replaced by a Unix domain socket, ask which endpoint and deployment assumptions change. If MQTT is carried through WebSocket, ask where each protocol sits and which layer is responsible for which behavior.
+
+This is how the model becomes practical instead of merely tidy.
+
 ### What belongs where?
 
-This table summarizes the practical placement of common concerns.
+The following table is a compact orientation aid. It is deliberately simple. Its job is not to solve every design decision. Its job is to help the reader ask the right first question.
 
 | Concern | Layer or model |
 |---|---|
 | IPv4, IPv6, Unix domain sockets, RFCOMM, L2CAP | Network layer |
 | Endpoint identity and address structure | Network layer |
 | Stream-oriented connection form | Transport layer |
-| Plain versus TLS-secured communication | Connection layer |
+| Non-TLS versus TLS-secured communication | Connection layer |
 | Handshake, encryption, certificate validation | Connection layer |
 | `SocketContext` protocol behavior | Application layer |
 | HTTP, WebSocket, MQTT, Express-like routing | Application layer |
@@ -569,40 +571,34 @@ This table summarizes the practical placement of common concerns.
 | Retry/reconnect scheduling | Operational/runtime behavior |
 | CMake component selection | Build expression of the layer stack |
 
-This table is deliberately simple.
-
-Its job is not to solve every design decision. Its job is to help the reader ask the right first question:
+The question to keep asking is:
 
 > Which layer am I reasoning about?
 
+Sometimes the answer is one layer. Often, the answer is a primary layer plus consequences in another layer. That is normal. Real systems are layered, but they are still systems.
+
 ### What to remember
 
-Remember:
-
-- The communication stack is not the same as the runtime core.
-- The network layer chooses the endpoint family.
-- The transport layer chooses the communication form.
-- The connection layer manages the concrete peer relationship.
-- TLS belongs to connection handling, not to application logic.
-- The application layer contains protocol behavior.
-- Type names encode the layer stack.
-- Component names encode the layer stack too.
-- Bluetooth RFCOMM and L2CAP are lower communication families, not unrelated exceptions.
-- Layers are real boundaries, but not sealed walls.
-- The purpose of layering is controlled variation and transfer.
+- Chapter 6 explained how registered instances make progress; this chapter explains how the communication choices behind those instances are structured.
+- The communication stack is not the same as the runtime core: the runtime moves work, while the layer stack describes what kind of communication work is being moved.
+- The network layer chooses the endpoint family, such as IPv4, IPv6, Unix domain sockets, RFCOMM, or L2CAP.
+- The transport layer gives the communication form; in the early teaching path, that form is `stream`.
+- The connection layer manages the concrete peer relationship; `legacy` means the non-TLS stream connection variant, while `tls` adds TLS connection handling.
+- The application layer contains protocol behavior, whether that behavior is a custom `SocketContext`, HTTP, WebSocket, Express-like routing, MQTT, or MQTT over WebSocket.
+- SNode.C type names and component names are compressed architectural statements; layers are real boundaries, but not sealed walls.
 
 ### Closing perspective
 
-Chapter 5 gave the mental model.
+Chapter 5 gave the mental model. Chapter 6 explained how registered instances are advanced by the runtime machinery. This chapter has shown how the communication layer stack appears in actual SNode.C names, components, and transfer questions.
 
-Chapter 6 explained the runtime machinery.
+That completes an important step in the reader's orientation.
 
-This chapter has shown how the communication layer stack appears in actual SNode.C names and components.
+The framework is not only a collection of classes. It is a system in which runtime progress and communication layering meet. A server or client handle registers an instance. The runtime advances that instance. The type and component names tell us which network family, transport form, connection machinery, and application protocol are involved.
 
 The next chapter moves into the first concrete piece of that stack: socket addresses.
 
 That is the right next step because the network layer becomes real only when we understand what endpoint identity means for each family. An IPv4 address, an IPv6 address, a Unix domain socket path, an RFCOMM endpoint, and an L2CAP endpoint are all addresses in a broad sense, but they are not the same kind of thing.
 
-The layer model tells us where address semantics belong.
+The layer model tells us that address semantics belong to the network layer. Chapter 8 therefore moves from the general stack to the first concrete network-layer question:
 
-Now we can study those semantics directly.
+> What does an endpoint identity mean for each supported family?
