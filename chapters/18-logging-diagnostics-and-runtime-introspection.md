@@ -2,7 +2,7 @@
 
 ### From configured roles to visible runtime behavior
 
-Chapter 17 showed how a SNode.C application is shaped through configuration.
+Chapter 17 showed how the configuration hierarchy shapes the executable, named communication roles, sections, and option values.
 
 The structure was:
 
@@ -13,11 +13,13 @@ application
           -> option
 ```
 
-Once those configured roles are active, the next question is:
+Once those configured roles are activated and registered as runtime-visible instances, the next question is:
 
 > How can we see what the application is doing?
 
 That is the subject of this chapter.
+
+Chapter 16 introduced configuration as architectural structure. Chapter 17 showed the anatomy of that structure. This chapter treats configuration, generated command lines, logging, connection identity, counters, and protocol-level decisions as parts of one diagnostic surface.
 
 SNode.C is event-driven.
 
@@ -33,13 +35,13 @@ Contexts react to peer data later.
 
 That makes runtime visibility essential.
 
-The source code may explain what can happen, but logging and diagnostics show what did happen in one concrete run.
+The source code may explain what can happen, but diagnostics show what did happen in one concrete run. They show which configured roles entered the runtime, which endpoints were used, which connection episodes existed, which system boundaries failed, which retries were scheduled, and which protocol decisions were made by a context.
 
-### The runtime visibility model
+### Runtime visibility as a diagnostic map
 
 Runtime visibility in SNode.C is broader than printing log lines.
 
-A useful model has four parts:
+A useful diagnostic map has four parts:
 
 | Visibility source | What it answers |
 |---|---|
@@ -52,7 +54,7 @@ These sources belong together.
 
 A surprising runtime behavior may come from protocol code.
 
-It may also come from configuration, disabled instances, address selection, retry behavior, TLS setup, or peer lifecycle.
+It may also come from configuration, disabled instances, address selection, retry behavior, TLS setup, platform state, or peer lifecycle.
 
 A good diagnostic style therefore does not start with random print statements.
 
@@ -62,16 +64,21 @@ It asks where the relevant responsibility lives.
 
 Configuration visibility answers questions such as:
 
-- Which instances exist?
+- Which named instances exist?
 - Which instances are enabled?
 - Which local or remote endpoint values are active?
 - Which retry or timeout values are in effect?
 - Which TLS settings are configured?
+- Which log destination and output mode are selected?
 - Which command line would reproduce this run?
 
 Chapter 17 explained the configuration hierarchy.
 
 In this chapter, the same mechanisms are treated as diagnostic artifacts.
+
+A runtime surprise is often a configuration surprise first.
+
+If a server listens on an unexpected endpoint, if a client connects to the wrong peer, if retry behaves differently from what the operator expected, or if TLS setup fails because a path is missing, the first useful diagnostic question is not always about protocol code. It is often about the effective configured shape.
 
 #### Log visibility
 
@@ -83,8 +90,11 @@ Log visibility answers questions such as:
 - Which retry was scheduled?
 - Which instance started listening or connecting?
 - Which connection was created, became ready, or disconnected?
+- Which protocol event was significant enough to record?
 
 The logger gives those events a controlled output path.
+
+The point is not merely that messages are printed. The point is that messages can be placed at the layer that understands their meaning.
 
 #### Connection visibility
 
@@ -97,9 +107,12 @@ Connection visibility answers questions such as:
 - How much data was sent?
 - How much data was read?
 - How much data was processed?
-- How long was the connection online?
+- When did the connection become active?
+- How long did the connection live?
 
 This information belongs to the connection model, not to arbitrary application-side bookkeeping.
+
+A connection episode should be diagnosable as a concrete peer relationship. Generic messages such as `connection closed` are rarely enough for that.
 
 #### Protocol visibility
 
@@ -110,20 +123,25 @@ Protocol visibility answers questions such as:
 - Was a frame accepted or rejected?
 - Why did the protocol close the connection?
 - Which application-level event was produced?
+- Which input was intentionally left unprocessed?
 
 This belongs in the `SocketContext`, because the context is where protocol behavior lives.
 
-### The logging surface
+The connection layer can say that bytes arrived. The context can say what those bytes meant.
+
+### The logging surface: ordinary logs, system-error logs, and verbose depth
 
 SNode.C exposes three main logging forms:
 
 | Form | Purpose |
 |---|---|
 | `LOG(level)` | ordinary runtime reporting through the normal log-level ladder |
-| `PLOG(level)` | runtime reporting with system-error context |
+| `PLOG(level)` | ordinary runtime reporting plus captured system-error context |
 | `VLOG(level)` | optional diagnostic depth controlled by the verbose level |
 
 These forms express different kinds of visibility and should not be used interchangeably.
+
+The distinction is architectural, not only syntactic.
 
 #### `LOG(level)`
 
@@ -146,13 +164,15 @@ A useful interpretation is:
 
 It is not the same thing as `VLOG`.
 
-A `TRACE` message is a low-level normal log event.
+A `TRACE` message is a low-level normal log event. A `VLOG` message is diagnostic detail selected by verbose depth.
 
-A `VLOG` message is diagnostic detail selected by verbose depth.
+That distinction keeps the ordinary log level focused on severity and lifecycle, while verbose depth can be raised only when a run needs deeper inspection.
 
 #### `PLOG(level)`
 
-`PLOG(level)` is for failures near a system or library boundary where system-error context matters.
+`PLOG(level)` follows the ordinary log-level filtering path, but it also records captured system-error context.
+
+It is useful when `errno` or comparable system-boundary context is part of the diagnosis.
 
 Typical cases include:
 
@@ -161,9 +181,9 @@ Typical cases include:
 - accept failures,
 - read or write errors,
 - descriptor failures,
-- filesystem/path problems,
+- filesystem or path problems,
 - permission problems,
-- TLS/library calls that expose useful system context.
+- other system-boundary failures where the platform error text explains the failure.
 
 `PLOG` should not be used merely because a message is an error.
 
@@ -172,8 +192,10 @@ It should be used when the system error context is part of the diagnosis.
 A useful rule is:
 
 ```text
-Use PLOG when errno/system context helps explain the failure.
+Use PLOG when captured system-error context helps explain the failure.
 ```
+
+This is narrower and more precise than “use `PLOG` for all errors.” Some errors are protocol errors, configuration errors, or application decisions. Those may deserve `LOG(ERROR)` or a protocol-specific log message, but not necessarily `PLOG`.
 
 #### `VLOG(level)`
 
@@ -181,7 +203,7 @@ Use PLOG when errno/system context helps explain the failure.
 
 It is controlled by the verbose level, not by the ordinary log-level ladder.
 
-A useful convention is:
+A useful project convention is:
 
 | Verbose level | Typical use |
 |---|---|
@@ -190,7 +212,7 @@ A useful convention is:
 | `VLOG(3)` | counters, deltas, buffer sizes, parser details, repeated flow internals |
 | `VLOG(4+)` | very high-volume or highly specialized internal traces |
 
-This keeps ordinary logs readable while still allowing deep inspection when needed.
+The framework enforces the numeric verbose-level threshold. The meaning assigned to each depth is a convention that makes the codebase readable.
 
 The distinction is:
 
@@ -202,7 +224,9 @@ VLOG level
   -> how deep into the flow do we want to look?
 ```
 
-### Log levels and verbose levels
+This keeps ordinary logs readable while still allowing deep inspection when needed.
+
+### Severity and diagnostic depth
 
 SNode.C uses two related visibility controls.
 
@@ -226,9 +250,7 @@ VLOG(3)
 ...
 ```
 
-This separation keeps normal logs readable without forcing deep diagnostics into `DEBUG` or `TRACE`.
-
-The result is:
+Internally, verbose messages are emitted through the logger's verbose path. For the reader and application author, the important distinction is simpler:
 
 ```text
 ordinary lifecycle and severity
@@ -238,7 +260,15 @@ optional diagnostic depth
   -> VLOG
 ```
 
-### Operational output modes
+This separation avoids a common logging failure mode: forcing all diagnostic detail into `DEBUG` or `TRACE` until ordinary logs become unreadable.
+
+A low ordinary log level should be able to show the shape of a run.
+
+A higher verbose level should be able to explain the fine structure of that run.
+
+Those are different jobs.
+
+### Output modes in real deployments
 
 Logging also has operational modes.
 
@@ -257,6 +287,24 @@ These are not cosmetic details. They decide whether diagnostics are usable in th
 The important point is that output mode belongs to the application shell.
 
 It is not the responsibility of every server, client, connection, or context to invent its own logging destination.
+
+SNode.C uses a centralized logging surface so that application-level settings can control where and how messages appear. That is especially important for daemonized applications, OpenWrt deployments, services started from init systems, and long-running systems where the interesting event may happen long after startup.
+
+The architecture matters here too:
+
+```text
+application shell
+  -> logging destination and output mode
+
+communication role
+  -> lifecycle facts
+
+connection
+  -> peer episode facts
+
+context
+  -> protocol meaning
+```
 
 ### Logging should follow responsibility boundaries
 
@@ -283,51 +331,59 @@ A log line is most useful when its location matches the meaning of the message.
 
 Application-level logs should describe the operational shell.
 
-Examples:
+Examples include:
 
 - configuration file selected,
+- configuration display or command-line generation requested,
 - logging initialized,
 - daemonization started,
-- process user/group applied,
+- process user or group applied,
 - shutdown requested,
 - application terminated.
 
 These messages belong above the communication roles.
 
+They are about the executable as an operating program.
+
 #### Instance-level logging
 
 Instance-level logs should describe server/client role activity.
 
-Examples:
+Examples include:
 
 - server starts listening,
 - client starts connecting,
 - retry is scheduled,
+- reconnect is scheduled,
 - instance is disabled,
 - listen/connect fails or succeeds.
 
-These messages belong to the configured communication role.
+These messages belong to the configured communication role that has entered the runtime as an instance.
+
+They should not be hidden inside protocol code, because protocol code should not have to explain why a role was activated, disabled, or retried.
 
 #### Connection-level logging
 
 Connection-level logs should describe one peer relationship.
 
-Examples:
+Examples include:
 
 - connection object created,
 - connection became ready,
 - peer disconnected,
 - local and remote addresses,
 - online duration,
-- queued/sent/read/processed totals.
+- queued, sent, read, and processed totals.
 
 These messages belong to the connection episode.
+
+They are not application-wide facts, and they are not necessarily protocol facts. They describe the concrete relationship between this process and one peer.
 
 #### Context-level logging
 
 Context-level logs should describe protocol meaning.
 
-Examples:
+Examples include:
 
 - protocol conversation begins,
 - first application message is sent,
@@ -339,6 +395,16 @@ Examples:
 The context should not duplicate generic socket facts that the connection layer already knows.
 
 It should add protocol meaning.
+
+That keeps the logs aligned with the architecture:
+
+```text
+connection layer
+  -> connection facts
+
+context layer
+  -> protocol meaning
+```
 
 ### Visibility at lifecycle boundaries
 
@@ -364,6 +430,8 @@ A good instance-level log can answer:
 
 This belongs to instance-level visibility.
 
+Activation is where configuration becomes runtime behavior. It is therefore a good place to report the configured endpoint and the resulting status, without forcing the reader to infer that from later connection events.
+
 #### `onConnect` and `onConnected`
 
 For stream connections, there is a useful distinction between early connection creation and full readiness.
@@ -386,6 +454,8 @@ The lifecycle event itself can be an ordinary log message.
 
 Detailed address and state dumps can be verbose diagnostics.
 
+This distinction is especially useful when a connection object can exist before the full protocol or connection-layer readiness is reached. A diagnostic message that preserves that difference is more valuable than a vague message that says only `connected`.
+
 #### `onDisconnect` summaries
 
 Disconnect is a natural summary boundary.
@@ -401,14 +471,12 @@ A good disconnect summary may include:
 - online duration,
 - total queued,
 - total sent,
-- write delta,
 - total read,
-- total processed,
-- read delta.
+- total processed.
 
 The event itself is a lifecycle fact.
 
-The detailed counters and deltas are diagnostic depth.
+The detailed counters and timing are diagnostic depth.
 
 That makes `onDisconnect` a good example of the `LOG` / `VLOG` split:
 
@@ -425,6 +493,8 @@ VLOG(3)
 
 This keeps normal debug output readable while preserving deeper information when needed.
 
+The important point is not the exact numeric verbose level chosen for every project. The important point is the separation of ordinary lifecycle facts from optional deeper evidence.
+
 #### Context-level protocol events
 
 The context is the right place for protocol-aware diagnostics.
@@ -437,14 +507,16 @@ An MQTT context may log when protocol state changes.
 
 These messages should use the vocabulary of the protocol, not the vocabulary of the socket layer.
 
-That keeps the logs aligned with the architecture:
+A context log should help the reader answer:
 
 ```text
-connection layer
-  -> connection facts
+What did the protocol endpoint decide?
+```
 
-context layer
-  -> protocol meaning
+not merely:
+
+```text
+What did the socket do?
 ```
 
 ### Configuration as a diagnostic source
@@ -459,8 +531,21 @@ Useful questions include:
 - Is it listening on the expected local endpoint?
 - Is the client connecting to the expected remote endpoint?
 - Are retry, timeout, TLS, quiet-mode, and log-destination settings what the operator expects?
+- Is the generated command line consistent with the intended deployment?
+- Did a command-line override change a value supplied in the configuration file or in code?
 
 Configuration display belongs in a diagnostics chapter because it shows the shape that the runtime is actually using.
+
+The hierarchy from Chapter 17 becomes a diagnostic map:
+
+```text
+application
+  -> instance
+      -> section
+          -> option
+```
+
+A wrong port, a missing TLS path, a disabled instance, a changed retry timeout, or an unexpected log file path can be understood as a value in that map.
 
 #### Showing effective configuration
 
@@ -471,6 +556,10 @@ What did this application actually start with?
 ```
 
 It can reveal changed endpoint values, disabled instances, non-default retry settings, missing TLS values, or changed logging behavior.
+
+This is diagnostic evidence, not only configuration output.
+
+It tells the reader whether the application that actually started is the application the operator thought they started.
 
 #### Generated command lines
 
@@ -483,6 +572,8 @@ How can this configuration be reproduced?
 They are useful for bug reports, deployment notes, comparing expected and effective configuration, sharing a minimal reproduction, or moving a working setup to another machine.
 
 The generated command line is a textual representation of the effective configuration.
+
+A generated command line can also expose accidental complexity. If reproducing a run requires many overrides, that may be a sign that the configuration file should be made more explicit or that defaults should be revisited.
 
 ### Connection metrics and identity
 
@@ -525,6 +616,14 @@ connection closed
   -> was anything left queued or unprocessed?
 ```
 
+The counters are not decorative.
+
+They are evidence.
+
+If total read grows but total processed does not, the protocol endpoint may not be consuming input as expected. If data is queued but not sent, the problem may lie in write-side progress, backpressure, shutdown, or peer behavior. If a connection lives only briefly, the diagnostic question differs from a connection that stays online for hours and then fails.
+
+The exact interpretation depends on the layer, but the values give the reader a starting point.
+
 ### Runtime introspection is broader than logging
 
 In this chapter, runtime introspection means practical runtime visibility.
@@ -545,11 +644,15 @@ A rejected frame is a protocol problem.
 
 A good diagnostic style uses the right visibility source for the problem.
 
+This is why runtime introspection is broader than logging. Logs are one form of runtime evidence. Effective configuration, generated command lines, connection metrics, and context decisions are evidence too.
+
 ### Too much logging is a failure mode
 
 More logging is not automatically better diagnostics.
 
 Too much logging can make a system harder to understand.
+
+Too much logging is not visibility. It is another kind of opacity.
 
 This happens when:
 
@@ -568,9 +671,11 @@ Use ordinary logs for important lifecycle and severity.
 
 Use verbose logs for optional depth.
 
-Use system-error logs when system context matters.
+Use system-error logs when captured system context matters.
 
 Use context logs for protocol meaning.
+
+A quiet log is not necessarily a good log. A noisy log is not necessarily an informative log. The useful goal is a log stream whose messages answer real runtime questions at the layer that understands them.
 
 ### A good log line answers a question
 
@@ -583,14 +688,17 @@ Examples:
 - Which peer connected?
 - Did the connection become fully ready?
 - Why is a retry scheduled?
-- Which system call failed?
+- Which system boundary failed?
 - How much data moved?
 - Which protocol transition occurred?
 - Which configuration state caused this behavior?
+- Which layer is responsible for the decision?
 
 If the message does not answer a useful question, it probably adds noise.
 
 This rule is simple, but it keeps logs readable.
+
+It also helps decide where the log belongs. A message about a selected configuration file belongs at application level. A message about retry scheduling belongs at instance level. A message about queued bytes belongs at connection level. A message about an invalid MQTT packet belongs at context level.
 
 ### A practical diagnostic workflow
 
@@ -600,7 +708,7 @@ A useful SNode.C diagnostic workflow is:
 2. Confirm which instances exist and which are enabled.
 3. Check ordinary lifecycle logs.
 4. Check warnings and errors.
-5. Use `PLOG` output to understand system-boundary failures.
+5. Use `PLOG` output when captured system-error context helps explain a boundary failure.
 6. Increase verbose level only when more detail is needed.
 7. Inspect connection identity, addresses, counters, and duration.
 8. Use context-level logs for protocol meaning.
@@ -609,50 +717,45 @@ This is not a rigid law.
 
 It is a useful rhythm.
 
+In compact form:
+
+```text
+configured shape
+  -> ordinary lifecycle
+      -> warnings, errors, and system-boundary context
+          -> verbose depth
+              -> connection evidence
+                  -> protocol meaning
+```
+
 It starts with the configured shape, then follows the runtime behavior, and only then increases diagnostic depth.
+
+That order matters. If the endpoint is wrong, deeper protocol logs may only produce more noise. If the ordinary lifecycle already shows a bind failure, protocol tracing will not explain it. If the connection counters show unread or unprocessed data, the relevant question may be in the context. The diagnostic workflow should follow the architecture rather than fight it.
 
 ### What to remember
 
-Remember:
-
-- Runtime visibility is essential in an event-driven framework.
-- Visibility in SNode.C comes from configuration, logs, connections, and contexts.
+- Runtime visibility is essential because SNode.C applications progress through events, callbacks, timers, retries, and context reactions.
+- Diagnostics should start with the configured shape: application, instance, section, and option values.
 - `LOG(level)` is for ordinary runtime reporting through the log-level ladder.
-- `PLOG(level)` is for system-boundary failures where system-error context matters.
-- `VLOG(level)` is for optional diagnostic depth.
-- `TRACE` is a normal log level, not the same thing as verbose logging.
-- Log levels and verbose levels are two different visibility axes.
-- Logging should follow responsibility boundaries.
-- Configuration display and generated command lines are diagnostic artifacts.
-- Connection objects expose identity, addresses, counters, and duration.
-- Lifecycle callbacks are natural visibility boundaries.
-- `onDisconnect` is a natural connection-episode summary point.
-- Context logs should express protocol meaning.
-- Too much logging can reduce visibility.
-- A good log line answers a real runtime question.
+- `PLOG(level)` is for ordinary runtime reporting where captured system-error context helps explain the failure.
+- `VLOG(n)` is for optional diagnostic depth controlled by the verbose level.
+- Good log placement follows responsibility boundaries: application, instance, connection, and context.
+- Connection identity, addresses, counters, and durations make runtime episodes concrete.
+- Context logs should add protocol meaning rather than duplicate socket-layer facts.
+- Chapter 19 moves from visibility and operation into TLS as a secure connection-layer specialization.
 
 ### Closing perspective
 
-Part V moved from configuration to operational visibility.
+Part V began with configuration as part of the architecture. It then looked at the detailed hierarchy of application, instance, section, and option. This chapter has shown that the same structure is also diagnostic structure.
 
-Chapter 16 explained the configuration philosophy.
+A networked application is not understandable merely because it compiles.
 
-Chapter 17 showed the anatomy of application, instance, section, and option configuration.
+It becomes understandable when its configured shape can be inspected, its activation can be observed, its connection episodes can be identified, its failures can be tied to the right boundary, and its protocol decisions can be read at the context level.
 
-Chapter 18 showed how configured roles become visible while they run.
+That is why logging and diagnostics are not accessories.
 
-The result is a practical operational model:
+They are part of operational design.
 
-```text
-configured application
-  -> named communication roles
-      -> visible lifecycle events
-          -> connection facts
-              -> protocol meaning
-```
+The next chapter moves into TLS. TLS is a secure connection-layer specialization, but it is also a diagnostic challenge: certificate paths, trust decisions, handshake behavior, shutdown behavior, system errors, and protocol expectations can all interact. Those failures are much easier to understand once configuration visibility, logging responsibility, connection identity, and protocol-level diagnostics have been separated.
 
-This closes the configuration and operational-behavior part of the book.
-
-The next part turns to secure and robust communication.
-
-Chapter 19 begins with TLS across the framework.
+With that diagnostic foundation in place, the book can now look at secure communication without treating it as a black box.
