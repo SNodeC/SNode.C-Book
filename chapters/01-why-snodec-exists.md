@@ -107,18 +107,40 @@ lower communication family
               -> application role
 ```
 
-At the bottom is the lower communication family. This answers questions such as:
+At the bottom is the lower communication family. It answers:
 
 ```text
-Are we communicating over IPv4, IPv6, Unix domain sockets,
-Bluetooth RFCOMM, or Bluetooth L2CAP?
+Which communication family carries the endpoint?
+IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP?
 ```
 
-Above that is the transport form. In the main parts of this book, that means connection-oriented `stream` communication.
+Above that is the transport form. It answers:
 
-Above that is connection handling. This is where SNode.C manages the concrete peer connection, data exchange, lifecycle, and, in TLS variants, encryption and decryption.
+```text
+What form does communication take?
+In the main parts of this book, connection-oriented stream communication.
+```
 
-Above that is the application protocol. This is where a custom protocol, HTTP, WebSocket, MQTT, or another protocol-specific layer gives meaning to the communication.
+Above that is connection handling. It answers:
+
+```text
+How is a concrete peer relationship advanced?
+Connection lifecycle, data exchange, and, in TLS variants, encryption and decryption.
+```
+
+Above that is the application protocol. It answers:
+
+```text
+What meaning does the byte stream have?
+A custom protocol, HTTP, WebSocket, MQTT, or another protocol-specific layer.
+```
+
+At the top is the application role. It answers:
+
+```text
+What job does this endpoint perform in the application?
+Server role, client role, bridge, broker, integrator, gateway, or another application-specific role.
+```
 
 The consequence is simple but powerful:
 
