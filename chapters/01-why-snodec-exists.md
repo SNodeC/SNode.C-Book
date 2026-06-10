@@ -189,7 +189,7 @@ runtime
               -> per-connection context
 ```
 
-The server or client instance represents a configured communication role.
+At this introductory point, read *instance* as the server-side or client-side communication role of an application. It is not a concrete peer connection. Chapter 3 connects that role to the visible C++ objects used in the first program, and Chapter 5 sharpens the term: the visible object is the application-side handle, while the instance is the configured role registered with the framework and advanced by the runtime.
 
 The connection represents a concrete peer relationship.
 
@@ -222,7 +222,7 @@ Here it is enough to understand why the book starts small: the small example giv
 ### What to remember
 
 - SNode.C is introduced in this book as an architectural teaching object, not merely as a collection of APIs.
-- Its value comes from recurring roles: runtime, server or client instance, connection, factory, and per-connection context.
+- Its value comes from recurring roles: runtime, server or client instance, concrete connection, factory, and per-connection context.
 - The framework separates lower communication choices from application protocol behavior, so the same mental model can survive changes in network family, transport, or protocol layer.
 - The first echo example is deliberately small because it exposes the shape of the framework without hiding it behind protocol complexity.
 - MQTTSuite becomes important later as a reference ecosystem, but the book first builds the framework model that makes such systems understandable.
