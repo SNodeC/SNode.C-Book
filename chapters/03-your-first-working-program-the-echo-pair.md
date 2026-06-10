@@ -24,9 +24,9 @@ runtime
 
 The rest of the book will add other network families, TLS, HTTP, WebSocket, MQTT, configuration, deployment, and persistence. The basic shape appears here first.
 
-### What the repository already contains
+### What the SNode.C repository contains
 
-The SNode.C repository already contains a full echo application under `src/apps/echo`.
+The SNode.C repository contains a full echo application under `src/apps/echo`.
 
 The repository example is more general than the first teaching version in this chapter. It uses a shared echo model and builds several variants by combining network-family and stream-mode choices. The echo context is implemented in `src/apps/echo/model/EchoSocketContext.h` and `EchoSocketContext.cpp`; the server and client entry points are `src/apps/echo/echoserver.cpp` and `echoclient.cpp`.
 
@@ -60,7 +60,7 @@ The first two files define the application behavior. The last two files define t
 
 That separation is already meaningful.
 
-The echo protocol itself should not be mixed into `main()`. The server and client applications should create and start roles. The per-connection protocol behavior belongs in a `SocketContext`.
+The echo protocol itself should not be mixed into `main()`. The server and client applications should create handles, configure roles, and register those roles with the framework. The per-connection protocol behavior belongs in a `SocketContext`.
 
 ### The three roles in the first example
 
@@ -68,9 +68,9 @@ Before writing code, it helps to name the three roles.
 
 #### The instance
 
-A server or client instance is the outer communication object.
+In everyday discussion, it is natural to call the visible `SocketServer` or `SocketClient` object an instance. That is acceptable as long as the basic idea is clear. In SNode.C's stricter architectural vocabulary, however, the visible C++ object is the application-side handle. Through that handle, the application configures and registers a server-side or client-side communication role. After `listen(...)` or `connect(...)`, that configured role is the instance the framework can advance through the runtime and flow-controller machinery. It is not yet a concrete peer connection; connections appear later.
 
-For this chapter the concrete types are:
+For this chapter, the visible handle types are:
 
 ```cpp
 net::in::stream::legacy::SocketServer<...>
@@ -79,7 +79,7 @@ net::in::stream::legacy::SocketClient<...>
 
 The `net::in` part means IPv4. The `stream` part means connection-oriented stream communication. The `legacy` part means the non-TLS stream connection variant.
 
-The server instance listens. The client instance connects. Neither one contains the echo protocol directly.
+The server-side role listens. The client-side role connects. Neither one contains the echo protocol directly.
 
 #### The factory
 
@@ -313,7 +313,7 @@ The first important line is:
 core::SNodeC::init(argc, argv);
 ```
 
-This initializes the SNode.C runtime environment before the instance is used.
+This initializes the SNode.C runtime environment before the server handle is used to configure and register the server-side instance.
 
 The next important line is the type alias:
 
@@ -331,7 +331,7 @@ IPv4
           -> context factory for echo
 ```
 
-Then the server instance is created with a name:
+Then the server handle is created with a name:
 
 ```cpp
 EchoServer server("echoserver");
@@ -339,7 +339,7 @@ EchoServer server("echoserver");
 
 The name is not only decoration. Named instances become important when configuration and diagnostics enter the book. Even in the first program, the name gives log output and callbacks a clear identity.
 
-Finally, the server registers its listening role:
+Finally, the server handle registers the listening role:
 
 ```cpp
 server.listen(8080, 5, callback);
@@ -349,7 +349,7 @@ For a first reading, it is tempting to say that this line â€œstarts the server.â
 
 A better mental model is:
 
-> `listen(...)` configures and registers the listening intention. The runtime advances the actual event-driven flow after `core::SNodeC::start()` is called.
+> `listen(...)` configures and registers the server-side communication role. The runtime and flow-controller machinery advance the actual event-driven flow after `core::SNodeC::start()` is called.
 
 This distinction will matter later for configuration, retries, and runtime behavior.
 
@@ -413,32 +413,32 @@ using EchoClient =
     net::in::stream::legacy::SocketClient<EchoClientSocketContextFactory>;
 ```
 
-The client instance also has a name:
+The client handle also has a name:
 
 ```cpp
 EchoClient client("echoclient");
 ```
 
-The connection registration is visible in the code:
+The client handle registers the connecting role in the code:
 
 ```cpp
 client.connect("localhost", 8080, callback);
 ```
 
-Again, this should not be read as a blocking call that performs the entire communication on the caller's stack. It registers the connection intention. The runtime then performs the actual event-driven work.
+Again, this should not be read as a blocking call that performs the entire communication on the caller's stack. It registers the client-side communication role. The runtime and flow-controller machinery then perform the actual event-driven work.
 
 The symmetry between server and client is intentional:
 
 ```text
 server
   init
-  create named instance
+  create named server handle
   register listen
   start runtime
 
 client
   init
-  create named instance
+  create named client handle
   register connect
   start runtime
 ```
@@ -587,7 +587,7 @@ Stop the example with `Ctrl-C`.
 
 Do not treat the output as noise.
 
-The first example is meant to connect source code to runtime behavior. When you see a log line from `onConnected()`, it corresponds to the lifecycle callback. When you see the reflected message, it corresponds to `onReceivedFromPeer()`. When the callback passed to `listen(...)` or `connect(...)` logs a state, it tells you whether the outer communication role was registered successfully.
+The first example is meant to connect source code to runtime behavior. When you see a log line from `onConnected()`, it corresponds to the lifecycle callback. When you see the reflected message, it corresponds to `onReceivedFromPeer()`. When the callback passed to `listen(...)` or `connect(...)` logs a state, it tells you whether the configured communication role was registered successfully.
 
 That is why Chapter 2 warned against silencing runtime output too early.
 
@@ -615,11 +615,12 @@ Again, that is a teaching choice.
 The important common structure is the same:
 
 ```text
-named instance
-  -> context factory
-      -> per-connection context
-          -> event-driven protocol behavior
-              -> runtime start
+application-side handle
+  -> registered server/client instance
+      -> context factory
+          -> per-connection context
+              -> event-driven protocol behavior
+                  -> runtime start
 ```
 
 ### What changed compared with ordinary socket programming
@@ -649,10 +650,10 @@ This does not make the low-level details disappear. It organizes where they belo
 ### What to remember
 
 - The first working example is small, but it already contains the core SNode.C application pattern.
-- A server or client instance represents a communication role; it is not the application protocol itself.
+- The visible server or client object is the application-side handle; the instance is the configured communication role registered through `listen(...)` or `connect(...)`.
 - A `SocketContextFactory` creates one context for each established connection.
 - A `SocketContext` contains the application protocol behavior for that connection.
-- `listen(...)` and `connect(...)` register communication intentions; the runtime advances the actual event-driven work.
+- `listen(...)` and `connect(...)` register communication roles; the runtime and flow-controller machinery advance the actual event-driven work.
 - The same structure used for IPv4 legacy streams can later be recognized again when the lower family, stream mode, or application protocol changes.
 
 ### Closing perspective
