@@ -75,9 +75,16 @@ Optional technologies should also be visible when available. Bluetooth RFCOMM an
 
 SNode.C is a modern C++ framework.
 
-The build expects CMake and a C++20-capable compiler. A recent GCC or Clang installation is therefore the right baseline. On a Debian-style system, GCC 12 or newer and Clang 13 or newer are reasonable minimum expectations for the commands shown in this book.
+The build system expects CMake and a C++20-capable compiler. The top-level build requires CMake 3.18 or newer, and the `src` build configures the project as C++20.
 
-Check the available tools first:
+The most important compiler expectations are:
+
+- GCC 12.2 or newer,
+- or Clang 13.0 or newer.
+
+This is not an arbitrary preference. SNode.C uses modern C++ internally. Building it with an older compiler is not a good way to learn the framework: the reader will spend time fighting toolchain problems instead of understanding architecture.
+
+A quick check is useful:
 
 ```sh
 cmake --version
@@ -85,9 +92,7 @@ g++ --version
 clang++ --version
 ```
 
-Only one compiler is needed for normal work. It is useful to have both GCC and Clang installed, but the first examples do not depend on using both.
-
-The important point is not compiler variety. The important point is avoiding old-toolchain problems. If the compiler is too old, the reader will spend time debugging the environment instead of learning the framework.
+It is fine if only one of GCC or Clang is used, as long as it satisfies the required version.
 
 ### Required and optional packages
 
@@ -191,7 +196,7 @@ cmake -S snode.c -B snode.c-build -G Ninja
 cmake --build snode.c-build -j$(nproc)
 ```
 
-The build can take some time. That is normal. SNode.C contains many components and example applications.
+The build can take some time. That is normal. The framework uses many templates and builds many components and examples.
 
 ### Installing the framework
 
