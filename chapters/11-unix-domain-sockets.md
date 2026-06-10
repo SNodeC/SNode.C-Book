@@ -27,7 +27,7 @@ The larger SNode.C model remains recognizable:
 - connection lifecycle callbacks,
 - and the same broad stream-based server/client/connection model.
 
-This shows that SNode.C's role model is not tied to host-plus-port addressing.
+This shows that SNode.C's role model is not tied to host-plus-port addressing. The point of the chapter is therefore not only to introduce another address class. It is to test whether the mental model from the previous chapters survives when the most familiar shape of a socket endpoint disappears.
 
 ### Same SNode.C model, different endpoint identity
 
@@ -51,6 +51,8 @@ The lower communication family changes.
 The endpoint identity changes.
 
 The application architecture does not need to be reinvented.
+
+The table should therefore be read as a transfer map, not as a feature comparison. It shows which ideas move unchanged into the Unix-domain family and which words must be reinterpreted once endpoint identity becomes path-based.
 
 This is the same teaching pattern as in Chapter 10, but the shift is stronger. IPv4 and IPv6 were different internet families with a similar host-plus-port shape. Unix domain sockets change the addressing category itself.
 
@@ -93,7 +95,7 @@ In application code this may appear as:
 net::un::SocketAddress address("/tmp/my-service.sock");
 ```
 
-The path is not merely a filename in the everyday document sense. It is the name through which local processes identify the communication endpoint.
+The path is not merely a filename in the everyday document sense. It is the name through which local processes identify the communication endpoint. In practice, it acts as a rendezvous name inside the local operating-system environment: one side creates or binds that endpoint identity, and the other side uses the same identity to reach the service.
 
 This avoids two common wrong instincts:
 
@@ -126,7 +128,7 @@ The important point is not to turn this into a long operating-system detour. The
 
 The wildcard idea transfers.
 
-The concrete representation changes.
+The concrete representation changes. This is the useful reading habit for all lower families in SNode.C: the abstract role of a default address may be comparable, but the actual meaning is always expressed in the vocabulary of the selected family.
 
 #### Locality as the defining idea
 
@@ -159,7 +161,7 @@ Unix domain sockets are therefore especially useful for:
 - development setups where network exposure is unnecessary,
 - appliance-like or embedded systems where components communicate locally.
 
-The lower-family choice is not decorative. It changes the operational shape of the system.
+The lower-family choice is not decorative. It changes the operational shape of the system. The code can keep the same server/client outline, but the questions a developer asks while deploying and diagnosing the application become local-service questions rather than network-reachability questions.
 
 ### Server and client use with path-based endpoints
 
@@ -167,7 +169,7 @@ The stream Unix-domain wrappers follow the same SNode.C pattern as the IPv4 and 
 
 The convenience calls set family-specific configuration and then delegate to the general `listen(onStatus)` or `connect(onStatus)` path.
 
-The difference is that the configured value is now a Unix-domain path.
+The difference is that the configured value is now a Unix-domain path. That keeps the application code pleasantly familiar while still making the lower-family decision explicit. A reader should see both sides at once: the call shape transfers, but the endpoint value has a different meaning.
 
 #### Server-side `listen(...)`
 
@@ -239,7 +241,7 @@ This keeps the local/remote distinction visible.
 
 The remote path is the service endpoint the client wants to reach.
 
-The optional local path describes the client's own local endpoint identity.
+The optional local path describes the client's own local endpoint identity. Most simple clients do not need to spell this out, but the overload exists because the model still distinguishes the peer being contacted from the local endpoint used for the connection.
 
 #### Local and remote paths
 
@@ -266,7 +268,7 @@ optional local path
 
 This continues Chapter 9's connection model.
 
-A connection can still have bind, local, and remote address views. The address family has changed, but directional endpoint thinking remains useful.
+A connection can still have bind, local, and remote address views. The address family has changed, but directional endpoint thinking remains useful. This is one of the main reasons to keep the address family visible in the type system: it prevents the local/remote distinction from being flattened into an unhelpful generic string.
 
 ### What remains stable
 
@@ -293,7 +295,7 @@ The connection is still the concrete peer relationship.
 
 The context is still the protocol endpoint attached to that connection.
 
-This is why moving from IPv4 to Unix domain sockets should not feel like moving to a different framework. The lower family has changed, not the architecture.
+This is why moving from IPv4 to Unix domain sockets should not feel like moving to a different framework. The lower family has changed, not the architecture. For application developers this is an important payoff: once the instance, connection, factory, and context boundaries are understood, a new endpoint family does not force the whole program shape to be relearned.
 
 #### Context and protocol logic
 
@@ -315,7 +317,7 @@ What often remains stable is:
 
 The same context class can often be reused when the protocol behavior does not depend on family-specific address details.
 
-The protocol context may inspect the address if it wants to log or display endpoint information. But the protocol logic itself can often remain the same.
+The protocol context may inspect the address if it wants to log or display endpoint information. But the protocol logic itself can often remain the same. This is the separation the book is building toward: lower layers decide how peers are reached, while the context concentrates on what the application protocol does once a connection exists.
 
 #### Legacy and TLS
 
@@ -366,7 +368,7 @@ That is a real design difference.
 
 Unix domain sockets are often the right choice when the communication should stay inside one machine. They are not the right choice when the peer must be reached over a network.
 
-SNode.C makes that family choice explicit instead of hiding it behind one generic endpoint abstraction.
+SNode.C makes that family choice explicit instead of hiding it behind one generic endpoint abstraction. That explicitness is useful during design reviews as well as during debugging: the namespace and address type already tell the reader that this is local IPC, not a network-facing endpoint.
 
 #### Path ownership and cleanup thinking
 
@@ -383,7 +385,7 @@ An application should be clear about:
 
 This does not mean Unix domain sockets are complicated.
 
-It means the family expresses locality through path identity, and application design should respect that.
+It means the family expresses locality through path identity, and application design should respect that. A path under a temporary directory, a runtime directory, or a service-specific directory communicates different operational expectations. The book does not need to prescribe one layout here, but the chapter should make clear that the path is part of the service design, not an incidental string literal.
 
 #### Unix domain sockets are not a replacement for IP
 
@@ -436,7 +438,7 @@ Bluetooth address + L2CAP PSM
 
 After Chapter 11, the reader has seen two kinds of endpoint shift: internet host-plus-port identity and local path identity. Chapter 12 adds device address plus service selector.
 
-The server/client/connection/context model remains available, while the lower-family address semantics change again.
+The server/client/connection/context model remains available, while the lower-family address semantics change again. That prepares the next chapter: Bluetooth should not feel like an exception to the architecture, but like another controlled variation in endpoint identity.
 
 ### What to remember
 
