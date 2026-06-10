@@ -1,45 +1,75 @@
 ## Socket Addresses and Address Semantics
 
-### Why addresses deserve their own chapter
+### From layers to endpoint identity
 
-Chapter 7 showed that the network layer chooses the endpoint family.
+Chapter 7 showed how SNode.C communication choices are encoded in the layer stack.
 
-This chapter explains what endpoint identity means inside each of those families.
+The first of those choices is the network family. An application may use IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP. That choice is not only a namespace fragment and not only a build component. It changes what an endpoint *is*.
 
-When people first learn network programming, they often treat addresses as simple input values. An IP address is a string. A port is a number. A Unix domain socket is a path. A Bluetooth endpoint is a device address plus a smaller service selector.
+This chapter therefore asks a narrower but important question:
+
+> What does endpoint identity mean for each supported family?
+
+When people first learn network programming, they often treat addresses as simple input values. An IP address is a string. A port is a number. A Unix domain socket is a path. A Bluetooth endpoint is a device address plus a service selector.
 
 That view is understandable, but it is too shallow for a framework like SNode.C.
 
-In SNode.C, addresses are not incidental parameters passed into `listen(...)` and `connect(...)` and then forgotten. They are part of the framework's layer model.
+In SNode.C, addresses are part of the network layer. They are not incidental parameters passed into `listen(...)` and `connect(...)` and then forgotten. The address type tells the framework and the reader what kind of endpoint identity is being described.
 
-The address type tells the framework and the reader what kind of endpoint identity exists at the network layer. It also shapes:
+That affects practical questions:
 
 - how a server binds,
-- how a client chooses a peer,
+- how a client selects a peer,
 - what a wildcard endpoint means,
-- what local versus remote identity means,
-- what string rendering and diagnostics should look like,
-- and, in the IP families, how name resolution can produce candidate endpoints.
+- what local and remote identity mean,
+- how diagnostics should render the endpoint,
+- and, in the IP families, how a name can resolve to candidate addresses.
 
-That is why SNode.C gives each network family its own concrete `SocketAddress` type instead of pretending that all endpoints are the same thing.
+This is why SNode.C does not collapse all endpoints into one vague address class. It uses a shared pattern, but preserves the family-specific meaning.
 
 ### The shared `SocketAddress` pattern
 
-SNode.C has a common template base:
+The common base is:
 
 ```cpp
 net::SocketAddress<SockAddrT>
 ```
 
-That base already tells us something important: a SNode.C address is not just a string plus a number. It is backed by a concrete socket-address structure and length, and it still participates in the framework's broader socket-address abstraction.
+That template already tells us something useful.
 
-The shared base gives the framework a common pattern, while the family-specific classes preserve the differences.
+A SNode.C address is not merely a string wrapper. It is backed by a concrete socket-address structure and length, and it participates in the framework's broader socket-address abstraction. The template parameter keeps the operating-system address representation visible enough for the family-specific class to remain honest.
 
-That is exactly the right architectural compromise:
+The shared base gives the framework a common shape.
+
+The derived family classes preserve the differences.
+
+That is the right compromise for this part of the design:
 
 > One address pattern, but no false claim that all endpoint identities mean the same thing.
 
-### Family-specific address semantics
+This mirrors the layer model from Chapter 7. The application shape may stay recognizable, but the endpoint family still matters.
+
+### Local and remote endpoint roles
+
+Before looking at the concrete families, it helps to separate two questions that are often mixed together.
+
+The first question is:
+
+> What kind of endpoint identity does this family use?
+
+The second question is:
+
+> Is this address being used as a local endpoint or as a remote peer endpoint?
+
+A server usually starts with a local bind identity. It may bind to a specific interface, a wildcard address, a Unix-domain path, a Bluetooth address, or a service selector.
+
+A client usually starts with a remote peer identity. It may connect to a host and port, a Unix-domain path, a Bluetooth device and channel, or a Bluetooth device and PSM.
+
+But the distinction is not absolute. A client may also have a local-side address. A server may later observe the remote addresses of connected peers. The same address class can therefore appear in different roles.
+
+This is one reason address semantics deserve careful treatment. A value such as `0`, `""`, or `00:00:00:00:00:00` is not meaningful by itself. It becomes meaningful in a family and in a role.
+
+### Endpoint identity by family
 
 The concrete address families are:
 
@@ -51,7 +81,11 @@ The concrete address families are:
 | Bluetooth RFCOMM | `net::rc::SocketAddress` | Bluetooth address plus channel |
 | Bluetooth L2CAP | `net::l2::SocketAddress` | Bluetooth address plus PSM |
 
-This table is the concrete continuation of Chapter 7: the network layer chooses the endpoint family, and the table shows how that choice becomes C++ API.
+This table is the concrete continuation of Chapter 7. The network layer chooses the endpoint family; the address class expresses that family in C++.
+
+The useful reading habit is:
+
+> Do not ask only what values an address object stores. Ask what kind of endpoint identity those values describe.
 
 #### IPv4: host plus port
 
@@ -61,51 +95,39 @@ The IPv4 address class is:
 net::in::SocketAddress
 ```
 
-Its conceptual surface includes:
+Its identity shape is host plus port.
 
-- default construction,
-- construction from host,
-- construction from port,
-- construction from host plus port,
-- construction from an existing `sockaddr_in`,
-- `setHost(...)` and `getHost()`,
-- `setPort(...)` and `getPort()`,
-- canonical-name access,
-- `Hints`,
-- `useNext()`,
-- and string rendering.
+Here, *host* may mean a numeric IPv4 address or a name that has to be resolved. The port is the IP service selector. Together, they describe an endpoint in the IPv4 family.
 
-This is richer than a naive "string plus number" wrapper.
-
-Its default host is:
-
-```text
-0.0.0.0
-```
-
-and the default port is:
-
-```text
-0
-```
-
-That means default IPv4 construction is wildcard-oriented. For a server, this naturally represents the idea of listening on the wildcard address. For a client-side local address, it can mean that the operating system may choose the local side when the connection is established.
-
-A fully specified IPv4 remote endpoint might look like:
+A concrete remote endpoint may look like this:
 
 ```cpp
 net::in::SocketAddress remote("127.0.0.1", 8080);
 ```
 
-A server-side wildcard port binding might be expressed as:
+A server-side address that binds to a port on the IPv4 wildcard address may be expressed as:
 
 ```cpp
 net::in::SocketAddress local(8080);
 ```
 
-The point is not to memorize every constructor, but to understand what each constructor expresses about endpoint identity.
+The default IPv4 address is wildcard-oriented:
 
-#### IPv6: similar shape, different semantics
+```text
+0.0.0.0
+```
+
+with port:
+
+```text
+0
+```
+
+For a server, `0.0.0.0` naturally means that the server is not restricted to one specific local IPv4 interface. Port `0` means that the concrete service selector has not yet been fixed and may be selected later by the operating system if used in that way.
+
+The IPv4 class also contains the resolution-oriented pieces that belong to IP-style addressing: `Hints`, canonical-name access, and `useNext()`. That is not accidental API growth. A host name may resolve to more than one candidate endpoint. The address abstraction therefore needs room for resolution and iteration.
+
+#### IPv6: similar shape, different family
 
 The IPv6 address class is:
 
@@ -113,21 +135,13 @@ The IPv6 address class is:
 net::in6::SocketAddress
 ```
 
-It has a surface very similar to the IPv4 class:
+Its surface deliberately resembles the IPv4 address class. It has the same host-plus-port teaching shape, the same need for name resolution, and the same idea that a host may be a numeric address or a resolvable name.
 
-- default construction,
-- construction from host,
-- construction from port,
-- construction from host plus port,
-- construction from an existing `sockaddr_in6`,
-- `setHost(...)` and `getHost()`,
-- `setPort(...)` and `getPort()`,
-- canonical-name access,
-- `Hints`,
-- `useNext()`,
-- and string rendering.
+A concrete loopback endpoint may look like this:
 
-That similarity is useful because it teaches the reader that IPv4 and IPv6 share a host-plus-port shape in SNode.C. But similar API does not mean identical operational semantics.
+```cpp
+net::in6::SocketAddress remote("::1", 8080);
+```
 
 The default IPv6 host is:
 
@@ -135,25 +149,15 @@ The default IPv6 host is:
 ::
 ```
 
-and the default port is:
+with port:
 
 ```text
 0
 ```
 
-So default IPv6 construction is also wildcard-oriented.
+This gives IPv6 the same broad wildcard-oriented starting point as IPv4, but in IPv6 vocabulary.
 
-A concrete IPv6 endpoint might look like:
-
-```cpp
-net::in6::SocketAddress remote("::1", 8080);
-```
-
-The reader should resist two opposite mistakes: treating IPv6 as completely unrelated to IPv4, or treating it as merely IPv4 with longer strings.
-
-The better view is:
-
-> SNode.C gives IPv4 and IPv6 a similar address interface where the similarity is useful, while preserving the fact that they are different endpoint families.
+The similarity is useful, but it should not hide the family boundary. IPv6 is not merely IPv4 with longer strings. It has its own address syntax, its own operational behavior, and its own deployment consequences. SNode.C gives IPv4 and IPv6 a similar address interface where that helps, while preserving the fact that they are different endpoint families.
 
 #### Unix domain sockets: local endpoint identity
 
@@ -163,28 +167,25 @@ The Unix domain socket address class is:
 net::un::SocketAddress
 ```
 
-Its conceptual surface is simpler:
+Its endpoint identity is not host plus port.
 
-- default construction,
-- construction from a socket path,
-- construction from an existing `sockaddr_un`,
-- initialization,
-- `setSunPath(...)` and `getSunPath()`,
-- and string rendering.
-
-That simpler surface is not a weakness. It reflects the family.
-
-A Unix domain socket endpoint is a local endpoint identity, normally represented by a path-like value:
+It is a local socket identity, normally represented by a path-like value:
 
 ```cpp
 net::un::SocketAddress local("/tmp/snodec.sock");
 ```
 
-Default construction uses an empty path string. In SNode.C's address model, that empty string acts as the wildcard indicator for Unix domain socket addressing.
+This is conceptually different from IP addressing. There is no remote internet host and no port number. The endpoint belongs to the local operating-system namespace.
 
-This is conceptually different from IP addressing. There is no remote host plus port pair; there is a local operating-system endpoint identity. A Unix domain socket is not just another IP socket with different syntax.
+Default construction uses the empty string:
 
-That makes Unix domain sockets pedagogically useful: they break the habit of thinking that every network endpoint is internet-shaped.
+```text
+""
+```
+
+In the SNode.C address model, that is the wildcard or not-yet-specific Unix-domain endpoint identity.
+
+Unix domain sockets are pedagogically useful because they break a common habit. They remind the reader that not every endpoint is internet-shaped. The same server/client/context architecture can still appear, but the network-layer identity is different.
 
 #### RFCOMM: Bluetooth address plus channel
 
@@ -194,42 +195,34 @@ The RFCOMM address class is:
 net::rc::SocketAddress
 ```
 
-Its conceptual surface includes:
-
-- default construction,
-- construction from Bluetooth address,
-- construction from channel,
-- construction from Bluetooth address plus channel,
-- construction from an existing `sockaddr_rc`,
-- initialization,
-- `setBtAddress(...)` and `getBtAddress()`,
-- `setChannel(...)` and `getChannel()`,
-- and string rendering.
-
-An RFCOMM endpoint is not host plus port. It is better understood as:
+An RFCOMM endpoint is:
 
 ```text
 Bluetooth device address
   + RFCOMM channel
 ```
 
-For example:
+A concrete remote endpoint may look like this:
 
 ```cpp
 net::rc::SocketAddress remote("00:11:22:33:44:55", 3);
 ```
 
-Default construction uses the wildcard Bluetooth address conceptually represented as:
+The Bluetooth address identifies the device. The RFCOMM channel selects the service within the RFCOMM family. The channel should not simply be translated into “a Bluetooth port number.” That wording would pull the reader back into IP vocabulary. A channel is the service selector used by RFCOMM.
+
+Default construction is wildcard-oriented in the SNode.C model:
 
 ```text
 00:00:00:00:00:00
 ```
 
-with channel `0` until a more specific channel is configured.
+with channel:
 
-The channel should not simply be described as "a Bluetooth port number." It is a service selector inside the RFCOMM communication family.
+```text
+0
+```
 
-That distinction matters because it keeps the reader from translating every endpoint model back into IP vocabulary. A Bluetooth RFCOMM address is not an IP-style address with different formatting; it belongs to a different endpoint family.
+That means the address can express a broad or deferred Bluetooth endpoint identity until the application or configuration makes it more specific.
 
 #### L2CAP: Bluetooth address plus PSM
 
@@ -239,54 +232,50 @@ The L2CAP address class is:
 net::l2::SocketAddress
 ```
 
-It mirrors the RFCOMM pattern closely, but with a different service selector:
-
-- default construction,
-- construction from Bluetooth address,
-- construction from PSM,
-- construction from Bluetooth address plus PSM,
-- construction from an existing `sockaddr_l2`,
-- initialization,
-- `setBtAddress(...)` and `getBtAddress()`,
-- `setPsm(...)` and `getPsm()`,
-- and string rendering.
-
-An L2CAP endpoint is:
+It belongs to the same Bluetooth world as RFCOMM, but it uses a different service selector:
 
 ```text
 Bluetooth device address
   + PSM
 ```
 
-For example:
+A concrete remote endpoint may look like this:
 
 ```cpp
 net::l2::SocketAddress remote("00:11:22:33:44:55", 0x1001);
 ```
 
-Default construction again uses the wildcard Bluetooth address conceptually represented as:
+The Bluetooth address again identifies the device. The PSM identifies the L2CAP service endpoint.
+
+Default construction follows the same wildcard-oriented Bluetooth pattern:
 
 ```text
 00:00:00:00:00:00
 ```
 
-with PSM `0` until a more specific PSM is configured.
+with PSM:
 
-RFCOMM and L2CAP both belong to the Bluetooth world, but their service selectors are not the same thing: RFCOMM uses a channel, while L2CAP uses a PSM.
+```text
+0
+```
 
-That is why SNode.C gives them distinct address classes instead of hiding both behind one ambiguous Bluetooth endpoint type. Similar Bluetooth vocabulary does not mean identical endpoint semantics.
+RFCOMM and L2CAP therefore share the idea of Bluetooth device identity, but they do not share the same service selector vocabulary. RFCOMM uses a channel. L2CAP uses a PSM.
 
-### Cross-family address behavior
+That is why SNode.C gives them distinct address classes. Similar Bluetooth vocabulary does not mean identical endpoint semantics.
 
-Once the five concrete families are understood, several cross-family patterns become visible.
+### Patterns that repeat across families
 
-These patterns should be learned as concepts, not as a list of signatures.
+The five families differ, but several patterns repeat.
+
+The point of this section is not to list every constructor or every member function. The useful question is:
+
+> What does the API shape teach about endpoint identity?
 
 #### Default construction and wildcard meaning
 
-Default construction is meaningful; it is not just uninitialized data.
+Default construction is meaningful. It is not uninitialized data.
 
-Across the supported families, it expresses a wildcard-like or deferred endpoint identity:
+Across the supported families, the default address expresses a wildcard-like, broad, or deferred endpoint identity:
 
 | Family | Default / wildcard shape |
 |---|---|
@@ -298,27 +287,21 @@ Across the supported families, it expresses a wildcard-like or deferred endpoint
 
 This matters because socket programming often begins with partial endpoint descriptions.
 
-A server may specify only the service selector it wants to listen on.
+A server may specify only the service selector it wants to listen on. A client may specify a remote endpoint while leaving its local side broad. A wildcard address is not an error. It is often the correct expression of “this endpoint is intentionally broad until bind or connect makes it concrete.”
 
-A client may specify a remote endpoint while leaving its local endpoint broad or system-selectable.
+#### Constructors teach identity shape
 
-A wildcard address is not an error. It is often the correct expression of "let this endpoint be broad until bind or connect makes it concrete."
+Constructors reveal what each family considers natural.
 
-#### Constructors teach semantics
+Port-only construction makes sense for IPv4 and IPv6 because a server often listens on a service port without caring which local interface receives the connection.
 
-A reader can learn a surprising amount from constructor sets alone.
+Path construction makes sense for Unix domain sockets because the path is the local endpoint identity.
 
-Across the five families, constructors expose what each endpoint family considers natural identity.
+Channel construction makes sense for RFCOMM because an RFCOMM service can be described by a channel while the Bluetooth address remains wildcarded.
 
-Port-only construction makes sense for IPv4 and IPv6 because a server often listens on a port without caring which local interface receives the connection.
+PSM construction makes sense for L2CAP for the same reason, but in L2CAP vocabulary.
 
-Path-only construction makes sense for Unix domain sockets because the path is the endpoint identity.
-
-Channel-only construction makes sense for RFCOMM because a local service can be described by its channel while the Bluetooth address remains wildcarded.
-
-PSM-only construction makes sense for L2CAP for the same reason, but in L2CAP's own vocabulary.
-
-Full constructors express a fully specified remote endpoint or an explicitly bound local endpoint:
+Full constructors express a fully specified peer or an explicitly specified local endpoint:
 
 ```cpp
 net::in::SocketAddress ip4("127.0.0.1", 8080);
@@ -328,19 +311,15 @@ net::rc::SocketAddress rc("00:11:22:33:44:55", 3);
 net::l2::SocketAddress l2("00:11:22:33:44:55", 0x1001);
 ```
 
-These examples are not meant to introduce a full application. They are code anchors for the address model.
+These examples are not application programs. They are anchors for the address model.
 
 #### Setters and getters use family language
 
-Each address class provides setters and getters appropriate to its family.
+Each address class names its fields in the language of its family.
 
-That is not only for programmer comfort.
+That is an important design choice.
 
-It reinforces the framework's educational idea:
-
-> Endpoint identity should be named in the language of its family.
-
-So instead of forcing everything through generic key-value access, the framework uses names such as:
+The framework does not force all address data through vague names such as `value1` and `value2`, or through a single generic key-value map. It uses names such as:
 
 ```cpp
 setHost(...)
@@ -351,64 +330,52 @@ setChannel(...)
 setPsm(...)
 ```
 
-The names themselves teach what kind of endpoint the reader is configuring.
+The names teach the endpoint model.
 
-#### String rendering and diagnostics
+A host is not a Unix path. A Unix path is not a Bluetooth address. An RFCOMM channel is not an L2CAP PSM.
 
-All five concrete address classes provide string rendering.
+The API vocabulary preserves those differences.
 
-This may seem secondary, but it is part of runtime literacy.
+#### String rendering is part of runtime literacy
 
-A framework that reports endpoint identity poorly becomes harder to operate. Good address rendering helps in:
+All concrete address classes provide string rendering.
+
+That may look secondary, but it is part of operational readability. A framework that cannot report endpoint identity clearly is harder to teach, harder to debug, and harder to operate.
+
+Address rendering appears in places such as:
 
 - startup logging,
-- status callbacks,
-- error reporting,
-- connect and listen diagnostics,
-- teaching examples.
+- listen and connect callbacks,
+- error messages,
+- status output,
+- diagnostic traces,
+- and teaching examples.
 
-A good address string is often the first thing a reader or operator sees when a connection succeeds or fails.
-
-#### Local and remote endpoint thinking
-
-Address semantics become clearer once the reader thinks in local-versus-remote pairs.
-
-A server usually cares first about a **local bind address**.
-
-A client usually cares first about a **remote peer address**.
-
-But both sides may have both identities conceptually present.
-
-For example:
-
-- a server may bind to a wildcard local address,
-- a client may leave its local side wildcarded,
-- a Unix domain server may bind a local path,
-- a Bluetooth server may listen on a wildcard Bluetooth address plus channel or PSM,
-- a Bluetooth client may specify the remote device while leaving the local side broad.
-
-Once this is understood, address classes stop feeling like static data containers. They become endpoint-role objects.
+A good address string is often the first evidence a reader sees that a server has bound the expected endpoint or that a client tried to connect to the expected peer.
 
 ### Address semantics and the layer model
 
-This chapter is the concrete continuation of Chapter 7: the address classes are where the network layer becomes tangible.
+This chapter is the first concrete network-layer chapter after the general layer model.
 
-They show:
+The runtime may still advance registered instances in the same broad way. The application may still use a factory and a context. The connection layer may still distinguish non-TLS stream handling from TLS stream handling.
+
+But the network layer changes the meaning of the endpoint being bound or connected.
+
+That is why `SocketAddress` is such a useful bridge between architecture and code.
+
+It shows:
 
 - what counts as endpoint identity in each family,
-- how wildcarding works in that family,
-- which values belong naturally together,
-- how higher layers can stay similar while lower identity rules differ.
+- how wildcarding is expressed in that family,
+- which values naturally belong together,
+- how local and remote endpoint roles are described,
+- and how higher layers can stay similar while lower identity rules differ.
 
-In that sense, `SocketAddress` is one of the clearest bridges between architecture and code.
-
-The application layer may still use the same context/factory pattern. The runtime may still drive events in the same way. But the network layer changes the meaning of the endpoint being bound or connected.
-
-That is the point of separating the layers.
+This is the practical value of separating layers. The application writer does not have to relearn the whole framework for every family, but neither does the framework pretend that every family has the same endpoint semantics.
 
 ### Why IP families have richer resolution behavior
 
-IPv4 and IPv6 differ from Unix domain, RFCOMM, and L2CAP in one especially important way.
+IPv4 and IPv6 differ from Unix domain sockets, RFCOMM, and L2CAP in one especially important way.
 
 Their address classes expose resolution-oriented API pieces:
 
@@ -416,65 +383,62 @@ Their address classes expose resolution-oriented API pieces:
 - `useNext()`,
 - canonical-name access.
 
-This reflects the fact that internet-style host names may resolve to more than one candidate endpoint. A name such as:
+This reflects the fact that internet-style host names may resolve to more than one candidate endpoint.
+
+A name such as:
 
 ```text
 example.org
 ```
 
-is not always a single concrete address.
+is not necessarily one concrete address. It may produce several candidates. The framework's address abstraction therefore leaves room for iterating through them.
 
-It may produce several candidates, and the framework's address abstraction leaves room for iterating through them.
+This is why the IP-family address classes are richer in this specific area. The richness is not accidental; it reflects the semantics of the family.
 
-That is why the IP-family address classes are richer in this specific area. The richness is not accidental feature growth; it reflects the semantics of the family.
+That distinction also prevents a false generalization. Unix domain sockets, RFCOMM, and L2CAP do not need to mimic IP name resolution merely to fit a common abstract shape. They keep the address model appropriate to their own family.
 
 ### What belongs where?
 
-This table summarizes the address-level meaning of common concepts.
+The following table summarizes the address-level meaning of common terms.
 
 | Concept | Address-layer meaning |
 |---|---|
-| Address family | Which endpoint universe the address belongs to |
-| Host | IP-family peer or local interface identity |
+| Address family | The endpoint universe the address belongs to |
+| Host | IP-family peer or local-interface identity |
 | Port | IP-family service selector |
 | Unix path | Local operating-system endpoint identity |
 | Bluetooth address | Bluetooth device identity |
 | RFCOMM channel | RFCOMM service selector |
 | L2CAP PSM | L2CAP service selector |
 | Wildcard/default address | Broad or deferred endpoint identity |
-| `toString(...)` | Runtime-readable representation |
+| `toString(...)` | Runtime-readable endpoint representation |
 
-The table is deliberately simple. Its job is not to replace the API documentation. Its job is to help the reader ask the right question:
+The table is deliberately compact. Its job is not to replace the API reference. Its job is to keep the central question visible:
 
 > What kind of endpoint identity am I describing?
 
+Once that question becomes natural, the address classes become much easier to read.
+
 ### What to remember
 
-Remember:
-
-- Socket addresses belong to the network layer.
-- Each network family has its own concrete address class.
-- IPv4 and IPv6 use host plus port.
+- Socket addresses belong to the network layer: they describe endpoint identity for a selected family.
+- SNode.C uses a shared address pattern, but each supported family keeps its own concrete `SocketAddress` type.
+- IPv4 and IPv6 use host-plus-port identity and add resolution-oriented behavior such as hints, canonical names, and candidate iteration.
 - Unix domain sockets use local socket path identity.
-- RFCOMM uses Bluetooth address plus channel.
-- L2CAP uses Bluetooth address plus PSM.
-- Default construction is meaningful and wildcard-oriented, not uninitialized data.
-- Constructors reveal what each family considers natural endpoint identity.
-- Setters and getters use the language of the family.
+- RFCOMM and L2CAP use Bluetooth device identity with different service selectors: channel for RFCOMM, PSM for L2CAP.
+- Default construction is meaningful and wildcard-oriented in family-specific ways.
 - Similar API shape does not mean identical endpoint semantics.
-- Address rendering is part of runtime diagnostics.
-- Local and remote endpoint roles shape how addresses are interpreted.
 
 ### Closing perspective
 
-Chapter 7 taught the communication layer stack.
+Chapter 7 explained the communication stack. This chapter made the first layer of that stack concrete by studying endpoint identity.
 
-This chapter made the network layer concrete by studying endpoint identity.
+That prepares the next step.
 
-That prepares the next step. Once we understand what an address means, we can return to server and client roles with better precision. `listen(...)` and `connect(...)` do not merely receive arbitrary strings or numbers; they receive family-specific endpoint descriptions.
+We can now return to server and client roles with better precision. `listen(...)` and `connect(...)` do not receive arbitrary strings and numbers. They receive family-specific endpoint descriptions.
 
-A server binds to an endpoint identity.
+A server binds to a local endpoint identity.
 
-A client connects to an endpoint identity.
+A client connects to a remote endpoint identity.
 
-The next chapters can now discuss server and client construction, lower-layer choices, and connection behavior with this address model in place.
+Chapter 9 can therefore ask the next architectural question with sharper vocabulary: how do server instances, client instances, and concrete connections use those endpoint identities while the runtime advances the communication flow?
