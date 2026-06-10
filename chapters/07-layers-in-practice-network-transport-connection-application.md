@@ -8,7 +8,7 @@ Chapter 6 then explained how the runtime advances registered instances. Descript
 
 This chapter turns to a different question:
 
-> What kind of communication work is the runtime advancing?
+> What kind of communication structure is the runtime advancing?
 
 The answer is the communication layer stack.
 
@@ -21,7 +21,7 @@ network family
           -> application protocol
 ```
 
-This is not a decorative diagram. It is the reason long SNode.C names are readable, why components can be selected systematically, and why the same application shape can move from IPv4 to IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, non-TLS streams, TLS streams, HTTP, WebSocket, MQTT, or MQTT over WebSocket without turning into unrelated code.
+This is not a decorative diagram. It explains why long SNode.C names are readable and why components can be selected systematically. It also explains why the same application shape can move from IPv4 to IPv6, from a Unix domain socket to Bluetooth RFCOMM or L2CAP, or from the non-TLS stream variant to TLS without becoming unrelated code. Higher protocols such as HTTP, WebSocket, MQTT, and MQTT over WebSocket add their own structure, but they do not make the lower stack disappear.
 
 Chapter 5 introduced this stack as part of the general mental model. Chapter 6 showed how registered instances make progress inside the runtime. This chapter explains how the communication choices behind those instances are named, built, and composed.
 
@@ -42,11 +42,11 @@ This four-layer view is not a replacement for the runtime model from Chapter 6.
 
 The runtime model explains how work is scheduled and dispatched. It talks about the event loop, descriptor readiness, timers, queued work, timeout processing, signals, and cleanup.
 
-The communication layer model explains what kind of communication structure that work belongs to. It answers different questions: Which endpoint family? Which transport form? Which connection machinery? Which application protocol?
+The communication layer model explains what kind of communication structure that runtime activity belongs to. It answers different questions: Which endpoint family? Which transport form? Which connection machinery? Which application protocol?
 
 That distinction is important because both models meet in every real application.
 
-A registered instance is advanced by the runtime. But the instance is not abstract runtime vapor. It is an IPv4 stream legacy client, an IPv6 TLS server, a Unix-domain HTTP endpoint, a Bluetooth RFCOMM stream endpoint, a WebSocket endpoint, an MQTT participant, or another concrete combination. The runtime moves the work; the layer stack tells us what kind of work it is.
+A registered instance is advanced by the runtime, but it is not a purely abstract runtime label. It is carried by some concrete stack: perhaps an IPv4 stream legacy client, an IPv6 TLS server, a Unix-domain HTTP endpoint, a Bluetooth RFCOMM stream endpoint, a WebSocket endpoint, an MQTT participant, or another combination. The runtime advances the instance; the layer stack tells us what kind of communication that instance represents.
 
 A compact separation is:
 
@@ -59,17 +59,13 @@ A compact separation is:
 | HTTP, WebSocket, MQTT, or custom protocol behavior | Application layer |
 | Factory and context classes | Application-facing protocol endpoint machinery |
 
-This prevents a common confusion.
-
-The runtime tells us *how work is moved*.
-
-The communication layer stack tells us *what kind of communication structure that work belongs to*.
+This prevents a common confusion. The runtime tells us *how progress happens*. The communication layer stack tells us *what kind of communication structure is making progress*. Each row in the table becomes visible later in type names, component names, configuration choices, and source-tree paths.
 
 ### Names are maps of architecture
 
 The fastest practical way to understand SNode.C layering is to read names from left to right.
 
-A long SNode.C name is usually not long by accident. In many cases, it is a compressed description of the communication stack. The name does not merely identify a class. It records a set of architectural decisions.
+A long SNode.C name is usually not long by accident. In many cases, it is a compact description of the communication stack. The name identifies a class, but it also records a set of architectural decisions. Reading such names structurally is one of the quickest ways to stop seeing them as noise.
 
 Consider this type:
 
@@ -109,7 +105,7 @@ network-facing code
 
 Once this habit is learned, long names become useful instead of intimidating. They are not random C++ namespace growth. They are compact layer descriptions.
 
-The rule is simple:
+A useful reading rule is:
 
 > Read a SNode.C communication type as a stack description before reading it as an isolated API name.
 
@@ -194,7 +190,7 @@ A framework that hides all endpoint identity behind a single general address typ
 
 SNode.C keeps the family-specific meaning visible while still preserving the higher-level pattern.
 
-This is why Chapter 8 follows naturally from this chapter. Once the reader understands that the network layer chooses an endpoint family, the next question is unavoidable:
+Once the endpoint family is chosen, the next question is what kind of communication relationship that family will carry. Before going there, however, the family-specific address meaning deserves its own treatment. This is why Chapter 8 follows naturally from this chapter. Once the reader understands that the network layer chooses an endpoint family, the next question is unavoidable:
 
 > What exactly does an address mean in each family?
 
@@ -214,9 +210,7 @@ A stream transport gives the framework a stable model for connection-oriented by
 
 This does not mean every communication form is the same. It means that the stream abstraction gives many SNode.C examples a common conceptual base.
 
-The network layer decides what kind of endpoint identity is used.
-
-The transport layer decides what kind of communication relationship is assumed.
+The network layer decides what kind of endpoint identity is used. The transport layer decides what kind of communication relationship is assumed.
 
 When these two decisions are combined, the result appears directly in namespaces such as:
 
@@ -240,13 +234,11 @@ Bluetooth RFCOMM stream communication?
 Bluetooth L2CAP stream communication?
 ```
 
-That question is more useful than asking only which socket class is involved. It places the code in the communication stack.
+That question is more useful than asking only which socket class is involved. It places the code in the communication stack. Once the endpoint family and transport form are fixed, the next question is how the concrete peer relationship is managed while it exists.
 
 ### The connection layer: managing the peer relationship
 
-The network layer chooses the endpoint family.
-
-The transport layer chooses the communication form.
+The network layer chooses the endpoint family. The transport layer chooses the communication form.
 
 The connection layer answers a different question:
 
@@ -357,7 +349,7 @@ A web server is not just web code. It is web behavior carried by some lower comm
 
 An MQTT application is not just MQTT code. It is MQTT behavior carried by a connection, which is carried by a transport, which is carried by a network family. MQTT over WebSocket adds another important lesson: an application protocol can itself be carried through another application-layer protocol structure while still relying on the lower stack below it.
 
-This is the practical value of the layer model. It lets the reader ask precise questions:
+This is the practical value of the layer model. Instead of treating higher protocols as feature islands, it lets the reader ask precise questions:
 
 ```text
 Which lower family carries this service?
@@ -367,13 +359,11 @@ Where does the context sit?
 Which parts would change if the lower family changed?
 ```
 
-Those questions are more useful than treating HTTP, WebSocket, MQTT, and custom protocols as unrelated feature islands.
+Those questions keep the application layer connected to the rest of the stack without collapsing all layers into one undifferentiated design.
 
 #### Application-layer components
 
-The component list reflects higher-level protocol support.
-
-Examples include:
+The component list reflects higher-level protocol support. The following names are representative examples rather than a vocabulary test:
 
 ```text
 http
@@ -402,9 +392,7 @@ http-server-express-tls-rc
 http-server-express-tls-un
 ```
 
-Again, the point is not to memorize every name at once. The point is to read component names as architectural statements.
-
-A component name tells the reader which higher framework behavior is selected and, in many cases, which lower communication stack carries it.
+The point is not to memorize every name at once. The point is to read component names as architectural statements. A component name tells the reader which higher framework behavior is selected and, in many cases, which lower communication stack carries it.
 
 #### The application layer is still connected to sockets
 
@@ -512,13 +500,11 @@ That is transfer.
 
 #### Where Bluetooth fits
 
-Bluetooth belongs in this chapter because RFCOMM and L2CAP are not exceptions to the model.
+RFCOMM and L2CAP appear here for the same reason IPv4, IPv6, and Unix domain sockets appear: they are endpoint families in the lower communication model. They are not exceptions to the stack; they exercise it in a device-near setting.
 
-They show that SNode.C's layer design is not only about internet-facing communication such as IPv4 and IPv6. It also covers device-near communication families.
+This is especially important for IoT, embedded, and machine-to-machine systems. Such systems often combine local device communication, network transport, web interfaces, message-oriented integration, and deployment constraints. Treating Bluetooth as a strange appendix would weaken the architectural lesson. Treating it as a lower communication family makes the model stronger.
 
-This is especially important for IoT, embedded, and machine-to-machine systems. Such systems often need to combine local device communication, network transport, web interfaces, message-oriented integration, and deployment constraints. Treating Bluetooth as a strange appendix would weaken the architectural lesson. Treating it as a lower communication family makes the model stronger.
-
-However, Bluetooth does not need to be justified every time it appears. Once the reader understands that RFCOMM and L2CAP are lower communication families in the same architectural model, later chapters can discuss their concrete address and API details without treating them as special outsiders.
+Once the reader understands that RFCOMM and L2CAP belong to the same architectural model, later chapters can discuss their concrete address and API details without repeatedly defending their presence.
 
 ### Layers are real, but not walls
 
@@ -556,7 +542,7 @@ This is how the model becomes practical instead of merely tidy.
 
 ### What belongs where?
 
-The following table is a compact orientation aid. It is deliberately simple. Its job is not to solve every design decision. Its job is to help the reader ask the right first question.
+The following table is a compact orientation aid. It is deliberately simple: its job is not to solve every design decision, but to help the reader ask the right first question.
 
 | Concern | Layer or model |
 |---|---|
@@ -575,29 +561,24 @@ The question to keep asking is:
 
 > Which layer am I reasoning about?
 
-Sometimes the answer is one layer. Often, the answer is a primary layer plus consequences in another layer. That is normal. Real systems are layered, but they are still systems.
+Sometimes the answer is one layer. Often, it is a primary layer plus consequences in another layer. That is normal. Real systems are layered, but they are still systems.
 
 ### What to remember
 
-- Chapter 6 explained how registered instances make progress; this chapter explains how the communication choices behind those instances are structured.
-- The communication stack is not the same as the runtime core: the runtime moves work, while the layer stack describes what kind of communication work is being moved.
+- The communication stack is not the runtime core: the runtime advances instances, while the stack describes what kind of communication those instances represent.
 - The network layer chooses the endpoint family, such as IPv4, IPv6, Unix domain sockets, RFCOMM, or L2CAP.
 - The transport layer gives the communication form; in the early teaching path, that form is `stream`.
-- The connection layer manages the concrete peer relationship; `legacy` means the non-TLS stream connection variant, while `tls` adds TLS connection handling.
+- The connection layer manages the concrete peer relationship; `legacy` names the non-TLS stream connection variant, while `tls` adds TLS connection handling.
 - The application layer contains protocol behavior, whether that behavior is a custom `SocketContext`, HTTP, WebSocket, Express-like routing, MQTT, or MQTT over WebSocket.
-- SNode.C type names and component names are compressed architectural statements; layers are real boundaries, but not sealed walls.
+- SNode.C type names and component names are compressed architectural statements, and layers are real boundaries without being sealed walls.
 
 ### Closing perspective
 
-Chapter 5 gave the mental model. Chapter 6 explained how registered instances are advanced by the runtime machinery. This chapter has shown how the communication layer stack appears in actual SNode.C names, components, and transfer questions.
-
-That completes an important step in the reader's orientation.
+Chapter 5 gave the mental model. Chapter 6 explained how registered instances are advanced by the runtime machinery. This chapter has shown how the communication layer stack appears in SNode.C names, components, and transfer questions.
 
 The framework is not only a collection of classes. It is a system in which runtime progress and communication layering meet. A server or client handle registers an instance. The runtime advances that instance. The type and component names tell us which network family, transport form, connection machinery, and application protocol are involved.
 
-The next chapter moves into the first concrete piece of that stack: socket addresses.
-
-That is the right next step because the network layer becomes real only when we understand what endpoint identity means for each family. An IPv4 address, an IPv6 address, a Unix domain socket path, an RFCOMM endpoint, and an L2CAP endpoint are all addresses in a broad sense, but they are not the same kind of thing.
+The next chapter moves into the first concrete piece of that stack: socket addresses. That is the right next step because the network layer becomes real only when we understand what endpoint identity means for each family. An IPv4 address, an IPv6 address, a Unix domain socket path, an RFCOMM endpoint, and an L2CAP endpoint are all addresses in a broad sense, but they are not the same kind of thing.
 
 The layer model tells us that address semantics belong to the network layer. Chapter 8 therefore moves from the general stack to the first concrete network-layer question:
 
