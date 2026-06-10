@@ -12,13 +12,15 @@ SNode.C is interesting because it takes a different path. It is not merely a set
 
 That visibility gives the framework a specific teaching value.
 
-This book is written for two kinds of readers in particular.
+This book is written for three kinds of readers in particular.
 
 The first kind is the experienced C++ developer who already understands classes, templates, ownership, build systems, and long-lived software. Such a reader does not only want a recipe. They want to understand where the boundaries are, which pieces can be reused, which pieces should remain separate, and how new behavior can be added without turning the application into an accidental collection of callbacks.
 
 The second kind is the advanced learner or student who already knows the broad idea of a protocol stack: perhaps Ethernet, IP, TCP, TLS, HTTP, WebSocket, MQTT, local IPC, or Bluetooth. Such a reader may understand the layers in theory, but still have difficulty recognizing those layers in real C++ code.
 
-SNode.C lives in that gap.
+The third kind is the enthusiastic maker who builds systems by combining devices, protocols, networks, and small services. Such a reader may come from microcontrollers, home labs, sensor systems, Linux boards, routers, or artistic and experimental installations. They may not want a purely academic treatment, but they do need a framework that helps them keep growing systems understandable.
+
+SNode.C lives where these interests meet.
 
 It lets the reader build real network applications, but it also exposes the architectural boundaries that make those applications understandable. For that reason, SNode.C is useful not only as a framework, but also as a learning object.
 
@@ -93,7 +95,7 @@ understand the boundary
 
 ### Why “layered” is more than a buzzword here
 
-The word *layered* is often used loosely. It can mean little more than “there are several modules.” In SNode.C, layering is more concrete.
+In technical writing, the word *layered* is sometimes used lazily. It can mean almost anything from “we have modules” to “there are several abstraction levels.” In SNode.C, however, layering is not decorative. It is operational.
 
 A useful first picture is this:
 
@@ -122,7 +124,7 @@ The consequence is simple but powerful:
 
 > Not everything changes at once.
 
-A small protocol implemented in a SNode.C context can often remain recognizable when the lower family changes. The endpoint identity and deployment environment may change, but the core application behavior does not have to be rewritten merely because the communication is now carried differently.
+A protocol implemented in a SNode.C context can often remain recognizable when the lower family changes. That is true for small teaching protocols, but it is not limited to them. Larger protocols also keep their application-level structure when the lower communication family changes, even though their internal behavior may be richer. The endpoint identity and deployment environment may change, but the protocol does not have to be redesigned merely because the communication is carried differently.
 
 This does not mean lower layers are irrelevant. They are very relevant. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP have different addressing models, operating-system assumptions, and deployment consequences.
 
@@ -225,21 +227,11 @@ Here it is enough to understand why the book starts small: the small example giv
 - The first echo example is deliberately small because it exposes the shape of the framework without hiding it behind protocol complexity.
 - MQTTSuite becomes important later as a reference ecosystem, but the book first builds the framework model that makes such systems understandable.
 
-### From motivation to a working environment
-
-This chapter has explained why SNode.C is worth studying as a framework and as a teaching object.
-
-The next step is deliberately practical.
-
-Architecture becomes meaningful only when the reader can build, run, inspect, and modify examples. Before writing the echo pair, the reader needs a working environment. They need to know where the code lives, how the project is built, how examples are organized, and how to read the repository without getting lost in its size.
-
-The next chapter therefore moves from motivation to preparation.
-
-It sets up the ground on which the rest of the book can stand.
-
 ### Closing perspective
 
 A good framework should do more than provide features. It should help its users think clearly.
+
+This chapter has explained why SNode.C is worth studying as a framework and as a teaching object. The next step is deliberately practical: before writing the echo pair, the reader needs a working environment. Architecture becomes meaningful only when examples can be built, run, inspected, and modified.
 
 SNode.C is worth studying because it offers a coherent way to think about networked applications in modern C++. It connects lower communication families such as IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP with higher protocol systems such as HTTP, WebSocket, and MQTT. It supports practical concerns such as configuration, TLS, deployment, diagnostics, and persistence. Most importantly, it does so without erasing the architecture.
 
