@@ -14,6 +14,8 @@ runtime
               -> application protocol behavior
 ```
 
+Here, as in Chapter 3, read *instance* as the configured server-side or client-side communication role, not as an already established peer connection.
+
 After that first program, the next difficulty is orientation.
 
 The SNode.C source tree is much larger than the first echo pair. It contains runtime code, logging support, utilities, lower communication families, transport specializations, HTTP and web-protocol layers, an Express-like framework, database support, IoT-oriented pieces, examples, applications, build logic, and packaging support.
@@ -225,7 +227,7 @@ For a server, the path is:
 SocketServer
   -> configuration
   -> listen(...)
-  -> accept/listen flow machinery
+  -> registered server instance / listen flow machinery
   -> SocketConnection
   -> SocketContextFactory
   -> SocketContext
@@ -237,7 +239,7 @@ For a client, the path is:
 SocketClient
   -> configuration
   -> connect(...)
-  -> connect flow machinery
+  -> registered client instance / connect flow machinery
   -> SocketConnection
   -> SocketContextFactory
   -> SocketContext
@@ -247,7 +249,7 @@ This path is more important than any single file name.
 
 When a file feels difficult, ask where it sits in the path.
 
-Is it part of the outer server or client instance? Is it configuration? Is it the lower-layer socket machinery? Is it a connection object? Is it a factory? Is it the per-connection context? Is it an application protocol implementation?
+Is it part of the application-side server or client handle, the configured instance, its configuration, the lower-layer socket machinery, a connection object, a factory, the per-connection context, or an application protocol implementation?
 
 That question restores orientation because it reconnects the file to a role.
 
@@ -488,9 +490,7 @@ Where does the flow enter the runtime?
 Which context is created when a connection is established?
 ```
 
-These questions turn a complex type into a structured reading exercise.
-
-They also keep the focus on architecture. The exact spelling of a template instantiation matters, but it matters because it encodes a boundary decision.
+These questions turn a complex type into a structured reading exercise. They also keep the focus on architecture. The exact spelling of a template instantiation matters, but it matters because it encodes a boundary decision.
 
 ### How to read a context class
 
@@ -572,27 +572,21 @@ This workflow is not only useful for beginners. It is also useful when extending
 - CMake files are navigation aids: they reveal subdirectories, targets, dependencies, components, and install boundaries.
 - Long namespace and component names usually encode architecture: layer area, network family, transport form, connection mode, and role.
 - Example applications show framework usage, but they are not the framework core; separate application decisions from reusable framework patterns.
-- A reliable reading path starts from an application, finds the instance, factory, and context, then follows aliases into `net` and abstractions into `core`.
+- A reliable reading path starts from an application, finds the application-side handle, configured instance, factory, and context, then follows aliases into `net` and abstractions into `core`.
 - Variant-heavy code becomes easier to read once you ask what stayed structurally the same and what changed because a lower layer changed.
 
 ### Transition to the architecture chapters
 
-Part I began with motivation, prepared the build environment, built the first echo pair, and now established a way to read the source tree.
+Part I began with motivation, prepared the build environment, built the first echo pair, and now established a way to read the source tree. The next part can therefore become more architectural. Chapter 5 names the mental model more formally. It will discuss SNode.C as an event-driven, layered framework built from recurring roles: runtime, instance, connection, factory, context, configuration, and protocol behavior.
 
-The next part can therefore become more architectural.
-
-Chapter 5 names the mental model more formally. It will discuss SNode.C as an event-driven, layered framework built from recurring roles: runtime, instance, connection, factory, context, configuration, and protocol behavior.
-
-The important result of this chapter is not a memorized directory list.
-
-The important result is confidence:
+The important result of this chapter is not a memorized directory list. The important result is confidence:
 
 ```text
 when you open a file,
-  ask which layer it belongs to,
-  ask which role it plays,
-  ask which boundary it expresses,
-  and only then read the implementation details.
+ask which layer it belongs to,
+ask which role it plays,
+ask which boundary it expresses,
+and only then read the implementation details.
 ```
 
 That habit is the difference between browsing the repository and understanding it.
