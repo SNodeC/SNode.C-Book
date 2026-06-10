@@ -2,33 +2,34 @@
 
 ### From host-plus-port to local path identity
 
-Chapter 10 compared IPv4 and IPv6 as two host-plus-port families.
+Chapter 10 used IPv4 and IPv6 as the first concrete lower-family comparison. Both families still used a host-plus-port endpoint identity.
 
-This chapter keeps the same SNode.C server/client/connection model but changes the endpoint identity:
+This chapter keeps the same SNode.C handle, instance, connection, factory, context, callback, and runtime model, but changes the endpoint identity more strongly:
 
 ```text
 host + port
   -> local Unix-domain path
 ```
 
-That is a significant lower-family shift.
+That is the next controlled variation in Part III.
 
-With IPv4 and IPv6, an endpoint is described by an address and a port. With Unix domain sockets, an endpoint is described primarily by a local path.
+With IPv4 and IPv6, an endpoint is described by an address and a port. With Unix domain sockets, an endpoint is described primarily by a local path. The endpoint no longer looks like an internet endpoint at all. It is a local interprocess-communication identity.
 
 The larger SNode.C model remains recognizable:
 
-- a server or client instance,
+- an application-side `SocketServer` or `SocketClient` handle,
+- a registered server-side or client-side instance,
+- a concrete `SocketConnection`,
 - a socket-context factory,
-- a socket context,
-- a concrete connection,
+- a per-connection socket context,
 - runtime integration,
 - status callbacks,
 - connection lifecycle callbacks,
-- and the same broad stream-based communication story.
+- and the same broad stream-based server/client/connection model.
 
 This shows that SNode.C's role model is not tied to host-plus-port addressing.
 
-### Same model, different endpoint identity
+### Same SNode.C model, different endpoint identity
 
 The transition from IPv4/IPv6 to Unix domain sockets can be summarized as follows.
 
@@ -39,9 +40,9 @@ The transition from IPv4/IPv6 to Unix domain sockets can be summarized as follow
 | Server bind value | local host + port | local socket path |
 | Client target | remote host + port | remote socket path |
 | Optional local bind | local host and/or port | local socket path |
-| Runtime model | same | same |
-| Server/client role model | same | same |
-| Context/factory model | same | same |
+| Runtime model | stable | stable |
+| Server/client role model | stable | stable |
+| Context/factory model | stable | stable |
 
 The key point is the controlled change.
 
@@ -51,7 +52,9 @@ The endpoint identity changes.
 
 The application architecture does not need to be reinvented.
 
-### The Unix-domain address model
+This is the same teaching pattern as in Chapter 10, but the shift is stronger. IPv4 and IPv6 were different internet families with a similar host-plus-port shape. Unix domain sockets change the addressing category itself.
+
+### Path identity in `net::un::SocketAddress`
 
 The Unix-domain address class is:
 
@@ -59,7 +62,7 @@ The Unix-domain address class is:
 net::un::SocketAddress
 ```
 
-It is intentionally simpler than the IPv4 and IPv6 address classes.
+Its surface is intentionally smaller than the IPv4 and IPv6 address classes because the endpoint identity is smaller. There is no host name to resolve, no internet port number, and no candidate list of remote network addresses. The address object represents a Unix-domain path and the socket-address structure built from it.
 
 Its conceptual surface includes:
 
@@ -70,7 +73,7 @@ Its conceptual surface includes:
 - `setSunPath(...)` and `getSunPath()`,
 - and string rendering.
 
-This simpler surface reflects the family.
+This surface reflects the family.
 
 A Unix-domain endpoint is not a host with a strange name. It is a local IPC endpoint identified primarily by a path.
 
@@ -105,15 +108,15 @@ path
       -> stream communication endpoint
 ```
 
+That is why Unix domain sockets belong in this part of the book. They are not a new application protocol. They are a different lower-family endpoint model under the same SNode.C stream architecture.
+
 #### Default construction and empty path
 
 Default construction is meaningful in the Unix-domain address model.
 
-In the terminology used in Chapter 8, an empty Unix-domain path acts as the wildcard or deferred endpoint indicator.
+In the SNode.C address vocabulary used here, an empty Unix-domain path acts as the wildcard or deferred endpoint indicator for this family. It gives SNode.C a way to represent an address object whose concrete path has not yet been made specific.
 
-That gives SNode.C a way to represent an address object whose concrete path has not yet been made specific.
-
-The important point is not to turn this into a long operating-system detour. The important point is consistency:
+The important point is not to turn this into a long operating-system detour. The important point is consistency across families:
 
 | Family | Default / wildcard shape |
 |---|---|
@@ -138,6 +141,7 @@ With IPv4 or IPv6 one often asks:
 - Which interface should listen?
 - Which port should be exposed?
 - Which remote host should be contacted?
+- Which firewall or routing rule might be involved?
 
 With Unix domain sockets one more often asks:
 
@@ -145,6 +149,7 @@ With Unix domain sockets one more often asks:
 - Which local processes are allowed to connect?
 - Where does this endpoint belong in the local service layout?
 - Who owns the lifecycle of that path?
+- What happens if an old path is left behind?
 
 Unix domain sockets are therefore especially useful for:
 
@@ -156,7 +161,7 @@ Unix domain sockets are therefore especially useful for:
 
 The lower-family choice is not decorative. It changes the operational shape of the system.
 
-### Server and client use
+### Server and client use with path-based endpoints
 
 The stream Unix-domain wrappers follow the same SNode.C pattern as the IPv4 and IPv6 wrappers.
 
@@ -174,6 +179,8 @@ using LocalServer = net::un::stream::legacy::SocketServer<MyFactory>;
 LocalServer server("local-service");
 server.listen("/tmp/my-service.sock", 5, onStatus);
 ```
+
+The visible `LocalServer` object is the application-side handle. The `listen(...)` call configures the server-side path and registers the server-side instance through the usual runtime path.
 
 The server is still a server role.
 
@@ -200,7 +207,7 @@ The server-side convenience overloads are path-centered:
 
 This mirrors the Chapter 10 pattern.
 
-A readable convenience call fills the instance configuration for the correct lower family and then uses the same underlying role machinery.
+A readable convenience call configures the application-side handle and then enters the same registration path.
 
 #### Client-side `connect(...)`
 
@@ -212,6 +219,8 @@ using LocalClient = net::un::stream::legacy::SocketClient<MyFactory>;
 LocalClient client("local-client");
 client.connect("/tmp/my-service.sock", onStatus);
 ```
+
+Here the visible `LocalClient` object is again the application-side handle. The `connect(...)` call configures the remote Unix-domain service path and registers the client-side instance through the usual runtime path.
 
 If the client also needs an explicit local bind path, the call can express that too:
 
@@ -236,7 +245,7 @@ The optional local path describes the client's own local endpoint identity.
 
 Path-based endpoint identity does not remove the local/remote distinction.
 
-It changes what local and remote mean.
+It only changes what the endpoint value looks like.
 
 For a Unix-domain server:
 
@@ -265,25 +274,26 @@ Unix domain sockets change endpoint identity, but they do not require a differen
 
 #### Server/client/connection/context model
 
-The same core roles remain:
+The same core model remains:
 
-| Role | Meaning with Unix domain sockets |
+| Concept | Meaning with Unix domain sockets |
 |---|---|
-| `SocketServer` | listens on a local Unix-domain path |
-| `SocketClient` | connects to a Unix-domain service path |
-| `SocketConnection` | represents one concrete peer relationship |
+| Application-side `SocketServer` handle | configures and registers a server-side instance |
+| Application-side `SocketClient` handle | configures and registers a client-side instance |
+| Registered instance | runtime-visible server/client role using `net::un` endpoint semantics |
+| `SocketConnection` | one concrete peer relationship |
 | `SocketContextFactory` | creates a context for a connection |
 | `SocketContext` | implements application protocol behavior |
 
-The server is still the outer listening role.
+The server-side instance is still the listening role.
 
-The client is still the outer connecting role.
+The client-side instance is still the connecting role.
 
 The connection is still the concrete peer relationship.
 
 The context is still the protocol endpoint attached to that connection.
 
-This is why moving from IPv4 to Unix domain sockets should not feel like moving to a different framework.
+This is why moving from IPv4 to Unix domain sockets should not feel like moving to a different framework. The lower family has changed, not the architecture.
 
 #### Context and protocol logic
 
@@ -303,7 +313,9 @@ What often remains stable is:
 - how it handles disconnection,
 - how it thinks in terms of one connection and one context.
 
-The protocol context may inspect the address if it wants to log or display endpoint information, but the protocol logic itself can often remain the same.
+The same context class can often be reused when the protocol behavior does not depend on family-specific address details.
+
+The protocol context may inspect the address if it wants to log or display endpoint information. But the protocol logic itself can often remain the same.
 
 #### Legacy and TLS
 
@@ -311,7 +323,7 @@ Chapter 7 introduced `legacy` and `tls` as connection-layer variants.
 
 Unix domain sockets fit into that same layer story.
 
-A Unix-domain stream component can participate in the same pattern:
+A Unix-domain stream component can participate in the pattern:
 
 ```text
 net::un
@@ -319,9 +331,9 @@ net::un
       -> legacy or TLS
 ```
 
-This matters because Unix domain sockets are not a special branch outside the framework.
+Here `legacy` is the non-TLS stream connection variant. `tls` adds TLS connection handling.
 
-In SNode.C's terminology, they are another lower communication family in the network-layer part of the stack, while stream transport and connection-layer handling remain recognizable.
+This matters because Unix domain sockets are not a special branch outside the framework. In SNode.C's terminology, they are another lower communication family in the network-layer part of the stack, while stream transport and connection-layer handling remain recognizable.
 
 ### What changes operationally
 
@@ -365,6 +377,7 @@ An application should be clear about:
 - where the socket path is placed,
 - which process creates it,
 - which process is allowed to use it,
+- what permissions or ownership expectations belong to the path,
 - what happens when the service stops,
 - what happens if an old path is left behind.
 
@@ -374,9 +387,9 @@ It means the family expresses locality through path identity, and application de
 
 #### Unix domain sockets are not a replacement for IP
 
-Unix domain sockets are not "better IP."
+Unix domain sockets are not better or worse IP sockets.
 
-They are a different lower-family choice.
+They answer a different design question.
 
 They are excellent when communication is local to one machine. They are not suitable when a process must communicate with a peer on another machine over a network.
 
@@ -392,6 +405,8 @@ The better question is:
 Is this communication local enough that path-based IPC is the right lower family?
 ```
 
+This keeps the comparison architectural rather than emotional. The lower family should match the communication boundary.
+
 ### Stream focus and a datagram note
 
 This chapter focuses on stream Unix domain sockets.
@@ -400,7 +415,9 @@ That is intentional for architectural continuity.
 
 Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
 
-The build also contains a `net-un-dgram` component. That is useful to know, but it is not the focus here. Datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8–12.
+The SNode.C build also contains a `net-un-dgram` component. That is useful to know, but it is not the focus here. Datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8--12.
+
+The practical lesson is simple: Unix domain sockets are not limited to one possible socket style, but this chapter follows the stream path because the book is still building the layered server/client/connection model.
 
 ### Preparing the Bluetooth shift
 
@@ -417,27 +434,19 @@ Bluetooth address + RFCOMM channel
 Bluetooth address + L2CAP PSM
 ```
 
-After Unix domain sockets, that shift should feel less surprising.
+After Chapter 11, the reader has seen two kinds of endpoint shift: internet host-plus-port identity and local path identity. Chapter 12 adds device address plus service selector.
 
 The server/client/connection/context model remains available, while the lower-family address semantics change again.
 
 ### What to remember
 
-Remember:
-
-- Unix domain sockets replace host-plus-port identity with local path identity.
-- The namespace is `net::un`.
-- The address class is `net::un::SocketAddress`.
-- The path is the local IPC endpoint identity.
-- Default construction corresponds to an empty path as wildcard or deferred endpoint identity.
-- `listen(sunPath, ...)` configures the server's local Unix-domain path.
-- `connect(sunPath, ...)` configures the client's remote Unix-domain service path.
-- `connect(sunPath, bindSunPath, ...)` also configures the client's local path.
-- Local and remote still matter, even when both are path-based.
-- The server/client/connection/context model remains stable.
-- Deployment thinking shifts toward local path placement, access, ownership, and cleanup.
-- Unix domain sockets are a local IPC family, not a replacement for network communication.
-- The next lower-family shift is Bluetooth address plus channel or PSM.
+- Unix domain sockets replace host-plus-port endpoint identity with local path identity.
+- `net::un` selects the Unix-domain family, and `net::un::SocketAddress` represents the path-based endpoint.
+- The application-side handle, registered instance, connection, factory, context, callbacks, and runtime model remain structurally familiar.
+- `listen(sunPath, ...)` configures the server's local Unix-domain path; `connect(sunPath, ...)` configures the client's remote Unix-domain service path.
+- `connect(sunPath, bindSunPath, ...)` keeps the local/remote distinction visible even though both endpoints are path-based.
+- The empty Unix-domain path is the family's wildcard or deferred endpoint representation in the SNode.C address model.
+- Deployment thinking shifts from network reachability to local path placement, access, ownership, and cleanup.
 
 ### Closing perspective
 
