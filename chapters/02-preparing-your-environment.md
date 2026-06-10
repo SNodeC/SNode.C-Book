@@ -12,48 +12,48 @@ If the source tree, build tree, install prefix, and external playground are mixe
 
 The goal of this chapter is therefore simple:
 
-> Prepare a development setup that lets you build SNode.C, run examples, inspect the repository, and later compile small applications against installed SNode.C components.
+> Prepare a development setup that lets you build SNode.C, run examples, inspect the framework source tree, and later compile small applications against installed SNode.C components.
 
 This is not a general Linux installation guide. It does not try to cover every distribution, every package manager, every editor, or every cross-compilation target. The concrete commands assume a normal Linux development machine, with Debian-style package names where package installation is shown. The ideas transfer to other systems, but package names and installation commands may need adjustment.
 
-### Three trees, three different purposes
+### Working areas, different purposes
 
-During the book it helps to keep three locations mentally separate.
+During the book it helps to keep several locations mentally separate.
 
-The first is the **book repository**.
-
-That is where the manuscript lives. It contains the Markdown chapter files, part files, Pandoc build configuration, LaTeX-related metadata, and other book-specific project files.
-
-The second is the **SNode.C framework repository**.
+The first is the **SNode.C source tree**.
 
 That is where the framework implementation lives. It contains the C++ source code, the CMake build system, the core runtime, network layers, protocol layers, database support, and example applications.
 
-The third is a small **playground project**.
+The second is the **build tree**.
 
-That is where you can later write small external applications that consume an installed SNode.C package without modifying the framework repository itself.
+That is where CMake writes generated build files, intermediate object files, and compiled binaries. It should not be mixed into the source tree.
+
+The third is the **install prefix**.
+
+That is where an installed SNode.C package places headers, libraries, CMake package files, and possibly installed executables. A local install prefix is especially useful for learning because it keeps the experiment self-contained.
+
+The fourth is a small **playground project**.
+
+That is where you can later write small external applications that consume an installed SNode.C package without modifying the framework source tree itself.
 
 A useful layout is:
 
 ```text
 projects/
-  SNode.C-Book/
-  snode.c/
-  snodec-playground/
-```
-
-A separate build directory belongs beside these source trees, not inside them:
-
-```text
-projects/
-  SNode.C-Book/
   snode.c/
   snode.c-build/
   snodec-playground/
 ```
 
-This separation is not only tidy. It protects the reader from confusing generated files with source files, manuscript files with framework files, and local experiments with upstream examples.
+A local install prefix can live outside these source and build directories:
 
-The book explains the framework. The framework repository remains the source of truth for the implementation. The playground is where you can test your understanding.
+```text
+~/.local/snodec/
+```
+
+This separation is not only tidy. It protects the reader from confusing source files with generated files, framework examples with local experiments, and build artifacts with installed package files.
+
+The framework source tree remains the source of truth for the implementation. The build tree is disposable. The install prefix is what external projects consume. The playground is where you can test your understanding.
 
 ### What the environment must support
 
@@ -63,7 +63,7 @@ First, it must allow us to **clone and build SNode.C**.
 
 Second, it must allow us to **run small server and client examples**.
 
-Third, it must allow us to **inspect the source tree and build tree separately**.
+Third, it must allow us to **inspect the framework source tree and build tree separately**.
 
 Fourth, it must allow us to **install the framework into a known prefix**.
 
@@ -320,7 +320,7 @@ A quiet program is not automatically a clean program. Sometimes it is only a pro
 
 ### Preparing a separate playground project
 
-Besides building the framework repository itself, it is useful to have a small external playground project.
+Besides building the framework source tree itself, it is useful to have a small external playground project.
 
 For example:
 
