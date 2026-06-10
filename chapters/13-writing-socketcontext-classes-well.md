@@ -11,21 +11,17 @@ The book has now shown that SNode.C can express several different endpoint ident
 - Bluetooth address plus RFCOMM channel,
 - Bluetooth address plus L2CAP PSM.
 
-The next question is what remains stable above those lower communication families.
+Those endpoint identities differ strongly. They belong to different lower communication families, have different address classes, and lead to different operational questions. Yet the application-side shape remained recognizable across all of them.
 
-For application code, the most important answer is:
+The reason is that application protocol behavior does not live in the address class, the transport family, or the connection wrapper. It lives in the per-connection context.
+
+For application code, the most important object in this part of the design is therefore:
 
 ```text
 SocketContext
 ```
 
-A server or client instance is the outer communication role.
-
-A `SocketConnection` is the concrete peer relationship.
-
-A `SocketContextFactory` creates protocol endpoints for connections.
-
-A `SocketContext` is where the application protocol behavior lives.
+The visible `SocketServer` or `SocketClient` object is the application-side handle used to configure and register a role. The registered instance is the long-lived runtime-visible server-side or client-side communication role. A `SocketConnection` is one concrete peer relationship below that role. A `SocketContextFactory` creates protocol endpoints for such connections. A `SocketContext` is the object in which the protocol behavior of one endpoint is written.
 
 That is the starting point for this chapter.
 
@@ -44,9 +40,11 @@ Every part of that sentence matters.
 | endpoint | the context represents one side of a protocol conversation |
 | attached to a `SocketConnection` | the context acts through a managed communication relationship |
 
-The context is therefore neither the whole application nor the transport object itself.
+The context is therefore neither the whole application nor the transport object itself. It is the protocol endpoint for one connection.
 
-It is the protocol endpoint for one connection.
+This distinction is easy to underestimate. A context is close enough to the connection that it can send, read, close, set timeouts, and observe metrics. At the same time, it should not become the connection. It should express what the protocol does over that connection.
+
+That makes the context the place where the book moves upward again. The previous part asked which lower family carries the connection. This part asks what the application protocol does once a connection exists.
 
 #### Context, connection, and factory
 
@@ -60,21 +58,30 @@ The three objects should be kept separate:
 
 This distinction continues Chapter 9.
 
-The connection represents communication with a peer.
+The connection represents communication with a peer. It owns the connection-facing runtime surface: data movement, shutdown, timeout, naming, counters, and endpoint views. The context implements what the application protocol does over that communication relationship. The factory creates the context when a new connection needs one.
 
-The context implements what the application protocol does over that communication relationship.
+If these responsibilities remain separate, SNode.C applications stay easier to read as they grow. The reader can ask three different questions and expect three different answers:
 
-The factory creates the context when a new connection needs one.
+```text
+Which peer relationship exists?
+  -> connection
 
-If these responsibilities remain separate, SNode.C applications stay easier to read as they grow.
+What protocol behavior runs over that relationship?
+  -> context
+
+How is the right protocol endpoint created for a connection?
+  -> factory
+```
+
+A good SNode.C application keeps those questions visible.
 
 #### Acting through the connection
 
 A `SocketContext` acts through a `SocketConnection`.
 
-That means it may send, read, close, inspect metrics, or set timeouts through the surface provided to it.
+That means it may send, stream, read, close, inspect metrics, set timeouts, or request shutdown through the surface provided to it. These are real operations. They are not merely descriptive helper functions.
 
-But it should not become the connection.
+But the context should not become the connection.
 
 A good context uses connection-facing operations to express protocol behavior. It does not reinvent send queues, transport buffers, descriptor ownership, or connection lifecycle machinery.
 
@@ -90,11 +97,17 @@ SocketContext
 
 This boundary is one of the most important design habits in SNode.C application code.
 
-### The live interface surface
+### The context surface seen by protocol code
 
-The stream `SocketContext` interface is focused.
+The stream `SocketContext` surface is focused. It gives derived protocol classes enough operations to implement real stream protocols while still keeping transport machinery outside the protocol class.
 
-It gives derived protocol classes enough surface to implement real stream protocols while still keeping transport machinery outside the protocol class.
+There are two layers worth keeping apart.
+
+The generic `core::socket::SocketContext` defines the protocol-context contract shared at the socket-context level: timeout, sending, reading, closing, metrics, received-data processing, signal handling, and read/write error handling.
+
+The stream-specific `core::socket::stream::SocketContext` adds the stream-oriented surface: stream-to-peer support, stream EOF, read and write shutdown, access to the stream `SocketConnection`, and the connection lifecycle hooks used by stream contexts.
+
+The chapter does not need to turn this into an inheritance lesson. The useful point is simpler: the context API is deliberately shaped around protocol behavior, while the concrete stream specialization provides the operations needed by stream protocols.
 
 A useful overview is:
 
@@ -109,11 +122,9 @@ A useful overview is:
 | connection access | `getSocketConnection()` |
 | signals and errors | `onSignal(...)`, `onReadError(...)`, `onWriteError(...)` |
 
-This table is not meant to replace the API documentation.
+This table is not meant to replace API documentation.
 
-Its purpose is to show the design shape.
-
-The context sees enough of the connection to implement protocol behavior, but not so much that it becomes a second transport implementation.
+Its purpose is to show the design shape. The context sees enough of the connection to implement protocol behavior, but not so much that it becomes a second transport implementation.
 
 #### What the surface tells us
 
@@ -125,13 +136,13 @@ Second, it reacts to lifecycle events.
 
 Third, it can close or shut down the connection when protocol semantics require it.
 
-Fourth, it can observe useful connection-derived metrics.
+Fourth, it can observe useful connection-derived metrics. Some of those observations are measured relative to the moment where the context is attached to the connection, which makes them meaningful for the context's own protocol lifetime.
 
 Fifth, it must handle signals and read/write errors explicitly enough that exceptional runtime situations are not invisible.
 
 That is a strong but focused contract.
 
-### The required hook groups
+### Lifecycle, input, signals, and errors
 
 A good way to understand a context is to group its hooks by responsibility.
 
@@ -143,9 +154,7 @@ A good way to understand a context is to group its hooks by responsibility.
 
 This grouping is more useful than memorizing method names in isolation.
 
-It shows what kind of thinking a context needs.
-
-A context is not one sequential script. It is a set of reactions to events that occur during a connection's lifetime.
+It shows what kind of thinking a context needs. A context is not one sequential script. It is a set of reactions to events that occur during a connection's lifetime.
 
 #### Lifecycle hooks
 
@@ -153,9 +162,7 @@ A context is not one sequential script. It is a set of reactions to events that 
 
 > What protocol-relevant action, if any, should happen when this endpoint becomes ready?
 
-Sometimes the correct answer is nothing.
-
-Sometimes the correct answer is to start the conversation.
+Sometimes the correct answer is nothing. Sometimes the correct answer is to start the conversation.
 
 For example, a client-side echo context may send the first message from `onConnected()` because that is the protocol-relevant beginning of the exchange.
 
@@ -163,9 +170,9 @@ For example, a client-side echo context may send the first message from `onConne
 
 > What protocol-local cleanup or final observation belongs to this endpoint when the connection ends?
 
-It is often a good place for lightweight bookkeeping, understandable logging, or releasing protocol-specific transient state.
+It is often a good place for lightweight bookkeeping, understandable logging, or releasing protocol-specific transient state. It should not become a large recovery dump site for responsibilities that were unclear earlier.
 
-It should not become a large recovery dump site for responsibilities that were unclear earlier.
+For application authors, the important rule is not to manage the context as if it owned the connection. The framework attaches the context to the connection, calls the lifecycle hooks at the appropriate points, and detaches the context when the connection ends. The context should use those hooks to express protocol-relevant behavior, not to take over framework lifetime management.
 
 #### Input processing hook
 
@@ -173,9 +180,7 @@ For many stream protocols, `onReceivedFromPeer()` is the central protocol method
 
 This is where incoming bytes become protocol meaning.
 
-A simple echo protocol may only read available bytes and send them back.
-
-A more complex protocol may need:
+A simple echo protocol may only read available bytes and send them back. A more complex protocol may need:
 
 - framing,
 - message accumulation,
@@ -190,19 +195,27 @@ The important point is the same in both cases:
 
 It should not blindly drain input and postpone all meaning indefinitely.
 
+The return value matters. `onReceivedFromPeer()` returns the amount of data actually processed. That return value connects protocol processing to the framework's accounting of processed input. If a context reads more than it can understand, or reports progress that did not really happen, diagnostics become less trustworthy.
+
+A good context keeps the relationship honest:
+
+```text
+read data
+  -> process data
+      -> report what was processed
+```
+
 #### Signal and error hooks
 
 The base context interface also requires explicit handling for signals and read/write errors.
 
-This does not mean every example must build an elaborate signal or error policy.
+This does not mean every example must build an elaborate signal or error policy. It does mean the context author should not pretend those events do not exist.
 
-It does mean the context author should not pretend those events do not exist.
-
-A small teaching example may keep these hooks minimal. A real protocol may use them to close a connection, record diagnostics, or translate lower-level problems into protocol-level decisions.
+A small teaching example may keep these hooks minimal. A real protocol may use them to close a connection, record diagnostics, reject invalid state, or translate lower-level problems into protocol-level decisions.
 
 The important habit is explicitness.
 
-### Writing good context behavior
+### Design habits for good context code
 
 A good `SocketContext` is usually small, connection-local, and protocol-specific.
 
@@ -227,15 +240,17 @@ It should not become:
 - a multiprotocol grab bag,
 - or the outer server/client role.
 
-This does not mean a context can never refer to application services.
+This does not mean a context can never refer to application services. A protocol endpoint may need authentication state, a message registry, a database facade, a dispatcher, or a shared application service.
 
-It means the context should keep its own responsibility clear: protocol behavior for this connection.
+The design question is how that dependency becomes visible.
 
-If it needs help from larger application services, those dependencies should be explicit and understandable.
+A context may receive references, pointers, or shared services through factory construction. That keeps the dependency visible at the creation boundary instead of hiding it behind unrelated global state. Chapter 14 will return to this point, because the factory is the natural bridge between application-level construction and per-connection protocol behavior.
 
 #### Think in events, not in one linear script
 
 SNode.C is event-driven.
+
+Chapter 6 explained that the runtime advances registered work through events. A context is the protocol-level expression of that model. It is not a blocking script. It is a collection of event reactions attached to one connection.
 
 A context should therefore not be designed as if the whole protocol were one blocking sequence such as:
 
@@ -266,7 +281,7 @@ onSignal(...) / onReadError(...) / onWriteError(...)
 
 This event-oriented structure is what makes context code readable later.
 
-Each hook should have a clear reason to exist.
+Each hook should have a clear reason to exist. The reader should be able to see which part of the protocol is represented by each reaction.
 
 #### Keep protocol state explicit
 
@@ -284,7 +299,7 @@ Good protocol state is:
 - updated at understandable points,
 - and small enough that transitions remain readable.
 
-Because a `SocketContext` is per-connection, it is often the right scope for connection-local protocol state.
+Because a `SocketContext` is per-connection, it is often the right scope for connection-local protocol state. A frame accumulator, a parser state, a handshake state, a pending request, or a session-local flag often belongs here.
 
 Hidden global state should be avoided unless the protocol genuinely needs shared application state and the dependency is made explicit.
 
@@ -302,33 +317,13 @@ For a framed or stateful protocol, the context should connect three questions:
 
 This discipline prevents the receive path from becoming an unbounded bucket of bytes whose meaning is deferred indefinitely.
 
-#### Return processed data honestly
-
-`onReceivedFromPeer()` should return the amount of data actually processed.
-
-That return value is not decorative.
-
-It connects input handling to the framework's view of read and processed data.
-
-This matters because the connection surface exposes both total read and total processed metrics. Sloppy accounting makes those metrics less meaningful and makes protocol bugs harder to diagnose.
-
-A good context keeps the relationship trustworthy:
-
-```text
-read data
-  -> process data
-      -> report what was processed
-```
-
 #### Send responses through the connection surface
 
-A context sends through `sendToPeer(...)` or related connection-facing operations.
+A context sends through `sendToPeer(...)`, `streamToPeer(...)`, or related connection-facing operations.
 
 That keeps protocol behavior separate from transport machinery.
 
-The context decides *what* protocol response should be sent.
-
-The connection machinery handles the managed communication path.
+The context decides *what* protocol response should be sent. The connection machinery handles the managed communication path.
 
 This avoids the common mistake of reimplementing output buffering or transport state inside the protocol class.
 
@@ -369,9 +364,7 @@ Examples:
 - half-shutdown when the protocol semantics justify it,
 - avoid abrupt closure when the protocol has a graceful ending.
 
-The context is allowed to close the connection.
-
-It should still know why it is doing so.
+The context is allowed to close the connection. It should still know why it is doing so.
 
 #### Use metrics as protocol information
 
@@ -418,13 +411,11 @@ This table folds several common mistakes into one design rule:
 
 #### Do not move server/client role logic into the context
 
-The outer server or client instance is responsible for the communication role.
-
-The context should not become the place where the application reimplements listening, connecting, retrying, reconnecting, or accepting peers.
-
-Those concerns belong to the instance, configuration, flow controller, and runtime machinery.
+Listening, connecting, accepting peers, retrying, and reconnecting belong to the registered instance and its runtime or flow-controller machinery. They do not belong to the per-connection context.
 
 The context begins where a concrete connection has protocol behavior to perform.
+
+This is a useful boundary when reading code. If a context starts deciding when the server should listen again, when the client should reconnect, or how instances should be registered, it is probably reaching outside its role.
 
 #### Do not turn the context into a second connection
 
@@ -432,9 +423,7 @@ The context acts through the connection.
 
 It should not become a competing connection implementation.
 
-Using `sendToPeer(...)`, `readFromPeer(...)`, `close()`, and metrics is appropriate.
-
-Recreating transport buffers, descriptor ownership, or connection lifecycle state inside the context is not.
+Using `sendToPeer(...)`, `readFromPeer(...)`, `close()`, shutdown operations, and metrics is appropriate. Recreating transport buffers, descriptor ownership, or connection lifecycle state inside the context is not.
 
 #### Do not hide unrelated global orchestration inside the context
 
@@ -460,15 +449,26 @@ Useful logging often includes:
 
 Less useful logging repeats every low-level detail until the protocol shape disappears.
 
-The goal is not maximum output.
+The goal is not maximum output. The goal is useful visibility.
 
-The goal is useful visibility.
+A good test is whether the log line helps answer a protocol question:
+
+```text
+Why did this endpoint send that response?
+Why did this context close the connection?
+Why did this peer stop making progress?
+What state was reached before disconnect?
+```
+
+Per-byte noise may be useful during a narrow diagnostic session. It should not be the default shape of a readable protocol implementation.
 
 ### The echo context as a minimal pattern
 
 The echo context is valuable because it is small.
 
-It demonstrates the minimum pattern:
+The point of echo is not that echo is interesting. The point is that echo makes the boundary visible: input handling belongs in `onReceivedFromPeer()`, connection-ready behavior belongs in `onConnected()` when the protocol needs it, and the outer instance remains free of protocol details.
+
+The minimal pattern is:
 
 | Method / area | Role in the example |
 |---|---|
@@ -477,9 +477,7 @@ It demonstrates the minimum pattern:
 | `onSignal(...)` | makes signal handling explicit |
 | `onReceivedFromPeer()` | performs the actual protocol action |
 
-The example should not be treated as a full protocol architecture.
-
-It should be treated as the smallest complete pattern that shows where behavior belongs.
+The example should not be treated as a full protocol architecture. It should be treated as the smallest complete pattern that shows where behavior belongs.
 
 The useful habits are:
 
@@ -503,11 +501,14 @@ Another developer should be able to read the class and answer:
 - What causes a response?
 - What causes closure?
 - What happens on invalid input?
+- What happens on timeout?
 - What happens on disconnect?
 
 If those questions are hard to answer, the context may be too implicit, too stateful in hidden ways, or too overloaded.
 
 A good context makes the protocol conversation visible.
+
+That is a stronger standard than merely compiling. A context can compile and still be hard to reason about. A well-written context lets the reader reconstruct the conversation from the hooks, state variables, and connection-facing operations.
 
 ### The factory as the next bridge
 
@@ -520,51 +521,37 @@ SocketContextFactory
   -> creates SocketContext objects for SocketConnection objects
 ```
 
-The factory is not where protocol behavior belongs.
+The factory is not where protocol behavior belongs. The protocol behavior belongs in the context.
 
-The protocol behavior belongs in the context.
+The factory is important because it creates the right context for a connection. It is also the natural place where construction-time dependencies become visible. If a context needs access to a shared service, configuration object, registry, or application state, the factory boundary is where that relationship can be made explicit rather than hidden.
 
-The factory is important because it creates the right context for a connection.
+If the context is the protocol endpoint, the factory is the construction boundary.
 
-Chapter 14 will look at that bridge more closely.
+Chapter 14 will look at that boundary more closely.
 
 ### What to remember
 
-Remember:
-
-- A `SocketContext` is one per-connection application protocol endpoint.
-- It is attached to a `SocketConnection`.
-- It acts through the connection, but it is not the connection.
-- It owns protocol behavior, not server/client role management.
-- It should react to lifecycle, input, signals, and errors explicitly.
-- `onConnected()` should express connection-ready protocol behavior.
-- `onDisconnected()` should handle protocol-local end-of-connection concerns.
-- `onReceivedFromPeer()` should process data intentionally.
-- The return value of `onReceivedFromPeer()` should report what was actually processed.
-- Protocol state should be explicit and preferably connection-local.
-- Timeouts and close operations should express protocol intent.
-- A good context remains mentally testable.
-- The factory creates contexts; Chapter 14 explains that bridge.
+- A `SocketContext` is the per-connection application protocol endpoint attached to a `SocketConnection`.
+- The context implements protocol behavior; it does not own the server/client role or reimplement the connection.
+- Context code should be event-oriented: lifecycle, input, signals, read errors, and write errors are separate responsibilities.
+- `onReceivedFromPeer()` should process input intentionally and return the amount of data actually processed.
+- Protocol state should be explicit, connection-local when possible, and named in protocol terms.
+- Sending, streaming, timeout, shutdown, close, and metrics operations act through the connection-facing surface.
+- Context metrics are most useful when interpreted as protocol observations, not as decorative counters.
+- A good context remains mentally testable: another reader can see what happens on connect, input, invalid data, timeout, closure, and disconnect.
 
 ### Closing perspective
 
 This chapter moves the book upward again.
 
-The previous chapters showed that SNode.C can carry communication over several different lower families.
+The previous chapters showed how SNode.C keeps a stable communication model across different lower families. This chapter showed where the application protocol lives once a connection exists.
 
-This chapter showed where application protocol behavior belongs once a connection exists.
+A `SocketContext` is not the server, not the client, not the connection, and not the factory. It is the per-connection protocol endpoint.
 
-The answer is the `SocketContext`.
+That leaves one important construction question.
 
-A well-written context keeps the framework's architectural promises intact:
+If contexts are per-connection objects, something must create them at the right moment, with the right type, and with the right dependencies.
 
-- the outer instance remains the communication role,
-- the connection remains the concrete peer relationship,
-- the runtime remains the event-driven coordinator,
-- and protocol behavior remains local, explicit, and understandable.
+That is the job of the `SocketContextFactory`.
 
-The next step follows naturally.
-
-If this chapter explained how to write the endpoint itself well, the next chapter should explain how those endpoints are created.
-
-That brings `SocketContextFactory` into focus.
+Chapter 14 turns to that bridge.
