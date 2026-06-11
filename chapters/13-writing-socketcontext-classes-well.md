@@ -128,19 +128,13 @@ Its purpose is to show the design shape. The context sees enough of the connecti
 
 #### What the surface tells us
 
-The interface tells us several things about the intended role of a context.
-
-First, the context is allowed to send and read data.
-
-Second, it reacts to lifecycle events.
+The interface tells us several things about the intended role of a context. First, the context is allowed to send and read data. Second, it reacts to lifecycle events.
 
 Third, it can close or shut down the connection when protocol semantics require it.
 
 Fourth, it can observe useful connection-derived metrics. Some of those observations are measured relative to the moment where the context is attached to the connection, which makes them meaningful for the context's own protocol lifetime.
 
-Fifth, it must handle signals and read/write errors explicitly enough that exceptional runtime situations are not invisible.
-
-That is a strong but focused contract.
+Fifth, it must handle signals and read/write errors explicitly enough that exceptional runtime situations are not invisible. That is a strong but focused contract.
 
 ### Lifecycle, input, signals, and errors
 
@@ -176,9 +170,7 @@ For application authors, the important rule is not to manage the context as if i
 
 #### Input processing hook
 
-For many stream protocols, `onReceivedFromPeer()` is the central protocol method.
-
-This is where incoming bytes become protocol meaning.
+For many stream protocols, `onReceivedFromPeer()` is the central protocol method. This is where incoming bytes become protocol meaning.
 
 A simple echo protocol may only read available bytes and send them back. A more complex protocol may need:
 
@@ -223,9 +215,7 @@ It answers the question:
 
 > What should this endpoint do on this connection?
 
-That question is deliberately narrow.
-
-A context becomes harder to understand when it tries to become the whole application.
+That question is deliberately narrow. A context becomes harder to understand when it tries to become the whole application.
 
 #### Keep responsibility connection-local
 
@@ -285,11 +275,7 @@ Each hook should have a clear reason to exist. The reader should be able to see 
 
 #### Keep protocol state explicit
 
-Many useful protocols need state.
-
-That is normal.
-
-The important question is whether the state is held well.
+Many useful protocols need state. That is normal. The important question is whether the state is held well.
 
 Good protocol state is:
 
@@ -305,9 +291,7 @@ Hidden global state should be avoided unless the protocol genuinely needs shared
 
 #### Read only what can be processed
 
-A context should read data with a clear idea of what it is prepared to process.
-
-For a simple echo protocol, a fixed buffer and immediate reflection may be enough.
+A context should read data with a clear idea of what it is prepared to process. For a simple echo protocol, a fixed buffer and immediate reflection may be enough.
 
 For a framed or stateful protocol, the context should connect three questions:
 
@@ -319,19 +303,13 @@ This discipline prevents the receive path from becoming an unbounded bucket of b
 
 #### Send responses through the connection surface
 
-A context sends through `sendToPeer(...)`, `streamToPeer(...)`, or related connection-facing operations.
-
-That keeps protocol behavior separate from transport machinery.
-
-The context decides *what* protocol response should be sent. The connection machinery handles the managed communication path.
+A context sends through `sendToPeer(...)`, `streamToPeer(...)`, or related connection-facing operations. That keeps protocol behavior separate from transport machinery. The context decides *what* protocol response should be sent. The connection machinery handles the managed communication path.
 
 This avoids the common mistake of reimplementing output buffering or transport state inside the protocol class.
 
 #### Use timeouts with protocol intent
 
-The context can set a timeout through `setTimeout(...)`.
-
-That does not mean every context should immediately set a custom timeout.
+The context can set a timeout through `setTimeout(...)`. That does not mean every context should immediately set a custom timeout.
 
 Timeouts should express protocol intent, such as:
 
@@ -341,9 +319,7 @@ Timeouts should express protocol intent, such as:
 - timeout-driven closure,
 - or protection against stalled conversations.
 
-Timeouts should not compensate for unclear state handling.
-
-A good context uses them because the protocol needs them.
+Timeouts should not compensate for unclear state handling. A good context uses them because the protocol needs them.
 
 #### Close or shut down with protocol intent
 
@@ -419,9 +395,7 @@ This is a useful boundary when reading code. If a context starts deciding when t
 
 #### Do not turn the context into a second connection
 
-The context acts through the connection.
-
-It should not become a competing connection implementation.
+The context acts through the connection. It should not become a competing connection implementation.
 
 Using `sendToPeer(...)`, `readFromPeer(...)`, `close()`, shutdown operations, and metrics is appropriate. Recreating transport buffers, descriptor ownership, or connection lifecycle state inside the context is not.
 
@@ -431,9 +405,7 @@ A context may need access to application services.
 
 But if it starts managing all sessions, all endpoints, all routing decisions, and all global state, it has probably grown beyond its intended role.
 
-A good context can be understood locally.
-
-It should be possible to read the class and understand what one protocol endpoint does on one connection.
+A good context can be understood locally. It should be possible to read the class and understand what one protocol endpoint does on one connection.
 
 ### Logging in a context
 
@@ -447,9 +419,7 @@ Useful logging often includes:
 - concise summaries of received or sent messages,
 - diagnostics around closure or timeout decisions.
 
-Less useful logging repeats every low-level detail until the protocol shape disappears.
-
-The goal is not maximum output. The goal is useful visibility.
+Less useful logging repeats every low-level detail until the protocol shape disappears. The goal is not maximum output. The goal is useful visibility.
 
 A good test is whether the log line helps answer a protocol question:
 
@@ -466,7 +436,7 @@ Per-byte noise may be useful during a narrow diagnostic session. It should not b
 
 The echo context is valuable because it is small.
 
-The point of echo is not that echo is interesting. The point is that echo makes the boundary visible: input handling belongs in `onReceivedFromPeer()`, connection-ready behavior belongs in `onConnected()` when the protocol needs it, and the outer instance remains free of protocol details.
+The point of echo is not that echo is interesting. The point is that echo makes the boundary visible: input handling belongs in `onReceivedFromPeer()`, connection-ready behavior belongs in `onConnected()` when the protocol needs it, and the application-side server/client handle remains free of protocol details.
 
 The minimal pattern is:
 
@@ -485,7 +455,7 @@ The useful habits are:
 - receive handling is where protocol action occurs,
 - responses are sent through the connection-facing surface,
 - behavior remains local to the context,
-- the outer instance stays clean.
+- the application-side server/client handle stays clean.
 
 A more complex protocol should grow from these habits, not abandon them.
 
@@ -525,9 +495,7 @@ The factory is not where protocol behavior belongs. The protocol behavior belong
 
 The factory is important because it creates the right context for a connection. It is also the natural place where construction-time dependencies become visible. If a context needs access to a shared service, configuration object, registry, or application state, the factory boundary is where that relationship can be made explicit rather than hidden.
 
-If the context is the protocol endpoint, the factory is the construction boundary.
-
-Chapter 14 will look at that boundary more closely.
+If the context is the protocol endpoint, the factory is the construction boundary. Chapter 14 will look at that boundary more closely.
 
 ### What to remember
 

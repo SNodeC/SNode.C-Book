@@ -39,9 +39,7 @@ That template already tells us something useful.
 
 A SNode.C address is not merely a string wrapper. It is backed by a concrete socket-address structure and length, and it participates in the framework's broader socket-address abstraction. The template parameter keeps the operating-system address representation visible enough for the family-specific class to remain honest.
 
-The shared base gives the framework a common shape.
-
-The derived family classes preserve the differences.
+The shared base gives the framework a common shape. The derived family classes preserve the differences.
 
 That is the right compromise for this part of the design:
 
@@ -315,9 +313,7 @@ These examples are not application programs. They are anchors for the address mo
 
 #### Setters and getters use family language
 
-Each address class names its fields in the language of its family.
-
-That is an important design choice.
+Each address class names its fields in the language of its family. That is an important design choice.
 
 The framework does not force all address data through vague names such as `value1` and `value2`, or through a single generic key-value map. It uses names such as:
 
@@ -359,9 +355,7 @@ This chapter is the first concrete network-layer chapter after the general layer
 
 The runtime may still advance registered instances in the same broad way. The application may still use a factory and a context. The connection layer may still distinguish non-TLS stream handling from TLS stream handling.
 
-But the network layer changes the meaning of the endpoint being bound or connected.
-
-That is why `SocketAddress` is such a useful bridge between architecture and code.
+But the network layer changes the meaning of the endpoint being bound or connected. That is why `SocketAddress` is such a useful bridge between architecture and code.
 
 It shows:
 
@@ -437,8 +431,6 @@ That prepares the next step.
 
 We can now return to server and client roles with better precision. `listen(...)` and `connect(...)` do not receive arbitrary strings and numbers. They receive family-specific endpoint descriptions.
 
-A server binds to a local endpoint identity.
-
-A client connects to a remote endpoint identity.
+A server binds to a local endpoint identity. A client connects to a remote endpoint identity.
 
 Chapter 9 can therefore ask the next architectural question with sharper vocabulary: how do server instances, client instances, and concrete connections use those endpoint identities while the runtime advances the communication flow?

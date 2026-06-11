@@ -55,9 +55,7 @@ WebSocket subprotocol role
 
 Each layer still has a responsibility. HTTP negotiates the upgrade. WebSocket provides the upgraded bidirectional message carrier. The WebSocket subprotocol role gives that carrier a selected protocol surface. `MqttContext` bridges the carrier to the MQTT protocol object. MQTT provides packet, session, topic, keep-alive, and publish-flow semantics.
 
-No layer disappears.
-
-That is the main point of the chapter.
+No layer disappears. That is the main point of the chapter.
 
 ### The composition in one model
 
@@ -335,9 +333,7 @@ This is exactly why the layered model is useful. It gives each concern a place.
 
 ### Native MQTT and MQTT-over-WebSocket as sibling compositions
 
-Native MQTT and MQTT-over-WebSocket are sibling compositions of the same MQTT protocol family.
-
-One places MQTT above a stream connection. The other places MQTT above a WebSocket subprotocol role.
+Native MQTT and MQTT-over-WebSocket are sibling compositions of the same MQTT protocol family. One places MQTT above a stream connection. The other places MQTT above a WebSocket subprotocol role.
 
 That is different from thinking of MQTT-over-WebSocket as “native MQTT with a few extra headers.” The two forms have different carrier paths:
 

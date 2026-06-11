@@ -2,9 +2,7 @@
 
 ### From path identity to Bluetooth endpoint identity
 
-Chapter 11 replaced host-plus-port endpoint identity with Unix-domain path identity.
-
-This chapter changes endpoint identity again.
+Chapter 11 replaced host-plus-port endpoint identity with Unix-domain path identity. This chapter changes endpoint identity again.
 
 Bluetooth RFCOMM and L2CAP are neither host-plus-port families nor path-based local IPC families. They use Bluetooth device identity together with a family-specific service selector:
 
@@ -30,11 +28,7 @@ The larger SNode.C model remains recognizable:
 - connection lifecycle callbacks,
 - and the same broad stream-based server/client/connection model.
 
-The lower communication family changes.
-
-The endpoint identity changes.
-
-The application architecture does not need to be reinvented.
+The lower communication family changes. The endpoint identity changes. The application architecture does not need to be reinvented.
 
 ### Two Bluetooth families, two service selectors
 
@@ -55,9 +49,7 @@ This table contains the main distinction of the chapter.
 
 RFCOMM and L2CAP share the idea of Bluetooth device identity. They differ in the service selector that identifies the communication endpoint within that Bluetooth family.
 
-That difference is not cosmetic.
-
-An RFCOMM channel is not an L2CAP PSM, and a PSM is not an RFCOMM channel.
+That difference is not cosmetic. An RFCOMM channel is not an L2CAP PSM, and a PSM is not an RFCOMM channel.
 
 #### RFCOMM: Bluetooth address plus channel
 
@@ -111,15 +103,11 @@ setBtAddress(...)
 setPsm(...)
 ```
 
-The shared Bluetooth-address part makes RFCOMM and L2CAP look related.
-
-The service-selector part keeps them distinct.
+The shared Bluetooth-address part makes RFCOMM and L2CAP look related. The service-selector part keeps them distinct.
 
 #### Channel and PSM are not interchangeable
 
-The most important conceptual mistake would be to collapse RFCOMM and L2CAP into one vague "Bluetooth socket" idea.
-
-They belong in the same chapter because they are both Bluetooth-related lower communication families.
+The most important conceptual mistake would be to collapse RFCOMM and L2CAP into one vague "Bluetooth socket" idea. They belong in the same chapter because they are both Bluetooth-related lower communication families.
 
 They must still remain conceptually separate:
 
@@ -230,9 +218,7 @@ It means the broad default/wildcard idea exists in both Bluetooth address models
 
 ### Server and client use with Bluetooth endpoints
 
-The stream Bluetooth wrappers follow the SNode.C pattern already seen for IPv4, IPv6, and Unix domain sockets.
-
-The convenience calls configure the application-side handle and then enter the usual registration path.
+The stream Bluetooth wrappers follow the SNode.C pattern already seen for IPv4, IPv6, and Unix domain sockets. The convenience calls configure the application-side handle and then enter the usual registration path.
 
 The difference is the configured endpoint identity:
 
@@ -270,9 +256,7 @@ The server-side convenience overloads are channel-centered:
 | `listen(btAddress, channel, ...)` | `Local::setBtAddress(btAddress)->setChannel(channel)` |
 | `listen(btAddress, channel, backlog, ...)` | `Local::setBtAddress(btAddress)->setChannel(channel)` + backlog |
 
-The server still registers a listening instance.
-
-The endpoint identity is now RFCOMM-specific.
+The server still registers a listening instance. The endpoint identity is now RFCOMM-specific.
 
 #### RFCOMM client-side `connect(...)`
 
@@ -294,9 +278,7 @@ The client-side convenience overloads are also channel-centered:
 | `connect(btAddress, channel, bindChannel, ...)` | remote address/channel + `Local::setChannel(bindChannel)` |
 | `connect(btAddress, channel, bindBtAddress, bindChannel, ...)` | remote address/channel + `Local::setBtAddress(bindBtAddress)->setChannel(bindChannel)` |
 
-The remote side is the peer Bluetooth address plus RFCOMM channel.
-
-The optional local side can refine the local Bluetooth address, the local channel, or both.
+The remote side is the peer Bluetooth address plus RFCOMM channel. The optional local side can refine the local Bluetooth address, the local channel, or both.
 
 #### L2CAP server-side `listen(...)`
 
@@ -324,9 +306,7 @@ The server-side convenience overloads are PSM-centered:
 | `listen(btAddress, psm, ...)` | `Local::setBtAddress(btAddress)->setPsm(psm)` |
 | `listen(btAddress, psm, backlog, ...)` | `Local::setBtAddress(btAddress)->setPsm(psm)` + backlog |
 
-The structure mirrors RFCOMM.
-
-The service selector changes.
+The structure mirrors RFCOMM. The service selector changes.
 
 #### L2CAP client-side `connect(...)`
 
@@ -348,9 +328,7 @@ The client-side convenience overloads are PSM-centered:
 | `connect(btAddress, psm, bindPsm, ...)` | remote address/PSM + `Local::setPsm(bindPsm)` |
 | `connect(btAddress, psm, bindBtAddress, bindPsm, ...)` | remote address/PSM + `Local::setBtAddress(bindBtAddress)->setPsm(bindPsm)` |
 
-Again, the structure mirrors RFCOMM.
-
-The endpoint semantics differ.
+Again, the structure mirrors RFCOMM. The endpoint semantics differ.
 
 ### Local and remote Bluetooth identity
 
@@ -392,11 +370,7 @@ local channel
 local PSM
 ```
 
-depending on the overload and family.
-
-This continues Chapter 9's connection model.
-
-There is still a local side, a remote side, a bound identity, and a peer identity.
+depending on the overload and family. This continues Chapter 9's connection model. There is still a local side, a remote side, a bound identity, and a peer identity.
 
 ### Pairing before SNode.C communication
 
@@ -436,11 +410,7 @@ The stable core roles remain:
 | `SocketContextFactory` | creates a context for a connection |
 | `SocketContext` | implements application protocol behavior |
 
-The server is still the listening role.
-
-The client is still the connecting role.
-
-The connection is still the concrete peer relationship.
+The server is still the listening role. The client is still the connecting role. The connection is still the concrete peer relationship.
 
 The context is still the protocol endpoint attached to that connection.
 
@@ -493,9 +463,7 @@ network family
 
 ### What changes operationally
 
-Bluetooth is device-near, radio-based communication.
-
-That changes the operational setting.
+Bluetooth is device-near, radio-based communication. That changes the operational setting.
 
 #### Platform and build reality
 
@@ -505,9 +473,7 @@ On Linux, that usually means BlueZ and the corresponding development files must 
 
 The framework can model RFCOMM and L2CAP as lower communication families, but the build can only provide those components where the platform Bluetooth stack and development files are available.
 
-That is normal for system-level Bluetooth support.
-
-SNode.C exposes RFCOMM and L2CAP as lower communication families, while still respecting the platform dependency.
+That is normal for system-level Bluetooth support. SNode.C exposes RFCOMM and L2CAP as lower communication families, while still respecting the platform dependency.
 
 #### Pairing, permissions, and adapter state
 
@@ -557,9 +523,7 @@ This is especially useful in IoT and embedded systems, where local device commun
 
 ### Closing perspective
 
-Chapter 10 covered host-plus-port endpoint identity through IPv4 and IPv6.
-
-Chapter 11 replaced that with Unix-domain path identity.
+Chapter 10 covered host-plus-port endpoint identity through IPv4 and IPv6. Chapter 11 replaced that with Unix-domain path identity.
 
 This chapter replaced it again with Bluetooth-specific endpoint identities:
 

@@ -4,9 +4,7 @@
 
 Chapter 3 showed the first working echo pair, and Chapter 5 turned that experience into a mental model of handles, instances, connections, contexts, factories, layers, and operational concerns. Chapter 5 also made an important distinction precise: the visible `SocketServer` or `SocketClient` object is the application-side handle, while the instance is the registered communication role advanced by the framework.
 
-That model is necessary, but it still leaves an important question open.
-
-**How does the framework actually keep everything moving?**
+That model is necessary, but it still leaves an important question open. **How does the framework actually keep everything moving?**
 
 A server can register an intention to listen. A client can register an intention to connect. A context can define reactions such as `onConnected()` and `onReceivedFromPeer()`. A timer can be armed. A descriptor can become readable. A timeout can expire. Something has to coordinate all of that.
 
@@ -567,6 +565,4 @@ SNodeC facade
 
 That picture will support the next chapters. When we later discuss socket layers, connection objects, contexts, HTTP, WebSocket, MQTT, and system-level applications, the same runtime story will still be underneath.
 
-SNode.C applications are not driven by scattered blocking calls.
-
-They are driven by a coordinated event-processing core.
+SNode.C applications are not driven by scattered blocking calls. They are driven by a coordinated event-processing core.

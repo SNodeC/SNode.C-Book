@@ -245,9 +245,7 @@ SocketClient
   -> SocketContext
 ```
 
-This path is more important than any single file name.
-
-When a file feels difficult, ask where it sits in the path.
+This path is more important than any single file name. When a file feels difficult, ask where it sits in the path.
 
 Is it part of the application-side server or client handle, the configured instance, its configuration, the lower-layer socket machinery, a connection object, a factory, the per-connection context, or an application protocol implementation?
 
@@ -275,9 +273,7 @@ They form the bridge between framework-managed connection machinery and user-def
 
 The flow-controller path explains a point introduced in Chapter 3: `listen(...)` and `connect(...)` should not be read as blocking calls that perform all communication immediately on the caller's stack.
 
-They register communication intent. The runtime-visible flow is then carried by configuration, connection, and flow-controller state.
-
-This distinction matters later for retries, timeouts, configuration, diagnostics, and shutdown behavior.
+They register communication intent. The runtime-visible flow is then carried by configuration, connection, and flow-controller state. This distinction matters later for retries, timeouts, configuration, diagnostics, and shutdown behavior.
 
 ### Reading `net`
 
@@ -459,9 +455,7 @@ A header often tells you:
 - which names are aliases,
 - and which types are intended for application code.
 
-Implementation files explain behavior. Headers explain shape.
-
-When learning SNode.C, shape should come first.
+Implementation files explain behavior. Headers explain shape. When learning SNode.C, shape should come first.
 
 A useful order is:
 

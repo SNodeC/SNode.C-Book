@@ -18,9 +18,7 @@ This is not a general Linux installation guide. It does not try to cover every d
 
 ### Working areas, different purposes
 
-During the book it helps to keep several locations mentally separate.
-
-The first is the **SNode.C source tree**.
+During the book it helps to keep several locations mentally separate. The first is the **SNode.C source tree**.
 
 That is where the framework implementation lives. It contains the C++ source code, the CMake build system, the core runtime, network layers, protocol layers, database support, and example applications.
 
@@ -57,17 +55,9 @@ The framework source tree remains the source of truth for the implementation. Th
 
 ### What the environment must support
 
-For the first part of the book, the environment must support five activities.
+For the first part of the book, the environment must support five activities. First, it must allow us to **clone and build SNode.C**. Second, it must allow us to **run small server and client examples**.
 
-First, it must allow us to **clone and build SNode.C**.
-
-Second, it must allow us to **run small server and client examples**.
-
-Third, it must allow us to **inspect the framework source tree and build tree separately**.
-
-Fourth, it must allow us to **install the framework into a known prefix**.
-
-Fifth, it must allow us to **compile small external programs against installed SNode.C components**.
+Third, it must allow us to **inspect the framework source tree and build tree separately**. Fourth, it must allow us to **install the framework into a known prefix**. Fifth, it must allow us to **compile small external programs against installed SNode.C components**.
 
 Optional technologies should also be visible when available. Bluetooth RFCOMM and Bluetooth L2CAP require the appropriate BlueZ development files. MariaDB support requires MariaDB development files. These optional areas do not have to be used immediately, but the environment should not hide them accidentally.
 
@@ -115,9 +105,7 @@ Optional libraries unlock additional framework areas:
 sudo apt install libbluetooth-dev libmagic-dev libmariadb-dev
 ```
 
-`libbluetooth-dev` is relevant for Bluetooth RFCOMM and Bluetooth L2CAP.
-
-`libmagic-dev` is relevant where file-type or content-type detection is used.
+`libbluetooth-dev` is relevant for Bluetooth RFCOMM and Bluetooth L2CAP. `libmagic-dev` is relevant where file-type or content-type detection is used.
 
 `libmariadb-dev` is relevant for MariaDB support.
 
@@ -162,9 +150,7 @@ For normal reading, do not edit the framework repository immediately. First lear
 
 ### Use an out-of-tree build
 
-A build directory should be separate from the source directory.
-
-This keeps generated files away from the code you want to read.
+A build directory should be separate from the source directory. This keeps generated files away from the code you want to read.
 
 A simple layout is:
 
@@ -286,15 +272,9 @@ Do not confuse these three. Many build problems become easier to diagnose once t
 
 ### Running server and client programs
 
-The basic pattern for server/client examples is simple.
+The basic pattern for server/client examples is simple. Open one terminal for the server. Open another terminal for the client.
 
-Open one terminal for the server.
-
-Open another terminal for the client.
-
-Start the server first.
-
-Then start the client.
+Start the server first. Then start the client.
 
 The echo pair in Chapter 3 uses this pattern. The server listens. The client connects and initiates the first message. Once both sides reflect received data, the program intentionally creates visible ping-pong behavior.
 
@@ -412,29 +392,13 @@ This distinction will appear again throughout the book. It matters for CMake, fo
 
 ### Environment checklist
 
-Before moving on, you should be able to answer these questions.
+Before moving on, you should be able to answer these questions. Can I clone the SNode.C repository? Can I configure an out-of-tree build?
 
-Can I clone the SNode.C repository?
+Can I compile the framework? Can I find built example executables? Can I run a server and a client in separate terminals?
 
-Can I configure an out-of-tree build?
+Do I understand the difference between the source directory, build directory, and install prefix? Do I know whether optional Bluetooth development files are installed? Do I know whether optional MariaDB development files are installed?
 
-Can I compile the framework?
-
-Can I find built example executables?
-
-Can I run a server and a client in separate terminals?
-
-Do I understand the difference between the source directory, build directory, and install prefix?
-
-Do I know whether optional Bluetooth development files are installed?
-
-Do I know whether optional MariaDB development files are installed?
-
-Do I know whether I am using a local install prefix or a system-wide install?
-
-Do I have a separate playground directory for later external experiments?
-
-If the answer to these questions is yes, the environment is ready for the first program.
+Do I know whether I am using a local install prefix or a system-wide install? Do I have a separate playground directory for later external experiments? If the answer to these questions is yes, the environment is ready for the first program.
 
 ### What to remember
 
@@ -447,9 +411,7 @@ If the answer to these questions is yes, the environment is ready for the first 
 
 ### Closing perspective
 
-A good development environment is not only about making the compiler happy.
-
-It shapes how the reader thinks.
+A good development environment is not only about making the compiler happy. It shapes how the reader thinks.
 
 If the source tree, build tree, install prefix, examples, and playground are clearly separated, the framework becomes easier to understand. If everything is mixed together, even simple questions become confusing.
 
@@ -457,6 +419,4 @@ Chapter 1 introduced the architectural reason for studying SNode.C. This chapter
 
 The next chapter uses this environment to build the first concrete program: an echo server and an echo client.
 
-The example will be small.
-
-But it will already expose the recurring shape of SNode.C applications.
+The example will be small. But it will already expose the recurring shape of SNode.C applications.

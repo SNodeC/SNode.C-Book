@@ -4,9 +4,7 @@
 
 Chapter 15 showed why configuration becomes visible as soon as a protocol is carried over different lower communication families.
 
-The protocol behavior may remain in the same `SocketContext`.
-
-The context creation policy may remain in the same `SocketContextFactory`.
+The protocol behavior may remain in the same `SocketContext`. The context creation policy may remain in the same `SocketContextFactory`.
 
 But the concrete application still has to decide which server-side or client-side role exists, which lower family it uses, which endpoint identity it receives, whether it uses legacy or TLS connection handling, whether it is enabled, and which values belong in source code, a configuration file, or a run-specific command line.
 
@@ -24,9 +22,7 @@ Configuration is therefore not decoration around an otherwise complete object. I
 
 ### Configuration as part of the architecture
 
-Configuration in SNode.C is not a separate afterthought beside the framework architecture.
-
-It is part of the architecture.
+Configuration in SNode.C is not a separate afterthought beside the framework architecture. It is part of the architecture.
 
 A communication role has several aspects:
 
@@ -38,11 +34,7 @@ application-side handle
               -> factories and contexts
 ```
 
-The context implements the protocol behavior.
-
-The factory creates the context.
-
-The lower-family server or client type selects the communication family.
+The context implements the protocol behavior. The factory creates the context. The lower-family server or client type selects the communication family.
 
 Configuration gives the role its concrete endpoint values, operational switches, and persistent identity.
 
@@ -86,23 +78,15 @@ SNode.C has three main configuration input paths:
 | configuration file | persistent operational configuration |
 | command line | run-specific override, discovery, and control |
 
-These are not three unrelated configuration worlds.
+These are not three unrelated configuration worlds. They are three ways to feed one underlying configuration model. The C++ API gives the application a baseline.
 
-They are three ways to feed one underlying configuration model.
-
-The C++ API gives the application a baseline.
-
-The configuration file gives deployment a durable expression.
-
-The command line gives a run-specific control surface.
+The configuration file gives deployment a durable expression. The command line gives a run-specific control surface.
 
 That matters because the same conceptual role can be shaped in code, persisted in a file, and overridden for one invocation without changing its identity.
 
 ### Three input paths, one configuration model
 
-The three input paths have different strengths.
-
-They should be understood together.
+The three input paths have different strengths. They should be understood together.
 
 #### Configuration through the C++ API
 
@@ -154,15 +138,11 @@ In-code configuration is therefore useful for:
 - tests and experiments,
 - application-level decisions known at construction time.
 
-It is not a second-class configuration path.
-
-It is one native way to shape a communication role.
+It is not a second-class configuration path. It is one native way to shape a communication role.
 
 #### Configuration through the command line
 
-Command-line configuration gives an already compiled application a way to be shaped at startup.
-
-That is especially important for named instances.
+Command-line configuration gives an already compiled application a way to be shaped at startup. That is especially important for named instances.
 
 A named server instance such as:
 
@@ -170,9 +150,7 @@ A named server instance such as:
 EchoServer echoServer("echo");
 ```
 
-can appear as an addressable communication role on the command line.
-
-Under that instance, sections expose the available configuration scopes.
+can appear as an addressable communication role on the command line. Under that instance, sections expose the available configuration scopes.
 
 A typical hierarchy is:
 
@@ -183,9 +161,7 @@ application
           -> option
 ```
 
-The command line is therefore not only a way to override values.
-
-It is also a discovery surface.
+The command line is therefore not only a way to override values. It is also a discovery surface.
 
 A user can ask for help at different levels:
 
@@ -201,9 +177,7 @@ This is important for applications that expose more than one communication role.
 
 #### Configuration through configuration files
 
-Configuration files persist the same model.
-
-They do not introduce a second configuration language with a different worldview.
+Configuration files persist the same model. They do not introduce a second configuration language with a different worldview.
 
 Their key structure follows the same hierarchy:
 
@@ -226,9 +200,7 @@ The configuration file is therefore both:
 - an operational artifact,
 - and an inspectable map of the configured application.
 
-It is operational because it can be used by a deployed application.
-
-It is inspectable because it shows the same structure that the command line and the C++ API feed.
+It is operational because it can be used by a deployed application. It is inspectable because it shows the same structure that the command line and the C++ API feed.
 
 ### Precedence and the startup boundary
 
@@ -250,11 +222,7 @@ That means:
 | configuration file | persistent operational configuration |
 | command line | run-specific override |
 
-This is the practical operational model.
-
-The application can encode reasonable defaults.
-
-The configuration file can store deployment choices.
+This is the practical operational model. The application can encode reasonable defaults. The configuration file can store deployment choices.
 
 The command line can override them for one run.
 
@@ -276,19 +244,13 @@ runtime-created roles
   -> C++ API configuration is the available path
 ```
 
-That is not a weakness.
-
-It is the natural boundary between startup configuration and runtime object creation.
+That is not a weakness. It is the natural boundary between startup configuration and runtime object creation.
 
 The command line and configuration file are external startup inputs. They can shape what has been made addressable before startup parsing completes. They cannot retroactively reach into a role that did not yet exist in that hierarchy.
 
 ### Named instances as configuration addresses
 
-One of the most important ideas in the configuration model is the difference between anonymous and named instances.
-
-An anonymous instance exists as a configured role in application code.
-
-A named instance also becomes addressable by the external configuration hierarchy.
+One of the most important ideas in the configuration model is the difference between anonymous and named instances. An anonymous instance exists as a configured role in application code. A named instance also becomes addressable by the external configuration hierarchy.
 
 That is the key distinction.
 
@@ -337,9 +299,7 @@ A name such as:
 EchoServer echoServer("echo");
 ```
 
-does more than make the C++ object easier to read.
-
-It gives the configured role an address in the configuration hierarchy.
+does more than make the C++ object easier to read. It gives the configured role an address in the configuration hierarchy.
 
 That address can appear:
 
@@ -349,19 +309,11 @@ That address can appear:
 - in shown configuration,
 - and in configuration-file keys.
 
-The name becomes part of the operational surface of the application.
-
-That is why named instances are central for serious applications.
-
-A name is not merely documentation. It is a stable handle for operation.
+The name becomes part of the operational surface of the application. That is why named instances are central for serious applications. A name is not merely documentation. It is a stable handle for operation.
 
 #### Disablement as instance-level configuration
 
-A configured communication role may exist but be inactive.
-
-SNode.C treats this as an instance-level configuration idea.
-
-A named instance can be disabled instead of being removed from the application.
+A configured communication role may exist but be inactive. SNode.C treats this as an instance-level configuration idea. A named instance can be disabled instead of being removed from the application.
 
 That is useful for:
 
@@ -385,11 +337,7 @@ This is cleaner than scattering ad hoc application flags across the program.
 
 ### Sections as structural scopes
 
-Sections are not only headings in documentation.
-
-They are structural scopes in the configuration hierarchy.
-
-A section is the boundary between different kinds of responsibility inside a communication role.
+Sections are not only headings in documentation. They are structural scopes in the configuration hierarchy. A section is the boundary between different kinds of responsibility inside a communication role.
 
 The common section names make this visible:
 
@@ -449,11 +397,7 @@ The exact fields depend on the lower family:
 | RFCOMM | Bluetooth address and channel |
 | L2CAP | Bluetooth address and PSM |
 
-The section model lets these differences remain structured without changing the larger configuration idea.
-
-The family changes the endpoint fields.
-
-The hierarchy remains recognizable.
+The section model lets these differences remain structured without changing the larger configuration idea. The family changes the endpoint fields. The hierarchy remains recognizable.
 
 #### Connection, socket, server, and TLS sections
 
@@ -481,35 +425,19 @@ This keeps configuration readable. A timeout, an address, a TLS certificate path
 
 ### Configuration as discovery, persistence, and inspection
 
-A good configuration system should not only accept values.
-
-It should help users discover what can be configured, inspect the active shape, and persist durable choices.
-
-SNode.C does this through command-line help, configuration display, command-line generation, and generated configuration files.
+A good configuration system should not only accept values. It should help users discover what can be configured, inspect the active shape, and persist durable choices. SNode.C does this through command-line help, configuration display, command-line generation, and generated configuration files.
 
 #### Help output as discovery
 
 Because named instances and sections participate in the command-line hierarchy, help output can reveal the configuration model step by step.
 
-At application level, help shows application-wide options and available instances.
+At application level, help shows application-wide options and available instances. At instance level, help shows instance-level options and sections. At section level, help shows the options for that section.
 
-At instance level, help shows instance-level options and sections.
-
-At section level, help shows the options for that section.
-
-This makes the configuration system self-describing.
-
-The user does not have to guess the entire option universe at once.
-
-The hierarchy itself teaches the shape of the application.
+This makes the configuration system self-describing. The user does not have to guess the entire option universe at once. The hierarchy itself teaches the shape of the application.
 
 #### Persistent and nonpersistent options
 
-Not every option should be written into a configuration file.
-
-Some options describe lasting behavior.
-
-Others describe one run.
+Not every option should be written into a configuration file. Some options describe lasting behavior. Others describe one run.
 
 SNode.C makes that distinction visible by separating persistent and nonpersistent options.
 
@@ -523,17 +451,13 @@ nonpersistent options
   -> affect inspection, generation, help, or the current run only
 ```
 
-Persistent options describe the desired shape of an application or instance.
-
-Nonpersistent options trigger inspection, generation, display, help, or one-run control actions.
+Persistent options describe the desired shape of an application or instance. Nonpersistent options trigger inspection, generation, display, help, or one-run control actions.
 
 This prevents operational commands such as help, display, command-line generation, or write-config from being confused with enduring instance configuration.
 
 #### Generated and shown configuration
 
-Generated configuration files are not only convenient output.
-
-They show the configuration model in file form.
+Generated configuration files are not only convenient output. They show the configuration model in file form.
 
 A generated file can contain:
 
@@ -545,11 +469,7 @@ A generated file can contain:
 - values overridden by file or command line,
 - comments describing the available options.
 
-Shown configuration and generated command lines serve a similar purpose from different angles.
-
-They make the active or possible configuration visible.
-
-That makes the file both editable and educational.
+Shown configuration and generated command lines serve a similar purpose from different angles. They make the active or possible configuration visible. That makes the file both editable and educational.
 
 It is an inspectable artifact of the same hierarchy used by the command line and the C++ API.
 
@@ -588,9 +508,7 @@ For a server, being configured enough may mean that the local endpoint is known.
 
 For a client, being configured enough may mean that the remote endpoint is known, and possibly also a local bind side.
 
-For TLS instances, it may also mean that required TLS-related configuration is available.
-
-The exact requirements depend on the concrete server/client type.
+For TLS instances, it may also mean that required TLS-related configuration is available. The exact requirements depend on the concrete server/client type.
 
 The architectural idea is stable:
 
@@ -605,9 +523,7 @@ A configured role is not only described. It is prepared for activation. The para
 
 #### Missing configuration is reported structurally
 
-When required configuration is missing, the error path should point back into the same hierarchy.
-
-For example, a missing server port is not just a random failure.
+When required configuration is missing, the error path should point back into the same hierarchy. For example, a missing server port is not just a random failure.
 
 It belongs to a particular instance and section:
 
@@ -618,19 +534,11 @@ application
           -> port
 ```
 
-A missing client host or port likewise belongs to the remote section of a particular client instance.
-
-This is why parameterless activation is a strong proof point.
-
-It works only because the role has a structured configuration identity.
+A missing client host or port likewise belongs to the remote section of a particular client instance. This is why parameterless activation is a strong proof point. It works only because the role has a structured configuration identity.
 
 ### CLI11 as implementation foundation
 
-SNode.C uses CLI11 as part of the implementation foundation for this unified model.
-
-That matters, but it should stay in the background of the chapter.
-
-The book does not need to become a CLI11 manual here.
+SNode.C uses CLI11 as part of the implementation foundation for this unified model. That matters, but it should stay in the background of the chapter. The book does not need to become a CLI11 manual here.
 
 The architectural point is:
 
@@ -656,23 +564,13 @@ The implementation foundation matters because it makes help output, configuratio
 
 ### Configuration as architectural leverage
 
-Configuration is not only operational convenience.
-
-It is architectural leverage.
+Configuration is not only operational convenience. It is architectural leverage.
 
 Because configuration can shape a role without rewriting protocol code, the same application structure can often be reused across deployments.
 
-A protocol may remain in the context.
+A protocol may remain in the context. The factory may keep creating the same kind of endpoint. The lower-family handle type, registered instance, endpoint identity, TLS/legacy selection, and deployment values may change.
 
-The factory may keep creating the same kind of endpoint.
-
-The lower-family handle type, registered instance, endpoint identity, TLS/legacy selection, and deployment values may change.
-
-Configuration is one of the places where that variation becomes explicit.
-
-This connects directly back to Chapter 15.
-
-Lower-family transfer is practical only if the changing parts have somewhere clear to live.
+Configuration is one of the places where that variation becomes explicit. This connects directly back to Chapter 15. Lower-family transfer is practical only if the changing parts have somewhere clear to live.
 
 In SNode.C, configuration is one of those places.
 
@@ -689,9 +587,7 @@ In SNode.C, configuration is one of those places.
 
 ### Closing perspective
 
-This chapter opened the configuration part of the book.
-
-The preceding part showed that protocol behavior, context creation, lower-family choice, and endpoint identity can be separated.
+This chapter opened the configuration part of the book. The preceding part showed that protocol behavior, context creation, lower-family choice, and endpoint identity can be separated.
 
 This chapter added the next piece:
 
@@ -702,8 +598,6 @@ configuration
 
 A configured communication role is not merely a server or client object with options attached. It is the place where role identity, endpoint identity, section structure, persistence, and activation come together.
 
-That is why configuration matters so much in SNode.C.
-
-Chapter 17 continues from philosophy to mechanics.
+That is why configuration matters so much in SNode.C. Chapter 17 continues from philosophy to mechanics.
 
 It looks more closely at application configuration, instance configuration, sections, and the concrete option structure that turns this model into something an application can expose and an operator can use.

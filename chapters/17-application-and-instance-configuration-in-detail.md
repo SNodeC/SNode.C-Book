@@ -15,11 +15,7 @@ application
           -> option
 ```
 
-The application is the executable-level operational shell.
-
-A named instance is the externally addressable configuration identity of one configured communication role inside that application.
-
-A section is one scoped part of that instance configuration.
+The application is the executable-level operational shell. A named instance is the externally addressable configuration identity of one configured communication role inside that application. A section is one scoped part of that instance configuration.
 
 An option is one concrete value inside such a scope.
 
@@ -114,17 +110,13 @@ The same hierarchy appears in three views:
 | command line | `app instance section --option value` |
 | configuration file | `instance.section.option = value` |
 
-The syntax changes.
-
-The hierarchy remains the same.
+The syntax changes. The hierarchy remains the same.
 
 That consistency is the main reason the detailed configuration model remains understandable. The C++ API gives the application direct programmatic control. The command line gives startup traversal and run-specific overrides. The configuration file gives a durable dotted-key representation of the same structure.
 
 ### Application configuration: the operational envelope
 
-Application configuration shapes the operational shell of the executable.
-
-It should not be confused with the configuration of one communication role.
+Application configuration shapes the operational shell of the executable. It should not be confused with the configuration of one communication role.
 
 Application-level options answer questions such as:
 
@@ -144,9 +136,7 @@ They do not say which port a server listens on or which peer a client connects t
 
 #### Operational shell of the executable
 
-The application scope is above all instances.
-
-That boundary matters.
+The application scope is above all instances. That boundary matters.
 
 | Application-level concern | Why it belongs at application scope |
 |---|---|
@@ -157,17 +147,11 @@ That boundary matters.
 | daemonization | it affects process behavior |
 | user/group selection | it affects process permissions |
 
-These settings are shared by the application process.
-
-They are not owned by one server or client role.
+These settings are shared by the application process. They are not owned by one server or client role.
 
 #### Persistent and nonpersistent application options
 
-Application options can be persistent or nonpersistent.
-
-Persistent options describe durable application shape and may be written into configuration files.
-
-Nonpersistent options inspect, generate, display, or control one run.
+Application options can be persistent or nonpersistent. Persistent options describe durable application shape and may be written into configuration files. Nonpersistent options inspect, generate, display, or control one run.
 
 That distinction prevents operational commands from becoming durable configuration by accident. For example, a log level may be persistent. A request to show help, show configuration, print a command line, or write a configuration file is run-specific.
 
@@ -203,15 +187,11 @@ They connect the application-side handle to the operational surface of the appli
 
 #### Role identity: server or client
 
-A configured role also has role identity.
-
-In the configuration model, that means an instance is constructed as a server role or a client role.
+A configured role also has role identity. In the configuration model, that means an instance is constructed as a server role or a client role.
 
 This is not merely descriptive text. It influences how the instance appears in help output and how its configuration is interpreted.
 
-A server role is normally shaped around listening and accepting.
-
-A client role is normally shaped around connecting.
+A server role is normally shaped around listening and accepting. A client role is normally shaped around connecting.
 
 Both can share the same broad hierarchy, but their most important sections differ. For a server, `local` is usually central. For a client, `remote` is usually central.
 
@@ -236,9 +216,7 @@ This does not make anonymous instances inferior. It only means that they belong 
 
 #### Disablement and requiredness
 
-Disablement is a first-class instance state.
-
-It is not only a Boolean label.
+Disablement is a first-class instance state. It is not only a Boolean label.
 
 Disablement lets a configured role remain part of the application shape while being removed from the required startup path for a particular run. That matters for multi-instance programs.
 
@@ -255,9 +233,7 @@ It also keeps help output, configuration files, and generated command lines hone
 
 ### Section configuration: scoped responsibilities
 
-Sections are the most important practical organizing device inside an instance.
-
-A section is a structural scope. It groups options that belong to one aspect of the communication role.
+Sections are the most important practical organizing device inside an instance. A section is a structural scope. It groups options that belong to one aspect of the communication role.
 
 A compact overview is:
 
@@ -345,9 +321,7 @@ Representative concerns include:
 - write block size,
 - termination timeout.
 
-These are not endpoint identity values.
-
-They apply after a connection exists.
+These are not endpoint identity values. They apply after a connection exists.
 
 That makes the section boundary clear:
 
@@ -388,11 +362,7 @@ Representative concerns include:
 - accepting behavior,
 - accept-per-tick style limits where supported.
 
-These settings are not generic connection options.
-
-They are about the listening and accepting side of a server role.
-
-That is why they belong in a server-specific section.
+These settings are not generic connection options. They are about the listening and accepting side of a server role. That is why they belong in a server-specific section.
 
 #### The `tls` section
 
@@ -431,9 +401,7 @@ instance.getConfig()->Remote::setHost("localhost");
 instance.getConfig()->Remote::setPort(8080);
 ```
 
-`getConfig()` returns a pointer, so the examples use `->`.
-
-The section qualification is useful when local and remote meaning must remain visible.
+`getConfig()` returns a pointer, so the examples use `->`. The section qualification is useful when local and remote meaning must remain visible.
 
 In server-side cases, a shorter form may also be valid because there is no local/remote ambiguity at that call site:
 
@@ -461,9 +429,7 @@ option:      port
 value:       8080
 ```
 
-The command line is therefore not just a flat collection of flags.
-
-It is a textual traversal of the configuration hierarchy.
+The command line is therefore not just a flat collection of flags. It is a textual traversal of the configuration hierarchy.
 
 ##### Command-line configuration as guided traversal
 
@@ -486,9 +452,7 @@ application help
           -> option details
 ```
 
-The command line can also print command-line representations of the selected configuration.
-
-The `--command-line` option supports views such as `standard`, `required`, `active`, and `complete`.
+The command line can also print command-line representations of the selected configuration. The `--command-line` option supports views such as `standard`, `required`, `active`, and `complete`.
 
 Together with `--show-config` and `--write-config`, this makes the command line more than a parser. It becomes a way to inspect, reproduce, and persist the configuration of an application.
 
@@ -524,21 +488,13 @@ $ echoserver echo local --port 8080
 2026-06-06 18:04:05 0000000000001 echo: listening on '0.0.0.0:8080 (0.0.0.0)'
 ```
 
-The exact timestamp and tick counter are run-specific.
+The exact timestamp and tick counter are run-specific. The important point is the direction. The CLI leads from application, to instance, to section, to option.
 
-The important point is the direction.
-
-The CLI leads from application, to instance, to section, to option.
-
-A named client instance follows the same idea, but the required section is usually `remote` rather than `local`.
-
-The CLI therefore teaches the structure while it reports the missing values.
+A named client instance follows the same idea, but the required section is usually `remote` rather than `local`. The CLI therefore teaches the structure while it reports the missing values.
 
 ##### Startup guidance, not arbitrary live reconfiguration
 
-This command-line guidance belongs to startup and run configuration.
-
-It should not be confused with arbitrary post-start interactive reconfiguration of instances created later at runtime.
+This command-line guidance belongs to startup and run configuration. It should not be confused with arbitrary post-start interactive reconfiguration of instances created later at runtime.
 
 As Chapter 16 explained, command-line and file configuration apply to startup-known instances. Runtime-created roles must be shaped through the C++ API.
 
@@ -572,17 +528,13 @@ instance
       -> option
 ```
 
-The syntax is different from the command line.
-
-The model is the same.
+The syntax is different from the command line. The model is the same.
 
 The file is therefore not a separate configuration universe. It is the persistent expression of the same hierarchy that the command line traverses and the C++ API configures directly.
 
 ### Required values and progressive disclosure
 
-Parameterless `listen()` and `connect()` rely on configuration that is already present.
-
-If required configuration is missing, the error path can reveal the missing part of the hierarchy.
+Parameterless `listen()` and `connect()` rely on configuration that is already present. If required configuration is missing, the error path can reveal the missing part of the hierarchy.
 
 For a server, a missing port can be understood as:
 
@@ -648,11 +600,7 @@ This is especially valuable in multi-instance programs. Instead of forcing every
 
 ### Persistent and nonpersistent values
 
-Persistent options describe durable configuration.
-
-Nonpersistent options perform run-specific inspection or control.
-
-This distinction appears throughout the configuration model.
+Persistent options describe durable configuration. Nonpersistent options perform run-specific inspection or control. This distinction appears throughout the configuration model.
 
 Persistent examples include values such as:
 
@@ -679,9 +627,7 @@ Configuration files should primarily describe durable shape. Command-line invoca
 
 ### Generated and shown configuration
 
-Generated configuration and shown configuration are not only convenience features.
-
-They make the hierarchy inspectable.
+Generated configuration and shown configuration are not only convenience features. They make the hierarchy inspectable.
 
 A shown configuration helps answer:
 
@@ -734,9 +680,7 @@ backend.remote.host = "127.0.0.1"
 backend.remote.port = 1883
 ```
 
-Each key says which configured role it belongs to.
-
-That is the value of named instances. They make configuration files describe application structure, not just isolated values.
+Each key says which configured role it belongs to. That is the value of named instances. They make configuration files describe application structure, not just isolated values.
 
 ### Designing configuration for real applications
 
@@ -774,9 +718,7 @@ This is the same design lesson as Chapters 08–12, now expressed through config
 
 #### Keep protocol behavior out of configuration
 
-Configuration can select endpoints, timeouts, retry behavior, TLS settings, and activation shape.
-
-It should not become the protocol implementation.
+Configuration can select endpoints, timeouts, retry behavior, TLS settings, and activation shape. It should not become the protocol implementation.
 
 The protocol still belongs in `SocketContext`.
 
@@ -786,9 +728,7 @@ Configuration should expose variation; it should not replace application design.
 
 #### Avoid hiding deployment shape in source-only defaults
 
-C++ defaults are useful.
-
-They make examples small. They provide reasonable baselines. They help tests and embedded use cases.
+C++ defaults are useful. They make examples small. They provide reasonable baselines. They help tests and embedded use cases.
 
 But deployment-facing choices often deserve external visibility. Ports, paths, certificate files, log files, daemonization, and enablement are easier to operate when they are visible through the configuration hierarchy.
 
@@ -805,17 +745,9 @@ application
           -> option
 ```
 
-The application gives the operational envelope.
+The application gives the operational envelope. The instance gives the configured communication role an address. The section gives one responsibility scope.
 
-The instance gives the configured communication role an address.
-
-The section gives one responsibility scope.
-
-The option gives one value.
-
-The same shape appears in C++ API calls, command-line traversal, and configuration-file keys.
-
-This is why the configuration model scales from a small echo example to applications with several communication roles.
+The option gives one value. The same shape appears in C++ API calls, command-line traversal, and configuration-file keys. This is why the configuration model scales from a small echo example to applications with several communication roles.
 
 ### What to remember
 
@@ -831,9 +763,7 @@ This is why the configuration model scales from a small echo example to applicat
 
 ### Closing perspective
 
-Chapter 16 explained the philosophy of configuration.
-
-This chapter made the anatomy concrete.
+Chapter 16 explained the philosophy of configuration. This chapter made the anatomy concrete.
 
 The hierarchy:
 
@@ -848,14 +778,8 @@ is the bridge between architecture and operation.
 
 It explains why named instances matter, why sections exist, why parameterless activation can work, and why configuration files and command-line invocations can express the same model.
 
-Once configuration has this structure, diagnostics can point into that structure.
+Once configuration has this structure, diagnostics can point into that structure. A log message can name an instance. A missing value can identify a section.
 
-A log message can name an instance.
-
-A missing value can identify a section.
-
-A generated command line can show how to reproduce a run.
-
-A shown configuration can reveal what the application understood.
+A generated command line can show how to reproduce a run. A shown configuration can reveal what the application understood.
 
 Chapter 18 therefore turns to logging, diagnostics, generated command lines, shown configuration, and runtime introspection as ways to understand what an application actually did.

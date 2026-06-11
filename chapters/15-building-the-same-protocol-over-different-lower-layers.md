@@ -2,11 +2,7 @@
 
 ### From context and factory separation to lower-family transfer
 
-Chapter 13 placed application protocol behavior in the `SocketContext`.
-
-Chapter 14 placed context construction in the `SocketContextFactory`.
-
-This chapter uses both separations together.
+Chapter 13 placed application protocol behavior in the `SocketContext`. Chapter 14 placed context construction in the `SocketContextFactory`. This chapter uses both separations together.
 
 The central question is:
 
@@ -31,17 +27,11 @@ SocketAddress / configuration
   -> lower-family-specific endpoint identity and deployment shape
 ```
 
-This is where the design discipline from Chapters 13 and 14 becomes visible across lower families.
-
-The protocol does not become independent of all lower-layer reality.
+This is where the design discipline from Chapters 13 and 14 becomes visible across lower families. The protocol does not become independent of all lower-layer reality.
 
 Address identity, local/remote meaning, deployment, platform support, pairing, permissions, TLS, retry behavior, and operational configuration still matter. But when protocol behavior lives in a `SocketContext`, and when construction choices remain in a `SocketContextFactory`, much more can transfer than one might first expect.
 
-The lower family matters.
-
-It does not always have to rewrite the protocol endpoint.
-
-That balance is the main idea of this chapter.
+The lower family matters. It does not always have to rewrite the protocol endpoint. That balance is the main idea of this chapter.
 
 ### The lower-family transfer model
 
@@ -75,9 +65,7 @@ It prevents one common design mistake: putting lower-family setup, protocol beha
 
 ### What can remain stable
 
-Not everything transfers.
-
-But several important parts often can.
+Not everything transfers. But several important parts often can.
 
 #### Protocol shape
 
@@ -92,9 +80,7 @@ The protocol shape includes questions such as:
 - What happens when the peer disconnects?
 - What errors or signals matter to the protocol?
 
-These are context-level questions.
-
-They belong to the application protocol endpoint.
+These are context-level questions. They belong to the application protocol endpoint.
 
 A well-written `SocketContext` can answer these questions without immediately depending on whether the connection came from IPv4, IPv6, Unix domain sockets, RFCOMM, or L2CAP.
 
@@ -122,15 +108,11 @@ The useful question is:
 
 > Does this code describe the protocol conversation, or does it describe the carrier and deployment environment?
 
-Protocol conversation belongs in the context.
-
-Carrier and deployment concerns usually belong outside it.
+Protocol conversation belongs in the context. Carrier and deployment concerns usually belong outside it.
 
 #### Factory construction policy
 
-The factory may also transfer.
-
-If the same context type is suitable across several lower families, the factory can remain small and recognizable.
+The factory may also transfer. If the same context type is suitable across several lower families, the factory can remain small and recognizable.
 
 It may still create:
 
@@ -144,11 +126,7 @@ or:
 new EchoSocketContext(connection, Role::Client)
 ```
 
-The application-side server/client handle type changes.
-
-The endpoint identity changes.
-
-The deployment setting changes.
+The application-side server/client handle type changes. The endpoint identity changes. The deployment setting changes.
 
 The context construction shape can still remain familiar.
 
@@ -156,9 +134,7 @@ This is why Chapters 13 and 14 came before this chapter. A well-factored context
 
 ### What changes with the lower family
 
-Lower-family transfer is not the same as pretending all families are identical.
-
-Several things usually change.
+Lower-family transfer is not the same as pretending all families are identical. Several things usually change.
 
 #### Server/client handle type and registered instance
 
@@ -202,11 +178,7 @@ The endpoint identity changes with the lower family.
 | RFCOMM | Bluetooth address + channel |
 | L2CAP | Bluetooth address + PSM |
 
-This changes the values passed to convenience calls, configuration objects, command-line options, and deployment scripts.
-
-The local/remote distinction remains useful.
-
-The concrete address form changes.
+This changes the values passed to convenience calls, configuration objects, command-line options, and deployment scripts. The local/remote distinction remains useful. The concrete address form changes.
 
 That is the central transfer lesson from Chapters 8 through 12. The framework model can remain stable while the meaning of an endpoint changes. A good design does not hide that change. It places it where it belongs.
 
@@ -222,11 +194,7 @@ Deployment also changes.
 | RFCOMM | Bluetooth stack availability, pairing/trust setup, channel semantics |
 | L2CAP | Bluetooth stack availability, pairing/trust setup, PSM semantics |
 
-These differences are real.
-
-The protocol may transfer.
-
-The deployment does not become identical.
+These differences are real. The protocol may transfer. The deployment does not become identical.
 
 For Bluetooth, for example, the protocol may still be a simple stream protocol. But the devices still need the platform Bluetooth stack, suitable permissions, adapter state, and pairing/trust setup before SNode.C can communicate between them. For Unix domain sockets, the same protocol may run locally, but path placement and cleanup become part of the service design. For IP families, routing, exposure, firewall behavior, and address selection remain operational concerns.
 
@@ -244,11 +212,7 @@ The lower family matters, but it does not always have to rewrite the protocol en
 
 ### Echo as the smallest transfer microscope
 
-The echo application gives the smallest useful example.
-
-Echo is not interesting because echo is sophisticated.
-
-It is interesting because it exposes the placement boundary.
+The echo application gives the smallest useful example. Echo is not interesting because echo is sophisticated. It is interesting because it exposes the placement boundary.
 
 The protocol behavior lives in one context type:
 
@@ -323,9 +287,7 @@ A compact comparison makes the transfer visible.
 | RFCOMM | Bluetooth address + channel | Bluetooth stack, pairing/trust setup, channel semantics | context, factory shape, protocol behavior |
 | L2CAP | Bluetooth address + PSM | Bluetooth stack, pairing/trust setup, PSM semantics | context, factory shape, protocol behavior |
 
-This table is not a portability guarantee.
-
-It is a design test.
+This table is not a portability guarantee. It is a design test.
 
 If the protocol's meaning is independent of the lower-family identity, the context can often remain stable. If the protocol's meaning depends on lower-family identity, the context may need to specialize.
 
@@ -333,9 +295,7 @@ The table is useful precisely because it does not hide the changing column. It s
 
 ### Designing for lower-family transfer
 
-A protocol that should travel well across lower families should be designed with clear boundaries.
-
-The following rules are not mechanical requirements. They are design habits that make transfer easier to reason about.
+A protocol that should travel well across lower families should be designed with clear boundaries. The following rules are not mechanical requirements. They are design habits that make transfer easier to reason about.
 
 #### Keep endpoint identity out of core protocol behavior unless it matters
 
@@ -392,9 +352,7 @@ This includes:
 - selecting retry or reconnect behavior,
 - selecting deployment-specific options.
 
-These choices are real and important.
-
-They should not be hidden inside the protocol behavior unless the protocol truly needs them.
+These choices are real and important. They should not be hidden inside the protocol behavior unless the protocol truly needs them.
 
 The visible server/client handle and its configuration define what will be registered. The registered instance then participates in the runtime as a lower-family-specific communication role. Keeping this distinction clear prevents protocol code from becoming the place where deployment decisions are quietly made.
 
@@ -442,11 +400,7 @@ Construction-time variation is healthy when it makes the protocol roles clear. I
 
 ### Preconfigured factories and endpoint roles
 
-Chapter 14 explained that server and client constructors can forward an argument pack into the factory constructor.
-
-That makes it possible to preconfigure factories with stable role and dependency information.
-
-This matters for lower-family transfer because the same mechanism can create role-specific endpoints over different carriers.
+Chapter 14 explained that server and client constructors can forward an argument pack into the factory constructor. That makes it possible to preconfigure factories with stable role and dependency information. This matters for lower-family transfer because the same mechanism can create role-specific endpoints over different carriers.
 
 Examples include:
 
@@ -473,31 +427,17 @@ Later chapters return to patterns such as publisher/subscriber, request/response
 
 ### Same protocol shape does not mean same deployment
 
-This distinction is essential.
+This distinction is essential. The same protocol shape may run over several lower families, but the resulting systems are not operationally identical. An IPv4 service may be reachable over a LAN or wider network.
 
-The same protocol shape may run over several lower families, but the resulting systems are not operationally identical.
+An IPv6 service raises IPv6 addressing and deployment questions. A Unix-domain service is local to one host and depends on path placement and local access. An RFCOMM service depends on Bluetooth stack support, pairing/trust setup, adapter state, and RFCOMM channel semantics.
 
-An IPv4 service may be reachable over a LAN or wider network.
-
-An IPv6 service raises IPv6 addressing and deployment questions.
-
-A Unix-domain service is local to one host and depends on path placement and local access.
-
-An RFCOMM service depends on Bluetooth stack support, pairing/trust setup, adapter state, and RFCOMM channel semantics.
-
-An L2CAP service depends on Bluetooth stack support, pairing/trust setup, adapter state, and PSM semantics.
-
-TLS adds certificate, trust, and connection-layer deployment questions.
-
-So lower-family transfer must be understood as an architectural separation, not as a promise that deployment disappears.
+An L2CAP service depends on Bluetooth stack support, pairing/trust setup, adapter state, and PSM semantics. TLS adds certificate, trust, and connection-layer deployment questions. So lower-family transfer must be understood as an architectural separation, not as a promise that deployment disappears.
 
 A good design lets the stable protocol core remain visible while keeping the family-specific deployment surface explicit.
 
 ### When reuse should stop
 
-Lower-family transfer is useful only when it preserves clarity.
-
-There are cases where reuse should stop.
+Lower-family transfer is useful only when it preserves clarity. There are cases where reuse should stop.
 
 #### Family-specific semantics may be part of the protocol
 
@@ -509,31 +449,19 @@ A local IPC protocol may depend on path placement or local access assumptions.
 
 A network-facing protocol may treat remote address information as part of authentication, rate limiting, routing, or trust decisions.
 
-If those details are part of the protocol's meaning, hiding them would be dishonest.
-
-In that case, the context should be allowed to know what it needs to know.
+If those details are part of the protocol's meaning, hiding them would be dishonest. In that case, the context should be allowed to know what it needs to know.
 
 #### Deployment-specific protocols may deserve separate contexts
 
-Sometimes two deployments look similar at first but differ enough that one shared context becomes awkward.
+Sometimes two deployments look similar at first but differ enough that one shared context becomes awkward. A local diagnostic Unix-domain service may have different assumptions than a network-facing service. A Bluetooth device-near endpoint may have different lifecycle expectations than an IP service.
 
-A local diagnostic Unix-domain service may have different assumptions than a network-facing service.
-
-A Bluetooth device-near endpoint may have different lifecycle expectations than an IP service.
-
-A TLS-protected network service may have different trust assumptions than a local IPC service.
-
-If one context becomes full of conditionals trying to cover all deployments, separate contexts may be clearer.
-
-This is not a failure of abstraction.
+A TLS-protected network service may have different trust assumptions than a local IPC service. If one context becomes full of conditionals trying to cover all deployments, separate contexts may be clearer. This is not a failure of abstraction.
 
 It is a sign that the protocol meaning has diverged.
 
 #### Small duplication can be healthier than over-abstraction
 
-Experienced C++ developers often try to remove duplication aggressively.
-
-That is not always the right instinct here.
+Experienced C++ developers often try to remove duplication aggressively. That is not always the right instinct here.
 
 A small amount of explicit outer-layer difference can be healthier than a giant abstraction that erases meaningful distinctions.
 
@@ -545,11 +473,7 @@ A good design may have:
 - small role-specific factories,
 - and explicit deployment choices.
 
-This is not failure.
-
-It is clean factoring.
-
-The goal is not to make all lower families look identical.
+This is not failure. It is clean factoring. The goal is not to make all lower families look identical.
 
 The goal is to keep the stable protocol core stable and the real family-specific differences visible.
 
@@ -567,9 +491,7 @@ The following table summarizes the chapter.
 | Runtime model | event-driven lifecycle | operational startup/configuration details |
 | Deployment | broad application intent | reachability, locality, platform, pairing, permissions, security assumptions |
 
-This table is the practical transfer model.
-
-Reuse is strongest when the stable column stays honest and the changing column is not hidden.
+This table is the practical transfer model. Reuse is strongest when the stable column stays honest and the changing column is not hidden.
 
 ### Configuration becomes visible here
 
@@ -588,15 +510,11 @@ A family transfer may change:
 - deployment files,
 - platform or permission requirements.
 
-That is why the next part of the book turns to configuration.
-
-Configuration is not merely operational convenience. It is one of the places where architectural variation becomes explicit.
+That is why the next part of the book turns to configuration. Configuration is not merely operational convenience. It is one of the places where architectural variation becomes explicit.
 
 Once the same protocol can be carried over different lower families, configuration becomes more than a collection of values. It is where endpoint identity, selected lower family, role naming, TLS/legacy choice, retry behavior, and deployment-specific variation become visible.
 
-This chapter shows why configuration matters.
-
-Chapter 16 begins to explain its philosophy.
+This chapter shows why configuration matters. Chapter 16 begins to explain its philosophy.
 
 ### What to remember
 
@@ -611,11 +529,7 @@ Chapter 16 begins to explain its philosophy.
 
 ### Closing perspective
 
-Part IV moved from raw connections to application protocol structure.
-
-Chapter 13 explained the protocol endpoint.
-
-Chapter 14 explained context creation.
+Part IV moved from raw connections to application protocol structure. Chapter 13 explained the protocol endpoint. Chapter 14 explained context creation.
 
 This chapter showed how those two separations make lower-family transfer possible.
 
@@ -642,6 +556,4 @@ With that structure in place, SNode.C is no longer just a set of socket-family A
 
 It becomes a communication architecture in which protocol behavior, context creation, lower-family selection, registration, and operational configuration each have a clear place.
 
-The next part begins the configuration view.
-
-It shows how applications are shaped, named, configured, and operated in practice.
+The next part begins the configuration view. It shows how applications are shaped, named, configured, and operated in practice.

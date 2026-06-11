@@ -437,9 +437,7 @@ The WebSocket layer provides explicit subprotocol infrastructure.
 | `SubProtocolFactory` | creates subprotocol instances |
 | `SubProtocolFactorySelector` | resolves requested subprotocol names in a server or client selection context |
 
-This keeps WebSocket mechanics and application-message semantics separated.
-
-WebSocket provides the upgraded carrier. The subprotocol defines what the messages mean.
+This keeps WebSocket mechanics and application-message semantics separated. WebSocket provides the upgraded carrier. The subprotocol defines what the messages mean.
 
 #### Factories and selectors
 

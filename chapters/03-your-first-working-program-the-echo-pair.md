@@ -2,9 +2,7 @@
 
 ### From environment to first program
 
-Chapter 2 prepared the practical ground: source tree, build tree, install tree, and a separate playground project.
-
-This chapter uses that environment for the first complete program.
+Chapter 2 prepared the practical ground: source tree, build tree, install tree, and a separate playground project. This chapter uses that environment for the first complete program.
 
 The goal is not to build a useful echo service. The goal is to make the recurring shape of SNode.C visible in real code. A good first example should be small enough that the reader can hold the whole program in mind, but complete enough that it is not pseudocode.
 
@@ -133,7 +131,7 @@ public:
         CLIENT
     };
 
-    explicit EchoSocketContext(core::socket::stream::SocketConnection* socketConnection,
+explicit EchoSocketContext(core::socket::stream::SocketConnection* socketConnection,
                                Role role);
 
 private:
@@ -142,7 +140,7 @@ private:
     bool onSignal(int signum) override;
     std::size_t onReceivedFromPeer() override;
 
-    Role role;
+Role role;
 };
 
 class EchoServerSocketContextFactory
@@ -197,7 +195,7 @@ EchoSocketContext::EchoSocketContext(
 void EchoSocketContext::onConnected() {
     VLOG(1) << "Echo connected";
 
-    if (role == Role::CLIENT) {
+if (role == Role::CLIENT) {
         sendToPeer("Hello peer! Nice to see you!!!");
     }
 }
@@ -213,14 +211,14 @@ bool EchoSocketContext::onSignal([[maybe_unused]] int signum) {
 std::size_t EchoSocketContext::onReceivedFromPeer() {
     char chunk[4096];
 
-    const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
+const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
 
-    if (chunkLen > 0) {
+if (chunkLen > 0) {
         VLOG(1) << "Data to reflect: " << std::string(chunk, chunkLen);
         sendToPeer(chunk, chunkLen);
     }
 
-    return chunkLen;
+return chunkLen;
 }
 
 core::socket::stream::SocketContext*
@@ -270,12 +268,12 @@ The server entry point is small because the protocol behavior already lives in t
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
 
-    using EchoServer =
+using EchoServer =
         net::in::stream::legacy::SocketServer<EchoServerSocketContextFactory>;
 
-    EchoServer server("echoserver");
+EchoServer server("echoserver");
 
-    server.listen(
+server.listen(
         8080,
         5,
         [instanceName = server.getConfig()->getInstanceName()]
@@ -303,7 +301,7 @@ int main(int argc, char* argv[]) {
         }
     );
 
-    return core::SNodeC::start();
+return core::SNodeC::start();
 }
 ```
 
@@ -369,12 +367,12 @@ The client mirrors the server.
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
 
-    using EchoClient =
+using EchoClient =
         net::in::stream::legacy::SocketClient<EchoClientSocketContextFactory>;
 
-    EchoClient client("echoclient");
+EchoClient client("echoclient");
 
-    client.connect(
+client.connect(
         "localhost",
         8080,
         [instanceName = client.getConfig()->getInstanceName()]
@@ -402,7 +400,7 @@ int main(int argc, char* argv[]) {
         }
     );
 
-    return core::SNodeC::start();
+return core::SNodeC::start();
 }
 ```
 
@@ -589,9 +587,7 @@ Do not treat the output as noise.
 
 The first example is meant to connect source code to runtime behavior. When you see a log line from `onConnected()`, it corresponds to the lifecycle callback. When you see the reflected message, it corresponds to `onReceivedFromPeer()`. When the callback passed to `listen(...)` or `connect(...)` logs a state, it tells you whether the configured communication role was registered successfully.
 
-That is why Chapter 2 warned against silencing runtime output too early.
-
-The output is part of the teaching instrument.
+That is why Chapter 2 warned against silencing runtime output too early. The output is part of the teaching instrument.
 
 ### Comparing the chapter version with the repository version
 
@@ -625,11 +621,7 @@ application-side handle
 
 ### What changed compared with ordinary socket programming
 
-If you have written direct POSIX socket code before, this example may look unusual.
-
-There is no explicit `accept()` loop in `main()`.
-
-There is no blocking `recv()` loop in the application entry point.
+If you have written direct POSIX socket code before, this example may look unusual. There is no explicit `accept()` loop in `main()`. There is no blocking `recv()` loop in the application entry point.
 
 There is no direct manual construction of per-peer protocol state in the server loop.
 

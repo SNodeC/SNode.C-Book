@@ -327,9 +327,7 @@ network family
 
 ### The application layer: protocol behavior
 
-Above the connection layer sits the application layer.
-
-This is where communication receives meaning.
+Above the connection layer sits the application layer. This is where communication receives meaning.
 
 For a small custom protocol, the application layer may be a `SocketContext` derived class written by the user. The context reacts to lifecycle and data events for one concrete connection. That is what the echo example did in Chapter 3.
 
@@ -343,9 +341,7 @@ For higher-level framework support, the application layer may involve:
 
 Later chapters also show how application protocols can be connected to persistent application state. That persistence belongs to the larger application architecture; it is not itself another communication layer in this stack.
 
-The architectural lesson is that higher protocols do not erase the lower layers.
-
-A web server is not just web code. It is web behavior carried by some lower communication stack.
+The architectural lesson is that higher protocols do not erase the lower layers. A web server is not just web code. It is web behavior carried by some lower communication stack.
 
 An MQTT application is not just MQTT code. It is MQTT behavior carried by a connection, which is carried by a transport, which is carried by a network family. MQTT over WebSocket adds another important lesson: an application protocol can itself be carried through another application-layer protocol structure while still relying on the lower stack below it.
 
@@ -419,9 +415,7 @@ Those questions are exactly the kind of thinking SNode.C is meant to support.
 
 ### The build system as confirmation
 
-A useful way to test an architectural description is to ask whether the build system reflects it.
-
-In SNode.C, it does.
+A useful way to test an architectural description is to ask whether the build system reflects it. In SNode.C, it does.
 
 The `src` build adds major framework regions such as `core`, `net`, `web`, `express`, `database`, `iot`, and `apps`. The supported components include core stream components, concrete network stream components, HTTP, Express, WebSocket, MQTT, and MQTT-over-WebSocket components.
 
@@ -461,9 +455,7 @@ A reader who learns the layer names is also learning how to navigate the build.
 
 ### One protocol, many lower carriers
 
-The layer model becomes most useful when the reader asks a transfer question.
-
-Suppose you write one simple application protocol using a `SocketContext`.
+The layer model becomes most useful when the reader asks a transfer question. Suppose you write one simple application protocol using a `SocketContext`.
 
 What changes if the same protocol is carried over:
 
@@ -508,15 +500,9 @@ Once the reader understands that RFCOMM and L2CAP belong to the same architectur
 
 ### Layers are real, but not walls
 
-A good systems book should avoid two opposite mistakes.
+A good systems book should avoid two opposite mistakes. The first mistake is to collapse everything into one big communication soup. The second mistake is to imagine layers as perfectly sealed walls that never influence one another.
 
-The first mistake is to collapse everything into one big communication soup.
-
-The second mistake is to imagine layers as perfectly sealed walls that never influence one another.
-
-SNode.C avoids the first mistake structurally. As readers, we should avoid the second.
-
-Layers are real and useful, but they still influence each other.
+SNode.C avoids the first mistake structurally. As readers, we should avoid the second. Layers are real and useful, but they still influence each other.
 
 For example:
 

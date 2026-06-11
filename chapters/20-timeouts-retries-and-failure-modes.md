@@ -270,15 +270,11 @@ By contrast:
 Add some timeout because the network is unreliable.
 ```
 
-is not precise enough.
-
-Timeouts improve robustness when they match the lifecycle and semantics of the protocol.
+is not precise enough. Timeouts improve robustness when they match the lifecycle and semantics of the protocol.
 
 ### Retry and reconnect are not the same thing
 
-Retry and reconnect are the most important distinction in this chapter.
-
-They are close enough to be confused, but different enough that the distinction matters.
+Retry and reconnect are the most important distinction in this chapter. They are close enough to be confused, but different enough that the distinction matters.
 
 | Mechanism | Situation | Meaning |
 |---|---|---|
@@ -541,11 +537,45 @@ connection/context
 
 This prevents two design mistakes.
 
-The first mistake is putting retry and reconnect policy into every protocol context. That makes each protocol endpoint responsible for operational behavior that belongs to the instance.
+The first mistake is putting retry and reconnect policy into every protocol context. That makes each protocol endpoint responsible for operational behavior that belongs to the configured communication role.
 
 The second mistake is forcing the outer role to understand protocol semantics it does not own. That makes the role-level machinery too clever and too protocol-specific.
 
 The flow controller keeps the role coherent. The context keeps the protocol coherent.
+
+### Output pressure and bounded write-buffer policy
+
+Timeouts, retries, and reconnects describe what happens when communication does not progress in time. Event-driven systems also need a policy for what happens when communication cannot progress in space.
+
+The clearest example is the outgoing write buffer. A fast producer can generate data faster than a peer can receive it. A MQTT broker may fan one publication out to many subscribers. A WebSocket dashboard may have one slow browser among many fast ones. An SSE stream may remain open while the client reads slowly or stops reading altogether.
+
+This is not only a performance problem. It is a failure-policy problem. An unbounded output queue is not robustness; it is delayed failure.
+
+A useful SNode.C application should therefore decide which boundary owns output-pressure policy:
+
+```text
+producer
+  -> creates data
+
+connection write buffer
+  -> stores pending output for one peer
+
+role/application policy
+  -> decides what happens when the buffer limit is reached
+```
+
+Possible policies include:
+
+- stop accepting more data for that peer,
+- drop non-essential updates,
+- disconnect the slow peer,
+- report a degraded state,
+- apply backpressure to the upstream producer where the application design allows it,
+- or persist/defer work through a deliberate bounded queue.
+
+The important word is *deliberate*. A bounded buffer with a visible failure policy is architecture. An unbounded buffer that grows until the process becomes unstable is not.
+
+This topic connects Chapter 20 with later chapters on diagnostics, deployment, testing, benchmarking, and architectural judgment. A benchmark that ignores slow receivers may measure throughput but miss the real limiting boundary. A diagnostic system that cannot identify which peer is backpressured may hide the failure. A role that owns fan-out should also own the policy for what happens when fan-out cannot complete at the produced rate.
 
 ### Protocol-level timeout use
 
@@ -586,7 +616,7 @@ A retry or reconnect system must be observable.
 
 The operator should be able to answer:
 
-- which instance failed,
+- which configured instance failed,
 - which endpoint was involved,
 - what state was reported,
 - whether retry was scheduled,
@@ -674,8 +704,6 @@ Chapter 20 completed the foundation for robust communication over time.
 
 Chapter 19 showed that secure connection handling adds meaningful startup, shutdown, and failure phases. Chapter 20 generalized that view across the framework: communication roles are activated, connections are established, protocol contexts react, timeouts bound phases, retry and reconnect policies schedule later work, and status/logging surfaces make the result observable.
 
-That completes Part VI.
-
-The next part moves upward into web-facing protocols.
+That completes Part VI. The next part moves upward into web-facing protocols.
 
 Once time, failure, retry, reconnect, and shutdown are understood at the stream layer, HTTP and WebSocket can be introduced as protocol-specific structures on top of the same event-driven timing and failure model. Chapter 21 begins that move with HTTP.

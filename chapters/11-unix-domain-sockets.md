@@ -44,11 +44,7 @@ The transition from IPv4/IPv6 to Unix domain sockets can be summarized as follow
 | Server/client role model | stable | stable |
 | Context/factory model | stable | stable |
 
-The key point is the controlled change.
-
-The lower communication family changes.
-
-The endpoint identity changes.
+The key point is the controlled change. The lower communication family changes. The endpoint identity changes.
 
 The application architecture does not need to be reinvented.
 
@@ -132,11 +128,7 @@ The concrete representation changes. This is the useful reading habit for all lo
 
 #### Locality as the defining idea
 
-A Unix domain socket is local interprocess communication.
-
-It is not used to reach a peer on another machine over an IP network.
-
-This changes the deployment questions.
+A Unix domain socket is local interprocess communication. It is not used to reach a peer on another machine over an IP network. This changes the deployment questions.
 
 With IPv4 or IPv6 one often asks:
 
@@ -207,9 +199,7 @@ The server-side convenience overloads are path-centered:
 | `listen(sunPath, ...)` | `Local::setSunPath(sunPath)` |
 | `listen(sunPath, backlog, ...)` | `Local::setSunPath(sunPath)` + backlog |
 
-This mirrors the Chapter 10 pattern.
-
-A readable convenience call configures the application-side handle and then enters the same registration path.
+This mirrors the Chapter 10 pattern. A readable convenience call configures the application-side handle and then enters the same registration path.
 
 #### Client-side `connect(...)`
 
@@ -237,17 +227,13 @@ The client-side convenience overloads are also path-centered:
 | `connect(sunPath, ...)` | `Remote::setSunPath(sunPath)` |
 | `connect(sunPath, bindSunPath, ...)` | `Remote::setSunPath(sunPath)` + `Local::setSunPath(bindSunPath)` |
 
-This keeps the local/remote distinction visible.
-
-The remote path is the service endpoint the client wants to reach.
+This keeps the local/remote distinction visible. The remote path is the service endpoint the client wants to reach.
 
 The optional local path describes the client's own local endpoint identity. Most simple clients do not need to spell this out, but the overload exists because the model still distinguishes the peer being contacted from the local endpoint used for the connection.
 
 #### Local and remote paths
 
-Path-based endpoint identity does not remove the local/remote distinction.
-
-It only changes what the endpoint value looks like.
+Path-based endpoint identity does not remove the local/remote distinction. It only changes what the endpoint value looks like.
 
 For a Unix-domain server:
 
@@ -287,11 +273,7 @@ The same core model remains:
 | `SocketContextFactory` | creates a context for a connection |
 | `SocketContext` | implements application protocol behavior |
 
-The server-side instance is still the listening role.
-
-The client-side instance is still the connecting role.
-
-The connection is still the concrete peer relationship.
+The server-side instance is still the listening role. The client-side instance is still the connecting role. The connection is still the concrete peer relationship.
 
 The context is still the protocol endpoint attached to that connection.
 
@@ -321,9 +303,7 @@ The protocol context may inspect the address if it wants to log or display endpo
 
 #### Legacy and TLS
 
-Chapter 7 introduced `legacy` and `tls` as connection-layer variants.
-
-Unix domain sockets fit into that same layer story.
+Chapter 7 introduced `legacy` and `tls` as connection-layer variants. Unix domain sockets fit into that same layer story.
 
 A Unix-domain stream component can participate in the pattern:
 
@@ -339,9 +319,7 @@ This matters because Unix domain sockets are not a special branch outside the fr
 
 ### What changes operationally
 
-Unix domain sockets are local, path-based endpoints.
-
-That changes deployment habits.
+Unix domain sockets are local, path-based endpoints. That changes deployment habits.
 
 #### Deployment habits
 
@@ -389,9 +367,7 @@ It means the family expresses locality through path identity, and application de
 
 #### Unix domain sockets are not a replacement for IP
 
-Unix domain sockets are not better or worse IP sockets.
-
-They answer a different design question.
+Unix domain sockets are not better or worse IP sockets. They answer a different design question.
 
 They are excellent when communication is local to one machine. They are not suitable when a process must communicate with a peer on another machine over a network.
 
@@ -411,11 +387,7 @@ This keeps the comparison architectural rather than emotional. The lower family 
 
 ### Stream focus and a datagram note
 
-This chapter focuses on stream Unix domain sockets.
-
-That is intentional for architectural continuity.
-
-Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
+This chapter focuses on stream Unix domain sockets. That is intentional for architectural continuity. Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
 
 The SNode.C build also contains a `net-un-dgram` component. That is useful to know, but it is not the focus here. Datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8--12.
 
@@ -423,11 +395,7 @@ The practical lesson is simple: Unix domain sockets are not limited to one possi
 
 ### Preparing the Bluetooth shift
 
-Unix domain sockets are also a useful bridge to Bluetooth.
-
-IPv4 and IPv6 showed host-plus-port endpoint identity.
-
-Unix domain sockets showed path-based local endpoint identity.
+Unix domain sockets are also a useful bridge to Bluetooth. IPv4 and IPv6 showed host-plus-port endpoint identity. Unix domain sockets showed path-based local endpoint identity.
 
 Bluetooth will introduce endpoint identities that are different again:
 

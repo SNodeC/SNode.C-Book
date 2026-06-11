@@ -133,9 +133,7 @@ Minimal builds expose these problems. For example, a minimal build that requests
 snodec::net-in-stream-legacy
 ```
 
-should not need unrelated protocol components. If it does, the component boundary is lying.
-
-Minimal builds are therefore not merely smaller builds. They are architectural tests.
+should not need unrelated protocol components. If it does, the component boundary is lying. Minimal builds are therefore not merely smaller builds. They are architectural tests.
 
 ```text
 minimal build:

@@ -162,9 +162,7 @@ This is important for understanding SNode.C code. A short `listen(8080, ...)` ca
 
 ### What remains stable
 
-Moving from IPv4 to IPv6 should not feel like changing the application architecture.
-
-The stable core remains the same.
+Moving from IPv4 to IPv6 should not feel like changing the application architecture. The stable core remains the same.
 
 | Aspect | IPv4 | IPv6 | Architectural point |
 |---|---|---|---|
@@ -207,9 +205,7 @@ The factory carries the rule for creating the context. The context carries the p
 
 #### Status and lifecycle callbacks
 
-Chapter 9 distinguished status callbacks from connection lifecycle callbacks.
-
-That distinction still applies here.
+Chapter 9 distinguished status callbacks from connection lifecycle callbacks. That distinction still applies here.
 
 A `listen(...)` or `connect(...)` status callback reports outer role status. It sees the relevant address object and a `core::socket::State` value.
 
@@ -221,9 +217,7 @@ Moving from IPv4 to IPv6 does not collapse those callback layers. The lower-fami
 
 ### What changes
 
-The stable structure does not mean IPv4 and IPv6 are identical.
-
-They are not.
+The stable structure does not mean IPv4 and IPv6 are identical. They are not.
 
 The chapter should teach the difference calmly and precisely. The point is not to turn this into a full IPv6 networking chapter. The point is to show where SNode.C keeps the architecture stable and where the lower family still matters.
 
@@ -346,11 +340,7 @@ This keeps the lower-family comparison sharp. It also prepares the next variatio
 
 #### Start with IPv4
 
-IPv4 remains the easiest first concrete example for many readers.
-
-That is not because it is more important.
-
-It is because its notation and everyday expectations are familiar.
+IPv4 remains the easiest first concrete example for many readers. That is not because it is more important. It is because its notation and everyday expectations are familiar.
 
 A minimal IPv4 server may look like this in outline:
 
@@ -409,9 +399,7 @@ The outer structure remains stable. The lower family and address notation change
 
 #### Compare what changed and what did not
 
-Once the IPv4 and IPv6 examples are side by side, the comparison becomes clear.
-
-What changed?
+Once the IPv4 and IPv6 examples are side by side, the comparison becomes clear. What changed?
 
 - the network-family namespace,
 - the address class,
@@ -431,9 +419,7 @@ What did not change?
 - connection lifecycle model,
 - layered reading of the type name.
 
-This comparison is the core result.
-
-The point is not only IPv4 and IPv6 themselves. The point is controlled variation across lower communication families.
+This comparison is the core result. The point is not only IPv4 and IPv6 themselves. The point is controlled variation across lower communication families.
 
 ### Stable model, different family semantics
 
@@ -452,11 +438,7 @@ The following table is the transfer map for the chapter. It shows which ideas st
 | Convenience API | sets config, delegates | sets config, delegates | easy API and configured API are one model |
 | Extra concern | simpler first case | IPv6-only / IPv4-mapped / dual-stack questions | deployment semantics differ |
 
-This table connects directly to Chapters 8 and 9.
-
-Chapter 8 explains the address rows.
-
-Chapter 9 explains the handle, instance, connection, factory, context, and callback rows.
+This table connects directly to Chapters 8 and 9. Chapter 8 explains the address rows. Chapter 9 explains the handle, instance, connection, factory, context, and callback rows.
 
 This chapter shows IPv4 and IPv6 as the first concrete comparison pair.
 
@@ -472,9 +454,7 @@ This chapter shows IPv4 and IPv6 as the first concrete comparison pair.
 
 ### Closing perspective
 
-Chapter 9 established the general server/client/connection model.
-
-This chapter specialized that model through IPv4 and IPv6.
+Chapter 9 established the general server/client/connection model. This chapter specialized that model through IPv4 and IPv6.
 
 The next chapter changes the lower-family assumption more strongly. Unix domain sockets keep the same broad SNode.C role model, but they remove the internet host-plus-port assumption. Endpoint identity becomes local operating-system identity instead of internet-family identity.
 
