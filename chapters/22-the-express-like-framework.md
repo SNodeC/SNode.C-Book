@@ -2,21 +2,7 @@
 
 ### From HTTP messages to application structure
 
-Chapter 21 showed how SNode.C raises stream communication to HTTP request and response objects.
-
-Chapter 22 moves one level higher.
-
-The application is no longer organized only around a HTTP request-ready callback.
-
-It is organized around:
-
-- a web application,
-- routers,
-- routes,
-- mounted routers,
-- middleware chains,
-- request and response facades,
-- and explicit middleware continuation.
+Chapter 21 showed how SNode.C raises stream communication to HTTP request and response objects. Chapter 22 moves one level higher: HTTP messages are no longer handled only by an HTTP request-ready callback, but by a web-application structure made of routers, routes, middleware chains, request/response facades, and explicit continuation.
 
 That is the central idea of this chapter:
 
@@ -32,17 +18,17 @@ lower communication family
               -> Express-like application layer
 ```
 
-The Express-like layer is therefore not a different universe.
+The Express-like layer is therefore not a different universe. It is the application-organization layer above HTTP. HTTP gives message meaning; the Express-like layer gives application structure.
 
-It is the application-organization layer above HTTP.
+Part VII now moves in steps. Chapter 21 introduced HTTP messages. Chapter 22 shows how those messages become routed application flow. Chapter 23 will keep that web-application structure, but change the temporal shape of a handler: instead of answering once, a route may keep an HTTP response open and emit events over time.
 
-### The Express-like layer in the SNode.C stack
+### The Express-like layer in the layered SNode.C model
 
-The stack now looks like this:
+The stack now reads:
 
 ```text
 runtime
-  -> configured server instance
+  -> registered server instance
       -> lower communication family
           -> stream transport
               -> legacy or TLS connection handling
@@ -50,24 +36,20 @@ runtime
                       -> Express-like routing and middleware
 ```
 
-Earlier chapters established the lower parts.
+The visible `WebAppT<ServerT>` object in application code is the application-side handle. Through that handle, the application configures a server-side communication role and registers a runtime-visible server instance. The Express-like layer does not change that model; it changes what happens when a ready HTTP request reaches application code.
 
-Chapter 21 introduced HTTP request and response semantics.
-
-Chapter 22 now asks what happens when HTTP handling becomes an application structure.
-
-The answer is:
+Earlier chapters established the lower parts. Chapter 21 introduced HTTP request and response semantics. Chapter 22 now asks what happens when HTTP handling becomes application structure. The answer is:
 
 ```text
 HTTP request ready
-  -> Express controller
-      -> root route
+  -> Controller(req, res)
+      -> root route dispatch
           -> router / middleware / application handler
 ```
 
 This is the transition from protocol handling to web-application composition.
 
-### HTTP layer and Express-like layer side by side
+### HTTP messages and Express-like application flow side by side
 
 A compact comparison makes the new layer visible.
 
@@ -75,22 +57,18 @@ A compact comparison makes the new layer visible.
 |---|---|---|
 | application-facing unit | request / response | routed request / response flow |
 | primary callback | request ready | route handler or middleware |
-| structure | one HTTP protocol endpoint | application, routers, routes, middleware |
-| flow control | HTTP lifecycle | `next()` and dispatcher chain |
+| structure | one HTTP protocol endpoint | application route tree |
+| flow control | HTTP lifecycle | dispatcher chain and `next()` |
 | path meaning | HTTP target/path | mount path, route path, params, base/original URL |
 | response surface | HTTP response | application-oriented response facade |
 | reuse mechanism | HTTP server/client wrappers | routers and middleware |
 | lower layers | still present | still present underneath HTTP |
 
-The HTTP layer gives the application request and response objects.
-
-The Express-like layer gives the application a way to organize what should happen with them.
+The HTTP layer gives the application request and response objects. The Express-like layer gives the application a way to organize what should happen with them.
 
 ### What “Express-like” means here
 
-“Express-like” does not mean that SNode.C embeds Node.js or the JavaScript Express runtime.
-
-It means that the C++ web-application layer uses a familiar application model:
+“Express-like” does not mean that SNode.C embeds Node.js or the JavaScript Express runtime. It means that the C++ web-application layer uses a familiar application model:
 
 - `WebApp`,
 - `Router`,
@@ -102,22 +80,11 @@ It means that the C++ web-application layer uses a familiar application model:
 - request and response facades,
 - built-in middleware.
 
-The layer is Express-like in its programming model.
+The layer is Express-like in its programming model. It is still SNode.C in its runtime, connection, configuration, diagnostics, and lower-layer architecture.
 
-It is still SNode.C in its runtime, connection, configuration, and lower-layer architecture.
+This distinction matters because the familiar surface should not hide the underlying model. A SNode.C Express-like application is still carried by an application-side web-app/server handle, a registered server instance, an HTTP server layer, legacy or TLS connection handling, lower-family choices, configuration, diagnostics, timing, and failure behavior.
 
-This distinction matters because the familiar surface should not hide the underlying model.
-
-A SNode.C Express-like application is still carried by:
-
-- a configured server instance,
-- a HTTP server layer,
-- legacy or TLS connection handling,
-- lower-family choices,
-- diagnostics,
-- timeout and failure behavior.
-
-### WebApp, WebAppT, and the HTTP server underneath
+### WebApp, WebAppT, and the HTTP server below
 
 The core composition is visible in two steps.
 
@@ -147,19 +114,15 @@ This composition explains how HTTP request handling becomes Express-like applica
 | `Router` | route tree and middleware structure |
 | `WebApp` | router-shaped application plus runtime-facing lifecycle |
 | `ServerT` | concrete HTTP server type underneath |
-| `WebAppT<ServerT>` | combined Express-like application and HTTP server |
+| `WebAppT<ServerT>` | combined Express-like application surface and HTTP server handle |
 
-The result is not a separate web runtime.
-
-It is a web-application surface joined to a concrete HTTP server.
+The result is not a separate web runtime. It is a web-application surface joined to a concrete HTTP server.
 
 #### WebApp as router-shaped application
 
-`WebApp` derives from `Router`.
+`WebApp` derives from `Router`. Because `WebApp` is router-shaped, the application root is not a separate routing concept. The application itself is the root router, and `WebAppT` makes that root router runnable by combining it with a concrete HTTP server.
 
-That means the application itself can be treated as the root of a route structure.
-
-It also exposes runtime-facing lifecycle operations such as:
+`WebApp` also exposes runtime-facing lifecycle operations such as:
 
 - `init(...)`,
 - `start(...)`,
@@ -168,21 +131,23 @@ It also exposes runtime-facing lifecycle operations such as:
 - `free()`,
 - `state()`.
 
-This keeps the web-application layer connected to the same runtime story introduced earlier in the book.
-
-A web application is not just a set of route functions.
-
-It is a route structure that still runs inside the SNode.C event-driven runtime.
+This keeps the web-application layer connected to the same event-driven runtime story introduced earlier in the book. A web application is not just a set of route functions; it is a route structure that still runs inside the SNode.C runtime.
 
 #### WebAppT as the bridge to a concrete HTTP server
 
-`WebAppT<ServerT>` combines the Express-like layer with a concrete HTTP server type.
+`WebAppT<ServerT>` is the joining point. It inherits the router-shaped `WebApp` surface and the concrete HTTP server type. When the HTTP server reports a ready request, `WebAppT` wraps that request/response pair in a `Controller` and dispatches it into the root route.
 
-For example, an IPv4 legacy Express-like web app can be shaped as:
+The concrete alias is not the main point; it is an example of the general pattern. An IPv4 legacy Express-like web application can be shaped as:
 
 ```cpp
 using WebApp =
     WebAppT<web::http::legacy::in::Server>;
+```
+
+The SNode.C source also provides the corresponding convenience alias:
+
+```cpp
+express::legacy::in::WebApp
 ```
 
 The same idea applies to other lower-family and connection-handling variants where provided.
@@ -195,11 +160,7 @@ Express-like WebAppT
       -> runnable web application
 ```
 
-This matches the design pattern from Chapter 21.
-
-The HTTP layer remains underneath.
-
-The Express-like layer organizes the application above it.
+This matches the design pattern from Chapter 21. The HTTP layer remains underneath; the Express-like layer organizes application behavior above it.
 
 #### From HTTP request readiness to Express dispatch
 
@@ -210,25 +171,17 @@ Conceptually:
 ```text
 HTTP request ready
   -> Controller(req, res)
-      -> rootRoute dispatch
+      -> root route dispatch
           -> application callback / middleware / mounted router
 ```
 
-This is where Chapter 21 becomes Chapter 22.
+The HTTP layer has parsed the request and prepared a response object. The Express-like layer now decides which application structure should handle that request. That decision belongs above HTTP because it depends on route paths, mounted routers, middleware, and routing policy.
 
-The HTTP layer has parsed the request and prepared a response object.
-
-The Express-like layer now decides which application structure should handle that request.
-
-That decision belongs above HTTP.
-
-It depends on route paths, mounted routers, middleware, and routing policy.
+The `Controller` is the dispatch-time object that carries the Express request/response facades through the route tree and tracks continuation state such as `next`, next route, and next router.
 
 ### Router as the application composition unit
 
-`Router` is the main composition unit of the Express-like layer.
-
-It lets a web application be assembled from parts instead of being written as one large request callback.
+`Router` is the main composition unit of the Express-like layer. It lets a web application be assembled from parts instead of being written as one large request callback.
 
 A router can contribute:
 
@@ -252,9 +205,7 @@ The routing surface includes familiar methods such as:
 - `.patch()`,
 - `.head()`.
 
-The important point is not the length of the method list.
-
-The important point is the structure it enables:
+The method list matters because each method attaches structure to the route tree. The important point is not that there are many methods; it is that routing, middleware, and mounted routers become composable:
 
 ```text
 application
@@ -266,11 +217,7 @@ application
 
 #### Routes, mounted routers, and middleware
 
-A route is a point where request properties and application behavior meet.
-
-A mounted router lets a larger application be built from smaller route structures.
-
-Middleware lets common behavior be placed into the request flow without duplicating it in every handler.
+A route is a point where request properties and application behavior meet. A mounted router lets a larger application be built from smaller route structures. Middleware lets common behavior be placed into the request flow without duplicating it in every handler.
 
 Together, these ideas move the application from:
 
@@ -288,9 +235,7 @@ That is the main application-level gain of the Express-like layer.
 
 #### Routing policy
 
-At this layer, route matching is part of application correctness.
-
-The router exposes policy controls such as:
+At this layer, route matching is part of application correctness. The router exposes policy controls such as:
 
 | Policy | Question |
 |---|---|
@@ -298,19 +243,9 @@ The router exposes policy controls such as:
 | case-insensitive routing | Should route matching ignore case? |
 | merge params | Should mounted routers receive parent params? |
 
-These policies belong here.
+These policies belong to the router. They are not socket concerns and not generic HTTP parsing concerns. They are web-application routing concerns.
 
-They are not socket concerns.
-
-They are not generic HTTP parsing concerns.
-
-They are web-application routing concerns.
-
-`merge params` is a good example.
-
-It decides how parameter information moves through nested router structures.
-
-That is meaningful only once the application has routers and mount points.
+`merge params` is a good example. It decides how parameter information moves through nested router structures. That is meaningful only once the application has routers and mount points.
 
 ### Application callbacks and middleware callbacks
 
@@ -319,23 +254,13 @@ The Express-like layer distinguishes two important callback shapes.
 | Callback shape | Meaning |
 |---|---|
 | `(req, res)` | application handler; may produce a response |
-| `(req, res, next)` | middleware; may continue the chain |
+| `(req, res, next)` | middleware participant; may continue the chain |
 
-This distinction teaches the layer model clearly.
-
-Not every function attached to a route has the same responsibility.
-
-Some handlers answer.
-
-Some middleware participates in a chain.
-
-Some middleware may inspect, modify, authorize, log, or prepare state before passing control onward.
+This distinction teaches the layer model clearly. Not every function attached to a route has the same responsibility. Some handlers answer. Some middleware participates in a chain. Some middleware may inspect, modify, authorize, log, or prepare state before passing control onward.
 
 #### Application handlers
 
-An application handler receives a request and a response.
-
-Its typical responsibility is to produce an answer for a matched request.
+An application handler receives a request and a response. Its typical responsibility is to produce an answer for a matched request.
 
 Conceptually:
 
@@ -349,9 +274,7 @@ This is the simplest Express-like callback shape.
 
 #### Middleware handlers
 
-A middleware handler receives a request, a response, and a `Next` object.
-
-Its responsibility is not necessarily to finish the response.
+A middleware handler receives a request, a response, and a `Next` object. Its responsibility is not necessarily to finish the response.
 
 It may:
 
@@ -376,9 +299,7 @@ This is why middleware is not just another name for a route handler.
 
 #### `Next` and middleware flow
 
-`Next` makes middleware continuation explicit.
-
-A middleware can decide whether the request flow should continue.
+`Next` makes middleware continuation explicit. A middleware can decide whether the request flow should continue.
 
 The model is:
 
@@ -389,11 +310,9 @@ middleware(req, res, next)
           -> following middleware / router / handler
 ```
 
-This makes flow control part of the application model.
+`Next` is not a scheduler and not a thread handoff. It is the application-visible continuation object for the dispatcher chain.
 
-The chain is visible to the user.
-
-That is one of the main differences between a simple HTTP callback and an Express-like application framework.
+This makes flow control part of the application model. The chain is visible to the user. That is one of the main differences between a simple HTTP callback and an Express-like application framework.
 
 ### Dispatchers behind the API
 
@@ -407,19 +326,13 @@ A compact view is:
 | `MiddlewareDispatcher` | handles middleware and `next()` flow |
 | `RouterDispatcher` | enters mounted routers |
 
-This internal structure mirrors the application model.
+The dispatchers are not just implementation clutter. They encode the fact that application callbacks, middleware callbacks, and mounted routers have different control-flow meanings.
 
-The framework does not pretend that all web actions are the same.
+This internal structure mirrors the application model. The framework does not pretend that all web actions are the same. The dispatcher structure reflects those differences.
 
-Application callbacks, middleware, and mounted routers have different meanings.
+### Request and Response as web-application facades
 
-The dispatcher structure reflects those differences.
-
-### Request and Response as application facades
-
-Chapter 21 introduced HTTP request and response objects.
-
-Chapter 22 raises them into Express-like application facades.
+Chapter 21 introduced HTTP request and response objects. Chapter 22 raises them into Express-like application facades.
 
 The facade does two things:
 
@@ -428,9 +341,15 @@ keeps access to HTTP meaning
   + adds application-structure meaning
 ```
 
-That is different from replacing the HTTP objects.
+That is different from replacing the HTTP objects. The Express-like layer wraps and enriches them:
 
-The Express-like layer wraps and enriches them.
+```text
+HTTP objects
+  -> protocol message meaning
+
+Express facades
+  -> web-application meaning
+```
 
 #### Request facade
 
@@ -443,11 +362,7 @@ The Express-like `Request` adds routing and application context to the lower HTT
 | HTTP metadata | method, URL, HTTP version, headers, trailer |
 | parsed input | query values, cookies, body |
 
-This is the request-side semantic lift.
-
-The application can ask route-level questions, not only HTTP parsing questions.
-
-For example:
+This is the request-side semantic lift. The application can ask route-level questions, not only HTTP parsing questions:
 
 ```text
 Which route parameter was matched?
@@ -471,9 +386,7 @@ The Express-like `Response` adds application-oriented response operations to the
 | redirects | `redirect`, `location` |
 | advanced HTTP | `upgrade`, fragments, socket-context access |
 
-This is the response-side semantic lift.
-
-The application can express common web responses directly:
+This is the response-side semantic lift. The application can express common web responses directly:
 
 ```text
 send JSON
@@ -484,15 +397,11 @@ return a status
 upgrade the connection
 ```
 
-Those operations still produce HTTP behavior underneath.
-
-The facade makes the application intent clearer.
+Those operations still produce HTTP behavior underneath. The facade makes the application intent clearer.
 
 #### Controlled access to lower HTTP capabilities
 
-The facade raises the application API, but it does not hide all lower HTTP capabilities.
-
-Advanced operations remain available when the application genuinely needs them.
+The facade raises the application API, but it does not hide all lower HTTP capabilities. Advanced operations remain available when the application genuinely needs them.
 
 Examples include:
 
@@ -502,13 +411,11 @@ Examples include:
 - socket-context access,
 - lower header control.
 
-This is a controlled escape hatch.
-
-It keeps the application interface convenient without pretending that lower HTTP and connection realities no longer exist.
+The facade is not a wall. It is a raised application surface with deliberate access points back to lower HTTP capabilities when the application genuinely needs them. This keeps the application interface convenient without pretending that lower HTTP and connection realities no longer exist.
 
 ### Built-in middleware as reusable application behavior
 
-The Express-like module also provides reusable middleware.
+The Express-like module also provides reusable middleware. Built-in middleware packages common request-processing behavior so it can be mounted once and reused across routes.
 
 Examples include:
 
@@ -520,25 +427,17 @@ Examples include:
 | `VerboseRequest` | request visibility |
 | `JsonMiddleware` | JSON request handling |
 
-These belong above HTTP and below application-specific route logic.
-
-They are reusable application behaviors.
-
-That is middleware territory.
+These belong above HTTP and below application-specific route logic. They are reusable application behaviors. That is middleware territory.
 
 #### Authentication, static serving, virtual hosts, request visibility, and JSON handling
 
-Basic authentication, static serving, virtual-host routing, verbose request reporting, and JSON handling are examples of reusable application behavior.
+Basic authentication, static serving, virtual-host routing, verbose request reporting, and JSON handling are examples of reusable application behavior. They can be attached through middleware instead of being baked into the lower socket layer, the HTTP parser, or every individual route handler.
 
-They can be attached through middleware instead of being baked into the lower socket layer, the HTTP parser, or every individual route handler.
+Static serving may involve root directories, index handling, fall-through behavior, headers, cookies, and connection-state decisions after the response. Those are practical application concerns, but they do not belong in the socket layer or in every route handler.
 
-Static serving may involve root directories, index handling, fall-through behavior, headers, cookies, and connection-state decisions after the response.
+`VHost` belongs here because host-based dispatch is web-application routing behavior. `VerboseRequest` belongs here because request visibility is useful across routes but should not be duplicated inside every handler.
 
-`VHost` belongs here because host-based dispatch is web-application routing behavior.
-
-`VerboseRequest` belongs here because request visibility is useful across routes but should not be duplicated inside every handler.
-
-JSON middleware belongs to the same group of reusable request-processing behavior when the required JSON dependency is available at build time.
+The Express module includes JSON middleware when the required `nlohmann_json` dependency is present; the build treats that dependency as required for this module. Architecturally, JSON middleware belongs to the same group of reusable request-processing behavior.
 
 The architectural point is:
 
@@ -549,12 +448,12 @@ common request-processing behavior
 
 ### Lower layers still matter
 
-The Express-like layer changes application organization.
-
-It does not remove lower-layer facts.
+The Express-like layer changes application organization. It does not remove lower-layer facts.
 
 A web application still has:
 
+- an application-side web app/server handle,
+- a registered server instance,
 - a lower communication family,
 - legacy or TLS connection handling,
 - HTTP parsing and response generation underneath,
@@ -564,29 +463,21 @@ A web application still has:
 - timeouts,
 - failure behavior.
 
-This matters during operation.
+This matters during operation. A route handler may look high-level, but failures can still originate in:
 
-A route handler may look simple, but the application can still fail because of:
-
-- bind errors,
-- TLS configuration,
-- read/write timeouts,
+- bind or listen activation,
+- TLS setup,
+- read/write timeout boundaries,
 - retry or reconnect policy,
 - HTTP parsing errors,
 - response streaming behavior,
 - protocol upgrade behavior.
 
-The Express-like layer is useful because it organizes application logic.
+The Express-like layer is useful because it organizes application logic. It is not a reason to forget the architecture beneath it.
 
-It is not a reason to forget the architecture beneath it.
+### From Express-like routing to Server-Sent Events
 
-### From Express-like applications to Server-Sent Events
-
-Chapter 22 is the second step in Part VII.
-
-Chapter 21 introduced the HTTP layer.
-
-Chapter 22 showed how HTTP handling becomes application structure.
+Chapter 22 is the second step in Part VII. Chapter 21 introduced the HTTP layer. Chapter 22 showed how HTTP handling becomes application structure.
 
 The next chapter moves to a specific HTTP-based real-time mechanism:
 
@@ -594,9 +485,7 @@ The next chapter moves to a specific HTTP-based real-time mechanism:
 Server-Sent Events
 ```
 
-This is a natural next step.
-
-The reader now understands:
+This is a natural next step. The reader now understands:
 
 ```text
 HTTP request / response
@@ -604,29 +493,25 @@ HTTP request / response
       -> long-lived HTTP event streaming
 ```
 
-Server-Sent Events will show how the web stack handles one-way event streaming while still using the same layered discipline.
+Chapter 23 then asks what happens when a route is not a short request/response exchange, but a long-lived one-way event stream. Server-Sent Events will show how the web stack handles that shape while still using the same layered discipline.
 
 ### What to remember
 
-Remember:
-
-- The Express-like layer sits above HTTP.
-- It organizes HTTP handling into routers, routes, middleware, and application callbacks.
-- The Express-like layer does not replace HTTP; it structures HTTP use.
+- The Express-like layer sits above HTTP and organizes HTTP handling into web-application structure.
 - `WebApp` is a router-shaped application surface.
-- `WebAppT<ServerT>` combines the Express layer with a concrete HTTP server.
-- HTTP request readiness is dispatched into the Express root route.
-- `Router` provides route methods, mounted routers, middleware, and routing policy.
+- `WebAppT<ServerT>` combines that application surface with a concrete HTTP server type.
+- HTTP request readiness enters the Express layer through a controller and the root route.
+- `Router` composes routes, middleware, mounted routers, method-specific handlers, and routing policy.
 - Application callbacks and middleware callbacks have different responsibilities.
-- `Next` controls middleware continuation.
-- Express `Request` and `Response` are application-oriented facades over HTTP objects.
-- Built-in middleware packages reusable web-application behavior.
-- Lower runtime, configuration, diagnostics, TLS, timeout, and failure behavior still matter.
-- Chapter 23 moves to Server-Sent Events.
+- `Next` makes middleware continuation explicit.
+- Express `Request` and `Response` are application-oriented facades over lower HTTP objects.
+- Built-in middleware packages reusable request-processing behavior.
+- Lower-family, TLS, configuration, diagnostics, timing, and failure behavior remain relevant beneath the web-application surface.
+- Chapter 23 moves from routed HTTP handling to Server-Sent Events.
 
 ### Closing perspective
 
-Chapter 22 showed how HTTP handling becomes application structure.
+Chapter 21 raised stream communication to HTTP messages. Chapter 22 raised HTTP messages into application structure.
 
 The stack now reads:
 
@@ -640,6 +525,4 @@ lower communication family
 
 This is a higher-level application model, but it is still built on the same SNode.C foundations.
 
-The next chapter turns to Server-Sent Events.
-
-There, HTTP is used for long-lived one-way event streaming.
+Chapter 23 keeps that structure but changes the temporal shape of a handler: instead of answering once, a route may keep an HTTP response open and emit events over time. There, HTTP is used for long-lived one-way event streaming.
