@@ -2,27 +2,9 @@
 
 ### Why testing follows deployment
 
-Chapter 33 showed that deployment is architecture entering the filesystem.
+Chapter 33 made deployment visible as installed architecture: packages, installed libraries, runtime-loaded modules, configuration directories, service definitions, TLS and database resources, and target-specific deployment constraints. Chapter 34 now asks how that architecture becomes trustworthy. A built and deployed system is not yet proven; it must still be tested, inspected, debugged, and measured at the boundaries where it claims to be clear.
 
-SNode.C does not only become an executable.
-
-It becomes:
-
-- shared libraries,
-- component packages,
-- exported CMake targets,
-- runtime-loaded protocol modules,
-- configuration directories,
-- log and pid directories,
-- service definitions,
-- TLS and database dependencies,
-- and, on OpenWrt, cross-compiled packages installed under embedded constraints.
-
-Chapter 34 now asks whether that installed architecture can be trusted.
-
-Testing, debugging, and benchmarking are not separate quality activities added after the real work is done.
-
-For SNode.C, they are ways of checking whether the boundaries taught throughout the book still hold under real pressure:
+SNode.C does not only become an executable. It becomes shared libraries, component packages, exported CMake targets, runtime-loaded protocol modules, configuration directories, log and pid directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages installed under embedded constraints. Testing, debugging, and benchmarking are therefore not separate quality activities added after the real work is done. They are ways of checking whether the boundaries taught throughout the book still hold under real pressure:
 
 ```text
 build structure
@@ -32,26 +14,9 @@ build structure
               -> measured behavior
 ```
 
-A network framework is not finished when it compiles.
+A network framework is not finished when it compiles. It is not even finished when it installs. Compilation means that the build graph was accepted. Installation means that the filesystem shape was produced. Trustworthiness means that behavior is reproducible, diagnosable, and measurable.
 
-It is not even finished when it installs.
-
-It becomes trustworthy only when its behavior can be checked, reproduced, explained, and measured.
-
-That is especially true for SNode.C because it is a layered framework.
-
-A failure may occur at many different boundaries:
-
-- a component target may have an undeclared dependency,
-- a public header may rely on an accidental transitive include,
-- an exported CMake package may differ from the in-tree target graph,
-- a parser may accept invalid protocol input,
-- a dispatcher may choose the wrong route,
-- a WebSocket upgrade module may be missing from the installed layout,
-- a MQTT session may survive or disappear incorrectly,
-- a database command sequence may fail halfway through a state update,
-- a long-running service may leak connection state,
-- a benchmark may measure only a convenient path and miss the real bottleneck.
+That is especially true for SNode.C because it is a layered framework. A failure may occur at many different boundaries: a component target may have an undeclared dependency; a public header may rely on an accidental transitive include; an exported CMake package may differ from the in-tree target graph; a parser may accept invalid protocol input; a dispatcher may choose the wrong route; a WebSocket upgrade module may be missing from the installed layout; an MQTT session may survive or disappear incorrectly; a database command sequence may fail halfway through a state update; a long-running service may leak connection state; a benchmark may measure only a convenient path and miss the real bottleneck.
 
 The useful question is therefore not only:
 
@@ -65,9 +30,7 @@ That is the central idea of this chapter.
 
 ### Testing follows framework boundaries
 
-The testing strategy should follow the same boundaries as the framework.
-
-SNode.C has already introduced several kinds of boundaries:
+Testing strategy should follow the same boundaries as the framework. SNode.C has already introduced several kinds of boundaries:
 
 ```text
 component boundary
@@ -80,7 +43,7 @@ protocol boundary
   -> where bytes become HTTP, WebSocket, MQTT, or another meaning
 
 runtime boundary
-  -> where configured roles become active connections and contexts
+  -> where configured communication roles become active connections and contexts
 
 configuration boundary
   -> where defaults, command-line arguments, files, and named instances combine
@@ -95,25 +58,11 @@ performance boundary
   -> where load reveals the limiting part of the system
 ```
 
-A good test does not have to cover all of these at once.
+A good test does not have to cover all of these at once. In fact, it usually should not. A broad end-to-end test is useful, but it is not a substitute for a focused boundary test when the boundary itself has a contract. A good test protects one boundary clearly enough that a failure is meaningful.
 
-In fact, it usually should not.
+If a parser test fails, the reader should suspect protocol syntax handling. If an installed-consumer build fails, the reader should suspect exported targets, public headers, package configuration, or missing link dependencies. If an installed WebSocket example starts but cannot upgrade, the reader should suspect runtime module paths, RPATH, upgrade selector configuration, or installation layout. If an MQTT load test collapses under many slow subscribers, the reader should look at buffering, backpressure, fan-out, and event-loop pressure rather than only at packet parsing.
 
-A good test protects one boundary clearly enough that a failure is meaningful.
-
-If a parser test fails, the reader should suspect protocol syntax handling.
-
-If an installed-consumer build fails, the reader should suspect exported targets, public headers, package configuration, or missing link dependencies.
-
-If an installed WebSocket example starts but cannot upgrade, the reader should suspect runtime module paths, RPATH, upgrade selector configuration, or installation layout.
-
-If an MQTT load test collapses under many slow subscribers, the reader should look at buffering, backpressure, fan-out, and event-loop pressure rather than only at packet parsing.
-
-Testing is therefore not a flat checklist.
-
-It is a map of confidence surfaces.
-
-A compact view is useful.
+Testing is therefore not a flat checklist. It is a map of confidence surfaces.
 
 | SNode.C surface | What may be wrong | Useful confidence method |
 |---|---|---|
@@ -121,7 +70,7 @@ A compact view is useful.
 | Exported package | in-tree build works but installed use fails | external consumer project using `find_package(snodec ...)` |
 | Protocol parser | malformed input accepted or valid input rejected | parser tests with valid, invalid, incomplete, and boundary input |
 | Protocol serializer | generated bytes are non-canonical or wrong | exact-byte tests |
-| Express-style dispatcher | wrong route, wrong params, wrong middleware order | behavior tests and Express compatibility tests |
+| Express-style dispatcher | wrong route, wrong params, wrong middleware order | behavior tests and Express compatibility tests where intended |
 | Runtime | socket readiness, timers, retries, shutdown, lifetime | real-socket integration tests |
 | Runtime-loaded module | installed module not found or wrong path encoded | installed deployment tests |
 | Configuration | effective role constellation differs from expectation | generated/effective configuration tests |
@@ -129,51 +78,23 @@ A compact view is useful.
 | Long-running service | leaks, retained cycles, stale handles | Valgrind, sanitizers, long-running diagnostics |
 | Performance | benchmark measures the wrong boundary | workload-specific benchmarking and bottleneck analysis |
 
-The rest of this chapter expands this table.
+The rest of this chapter expands this table as confidence surfaces: build confidence, protocol confidence, runtime confidence, deployment confidence, diagnostic confidence, and performance confidence.
 
 ### Build-time confidence
 
 #### Build policy is the first test surface
 
-Chapter 32 already treated CMake policy as architecture.
+Chapter 32 treated CMake policy as architecture. The same is true for testing. SNode.C's strict build policy is already a form of automated pressure on the component graph.
 
-The same is true for testing.
+Warnings are not decorative. They catch suspicious conversions, hidden overloads, unreachable code, inconsistent initialization, lifetime hazards, and many small mistakes that become large when framework code is reused by many applications. For SNode.C this matters because low-level mistakes multiply upward. A bug in a socket abstraction can affect HTTP, WebSocket, MQTT, database-connected applications, and MQTTSuite tools. A bug in a dispatcher utility can affect every Express-style application. A hidden dependency in a public header can make a component appear usable only because another component happened to be built first.
 
-A strict build is the first automated review of a C++ framework.
-
-Warnings are not decorative.
-
-They catch suspicious conversions, hidden overloads, unreachable code, inconsistent initialization, lifetime hazards, and many small mistakes that become large when framework code is reused by many applications.
-
-For SNode.C this matters because low-level mistakes multiply upward.
-
-A bug in a socket abstraction can affect HTTP, WebSocket, MQTT, database-connected applications, and MQTTSuite tools.
-
-A bug in a dispatcher utility can affect every Express-style application.
-
-A hidden dependency in a public header can make a component appear usable only because another component happened to be built first.
-
-Build-time confidence therefore belongs at the beginning of the chapter.
-
-It checks whether the component graph is truthful before any runtime behavior is observed.
+Build-time confidence therefore belongs at the beginning of the chapter. It checks whether the component graph is truthful before any runtime behavior is observed.
 
 #### Strict does not mean careless
 
-Strict warnings are valuable.
+Strict warnings are valuable. Blind strictness is not. SNode.C is built in ordinary Linux environments, optional-feature configurations, and cross-compilation contexts such as OpenWrt. It also depends on system headers and third-party libraries.
 
-Blind strictness is not.
-
-SNode.C is built in ordinary Linux environments, optional-feature configurations, and cross-compilation contexts such as OpenWrt.
-
-It also depends on system headers and third-party libraries.
-
-A useful warning policy distinguishes between:
-
-- warnings from SNode.C code,
-- warnings caused by platform or compiler differences,
-- warnings emitted through third-party headers,
-- warnings that reveal real dependency or lifetime problems,
-- warnings that would make a target platform fragile without improving project quality.
+A useful warning policy distinguishes between warnings from SNode.C code, warnings caused by platform or compiler differences, warnings emitted through third-party headers, warnings that reveal real dependency or lifetime problems, and warnings that would make a target platform fragile without improving project quality.
 
 The principle is:
 
@@ -183,29 +104,15 @@ be strict for project code
       -> avoid global suppressions that hide real regressions
 ```
 
-This is not a compromise against quality.
-
-It is how strictness remains maintainable.
+This is not a compromise against quality. It is how strictness remains maintainable.
 
 #### Include discipline protects component truth
 
-Include discipline is not only a formatting preference.
+Include discipline is not only a formatting preference. It is a component test. Every public header should include what it uses. Every source file should avoid relying on accidental transitive includes.
 
-It is a component test.
+This matters because SNode.C is not consumed only as one monolithic source tree. It is consumed through components. A header that compiles only because another unrelated header was included first is not a stable public interface. A component that builds only because HTTP, MQTT, or database support was also present is not an honest component.
 
-Every public header should include what it uses.
-
-Every source file should avoid relying on accidental transitive includes.
-
-This matters because SNode.C is not consumed only as one monolithic source tree.
-
-It is consumed through components.
-
-A header that compiles only because another unrelated header was included first is not a stable public interface.
-
-A component that builds only because HTTP, MQTT, or database support was also present is not an honest component.
-
-Include-what-you-use style checking therefore has a direct architectural meaning:
+The repository already treats include checking as a build concern. When `include-what-you-use` is available, the build can configure it, while cross-compilation contexts are handled more carefully. That is not just a tooling preference. It supports the architectural promise that a public header expresses its own requirements.
 
 ```text
 public header
@@ -214,77 +121,39 @@ public header
           -> package boundary remains truthful
 ```
 
-This is where Chapter 32 and Chapter 34 meet.
-
-The component graph drawn by CMake must also be true at the level of headers.
+This is where Chapter 32 and Chapter 34 meet. The component graph drawn by CMake must also be true at the level of headers.
 
 #### Minimal builds are boundary tests
 
-Full builds are useful.
+Full builds are useful. They prove that the broad source tree still compiles as one large system. But full builds can also hide mistakes. A missing include may be hidden by another component. A missing link dependency may be hidden by a final executable. An optional dependency may appear mandatory because the full build always enables it. A component may accidentally rely on a higher layer because the higher layer is always nearby in the full build.
 
-They prove that the broad source tree still compiles as one large system.
-
-But full builds can also hide mistakes.
-
-A missing include may be hidden by another component.
-
-A missing link dependency may be hidden by a final executable.
-
-An optional dependency may appear mandatory because the full build always enables it.
-
-A component may accidentally rely on a higher layer because the higher layer is always nearby in the full build.
-
-Minimal builds expose these problems.
-
-For example, a minimal build that requests only an IPv4 legacy stream component should not silently require HTTP, WebSocket, MQTT, or MariaDB support.
-
-A small external application that links only against:
+Minimal builds expose these problems. For example, a minimal build that requests only an IPv4 legacy stream component should not silently require HTTP, WebSocket, MQTT, or MariaDB support. A small external application that links only against:
 
 ```cmake
 snodec::net-in-stream-legacy
 ```
 
-should not need unrelated protocol components.
+should not need unrelated protocol components. If it does, the component boundary is lying.
 
-If it does, the component boundary is lying.
+Minimal builds are therefore not merely smaller builds. They are architectural tests.
 
-That is why minimal builds are not merely convenience builds.
+```text
+minimal build:
+  tests component honesty
 
-They are architectural tests.
+full build:
+  tests broad integration
+```
 
 #### Full builds still matter
 
-Minimal builds protect boundaries.
+Minimal builds protect boundaries. Full builds protect integration. SNode.C also needs confidence that the complete system still compiles when many optional surfaces are enabled together: legacy and TLS stream components, IPv4 and IPv6 support, Unix domain socket support, Bluetooth support where available, HTTP and Express support, WebSocket support, MQTT and MQTT-over-WebSocket support, MariaDB support, examples, and applications.
 
-Full builds protect integration.
-
-SNode.C also needs confidence that the complete system still compiles when many optional surfaces are enabled together:
-
-- legacy and TLS stream components,
-- IPv4 and IPv6 support,
-- Unix domain socket support,
-- Bluetooth support where available,
-- HTTP and Express support,
-- WebSocket support,
-- MQTT and MQTT-over-WebSocket support,
-- MariaDB support,
-- examples and applications.
-
-A full build checks whether the broad framework still fits together.
-
-A minimal build checks whether the pieces remain honest.
-
-Both are needed.
-
-They answer different questions.
+A full build checks whether the broad framework still fits together. A minimal build checks whether the pieces remain honest. Both are needed because they answer different questions.
 
 #### Installed-consumer builds are especially important
 
-An in-tree build is not enough for a framework.
-
-A downstream application does not usually link against local build-tree target names.
-
-It uses the installed package interface:
+An in-tree build is not enough for a framework. A downstream application does not usually link against local build-tree target names. It uses the installed package interface:
 
 ```cmake
 find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy)
@@ -295,23 +164,9 @@ target_link_libraries(myapp
 )
 ```
 
-This gives a different kind of confidence.
+This gives a different kind of confidence. It checks that the package configuration was installed, the requested component is supported, dependencies are loaded recursively, the exported target exists, the namespace is correct, include directories are exported correctly, public dependencies are present, link dependencies are truthful, and the installed library layout can be consumed outside the source tree.
 
-It checks that:
-
-- the package configuration was installed,
-- the exported target exists,
-- the namespace is correct,
-- include directories are exported correctly,
-- public dependencies are present,
-- link dependencies are truthful,
-- the installed library layout can be consumed outside the source tree.
-
-This kind of test is easy to underestimate.
-
-For a framework with exported CMake targets, it is one of the most important tests.
-
-The question is not only:
+This kind of test is easy to underestimate. For a framework with exported CMake targets, it is one of the most important tests. The question is not only:
 
 ```text
 Can SNode.C build itself?
@@ -323,55 +178,25 @@ The question is also:
 Can a separate project consume the installed SNode.C package exactly as the book teaches?
 ```
 
+For a framework, the installed consumer is not a secondary scenario. It is the public contract.
+
 #### Package builds test deployable truth
 
-Chapter 33 explained that package dependencies should follow component dependencies.
+Chapter 33 explained that package dependencies should follow component dependencies. Chapter 34 adds the testing consequence: a package build tests whether that deployment story is still true.
 
-Chapter 34 adds the testing consequence:
+A CPack package build can reveal mistakes that a source build misses: missing install rules, missing package dependencies, wrong component grouping, libraries installed without their runtime dependencies, headers installed without the package metadata that makes them usable, or applications installed without their required data files. It checks whether CPack component metadata still follows the component graph that Chapter 32 described.
 
-A package build tests whether that deployment story is still true.
+OpenWrt-targeted package builds add another confidence surface. They can check whether SNode.C and applications built on top of it survive cross-compilation, target ABI assumptions, package recipes, feed layout, and embedded filesystem constraints. This is deployment/testing guidance, not a claim that every such OpenWrt package test already exists in the repository.
 
-A CPack package build can reveal mistakes that a source build misses:
-
-- missing install rules,
-- missing package dependencies,
-- wrong component grouping,
-- libraries installed without their runtime dependencies,
-- headers installed without the package metadata that makes them usable,
-- applications installed without their required data files.
-
-OpenWrt package builds add another confidence surface.
-
-They check whether SNode.C and applications built on top of it survive cross-compilation, target ABI assumptions, package recipes, feed layout, and embedded filesystem constraints.
-
-A package build is therefore not merely a release step.
-
-It is a test of the deployable shape of the architecture.
+A package build is therefore not merely a release step. It is a test of the deployable shape of the architecture.
 
 ### Protocol-boundary confidence
 
 #### Protocol tests protect meaning boundaries
 
-A protocol layer is where bytes receive meaning.
+A protocol layer is where bytes receive meaning. At a lower stream level, incoming data is just a sequence of bytes. At a higher layer, those bytes may become an HTTP request, an HTTP response, a WebSocket frame, a server-sent event stream, an MQTT control packet, a route match, a middleware transition, or a database command response.
 
-At a lower stream level, incoming data is just a sequence of bytes.
-
-At a higher layer, those bytes may become:
-
-- an HTTP request,
-- an HTTP response,
-- a WebSocket frame,
-- a server-sent event stream,
-- a MQTT control packet,
-- a route match,
-- a middleware transition,
-- a database command response.
-
-That conversion is a boundary.
-
-It deserves direct tests.
-
-A protocol test should make clear which boundary it protects:
+A protocol test protects the place where bytes stop being anonymous and start carrying protocol meaning. It should make clear which boundary it protects:
 
 ```text
 bytes
@@ -388,245 +213,92 @@ protocol object
       -> exact bytes on the wire
 ```
 
-The closer a layer is to external input, the more important invalid and boundary input becomes.
-
-Network code does not only receive beautiful input.
-
-It receives incomplete input, split input, malformed input, hostile input, and input that arrives at inconvenient times.
-
-A parser that only accepts beautiful examples has not been tested.
-
-It has only been demonstrated.
+The closer a layer is to external input, the more important invalid and boundary input becomes. Network code does not only receive beautiful input. It receives incomplete input, split input, malformed input, hostile input, and input that arrives at inconvenient times. A parser that only accepts beautiful examples has not been tested. It has only been demonstrated.
 
 #### Parser tests should include bad input
 
-HTTP parser tests should not only test a common valid request.
+HTTP parser tests should not only test a common valid request. They should also cover malformed request lines, invalid methods, malformed header fields, missing line terminators, duplicate or unusual headers, invalid percent encodings, oversized values, chunked transfer edge cases, and incomplete input that arrives in several pieces.
 
-They should also cover cases such as:
+WebSocket parsing and frame handling require their own invalid cases: invalid opcodes, incorrect control-frame lengths, fragmentation errors, masking errors, unexpected close behavior, and reserved-bit misuse where unsupported.
 
-- malformed request lines,
-- invalid methods,
-- malformed header fields,
-- missing line terminators,
-- duplicate or unusual headers,
-- invalid percent encodings,
-- oversized values,
-- chunked transfer edge cases,
-- incomplete input that arrives in several pieces.
+MQTT parsing requires another set: malformed remaining-length encodings, invalid control-packet combinations, invalid topic names, incomplete packets, unexpected packets for the current session state, and illegal QoS-related packet sequences where those paths are supported.
 
-WebSocket parsing and frame handling require their own invalid cases:
-
-- invalid opcodes,
-- incorrect control-frame lengths,
-- fragmentation errors,
-- masking errors,
-- unexpected close behavior,
-- reserved-bit misuse where unsupported.
-
-MQTT parsing requires another set:
-
-- malformed remaining-length encodings,
-- invalid control-packet combinations,
-- invalid topic names,
-- incomplete packets,
-- unexpected packets for the current session state,
-- illegal QoS-related packet sequences.
-
-The goal is not to list every possible protocol conformance case in this book.
-
-The goal is to name the testing responsibility correctly.
-
-When SNode.C raises stream bytes into protocol meaning, tests must check both the accepted and rejected forms of that meaning.
+The goal is not to list every possible protocol conformance case in this book. The goal is to name the testing responsibility correctly. When SNode.C raises stream bytes into protocol meaning, tests must check both the accepted and rejected forms of that meaning.
 
 #### Serializer tests should check exact bytes
 
-Serializers deserve exact-byte tests.
+Serializers deserve exact-byte tests. This is especially true for binary protocols. A loose test that only checks whether another implementation happened to accept the output may hide mistakes.
 
-This is especially true for binary protocols.
+A serializer test should ask whether fixed header bits are correct, whether the length is encoded correctly, whether reserved bits are clear where they must be clear, whether flags are correct, whether strings are length-prefixed correctly, whether byte order is correct, and whether canonical output is preserved where the protocol expects it.
 
-A loose test that only checks whether another implementation happened to accept the output may hide mistakes.
-
-A serializer test should ask:
-
-- are fixed header bits correct?
-- is the length encoded correctly?
-- are reserved bits clear where they must be clear?
-- are flags correct?
-- are strings length-prefixed correctly?
-- is byte order correct?
-- is canonical output preserved where the protocol expects it?
-
-Exact-byte tests are sometimes criticized as brittle.
-
-For protocol serializers, that brittleness is useful.
-
-The protocol is defined in bytes.
-
-The test should be precise enough to catch byte-level drift.
+Exact-byte tests are sometimes criticized as brittle. For protocol serializers, that brittleness is useful. The protocol is defined in bytes. The test should be precise enough to catch byte-level drift.
 
 #### HTTP tests should check the whole response surface
 
-At the HTTP layer, correctness is not only the response body.
+At the HTTP layer, correctness is not only the response body. A useful HTTP test checks both message correctness and connection correctness:
 
-A useful HTTP test checks several visible surfaces:
+```text
+message correctness:
+  status, reason phrase where relevant, headers, body, body length
 
-- status code,
-- reason phrase where relevant,
-- headers,
-- body,
-- body length,
-- connection behavior,
-- keep-alive behavior,
-- chunked or non-chunked transfer behavior,
-- error responses,
-- upgrade interactions where applicable.
+connection correctness:
+  keep-alive, close behavior, chunking, error responses, upgrade interaction
+```
 
-A test that checks only the body may pass while the server handles lifetime or headers incorrectly.
-
-That matters because HTTP is both a message protocol and a connection behavior.
-
-The body is only one part of the contract.
+A test that checks only the body may pass while the server handles lifetime or headers incorrectly. That matters because HTTP is both a message protocol and a connection behavior. The body is only one part of the contract.
 
 #### Express-style routing needs semantic tests
 
-The Express-like layer is one of the strongest cases for semantic testing in SNode.C.
+The Express-like layer is one of the strongest cases for semantic testing in SNode.C. It is not enough to check that a handler was called once. The dispatcher has a detailed semantic contract: path matching, prefix matching, end anchoring, middleware order, nested router behavior, application mounting, `next()` behavior, error flow where supported, wildcard captures, named parameters, parameter decoding, query-string treatment, route metadata, and parameter scoping.
 
-It is not enough to check that a handler was called once.
+Small differences here can create large application differences. A dispatcher can look correct in simple examples and still fail in real applications.
 
-The dispatcher has a detailed semantic contract:
-
-- path matching,
-- prefix matching,
-- end anchoring,
-- middleware order,
-- nested router behavior,
-- application mounting,
-- `next()` behavior,
-- error flow where supported,
-- wildcard captures,
-- named parameters,
-- parameter decoding,
-- query-string treatment,
-- route metadata,
-- parameter scoping.
-
-Small differences here can create large application differences.
-
-A dispatcher can look correct in simple examples and still fail in real applications.
-
-This is why behavior names are useful.
-
-A test named:
+This is why behavior names are useful. A test named:
 
 ```text
 query_string_does_not_affect_route_match
 ```
 
-already documents a semantic contract.
-
-A test named:
+already documents a semantic contract. A test named:
 
 ```text
 nested_router_restores_params
 ```
 
-points directly to a boundary between one router context and another.
-
-Names like these turn a test suite into executable documentation.
+points directly to a boundary between one router context and another. Names like these turn a test suite into executable documentation.
 
 #### Express compatibility is a special confidence source
 
-SNode.C does not need to imitate Node.js internally.
+SNode.C does not need to imitate Node.js internally. But where SNode.C intentionally offers Express-like behavior, compatibility tests against Node.js/Express are a particularly strong confidence source.
 
-But where SNode.C intentionally offers Express-like behavior, compatibility testing against Node.js/Express is especially valuable.
-
-An independent reference implementation gives stronger confidence than self-testing alone.
-
-A useful compatibility test can run the same route tree against:
+An independent reference implementation gives stronger confidence than self-testing alone. A useful compatibility test can run the same route tree against:
 
 ```text
 Node.js / Express reference
 SNode.C Express-like application
 ```
 
-and compare structured observations:
+and compare structured observations: final response body, status and headers, which route matched, which middleware ran, what parameters were visible, what mounted path remained, and what happened after leaving a nested router.
 
-- final response body,
-- status and headers,
-- which route matched,
-- which middleware ran,
-- what parameters were visible,
-- what mounted path remained,
-- what happened after leaving a nested router.
-
-This is a very SNode.C-specific testing story.
-
-It protects the public semantic promise of the Express-like layer.
-
-The goal is not imitation for its own sake.
-
-The goal is to avoid surprising users at the boundary where the book deliberately says “Express-like”.
+This is a very SNode.C-specific testing story. It protects the public semantic promise of the Express-like layer. The goal is not imitation for its own sake. The goal is to avoid surprising users at the boundary where the book deliberately says “Express-like”.
 
 #### WebSocket tests have two phases
 
-WebSocket testing has two different confidence surfaces.
+WebSocket testing has two different confidence surfaces. First, the HTTP upgrade must be correct. Second, the WebSocket frame behavior must be correct.
 
-First, the HTTP upgrade must be correct.
+The upgrade phase checks HTTP-level negotiation: `Upgrade` handling, `Connection` handling, `Sec-WebSocket-Key`, `Sec-WebSocket-Accept`, subprotocol negotiation, rejection paths, and interaction with ordinary HTTP routes.
 
-Second, the WebSocket frame behavior must be correct.
+The frame phase checks WebSocket-level behavior: text frames, binary frames, ping and pong, close handshake, fragmentation, invalid frames, and lifetime after abnormal peer behavior.
 
-The upgrade phase checks HTTP-level negotiation:
-
-- `Upgrade` handling,
-- `Connection` handling,
-- `Sec-WebSocket-Key`,
-- `Sec-WebSocket-Accept`,
-- subprotocol negotiation,
-- rejection paths,
-- interaction with ordinary HTTP routes.
-
-The frame phase checks WebSocket-level behavior:
-
-- text frames,
-- binary frames,
-- ping and pong,
-- close handshake,
-- fragmentation,
-- invalid frames,
-- lifetime after abnormal peer behavior.
-
-A WebSocket echo test is a beginning.
-
-It is not enough.
-
-Echo proves that one happy-path data loop works.
-
-It does not prove that the upgrade boundary, frame boundary, control-frame boundary, close boundary, and subprotocol boundary are correct.
+A WebSocket echo test is a beginning. It is not enough. Echo proves that one happy-path data loop works. It does not prove that the upgrade boundary, frame boundary, control-frame boundary, close boundary, and subprotocol boundary are correct.
 
 #### EventSource tests are lifetime tests
 
-Server-sent events look simple at the protocol surface.
+Server-sent events look simple at the protocol surface. Operationally, they are mostly about time and lifetime.
 
-Operationally, they are mostly about time and lifetime.
+An EventSource test should check `Content-Type`, connection persistence, event formatting, event names, data framing, retry hints where used, flushing behavior, disconnect behavior, cleanup when the peer disappears, and behavior when producers pause and resume.
 
-An EventSource test should check:
-
-- `Content-Type`,
-- connection persistence,
-- event formatting,
-- event names,
-- data framing,
-- retry hints where used,
-- flushing behavior,
-- disconnect behavior,
-- cleanup when the peer disappears,
-- behavior when producers pause and resume.
-
-One event is not enough.
-
-A useful test asks whether events continue to flow and whether resources are released when they stop flowing.
-
-This is the same architectural lesson again:
+One event is not enough. One event proves formatting; a stream test proves lifetime. A useful test asks whether events continue to flow and whether resources are released when they stop flowing.
 
 ```text
 protocol surface
@@ -640,26 +312,9 @@ Both matter.
 
 #### MQTT tests must model sessions
 
-MQTT is not only a packet format.
+MQTT is not only a packet format. It is a session protocol. Packet tests are necessary, but not sufficient.
 
-It is a session protocol.
-
-Packet tests are necessary, but not sufficient.
-
-Useful MQTT tests include:
-
-- connect and disconnect,
-- keep-alive behavior,
-- subscribe and unsubscribe,
-- publish to matching subscribers,
-- retained messages where supported,
-- QoS behavior where supported,
-- duplicate client identifiers,
-- malformed packet rejection,
-- broker restart behavior,
-- bridge reconnect behavior,
-- topic matching,
-- mapping behavior in integrator-style applications.
+Useful MQTT tests include connect and disconnect, keep-alive behavior, subscribe and unsubscribe, publish to matching subscribers, retained messages where supported, QoS behavior where supported, duplicate client identifiers, malformed packet rejection, broker restart behavior, bridge reconnect behavior, topic matching, and mapping behavior in integrator-style applications.
 
 The important distinction is:
 
@@ -671,156 +326,68 @@ session correctness
   -> does the MQTT relationship behave correctly over time?
 ```
 
-A test strategy that checks only packets may miss the real MQTT behavior.
-
-A broker-oriented role must also be tested as a broker-oriented role.
-
-A client-oriented role must be tested as a protocol participant, not merely as a byte writer.
+A test strategy that checks only packets may miss the real MQTT behavior. A broker-oriented role must also be tested as a broker-oriented role. A client-oriented role must be tested as a protocol participant, not merely as a byte writer.
 
 #### Database-backed protocol tests must control state
 
-Database-backed components introduce persistent state.
+Database-backed components introduce persistent state. Persistent state makes tests powerful. It also makes them dangerous if uncontrolled.
 
-Persistent state makes tests powerful.
+A test that depends on a developer's local database contents is not reproducible. A database-backed test should create or use controlled state: a temporary test database, a generated schema, known fixtures, transaction rollback, explicit cleanup, isolated credentials, and isolated database names for test runs.
 
-It also makes them dangerous if uncontrolled.
+This matters for MQTT storage, IoT history, monitoring, or any persistence-facing application. A test should be repeatable. Running it twice should not depend on hidden leftovers from the first run.
 
-A test that depends on a developer's local database contents is not reproducible.
-
-A database-backed test should create or use controlled state:
-
-- a temporary test database,
-- a generated schema,
-- known fixtures,
-- transaction rollback,
-- explicit cleanup,
-- isolated credentials and database names for test runs.
-
-This matters for MQTT storage, IoT history, monitoring, or any persistence-facing application.
-
-A test should be repeatable.
-
-Running it twice should not depend on hidden leftovers from the first run.
-
-State is useful.
-
-Uncontrolled state is a source of false confidence.
+State is useful. Uncontrolled state is a source of false confidence.
 
 ### Runtime confidence
 
 #### Real sockets are not optional
 
-Mocks are useful for local logic.
+Mocks are useful for local logic. They cannot replace real-socket tests for a socket framework.
 
-They cannot replace real-socket tests for a socket framework.
+A real-socket test checks behavior that mocks often hide: bind behavior, listen behavior, accept behavior, connect behavior, local port conflicts, IPv4 and IPv6 differences, Unix domain socket path behavior, readiness notification, half-close behavior, buffering, backpressure, operating-system error paths, and TLS handshake behavior.
 
-A real socket test checks behavior that mocks often hide:
+These tests are more expensive than pure unit tests. They may be more sensitive to the environment. They are still essential. A socket framework that is never tested with sockets is under-tested.
 
-- bind behavior,
-- listen behavior,
-- accept behavior,
-- connect behavior,
-- local port conflicts,
-- IPv4 and IPv6 differences,
-- Unix domain socket path behavior,
-- readiness notification,
-- half-close behavior,
-- buffering,
-- backpressure,
-- operating-system error paths,
-- TLS handshake behavior.
-
-These tests are more expensive than pure unit tests.
-
-They may be more sensitive to the environment.
-
-They are still essential.
-
-A socket framework that is never tested with sockets is under-tested.
-
-For SNode.C, this is also a model check.
-
-The framework teaches:
+For SNode.C, this is also a model check. The framework teaches:
 
 ```text
-configured role
-  -> runtime
+configured communication role
+  -> registered runtime-visible instance
       -> connection
           -> context
 ```
 
-Real-socket tests prove that this path is not only a conceptual diagram.
-
-They prove that it works against the operating system.
+Real-socket tests prove that this path is not only a conceptual diagram. They prove that it works against the operating system.
 
 #### Timers, retries, reconnects, and shutdown need runtime tests
 
-Chapter 20 introduced robust communication over time.
+Chapter 20 described communication-over-time concerns: timeouts, retries, reconnects, shutdown paths, and failure states. Chapter 34 treats them as runtime confidence surfaces. These behaviors cannot be fully proven by local unit tests because they depend on runtime sequencing.
 
-That behavior cannot be fully proven by local unit tests.
+Useful tests should cover questions such as: what happens when a client connects before the server is available; what happens when a server disappears after a connection was established; what happens when a peer stops reading; what happens when a peer closes cleanly; what happens when a peer disappears abruptly; what happens when retry limits are reached; and what happens during shutdown while data is queued.
 
-Timeouts, retries, reconnects, shutdown paths, and failure states depend on runtime sequencing.
-
-Useful tests should cover questions such as:
-
-- what happens when a client connects before the server is available?
-- what happens when a server disappears after a connection was established?
-- what happens when a peer stops reading?
-- what happens when a peer closes cleanly?
-- what happens when a peer disappears abruptly?
-- what happens when retry limits are reached?
-- what happens during shutdown while data is queued?
-
-The important point is not that every case must be automated immediately.
-
-The important point is that these are runtime questions.
-
-They belong at the boundary where configured roles meet real time.
+The important point is not that every case must be automated immediately. The important point is that these are runtime questions. They belong at the boundary where configured communication roles meet real time.
 
 #### Backpressure and buffer pressure deserve explicit attention
 
-Event-driven frameworks are often easiest to demonstrate with fast peers.
+Event-driven frameworks are often easiest to demonstrate with fast peers. Real systems often contain slow peers. A slow client, a full write buffer, or a burst of MQTT fan-out can reveal problems that normal examples never show.
 
-Real systems often contain slow peers.
+SNode.C applications should therefore be tested under buffer pressure: a peer that reads slowly, a peer that stops reading, many subscribers receiving the same MQTT publication, WebSocket clients with different receive speeds, SSE clients held open for long periods, and database writes slower than incoming message rate.
 
-A slow client, a full write buffer, or a burst of MQTT fan-out can reveal problems that normal examples never show.
-
-SNode.C applications should therefore be tested under buffer pressure:
-
-- a peer that reads slowly,
-- a peer that stops reading,
-- many subscribers receiving the same MQTT publication,
-- WebSocket clients with different receive speeds,
-- SSE clients held open for long periods,
-- database writes slower than incoming message rate.
-
-Backpressure tests ask a different question from throughput tests.
-
-They ask:
+Backpressure tests ask a different question from throughput tests:
 
 ```text
 What happens when output cannot progress as fast as input?
 ```
 
-A robust application should not grow memory without limit, block the event loop accidentally, or hide the failure until the process becomes unstable.
+The answer should be a policy, not an accident. Depending on the role, the policy may involve bounded buffering, a drop policy, a disconnect policy, a retry/defer policy, or an operator-visible degraded state. A robust application should not grow memory without limit, block the event loop accidentally, or hide the failure until the process becomes unstable.
 
 This topic is especially important for brokers, bridges, dashboards, live-update streams, and IoT ingestion systems.
 
 #### Connection and context lifetime must be checked over time
 
-SNode.C's context model gives each connection a protocol endpoint.
+SNode.C's context model gives each connection a protocol endpoint. That is clean architecture. It also creates a lifetime responsibility.
 
-That is clean architecture.
-
-It also creates a lifetime responsibility.
-
-A connection ending should release its associated protocol state.
-
-A reconnecting client should not retain stale connection objects.
-
-A WebSocket upgrade should not leave the HTTP-side object graph alive unintentionally.
-
-A callback should not keep a connection alive after the runtime believes it is gone.
+A connection ending should release its associated protocol state. A reconnecting client should not retain stale connection objects. A WebSocket upgrade should not leave the HTTP-side object graph alive unintentionally. A callback should not keep a connection alive after the runtime believes it is gone.
 
 Memory tools help here, but the architectural question comes first:
 
@@ -828,80 +395,27 @@ Memory tools help here, but the architectural question comes first:
 Does the lifetime of each object match the lifetime of the role it represents?
 ```
 
-This question applies to:
+This question applies to connections, socket contexts, protocol contexts, factories, callbacks, WebSocket subprotocol objects, MQTT sessions, EventSource clients, database handles, and dynamically loaded modules.
 
-- socket connections,
-- contexts,
-- factories,
-- callbacks,
-- WebSocket subprotocol objects,
-- MQTT sessions,
-- EventSource clients,
-- database handles,
-- dynamically loaded modules.
-
-Long-running tests are useful because some lifetime bugs do not appear in a short request/response example.
-
-They appear after many connect/disconnect cycles, many reconnect attempts, many upgrades, or many subscriptions.
+Long-running tests are useful because some lifetime bugs do not appear in a short request/response example. They appear after many connect/disconnect cycles, many reconnect attempts, many upgrades, or many subscriptions.
 
 #### Configuration is runtime behavior
 
-SNode.C configuration is not just parsed input.
+SNode.C configuration is not just parsed input. It shapes the effective runtime system.
 
-It shapes the effective runtime system.
+A configuration test should therefore check more than whether command-line parsing succeeds. It should check the effective configuration after defaults, command-line options, configuration files, named instances, option groups, generated configuration, and application-specific settings have been combined.
 
-A configuration test should therefore check more than whether command-line parsing succeeds.
+Useful checks include whether a configured communication role is enabled or disabled as expected, whether a server binds to the expected address, whether a client connects to the expected remote endpoint, whether TLS settings are applied to the correct role, whether retry and timeout settings have the expected effective values, whether generated configuration can be reused, and whether invalid combinations fail clearly.
 
-It should check the effective configuration after:
-
-- defaults,
-- command-line options,
-- configuration files,
-- named instances,
-- option groups,
-- generated configuration,
-- and application-specific settings
-
-have been combined.
-
-Useful checks include:
-
-- an instance is enabled or disabled as expected,
-- a server binds to the expected address,
-- a client connects to the expected remote endpoint,
-- TLS settings are applied to the correct role,
-- retry and timeout settings have the expected effective values,
-- generated configuration can be reused,
-- invalid combinations fail clearly.
-
-This matters because configuration is one of the main ways SNode.C systems become multi-role systems.
-
-A generated configuration file can be a map of the deployed role constellation.
-
-Testing that map protects the operational shape of the application.
+This matters because configuration is one of the main ways SNode.C systems become multi-role systems. A generated configuration file can be a map of the deployed role constellation. Testing that map protects the operational shape of the application.
 
 ### Deployment confidence
 
 #### Installed behavior is not the same as build-tree behavior
 
-A program that works from the build tree may fail after installation.
+A program that works from the build tree may fail after installation. That is not unusual. The installed environment is different: library search paths change, RPATH behavior matters, runtime-loaded modules move to installed locations, configuration directories change, service users may differ from development users, TLS material may be read from protected paths, database access may depend on system configuration, and package dependencies may be incomplete.
 
-That is not unusual.
-
-The installed environment is different:
-
-- library search paths change,
-- RPATH behavior matters,
-- runtime-loaded modules move to installed locations,
-- configuration directories change,
-- service users may differ from development users,
-- TLS material may be read from protected paths,
-- database access may depend on system configuration,
-- package dependencies may be incomplete.
-
-Chapter 33 explained these deployment surfaces.
-
-Chapter 34 adds the test implication:
+Chapter 33 explained these deployment surfaces. Chapter 34 adds the test implication:
 
 ```text
 installed behavior must be tested as installed behavior
@@ -911,15 +425,9 @@ It is not enough to run only from the source tree.
 
 #### Runtime-loaded modules are deployment test surfaces
 
-HTTP upgrade support, WebSocket handling, WebSocket subprotocols, and MQTT-over-WebSocket composition can depend on runtime-loaded or path-sensitive libraries.
+HTTP upgrade support, WebSocket handling, WebSocket subprotocols, and MQTT-over-WebSocket composition can depend on runtime-loaded or path-sensitive libraries. This creates a special deployment test surface.
 
-This creates a special deployment test surface.
-
-A build-tree test may pass because every library is nearby.
-
-An installed-system test may fail because a module is not installed, not found, not in the expected directory, or not reachable through the encoded search path.
-
-A useful installed test should therefore exercise the real protocol composition:
+A build-tree test may pass because every library is nearby. An installed-system test may fail because a module is not installed, not found, not in the expected directory, or not reachable through the encoded search path. A useful installed test should therefore exercise the real protocol composition:
 
 ```text
 start installed application
@@ -929,72 +437,29 @@ start installed application
               -> exchange WebSocket or MQTT-over-WebSocket traffic
 ```
 
-This checks more than protocol correctness.
-
-It checks the installed runtime shape.
+This checks more than protocol correctness. It checks the installed runtime shape.
 
 #### RPATH and library search should be verified by behavior
 
-RPATH problems often do not look like architecture problems at first.
+RPATH problems often do not look like architecture problems at first. They look like runtime loader errors, missing symbols, or modules that cannot be opened. For SNode.C they are architecture problems because runtime-loaded protocol composition depends on correct installed paths.
 
-They look like runtime loader errors, missing symbols, or modules that cannot be opened.
+A deployment test should answer whether the application starts without ad-hoc environment variables, whether the platform loader finds the required shared libraries, whether the framework finds upgrade and subprotocol modules, whether the installed layout works after package installation, and whether the same package works on the intended target system.
 
-For SNode.C they are architecture problems because runtime-loaded protocol composition depends on correct installed paths.
-
-A deployment test should answer:
-
-- does the application start without ad-hoc environment variables?
-- does the platform loader find the required shared libraries?
-- does the framework find upgrade and subprotocol modules?
-- does the installed layout work after package installation?
-- does the same package work on the intended target system?
-
-The last point is especially important for OpenWrt.
-
-Cross-compilation can accidentally encode build-host assumptions into target artifacts if deployment is not tested carefully.
+The last point is especially important for OpenWrt. Cross-compilation can accidentally encode build-host assumptions into target artifacts if deployment is not tested carefully.
 
 #### Service-level tests protect operational reality
 
-A service is not only a process.
+A service is not only a process. It is a process under supervision. General-purpose Linux may use systemd or another service manager. OpenWrt normally uses `procd`.
 
-It is a process under supervision.
+A protocol test asks whether HTTP, WebSocket, MQTT, or another protocol behavior works. A service-level test asks whether the deployed role can be operated. It checks whether the service starts as the intended user, has access to configuration files, can create log and pid files, handles restart behavior, shuts down cleanly, exposes useful logs, and fails clearly when required resources are missing.
 
-General-purpose Linux may use systemd or another service manager.
-
-OpenWrt normally uses `procd`.
-
-A service-level test asks whether the application behaves correctly under that supervisor:
-
-- starts as the intended user,
-- has access to configuration files,
-- can create log and pid files,
-- handles restart behavior,
-- shuts down cleanly,
-- exposes useful logs,
-- fails clearly when required resources are missing.
-
-This is not the same as a protocol test.
-
-A protocol test may show that HTTP or MQTT works.
-
-A service-level test shows that the deployed role can be operated.
+This is not the same as a protocol test. A protocol test may show that HTTP or MQTT works. A service-level test shows that the deployed role can be operated.
 
 #### OpenWrt tests should respect embedded constraints
 
-OpenWrt deployment should be tested as OpenWrt deployment.
+OpenWrt deployment should be tested as OpenWrt deployment. A desktop Linux binary copied onto a router is not the intended confidence path.
 
-A desktop Linux binary copied onto a router is not the intended confidence path.
-
-Useful OpenWrt checks include:
-
-- package recipe builds in the SDK,
-- dependencies are declared explicitly,
-- package size is acceptable for the target,
-- installed files land in expected paths,
-- service scripts integrate with `procd`,
-- configuration files match OpenWrt filesystem expectations,
-- optional components are not pulled in unnecessarily,
-- logs and writable state are appropriate for embedded storage.
+For OpenWrt-targeted packages, useful checks include whether the package recipe builds in the SDK, whether dependencies are declared explicitly, whether package size is acceptable for the target, whether installed files land in expected paths, whether service scripts integrate with `procd`, whether configuration files match OpenWrt filesystem expectations, whether optional components are not pulled in unnecessarily, and whether logs and writable state are appropriate for embedded storage.
 
 This connects testing to the main lesson of Chapter 33:
 
@@ -1024,8 +489,8 @@ Examples:
 Does the component fail to build?
   -> check includes, link dependencies, exported targets
 
-Does the application fail after installation?
-  -> check package contents, library paths, runtime modules, configuration directories
+Does the application work in-tree but fail installed?
+  -> check exported package, installed paths, RPATH, runtime modules, service user
 
 Does the connection never establish?
   -> check endpoint configuration, bind/connect status, firewall, TLS handshake, retry state
@@ -1043,21 +508,11 @@ Does behavior degrade over time?
   -> check lifetime, buffering, backpressure, leaks, slow peers
 ```
 
-This boundary-first approach is one of the practical benefits of a layered framework.
+This boundary-first approach is one of the practical benefits of a layered framework. SNode.C gives the developer names for the places where failure can occur. Debugging should use those names.
 
-SNode.C gives the developer names for the places where failure can occur.
+#### Configured instance names are diagnostic handles
 
-Debugging should use those names.
-
-#### Named instances are diagnostic handles
-
-Named instances are not only configuration conveniences.
-
-They are diagnostic handles.
-
-A named role can appear in configuration, logs, status callbacks, and generated files.
-
-That makes multi-role systems easier to inspect.
+Configured instance names are not only configuration conveniences. They are diagnostic handles when they connect configuration, logs, callbacks, generated files, and operator language.
 
 For example, a system may have roles such as:
 
@@ -1070,172 +525,83 @@ event-stream
 store-db
 ```
 
-When logs use names like these, the system becomes easier to reason about.
-
-A vague message such as:
+When logs use names like these, the system becomes easier to reason about. A vague message such as:
 
 ```text
 connection failed
 ```
 
-is much less useful than a message that identifies the role, endpoint, state, and reason.
+is much less useful than a message that identifies the role, endpoint, state, protocol phase, and reason.
 
-Good diagnostics preserve architecture in the log output.
-
-The log should help the reader see which role, connection, context, or protocol boundary produced the event.
+Good diagnostics preserve architecture in the log output. The log should help the reader see which role, connection, context, or protocol boundary produced the event.
 
 #### Reproducibility is part of debugging
 
-A bug report is most useful when it can be reproduced at the right boundary.
+A bug report is most useful when it can be reproduced at the right boundary. For SNode.C, a good reproduction should identify the component set, build type, installed or build-tree context, enabled lower families, legacy or TLS mode, configured instance names, exact protocol input where relevant, runtime sequence, and target platform.
 
-For SNode.C, a good reproduction should identify:
+A routing bug should ideally be reproducible with a small route tree. A parser bug should ideally be reproducible with a small byte sequence. A deployment bug should ideally be reproducible from package installation and service startup. A reconnect bug should ideally describe the timing of peer availability, failure, retry, and recovery.
 
-- the component set,
-- the build type,
-- the installed or build-tree context,
-- the enabled lower families,
-- the legacy or TLS mode,
-- the named instance configuration,
-- the exact protocol input where relevant,
-- the runtime sequence,
-- the target platform.
-
-A routing bug should ideally be reproducible with a small route tree.
-
-A parser bug should ideally be reproducible with a small byte sequence.
-
-A deployment bug should ideally be reproducible from package installation and service startup.
-
-A reconnect bug should ideally describe the timing of peer availability, failure, retry, and recovery.
-
-The goal is not bureaucracy.
-
-The goal is to put the bug at the smallest honest boundary.
+The goal is not bureaucracy. The goal is to put the bug at the smallest honest boundary.
 
 #### Memory tools verify lifetime assumptions
 
-Valgrind, sanitizers, and similar tools are not only generic C++ debugging aids.
+Valgrind, sanitizers, and similar tools are not only generic C++ debugging aids. In SNode.C they verify architectural lifetime assumptions.
 
-In SNode.C they verify architectural lifetime assumptions.
+They help answer questions such as: does a context disappear when its connection disappears; does a callback retain something longer than intended; does a WebSocket upgrade leave old HTTP state reachable; does a reconnect loop accumulate stale objects; does a database command path leak handles; does a dynamically loaded module leave unexpected reachable memory; and does a long-running MQTT broker accumulate session or subscription state incorrectly?
 
-They help answer questions such as:
-
-- does a context disappear when its connection disappears?
-- does a callback retain something longer than intended?
-- does a WebSocket upgrade leave old HTTP state reachable?
-- does a reconnect loop accumulate stale objects?
-- does a database command path leak handles?
-- does a dynamically loaded module leave unexpected reachable memory?
-- does a long-running MQTT broker accumulate session or subscription state incorrectly?
-
-The tool reports are low-level.
-
-The interpretation should be architectural.
-
-A memory leak is not only “some bytes were lost.”
-
-In a framework, it often means an ownership boundary was not expressed correctly.
+The tool reports are low-level. The interpretation should be architectural. A memory leak is not only “some bytes were lost.” In a framework, it often means an ownership boundary was not expressed correctly.
 
 #### Runtime diagnostics should be designed, not improvised
 
-Useful diagnostics do not appear accidentally.
+Useful diagnostics do not appear accidentally. They are designed around the same boundaries as the framework.
 
-They are designed around the same boundaries as the framework.
+A good diagnostic event should make clear which configured instance is involved, which local or remote endpoint is involved, which state transition occurred, which protocol boundary is active, whether the event is normal, retryable, fatal, or operator-visible, and which configuration value influenced the behavior where relevant.
 
-A good diagnostic event should make clear:
-
-- which named instance is involved,
-- which local or remote endpoint is involved,
-- which state transition occurred,
-- which protocol boundary is active,
-- whether the event is normal, retryable, fatal, or operator-visible,
-- which configuration value influenced the behavior where relevant.
-
-This is especially important for long-running systems.
-
-A short example can be debugged by watching the terminal.
-
-A deployed MQTT bridge, web dashboard, or database-backed IoT service needs logs that remain useful after the developer has left the terminal.
+This is especially important for long-running systems. A short example can be debugged by watching the terminal. A deployed MQTT bridge, web dashboard, or database-backed IoT service needs logs that remain useful after the developer has left the terminal.
 
 ### Benchmarking
 
 #### Benchmarking should find the limiting boundary
 
-Benchmarking is not only about producing large numbers.
-
-For SNode.C, a useful benchmark asks:
+Benchmarking is not only about producing large numbers. For SNode.C, a useful benchmark asks:
 
 > Which boundary becomes limiting under this workload?
 
-The answer may be different for different applications.
+The answer may be different for different applications. One benchmark may be parser-bound. Another may be TLS-bound. Another may be dispatcher-bound. Another may be socket-buffer-bound. Another may be database-bound. Another may be dominated by MQTT fan-out, slow subscribers, or backpressure behavior.
 
-One benchmark may be parser-bound.
-
-Another may be TLS-bound.
-
-Another may be dispatcher-bound.
-
-Another may be socket-buffer-bound.
-
-Another may be database-bound.
-
-Another may be dominated by MQTT fan-out, slow subscribers, or backpressure behavior.
-
-The benchmark should make the tested boundary visible.
-
-A number without a boundary is hard to interpret.
+The benchmark should make the tested boundary visible. A number without a boundary is hard to interpret.
 
 #### Workload shape matters
 
-A benchmark should describe its workload clearly.
+A benchmark should describe its workload clearly. For SNode.C systems, useful dimensions can be grouped by shape:
 
-For SNode.C systems, useful dimensions include:
+```text
+connection shape:
+  number of connections, connection duration, slow peers
 
-- number of connections,
-- connection duration,
-- message size,
-- request rate,
-- publish rate,
-- number of subscribers,
-- number of routes or middleware layers,
-- TLS or legacy mode,
-- WebSocket frame size and frequency,
-- EventSource connection count,
-- database write rate,
-- slow-peer behavior,
-- logging level,
-- build type,
-- target platform.
+message shape:
+  message size, request rate, publish rate, frame size, frame frequency
 
-Changing one dimension may change the bottleneck.
+protocol shape:
+  HTTP route depth, middleware count, TLS or legacy mode, WebSocket, SSE, MQTT fan-out
 
-A benchmark with one fast client tells a different story from a benchmark with thousands of slow clients.
+state shape:
+  number of subscribers, retained/session behavior where supported, database write rate
 
-A MQTT publish test with one subscriber tells a different story from a fan-out test with many subscribers.
+platform shape:
+  build type, target platform, installed or build-tree context
 
-A HTTP benchmark without TLS tells a different story from a TLS benchmark.
+operational shape:
+  logging level, diagnostics enabled, service supervision
+```
 
-A database-backed benchmark tells a different story from an in-memory protocol benchmark.
+Changing one dimension may change the bottleneck. A benchmark with one fast client tells a different story from a benchmark with thousands of slow clients. An MQTT publish test with one subscriber tells a different story from a fan-out test with many subscribers. An HTTP benchmark without TLS tells a different story from a TLS benchmark. A database-backed benchmark tells a different story from an in-memory protocol benchmark.
 
 The benchmark result should therefore never be separated from the workload shape.
 
 #### Avoid misleading comparisons
 
-Benchmarks can mislead easily.
-
-A benchmark may accidentally measure the client tool instead of the server.
-
-It may keep logging enabled in one run and disabled in another.
-
-It may compare a build-tree run against an installed run with different library paths.
-
-It may test plain HTTP and then generalize to TLS.
-
-It may test a local loopback connection and then make claims about network deployment.
-
-It may test a broker without slow subscribers and then make claims about production fan-out.
-
-It may test a database-backed application with an empty local database and then generalize to persistent workloads.
+Benchmarks can mislead easily. A benchmark may accidentally measure the client tool instead of the server. It may keep logging enabled in one run and disabled in another. It may compare a build-tree run against an installed run with different library paths. It may test plain HTTP and then generalize to TLS. It may test a local loopback connection and then make claims about network deployment. It may test a broker without slow subscribers and then make claims about production fan-out. It may test a database-backed application with an empty local database and then generalize to persistent workloads.
 
 The refined rule is simple:
 
@@ -1243,88 +609,37 @@ The refined rule is simple:
 A benchmark is only meaningful together with the boundary and workload it measures.
 ```
 
-That should be the benchmarking tone of this book.
-
-Not marketing numbers.
-
-Not vague speed claims.
-
-Measured behavior tied to architecture.
+That should be the benchmarking tone of this book: not marketing numbers, not vague speed claims, but measured behavior tied to architecture.
 
 #### Latency and throughput are different questions
 
-Throughput asks how much work the system can complete per time interval.
+Throughput asks how much work the system can complete per time interval. Latency asks how long one operation takes. Both matter. They are not interchangeable.
 
-Latency asks how long one operation takes.
+A system may have high throughput but poor tail latency under load. A system may respond quickly to one client but degrade when many connections stay open. A system may process MQTT packets quickly until database persistence becomes active. A system may handle many SSE clients until one slow group creates buffer pressure.
 
-Both matter.
+Benchmarking should therefore separate average latency, tail latency, throughput, connection count, memory growth, CPU load, backpressure behavior, and recovery after overload.
 
-They are not interchangeable.
-
-A system may have high throughput but poor tail latency under load.
-
-A system may respond quickly to one client but degrade when many connections stay open.
-
-A system may process MQTT packets quickly until database persistence becomes active.
-
-A system may handle many SSE clients until one slow group creates buffer pressure.
-
-Benchmarking should therefore separate:
-
-- average latency,
-- tail latency,
-- throughput,
-- connection count,
-- memory growth,
-- CPU load,
-- backpressure behavior,
-- recovery after overload.
-
-The event-driven model makes this especially important.
-
-When one boundary blocks or slows down, other connections may also be affected if the application design does not handle the pressure correctly.
+The event-driven model makes this especially important. When one boundary blocks or slows down, other connections may also be affected if the application design does not handle the pressure correctly.
 
 #### Benchmarking should not replace profiling
 
-A benchmark says that something became slow.
+A benchmark says that something became slow. Profiling helps explain where.
 
-Profiling helps explain where.
+For SNode.C, profiling may show pressure in parsing, routing, serialization, TLS operations, logging, memory allocation, topic matching, database commands, dynamic dispatch, event-loop activity, or user application callbacks.
 
-For SNode.C, profiling may show pressure in:
+```text
+benchmark:
+  what became slow?
 
-- parsing,
-- routing,
-- serialization,
-- TLS operations,
-- logging,
-- memory allocation,
-- topic matching,
-- database commands,
-- dynamic dispatch,
-- event-loop activity,
-- user application callbacks.
+profile:
+  where is the cost?
+```
 
-The benchmark identifies the workload.
-
-The profile identifies the cost.
-
-The architecture helps interpret both.
+The benchmark identifies the workload. The profile identifies the cost. The architecture helps interpret both.
 
 ### Current practice and future strategy
 
-A chapter like this must be honest.
-
-Not every test described here has to exist as an automated test today.
-
-Some checks may already be part of daily development.
-
-Some may be manual debugging practice.
-
-Some may be desirable CI coverage.
-
-Some may be future hardening work for specific applications or deployment targets.
-
-The book should therefore avoid pretending that a complete test laboratory already exists for every boundary.
+A chapter like this must be honest. It should not pretend that every confidence surface is already covered by automated tests. Some checks may already be part of daily development. Some may be manual debugging practice. Some may be desirable CI coverage. Some may be future hardening work for specific applications or deployment targets.
 
 A useful distinction is:
 
@@ -1339,39 +654,24 @@ recommended strategy
   -> what should be protected over time as the framework and applications grow
 ```
 
-This distinction keeps the chapter technically honest.
+This distinction keeps the chapter technically honest. It also makes the chapter more useful. A reader does not need to implement every test category immediately. They need to learn how to think about confidence in a layered framework.
 
-It also makes the chapter more useful.
-
-A reader does not need to implement every test category immediately.
-
-They need to learn how to think about confidence in a layered framework.
-
-The most important practical habit is to add tests at the boundary where a bug actually mattered.
-
-If a bug appears in URL decoding, a unit test may be enough.
-
-If a bug appears in mounted router parameter restoration, a dispatcher behavior test is better.
-
-If a bug appears only after installation, an in-tree unit test is not sufficient.
-
-If a bug appears only under slow clients, a happy-path throughput test will not protect it.
+The most important practical habit is to add tests at the boundary where a bug actually mattered. If a bug appears in URL decoding, a focused parser or utility test may be enough. If a bug appears in mounted router parameter restoration, a dispatcher behavior test is better. If a bug appears only after installation, an in-tree unit test is not sufficient. If a bug appears only under slow clients, a happy-path throughput test will not protect it.
 
 Regression tests should protect the semantic boundary that failed.
 
 ### What to remember
 
-Remember:
-
 - Testing in SNode.C should follow framework boundaries.
 - A test should make clear which boundary it protects.
 - Build-time checks protect component truth, public headers, and dependency surfaces.
+- Include discipline protects component honesty.
 - Minimal builds are architectural tests, not only smaller builds.
 - Installed-consumer builds test the exported package interface.
 - Package builds test the deployable shape of the component model.
 - Protocol tests protect the point where bytes become HTTP, WebSocket, MQTT, or another meaning.
 - Exact-byte serializer tests are valuable for binary protocols.
-- Express compatibility tests protect the public promise of Express-like behavior.
+- Express compatibility tests protect the public promise of Express-like behavior where that behavior is intended.
 - WebSocket tests must cover both HTTP upgrade and frame behavior.
 - EventSource tests are mostly lifetime and time-flow tests.
 - MQTT tests must model sessions, not only packets.
@@ -1379,42 +679,21 @@ Remember:
 - Configuration tests should check effective runtime shape, not only parsing.
 - Installed-system tests must cover libraries, runtime-loaded modules, RPATH, configuration directories, and service behavior.
 - Debugging should begin by identifying the broken boundary.
-- Named instances are diagnostic handles.
+- Configured instance names are diagnostic handles.
 - Memory tools verify lifetime assumptions.
 - Benchmarks should identify the limiting boundary, not merely produce large numbers.
-- Current practice, manual checks, and recommended future strategy should be distinguished honestly.
+- Existing practice, manual checks, and recommended future strategy should be distinguished honestly.
+- Regression tests should protect the semantic boundary that failed.
 
 ### Closing perspective
 
-Chapter 32 showed how SNode.C expresses architecture through CMake components, targets, and dependency surfaces.
+Chapter 32 showed how SNode.C expresses architecture through CMake components, targets, and dependency surfaces. Chapter 33 showed how that architecture enters the filesystem through packages, installed paths, service definitions, configuration directories, and embedded deployment constraints. This chapter showed how that installed architecture becomes trustworthy.
 
-Chapter 33 showed how that architecture enters the filesystem through packages, installed paths, service definitions, configuration directories, and embedded deployment constraints.
+Testing, debugging, and benchmarking do not replace architectural clarity. They reveal whether the architecture is clear.
 
-This chapter showed how that installed architecture becomes trustworthy.
+A clean component boundary can be built minimally. A truthful exported target can be consumed from a separate project. A clear protocol boundary can be tested with exact input and output. A clear runtime boundary can be exercised with real sockets, retries, shutdowns, and slow peers. A clear deployment boundary can be verified after installation. A clear diagnostic boundary can be read in logs. A clear performance boundary can be measured under load.
 
-Testing, debugging, and benchmarking do not replace architectural clarity.
-
-They reveal whether the architecture is clear.
-
-A clean component boundary can be built minimally.
-
-A truthful exported target can be consumed from a separate project.
-
-A clear protocol boundary can be tested with exact input and output.
-
-A clear runtime boundary can be exercised with real sockets, retries, shutdowns, and slow peers.
-
-A clear deployment boundary can be verified after installation.
-
-A clear diagnostic boundary can be read in logs.
-
-A clear performance boundary can be measured under load.
-
-That leads naturally to the next chapter.
-
-If testing reveals whether boundaries hold, architectural judgment asks how those boundaries should be chosen in the first place.
-
-The next chapter therefore turns from verification to design judgment:
+Chapter 34 asked how to verify whether boundaries hold. Chapter 35 asks how to choose those boundaries wisely in the first place.
 
 ```text
 Which layer should own this concern?
