@@ -271,9 +271,7 @@ Where such a name belongs to a configured communication role, it can also become
 
 ### Integration and topology: MQTTIntegrator and MQTTBridge
 
-MQTTIntegrator and MQTTBridge both connect MQTT worlds, but they do not solve the same problem.
-
-One is mainly about transformation. The other is mainly about topology.
+MQTTIntegrator and MQTTBridge both connect MQTT worlds, but they do not solve the same problem. One is mainly about transformation. The other is mainly about topology.
 
 Keeping this distinction visible prevents the ecosystem from becoming a vague collection of MQTT clients:
 
@@ -489,7 +487,7 @@ MQTTSuite also demonstrates a useful operational style:
 
 ```text
 start with explicit options
-  -> verify the instance constellation
+  -> verify the configured instance constellation
       -> persist selected configuration where supported
           -> restart later from repeatable configuration
 ```

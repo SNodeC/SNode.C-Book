@@ -10,9 +10,7 @@ If the framework hides the deeper structure of the system, the reader may learn 
 
 SNode.C is interesting because it takes a different path. It is not merely a set of socket helpers. It is not only an HTTP framework. It is not only an MQTT toolkit. It is a layered, event-driven C++ framework that keeps the structure of networked applications visible.
 
-That visibility gives the framework a specific teaching value.
-
-This book is written for three kinds of readers in particular.
+That visibility gives the framework a specific teaching value. This book is written for three kinds of readers in particular.
 
 The first kind is the experienced C++ developer who already understands classes, templates, ownership, build systems, and long-lived software. Such a reader does not only want a recipe. They want to understand where the boundaries are, which pieces can be reused, which pieces should remain separate, and how new behavior can be added without turning the application into an accidental collection of callbacks.
 
@@ -28,9 +26,7 @@ The promise of this book is therefore practical and architectural at the same ti
 
 > By the end of the book, you should be able to build servers and clients with SNode.C, understand why its architecture has the shape it has, and extend that architecture without breaking its conceptual boundaries.
 
-The goal is not merely that you can copy an example.
-
-The goal is that you can explain why the example has its shape.
+The goal is not merely that you can copy an example. The goal is that you can explain why the example has its shape.
 
 ### The problem SNode.C addresses
 
@@ -46,15 +42,13 @@ A fourth problem is **framework opacity**. Some frameworks are pleasant as long 
 
 SNode.C addresses these problems by making structure explicit.
 
-It distinguishes among lower communication family, transport form, connection handling, and application protocol. It repeatedly uses roles such as server or client instance, connection, context, factory, configuration, and runtime. It supports several lower communication families within one conceptual scheme. It can add TLS without forcing the application model to be reinvented. It then builds HTTP, an Express-like web layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, and database-facing applications on top of the same layered discipline.
+It distinguishes among lower communication family, transport form, connection handling, and application protocol. It repeatedly uses roles and boundaries such as application-side handles, configured communication roles, registered runtime-visible instances, connections, contexts, factories, configuration, and runtime. It supports several lower communication families within one conceptual scheme. It can add TLS without forcing the application model to be reinvented. It then builds HTTP, an Express-like web layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, and database-facing applications on top of the same layered discipline.
 
 This gives the reader transfer.
 
 A concept learned in one place can be recognized again in another. A server over IPv4, a server over IPv6, a local service over Unix domain sockets, and a Bluetooth-oriented endpoint are not unrelated worlds. They have different endpoint identities and deployment assumptions, but the architectural questions remain comparable.
 
-That is the first reason this book exists.
-
-It teaches SNode.C, but it also uses SNode.C to teach how networked systems can be organized.
+That is the first reason this book exists. It teaches SNode.C, but it also uses SNode.C to teach how networked systems can be organized.
 
 ### What this book will and will not do
 
@@ -62,11 +56,7 @@ This book is not a replacement for formal networking theory. It assumes the read
 
 It is also not merely an API reference. A reference answers questions such as “what is the signature of this function?” or “which overloads exist?” Those questions matter, but a teaching book has a different job. Its job is to build durable understanding.
 
-This book will therefore do four things repeatedly.
-
-First, it will explain **why** a particular SNode.C abstraction exists.
-
-Second, it will show **how** that abstraction is used in small but realistic examples.
+This book will therefore do four things repeatedly. First, it will explain **why** a particular SNode.C abstraction exists. Second, it will show **how** that abstraction is used in small but realistic examples.
 
 Third, it will connect the mechanism back to the **layered model** of the framework.
 
@@ -74,9 +64,7 @@ Fourth, it will ask the transfer question: what remains the same, and what chang
 
 The book will touch many technologies, but it will not become a specialist book about all of them. It is not a complete TLS book, Bluetooth book, HTTP book, MQTT book, database book, or OpenWrt deployment manual.
 
-Instead, it uses these technologies to explain how SNode.C organizes networked software.
-
-That distinction is important.
+Instead, it uses these technologies to explain how SNode.C organizes networked software. That distinction is important.
 
 When Bluetooth RFCOMM and Bluetooth L2CAP appear, they are not treated as strange appendices. They are lower communication families that exercise the same architectural model in a device-near setting.
 
@@ -213,11 +201,7 @@ runtime
 
 At this introductory point, read *instance* as the server-side or client-side communication role of an application. It is not a concrete peer connection. Chapter 3 connects that role to the visible C++ objects used in the first program, and Chapter 5 sharpens the term: the visible object is the application-side handle, while the instance is the configured role registered with the framework and advanced by the runtime.
 
-The connection represents a concrete peer relationship.
-
-The factory creates the context.
-
-The context contains the application protocol behavior for one connection.
+The connection represents a concrete peer relationship. The factory creates the context. The context contains the application protocol behavior for one connection.
 
 The runtime coordinates event-driven progress.
 
@@ -227,11 +211,7 @@ That regularity is one of the reasons the framework is teachable.
 
 ### Why starting with echo is not childish
 
-Some readers see an echo example and assume it is too simple to matter.
-
-That reaction is understandable, but mistaken.
-
-A good echo application is a microscope.
+Some readers see an echo example and assume it is too simple to matter. That reaction is understandable, but mistaken. A good echo application is a microscope.
 
 It exposes server and client creation, context construction, callback flow, data input and output, runtime startup, and the boundary between framework logic and application logic with very little distraction.
 
@@ -244,7 +224,7 @@ Here it is enough to understand why the book starts small: the small example giv
 ### What to remember
 
 - SNode.C is introduced in this book as an architectural teaching object, not merely as a collection of APIs.
-- Its value comes from recurring roles: runtime, server or client instance, concrete connection, factory, and per-connection context.
+- Its value comes from recurring roles and boundaries: runtime, configured communication role, registered runtime-visible instance, concrete connection, factory, and per-connection context.
 - The framework separates lower communication choices from application protocol behavior, so the same mental model can survive changes in network family, transport, or protocol layer.
 - The first echo example is deliberately small because it exposes the shape of the framework without hiding it behind protocol complexity.
 - MQTTSuite becomes important later as a reference ecosystem, but the book first builds the framework model that makes such systems understandable.
@@ -261,8 +241,4 @@ The goal of this book is not simply that you can write code *with* SNode.C.
 
 The goal is that, after some chapters, you begin to see networked systems *through* the architectural lens that SNode.C makes available.
 
-Once that happens, the framework becomes more than a toolkit in the ordinary sense.
-
-It becomes a way of organizing thought.
-
-And that is the right place to begin.
+Once that happens, the framework becomes more than a toolkit in the ordinary sense. It becomes a way of organizing thought. And that is the right place to begin.

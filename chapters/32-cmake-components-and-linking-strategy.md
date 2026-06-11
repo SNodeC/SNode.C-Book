@@ -729,9 +729,7 @@ A distributor may want different compiled defaults for an embedded package. An o
 
 ### Installed packages and external consumers
 
-SNode.C is not only built for itself. It is also consumed by external applications.
-
-That is where package configuration, exported targets, component selection, and namespaced target names become essential.
+SNode.C is not only built for itself. It is also consumed by external applications. That is where package configuration, exported targets, component selection, and namespaced target names become essential.
 
 #### From build targets to installed package targets
 

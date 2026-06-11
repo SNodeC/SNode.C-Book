@@ -104,9 +104,7 @@ In everyday discussion, the visible `SocketServer` or `SocketClient` object in u
 
 For example, an IPv4 stream legacy server object in `main()` is the handle through which the application names the role, adjusts configuration, attaches callbacks, and finally registers the listening role. The exact type name encodes lower-layer choices, but the architectural sequence is stable: handle, registered instance, runtime flow, connection, context.
 
-The instance is not the application protocol.
-
-It carries the application protocol into the runtime.
+The instance is not the application protocol. It carries the application protocol into the runtime.
 
 This distinction prevents a common beginner mistake. It is tempting to put all behavior into the server or client object because that object is visible in `main()`. In SNode.C, the server or client instance should usually describe the communication role. Protocol behavior belongs one step deeper, in the context attached to an actual peer connection.
 
@@ -146,9 +144,7 @@ The factory creates contexts.
 
 A `SocketContextFactory` exists because a context belongs to a connection, and connections appear dynamically. A server may accept many peers over time. Each peer needs its own protocol endpoint object. The framework therefore asks the factory to create a context when a connection needs one.
 
-This is not accidental indirection.
-
-It is the mechanism that connects a longer-lived communication role to shorter-lived per-connection protocol state.
+This is not accidental indirection. It is the mechanism that connects a longer-lived communication role to shorter-lived per-connection protocol state.
 
 Read the factory as the boundary between these two lifetimes:
 
@@ -163,9 +159,7 @@ Once this boundary is understood, the factory becomes one of the most natural pa
 
 ### The normal startup-to-protocol flow
 
-A SNode.C stream application can be read as a sequence of phases.
-
-The exact classes vary by network family and connection mode, but the shape remains stable.
+A SNode.C stream application can be read as a sequence of phases. The exact classes vary by network family and connection mode, but the shape remains stable.
 
 #### Phase 1: initialize the framework
 
@@ -215,11 +209,7 @@ From this point, registered roles can be advanced, event receivers can react to 
 
 #### Phase 5: connections appear
 
-For a server, a connection appears when a peer is accepted.
-
-For a client, a connection appears when the connection attempt succeeds.
-
-This is where the abstract communication role becomes a concrete relationship to a peer.
+For a server, a connection appears when a peer is accepted. For a client, a connection appears when the connection attempt succeeds. This is where the abstract communication role becomes a concrete relationship to a peer.
 
 #### Phase 6: the factory creates a context
 
@@ -249,9 +239,7 @@ That flow is one of the best compact mental models for SNode.C.
 
 ### Lifetimes: role, handle, connection, context
 
-A large part of SNode.C becomes clearer when lifetimes are separated carefully.
-
-There are at least four different things that beginners may accidentally merge into one idea.
+A large part of SNode.C becomes clearer when lifetimes are separated carefully. There are at least four different things that beginners may accidentally merge into one idea.
 
 #### The local C++ handle
 
@@ -318,11 +306,7 @@ rc    Bluetooth RFCOMM
 l2    Bluetooth L2CAP
 ```
 
-IPv4 and IPv6 use IP addresses and ports.
-
-Unix domain sockets use local socket identities.
-
-Bluetooth RFCOMM and L2CAP use Bluetooth-specific endpoint concepts.
+IPv4 and IPv6 use IP addresses and ports. Unix domain sockets use local socket identities. Bluetooth RFCOMM and L2CAP use Bluetooth-specific endpoint concepts.
 
 The details differ, but the application shape can remain familiar when the selected SNode.C layer exposes a compatible stream abstraction.
 
@@ -336,11 +320,7 @@ Other communication forms may appear in the framework, but the mental model in t
 
 #### Connection handling
 
-Connection handling describes how a concrete peer relationship is managed.
-
-This is where the `legacy` versus `tls` distinction appears in the stream hierarchy.
-
-In this book, `legacy` means the non-TLS stream variant. It does not mean obsolete.
+Connection handling describes how a concrete peer relationship is managed. This is where the `legacy` versus `tls` distinction appears in the stream hierarchy. In this book, `legacy` means the non-TLS stream variant. It does not mean obsolete.
 
 TLS changes important security properties: certificates, handshakes, validation, encrypted data flow, and additional failure modes. But TLS does not require the application writer to abandon the core instance/factory/context model.
 
@@ -352,9 +332,7 @@ The application protocol is the behavior above the connection.
 
 It may be tiny and custom, like the echo protocol. It may be HTTP. It may be WebSocket. It may be MQTT. It may be an Express-like application built on routing and middleware. It may be a bridge or integrator in a larger system.
 
-The important point is that protocol behavior belongs above the lower communication layers.
-
-That separation is what gives the framework its transfer value.
+The important point is that protocol behavior belongs above the lower communication layers. That separation is what gives the framework its transfer value.
 
 When a lower layer changes, the application writer asks:
 
@@ -449,9 +427,7 @@ That rule is more precise than saying that these calls “start the server” or
 
 #### Connection callbacks and context callbacks are different layers
 
-SNode.C exposes both connection-level callbacks and context-level lifecycle methods.
-
-They are related, but they do different jobs.
+SNode.C exposes both connection-level callbacks and context-level lifecycle methods. They are related, but they do different jobs.
 
 Connection-level callbacks are associated with the server or client machinery. They are useful for observing, logging, measuring, supervising, or adapting connection-level behavior.
 

@@ -8,9 +8,7 @@ Chapter 19 begins the next part by adding secure connection handling to the same
 
 Security and robustness do not remove the SNode.C model. They add stricter connection-layer responsibilities, more timing-sensitive transitions, and more failure states.
 
-TLS does not introduce a second application model.
-
-It changes the connection layer.
+TLS does not introduce a second application model. It changes the connection layer.
 
 That is the central idea of this chapter:
 
@@ -41,11 +39,7 @@ lower communication family
           -> application protocol
 ```
 
-TLS belongs in the connection-handling position.
-
-It sits above the lower communication family and transport form.
-
-It sits below the application protocol.
+TLS belongs in the connection-handling position. It sits above the lower communication family and transport form. It sits below the application protocol.
 
 That means:
 
@@ -59,11 +53,7 @@ IPv4 stream
       -> protocol context
 ```
 
-The lower family still exists.
-
-The registered server/client instance still exists.
-
-The context still implements the protocol conversation.
+The lower family still exists. The registered server/client instance still exists. The context still implements the protocol conversation.
 
 TLS adds secure connection handling between those parts.
 
@@ -96,21 +86,13 @@ A compact comparison makes the teaching point visible.
 | context behavior | protocol endpoint | often unchanged after secure readiness |
 | diagnostics | lifecycle, counters, errors | lifecycle, counters, errors plus TLS-specific handshake, trust, and shutdown diagnostics |
 
-This table is the chapter in miniature.
-
-TLS adds real work.
-
-It does not erase the surrounding framework structure.
+This table is the chapter in miniature. TLS adds real work. It does not erase the surrounding framework structure.
 
 That is why TLS is easiest to understand after the legacy stream shape is already clear. The legacy stream shows the connection model without secure transport. The TLS stream then shows which parts are added by secure connection handling.
 
 ### The TLS wrapper shape in code
 
-The code shape confirms the model.
-
-The TLS server is not a completely separate hand-built server type.
-
-It reuses the ordinary IPv4 stream server shell and changes the connection-layer pieces.
+The code shape confirms the model. The TLS server is not a completely separate hand-built server type. It reuses the ordinary IPv4 stream server shell and changes the connection-layer pieces.
 
 In simplified form, the shape is:
 
@@ -146,19 +128,13 @@ The important parts are:
 
 The application still selects a concrete server/client handle type. That type registers a server-side or client-side instance as before. The TLS specialization changes the acceptor or connector, the reader/writer behavior, and the configuration type used beneath that handle.
 
-This is the architectural payoff.
-
-The handle/instance model remains recognizable.
-
-The connection machinery changes.
+This is the architectural payoff. The handle/instance model remains recognizable. The connection machinery changes.
 
 The protocol endpoint can often remain stable.
 
 ### What TLS adds to the connection layer
 
-TLS changes real parts of the communication path.
-
-It adds concerns that do not exist in a plain legacy stream.
+TLS changes real parts of the communication path. It adds concerns that do not exist in a plain legacy stream.
 
 The most important groups are:
 
@@ -172,11 +148,7 @@ The most important groups are:
 | shutdown semantics | close-notify handling and unexpected EOF behavior |
 | diagnostics | handshake, trust, timeout, shutdown, and TLS-library error visibility |
 
-These are not superficial options.
-
-They are part of secure connection handling.
-
-TLS is therefore not just “turn encryption on.”
+These are not superficial options. They are part of secure connection handling. TLS is therefore not just “turn encryption on.”
 
 It adds identity, trust, handshake timing, shutdown semantics, and new diagnostic surfaces to the connection layer.
 
@@ -198,11 +170,7 @@ The following parts can often remain stable:
 - use of `sendToPeer(...)`,
 - use of `readFromPeer(...)`.
 
-This is why TLS is teachable inside the same architecture.
-
-The reader does not need to learn a new framework model.
-
-The reader needs to understand where the secure connection layer fits.
+This is why TLS is teachable inside the same architecture. The reader does not need to learn a new framework model. The reader needs to understand where the secure connection layer fits.
 
 The word *often* matters. TLS independence is not a universal law. It is a design result that holds when the protocol conversation after secure connection readiness is the same. If the protocol uses peer certificates, secure-transport properties, or SNI-derived policy as part of its own semantics, then TLS meaning may deliberately rise into the protocol layer.
 
@@ -224,25 +192,17 @@ But it is specialized with TLS-aware machinery:
 - close-notify handling,
 - access to the underlying `SSL*`.
 
-The connection remains the connection.
-
-The reader/writer behavior and internal lifecycle become TLS-aware.
-
-This is the right layer for encryption.
+The connection remains the connection. The reader/writer behavior and internal lifecycle become TLS-aware. This is the right layer for encryption.
 
 The context can still talk to the peer through the same conceptual operations. It sends data, reads data, reacts to connection readiness, and maintains protocol state. The connection layer handles the secure transport details that make that communication confidential, integrity-protected, and identity-aware.
 
 #### `getSSL()` as TLS-specific access
 
-The TLS connection exposes access to the underlying `SSL*`.
-
-That is useful, but it should be understood carefully.
+The TLS connection exposes access to the underlying `SSL*`. That is useful, but it should be understood carefully.
 
 `getSSL()` is not the normal protocol interface.
 
-It is TLS-specific access at the connection boundary.
-
-It is appropriate when TLS properties genuinely matter.
+It is TLS-specific access at the connection boundary. It is appropriate when TLS properties genuinely matter.
 
 Examples include:
 
@@ -252,15 +212,11 @@ Examples include:
 - TLS-specific diagnostics,
 - application behavior that depends on TLS details.
 
-It should not make every ordinary protocol context TLS-dependent by default.
-
-A protocol context should care about TLS only when TLS has protocol meaning.
+It should not make every ordinary protocol context TLS-dependent by default. A protocol context should care about TLS only when TLS has protocol meaning.
 
 ### TLS configuration and the `tls` section
 
-TLS configuration is added to the existing configuration model.
-
-It does not create a separate configuration universe.
+TLS configuration is added to the existing configuration model. It does not create a separate configuration universe.
 
 The IPv4 TLS server configuration is built by layering TLS configuration on top of the normal IPv4 stream server configuration.
 
@@ -308,9 +264,7 @@ Endpoint identity stays in `local` and `remote`.
 
 Socket and retry behavior stay in `socket`.
 
-Server-specific listen behavior stays in server-side sections.
-
-TLS-specific security, handshake, trust, and shutdown policy belong in `tls`.
+Server-specific listen behavior stays in server-side sections. TLS-specific security, handshake, trust, and shutdown policy belong in `tls`.
 
 #### Client-side and server-side SNI
 
@@ -368,19 +322,13 @@ A useful reading is:
 | `onConnected` | connection is ready for protocol work |
 | context `onConnected()` | protocol endpoint can begin its conversation |
 
-TLS does not make the lifecycle impossible to understand.
-
-It makes the middle part more meaningful.
+TLS does not make the lifecycle impossible to understand. It makes the middle part more meaningful.
 
 The architecture remains legible because there is still a boundary between transport connection existence, TLS readiness, and protocol-context behavior.
 
 ### TLS also affects shutdown
 
-TLS also adds work at the end of a connection.
-
-A legacy stream shutdown may be mostly socket shutdown and close behavior.
-
-A TLS stream may also need TLS shutdown behavior, including close-notify handling.
+TLS also adds work at the end of a connection. A legacy stream shutdown may be mostly socket shutdown and close behavior. A TLS stream may also need TLS shutdown behavior, including close-notify handling.
 
 A useful model is:
 
@@ -404,9 +352,7 @@ shutdown
   -> TLS shutdown / close-notify
 ```
 
-Both phases belong to the connection layer.
-
-Both phases are relevant for diagnostics.
+Both phases belong to the connection layer. Both phases are relevant for diagnostics.
 
 Close-notify is not an application message. It is part of the TLS connection ending correctly. A missing or unexpected close-notify can therefore be a connection-layer diagnostic fact even when the application protocol itself has already decided to close.
 
@@ -414,9 +360,7 @@ This is one reason TLS diagnostics belong together with connection lifecycle vis
 
 ### TLS does not erase the lower family
 
-A TLS connection is still carried over a lower communication family.
-
-The lower family does not disappear just because the connection is encrypted.
+A TLS connection is still carried over a lower communication family. The lower family does not disappear just because the connection is encrypted.
 
 The application may still need to know whether the carrier beneath TLS is:
 
@@ -429,21 +373,13 @@ The application may still need to know whether the carrier beneath TLS is:
 
 This affects endpoint configuration, address semantics, deployment shape, permissions, pairing/trust setup for Bluetooth carriers, local path behavior for Unix-domain sockets, and diagnostics.
 
-TLS specializes connection handling above the lower transport.
-
-It does not replace the lower transport.
-
-That is why the earlier lower-family chapters still matter.
+TLS specializes connection handling above the lower transport. It does not replace the lower transport. That is why the earlier lower-family chapters still matter.
 
 The chapter uses IPv4 code shapes because they are compact and familiar. The architectural idea is broader: lower family first, stream transport next, legacy or TLS connection handling above that, and protocol behavior in the context.
 
 ### Protocol contexts should stay TLS-independent when possible
 
-A `SocketContext` should usually describe the application protocol.
-
-It should not become TLS-heavy unless TLS has protocol meaning.
-
-For many protocols, the conversation is the same after the secure connection is ready.
+A `SocketContext` should usually describe the application protocol. It should not become TLS-heavy unless TLS has protocol meaning. For many protocols, the conversation is the same after the secure connection is ready.
 
 The context still needs to:
 
@@ -457,9 +393,7 @@ That means the same protocol endpoint may often work over legacy and TLS streams
 
 The application-side handle type, registered instance, connection-layer wrapper, and TLS configuration decide whether the connection is secure.
 
-The context implements the conversation.
-
-A context can stay TLS-independent when the protocol conversation after connection readiness is the same.
+The context implements the conversation. A context can stay TLS-independent when the protocol conversation after connection readiness is the same.
 
 #### When protocol logic should care about TLS
 
@@ -475,17 +409,11 @@ Examples include:
 - protocols that bind authorization to TLS peer identity,
 - SNI-derived behavior that is part of application policy.
 
-In those cases, TLS-specific meaning may rise into protocol logic.
-
-But it should rise deliberately.
-
-Do not make every ordinary context TLS-aware just because the transport is TLS.
+In those cases, TLS-specific meaning may rise into protocol logic. But it should rise deliberately. Do not make every ordinary context TLS-aware just because the transport is TLS.
 
 ### TLS diagnostics through the Chapter 18 lens
 
-TLS makes diagnostics more important.
-
-A plain socket failure is already meaningful.
+TLS makes diagnostics more important. A plain socket failure is already meaningful.
 
 A TLS failure may involve several additional questions:
 
@@ -510,17 +438,9 @@ Chapter 18’s diagnostic map applies directly.
 | connection visibility | Which concrete connection, peer, address, duration, and counters were involved? |
 | protocol visibility | Did TLS meaning affect protocol authorization or behavior? |
 
-Use configuration display to inspect TLS settings.
+Use configuration display to inspect TLS settings. Use ordinary logs for lifecycle events. Use `PLOG` or TLS-specific error reporting where system, OpenSSL, or library context matters.
 
-Use ordinary logs for lifecycle events.
-
-Use `PLOG` or TLS-specific error reporting where system, OpenSSL, or library context matters.
-
-Use `VLOG` for handshake, shutdown, certificate, and trust diagnostics that are too detailed for normal output.
-
-Use connection identity and counters to connect TLS events to a concrete peer relationship.
-
-TLS does not require a new diagnostic philosophy.
+Use `VLOG` for handshake, shutdown, certificate, and trust diagnostics that are too detailed for normal output. Use connection identity and counters to connect TLS events to a concrete peer relationship. TLS does not require a new diagnostic philosophy.
 
 It makes the existing one more important.
 
@@ -543,11 +463,7 @@ First understand the legacy application:
 - lower-family endpoint,
 - connection lifecycle.
 
-Then introduce TLS as a connection-layer upgrade.
-
-This lets the reader see what changed and what remained stable.
-
-It also avoids presenting TLS as a completely new application architecture.
+Then introduce TLS as a connection-layer upgrade. This lets the reader see what changed and what remained stable. It also avoids presenting TLS as a completely new application architecture.
 
 TLS is easier to understand when the non-TLS shape is already clear because the architecture itself shows where the additional secure-connection work is inserted.
 
@@ -565,13 +481,15 @@ Then let:
 - the `tls` section,
 - and the diagnostics
 
-carry the secure-transport differences.
-
-Only promote TLS details into protocol logic when the protocol semantics require it.
-
-This keeps application code cleaner.
+carry the secure-transport differences. Only promote TLS details into protocol logic when the protocol semantics require it. This keeps application code cleaner.
 
 It also keeps the architecture readable.
+
+### TLS capability and deployment responsibility
+
+TLS-capable components make secure connection handling possible; they do not by themselves complete a secure deployment. Certificate files, private-key permissions, trust anchors, SNI policy, and diagnostics still belong to the deployed role and its configuration.
+
+That distinction will matter again in the deployment chapters. A binary may be linked with TLS support and still fail as a secure service if the surrounding filesystem, permissions, and trust material are wrong. TLS-capable linking is not the same as TLS deployment.
 
 ### What to remember
 
@@ -587,9 +505,7 @@ It also keeps the architecture readable.
 
 ### Closing perspective
 
-Chapter 19 showed how secure connection handling fits into the same architecture.
-
-TLS is serious.
+Chapter 19 showed how secure connection handling fits into the same architecture. TLS is serious.
 
 It introduces handshake behavior, shutdown behavior, certificate material, trust policy, SNI behavior, close-notify semantics, and new failure modes.
 

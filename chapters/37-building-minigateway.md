@@ -1,8 +1,8 @@
-## A Complete Guided Project
+## Building MiniGateway
 
 ### Why this project comes here
 
-Chapter 35 asked how to choose the right layer, role, protocol surface, configuration boundary, and deployment shape.
+Chapter 35 asked how to choose the right layer, role, protocol surface, configuration boundary, and deployment shape. Chapter 36 then asked how SNode.C applications and framework code can be extended safely without damaging those boundaries.
 
 This chapter turns that judgment into one guided project.
 
@@ -1128,11 +1128,11 @@ That is why it belongs near the end of the book.
 The reader has seen lower communication families, runtime roles, contexts, factories, configuration, diagnostics, TLS, HTTP, Express, SSE, WebSocket, MQTT, persistence, applications, systems, deployment, testing, and judgment.
 MiniGateway shows how those ideas can be assembled without losing the boundaries that made them understandable.
 
-The next chapter can therefore return to the framework itself and ask how to extend SNode.C safely.
+The next chapter therefore stays with MiniGateway and asks how the small system can be extended, tested, and deployed without losing the boundaries that made it clear.
 Once a reader can build a small complete system, the next danger is not inability.
-It is overextension.
+It is unstructured growth.
 
-The final design lesson is simple:
+The final design lesson for this chapter is simple:
 
 ```text
 build the smallest complete system
