@@ -77,3 +77,13 @@
 ## Closing
 
 - Epilogue: What to Take Away from SNode.C — **present**
+
+
+## Part XII restructuring note
+
+Chapter 37 and Chapter 38 are now staged guided-project chapters. Chapter 37 builds MiniGateway in layers; Chapter 38 explains safe extension, testing, debugging, deployment, and split decisions.
+
+## Closing
+
+- `parts/part-13-closing.md`
+- `chapters/39-closing-perspective.md`

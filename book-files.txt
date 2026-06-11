@@ -48,4 +48,5 @@ chapters/36-extending-the-framework-safely.md
 parts/part-12-building-a-minigateway-application.md
 chapters/37-building-minigateway.md
 chapters/38-extending-testing-and-deploying-minigateway.md
+parts/part-13-closing.md
 chapters/39-closing-perspective.md

@@ -6,3 +6,11 @@
 /build.ninja
 /cmake_install.cmake
 /qtcsettings.cmake
+*.clang-format
+*.clang-format-ignore
+*.clang-tidy
+*.clangd
+*.cmake-format.py
+*.gitignore
+*.json
+*.txt.user

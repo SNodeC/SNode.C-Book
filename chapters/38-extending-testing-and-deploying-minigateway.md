@@ -1,565 +1,905 @@
 ## Extending, Testing, and Deploying MiniGateway
 
-### Why this chapter follows the build
+### Why this chapter follows the base build
 
-Chapter 37 built the first MiniGateway shape: a small SNode.C application with HTTP administration, SSE observation, MQTT integration, application-owned measurement state, and explicit role boundaries.
+Chapter 37 built the base MiniGateway application. That version was intentionally small: an HTTP/Express surface, an SSE observation path, a native MQTT client role, an in-memory current measurement, and `/simulate` as a controlled input boundary.
 
-This chapter does not replace that design. It asks how the project can grow without losing it.
-
-```text
-Chapter 37:
-  assemble the first complete application
-
-Chapter 38:
-  extend, test, and deploy it without hiding the boundaries
-```
-
-That distinction matters. A guided project is only useful if the reader sees not only how to make it work once, but also how to change it safely.
-
-MiniGateway is deliberately small, but it has the same pressures as larger systems:
+Chapter 38 now shows how the application can grow without losing its shape. The concrete source extension used in this chapter is the `MiniGateway-Extended` version: it adds a Unix-domain socket input for real external measurement injection. That extension is important, but it is not the whole chapter. The larger topic is how SNode.C applications should be extended, tested, debugged, and deployed while keeping boundaries visible.
 
 ```text
-more carriers
-more configuration
-more observers
-more failure modes
-more deployment constraints
-possible persistence
-possible testing automation
+base MiniGateway
+  -> explicit new input boundary
+      -> same domain state
+          -> same MeasurementBus
+              -> same HTTP / SSE / MQTT outputs
 ```
 
-The answer is not to turn MiniGateway into MQTTSuite. The answer is to keep the boundary vocabulary intact while adding carefully chosen features.
-
-### The first version, restated
-
-The first version had this shape:
+The extension therefore demonstrates the main design rule of this part of the book:
 
 ```text
-MiniGateway executable
-
-  admin-http
-    -> HTTP status and health routes
-    -> SSE observation route
-
-  mqtt-uplink
-    -> MQTT client role
-    -> publish measurements
-    -> receive command messages
-
-  measurement-state
-    -> owns current domain state
-    -> owns sequence and enabled state
-
-  measurement-bus
-    -> distributes state changes without owning protocols
+add the boundary that owns the new concern
 ```
 
-This is the baseline. Every extension in this chapter must preserve it or consciously change it.
+Do not extend an application by hiding new behavior inside an arbitrary callback merely because that callback is convenient.
 
-The project should not drift into this shape:
+This chapter has two jobs. First, it walks through the concrete `MiniGateway-Extended` source tree and shows exactly where the Unix-domain input is added. Second, it uses that concrete extension to discuss broader application growth: testing by boundaries, debugging by role, deployment shape, constrained targets, and the point at which one process should become several processes.
+
+The source of truth for the concrete extension is the `MiniGateway-Extended` example tree in the book package. The base source of Chapter 37 remains the `MiniGateway-Base` tree. Keeping both trees side by side is intentional: the reader can compare what changed and, more importantly, what did not change.
+
+### What changes in the extended version
+
+The extended version adds one responsibility: measurements can now arrive through a Unix-domain stream socket. The input format is deliberately simple: one comma-separated measurement per line.
+
+```sh
+printf '21.5,43.0,3.72\n' | nc -U /tmp/minigateway-measurements.sock
+```
+
+The accepted fields are:
 
 ```text
-main.cpp
-  -> routes
-  -> MQTT callbacks
-  -> timers
-  -> persistence
-  -> retry policy
-  -> observer list
-  -> deployment assumptions
-  -> everything else
+temperature,humidity,voltage
+temperature,humidity,voltage,sequence
 ```
 
-That version might compile, but it would erase the lesson of the book.
-
-### Extension 1: MQTT over WebSocket as a carrier change
-
-The most direct extension is to replace the native MQTT carrier with MQTT-over-WebSocket.
-
-The domain state should not care.
-The HTTP status route should not care.
-The SSE endpoint should not care.
-The measurement serialization should not care.
-
-Only the MQTT communication role changes its carrier path.
+If the sender does not provide a sequence number, MiniGateway assigns the next local sequence number. After that, the measurement follows the same path as a simulated measurement:
 
 ```text
-before:
-  mqtt-uplink
-    -> native MQTT client
-    -> IPv4 legacy stream
-
-extension:
-  mqtt-uplink
-    -> HTTP client
-    -> WebSocket upgrade
-    -> MQTT WebSocket subprotocol
+Unix-domain input line
+  -> parse Measurement
+  -> acceptMeasurement(...)
+      -> update MeasurementState
+      -> publish through MeasurementBus
+          -> SSE observers
+          -> MQTT publication
 ```
 
-This is the guided-project form of a recurring book idea:
+The important point is what does not change. The HTTP `/status` route does not learn how Unix-domain sockets work. The SSE route does not parse CSV. `MiniGatewayMqtt` does not read from the local measurement socket. The new input boundary ends at the same `acceptMeasurement` function that already existed in Chapter 37.
+
+| Aspect | Base version | Extended version |
+|---|---|---|
+| controlled teaching input | `/simulate` | still present |
+| external measurement input | not present | Unix-domain stream socket |
+| state owner | `MeasurementState` | unchanged |
+| fan-out path | `MeasurementBus` | unchanged |
+| HTTP status route | `/status` | unchanged |
+| SSE observation route | `/events` | unchanged |
+| MQTT publication path | `MiniGatewayMqtt` observes the bus | unchanged |
+
+This table is the reason the extension is useful as a teaching example. The application grows by adding one boundary, not by spreading the new concern through all existing roles.
+
+### Extension overview
+
+Compared with the base source tree, the extended version adds two new classes and changes three existing files:
 
 ```text
-same MQTT semantics
-  -> different carrier path
+new:
+  MeasurementUnixSocketContext.h/.cpp
+  MeasurementUnixSocketContextFactory.h/.cpp
+
+changed:
+  CMakeLists.txt
+  main.cpp
+  README-BUILD.md
 ```
 
-In MQTTSuite's CLI application, the WebSocket MQTT client shape is created by constructing an HTTP client role, setting `Sec-WebSocket-Protocol` to `mqtt`, and upgrading to WebSocket with a configured target such as `/ws`. MiniGateway should follow the same semantic pattern if it adds an MQTT-over-WebSocket variant.
+The rest of the source tree remains the base application. That is the strongest sign that the extension is placed correctly. A new input carrier should not force a rewrite of the output roles.
 
-The important design point is that this is not a domain rewrite. It is a carrier/role variation.
+The extended chapter shows only the changed and new files. The unchanged base files still matter, but repeating all of them would hide the design signal. The design signal is that `MeasurementState`, `MeasurementBus`, `MiniGatewayMqtt`, and the HTTP/SSE behavior remain stable.
 
-A build surface for the native variant may use:
+### The build target after extension
+
+The extended CMake file adds the Unix-domain stream component and the two new source files.
+
+```text
+base components:
+  http-server-express-legacy-in
+  net-in-stream-legacy
+  mqtt-client
+
+extended component:
+  net-un-stream-legacy
+```
+
+That is a component-level expression of the new boundary: the application now owns a Unix-domain local input role in addition to the HTTP and MQTT roles.
+
+#### `CMakeLists.txt`
 
 ```cmake
-find_package(snodec 1.0.0 REQUIRED COMPONENTS
-    http-server-express-legacy-in
-    net-in-stream-legacy
-    mqtt-client
+cmake_minimum_required(VERSION 3.14)
+
+project(MiniGateway LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+find_package(nlohmann_json 3.7.0 REQUIRED)
+
+find_package(
+    snodec 1.0.0 REQUIRED COMPONENTS http-server-express-legacy-in
+                                     net-in-stream-legacy net-un-stream-legacy mqtt-client
+)
+
+add_executable(
+    minigateway
+    main.cpp
+    MeasurementState.cpp
+    MeasurementBus.cpp
+    MeasurementUnixSocketContext.cpp
+    MeasurementUnixSocketContextFactory.cpp
+    MiniGatewayMqtt.cpp
+    MiniGatewaySocketContextFactory.cpp
+    ConfigSections.cpp
+    MeasurementState.h
+    MeasurementBus.h
+    MeasurementUnixSocketContext.h
+    MeasurementUnixSocketContextFactory.h
+    MiniGatewayMqtt.h
+    MiniGatewaySocketContextFactory.h
+    ConfigSections.h
+)
+
+target_link_libraries(
+    minigateway
+    PRIVATE snodec::http-server-express-legacy-in snodec::net-in-stream-legacy
+            snodec::net-un-stream-legacy snodec::mqtt-client
+            nlohmann_json::nlohmann_json
 )
 ```
 
-A WebSocket-carried MQTT variant needs the HTTP client surface as well:
+The CMake change is small because the architectural change is small. The extended application needs one additional SNode.C component family, `net-un-stream-legacy`, and the two new Unix-input source files. The existing HTTP and MQTT components remain unchanged.
 
-```cmake
-find_package(snodec 1.0.0 REQUIRED COMPONENTS
-    http-server-express-legacy-in
-    net-in-stream-legacy
-    http-client
-    mqtt-client-websocket
-)
+
+### The Unix-domain measurement context
+
+The new `MeasurementUnixSocketContext` owns the local input protocol. Its protocol is intentionally small: read bytes from a stream connection, collect complete lines, parse each line as a measurement, and pass accepted measurements to the application handler.
+
+This class is not a general CSV library and not a sensor framework. It is the protocol endpoint for one local MiniGateway input boundary.
+
+```text
+Unix stream bytes
+  -> line buffer
+      -> CSV measurement parser
+          -> MeasurementHandler
 ```
 
-The exact component set depends on the final application shape and enabled carrier families. The architectural rule is stable: the build target should reveal the carrier change.
+The context does not update `MeasurementState` directly. It does not publish MQTT messages. It does not know about SSE clients. It hands a parsed `Measurement` to the handler it received from the application assembly. That is the boundary discipline.
+
+#### `MeasurementUnixSocketContext.h`
+
+```cpp
+#pragma once
+
+#include "Measurement.h"
+
+#include <core/socket/stream/SocketContext.h>
+#include <cstdint>
+#include <functional>
+#include <string>
+
+namespace minigateway {
+
+    class MeasurementUnixSocketContext : public core::socket::stream::SocketContext {
+    public:
+        using MeasurementHandler = std::function<void(Measurement)>;
+
+        MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection, MeasurementHandler measurementHandler);
+
+    private:
+        void onConnected() final;
+        void onDisconnected() final;
+        [[nodiscard]] bool onSignal(int signum) final;
+        std::size_t onReceivedFromPeer() final;
+
+        void processLine(const std::string& line) const;
+
+        MeasurementHandler measurementHandler;
+        std::string receiveBuffer;
+    };
+
+} // namespace minigateway
+```
+
+
+#### `MeasurementUnixSocketContext.cpp`
+
+```cpp
+#include "MeasurementUnixSocketContext.h"
+
+#include <algorithm>
+#include <cctype>
+#include <chrono>
+#include <cmath>
+#include <core/socket/SocketAddress.h>
+#include <core/socket/stream/SocketConnection.h>
+#include <exception>
+#include <log/Logger.h>
+#include <stdexcept>
+#include <utility>
+#include <vector>
+
+namespace minigateway {
+
+    namespace {
+
+        std::string trim(std::string value) {
+            value.erase(value.begin(), std::find_if(value.begin(), value.end(), [](unsigned char ch) {
+                            return !std::isspace(ch);
+                        }));
+            value.erase(std::find_if(value.rbegin(),
+                                     value.rend(),
+                                     [](unsigned char ch) {
+                                         return !std::isspace(ch);
+                                     })
+                            .base(),
+                        value.end());
+
+            return value;
+        }
+
+        std::vector<std::string> splitCsvLine(const std::string& line) {
+            std::vector<std::string> values;
+            std::size_t valueStart = 0;
+
+            while (valueStart <= line.length()) {
+                const std::size_t valueEnd = line.find(',', valueStart);
+                values.push_back(trim(line.substr(valueStart, valueEnd - valueStart)));
+
+                if (valueEnd == std::string::npos) {
+                    break;
+                }
+                valueStart = valueEnd + 1;
+            }
+
+            return values;
+        }
+
+        double parseDouble(const std::string& value, const std::string& fieldName) {
+            std::size_t parsedLength = 0;
+            const double parsedValue = std::stod(value, &parsedLength);
+            if (parsedLength != value.length() || !std::isfinite(parsedValue)) {
+                throw std::invalid_argument("invalid " + fieldName + " value '" + value + "'");
+            }
+
+            return parsedValue;
+        }
+
+        std::uint64_t parseSequence(const std::string& value) {
+            std::size_t parsedLength = 0;
+            const auto parsedValue = std::stoull(value, &parsedLength);
+            if (parsedLength != value.length()) {
+                throw std::invalid_argument("invalid sequence value '" + value + "'");
+            }
+
+            return parsedValue;
+        }
+
+        Measurement parseMeasurementLine(const std::string& line) {
+            const std::vector<std::string> values = splitCsvLine(line);
+            if (values.size() != 3 && values.size() != 4) {
+                throw std::invalid_argument("expected temperature,humidity,voltage[,sequence]");
+            }
+
+            Measurement measurement;
+            measurement.temperature = parseDouble(values[0], "temperature");
+            measurement.humidity = parseDouble(values[1], "humidity");
+            measurement.voltage = parseDouble(values[2], "voltage");
+            measurement.sequence = values.size() == 4 ? parseSequence(values[3]) : 0;
+            measurement.timestamp = std::chrono::system_clock::now();
+
+            return measurement;
+        }
+
+    } // namespace
+
+    MeasurementUnixSocketContext::MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection,
+                                                               MeasurementHandler measurementHandler)
+        : core::socket::stream::SocketContext(socketConnection)
+        , measurementHandler(std::move(measurementHandler)) {
+    }
+
+    void MeasurementUnixSocketContext::onConnected() {
+        VLOG(1) << "Measurement socket connected from " << getSocketConnection()->getRemoteAddress().toString();
+    }
+
+    void MeasurementUnixSocketContext::onDisconnected() {
+        VLOG(1) << "Measurement socket disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+    }
+
+    bool MeasurementUnixSocketContext::onSignal(int signum) {
+        VLOG(1) << "Measurement socket disconnected due to signal " << signum;
+
+        return true;
+    }
+
+    std::size_t MeasurementUnixSocketContext::onReceivedFromPeer() {
+        char chunk[4096];
+        const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
+
+        if (chunkLen > 0) {
+            receiveBuffer.append(chunk, chunkLen);
+
+            std::size_t lineEnd = receiveBuffer.find('\n');
+            while (lineEnd != std::string::npos) {
+                std::string line = receiveBuffer.substr(0, lineEnd);
+                if (!line.empty() && line.back() == '\r') {
+                    line.pop_back();
+                }
+
+                processLine(line);
+                receiveBuffer.erase(0, lineEnd + 1);
+                lineEnd = receiveBuffer.find('\n');
+            }
+
+            if (receiveBuffer.length() > 4096) {
+                LOG(WARNING) << "Measurement socket line exceeds 4096 bytes; dropping buffered input";
+                receiveBuffer.clear();
+            }
+        }
+
+        return chunkLen;
+    }
+
+    void MeasurementUnixSocketContext::processLine(const std::string& line) const {
+        if (line.empty()) {
+            return;
+        }
+
+        try {
+            Measurement measurement = parseMeasurementLine(line);
+            measurementHandler(std::move(measurement));
+        } catch (const std::exception& ex) {
+            LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+        }
+    }
+
+} // namespace minigateway
+```
+
+This context owns exactly the local line protocol. It buffers bytes, recognizes complete lines, parses a measurement, and calls the injected handler. It does not know whether the handler updates memory, publishes MQTT, emits SSE, or stores history. That ignorance is not a limitation. It is the boundary that makes the extension safe.
+
+
+### The Unix-domain measurement factory
+
+The factory is deliberately small. Its only job is to construct a `MeasurementUnixSocketContext` for each accepted Unix-domain stream connection and pass the configured measurement handler into it.
+
+This mirrors the factory pattern used earlier for MQTT, but with a different protocol object:
+
+```text
+Unix SocketConnection
+  -> MeasurementUnixSocketContextFactory
+      -> MeasurementUnixSocketContext
+          -> MeasurementHandler
+```
+
+#### `MeasurementUnixSocketContextFactory.h`
+
+```cpp
+#pragma once
+
+#include "MeasurementUnixSocketContext.h"
+
+#include <core/socket/stream/SocketContextFactory.h>
+
+namespace minigateway {
+
+    class MeasurementUnixSocketContextFactory : public core::socket::stream::SocketContextFactory {
+    public:
+        explicit MeasurementUnixSocketContextFactory(MeasurementUnixSocketContext::MeasurementHandler measurementHandler);
+
+    private:
+        core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* socketConnection) final;
+
+        MeasurementUnixSocketContext::MeasurementHandler measurementHandler;
+    };
+
+} // namespace minigateway
+```
+
+
+#### `MeasurementUnixSocketContextFactory.cpp`
+
+```cpp
+#include "MeasurementUnixSocketContextFactory.h"
+
+#include <utility>
+
+namespace minigateway {
+
+    MeasurementUnixSocketContextFactory::MeasurementUnixSocketContextFactory(
+        MeasurementUnixSocketContext::MeasurementHandler measurementHandler)
+        : measurementHandler(std::move(measurementHandler)) {
+    }
+
+    core::socket::stream::SocketContext*
+    MeasurementUnixSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
+        return new MeasurementUnixSocketContext(socketConnection, measurementHandler);
+    }
+
+} // namespace minigateway
+```
+
+The factory is intentionally thin. It receives the application handler during construction and injects that handler into each new Unix-domain socket context. The factory does not become a state owner. It only makes sure each accepted Unix-domain connection receives the same application input boundary.
+
+
+### Runtime assembly after extension
+
+The extended `main.cpp` keeps the base application path and adds one new server role named `measurement-input`. The new role listens on `/tmp/minigateway-measurements.sock` and uses the same `acceptMeasurement` function as `/simulate`.
+
+This is the key design point. The input changes, but the application state path does not.
+
+```text
+/simulate
+  -> acceptMeasurement(...)
+
+measurement-input Unix socket
+  -> acceptMeasurement(...)
+```
+
+Once a measurement reaches `acceptMeasurement`, the rest of the application is identical: current state is updated, the bus publishes, SSE observers are notified, and MQTT publication is attempted if the MQTT role is connected.
+
+#### `main.cpp`
+
+```cpp
+#include "ConfigSections.h"
+#include "MeasurementBus.h"
+#include "MeasurementState.h"
+#include "MeasurementUnixSocketContextFactory.h"
+#include "MiniGatewayMqtt.h"
+#include "MiniGatewaySocketContextFactory.h"
+
+#include <chrono>
+#include <core/SNodeC.h>
+#include <cstdint>
+#include <express/legacy/in/WebApp.h>
+#include <express/middleware/VerboseRequest.h>
+#include <log/Logger.h>
+#include <net/config/ConfigInstance.h>
+#include <net/in/stream/legacy/SocketClient.h>
+#include <net/un/stream/legacy/SocketServer.h>
+#include <string>
+#include <type_traits>
+#include <utility>
+#include <web/http/http_utils.h>
+
+namespace {
+
+    void reportState(const std::string& instanceName, const core::socket::SocketAddress& socketAddress, const core::socket::State& state) {
+        switch (state) {
+            case core::socket::State::OK:
+                VLOG(1) << instanceName << ": connected/listening on '" << socketAddress.toString() << "'";
+                break;
+            case core::socket::State::DISABLED:
+                VLOG(1) << instanceName << ": disabled";
+                break;
+            case core::socket::State::ERROR:
+                LOG(ERROR) << instanceName << " " << socketAddress.toString() << ": " << state.what();
+                break;
+            case core::socket::State::FATAL:
+                LOG(FATAL) << instanceName << " " << socketAddress.toString() << ": " << state.what();
+                break;
+        }
+    }
+
+    minigateway::Measurement makeSimulatedMeasurement(std::uint64_t& sequence) {
+        minigateway::Measurement measurement;
+        measurement.temperature = 20.0 + static_cast<double>(sequence % 50) / 10.0;
+        measurement.humidity = 40.0 + static_cast<double>(sequence % 20);
+        measurement.voltage = 3.7 + static_cast<double>(sequence % 10) / 100.0;
+        measurement.sequence = ++sequence;
+        measurement.timestamp = std::chrono::system_clock::now();
+
+        return measurement;
+    }
+
+    void createMqttConfig(net::in::stream::legacy::config::ConfigSocketClient& config) {
+        config.Instance::newSubCommand<minigateway::ConfigMqtt>();
+    }
+
+    auto startMqttClient() {
+        using Client = net::in::stream::legacy::SocketClient<minigateway::MiniGatewaySocketContextFactory>;
+
+        Client socketClient("mqtt-uplink");
+
+        auto* config = socketClient.getConfig();
+        config->Remote::setPort(1883);
+        config->setDisableNagleAlgorithm();
+        createMqttConfig(*config);
+
+        socketClient.getConfig()->setRetry();
+        socketClient.getConfig()->setRetryBase(1);
+        socketClient.getConfig()->setReconnect();
+
+        socketClient.connect([](const Client::SocketAddress& socketAddress, const core::socket::State& state) {
+            reportState("mqtt-uplink", socketAddress, state);
+        });
+
+        return socketClient;
+    }
+
+    template <typename MeasurementHandler>
+    auto startMeasurementSocketServer(MeasurementHandler measurementHandler) {
+        using Handler = std::decay_t<MeasurementHandler>;
+        using Server = net::un::stream::legacy::SocketServer<minigateway::MeasurementUnixSocketContextFactory, Handler>;
+
+        Server socketServer("measurement-input", std::move(measurementHandler));
+        socketServer.listen("/tmp/minigateway-measurements.sock",
+                            [](const Server::SocketAddress& socketAddress, const core::socket::State& state) {
+                                reportState("measurement-input", socketAddress, state);
+                            });
+
+        return socketServer;
+    }
+
+    template <typename ResponseT>
+    void sendMeasurementEvent(const minigateway::Measurement& measurement, const ResponseT& res) {
+        res->sendFragment("event: measurement");
+        res->sendFragment("id:" + std::to_string(measurement.sequence));
+        res->sendFragment("retry: 1000");
+        res->sendFragment("data: " + minigateway::toPayload(measurement) + "\r\n");
+    }
+
+} // namespace
+
+int main(int argc, char* argv[]) {
+    core::SNodeC::init(argc, argv);
+
+    minigateway::MeasurementState state;
+    minigateway::MeasurementBus bus;
+
+    auto acceptMeasurement = [&state, &bus](minigateway::Measurement measurement) {
+        if (measurement.sequence == 0) {
+            measurement.sequence = state.current().sequence + 1;
+        }
+
+        state.update(measurement);
+        bus.publish(state.current());
+    };
+
+    bus.subscribe([](const minigateway::Measurement& measurement) {
+        minigateway::MiniGatewayMqtt::publishMeasurementToConnected(measurement);
+        return true;
+    });
+
+    const express::legacy::in::WebApp app;
+
+    app.use(express::middleware::VerboseRequest());
+
+    app.get("/health", [] APPLICATION(req, res) {
+        res->json({{"ok", true}});
+    });
+
+    app.get("/status", [&state] APPLICATION(req, res) {
+        res->json(minigateway::toJson(state.current()));
+    });
+
+    app.get("/events", [&state, &bus] APPLICATION(req, res) {
+        if (web::http::ciContains(req->get("Accept"), "text/event-stream")) {
+            res->set("Content-Type", "text/event-stream").set("Cache-Control", "no-cache").set("Connection", "keep-alive");
+            res->sendHeader();
+
+            const minigateway::Measurement current = state.current();
+            if (current.sequence > 0) {
+                sendMeasurementEvent(current, res);
+            }
+
+            bus.subscribe([res](const minigateway::Measurement& measurement) {
+                if (!res->isConnected()) {
+                    return false;
+                }
+
+                sendMeasurementEvent(measurement, res);
+                return true;
+            });
+        } else {
+            res->status(406).send("SSE requires Accept: text/event-stream");
+        }
+    });
+
+    std::uint64_t simulatedSequence = 0;
+
+    app.get("/simulate", [&acceptMeasurement, &simulatedSequence] APPLICATION(req, res) {
+        minigateway::Measurement measurement = makeSimulatedMeasurement(simulatedSequence);
+        acceptMeasurement(measurement);
+
+        res->json(minigateway::toJson(measurement));
+    });
+
+    app.listen(8080,
+               [instanceName = app.getConfig()->getInstanceName()](const express::legacy::in::WebApp::SocketAddress& socketAddress,
+                                                                   const core::socket::State& listenState) {
+                   reportState(instanceName, socketAddress, listenState);
+               });
+
+    const auto measurementSocketServer = startMeasurementSocketServer(acceptMeasurement);
+    const auto mqttClient = startMqttClient();
+
+    return core::SNodeC::start();
+}
+```
+
+The extended `main.cpp` shows the extension point in its most compact form. The application starts one more configured role, `measurement-input`, and gives that role the same `acceptMeasurement` function used by `/simulate`. No output path is rewritten. That is what safe extension looks like in a small SNode.C application.
+
+
+### Build and usage note for the extended version
+
+The extended README documents the new local measurement input. The example uses `nc -U`, but the same socket could be written by a helper process, a data-acquisition script, a serial-to-local-socket adapter, or another local service.
+
+#### `README-BUILD.md`
+
+````markdown
+# MiniGateway
+
+This is the current event-driven MiniGateway source package extracted from the book project.
+
+It contains the complete source tree used by Chapter 37:
+
+- `CMakeLists.txt`
+- `main.cpp`
+- `Measurement.h`
+- `MeasurementState.h/.cpp`
+- `MeasurementBus.h/.cpp`
+- `MeasurementUnixSocketContext.h/.cpp`
+- `MeasurementUnixSocketContextFactory.h/.cpp`
+- `ConfigSections.h/.cpp`
+- `MiniGatewayMqtt.h/.cpp`
+- `MiniGatewaySocketContextFactory.h/.cpp`
+
+Expected build shape, assuming SNode.C is installed as a CMake package:
+
+```sh
+cmake -S . -B build
+cmake --build build
+```
+
+Measurements can be injected through the Unix domain socket `/tmp/minigateway-measurements.sock`. Send one comma-separated line per measurement:
+
+```sh
+printf '21.5,43.0,3.72\n' | nc -U /tmp/minigateway-measurements.sock
+```
+
+The accepted fields are `temperature,humidity,voltage` or `temperature,humidity,voltage,sequence`. Measurements without a sequence receive the next local sequence number and are forwarded to the `MeasurementState`, `MeasurementBus`, MQTT publisher, SSE subscribers, and `/status` endpoint.
+
+This package intentionally contains no TLS, no persistence, no MQTT-over-WebSocket, no frontend.
+````
+
+The README is intentionally operational. It tells the reader how to build the extended variant and how to inject a measurement without introducing another tool or protocol into the chapter. The important point is not `nc` itself. The important point is that an ordinary local process can now feed the same application measurement path.
+
+
+### What the extension teaches
+
+The extension is small, but it teaches a general SNode.C lesson. A new carrier or local input path should be added where that communication concern belongs. It should not be smeared across the existing output protocols.
 
 ```text
 bad extension:
-  hide native MQTT and MQTT-over-WebSocket behind one opaque branch
+  parse device input inside /status
+  publish MQTT directly from the parser
+  let SSE own the latest measurement
 
-good extension:
-  name the role and component choices so the carrier boundary remains visible
+better extension:
+  parse input in a device-facing context
+  hand a Measurement to the application
+  reuse the existing state and bus path
 ```
 
-### Extension 2: explicit command handling
+The extended MiniGateway source is therefore not interesting because it adds many features. It is interesting because it adds one feature without disturbing the old boundaries.
 
-MiniGateway's first MQTT role can publish measurements and receive command messages. The next step is to make the command boundary explicit.
+### Extending beyond this gateway input
 
-A command should not be treated as a raw string that random code interprets. It should become an application-level operation.
+The Unix-domain socket is only one example of an extension boundary. The same reasoning applies to other changes.
 
-Example command payloads might be:
+A serial input adapter would still be a device-facing input boundary. A Bluetooth RFCOMM or L2CAP input would also be a device-near input boundary, with the additional operational condition that the devices must already be paired at the operating-system level before SNode.C can use the Bluetooth connection. A database history feature would be a persistence boundary. MQTT-over-WebSocket would be a carrier variation for MQTT semantics. A browser dashboard would be an application/UI surface, not a reason to move domain ownership into HTTP route handlers.
 
-```json
-{"enabled": true}
-```
+| New requirement | Preferred owner |
+|---|---|
+| local line-oriented measurement input | input `SocketContext` |
+| serial or Bluetooth measurement source | device-facing input boundary |
+| durable measurement history | persistence service |
+| MQTT over WebSocket | MQTT carrier boundary |
+| authentication | HTTP/MQTT boundary and deployment policy |
+| browser dashboard | web application/static asset boundary |
+| command execution | explicit command/domain service |
+| retained measurement backlog | persistence or bounded queue, not SSE response state |
 
-or:
-
-```json
-{"intervalSeconds": 5}
-```
-
-The MQTT callback receives a publish packet. The command decoder interprets the payload. The domain service applies the operation.
-
-```text
-MQTT publish received
-  -> command decoder
-      -> application command
-          -> MeasurementState / MeasurementController
-              -> state change
-                  -> HTTP/SSE/MQTT surfaces observe the result
-```
-
-That flow preserves ownership. MQTT is the carrier and protocol surface. The domain service owns the meaning.
-
-A useful naming convention is:
-
-```text
-minigateway/<name>/measurement
-minigateway/<name>/status
-minigateway/<name>/command
-```
-
-The topic names should be configuration, not hard-coded protocol truth. The command semantics should be application code, not transport code.
-
-### Extension 3: bounded SSE observation
-
-The first SSE endpoint may periodically send the current state while the response is connected. That is enough to teach the SNode.C response shape, but it is not a complete output-pressure policy.
-
-A maintainable live-observation role needs a bounded rule.
-
-```text
-slow observer
-  -> must not force unbounded memory growth
-```
-
-For MiniGateway, a simple policy is sufficient:
-
-```text
-SSE policy:
-  keep only the latest measurement for each observer
-  send the newest state on the next timer tick
-  stop the timer when the response is disconnected
-  do not queue an unlimited history in memory
-```
-
-This is a deliberate teaching policy. It is not the only possible one.
-
-Other systems may choose:
-
-```text
-bounded queue per observer
-coalescing by event type
-forced disconnect after repeated write pressure
-lossy observation with explicit sequence numbers
-backpressure propagated to the producer
-```
-
-The important point is that the policy is named. A live-event stream without a bounded output policy is unfinished architecture.
-
-### Extension 4: a persistence boundary
-
-MiniGateway can also grow a persistence boundary, but persistence should not be hidden in protocol callbacks.
-
-The first step is an interface or service boundary:
-
-```cpp
-class MeasurementStore {
-public:
-    virtual ~MeasurementStore() = default;
-    virtual void store(const Measurement& measurement) = 0;
-};
-```
-
-The exact implementation may be a no-op store, a file store, a MariaDB-backed store, or a later MQTTStore-style storage service.
-
-The application flow should remain clear:
-
-```text
-measurement updated
-  -> domain state changed
-      -> observer notification
-      -> MQTT publication
-      -> persistence service, if configured
-```
-
-The persistence service is its own boundary. It owns durable-state decisions. The MQTT publish callback does not secretly own database writes. The HTTP route does not secretly own database schema. The SSE endpoint does not become a storage engine.
-
-If MiniGateway later uses MariaDB, it should follow the Chapter 28 discipline: database availability, credentials, schema assumptions, command sequencing, and degraded behavior are part of the persistence boundary. If it later uses MQTTStore as a separate application, MiniGateway may not need to write the database at all; it can publish MQTT messages and let the store role persist them.
-
-Those are different designs:
-
-```text
-embedded persistence:
-  MiniGateway owns measurement storage
-
-external persistence role:
-  MiniGateway publishes measurements
-  MQTTStore subscribes and stores them
-```
-
-Neither is automatically better. The right choice depends on the system boundary.
-
-### Extension 5: generated configuration as project artifact
-
-A guided project should teach configuration as a reproducible role shape, not only as a command-line convenience.
-
-MiniGateway has at least these configurable concerns:
-
-```text
-admin-http:
-  address / port
-  enabled or disabled
-
-mqtt-uplink:
-  broker address
-  client id
-  keep-alive
-  reconnect policy
-  publish topic
-  command topic
-
-measurement-source:
-  update interval
-  enabled state
-
-live-events:
-  event interval or push policy
-  observer/backpressure policy
-```
-
-The exact syntax depends on the SNode.C configuration machinery and the application-specific subcommands. The design rule is independent of syntax:
-
-```text
-configuration should show the role constellation
-```
-
-A useful generated configuration is therefore not only a dump of flags. It is a readable description of the deployed application shape.
-
-```text
-MiniGateway deployed shape:
-  admin-http enabled on port 8080
-  mqtt-uplink enabled toward broker.example:1883
-  publish topic minigateway/lab-1/measurement
-  command topic minigateway/lab-1/command
-  measurement interval 5s
-  SSE observer policy latest-only
-```
-
-That is the kind of information an operator or maintainer needs.
+The pattern is always the same: identify the concern first, then choose the owner.
 
 ### Testing MiniGateway by boundaries
 
-Chapter 34 gave the testing rule:
+MiniGateway should not be tested only by starting it and clicking around. End-to-end checks are useful, but they often hide the boundary that failed. The project should be tested where the design claims to have a boundary.
 
-```text
-Which SNode.C boundary does this test protect?
-```
-
-MiniGateway can use that rule directly.
-
-| Test | Boundary protected |
+| Test surface | What it protects |
 |---|---|
-| `/health` returns `{"ok": true}` | HTTP route surface |
-| `/status` returns the current measurement | HTTP/domain read boundary |
-| `/events` emits `measurement` events | SSE lifetime and formatting boundary |
-| MQTT publication contains expected JSON | MQTT integration boundary |
-| command topic changes enabled state | MQTT command/application boundary |
-| slow SSE observer does not grow memory without limit | output-pressure policy |
-| MQTT disconnect leads to visible reconnect/degraded state | failure policy |
-| generated config reproduces the same role shape | configuration boundary |
-| installed executable finds required libraries/modules | deployment boundary |
+| CMake build | external SNode.C consumer shape |
+| `/health` | basic HTTP request/response path |
+| `/status` | current measurement representation |
+| `/simulate` | controlled base input boundary |
+| `/events` | SSE lifetime and event formatting |
+| `measurement-input` Unix socket | line parsing and local input role |
+| `MeasurementState` | current-value ownership |
+| `MeasurementBus` | event fan-out without protocol coupling |
+| `MiniGatewayMqtt` | MQTT session and publish behavior |
+| generated configuration | effective role shape |
+| deployment | installed binary, libraries, paths, and service user |
 
-A small end-to-end test is useful, but it is not enough. The project is designed around several boundaries, so the tests should protect several boundaries.
-
-### Debugging MiniGateway
-
-MiniGateway should be debugged by role names and boundaries, not by guessing through the whole process.
-
-Useful first questions are:
+A useful test name should often answer the question from Chapter 34:
 
 ```text
-Is admin-http listening?
-Does /health work?
-Does /status show current domain state?
-Does /events stay connected?
-Is mqtt-uplink connected?
-Is MQTT publishing or subscribing?
-Did a command reach the application decoder?
-Did the measurement state change?
-Did the persistence boundary accept or reject the update?
+Which MiniGateway boundary does this test protect?
 ```
 
-The log vocabulary should preserve those names.
+For example:
 
 ```text
-admin-http: listening on '0.0.0.0:8080'
-live-events: observer disconnected
-mqtt-uplink: connected to 'broker.example:1883'
-mqtt-uplink: reconnect scheduled after connection error
-measurement-state: sequence advanced to 42
-measurement-store: unavailable, degraded mode active
+status_returns_current_measurement
+simulate_publishes_to_bus
+unix_socket_accepts_measurement_line
+sse_disconnect_removes_listener
+mqtt_publish_only_when_connected
 ```
 
-These messages are examples of the diagnostic style, not an API requirement. The principle is that logs should keep the broken boundary visible.
+These names are not just labels. They preserve architectural intent.
+
+### Manual checks while developing
+
+A small manual sequence can already exercise most of the guided application:
+
+```sh
+./minigateway
+```
+
+In another terminal:
+
+```sh
+curl http://localhost:8080/health
+curl http://localhost:8080/status
+curl http://localhost:8080/simulate
+curl http://localhost:8080/status
+```
+
+For SSE:
+
+```sh
+curl -N -H 'Accept: text/event-stream' http://localhost:8080/events
+```
+
+Then trigger a measurement:
+
+```sh
+curl http://localhost:8080/simulate
+```
+
+For the extended Unix-domain input:
+
+```sh
+printf '21.5,43.0,3.72\n' | nc -U /tmp/minigateway-measurements.sock
+curl http://localhost:8080/status
+```
+
+And before diagnosing an HTTP route, verify endpoint ownership:
+
+```sh
+ss -ltnp 'sport = :8080'
+```
+
+This last command matters. A wrong response from `localhost:8080` may mean the wrong process owns the port, not that MiniGateway's route is wrong.
+
+### Debugging by role
+
+When MiniGateway fails, start with the role or boundary, not with the whole application.
+
+```text
+/status does not change:
+  inspect input path, acceptMeasurement, MeasurementState
+
+/events does not receive updates:
+  inspect SSE request headers, response lifetime, MeasurementBus listeners
+
+MQTT does not publish:
+  inspect mqtt-uplink connection state, broker reachability, CONNACK result
+
+Unix socket input fails:
+  inspect measurement-input state, socket path, line format, permissions
+
+wrong HTTP response appears:
+  inspect which process owns the port
+```
+
+Configured role names are diagnostic handles. `mqtt-uplink` and `measurement-input` are not decorative names. They connect configuration, state callbacks, logs, and operator language.
 
 ### Deployment shape
 
-MiniGateway can be deployed as one executable with several roles. That is a valid system shape.
+A deployed MiniGateway is not only an executable. It has linked SNode.C components, configuration, runtime state, log output, and possibly service-manager integration.
+
+A general-purpose Linux deployment should make these questions answerable:
 
 ```text
-one executable:
-  admin-http
-  live-events
-  mqtt-uplink
-  measurement-state
+Which binary is installed?
+Which SNode.C components are required?
+Which configured roles exist?
+Which ports or socket paths are owned?
+Where are configuration, logs, and pid files written?
+Which user/group owns the service?
+How is restart handled?
 ```
 
-If the system grows, some roles may move out:
+For the extended version, the Unix-domain socket path is a deployment surface. `/tmp/minigateway-measurements.sock` is convenient for a guided project, but a packaged service may want a path below a runtime directory owned by the service user. That is a deployment decision, not a parser decision.
+
+### OpenWrt and constrained systems
+
+On OpenWrt or another constrained Linux target, MiniGateway's architecture does not change, but the cost of each dependency becomes more visible. The package should include only the required SNode.C components. The service definition should expose the configured roles clearly. Runtime paths must fit the platform's filesystem and permission model.
+
+For an OpenWrt-style deployment, ask:
 
 ```text
-several executables:
-  minigateway
-  mqttstore
-  external dashboard
-  external broker
+Is HTTP really needed on the device?
+Is native MQTT enough, or is MQTT-over-WebSocket required by the network?
+Where should local measurement input live?
+Should measurement input be enabled on this target?
+Which logs are useful under constrained storage?
+What happens if the broker is temporarily unavailable?
 ```
 
-The packaging decision is operational, not moral. One executable is clear when the roles share lifecycle and deployment context. Several executables are clearer when roles need different failure isolation, update cycles, resource limits, or ownership.
+These are not questions for CMake alone. They are application-deployment questions.
 
-For ordinary Linux deployment, the application needs installed libraries, configuration, logs, pid/runtime state, and service policy. For OpenWrt or another embedded Linux target, the same architecture must be expressed through cross-compiled packages, explicit dependencies, constrained storage, and a platform service manager.
+### When to split the application
 
-The project should therefore not end at build success.
+MiniGateway is intentionally one process. That is appropriate for the guided project because it keeps the role constellation visible. A larger system may eventually need process separation.
+
+Split only when the operational boundary is real:
 
 ```text
-build success:
-  the executable was produced
+same process is fine when:
+  failures are shared
+  deployment is shared
+  configuration is shared
+  the roles form one small application
 
-deployment success:
-  the role constellation can run where it is installed
+separate processes may be better when:
+  input collection must survive HTTP restarts
+  persistence must be isolated
+  security policies differ
+  deployment cadence differs
+  one role must be disabled independently
 ```
 
+Process splitting is not automatically more mature. It is useful when it makes an existing operational boundary honest.
 
-### A small installed layout
+### Extending safely in general
 
-MiniGateway is not complete merely because it starts from the build tree. The installed shape should be readable too.
-
-A small deployment may contain:
+The MiniGateway extension is a concrete example, but the rule applies throughout SNode.C applications.
 
 ```text
-/usr/bin/minigateway
-/etc/snode.c/minigateway.conf
-/var/log/snode.c/minigateway.log
-/var/run/snode.c/minigateway.pid
+new protocol semantics
+  -> protocol context or subprotocol
+
+new carrier
+  -> lower-family or upgrade boundary
+
+new domain behavior
+  -> application/domain service
+
+new durability requirement
+  -> persistence boundary
+
+new operator choice
+  -> configuration surface
+
+new failure policy
+  -> role that owns the failure
 ```
 
-The exact paths depend on user/root mode and the surrounding packaging policy, but the categories are stable:
-
-```text
-executable
-configuration
-log output
-runtime state
-service definition
-optional static assets
-optional persistence resources
-```
-
-The deployment should preserve the role names used in the source. If the configuration calls a role `mqtt-uplink`, the logs and operational documentation should not call the same thing `broker-client-2` without explanation. Names become part of the deployed system's readability.
-
-For a constrained Linux target, the same idea applies with stronger pressure. The package should contain the smallest useful component surface. A MiniGateway build that uses native MQTT over IPv4 and an HTTP administration surface should not accidentally drag in every optional carrier merely because the development tree happened to build them.
-
-```text
-selected role surface
-  -> selected SNode.C components
-      -> explicit package dependencies
-          -> reproducible deployed system
-```
-
-### A boundary-first smoke-test path
-
-A complete CI system is beyond the purpose of this chapter, but MiniGateway should at least have a smoke-test path that follows the architecture.
-
-One useful order is:
-
-```text
-1. build external consumer target
-2. start MiniGateway in foreground mode
-3. request /health
-4. request /status and validate JSON shape
-5. connect to /events and read at least two measurement events
-6. observe MQTT connection state
-7. publish a command message and check domain-state change
-8. stop the process cleanly
-9. repeat from an installed location
-```
-
-This sequence is not only a test plan. It is a reading plan for the system. It moves from build surface to runtime surface, then from HTTP to SSE to MQTT, and finally to installed behavior.
-
-The test should not hide all details behind one opaque end-to-end result. A single result called `MiniGateway works` is less useful than several smaller results that say which boundary failed.
-
-```text
-bad failure report:
-  MiniGateway test failed
-
-better failure report:
-  /events did not deliver second measurement event
-  mqtt-uplink did not reconnect after broker restart
-  installed binary could not find runtime-loaded module
-```
-
-That is the same diagnostic discipline applied to testing.
-
-### What not to extend yet
-
-A guided project is also a place to practice restraint. MiniGateway should not immediately become a general IoT platform.
-
-Do not add all of these at once:
-
-```text
-user management
-large web frontend
-database migrations
-plugin system
-multiple device protocols
-cluster coordination
-cloud provisioning
-automatic certificate management
-full MQTT bridge behavior
-```
-
-Each of those topics may be legitimate in a real project. They are not legitimate merely because an extension point exists.
-
-A safe next step is one that answers a specific boundary question:
-
-```text
-Do we need another carrier?
-Do we need durable state?
-Do we need better operator visibility?
-Do we need failure isolation?
-Do we need a reusable component?
-```
-
-That is the discipline Chapter 36 described. Extension should follow real variation, not imagination.
-
-### When MiniGateway should split
-
-A small system should not split prematurely, but it should have clear warning signs.
-
-MiniGateway may need to split when:
-
-```text
-HTTP administration needs separate authentication and update policy
-MQTT integration must be restarted independently
-persistence failures must not affect observation
-measurement acquisition moves to a device-near process
-several gateways share one store or broker integration
-OpenWrt packaging requires smaller install surfaces
-```
-
-Splitting is not the first solution. It is a response to real operational boundaries.
-
-The architecture should make the split possible without rewriting the domain model. That is why the first version separated measurement state, HTTP routes, SSE observation, MQTT integration, and optional persistence.
-
-### What the project proves
-
-MiniGateway proves that the book's vocabulary is practical.
-
-It shows:
-
-```text
-one domain fact
-  -> several protocol surfaces
-
-one process
-  -> several named roles
-
-one state owner
-  -> several observers
-
-one MQTT semantics
-  -> more than one possible carrier path
-
-one application
-  -> build, configuration, diagnostics, deployment, and tests
-```
-
-The project is intentionally modest. Its value is not feature volume. Its value is that the features are placed at the right boundaries.
+If an extension requires unrelated parts of the application to know too much about each other, the boundary is probably wrong. That does not always mean a new framework abstraction is needed. Sometimes the correct answer is simply a small application-local class with a clear name and a narrow responsibility.
 
 ### What to remember
 
-- A guided project should preserve the book's boundary vocabulary.
-- MiniGateway can grow without becoming MQTTSuite.
-- MQTT-over-WebSocket is a carrier extension, not a domain rewrite.
-- MQTT commands should become application commands before they mutate domain state.
-- SSE needs an explicit output-pressure policy.
-- Persistence should be its own boundary, not a hidden side effect of random callbacks.
-- Generated configuration should describe the deployed role shape.
-- Tests should protect specific boundaries.
-- Logs should name roles and phases, not only report generic failure.
-- Deployment success is different from build success.
-- Splitting an executable is an operational boundary decision.
-- The guided project proves that SNode.C's architectural vocabulary can be assembled into a small but real system.
-
-### Closing the guided project
-
-The guided project is the last technical part of the book because it does what a final project should do: it does not introduce a new conceptual universe, but assembles the existing one.
-
-From here, the book can close by returning to the central lesson: SNode.C is valuable not because it hides network programming, but because it keeps the layers, roles, boundaries, and operational surfaces visible enough to reason about them.
+- The extended version adds a Unix-domain measurement input, not a new application architecture.
+- The new input path ends at the same `acceptMeasurement` function used by `/simulate`.
+- HTTP, SSE, and MQTT behavior remain unchanged because the extension is placed at the input boundary.
+- A `SocketContext` is a good owner for local line-oriented stream input.
+- A factory should construct the context and inject the application handler, not own the domain state.
+- New requirements should be placed at the boundary that owns their variation.
+- Testing should protect boundaries, not only end-to-end behavior.
+- Debugging should start with the failing role or communication boundary.
+- Deployment includes ports, socket paths, configuration, logs, users, and restart policy.
+- OpenWrt-style deployment changes dependency cost and runtime-path choices, not the core architecture.
+- A single process is fine until there is a real operational reason to split it.
