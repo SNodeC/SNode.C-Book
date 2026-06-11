@@ -2,9 +2,7 @@
 
 ### From framework pieces to application structure
 
-Chapter 28 introduced persistence as an application-state boundary.
-
-Chapter 29 now turns to the applications in `src/apps`.
+Chapter 28 introduced persistence as an application-state boundary. Chapter 29 now turns to executable applications: the point where runtime setup, selected components, application-side objects, configured communication roles, callbacks, routes, persistence objects, and installable targets meet in concrete programs.
 
 The question changes from:
 
@@ -18,87 +16,51 @@ to:
 How do the layers become executable programs?
 ```
 
-This is an important shift.
-
-Up to this point, the book has introduced many framework pieces separately:
-
-- runtime initialization,
-- communication roles,
-- contexts and factories,
-- lower communication families,
-- configuration,
-- diagnostics,
-- TLS,
-- timeouts and failure behavior,
-- HTTP,
-- the Express-like layer,
-- SSE,
-- WebSocket,
-- MQTT,
-- MQTT over WebSocket,
-- database support.
-
-The applications in `src/apps` show how those pieces are assembled.
+That is an important shift. Up to this point, the book has introduced many framework pieces separately: runtime initialization, communication roles, contexts and factories, lower communication families, configuration, diagnostics, TLS, timeouts and failure behavior, HTTP, the Express-like layer, SSE, WebSocket, MQTT, MQTT over WebSocket, and database support. The applications in `src/apps` show how those pieces are assembled.
 
 The central sentence for this chapter is:
 
 > In SNode.C, the build target often reveals the application architecture before the entry point is opened.
 
-That is the main reason `src/apps` is useful as study material.
-
-It shows not only C++ entry points, but also executable targets, linked libraries, optional dependencies, and installable application shapes.
+That is the main reason `src/apps` is useful as study material. It shows not only C++ entry points, but also executable targets, linked libraries, optional dependencies, and installable application shapes. Chapter 28 showed persistence as a boundary. Chapter 29 shows applications as assembly points.
 
 ### `src/apps` as study material
 
-The applications in `src/apps` should not all be read in the same way.
+The applications in `src/apps` should not all be read in the same way. Some are application shells, some are focused examples, some are utility programs, and some are test or demonstration targets. Some demonstrate a protocol family. Some demonstrate a build pattern. They are not all production templates.
 
-Some are application shells.
-
-Some are focused examples.
-
-Some are utility or test-style programs.
-
-Some demonstrate a protocol family.
-
-Some demonstrate a build pattern.
-
-For this chapter, we will not discuss every target in the directory.
-
-Instead, we select a representative set:
+For this chapter, we will not discuss every target in the directory. Instead, we select a representative set:
 
 | Example | Why it is useful here |
 |---|---|
-| `snode.c` | application shell with Express-style web structure, routes, SSE, and timer use |
-| `express-compat-server` | compatibility-oriented Express behavior example |
-| echo family | one protocol model packaged across several carriers and stream modes |
-| `jsonserver` / `jsonclient` | HTTP server/client split and optional JSON-related target |
-| `testpost` | focused HTTP POST example with legacy and TLS stream linkage |
-| `testpipe` | small core/runtime utility showing pipe-based event handling |
-| `database/testmariadb` | MariaDB demonstration after the persistence chapter |
+| `snode.c` | web application shell with Express-style structure, routes, SSE, timers, and listen-state reporting |
+| `express-compat-server` | behavior and compatibility comparison using the same broad web stack |
+| echo family | generated client/server matrix over several carriers and stream modes |
+| `jsonserver` / `jsonclient` | HTTP server/client pair with JSON-oriented request and response behavior |
+| `testpost` | focused HTTP POST example with legacy and TLS web application composition |
+| `testpipe` | core runtime utility showing pipe-based event handling |
+| `database/testmariadb` | MariaDB persistence demonstration after the persistence chapter |
 
-The selection is broad enough to show different application shapes.
+The selection is broad enough to show different application shapes and narrow enough to keep the chapter readable. The goal is not to catalogue a directory. The goal is to learn how SNode.C applications are assembled.
 
-It is also narrow enough to keep the chapter readable.
+The top-level app build also contains other targets, such as `configtest`, `warema-jalousien`, and a conditional `testregex`. Those are useful in their own contexts, but they are not needed for the main teaching path here.
 
-The goal is not to catalogue a directory.
-
-The goal is to learn how SNode.C applications are assembled.
-
-### Build targets as the first reading layer
+### Build targets as the first architectural reading layer
 
 Before opening the C++ entry point, the build target already tells part of the application story.
 
+A SNode.C application target tells the reader three things before C++ is opened:
+
+```text
+which executable is produced
+which framework components form its public face
+which optional dependencies decide whether the target exists
+```
+
 #### Selected application targets in the repository
 
-A first reading pass should start with the build targets.
+A first reading pass should start with the build targets. The top-level `src/apps/CMakeLists.txt` creates executables and links them against selected SNode.C targets. This file is an in-source-tree build file, and that distinction matters.
 
-The top-level `src/apps/CMakeLists.txt` creates executables and links them against selected SNode.C targets.
-
-This file is an in-source-tree build file.
-
-That distinction matters.
-
-Inside the SNode.C source tree, the application targets can link against local CMake target names such as:
+Inside the SNode.C source tree, application targets can link local CMake target names such as:
 
 ```text
 core
@@ -124,13 +86,7 @@ target_link_libraries(my-ipv4-legacy-webapp
 )
 ```
 
-The namespace is not cosmetic.
-
-It tells CMake that the application is using exported SNode.C component targets, not internal targets from the SNode.C build tree.
-
-The direct component choices are the same as in the in-tree example.
-
-The external form uses the installed `snodec::...` namespace.
+The namespace is not cosmetic. It tells CMake that the application is using exported SNode.C component targets, not internal targets from the SNode.C build tree. The direct component choices are the same as in the in-tree example; the external form uses the installed `snodec::...` namespace.
 
 A simplified view of the selected application targets is:
 
@@ -141,38 +97,24 @@ A simplified view of the selected application targets is:
 | `testpost` | `http-server-express` + `net-in-stream-legacy` + `net-in-stream-tls` | HTTP POST handling and legacy/TLS application composition |
 | `jsonserver` | `http-server-express` + `net-in-stream-legacy`, built when JSON support is available | JSON-capable HTTP server example |
 | `jsonclient` | `http-client` + `net-in-stream-legacy` | outgoing HTTP request/response example |
-| `testpipe` | core-only utility target | pipe event behavior inside the runtime |
-| `database/testmariadb` | MariaDB database target | MariaDB API and persistence demonstration |
-| echo family | shared echo context plus generated stream/network variants | one protocol model across carriers and stream modes |
+| `testpipe` | `core` | pipe event behavior inside the runtime |
+| `database/testmariadb` | `db-mariadb`, built when MariaDB support is available | MariaDB API and persistence demonstration |
+| echo family | `echosocketcontext` + generated `net-...-stream-...` combinations | one protocol model across carriers and stream modes |
 
-The target name tells the reader what executable is produced.
+The target name tells the reader what executable is produced. The link line shows which application-facing component or local target is selected. Conditional build rules show which optional components must be available. Install rules show which executables become part of the application installation set.
 
-The link line shows which application-facing component or local target is selected.
-
-The conditional build rules show which optional components must be available.
-
-The install rules show which executables become part of the application installation set.
-
-The link line should not be misread as a manual list of every lower layer.
-
-It shows the direct application-facing components selected by the executable.
-
-The next section reads this link line in detail.
+The link line should not be misread as a manual list of every lower layer. It shows the direct application-facing components selected by the executable. The next section reads this link line in more detail.
 
 #### Linked components reveal application shape
 
-A SNode.C application can often be understood by reading the components it links.
-
-For high-level protocol applications, the normal direct link shape is:
+A SNode.C application can often be understood by reading the components it links. For many high-level protocol applications, the normal direct link shape is:
 
 ```text
 protocol/application component
   + selected transport component
 ```
 
-This rule applies both inside the SNode.C source tree and outside it.
-
-Only the target names change:
+This rule applies both inside the SNode.C source tree and outside it. Only the target names change:
 
 ```text
 in-tree target names
@@ -197,9 +139,7 @@ target_link_libraries(
 )
 ```
 
-It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream carrier.
-
-The equivalent external form uses exported `snodec::...` targets:
+It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream carrier. The equivalent external form uses exported `snodec::...` targets:
 
 ```cmake
 find_package(snodec REQUIRED
@@ -231,17 +171,9 @@ IPv4 legacy stream carrier
   external target: snodec::net-in-stream-legacy
 ```
 
-The `snodec::...` form is not another dependency step.
+The `snodec::...` form is not another dependency step. It is the installed/exported target name used outside the SNode.C source tree. The application does not need to list the lower dependency chain behind those components, because the selected component targets already declare the further SNode.C components they need.
 
-It is the installed/exported target name used outside the SNode.C source tree.
-
-The application does not need to list the lower dependency chain behind those components, because the selected component targets already declare the further SNode.C components they need.
-
-The direct link line is short, but the component-owned dependency graph is deeper.
-
-For this example, the public component-dependency graph can be expanded as a tree like this.
-
-System libraries and non-SNode.C implementation details are intentionally not expanded; some are only shown as named leaf dependencies.
+The direct link line is short, but the component-owned dependency graph is deeper. For this example, the public component-dependency graph expands into the following teaching view. System libraries and non-SNode.C implementation details are intentionally not expanded; some are only shown as named leaf dependencies.
 
 ```text
 my-ipv4-legacy-webapp
@@ -273,9 +205,7 @@ my-ipv4-legacy-webapp
                         `-- snodec::logger
 ```
 
-The two top-level branches are still the important part.
-
-They show the two direct decisions of the application:
+The two top-level branches are still the important part. They show the two direct decisions of the application:
 
 ```text
 http-server-express
@@ -285,13 +215,9 @@ net-in-stream-legacy
   -> the selected IPv4 legacy stream carrier
 ```
 
-The HTTP branch remains the protocol/application branch. It may still carry lower implementation dependencies, such as stream context machinery, when the HTTP implementation needs them.
+The HTTP branch remains the protocol/application branch. It carries lower implementation dependencies, such as HTTP server support, generic HTTP support, stream context machinery, core socket support, core runtime support, utilities, and logging. Optional MIME support can add `libmagic`, and the Express layer requires JSON support for its JSON middleware.
 
-The transport branch remains the selected carrier branch. Lower dependencies may overlap internally, but that does not change the application-facing rule.
-
-The same way of reading applies inside `net-in-stream-legacy` itself.
-
-It is a composed SNode.C component:
+The transport branch remains the selected carrier branch. Lower dependencies may overlap internally, but that does not change the application-facing rule. The same way of reading applies inside `net-in-stream-legacy` itself. It is a composed SNode.C component:
 
 ```text
 net-in-stream-legacy
@@ -309,11 +235,7 @@ IPv4 network family
   + generic/core stream machinery
 ```
 
-A higher-level component name abstracts the internal link list, but it still exposes the design structure.
-
-The diagram is not a linker command.
-
-It is a teaching view of the public dependency graph.
+A higher-level component name abstracts the internal link list, but it still exposes the design structure. The diagram is not a linker command; it is a reader-facing view of the public component graph.
 
 The important build model is:
 
@@ -335,23 +257,13 @@ What do those components need internally?
   -> their targets declare it
 ```
 
-The important point is not that the application knows the whole graph.
+The important point is not that the application knows the whole graph. The important point is that it selects the components that define its public shape: the HTTP application layer and the concrete transport carrier. The remaining dependencies belong to those selected components.
 
-The important point is that it selects the components that define its public face: the HTTP application layer and the concrete transport carrier.
+When reading another SNode.C application, start with the executable target, then read the linked protocol/application component, the selected transport component, and any optional feature components. Only then open the C++ entry point. A direct application link line should describe the application face, not repeat every implementation layer below it.
 
-The remaining dependencies belong to those selected components.
+#### The build system records application choices
 
-When reading another SNode.C application, start with the executable target, then read the linked protocol/application component, the selected transport component, and any optional feature components.
-
-Only then open the C++ entry point.
-
-A direct application link line should describe the application face, not repeat every implementation layer below it.
-
-#### The build system records application architecture
-
-The build system is part of the application story.
-
-In SNode.C, CMake targets often reveal the application structure before the C++ entry point is opened.
+The build system is part of the application story. In SNode.C, CMake targets often reveal the application structure before the C++ entry point is opened.
 
 The build file records:
 
@@ -377,9 +289,7 @@ if(NLOHMANN_JSON_FOUND)
 endif()
 ```
 
-This is an application-level fact, not only a build-system detail.
-
-It means:
+This is an application-level fact, not only a build-system detail:
 
 ```text
 JSON support available
@@ -389,9 +299,15 @@ JSON support unavailable
   -> target is not produced
 ```
 
-The same idea appears with the database example.
+The same idea appears with the database example:
 
-The database demonstration is built only when MariaDB support is available.
+```text
+MariaDB support available
+  -> database demonstration target exists
+
+MariaDB support unavailable
+  -> database demonstration target is absent
+```
 
 Optional dependencies therefore influence the set of applications that exist in the build.
 
@@ -401,22 +317,21 @@ After the build target has established the application face, the entry point sho
 
 #### The executable as an assembly point
 
-In many SNode.C applications, the executable entry point is not the place where the whole framework is reimplemented.
-
-It is the assembly point.
+In many SNode.C applications, the executable entry point is not the place where the whole framework is reimplemented. It is the assembly point. It wires selected framework pieces, application callbacks, configuration, listen/connect actions, and runtime start together.
 
 A typical entry point answers questions such as:
 
 - How is the runtime initialized?
-- Which application object or communication role is created?
-- Which middleware, routes, contexts, or factories are registered?
-- Which instance names are used?
-- Which listen or connect action is registered?
+- Which application-side object or communication role is created?
+- Which configured communication roles and registered runtime-visible instances become relevant?
+- Which middleware, routes, contexts, factories, or command objects are registered?
+- Which listen or connect action is started?
+- Where do diagnostics and state callbacks enter?
 - How is the runtime started?
 
-The `snode.c` application is a good example.
+The `snode.c` application is a good example. Here, `snode.c` refers to the application target in `src/apps`, not to the entire framework.
 
-A compact form of its structure is:
+A compact teaching shape of its structure is:
 
 ```cpp
 int main(int argc, char* argv[]) {
@@ -430,6 +345,8 @@ int main(int argc, char* argv[]) {
         res->json({{"ok", true}});
     });
 
+    app.listen(8080, /* state callback */);
+
     return core::SNodeC::start();
 }
 ```
@@ -441,22 +358,17 @@ runtime initialization
   -> web application object
       -> middleware
           -> route
-              -> runtime start
+              -> listen action
+                  -> runtime start
 ```
 
-The real file contains more routes, nested routers, SSE behavior, and timer-driven output.
+The real file contains more routes, nested routers, SSE behavior, timer-driven output, and listen-state handling. But the assembly principle is already visible in the compact form. The executable is not a giant custom abstraction. It wires framework pieces and application behavior together.
 
-But the assembly principle is already visible in the small excerpt.
-
-The executable is not a giant custom abstraction.
-
-It wires framework pieces and application behavior together.
+Chapter 16 and Chapter 17 become practical here: application entry points and build targets decide which roles and configuration surfaces become visible. Chapter 18 becomes practical as well: application examples show where diagnostics enter through state callbacks, log output, visible target names, and conditional build choices.
 
 #### `snode.c` as application-shell example
 
-The `snode.c` target is the best main example for application-shell structure.
-
-It combines:
+The `snode.c` target is the best main example for application-shell structure. It combines:
 
 ```text
 snode.c
@@ -473,6 +385,7 @@ Its entry point demonstrates several useful patterns:
 - JSON responses,
 - SSE output,
 - timer-driven repeated sending,
+- listen-state callback handling,
 - runtime start.
 
 A useful reading model is:
@@ -482,14 +395,11 @@ build target
   -> linked layers
       -> application object
           -> middleware and routes
-              -> runtime start
+              -> listen/connect/state handling
+                  -> runtime start
 ```
 
-This is the path from CMake to application behavior.
-
-For a reader, that path is more useful than memorizing individual API calls.
-
-It shows how to approach a SNode.C application file.
+This is the path from CMake to application behavior. For a reader, that path is more useful than memorizing individual API calls. It shows how to approach a SNode.C application file.
 
 #### `express-compat-server` as compatibility-oriented example
 
@@ -500,11 +410,7 @@ http-server-express
 net-in-stream-legacy
 ```
 
-Its role in the manuscript should be secondary.
-
-It is useful because it shows that the Express-like layer is not only used by one application shell.
-
-It can also be used for behavior comparison, compatibility checking, and focused route/middleware experiments.
+Its role in the manuscript should be secondary. It is useful because it shows that the Express-like layer is not only used by one application shell. It can also be used for behavior comparison, compatibility checking, and focused route/middleware experiments.
 
 A good way to present it is:
 
@@ -516,9 +422,7 @@ express-compat-server
   -> compatibility / behavior-comparison example
 ```
 
-The point is not to study both applications deeply.
-
-The point is to show that the same layer composition can serve different application intentions.
+The point is not to study both applications deeply. The point is to show that the same layer composition can serve different application intentions.
 
 ### Application families and focused examples
 
@@ -535,69 +439,52 @@ EchoSocketContext
   -> IPv4 / stream / legacy
 ```
 
-The repository echo family generalizes the same idea.
-
-The full echo application structure uses:
-
-- a shared echo protocol model,
-- generated server executables,
-- generated client executables,
-- several network families,
-- legacy and TLS stream modes,
-- compile definitions for the selected combination.
+The repository echo family generalizes the same idea. The full echo application structure uses a shared echo protocol model, generated server executables, generated client executables, several network families, legacy and TLS stream modes, and compile definitions for the selected combination.
 
 The key idea is:
 
 ```text
-stable protocol behavior
-  -> several executable variants
-      -> different carrier and stream choices
+stable protocol model
+  -> generated client/server targets
+      -> selected network family
+          -> selected legacy/TLS stream mode
 ```
 
-This is one of the most useful application patterns in the repository.
+This is one of the most useful application patterns in the repository. It shows how SNode.C can keep the protocol core stable while changing the outer communication boundary.
 
-It shows how SNode.C can keep the protocol core stable while changing the outer communication boundary.
+The build includes IPv4, IPv6, and Unix-domain variants by default. Bluetooth L2CAP and RFCOMM echo variants are added only when BlueZ support is available. That conditionality matters because it is part of the application shape: not every generated executable exists in every build.
 
 #### JSON server and JSON client
 
 The JSON examples are useful because they show a clean server/client split.
 
-The server side combines the Express-like HTTP server layer with the selected stream carrier and JSON middleware.
-
-A compact model is:
+The server side combines the Express-like HTTP server layer with the selected stream carrier and JSON middleware:
 
 ```text
 jsonserver
-  -> HTTP server / Express-like layer
-      -> JSON middleware
-          -> POST route
-              -> JSON body access
+  -> Express legacy WebApp
+      -> JsonMiddleware
+          -> POST /index.html
+              -> JSON attribute access
                   -> response
 ```
 
-The client side combines the HTTP client layer with the selected stream carrier.
-
-A compact model is:
+The client side combines the HTTP client layer with the selected stream carrier:
 
 ```text
 jsonclient
-  -> HTTP client
-      -> POST request
-          -> JSON body
-              -> response callback
+  -> HTTP legacy client
+      -> MasterRequest
+          -> POST /index.html
+              -> application/json body
+                  -> response / parse-error callbacks
 ```
 
-This pair is good manuscript material because it shows both sides of an HTTP interaction.
-
-It also shows optional feature availability.
-
-The server target depends on JSON support being present, while the client demonstrates an outgoing HTTP request shape.
+This pair is good manuscript material because it shows both sides of an HTTP interaction. It also shows optional feature availability: the server target depends on JSON support being present, while the client demonstrates an outgoing HTTP request shape.
 
 #### `testpost` as focused HTTP POST example
 
-`testpost` should be presented as a focused example, not as a polished application.
-
-It demonstrates an HTTP POST-oriented surface and links both legacy and TLS stream support.
+`testpost` should be presented as a focused example, not as a polished application. It demonstrates an HTTP POST-oriented surface and links both legacy and TLS stream support.
 
 A useful model is:
 
@@ -621,11 +508,7 @@ express::tls::in::WebApp
   -> TLS HTTP endpoint
 ```
 
-The TLS app reuses the legacy app behavior.
-
-That makes `testpost` useful for Chapter 29 because it shows application composition rather than only route syntax.
-
-It also connects back to Chapter 19:
+The TLS app reuses the legacy app behavior. That makes `testpost` useful for Chapter 29 because it shows application composition rather than only route syntax. It also connects back to Chapter 19:
 
 ```text
 same application behavior
@@ -633,29 +516,23 @@ same application behavior
   -> TLS carrier
 ```
 
-This example should remain compact in the manuscript.
-
-The point is the application shape, not the details of the HTML upload form.
+This example should remain compact in the manuscript. The point is the application shape, not the details of the HTML upload form or the example certificate configuration.
 
 #### `testpipe` as a small core utility
 
-`testpipe` is useful because it does not depend on HTTP, MQTT, WebSocket, or database support.
-
-It links only against the core layer.
-
-That makes it a small example of runtime-managed utility behavior.
+`testpipe` is useful because it does not depend on HTTP, MQTT, WebSocket, or database support. It links only against the core layer. That makes it a small example of runtime-managed utility behavior.
 
 A compact model is:
 
 ```text
 core runtime
   -> Pipe
-      -> PipeSink callback
+      -> PipeSink callbacks
           -> PipeSource send
               -> runtime start
 ```
 
-A small excerpt captures the idea:
+A simplified excerpt captures the idea:
 
 ```cpp
 core::SNodeC::init(argc, argv);
@@ -667,6 +544,10 @@ const core::pipe::Pipe pipe(
             source.send(chunk, len);
         });
 
+        sink.setOnEof([]() {
+            VLOG(1) << "Pipe EOF";
+        });
+
         source.send("Hello World!");
     },
     [](int errnum) {
@@ -676,11 +557,7 @@ const core::pipe::Pipe pipe(
 return core::SNodeC::start();
 ```
 
-This example is useful because it reminds the reader that applications are not only servers.
-
-SNode.C also contains core utilities and runtime-managed helpers.
-
-The same pattern appears again:
+This example is useful because it reminds the reader that applications are not only servers. SNode.C also contains core utilities and runtime-managed helpers. The same pattern appears again:
 
 ```text
 initialize runtime
@@ -689,11 +566,11 @@ initialize runtime
           -> start runtime
 ```
 
+Not every application target is a server/client communication-role example. Some targets demonstrate core runtime objects or database integration.
+
 #### `database/testmariadb` after the persistence chapter
 
-Chapter 28 introduced the MariaDB integration layer.
-
-Chapter 29 can now show how a database demonstration becomes an application target.
+Chapter 28 introduced the MariaDB integration layer. Chapter 29 can now show how a database demonstration becomes an application target.
 
 The database example is located under a dedicated application subdirectory:
 
@@ -701,9 +578,7 @@ The database example is located under a dedicated application subdirectory:
 src/apps/database
 ```
 
-It is built only when MariaDB support is available.
-
-Its build shape is compact:
+It is built only when MariaDB support is available. Its build shape is compact:
 
 ```cmake
 if(LIBMARIADB_FOUND)
@@ -712,21 +587,18 @@ if(LIBMARIADB_FOUND)
 endif()
 ```
 
-This is a good continuation from Chapter 28.
+This is a good continuation from Chapter 28. The target does not need HTTP, MQTT, or WebSocket to teach persistence. It directly demonstrates:
 
-The target does not need HTTP, MQTT, or WebSocket to teach persistence.
-
-It directly demonstrates:
-
-- database connection configuration,
+- database-related configuration,
 - `MariaDBConnectionDetails`,
 - `MariaDBClient`,
 - state-change callbacks,
 - `exec(...)`,
 - `query(...)`,
-- affected-row metadata,
+- affected-row and field-count metadata,
 - command chaining,
-- timers that trigger database work.
+- timers that trigger database work,
+- transaction sequences with rollback and commit.
 
 A compact application model is:
 
@@ -739,11 +611,7 @@ configuration
                   -> timer-driven repeated queries
 ```
 
-The important point is that `testmariadb` is a focused demonstration target.
-
-It is not a recommended production persistence architecture.
-
-Its value is that it makes the Chapter 28 API concrete.
+The important point is that `testmariadb` is a focused demonstration target. It is not a recommended production persistence architecture. Its value is that it makes the Chapter 28 API concrete.
 
 ### Reading applications in `src/apps`
 
@@ -751,43 +619,35 @@ The examples lead to a practical reading method for unfamiliar SNode.C applicati
 
 #### Application categories in `src/apps`
 
-The selected examples can be grouped by what they teach.
+The selected examples can be grouped by what they teach:
 
 | Category | Examples | What to learn |
 |---|---|---|
 | web application shell | `snode.c` | runtime + Express-style application assembly |
 | compatibility / behavior comparison | `express-compat-server` | another application using the same broad web stack |
-| generated application family | echo family | one protocol model across several executable variants |
+| generated application family | echo family | one protocol model across executable variants |
 | HTTP client/server examples | `jsonserver`, `jsonclient` | server/client split and optional JSON support |
 | HTTP POST / TLS-capable example | `testpost` | legacy/TLS application composition |
 | core runtime utility | `testpipe` | core-only runtime object and callbacks |
 | database demonstration | `database/testmariadb` | MariaDB API and event-integrated persistence |
 
-This grouping is more useful than a flat directory list.
-
-It tells the reader what to study and why.
+This grouping is more useful than a flat directory list. It tells the reader what to study and why.
 
 #### Small applications and larger applications differ by composition depth
 
-Small applications and larger applications often use the same pattern.
-
-They differ in composition depth.
+Small applications and larger applications often use the same pattern. They differ in composition depth.
 
 | Application depth | Typical composition |
 |---|---|
 | minimal utility | runtime + one core object + callbacks |
-| small server | runtime + server role + context/factory or route |
+| small server | runtime + server-side communication role + context/factory or route |
 | web app | runtime + HTTP/Express + middleware/routes |
 | client/server pair | server target + client target + shared protocol expectation |
 | generated family | stable model + build matrix of roles/carriers |
 | persistence demo | runtime + database client + command callbacks |
 | system-facing app | several roles + configuration + persistence + diagnostics |
 
-This keeps the mental model stable.
-
-A larger application is not necessarily a different kind of thing.
-
-It may simply compose more roles, more layers, and more operational behavior.
+This keeps the mental model stable. A larger application is not necessarily a different kind of thing. It may simply compose more roles, more layers, and more operational behavior.
 
 The recurring structure is:
 
@@ -801,11 +661,7 @@ select layers
 
 #### Optional dependencies and application availability
 
-Some applications only exist when optional dependencies are available.
-
-This is not only a CMake technicality.
-
-It is part of the application model.
+Some applications only exist when optional dependencies are available. This is not only a CMake technicality. It is part of the application model.
 
 Examples:
 
@@ -817,17 +673,7 @@ MariaDB support available
   -> database demonstration target can be built
 ```
 
-This prepares the reader for later build and deployment chapters.
-
-A deployed system may not contain every possible SNode.C component.
-
-It contains the components enabled by:
-
-- selected modules,
-- available dependencies,
-- build configuration,
-- install rules,
-- deployment purpose.
+This prepares the reader for later build and deployment chapters. A deployed system may not contain every possible SNode.C component. It contains the components enabled by selected modules, available dependencies, build configuration, install rules, and deployment purpose.
 
 The application tree therefore teaches a practical lesson:
 
@@ -840,22 +686,21 @@ available framework capability
 
 #### Reading a SNode.C application: a practical recipe
 
-When reading a SNode.C application, use a repeatable method.
+When reading a SNode.C application, use a repeatable method:
 
 1. Start with its CMake target.
-2. Look at the linked libraries.
-3. Identify the executable entry point.
-4. Find runtime initialization.
-5. Identify named instances or application objects.
-6. Find contexts/factories, routes, middleware, or command objects.
-7. Look for configuration hooks.
-8. Look for diagnostics and state callbacks.
-9. Check whether optional dependencies affect the target.
-10. Ask whether the target is a main application, focused example, utility, or demonstration.
+2. Read the linked components.
+3. Check conditional build guards.
+4. Identify whether this is a main application, focused example, utility, or demonstration.
+5. Identify the executable entry point.
+6. Find runtime initialization.
+7. Identify application-side objects, configured communication roles, and registered runtime-visible instances.
+8. Find contexts/factories, routes, middleware, command objects, or persistence objects.
+9. Look for configuration hooks.
+10. Look for diagnostics, state callbacks, and operational reporting.
+11. Ask whether the build target and the entry point agree.
 
-This recipe works well because SNode.C applications are often explicit about their layers.
-
-The build target and the entry point usually agree.
+This recipe works well because SNode.C applications are often explicit about their layers. The build target and the entry point usually agree.
 
 For example:
 
@@ -877,17 +722,18 @@ external: target_link_libraries(... snodec::core ...)
   -> expect runtime/core utility behavior
 ```
 
-The reader should learn to move between CMake and C++.
+The reader should learn to move between CMake and C++. Both files are part of the application:
 
-Both files are part of the application.
+```text
+CMake tells what the application selects.
+main.cpp shows how it assembles and runs it.
+```
 
 The reader should also distinguish local in-tree target names from installed `snodec::...` imported targets.
 
 #### Build structure and operational clarity
 
-A build target does not only produce a binary.
-
-It also makes a choice visible.
+A build target does not only produce a binary. It also makes a choice visible.
 
 For example:
 
@@ -901,9 +747,7 @@ may be clearer than:
 one universal executable with every carrier hidden behind runtime branching
 ```
 
-The echo family demonstrates this.
-
-A separate generated target can make each variant easier to test, install, run, and explain.
+The echo family demonstrates this. A separate generated target can make each variant easier to test, install, run, and explain. That does not mean one executable per variant is always the right design. It means the build structure can express operational clarity when the variants are meaningful.
 
 The JSON examples demonstrate a different form of clarity:
 
@@ -925,20 +769,23 @@ MariaDB unavailable
   -> database target is absent
 ```
 
-These are application-design decisions.
-
-The build system records them.
+These are application-design decisions. The build system records them.
 
 ### What to remember
 
 - `src/apps` shows how framework layers become executable targets.
-- The chapter studies selected applications, not every target in the directory.
+- The chapter studies representative applications, not every target in the directory.
 - In SNode.C, the build target often reveals the application architecture before the entry point is opened.
-- A high-level protocol application links the protocol/application component and the selected transport component.
-- In-tree applications use local target names; external applications use the corresponding installed `snodec::...` target names.
-- The direct link line is short, but the component-owned dependency graph may be deep.
-- The executable entry point is usually an assembly point.
-- The echo family, JSON examples, `testpost`, `testpipe`, and `database/testmariadb` show different application shapes.
+- In-tree applications use local target names; external applications use installed `snodec::...` targets.
+- A direct link line shows the application-facing component choices; component-owned dependency graphs may be deeper.
+- The executable entry point is usually an assembly point for runtime initialization, application objects, routes, callbacks, configuration, diagnostics, and runtime start.
+- `snode.c` is the main web-application-shell example.
+- The echo family shows a stable protocol model generated across carrier and stream variants.
+- `jsonserver` and `jsonclient` show an HTTP server/client pair.
+- `testpost` shows legacy/TLS application composition.
+- `testpipe` shows a core-only runtime utility.
+- `database/testmariadb` makes Chapter 28’s MariaDB API concrete.
+- Optional dependencies affect which application targets exist.
 - Chapter 30 moves from individual applications to systems.
 
 ### Closing perspective
@@ -955,10 +802,6 @@ framework layer
               -> installable program
 ```
 
-This is the bridge from framework knowledge to application reading.
-
-Chapter 30 now widens the view from individual applications to systems.
-
-It asks how several applications, roles, deployment boundaries, and operational relationships can form a larger SNode.C-based system.
+This is the bridge from framework knowledge to application reading. Chapter 29 showed individual applications as assembly points. Chapter 30 now widens the view again: several applications, roles, deployment boundaries, configuration files, and operational relationships form a system.
 
 Chapter 31 will then study MQTTSuite as a concrete reference ecosystem.
