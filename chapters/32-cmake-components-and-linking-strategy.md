@@ -2,17 +2,11 @@
 
 ### Why CMake starts Part X
 
-Part X begins a new kind of work.
+Chapter 31 closed Part IX by reading MQTTSuite as a concrete SNode.C-based ecosystem. Chapter 32 opens Part X by asking how such ecosystems are built, linked, installed, exported, and consumed. The subject is CMake, but the real topic is architectural visibility in the build system.
 
-The previous part ended with applications, systems, and MQTTSuite as a concrete reference ecosystem.
+Part IX looked at applications, systems, and a reference ecosystem. Part X turns toward build structure, component selection, packaging, porting, optional dependencies, and long-term maintenance. That makes CMake the right first topic.
 
-Now the focus turns toward building, linking, installing, porting, and maintaining those systems.
-
-That makes CMake the right first topic.
-
-For SNode.C, CMake is not only the mechanism that turns source files into libraries and executables. It is also one of the places where the architecture becomes visible.
-
-The build structure expresses many of the same ideas that appeared earlier:
+For SNode.C, CMake is not only the mechanism that turns source files into libraries and executables. It is one of the places where the framework declares its own architecture. The build structure expresses many of the same ideas that appeared earlier:
 
 - layers,
 - components,
@@ -24,9 +18,14 @@ The build structure expresses many of the same ideas that appeared earlier:
 - exported targets,
 - and consumer-facing component selection.
 
-This chapter is therefore not a generic CMake tutorial.
+This chapter is therefore not a generic CMake tutorial. It is about how SNode.C uses CMake to preserve architectural clarity.
 
-It is about how SNode.C uses CMake to preserve architectural clarity.
+The central idea is:
+
+```text
+CMake is not only build mechanics.
+CMake is one place where SNode.C declares its architecture.
+```
 
 ### The build structure as architecture
 
@@ -38,68 +37,52 @@ A beginner may look at a CMake build structure and see only commands:
 - `add_subdirectory`,
 - `configure_package_config_file`.
 
-Those commands matter.
-
-But in a framework like SNode.C, the more important question is:
+Those commands matter, but in a framework like SNode.C the more important question is:
 
 > What does the build structure reveal about the architecture?
 
-The answer is: a great deal.
-
-The build structure shows which parts are lower runtime infrastructure, which parts are protocol layers, which parts are transport/family compositions, which parts are optional features, and which parts are applications.
+The answer is: a great deal. The build structure shows which parts are lower runtime infrastructure, which parts are protocol layers, which parts are transport/family compositions, which parts are optional features, which parts are exported components, and which parts are applications.
 
 #### Top-level project shell
 
-The top-level `CMakeLists.txt` stays intentionally small.
+The top-level `CMakeLists.txt` stays intentionally small. It declares the project metadata, sets the version, extends the module path, includes helper modules such as formatting, Doxygen, uninstall, and graph visualization support, descends into `src`, and then includes packaging.
 
-It declares the project, sets the version, extends the module path, includes helper modules such as formatting, Doxygen, uninstall, and graph visualization support, descends into `src`, and then includes packaging.
+That is the right division of responsibility:
 
-That is the right division of responsibility.
+```text
+top level
+  -> project shell
 
-The top level owns the project shell.
+src
+  -> framework shape
 
-The `src` tree owns the framework shape.
+packaging
+  -> distribution
+```
 
-The packaging layer owns distribution.
-
-A top-level file that tried to describe every target directly would hide the architecture in one overloaded script.
-
-SNode.C does the opposite.
-
-It delegates target construction to the module tree.
+A top-level file that tried to describe every target directly would hide the architecture in one overloaded script. SNode.C does the opposite. It delegates target construction to the module tree.
 
 #### `src` as the structural center
 
-The real structural center of the build is `src/CMakeLists.txt`.
+The real structural center of the build is `src/CMakeLists.txt`. That file does several important things:
 
-That file does several important things:
-
-- checks supported compiler versions,
+- checks the supported compiler baseline,
 - sets the C++ standard,
-- applies strict warning options,
-- applies linker policy,
-- enables or disables logging-related compile definitions,
-- distinguishes the in-tree build context,
+- applies warning and linker policy,
+- defines the in-tree build context,
+- applies logging-related compile definitions,
 - descends into the major framework modules,
 - computes target dependencies,
 - declares supported installable components,
 - and generates the exported package configuration.
 
-This is where the build becomes more than compilation mechanics.
+This is where the build becomes more than compilation mechanics. It becomes an inventory of what the framework believes its component surface is.
 
-It becomes an inventory of what the framework believes its own component surface is.
-
-The supported component list is especially important.
-
-It includes core runtime pieces, stream legacy/TLS pieces, network-family variants, HTTP, Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and more.
-
-In other words, the CMake component list is also an architectural table of contents.
+The supported component list is especially important. It includes core runtime pieces, stream legacy/TLS pieces, network-family variants, HTTP, Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and more. In other words, the CMake component list is also an architectural table of contents.
 
 #### Compiler policy
 
-SNode.C requires a modern compiler baseline.
-
-The build checks for sufficiently recent GNU or Clang versions and then sets:
+SNode.C requires a modern compiler baseline. The build checks for sufficiently recent GNU or Clang versions and then sets:
 
 ```cmake
 set(CMAKE_CXX_STANDARD 20)
@@ -107,15 +90,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 ```
 
-This matters.
+This matters. SNode.C is not presented as old-style portable C++ that happens to compile with anything. It is a modern C++ framework, and the build makes that identity explicit.
 
-SNode.C is not presented as old-style portable C++ that happens to compile with anything.
-
-It is a modern C++ framework, and the build makes that identity explicit.
-
-The compiler baseline is therefore part of the project contract.
-
-A port must provide not only a compiler, but a compiler that is sufficiently modern for the framework's language and diagnostic expectations.
+The compiler baseline is not merely a convenience check. It is part of the framework contract. A port must provide not only a compiler, but a compiler sufficiently modern for the framework's language and diagnostic expectations.
 
 #### Warning policy
 
@@ -129,16 +106,9 @@ The build enables a strict diagnostic posture, including warnings such as:
 - `-Wfloat-equal`,
 - and `-Werror`.
 
-This is a maintenance decision.
+This is a maintenance decision. Warnings are not treated as harmless background noise. They are treated as build-breaking signals.
 
-Warnings are not treated as harmless background noise. They are treated as build-breaking signals.
-
-That is demanding, especially in a cross-platform framework, but it has real benefits:
-
-- questionable conversions are caught early,
-- accidental unreachable code becomes visible,
-- compiler upgrades reveal problems immediately,
-- warning regressions cannot accumulate silently.
+That is demanding, especially in a cross-platform framework, but it has real benefits. Questionable conversions are caught early, unreachable code becomes visible, compiler upgrades reveal problems immediately, and warning regressions cannot accumulate silently.
 
 The important lesson is:
 
@@ -148,53 +118,37 @@ A strict build is one of the ways a systems framework protects itself over time.
 
 #### Strict does not mean naïve
 
-The build is strict, but it is not naïve.
+The build is strict, but it is not naïve. It also includes carefully chosen suppressions for warnings that would be unhelpful, compiler-specific, or platform-specific.
 
-It also includes carefully chosen suppressions for warnings that would be unhelpful, compiler-specific, or platform-specific.
+Examples include suppressions for shadowing, ABI notes on Raspberry Pi, Android/Termux deprecations, and several Clang-specific diagnostics. That is the right style:
 
-Examples include suppressions for shadowing, ABI notes on Raspberry Pi, Android/Termux deprecations, and several Clang-specific diagnostics.
+```text
+strict default
+  + documented practical suppressions
+      -> maintainable diagnostic policy
+```
 
-That is the right style.
-
-A serious build does not blindly enable every warning forever and pretend that context does not matter.
-
-It chooses a strict default, then documents exceptions through build flags.
-
-This is especially important for a framework that targets Linux desktops, embedded Linux, routers, and other constrained systems.
+A serious build does not blindly enable every warning forever and pretend that context does not matter. It chooses a strict default, then documents exceptions through build flags. This is especially important for a framework that targets Linux desktops, embedded Linux, routers, and other constrained systems.
 
 The build must be disciplined and practical at the same time.
 
 #### Linker policy
 
-The build does not only treat compiler warnings strictly.
-
-It also applies a strict linker posture:
+The build does not only treat compiler warnings strictly. It also applies a strict linker posture:
 
 ```cmake
-add_link_options(LINKER:--as-needed --no-undefined)
+add_link_options(LINKER:--as-needed LINKER:--no-undefined)
 ```
 
 This belongs to the same dependency-hygiene story.
 
-`--as-needed` discourages unnecessary linkage.
+`--as-needed` discourages unnecessary linkage. `--no-undefined` requires shared libraries to declare the dependencies they need instead of relying on a final application link step to accidentally complete missing symbols.
 
-`--no-undefined` requires shared libraries to declare the dependencies they need instead of relying on a final application link step to accidentally complete missing symbols.
-
-That is important for SNode.C's component model.
-
-A component target should not merely compile.
-
-It should have a truthful link face.
-
-The policy reinforces the idea that dependencies belong to the component that needs them.
+That is important for SNode.C's component model. A component target should not merely compile. It should have a truthful link face. The policy reinforces the idea that dependencies belong to the component that needs them.
 
 #### In-tree and installed build contexts
 
-SNode.C also distinguishes between building the framework itself and consuming the installed framework.
-
-The in-tree build defines `SNODEC_INTREE_BUILD`.
-
-That is a useful signal.
+SNode.C distinguishes between building the framework itself and consuming the installed framework. The in-tree build defines `SNODEC_INTREE_BUILD`. That is useful, but it is not the consumer-facing package interface.
 
 Inside the SNode.C source tree, targets can refer to local target names such as:
 
@@ -212,29 +166,19 @@ snodec::net-in-stream-legacy
 snodec::core-socket-stream-legacy
 ```
 
-Those are different build contexts.
-
-The architecture is the same, but the target names belong to different views of the build.
+Those are different build contexts. The architecture is the same, but the target names belong to different views of the build.
 
 ### Component targets and dependency surfaces
 
 The word *component* appears in two related senses.
 
-At the CMake package level, a component is a selectable install/package component.
+At the CMake package level, a component is a selectable install/package component. At the architecture level, a component is a named framework piece represented by a target. SNode.C tries to keep these meanings aligned, but they are not literally the same concept in CMake semantics.
 
-At the architecture level, a component is a named framework piece represented by a target.
-
-SNode.C tries to keep these meanings aligned.
-
-That is why the target names matter.
-
-They are not arbitrary labels. They are part of the public shape of the framework.
+That is why the target names matter. They are not arbitrary labels. They are part of the public shape of the framework.
 
 #### Libraries mirror layers
 
-The library target names in SNode.C are unusually instructive.
-
-Examples include:
+The library target names in SNode.C are unusually instructive. Examples include:
 
 - `core`,
 - `core-socket`,
@@ -242,6 +186,8 @@ Examples include:
 - `core-socket-stream-legacy`,
 - `core-socket-stream-tls`,
 - `net`,
+- `net-in`,
+- `net-in-stream`,
 - `net-in-stream-legacy`,
 - `net-in-stream-tls`,
 - `http`,
@@ -258,9 +204,7 @@ Examples include:
 - `mqtt-server-websocket`,
 - `mqtt-client-websocket`.
 
-These names are readable architectural statements.
-
-For example:
+These names are readable architectural statements. For example:
 
 ```text
 net-in-stream-tls
@@ -288,23 +232,15 @@ role: client
 carrier composition: WebSocket
 ```
 
-A target name should make the role of the component visible before the source file is opened.
+A target name should make the role of the component visible before the source file is opened. The example list is intentionally written without intermediate library holes: `net-in-stream-legacy` and `net-in-stream-tls` are not shown as if they appeared directly below `net`; the intermediate `net-in` and `net-in-stream` targets are part of the visible layering. SNode.C largely follows that principle. This is why renaming a target is not a cosmetic act in SNode.C.
 
-SNode.C largely follows that principle.
+#### A public component graph read from `logger` upward
 
-#### The public target graph rooted at `logger`
+The public component graph can also be read from lower shared targets upward. The following view starts at `logger`, because `logger` is a useful starting point: many public dependency paths eventually reach it through `utils`. From there, the view expands through `utils`, `core`, socket layers, network families, HTTP/Express, WebSocket, MQTT, and database support.
 
-The public component graph can also be read from the bottom upward.
+This is a selected public component dependency view, read bottom-up from lower shared targets toward targets that publicly depend on them. It is not a complete list of source files and not a literal source-directory tree. System libraries, generated helper targets, private implementation details, and some optional platform-specific components are either omitted or shown only as short leaf notes.
 
-The following graph view starts at `logger`, because `logger` is the lowest shared SNode.C target that many public dependency paths eventually reach. From there, the view expands through `utils`, `core`, socket layers, network families, HTTP/Express, WebSocket, MQTT, and database support.
-
-This is a public component-target graph view, not a complete list of source files.
-
-System libraries, generated helper targets, private implementation details, and some optional platform-specific components are either omitted or shown only as short leaf notes.
-
-Bluetooth RFCOMM (`net-rc`) and L2CAP (`net-l2`) branches, if available, are shown as optional branches in the graph.
-
-Some targets have more than one relevant public path. The ASCII drawing is tree-shaped for readability, but it represents selected paths through the public dependency graph.
+Bluetooth RFCOMM (`net-rc`) and L2CAP (`net-l2`) branches, if available, are shown as optional branches. Some targets have more than one relevant public path. The ASCII drawing is tree-shaped for readability, but the real dependency structure is a graph, not a tree. Shared nodes are repeated or summarized because the purpose here is to show selected public paths.
 
 ```text
 logger
@@ -409,9 +345,9 @@ logger
                 `-- mqtt-client-websocket, shared path
 ```
 
-The graph view is useful because it makes two things visible at once.
+The graph view is useful because it makes several things visible at once.
 
-First, the lower base path is deliberately small:
+First, the lower shared base path is deliberately small:
 
 ```text
 logger
@@ -420,9 +356,9 @@ logger
           -> core-socket
 ```
 
-Second, the graph has shared public paths. For example, `websocket-server` belongs to the WebSocket side and also reaches the HTTP server side. The MQTT-over-WebSocket targets similarly connect the MQTT role with the WebSocket role.
+Second, the graph has shared public paths. For example, `websocket` links through `utils`, while `websocket-server` also belongs to the HTTP upgrade side. MQTT-over-WebSocket targets similarly connect MQTT roles with WebSocket roles.
 
-Third, higher-level components do not all grow from one single branch. HTTP, MQTT, database support, network families, and concrete transport compositions all attach to the lower framework surface in different ways.
+Third, higher-level components do not all grow from one single branch. HTTP, MQTT, database support, network families, and concrete transport compositions attach to the lower framework surface in different ways.
 
 That is the component architecture the build exposes.
 
@@ -436,9 +372,7 @@ add_library(snodec::net-in-stream-legacy ALIAS net-in-stream-legacy)
 add_library(snodec::http-server-express ALIAS http-server-express)
 ```
 
-The namespace is not cosmetic.
-
-It tells an external application that the target is an exported SNode.C component, not a local helper target from the application's own build tree.
+The namespace is not cosmetic. It tells an external application that the target is an exported SNode.C component, not a local helper target from the application's own build tree.
 
 An external consumer can write:
 
@@ -461,21 +395,11 @@ That is clearer than linking every application against one vague monolithic targ
 
 #### `PUBLIC`, `PRIVATE`, and `INTERFACE`
 
-CMake's visibility keywords are architectural words in a framework.
+CMake's visibility keywords are architectural words in a framework. They decide which dependencies become part of a component's public surface and which remain implementation details.
 
-They decide which dependencies become part of a component's public surface and which remain implementation details.
+A dependency linked as `PUBLIC` becomes part of what consumers of the target also need. A dependency linked as `PRIVATE` remains internal to the target. An `INTERFACE` usage requirement shapes consumers without necessarily being a compiled object in the same way.
 
-A dependency linked as `PUBLIC` becomes part of what consumers of the target also need.
-
-A dependency linked as `PRIVATE` remains internal to the target.
-
-An `INTERFACE` usage requirement shapes consumers without necessarily being a compiled object in the same way.
-
-This is not CMake trivia.
-
-It is dependency hygiene.
-
-A framework that gets this wrong can make downstream applications difficult to build, difficult to package, or accidentally dependent on internals.
+This is not CMake trivia. It is dependency hygiene. A framework that gets this wrong can make downstream applications difficult to build, difficult to package, or accidentally dependent on internals.
 
 #### Component-owned dependencies
 
@@ -483,9 +407,7 @@ The central rule is simple:
 
 > The target that needs a dependency should declare it.
 
-That is why a consumer-facing link line does not manually repeat the whole lower dependency chain.
-
-A direct link line should describe the application face:
+That is why a consumer-facing link line does not manually repeat the whole lower dependency chain. A direct link line should describe the application face:
 
 ```text
 application
@@ -494,9 +416,7 @@ application
   -> optional feature components directly used by the application
 ```
 
-The selected component targets then propagate their own public dependencies.
-
-This keeps the public link line small without hiding the architecture.
+The selected component targets then propagate their own public dependencies. This keeps the public link line small without hiding the architecture.
 
 It also prevents two opposite mistakes:
 
@@ -517,6 +437,8 @@ choose the direct building blocks
   -> let the component targets carry their declared lower dependencies
 ```
 
+A concrete Express carrier target shows this well. `http-server-express-legacy-in` owns both sides of its composition: the selected IPv4 legacy carrier and the base Express component.
+
 ### Core, network, and transport composition
 
 The lower build layers show how SNode.C separates runtime machinery, socket abstractions, network families, stream behavior, and connection variants.
@@ -525,39 +447,29 @@ That separation is one of the reasons the component model works.
 
 #### Core and multiplexer choice
 
-One of the most interesting build decisions appears in the core module.
-
-The build offers an I/O multiplexer selection among:
+One of the most interesting build decisions appears in the core module. The build offers an I/O multiplexer selection among:
 
 - `epoll`,
 - `poll`,
 - `select`.
 
-If no explicit choice is given, the build chooses the first entry from that list.
+If no explicit choice is given, the build chooses the first entry from that list. This is a lower runtime concern made explicit at build time.
 
-This is a lower runtime concern made explicit at build time.
+The event loop and the multiplexer are runtime concepts, but the default implementation choice is also a build surface. Ordinary application code should not normally be written around that choice. An HTTP server, MQTT client, or custom stream protocol context should not need to care whether the runtime is built with `epoll`, `poll`, or `select`.
 
-The event loop and the multiplexer are runtime concepts, but the default implementation choice is also a build surface.
+The normal build selects the default low-level waiting backend. The multiplexer implementations are also built as separate shared libraries. Because of that, process-local override techniques such as `LD_PRELOAD` can be useful in deployment experiments, diagnostics, or platform-specific operation. That does not change the application-facing event-driven model.
 
-Ordinary application code should not normally be written around that choice.
-
-An HTTP server, MQTT client, or custom stream protocol context should not need to care whether the runtime is built with `epoll`, `poll`, or `select`.
-
-The normal build selects the default low-level waiting backend. The multiplexer implementations are also available as separate shared libraries, so a process can preload a different multiplexer library with `LD_PRELOAD` and thereby override the effective multiplexer for that process.
-
-That gives two levels of selection:
+The two levels should be kept distinct:
 
 ```text
 build/default choice
   -> selected by CMake
 
-process-local override
-  -> selected by LD_PRELOAD
+process-local override technique
+  -> useful for diagnostics or deployment experiments
 ```
 
-Both mechanisms change the low-level waiting backend, not the application-facing event-driven model.
-
-The `LD_PRELOAD` form is mainly useful for process-local deployment experiments, diagnostics, or platform-specific operation.
+Both mechanisms affect the low-level waiting backend, not the application-facing event-driven model.
 
 #### Core socket stream layers
 
@@ -569,15 +481,7 @@ The core socket build descends through clear stages:
 - `core-socket-stream-legacy`,
 - `core-socket-stream-tls`.
 
-This progression mirrors the architecture.
-
-First there is runtime and core infrastructure.
-
-Then there are socket abstractions.
-
-Then there is stream-oriented socket machinery.
-
-Then there are connection-layer variants: legacy and TLS.
+This progression mirrors the architecture. First there is runtime and core infrastructure. Then there are socket abstractions. Then there is stream-oriented socket machinery. Then there are connection-layer variants: legacy and TLS.
 
 The important current dependency shape is:
 
@@ -586,12 +490,7 @@ core-socket-stream
   -> core-socket
 ```
 
-
-That distinction matters.
-
-The core stream machinery belongs to the core/socket side.
-
-The network-family side is selected separately through targets such as `net-in-stream-legacy`.
+That distinction matters. The core stream machinery belongs to the core/socket side. The network-family side is selected separately through targets such as `net-in-stream-legacy`.
 
 #### Network-family targets
 
@@ -611,23 +510,15 @@ net-in-stream
 core-socket-stream-tls
 ```
 
-This is the build-system equivalent of the architectural layering used throughout the framework.
-
-The family-specific side provides IPv4, IPv6, Unix-domain, Bluetooth RFCOMM, Bluetooth L2CAP, or another lower communication family.
-
-The core stream side provides generic stream operation and the legacy or TLS connection mode.
+This is the build-system equivalent of the architectural layering used throughout the framework. The family-specific side provides IPv4, IPv6, Unix-domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, or another lower communication family. The core stream side provides generic stream operation and the legacy or TLS connection mode.
 
 The combined target becomes the usable carrier component.
 
 #### Legacy and TLS variants
 
-The separation between legacy and TLS stream targets is central to the build model.
+The separation between legacy and TLS stream targets is central to the build model. TLS is not hidden behind one global Boolean that silently changes the meaning of every target.
 
-TLS is not hidden behind one global Boolean that silently changes the meaning of every target.
-
-Instead, TLS variants have their own targets.
-
-A consumer can choose:
+Instead, TLS variants have their own targets. A consumer can choose:
 
 - unencrypted legacy stream components,
 - TLS stream components,
@@ -643,9 +534,7 @@ connection layer
   -> selected as legacy or TLS
 ```
 
-TLS is a connection-layer specialization, not a rewrite of the application model.
-
-The build system reinforces that directly.
+TLS is a connection-layer specialization, not a rewrite of the application model. The build system reinforces that directly.
 
 ### Protocol and application-layer components
 
@@ -662,33 +551,21 @@ Which dependency is owned by which layer?
 
 #### HTTP and upgrade layout
 
-The HTTP module introduces protocol-upgrade infrastructure.
+The HTTP module introduces protocol-upgrade infrastructure. The build sets explicit compile and install library directories for HTTP and upgrade-related libraries. It also stores those paths as target properties.
 
-The build sets explicit compile and install library directories for HTTP and upgrade-related libraries. It also stores those paths as target properties.
+That is not random bookkeeping. HTTP upgrade support needs known locations for protocol-upgrade libraries and related runtime composition.
 
-That is not random bookkeeping.
-
-HTTP upgrade support needs known locations for protocol-upgrade libraries and related runtime composition.
-
-Once dynamic protocol upgrade enters the framework, the build must do more than create ordinary shared libraries.
-
-It must preserve enough path and RPATH information for runtime composition to work.
+Once dynamic protocol upgrade enters the framework, the build must do more than create ordinary shared libraries. It must preserve enough path and RPATH information for runtime composition to work.
 
 That is why HTTP build strategy belongs in the same architectural discussion as WebSocket and MQTT-over-WebSocket.
 
 #### RPATH and runtime composition
 
-HTTP, Express, and WebSocket build files set library output directories and install RPATH-related properties.
+HTTP, Express, and WebSocket build files set library output directories and install RPATH-related properties. This is especially relevant for dynamically loaded or nontrivially nested protocol components.
 
-This is especially relevant for dynamically loaded or nontrivially nested protocol components.
+A framework that supports HTTP upgrade and WebSocket subprotocols cannot treat library location as a completely accidental detail. The runtime must be able to find what the build and install process produced.
 
-A framework that supports HTTP upgrade and WebSocket subprotocols cannot treat library location as a completely accidental detail.
-
-The runtime must be able to find what the build and install process produced.
-
-RPATH decisions are therefore part of the runtime-composition story.
-
-They are not only packager concerns.
+RPATH decisions are therefore part of the runtime-composition story. They are not only packager concerns. This does not mean RPATH solves every deployment problem, but it does mean the build preserves information that runtime composition needs.
 
 #### Express base and concrete carrier targets
 
@@ -700,9 +577,7 @@ The base target is:
 http-server-express
 ```
 
-It represents the Express-like application layer above the HTTP server layer.
-
-Its direct dependencies are:
+It represents the Express-like application layer above the HTTP server layer. Its direct dependencies are:
 
 ```text
 http-server
@@ -715,9 +590,7 @@ A concrete carrier target, for example:
 http-server-express-legacy-in
 ```
 
-has a different role.
-
-It represents the Express-like server over a concrete carrier shape.
+has a different role. It represents the Express-like server over a concrete carrier shape.
 
 The intended dependency model is:
 
@@ -727,10 +600,7 @@ http-server-express-legacy-in
   -> http-server-express
 ```
 
-The concrete target selects the IPv4 legacy stream carrier and the base Express component.
-
-
-The same pattern applies to the other concrete Express family targets:
+The concrete target selects the IPv4 legacy stream carrier and the base Express component. The same pattern applies to the other concrete Express family targets:
 
 ```text
 http-server-express-legacy-in6
@@ -751,41 +621,23 @@ concrete Express carrier target
       -> HTTP server dependency
 ```
 
-The lower HTTP server layer is reached through the base Express component.
-
-The concrete target stays responsible for the concrete carrier choice.
-
-That keeps the direct dependency face meaningful.
+The lower HTTP server layer is reached through the base Express component. The concrete target stays responsible for the concrete carrier choice. That keeps the direct dependency face meaningful.
 
 #### WebSocket upgrade components
 
 The WebSocket build obtains HTTP upgrade directories from the HTTP target and places WebSocket-related artifacts beneath the HTTP upgrade layout.
 
-The build layout mirrors the protocol model.
+The build layout mirrors the protocol model. WebSocket is an HTTP upgrade, not a completely unrelated protocol island.
 
-WebSocket is a HTTP upgrade, not a completely unrelated protocol island.
-
-The CMake structure therefore expresses the same architectural fact that the WebSocket chapters expressed in protocol terms.
-
-The WebSocket component belongs to the HTTP upgrade family.
-
-Its build placement reflects that.
+The CMake structure therefore expresses the same architectural fact that the WebSocket chapters expressed in protocol terms. The WebSocket component belongs to the HTTP upgrade family. Its build placement reflects that.
 
 #### MQTT native and WebSocket-carried components
 
-The MQTT build constructs a base `mqtt` target and then descends into client and server subdirectories.
+The MQTT build constructs a base `mqtt` target and then descends into client and server subdirectories. In the current build, the MQTT component is built only when `nlohmann_json >= 3.11` is found.
 
-It also supports WebSocket-carried MQTT through explicit MQTT-over-WebSocket targets.
+SNode.C also supports WebSocket-carried MQTT through explicit MQTT-over-WebSocket targets. This is another important build lesson. The build does not treat MQTT-over-WebSocket as an application trick. It appears as a first-class component surface.
 
-This is another important build lesson.
-
-The build does not treat MQTT-over-WebSocket as an application trick.
-
-It appears as a first-class component surface.
-
-Native MQTT and MQTT over WebSocket are related protocol compositions, but they deserve distinct build artifacts.
-
-The build tree makes that distinction visible:
+Native MQTT and MQTT over WebSocket are related protocol compositions, but they deserve distinct build artifacts. The build tree makes that distinction visible:
 
 ```text
 mqtt-client
@@ -798,73 +650,68 @@ A consumer can therefore select the protocol role and carrier composition delibe
 
 ### Optional features and generated configuration
 
-Not every feature is always available.
-
-Some depend on external libraries.
-
-Some affect compile definitions.
-
-Some determine whether a component is built at all.
+Not every feature is always available. Some depend on external libraries. Some affect compile definitions. Some determine whether a component is built at all.
 
 SNode.C keeps these boundaries visible in the build.
 
 #### Optional dependencies
 
-Different external dependencies have different meanings.
+Different external dependencies have different meanings:
+
+```text
+optional enhancement
+  -> improves a component when available
+
+required dependency for a component
+  -> the component needs it to build
+
+availability gate for a component family
+  -> the component family is absent when the dependency is absent
+```
 
 For example:
 
 - HTTP can use `libmagic` for better MIME detection.
 - Express requires `nlohmann_json`.
+- The current MQTT component is gated by `nlohmann_json >= 3.11`.
 - MariaDB support requires the MariaDB client library.
 - Bluetooth-related components depend on platform Bluetooth support.
 
-The build should distinguish these cases.
+That distinction is important for packagers and application developers. Optional functionality should be visible in the build, not hidden as mysterious runtime absence.
 
-Some dependencies are optional enhancements.
+#### Build-time defaults as compiled policy
 
-Some are required for a component.
+The build contains a helper that appends compile definitions to specific source files. It is used to inject default values such as:
 
-Some conditionally control whether a component is available.
+- `READ_BLOCKSIZE`,
+- `WRITE_BLOCKSIZE`,
+- `READ_TIMEOUT`,
+- `WRITE_TIMEOUT`,
+- `TERMINATE_TIMEOUT`,
+- `ACCEPTS_PER_TICK`,
+- `BACKLOG`,
+- `RETRY`,
+- `RETRY_ON_FATAL`,
+- `RETRY_TIMEOUT`,
+- `RETRY_TRIES`,
+- `RETRY_BASE`,
+- `RETRY_JITTER`,
+- `RETRY_LIMIT`,
+- `ACCEPT_TIMEOUT`,
+- `RECONNECT`,
+- `RECONNECT_TIME`,
+- `CONNECT_TIMEOUT`,
+- `TLS_INIT_TIMEOUT`.
 
-That distinction is important for packagers and application developers.
+This is a subtle but important build feature. Some framework defaults are not only hard-coded in ordinary source text. They can be shaped at CMake time and compiled into the relevant implementation files.
 
-Optional functionality should be visible in the build, not hidden as mysterious runtime absence.
-
-#### Build-time defaults
-
-The build contains a helper that appends compile definitions to specific source files.
-
-It is used to inject default values such as:
-
-- read block size,
-- write block size,
-- read timeout,
-- write timeout,
-- retry behavior,
-- retry base,
-- retry jitter,
-- reconnect settings,
-- TLS initialization timeout,
-- TLS shutdown timeout.
-
-This is a subtle but important build feature.
-
-Some framework defaults are not only hard-coded in ordinary source text.
-
-They can be shaped at CMake time and compiled into the relevant implementation files.
-
-For a systems framework, that can be valuable.
-
-It gives builders and packagers another controlled way to shape default behavior.
+For a systems framework, that can be valuable. It gives builders and packagers another controlled way to shape default behavior.
 
 #### Build-time defaults and runtime configuration
 
 Build-time defaults and runtime configuration should not be confused.
 
-A build-time default defines what the compiled library considers its baseline behavior.
-
-Runtime configuration defines what a concrete application instance chooses when it runs.
+A build-time default defines the library's compiled baseline. Runtime configuration describes what a particular configured instance chooses when the application starts.
 
 Both are useful, but they operate at different times:
 
@@ -878,25 +725,17 @@ runtime configuration
 
 Keeping those two levels separate avoids confusion.
 
-A distributor may want different compiled defaults for an embedded package.
-
-An operator may still want runtime configuration for a particular deployment.
-
-Those are not the same decision.
+A distributor may want different compiled defaults for an embedded package. An operator may still want runtime configuration for a particular deployment. Those are not the same decision.
 
 ### Installed packages and external consumers
 
-SNode.C is not only built for itself.
-
-It is also consumed by external applications.
+SNode.C is not only built for itself. It is also consumed by external applications.
 
 That is where package configuration, exported targets, component selection, and namespaced target names become essential.
 
 #### From build targets to installed package targets
 
-The internal build tree produces targets.
-
-The install/export machinery turns selected targets into an external package interface.
+The internal build tree produces targets. The install/export machinery turns selected targets into an external package interface.
 
 The shape is:
 
@@ -909,13 +748,11 @@ internal target
 
 This is the bridge between framework build architecture and consumer build architecture.
 
-A component that is not exported properly cannot be selected cleanly by an external application.
-
-A component that exports too much can force consumers to see internal details.
-
-A component that exports too little can make consumers link missing dependencies manually.
+A component that is not exported properly cannot be selected cleanly by an external application. A component that exports too much can force consumers to see internal details. A component that exports too little can make consumers link missing dependencies manually.
 
 The package interface is therefore part of the framework design.
+
+The installed package configuration verifies requested components, recursively loads component dependencies, and includes the exported target files. That keeps the consumer-facing build line short while preserving the component model underneath.
 
 #### External project example
 
@@ -947,9 +784,7 @@ target_link_libraries(my-ipv4-legacy-webapp
 )
 ```
 
-The important part is not the number of lines.
-
-The important part is the application face:
+This is a minimal consumer shape, not the only possible application structure. The important part is the application face:
 
 ```text
 http-server-express
@@ -959,9 +794,7 @@ net-in-stream-legacy
   -> selected IPv4 legacy stream carrier
 ```
 
-The application does not list `core`, `core-socket`, `http`, `http-server`, `utils`, or `logger` manually.
-
-Those lower dependencies belong to the selected SNode.C component targets.
+The application does not list `core`, `core-socket`, `http`, `http-server`, `utils`, or `logger` manually. Those lower dependencies belong to the selected SNode.C component targets.
 
 #### Component selection is not “select everything”
 
@@ -977,9 +810,7 @@ optional feature components directly used by the application
 
 For example, a web application over IPv4 legacy stream does not need to link every HTTP, WebSocket, MQTT, database, IPv6, Unix-domain, Bluetooth, TLS, and utility component.
 
-That would make the build line noisy and misleading.
-
-The direct link line should remain a short architectural statement.
+That would make the build line noisy and misleading. The direct link line should remain a short architectural statement.
 
 #### In-tree names and external names
 
@@ -999,9 +830,7 @@ snodec::http-server-express
 snodec::net-in-stream-legacy
 ```
 
-The `snodec::...` prefix is the installed/exported namespace.
-
-It marks the target as a framework component provided by the package.
+The `snodec::...` prefix is the installed/exported namespace. It marks the target as a framework component provided by the package.
 
 This is why examples for external applications should use namespaced targets.
 
@@ -1040,26 +869,28 @@ core-socket-stream-legacy
 core-socket-stream-tls
 ```
 
-This distinction matters.
+Some targets are application targets:
 
-A base component often represents a protocol or application layer.
+```text
+snode.c
+testpost
+jsonserver
+mqttbroker
+mqttstore
+```
 
-A concrete composition component often binds a role to a carrier, family, or connection mode.
-
-A lower operational component provides reusable machinery below both.
+This distinction matters. A base component often represents a protocol or application layer. A concrete composition component often binds a role to a carrier, family, or connection mode. A lower operational component provides reusable machinery below both. An application target assembles selected pieces into an executable.
 
 Reading the target name with this distinction in mind prevents many linking misunderstandings.
 
 ### Reading a SNode.C CMake target
 
-A SNode.C CMake target can be read systematically.
-
-A practical recipe is:
+A SNode.C CMake target can be read systematically. A practical recipe is:
 
 1. Identify the target name.
-2. Decide whether it is a base component, concrete composition component, lower operational component, or application target.
+2. Decide whether it is a framework component, concrete composition component, lower operational component, or application target.
 3. Read `target_link_libraries`.
-4. Separate public dependencies from private implementation details.
+4. Separate `PUBLIC`, `PRIVATE`, and `INTERFACE` dependencies before opening C++ source files.
 5. Check whether the target has an installed/exported alias.
 6. Check whether it is listed as a supported component.
 7. Look for optional dependency gates around the target.
@@ -1067,22 +898,23 @@ A practical recipe is:
 9. For external use, translate local target names to `snodec::...`.
 10. Only then inspect the C++ source if the build shape is not enough.
 
-This method follows the same pattern used in Chapter 29.
-
-The build target often reveals the architecture before the implementation file is opened.
+This method follows the same pattern used in Chapter 29. The build target often reveals the architecture before the implementation file is opened.
 
 ### What to remember
 
 - CMake is an architectural surface in SNode.C, not only a build-script language.
 - The top-level build creates the project shell; `src/CMakeLists.txt` exposes the framework surface.
 - Compiler, warning, and linker policies are part of the maintenance strategy.
-- Multiplexer libraries are build-selectable and can also be overridden process-locally with `LD_PRELOAD`.
+- `SNODEC_INTREE_BUILD` separates the in-tree build context from the installed consumer view.
 - Component targets should own their dependencies.
-- The public target graph can be read from `logger` upward to understand the component surface and its shared paths.
-- `PUBLIC`, `PRIVATE`, and `INTERFACE` describe dependency hygiene.
+- `PUBLIC`, `PRIVATE`, and `INTERFACE` describe dependency visibility.
+- The public target graph is a graph, even when drawn as a readable tree.
 - `core-socket-stream` belongs to the core/socket side of the component graph.
 - Concrete network-family targets combine family identity with legacy or TLS stream operation.
 - The base `http-server-express` target owns the HTTP-server dependency; concrete Express carrier targets select the carrier plus the base Express component.
+- WebSocket build layout reflects HTTP upgrade architecture.
+- MQTT native and MQTT-over-WebSocket forms are distinct component surfaces.
+- Build-time defaults and runtime configuration operate at different times.
 - External applications should use exported `snodec::...` targets through `find_package(snodec COMPONENTS ...)`.
 - A consumer should link the direct application/protocol component and the selected transport component, not every lower layer manually.
 
@@ -1102,4 +934,4 @@ How can applications consume the installed package cleanly?
 How is the build kept maintainable over time?
 ```
 
-Those are the concerns of the remaining chapters in this part.
+Chapter 32 made the component surface visible. The remaining chapters in Part X can now discuss porting, packaging, optional dependencies, constrained systems, and maintenance without treating the build as a black box.
