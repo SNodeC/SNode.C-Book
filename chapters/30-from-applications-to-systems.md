@@ -2,15 +2,9 @@
 
 ### Why this chapter comes after applications
 
-Chapter 29 showed how SNode.C framework pieces become executable applications.
+Chapter 29 showed how SNode.C framework pieces become executable applications: build targets, entry points, linked components, configured roles, callbacks, and runtime start. Chapter 30 widens the view again. The question is no longer only how one executable is assembled, but how several roles, boundaries, state responsibilities, and operational policies form a system.
 
-That was the necessary first step.
-
-An executable is still an important architectural object. It has a build target, an entry point, linked components, instance names, configuration, and runtime behavior.
-
-But a communication framework becomes most useful when applications are no longer seen only as isolated endpoints.
-
-They become parts of larger arrangements:
+An executable remains an important architectural object. It has a build target, an entry point, linked components, application-side objects, configured communication roles, instance names, configuration, and runtime behavior. But a communication framework becomes most useful when applications are no longer seen only as isolated endpoints. They become parts of larger arrangements:
 
 - several communication roles,
 - several protocol families,
@@ -30,21 +24,26 @@ to:
 How do several roles become a system?
 ```
 
-A SNode.C system may be one executable with several named roles. It may also be several cooperating executables. It may run on one host, across several processes, or across several machines.
+This is the progression from the previous chapters:
 
-The word *system* does not automatically mean a distributed cloud of services.
+```text
+Chapter 29
+  -> executable applications as assembly points
 
-It means that the design is now understood as a constellation of roles and boundaries rather than as one application in isolation.
+Chapter 30
+  -> systems as role constellations
+
+Chapter 31
+  -> MQTTSuite as a concrete reference ecosystem
+```
+
+A SNode.C system may be one executable with several named roles. It may also be several cooperating executables. It may run on one host, across several processes, or across several machines. The word *system* does not automatically mean a distributed cloud of services. It means that the design is now understood as a constellation of roles and boundaries rather than as one application in isolation.
 
 ### From applications to role constellations
 
-A system is not simply a larger single application.
+A system is not simply a larger single application. That distinction matters.
 
-That distinction matters.
-
-A larger application may still have one main role, one deployment boundary, and one dominant operational shape.
-
-A system introduces a different kind of complexity:
+A larger application may still have one main role, one deployment boundary, and one dominant operational shape. A system introduces a different kind of complexity:
 
 ```text
 roles
@@ -54,9 +53,7 @@ roles
               -> operational topology
 ```
 
-Those are architectural concerns, not only size concerns.
-
-A useful first question is therefore:
+Those are architectural concerns, not only size concerns. A useful first question is therefore:
 
 ```text
 Which roles exist?
@@ -67,6 +64,8 @@ not only:
 ```text
 Which classes are instantiated?
 ```
+
+In this chapter, a role is a system-design responsibility. A concrete SNode.C program may realize such a role through an application-side server or client handle, a configured communication role, and a registered runtime-visible instance. These terms should not be collapsed into one another. The role belongs to the system design; the configured communication role belongs to the SNode.C configuration surface; the registered runtime-visible instance is what the runtime can observe and operate.
 
 #### A concrete system sketch
 
@@ -99,11 +98,7 @@ operator tool
   -> local-control
 ```
 
-This sketch is deliberately generic.
-
-Chapter 31 will make the idea concrete with MQTTSuite.
-
-Here, the sketch only introduces the way of thinking:
+This sketch is deliberately generic. Chapter 31 will make the idea concrete with MQTTSuite. Here, the sketch only introduces the way of thinking:
 
 ```text
 admin-http
@@ -125,19 +120,17 @@ database-state
   -> persistence boundary
 ```
 
-The system is not defined by one large binary name.
+These are role names, not necessarily executable names. Some roles may be routes inside one application. Some may be configured communication roles. Some may be service-level responsibilities. Some roles are nested inside others: an SSE route may belong to a web role, while still being useful as a named observation boundary.
 
-It is defined by the roles that cooperate.
+The role `database-state` is intentionally different from `admin-http` or `mqtt-ingest`. It is not the same kind of communication role as a socket server or client. It names the persistence boundary that owns durable application state.
 
-Some roles may live inside one executable. Some may be separate services. That is an architectural decision, not a limitation imposed by the framework.
+The system is not defined by one large binary name. It is defined by the roles that cooperate. Some roles may live inside one executable. Some may be separate services. That is an architectural decision, not a limitation imposed by the framework.
 
-#### Named roles
+#### Named roles as system vocabulary
 
 One of the most useful mental models for SNode.C systems is the **named role constellation**.
 
-A role constellation is a set of communication roles with clear names, clear boundaries, and clear responsibilities.
-
-For example:
+A named role constellation is a set of system responsibilities whose names are stable enough to appear in code, configuration, logs, diagnostics, deployment discussion, and operator language. For example:
 
 ```text
 admin-http
@@ -156,11 +149,7 @@ local-control
   -> exposes host-local control or diagnostics
 ```
 
-This is where SNode.C's named-instance model becomes more than a configuration convenience.
-
-Names become system vocabulary.
-
-A named instance can identify:
+This is where SNode.C's named-instance model becomes more than a configuration convenience. Where a role is realized by a SNode.C communication role, the configured instance name can become part of the system vocabulary. A named instance can identify:
 
 - the configuration section,
 - the log context,
@@ -169,21 +158,15 @@ A named instance can identify:
 - the deployment responsibility,
 - and the runtime behavior that should be observed.
 
-Named roles are not noise.
+Named roles are not noise. They help code, configuration, logs, diagnostics, deployment, and operator discussion use the same vocabulary.
 
-They help code, configuration, logs, diagnostics, and deployment discussion use the same vocabulary.
-
-A web-facing administration role should remain visibly different from a broker-facing MQTT role. A local control interface should remain visibly different from a public network interface. A streaming observation role should remain visibly different from a transactional control role.
-
-When the roles are explicit, the system becomes easier to reason about.
+A web-facing administration role should remain visibly different from a broker-facing MQTT role. A local control interface should remain visibly different from a public network interface. A streaming observation role should remain visibly different from a transactional control role. When the roles are explicit, the system becomes easier to reason about.
 
 #### One executable or several services
 
 A SNode.C system does not have to be packaged in exactly one way.
 
-A serious system is not defined by being one binary, and it is not automatically improved by being split into many processes.
-
-Sometimes one executable with several roles is the best design. Sometimes several cooperating executables are better.
+A serious system is not defined by being one binary, and it is not automatically improved by being split into many processes. Sometimes one executable with several roles is the best design. Sometimes several cooperating executables are better. Packaging is an operational boundary decision, not a measure of architectural maturity.
 
 The choice should be guided by operational clarity.
 
@@ -196,15 +179,11 @@ The choice should be guided by operational clarity.
 | configuration should be managed as one unit | deployment boundaries should be explicit |
 | local communication inside one process is sufficient | process or host boundaries are part of the architecture |
 
-This is not a moral distinction.
-
-A single executable is not automatically less serious. Several services are not automatically more architectural.
-
-The right boundary is the one that makes the system easier to deploy, operate, diagnose, and evolve.
+This is not a moral distinction. A single executable is not automatically less serious. Several services are not automatically more architectural. The right boundary is the one that makes the system easier to deploy, operate, diagnose, and evolve.
 
 ### Boundaries define the system
 
-A system is easier to understand when it is designed from boundaries first.
+A system becomes understandable when its boundaries are visible before its features are listed.
 
 Useful boundary questions include:
 
@@ -218,15 +197,11 @@ Useful boundary questions include:
 - Which roles own durable state?
 - Which roles should be observable independently?
 
-The result is not only a set of features.
-
-It is a set of explicit boundaries.
+The result is not only a set of features. It is a set of explicit boundaries.
 
 #### Protocol boundaries
 
-Chapter 27 discussed multi-protocol IoT thinking.
-
-Chapter 30 uses the same idea at the system-architecture level without repeating the IoT discussion.
+Chapter 27 discussed multi-protocol IoT thinking. Chapter 30 uses the same idea at the system-architecture level without repeating the IoT discussion.
 
 The system-level question is not:
 
@@ -250,11 +225,9 @@ A system may legitimately use:
 - IPv4 or IPv6 stream carriers for network-facing roles,
 - TLS where the boundary requires encryption and authentication support.
 
-The point is not to use many protocols for decoration.
+The point is not to use many protocols for decoration. The point is to choose the protocol family that matches each boundary. SNode.C's component structure supports that kind of breadth, but system design still has to decide where each protocol belongs.
 
-The point is to choose the protocol family that matches each boundary.
-
-#### Local, networked, and upgraded boundaries
+#### Local, network-facing, and upgraded boundaries
 
 A single system can mix different boundary types coherently.
 
@@ -280,19 +253,35 @@ device-near-link
   -> Bluetooth-facing lower communication in device-near contexts
 ```
 
-The previous chapters introduced these communication families one by one.
+The previous chapters introduced these communication families one by one. The system-level lesson is that they can coexist without forcing a different programming model for each one.
 
-The system-level lesson is that they can coexist without forcing a different programming model for each one.
+```text
+local boundary
+  -> same-host control or diagnostics
 
-Different boundaries can remain different while the architecture remains consistent.
+network boundary
+  -> externally reachable service or integration path
+
+upgraded boundary
+  -> HTTP-negotiated transition to WebSocket behavior
+```
+
+Different boundaries can remain different while the architecture remains consistent. Bluetooth-facing communication, for example, belongs near device edges or nearby peer interaction. It should not be treated as a general integration bus merely because it is another available lower family.
 
 #### Stateful and stateless roles
 
 System design also requires a clear distinction between stateful and stateless roles.
 
-A stateless role can often be restarted or replaced with little coordination. It may serve requests, forward messages, expose an interface, or adapt one protocol to another.
+```text
+stateless role
+  -> can often be restarted or replaced with little coordination
 
-A stateful role owns information that must survive beyond one request or one connection. That may include:
+stateful role
+  -> owns information whose correctness outlives a single request,
+     connection, or message
+```
+
+A stateless role may serve requests, forward messages, expose an interface, or adapt one protocol to another. A stateful role owns information that must survive beyond one request or one connection. That may include:
 
 - configuration-derived runtime state,
 - retained or cached observations,
@@ -302,9 +291,7 @@ A stateful role owns information that must survive beyond one request or one con
 - integration progress,
 - or persistent domain data.
 
-Chapter 28 introduced persistence as an application-state boundary.
-
-In a system, persistence becomes an ownership question:
+Chapter 28 introduced persistence as an application-state boundary. In a system, persistence becomes an ownership question:
 
 ```text
 Which role owns the state?
@@ -314,21 +301,17 @@ Which roles only observe it?
 Which failure mode can leave it inconsistent?
 ```
 
-Without state ownership, a system sketch remains incomplete.
+Without state ownership, a system sketch is only a communication sketch.
 
 ### System operation
 
-Once roles and boundaries are visible, operation becomes more concrete.
-
-Configuration, diagnostics, failure behavior, and build structure no longer describe isolated applications only. They describe the system surface.
+Once roles and boundaries are visible, operation becomes more concrete. Configuration, diagnostics, failure behavior, and build structure no longer describe isolated applications only. They describe the system surface.
 
 #### Configuration
 
-At the application level, configuration shapes one communication role.
+At the application level, configuration shapes one communication role. At the system level, configuration can describe a constellation of roles.
 
-At the system level, configuration can describe a constellation of roles.
-
-A simplified pseudo-configuration might look like this:
+Chapters 16 and 17 introduced named instances and structured configuration. At system scale, those ideas become a role map. The purpose of the following pseudo-configuration is not syntax. It is to show how names can make role boundaries visible.
 
 ```ini
 [admin-http]
@@ -360,9 +343,7 @@ role = mariadb
 database = monitoring
 ```
 
-This is not meant as exact SNode.C syntax.
-
-It shows the architectural idea: named roles make the system visible.
+This is not meant as exact SNode.C syntax. It shows the architectural idea: named roles make the system visible.
 
 Once names like `admin-http`, `mqtt-ingest`, and `local-control` exist, the rest of the operational story becomes easier:
 
@@ -372,15 +353,11 @@ Once names like `admin-http`, `mqtt-ingest`, and `local-control` exist, the rest
 - diagnostics can be localized,
 - and deployment discussions can use the same vocabulary as the code.
 
-Configuration is no longer only setup.
+Configuration is no longer only setup. It can become one of the clearest descriptions of the system's role constellation and boundaries.
 
-It can become one of the clearest descriptions of the system's role constellation and boundaries.
+#### Diagnostics and observability
 
-#### Diagnostics
-
-At application scale, diagnostics help a developer understand one program.
-
-In a system, diagnostics become observability across role boundaries.
+At application scale, diagnostics help a developer understand one program. In a system, diagnostics become observability across role boundaries.
 
 The important questions change:
 
@@ -390,6 +367,16 @@ Which connection belongs to which boundary?
 Which retry loop belongs to which integration?
 Which named instance failed?
 Which part of the system is still healthy?
+```
+
+A useful diagnostic fact should keep the boundary visible:
+
+```text
+which role
+which configured instance
+which connection
+which retry loop
+which state owner
 ```
 
 SNode.C already contains ingredients for this kind of visibility:
@@ -402,17 +389,11 @@ SNode.C already contains ingredients for this kind of visibility:
 - generated command-line structure,
 - runtime status information.
 
-A system may still need external monitoring, dashboards, metrics storage, or log aggregation.
-
-SNode.C does not replace those tools.
-
-It gives the system a clear internal vocabulary that those tools can build on.
+A system may still need external monitoring, dashboards, metrics storage, or log aggregation. SNode.C does not replace those tools. It gives the system a clear internal vocabulary that those tools can build on.
 
 #### Failure behavior
 
-At application scale, retry and reconnect behavior may look like local communication policy.
-
-In a system, it becomes topology policy.
+At application scale, retry and reconnect behavior may look like local communication policy. In a system, it becomes topology policy.
 
 The architect now asks:
 
@@ -424,19 +405,15 @@ The architect now asks:
 - Which role should degrade gracefully?
 - Which role owns state that must be protected during failure?
 
-A reconnect policy for `mqtt-ingest` may be reasonable.
+Chapter 20 separated timeout, retry, reconnect, disablement, shutdown, and failure state. Chapter 30 applies that vocabulary to a constellation of roles.
 
-The same policy for `database-state` may be dangerous if it hides a persistent state problem.
+A reconnect policy for `mqtt-ingest` may be reasonable. The same policy for `database-state` may be dangerous if it hides a persistent state problem. A database role may require visible degraded-state behavior rather than silent retry, because persistence failures can corrupt the system's understanding of durable state. A local control interface may not need the same failure behavior as an external integration client.
 
-A local control interface may not need the same failure behavior as an external integration client.
+Failure behavior belongs to the role that owns the boundary, not merely to the socket that reports the error.
 
-The important point is that failure behavior belongs to the role and the boundary, not only to the socket.
+#### Build structure as the first system map
 
-#### Build structure
-
-Chapter 29 showed that application targets reveal application shape.
-
-In a system, the build structure also reveals the system surface.
+Chapter 29 showed that application targets reveal application shape. In a system, the build structure also reveals the system surface.
 
 Separate libraries and executables tell the reader something about:
 
@@ -446,17 +423,11 @@ Separate libraries and executables tell the reader something about:
 - which optional features depend on external libraries,
 - and which application targets represent runnable roles.
 
-The build system does not describe the whole runtime topology.
-
-Configuration, deployment, and operation complete that picture.
-
-But the build system gives the first map.
+The build system does not describe the whole runtime topology. Configuration, deployment, and operation complete that picture. But the build system gives the first map.
 
 ### Stable protocol cores and domain code
 
-Chapter 15 introduced an important idea: protocol logic can often remain stable while lower carriers change.
-
-In a system, that idea becomes a design strategy.
+Chapter 15 introduced an important idea: protocol logic can often remain stable while lower carriers change. In a system, that idea becomes a design strategy.
 
 A system is easier to evolve when:
 
@@ -468,17 +439,13 @@ carrier / deployment boundary
   -> can change around it
 ```
 
-For example, a message-oriented domain protocol may begin as a native internal service. Later it may also be exposed through a WebSocket path, an HTTP-facing endpoint, or an MQTT integration boundary.
+The earlier carrier-change idea now becomes a system-evolution strategy: keep protocol or domain logic stable where possible, and let carrier or deployment boundaries change around it deliberately.
 
-The system remains easier to evolve if the protocol logic is not fused unnecessarily to one carrier or deployment shape.
+For example, a message-oriented domain protocol may begin as a native internal service. Later it may also be exposed through a WebSocket path, an HTTP-facing endpoint, or an MQTT integration boundary. The system remains easier to evolve if the protocol logic is not fused unnecessarily to one carrier or deployment shape.
 
-This is where the earlier layer discipline pays off.
+This is where the earlier layer discipline pays off. SNode.C gives the architect communication roles, protocol layers, configuration structure, diagnostics, runtime behavior, and reusable web and messaging facilities.
 
-SNode.C gives the architect communication roles, protocol layers, configuration structure, diagnostics, runtime behavior, and reusable web and messaging facilities.
-
-It does not replace domain-specific code.
-
-Real systems still need:
+It does not replace domain-specific code. Real systems still need:
 
 - business rules,
 - device models,
@@ -490,36 +457,39 @@ Real systems still need:
 - user-facing behavior,
 - and deployment-specific decisions.
 
-The framework's job is to give that domain logic a clear communication architecture to live in.
+The responsibility split is useful:
 
-That separates communication structure from domain decisions without pretending that either one can replace the other.
+```text
+SNode.C
+  -> communication architecture, runtime, roles, configuration,
+     diagnostics, reusable protocol layers
+
+domain code
+  -> business rules, device model, authorization, persistence semantics,
+     orchestration, user-facing behavior
+```
+
+The framework's job is to give domain logic a clear communication architecture to live in. That separates communication structure from domain decisions without pretending that either one can replace the other.
 
 ### Reading a SNode.C system
 
-Chapter 29 gave a way to read an application.
-
-A SNode.C system can be read with a wider checklist:
+Chapter 29 gave a way to read an application. A SNode.C system can be read with a wider checklist:
 
 1. Which roles exist?
 2. Which roles share an executable?
 3. Which roles cross process, host, or network boundaries?
 4. Which protocol family belongs at each boundary?
-5. Which roles own durable state?
-6. Which roles are stateless adapters?
-7. Which roles require TLS, retry, reconnect, or disablement?
-8. Which roles must be observable independently?
-9. Which parts may fail or restart independently?
-10. Which protocol cores should remain reusable if carriers or deployment boundaries change?
+5. Which role owns which configuration surface?
+6. Which role owns durable state, and which roles only read, update, or observe it?
+7. Which roles are stateless adapters?
+8. Which roles require TLS, retry, reconnect, disablement, or degraded-state behavior?
+9. Which roles must be observable independently?
+10. Which parts may fail or restart independently?
+11. Which protocol cores should remain reusable if carriers or deployment boundaries change?
 
-This checklist is not a rigid method.
+This checklist is not a rigid method. It is a way to prevent system design from collapsing into a pile of features.
 
-It is a way to prevent system design from collapsing into a pile of features.
-
-A framework can tolerate some inconsistency in tiny examples.
-
-In a system, inconsistency becomes expensive.
-
-This is why SNode.C's consistency matters:
+A framework can tolerate some inconsistency in tiny examples. In a system, inconsistency becomes expensive. This is why SNode.C's consistency matters:
 
 - roles remain visible,
 - lower families remain explicit,
@@ -536,21 +506,22 @@ This is the real transition from applications to systems.
 ### What to remember
 
 - A system is not just a bigger application.
-- A SNode.C system is best understood as a constellation of named communication roles.
-- Explicit role names help code, configuration, logs, diagnostics, and deployment discussion use the same vocabulary.
-- A system may be one executable with several roles or several cooperating executables.
+- A SNode.C system is best understood as a constellation of named roles and boundaries.
+- A role name is system vocabulary; it should help code, configuration, logs, diagnostics, deployment, and operator discussion use the same words.
+- A role may be realized inside one executable or by one of several cooperating executables.
+- Packaging is an operational boundary decision, not a measure of architectural maturity.
 - Protocol choice is boundary-specific, not necessarily system-wide.
 - Configuration can describe system architecture, not only application setup.
 - Persistence introduces state ownership at the system level.
 - Diagnostics become observability across role boundaries.
-- Failure behavior becomes topology-aware.
+- Failure behavior becomes topology-aware and role-owned.
+- Stable protocol cores and domain logic are easier to evolve when they are not fused unnecessarily to one carrier or deployment shape.
+- SNode.C provides communication architecture; domain code still owns domain semantics.
 - Chapter 31 applies this vocabulary to MQTTSuite as a concrete reference ecosystem.
 
 ### Closing perspective
 
-This chapter moved from executable applications to communication systems.
-
-The vocabulary is now in place:
+This chapter moved from executable applications to communication systems. The vocabulary is now in place:
 
 - roles,
 - boundaries,
@@ -563,6 +534,4 @@ The vocabulary is now in place:
 
 That vocabulary is deliberately generic. It is not tied to one reference product.
 
-The next chapter applies it to a concrete ecosystem.
-
-Chapter 31 studies MQTTSuite as a reference system built from SNode.C ideas: not merely as a set of programs, but as an example of how communication roles, MQTT messaging, integration, bridging, configuration, persistence, and deployment can form a coherent system architecture.
+Chapter 31 applies this vocabulary to MQTTSuite. The point is not merely to list programs, but to read MQTTSuite as an ecosystem of communication roles, MQTT messaging paths, bridge boundaries, configuration surfaces, persistence choices, and deployment relationships.
