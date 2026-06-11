@@ -45,5 +45,7 @@ chapters/34-testing-debugging-and-benchmarking.md
 parts/part-11-designing-with-snodec.md
 chapters/35-architectural-judgment-choosing-the-right-layer-and-boundary.md
 chapters/36-extending-the-framework-safely.md
-chapters/37-a-complete-guided-project.md
-chapters/38-where-to-go-next.md
+parts/part-12-building-a-minigateway-application.md
+chapters/37-building-minigateway.md
+chapters/38-extending-testing-and-deploying-minigateway.md
+chapters/39-closing-perspective.md
