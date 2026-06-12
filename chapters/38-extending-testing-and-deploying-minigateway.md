@@ -22,16 +22,13 @@ add the boundary that owns the new concern
 
 Do not extend an application by hiding new behavior inside an arbitrary callback merely because that callback is convenient.
 
-This chapter has two jobs. First, it walks through the concrete `MiniGateway-Extended` source tree and shows exactly where the Unix-domain input is added. Second, it uses that concrete extension to discuss broader application growth: testing by boundaries, debugging by role, deployment shape, constrained targets, and the point at which one process should become several processes.
-
-The source of truth for the concrete extension is the `MiniGateway-Extended` example tree in the book package. The base source of Chapter 37 remains the `MiniGateway-Base` tree. Keeping both trees side by side is intentional: the reader can compare what changed and, more importantly, what did not change.
-
 ### What changes in the extended version
 
 The extended version adds one responsibility: measurements can now arrive through a Unix-domain stream socket. The input format is deliberately simple: one comma-separated measurement per line.
 
 ```sh
-printf '21.5,43.0,3.72\n' | nc -U /tmp/minigateway-measurements.sock
+printf '21.5,43.0,3.72
+' | nc -U /tmp/minigateway-measurements.sock
 ```
 
 The accepted fields are:
@@ -55,18 +52,6 @@ Unix-domain input line
 
 The important point is what does not change. The HTTP `/status` route does not learn how Unix-domain sockets work. The SSE route does not parse CSV. `MiniGatewayMqtt` does not read from the local measurement socket. The new input boundary ends at the same `acceptMeasurement` function that already existed in Chapter 37.
 
-| Aspect | Base version | Extended version |
-|---|---|---|
-| controlled teaching input | `/simulate` | still present |
-| external measurement input | not present | Unix-domain stream socket |
-| state owner | `MeasurementState` | unchanged |
-| fan-out path | `MeasurementBus` | unchanged |
-| HTTP status route | `/status` | unchanged |
-| SSE observation route | `/events` | unchanged |
-| MQTT publication path | `MiniGatewayMqtt` observes the bus | unchanged |
-
-This table is the reason the extension is useful as a teaching example. The application grows by adding one boundary, not by spreading the new concern through all existing roles.
-
 ### Extension overview
 
 Compared with the base source tree, the extended version adds two new classes and changes three existing files:
@@ -83,8 +68,6 @@ changed:
 ```
 
 The rest of the source tree remains the base application. That is the strongest sign that the extension is placed correctly. A new input carrier should not force a rewrite of the output roles.
-
-The extended chapter shows only the changed and new files. The unchanged base files still matter, but repeating all of them would hide the design signal. The design signal is that `MeasurementState`, `MeasurementBus`, `MiniGatewayMqtt`, and the HTTP/SSE behavior remain stable.
 
 ### The build target after extension
 
@@ -146,8 +129,6 @@ target_link_libraries(
             nlohmann_json::nlohmann_json
 )
 ```
-
-The CMake change is small because the architectural change is small. The extended application needs one additional SNode.C component family, `net-un-stream-legacy`, and the two new Unix-input source files. The existing HTTP and MQTT components remain unchanged.
 
 
 ### The Unix-domain measurement context
@@ -356,8 +337,6 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-This context owns exactly the local line protocol. It buffers bytes, recognizes complete lines, parses a measurement, and calls the injected handler. It does not know whether the handler updates memory, publishes MQTT, emits SSE, or stores history. That ignorance is not a limitation. It is the boundary that makes the extension safe.
-
 
 ### The Unix-domain measurement factory
 
@@ -418,8 +397,6 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
-
-The factory is intentionally thin. It receives the application handler during construction and injects that handler into each new Unix-domain socket context. The factory does not become a state owner. It only makes sure each accepted Unix-domain connection receives the same application input boundary.
 
 
 ### Runtime assembly after extension
@@ -618,8 +595,6 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-The extended `main.cpp` shows the extension point in its most compact form. The application starts one more configured role, `measurement-input`, and gives that role the same `acceptMeasurement` function used by `/simulate`. No output path is rewritten. That is what safe extension looks like in a small SNode.C application.
-
 
 ### Build and usage note for the extended version
 
@@ -662,8 +637,6 @@ The accepted fields are `temperature,humidity,voltage` or `temperature,humidity,
 
 This package intentionally contains no TLS, no persistence, no MQTT-over-WebSocket, no frontend.
 ````
-
-The README is intentionally operational. It tells the reader how to build the extended variant and how to inject a measurement without introducing another tool or protocol into the chapter. The important point is not `nc` itself. The important point is that an ordinary local process can now feed the same application measurement path.
 
 
 ### What the extension teaches
@@ -771,7 +744,8 @@ curl http://localhost:8080/simulate
 For the extended Unix-domain input:
 
 ```sh
-printf '21.5,43.0,3.72\n' | nc -U /tmp/minigateway-measurements.sock
+printf '21.5,43.0,3.72
+' | nc -U /tmp/minigateway-measurements.sock
 curl http://localhost:8080/status
 ```
 

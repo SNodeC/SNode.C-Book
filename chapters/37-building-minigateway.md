@@ -18,10 +18,6 @@ new measurement
 
 This is the core of the project. Everything else in the chapter exists to keep this path honest.
 
-This chapter is therefore a source walk-through. The complete base source is shown because the guided project is meant to be built, not only admired as a diagram. The source of truth for this chapter is the `MiniGateway-Base` example tree in the book package. The prose around the listings explains why each file exists and which boundary it owns.
-
-The important reading discipline is simple: do not read the files merely as implementation fragments. Read each file as a placement decision. A file either owns a domain fact, a small piece of state, an internal application event path, a protocol role, a context factory, or the final application assembly.
-
 ### What the application does
 
 The base version built in this chapter has two outward-facing communication roles.
@@ -133,8 +129,6 @@ role assembly
 
 A one-file example would be shorter, but it would teach the wrong reflex. This chapter wants the reader to see how a small SNode.C application is assembled from visible boundaries.
 
-For that reason, the chapter keeps the full source visible. This is different from earlier chapters, where a short snippet was often enough. Here the goal is to show the shape of a small complete application, including the ordinary build file and the small helper classes that keep responsibilities separate.
-
 ### Stage 1: the build target
 
 MiniGateway is an external SNode.C consumer. It therefore uses installed package targets, not private in-tree targets. The selected components already say a lot about the application:
@@ -193,8 +187,6 @@ target_link_libraries(
 ```
 
 
-The build target is intentionally small but not accidental. It names the public SNode.C component surface used by the application: HTTP/Express over IPv4 for the observation surface, native IPv4 stream support for the MQTT client connection, and the MQTT client protocol layer. The build file does not know anything about measurements, routes, topics, or observers. It only expresses the external framework capabilities that the application uses.
-
 ### Stage 2: the domain fact
 
 The first application type is `Measurement`. It is deliberately plain. The domain value has no knowledge of HTTP, SSE, MQTT, sockets, configuration, or deployment. It is the fact that the application owns and exposes.
@@ -236,8 +228,6 @@ inline std::string toPayload(const Measurement& measurement) {
 
 } // namespace minigateway
 ```
-
-This file is deliberately more boring than the protocol code that follows. That is a strength. `Measurement` is the stable application fact that several communication surfaces can reuse. HTTP serializes it, SSE transports it as event data, and MQTT publishes it as payload, but none of those protocol surfaces owns the meaning of the measurement itself.
 
 
 ### Stage 3: the current state
@@ -287,8 +277,6 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
-
-The state holder has no callback list and no protocol knowledge. It only answers the question, “what is the current measurement now?” That keeps `/status` simple, and it prevents the latest value from being hidden inside an SSE response object or an MQTT connection object.
 
 
 ### Stage 4: the internal measurement bus
@@ -357,8 +345,6 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
-
-The bus is application-local. It is not a general message broker and it is not a replacement for MQTT. Its job is narrower: within this one event-driven process, it lets independent output roles react to the same accepted measurement. This is why adding another input in Chapter 38 does not require rewriting the output roles.
 
 
 ### Stage 5: MiniGateway-specific MQTT configuration
@@ -460,8 +446,6 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
-
-The configuration section is the operator-facing surface of the MQTT role. The defaults make the guided project convenient, but the values are not hard-coded into the MQTT protocol object. That separation matters: changing a topic name is deployment/configuration variation, not a protocol-class change.
 
 
 ### Stage 6: the MQTT protocol object
@@ -619,8 +603,6 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-`MiniGatewayMqtt` is intentionally only an MQTT-facing object. It starts the session, subscribes to the command topic, logs incoming command payloads, and publishes measurements when connected. It does not own the current measurement and it does not decide when a measurement is accepted. The static list of connected protocol objects is a small bridge from the application-local bus to currently connected MQTT sessions.
-
 
 ### Stage 7: constructing MQTT contexts
 
@@ -682,8 +664,6 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
-
-The factory is the construction boundary between the stream connection and the MQTT protocol object. It is also the place where the configured role state becomes concrete protocol construction parameters. This keeps `main.cpp` from manually constructing MQTT packet machinery and keeps `MiniGatewayMqtt` from knowing how it was attached to a socket.
 
 
 ### Stage 8: assembling the runtime roles
@@ -795,8 +775,6 @@ namespace {
 
 } // namespace
 
-The helper functions above are application assembly helpers, not framework extensions. `reportState` keeps role diagnostics consistent. `makeSimulatedMeasurement` exists only for the guided base input. `createMqttConfig` adds the MiniGateway-specific MQTT subcommand to the configured MQTT client role. `startMqttClient` creates the concrete role and starts it.
-
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
 
@@ -868,8 +846,6 @@ int main(int argc, char* argv[]) {
     return core::SNodeC::start();
 }
 ```
-
-The completed `main.cpp` is the composition point. It does not try to hide the roles behind one large application object. Instead, it wires a small state owner, an internal event bus, the HTTP/SSE role, and the MQTT role into one event-driven process. That is the guided project’s main architectural lesson.
 
 
 ### Building the base source package
