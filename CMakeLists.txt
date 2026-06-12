@@ -12,9 +12,12 @@ set(BUILD_DIR
     "${CMAKE_CURRENT_SOURCE_DIR}/build"
     CACHE PATH "Output directory")
 
+set_property(
+  DIRECTORY
+  APPEND
+  PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/book-files.txt")
+
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/book-files.txt" BOOK_FILES)
-file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/book-files-existing-only.txt"
-     EXISTING_FILES)
 
 set(PANDOC_FROM "markdown+raw_tex+fenced_code_attributes")
 
@@ -50,14 +53,8 @@ endfunction()
 make_pandoc_pdf_target(pdf "snodec-book" --metadata-file metadata.yaml
                        ${BOOK_FILES})
 
-make_pandoc_pdf_target(pdf-existing "snodec-book-existing-only" --metadata-file
-                       metadata.yaml ${EXISTING_FILES})
-
 make_pandoc_target(tex "snodec-book" --metadata-file metadata.yaml
                    ${BOOK_FILES})
-
-make_pandoc_target(tex-existing "snodec-book-existing-only" --metadata-file
-                   metadata.yaml ${EXISTING_FILES})
 
 make_pandoc_pdf_target(proposal "book-proposal-package" --metadata-file
                        metadata.yaml proposal/book-proposal-package.md)
