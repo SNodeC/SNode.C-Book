@@ -1,12 +1,4 @@
-# Epilogue — What to Take Away from SNode.C {.unnumbered}
-
-SNode.C is not primarily a shortcut for opening sockets.
-
-It is a way of keeping network-system architecture visible while the application grows from simple connections to protocols, protocols to roles, roles to applications, and applications to deployable systems.
-
-That visibility is the real subject of this book.
-
-## Layers are not decoration
+## Layers are not decoration {.unnumbered}
 
 The word layered can be used lazily. In SNode.C, it is meant operationally.
 
@@ -24,7 +16,7 @@ lower family
 
 A reader who understands this stack can move between IPv4, IPv6, Unix domain sockets, Bluetooth, HTTP, WebSocket, MQTT, persistence, and deployment without treating each subject as a separate world.
 
-## Boundaries are design decisions
+## Boundaries are design decisions {.unnumbered}
 
 Many mistakes in network applications are not caused by the wrong syntax. They are caused by the wrong boundary.
 
@@ -40,7 +32,7 @@ Which boundary honestly owns this concern?
 
 That question is useful before writing code, while debugging code, while designing configuration, while packaging the application, and while deciding whether a system should remain one executable or become several cooperating services.
 
-## Roles and instances need precise language
+## Roles and instances need precise language {.unnumbered}
 
 The book deliberately distinguishes system-design roles, application-side server or client handles, configured communication roles, registered runtime-visible instances, connections, contexts, factories, middleware, subprotocols, and application services.
 
@@ -58,7 +50,7 @@ configured role name
 
 This is not merely terminology. It is how a running system becomes understandable.
 
-## Protocols carry meaning, not only bytes
+## Protocols carry meaning, not only bytes {.unnumbered}
 
 The book started with simple communication and gradually moved upward: custom stream protocols, HTTP, Express-like routing, SSE, WebSocket, MQTT, MQTT-over-WebSocket, and multi-protocol IoT systems.
 
@@ -74,7 +66,7 @@ raw data
 
 This is why protocol code should not be treated as accidental glue. It is where communication becomes part of an application.
 
-## Build and deployment are part of architecture
+## Build and deployment are part of architecture {.unnumbered}
 
 A network framework does not end at the source tree.
 
@@ -93,7 +85,7 @@ source component
 
 A system that is clear only in the source tree is not yet fully clear.
 
-## The guided project is not the end of the idea
+## The guided project is not the end of the idea {.unnumbered}
 
 MiniGateway was deliberately small. It did not try to become a product. It showed how the pieces can be assembled while preserving the vocabulary of the book.
 
@@ -112,7 +104,21 @@ Which tests protect the real boundaries?
 
 When those questions remain answerable, the application can grow without becoming opaque.
 
-## Where to go next
+## A philosophical review of the book {.unnumbered}
+
+This book has used SNode.C as a concrete framework, but its deeper subject is not only SNode.C. It is the question of how network software can remain intelligible when it grows. That question is older than any particular library. Every serious network application eventually meets the same forces: different carriers, different protocols, changing deployment targets, operational failures, partial knowledge, and the temptation to hide complexity behind one convenient abstraction.
+
+The position taken by this book is deliberately not that complexity can be made to disappear. A framework that pretends to remove all complexity usually only moves it somewhere less visible. SNode.C takes a different path. It gives names and places to concerns that are often blurred: lower communication family, transport form, connection handling, protocol meaning, context, configured role, runtime-visible instance, application state, package component, deployed service, diagnostic boundary. The philosophical value of such a framework is not that it makes design automatic. It makes design discussable.
+
+That is why the book has returned so often to boundaries. A boundary is not a wall erected for its own sake. It is a claim that a certain concern has a natural owner. When the claim is right, the program becomes easier to reason about. When the claim is wrong, the program may still compile, but it becomes conceptually dishonest. The HTTP route begins to own domain state. The MQTT callback begins to decide deployment policy. A socket context becomes a dumping ground for orchestration. A configuration option becomes a disguised invariant. These failures are technical, but they are also failures of thought.
+
+The recurring discipline of the book can therefore be read as a kind of engineering humility. Do not pretend that a byte stream already is a protocol. Do not pretend that a protocol already is an application. Do not pretend that an application already is a deployed system. Do not pretend that a running process is understood merely because it is running. Each step adds meaning, and each step deserves a place where that meaning can be named, tested, logged, configured, and maintained.
+
+There is also a positive side to this discipline. Visible boundaries make change less frightening. MiniGateway could be extended because the base application did not collapse measurement input, state ownership, observation, and MQTT publication into one accidental block of code. MQTTSuite can be understood as an ecosystem because its roles are not merely executables, but architectural positions. Build targets, package components, and runtime configuration are not administrative noise; they are part of how the architecture survives contact with real machines.
+
+Seen this way, SNode.C is less a library of shortcuts than a vocabulary for layered network systems in C++. It rewards programmers who are willing to be explicit. It asks for more care at the boundary between concepts, but it pays that care back when systems need to be extended, diagnosed, ported, packaged, or taught. That is the philosophical center of the book: clarity is not achieved by hiding all structure. Clarity is achieved by preserving the right structure long enough that the system can still explain itself.
+
+## Where to go next {.unnumbered}
 
 A reader who finishes this book should not merely know that SNode.C has servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components.
 
@@ -131,7 +137,7 @@ only then generalize or split the system
 
 SNode.C rewards this discipline because its architecture makes the boundaries explicit. It does not force good design automatically, but it gives good design places to live.
 
-## Closing perspective
+## Closing perspective {.unnumbered}
 
 The promise of SNode.C is not that networking becomes trivial.
 
