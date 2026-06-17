@@ -197,6 +197,8 @@ examples/MiniGateway-Extended
 
 `MiniGateway-Extended` is the source of truth for Chapter 38. It extends the base application with a Unix-domain measurement input boundary while preserving the existing HTTP, SSE, MQTT, and state path.
 
+The chapter listings are explanatory copies of these source trees. They should be regenerated or checked against the example directories whenever the examples change. Before publication, both MiniGateway versions should be built as external SNode.C consumer applications against the SNode.C version or commit named for the manuscript. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is authoritative.
+
 ## Style guide for the manuscript
 
 ### Tone

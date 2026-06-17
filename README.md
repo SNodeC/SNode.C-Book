@@ -34,6 +34,12 @@ examples/MiniGateway-Base
 examples/MiniGateway-Extended
 ```
 
+## MiniGateway source and tested-code policy
+
+`examples/MiniGateway-Base` is the authoritative source tree for Chapter 37. `examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
+
+Both MiniGateway versions are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C version or commit named for the manuscript. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
+
 ## Heading convention
 
 For Pandoc/XeLaTeX with `documentclass: book` and `--top-level-division=part`, the manuscript uses this heading convention:
@@ -54,7 +60,7 @@ Manual chapter numbers are not part of chapter headings. LaTeX/Pandoc numbers pa
 
 ## Build
 
-Install Pandoc and a XeLaTeX-capable TeX distribution first. The ordinary manuscript build can be driven through the Makefile wrapper:
+Install Pandoc and a XeLaTeX-capable TeX distribution. The ordinary manuscript build can be run through the Makefile wrapper:
 
 ```bash
 make pdf
@@ -72,31 +78,24 @@ To generate LaTeX only:
 make tex
 ```
 
-The CMake build can also be used directly, especially when producing package artifacts:
+The same manuscript can also be built directly through CMake:
 
 ```bash
 cmake -S . -B build
 cmake --build build --target pdf
 ```
 
-CMake reads `book-files.txt` and `book-files-existing-only.txt` during configuration. If either file list changes, reconfigure the build directory before rebuilding.
+The CMake build reads `book-files.txt` and `book-files-existing-only.txt` during configuration. If either file list changes, reconfigure the build directory.
 
 ## Proposal / publisher package
 
 The proposal package target creates a clean reviewer-facing archive in `packages/`:
 
 ```bash
-cmake -S . -B build
 cmake --build build --target proposal-package
 ```
 
-Despite its name, the proposal package is not only the proposal document. It is the clean publisher/reviewer package for the current book source. It should contain the proposal, manuscript Markdown sources, metadata, structure files, build files, and MiniGateway example source trees needed for inspection. It should not contain local build directories, editor state, `.git` internals, generated working files, or other private workspace artifacts.
-
-## Example source of truth
-
-The MiniGateway examples are part of the manuscript source, not detached sample code. Chapter 37 uses `examples/MiniGateway-Base` as its source of truth. Chapter 38 uses `examples/MiniGateway-Extended` as its source of truth.
-
-If one of those example trees changes, the corresponding chapter listings and prose must be checked against it. Conversely, if a chapter listing is edited, the matching example source tree must be updated as well. The intended publication state is that the example source trees are buildable external consumers of the documented SNode.C version.
+The generated archive contains the proposal, manuscript Markdown sources, metadata, structure files, and example source trees needed for publisher or reviewer inspection. It should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
 
 ## Positioning
 
