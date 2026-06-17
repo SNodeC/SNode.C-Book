@@ -56,11 +56,7 @@ This book is not a replacement for formal networking theory. It assumes the read
 
 It is also not merely an API reference. A reference answers questions such as “what is the signature of this function?” or “which overloads exist?” Those questions matter, but a teaching book has a different job. Its job is to build durable understanding.
 
-This book will therefore do four things repeatedly. First, it will explain **why** a particular SNode.C abstraction exists. Second, it will show **how** that abstraction is used in small but realistic examples.
-
-Third, it will connect the mechanism back to the **layered model** of the framework.
-
-Fourth, it will ask the transfer question: what remains the same, and what changes, if the lower family changes, TLS is inserted, or a higher protocol layer is added?
+This book therefore treats SNode.C abstractions in four linked ways. It explains **why** a particular abstraction exists, shows **how** that abstraction is used in small but realistic examples, connects the mechanism back to the **layered model** of the framework, and repeatedly asks the transfer question: what remains the same, and what changes, if the lower communication family changes, TLS is inserted, or a higher protocol layer is added?
 
 The book will touch many technologies, but it will not become a specialist book about all of them. It is not a complete TLS book, Bluetooth book, HTTP book, MQTT book, database book, or OpenWrt deployment manual.
 
@@ -208,7 +204,7 @@ These are not separate worlds. In a real system, they meet.
 
 SNode.C is especially interesting in the context of IoT and machine-to-machine communication because such systems rarely live at only one level. They often touch devices, local transports, network transports, secure channels, web interfaces, broker-oriented messaging, persistence, deployment, and diagnostics at the same time.
 
-MQTTSuite is the reference ecosystem that makes this concrete. It builds focused MQTT applications on top of SNode.C, including broker, integrator, bridge, command-line, and store roles. The book does not begin with MQTTSuite, because the reader first needs the framework model. But MQTTSuite becomes important later because it shows the framework ideas at application and system scale.
+MQTTSuite is the reference ecosystem that makes this concrete. It builds focused MQTT applications on top of SNode.C, including broker, integrator, bridge, command-line, and store roles. MQTTSuite appears later, after the framework model has been established. That order is deliberate: the reader first needs to understand the recurring SNode.C roles and boundaries before seeing them at application and system scale.
 
 ### The central pattern you will meet again and again
 
@@ -230,17 +226,17 @@ The connection represents a concrete peer relationship. The factory creates the 
 
 The runtime coordinates event-driven progress.
 
-At this point, this is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. The important point is that SNode.C is regular: the same few roles reappear in different protocol settings.
+At this point, this is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. The important point is that SNode.C is regular: the same few roles reappear in different protocol settings, and that regularity is one of the reasons the framework is teachable.
 
-That regularity is one of the reasons the framework is teachable.
+The first concrete program will therefore be deliberately modest: an echo server and client.
 
-### Why starting with echo is not childish
+### Why the first example is an echo pair
 
 Some readers see an echo example and assume it is too simple to matter. That reaction is understandable, but mistaken. A good echo application is a microscope.
 
 It exposes server and client creation, context construction, callback flow, data input and output, runtime startup, and the boundary between framework logic and application logic with very little distraction.
 
-The purpose of the first echo pair is not to impress the reader with a sophisticated protocol. Its purpose is to show the shape of the framework before higher layers add vocabulary of their own.
+The first echo pair is not meant to impress with protocol sophistication. It is meant to show the shape of the framework before higher layers add vocabulary of their own.
 
 Chapter 3 gives the first full example.
 
@@ -262,8 +258,6 @@ This chapter has explained why SNode.C is worth studying as a framework and as a
 
 SNode.C is worth studying because it offers a coherent way to think about networked applications in modern C++. It connects lower communication families such as IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP with higher protocol systems such as HTTP, WebSocket, and MQTT. It supports practical concerns such as configuration, TLS, deployment, diagnostics, and persistence. Most importantly, it does so without erasing the architecture.
 
-The goal of this book is not simply that you can write code *with* SNode.C.
-
-The goal is that, after some chapters, you begin to see networked systems *through* the architectural lens that SNode.C makes available.
+The goal of this book is not simply that you can write code *with* SNode.C, but that, after some chapters, you begin to see networked systems *through* the architectural lens that SNode.C makes available.
 
 Once that happens, the framework becomes more than a toolkit in the ordinary sense. It becomes a way of organizing thought. And that is the right place to begin.
