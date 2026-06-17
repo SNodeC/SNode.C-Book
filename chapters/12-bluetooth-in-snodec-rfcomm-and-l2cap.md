@@ -518,18 +518,10 @@ This is especially useful in IoT and embedded systems, where local device commun
 - The application-side handle, registered instance, connection, factory, context, callbacks, and runtime model remain structurally familiar.
 - Bluetooth convenience calls configure the application-side handle and then enter the usual registration path.
 - The Bluetooth wildcard or deferred endpoint shape is the wildcard Bluetooth address plus service selector `0`.
-- Devices must be paired at the operating-system Bluetooth level before SNode.C can use RFCOMM or L2CAP between them.
-- Bluetooth support depends on platform Bluetooth support and build availability.
 
 ### Closing perspective
 
 Chapter 10 covered host-plus-port endpoint identity through IPv4 and IPv6. Chapter 11 replaced that with Unix-domain path identity.
 
-This chapter replaced it again with Bluetooth-specific endpoint identities:
-
-- Bluetooth address plus RFCOMM channel,
-- Bluetooth address plus L2CAP PSM.
-
-That completes the lower-family tour of this part of the book.
-
 The next part can now move upward. The question becomes less "Which endpoint family carries the connection?" and more "How should protocol behavior be written inside a `SocketContext`, and how should factories create those contexts?"
+

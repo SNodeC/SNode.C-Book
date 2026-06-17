@@ -2,7 +2,7 @@
 
 ### Why these three belong in one chapter
 
-Chapter 8 made the network layer concrete. It showed that an address in SNode.C is not merely a string, a number, or a path. It is a family-specific description of endpoint identity. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
+Chapter 8 made the network layer concrete. It showed that an address in SNode.C is not just a string, a number, or a path. It is a family-specific description of endpoint identity. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
 
 This chapter asks the next question:
 
@@ -104,7 +104,7 @@ The protocol endpoint lives in the context. The concrete peer relationship lives
 
 #### Local handle and runtime-visible instance
 
-This chapter uses the local-handle distinction introduced earlier.
+It uses the local-handle distinction introduced earlier.
 
 A local `SocketServer` or `SocketClient` object is the handle used to configure and register the role. After `listen(...)` or `connect(...)`, the active runtime story continues through shared configuration, flow-controller state, accept/connect machinery, and connection objects.
 
@@ -166,7 +166,7 @@ onDisconnect
 
 These callbacks receive a `SocketConnection*`.
 
-That detail is important. They are not merely status messages about the server as a whole. They are hooks into the lifecycle of a concrete connection under the server-side instance.
+That detail is important. They are not just status messages about the server as a whole. They are hooks into the lifecycle of a concrete connection under the server-side instance.
 
 Typical uses include:
 
@@ -388,7 +388,7 @@ setWriteTimeout(...)
 
 This also connects back to Chapter 6: timers and event processing make timeout behavior part of the runtime, not a manual sleep loop in protocol code.
 
-A timeout is not merely an application-level preference. It is part of how the runtime supervises a concrete peer relationship.
+A timeout is not just an application-level preference. It is part of how the runtime supervises a concrete peer relationship.
 
 #### Metrics and duration
 
@@ -521,7 +521,7 @@ A simple legacy echo example may not make the distinction feel dramatic. A more 
 
 #### `onDisconnect`
 
-`onDisconnect` is not merely a destructor-like cleanup moment. It is often the place where a completed connection lifecycle becomes interpretable.
+`onDisconnect` is not just a destructor-like cleanup moment. It is often the place where a completed connection lifecycle becomes interpretable.
 
 At disconnect time, useful information such as addresses, online duration, queued bytes, sent bytes, read bytes, and processed bytes can be logged or inspected.
 
@@ -564,7 +564,7 @@ registered instance
           -> SocketContext
 ```
 
-This is why the factory belongs conceptually between instance and context.
+Therefore, the factory belongs conceptually between instance and context.
 
 Without the factory, a server accepting multiple peers would have no clean general mechanism for producing a fresh protocol endpoint for each connection. The application entry point would have to know too much about connection creation timing. The role would begin to absorb protocol construction. The structure would become less reusable.
 
@@ -643,22 +643,10 @@ That question usually prevents the most common misunderstandings.
 - Server and client roles share the same broad pattern, but differ in setup direction: servers accept peers, clients initiate connection attempts and may reconnect.
 - Connection objects carry addresses, data flow, shutdown, timeouts, metrics, duration, and naming for one peer relationship.
 - Factories create per-connection contexts; contexts implement protocol behavior over the connection.
-- Status callbacks, connection lifecycle callbacks, and context callbacks belong to different layers of the model.
 
 ### Closing perspective
 
 Chapter 8 explained endpoint identity. This chapter explained the runtime roles that use those identities and the concrete connection objects that appear when communication succeeds.
 
-We can now separate three questions that are often mixed together:
-
-```text
-Which endpoint identity is being used?
-Which instance is registering listen or connect intent?
-Which concrete connection exists after success?
-```
-
-That separation prepares the next step.
-
-Chapter 10 uses IPv4 and IPv6 as the primary teaching path. With the distinctions from this chapter in place, we can read those examples more precisely. A server-side instance binds to a local endpoint identity. A client-side instance connects to a remote endpoint identity. A `SocketConnection` then exposes the actual local and remote endpoints of the concrete peer relationship.
-
 The next chapter therefore does not need to reintroduce the whole model. It can use IPv4 and IPv6 to show the model in its most familiar network-family setting.
+

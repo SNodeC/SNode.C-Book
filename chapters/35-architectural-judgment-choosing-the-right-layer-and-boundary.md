@@ -53,7 +53,7 @@ A warning sign is one class, callback, configuration section, or executable that
 
 At the lowest practical architectural level, the communication family shapes endpoint identity, deployment assumptions, permissions, diagnostics, and operational boundaries.
 
-IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP do not merely differ in address syntax. They imply different kinds of communication situations.
+IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP do not just differ in address syntax. They imply different kinds of communication situations.
 
 A good first rule is:
 
@@ -305,11 +305,11 @@ A useful rule is:
 - put degraded-state behavior at the role or system boundary that owns the consequence,
 - do not force every failure concern into one place.
 
-Failure policy belongs to the role that owns the boundary, not merely to the lowest socket that notices the error.
+Failure policy belongs to the role that owns the boundary, not just to the lowest socket that notices the error.
 
 ### Choosing what must be operator-visible
 
-System architecture is not only about internal correctness. It is also about operability.
+System architecture is not only about internal correctness. It is about operability.
 
 A good SNode.C architect should routinely ask:
 
@@ -415,31 +415,10 @@ Architectural judgment in SNode.C means choosing the right layer, role boundary,
 - Choose the protocol surface by asking what kind of conversation the boundary wants to have.
 - The simplest honest stack is not always the lowest stack.
 - Native protocols and composed protocols solve different boundary problems.
-- Separate roles when audience, protocol, state ownership, deployment, or failure policy differ.
-- Separating roles does not automatically mean separating executables.
-- Packaging is an operational boundary decision, not a maturity contest.
-- `SocketContext`, factories, middleware, routers, subprotocols, configuration, and application/system layers each own different kinds of concerns.
-- Configuration should expose deployment and operator variability, not internal invariants.
-- Endpoint-local state belongs near the endpoint only when it describes the current protocol relationship.
-- Protocol meaning and carrier mechanics should not be confused.
-- Extensibility should live at the point where the real variation occurs.
-- Failure policy belongs to the role that owns the boundary.
-- Operator-visible concerns should be named, configured, logged, or measured.
-- Simplicity and honesty usually beat cleverness.
-- Preserve meaning until another layer honestly owns it.
-- SNode.C provides communication architecture; domain code still owns domain semantics.
 
 ### Closing perspective
 
 Chapter 35 does not add another protocol. It asks the reader to use the existing protocol, role, configuration, deployment, diagnostic, and testing vocabulary with judgment.
 
-From here on, the book can focus less on adding new surfaces and more on preserving clarity while systems grow. The next natural step is to turn this judgment toward evolution:
-
-```text
-How should a SNode.C codebase grow
-  -> without losing its layer boundaries,
-      -> without hiding its role structure,
-          -> and without turning useful abstraction into accidental complexity?
-```
-
 Chapter 36 therefore turns from choosing boundaries to evolving them safely.
+

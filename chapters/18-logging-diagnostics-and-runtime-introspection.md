@@ -78,7 +78,7 @@ Log visibility answers questions such as:
 
 The logger gives those events a controlled output path.
 
-The point is not merely that messages are printed. The point is that messages can be placed at the layer that understands their meaning.
+The point is not just that messages are printed. The point is that messages can be placed at the layer that understands their meaning.
 
 #### Connection visibility
 
@@ -254,7 +254,7 @@ These are not cosmetic details. They decide whether diagnostics are usable in th
 | color output | improve terminal readability |
 | monochrome output | improve logs in files, pipes, and plain consoles |
 
-The important point is that output mode belongs to the application shell. It is not the responsibility of every server, client, connection, or context to invent its own logging destination.
+output mode belongs to the application shell. It is not the responsibility of every server, client, connection, or context to invent its own logging destination.
 
 SNode.C uses a centralized logging surface so that application-level settings can control where and how messages appear. That is especially important for daemonized applications, OpenWrt deployments, services started from init systems, and long-running systems where the interesting event may happen long after startup.
 
@@ -437,7 +437,7 @@ VLOG(3)
 
 This keeps normal debug output readable while preserving deeper information when needed.
 
-The important point is not the exact numeric verbose level chosen for every project. The important point is the separation of ordinary lifecycle facts from optional deeper evidence.
+The point is not the exact numeric verbose level chosen for every project. The important point is the separation of ordinary lifecycle facts from optional deeper evidence.
 
 #### Context-level protocol events
 
@@ -566,7 +566,7 @@ A repeated retry is an instance-level flow problem. A peer closing unexpectedly 
 
 A good diagnostic style uses the right visibility source for the problem.
 
-This is why runtime introspection is broader than logging. Logs are one form of runtime evidence. Effective configuration, generated command lines, connection metrics, and context decisions are evidence too.
+Therefore, runtime introspection is broader than logging. Logs are one form of runtime evidence. Effective configuration, generated command lines, connection metrics, and context decisions are evidence too.
 
 ### Too much logging is a failure mode
 
@@ -646,20 +646,10 @@ That order matters. If the endpoint is wrong, deeper protocol logs may only prod
 - `PLOG(level)` is for ordinary runtime reporting where captured system-error context helps explain the failure.
 - `VLOG(n)` is for optional diagnostic depth controlled by the verbose level.
 - Good log placement follows responsibility boundaries: application, instance, connection, and context.
-- Connection identity, addresses, counters, and durations make runtime episodes concrete.
-- Context logs should add protocol meaning rather than duplicate socket-layer facts.
-- Chapter 19 moves from visibility and operation into TLS as a secure connection-layer specialization.
 
 ### Closing perspective
 
 Part V began with configuration as part of the architecture. It then looked at the detailed hierarchy of application, instance, section, and option. This chapter has shown that the same structure is also diagnostic structure.
 
-A networked application is not understandable merely because it compiles.
-
-It becomes understandable when its configured shape can be inspected, its activation can be observed, its connection episodes can be identified, its failures can be tied to the right boundary, and its protocol decisions can be read at the context level.
-
-That is why logging and diagnostics are not accessories. They are part of operational design.
-
-The next chapter moves into TLS. TLS is a secure connection-layer specialization, but it is also a diagnostic challenge: certificate paths, trust decisions, handshake behavior, shutdown behavior, system errors, and protocol expectations can all interact. Those failures are much easier to understand once configuration visibility, logging responsibility, connection identity, and protocol-level diagnostics have been separated.
-
 With that diagnostic foundation in place, the book can now look at secure communication without treating it as a black box.
+

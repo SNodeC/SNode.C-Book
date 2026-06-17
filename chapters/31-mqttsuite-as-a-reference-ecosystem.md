@@ -463,7 +463,7 @@ MQTT client or server components
 optional lower carriers where available
 ```
 
-Again, the build system is not merely mechanics; it shows which roles and communication boundaries the application can expose.
+Again, the build system is not just mechanics; it shows which roles and communication boundaries the application can expose.
 
 #### Configuration and repeatable role constellations
 
@@ -536,13 +536,6 @@ MQTTSuite shows how focused SNode.C applications can form a larger system.
 - `mqttbroker` demonstrates direct MQTT listener roles, web/admin roles, live observation, and MQTT-over-WebSocket.
 - `mqttintegrator` demonstrates mapping-driven integration semantics above MQTT.
 - `mqttbridge` demonstrates topology management and selected traffic movement between MQTT worlds.
-- `mqttcli` demonstrates the MQTT stack as an operational tool.
-- `mqttstore` demonstrates a persistence boundary: raw MQTT envelope storage plus optional typed projections.
-- `mqtt-mapping` is shared support for mapping and mapping administration, not the whole ecosystem.
-- Mapping, bridging, CLI operation, and persistence are application semantics above MQTT core.
-- The build system and configuration surfaces expose much of the system surface.
-- MQTTSuite closes Part IX by showing how SNode.C applications can form a coherent ecosystem.
-- Chapter 32 moves into building, components, and linking strategy.
 
 ### Closing perspective
 

@@ -413,10 +413,5 @@ Do I know whether I am using a local install prefix or a system-wide install? Do
 
 A good development environment is not only about making the compiler happy. It shapes how the reader thinks.
 
-If the source tree, build tree, install prefix, examples, and playground are clearly separated, the framework becomes easier to understand. If everything is mixed together, even simple questions become confusing.
-
-Chapter 1 introduced the architectural reason for studying SNode.C. This chapter prepared the practical ground on which that architecture can be inspected.
-
-The next chapter uses this environment to build the first concrete program: an echo server and an echo client.
-
 The example will be small. But it will already expose the recurring shape of SNode.C applications.
+

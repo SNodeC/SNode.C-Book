@@ -4,7 +4,7 @@
 
 Chapter 10 used IPv4 and IPv6 as the first concrete lower-family comparison. Both families still used a host-plus-port endpoint identity.
 
-This chapter keeps the same SNode.C handle, instance, connection, factory, context, callback, and runtime model, but changes the endpoint identity more strongly:
+This chapter keeps the same SNode.C runtime model, but changes endpoint identity more strongly:
 
 ```text
 host + port
@@ -91,7 +91,7 @@ In application code this may appear as:
 net::un::SocketAddress address("/tmp/my-service.sock");
 ```
 
-The path is not merely a filename in the everyday document sense. It is the name through which local processes identify the communication endpoint. In practice, it acts as a rendezvous name inside the local operating-system environment: one side creates or binds that endpoint identity, and the other side uses the same identity to reach the service.
+The path is not just a filename in the everyday document sense. It is the name through which local processes identify the communication endpoint. In practice, it acts as a rendezvous name inside the local operating-system environment: one side creates or binds that endpoint identity, and the other side uses the same identity to reach the service.
 
 This avoids two common wrong instincts:
 
@@ -114,7 +114,7 @@ Default construction is meaningful in the Unix-domain address model.
 
 In the SNode.C address vocabulary used here, an empty Unix-domain path acts as the wildcard or deferred endpoint indicator for this family. It gives SNode.C a way to represent an address object whose concrete path has not yet been made specific.
 
-The important point is not to turn this into a long operating-system detour. The important point is consistency across families:
+The point is not to turn this into a long operating-system detour. The important point is consistency across families:
 
 | Family | Default / wildcard shape |
 |---|---|
@@ -277,7 +277,7 @@ The server-side instance is still the listening role. The client-side instance i
 
 The context is still the protocol endpoint attached to that connection.
 
-This is why moving from IPv4 to Unix domain sockets should not feel like moving to a different framework. The lower family has changed, not the architecture. For application developers this is an important payoff: once the instance, connection, factory, and context boundaries are understood, a new endpoint family does not force the whole program shape to be relearned.
+Therefore, moving from IPv4 to Unix domain sockets should not feel like moving to a different framework. The lower family has changed, not the architecture. For application developers this is an important payoff: once the instance, connection, factory, and context boundaries are understood, a new endpoint family does not force the whole program shape to be relearned.
 
 #### Context and protocol logic
 
@@ -387,7 +387,7 @@ This keeps the comparison architectural rather than emotional. The lower family 
 
 ### Stream focus and a datagram note
 
-This chapter focuses on stream Unix domain sockets. That is intentional for architectural continuity. Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
+It focuses on stream Unix domain sockets. That is intentional for architectural continuity. Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
 
 The SNode.C build also contains a `net-un-dgram` component. That is useful to know, but it is not the focus here. Datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8--12.
 
@@ -416,7 +416,6 @@ The server/client/connection/context model remains available, while the lower-fa
 - `listen(sunPath, ...)` configures the server's local Unix-domain path; `connect(sunPath, ...)` configures the client's remote Unix-domain service path.
 - `connect(sunPath, bindSunPath, ...)` keeps the local/remote distinction visible even though both endpoints are path-based.
 - The empty Unix-domain path is the family's wildcard or deferred endpoint representation in the SNode.C address model.
-- Deployment thinking shifts from network reachability to local path placement, access, ownership, and cleanup.
 
 ### Closing perspective
 

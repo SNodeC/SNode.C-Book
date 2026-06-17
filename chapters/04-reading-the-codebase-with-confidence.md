@@ -32,7 +32,7 @@ This chapter does not try to explain every file. It teaches a reading strategy. 
 
 The first useful map is not a class diagram. It is the build structure.
 
-The top-level `CMakeLists.txt` defines the project, prepares project-level helper modules, delegates into `src`, and then includes packaging support. In other words, the top-level file is mostly a gateway into the framework source tree rather than the place where the framework structure itself is expressed.
+The top-level `CMakeLists.txt` defines the project, prepares project-level helper modules, delegates into `src`, and then includes packaging support. the top-level file is mostly a gateway into the framework source tree rather than the place where the framework structure itself is expressed.
 
 ```text
 CMakeLists.txt
@@ -97,7 +97,7 @@ application
                       -> runtime machinery
 ```
 
-This is why the echo pair is valuable. It gives the reader a concrete entry point. A good first reading path is:
+Therefore, the echo pair is valuable. It gives the reader a concrete entry point. A good first reading path is:
 
 ```text
 src/apps/echo/
@@ -558,7 +558,7 @@ A practical reading workflow for SNode.C is:
 9. Return to the application and re-read it with the framework roles visible.
 ```
 
-This workflow is not only useful for beginners. It is also useful when extending the framework. A new feature should have a clear place in the same map.
+This workflow is not only useful for beginners. It is useful when extending the framework. A new feature should have a clear place in the same map.
 
 ### What to remember
 

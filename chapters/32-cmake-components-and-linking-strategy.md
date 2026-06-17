@@ -78,7 +78,7 @@ The real structural center of the build is `src/CMakeLists.txt`. That file does 
 
 This is where the build becomes more than compilation mechanics. It becomes an inventory of what the framework believes its component surface is.
 
-The supported component list is especially important. It includes core runtime pieces, stream legacy/TLS pieces, network-family variants, HTTP, Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and more. In other words, the CMake component list is also an architectural table of contents.
+The supported component list is especially important. It includes core runtime pieces, stream legacy/TLS pieces, network-family variants, HTTP, Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and more. the CMake component list is also an architectural table of contents.
 
 #### Compiler policy
 
@@ -92,7 +92,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 This matters. SNode.C is not presented as old-style portable C++ that happens to compile with anything. It is a modern C++ framework, and the build makes that identity explicit.
 
-The compiler baseline is not merely a convenience check. It is part of the framework contract. A port must provide not only a compiler, but a compiler sufficiently modern for the framework's language and diagnostic expectations.
+The compiler baseline is not just a convenience check. It is part of the framework contract. A port must provide not only a compiler, but a compiler sufficiently modern for the framework's language and diagnostic expectations.
 
 #### Warning policy
 
@@ -144,7 +144,7 @@ This belongs to the same dependency-hygiene story.
 
 `--as-needed` discourages unnecessary linkage. `--no-undefined` requires shared libraries to declare the dependencies they need instead of relying on a final application link step to accidentally complete missing symbols.
 
-That is important for SNode.C's component model. A component target should not merely compile. It should have a truthful link face. The policy reinforces the idea that dependencies belong to the component that needs them.
+For SNode.C's component model, a target should not just compile; it should have a truthful link face. Dependencies belong to the component that needs them.
 
 #### In-tree and installed build contexts
 
@@ -232,7 +232,7 @@ role: client
 carrier composition: WebSocket
 ```
 
-A target name should make the role of the component visible before the source file is opened. The example list is intentionally written without intermediate library holes: `net-in-stream-legacy` and `net-in-stream-tls` are not shown as if they appeared directly below `net`; the intermediate `net-in` and `net-in-stream` targets are part of the visible layering. SNode.C largely follows that principle. This is why renaming a target is not a cosmetic act in SNode.C.
+A target name should make the role of the component visible before the source file is opened. The example list is intentionally written without intermediate library holes: `net-in-stream-legacy` and `net-in-stream-tls` are not shown as if they appeared directly below `net`; the intermediate `net-in` and `net-in-stream` targets are part of the visible layering. SNode.C largely follows that principle. Therefore, renaming a target is not a cosmetic act in SNode.C.
 
 #### A public component graph read from `logger` upward
 
@@ -729,7 +729,7 @@ A distributor may want different compiled defaults for an embedded package. An o
 
 ### Installed packages and external consumers
 
-SNode.C is not only built for itself. It is also consumed by external applications. That is where package configuration, exported targets, component selection, and namespaced target names become essential.
+SNode.C is not only built for itself. It is consumed by external applications. That is where package configuration, exported targets, component selection, and namespaced target names become essential.
 
 #### From build targets to installed package targets
 
@@ -830,7 +830,7 @@ snodec::net-in-stream-legacy
 
 The `snodec::...` prefix is the installed/exported namespace. It marks the target as a framework component provided by the package.
 
-This is why examples for external applications should use namespaced targets.
+Therefore, examples for external applications should use namespaced targets.
 
 #### Base components and concrete composition components
 
@@ -906,30 +906,10 @@ This method follows the same pattern used in Chapter 29. The build target often 
 - `SNODEC_INTREE_BUILD` separates the in-tree build context from the installed consumer view.
 - Component targets should own their dependencies.
 - `PUBLIC`, `PRIVATE`, and `INTERFACE` describe dependency visibility.
-- The public target graph is a graph, even when drawn as a readable tree.
-- `core-socket-stream` belongs to the core/socket side of the component graph.
-- Concrete network-family targets combine family identity with legacy or TLS stream operation.
-- The base `http-server-express` target owns the HTTP-server dependency; concrete Express carrier targets select the carrier plus the base Express component.
-- WebSocket build layout reflects HTTP upgrade architecture.
-- MQTT native and MQTT-over-WebSocket forms are distinct component surfaces.
-- Build-time defaults and runtime configuration operate at different times.
-- External applications should use exported `snodec::...` targets through `find_package(snodec COMPONENTS ...)`.
-- A consumer should link the direct application/protocol component and the selected transport component, not every lower layer manually.
 
 ### Closing perspective
 
 Chapter 32 starts Part X by making the build system visible as architecture.
 
-The same design discipline that shaped SNode.C's runtime layers also appears in its CMake targets, install components, exported package configuration, and dependency visibility.
-
-Once this component and linking strategy is clear, the next questions are practical ones:
-
-```text
-How is the framework ported?
-How is it packaged?
-How are optional features handled on constrained systems?
-How can applications consume the installed package cleanly?
-How is the build kept maintainable over time?
-```
-
 Chapter 32 made the component surface visible. The remaining chapters in Part X can now discuss porting, packaging, optional dependencies, constrained systems, and maintenance without treating the build as a black box.
+

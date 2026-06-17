@@ -4,11 +4,7 @@
 
 Chapter 3 showed the first working echo pair, and Chapter 5 turned that experience into a mental model of handles, instances, connections, contexts, factories, layers, and operational concerns. Chapter 5 also made an important distinction precise: the visible `SocketServer` or `SocketClient` object is the application-side handle, while the instance is the registered communication role advanced by the framework.
 
-That model is necessary, but it still leaves an important question open. **How does the framework actually keep everything moving?**
-
-A server can register an intention to listen. A client can register an intention to connect. A context can define reactions such as `onConnected()` and `onReceivedFromPeer()`. A timer can be armed. A descriptor can become readable. A timeout can expire. Something has to coordinate all of that.
-
-That “something” is the runtime core. This chapter therefore moves from application shape to runtime machinery. It stays close to the SNode.C source structure, but it describes that structure in a teaching-oriented way: as a small number of cooperating runtime concepts.
+That model still leaves an important question open: **how does the framework keep everything moving?** A server can register an intention to listen, a client can register an intention to connect, a context can react to input, a timer can be armed, a descriptor can become readable, and a timeout can expire. The runtime core coordinates all of that. This chapter moves from application shape to runtime machinery while staying close to the SNode.C source structure.
 
 The key insight is this:
 
@@ -42,11 +38,9 @@ Application code
                     -> next-tick and queued runtime work
 ```
 
-This is not a complete implementation diagram. It is a memory map. It tells us where the major ideas belong.
+This compact diagram is a memory map. It tells us where the major ideas belong.
 
 The application normally talks to `core::SNodeC`. `core::SNodeC` forwards runtime control to the event loop. The event loop delegates low-level waiting and dispatch coordination to the multiplexer. The multiplexer brings together descriptor readiness, timers, queued events, timeout processing, signals, and cleanup.
-
-That is the backbone of the chapter.
 
 ### The public runtime surface: `core::SNodeC`
 
@@ -61,13 +55,11 @@ Its public surface is intentionally small:
 - `free()`
 - `state()`
 
-This compact interface already teaches several important things.
-
 #### The runtime has explicit phases
 
 The existence of `init`, `start`, `stop`, `free`, and `state` tells us that the framework runtime is not just a side effect of object construction. It has lifecycle.
 
-That is a design strength. It reduces ambiguity for applications and gives the reader a stable mental timeline. A typical application does not merely create a server and hope that background machinery appears. It initializes the framework, registers communication roles, and then starts the runtime.
+A typical application does not create a server and hope that background machinery appears. It initializes the framework, registers communication roles, and then starts the runtime.
 
 #### Event-loop control is centralized
 
@@ -279,7 +271,7 @@ A good teaching summary is:
 
 > One tick is the multiplexer coordinating descriptor readiness, timers, queued events, timeout processing, signals, and cleanup.
 
-The multiplexer is not merely a thin wrapper around `epoll`, `poll`, or `select`. It is the runtime hub that combines several kinds of progress into one coordinated event-loop iteration.
+The multiplexer is not just a thin wrapper around `epoll`, `poll`, or `select`. It is the runtime hub that combines several kinds of progress into one coordinated event-loop iteration.
 
 Its structure shows that it:
 
@@ -398,7 +390,7 @@ A small table helps to keep the distinction clear.
 | `DescriptorEventPublisher` | Manages the observed population for a descriptor channel | Decides *who is being observed* |
 | `DescriptorEventReceiver` | Defines behavior for one observed descriptor participant | Decides *what happens when observation produces work* |
 
-This distinction will matter again when socket acceptors, connectors, readers, and writers enter the picture. They are not merely callbacks attached to file descriptors. They are specialized runtime participants managed by the event system.
+This distinction will matter again when socket acceptors, connectors, readers, and writers enter the picture. They are not just callbacks attached to file descriptors. They are specialized runtime participants managed by the event system.
 
 ### Timers are not bolted on
 
@@ -455,7 +447,7 @@ The multiplexer spans active events and publishes them toward the relevant recei
 
 Queued work, including next-tick callbacks and other internal runtime events, is executed. This is where scheduled framework work can run outside the original caller's stack.
 
-It is also the reason `listen(...)` and `connect(...)` can register intent rather than doing the whole operation immediately.
+It is the reason `listen(...)` and `connect(...)` can register intent rather than doing the whole operation immediately.
 
 #### Timeouts and cleanup are checked
 
@@ -493,7 +485,7 @@ A manual sleep inside a callback is almost always the wrong instinct. It stops t
 
 The public call configures and registers an instance. The flow-controller/shared-context path and the event loop advance the actual work.
 
-This is not merely a wording preference. It is the difference between reading SNode.C as a blocking socket wrapper and reading it as an event-driven runtime.
+This is not just a wording preference. It is the difference between reading SNode.C as a blocking socket wrapper and reading it as an event-driven runtime.
 
 #### Understand where descriptor activity, timers, and queued work meet
 
@@ -544,25 +536,7 @@ Those are the ideas the reader should carry forward.
 
 The runtime core is the reason the higher layers of SNode.C can remain regular.
 
-A server can register a listening instance because the runtime can later advance that instance. A client can register a connecting instance because the runtime can later progress the connection attempt. A context can express protocol behavior because the runtime knows when to call it.
-
-Retries and reconnects can exist as part of the model because timers are first-class event sources. Descriptor readiness can become protocol progress because descriptor receivers participate in a managed event system.
-
-This is why the event loop is not a footnote. It is the machinery that turns the framework's architecture into motion.
-
-The reader does not need to memorize every internal method in this chapter. But the reader should leave with a durable picture:
-
-```text
-SNodeC facade
-  -> EventLoop
-      -> EventMultiplexer
-          -> descriptor readiness
-          -> timer progression
-          -> queued runtime work
-          -> timeout handling
-          -> cleanup
-```
-
 That picture will support the next chapters. When we later discuss socket layers, connection objects, contexts, HTTP, WebSocket, MQTT, and system-level applications, the same runtime story will still be underneath.
 
 SNode.C applications are not driven by scattered blocking calls. They are driven by a coordinated event-processing core.
+

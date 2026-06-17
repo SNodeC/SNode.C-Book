@@ -79,7 +79,7 @@ A good SNode.C application keeps those questions visible.
 
 A `SocketContext` acts through a `SocketConnection`.
 
-That means it may send, stream, read, close, inspect metrics, set timeouts, or request shutdown through the surface provided to it. These are real operations. They are not merely descriptive helper functions.
+That means it may send, stream, read, close, inspect metrics, set timeouts, or request shutdown through the surface provided to it. These are real operations. They are not just descriptive helper functions.
 
 But the context should not become the connection.
 
@@ -493,7 +493,7 @@ SocketContextFactory
 
 The factory is not where protocol behavior belongs. The protocol behavior belongs in the context.
 
-The factory is important because it creates the right context for a connection. It is also the natural place where construction-time dependencies become visible. If a context needs access to a shared service, configuration object, registry, or application state, the factory boundary is where that relationship can be made explicit rather than hidden.
+The factory is important because it creates the right context for a connection. It is the natural place where construction-time dependencies become visible. If a context needs access to a shared service, configuration object, registry, or application state, the factory boundary is where that relationship can be made explicit rather than hidden.
 
 If the context is the protocol endpoint, the factory is the construction boundary. Chapter 14 will look at that boundary more closely.
 
@@ -505,21 +505,10 @@ If the context is the protocol endpoint, the factory is the construction boundar
 - `onReceivedFromPeer()` should process input intentionally and return the amount of data actually processed.
 - Protocol state should be explicit, connection-local when possible, and named in protocol terms.
 - Sending, streaming, timeout, shutdown, close, and metrics operations act through the connection-facing surface.
-- Context metrics are most useful when interpreted as protocol observations, not as decorative counters.
-- A good context remains mentally testable: another reader can see what happens on connect, input, invalid data, timeout, closure, and disconnect.
 
 ### Closing perspective
 
 This chapter moves the book upward again.
 
-The previous chapters showed how SNode.C keeps a stable communication model across different lower families. This chapter showed where the application protocol lives once a connection exists.
-
-A `SocketContext` is not the server, not the client, not the connection, and not the factory. It is the per-connection protocol endpoint.
-
-That leaves one important construction question.
-
-If contexts are per-connection objects, something must create them at the right moment, with the right type, and with the right dependencies.
-
-That is the job of the `SocketContextFactory`.
-
 Chapter 14 turns to that bridge.
+

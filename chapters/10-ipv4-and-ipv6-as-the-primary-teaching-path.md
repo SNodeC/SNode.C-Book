@@ -219,7 +219,7 @@ Moving from IPv4 to IPv6 does not collapse those callback layers. The lower-fami
 
 The stable structure does not mean IPv4 and IPv6 are identical. They are not.
 
-The chapter should teach the difference calmly and precisely. The point is not to turn this into a full IPv6 networking chapter. The point is to show where SNode.C keeps the architecture stable and where the lower family still matters.
+The goal is not to turn this into a full IPv6 chapter, but to show where SNode.C keeps the architecture stable and where the lower family still matters.
 
 #### Namespace and address family
 
@@ -450,12 +450,10 @@ This chapter shows IPv4 and IPv6 as the first concrete comparison pair.
 - The application-side server/client handle, registered instance, connection, factory, context, and runtime model stay structurally the same.
 - Convenience `listen(...)` and `connect(...)` overloads set configuration and then delegate to the general registration path.
 - Protocol contexts can often be reused across IPv4 and IPv6 when the protocol itself does not depend on address-family details.
-- The point of the comparison is controlled variation: same SNode.C architecture, different lower-family semantics.
 
 ### Closing perspective
 
 Chapter 9 established the general server/client/connection model. This chapter specialized that model through IPv4 and IPv6.
 
-The next chapter changes the lower-family assumption more strongly. Unix domain sockets keep the same broad SNode.C role model, but they remove the internet host-plus-port assumption. Endpoint identity becomes local operating-system identity instead of internet-family identity.
-
 That makes Unix domain sockets the next useful step: the reader can keep the handle, instance, connection, factory, context, and runtime model while changing what an endpoint address means.
+

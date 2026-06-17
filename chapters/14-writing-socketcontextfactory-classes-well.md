@@ -6,7 +6,7 @@ Chapter 13 explained where application protocol behavior belongs.
 
 It belongs in the `SocketContext`.
 
-This chapter explains how such contexts are created for concrete connections.
+It explains how such contexts are created for concrete connections.
 
 The transition is small in API surface but important in design:
 
@@ -110,7 +110,7 @@ application-side SocketServer / SocketClient handle
 
 This diagram connects Chapters 9, 13, and 14. Chapter 9 explained the server/client/connection relationship. Chapter 13 explained the context as the per-connection protocol endpoint.
 
-This chapter explains the construction step between connection and context. The factory does not make the connection real. The accept or connect path does that. The factory does not process protocol messages. The context does that.
+It explains the construction step between connection and context. The accept or connect path makes the connection real; the context processes protocol messages; the factory creates the context.
 
 The factory creates the context that will handle protocol behavior once attached to the connection.
 
@@ -400,7 +400,7 @@ std::make_shared<SocketContextFactory>(
 )
 ```
 
-In other words, the argument pack allows the factory to be preconfigured at the point where the server or client handle is created. The resulting factory object is then part of the shared state used by the registered instance when concrete connections appear.
+the argument pack allows the factory to be preconfigured at the point where the server or client handle is created. The resulting factory object is then part of the shared state used by the registered instance when concrete connections appear.
 
 This means the server or client constructor can provide the stable information the factory needs. That information may then be stored in the factory and used later when `create(connection)` is called.
 
@@ -574,25 +574,10 @@ The factory supports that portability story because it keeps context creation se
 - The raw pointer returned by `create(...)` belongs to the framework construction contract, not to arbitrary manual lifetime management.
 - Factory constructor arguments are a clean way to pass stable dependencies into future contexts.
 - Construction-time selection is acceptable; mid-protocol behavior belongs in the context.
-- A good factory is easy to inspect: the reader can see which context type is created and which dependencies are passed.
-- Chapter 15 builds on this separation to carry the same protocol over different lower layers.
 
 ### Closing perspective
 
 Chapter 13 established the context as the place where protocol behavior lives. Chapter 14 established the factory as the construction boundary that creates those contexts for concrete connections.
 
-Together, the two chapters separate behavior from construction:
-
-```text
-SocketContext
-  -> what the protocol endpoint does
-
-SocketContextFactory
-  -> how the endpoint object is created for a connection
-```
-
-That separation now becomes useful in a broader way.
-
-The same protocol context can often be carried over different lower communication families when the protocol behavior itself does not depend on family-specific address details. The factory is one of the places where that portability becomes practical, because it keeps context construction explicit while the server or client handle chooses the lower-family-specific communication role.
-
 Chapter 15 uses that separation to show how the same protocol can move across different lower layers without turning the application into a pile of special cases.
+

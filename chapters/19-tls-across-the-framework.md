@@ -68,7 +68,7 @@ lower communication family
 
 Where a TLS wrapper exists for a lower family, this pattern applies. The chapter uses IPv4 examples because they are familiar, not because the architectural idea is IPv4-specific. The same connection-layer specialization can be expressed for other lower communication families where the corresponding TLS stream components are available.
 
-The important point is not that every lower family has identical deployment meaning. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP still have different endpoint identities and operating-system assumptions. The point is that TLS does not erase that lower-family identity. It specializes the stream connection handling above it.
+The point is not that every lower family has identical deployment meaning. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP still have different endpoint identities and operating-system assumptions. The point is that TLS does not erase that lower-family identity. It specializes the stream connection handling above it.
 
 ### Legacy and TLS streams as neighboring connection variants
 
@@ -170,7 +170,7 @@ The following parts can often remain stable:
 - use of `sendToPeer(...)`,
 - use of `readFromPeer(...)`.
 
-This is why TLS is teachable inside the same architecture. The reader does not need to learn a new framework model. The reader needs to understand where the secure connection layer fits.
+Therefore, TLS is teachable inside the same architecture. The reader does not need to learn a new framework model. The reader needs to understand where the secure connection layer fits.
 
 The word *often* matters. TLS independence is not a universal law. It is a design result that holds when the protocol conversation after secure connection readiness is the same. If the protocol uses peer certificates, secure-transport properties, or SNI-derived policy as part of its own semantics, then TLS meaning may deliberately rise into the protocol layer.
 
@@ -311,7 +311,7 @@ transport connection exists
                       -> protocol context works
 ```
 
-This is why the lifecycle distinction between early connection creation and full readiness matters.
+Therefore, the lifecycle distinction between early connection creation and full readiness matters.
 
 A useful reading is:
 
@@ -499,26 +499,10 @@ That distinction will matter again in the deployment chapters. A binary may be l
 - The application-side handle and registered instance model remain recognizable; the TLS wrapper changes the connection-layer machinery.
 - A `SocketContext` can often remain TLS-independent when the protocol conversation is the same after secure connection setup.
 - TLS-specific meaning should enter protocol logic only when certificate, trust, SNI, or secure-transport properties are part of the protocol semantics.
-- TLS configuration belongs in the `tls` section, not in endpoint identity, socket retry, or protocol-context code.
-- `getSSL()` is TLS-specific access at the connection boundary.
-- Chapter 20 continues with timeouts, retries, and failure modes.
 
 ### Closing perspective
 
 Chapter 19 showed how secure connection handling fits into the same architecture. TLS is serious.
 
-It introduces handshake behavior, shutdown behavior, certificate material, trust policy, SNI behavior, close-notify semantics, and new failure modes.
-
-But it remains contained in the connection layer and its configuration unless higher protocol semantics deliberately make TLS properties meaningful.
-
-That balance is the important architectural lesson.
-
-```text
-recognizable application shape
-  -> TLS-aware connection handling
-      -> secure protocol conversation
-```
-
-TLS has already shown that a connection may fail before readiness, during readiness, during shutdown, or while reporting peer trust.
-
 The next chapter generalizes this view into timeouts, retries, and failure modes across the framework.
+

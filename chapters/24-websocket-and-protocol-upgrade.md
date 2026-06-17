@@ -461,7 +461,7 @@ This is enough for Chapter 24. The details of plugin architecture and dynamic lo
 
 A subprotocol may be linked directly into the application or provided through a dynamically loaded factory. That matters because WebSocket can become a carrier for protocols that are not all built into one executable.
 
-For Chapter 24, the important point is not how dynamic loading is implemented. The important point is that WebSocket subprotocol behavior is selected through factories rather than hard-coded into WebSocket framing itself.
+For Chapter 24, the important point is not how dynamic loading is implemented. WebSocket subprotocol behavior is selected through factories rather than hard-coded into WebSocket framing itself.
 
 The architecture allows a later layer to decide:
 
@@ -553,27 +553,10 @@ That later combination becomes easier to understand after Chapter 24. WebSocket 
 - `SocketContextUpgrade` is the boundary object between HTTP negotiation and the upgraded protocol context.
 - WebSocket uses frames, messages, and control frames such as ping, pong, and close.
 - Server and client upgrade paths are related but not identical.
-- The shared `websocket` module contains framing and subprotocol infrastructure; server and client modules connect it to the HTTP sides.
-- WebSocket is an upgraded carrier; the subprotocol gives carried messages their application meaning.
-- Subprotocol factories and selectors keep subprotocol selection structured and extensible.
-- Lower-family, TLS, runtime, configuration, diagnostics, timeout, and failure behavior remain relevant.
-- Chapter 25 moves from web protocols to MQTT.
 
 ### Closing perspective
 
 Chapter 21 raised stream communication into HTTP messages. Chapter 22 organized HTTP messages into application structure. Chapter 23 stretched one HTTP response into a one-way event stream. Chapter 24 used HTTP as a negotiation boundary and moved the same connection episode into bidirectional WebSocket communication.
 
-The path through Part VII now reads:
-
-```text
-HTTP request / response
-  -> Express-like application structure
-      -> Server-Sent Events
-          -> long-lived one-way event streaming
-              -> WebSocket
-                  -> upgraded bidirectional message communication
-```
-
-That completes the main web-protocol climb.
-
 Chapter 25 moves to MQTT, a message-oriented protocol family that can use SNode.C directly and later reappear over WebSocket.
+

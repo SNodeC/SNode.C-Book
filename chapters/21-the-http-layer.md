@@ -276,7 +276,7 @@ The HTTP layer adds more than server and client aliases. It contains the machine
 | upgrade machinery | allows HTTP to negotiate another protocol |
 | EventSource support | builds streaming-style behavior on HTTP |
 
-This is why HTTP is a real protocol layer in SNode.C. It is not merely a convenience function for writing a few text lines to a socket.
+Therefore, HTTP is a real protocol layer in SNode.C. It is not just a convenience function for writing a few text lines to a socket.
 
 #### Parsing and decoding
 
@@ -453,9 +453,6 @@ Chapter 21 explains how HTTP becomes request/response semantics. Chapter 22 asks
 - HTTP server wrappers plug an HTTP context factory and request-ready callback into lower server shells.
 - HTTP client wrappers plug an HTTP context factory, HTTP connection callbacks, and `MasterRequest` coordination into lower client shells.
 - HTTP-specific client configuration lives in the `http` subcommand for behavior such as Host header and pipelining.
-- Parsing, decoding, status/header utilities, and MIME handling belong to the HTTP layer.
-- Upgrade support and EventSource show how HTTP becomes a bridge to higher web protocols.
-- Chapter 22 moves from HTTP protocol support to Express-like routing and middleware.
 
 ### Closing perspective
 

@@ -283,7 +283,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 ```
 
-The exact path depends on the application. The important point is that the client does not start with a new non-HTTP protocol. It asks HTTP for an event stream.
+The exact path depends on the application. the client does not start with a new non-HTTP protocol. It asks HTTP for an event stream.
 
 #### Event-stream request setup
 
@@ -489,11 +489,6 @@ The timing behavior still depends on the network, server, client, buffering, and
 - Server-side SSE is an HTTP or Express route that keeps a response open and writes event-stream records.
 - `ReadyState` describes the client-side stream lifecycle: connecting, open, or closed.
 - `MessageEvent` raises SSE fields into an application-facing event object.
-- `data`, `event`, `id`, and `retry` fields have distinct meanings; a blank line dispatches the accumulated event.
-- `retry:` updates client recovery timing; `Last-Event-ID` supports continuity across reconnects.
-- `close()` is intentional shutdown and disables retry/reconnect behavior.
-- Lower HTTP, connection lifecycle, diagnostics, retry/reconnect, and TLS behavior remain relevant.
-- Chapter 24 moves to WebSocket and bidirectional upgraded communication.
 
 ### Closing perspective
 

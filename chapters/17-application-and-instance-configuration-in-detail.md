@@ -69,7 +69,7 @@ It contains concerns such as:
 
 The visible server/client object in application code is the application-side handle. In the configuration model, a named instance is the externally addressable configuration identity of the communication role that the handle configures and registers.
 
-That distinction matters. The configuration system does not merely decorate a local C++ variable. It gives a communication role an operational address.
+That distinction matters. The configuration system does not just decorate a local C++ variable. It gives a communication role an operational address.
 
 #### Section scope
 
@@ -189,7 +189,7 @@ They connect the application-side handle to the operational surface of the appli
 
 A configured role also has role identity. In the configuration model, that means an instance is constructed as a server role or a client role.
 
-This is not merely descriptive text. It influences how the instance appears in help output and how its configuration is interpreted.
+This is not just descriptive text. It influences how the instance appears in help output and how its configuration is interpreted.
 
 A server role is normally shaped around listening and accepting. A client role is normally shaped around connecting.
 
@@ -556,7 +556,7 @@ application
 
 This is more than error reporting.
 
-It reinforces the structure of the configuration model. The error is not merely "something failed." It belongs to a scope that the user can inspect.
+It reinforces the structure of the configuration model. The error is not just "something failed." It belongs to a scope that the user can inspect.
 
 #### Parameterless activation
 
@@ -581,7 +581,7 @@ The required values may have come from:
 - command-line arguments,
 - or the precedence model combining all three.
 
-This is why parameterless activation is such a strong proof point for the configuration architecture. The call does not repeat the endpoint identity because the configured role already owns that identity.
+Therefore, parameterless activation is such a strong proof point for the configuration architecture. The call does not repeat the endpoint identity because the configured role already owns that identity.
 
 #### Progressive disclosure as a teaching tool
 
@@ -747,7 +747,7 @@ application
 
 The application gives the operational envelope. The instance gives the configured communication role an address. The section gives one responsibility scope.
 
-The option gives one value. The same shape appears in C++ API calls, command-line traversal, and configuration-file keys. This is why the configuration model scales from a small echo example to applications with several communication roles.
+The option gives one value. The same shape appears in C++ API calls, command-line traversal, and configuration-file keys. Therefore, the configuration model scales from a small echo example to applications with several communication roles.
 
 ### What to remember
 
@@ -757,29 +757,10 @@ The option gives one value. The same shape appears in C++ API calls, command-lin
 - Sections such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` group options by responsibility.
 - The same hierarchy appears through the C++ API, command line, and configuration files.
 - Disablement lets a role remain present while no longer blocking startup as a required participant.
-- Parameterless `listen(onStatus)` and `connect(onStatus)` rely on configuration that is already present.
-- Persistent options describe durable shape; nonpersistent options perform run-specific inspection or control.
-- Chapter 18 builds on this by turning configuration, logging, and runtime introspection into diagnostic tools.
 
 ### Closing perspective
 
 Chapter 16 explained the philosophy of configuration. This chapter made the anatomy concrete.
 
-The hierarchy:
-
-```text
-application
-  -> instance
-      -> section
-          -> option
-```
-
-is the bridge between architecture and operation.
-
-It explains why named instances matter, why sections exist, why parameterless activation can work, and why configuration files and command-line invocations can express the same model.
-
-Once configuration has this structure, diagnostics can point into that structure. A log message can name an instance. A missing value can identify a section.
-
-A generated command line can show how to reproduce a run. A shown configuration can reveal what the application understood.
-
 Chapter 18 therefore turns to logging, diagnostics, generated command lines, shown configuration, and runtime introspection as ways to understand what an application actually did.
+

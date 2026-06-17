@@ -154,7 +154,7 @@ If that sentence feels false, the extension probably belongs somewhere else.
 
 A `SocketContextFactory` is appropriate when the extension is about constructing the correct context.
 
-The factory is not merely an allocation hook; it associates a connection with the correct protocol endpoint object.
+The factory is not just an allocation hook; it associates a connection with the correct protocol endpoint object.
 
 In MQTTSuite, the MQTT CLI factory retrieves configuration sections and creates an `iot::mqtt::SocketContext` with a client-side MQTT protocol object. That keeps construction policy separate from both the MQTT protocol object and the socket client role.
 
@@ -504,13 +504,6 @@ The questions prevent an extension from becoming accidental architecture.
 - A new `SocketContext` is appropriate for connection-local protocol endpoint behavior.
 - A new `SocketContextFactory` should construct the right context, not become a service locator.
 - Middleware and routers are for web-application flow, not every cross-cutting concern.
-- A WebSocket subprotocol belongs above WebSocket, not inside ordinary HTTP routing.
-- MQTT application semantics should sit above MQTT core semantics.
-- Configuration makes runtime variation reproducible, but not every invariant should become configurable.
-- Build targets and exported components should preserve architectural meaning.
-- Diagnostics and failure policy are part of extension safety.
-- Tests should protect the boundary introduced by the extension.
-- Avoid framework pollution and premature abstraction by preserving meaning first.
 
 ### From safe extension to a guided project
 

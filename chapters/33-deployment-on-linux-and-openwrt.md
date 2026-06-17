@@ -190,7 +190,7 @@ explicit operational override
   -> additional multiplexer library available for process-local override
 ```
 
-The important point is that both mechanisms remain deployment decisions. They do not change the application-facing event-driven model.
+both mechanisms remain deployment decisions. They do not change the application-facing event-driven model.
 
 #### Installed paths and runtime-loaded modules
 
@@ -198,7 +198,7 @@ Some libraries are ordinary link-time dependencies. Others participate in runtim
 
 For ordinary linked libraries, the platform loader must find the dependency. For upgrade and subprotocol composition, SNode.C must also find the libraries that participate in runtime protocol composition. A dynamically loaded or path-sensitive module must therefore be installed where the runtime expects it, or where configuration tells the runtime to find it.
 
-This is why Chapter 32 discussed output directories, install directories, RPATH, and upgrade-library locations. In deployment, those choices stop being abstract build details. They become the difference between:
+Therefore, Chapter 32 discussed output directories, install directories, RPATH, and upgrade-library locations. In deployment, those choices stop being abstract build details. They become the difference between:
 
 ```text
 application starts
@@ -413,7 +413,7 @@ On smaller targets, deployment becomes more sensitive to:
 - cross-compilation correctness,
 - and external dependency selection.
 
-This is why SNode.C's componentized design matters. A constrained target does not need to carry protocol families, database support, example applications, or dynamic modules it never uses. On embedded systems, linking and packaging discipline become resource discipline.
+Therefore, SNode.C's componentized design matters. A constrained target does not need to carry protocol families, database support, example applications, or dynamic modules it never uses. On embedded systems, linking and packaging discipline become resource discipline.
 
 #### OpenWrt is Linux under embedded constraints
 
@@ -606,21 +606,10 @@ When these details are hidden, failures appear later as unrelated runtime proble
 - CPack connects install components to ordinary Linux packages, but it does not replace service, certificate, database, repository, or update policy.
 - Package dependencies should follow component dependencies.
 - Runtime-loaded upgrade and subprotocol modules make installation paths and RPATH part of deployment.
-- Root-mode deployments use system-level configuration, log, and pid directories.
-- Root-mode directory creation expects the configured management group, currently `snodec` by default.
-- Generated configuration files are deployment artifacts.
-- Logs and pid files are managed runtime state.
-- TLS deployment includes certificate and trust material.
-- Database deployment includes both package dependencies and persistent-state assumptions.
-- OpenWrt deployment is Linux deployment under embedded, cross-compiled, package-managed constraints.
-- OpenWrt packaging should preserve the smallest useful SNode.C component surface.
-- Continuous OpenWrt services should fit the platform service model, commonly `procd`.
-- Package feeds, repositories, and signing are part of deployment trust.
 
 ### Closing perspective
 
 Chapter 33 moved from build artifacts to deployed systems. The same architecture that appears in SNode.C targets and packages also appears in installed libraries, runtime module paths, configuration directories, service definitions, package repositories, and trust relationships.
 
-That is why deployment belongs in Part X.
-
 Chapter 33 made deployment visible as installed architecture. Chapter 34 then asks how to verify that this installed architecture behaves correctly: how to test it, inspect it, debug it, and measure it without losing the layer and boundary vocabulary built so far.
+

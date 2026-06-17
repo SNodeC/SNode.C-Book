@@ -6,7 +6,7 @@ Chapter 7 showed how SNode.C communication choices are encoded in the layer stac
 
 The first of those choices is the network family. An application may use IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP. That choice is not only a namespace fragment and not only a build component. It changes what an endpoint *is*.
 
-This chapter therefore asks a narrower but important question:
+It therefore asks a narrower but important question:
 
 > What does endpoint identity mean for each supported family?
 
@@ -25,7 +25,7 @@ That affects practical questions:
 - how diagnostics should render the endpoint,
 - and, in the IP families, how a name can resolve to candidate addresses.
 
-This is why SNode.C does not collapse all endpoints into one vague address class. It uses a shared pattern, but preserves the family-specific meaning.
+Therefore, SNode.C does not collapse all endpoints into one vague address class. It uses a shared pattern, but preserves the family-specific meaning.
 
 ### The shared `SocketAddress` pattern
 
@@ -37,7 +37,7 @@ net::SocketAddress<SockAddrT>
 
 That template already tells us something useful.
 
-A SNode.C address is not merely a string wrapper. It is backed by a concrete socket-address structure and length, and it participates in the framework's broader socket-address abstraction. The template parameter keeps the operating-system address representation visible enough for the family-specific class to remain honest.
+A SNode.C address is not just a string wrapper. It is backed by a concrete socket-address structure and length, and it participates in the framework's broader socket-address abstraction. The template parameter keeps the operating-system address representation visible enough for the family-specific class to remain honest.
 
 The shared base gives the framework a common shape. The derived family classes preserve the differences.
 
@@ -155,7 +155,7 @@ with port:
 
 This gives IPv6 the same broad wildcard-oriented starting point as IPv4, but in IPv6 vocabulary.
 
-The similarity is useful, but it should not hide the family boundary. IPv6 is not merely IPv4 with longer strings. It has its own address syntax, its own operational behavior, and its own deployment consequences. SNode.C gives IPv4 and IPv6 a similar address interface where that helps, while preserving the fact that they are different endpoint families.
+The similarity is useful, but it should not hide the family boundary. IPv6 is not just IPv4 with longer strings. It has its own address syntax, its own operational behavior, and its own deployment consequences. SNode.C gives IPv4 and IPv6 a similar address interface where that helps, while preserving the fact that they are different endpoint families.
 
 #### Unix domain sockets: local endpoint identity
 
@@ -206,7 +206,7 @@ A concrete remote endpoint may look like this:
 net::rc::SocketAddress remote("00:11:22:33:44:55", 3);
 ```
 
-The Bluetooth address identifies the device. The RFCOMM channel selects the service within the RFCOMM family. The channel should not simply be translated into “a Bluetooth port number.” That wording would pull the reader back into IP vocabulary. A channel is the service selector used by RFCOMM.
+The Bluetooth address identifies the device. The RFCOMM channel selects the service within the RFCOMM family. The channel should not just be translated into “a Bluetooth port number.” That wording would pull the reader back into IP vocabulary. A channel is the service selector used by RFCOMM.
 
 Default construction is wildcard-oriented in the SNode.C model:
 
@@ -387,7 +387,7 @@ example.org
 
 is not necessarily one concrete address. It may produce several candidates. The framework's address abstraction therefore leaves room for iterating through them.
 
-This is why the IP-family address classes are richer in this specific area. The richness is not accidental; it reflects the semantics of the family.
+Therefore, the IP-family address classes are richer in this specific area. The richness is not accidental; it reflects the semantics of the family.
 
 That distinction also prevents a false generalization. Unix domain sockets, RFCOMM, and L2CAP do not need to mimic IP name resolution merely to fit a common abstract shape. They keep the address model appropriate to their own family.
 
@@ -421,16 +421,10 @@ Once that question becomes natural, the address classes become much easier to re
 - Unix domain sockets use local socket path identity.
 - RFCOMM and L2CAP use Bluetooth device identity with different service selectors: channel for RFCOMM, PSM for L2CAP.
 - Default construction is meaningful and wildcard-oriented in family-specific ways.
-- Similar API shape does not mean identical endpoint semantics.
 
 ### Closing perspective
 
 Chapter 7 explained the communication stack. This chapter made the first layer of that stack concrete by studying endpoint identity.
 
-That prepares the next step.
-
-We can now return to server and client roles with better precision. `listen(...)` and `connect(...)` do not receive arbitrary strings and numbers. They receive family-specific endpoint descriptions.
-
-A server binds to a local endpoint identity. A client connects to a remote endpoint identity.
-
 Chapter 9 can therefore ask the next architectural question with sharper vocabulary: how do server instances, client instances, and concrete connections use those endpoint identities while the runtime advances the communication flow?
+

@@ -23,7 +23,7 @@ network family
 
 This is not a decorative diagram. It explains why long SNode.C names are readable and why components can be selected systematically. It also explains why the same application shape can move from IPv4 to IPv6, from a Unix domain socket to Bluetooth RFCOMM or L2CAP, or from the non-TLS stream variant to TLS without becoming unrelated code. Higher protocols such as HTTP, WebSocket, MQTT, and MQTT over WebSocket add their own structure, but they do not make the lower stack disappear.
 
-Chapter 5 introduced this stack as part of the general mental model. Chapter 6 showed how registered instances make progress inside the runtime. This chapter explains how the communication choices behind those instances are named, built, and composed.
+Chapter 5 introduced this stack as part of the general mental model. Chapter 6 showed how registered instances make progress inside the runtime. It explains how the communication choices behind those instances are named, built, and composed.
 
 The goal is not to repeat a textbook theory of layering. The goal is more practical: after this chapter, a reader should be able to look at a SNode.C type name, component name, or source-tree path and understand what it says about the communication stack.
 
@@ -190,7 +190,7 @@ A framework that hides all endpoint identity behind a single general address typ
 
 SNode.C keeps the family-specific meaning visible while still preserving the higher-level pattern.
 
-Once the endpoint family is chosen, the next question is what kind of communication relationship that family will carry. Before going there, however, the family-specific address meaning deserves its own treatment. This is why Chapter 8 follows naturally from this chapter. Once the reader understands that the network layer chooses an endpoint family, the next question is unavoidable:
+Once the endpoint family is chosen, the next question is what kind of communication relationship that family will carry. Before going there, however, the family-specific address meaning deserves its own treatment. Therefore, Chapter 8 follows naturally from this chapter. Once the reader understands that the network layer chooses an endpoint family, the next question is unavoidable:
 
 > What exactly does an address mean in each family?
 
@@ -562,10 +562,7 @@ Sometimes the answer is one layer. Often, it is a primary layer plus consequence
 
 Chapter 5 gave the mental model. Chapter 6 explained how registered instances are advanced by the runtime machinery. This chapter has shown how the communication layer stack appears in SNode.C names, components, and transfer questions.
 
-The framework is not only a collection of classes. It is a system in which runtime progress and communication layering meet. A server or client handle registers an instance. The runtime advances that instance. The type and component names tell us which network family, transport form, connection machinery, and application protocol are involved.
-
-The next chapter moves into the first concrete piece of that stack: socket addresses. That is the right next step because the network layer becomes real only when we understand what endpoint identity means for each family. An IPv4 address, an IPv6 address, a Unix domain socket path, an RFCOMM endpoint, and an L2CAP endpoint are all addresses in a broad sense, but they are not the same kind of thing.
-
 The layer model tells us that address semantics belong to the network layer. Chapter 8 therefore moves from the general stack to the first concrete network-layer question:
 
 > What does an endpoint identity mean for each supported family?
+

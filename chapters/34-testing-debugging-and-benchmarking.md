@@ -184,7 +184,7 @@ A CPack package build can reveal mistakes that a source build misses: missing in
 
 OpenWrt-targeted package builds add another confidence surface. They can check whether SNode.C and applications built on top of it survive cross-compilation, target ABI assumptions, package recipes, feed layout, and embedded filesystem constraints. This is deployment/testing guidance, not a claim that every such OpenWrt package test already exists in the repository.
 
-A package build is therefore not merely a release step. It is a test of the deployable shape of the architecture.
+A package build is therefore not just a release step. It is a test of the deployable shape of the architecture.
 
 ### Protocol-boundary confidence
 
@@ -249,7 +249,7 @@ The Express-like layer is one of the strongest cases for semantic testing in SNo
 
 Small differences here can create large application differences. A dispatcher can look correct in simple examples and still fail in real applications.
 
-This is why behavior names are useful. A test named:
+Therefore, behavior names are useful. A test named:
 
 ```text
 query_string_does_not_affect_route_match
@@ -322,7 +322,7 @@ session correctness
   -> does the MQTT relationship behave correctly over time?
 ```
 
-A test strategy that checks only packets may miss MQTT behavior. Broker-oriented and client-oriented roles must be tested as roles, not merely as byte writers.
+A test strategy that checks only packets may miss MQTT behavior. Broker-oriented and client-oriented roles must be tested as roles, not just as byte writers.
 
 #### Database-backed protocol tests must control state
 
@@ -361,7 +361,7 @@ Chapter 20 described communication-over-time concerns: timeouts, retries, reconn
 
 Useful tests should cover questions such as: what happens when a client connects before the server is available; what happens when a server disappears after a connection was established; what happens when a peer stops reading; what happens when a peer closes cleanly; what happens when a peer disappears abruptly; what happens when retry limits are reached; and what happens during shutdown while data is queued.
 
-The important point is not that every case must be automated immediately. The important point is that these are runtime questions. They belong at the boundary where configured communication roles meet real time.
+Not every case must be automated immediately, but these are runtime questions. They belong where configured roles meet real time.
 
 #### Backpressure and buffer pressure deserve explicit attention
 
@@ -662,38 +662,12 @@ Regression tests should protect the semantic boundary that failed.
 - Include discipline protects component honesty.
 - Minimal builds are architectural tests, not only smaller builds.
 - Installed-consumer builds test the exported package interface.
-- Package builds test the deployable shape of the component model.
-- Protocol tests protect the point where bytes become HTTP, WebSocket, MQTT, or another meaning.
-- Exact-byte serializer tests are valuable for binary protocols.
-- Express compatibility tests protect the public promise of Express-like behavior where that behavior is intended.
-- WebSocket tests must cover both HTTP upgrade and frame behavior.
-- EventSource tests are mostly lifetime and time-flow tests.
-- MQTT tests must model sessions, not only packets.
-- Real-socket tests are essential for a socket framework.
-- Configuration tests should check effective runtime shape, not only parsing.
-- Installed-system tests must cover libraries, runtime-loaded modules, RPATH, configuration directories, and service behavior.
-- Debugging should begin by identifying the broken boundary.
-- Configured instance names are diagnostic handles.
-- Memory tools verify lifetime assumptions.
-- Benchmarks should identify the limiting boundary, not merely produce large numbers.
-- Existing practice, manual checks, and recommended future strategy should be distinguished honestly.
-- Regression tests should protect the semantic boundary that failed.
 
 ### Closing perspective
 
 Chapter 32 showed how SNode.C expresses architecture through CMake components, targets, and dependency surfaces. Chapter 33 showed how that architecture enters the filesystem through packages, installed paths, service definitions, configuration directories, and embedded deployment constraints. This chapter showed how that installed architecture becomes trustworthy.
 
-Testing, debugging, and benchmarking reveal whether the architecture is clear.
-
-A clean component boundary can be built minimally; an exported target can be consumed externally; a protocol boundary can be tested with exact input and output; a runtime boundary can be exercised with real sockets and slow peers; deployment, diagnostic, and performance boundaries can be verified after installation, in logs, and under load.
-
 Chapter 34 asked how to verify whether boundaries hold. Chapter 35 asks how to choose those boundaries wisely in the first place.
 
-```text
-Which layer should own this concern?
-Which boundary should remain visible?
-Which role should be separate?
-Which abstraction helps, and which abstraction hides too much?
-```
-
 That is the step from testing a SNode.C system to designing one wisely.
+

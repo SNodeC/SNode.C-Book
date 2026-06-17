@@ -491,16 +491,6 @@ SNode.C helps because different protocol families still share the same architect
 - Telemetry, control, observation, administration, and device exchange are different conversations.
 - MQTT is often an integration spine, not the whole system.
 - HTTP/Express often fits management and operator-facing surfaces.
-- SSE and WebSocket often fit live observation and bidirectional interaction.
-- MQTT-over-WebSocket is a bridge boundary, not a universal default.
-- Bluetooth belongs near device edges.
-- Unix domain sockets often fit same-host control.
-- Multi-protocol design can live in one process or in several cooperating applications.
-- Configuration becomes a map of roles and boundaries.
-- Diagnostics and failure policy should be role-specific.
-- The same domain meaning may appear through several honest protocol surfaces.
-- Protocol diversity is not chaos when boundaries are clear.
-- Chapter 28 moves from protocol/system design to persistence and application state.
 
 ### Closing perspective
 

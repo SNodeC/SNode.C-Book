@@ -205,7 +205,7 @@ The routing surface includes familiar methods such as:
 - `.patch()`,
 - `.head()`.
 
-The method list matters because each method attaches structure to the route tree. The important point is not that there are many methods; it is that routing, middleware, and mounted routers become composable:
+The method list matters because each method attaches structure to the route tree. The point is not that there are many methods; it is that routing, middleware, and mounted routers become composable:
 
 ```text
 application
@@ -295,7 +295,7 @@ middleware
   -> maybe call next()
 ```
 
-This is why middleware is not just another name for a route handler.
+Therefore, middleware is not just another name for a route handler.
 
 #### `Next` and middleware flow
 
@@ -503,26 +503,10 @@ Chapter 23 then asks what happens when a route is not a short request/response e
 - HTTP request readiness enters the Express layer through a controller and the root route.
 - `Router` composes routes, middleware, mounted routers, method-specific handlers, and routing policy.
 - Application callbacks and middleware callbacks have different responsibilities.
-- `Next` makes middleware continuation explicit.
-- Express `Request` and `Response` are application-oriented facades over lower HTTP objects.
-- Built-in middleware packages reusable request-processing behavior.
-- Lower-family, TLS, configuration, diagnostics, timing, and failure behavior remain relevant beneath the web-application surface.
-- Chapter 23 moves from routed HTTP handling to Server-Sent Events.
 
 ### Closing perspective
 
 Chapter 21 raised stream communication to HTTP messages. Chapter 22 raised HTTP messages into application structure.
 
-The stack now reads:
-
-```text
-lower communication family
-  -> stream transport
-      -> legacy or TLS connection handling
-          -> HTTP request / response
-              -> Express-like routing and middleware
-```
-
-This is a higher-level application model, but it is still built on the same SNode.C foundations.
-
 Chapter 23 keeps that structure but changes the temporal shape of a handler: instead of answering once, a route may keep an HTTP response open and emit events over time. There, HTTP is used for long-lived one-way event streaming.
+

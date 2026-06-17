@@ -2,7 +2,7 @@
 
 ### From environment to first program
 
-Chapter 2 prepared the practical ground: source tree, build tree, install tree, and a separate playground project. This chapter uses that environment for the first complete program.
+Chapter 2 prepared the practical ground: source tree, build tree, install tree, and a separate playground project. It uses that environment for the first complete program.
 
 The goal is not to build a useful echo service. The goal is to make the recurring shape of SNode.C visible in real code. A good first example should be small enough that the reader can hold the whole program in mind, but complete enough that it is not pseudocode.
 
@@ -519,7 +519,7 @@ SNode.C component
       -> echoclient
 ```
 
-The example is intentionally smaller than the repository build. The repository echo application uses generated variants and shared model headers. This chapter uses one explicit IPv4 legacy variant so that the first build remains readable.
+The example is intentionally smaller than the repository build. The repository echo application uses generated variants and shared model headers. It uses one explicit IPv4 legacy variant so that the first build remains readable.
 
 ### Configuring and building the playground
 
@@ -652,8 +652,5 @@ This does not make the low-level details disappear. It organizes where they belo
 
 This chapter turned the prepared environment into a working program.
 
-The echo pair is intentionally simple. Its purpose is not to teach an interesting application protocol. Its purpose is to expose the shape of SNode.C applications before the book adds more layers.
-
-The next chapter slows down and looks more closely at what happened when the program ran: runtime initialization, event flow, callbacks, connection lifecycle, and why the program is structured around reactions rather than a blocking control loop.
-
 That is the next step from “it works” to “I understand why it works.”
+

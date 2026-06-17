@@ -303,7 +303,7 @@ start command
               -> command completes or waits again
 ```
 
-The important point is not the exact MariaDB C API detail. Database work is expressed as explicit continuation, not as an invisible blocking detour inside a protocol callback.
+The point is not the exact MariaDB C API detail. Database work is expressed as explicit continuation, not as an invisible blocking detour inside a protocol callback.
 
 ### Database work as commands and command sequences
 
@@ -421,7 +421,7 @@ startTransactions
           -> endTransactions
 ```
 
-The important point is not only that transactions exist. Transaction flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
+The point is not only that transactions exist. Transaction flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
 
 A transaction is not outside the event model; it is a policy and ordering boundary expressed through database commands and callbacks.
 
@@ -591,18 +591,6 @@ That coordination is application architecture. The database module provides the 
 - Database state and runtime state are different.
 - `MariaDBClient` is the application-facing database object.
 - `MariaDBConnectionDetails` describes the database endpoint and credentials.
-- The state-change callback exposes database availability and errors.
-- Internally, `MariaDBConnection` participates in the event-driven runtime through read, write, and exceptional-condition event receivers.
-- Database operations are represented as commands and command sequences.
-- `query(...)` and `exec(...)` express different application intentions.
-- Sync-style metadata calls still use callback-shaped application flow.
-- Transactions are ordered database work inside the same command model.
-- Timers can start database work, but the database layer should not become a blocking loop.
-- Protocol callbacks should not automatically contain persistence logic.
-- Database client ownership and lifetime are application design decisions.
-- Database failures can create degraded modes across otherwise healthy protocol roles.
-- Persistence can introduce backpressure.
-- Chapter 29 moves from database support to applications in `src/apps`.
 
 ### Closing perspective
 

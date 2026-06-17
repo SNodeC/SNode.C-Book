@@ -57,7 +57,7 @@ HTTP upgrade
           -> MQTT protocol semantics
 ```
 
-This is why Chapter 25 belongs after Chapter 24. Chapter 24 explained the carrier:
+Therefore, Chapter 25 belongs after Chapter 24. Chapter 24 explained the carrier:
 
 ```text
 WebSocket
@@ -86,7 +86,7 @@ A compact comparison helps keep the two forms separate without turning them into
 | MQTT meaning | sessions, topics, control packets, publish flow | same MQTT semantics |
 | book focus | introduced in this chapter | treated in detail in Chapter 26 |
 
-The important point is not that there are two unrelated MQTT implementations. The important point is:
+The point is not that there are two unrelated MQTT implementations. The important point is:
 
 ```text
 same MQTT semantics
@@ -165,7 +165,7 @@ That is why packet classes, fixed-header handling, deserialization, sessions, an
 
 The central code-shaped MQTT object is `iot::mqtt::Mqtt`.
 
-It is the protocol object. It is not merely a socket callback, and it is not the complete endpoint by itself. It owns MQTT-level lifecycle, packet delivery, session setup, publish acknowledgement flow, packet identifiers, keep-alive state, and distribution hooks. To become a concrete endpoint, it is connected to a carrier through `MqttContext` and either a native stream `SocketContext` or a WebSocket `SubProtocol`.
+It is the protocol object. It is not just a socket callback, and it is not the complete endpoint by itself. It owns MQTT-level lifecycle, packet delivery, session setup, publish acknowledgement flow, packet identifiers, keep-alive state, and distribution hooks. To become a concrete endpoint, it is connected to a carrier through `MqttContext` and either a native stream `SocketContext` or a WebSocket `SubProtocol`.
 
 A compact view of its responsibilities is:
 
@@ -213,7 +213,7 @@ MQTT has explicit packet vocabulary. For example, the core object exposes helper
 | `sendPubrel` / `onPubrel` | QoS 2 release step |
 | `sendPubcomp` / `onPubcomp` | QoS 2 completion step |
 
-This chapter uses the packet names to show structure, not to teach MQTT QoS in detail. The architectural point is smaller and more important for this part of the book:
+It uses the packet names to show structure, not to teach MQTT QoS in detail. The architectural point is smaller and more important for this part of the book:
 
 ```text
 MQTT is packet-structured,
@@ -472,35 +472,13 @@ Chapter 27 will later combine these ideas with multiple protocols and IoT system
 - MQTT opens the message-oriented part of the book.
 - MQTT is not a web protocol, but it fits the same SNode.C layering discipline.
 - MQTT is a protocol family with shared packet, session, topic, context, and keep-alive concerns.
-- `Mqtt` is the MQTT protocol object, not merely a socket callback.
+- `Mqtt` is the MQTT protocol object, not just a socket callback.
 - `MqttContext` bridges the MQTT protocol object to the carrier underneath.
 - Native MQTT combines stream `SocketContext` with `MqttContext`.
-- MQTT-over-WebSocket combines a WebSocket subprotocol role with `MqttContext`.
-- MQTT sessions and keep-alive belong to the MQTT protocol layer.
-- MQTT is message-oriented, but its structure is expressed through control packets and acknowledgement flow.
-- Server and client modules specialize the shared protocol core.
-- The server side is broker-oriented; the client side is a real protocol participant.
-- MQTT-over-WebSocket reuses the WebSocket subprotocol architecture from Chapter 24.
-- Chapter 26 treats MQTT-over-WebSocket in detail.
 
 ### Closing perspective
 
 Chapter 25 introduced MQTT as a message-oriented protocol family in SNode.C.
 
-It established two central carrier forms:
-
-```text
-native MQTT
-  -> MQTT above stream connection
-
-MQTT over WebSocket
-  -> MQTT above WebSocket subprotocol
-```
-
-MQTT remains a protocol layer with its own identity. It brings sessions, topics, control packets, keep-alive timing, and publish flow into the same SNode.C architectural discipline used by the lower transport and web chapters.
-
 Chapter 25 established MQTT as a protocol family and introduced its two carrier forms. Chapter 26 now narrows the view to one specific composition:
 
-```text
-MQTT carried as a WebSocket subprotocol
-```

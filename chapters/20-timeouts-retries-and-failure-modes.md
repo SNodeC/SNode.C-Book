@@ -331,7 +331,7 @@ connected client instance
               -> connect is attempted again
 ```
 
-This is why reconnect belongs to the lifecycle of the client instance. It is not just another failed connect attempt.
+Therefore, reconnect belongs to the lifecycle of the client instance. It is not just another failed connect attempt.
 
 ### Server and client symmetry and difference
 
@@ -499,7 +499,7 @@ Failure can occur at many points in the lifecycle.
 | after disconnect | reconnect decision or reconnect failure |
 | termination | role-level flow is stopped instead of continued |
 
-This is why a single error category is not enough.
+Therefore, a single error category is not enough.
 
 Communication has phases. Failures belong to phases. The diagnostic question is not only:
 
@@ -674,7 +674,7 @@ This boundary keeps the architecture balanced.
 
 It prevents protocol code from swallowing outer operational policy. It prevents outer role logic from pretending to understand protocol semantics. It keeps failure behavior visible.
 
-The important separation is not only technical. It is also explanatory. A reader should be able to answer:
+The important separation is not only technical. It is explanatory. A reader should be able to answer:
 
 ```text
 Is this an activation problem?
@@ -694,16 +694,10 @@ When the answer is clear, the system is easier to operate and easier to debug.
 - Retry policy is role-level behavior controlled by retry, retry timeout, retry base, retry limit, retry jitter, retry tries, and retry-on-fatal settings.
 - `NO_RETRY` is retry-control information attached to a state; it does not replace `ERROR`, `FATAL`, or another reported outcome.
 - `DISABLED` means intentional non-participation, not failure.
-- Protocol-level timeouts should express protocol expectations, not vague distrust of the network.
-- Flow controllers keep role-level retry/reconnect policy out of protocol contexts.
-- Failure handling must remain visible through configuration, status callbacks, logs, and connection diagnostics.
 
 ### Closing perspective
 
 Chapter 20 completed the foundation for robust communication over time.
 
-Chapter 19 showed that secure connection handling adds meaningful startup, shutdown, and failure phases. Chapter 20 generalized that view across the framework: communication roles are activated, connections are established, protocol contexts react, timeouts bound phases, retry and reconnect policies schedule later work, and status/logging surfaces make the result observable.
-
-That completes Part VI. The next part moves upward into web-facing protocols.
-
 Once time, failure, retry, reconnect, and shutdown are understood at the stream layer, HTTP and WebSocket can be introduced as protocol-specific structures on top of the same event-driven timing and failure model. Chapter 21 begins that move with HTTP.
+

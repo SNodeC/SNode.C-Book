@@ -872,8 +872,4 @@ If an extension requires unrelated parts of the application to know too much abo
 - A `SocketContext` is a good owner for local line-oriented stream input.
 - A factory should construct the context and inject the application handler, not own the domain state.
 - New requirements should be placed at the boundary that owns their variation.
-- Testing should protect boundaries, not only end-to-end behavior.
-- Debugging should start with the failing role or communication boundary.
-- Deployment includes ports, socket paths, configuration, logs, users, and restart policy.
-- OpenWrt-style deployment changes dependency cost and runtime-path choices, not the core architecture.
-- A single process is fine until there is a real operational reason to split it.
+

@@ -41,7 +41,7 @@ A SNode.C system may be one executable with several named roles or several coope
 
 ### From applications to role constellations
 
-A system is not simply a larger single application. A larger application may still have one main role, one deployment boundary, and one dominant operational shape. A system introduces a different kind of complexity:
+A system is not just a larger single application. A larger application may still have one main role, one deployment boundary, and one dominant operational shape. A system introduces a different kind of complexity:
 
 ```text
 roles
@@ -395,7 +395,7 @@ The architect now asks:
 
 Chapter 20 separated timeout, retry, reconnect, disablement, shutdown, and failure state. Chapter 30 applies that vocabulary to a constellation of roles.
 
-A reconnect policy for `mqtt-ingest` may be reasonable. The same policy for `database-state` may hide a persistent state problem; that role may require visible degraded-state behavior rather than silent retry. Failure behavior belongs to the role that owns the boundary, not merely to the socket that reports the error.
+A reconnect policy for `mqtt-ingest` may be reasonable. The same policy for `database-state` may hide a persistent state problem; that role may require visible degraded-state behavior rather than silent retry. Failure behavior belongs to the role that owns the boundary, not just to the socket that reports the error.
 
 #### Build structure as the first system map
 
@@ -471,7 +471,7 @@ Chapter 29 gave a way to read an application. A SNode.C system can be read with 
 10. Which parts may fail or restart independently?
 11. Which protocol cores should remain reusable if carriers or deployment boundaries change?
 
-This checklist is not a rigid method. It prevents system design from collapsing into a pile of features. In tiny examples, some inconsistency may be tolerable; in systems, it becomes expensive. This is why SNode.C's consistency matters:
+This checklist is not a rigid method. It prevents system design from collapsing into a pile of features. In tiny examples, some inconsistency may be tolerable; in systems, it becomes expensive:
 
 - roles remain visible,
 - lower families remain explicit,
@@ -491,13 +491,6 @@ That consistency lets developers, maintainers, and operators think clearly even 
 - A role may be realized inside one executable or by one of several cooperating executables.
 - Packaging is an operational boundary decision, not a measure of architectural maturity.
 - Protocol choice is boundary-specific, not necessarily system-wide.
-- Configuration can describe system architecture, not only application setup.
-- Persistence introduces state ownership at the system level.
-- Diagnostics become observability across role boundaries.
-- Failure behavior becomes topology-aware and role-owned.
-- Stable protocol cores and domain logic are easier to evolve when they are not fused unnecessarily to one carrier or deployment shape.
-- SNode.C provides communication architecture; domain code still owns domain semantics.
-- Chapter 31 applies this vocabulary to MQTTSuite as a concrete reference ecosystem.
 
 ### Closing perspective
 
@@ -514,4 +507,4 @@ This chapter moved from executable applications to communication systems. The vo
 
 That vocabulary is deliberately generic. It is not tied to one reference product.
 
-Chapter 31 applies this vocabulary to MQTTSuite. The point is not merely to list programs, but to read MQTTSuite as an ecosystem of communication roles, MQTT messaging paths, bridge boundaries, configuration surfaces, persistence choices, and deployment relationships.
+Chapter 31 applies this vocabulary to MQTTSuite. The point is not just to list programs, but to read MQTTSuite as an ecosystem of communication roles, MQTT messaging paths, bridge boundaries, configuration surfaces, persistence choices, and deployment relationships.

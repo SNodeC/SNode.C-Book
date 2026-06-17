@@ -889,8 +889,4 @@ This package intentionally contains no TLS, no persistence, no MQTT-over-WebSock
 - Measurement arrival is event-driven. The application does not poll for measurements.
 - `MeasurementState` owns the current value.
 - `MeasurementBus` distributes state changes without knowing about HTTP, SSE, or MQTT.
-- SSE observers are bus listeners whose lifetime is tied to the HTTP response.
-- `MiniGatewayMqtt` owns MQTT session behavior and publication.
-- The MQTT socket-context factory follows the same shape used by MQTTSuite-style MQTT applications.
-- The configured role name `mqtt-uplink` is a diagnostic and configuration handle.
-- A running process is not enough; verify that the intended role owns the intended port.
+

@@ -66,7 +66,7 @@ this is how it participates
 this is how it can be operated
 ```
 
-The previous chapters established the runtime and protocol roles. This chapter explains how those roles become concrete enough to run in an application.
+The previous chapters established the runtime and protocol roles. It explains how those roles become concrete enough to run in an application.
 
 #### One model, several entry paths
 
@@ -161,7 +161,7 @@ application
           -> option
 ```
 
-The command line is therefore not only a way to override values. It is also a discovery surface.
+The command line is therefore not only a way to override values. It is a discovery surface.
 
 A user can ask for help at different levels:
 
@@ -309,7 +309,7 @@ That address can appear:
 - in shown configuration,
 - and in configuration-file keys.
 
-The name becomes part of the operational surface of the application. That is why named instances are central for serious applications. A name is not merely documentation. It is a stable handle for operation.
+The name becomes part of the operational surface of the application. That is why named instances are central for serious applications. A name is not just documentation. It is a stable handle for operation.
 
 #### Disablement as instance-level configuration
 
@@ -534,7 +534,7 @@ application
           -> port
 ```
 
-A missing client host or port likewise belongs to the remote section of a particular client instance. This is why parameterless activation is a strong proof point. It works only because the role has a structured configuration identity.
+A missing client host or port likewise belongs to the remote section of a particular client instance. Therefore, parameterless activation is a strong proof point. It works only because the role has a structured configuration identity.
 
 ### CLI11 as implementation foundation
 
@@ -582,22 +582,10 @@ In SNode.C, configuration is one of those places.
 - Named instances become addressable in that hierarchy; anonymous instances remain internal to application code.
 - Sections such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` scope options by responsibility.
 - Parameterless `listen(onStatus)` and `connect(onStatus)` are useful because the role can already be configured before activation.
-- Persistent and nonpersistent options separate durable behavior from run-specific control and inspection actions.
-- Chapter 17 turns this philosophy into concrete application and instance configuration details.
 
 ### Closing perspective
 
 This chapter opened the configuration part of the book. The preceding part showed that protocol behavior, context creation, lower-family choice, and endpoint identity can be separated.
 
-This chapter added the next piece:
-
-```text
-configuration
-  -> gives architectural variation an operational surface
-```
-
-A configured communication role is not merely a server or client object with options attached. It is the place where role identity, endpoint identity, section structure, persistence, and activation come together.
-
-That is why configuration matters so much in SNode.C. Chapter 17 continues from philosophy to mechanics.
-
 It looks more closely at application configuration, instance configuration, sections, and the concrete option structure that turns this model into something an application can expose and an operator can use.
+

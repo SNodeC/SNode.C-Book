@@ -48,7 +48,7 @@ configured role name
   -> appears in operational discussion
 ```
 
-This is not merely terminology. It is how a running system becomes understandable.
+This is not just terminology. It is how a running system becomes understandable.
 
 ## Protocols carry meaning, not only bytes {.unnumbered}
 
@@ -64,7 +64,7 @@ raw data
               -> system behavior
 ```
 
-This is why protocol code should not be treated as accidental glue. It is where communication becomes part of an application.
+Therefore, protocol code should not be treated as accidental glue. It is where communication becomes part of an application.
 
 ## Build and deployment are part of architecture {.unnumbered}
 
@@ -114,13 +114,13 @@ That is why the book has returned so often to boundaries. A boundary is not a wa
 
 The recurring discipline of the book can therefore be read as a kind of engineering humility. Do not pretend that a byte stream already is a protocol. Do not pretend that a protocol already is an application. Do not pretend that an application already is a deployed system. Do not pretend that a running process is understood merely because it is running. Each step adds meaning, and each step deserves a place where that meaning can be named, tested, logged, configured, and maintained.
 
-There is also a positive side to this discipline. Visible boundaries make change less frightening. MiniGateway could be extended because the base application did not collapse measurement input, state ownership, observation, and MQTT publication into one accidental block of code. MQTTSuite can be understood as an ecosystem because its roles are not merely executables, but architectural positions. Build targets, package components, and runtime configuration are not administrative noise; they are part of how the architecture survives contact with real machines.
+There is also a positive side to this discipline. Visible boundaries make change less frightening. MiniGateway could be extended because the base application did not collapse measurement input, state ownership, observation, and MQTT publication into one accidental block of code. MQTTSuite can be understood as an ecosystem because its roles are not just executables, but architectural positions. Build targets, package components, and runtime configuration are not administrative noise; they are part of how the architecture survives contact with real machines.
 
 Seen this way, SNode.C is less a library of shortcuts than a vocabulary for layered network systems in C++. It rewards programmers who are willing to be explicit. It asks for more care at the boundary between concepts, but it pays that care back when systems need to be extended, diagnosed, ported, packaged, or taught. That is the philosophical center of the book: clarity is not achieved by hiding all structure. Clarity is achieved by preserving the right structure long enough that the system can still explain itself.
 
 ## Where to go next {.unnumbered}
 
-A reader who finishes this book should not merely know that SNode.C has servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components.
+A reader who finishes this book should know more than the names of SNode.C servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components.
 
 The reader should know how to think with them.
 

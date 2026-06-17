@@ -257,7 +257,7 @@ What do those components need internally?
   -> their targets declare it
 ```
 
-The important point is not that the application knows the whole graph. It selects the components that define its public shape: the HTTP application layer and the concrete transport carrier. The remaining dependencies belong to those selected components.
+The point is not that the application knows the whole graph. It selects the components that define its public shape: the HTTP application layer and the concrete transport carrier. The remaining dependencies belong to those selected components.
 
 When reading another SNode.C application, start with the executable target, then read the linked protocol/application component, the selected transport component, and any optional feature components. Only then open the C++ entry point. A direct application link line should describe the application face, not repeat every implementation layer below it.
 
@@ -422,7 +422,7 @@ express-compat-server
   -> compatibility / behavior-comparison example
 ```
 
-The point is not to study both applications deeply. The point is to show that the same layer composition can serve different application intentions.
+The goal is not to study both applications deeply, but to show that the same layer composition can serve different application intentions.
 
 ### Application families and focused examples
 
@@ -779,14 +779,6 @@ These are application-design decisions. The build system records them.
 - In-tree applications use local target names; external applications use installed `snodec::...` targets.
 - A direct link line shows the application-facing component choices; component-owned dependency graphs may be deeper.
 - The executable entry point is usually an assembly point for runtime initialization, application objects, routes, callbacks, configuration, diagnostics, and runtime start.
-- `snode.c` is the main web-application-shell example.
-- The echo family shows a stable protocol model generated across carrier and stream variants.
-- `jsonserver` and `jsonclient` show an HTTP server/client pair.
-- `testpost` shows legacy/TLS application composition.
-- `testpipe` shows a core-only runtime utility.
-- `database/testmariadb` makes Chapter 28’s MariaDB API concrete.
-- Optional dependencies affect which application targets exist.
-- Chapter 30 moves from individual applications to systems.
 
 ### Closing perspective
 
