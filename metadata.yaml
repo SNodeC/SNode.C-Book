@@ -1,5 +1,6 @@
 ---
-title: "SNode.C — Building Layered Network Applications in Modern C++"
+title: "Layered Network Programming with SNode.C"
+subtitle: "Building Multi-Protocol Applications in Modern C++"
 author: "Volker Christian"
 
 documentclass: book

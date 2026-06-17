@@ -5,14 +5,14 @@
 
 This structure belongs to an architecture-first SNode.C book. The manuscript is not positioned as a general C++ networking survey. Its subject is layered network programming with SNode.C: lower communication families, transport form, connection handling, protocol meaning, configuration, diagnostics, deployment, and application roles.
 
-
+The manuscript currently contains all planned chapters and an epilogue.
 
 ## Part I — Getting Oriented
 
 - 01. Why SNode.C Exists — **present**
-- 02. Preparing Your Environment — **TODO placeholder**
+- 02. Preparing Your Environment — **present**
 - 03. Your First Working Program: The Echo Pair — **present**
-- 04. Reading the Codebase with Confidence — **TODO placeholder**
+- 04. Reading the Codebase with Confidence — **present**
 
 ## Part II — The SNode.C Architecture
 
@@ -67,13 +67,31 @@ This structure belongs to an architecture-first SNode.C book. The manuscript is 
 
 ## Part X — Building, Porting, and Maintaining
 
-- 32. CMake, Components, and Linking Strategy — **present**
+- 32. CMake Components and Linking Strategy — **present**
 - 33. Deployment on Linux and OpenWrt — **present**
 - 34. Testing, Debugging, and Benchmarking — **present**
 
 ## Part XI — Designing with SNode.C
 
 - 35. Architectural Judgment: Choosing the Right Layer and Boundary — **present**
-- 36. Extending the Framework Safely — **TODO placeholder**
-- 37. A Complete Guided Project — **TODO placeholder**
-- 38. Where to Go Next — **TODO placeholder**
+- 36. Extending the Framework Safely — **present**
+
+## Part XII — Building a MiniGateway Application
+
+- 37. Building MiniGateway — **present**
+- 38. Extending, Testing, and Deploying MiniGateway — **present**
+
+## Epilogue
+
+- What to Take Away from SNode.C — **present**
+
+## Guided project source trees
+
+The final technical part uses two source trees as source-of-truth examples:
+
+```text
+examples/MiniGateway-Base
+examples/MiniGateway-Extended
+```
+
+Chapter 37 uses the base version. Chapter 38 uses the extended version to show how a SNode.C application can be extended without disturbing existing protocol surfaces.

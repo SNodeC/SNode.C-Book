@@ -81,6 +81,31 @@ understand the boundary
           -> understand what can change safely
 ```
 
+### Where SNode.C fits
+
+SNode.C is not trying to replace every C++ networking approach. It is most useful when an application needs explicit communication roles, layered protocol structure, runtime-visible configuration, diagnostics, and several transport or protocol surfaces within one architectural model.
+
+If an application only needs a small one-off TCP client, direct POSIX sockets, Boost.Asio, standalone Asio, or another focused library may be the simpler choice. If the application wants a narrowly optimized HTTP service, a specialized web framework may be more direct. SNode.C is useful when the structure of the communication system itself matters.
+
+This book therefore does not position SNode.C as a universal answer to every networking problem. It positions SNode.C as a coherent framework for readers who want to build multi-protocol applications while keeping the communication model visible.
+
+### What this book is, and what it is not
+
+```text
+This book is:
+  an architecture-first guide to SNode.C
+  a layered network-programming book
+  a framework book for mature C++ readers
+  a practical design guide for multi-protocol applications
+
+This book is not:
+  a general C++ networking survey
+  a Boost.Asio replacement tutorial
+  a beginner C++ book
+  a pure IoT recipe book
+  a complete TLS, HTTP, MQTT, Bluetooth, or database reference
+```
+
 ### Why “layered” is more than a buzzword here
 
 In technical writing, the word *layered* is sometimes used lazily. It can mean almost anything from “we have modules” to “there are several abstraction levels.” In SNode.C, however, layering is not decorative. It is operational.
@@ -162,11 +187,11 @@ In a dynamic environment, a developer can sometimes get surprisingly far without
 
 SNode.C rewards that effort.
 
-### Why this matters for full-stack protocol development
+### Why this matters for multi-protocol application development
 
-The phrase *full stack* is often reduced to browser, backend, and database. That is one valid meaning, but it is too narrow for this book.
+The phrase *multi-protocol application* is used deliberately here. This book is not only about exposing an HTTP route, opening a TCP socket, or publishing an MQTT message. It is about recognizing how several communication surfaces can belong to one application while still keeping their responsibilities separate.
 
-Here, *full stack* means something more systems-oriented: being able to reason across communication layers and protocol boundaries.
+A useful SNode.C application may need to reason across communication layers and protocol boundaries.
 
 A realistic networked system may involve:
 
@@ -223,7 +248,7 @@ Here it is enough to understand why the book starts small: the small example giv
 
 ### What to remember
 
-- SNode.C is introduced in this book as an architectural teaching object, not merely as a collection of APIs.
+- SNode.C is introduced in this book as the concrete framework for layered network programming, not merely as a collection of APIs.
 - Its value comes from recurring roles and boundaries: runtime, configured communication role, registered runtime-visible instance, concrete connection, factory, and per-connection context.
 - The framework separates lower communication choices from application protocol behavior, so the same mental model can survive changes in network family, transport, or protocol layer.
 - The first echo example is deliberately small because it exposes the shape of the framework without hiding it behind protocol complexity.

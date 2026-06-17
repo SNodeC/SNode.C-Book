@@ -2,7 +2,7 @@
 
 **Building Multi-Protocol Applications in Modern C++**
 
-This repository contains the Markdown source for an architecture-first book about SNode.C. The book is positioned as a SNode.C book, not as a general survey of C++ networking libraries. It teaches layered, event-driven, multi-protocol network programming through the concrete structure of SNode.C.
+This repository contains the structured Markdown source for an architecture-first book about SNode.C. The book is positioned as a SNode.C book, not as a general survey of C++ networking libraries. It teaches layered, event-driven, multi-protocol network programming through the concrete structure of SNode.C.
 
 The central idea is that communication software becomes easier to build, extend, test, and deploy when the important boundaries remain visible:
 
@@ -25,7 +25,14 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `proposal/book-proposal-package.md` — publisher-facing proposal material.
 - `chapters/` — one Markdown file per chapter.
 - `parts/` — part divider files.
-- `examples/` — example source trees when present.
+- `examples/` — example source trees used by the guided MiniGateway chapters.
+
+The current manuscript contains all planned chapters and an epilogue. Chapters 37 and 38 contain the MiniGateway guided project. The source trees used by those chapters are:
+
+```text
+examples/MiniGateway-Base
+examples/MiniGateway-Extended
+```
 
 ## Heading convention
 
@@ -75,7 +82,7 @@ The proposal package target creates a clean reviewer-facing archive in `packages
 cmake --build build --target proposal-package
 ```
 
-The generated archive should contain only the publisher/reviewer-facing source files and should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
+The generated archive should contain only publisher/reviewer-facing source files and should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
 
 ## Positioning
 
@@ -97,4 +104,3 @@ a beginner C++ book
 a pure IoT recipe book
 a complete TLS, HTTP, MQTT, Bluetooth, or database reference
 ```
-
