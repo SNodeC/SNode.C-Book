@@ -1,0 +1,70 @@
+\documentclass[tikz,border=6pt]{standalone}
+\input{snodec-figure-style.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+  snodec diagram,
+  app block/.style={
+    draw=snodecGreen!75,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=left,
+    text width=92mm,
+    inner xsep=4.5mm,
+    inner ysep=2.6mm,
+    minimum height=11mm
+  },
+  runtime block/.style={
+    draw=snodecBlue!75,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=left,
+    text width=92mm,
+    inner xsep=4.5mm,
+    inner ysep=2.6mm,
+    minimum height=11mm
+  },
+  flow/.style={snodec arrow, draw=snodecBlue!65},
+  register flow/.style={snodec arrow, draw=snodecGreen!70},
+  arrow label/.style={font=\sffamily\footnotesize, text=snodecMuted, fill=white, inner sep=1.2pt}
+]
+
+\node[app block] (appcode) {\textbf{\textcolor{snodecGreen}{Application code}}\\[-0.5mm]
+  {\footnotesize Creates and configures communication roles.}
+};
+
+\node[app block, below=5.5mm of appcode] (handle) {\textbf{\textcolor{snodecGreen}{Application-side handle}}\\[-0.5mm]
+  {\footnotesize Visible \texttt{SocketServer} or \texttt{SocketClient} object.}
+};
+
+\node[runtime block, below=11mm of handle] (instance) {\textbf{\textcolor{snodecBlue}{Instance}}\\[-0.5mm]
+  {\footnotesize Registered communication role.}
+};
+
+\node[runtime block, below=5.5mm of instance] (connection) {\textbf{\textcolor{snodecBlue}{Connection}}\\[-0.5mm]
+  {\footnotesize Concrete peer relationship.}
+};
+
+\node[runtime block, below=5.5mm of connection] (factory) {\textbf{\textcolor{snodecBlue}{Context factory}}\\[-0.5mm]
+  {\footnotesize Creates contexts for connections.}
+};
+
+\node[runtime block, below=5.5mm of factory] (context) {\textbf{\textcolor{snodecBlue}{Context}}\\[-0.5mm]
+  {\footnotesize Per-connection protocol behavior.}
+};
+
+\draw[register flow] (appcode.south) -- (handle.north);
+\draw[register flow] (handle.south) -- node[arrow label, right=1.5mm] {registers role} (instance.north);
+\draw[flow] (instance.south) -- (connection.north);
+\draw[flow] (connection.south) -- (factory.north);
+\draw[flow] (factory.south) -- (context.north);
+
+\begin{scope}[on background layer]
+  \node[fit=(instance)(connection)(factory)(context), snodec boundary, inner sep=4.5mm,
+        label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1pt]above:core::SNodeC runtime}] (runtime) {};
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

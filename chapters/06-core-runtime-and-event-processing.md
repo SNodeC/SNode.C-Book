@@ -38,6 +38,10 @@ Application code
                     -> next-tick and queued runtime work
 ```
 
+The same runtime picture is shown below.
+
+![The SNode.C event-processing core connects runtime control, descriptor readiness, timers, queued work, and protocol dispatch.](figures/pdf/fig-03-event-runtime-picture.pdf){#fig:snodec-event-runtime width=88%}
+
 This compact diagram is a memory map. It tells us where the major ideas belong.
 
 The application normally talks to `core::SNodeC`. `core::SNodeC` forwards runtime control to the event loop. The event loop delegates low-level waiting and dispatch coordination to the multiplexer. The multiplexer brings together descriptor readiness, timers, queued events, timeout processing, signals, and cleanup.

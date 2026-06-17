@@ -1,0 +1,108 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+  snodec diagram,
+  core block/.style={
+    draw=snodecBlue!75,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=left,
+    text width=56mm,
+    inner xsep=4.5mm,
+    inner ysep=2.7mm,
+    minimum height=11mm
+  },
+  source block/.style={
+    draw=snodecGreen!75,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=34mm,
+    inner xsep=3.2mm,
+    inner ysep=2.4mm,
+    minimum height=12mm
+  },
+  dispatch block/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=50mm,
+    inner xsep=4mm,
+    inner ysep=2.5mm,
+    minimum height=11mm
+  },
+  flow/.style={snodec arrow, draw=snodecBlue!65},
+  source flow/.style={snodec arrow, draw=snodecGreen!70},
+  dispatch flow/.style={snodec arrow, draw=snodecOrange!75},
+  feedback flow/.style={snodec muted arrow, dashed, draw=snodecMuted!55},
+  muted label/.style={font=\sffamily\footnotesize, text=snodecMuted, fill=white, inner sep=1.2pt}
+]
+
+\node[core block] (app) {\textbf{\textcolor{snodecBlue}{Application code}}\\[-0.5mm]
+  {\footnotesize Calls \texttt{init(...)}, registers roles, then starts or ticks the runtime.}
+};
+
+% Intentionally 11mm so the dashed runtime border sits visually halfway
+% between the first and second box: 5.5mm above core::SNodeC and 5.5mm below Application code.
+\node[core block, below=11mm of app] (snodec) {\textbf{\textcolor{snodecBlue}{core::SNodeC}}\\[-0.5mm]
+  {\footnotesize Public runtime control surface.}
+};
+
+\node[core block, below=6mm of snodec] (loop) {\textbf{\textcolor{snodecBlue}{core::EventLoop}}\\[-0.5mm]
+  {\footnotesize Orchestrates one event-processing step after another.}
+};
+
+\node[core block, below=6mm of loop] (mux) {\textbf{\textcolor{snodecBlue}{core::EventMultiplexer}}\\[-0.5mm]
+  {\footnotesize Waits for readiness, timers, and queued work.}
+};
+
+\node[source block, below=13mm of mux, xshift=-43mm] (descriptor) {\textbf{\textcolor{snodecGreen}{Descriptors}}\\[-0.5mm]
+  {\footnotesize socket and file-descriptor readiness}
+};
+
+\node[source block, below=13mm of mux] (timer) {\textbf{\textcolor{snodecGreen}{Timers}}\\[-0.5mm]
+  {\footnotesize scheduled and timeout activity}
+};
+
+\node[source block, below=13mm of mux, xshift=43mm] (queue) {\textbf{\textcolor{snodecGreen}{Event queue}}\\[-0.5mm]
+  {\footnotesize deferred runtime work}
+};
+
+\node[dispatch block, below=13mm of timer] (dispatch) {\textbf{\textcolor{snodecOrange}{Dispatch}}\\[-0.5mm]
+  {\footnotesize Receivers, callbacks, and protocol contexts react.}
+};
+
+\draw[flow] (app.south) -- (snodec.north);
+\draw[flow] (snodec.south) -- (loop.north);
+\draw[flow] (loop.south) -- (mux.north);
+
+\draw[source flow] (mux.south) -- ++(0,-4.5mm) -| (descriptor.north);
+\draw[source flow] (mux.south) -- (timer.north);
+\draw[source flow] (mux.south) -- ++(0,-4.5mm) -| (queue.north);
+
+\draw[dispatch flow] (descriptor.south) |- (dispatch.west);
+\draw[dispatch flow] (timer.south) -- (dispatch.north);
+\draw[dispatch flow] (queue.south) |- ([yshift=2.5mm]dispatch.east);
+
+\coordinate (feedbackLane) at ($(queue.east)+(8mm,0)$);
+\coordinate (feedbackBottom) at ($(dispatch.south)+(0,-6mm)$);
+\draw[feedback flow]
+  (dispatch.south)
+  -- (feedbackBottom)
+  -| (feedbackLane)
+  |- node[muted label, near end, right=1mm] {next step}
+  (loop.east);
+
+\begin{scope}[on background layer]
+  \node[fit=(snodec)(loop)(mux)(descriptor)(timer)(queue)(dispatch)(feedbackLane)(feedbackBottom), snodec boundary, inner sep=5.5mm,
+        label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:SNode.C event-processing core}] {};
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

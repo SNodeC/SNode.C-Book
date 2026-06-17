@@ -20,23 +20,23 @@
 ]
 
 \node[layer block] (family) {\textbf{\textcolor{snodecBlue}{Lower communication family}}\\[-0.5mm]
-  {\footnotesize Which family carries the endpoint? IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP.}
+  {\footnotesize Endpoint family: IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or L2CAP.}
 };
 
 \node[layer block, above=6mm of family] (transport) {\textbf{\textcolor{snodecBlue}{Transport form}}\\[-0.5mm]
-  {\footnotesize What form does communication take? In the main path of this book, connection-oriented stream communication.}
+  {\footnotesize Connection-oriented stream communication in the main path of this book.}
 };
 
 \node[layer block, above=6mm of transport] (connection) {\textbf{\textcolor{snodecBlue}{Connection handling}}\\[-0.5mm]
-  {\footnotesize How is a concrete peer relationship advanced? Lifecycle, data exchange, and, in TLS variants, encryption and decryption.}
+  {\footnotesize Peer relationship: lifecycle, data exchange, and optional TLS encryption/decryption.}
 };
 
 \node[layer block, above=6mm of connection] (protocol) {\textbf{\textcolor{snodecBlue}{Application protocol}}\\[-0.5mm]
-  {\footnotesize What meaning does the byte stream have? A custom protocol, HTTP, WebSocket, MQTT, or another protocol-specific layer.}
+  {\footnotesize Stream meaning: custom protocol, HTTP, WebSocket, MQTT, or another protocol layer.}
 };
 
 \node[layer block, above=6mm of protocol] (role) {\textbf{\textcolor{snodecBlue}{Application role}}\\[-0.5mm]
-  {\footnotesize What job does this endpoint perform? Server, client, bridge, broker, integrator, gateway, or another application-specific role.}
+  {\footnotesize Endpoint job: server, client, bridge, broker, integrator, gateway, or custom role.}
 };
 
 \draw[stack arrow] (family.north) -- (transport.south);
