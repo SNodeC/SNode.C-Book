@@ -1,0 +1,10 @@
+\documentclass[tikz,border=6pt]{standalone}
+\input{snodec-figure-style.tex}
+
+\begin{document}
+\begin{tikzpicture}[snodec diagram, node distance=5mm]
+  \node[snodec layer] (top) {Application role};
+  \node[snodec layer, below=of top] (protocol) {Application protocol};
+  \draw[snodec arrow] (protocol) -- (top);
+\end{tikzpicture}
+\end{document}

@@ -18,6 +18,17 @@ file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/book-files-existing-only.txt"
 
 set(PANDOC_FROM "markdown+raw_tex+fenced_code_attributes")
 
+# Reconfigure automatically when manuscript file lists or figure source files change.
+# The Pandoc input list and the TikZ figure source list are read at configure time.
+set_property(
+  DIRECTORY
+  APPEND
+  PROPERTY CMAKE_CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/book-files.txt"
+    "${CMAKE_CURRENT_SOURCE_DIR}/book-files-existing-only.txt"
+    "${CMAKE_CURRENT_SOURCE_DIR}/figures/src")
+
+
 function(make_pandoc_target target_name output_file)
   add_custom_target(
     ${target_name}
@@ -47,6 +58,71 @@ function(make_pandoc_pdf_target target_name output_file)
     VERBATIM)
 endfunction()
 
+
+# -----------------------------------------------------------------------------
+# TikZ / vector figure workflow
+# -----------------------------------------------------------------------------
+# Figure source files live in figures/src and are compiled to figures/pdf.
+# Only files named fig-*.tex are built as figures. Shared style files and
+# templates can therefore live in the same directory without becoming targets.
+#
+# A typical figure source looks like this:
+#
+#   \documentclass[tikz,border=6pt]{standalone}
+#   \input{snodec-figure-style.tex}
+#   \begin{document}
+#   \begin{tikzpicture}[snodec diagram]
+#     ...
+#   \end{tikzpicture}
+#   \end{document}
+#
+set(FIGURE_ENGINE
+    "${PDF_ENGINE}"
+    CACHE STRING "LaTeX engine used to build TikZ figures")
+set(FIGURE_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/figures/src")
+set(FIGURE_PDF_DIR "${CMAKE_CURRENT_SOURCE_DIR}/figures/pdf")
+set(FIGURE_BUILD_DIR "${BUILD_DIR}/figures")
+
+file(GLOB FIGURE_SOURCES CONFIGURE_DEPENDS "${FIGURE_SRC_DIR}/fig-*.tex")
+set(FIGURE_OUTPUTS "")
+
+foreach(FIGURE_SOURCE IN LISTS FIGURE_SOURCES)
+  get_filename_component(FIGURE_NAME "${FIGURE_SOURCE}" NAME_WE)
+  set(FIGURE_WORK_DIR "${FIGURE_BUILD_DIR}/${FIGURE_NAME}")
+  set(FIGURE_OUTPUT "${FIGURE_PDF_DIR}/${FIGURE_NAME}.pdf")
+
+  add_custom_command(
+    OUTPUT "${FIGURE_OUTPUT}"
+    COMMAND "${CMAKE_COMMAND}" -E make_directory "${FIGURE_WORK_DIR}"
+    COMMAND "${CMAKE_COMMAND}" -E make_directory "${FIGURE_PDF_DIR}"
+    COMMAND
+      "${FIGURE_ENGINE}" -interaction=nonstopmode -halt-on-error
+      -output-directory "${FIGURE_WORK_DIR}" "${FIGURE_SOURCE}"
+    COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+            "${FIGURE_WORK_DIR}/${FIGURE_NAME}.pdf" "${FIGURE_OUTPUT}"
+    DEPENDS "${FIGURE_SOURCE}" "${FIGURE_SRC_DIR}/snodec-figure-style.tex"
+    WORKING_DIRECTORY "${FIGURE_SRC_DIR}"
+    COMMENT "Building TikZ figure ${FIGURE_NAME}.pdf"
+    VERBATIM)
+
+  list(APPEND FIGURE_OUTPUTS "${FIGURE_OUTPUT}")
+endforeach()
+
+if(FIGURE_OUTPUTS)
+  add_custom_target(figures DEPENDS ${FIGURE_OUTPUTS})
+else()
+  add_custom_target(
+    figures
+    COMMAND "${CMAKE_COMMAND}" -E make_directory "${FIGURE_SRC_DIR}"
+    COMMAND "${CMAKE_COMMAND}" -E make_directory "${FIGURE_PDF_DIR}"
+    COMMENT "No TikZ figures found yet; create figures/src/fig-*.tex")
+endif()
+
+add_custom_target(
+  figures-clean
+  COMMAND "${CMAKE_COMMAND}" -E rm -rf "${FIGURE_PDF_DIR}" "${FIGURE_BUILD_DIR}"
+  VERBATIM)
+
 make_pandoc_pdf_target(pdf "snodec-book" --metadata-file metadata.yaml
                        ${BOOK_FILES})
 
@@ -61,6 +137,11 @@ make_pandoc_target(tex-existing "snodec-book-existing-only" --metadata-file
 
 make_pandoc_pdf_target(proposal "book-proposal-package" --metadata-file
                        metadata.yaml proposal/book-proposal-package.md)
+
+
+# Build figure PDFs before full manuscript PDF targets that may include them.
+add_dependencies(pdf figures)
+add_dependencies(pdf-existing figures)
 
 add_custom_target(book ALL DEPENDS pdf)
 
@@ -205,6 +286,9 @@ copy_optional_file(".gitignore")
 
 # Example sources used by the manuscript, copied when present.
 copy_optional_directory("examples")
+
+# Vector figure sources and generated figure PDFs, copied when present.
+copy_optional_directory("figures")
 
 # Generated PDFs are optional. Put them below generated/ so they are clearly not
 # source files.

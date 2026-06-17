@@ -1,0 +1,57 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+  snodec diagram,
+  layer block/.style={
+    draw=snodecBlue!75,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=left,
+    text width=122mm,
+    inner xsep=5mm,
+    inner ysep=2.8mm,
+    minimum height=13mm
+  },
+  stack arrow/.style={snodec arrow, draw=snodecBlue!65},
+  side note/.style={font=\sffamily\footnotesize, text=snodecMuted, align=center, inner sep=0pt}
+]
+
+\node[layer block] (family) {\textbf{\textcolor{snodecBlue}{Lower communication family}}\\[-0.5mm]
+  {\footnotesize Which family carries the endpoint? IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP.}
+};
+
+\node[layer block, above=6mm of family] (transport) {\textbf{\textcolor{snodecBlue}{Transport form}}\\[-0.5mm]
+  {\footnotesize What form does communication take? In the main path of this book, connection-oriented stream communication.}
+};
+
+\node[layer block, above=6mm of transport] (connection) {\textbf{\textcolor{snodecBlue}{Connection handling}}\\[-0.5mm]
+  {\footnotesize How is a concrete peer relationship advanced? Lifecycle, data exchange, and, in TLS variants, encryption and decryption.}
+};
+
+\node[layer block, above=6mm of connection] (protocol) {\textbf{\textcolor{snodecBlue}{Application protocol}}\\[-0.5mm]
+  {\footnotesize What meaning does the byte stream have? A custom protocol, HTTP, WebSocket, MQTT, or another protocol-specific layer.}
+};
+
+\node[layer block, above=6mm of protocol] (role) {\textbf{\textcolor{snodecBlue}{Application role}}\\[-0.5mm]
+  {\footnotesize What job does this endpoint perform? Server, client, bridge, broker, integrator, gateway, or another application-specific role.}
+};
+
+\draw[stack arrow] (family.north) -- (transport.south);
+\draw[stack arrow] (transport.north) -- (connection.south);
+\draw[stack arrow] (connection.north) -- (protocol.south);
+\draw[stack arrow] (protocol.north) -- (role.south);
+
+\draw[snodec muted arrow] ($(family.west)+(-11mm,0)$) -- ($(role.west)+(-11mm,0)$)
+  node[side note, midway, rotate=90, above=1.5mm] {more application-specific};
+\draw[snodec muted arrow] ($(role.east)+(11mm,0)$) -- ($(family.east)+(11mm,0)$)
+  node[side note, midway, rotate=90, above=1.5mm] {more communication-specific};
+
+\begin{scope}[on background layer]
+  \node[fit=(family)(transport)(connection)(protocol)(role), snodec boundary, inner sep=5mm] (stack) {};
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

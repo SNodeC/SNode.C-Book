@@ -1,0 +1,109 @@
+% Shared TikZ style for figures in
+% Layered Network Programming with SNode.C.
+%
+% Figure source files should normally use:
+%
+%   \documentclass[tikz,border=6pt]{standalone}
+%   \input{snodec-figure-style.tex}
+%   \begin{document}
+%   \begin{tikzpicture}[snodec diagram]
+%     ...
+%   \end{tikzpicture}
+%   \end{document}
+%
+% Keep this file deliberately conservative. The book needs precise engineering
+% diagrams, not decorative artwork.
+
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows.meta,
+  backgrounds,
+  calc,
+  fit,
+  matrix,
+  positioning,
+  shapes.geometric,
+  shapes.multipart
+}
+
+% Restrained palette. These colors are intentionally quiet so that the diagrams
+% print well and do not dominate the surrounding prose.
+\definecolor{snodecInk}{HTML}{1F2933}
+\definecolor{snodecMuted}{HTML}{52616B}
+\definecolor{snodecRule}{HTML}{8A9BA8}
+\definecolor{snodecBlue}{HTML}{0B3D4A}
+\definecolor{snodecBlueSoft}{HTML}{E8F1F4}
+\definecolor{snodecGreen}{HTML}{2F6F5E}
+\definecolor{snodecGreenSoft}{HTML}{EAF4EF}
+\definecolor{snodecOrange}{HTML}{B86B2B}
+\definecolor{snodecOrangeSoft}{HTML}{F7EFE7}
+\definecolor{snodecGraySoft}{HTML}{F3F5F6}
+
+\tikzset{
+  snodec diagram/.style={
+    font=\sffamily\small,
+    text=snodecInk,
+    line cap=round,
+    line join=round,
+    >=Latex
+  },
+  snodec box/.style={
+    draw=snodecBlue!75,
+    fill=snodecBlueSoft,
+    rounded corners=2pt,
+    very thick,
+    align=center,
+    inner xsep=5mm,
+    inner ysep=2.5mm,
+    minimum height=8mm
+  },
+  snodec layer/.style={
+    snodec box,
+    text width=48mm,
+    minimum height=9mm
+  },
+  snodec role/.style={
+    snodec box,
+    fill=snodecGreenSoft,
+    draw=snodecGreen!75,
+    text width=38mm
+  },
+  snodec protocol/.style={
+    snodec box,
+    fill=snodecOrangeSoft,
+    draw=snodecOrange!75,
+    text width=42mm
+  },
+  snodec neutral/.style={
+    snodec box,
+    fill=snodecGraySoft,
+    draw=snodecRule!80,
+    text width=42mm
+  },
+  snodec boundary/.style={
+    draw=snodecRule,
+    dashed,
+    rounded corners=3pt,
+    inner sep=4mm
+  },
+  snodec arrow/.style={
+    -{Latex[length=2.2mm,width=1.6mm]},
+    very thick,
+    draw=snodecBlue!80
+  },
+  snodec muted arrow/.style={
+    -{Latex[length=2mm,width=1.4mm]},
+    thick,
+    draw=snodecMuted!70
+  },
+  snodec note/.style={
+    font=\sffamily\footnotesize,
+    text=snodecMuted,
+    align=center
+  },
+  snodec label/.style={
+    font=\sffamily\bfseries\small,
+    text=snodecBlue
+  }
+}
