@@ -54,7 +54,7 @@ Manual chapter numbers are not part of chapter headings. LaTeX/Pandoc numbers pa
 
 ## Build
 
-Install Pandoc and a XeLaTeX-capable TeX distribution, then run:
+Install Pandoc and a XeLaTeX-capable TeX distribution first. The ordinary manuscript build can be driven through the Makefile wrapper:
 
 ```bash
 make pdf
@@ -72,17 +72,31 @@ To generate LaTeX only:
 make tex
 ```
 
-The CMake build reads `book-files.txt` and `book-files-existing-only.txt` during configuration. If either file list changes, reconfigure the build directory.
+The CMake build can also be used directly, especially when producing package artifacts:
+
+```bash
+cmake -S . -B build
+cmake --build build --target pdf
+```
+
+CMake reads `book-files.txt` and `book-files-existing-only.txt` during configuration. If either file list changes, reconfigure the build directory before rebuilding.
 
 ## Proposal / publisher package
 
 The proposal package target creates a clean reviewer-facing archive in `packages/`:
 
 ```bash
+cmake -S . -B build
 cmake --build build --target proposal-package
 ```
 
-The generated archive should contain only publisher/reviewer-facing source files and should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
+Despite its name, the proposal package is not only the proposal document. It is the clean publisher/reviewer package for the current book source. It should contain the proposal, manuscript Markdown sources, metadata, structure files, build files, and MiniGateway example source trees needed for inspection. It should not contain local build directories, editor state, `.git` internals, generated working files, or other private workspace artifacts.
+
+## Example source of truth
+
+The MiniGateway examples are part of the manuscript source, not detached sample code. Chapter 37 uses `examples/MiniGateway-Base` as its source of truth. Chapter 38 uses `examples/MiniGateway-Extended` as its source of truth.
+
+If one of those example trees changes, the corresponding chapter listings and prose must be checked against it. Conversely, if a chapter listing is edited, the matching example source tree must be updated as well. The intended publication state is that the example source trees are buildable external consumers of the documented SNode.C version.
 
 ## Positioning
 
