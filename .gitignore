@@ -14,3 +14,4 @@
 *.gitignore
 *.json
 *.txt.user
+/packages/
