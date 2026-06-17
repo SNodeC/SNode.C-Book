@@ -303,7 +303,7 @@ start command
               -> command completes or waits again
 ```
 
-The important point is not the exact MariaDB C API detail. The important point is that database work is expressed as explicit continuation, not as an invisible blocking detour inside a protocol callback.
+The important point is not the exact MariaDB C API detail. Database work is expressed as explicit continuation, not as an invisible blocking detour inside a protocol callback.
 
 ### Database work as commands and command sequences
 
@@ -421,7 +421,7 @@ startTransactions
           -> endTransactions
 ```
 
-The important point is not only that transactions exist. The important point is that transaction flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
+The important point is not only that transactions exist. Transaction flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
 
 A transaction is not outside the event model; it is a policy and ordering boundary expressed through database commands and callbacks.
 
@@ -568,7 +568,7 @@ HTTP command
 
 The correct order depends on the domain. Sometimes persistence follows communication; sometimes persistence authorizes or precedes communication.
 
-The important point is that persistence participates in the system flow. It should not be treated as an isolated afterthought.
+persistence participates in the system flow. It should not be treated as an isolated afterthought.
 
 A multi-protocol system may need to coordinate:
 

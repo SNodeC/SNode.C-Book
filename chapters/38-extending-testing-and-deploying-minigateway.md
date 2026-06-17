@@ -2,9 +2,9 @@
 
 ### Why this chapter follows the base build
 
-Chapter 37 built the base MiniGateway application. That version was intentionally small: an HTTP/Express surface, an SSE observation path, a native MQTT client role, an in-memory current measurement, and `/simulate` as a controlled input boundary.
+Chapter 37 built the base MiniGateway: an HTTP/Express surface, an SSE observation path, a native MQTT client role, an in-memory current measurement, and `/simulate` as a controlled input boundary.
 
-Chapter 38 now shows how the application can grow without losing its shape. The concrete source extension used in this chapter is the `MiniGateway-Extended` version: it adds a Unix-domain socket input for real external measurement injection. That extension is important, but it is not the whole chapter. The larger topic is how SNode.C applications should be extended, tested, debugged, and deployed while keeping boundaries visible.
+Chapter 38 shows how the application can grow without losing its shape. The concrete source extension is `MiniGateway-Extended`, which adds a Unix-domain socket input for external measurement injection. The larger topic is how SNode.C applications can be extended, tested, debugged, and deployed while keeping boundaries visible.
 
 ```text
 base MiniGateway
@@ -14,13 +14,13 @@ base MiniGateway
               -> same HTTP / SSE / MQTT outputs
 ```
 
-The extension therefore demonstrates the main design rule of this part of the book:
+The extension demonstrates this part's main design rule:
 
 ```text
 add the boundary that owns the new concern
 ```
 
-Do not extend an application by hiding new behavior inside an arbitrary callback merely because that callback is convenient.
+Do not hide new behavior inside an arbitrary callback merely because that callback is convenient.
 
 ### What changes in the extended version
 
@@ -50,7 +50,7 @@ Unix-domain input line
           -> MQTT publication
 ```
 
-The important point is what does not change. The HTTP `/status` route does not learn how Unix-domain sockets work. The SSE route does not parse CSV. `MiniGatewayMqtt` does not read from the local measurement socket. The new input boundary ends at the same `acceptMeasurement` function that already existed in Chapter 37.
+What matters is what does not change: `/status` does not learn Unix-domain sockets, the SSE route does not parse CSV, `MiniGatewayMqtt` does not read the local socket, and the new input boundary ends at the same `acceptMeasurement` function from Chapter 37.
 
 ### Extension overview
 
@@ -67,7 +67,7 @@ changed:
   README-BUILD.md
 ```
 
-The rest of the source tree remains the base application. That is the strongest sign that the extension is placed correctly. A new input carrier should not force a rewrite of the output roles.
+The rest of the source tree remains the base application. A new input carrier should not force a rewrite of the output roles.
 
 ### The build target after extension
 
@@ -83,7 +83,7 @@ extended component:
   net-un-stream-legacy
 ```
 
-That is a component-level expression of the new boundary: the application now owns a Unix-domain local input role in addition to the HTTP and MQTT roles.
+That is the component-level expression of the new boundary: a Unix-domain local input role in addition to the HTTP and MQTT roles.
 
 #### `CMakeLists.txt`
 

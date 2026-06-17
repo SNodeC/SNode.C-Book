@@ -66,7 +66,7 @@ It answers:
 How long may this phase continue without progress?
 ```
 
-The phase may be a read, a write, a client connection attempt, TLS initialization, TLS shutdown, connection termination, or a protocol-specific waiting phase. The important point is that a timeout belongs to a phase that is already in progress.
+The phase may be a read, a write, a client connection attempt, TLS initialization, TLS shutdown, connection termination, or a protocol-specific waiting phase. A timeout belongs to a phase that is already in progress.
 
 #### Retry
 
@@ -224,7 +224,7 @@ After a previously established client connection ended,
 when should the client try to restore it?
 ```
 
-This is not merely another word for retry. It describes the long-term lifecycle of a client instance.
+It is not another word for retry. It describes the long-term lifecycle of a client instance.
 
 #### TLS timing
 

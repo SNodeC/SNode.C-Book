@@ -544,7 +544,7 @@ HTTP upgrade
           -> MQTT
 ```
 
-The important point is that no layer disappears.
+no layer disappears.
 
 HTTP negotiates the upgrade. WebSocket carries bidirectional messages. The WebSocket subprotocol role provides the selected protocol surface. `MqttContext` bridges that carrier to the MQTT protocol object. MQTT gives the payload its protocol meaning.
 

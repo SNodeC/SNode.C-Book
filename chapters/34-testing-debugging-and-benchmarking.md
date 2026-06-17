@@ -2,9 +2,9 @@
 
 ### Why testing follows deployment
 
-Chapter 33 made deployment visible as installed architecture: packages, installed libraries, runtime-loaded modules, configuration directories, service definitions, TLS and database resources, and target-specific deployment constraints. Chapter 34 now asks how that architecture becomes trustworthy. A built and deployed system is not yet proven; it must still be tested, inspected, debugged, and measured at the boundaries where it claims to be clear.
+Chapter 33 made deployment visible as installed architecture. Chapter 34 asks how that architecture becomes trustworthy: a built and deployed system must still be tested, inspected, debugged, and measured at the boundaries where it claims to be clear.
 
-SNode.C does not only become an executable. It becomes shared libraries, component packages, exported CMake targets, runtime-loaded protocol modules, configuration directories, log and pid directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages installed under embedded constraints. Testing, debugging, and benchmarking are therefore not separate quality activities added after the real work is done. They are ways of checking whether the boundaries taught throughout the book still hold under real pressure:
+SNode.C does not only become an executable. It becomes libraries, component packages, exported CMake targets, runtime-loaded modules, configuration directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages. Testing, debugging, and benchmarking check whether the boundaries taught throughout the book still hold under pressure:
 
 ```text
 build structure
@@ -14,9 +14,9 @@ build structure
               -> measured behavior
 ```
 
-A network framework is not finished when it compiles. It is not even finished when it installs. Compilation means that the build graph was accepted. Installation means that the filesystem shape was produced. Trustworthiness means that behavior is reproducible, diagnosable, and measurable.
+A network framework is not finished when it compiles or installs. Compilation accepts the build graph; installation produces the filesystem shape. Trustworthiness requires reproducible, diagnosable, measurable behavior.
 
-That is especially true for SNode.C because it is a layered framework. A failure may occur at many different boundaries: a component target may have an undeclared dependency; a public header may rely on an accidental transitive include; an exported CMake package may differ from the in-tree target graph; a parser may accept invalid protocol input; a dispatcher may choose the wrong route; a WebSocket upgrade module may be missing from the installed layout; an MQTT session may survive or disappear incorrectly; a database command sequence may fail halfway through a state update; a long-running service may leak connection state; a benchmark may measure only a convenient path and miss the real bottleneck.
+In a layered framework, failures can occur at many boundaries: undeclared component dependencies, accidental transitive includes, exported CMake packages that differ from the in-tree graph, invalid protocol parsing, wrong route dispatch, missing runtime modules, incorrect MQTT session behavior, partial database updates, leaked connection state, or benchmarks that miss the real bottleneck.
 
 The useful question is therefore not only:
 
@@ -26,11 +26,11 @@ The better question is:
 
 > Which SNode.C boundary does this test protect?
 
-That is the central idea of this chapter.
+That is this chapter's central idea.
 
 ### Testing follows framework boundaries
 
-Testing strategy should follow the same boundaries as the framework. SNode.C has already introduced several kinds of boundaries:
+Testing strategy should follow the framework's boundaries:
 
 ```text
 component boundary
@@ -58,11 +58,11 @@ performance boundary
   -> where load reveals the limiting part of the system
 ```
 
-A good test does not have to cover all of these at once. In fact, it usually should not. A broad end-to-end test is useful, but it is not a substitute for a focused boundary test when the boundary itself has a contract. A good test protects one boundary clearly enough that a failure is meaningful.
+A good test does not have to cover all of these at once. A broad end-to-end test is useful, but it is not a substitute for a focused boundary test when the boundary itself has a contract.
 
-If a parser test fails, the reader should suspect protocol syntax handling. If an installed-consumer build fails, the reader should suspect exported targets, public headers, package configuration, or missing link dependencies. If an installed WebSocket example starts but cannot upgrade, the reader should suspect runtime module paths, RPATH, upgrade selector configuration, or installation layout. If an MQTT load test collapses under many slow subscribers, the reader should look at buffering, backpressure, fan-out, and event-loop pressure rather than only at packet parsing.
+A focused failure should point toward a focused cause: parser syntax handling, exported targets, public headers, package configuration, runtime module paths, RPATH, upgrade selector configuration, buffering, backpressure, fan-out, or event-loop pressure.
 
-Testing is therefore not a flat checklist. It is a map of confidence surfaces.
+Testing is a map of confidence surfaces, not a flat checklist.
 
 | SNode.C surface | What may be wrong | Useful confidence method |
 |---|---|---|
@@ -78,7 +78,7 @@ Testing is therefore not a flat checklist. It is a map of confidence surfaces.
 | Long-running service | leaks, retained cycles, stale handles | Valgrind, sanitizers, long-running diagnostics |
 | Performance | benchmark measures the wrong boundary | workload-specific benchmarking and bottleneck analysis |
 
-The rest of this chapter expands this table as confidence surfaces: build confidence, protocol confidence, runtime confidence, deployment confidence, diagnostic confidence, and performance confidence.
+The rest of this chapter expands these surfaces: build, protocol, runtime, deployment, diagnostic, and performance confidence.
 
 ### Build-time confidence
 
@@ -86,15 +86,15 @@ The rest of this chapter expands this table as confidence surfaces: build confid
 
 Chapter 32 treated CMake policy as architecture. The same is true for testing. SNode.C's strict build policy is already a form of automated pressure on the component graph.
 
-Warnings are not decorative. They catch suspicious conversions, hidden overloads, unreachable code, inconsistent initialization, lifetime hazards, and many small mistakes that become large when framework code is reused by many applications. For SNode.C this matters because low-level mistakes multiply upward. A bug in a socket abstraction can affect HTTP, WebSocket, MQTT, database-connected applications, and MQTTSuite tools. A bug in a dispatcher utility can affect every Express-style application. A hidden dependency in a public header can make a component appear usable only because another component happened to be built first.
+Warnings are not decorative. They catch suspicious conversions, hidden overloads, unreachable code, inconsistent initialization, lifetime hazards, and small mistakes that become large when framework code is reused. A bug in a socket abstraction can affect HTTP, WebSocket, MQTT, database-connected applications, and MQTTSuite tools; a hidden dependency in a public header can make a component appear usable only because another component happened to be built first.
 
-Build-time confidence therefore belongs at the beginning of the chapter. It checks whether the component graph is truthful before any runtime behavior is observed.
+Build-time confidence checks whether the component graph is truthful before runtime behavior is observed.
 
 #### Strict does not mean careless
 
-Strict warnings are valuable. Blind strictness is not. SNode.C is built in ordinary Linux environments, optional-feature configurations, and cross-compilation contexts such as OpenWrt. It also depends on system headers and third-party libraries.
+Strict warnings are valuable; blind strictness is not. SNode.C is built in ordinary Linux environments, optional-feature configurations, and cross-compilation contexts such as OpenWrt, with system headers and third-party libraries.
 
-A useful warning policy distinguishes between warnings from SNode.C code, warnings caused by platform or compiler differences, warnings emitted through third-party headers, warnings that reveal real dependency or lifetime problems, and warnings that would make a target platform fragile without improving project quality.
+A useful warning policy distinguishes project-code warnings, platform/compiler differences, third-party header noise, real dependency or lifetime problems, and warnings that would make a target platform fragile without improving quality.
 
 The principle is:
 
@@ -104,15 +104,15 @@ be strict for project code
       -> avoid global suppressions that hide real regressions
 ```
 
-This is not a compromise against quality. It is how strictness remains maintainable.
+This is how strictness remains maintainable.
 
 #### Include discipline protects component truth
 
 Include discipline is not only a formatting preference. It is a component test. Every public header should include what it uses. Every source file should avoid relying on accidental transitive includes.
 
-This matters because SNode.C is not consumed only as one monolithic source tree. It is consumed through components. A header that compiles only because another unrelated header was included first is not a stable public interface. A component that builds only because HTTP, MQTT, or database support was also present is not an honest component.
+This matters because SNode.C is consumed through components, not only as one monolithic source tree. A header that compiles only because another unrelated header came first is not a stable public interface.
 
-The repository already treats include checking as a build concern. When `include-what-you-use` is available, the build can configure it, while cross-compilation contexts are handled more carefully. That is not just a tooling preference. It supports the architectural promise that a public header expresses its own requirements.
+The repository already treats include checking as a build concern. When `include-what-you-use` is available, the build can configure it, while cross-compilation contexts are handled more carefully. This supports the architectural promise that a public header expresses its own requirements.
 
 ```text
 public header
@@ -121,19 +121,19 @@ public header
           -> package boundary remains truthful
 ```
 
-This is where Chapter 32 and Chapter 34 meet. The component graph drawn by CMake must also be true at the level of headers.
+The component graph drawn by CMake must also be true at the level of headers.
 
 #### Minimal builds are boundary tests
 
-Full builds are useful. They prove that the broad source tree still compiles as one large system. But full builds can also hide mistakes. A missing include may be hidden by another component. A missing link dependency may be hidden by a final executable. An optional dependency may appear mandatory because the full build always enables it. A component may accidentally rely on a higher layer because the higher layer is always nearby in the full build.
+Full builds prove that the broad source tree still compiles, but they can hide mistakes: missing includes, missing link dependencies, optional dependencies that appear mandatory, or components that accidentally rely on nearby higher layers.
 
-Minimal builds expose these problems. For example, a minimal build that requests only an IPv4 legacy stream component should not silently require HTTP, WebSocket, MQTT, or MariaDB support. A small external application that links only against:
+Minimal builds expose these problems. A build that requests only an IPv4 legacy stream component should not silently require HTTP, WebSocket, MQTT, or MariaDB support. A small external application that links only against:
 
 ```cmake
 snodec::net-in-stream-legacy
 ```
 
-should not need unrelated protocol components. If it does, the component boundary is lying. Minimal builds are therefore not merely smaller builds. They are architectural tests.
+should not need unrelated protocol components. If it does, the component boundary is lying. Minimal builds are architectural tests.
 
 ```text
 minimal build:
@@ -145,9 +145,7 @@ full build:
 
 #### Full builds still matter
 
-Minimal builds protect boundaries. Full builds protect integration. SNode.C also needs confidence that the complete system still compiles when many optional surfaces are enabled together: legacy and TLS stream components, IPv4 and IPv6 support, Unix domain socket support, Bluetooth support where available, HTTP and Express support, WebSocket support, MQTT and MQTT-over-WebSocket support, MariaDB support, examples, and applications.
-
-A full build checks whether the broad framework still fits together. A minimal build checks whether the pieces remain honest. Both are needed because they answer different questions.
+Minimal builds protect boundaries; full builds protect integration. SNode.C also needs confidence that the complete system still compiles when optional surfaces are enabled together: legacy and TLS streams, IPv4 and IPv6, Unix domain sockets, Bluetooth where available, HTTP/Express, WebSocket, MQTT and MQTT-over-WebSocket, MariaDB, examples, and applications. Both are needed because they answer different questions.
 
 #### Installed-consumer builds are especially important
 
@@ -162,7 +160,7 @@ target_link_libraries(myapp
 )
 ```
 
-This gives a different kind of confidence. It checks that the package configuration was installed, the requested component is supported, dependencies are loaded recursively, the exported target exists, the namespace is correct, include directories are exported correctly, public dependencies are present, link dependencies are truthful, and the installed library layout can be consumed outside the source tree.
+This checks that the package configuration was installed, the requested component is supported, dependencies load recursively, the exported target and namespace are correct, include directories and public dependencies are present, link dependencies are truthful, and the installed library layout can be consumed outside the source tree.
 
 This kind of test is easy to underestimate. For a framework with exported CMake targets, it is one of the most important tests. The question is not only:
 
@@ -324,7 +322,7 @@ session correctness
   -> does the MQTT relationship behave correctly over time?
 ```
 
-A test strategy that checks only packets may miss the real MQTT behavior. A broker-oriented role must also be tested as a broker-oriented role. A client-oriented role must be tested as a protocol participant, not merely as a byte writer.
+A test strategy that checks only packets may miss MQTT behavior. Broker-oriented and client-oriented roles must be tested as roles, not merely as byte writers.
 
 #### Database-backed protocol tests must control state
 
@@ -551,27 +549,27 @@ The tool reports are low-level. The interpretation should be architectural. A me
 
 #### Runtime diagnostics should be designed, not improvised
 
-Useful diagnostics do not appear accidentally. They are designed around the same boundaries as the framework.
+Useful diagnostics are designed around the same boundaries as the framework.
 
-A good diagnostic event should make clear which configured instance is involved, which local or remote endpoint is involved, which state transition occurred, which protocol boundary is active, whether the event is normal, retryable, fatal, or operator-visible, and which configuration value influenced the behavior where relevant.
+A good diagnostic event should identify the configured instance, endpoint, state transition, active protocol boundary, severity or retryability, and relevant configuration value.
 
-This is especially important for long-running systems. A short example can be debugged by watching the terminal. A deployed MQTT bridge, web dashboard, or database-backed IoT service needs logs that remain useful after the developer has left the terminal.
+Long-running systems need logs that remain useful after the developer has left the terminal.
 
 ### Benchmarking
 
 #### Benchmarking should find the limiting boundary
 
-Benchmarking is not only about producing large numbers. For SNode.C, a useful benchmark asks:
+Benchmarking is not about producing large numbers. A useful benchmark asks:
 
 > Which boundary becomes limiting under this workload?
 
 The answer may be different for different applications. One benchmark may be parser-bound. Another may be TLS-bound. Another may be dispatcher-bound. Another may be socket-buffer-bound. Another may be database-bound. Another may be dominated by MQTT fan-out, slow subscribers, or backpressure behavior.
 
-The benchmark should make the tested boundary visible. A number without a boundary is hard to interpret.
+A number without a boundary is hard to interpret.
 
 #### Workload shape matters
 
-A benchmark should describe its workload clearly. For SNode.C systems, useful dimensions can be grouped by shape:
+A benchmark should describe its workload clearly. Useful dimensions include:
 
 ```text
 connection shape:
@@ -593,13 +591,11 @@ operational shape:
   logging level, diagnostics enabled, service supervision
 ```
 
-Changing one dimension may change the bottleneck. A benchmark with one fast client tells a different story from a benchmark with thousands of slow clients. An MQTT publish test with one subscriber tells a different story from a fan-out test with many subscribers. An HTTP benchmark without TLS tells a different story from a TLS benchmark. A database-backed benchmark tells a different story from an in-memory protocol benchmark.
-
-The benchmark result should therefore never be separated from the workload shape.
+Changing one dimension may change the bottleneck. One fast client, thousands of slow clients, one MQTT subscriber, many fan-out subscribers, HTTP without TLS, TLS, database-backed state, and in-memory protocol handling all tell different stories. The result should never be separated from workload shape.
 
 #### Avoid misleading comparisons
 
-Benchmarks can mislead easily. A benchmark may accidentally measure the client tool instead of the server. It may keep logging enabled in one run and disabled in another. It may compare a build-tree run against an installed run with different library paths. It may test plain HTTP and then generalize to TLS. It may test a local loopback connection and then make claims about network deployment. It may test a broker without slow subscribers and then make claims about production fan-out. It may test a database-backed application with an empty local database and then generalize to persistent workloads.
+Benchmarks mislead when they measure the client tool instead of the server, change logging between runs, compare build-tree and installed runs with different paths, generalize plain HTTP to TLS, generalize loopback to deployment, ignore slow subscribers, or test database-backed behavior only against an empty local database.
 
 The refined rule is simple:
 
@@ -607,17 +603,17 @@ The refined rule is simple:
 A benchmark is only meaningful together with the boundary and workload it measures.
 ```
 
-That should be the benchmarking tone of this book: not marketing numbers, not vague speed claims, but measured behavior tied to architecture.
+The benchmarking tone should be measured behavior tied to architecture, not marketing numbers.
 
 #### Latency and throughput are different questions
 
-Throughput asks how much work the system can complete per time interval. Latency asks how long one operation takes. Both matter. They are not interchangeable.
+Throughput asks how much work the system completes per time interval. Latency asks how long one operation takes. They are not interchangeable.
 
 A system may have high throughput but poor tail latency under load. A system may respond quickly to one client but degrade when many connections stay open. A system may process MQTT packets quickly until database persistence becomes active. A system may handle many SSE clients until one slow group creates buffer pressure.
 
-Benchmarking should therefore separate average latency, tail latency, throughput, connection count, memory growth, CPU load, backpressure behavior, and recovery after overload.
+Benchmarking should separate average latency, tail latency, throughput, connection count, memory growth, CPU load, backpressure behavior, and recovery after overload.
 
-The event-driven model makes this especially important. When one boundary blocks or slows down, other connections may also be affected if the application design does not handle the pressure correctly.
+In an event-driven model, one slow boundary can affect other connections if the application does not handle pressure correctly.
 
 #### Benchmarking should not replace profiling
 
@@ -637,7 +633,7 @@ The benchmark identifies the workload. The profile identifies the cost. The arch
 
 ### Current practice and future strategy
 
-A chapter like this must be honest. It should not pretend that every confidence surface is already covered by automated tests. Some checks may already be part of daily development. Some may be manual debugging practice. Some may be desirable CI coverage. Some may be future hardening work for specific applications or deployment targets.
+A chapter like this must be honest: not every confidence surface is already automated. Some checks are daily development practice, some manual debugging, some desirable CI coverage, and some future hardening work.
 
 A useful distinction is:
 
@@ -652,9 +648,9 @@ recommended strategy
   -> what should be protected over time as the framework and applications grow
 ```
 
-This distinction keeps the chapter technically honest. It also makes the chapter more useful. A reader does not need to implement every test category immediately. They need to learn how to think about confidence in a layered framework.
+This distinction keeps the chapter honest and useful. A reader does not need every test category immediately; they need to learn how to think about confidence in a layered framework.
 
-The most important practical habit is to add tests at the boundary where a bug actually mattered. If a bug appears in URL decoding, a focused parser or utility test may be enough. If a bug appears in mounted router parameter restoration, a dispatcher behavior test is better. If a bug appears only after installation, an in-tree unit test is not sufficient. If a bug appears only under slow clients, a happy-path throughput test will not protect it.
+The practical habit is to add tests at the boundary where a bug mattered. URL decoding may need a parser or utility test; router parameter restoration may need a dispatcher test; installation-only bugs need installed tests; slow-client bugs need pressure tests.
 
 Regression tests should protect the semantic boundary that failed.
 
@@ -687,9 +683,9 @@ Regression tests should protect the semantic boundary that failed.
 
 Chapter 32 showed how SNode.C expresses architecture through CMake components, targets, and dependency surfaces. Chapter 33 showed how that architecture enters the filesystem through packages, installed paths, service definitions, configuration directories, and embedded deployment constraints. This chapter showed how that installed architecture becomes trustworthy.
 
-Testing, debugging, and benchmarking do not replace architectural clarity. They reveal whether the architecture is clear.
+Testing, debugging, and benchmarking reveal whether the architecture is clear.
 
-A clean component boundary can be built minimally. A truthful exported target can be consumed from a separate project. A clear protocol boundary can be tested with exact input and output. A clear runtime boundary can be exercised with real sockets, retries, shutdowns, and slow peers. A clear deployment boundary can be verified after installation. A clear diagnostic boundary can be read in logs. A clear performance boundary can be measured under load.
+A clean component boundary can be built minimally; an exported target can be consumed externally; a protocol boundary can be tested with exact input and output; a runtime boundary can be exercised with real sockets and slow peers; deployment, diagnostic, and performance boundaries can be verified after installation, in logs, and under load.
 
 Chapter 34 asked how to verify whether boundaries hold. Chapter 35 asks how to choose those boundaries wisely in the first place.
 

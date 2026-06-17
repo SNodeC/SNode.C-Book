@@ -257,7 +257,7 @@ What do those components need internally?
   -> their targets declare it
 ```
 
-The important point is not that the application knows the whole graph. The important point is that it selects the components that define its public shape: the HTTP application layer and the concrete transport carrier. The remaining dependencies belong to those selected components.
+The important point is not that the application knows the whole graph. It selects the components that define its public shape: the HTTP application layer and the concrete transport carrier. The remaining dependencies belong to those selected components.
 
 When reading another SNode.C application, start with the executable target, then read the linked protocol/application component, the selected transport component, and any optional feature components. Only then open the C++ entry point. A direct application link line should describe the application face, not repeat every implementation layer below it.
 
@@ -611,7 +611,7 @@ configuration
                   -> timer-driven repeated queries
 ```
 
-The important point is that `testmariadb` is a focused demonstration target. It is not a recommended production persistence architecture. Its value is that it makes the Chapter 28 API concrete.
+`testmariadb` is a focused demonstration target. It is not a recommended production persistence architecture. Its value is that it makes the Chapter 28 API concrete.
 
 ### Reading applications in `src/apps`
 

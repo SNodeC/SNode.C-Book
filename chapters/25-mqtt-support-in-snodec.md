@@ -497,7 +497,7 @@ MQTT over WebSocket
   -> MQTT above WebSocket subprotocol
 ```
 
-The important point is that MQTT remains a protocol layer with its own identity. It brings sessions, topics, control packets, keep-alive timing, and publish flow into the same SNode.C architectural discipline used by the lower transport and web chapters.
+MQTT remains a protocol layer with its own identity. It brings sessions, topics, control packets, keep-alive timing, and publish flow into the same SNode.C architectural discipline used by the lower transport and web chapters.
 
 Chapter 25 established MQTT as a protocol family and introduced its two carrier forms. Chapter 26 now narrows the view to one specific composition:
 

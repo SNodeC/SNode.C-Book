@@ -4,9 +4,7 @@
 
 Chapter 34 asked how to test, debug, and measure whether SNode.C boundaries hold. Chapter 35 asks the prior architectural question: how should those boundaries be chosen in the first place?
 
-By this point in the book, the reader has already seen a great deal of SNode.C: the runtime, lower communication families, the connection model, contexts and factories, configuration, diagnostics, TLS, HTTP, the Express-like layer, SSE, WebSocket, MQTT, MQTT over WebSocket, applications, systems, build components, deployment, and testing strategy. That is enough knowledge to build many things.
-
-There is still one skill that turns framework familiarity into architectural maturity. That skill is judgment.
+By this point, the reader has seen the runtime, lower communication families, connection model, contexts and factories, configuration, diagnostics, TLS, HTTP, Express-like routing, SSE, WebSocket, MQTT, MQTT over WebSocket, applications, systems, build components, deployment, and testing strategy. That is enough knowledge to build many things; judgment turns that familiarity into architectural maturity.
 
 The hardest questions in real systems are often not questions of syntax or API usage. They are questions like these:
 
@@ -17,7 +15,7 @@ The hardest questions in real systems are often not questions of syntax or API u
 - Should this behavior belong in a context, middleware, subprotocol, persistence service, or separate application?
 - Should these roles live in one executable or in several?
 
-This chapter is about those questions. It is not another API chapter. It is a synthesis chapter about the architect's task in SNode.C:
+This is not another API chapter. It is a synthesis chapter about the architect's task in SNode.C:
 
 ```text
 right concern
@@ -25,13 +23,13 @@ right concern
       -> right boundary
 ```
 
-The following questions are not a checklist to apply mechanically. They are recurring pressure points where SNode.C forces the architect to place meaning deliberately.
+The following questions are not a mechanical checklist. They are recurring pressure points where SNode.C forces the architect to place meaning deliberately.
 
-In this chapter, the word *role* is often used in the system-design sense. When the text refers to SNode.C's configured runtime entities, it uses the more precise language of configured communication roles and registered runtime-visible instances. A system-design role, an application-side server/client handle, a configured communication role, a connection, and a context are related, but they are not the same thing.
+Here, *role* is often used in the system-design sense. When the text refers to SNode.C runtime entities, it uses the more precise language of configured communication roles and registered runtime-visible instances.
 
 ### Good judgment begins by refusing category mistakes
 
-One of the simplest and most powerful habits in SNode.C is to avoid putting the right concern in the wrong layer. A category mistake happens when a real concern is implemented in a layer that cannot honestly own it.
+One of the simplest SNode.C habits is to avoid putting the right concern in the wrong layer. A category mistake happens when a concern is implemented in a layer that cannot honestly own it.
 
 Common examples are:
 
@@ -43,17 +41,17 @@ Common examples are:
 - putting service-supervisor policy into per-connection code,
 - putting system-boundary decisions into request callbacks.
 
-SNode.C is a good framework for learning architectural judgment precisely because it has so many explicit layers, roles, and boundaries. It teaches the reader to ask:
+SNode.C teaches this judgment because it makes layers, roles, and boundaries explicit. It asks:
 
 > What kind of thing is this concern, really?
 
 That is often the most important design question of all.
 
-A useful warning sign is when one class, one callback, one configuration section, or one executable has to know too many unrelated reasons for change. The problem is not always that the code is wrong. Often the code is locally reasonable, but it has been placed at the wrong boundary.
+A warning sign is one class, callback, configuration section, or executable that knows too many unrelated reasons for change. Often the code is locally reasonable but placed at the wrong boundary.
 
 ### Choosing the communication family
 
-At the lowest practical architectural level, the reader often has to decide which communication family is appropriate. This is not a small detail. It shapes endpoint identity, deployment assumptions, permissions, diagnostics, and operational boundaries.
+At the lowest practical architectural level, the communication family shapes endpoint identity, deployment assumptions, permissions, diagnostics, and operational boundaries.
 
 IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP do not merely differ in address syntax. They imply different kinds of communication situations.
 
@@ -64,13 +62,13 @@ A good first rule is:
 - use **Bluetooth RFCOMM/L2CAP** when the role is genuinely nearby, paired, device-near, or commissioning-oriented,
 - and do not choose a family merely because it is familiar.
 
-This is one of the deepest lessons from the lower-family chapters. The right family is not the one the developer already knows best. It is the one that matches the system boundary honestly.
+The right family is not the one the developer already knows best. It is the one that matches the system boundary honestly.
 
 Bluetooth is a useful example. It should not be treated as a general-purpose integration bus merely because it can carry byte streams. It belongs where nearby peer exchange, device-local setup, or device-near communication is the real boundary.
 
 ### Choosing the protocol surface
 
-Once the lower family is chosen, the next major decision is about the protocol surface. The useful question is not only which protocol is available. The useful question is:
+Once the lower family is chosen, the next decision is the protocol surface. The useful question is not only which protocol is available, but:
 
 > What kind of conversation does this boundary actually want to have?
 
@@ -86,13 +84,13 @@ A compact decision view is:
 | brokered machine messaging | MQTT |
 | MQTT semantics through a web-compatible boundary | MQTT over WebSocket |
 
-This is not a checklist to memorize mechanically. It is a way of forcing the architectural question into the open.
+This is not a checklist to memorize; it forces the architectural question into the open.
 
-A plain stream endpoint is not automatically more honest because it is lower. HTTP, Express-like routing, SSE, WebSocket, or MQTT may be simpler when the boundary already has those semantics. The simplest honest stack is not always the lowest stack. It is the stack that matches the conversation without pretending the conversation is something else.
+A plain stream endpoint is not automatically more honest because it is lower. HTTP, Express-like routing, SSE, WebSocket, or MQTT may be simpler when the boundary already has those semantics. The simplest honest stack matches the conversation without pretending it is something else.
 
 ### Choosing native or composed protocol form
 
-One of the strongest themes of the later chapters has been protocol composition. The reader often has to choose not only *which* protocol family to use, but whether to use it directly or as part of a larger stack.
+Protocol composition raises a second question: not only *which* protocol family to use, but whether to use it directly or as part of a larger stack.
 
 For example:
 
@@ -139,11 +137,11 @@ MQTT over WebSocket
   -> MQTT semantics through a WebSocket-compatible boundary
 ```
 
-The architectural question is not which stack is richer. The question is which stack is honest.
+The question is not which stack is richer, but which stack is honest.
 
 ### Choosing role boundaries
 
-At application and system scale, one of the most important design decisions is how many roles should exist. A common mistake is to begin with one giant all-purpose communication role and keep adding responsibilities until it becomes impossible to reason about.
+At application and system scale, the architect must decide how many roles should exist. A common mistake is to begin with one all-purpose communication role and keep adding responsibilities until it becomes impossible to reason about.
 
 SNode.C encourages a healthier question:
 
@@ -161,11 +159,11 @@ For example, these often deserve to remain explicit:
 
 These roles may be implemented in one process or in several. Separating roles does not automatically mean separating executables. A role can remain explicit inside one process if the boundary remains visible in code, configuration, diagnostics, and failure policy.
 
-The important point is visibility. When roles are genuinely different in audience, protocol, state ownership, or deployment boundary, hiding them behind one vague communication surface usually makes the system harder to operate and harder to change.
+Visibility matters. When roles differ in audience, protocol, state ownership, or deployment boundary, hiding them behind one vague communication surface makes the system harder to operate and change.
 
 ### Choosing process and deployment boundaries
 
-The framework supports both multi-role single applications and systems built from several cooperating executables. SNode.C does not decide this for the reader. The architect must decide.
+SNode.C supports both multi-role single applications and systems built from cooperating executables. The architect must decide which shape is honest.
 
 Use **one executable** when:
 
@@ -183,9 +181,7 @@ Use **several executables or services** when:
 - protocol responsibilities are cleanly separable,
 - one role constellation would otherwise become muddy.
 
-Packaging is an operational boundary decision, not a moral ranking of architectures. Several services are not automatically more mature than one executable. One executable is not automatically simpler if it hides several unrelated reasons for change.
-
-The good architecture is the one whose operational shape matches the real system boundary.
+Packaging is an operational boundary decision, not a moral ranking. Good architecture has an operational shape that matches the real system boundary.
 
 ### Choosing the implementation layer
 
@@ -209,9 +205,7 @@ A useful map is:
 | durable state | persistence service |
 | failure visibility | role/application diagnostics |
 
-A `SocketContext` is not a dumping ground for every connection-adjacent concern. It is the place for behavior that belongs to the protocol endpoint of a concrete connection. Construction policy belongs in factories. Web request flow belongs in middleware or routers. Semantics above WebSocket belong in subprotocols. Cross-role orchestration belongs above the connection-local endpoint when it truly spans roles.
-
-Many design mistakes are not about wrong code, but about right code placed in the wrong level.
+A `SocketContext` is not a dumping ground for every connection-adjacent concern. It owns behavior that belongs to the protocol endpoint of a concrete connection. Construction policy belongs in factories, web request flow in middleware or routers, semantics above WebSocket in subprotocols, and cross-role orchestration above the connection-local endpoint when it truly spans roles.
 
 ### Choosing code or configuration
 
@@ -232,9 +226,7 @@ generated configuration
 
 Put choices in **configuration** when they are deployment-specific, operator-facing, role-selecting, environment-dependent, or likely to vary across runs. Keep choices in **code** when they are part of essential protocol logic, invariants of the application design, not reasonably changeable by operators, or fundamental to internal correctness.
 
-Making a choice configurable is not automatically better. A configurable invariant is often just an unprotected design mistake. Configuration is powerful when it exposes real deployment variability. It is dangerous when it turns internal correctness into an operator burden.
-
-This is one of the most practical uses of SNode.C's configuration model. It lets the architect separate what should remain stable in the design from what should remain flexible in deployment.
+Making a choice configurable is not automatically better. A configurable invariant is often just an unprotected design mistake. SNode.C's configuration model is useful because it separates stable design from deployment variability.
 
 ### Asking what the endpoint should know
 
@@ -242,11 +234,9 @@ Whenever adding behavior to a `SocketContext`, an HTTP handler, middleware, a We
 
 > Does this endpoint genuinely need to know this?
 
-Many design problems disappear when this question is asked honestly.
+Endpoint-local state belongs there when it describes the current protocol relationship. Protocol parsing, protocol response logic, and connection-local protocol state usually belong there; durable state, global orchestration, cross-role coordination, deployment topology, log-file policy, database ownership, and service-supervisor policy usually do not.
 
-Endpoint-local state belongs there when it describes the current protocol relationship. Protocol parsing, protocol response logic, and connection-local protocol state usually belong there. Durable system state usually does not. Global orchestration usually does not. Cross-role coordination usually does not. Deployment topology usually does not. Log-file policy, database ownership policy, and service supervisor policy usually do not.
-
-A framework with strong boundaries makes this question easier to ask. That is one of SNode.C's strengths.
+Strong boundaries make this question easier to ask.
 
 ### Separating protocol meaning from carrier mechanics
 
@@ -269,11 +259,11 @@ For example:
 - route matching in Express is an application-layer concern,
 - bind host / port / path / channel / PSM are carrier or lower-family concerns.
 
-This distinction often prevents architecture from drifting into confusion. A richer protocol layer does not erase the carrier beneath it; it gives meaning to communication carried by that lower layer.
+A richer protocol layer does not erase the carrier beneath it; it gives meaning to communication carried by that lower layer.
 
 ### Choosing the extensibility point
 
-SNode.C offers several places where extensibility can occur. The architect should choose the one that matches the actual kind of variation.
+SNode.C offers several extensibility points. Choose the one that matches the actual variation.
 
 A useful map is:
 
@@ -299,7 +289,7 @@ package/build component
 
 Use a factory when the variation is endpoint construction. Use middleware when the variation is cross-cutting web behavior. Use routers when the variation is mounted path structure. Use subprotocol selection when the variation is truly above WebSocket. Use separate executables, configured communication instances, or package components when the variation is operational or deployment-level rather than only code-level.
 
-Choosing the wrong extensibility point is one of the easiest ways to create systems that feel flexible at first and chaotic later.
+The wrong extensibility point can feel flexible at first and chaotic later.
 
 ### Placing failure policy
 
@@ -317,8 +307,6 @@ A useful rule is:
 
 Failure policy belongs to the role that owns the boundary, not merely to the lowest socket that notices the error.
 
-This is another example of architectural judgment being mostly about putting the right concern in the right boundary.
-
 ### Choosing what must be operator-visible
 
 System architecture is not only about internal correctness. It is also about operability.
@@ -333,7 +321,7 @@ A good SNode.C architect should routinely ask:
 - Which role failures should be immediately visible?
 - Which protocol stacks are important enough to be obvious in packaging and configuration?
 
-A concern that must be operated must be named, configured, logged, or measured somewhere visible. SNode.C's configuration and diagnostics shell make these questions concrete rather than abstract.
+A concern that must be operated must be named, configured, logged, or measured somewhere visible. SNode.C's configuration and diagnostics shell make that concrete.
 
 A useful log message should preserve the boundary: role, configured instance name where applicable, endpoint, state, protocol phase, and reason. Without that information, a system may still be technically correct but operationally opaque.
 
@@ -354,7 +342,7 @@ That means:
 
 SNode.C provides communication architecture. Domain code still owns domain semantics. The framework helps decide how domain rules meet communication boundaries; it does not make those domain decisions automatically.
 
-This is a framework that rewards clarity more than cleverness. That is one of the reasons it scales well in the mind.
+The framework rewards clarity more than cleverness.
 
 ### The deeper rule: preserve meaning as long as possible
 
@@ -374,11 +362,11 @@ That means:
 
 Preserving meaning does not mean refusing abstraction. It means not erasing a distinction before another layer honestly owns it.
 
-This is one of the deepest lessons the framework teaches. A system stays maintainable when its important meanings are not erased too early.
+A system stays maintainable when its important meanings are not erased too early.
 
 ### Common bad instincts this chapter tries to cure
 
-A good architect's chapter should be slightly diagnostic too. Some common bad instincts are:
+Some common bad instincts are:
 
 - choosing a protocol because it is fashionable rather than because the boundary wants it,
 - collapsing too many roles into one binary too early,
@@ -389,7 +377,7 @@ A good architect's chapter should be slightly diagnostic too. Some common bad in
 - turning every cross-cutting concern into middleware even when it belongs to configuration, protocol state, or system orchestration,
 - treating every richer layer as if it replaces the layers beneath it.
 
-SNode.C is a good framework for outgrowing these instincts because it keeps the actual boundaries visible.
+SNode.C helps cure these instincts by keeping the actual boundaries visible.
 
 ### Common misunderstandings
 
@@ -417,9 +405,7 @@ Corrected view: this chapter is technical because boundary mistakes become techn
 
 ### The architectural principle
 
-Architectural judgment in SNode.C means choosing the right layer, role boundary, protocol family, packaging style, configuration surface, and diagnostic surface for a real system concern. The framework gives the architect many explicit places where behavior can live: lower-family carriers, connection layers, contexts, middleware, routers, upgrades, subprotocols, configured communication roles, registered runtime-visible instances, persistence services, and separate applications or services.
-
-Good judgment consists in using those boundaries honestly, so that protocol meaning, operational policy, durable state, and system structure remain clear rather than collapsing into one giant custom abstraction.
+Architectural judgment in SNode.C means choosing the right layer, role boundary, protocol family, packaging style, configuration surface, and diagnostic surface for a real system concern. Good judgment uses those boundaries honestly, so that protocol meaning, operational policy, durable state, and system structure remain clear rather than collapsing into one giant custom abstraction.
 
 ### What to remember
 
