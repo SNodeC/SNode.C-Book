@@ -1,0 +1,67 @@
+
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  box/.style={draw=snodecBlue!75, fill=snodecBlueSoft, rounded corners=2.5pt, line width=0.75pt},
+  sidebox/.style={draw=snodecGreen!70!black, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
+  maintext/.style={font=\sffamily\small, align=center, text depth=0pt, text height=1.7ex},
+  sidetext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
+  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.2mm,width=1.8mm]}, line width=0.75pt},
+  link/.style={draw=snodecMuted!85, line width=0.75pt}
+]
+% top handle box
+\draw[box] (26,0) rectangle (134,-18);
+\node[maintext] at (80,-9) {\begin{tabular}{@{}c@{}}\textbf{Application-side handle}\\SocketServer / SocketClient visible in user code\end{tabular}};
+
+% registration box
+\draw[box] (26,-28) rectangle (134,-46);
+\node[maintext] at (80,-37) {\begin{tabular}{@{}c@{}}\textbf{Registration call}\\listen(...) registers a server role\\connect(...) registers a client role\end{tabular}};
+\draw[arrow] (80,-18) -- (80,-28);
+
+% server client split boxes
+\draw[sidebox] (8,-58) rectangle (70,-76);
+\node[sidetext] at (39,-67) {\begin{tabular}{@{}c@{}}\textbf{Server-side instance}\\listens and accepts peers\end{tabular}};
+
+\draw[sidebox] (90,-58) rectangle (152,-76);
+\node[sidetext] at (121,-67) {\begin{tabular}{@{}c@{}}\textbf{Client-side instance}\\initiates a peer relationship\end{tabular}};
+
+% split from registration to instances: one stem, horizontal branch, then two down arrows
+\draw[link] (80,-46) -- (80,-52);
+\draw[link] (39,-52) -- (121,-52);
+\draw[arrow] (39,-52) -- (39,-58);
+\draw[arrow] (121,-52) -- (121,-58);
+
+% accept/connect machinery
+\draw[box] (22,-88) rectangle (138,-106);
+\node[maintext] at (80,-97) {\begin{tabular}{@{}c@{}}\textbf{Accept/connect machinery}\\runtime and flow-controller progress the role\end{tabular}};
+% converge using orthogonal lines to top center
+\draw[link] (39,-76) -- (39,-82);
+\draw[link] (121,-76) -- (121,-82);
+\draw[link] (39,-82) -- (121,-82);
+\draw[arrow] (80,-82) -- (80,-88);
+
+% connection
+\draw[box] (32,-118) rectangle (128,-136);
+\node[maintext] at (80,-127) {\begin{tabular}{@{}c@{}}\textbf{SocketConnection}\\one concrete peer relationship\end{tabular}};
+\draw[arrow] (80,-106) -- (80,-118);
+
+% factory
+\draw[box] (30,-148) rectangle (130,-166);
+\node[maintext] at (80,-157) {\begin{tabular}{@{}c@{}}\textbf{SocketContextFactory}\\creates a fresh context for the connection\end{tabular}};
+\draw[arrow] (80,-136) -- (80,-148);
+
+% context
+\draw[box] (36,-178) rectangle (124,-196);
+\node[maintext] at (80,-187) {\begin{tabular}{@{}c@{}}\textbf{SocketContext}\\per-connection protocol endpoint\end{tabular}};
+\draw[arrow] (80,-166) -- (80,-178);
+
+% protocol behavior
+\draw[box] (28,-208) rectangle (132,-226);
+\node[maintext] at (80,-217) {\begin{tabular}{@{}c@{}}\textbf{Protocol behavior}\\application meaning over the peer relationship\end{tabular}};
+\draw[arrow] (80,-196) -- (80,-208);
+
+\end{tikzpicture}
+\end{document}

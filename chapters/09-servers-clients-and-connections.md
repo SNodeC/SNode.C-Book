@@ -2,7 +2,7 @@
 
 ### Why these three belong in one chapter
 
-Chapter 8 made the network layer concrete. It showed that an address in SNode.C is not just a string, a number, or a path. It is a family-specific description of endpoint identity. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
+Chapter 8 made the network layer concrete. It showed that an address in SNode.C is not merely a string, a number, or a path. It is a family-specific description of endpoint identity. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
 
 This chapter asks the next question:
 
@@ -12,21 +12,11 @@ The answer brings together three concepts that should not be learned as unrelate
 
 A server-side instance uses a local endpoint identity to listen and accept peers. A client-side instance uses a remote endpoint identity, and optionally a local one, to initiate a connection. A connection is the concrete peer relationship that appears when the listen or connect flow succeeds.
 
-The refined mental model is therefore:
+Figure~\ref{fig:server-client-path} turns that sequence into a single path. It starts with the application-side handle, passes through the registration call and the runtime-visible server or client role, and then follows the accept/connect machinery to the concrete connection, factory, context, and protocol behavior.
 
-```text
-application-side SocketServer / SocketClient handle
-  -> registers a server/client instance through listen(...) / connect(...)
-      -> accept/connect machinery
-          -> SocketConnection
-              -> SocketContextFactory
-                  -> SocketContext
-                      -> protocol behavior
-```
+![The server/client role path from application-side handle to protocol behavior.](figures/pdf/fig-05-server-client-connection-context-path.pdf){#fig:server-client-path width=88% latex-placement="tbp"}
 
-This diagram connects the previous chapters.
-
-Chapter 3 showed the first echo pair. Chapter 5 distinguished handles, instances, connections, factories, and contexts. Chapter 6 explained the runtime and flow-controller machinery that advances registered instances. Chapter 7 placed communication choices into a layer stack. Chapter 8 explained endpoint identity.
+Read Figure~\ref{fig:server-client-path} as the bridge between the previous chapters, not as a full implementation diagram. Chapter 3 showed the first echo pair. Chapter 5 distinguished handles, instances, connections, factories, and contexts. Chapter 6 explained the runtime and flow-controller machinery that advances registered instances. Chapter 7 placed communication choices into a layer stack. Chapter 8 explained endpoint identity.
 
 Chapter 9 now brings those ideas together around the most important practical boundary in the stream layer:
 
@@ -100,15 +90,23 @@ The important conceptual point is:
 
 It is the configured communication role that participates in the runtime, creates or accepts concrete connections, and arranges for contexts to be attached to them.
 
-The protocol endpoint lives in the context. The concrete peer relationship lives in the connection. The runtime-visible instance is the durable role that ties the two together over time.
+The protocol endpoint lives in the context.
+
+The concrete peer relationship lives in the connection.
+
+The runtime-visible instance is the durable role that ties the two together over time.
 
 #### Local handle and runtime-visible instance
 
-It uses the local-handle distinction introduced earlier.
+This chapter uses the local-handle distinction introduced earlier.
 
 A local `SocketServer` or `SocketClient` object is the handle used to configure and register the role. After `listen(...)` or `connect(...)`, the active runtime story continues through shared configuration, flow-controller state, accept/connect machinery, and connection objects.
 
-That distinction explains why the outer object should not be mentally reduced to one connection. The instance is the durable role. The connection is the concrete peer relationship.
+That distinction explains why the outer object should not be mentally reduced to one connection.
+
+The instance is the durable role.
+
+The connection is the concrete peer relationship.
 
 The local handle is the application-side entry point through which the role is configured and registered.
 
@@ -166,7 +164,7 @@ onDisconnect
 
 These callbacks receive a `SocketConnection*`.
 
-That detail is important. They are not just status messages about the server as a whole. They are hooks into the lifecycle of a concrete connection under the server-side instance.
+That detail is important. They are not merely status messages about the server as a whole. They are hooks into the lifecycle of a concrete connection under the server-side instance.
 
 Typical uses include:
 
@@ -259,13 +257,19 @@ The differences are also real:
 | Retry focus | listening retry | connect retry and reconnect |
 | Primary address concern | local bind address | remote peer address, optional local bind address |
 
-The reader should keep both ideas at once. The structure is shared. The direction of communication setup is different.
+The reader should keep both ideas at once.
+
+The structure is shared.
+
+The direction of communication setup is different.
 
 That is why the same mental model can carry both sides without pretending that server and client behavior are identical.
 
 #### Retry, reconnect, and role lifetime
 
-Server and client instances both involve flow control, but the client side makes reconnect especially visible. A server-side flow can retry listening when configured.
+Server and client instances both involve flow control, but the client side makes reconnect especially visible.
+
+A server-side flow can retry listening when configured.
 
 A client-side flow can retry connection attempts when the initial attempt fails, and it can reconnect later after a connection has ended when reconnect behavior is configured.
 
@@ -276,7 +280,9 @@ The distinction is:
 | Server-side instance | retry listening when configured |
 | Client-side instance | retry connection attempts and optionally reconnect after disconnect |
 
-This belongs in the instance discussion, not in the application protocol context. The context should not have to become a reconnect manager.
+This belongs in the instance discussion, not in the application protocol context.
+
+The context should not have to become a reconnect manager.
 
 That rule is important enough to state directly:
 
@@ -286,7 +292,9 @@ The context may react to a connection while it exists. It may send application d
 
 ### `SocketConnection`: the concrete peer relationship
 
-If the server or client instance is the outer role, the `SocketConnection` is the concrete peer relationship. This is where communication becomes tangible.
+If the server or client instance is the outer role, the `SocketConnection` is the concrete peer relationship.
+
+This is where communication becomes tangible.
 
 The connection object carries several groups of responsibility:
 
@@ -308,7 +316,9 @@ The connection is therefore not a hidden pipe. It is a visible runtime object wi
 
 #### Connection versus context
 
-A connection object represents the managed communication relationship. A context object represents the application protocol endpoint attached to that relationship.
+A connection object represents the managed communication relationship.
+
+A context object represents the application protocol endpoint attached to that relationship.
 
 The correct mental model is:
 
@@ -322,13 +332,19 @@ SocketContext
   -> reacts to lifecycle and input events through the connection
 ```
 
-This distinction should be kept clear. The context works through the connection, but it is not the connection. The connection carries the peer relationship, but it is not the application protocol.
+This distinction should be kept clear.
+
+The context works through the connection, but it is not the connection.
+
+The connection carries the peer relationship, but it is not the application protocol.
 
 This separation is one of the reasons SNode.C applications can remain readable as they grow. A protocol context can stay focused on protocol behavior, while the connection object remains the place where peer relationship, address visibility, timeouts, counters, and shutdown behavior are represented.
 
 #### Addresses on the connection
 
-Chapter 8 explained what address objects mean. Here we see where they appear during connection lifetime.
+Chapter 8 explained what address objects mean.
+
+Here we see where they appear during connection lifetime.
 
 A `SocketConnection` exposes three address views:
 
@@ -338,7 +354,11 @@ getLocalAddress()
 getRemoteAddress()
 ```
 
-These are not redundant. The **bind address** describes the address requested or used for binding. The **local address** describes the actual local endpoint of the connection.
+These are not redundant.
+
+The **bind address** describes the address requested or used for binding.
+
+The **local address** describes the actual local endpoint of the connection.
 
 The **remote address** describes the peer endpoint.
 
@@ -388,7 +408,7 @@ setWriteTimeout(...)
 
 This also connects back to Chapter 6: timers and event processing make timeout behavior part of the runtime, not a manual sleep loop in protocol code.
 
-A timeout is not just an application-level preference. It is part of how the runtime supervises a concrete peer relationship.
+A timeout is not merely an application-level preference. It is part of how the runtime supervises a concrete peer relationship.
 
 #### Metrics and duration
 
@@ -426,13 +446,19 @@ getInstanceName()
 getConnectionName()
 ```
 
-The instance name identifies the configured role. The connection name identifies a concrete peer relationship under that role. This distinction helps logs and diagnostics, especially for servers that accept many peers over time.
+The instance name identifies the configured role.
+
+The connection name identifies a concrete peer relationship under that role.
+
+This distinction helps logs and diagnostics, especially for servers that accept many peers over time.
 
 A server-side instance may have one name that remains stable across the process lifetime, while many connection names appear and disappear as peers connect and disconnect. That is exactly the distinction the logging output should preserve.
 
 ### Callback layers
 
-Chapter 9 needs one especially clear distinction: not all callbacks report the same kind of event. SNode.C has several callback layers.
+Chapter 9 needs one especially clear distinction: not all callbacks report the same kind of event.
+
+SNode.C has several callback layers.
 
 | Callback type | Receives | Meaning |
 |---|---|---|
@@ -440,7 +466,9 @@ Chapter 9 needs one especially clear distinction: not all callbacks report the s
 | connection lifecycle callback | `SocketConnection*` | lifecycle of one connection |
 | context callback | context method call | protocol behavior on that connection |
 
-This table is one of the most important practical tools in the chapter. It prevents three different ideas from being collapsed into one vague “callback” concept.
+This table is one of the most important practical tools in the chapter.
+
+It prevents three different ideas from being collapsed into one vague “callback” concept.
 
 #### Status callbacks
 
@@ -453,7 +481,9 @@ SocketAddress
 core::socket::State
 ```
 
-The address identifies the relevant endpoint. The state describes the role-level outcome.
+The address identifies the relevant endpoint.
+
+The state describes the role-level outcome.
 
 This is different from a connection lifecycle callback. A status callback may tell us whether listening or connecting succeeded, failed, was disabled, or should not be retried. It does not by itself represent protocol behavior.
 
@@ -505,7 +535,11 @@ onDisconnect
 
 receive a `SocketConnection*`.
 
-They observe the lifecycle of a concrete peer relationship under the server-side or client-side instance. They are useful for connection inspection, address logging, operational diagnostics, and role-level setup. They are not the same as status callbacks.
+They observe the lifecycle of a concrete peer relationship under the server-side or client-side instance.
+
+They are useful for connection inspection, address logging, operational diagnostics, and role-level setup.
+
+They are not the same as status callbacks.
 
 They are also not the same as context callbacks.
 
@@ -513,7 +547,9 @@ The distinction is practical. If the question is “what happened to the outer l
 
 #### `onConnect` versus `onConnected`
 
-The framework exposes both `onConnect` and `onConnected` as separate lifecycle hooks. This means the reader should not collapse them into one undifferentiated event.
+The framework exposes both `onConnect` and `onConnected` as separate lifecycle hooks.
+
+This means the reader should not collapse them into one undifferentiated event.
 
 The names mark distinct lifecycle hooks in the framework. Later TLS and setup paths make the distinction more visible; for now, the important rule is not to treat them as interchangeable just because they may appear close together in simple examples.
 
@@ -521,7 +557,9 @@ A simple legacy echo example may not make the distinction feel dramatic. A more 
 
 #### `onDisconnect`
 
-`onDisconnect` is not just a destructor-like cleanup moment. It is often the place where a completed connection lifecycle becomes interpretable.
+`onDisconnect` is not merely a destructor-like cleanup moment.
+
+It is often the place where a completed connection lifecycle becomes interpretable.
 
 At disconnect time, useful information such as addresses, online duration, queued bytes, sent bytes, read bytes, and processed bytes can be logged or inspected.
 
@@ -531,7 +569,9 @@ This also explains why disconnect callbacks receive a `SocketConnection*`: the c
 
 #### Context callbacks
 
-Context callbacks are different again. They are protocol-facing methods on the per-connection context.
+Context callbacks are different again.
+
+They are protocol-facing methods on the per-connection context.
 
 Typical examples include lifecycle and input handling methods such as:
 
@@ -551,9 +591,15 @@ In the echo example, the context decides what to do when data arrives. It reads 
 
 ### Where the context factory fits
 
-Even though this chapter focuses on servers, clients, and connections, the factory is still part of the story. The factory is the bridge from long-lived instance to per-connection protocol endpoint. The server-side or client-side instance carries the factory.
+Even though this chapter focuses on servers, clients, and connections, the factory is still part of the story.
 
-When a concrete connection is created, the factory creates a context for that connection. The context then expresses the application protocol behavior.
+The factory is the bridge from long-lived instance to per-connection protocol endpoint.
+
+The server-side or client-side instance carries the factory.
+
+When a concrete connection is created, the factory creates a context for that connection.
+
+The context then expresses the application protocol behavior.
 
 The sequence is:
 
@@ -564,7 +610,7 @@ registered instance
           -> SocketContext
 ```
 
-Therefore, the factory belongs conceptually between instance and context.
+This is why the factory belongs conceptually between instance and context.
 
 Without the factory, a server accepting multiple peers would have no clean general mechanism for producing a fresh protocol endpoint for each connection. The application entry point would have to know too much about connection creation timing. The role would begin to absorb protocol construction. The structure would become less reusable.
 
@@ -601,9 +647,17 @@ application creates a SocketServer / SocketClient handle
                           -> SocketContext implements protocol behavior
 ```
 
-Every line in this picture matters. The handle is not the whole instance. The instance is not the connection.
+Every line in this picture matters.
 
-The connection is not the context. The context is not the factory. The factory is not protocol behavior.
+The handle is not the whole instance.
+
+The instance is not the connection.
+
+The connection is not the context.
+
+The context is not the factory.
+
+The factory is not protocol behavior.
 
 These distinctions may feel careful, but they are what make the framework scalable as a mental model.
 
@@ -643,10 +697,22 @@ That question usually prevents the most common misunderstandings.
 - Server and client roles share the same broad pattern, but differ in setup direction: servers accept peers, clients initiate connection attempts and may reconnect.
 - Connection objects carry addresses, data flow, shutdown, timeouts, metrics, duration, and naming for one peer relationship.
 - Factories create per-connection contexts; contexts implement protocol behavior over the connection.
+- Status callbacks, connection lifecycle callbacks, and context callbacks belong to different layers of the model.
 
 ### Closing perspective
 
 Chapter 8 explained endpoint identity. This chapter explained the runtime roles that use those identities and the concrete connection objects that appear when communication succeeds.
 
-The next chapter therefore does not need to reintroduce the whole model. It can use IPv4 and IPv6 to show the model in its most familiar network-family setting.
+We can now separate three questions that are often mixed together:
 
+```text
+Which endpoint identity is being used?
+Which instance is registering listen or connect intent?
+Which concrete connection exists after success?
+```
+
+That separation prepares the next step.
+
+Chapter 10 uses IPv4 and IPv6 as the primary teaching path. With the distinctions from this chapter in place, we can read those examples more precisely. A server-side instance binds to a local endpoint identity. A client-side instance connects to a remote endpoint identity. A `SocketConnection` then exposes the actual local and remote endpoints of the concrete peer relationship.
+
+The next chapter therefore does not need to reintroduce the whole model. It can use IPv4 and IPv6 to show the model in its most familiar network-family setting.
