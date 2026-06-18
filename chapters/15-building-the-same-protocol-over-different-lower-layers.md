@@ -2,7 +2,7 @@
 
 ### From context and factory separation to lower-family transfer
 
-Chapter 13 placed protocol behavior in the `SocketContext`; Chapter 14 placed context construction in the `SocketContextFactory`. It uses both separations together.
+Chapter 13 placed application protocol behavior in the `SocketContext`. Chapter 14 placed context construction in the `SocketContextFactory`. This chapter uses both separations together.
 
 The central question is:
 
@@ -46,20 +46,13 @@ The transfer model keeps four questions apart:
 
 This separation is the reason the same protocol core can often move across lower families without rewriting the protocol itself.
 
+Figure @fig:snodec-lower-family-transfer shows the same idea as a transfer model: the protocol-side boundary remains stable, while the lower-family side changes endpoint identity, concrete server/client type, configuration, and deployment assumptions.
+
+![The lower-family transfer model. The protocol-side boundary remains stable while endpoint families change address types, concrete server/client types, configuration, and deployment assumptions.](figures/pdf/fig-04-lower-family-transfer-model.pdf){#fig:snodec-lower-family-transfer width=95% latex-placement="tbp"}
+
 The visible server/client type changes because the application selects a different lower-family specialization. The registered instance then carries that configured lower-family role into the runtime. The concrete `SocketConnection` represents one peer relationship under that role. The factory creates the per-connection context for that connection. The context implements the protocol endpoint.
 
-A compact view is:
-
-```text
-application-side SocketServer / SocketClient handle
-  -> registered lower-family-specific server/client instance
-      -> concrete SocketConnection
-          -> SocketContextFactory::create(connection)
-              -> SocketContext
-                  -> protocol behavior
-```
-
-This is not just a naming exercise.
+This is not merely a naming exercise.
 
 It prevents one common design mistake: putting lower-family setup, protocol behavior, context construction, and deployment policy into the same class. SNode.C makes those boundaries visible. Application code becomes easier to move across families when it respects them.
 
@@ -130,7 +123,7 @@ The application-side server/client handle type changes. The endpoint identity ch
 
 The context construction shape can still remain familiar.
 
-Therefore, Chapters 13 and 14 came before this chapter. A well-factored context and a disciplined factory make lower-family transfer practical. The factory does not make the protocol portable by magic. It keeps the construction boundary clean enough that portability can be judged honestly.
+This is why Chapters 13 and 14 came before this chapter. A well-factored context and a disciplined factory make lower-family transfer practical. The factory does not make the protocol portable by magic. It keeps the construction boundary clean enough that portability can be judged honestly.
 
 ### What changes with the lower family
 
@@ -410,7 +403,7 @@ Examples include:
 - requester / request handler,
 - model-side / view-side / controller-side endpoints.
 
-It uses those roles only lightly.
+This chapter uses those roles only lightly.
 
 The mechanism matters here because it supports transfer:
 
@@ -510,7 +503,7 @@ A family transfer may change:
 - deployment files,
 - platform or permission requirements.
 
-That is why the next part of the book turns to configuration. Configuration is not just operational convenience. It is one of the places where architectural variation becomes explicit.
+That is why the next part of the book turns to configuration. Configuration is not merely operational convenience. It is one of the places where architectural variation becomes explicit.
 
 Once the same protocol can be carried over different lower families, configuration becomes more than a collection of values. It is where endpoint identity, selected lower family, role naming, TLS/legacy choice, retry behavior, and deployment-specific variation become visible.
 
@@ -524,10 +517,36 @@ This chapter shows why configuration matters. Chapter 16 begins to explain its p
 - Endpoint identity and configuration change with the lower family: host/port, path, channel, or PSM.
 - Deployment assumptions still matter; protocol reuse does not make systems operationally identical.
 - Reuse should stop when lower-family semantics become part of the protocol's meaning.
+- Small family-specific outer code is often clearer than an over-generalized abstraction.
+- Chapter 16 begins the configuration view because lower-family transfer makes configuration visible.
 
 ### Closing perspective
 
 Part IV moved from raw connections to application protocol structure. Chapter 13 explained the protocol endpoint. Chapter 14 explained context creation.
 
-The next part begins the configuration view. It shows how applications are shaped, named, configured, and operated in practice.
+This chapter showed how those two separations make lower-family transfer possible.
 
+The result is the central pattern:
+
+```text
+SocketContext
+  -> protocol behavior
+
+SocketContextFactory
+  -> construction and role preconfiguration
+
+application-side SocketServer / SocketClient handle
+  -> concrete lower-family selection
+
+registered server/client instance
+  -> runtime-visible configured communication role
+
+configuration
+  -> endpoint identity and deployment shape
+```
+
+With that structure in place, SNode.C is no longer just a set of socket-family APIs.
+
+It becomes a communication architecture in which protocol behavior, context creation, lower-family selection, registration, and operational configuration each have a clear place.
+
+The next part begins the configuration view. It shows how applications are shaped, named, configured, and operated in practice.
