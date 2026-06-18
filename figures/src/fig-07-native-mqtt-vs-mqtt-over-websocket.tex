@@ -1,0 +1,142 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  semantics/.style={
+    draw=snodecBlue!75,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt
+  },
+  native/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt
+  },
+  websocket/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt
+  },
+  basebox/.style={
+    draw=snodecBlue!60,
+    fill=white,
+    rounded corners=2.5pt,
+    line width=0.75pt
+  },
+  boxtext/.style={
+    font=\sffamily\small,
+    align=center,
+    text depth=0pt,
+    text height=1.7ex
+  },
+  smalltext/.style={
+    font=\sffamily\footnotesize,
+    align=center,
+    text depth=0pt,
+    text height=1.6ex
+  },
+  arrow/.style={
+    draw=snodecMuted!85,
+    -{Latex[length=2.2mm,width=1.7mm]},
+    line width=0.75pt
+  },
+  link/.style={
+    draw=snodecMuted!85,
+    line width=0.75pt
+  },
+  arlabel/.style={
+    font=\sffamily\footnotesize,
+    text=snodecMuted,
+    fill=white,
+    inner sep=1.1pt
+  }
+]
+
+% ----------------------------------------------------------------------
+% Shared MQTT semantics.
+% ----------------------------------------------------------------------
+\draw[semantics] (8,0) rectangle (152,-24);
+\node[boxtext] at (80,-12) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{MQTT protocol semantics}\\
+  CONNECT, SUBSCRIBE, PUBLISH, QoS, session state, topic flow
+  \end{tabular}};
+
+% Split from shared semantics to two carrier paths.
+\draw[link] (80,-24) -- (80,-34);
+\draw[link] (39,-34) -- (121,-34);
+\node[arlabel] at (80,-34) {same MQTT packets and semantics};
+
+% ----------------------------------------------------------------------
+% Carrier path row.
+% ----------------------------------------------------------------------
+\draw[native] (6,-48) rectangle (72,-73);
+\node[boxtext] at (39,-60.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Native MQTT carrier}\\
+  MQTT packets directly\\
+  on stream
+  \end{tabular}};
+
+\draw[websocket] (88,-48) rectangle (154,-73);
+\node[boxtext] at (121,-60.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{MQTT over WebSocket}\\
+  MQTT packets inside\\
+  WebSocket frames
+  \end{tabular}};
+
+\draw[arrow] (39,-34) -- (39,-48);
+\draw[arrow] (121,-34) -- (121,-48);
+
+% ----------------------------------------------------------------------
+% Immediate carrier basis row.
+% ----------------------------------------------------------------------
+\draw[basebox] (6,-91) rectangle (72,-116);
+\node[boxtext] at (39,-103.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Stream / TLS stream}\\
+  lower family + transport
+  \end{tabular}};
+
+\draw[basebox] (88,-91) rectangle (154,-116);
+\node[boxtext] at (121,-103.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{HTTP upgrade path}\\
+  HTTP handshake\\
+  then WebSocket frames
+  \end{tabular}};
+
+\draw[arrow] (39,-73) -- (39,-91);
+\draw[arrow] (121,-73) -- (121,-91);
+
+% ----------------------------------------------------------------------
+% Lower endpoint / deployment row.
+% ----------------------------------------------------------------------
+\draw[basebox] (6,-134) rectangle (72,-159);
+\node[smalltext] at (39,-146.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Endpoint families}\\
+  IPv4, IPv6, Unix,\\
+  Bluetooth, \dots
+  \end{tabular}};
+
+\draw[basebox] (88,-134) rectangle (154,-159);
+\node[smalltext] at (121,-146.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Web-capable carrier}\\
+  HTTP runs over\\
+  stream / TLS stream
+  \end{tabular}};
+
+\draw[arrow] (39,-116) -- (39,-134);
+\draw[arrow] (121,-116) -- (121,-134);
+
+\end{tikzpicture}
+\end{document}
