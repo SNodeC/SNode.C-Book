@@ -1,0 +1,85 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  meta/.style={draw=snodecBlue!55, fill=snodecBlueSoft!45, rounded corners=3pt, line width=0.75pt},
+  clientbox/.style={draw=snodecGreen!70, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
+  storebox/.style={draw=snodecOrange!75, fill=snodecOrangeSoft, rounded corners=2.5pt, line width=0.75pt},
+  brokerbox/.style={draw=snodecBlue!75, fill=snodecBlueSoft, rounded corners=2.5pt, line width=0.75pt},
+  toolbox/.style={draw=snodecBlue!60, fill=white, rounded corners=2.5pt, line width=0.75pt},
+  boxtext/.style={font=\sffamily\small, align=center, text depth=0pt, text height=1.7ex},
+  smalltext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
+  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!45, inner sep=1.2pt},
+  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.75pt},
+  arlabel/.style={font=\sffamily\footnotesize, text=snodecMuted, fill=white, inner sep=1.1pt}
+]
+
+% ----------------------------------------------------------------------
+% Outer frame.
+% ----------------------------------------------------------------------
+\draw[meta] (0,0) rectangle (160,-150);
+\node[titletext, anchor=west] at (5,-6) {MQTTSuite ecosystem};
+
+% ----------------------------------------------------------------------
+% Top row: clients/tools and persistence-facing store.
+% ----------------------------------------------------------------------
+\draw[clientbox] (8,-19) rectangle (72,-50);
+\node[smalltext] at (40,-34.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{MQTT clients and tools}\\
+  native MQTT clients, devices,\\
+  tools, services, browsers,\\
+  dashboards, MQTTCli
+  \end{tabular}};
+
+\draw[storebox] (88,-19) rectangle (152,-50);
+\node[smalltext] at (120,-34.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{MQTTStore}\\
+  persistent topic/state view,\\
+  retained/state history,\\
+  storage-facing role
+  \end{tabular}};
+
+% ----------------------------------------------------------------------
+% Center role.
+% ----------------------------------------------------------------------
+\draw[brokerbox] (18,-75) rectangle (142,-101);
+\node[boxtext] at (80,-88) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{MQTTBroker}\\
+  topic space, subscriptions, retained messages, client state
+  \end{tabular}};
+
+% Top-row connectors: straight vertical arrows centered at the smaller boxes.
+\draw[arrow] (40,-50) -- node[arlabel, left=1.3mm] {connect / publish / subscribe} (40,-75);
+\draw[arrow] (120,-50) -- node[arlabel, right=1.3mm] {store / retrieve} (120,-75);
+
+% ----------------------------------------------------------------------
+% Bottom row: bridge and integration roles.
+% ----------------------------------------------------------------------
+\draw[toolbox] (8,-124) rectangle (72,-143);
+\node[smalltext] at (40,-133.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{MQTTBridge}\\
+  broker-to-broker topic flow,\\
+  prefixes and loop boundaries
+  \end{tabular}};
+
+\draw[toolbox] (88,-124) rectangle (152,-143);
+\node[smalltext] at (120,-133.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{MQTTIntegrator}\\
+  external services, databases,\\
+  application-specific systems
+  \end{tabular}};
+
+% Bottom-row connectors: straight vertical arrows centered at the smaller boxes.
+\draw[arrow] (40,-124) -- node[arlabel, left=1.3mm] {bridge / replicate} (40,-101);
+\draw[arrow] (120,-124) -- node[arlabel, right=1.3mm] {integrate / adapt} (120,-101);
+
+\end{tikzpicture}
+\end{document}
