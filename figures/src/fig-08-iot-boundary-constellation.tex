@@ -1,0 +1,120 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  meta/.style={
+    draw=snodecBlue!55,
+    fill=snodecBlueSoft!38,
+    rounded corners=3pt,
+    line width=0.75pt
+  },
+  boundary/.style={
+    draw=snodecBlue!70,
+    fill=white,
+    rounded corners=2.5pt,
+    line width=0.75pt
+  },
+  central/.style={
+    draw=snodecOrange!78,
+    fill=snodecOrangeSoft,
+    rounded corners=2.5pt,
+    line width=0.8pt
+  },
+  boxtext/.style={
+    font=\sffamily\small,
+    align=center,
+    text depth=0pt,
+    text height=1.7ex
+  },
+  smalltext/.style={
+    font=\sffamily\footnotesize,
+    align=center,
+    text depth=0pt,
+    text height=1.6ex
+  },
+  titletext/.style={
+    font=\sffamily\bfseries\small,
+    text=snodecBlue,
+    fill=snodecBlueSoft!38,
+    inner sep=1.2pt
+  },
+  arrow/.style={
+    draw=snodecMuted!85,
+    -{Latex[length=2.2mm,width=1.7mm]},
+    line width=0.75pt
+  },
+  arlabel/.style={
+    font=\sffamily\footnotesize,
+    text=snodecMuted,
+    fill=white,
+    inner sep=1.1pt
+  }
+]
+
+% ----------------------------------------------------------------------
+% Outer constellation frame.
+% ----------------------------------------------------------------------
+\draw[meta] (0,0) rectangle (160,-146);
+\node[titletext, anchor=west] at (5,-6) {IoT boundary constellation};
+
+% ----------------------------------------------------------------------
+% Upper boundary boxes.
+% ----------------------------------------------------------------------
+\draw[boundary] (10,-18) rectangle (72,-45);
+\node[boxtext] at (41,-31.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Field devices}\\
+  sensors, actuators, nodes\\
+  MQTT, Bluetooth, local links
+  \end{tabular}};
+
+\draw[boundary] (88,-18) rectangle (150,-45);
+\node[boxtext] at (119,-31.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Browser / operator surface}\\
+  pages, dashboards, controls\\
+  HTTP, SSE, WebSocket
+  \end{tabular}};
+
+% ----------------------------------------------------------------------
+% Central application / gateway process.
+% ----------------------------------------------------------------------
+\draw[central] (16,-69) rectangle (144,-94);
+\node[boxtext] at (80,-81.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{IoT application / gateway process}\\
+  shared state, policy, routing, translation, diagnostics
+  \end{tabular}};
+
+% Upper arrows to central box.
+\draw[arrow] (41,-45) -- node[arlabel, right=1.6mm] {telemetry / commands} (41,-69);
+\draw[arrow] (119,-45) -- node[arlabel, right=1.6mm] {observe / control} (119,-69);
+
+% ----------------------------------------------------------------------
+% Lower boundary boxes.
+% ----------------------------------------------------------------------
+\draw[boundary] (10,-118) rectangle (72,-139);
+\node[boxtext] at (41,-128.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Persistent state}\\
+  database, measurements,\\
+  history, retained view
+  \end{tabular}};
+
+\draw[boundary] (88,-118) rectangle (150,-139);
+\node[boxtext] at (119,-128.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{External services / brokers}\\
+  MQTT broker, APIs, cloud,\\
+  other systems
+  \end{tabular}};
+
+% Lower arrows to central box.
+\draw[arrow] (41,-118) -- node[arlabel, right=1.6mm] {state read/write} (41,-94);
+\draw[arrow] (119,-118) -- node[arlabel, right=1.6mm] {publish / integrate} (119,-94);
+
+\end{tikzpicture}
+\end{document}
