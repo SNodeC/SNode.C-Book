@@ -28,6 +28,7 @@ hyperrefoptions:
 header-includes:
   - |
     ```{=latex}
+    \providecommand{\passthrough}[1]{#1}
     \usepackage{tocloft}
     \setlength{\cftchapnumwidth}{1.5em}
     \setlength{\cftsecnumwidth}{3em}
