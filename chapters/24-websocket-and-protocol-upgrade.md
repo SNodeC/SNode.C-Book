@@ -8,21 +8,11 @@ That is the central idea of this chapter:
 
 > WebSocket starts in HTTP, but after the upgrade the connection is handled as a bidirectional message-oriented WebSocket connection.
 
-This makes WebSocket different from both ordinary HTTP and Server-Sent Events.
+This makes WebSocket different from both ordinary HTTP and Server-Sent Events. Figure~\ref{fig:web-protocol-layer-structure} places these ideas in the relationship used in this part of the book: HTTP request/response is the common web-protocol foundation; Server-Sent Events and WebSocket are dependent protocol shapes inside the same web protocol layer; and the Express-like application structure uses that layer to organize application-facing endpoints.
 
-```text
-ordinary HTTP
-  -> one request, one response
+![The web protocol layer with HTTP request/response as the common foundation for Server-Sent Events and WebSocket, and with the Express-like application structure using that layer.](figures/pdf/fig-06-web-protocol-layer-structure.pdf){#fig:web-protocol-layer-structure width=88% latex-placement="tbp"}
 
-Server-Sent Events
-  -> one request, one long-lived event response
-
-WebSocket
-  -> HTTP upgrade
-      -> bidirectional message-oriented connection
-```
-
-The key word is:
+The key word for the WebSocket path in Figure~\ref{fig:web-protocol-layer-structure} is:
 
 ```text
 upgrade
@@ -30,21 +20,7 @@ upgrade
 
 Upgrade does not mean that the lower connection disappears. The lower communication family, stream transport, TLS state if present, connection identity, counters, runtime lifecycle, and diagnostic surface remain part of the same peer episode. What changes is the protocol context that interprets that episode.
 
-Part VII now reads as a sequence:
-
-```text
-Chapter 21
-  -> HTTP request / response
-
-Chapter 22
-  -> Express-like application structure
-
-Chapter 23
-  -> long-lived one-way HTTP event streams
-
-Chapter 24
-  -> HTTP upgrade to bidirectional WebSocket communication
-```
+Figure~\ref{fig:web-protocol-layer-structure} also prevents a wrong reading of the web chapters. Express-like routing is an application-structuring layer, not the protocol parent of SSE or WebSocket. Application code can use the Express-like structure to organize ordinary HTTP routes, SSE endpoints, and WebSocket upgrade entry points, or it can use the web protocol layer directly where that is the better fit.
 
 Chapter 24 therefore closes the main web-protocol climb before the book moves to MQTT.
 
@@ -437,7 +413,9 @@ The WebSocket layer provides explicit subprotocol infrastructure.
 | `SubProtocolFactory` | creates subprotocol instances |
 | `SubProtocolFactorySelector` | resolves requested subprotocol names in a server or client selection context |
 
-This keeps WebSocket mechanics and application-message semantics separated. WebSocket provides the upgraded carrier. The subprotocol defines what the messages mean.
+This keeps WebSocket mechanics and application-message semantics separated.
+
+WebSocket provides the upgraded carrier. The subprotocol defines what the messages mean.
 
 #### Factories and selectors
 
@@ -461,7 +439,7 @@ This is enough for Chapter 24. The details of plugin architecture and dynamic lo
 
 A subprotocol may be linked directly into the application or provided through a dynamically loaded factory. That matters because WebSocket can become a carrier for protocols that are not all built into one executable.
 
-For Chapter 24, the important point is not how dynamic loading is implemented. WebSocket subprotocol behavior is selected through factories rather than hard-coded into WebSocket framing itself.
+For Chapter 24, the important point is not how dynamic loading is implemented. The important point is that WebSocket subprotocol behavior is selected through factories rather than hard-coded into WebSocket framing itself.
 
 The architecture allows a later layer to decide:
 
@@ -553,10 +531,27 @@ That later combination becomes easier to understand after Chapter 24. WebSocket 
 - `SocketContextUpgrade` is the boundary object between HTTP negotiation and the upgraded protocol context.
 - WebSocket uses frames, messages, and control frames such as ping, pong, and close.
 - Server and client upgrade paths are related but not identical.
+- The shared `websocket` module contains framing and subprotocol infrastructure; server and client modules connect it to the HTTP sides.
+- WebSocket is an upgraded carrier; the subprotocol gives carried messages their application meaning.
+- Subprotocol factories and selectors keep subprotocol selection structured and extensible.
+- Lower-family, TLS, runtime, configuration, diagnostics, timeout, and failure behavior remain relevant.
+- Chapter 25 moves from web protocols to MQTT.
 
 ### Closing perspective
 
 Chapter 21 raised stream communication into HTTP messages. Chapter 22 organized HTTP messages into application structure. Chapter 23 stretched one HTTP response into a one-way event stream. Chapter 24 used HTTP as a negotiation boundary and moved the same connection episode into bidirectional WebSocket communication.
 
-Chapter 25 moves to MQTT, a message-oriented protocol family that can use SNode.C directly and later reappear over WebSocket.
+The path through Part VII now reads:
 
+```text
+HTTP request / response
+  -> Express-like application structure
+      -> Server-Sent Events
+          -> long-lived one-way event streaming
+              -> WebSocket
+                  -> upgraded bidirectional message communication
+```
+
+That completes the main web-protocol climb.
+
+Chapter 25 moves to MQTT, a message-oriented protocol family that can use SNode.C directly and later reappear over WebSocket.

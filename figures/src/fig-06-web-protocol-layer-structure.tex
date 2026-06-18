@@ -1,0 +1,136 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  meta/.style={
+    draw=snodecBlue!55,
+    fill=snodecBlueSoft!45,
+    rounded corners=3pt,
+    line width=0.75pt
+  },
+  protocol/.style={
+    draw=snodecBlue!75,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt
+  },
+  dependent/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt
+  },
+  appstruct/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt
+  },
+  appcode/.style={
+    draw=snodecBlue!75,
+    fill=white,
+    rounded corners=2.5pt,
+    line width=0.75pt
+  },
+  boxtext/.style={
+    font=\sffamily\small,
+    align=center,
+    text depth=0pt,
+    text height=1.7ex
+  },
+  titletext/.style={
+    font=\sffamily\bfseries\small,
+    text=snodecBlue,
+    fill=snodecBlueSoft!45,
+    inner sep=1.2pt
+  },
+  arrow/.style={
+    draw=snodecMuted!85,
+    -{Latex[length=2.2mm,width=1.7mm]},
+    line width=0.75pt
+  },
+  link/.style={
+    draw=snodecMuted!85,
+    line width=0.75pt
+  },
+  arlabel/.style={
+    font=\sffamily\footnotesize,
+    text=snodecMuted,
+    fill=white,
+    inner sep=1.1pt
+  }
+]
+
+% ----------------------------------------------------------------------
+% Web protocol layer meta-box
+% ----------------------------------------------------------------------
+\draw[meta] (0,0) rectangle (160,-92);
+\node[titletext, anchor=west] at (5,-6) {Web protocol layer};
+
+% HTTP request/response foundation inside web protocol layer.
+\draw[protocol] (24,-17) rectangle (136,-38);
+\node[boxtext] at (80,-27.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{HTTP request/response}\\
+  requests, responses, headers, body, lifecycle, upgrade path
+  \end{tabular}};
+
+% Dependent protocol shapes.
+\draw[dependent] (10,-61) rectangle (74,-84);
+\node[boxtext] at (42,-72.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Server-Sent Events}\\
+  long-lived HTTP response\\
+  server $\rightarrow$ client events
+  \end{tabular}};
+
+\draw[dependent] (86,-61) rectangle (150,-84);
+\node[boxtext] at (118,-72.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{WebSocket}\\
+  HTTP upgrade, then frames\\
+  client $\leftrightarrow$ server
+  \end{tabular}};
+
+% HTTP to dependent shapes: one centered stem, 90-degree split,
+% final arrows to h-center of each child box top border.
+\draw[link] (80,-38) -- (80,-49);
+\draw[link] (42,-49) -- (118,-49);
+\draw[arrow] (42,-49) -- (42,-61);
+\draw[arrow] (118,-49) -- (118,-61);
+
+% ----------------------------------------------------------------------
+% Express-like structure, half width and left aligned.
+% ----------------------------------------------------------------------
+\draw[appstruct] (0,-111) rectangle (78,-139);
+\node[boxtext] at (39,-125) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Express-like application structure}\\
+  routing, middleware, mounted handlers\\
+  organizes routes, SSE endpoints, WS upgrades
+  \end{tabular}};
+
+% Express uses the web protocol layer.
+\draw[arrow] (39,-111) -- node[arlabel, right=1.5mm] {uses} (39,-92);
+
+% ----------------------------------------------------------------------
+% Application code: full width, with two paths upward.
+% ----------------------------------------------------------------------
+\draw[appcode] (0,-160) rectangle (160,-184);
+\node[boxtext] at (80,-172) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{Application code}\\
+  APIs, pages, dashboards, monitoring, commands, sessions
+  \end{tabular}};
+
+% Application can use Express-like structure...
+\draw[arrow] (39,-160) -- node[arlabel, right=1.5mm] {uses} (39,-139);
+
+% ...or the web protocol layer directly on the free right half.
+\draw[arrow] (125,-160) -- node[arlabel, right=1.5mm] {direct use} (125,-92);
+
+\end{tikzpicture}
+\end{document}
