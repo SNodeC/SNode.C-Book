@@ -1,0 +1,101 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  meta/.style={draw=snodecBlue!55, fill=snodecBlueSoft!45, rounded corners=3pt, line width=0.75pt},
+  appbox/.style={draw=snodecBlue!72, fill=snodecBlueSoft, rounded corners=2.5pt, line width=0.75pt},
+  instbox/.style={draw=snodecGreen!70, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
+  connbox/.style={draw=snodecOrange!75, fill=snodecOrangeSoft, rounded corners=2.5pt, line width=0.75pt},
+  ctxbox/.style={draw=snodecRule!85, fill=snodecGraySoft, rounded corners=2.5pt, line width=0.75pt},
+  formbox/.style={draw=snodecRule!85, fill=white, rounded corners=2.5pt, line width=0.75pt},
+  boxtext/.style={font=\sffamily\small, align=center, text depth=0pt, text height=1.7ex},
+  smalltext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
+  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!45, inner sep=1.2pt},
+  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.75pt}
+]
+
+% ----------------------------------------------------------------------
+% Outer frame.
+% ----------------------------------------------------------------------
+\draw[meta] (0,0) rectangle (168,-208);
+\node[titletext, anchor=west] at (5,-6) {Logging and diagnostic visibility map};
+
+% ----------------------------------------------------------------------
+% Responsibility map.
+% ----------------------------------------------------------------------
+\draw[appbox] (8,-18) rectangle (160,-47);
+\node[boxtext] at (84,-32.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{application shell}\\
+  operational program boundary\\
+  config file, generated command line, log file, daemonization, quiet mode\\
+  diagnostic evidence: effective configuration, output mode, startup state
+  \end{tabular}};
+
+\draw[arrow] (84,-47) -- (84,-58);
+
+\draw[instbox] (8,-58) rectangle (160,-87);
+\node[boxtext] at (84,-72.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{instance scope}\\
+  configured server/client role visible at runtime\\
+  enabled/disabled state, listen/connect activation, retry scheduling\\
+  diagnostic evidence: role lifecycle, endpoint selection, activation result
+  \end{tabular}};
+
+\draw[arrow] (84,-87) -- (84,-98);
+
+\draw[connbox] (8,-98) rectangle (160,-127);
+\node[boxtext] at (84,-112.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{connection scope}\\
+  one concrete peer relationship\\
+  connection name, local/remote addresses, queued/sent/read/processed data\\
+  diagnostic evidence: peer episode, counters, duration, disconnect summary
+  \end{tabular}};
+
+\draw[arrow] (84,-127) -- (84,-138);
+
+\draw[ctxbox] (8,-138) rectangle (160,-167);
+\node[boxtext] at (84,-152.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{context scope}\\
+  protocol behavior attached to one connection\\
+  protocol state, accepted/rejected frames, application-level events\\
+  diagnostic evidence: protocol meaning, state transitions, close decisions
+  \end{tabular}};
+
+% ----------------------------------------------------------------------
+% Logging forms.
+% ----------------------------------------------------------------------
+\node[smalltext, text=snodecMuted] at (84,-176) {Logging forms};
+
+\draw[formbox] (8,-181) rectangle (58,-202);
+\node[smalltext] at (33,-191.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{\texttt{LOG(level)}}\\
+  ordinary lifecycle\\
+  and severity
+  \end{tabular}};
+
+\draw[formbox] (61,-181) rectangle (111,-202);
+\node[smalltext] at (86,-191.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{\texttt{PLOG(level)}}\\
+  lifecycle plus captured\\
+  system-error context
+  \end{tabular}};
+
+\draw[formbox] (114,-181) rectangle (160,-202);
+\node[smalltext] at (137,-191.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{\texttt{VLOG(n)}}\\
+  optional diagnostic\\
+  depth
+  \end{tabular}};
+
+\end{tikzpicture}
+\end{document}
