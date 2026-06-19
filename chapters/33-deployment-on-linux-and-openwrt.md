@@ -46,19 +46,13 @@ These questions are not afterthoughts. They decide whether the built architectur
 
 #### Architecture entering the filesystem
 
-Deployment is architecture entering the filesystem. When SNode.C is installed, the framework's internal boundaries become visible as files, directories, packages, service definitions, and runtime state.
+Deployment is architecture entering the filesystem. When SNode.C is installed, the framework's internal boundaries become visible as libraries, executables, exported package files, runtime-loaded modules, configuration directories, service definitions, package metadata, and managed runtime state.
 
-A small experimental program may run from the build tree with a manually adjusted environment. A serious deployment needs a reproducible filesystem shape:
+A small experimental program may run from the build tree with a manually adjusted environment. A serious deployment needs a reproducible filesystem shape. Figure~\ref{fig:build-install-package-deployment-surface} shows the path from a build component to an installed runtime surface.
 
-```text
-build component
-  -> install component
-      -> package component
-          -> deployed runtime surface
-              -> service definition
-                  -> runtime configuration
-                      -> runtime state
-```
+![The build-to-deployment path in which component choices become installed packages, service definition, configuration, and runtime state.](figures/pdf/fig-11-build-install-package-deployment-surface.pdf){#fig:build-install-package-deployment-surface width=90% latex-placement="tbp"}
+
+Figure~\ref{fig:build-install-package-deployment-surface} is intentionally not only a build pipeline. The important point is that each step preserves architectural information. A CMake target expresses a component boundary. An install component gives that boundary a filesystem location. A package component adds dependency metadata. The deployed runtime surface then has to contain everything the running role needs: libraries, executables, runtime-loaded modules, configuration, service definition, writable state, and deployment-specific resources.
 
 The installed system should still reveal what was built. If the build selected HTTP, Express, MQTT, WebSocket, TLS, MariaDB support, or a particular network family, deployment should not hide those choices behind one opaque pile of files.
 

@@ -1,0 +1,85 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta,fit}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  meta/.style={draw=snodecBlue!55, fill=snodecBlueSoft!45, rounded corners=3pt, line width=0.75pt},
+  buildbox/.style={draw=snodecBlue!75, fill=snodecBlueSoft, rounded corners=2.5pt, line width=0.75pt},
+  installbox/.style={draw=snodecGreen!70, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
+  packagebox/.style={draw=snodecOrange!75, fill=snodecOrangeSoft, rounded corners=2.5pt, line width=0.75pt},
+  surfacebox/.style={draw=snodecBlue!65, fill=white, rounded corners=2.5pt, line width=0.75pt},
+  servicebox/.style={draw=snodecGreen!70, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
+  smalltext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
+  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!45, inner sep=1.2pt},
+  boxtitle/.style={font=\sffamily\bfseries\footnotesize, text=snodecBlue, align=center},
+  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.75pt}
+]
+
+% ----------------------------------------------------------------------
+% Outer frame.
+% ----------------------------------------------------------------------
+\draw[meta] (0,0) rectangle (215,-142);
+\node[titletext, anchor=west] at (5,-6) {Build $\rightarrow$ install $\rightarrow$ package $\rightarrow$ deployment surface};
+
+% ----------------------------------------------------------------------
+% Build/install/package path.
+% ----------------------------------------------------------------------
+\draw[buildbox] (8,-20) rectangle (52,-48);
+\node[smalltext] at (30,-34) {%%
+  \begin{tabular}{@{}c@{}}
+  \textbf{CMake component}\\
+  target, options,\\
+  link dependencies
+  \end{tabular}};
+
+\draw[installbox] (68,-20) rectangle (112,-48);
+\node[smalltext] at (90,-34) {%%
+  \begin{tabular}{@{}c@{}}
+  \textbf{install component}\\
+  libraries, apps,\\
+  exported config
+  \end{tabular}};
+
+\draw[packagebox] (133,-20) rectangle (177,-48);
+\node[smalltext] at (155,-34) {%%
+  \begin{tabular}{@{}c@{}}
+  \textbf{package component}\\
+  package metadata,\\
+  dependencies
+  \end{tabular}};
+
+\draw[arrow] (52,-34) -- (68,-34);
+\draw[arrow] (112,-34) -- (133,-34);
+
+% ----------------------------------------------------------------------
+% Deployed surface. One box, centered below the package component.
+% ----------------------------------------------------------------------
+\draw[surfacebox] (120,-68) rectangle (190,-116);
+\node[boxtitle] at (155,-76) {deployed runtime surface};
+\node[smalltext, text=snodecInk] at (155,-95) {%%
+  \begin{tabular}{@{}c@{}}
+  libraries and executables\\
+  runtime-loaded modules\\
+  package exports\\
+  service definition\\
+  configuration files\\
+  logs, pid files, writable state
+  \end{tabular}};
+
+\draw[arrow] (155,-48) -- (155,-68);
+
+% ----------------------------------------------------------------------
+% Running service role.
+% ----------------------------------------------------------------------
+\draw[servicebox] (123,-126) rectangle (187,-138);
+\node[smalltext] at (155,-132) {%%
+  \begin{tabular}{@{}c@{}}
+  \textbf{running service role}\\
+  complete runtime environment exists
+  \end{tabular}};
+\draw[arrow] (155,-116) -- (155,-126);
+
+\end{tikzpicture}
+\end{document}
