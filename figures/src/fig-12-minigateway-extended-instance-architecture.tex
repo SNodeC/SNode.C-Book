@@ -1,0 +1,80 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  meta/.style={draw=snodecBlue!55, fill=snodecBlueSoft!45, rounded corners=3pt, line width=0.75pt},
+  rolebox/.style={draw=snodecGreen!70, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
+  corebox/.style={draw=snodecBlue!75, fill=snodecBlueSoft, rounded corners=2.5pt, line width=0.75pt},
+  mqttbox/.style={draw=snodecOrange!75, fill=snodecOrangeSoft, rounded corners=2.5pt, line width=0.75pt},
+  boxtext/.style={font=\sffamily\small, align=center, text depth=0pt, text height=1.7ex},
+  smalltext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
+  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!45, inner sep=1.2pt},
+  sectiontext/.style={font=\sffamily\footnotesize, text=snodecMuted, align=center},
+  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.75pt},
+  arlabel/.style={font=\sffamily\footnotesize, text=snodecMuted, fill=white, inner sep=1.1pt}
+]
+
+% ----------------------------------------------------------------------
+% Outer frame.
+% ----------------------------------------------------------------------
+\draw[meta] (0,0) rectangle (160,-152);
+\node[titletext, anchor=west] at (5,-6) {MiniGateway-Extended instance architecture};
+\node[sectiontext, anchor=west] at (8,-15) {SNode.C communication roles / instances};
+
+% ----------------------------------------------------------------------
+% HTTP / Express role.
+% ----------------------------------------------------------------------
+\draw[rolebox] (18,-24) rectangle (142,-51);
+\node[smalltext] at (80,-37.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{express::legacy::in::WebApp}\\
+  HTTP/Express server instance\\
+  routes: /health /status /events /simulate
+  \end{tabular}};
+
+% ----------------------------------------------------------------------
+% Shared application core.
+% ----------------------------------------------------------------------
+\draw[corebox] (18,-74) rectangle (142,-101);
+\node[smalltext] at (80,-87.5) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{shared application core}\\
+  acceptMeasurement(...)\\
+  MeasurementState\\
+  MeasurementBus
+  \end{tabular}};
+
+% Bidirectional HTTP/core relationships, kept as separate straight arrows.
+\draw[arrow] (60,-51) -- node[arlabel, left=1.4mm] {/simulate} (60,-74);
+\draw[arrow] (100,-74) -- node[arlabel, right=1.4mm] {/status, /events} (100,-51);
+
+% ----------------------------------------------------------------------
+% Bottom roles / instances.
+% ----------------------------------------------------------------------
+\draw[rolebox] (7,-122) rectangle (77,-146);
+\node[smalltext] at (42,-134) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{net::un::stream::legacy::SocketServer}\\
+  measurement-input server instance\\
+  MeasurementUnixSocketContextFactory\\
+  MeasurementUnixSocketContext
+  \end{tabular}};
+
+\draw[mqttbox] (83,-122) rectangle (153,-146);
+\node[smalltext] at (118,-134) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{net::in::stream::legacy::SocketClient}\\
+  mqtt-uplink client instance\\
+  MiniGatewaySocketContextFactory\\
+  MiniGatewayMqtt
+  \end{tabular}};
+
+% Bottom-role relationships, kept straight and local.
+\draw[arrow] (42,-122) -- node[arlabel, left=1.4mm] {parsed Measurement} (42,-101);
+\draw[arrow] (118,-101) -- node[arlabel, right=1.4mm] {bus subscriber} (118,-122);
+
+\end{tikzpicture}
+\end{document}

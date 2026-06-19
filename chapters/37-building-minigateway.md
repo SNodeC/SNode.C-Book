@@ -127,7 +127,7 @@ role assembly
   -> main.cpp
 ```
 
-A one-file example would be shorter, but it would teach the wrong reflex. This chapter wants the reader to see how a small SNode.C application is assembled from visible boundaries.
+A one-file example would be shorter, but it would teach the wrong reflex. This chapter wants the reader to see how a small SNode.C application is assembled from visible boundaries. Chapter 38 keeps the same split visible when it adds the Unix-domain measurement input. That extension is introduced as another SNode.C communication role, not as behavior hidden inside the HTTP routes, the SSE response path, or the MQTT client object.
 
 ### Stage 1: the build target
 

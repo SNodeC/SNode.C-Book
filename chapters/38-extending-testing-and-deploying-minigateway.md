@@ -26,6 +26,10 @@ Do not hide new behavior inside an arbitrary callback merely because that callba
 
 The extended version adds one responsibility: measurements can now arrive through a Unix-domain stream socket. The input format is deliberately simple: one comma-separated measurement per line.
 
+Figure~\ref{fig:minigateway-extended-instance-architecture} shows the extended application as an instance architecture. The HTTP/Express `WebApp`, the new `measurement-input` Unix-domain server, and the `mqtt-uplink` client are visible communication roles around one shared application core. The figure is not meant as a complete call graph. It shows which instance owns which boundary, and where the new input role joins the same `acceptMeasurement(...)`, `MeasurementState`, and `MeasurementBus` path.
+
+![MiniGateway-Extended as SNode.C communication roles around one shared application core. The Unix-domain measurement input is a separate server instance, while HTTP routes, state, bus distribution, and MQTT publication remain separated.](figures/pdf/fig-12-minigateway-extended-instance-architecture.pdf){#fig:minigateway-extended-instance-architecture width=90% latex-placement="tbp"}
+
 ```sh
 printf '21.5,43.0,3.72
 ' | nc -U /tmp/minigateway-measurements.sock
@@ -403,15 +407,7 @@ namespace minigateway {
 
 The extended `main.cpp` keeps the base application path and adds one new server role named `measurement-input`. The new role listens on `/tmp/minigateway-measurements.sock` and uses the same `acceptMeasurement` function as `/simulate`.
 
-This is the key design point. The input changes, but the application state path does not.
-
-```text
-/simulate
-  -> acceptMeasurement(...)
-
-measurement-input Unix socket
-  -> acceptMeasurement(...)
-```
+This is the key design point already visible in Figure~\ref{fig:minigateway-extended-instance-architecture}. The input changes, but the application state path does not. The HTTP route and the Unix-domain server are different communication roles; after they have produced a `Measurement`, both end at the same acceptance boundary.
 
 Once a measurement reaches `acceptMeasurement`, the rest of the application is identical: current state is updated, the bus publishes, SSE observers are notified, and MQTT publication is attempted if the MQTT role is connected.
 
