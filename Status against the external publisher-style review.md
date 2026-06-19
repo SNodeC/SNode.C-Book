@@ -247,13 +247,13 @@ This is not urgent, but it would improve the learning arc.
 
 ## 3. Figures / visual design
 
-Status: **open**
+Status: **done for now**
 
 The review strongly criticized reliance on fenced `text` diagrams.
 
-The current text diagrams are useful, but the book still needs a small number of real figures for publisher quality.
+The current text diagrams were useful as planning material, but the book now has a real figure layer for publisher quality.
 
-Recommended set:
+Implemented / accepted set so far:
 
 ```text
 1. Overall SNode.C layer stack
@@ -264,11 +264,14 @@ Recommended set:
 6. MiniGateway Extended architecture
 7. Build → install → package → deployment surface
 8. Testing confidence surfaces
+9. Configuration hierarchy
+10. Logging and diagnostic visibility map
+11. TLS as connection-layer specialization
+12. Failure and retry lifecycle
+13. Persistence boundary
 ```
 
-I would add **8–12 figures**, not more.
-
-TikZ is probably the right production format.
+The current figure set is sufficient for now and is being produced in TikZ/PDF, which is the right production format for this manuscript.
 
 ## 4. Callout / box styling
 
