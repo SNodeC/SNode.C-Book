@@ -27,6 +27,23 @@ local function has_any_class(el, names)
   return false
 end
 
+local function strip_classes(el, names)
+  local keep = {}
+  for _, class in ipairs(el.classes) do
+    local remove = false
+    for _, name in ipairs(names) do
+      if class == name then
+        remove = true
+        break
+      end
+    end
+    if not remove then
+      table.insert(keep, class)
+    end
+  end
+  el.classes = keep
+end
+
 function CodeBlock(el)
   -- Respect explicit per-block styling in the manuscript.
   if el.attributes["style"] ~= nil and el.attributes["style"] ~= "" then
@@ -43,8 +60,12 @@ function CodeBlock(el)
     return el
   end
 
-  if has_class(el, "cmake") then
+  if has_any_class(el, {"cmake", "cmakelists", "cmakelist"}) then
     el.attributes["style"] = "snodec-cmake"
+    -- Let the listings style select the custom SNode.C CMake language.
+    -- Otherwise Pandoc may emit language=cmake in addition to style=...,
+    -- which depends on whether the local listings installation knows CMake.
+    strip_classes(el, {"cmake", "cmakelists", "cmakelist"})
     return el
   end
 

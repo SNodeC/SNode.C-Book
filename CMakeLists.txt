@@ -21,6 +21,10 @@ set(PANDOC_CROSSREF_FILTER
     pandoc-crossref
     CACHE STRING "Pandoc cross-reference filter executable")
 
+set(PANDOC_CALLOUT_FILTER
+    "${CMAKE_CURRENT_SOURCE_DIR}/filters/snodec-callouts.lua"
+    CACHE STRING "Pandoc Lua filter for SNode.C semantic callouts")
+
 set(PANDOC_LISTINGS_FILTER
     "${CMAKE_CURRENT_SOURCE_DIR}/filters/snodec-listings.lua"
     CACHE STRING "Pandoc Lua filter for book-specific listings styles")
@@ -101,7 +105,7 @@ function(make_pandoc_target target_name output_file)
     ${target_name}
     COMMAND "${CMAKE_COMMAND}" -E make_directory "${BUILD_DIR}"
     COMMAND
-      "${PANDOC}" ${ARGN} --lua-filter "${PANDOC_LISTINGS_FILTER}" --filter "${PANDOC_CROSSREF_FILTER}" --syntax-highlighting=idiomatic --from
+      "${PANDOC}" ${ARGN} --lua-filter "${PANDOC_LISTINGS_FILTER}" --lua-filter "${PANDOC_CALLOUT_FILTER}" --filter "${PANDOC_CROSSREF_FILTER}" --syntax-highlighting=idiomatic --from
       "${PANDOC_FROM}" --top-level-division=part -o
       "${BUILD_DIR}/${output_file}.tex"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -115,7 +119,7 @@ function(make_pandoc_pdf_target target_name output_file)
     COMMAND "cp" "-fa" "${BUILD_DIR}/${output_file}.pdf"
             "${BUILD_DIR}/${output_file}-old.pdf" || echo ""
     COMMAND
-      "${PANDOC}" ${ARGN} --lua-filter "${PANDOC_LISTINGS_FILTER}" --filter "${PANDOC_CROSSREF_FILTER}" --syntax-highlighting=idiomatic --from
+      "${PANDOC}" ${ARGN} --lua-filter "${PANDOC_LISTINGS_FILTER}" --lua-filter "${PANDOC_CALLOUT_FILTER}" --filter "${PANDOC_CROSSREF_FILTER}" --syntax-highlighting=idiomatic --from
       "${PANDOC_FROM}" --to pdf --top-level-division=part --pdf-engine
       "${PDF_ENGINE}" -o "${BUILD_DIR}/${output_file}-temp.pdf"
     COMMAND "rm" "-f" "${BUILD_DIR}/${output_file}.pdf" || echo ""

@@ -35,6 +35,7 @@ header-includes:
     \setlength{\cftsubsecnumwidth}{3.8em}
     \setlength{\cftsubsecindent}{5.5em}
     \usepackage{xcolor}
+    \input{latex/snodec-callouts.tex}
     \usepackage{listings}
     \definecolor{codebg}{HTML}{F8F8F8}
     \definecolor{codeframe}{HTML}{D0D0D0}
@@ -61,12 +62,61 @@ header-includes:
       keywordstyle=[5]\color{codepreproc}\bfseries
     }
 
+
+
+    \lstdefinelanguage{SNodeCCMake}{
+      sensitive=false,
+      alsoletter={_},
+      morecomment=[l]{\#},
+      morestring=[b]",
+      morekeywords=[1]{
+        add_compile_definitions,add_compile_options,add_custom_command,add_custom_target,
+        add_definitions,add_dependencies,add_executable,add_library,add_link_options,
+        add_subdirectory,add_test,aux_source_directory,cmake_minimum_required,
+        configure_file,enable_language,enable_testing,execute_process,
+        file,find_file,find_library,find_package,find_path,find_program,
+        get_filename_component,get_property,include,include_directories,
+        install,link_directories,link_libraries,list,message,option,project,
+        set,set_property,set_target_properties,string,target_compile_definitions,
+        target_compile_features,target_compile_options,target_include_directories,
+        target_link_directories,target_link_libraries,target_link_options,
+        target_sources,unset
+      },
+      keywordstyle=[1]\color{codekeyword}\bfseries,
+      morekeywords=[2]{
+        if,elseif,else,endif,foreach,endforeach,while,endwhile,
+        function,endfunction,macro,endmacro,return,break,continue
+      },
+      keywordstyle=[2]\color{codepreproc}\bfseries,
+      morekeywords=[3]{
+        ON,OFF,TRUE,FALSE,YES,NO,WIN32,UNIX,APPLE,MSVC,ANDROID,
+        STATIC,SHARED,MODULE,INTERFACE,OBJECT,IMPORTED,ALIAS,
+        PUBLIC,PRIVATE,INTERFACE,REQUIRED,QUIET,CONFIG,EXACT,
+        CACHE,STRING,BOOL,PATH,FILEPATH,INTERNAL,FORCE,GLOBAL,PROPERTY,
+        STATUS,WARNING,AUTHOR_WARNING,SEND_ERROR,FATAL_ERROR
+      },
+      keywordstyle=[3]\color{codetype}\bfseries,
+      morekeywords=[4]{
+        CMAKE_SOURCE_DIR,CMAKE_BINARY_DIR,CMAKE_CURRENT_SOURCE_DIR,
+        CMAKE_CURRENT_BINARY_DIR,CMAKE_CURRENT_LIST_DIR,CMAKE_MODULE_PATH,
+        CMAKE_INSTALL_PREFIX,CMAKE_BUILD_TYPE,CMAKE_CXX_STANDARD,
+        CMAKE_CXX_STANDARD_REQUIRED,CMAKE_CXX_EXTENSIONS,PROJECT_SOURCE_DIR,
+        PROJECT_BINARY_DIR,PROJECT_NAME,BUILD_SHARED_LIBS
+      },
+      keywordstyle=[4]\color{codeclass}\bfseries,
+      commentstyle=\color{codecomment}\itshape,
+      stringstyle=\color{codestring},
+      literate={0}{{{\color{codenumber}0}}}{1}{1}{{{\color{codenumber}1}}}{1}{2}{{{\color{codenumber}2}}}{1}{3}{{{\color{codenumber}3}}}{1}{4}{{{\color{codenumber}4}}}{1}{5}{{{\color{codenumber}5}}}{1}{6}{{{\color{codenumber}6}}}{1}{7}{{{\color{codenumber}7}}}{1}{8}{{{\color{codenumber}8}}}{1}{9}{{{\color{codenumber}9}}}{1}
+    }
+
     \lstdefinestyle{snodec-listing-base}{
       basicstyle=\ttfamily\small,
       backgroundcolor=\color{codebg},
       frame=single,
+      frameround=tttt,
+      framesep=5pt,
       rulecolor=\color{codeframe},
-      framerule=0.4pt,
+      framerule=0.35pt,
       showstringspaces=false,
       showtabs=false,
       tabsize=4,
@@ -78,6 +128,12 @@ header-includes:
 
     \lstdefinestyle{snodec-plain}{
       style=snodec-listing-base,
+      language={},
+      numbers=none,
+      backgroundcolor=\color{black!2},
+      rulecolor=\color{black!15},
+      framerule=0.3pt,
+      framesep=5pt,
       keywordstyle=\color{black},
       commentstyle=\color{black},
       stringstyle=\color{black},
@@ -106,7 +162,8 @@ header-includes:
     }
 
     \lstdefinestyle{snodec-cmake}{
-      style=snodec-plain
+      style=snodec-listing-base,
+      language=SNodeCCMake
     }
 
     \lstdefinestyle{snodec-config}{
