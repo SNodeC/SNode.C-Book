@@ -23,7 +23,9 @@ This chapter follows that hierarchy from the outside inward. The goal is not to 
 
 ### The anatomy of the configuration hierarchy
 
-The configuration model is easiest to read from the outside inward.
+The configuration model is easiest to read from the outside inward. Figure~\ref{fig:configuration-hierarchy} shows that hierarchy as one structural model. The named-instance level is where a configured server/client role receives an externally addressable identity and can be enabled or disabled without removing the role from the application shape.
+
+![The SNode.C configuration hierarchy: application scope contains named communication-role instances; each instance contains responsibility sections; each section owns concrete options.](figures/pdf/fig-13-configuration-hierarchy.pdf){#fig:configuration-hierarchy width=90% latex-placement="tbp"}
 
 | Scope | Addressed by | Typical concerns |
 |---|---|---|
