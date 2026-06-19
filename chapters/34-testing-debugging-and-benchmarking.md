@@ -62,7 +62,11 @@ A good test does not have to cover all of these at once. A broad end-to-end test
 
 A focused failure should point toward a focused cause: parser syntax handling, exported targets, public headers, package configuration, runtime module paths, RPATH, upgrade selector configuration, buffering, backpressure, fan-out, or event-loop pressure.
 
-Testing is a map of confidence surfaces, not a flat checklist.
+Testing is a map of confidence surfaces, not a flat checklist. Figure~\ref{fig:testing-confidence-surfaces} turns that idea into a boundary map. SNode.C is not protected by one abstract test category. It is protected by tests that make specific architectural promises observable: components should be honest, installed packages should be consumable, protocols should preserve semantics, runtime behavior should remain stable, deployment should match the installed shape, diagnostics should localize failures, and benchmarks should measure the relevant pressure point.
+
+![Testing confidence surfaces in SNode.C: different tests protect different architectural boundaries, from component truth and installed-package consumption to protocol semantics, runtime behavior, deployment shape, diagnostics, and performance.](figures/pdf/fig-18-testing-confidence-surfaces.pdf){#fig:testing-confidence-surfaces width=90% latex-placement="tbp"}
+
+The figure is intentionally not a testing pyramid. A pyramid answers how many tests of each kind a project might want. A confidence-surface map asks a different question: when something fails, which boundary did the failure make visible?
 
 | SNode.C surface | What may be wrong | Useful confidence method |
 |---|---|---|

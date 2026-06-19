@@ -1,0 +1,71 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{arrows.meta,calc,positioning}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  frame/.style={draw=snodecBlue!58, fill=snodecBlueSoft!28, rounded corners=3pt, line width=0.8pt},
+  systembox/.style={draw=snodecBlue!74, fill=snodecBlueSoft!88, rounded corners=2.5pt, line width=0.78pt},
+  buildbox/.style={draw=snodecBlue!66, fill=snodecBlueSoft!62, rounded corners=2.5pt, line width=0.72pt},
+  protocolbox/.style={draw=snodecGreen!72, fill=snodecGreenSoft!92, rounded corners=2.5pt, line width=0.72pt},
+  runtimebox/.style={draw=snodecOrange!76, fill=snodecOrangeSoft!86, rounded corners=2.5pt, line width=0.72pt},
+  opsbox/.style={draw=snodecRule!78, fill=snodecGraySoft, rounded corners=2.5pt, line width=0.72pt},
+  perfbox/.style={draw=snodecBlue!46!snodecOrange!75, fill=snodecOrangeSoft!55, rounded corners=2.5pt, line width=0.72pt},
+  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!55, inner sep=1.2pt},
+  boxtext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
+  smallnote/.style={font=\sffamily\footnotesize, align=center, text=snodecMuted},
+  surfacetext/.style={font=\sffamily\bfseries\footnotesize, text=snodecMuted, fill=snodecBlueSoft!28, inner sep=1.1pt},
+  line/.style={draw=snodecMuted!82, line width=0.68pt},
+  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.0mm,width=1.45mm]}, line width=0.68pt}
+]
+
+\draw[frame] (0,0) rectangle (190,-145);
+\node[titletext, anchor=west] at (5,-6) {Testing confidence surfaces};
+\node[smallnote, anchor=west] at (12,-17) {Same system, different confidence questions};
+
+% central tested system box
+\draw[systembox] (62,-54) rectangle (128,-82);
+\node[boxtext] at (95,-68) {\begin{tabular}{@{}c@{}}\textbf{tested SNode.C system}\\built, installed\\configured, running\end{tabular}};
+
+% top row: equal boxes
+\draw[buildbox] (16,-28) rectangle (56,-50);
+\node[boxtext] at (36,-39) {\begin{tabular}{@{}c@{}}\textbf{component surface}\\target honesty\\headers, deps\\minimal builds\end{tabular}};
+
+\draw[buildbox] (75,-28) rectangle (115,-50);
+\node[boxtext] at (95,-39) {\begin{tabular}{@{}c@{}}\textbf{package surface}\\installed use\\\texttt{find\_package}\\exported targets\end{tabular}};
+
+\draw[protocolbox] (134,-28) rectangle (174,-50);
+\node[boxtext] at (154,-39) {\begin{tabular}{@{}c@{}}\textbf{protocol surface}\\semantic behavior\\parsers, routes\\exact bytes\end{tabular}};
+
+% middle side boxes
+\draw[runtimebox] (16,-72) rectangle (56,-94);
+\node[boxtext] at (36,-83) {\begin{tabular}{@{}c@{}}\textbf{runtime surface}\\active behavior\\sockets, timers\\retries, lifetime\end{tabular}};
+
+\draw[opsbox] (134,-72) rectangle (174,-94);
+\node[boxtext] at (154,-83) {\begin{tabular}{@{}c@{}}\textbf{deployment surface}\\installed shape\\modules, configs\\services, paths\end{tabular}};
+
+% lower row
+\draw[opsbox] (46,-104) rectangle (86,-126);
+\node[boxtext] at (66,-115) {\begin{tabular}{@{}c@{}}\textbf{diagnostic surface}\\observable cause\\logs, states\\failure locality\end{tabular}};
+
+\draw[perfbox] (104,-104) rectangle (144,-126);
+\node[boxtext] at (124,-115) {\begin{tabular}{@{}c@{}}\textbf{performance surface}\\load and pressure\\latency, throughput\\bottlenecks\end{tabular}};
+
+% Light confidence rays from the central system to surfaces.
+% They use a different neutral color than the borders and avoid becoming category colors.
+\draw[line] (79,-54) -- (56,-50);
+\draw[line] (95,-54) -- (95,-50);
+\draw[line] (111,-54) -- (134,-50);
+\draw[line] (62,-72) -- (56,-83);
+\draw[line] (128,-72) -- (134,-83);
+\draw[line] (79,-82) -- (66,-104);
+\draw[line] (111,-82) -- (124,-104);
+
+% A small orientation bus under the map makes the failure-locality message explicit.
+\draw[line] (36,-134) -- (154,-134);
+\draw[arrow] (95,-134) -- (95,-128);
+\node[smallnote] at (95,-139) {A failure should point toward the boundary whose promise was broken.};
+
+\end{tikzpicture}
+\end{document}
