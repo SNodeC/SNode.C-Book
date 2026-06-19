@@ -1,101 +1,127 @@
 \documentclass[tikz,border=7pt]{standalone}
-\input{snodec-figure-style.tex}
+\usepackage{xcolor}
+\definecolor{figFrame}{RGB}{86,104,120}
+\definecolor{figOuterBg}{RGB}{244,247,250}
+\definecolor{figInnerBg}{RGB}{252,253,254}
+\definecolor{titleBlue}{RGB}{52,91,122}
+\definecolor{titleBlueBg}{RGB}{225,236,245}
+\definecolor{startBorder}{RGB}{64,112,151}
+\definecolor{startFill}{RGB}{226,238,248}
+\definecolor{okBorder}{RGB}{88,137,77}
+\definecolor{okFill}{RGB}{229,241,226}
+\definecolor{failBorder}{RGB}{184,112,63}
+\definecolor{failFill}{RGB}{249,235,221}
+\definecolor{decisionBorder}{RGB}{93,101,143}
+\definecolor{decisionFill}{RGB}{236,238,249}
+\definecolor{stopBorder}{RGB}{118,126,135}
+\definecolor{stopFill}{RGB}{239,242,244}
+\definecolor{timerBorder}{RGB}{166,126,58}
+\definecolor{timerFill}{RGB}{250,242,220}
+\definecolor{arrowColor}{RGB}{77,88,98}
+\definecolor{returnArrow}{RGB}{58,98,130}
 \usetikzlibrary{arrows.meta,calc,positioning}
 
 \begin{document}
 \begin{tikzpicture}[
   x=1mm,y=1mm,
-  meta/.style={draw=snodecBlue!55, fill=snodecBlueSoft!45, rounded corners=3pt, line width=0.75pt},
-  startbox/.style={draw=snodecBlue!72, fill=snodecBlueSoft, rounded corners=2.5pt, line width=0.75pt},
-  okbox/.style={draw=snodecGreen!70, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
-  failbox/.style={draw=snodecOrange!75, fill=snodecOrangeSoft, rounded corners=2.5pt, line width=0.75pt},
-  stopbox/.style={draw=snodecRule!85, fill=snodecGraySoft, rounded corners=2.5pt, line width=0.75pt},
-  decisionbox/.style={draw=snodecBlue!60, fill=white, rounded corners=2.5pt, line width=0.75pt},
-  timerbox/.style={draw=snodecOrange!70, fill=white, rounded corners=2.5pt, line width=0.75pt},
-  boxtext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
-  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!45, inner sep=1.2pt},
-  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.1mm,width=1.6mm]}, line width=0.7pt},
-  branch/.style={draw=snodecMuted!85, line width=0.7pt},
-  returnarrow/.style={draw=snodecBlue!70, -{Latex[length=2.1mm,width=1.6mm]}, line width=0.7pt, dashed}
+  outerbox/.style={draw=figFrame, fill=figOuterBg, rounded corners=3pt, line width=0.85pt},
+  innerbox/.style={draw=figFrame!75, fill=figInnerBg, rounded corners=3pt, line width=0.8pt},
+  startbox/.style={draw=startBorder, fill=startFill, rounded corners=2.5pt, line width=0.8pt},
+  okbox/.style={draw=okBorder, fill=okFill, rounded corners=2.5pt, line width=0.8pt},
+  failbox/.style={draw=failBorder, fill=failFill, rounded corners=2.5pt, line width=0.8pt},
+  decisionbox/.style={draw=decisionBorder, fill=decisionFill, rounded corners=2.5pt, line width=0.8pt},
+  stopbox/.style={draw=stopBorder, fill=stopFill, rounded corners=2.5pt, line width=0.8pt},
+  timerbox/.style={draw=timerBorder, fill=timerFill, rounded corners=2.5pt, line width=0.8pt},
+  boxtext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex, text=black},
+  titletext/.style={font=\sffamily\bfseries\small, text=titleBlue, fill=titleBlueBg, inner sep=1.4pt},
+  arrow/.style={draw=arrowColor, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.78pt},
+  line/.style={draw=arrowColor, line width=0.78pt},
+  returnarrow/.style={draw=returnArrow, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.82pt}
 ]
 
-\draw[meta] (0,0) rectangle (200,-266);
+\draw[outerbox] (0,0) rectangle (200,-282);
 \node[titletext, anchor=west] at (5,-6) {Retry and reconnect flow};
 
-% Common connect path.
-\draw[startbox] (8,-18) rectangle (50,-40);
-\node[boxtext] at (29,-29) {\begin{tabular}{@{}c@{}}\textbf{connect requested}\\\texttt{SocketClient::connect()}\end{tabular}};
+% top centered boxes
+\draw[startbox] (74,-18) rectangle (126,-38);
+\node[boxtext] at (100,-28) {\begin{tabular}{@{}c@{}}\textbf{connect requested}\\\texttt{SocketClient::connect()}\end{tabular}};
+\draw[arrow] (100,-38) -- (100,-45);
 
-\draw[startbox] (78,-18) rectangle (120,-40);
-\node[boxtext] at (99,-29) {\begin{tabular}{@{}c@{}}\textbf{connect attempt}\\open / bind / connect\\async completion / timeout\end{tabular}};
+\draw[startbox] (74,-45) rectangle (126,-67);
+\node[boxtext] at (100,-56) {\begin{tabular}{@{}c@{}}\textbf{connect attempt}\\open / bind / connect\\async completion / timeout\end{tabular}};
 
-\draw[startbox] (150,-18) rectangle (192,-42);
-\node[boxtext] at (171,-30) {\begin{tabular}{@{}c@{}}\textbf{classify outcome}\\OK / DISABLED\\ERROR / FATAL\\optional NO\_RETRY\end{tabular}};
+% classify-outcome container
+\draw[innerbox] (10,-78) rectangle (190,-258);
+\node[titletext, anchor=west] at (16,-84) {classify outcome};
 
-\draw[arrow] (50,-29) -- (78,-29);
-\draw[arrow] (120,-29) -- (150,-29);
+% bus inside container
+\draw[line] (41,-88) -- (159,-88);
+\draw[line] (100,-67) -- (100,-88);
 
-% Outcome row. The branch line itself has no arrow heads.
-\draw[branch] (171,-42) -- (171,-52);
-\draw[branch] (29,-52) -- (171,-52);
+% outcome row
+\draw[okbox] (20,-95) rectangle (62,-117);
+\node[boxtext] at (41,-106) {\begin{tabular}{@{}c@{}}\textbf{OK}\\connection established\end{tabular}};
+\draw[arrow] (41,-88) -- (41,-95);
 
-\draw[okbox] (8,-62) rectangle (50,-84);
-\node[boxtext] at (29,-73) {\begin{tabular}{@{}c@{}}\textbf{OK}\\connection established\end{tabular}};
+\draw[stopbox] (79,-95) rectangle (121,-117);
+\node[boxtext] at (100,-106) {\begin{tabular}{@{}c@{}}\textbf{DISABLED / stop}\\no connection continues\end{tabular}};
+\draw[arrow] (100,-88) -- (100,-95);
 
-\draw[stopbox] (80,-62) rectangle (122,-84);
-\node[boxtext] at (101,-73) {\begin{tabular}{@{}c@{}}\textbf{DISABLED / stop}\\no connection continues\end{tabular}};
+\draw[failbox] (138,-95) rectangle (180,-117);
+\node[boxtext] at (159,-106) {\begin{tabular}{@{}c@{}}\textbf{ERROR / FATAL}\\failed attempt\end{tabular}};
+\draw[arrow] (159,-88) -- (159,-95);
 
-\draw[failbox] (150,-62) rectangle (192,-84);
-\node[boxtext] at (171,-73) {\begin{tabular}{@{}c@{}}\textbf{ERROR / FATAL}\\failed attempt\end{tabular}};
+% reconnect branch left
+\draw[okbox] (20,-124) rectangle (62,-148);
+\node[boxtext] at (41,-136) {\begin{tabular}{@{}c@{}}\textbf{established connection}\\stream connection\\protocol context active\end{tabular}};
+\draw[arrow] (41,-117) -- (41,-124);
 
-\draw[arrow] (29,-52) -- (29,-62);
-\draw[arrow] (101,-52) -- (101,-62);
-\draw[arrow] (171,-52) -- (171,-62);
+\draw[failbox] (20,-155) rectangle (62,-177);
+\node[boxtext] at (41,-166) {\begin{tabular}{@{}c@{}}\textbf{disconnect event}\\established connection\\closed\end{tabular}};
+\draw[arrow] (41,-148) -- (41,-155);
 
-% Reconnect branch.
-\draw[okbox] (8,-104) rectangle (50,-128);
-\node[boxtext] at (29,-116) {\begin{tabular}{@{}c@{}}\textbf{established connection}\\stream connection\\protocol context active\end{tabular}};
-\draw[arrow] (29,-84) -- (29,-104);
+% condition boxes above their own decision buses
+\draw[decisionbox] (18,-184) rectangle (96,-206);
+\node[boxtext] at (57,-195) {\begin{tabular}{@{}c@{}}\textbf{reconnect allowed?}\\reconnect enabled\\flow controller allows it\\event loop running\end{tabular}};
+\draw[arrow] (41,-177) -- (41,-184);
 
-\draw[failbox] (8,-148) rectangle (50,-170);
-\node[boxtext] at (29,-159) {\begin{tabular}{@{}c@{}}\textbf{disconnect event}\\established connection\\closed\end{tabular}};
-\draw[arrow] (29,-128) -- (29,-148);
+\draw[decisionbox] (104,-184) rectangle (182,-206);
+\node[boxtext] at (143,-195) {\begin{tabular}{@{}c@{}}\textbf{retry allowed?}\\retry enabled\\tries below limit\\ERROR or retry-on-fatal\\no NO\_RETRY\end{tabular}};
+\draw[line] (159,-117) -- (159,-170);
+\draw[arrow] (159,-170) -- (159,-184);
 
-\draw[decisionbox] (8,-190) rectangle (50,-220);
-\node[boxtext] at (29,-205) {\begin{tabular}{@{}c@{}}\textbf{reconnect allowed?}\\reconnect enabled\\flow controller allows it\\event loop running\end{tabular}};
-\draw[arrow] (29,-170) -- (29,-190);
+% decision buses and consequences
+\draw[line] (35.5,-214) -- (78.5,-214);
+\draw[line] (57,-206) -- (57,-214);
 
-\draw[timerbox] (58,-190) rectangle (96,-220);
-\node[boxtext] at (77,-205) {\begin{tabular}{@{}c@{}}\textbf{reconnect timer}\\configured\\reconnect time\end{tabular}};
-\draw[arrow] (50,-205) -- node[boxtext, above] {yes} (58,-205);
+\draw[line] (121.5,-214) -- (164.5,-214);
+\draw[line] (143,-206) -- (143,-214);
 
-\draw[stopbox] (8,-238) rectangle (50,-252);
-\node[boxtext] at (29,-245) {\textbf{stop client}};
-\draw[arrow] (29,-220) -- node[boxtext, right, xshift=1mm] {no} (29,-238);
+% consequence row
+\draw[stopbox] (18,-221) rectangle (53,-239);
+\node[boxtext] at (35.5,-230) {\textbf{stop client}};
+\draw[arrow] (35.5,-214) -- node[boxtext, left, xshift=-0.6mm] {no} (35.5,-221);
 
-% Retry branch.
-\draw[decisionbox] (150,-190) rectangle (192,-220);
-\node[boxtext] at (171,-205) {\begin{tabular}{@{}c@{}}\textbf{retry allowed?}\\retry enabled\\tries below limit\\ERROR or retry-on-fatal\\no NO\_RETRY marker\end{tabular}};
-\draw[arrow] (171,-84) -- (171,-190);
+\draw[timerbox] (61,-221) rectangle (96,-239);
+\node[boxtext] at (78.5,-230) {\begin{tabular}{@{}c@{}}\textbf{reconnect timer}\\configured\\reconnect time\end{tabular}};
+\draw[arrow] (78.5,-214) -- node[boxtext, right, xshift=0.6mm] {yes} (78.5,-221);
 
-\draw[timerbox] (104,-190) rectangle (142,-220);
-\node[boxtext] at (123,-205) {\begin{tabular}{@{}c@{}}\textbf{retry timer}\\timeout, base,\\limit, jitter\end{tabular}};
-\draw[arrow] (150,-205) -- node[boxtext, above] {yes} (142,-205);
+\draw[timerbox] (104,-221) rectangle (139,-239);
+\node[boxtext] at (121.5,-230) {\begin{tabular}{@{}c@{}}\textbf{retry timer}\\timeout, base,\\limit, jitter\end{tabular}};
+\draw[arrow] (121.5,-214) -- node[boxtext, left, xshift=-0.6mm] {yes} (121.5,-221);
 
-\draw[stopbox] (150,-238) rectangle (192,-252);
-\node[boxtext] at (171,-245) {\textbf{stop attempt}};
-\draw[arrow] (171,-220) -- node[boxtext, right, xshift=1mm] {no} (171,-238);
+\draw[stopbox] (147,-221) rectangle (182,-239);
+\node[boxtext] at (164.5,-230) {\textbf{stop attempt}};
+\draw[arrow] (164.5,-214) -- node[boxtext, right, xshift=0.6mm] {no} (164.5,-221);
 
-% Common delayed next attempt.
-\draw[startbox] (76,-238) rectangle (126,-252);
-\node[boxtext] at (101,-245) {\begin{tabular}{@{}c@{}}\textbf{initiate next}\\\textbf{connect attempt}\end{tabular}};
+% initiate-next row alone below the two timer boxes; spans both timers
+\draw[startbox] (61,-246) rectangle (139,-254);
+\node[boxtext] at (100,-250) {\begin{tabular}{@{}c@{}}\textbf{initiate next}\\\textbf{connect attempt}\end{tabular}};
+\draw[arrow] (78.5,-239) -- (78.5,-246);
+\draw[arrow] (121.5,-239) -- (121.5,-246);
 
-\draw[arrow] (77,-220) -- (77,-228) -- (95,-228) -- (95,-238);
-\draw[arrow] (123,-220) -- (123,-228) -- (107,-228) -- (107,-238);
-
-% Dashed return path from the bottom center of the common next-attempt box.
-\draw[returnarrow] (101,-252) -- (101,-260) -- (56,-260) -- (56,-29) -- (78,-29);
-\node[boxtext, text=snodecMuted, anchor=west] at (58,-178) {timer fires};
+% solid return arrow: fully outside classify-outcome box, inside outer figure frame
+\draw[returnarrow] (100,-254) -- (100,-272) -- (6,-272) -- (6,-56) -- (74,-56);
 
 \end{tikzpicture}
 \end{document}
