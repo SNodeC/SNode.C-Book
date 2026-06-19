@@ -1,0 +1,70 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{arrows.meta,calc,positioning}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  frame/.style={draw=snodecBlue!58, fill=snodecBlueSoft!30, rounded corners=3pt, line width=0.8pt},
+  lane/.style={draw=snodecRule!58, fill=white, rounded corners=2.5pt, line width=0.68pt},
+  commbox/.style={draw=snodecBlue!72, fill=snodecBlueSoft!85, rounded corners=2.5pt, line width=0.75pt},
+  appbox/.style={draw=snodecGreen!72, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
+  persistbox/.style={draw=snodecOrange!78, fill=snodecOrangeSoft!82, rounded corners=2.5pt, line width=0.75pt},
+  dbbox/.style={draw=snodecRule!82, fill=snodecGraySoft, rounded corners=2.5pt, line width=0.75pt},
+  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!55, inner sep=1.2pt},
+  lanetext/.style={font=\sffamily\bfseries\footnotesize, text=snodecMuted, fill=white, inner sep=1.1pt},
+  boxtext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
+  note/.style={font=\sffamily\footnotesize, align=center, text=snodecMuted},
+  arrow/.style={draw=snodecMuted!95, -{Latex[length=2.15mm,width=1.6mm]}, line width=0.72pt},
+  line/.style={draw=snodecMuted!95, line width=0.72pt},
+  boundaryline/.style={draw=snodecBlue!70, dashed, dash pattern=on 2.2pt off 1.8pt, line width=0.8pt}
+]
+
+\draw[frame] (0,0) rectangle (190,-142);
+\node[titletext, anchor=west] at (5,-6) {Persistence boundary};
+
+% lane backgrounds: same width, same height, same horizontal margins
+\draw[lane] (8,-16) rectangle (182,-62);
+\node[lanetext, anchor=west] at (13,-21) {transient communication side};
+
+\draw[lane] (8,-78) rectangle (182,-124);
+\node[lanetext, anchor=west] at (13,-83) {durable state side};
+
+% upper lane: three equal boxes on a consistent grid
+\draw[commbox] (20,-31) rectangle (60,-53);
+\node[boxtext] at (40,-42) {\begin{tabular}{@{}c@{}}\textbf{peer connection}\\socket lifecycle\\read/write events\end{tabular}};
+
+\draw[commbox] (75,-31) rectangle (115,-53);
+\node[boxtext] at (95,-42) {\begin{tabular}{@{}c@{}}\textbf{protocol context}\\protocol meaning\\messages, requests\end{tabular}};
+
+\draw[appbox] (130,-31) rectangle (170,-53);
+\node[boxtext] at (150,-42) {\begin{tabular}{@{}c@{}}\textbf{application state}\\what changed?\\what should survive?\end{tabular}};
+
+\draw[arrow] (60,-42) -- (75,-42);
+\draw[arrow] (115,-42) -- (130,-42);
+
+% boundary with centered label and a clear vertical crossing from application state
+\draw[boundaryline] (20,-70) -- (170,-70);
+\node[titletext] at (95,-70) {persistence boundary};
+\draw[arrow] (150,-53) -- (150,-66.5);
+
+% lower lane: three equal boxes on the same grid
+\draw[persistbox] (20,-94) rectangle (60,-116);
+\node[boxtext] at (40,-105) {\begin{tabular}{@{}c@{}}\textbf{persistence adapter}\\mapping + policy\\schema knowledge\end{tabular}};
+
+\draw[persistbox] (75,-94) rectangle (115,-116);
+\node[boxtext] at (95,-105) {\begin{tabular}{@{}c@{}}\textbf{database client}\\async/sync commands\\state/error callback\end{tabular}};
+
+\draw[dbbox] (130,-94) rectangle (170,-116);
+\node[boxtext] at (150,-105) {\begin{tabular}{@{}c@{}}\textbf{MariaDB / store}\\tables, indexes\\transactions\end{tabular}};
+
+% Cross-boundary routing: travel on a thin bus at the top of the durable lane, then enter adapter.
+\draw[line] (150,-73.5) -- (150,-86) -- (40,-86);
+\draw[arrow] (40,-86) -- (40,-94);
+\draw[arrow] (60,-105) -- (75,-105);
+\draw[arrow] (115,-105) -- (130,-105);
+
+\node[note] at (95,-134) {Do not persist transport facts blindly. Persist application facts deliberately.};
+
+\end{tikzpicture}
+\end{document}

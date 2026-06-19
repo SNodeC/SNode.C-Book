@@ -30,6 +30,12 @@ protocol event
 
 Persistence is not automatically part of every request or every message. It is an application-state boundary that should be chosen deliberately.
 
+Figure~\ref{fig:persistence-boundary} shows the boundary that should stay visible when database support enters an SNode.C application. The upper lane stays on the transient communication side: peer connections, protocol contexts, and application interpretation live in the runtime and give incoming events their application meaning. The lower lane stays on the durable-state side: once the application has decided that something should survive process lifetime, the work crosses the persistence boundary and becomes explicit persistence work.
+
+![Persistence boundary in an SNode.C application: protocol contexts translate peer events into application meaning, application state decides what is worth keeping, and the database client belongs behind an explicit persistence boundary rather than inside transport or protocol mechanics.](figures/pdf/fig-17-persistence-boundary.pdf){#fig:persistence-boundary width=90% latex-placement="tbp"}
+
+Figure~\ref{fig:persistence-boundary} therefore makes two decisions visible at the same time. First, protocol and transport activity do not automatically imply durable storage. Second, persistence is not just a raw database call tacked onto a callback. Between those two sides stands an application-state decision: what changed, what matters, and what is worth keeping. Only after that decision does the database client, its command API, and the durable store become part of the flow.
+
 ### Persistence as an application-state boundary
 
 A database is not just another transport protocol. An HTTP endpoint, MQTT session, WebSocket connection, Bluetooth link, or Unix-domain control socket is usually a communication boundary between active participants. A database connection is different. It is a persistence and query boundary: it stores state, retrieves state, changes state, and may become the durable memory of a larger system.
