@@ -171,9 +171,9 @@ This does not replace a full final code-style audit, but the known inconsistency
 
 ## 1. Repetition / shrink pass
 
-Status: **open**
+Status: **done for now**
 
-This is now the most important editorial issue.
+This editorial issue is treated as done for now. The manuscript has already gone through a shrink/repetition pass sufficient for the current review stage.
 
 The external review criticized repeated terms and repeated conceptual framing:
 
@@ -510,10 +510,10 @@ Finished:
   ✓ STRUCTURE.md cleanup
   ✓ MiniGateway tested-code/source-of-truth policy
   ✓ known MiniGateway source-formatting inconsistency
+  ✓ repetition/shrink pass
+  ✓ real figures / visual design
 
 Still open:
-  ✗ repetition/shrink pass
-  ✗ real figures / visual design
   ✗ callout/style system
   ✗ glossary
   ✗ index

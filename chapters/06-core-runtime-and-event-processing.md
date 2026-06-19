@@ -29,7 +29,7 @@ Once those pieces are placed correctly in the reader's mind, the framework's beh
 
 ### The runtime picture in one diagram
 
-Before looking at the individual parts, it helps to place the event-processing core in one visual model. As shown in @fig:snodec-event-runtime, the public runtime surface leads into the event loop and multiplexer, which coordinate descriptor readiness, timers, queued work, and dispatch.
+Before looking at the individual parts, it helps to place the event-processing core in one visual model. As shown in Figure~\ref{fig:snodec-event-runtime}, the public runtime surface leads into the event loop and multiplexer, which coordinate descriptor readiness, timers, queued work, and dispatch.
 
 ![The SNode.C event-processing core connects runtime control, descriptor readiness, timers, queued work, and protocol dispatch.](figures/pdf/fig-03-event-runtime-picture.pdf){#fig:snodec-event-runtime width=88% latex-placement="tbp"}
 

@@ -62,7 +62,7 @@ The runtime model answers the question:
 
 > How does a SNode.C application come alive?
 
-The answer has four recurring roles and one coordinating runtime. As shown in @fig:snodec-runtime-model, application code uses a visible handle to register a communication role; the runtime advances the registered instance; a concrete connection appears; the factory creates a context; and the context expresses protocol behavior for that peer.
+The answer has four recurring roles and one coordinating runtime. As shown in Figure~\ref{fig:snodec-runtime-model}, application code uses a visible handle to register a communication role; the runtime advances the registered instance; a concrete connection appears; the factory creates a context; and the context expresses protocol behavior for that peer.
 
 ![The runtime view of application-side handles, registered instances, connections, factories, and contexts.](figures/pdf/fig-02-runtime-instance-connection-context.pdf){#fig:snodec-runtime-model width=82% latex-placement="tbp"}
 

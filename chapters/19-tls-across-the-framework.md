@@ -71,7 +71,7 @@ Where a TLS wrapper exists for a lower family, this pattern applies. The chapter
 The point is not that every lower family has identical deployment meaning. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP still have different endpoint identities and operating-system assumptions. The point is that TLS does not erase that lower-family identity. It specializes the stream connection handling above it.
 
 
-Figure~ef{fig:tls-connection-layer-specialization} shows the intended mental model. TLS is not a different application protocol and not a different lower communication family. It specializes the stream connection form. The surrounding role, address family, and socket-context structure remain recognizable.
+Figure~\ref{fig:tls-connection-layer-specialization} shows the intended mental model. TLS is not a different application protocol and not a different lower communication family. It specializes the stream connection form. The surrounding role, address family, and socket-context structure remain recognizable.
 
 ![TLS as a connection-layer specialization: the lower communication family, application protocol, and socket context shape remain stable, while the stream connection is specialized from legacy byte transport to TLS-secured byte transport.](figures/pdf/fig-15-tls-connection-layer-specialization.pdf){#fig:tls-connection-layer-specialization width=90% latex-placement="tbp"}
 

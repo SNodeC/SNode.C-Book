@@ -106,7 +106,7 @@ This book is not:
 
 In technical writing, the word *layered* is sometimes used lazily. It can mean almost anything from “we have modules” to “there are several abstraction levels.” In SNode.C, however, layering is not decorative. It is operational.
 
-The layer model in @fig:snodec-layer-stack is the first compact view of that structure.
+Figure~\ref{fig:snodec-layer-stack} is the first compact view of that structure.
 
 ![The basic SNode.C layer model used throughout the book.](figures/pdf/fig-01-layer-stack.pdf){#fig:snodec-layer-stack width=90% latex-placement="tbp"}
 
