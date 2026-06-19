@@ -278,7 +278,9 @@ context
 
 The central rule is:
 
-> Log from the layer that has the right responsibility.
+::: {.snodec-rule title="Diagnostic responsibility rule"}
+Log from the layer that has the right responsibility.
+:::
 
 SNode.C already has clear architectural boundaries. Logging should follow them.
 
@@ -467,14 +469,14 @@ What did the socket do?
 
 Many runtime surprises are configuration surprises. Before assuming that protocol code is wrong, inspect the effective configuration.
 
-Useful questions include:
-
+::: {.snodec-checklist title="Configuration diagnostic checklist"}
 - Is the expected instance enabled?
 - Is it listening on the expected local endpoint?
 - Is the client connecting to the expected remote endpoint?
 - Are retry, timeout, TLS, quiet-mode, and log-destination settings what the operator expects?
 - Is the generated command line consistent with the intended deployment?
 - Did a command-line override change a value supplied in the configuration file or in code?
+:::
 
 Configuration display belongs in a diagnostics chapter because it shows the shape that the runtime is actually using.
 
@@ -644,14 +646,14 @@ It starts with the configured shape, then follows the runtime behavior, and only
 
 That order matters. If the endpoint is wrong, deeper protocol logs may only produce more noise. If the ordinary lifecycle already shows a bind failure, protocol tracing will not explain it. If the connection counters show unread or unprocessed data, the relevant question may be in the context. The diagnostic workflow should follow the architecture rather than fight it.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Runtime visibility is essential because SNode.C applications progress through events, callbacks, timers, retries, and context reactions.
 - Diagnostics should start with the configured shape: application, instance, section, and option values.
 - `LOG(level)` is for ordinary runtime reporting through the log-level ladder.
 - `PLOG(level)` is for ordinary runtime reporting where captured system-error context helps explain the failure.
 - `VLOG(n)` is for optional diagnostic depth controlled by the verbose level.
 - Good log placement follows responsibility boundaries: application, instance, connection, and context.
+:::
 
 ### Closing perspective
 

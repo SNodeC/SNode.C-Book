@@ -8,7 +8,9 @@ MQTT is not part of the web stack. It has its own packet vocabulary, session beh
 
 That is the central idea of this chapter:
 
-> MQTT is not part of the web stack, but it fits the same SNode.C layering discipline.
+::: {.snodec-note title="MQTT-layering note"}
+MQTT is not part of the web stack, but it fits the same SNode.C layering discipline.
+:::
 
 The shift is therefore twofold:
 
@@ -467,14 +469,14 @@ The topic model and broker-oriented distribution make MQTT useful for IoT-facing
 
 Chapter 27 will later combine these ideas with multiple protocols and IoT system design. For now, Chapter 25 keeps the focus on MQTT as a protocol family inside SNode.C.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - MQTT opens the message-oriented part of the book.
 - MQTT is not a web protocol, but it fits the same SNode.C layering discipline.
 - MQTT is a protocol family with shared packet, session, topic, context, and keep-alive concerns.
 - `Mqtt` is the MQTT protocol object, not just a socket callback.
 - `MqttContext` bridges the MQTT protocol object to the carrier underneath.
 - Native MQTT combines stream `SocketContext` with `MqttContext`.
+:::
 
 ### Closing perspective
 

@@ -16,11 +16,13 @@ base MiniGateway
 
 The extension demonstrates this part's main design rule:
 
-```text
-add the boundary that owns the new concern
-```
+::: {.snodec-rule title="MiniGateway extension rule"}
+Add the boundary that owns the new concern.
+:::
 
+::: {.snodec-warning title="Convenience-callback warning"}
 Do not hide new behavior inside an arbitrary callback merely because that callback is convenient.
+:::
 
 ### What changes in the extended version
 
@@ -674,7 +676,9 @@ The pattern is always the same: identify the concern first, then choose the owne
 
 ### Testing MiniGateway by boundaries
 
-MiniGateway should not be tested only by starting it and clicking around. End-to-end checks are useful, but they often hide the boundary that failed. The project should be tested where the design claims to have a boundary.
+::: {.snodec-warning title="MiniGateway testing warning"}
+Do not treat testing and deployment as an afterthought after the architecture is already fixed. End-to-end checks are useful, but they often hide the boundary that failed.
+:::
 
 | Test surface | What it protects |
 |---|---|
@@ -692,9 +696,14 @@ MiniGateway should not be tested only by starting it and clicking around. End-to
 
 A useful test name should often answer the question from Chapter 34:
 
-```text
-Which MiniGateway boundary does this test protect?
-```
+::: {.snodec-checklist title="MiniGateway test-surface checklist"}
+- extension point
+- failure behavior
+- diagnostics
+- test surface
+- deployment surface
+- runtime configuration
+:::
 
 For example:
 
@@ -860,12 +869,11 @@ new failure policy
 
 If an extension requires unrelated parts of the application to know too much about each other, the boundary is probably wrong. That does not always mean a new framework abstraction is needed. Sometimes the correct answer is simply a small application-local class with a clear name and a narrow responsibility.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - The extended version adds a Unix-domain measurement input, not a new application architecture.
 - The new input path ends at the same `acceptMeasurement` function used by `/simulate`.
 - HTTP, SSE, and MQTT behavior remain unchanged because the extension is placed at the input boundary.
 - A `SocketContext` is a good owner for local line-oriented stream input.
 - A factory should construct the context and inject the application handler, not own the domain state.
 - New requirements should be placed at the boundary that owns their variation.
-
+:::

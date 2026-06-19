@@ -510,14 +510,14 @@ SNode.C's value is that these worlds can be understood through one layered model
 
 This is especially useful in IoT and embedded systems, where local device communication and network communication often coexist.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Bluetooth support in this part is represented by two lower communication families: RFCOMM in `net::rc` and L2CAP in `net::l2`.
 - RFCOMM endpoint identity is Bluetooth address plus channel; L2CAP endpoint identity is Bluetooth address plus PSM.
 - Channel and PSM are not interchangeable service selectors.
 - The application-side handle, registered instance, connection, factory, context, callbacks, and runtime model remain structurally familiar.
 - Bluetooth convenience calls configure the application-side handle and then enter the usual registration path.
 - The Bluetooth wildcard or deferred endpoint shape is the wildcard Bluetooth address plus service selector `0`.
+:::
 
 ### Closing perspective
 

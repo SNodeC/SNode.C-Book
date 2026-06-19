@@ -130,7 +130,9 @@ That is enough to reason about many important behaviors. Server and client flows
 
 This sharpens what Chapters 3 and 5 introduced:
 
-> Runtime state is not background decoration. It is part of the control logic.
+::: {.snodec-rule title="Runtime-state rule"}
+Runtime state is not background decoration. It is part of the control logic.
+:::
 
 ### Tick-by-tick execution and `TickStatus`
 
@@ -213,7 +215,9 @@ core::EventReceiver::atNextTick(...);
 
 This is the framework's way of saying:
 
-> Do not do this immediately on the caller's stack. Queue it for an event-loop turn.
+::: {.snodec-warning title="Deferred-work warning"}
+Do not do this immediately on the caller's stack. Queue it for an event-loop turn.
+:::
 
 The implementation creates a temporary event receiver, spans it into the event system, invokes the stored callback from `onEvent(...)`, and destroys the temporary receiver after execution. The exact caller path depends on the surrounding flow, but the architectural meaning is stable: operational work can be moved into the runtime domain instead of being executed immediately by arbitrary user call stacks.
 
@@ -522,14 +526,14 @@ The second is the distinction between an instance and a connection. The instance
 
 Those are the ideas the reader should carry forward.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - `core::SNodeC` is the public runtime facade; `core::EventLoop` is the central event-loop orchestrator behind it.
 - `core::EventMultiplexer` coordinates descriptor readiness, timers, queued work, timeout checks, signals, and cleanup.
 - `listen(...)` and `connect(...)` do not perform the whole operation on the caller's stack; they enter the flow-controller path and schedule runtime work.
 - The visible server or client object is an application-side handle; the registered instance is advanced through shared state and flow-controller machinery.
 - Descriptor receivers and timer receivers are managed runtime participants with enable/disable, suspend/resume, timeout, and cleanup behavior.
 - Application callbacks should return control to the event loop rather than blocking the runtime.
+:::
 
 ### Closing perspective
 

@@ -20,7 +20,9 @@ Read Figure~\ref{fig:server-client-path} as the bridge between the previous chap
 
 Chapter 9 now brings those ideas together around the most important practical boundary in the stream layer:
 
-> A server or client instance is not a connection. It is the runtime-visible role under which concrete connections appear.
+::: {.snodec-warning title="Instance/connection warning"}
+A server or client instance is not a connection. It is the runtime-visible role under which concrete connections appear.
+:::
 
 That distinction is simple, but it carries a large part of the framework's architecture. If it is missed, everything tends to collapse into one vague object: the thing that listens, connects, owns the socket, handles data, stores state, performs retries, and implements the protocol. SNode.C does not use that collapsed model. It separates those responsibilities deliberately.
 
@@ -286,7 +288,9 @@ The context should not have to become a reconnect manager.
 
 That rule is important enough to state directly:
 
-> Retry and reconnect are behavior of the configured instance and its flow-controller machinery; they are not responsibilities of the per-connection protocol context.
+::: {.snodec-rule title="Retry/reconnect ownership"}
+Retry and reconnect are behavior of the configured instance and its flow-controller machinery; they are not responsibilities of the per-connection protocol context.
+:::
 
 The context may react to a connection while it exists. It may send application data, parse incoming data, close the connection, or keep protocol-side state. But it should not be responsible for recreating the whole communication role after a connection ends. That responsibility belongs to the role and its runtime machinery.
 
@@ -583,7 +587,9 @@ onReceivedFromPeer()
 
 The exact set depends on the context abstraction being used, but the boundary is stable:
 
-> Instance callbacks observe connection lifecycle; context callbacks implement protocol behavior.
+::: {.snodec-rule title="Lifecycle responsibility rule"}
+Instance callbacks observe connection lifecycle; context callbacks implement protocol behavior.
+:::
 
 This is the same distinction introduced earlier, but Chapter 9 is where it becomes operationally concrete.
 
@@ -689,8 +695,7 @@ When reading a new SNode.C type or callback, the first question should be:
 
 That question usually prevents the most common misunderstandings.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - The visible `SocketServer` or `SocketClient` object is the application-side handle used to configure and register a server-side or client-side instance.
 - The registered instance is the long-lived runtime-visible role; a `SocketConnection` is one concrete peer relationship under that role.
 - `listen(...)` and `connect(...)` register intent and enter runtime/flow-controller machinery; they do not make the local handle itself become a peer connection.
@@ -698,6 +703,7 @@ That question usually prevents the most common misunderstandings.
 - Connection objects carry addresses, data flow, shutdown, timeouts, metrics, duration, and naming for one peer relationship.
 - Factories create per-connection contexts; contexts implement protocol behavior over the connection.
 - Status callbacks, connection lifecycle callbacks, and context callbacks belong to different layers of the model.
+:::
 
 ### Closing perspective
 

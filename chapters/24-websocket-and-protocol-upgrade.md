@@ -6,7 +6,9 @@ Chapter 23 showed how HTTP can remain open as a one-way event stream. Chapter 24
 
 That is the central idea of this chapter:
 
-> WebSocket starts in HTTP, but after the upgrade the connection is handled as a bidirectional message-oriented WebSocket connection.
+::: {.snodec-note title="Upgrade-boundary note"}
+WebSocket starts in HTTP, but after the upgrade the connection is handled as a bidirectional message-oriented WebSocket connection.
+:::
 
 This makes WebSocket different from both ordinary HTTP and Server-Sent Events. Figure~\ref{fig:web-protocol-layer-structure} places these ideas in the relationship used in this part of the book: HTTP request/response is the common web-protocol foundation; Server-Sent Events and WebSocket are dependent protocol shapes inside the same web protocol layer; and the Express-like application structure uses that layer to organize application-facing endpoints.
 
@@ -523,8 +525,7 @@ MQTT over WebSocket will not be a new architectural trick. It will be a protocol
 
 That later combination becomes easier to understand after Chapter 24. WebSocket provides the upgraded message channel. MQTT provides the protocol semantics.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - WebSocket begins as HTTP upgrade and continues as a bidirectional message-oriented connection.
 - Upgrade changes the protocol context while keeping the underlying connection.
 - SNode.C's upgrade mechanism is generic; WebSocket is one concrete upgraded protocol.
@@ -536,6 +537,7 @@ That later combination becomes easier to understand after Chapter 24. WebSocket 
 - Subprotocol factories and selectors keep subprotocol selection structured and extensible.
 - Lower-family, TLS, runtime, configuration, diagnostics, timeout, and failure behavior remain relevant.
 - Chapter 25 moves from web protocols to MQTT.
+:::
 
 ### Closing perspective
 

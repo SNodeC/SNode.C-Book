@@ -29,7 +29,9 @@ That is the starting point for this chapter.
 
 A compact definition is:
 
-> A `SocketContext` is the per-connection application protocol endpoint attached to a `SocketConnection`.
+::: {.snodec-rule title="Context responsibility rule"}
+A `SocketContext` is the per-connection application protocol endpoint attached to a `SocketConnection`.
+:::
 
 Every part of that sentence matters.
 
@@ -383,7 +385,9 @@ A compact contrast helps:
 
 This table folds several common mistakes into one design rule:
 
-> Keep the context focused on protocol behavior for one connection.
+::: {.snodec-warning title="Context-scope warning"}
+Keep the context focused on protocol behavior for one connection.
+:::
 
 #### Do not move server/client role logic into the context
 
@@ -497,14 +501,14 @@ The factory is important because it creates the right context for a connection. 
 
 If the context is the protocol endpoint, the factory is the construction boundary. Chapter 14 will look at that boundary more closely.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - A `SocketContext` is the per-connection application protocol endpoint attached to a `SocketConnection`.
 - The context implements protocol behavior; it does not own the server/client role or reimplement the connection.
 - Context code should be event-oriented: lifecycle, input, signals, read errors, and write errors are separate responsibilities.
 - `onReceivedFromPeer()` should process input intentionally and return the amount of data actually processed.
 - Protocol state should be explicit, connection-local when possible, and named in protocol terms.
 - Sending, streaming, timeout, shutdown, close, and metrics operations act through the connection-facing surface.
+:::
 
 ### Closing perspective
 

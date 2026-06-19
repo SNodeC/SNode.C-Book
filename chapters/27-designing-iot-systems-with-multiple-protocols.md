@@ -13,7 +13,9 @@ HTTP upgrade
 
 Chapter 27 widens the lens from one composed stack to a whole IoT system. In such a system, several protocol stacks may coexist because they serve different communication boundaries. The central sentence is:
 
-> A multi-protocol IoT system is clear when each protocol is assigned to an honest boundary.
+::: {.snodec-rule title="Multi-protocol boundary rule"}
+A multi-protocol IoT system is clear when each protocol is assigned to an honest boundary.
+:::
 
 This chapter is not about using every protocol everywhere. It is about deciding where each protocol belongs. Chapter 25 introduced MQTT as a protocol family. Chapter 26 showed MQTT over WebSocket as one composed stack. Chapter 27 now treats multi-protocol IoT systems as boundary design.
 
@@ -495,8 +497,7 @@ The difference is whether each protocol has a reason to be there.
 
 SNode.C helps because many different protocol families still share the same architectural language: configured roles, registered instances, contexts, factories, configuration, diagnostics, runtime lifecycle, and failure behavior. Protocol diversity is manageable when those shared concepts remain visible.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - IoT architecture is defined by communication boundaries, not only by devices.
 - A protocol should be chosen for the boundary it serves.
 - Boundary roles in this chapter are design positions; concrete SNode.C applications realize them through configured roles and registered instances.
@@ -513,6 +514,7 @@ SNode.C helps because many different protocol families still share the same arch
 - The same domain meaning may appear through several honest protocol surfaces.
 - Protocol diversity is not chaos when boundaries are clear.
 - Chapter 28 moves from protocol/system design to persistence and application state.
+:::
 
 ### Closing perspective
 

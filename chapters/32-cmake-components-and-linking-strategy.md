@@ -112,7 +112,9 @@ That is demanding, especially in a cross-platform framework, but it has real ben
 
 The important lesson is:
 
-> build policy is code-quality policy.
+::: {.snodec-rule title="Build-policy rule"}
+build policy is code-quality policy.
+:::
 
 A strict build is one of the ways a systems framework protects itself over time.
 
@@ -405,7 +407,9 @@ This is not CMake trivia. It is dependency hygiene. A framework that gets this w
 
 The central rule is simple:
 
-> The target that needs a dependency should declare it.
+::: {.snodec-rule title="Dependency ownership rule"}
+The target that needs a dependency should declare it.
+:::
 
 That is why a consumer-facing link line does not manually repeat the whole lower dependency chain. A direct link line should describe the application face:
 
@@ -417,6 +421,13 @@ application
 ```
 
 The selected component targets then propagate their own public dependencies. This keeps the public link line small without hiding the architecture.
+
+::: {.snodec-checklist title="Package-boundary checklist"}
+- Does the component declare its own dependencies?
+- Does the installed target expose the right usage requirements?
+- Can an external consumer link it?
+- Does the package export match the architecture?
+:::
 
 It also prevents two opposite mistakes:
 
@@ -898,14 +909,14 @@ A SNode.C CMake target can be read systematically. A practical recipe is:
 
 This method follows the same pattern used in Chapter 29. The build target often reveals the architecture before the implementation file is opened.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - CMake is an architectural surface in SNode.C, not only a build-script language.
 - The top-level build creates the project shell; `src/CMakeLists.txt` exposes the framework surface.
 - Compiler, warning, and linker policies are part of the maintenance strategy.
 - `SNODEC_INTREE_BUILD` separates the in-tree build context from the installed consumer view.
 - Component targets should own their dependencies.
 - `PUBLIC`, `PRIVATE`, and `INTERFACE` describe dependency visibility.
+:::
 
 ### Closing perspective
 

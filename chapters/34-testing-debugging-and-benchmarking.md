@@ -20,13 +20,15 @@ In a layered framework, failures can occur at many boundaries: undeclared compon
 
 The useful question is therefore not only:
 
-> Do we have tests?
+```text
+Do we have tests?
+```
 
-The better question is:
+The better question is the chapter's central rule:
 
-> Which SNode.C boundary does this test protect?
-
-That is this chapter's central idea.
+::: {.snodec-rule title="Testing-boundary rule"}
+A test is useful when it says which SNode.C boundary it protects.
+:::
 
 ### Testing follows framework boundaries
 
@@ -60,9 +62,23 @@ performance boundary
 
 A good test does not have to cover all of these at once. A broad end-to-end test is useful, but it is not a substitute for a focused boundary test when the boundary itself has a contract.
 
+::: {.snodec-warning title="End-to-end warning"}
+End-to-end success does not prove that every boundary is well protected. Use it together with focused tests that make the failing boundary visible.
+:::
+
 A focused failure should point toward a focused cause: parser syntax handling, exported targets, public headers, package configuration, runtime module paths, RPATH, upgrade selector configuration, buffering, backpressure, fan-out, or event-loop pressure.
 
 Testing is a map of confidence surfaces, not a flat checklist. Figure~\ref{fig:testing-confidence-surfaces} turns that idea into a boundary map. SNode.C is not protected by one abstract test category. It is protected by tests that make specific architectural promises observable: components should be honest, installed packages should be consumable, protocols should preserve semantics, runtime behavior should remain stable, deployment should match the installed shape, diagnostics should localize failures, and benchmarks should measure the relevant pressure point.
+
+::: {.snodec-checklist title="Testing confidence surfaces"}
+- component surface
+- package surface
+- protocol surface
+- runtime surface
+- deployment surface
+- diagnostic surface
+- performance surface
+:::
 
 ![Testing confidence surfaces in SNode.C: different tests protect different architectural boundaries, from component truth and installed-package consumption to protocol semantics, runtime behavior, deployment shape, diagnostics, and performance.](figures/pdf/fig-18-testing-confidence-surfaces.pdf){#fig:testing-confidence-surfaces width=90% latex-placement="tbp"}
 
@@ -658,14 +674,14 @@ The practical habit is to add tests at the boundary where a bug mattered. URL de
 
 Regression tests should protect the semantic boundary that failed.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Testing in SNode.C should follow framework boundaries.
 - A test should make clear which boundary it protects.
 - Build-time checks protect component truth, public headers, and dependency surfaces.
 - Include discipline protects component honesty.
 - Minimal builds are architectural tests, not only smaller builds.
 - Installed-consumer builds test the exported package interface.
+:::
 
 ### Closing perspective
 

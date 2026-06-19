@@ -234,7 +234,9 @@ Do not disable logging while working through the first examples unless you have 
 
 Later chapters will treat logging and configuration more carefully. At this stage, the important rule is simple:
 
-> Do not make the first examples silent before you understand what they are doing.
+::: {.snodec-warning title="Early diagnostic warning"}
+Do not make the first examples silent before you understand what they are doing.
+:::
 
 ### Finding built executables
 
@@ -390,24 +392,31 @@ For example:
 
 This distinction will appear again throughout the book. It matters for CMake, for debugging, for deployment, and for understanding why an external playground project is different from an in-tree example.
 
-### Environment checklist
+::: {.snodec-checklist title="Environment checklist"}
+Before moving on, you should be able to answer these questions.
 
-Before moving on, you should be able to answer these questions. Can I clone the SNode.C repository? Can I configure an out-of-tree build?
+- Can I clone the SNode.C repository?
+- Can I configure an out-of-tree build?
+- Can I compile the framework?
+- Can I find built example executables?
+- Can I run a server and a client in separate terminals?
+- Do I understand the difference between the source directory, build directory, and install prefix?
+- Do I know whether optional Bluetooth development files are installed?
+- Do I know whether optional MariaDB development files are installed?
+- Do I know whether I am using a local install prefix or a system-wide install?
+- Do I have a separate playground directory for later external experiments?
 
-Can I compile the framework? Can I find built example executables? Can I run a server and a client in separate terminals?
+If the answer to these questions is yes, the environment is ready for the first program.
+:::
 
-Do I understand the difference between the source directory, build directory, and install prefix? Do I know whether optional Bluetooth development files are installed? Do I know whether optional MariaDB development files are installed?
-
-Do I know whether I am using a local install prefix or a system-wide install? Do I have a separate playground directory for later external experiments? If the answer to these questions is yes, the environment is ready for the first program.
-
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Keep the source tree, build tree, install tree, and playground project separate; each has a different purpose.
 - Use an out-of-tree build so generated files and compiled binaries do not obscure the source tree.
 - A local install prefix makes external examples predictable because headers, libraries, and CMake package files live in one known place.
 - Component names such as `net-in-stream-legacy` encode architectural position; `legacy` means the non-TLS stream connection variant.
 - Runtime output is part of the learning process. Do not silence diagnostics before the first examples are understood.
 - The environment is ready when the framework builds, example programs can be found and run, and an external playground project can consume the installed package.
+:::
 
 ### Closing perspective
 

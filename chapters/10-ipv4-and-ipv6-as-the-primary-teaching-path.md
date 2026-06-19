@@ -42,7 +42,9 @@ Nothing about moving from IPv4 to IPv6 changes that architectural shape.
 
 The first major observation is:
 
-> The handle / instance / connection / factory / context / runtime pattern is more fundamental than the specific IP family.
+::: {.snodec-rule title="Family-independent pattern"}
+The handle / instance / connection / factory / context / runtime pattern is more fundamental than the specific IP family.
+:::
 
 IPv4 and IPv6 show this without changing endpoint identity as radically as Unix domain sockets or Bluetooth do. Both IP families still use the familiar host-plus-port idea. That makes the comparison focused: the lower family changes, but the application architecture does not collapse into a different model.
 
@@ -125,7 +127,9 @@ That is the right balance. One address pattern transfers across both IP families
 
 The useful lesson is:
 
-> The API shape is intentionally parallel where that helps, but the endpoint families remain distinct.
+::: {.snodec-note title="Parallel-shape note"}
+The API shape is intentionally parallel where that helps, but the endpoint families remain distinct.
+:::
 
 Here “host” should be read broadly. It may be a numeric address such as `127.0.0.1` or `::1`, or it may be a name that has to be resolved. The convenience API makes the common case readable, but Chapter 8’s address model still matters underneath.
 
@@ -442,14 +446,14 @@ This table connects directly to Chapters 8 and 9. Chapter 8 explains the address
 
 This chapter shows IPv4 and IPv6 as the first concrete comparison pair.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - IPv4 and IPv6 are the first concrete lower-family comparison because they are familiar, parallel, and still meaningfully different.
 - `net::in` selects IPv4; `net::in6` selects IPv6.
 - Both families use host-plus-port endpoint identity, but their textual forms, wildcard forms, and deployment questions differ.
 - The application-side server/client handle, registered instance, connection, factory, context, and runtime model stay structurally the same.
 - Convenience `listen(...)` and `connect(...)` overloads set configuration and then delegate to the general registration path.
 - Protocol contexts can often be reused across IPv4 and IPv6 when the protocol itself does not depend on address-family details.
+:::
 
 ### Closing perspective
 

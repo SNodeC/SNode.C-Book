@@ -120,7 +120,9 @@ That is why the factory is a boundary object. It is close to the connection, bec
 
 The most important rule is simple:
 
-> A factory should create a fresh context for the concrete connection it receives.
+::: {.snodec-rule title="Factory responsibility rule"}
+A factory should create a fresh context for the concrete connection it receives.
+:::
 
 A `SocketContext` is per-connection.
 
@@ -457,7 +459,9 @@ All four patterns can be valid.
 
 The same rule applies to all of them:
 
-> The selection should remain a construction-time decision, not protocol execution.
+::: {.snodec-warning title="Factory-scope warning"}
+The selection should remain a construction-time decision, not protocol execution.
+:::
 
 This section is therefore not a pattern catalogue. It is a set of examples showing how the construction-boundary idea can be expressed without moving protocol behavior into the factory.
 
@@ -566,14 +570,14 @@ Different server/client types can choose different endpoint families while the f
 
 The factory supports that portability story because it keeps context creation separate from the lower-layer role. It does not perform the protocol itself.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - A `SocketContextFactory` is the construction boundary between a concrete `SocketConnection` and the per-connection `SocketContext`.
 - The factory creates context objects; the context implements protocol behavior.
 - The ordinary creation path should produce a fresh context object for the connection it receives.
 - The raw pointer returned by `create(...)` belongs to the framework construction contract, not to arbitrary manual lifetime management.
 - Factory constructor arguments are a clean way to pass stable dependencies into future contexts.
 - Construction-time selection is acceptable; mid-protocol behavior belongs in the context.
+:::
 
 ### Closing perspective
 

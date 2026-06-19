@@ -6,7 +6,9 @@ Chapter 21 showed how SNode.C raises stream communication to HTTP request and re
 
 That is the central idea of this chapter:
 
-> The Express-like layer does not replace HTTP; it organizes HTTP handling into application structure.
+::: {.snodec-rule title="Express-layer rule"}
+The Express-like layer does not replace HTTP; it organizes HTTP handling into application structure.
+:::
 
 The lower stack remains visible:
 
@@ -495,14 +497,14 @@ HTTP request / response
 
 Chapter 23 then asks what happens when a route is not a short request/response exchange, but a long-lived one-way event stream. Server-Sent Events will show how the web stack handles that shape while still using the same layered discipline.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - The Express-like layer sits above HTTP and organizes HTTP handling into web-application structure.
 - `WebApp` is a router-shaped application surface.
 - `WebAppT<ServerT>` combines that application surface with a concrete HTTP server type.
 - HTTP request readiness enters the Express layer through a controller and the root route.
 - `Router` composes routes, middleware, mounted routers, method-specific handlers, and routing policy.
 - Application callbacks and middleware callbacks have different responsibilities.
+:::
 
 ### Closing perspective
 

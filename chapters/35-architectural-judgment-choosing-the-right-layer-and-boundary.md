@@ -25,6 +25,13 @@ right concern
 
 The following questions are not a mechanical checklist. They are recurring pressure points where SNode.C forces the architect to place meaning deliberately.
 
+::: {.snodec-checklist title="Boundary judgment checklist"}
+- What kind of concern is this?
+- Which boundary owns it?
+- Which role should see it?
+- Which failure policy belongs here?
+:::
+
 Here, *role* is often used in the system-design sense. When the text refers to SNode.C runtime entities, it uses the more precise language of configured communication roles and registered runtime-visible instances.
 
 ### Good judgment begins by refusing category mistakes
@@ -43,7 +50,9 @@ Common examples are:
 
 SNode.C teaches this judgment because it makes layers, roles, and boundaries explicit. It asks:
 
-> What kind of thing is this concern, really?
+::: {.snodec-rule title="Category rule"}
+Choose the layer by the kind of concern, not by where the code first feels convenient.
+:::
 
 That is often the most important design question of all.
 
@@ -407,14 +416,14 @@ Corrected view: this chapter is technical because boundary mistakes become techn
 
 Architectural judgment in SNode.C means choosing the right layer, role boundary, protocol family, packaging style, configuration surface, and diagnostic surface for a real system concern. Good judgment uses those boundaries honestly, so that protocol meaning, operational policy, durable state, and system structure remain clear rather than collapsing into one giant custom abstraction.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Architectural judgment means choosing the right layer and boundary for the actual concern.
 - A category mistake happens when a concern is placed in a layer that cannot honestly own it.
 - Choose the lower communication family that matches the system boundary.
 - Choose the protocol surface by asking what kind of conversation the boundary wants to have.
 - The simplest honest stack is not always the lowest stack.
 - Native protocols and composed protocols solve different boundary problems.
+:::
 
 ### Closing perspective
 

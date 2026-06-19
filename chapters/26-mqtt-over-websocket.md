@@ -16,7 +16,9 @@ Chapter 26 narrows the view to the second form and follows the complete stack: H
 
 The central sentence is:
 
-> MQTT over WebSocket in SNode.C is MQTT expressed as a WebSocket subprotocol on top of the HTTP upgrade stack.
+::: {.snodec-note title="MQTT-over-WebSocket note"}
+MQTT over WebSocket in SNode.C is MQTT expressed as a WebSocket subprotocol on top of the HTTP upgrade stack.
+:::
 
 This sentence defines the composition precisely. MQTT-over-WebSocket is not ordinary native MQTT with a few additional HTTP headers. The HTTP headers belong to the upgrade negotiation. After a successful upgrade, MQTT packet data is carried as WebSocket message payload and interpreted by the MQTT layer.
 
@@ -516,8 +518,7 @@ A multi-protocol system may combine:
 
 The next chapter is therefore not only about another protocol. It is about system composition.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - MQTT-over-WebSocket carries MQTT as a WebSocket subprotocol.
 - HTTP still matters because it negotiates the upgrade.
 - WebSocket still matters because it provides the upgraded bidirectional message carrier.
@@ -529,6 +530,7 @@ The next chapter is therefore not only about another protocol. It is about syste
 - The carrier path changes; MQTT packet, session, topic, keep-alive, and publish-flow semantics remain recognizable.
 - Failures can belong to lower connection, TLS, HTTP upgrade, WebSocket framing, subprotocol selection, MQTT parsing, MQTT session, or keep-alive behavior.
 - Chapter 27 moves from one protocol composition to multi-protocol IoT system design.
+:::
 
 ### Closing perspective
 

@@ -36,6 +36,10 @@ Figure~\ref{fig:persistence-boundary} shows the boundary that should stay visibl
 
 Figure~\ref{fig:persistence-boundary} therefore makes two decisions visible at the same time. First, protocol and transport activity do not automatically imply durable storage. Second, persistence is not just a raw database call tacked onto a callback. Between those two sides stands an application-state decision: what changed, what matters, and what is worth keeping. Only after that decision does the database client, its command API, and the durable store become part of the flow.
 
+::: {.snodec-rule title="Persistence rule"}
+Persist application facts, not raw transport accidents.
+:::
+
 ### Persistence as an application-state boundary
 
 A database is not just another transport protocol. An HTTP endpoint, MQTT session, WebSocket connection, Bluetooth link, or Unix-domain control socket is usually a communication boundary between active participants. A database connection is different. It is a persistence and query boundary: it stores state, retrieves state, changes state, and may become the durable memory of a larger system.
@@ -59,7 +63,9 @@ The database support in SNode.C has a concrete scope. The current concrete datab
 
 The accurate statement is:
 
-> SNode.C currently provides a MariaDB integration layer shaped to work inside the same event-driven runtime discipline as the rest of the framework.
+::: {.snodec-note title="MariaDB scope note"}
+SNode.C currently provides a MariaDB integration layer shaped to work inside the same event-driven runtime discipline as the rest of the framework.
+:::
 
 This narrower statement keeps the chapter aligned with the implementation. It lets the chapter focus on what the code actually provides:
 
@@ -589,14 +595,14 @@ A multi-protocol system may need to coordinate:
 
 That coordination is application architecture. The database module provides the event-integrated persistence tool. The application decides how durable state fits into the system.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Persistence is another system boundary.
 - Persistence is where selected application information survives beyond one connection, message, request, or runtime episode.
 - SNode.C currently provides MariaDB-focused database support through `db-mariadb`.
 - Database state and runtime state are different.
 - `MariaDBClient` is the application-facing database object.
 - `MariaDBConnectionDetails` describes the database endpoint and credentials.
+:::
 
 ### Closing perspective
 

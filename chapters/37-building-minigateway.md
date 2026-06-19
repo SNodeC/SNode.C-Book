@@ -42,6 +42,15 @@ The second role is a native MQTT client role named `mqtt-uplink`. It connects to
 
 The base version does not poll measurements. SNode.C runs the application in its event-driven runtime model, and MiniGateway keeps the project consistent with that model. A new measurement is handled when a new measurement event appears.
 
+::: {.snodec-checklist title="MiniGateway role checklist"}
+- HTTP administration role
+- SSE observation path
+- MQTT-uplink role
+- shared application state
+- configuration
+- runtime startup
+:::
+
 The base version creates such events through `/simulate`. That route is not the final device interface. It is a controlled teaching input. Chapter 38 replaces this with a small Unix-domain socket input to demonstrate how the application can grow without changing the HTTP, SSE, MQTT, or domain-state structure.
 
 ### How to use the base version
@@ -80,7 +89,11 @@ curl http://localhost:8080/simulate
 
 The SSE terminal should receive an event. If an MQTT broker is reachable and the MQTT role is connected, the same measurement is also published through MQTT.
 
-One practical warning is worth making explicit. Before testing `/status`, verify that MiniGateway really owns the configured HTTP port. If another SNode.C application, for example MQTTBroker, is already listening on the same port, `curl` may reach the wrong process. A simple check is:
+::: {.snodec-warning title="Port ownership warning"}
+Before testing `/status`, verify that MiniGateway really owns the configured HTTP port. If another SNode.C application, for example MQTTBroker, is already listening on the same port, `curl` may reach the wrong process.
+:::
+
+A simple check is:
 
 ```sh
 ss -ltnp 'sport = :8080'
@@ -881,12 +894,11 @@ This package intentionally contains no TLS, no persistence, no MQTT-over-WebSock
 ````
 
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - MiniGateway is a guided application, not a framework subsystem.
 - The base version owns one current measurement and exposes it through HTTP, SSE, and MQTT.
 - `/simulate` is a teaching input boundary; it injects a measurement into the same path that a real input source can use later.
 - Measurement arrival is event-driven. The application does not poll for measurements.
 - `MeasurementState` owns the current value.
 - `MeasurementBus` distributes state changes without knowing about HTTP, SSE, or MQTT.
-
+:::

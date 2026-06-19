@@ -499,8 +499,7 @@ That consistency allows a developer, maintainer, or operator to keep thinking cl
 
 This is the real transition from applications to systems.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - A system is not just a bigger application.
 - A SNode.C system is best understood as a constellation of named roles and boundaries.
 - A role name is system vocabulary; it should help code, configuration, logs, diagnostics, deployment, and operator discussion use the same words.
@@ -514,6 +513,7 @@ This is the real transition from applications to systems.
 - Stable protocol cores and domain logic are easier to evolve when they are not fused unnecessarily to one carrier or deployment shape.
 - SNode.C provides communication architecture; domain code still owns domain semantics.
 - Chapter 31 applies this vocabulary to MQTTSuite as a concrete reference ecosystem.
+:::
 
 ### Closing perspective
 

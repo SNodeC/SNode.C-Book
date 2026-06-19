@@ -99,7 +99,9 @@ A context that is truly a per-connection protocol endpoint is easier to carry to
 
 The useful question is:
 
-> Does this code describe the protocol conversation, or does it describe the carrier and deployment environment?
+::: {.snodec-rule title="Protocol/carrier rule"}
+Does this code describe the protocol conversation, or does it describe the carrier and deployment environment?
+:::
 
 Protocol conversation belongs in the context. Carrier and deployment concerns usually belong outside it.
 
@@ -509,8 +511,7 @@ Once the same protocol can be carried over different lower families, configurati
 
 This chapter shows why configuration matters. Chapter 16 begins to explain its philosophy.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Lower-family transfer is possible when protocol behavior is kept in the `SocketContext`.
 - The factory keeps context creation, role preconfiguration, and stable dependency passing separate from protocol behavior.
 - The application-side server/client type and the registered instance change with the lower family; the protocol endpoint may remain stable.
@@ -519,6 +520,7 @@ This chapter shows why configuration matters. Chapter 16 begins to explain its p
 - Reuse should stop when lower-family semantics become part of the protocol's meaning.
 - Small family-specific outer code is often clearer than an over-generalized abstraction.
 - Chapter 16 begins the configuration view because lower-family transfer makes configuration visible.
+:::
 
 ### Closing perspective
 

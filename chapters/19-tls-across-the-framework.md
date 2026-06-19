@@ -12,7 +12,9 @@ TLS does not introduce a second application model. It changes the connection lay
 
 That is the central idea of this chapter:
 
-> TLS changes the connection layer; it does not replace the application architecture.
+::: {.snodec-rule title="TLS boundary rule"}
+TLS changes the connection layer; it does not replace the application architecture.
+:::
 
 A TLS-enabled SNode.C application still has:
 
@@ -476,7 +478,9 @@ TLS is easier to understand when the non-TLS shape is already clear because the 
 
 A useful rule is:
 
-> Write the protocol endpoint as if secure and insecure transport are the same conversation whenever that is honestly true.
+::: {.snodec-rule title="Protocol continuity rule"}
+Write the protocol endpoint as if secure and insecure transport are the same conversation whenever that is honestly true.
+:::
 
 Then let:
 
@@ -496,14 +500,14 @@ TLS-capable components make secure connection handling possible; they do not by 
 
 That distinction will matter again in the deployment chapters. A binary may be linked with TLS support and still fail as a secure service if the surrounding filesystem, permissions, and trust material are wrong. TLS-capable linking is not the same as TLS deployment.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - TLS is a connection-layer specialization, not a second application architecture.
 - The lower communication family and transport form remain present beneath TLS.
 - TLS changes reader/writer behavior, SSL object setup, handshake, shutdown, close-notify handling, certificate/trust configuration, and diagnostics.
 - The application-side handle and registered instance model remain recognizable; the TLS wrapper changes the connection-layer machinery.
 - A `SocketContext` can often remain TLS-independent when the protocol conversation is the same after secure connection setup.
 - TLS-specific meaning should enter protocol logic only when certificate, trust, SNI, or secure-transport properties are part of the protocol semantics.
+:::
 
 ### Closing perspective
 

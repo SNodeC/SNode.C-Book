@@ -552,8 +552,7 @@ This is only a teaching view. A real deployment may use a different topology or 
 
 The point is cooperation. MQTTSuite shows how SNode.C-based applications can remain focused while still forming a larger system.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - MQTTSuite is a reference ecosystem, not a second framework manual.
 - The suite consists of focused applications plus shared support where useful.
 - The top-level build layout exposes the ecosystem shape: shared library support and separate operational applications.
@@ -567,6 +566,7 @@ The point is cooperation. MQTTSuite shows how SNode.C-based applications can rem
 - The build system and configuration surfaces expose much of the system surface.
 - MQTTSuite closes Part IX by showing how SNode.C applications can form a coherent ecosystem.
 - Chapter 32 moves into building, components, and linking strategy.
+:::
 
 ### Closing perspective
 

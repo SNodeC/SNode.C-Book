@@ -43,7 +43,9 @@ The shared base gives the framework a common shape. The derived family classes p
 
 That is the right compromise for this part of the design:
 
-> One address pattern, but no false claim that all endpoint identities mean the same thing.
+::: {.snodec-note title="Endpoint identity note"}
+One address pattern, but no false claim that all endpoint identities mean the same thing.
+:::
 
 This mirrors the layer model from Chapter 7. The application shape may stay recognizable, but the endpoint family still matters.
 
@@ -83,7 +85,9 @@ This table is the concrete continuation of Chapter 7. The network layer chooses 
 
 The useful reading habit is:
 
-> Do not ask only what values an address object stores. Ask what kind of endpoint identity those values describe.
+::: {.snodec-note title="Address-reading habit"}
+Do not ask only what values an address object stores. Ask what kind of endpoint identity those values describe.
+:::
 
 #### IPv4: host plus port
 
@@ -413,14 +417,14 @@ The table is deliberately compact. Its job is not to replace the API reference. 
 
 Once that question becomes natural, the address classes become much easier to read.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Socket addresses belong to the network layer: they describe endpoint identity for a selected family.
 - SNode.C uses a shared address pattern, but each supported family keeps its own concrete `SocketAddress` type.
 - IPv4 and IPv6 use host-plus-port identity and add resolution-oriented behavior such as hints, canonical names, and candidate iteration.
 - Unix domain sockets use local socket path identity.
 - RFCOMM and L2CAP use Bluetooth device identity with different service selectors: channel for RFCOMM, PSM for L2CAP.
 - Default construction is meaningful and wildcard-oriented in family-specific ways.
+:::
 
 ### Closing perspective
 

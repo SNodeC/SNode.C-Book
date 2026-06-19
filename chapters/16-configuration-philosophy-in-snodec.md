@@ -14,7 +14,9 @@ Part IV separated protocol behavior, context construction, lower-family selectio
 
 The central idea is:
 
-> In SNode.C, configuration is one of the main ways a communication role becomes concrete.
+::: {.snodec-rule title="Configuration rule"}
+In SNode.C, configuration is one of the main ways a communication role becomes concrete.
+:::
 
 The visible `SocketServer` or `SocketClient` object is the application-side handle. Through that handle, the application configures a server-side or client-side communication role. When `listen(...)` or `connect(...)` registers that role, the configured instance enters the runtime.
 
@@ -574,14 +576,14 @@ Configuration is one of the places where that variation becomes explicit. This c
 
 In SNode.C, configuration is one of those places.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Configuration is part of the SNode.C architecture, not an afterthought beside it.
 - The application-side handle configures a server-side or client-side communication role; the registered instance carries that configured role into the runtime.
 - The C++ API, configuration files, and command line feed one hierarchical configuration model.
 - Named instances become addressable in that hierarchy; anonymous instances remain internal to application code.
 - Sections such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` scope options by responsibility.
 - Parameterless `listen(onStatus)` and `connect(onStatus)` are useful because the role can already be configured before activation.
+:::
 
 ### Closing perspective
 

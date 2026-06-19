@@ -130,7 +130,9 @@ The derived class supplies protocol behavior through lifecycle methods such as `
 
 This gives one of the most important rules in the book:
 
-> The instance is the runtime-facing communication role; the context expresses protocol behavior for a concrete connection.
+::: {.snodec-rule title="Instance/context boundary"}
+The instance is the runtime-facing communication role; the context expresses protocol behavior for a concrete connection.
+:::
 
 The echo pair from Chapter 3 used that rule in a very small form. The server and client handles registered roles. The framework advanced those roles through runtime flow, and the context performed the echo behavior once a connection existed. Larger applications follow the same boundary even when the protocol is HTTP, WebSocket, MQTT, or a custom stream protocol.
 
@@ -275,9 +277,9 @@ It should not be used as a global protocol singleton. It exists to hold per-conn
 
 The lifetime rule is:
 
-```text
-instance lifetime >= connection lifetime >= context lifetime
-```
+::: {.snodec-rule title="Lifetime rule"}
+`instance lifetime` >= `connection lifetime` >= `context lifetime`
+:::
 
 That rule is conceptual rather than a claim about exact ownership mechanics in every implementation detail. It is the mental ordering that matters. An instance can outlive one connection. A connection carries one context at a time. The context is meaningful only in relation to the connection it serves.
 
@@ -393,7 +395,9 @@ Those names are not decorative. They encode layer decisions.
 
 This gives a useful reading habit:
 
-> When a SNode.C name feels long, do not shorten it mentally too early. First ask which decisions it records.
+::: {.snodec-note title="Reading habit"}
+When a SNode.C name feels long, do not shorten it mentally too early. First ask which decisions it records.
+:::
 
 Often the long name tells you exactly where the type sits in the framework.
 
@@ -437,7 +441,9 @@ A flow can be started, observed, retried, terminated, and associated with runtim
 
 For the reader, the important mental rule is:
 
-> `listen(...)` and `connect(...)` register instances; the runtime and flow-controller machinery advance them.
+::: {.snodec-rule title="Runtime-flow rule"}
+`listen(...)` and `connect(...)` register instances; the runtime and flow-controller machinery advance them.
+:::
 
 That rule is more precise than saying that these calls “start the server” or “open the connection,” although those informal phrases may be acceptable in casual discussion.
 
@@ -553,8 +559,7 @@ metrics
 
 Together they form the working mental model of SNode.C.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - SNode.C is best understood as an event-driven, layer-based framework built from recurring roles.
 - `core::SNodeC` owns the visible runtime lifecycle; `listen(...)` and `connect(...)` register instances that the runtime and flow-controller machinery advance.
 - A server or client instance is the long-lived runtime-managed role; the visible `SocketServer` or `SocketClient` object is the application-side handle used to configure and register it.
@@ -562,5 +567,6 @@ Together they form the working mental model of SNode.C.
 - A `SocketContextFactory` creates per-connection contexts, and a `SocketContext` is where protocol behavior belongs.
 - The practical layer stack is network family, transport form, connection handling, and application protocol.
 - Configuration, callbacks, retry behavior, flow control, diagnostics, and metrics are part of the operational model, not decoration around it.
+:::
 
 The next chapters will open the model from the inside. Chapter 6 looks more closely at the core runtime and event processing. Chapter 7 then turns the layer model into practical reading and design guidance for network, transport, connection, and application boundaries.

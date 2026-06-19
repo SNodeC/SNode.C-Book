@@ -751,14 +751,14 @@ The application gives the operational envelope. The instance gives the configure
 
 The option gives one value. The same shape appears in C++ API calls, command-line traversal, and configuration-file keys. Therefore, the configuration model scales from a small echo example to applications with several communication roles.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - The configuration hierarchy is `application -> instance -> section -> option`.
 - Application configuration describes the operational envelope of the executable.
 - A named instance is an externally addressable configured communication role; an anonymous instance remains internal to application code.
 - Sections such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` group options by responsibility.
 - The same hierarchy appears through the C++ API, command line, and configuration files.
 - Disablement lets a role remain present while no longer blocking startup as a required participant.
+:::
 
 ### Closing perspective
 

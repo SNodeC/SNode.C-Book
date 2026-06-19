@@ -6,7 +6,9 @@ Chapter 22 showed how HTTP handling becomes application structure through routin
 
 That is the central idea of this chapter:
 
-> Server-Sent Events keep the application inside HTTP while changing the response from a short message into a long-lived event stream.
+::: {.snodec-note title="SSE lifetime note"}
+Server-Sent Events keep the application inside HTTP while changing the response from a short message into a long-lived event stream.
+:::
 
 Here, “real-time” means live-update HTTP. It does not mean deterministic latency, hard real-time scheduling, or a replacement for the lower timing and failure model introduced earlier. SSE is a practical web mechanism for delivering server-side updates as they become available.
 
@@ -481,14 +483,14 @@ Use cases include:
 
 The timing behavior still depends on the network, server, client, buffering, and reconnect policy.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Server-Sent Events keep the application inside HTTP while turning one response into a long-lived event stream.
 - SSE is one-way: the long-lived stream carries events from server to client.
 - SNode.C provides a client-side `EventSource` abstraction on top of an HTTP client.
 - Server-side SSE is an HTTP or Express route that keeps a response open and writes event-stream records.
 - `ReadyState` describes the client-side stream lifecycle: connecting, open, or closed.
 - `MessageEvent` raises SSE fields into an application-facing event object.
+:::
 
 ### Closing perspective
 

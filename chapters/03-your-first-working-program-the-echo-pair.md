@@ -347,7 +347,9 @@ For a first reading, it is tempting to say that this line â€œstarts the server.â
 
 A better mental model is:
 
-> `listen(...)` configures and registers the server-side communication role. The runtime and flow-controller machinery advance the actual event-driven flow after `core::SNodeC::start()` is called.
+::: {.snodec-rule title="Runtime registration rule"}
+`listen(...)` configures and registers the server-side communication role. The runtime and flow-controller machinery advance the actual event-driven flow after `core::SNodeC::start()` is called.
+:::
 
 This distinction will matter later for configuration, retries, and runtime behavior.
 
@@ -639,14 +641,14 @@ You give up the illusion that `main()` controls every socket operation directly.
 
 This does not make the low-level details disappear. It organizes where they belong.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - The first working example is small, but it already contains the core SNode.C application pattern.
 - The visible server or client object is the application-side handle; the instance is the configured communication role registered through `listen(...)` or `connect(...)`.
 - A `SocketContextFactory` creates one context for each established connection.
 - A `SocketContext` contains the application protocol behavior for that connection.
 - `listen(...)` and `connect(...)` register communication roles; the runtime and flow-controller machinery advance the actual event-driven work.
 - The same structure used for IPv4 legacy streams can later be recognized again when the lower family, stream mode, or application protocol changes.
+:::
 
 ### Closing perspective
 

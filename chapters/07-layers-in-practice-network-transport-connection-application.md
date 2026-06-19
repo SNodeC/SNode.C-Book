@@ -107,7 +107,9 @@ Once this habit is learned, long names become useful instead of intimidating. Th
 
 A useful reading rule is:
 
-> Read a SNode.C communication type as a stack description before reading it as an isolated API name.
+::: {.snodec-rule title="Layer-reading rule"}
+Read a SNode.C communication type as a stack description before reading it as an isolated API name.
+:::
 
 #### Component names tell the same story
 
@@ -174,7 +176,9 @@ It does not mean these families are identical. They are not. IPv4 and IPv6 use n
 
 The design point is subtler:
 
-> SNode.C reuses the application shape without pretending that endpoint semantics are the same.
+::: {.snodec-note title="Endpoint-semantics note"}
+SNode.C reuses the application shape without pretending that endpoint semantics are the same.
+:::
 
 That is exactly the balance a layered framework should aim for. It lets the reader carry a mental model from one family to another, while still respecting family-specific facts.
 
@@ -549,14 +553,14 @@ The question to keep asking is:
 
 Sometimes the answer is one layer. Often, it is a primary layer plus consequences in another layer. That is normal. Real systems are layered, but they are still systems.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - The communication stack is not the runtime core: the runtime advances instances, while the stack describes what kind of communication those instances represent.
 - The network layer chooses the endpoint family, such as IPv4, IPv6, Unix domain sockets, RFCOMM, or L2CAP.
 - The transport layer gives the communication form; in the early teaching path, that form is `stream`.
 - The connection layer manages the concrete peer relationship; `legacy` names the non-TLS stream connection variant, while `tls` adds TLS connection handling.
 - The application layer contains protocol behavior, whether that behavior is a custom `SocketContext`, HTTP, WebSocket, Express-like routing, MQTT, or MQTT over WebSocket.
 - SNode.C type names and component names are compressed architectural statements, and layers are real boundaries without being sealed walls.
+:::
 
 ### Closing perspective
 

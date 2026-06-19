@@ -24,7 +24,9 @@ A reader who opens such a tree without a map can easily get the wrong impression
 
 The rule for this chapter is therefore simple:
 
-> Do not read SNode.C as a pile of files. Read it as a set of layers, roles, and recurring boundaries.
+::: {.snodec-rule title="Reading rule"}
+Do not read SNode.C as a pile of files. Read it as a set of layers, roles, and recurring boundaries.
+:::
 
 This chapter does not try to explain every file. It teaches a reading strategy. Later chapters will move into the runtime, the lower communication families, application protocols, configuration, TLS, HTTP, WebSocket, MQTT, persistence, deployment, and testing in detail. Here the goal is more basic: learn how to open the repository and stay oriented.
 
@@ -346,7 +348,9 @@ The top-level build delegates into `src`. The `src` build adds the major framewo
 
 This gives a practical reading habit:
 
-> When you do not know where an executable, library, or component comes from, read its nearest `CMakeLists.txt` before searching the whole tree.
+::: {.snodec-note title="Build-reading habit"}
+When you do not know where an executable, library, or component comes from, read its nearest `CMakeLists.txt` before searching the whole tree.
+:::
 
 Build files reveal boundaries that may be less obvious from implementation files alone.
 
@@ -399,19 +403,19 @@ Text search is useful, but search without an architectural question can mislead.
 
 A weak search question is:
 
-> Where is `SocketServer`?
+```text
+Where is SocketServer?
+```
 
-Better search questions are:
+A better search habit asks for the role that a name plays:
 
-> Which `SocketServer` is the stream server template?
-
-> Which `SocketServer` name selects IPv4 legacy stream communication?
-
-> Which overload registers the port and backlog?
-
-> Which code path starts the flow controller?
-
-> Which factory creates the per-connection context?
+::: {.snodec-checklist title="Search by role"}
+- Which `SocketServer` is the stream server template?
+- Which `SocketServer` name selects IPv4 legacy stream communication?
+- Which overload registers the port and backlog?
+- Which code path starts the flow controller?
+- Which factory creates the per-connection context?
+:::
 
 A good search query combines a name with a role:
 
@@ -560,14 +564,14 @@ A practical reading workflow for SNode.C is:
 
 This workflow is not only useful for beginners. It is useful when extending the framework. A new feature should have a clear place in the same map.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Read SNode.C as a set of layers and recurring roles, not as a flat pile of source files.
 - CMake files are navigation aids: they reveal subdirectories, targets, dependencies, components, and install boundaries.
 - Long namespace and component names usually encode architecture: layer area, network family, transport form, connection mode, and role.
 - Example applications show framework usage, but they are not the framework core; separate application decisions from reusable framework patterns.
 - A reliable reading path starts from an application, finds the application-side handle, configured instance, factory, and context, then follows aliases into `net` and abstractions into `core`.
 - Variant-heavy code becomes easier to read once you ask what stayed structurally the same and what changed because a lower layer changed.
+:::
 
 ### Transition to the architecture chapters
 

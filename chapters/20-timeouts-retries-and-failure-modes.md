@@ -290,6 +290,10 @@ Figure~\ref{fig:retry-reconnect-flow} separates the two loops visually. Retry be
 
 The important point is that retry and reconnect are not synonyms. Retry reacts to classified connection-attempt failure. Reconnect reacts to connection loss after success. This distinction keeps failure handling predictable: an application can reason separately about failed startup attempts, address iteration, retry backoff, and later connection recovery.
 
+::: {.snodec-rule title="Retry/reconnect rule"}
+Retry belongs to failed connection attempts. Reconnect belongs to established connections that later disconnect.
+:::
+
 A failed initial connect attempt is not the same situation as a client that was connected for an hour and then lost its peer. A server that cannot bind its listening endpoint is not in the same situation as a protocol context that decides to close a connection.
 
 #### Server retry
@@ -379,7 +383,9 @@ A retry policy may need to answer several questions:
 
 Together, these settings prevent retry behavior from becoming an uncontrolled loop. They also let retry behavior adapt to deployment needs.
 
-Automatic retry can be useful, but it is not automatically good. It can hide real failure if it is unbounded, invisible, or enabled in the wrong place. Retry is policy, not morality. It should be bounded, visible, and configurable.
+::: {.snodec-warning title="Retry-policy warning"}
+Automatic retry can hide real failure if it is unbounded, invisible, or enabled in the wrong place. Retry is policy, not morality. It should be bounded, visible, and configurable.
+:::
 
 #### Scaling and limits
 
@@ -693,14 +699,14 @@ Is this intentional disablement or termination?
 
 When the answer is clear, the system is easier to operate and easier to debug.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Robust communication is communication over time: activation, establishment, operation, interruption, shutdown, retry, reconnect, termination, or stop.
 - Timeout, retry, reconnect, shutdown, disablement, and failure state are related but distinct concepts.
 - Retry belongs to failed listen/connect activation attempts; reconnect belongs to client lifecycle after an established connection ended.
 - Retry policy is role-level behavior controlled by retry, retry timeout, retry base, retry limit, retry jitter, retry tries, and retry-on-fatal settings.
 - `NO_RETRY` is retry-control information attached to a state; it does not replace `ERROR`, `FATAL`, or another reported outcome.
 - `DISABLED` means intentional non-participation, not failure.
+:::
 
 ### Closing perspective
 

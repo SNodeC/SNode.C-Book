@@ -424,20 +424,23 @@ That question should follow every extension.
 
 A new `SocketContext` needs tests for protocol endpoint behavior; middleware needs request/response tests; a WebSocket subprotocol needs upgrade, frame/message, close, and invalid-input tests; MQTT application behavior needs session, topic, publish, and reconnect tests; a build component needs an installed-consumer test. The extension is complete only when its boundary can be tested, debugged, and explained.
 
-```text
-extension checklist:
-  what boundary was added?
-  what behavior belongs to it?
-  what behavior must not belong to it?
-  how is it configured?
-  how is it diagnosed?
-  how is it built and installed?
-  what test protects it?
-```
+::: {.snodec-checklist title="Extension checklist"}
+- What boundary was added?
+- What behavior belongs to it?
+- What behavior must not belong to it?
+- How is it configured?
+- How is it diagnosed?
+- How is it built and installed?
+- What test protects it?
+:::
 
 ### Avoiding framework pollution
 
 Framework pollution happens when project-specific behavior enters the framework merely because the framework was the easiest place to modify.
+
+::: {.snodec-warning title="Framework-pollution warning"}
+Do not extend the framework by smuggling application policy into lower layers. Keep project-specific behavior at the application boundary unless the reusable boundary is real.
+:::
 
 Typical symptoms include:
 
@@ -475,6 +478,10 @@ one configuration section that mixes deployment, protocol, and domain policy
 
 A safe extension preserves meaning first. Generality can emerge when the repeated boundary is real.
 
+::: {.snodec-rule title="Extension rule"}
+Extend at the boundary whose responsibility actually changes.
+:::
+
 ### Review questions for a proposed extension
 
 Before adding a reusable extension to a SNode.C application or to the framework itself, ask these questions.
@@ -496,14 +503,14 @@ Before adding a reusable extension to a SNode.C application or to the framework 
 
 The questions prevent an extension from becoming accidental architecture.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Safe extension starts with the boundary, not with the easiest file to edit.
 - Application-local code is not inferior; it is often the right home for domain behavior.
 - Framework-level extensions should represent reusable framework boundaries, not one project's policy.
 - A new `SocketContext` is appropriate for connection-local protocol endpoint behavior.
 - A new `SocketContextFactory` should construct the right context, not become a service locator.
 - Middleware and routers are for web-application flow, not every cross-cutting concern.
+:::
 
 ### From safe extension to a guided project
 

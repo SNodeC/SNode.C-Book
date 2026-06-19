@@ -155,7 +155,9 @@ This does not mean lower layers are irrelevant. They are very relevant. IPv4, IP
 
 The point is different:
 
-> SNode.C lets lower-layer choices and application-layer behavior be reasoned about separately without pretending that they are unrelated.
+::: {.snodec-rule title="Separation rule"}
+SNode.C lets lower-layer choices and application-layer behavior be reasoned about separately without pretending that they are unrelated.
+:::
 
 That is the architectural lens the reader should keep from the beginning.
 
@@ -236,13 +238,13 @@ Chapter 3 gives the first full example.
 
 Here it is enough to understand why the book starts small: the small example gives the first clear view of the structure.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - SNode.C is introduced in this book as the concrete framework for layered network programming, not merely as a collection of APIs.
 - Its value comes from recurring roles and boundaries: runtime, configured communication role, registered runtime-visible instance, concrete connection, factory, and per-connection context.
 - The framework separates lower communication choices from application protocol behavior, so the same mental model can survive changes in network family, transport, or protocol layer.
 - The first echo example is deliberately small because it exposes the shape of the framework without hiding it behind protocol complexity.
 - MQTTSuite becomes important later as a reference ecosystem, but the book first builds the framework model that makes such systems understandable.
+:::
 
 ### Closing perspective
 

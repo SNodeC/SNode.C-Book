@@ -20,7 +20,9 @@ That is an important shift. Up to this point, the book has introduced many frame
 
 The central sentence for this chapter is:
 
-> In SNode.C, the build target often reveals the application architecture before the entry point is opened.
+::: {.snodec-note title="Build-target reading note"}
+In SNode.C, the build target often reveals the application architecture before the entry point is opened.
+:::
 
 That is the main reason `src/apps` is useful as study material. It shows not only C++ entry points, but also executable targets, linked libraries, optional dependencies, and installable application shapes. Chapter 28 showed persistence as a boundary. Chapter 29 shows applications as assembly points.
 
@@ -59,6 +61,15 @@ which optional dependencies decide whether the target exists
 #### Selected application targets in the repository
 
 A first reading pass should start with the build targets. The top-level `src/apps/CMakeLists.txt` creates executables and links them against selected SNode.C targets. This file is an in-source-tree build file, and that distinction matters.
+
+::: {.snodec-checklist title="Application reading checklist"}
+- Read the CMake target.
+- Identify the lower layer.
+- Find the configured role.
+- Find the context factory.
+- Find the context.
+- Find the runtime start point.
+:::
 
 Inside the SNode.C source tree, application targets can link local CMake target names such as:
 
@@ -771,14 +782,14 @@ MariaDB unavailable
 
 These are application-design decisions. The build system records them.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - `src/apps` shows how framework layers become executable targets.
 - The chapter studies representative applications, not every target in the directory.
 - In SNode.C, the build target often reveals the application architecture before the entry point is opened.
 - In-tree applications use local target names; external applications use installed `snodec::...` targets.
 - A direct link line shows the application-facing component choices; component-owned dependency graphs may be deeper.
 - The executable entry point is usually an assembly point for runtime initialization, application objects, routes, callbacks, configuration, diagnostics, and runtime start.
+:::
 
 ### Closing perspective
 

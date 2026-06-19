@@ -50,6 +50,10 @@ Deployment is architecture entering the filesystem. When SNode.C is installed, t
 
 A small experimental program may run from the build tree with a manually adjusted environment. A serious deployment needs a reproducible filesystem shape. Figure~\ref{fig:build-install-package-deployment-surface} shows the path from a build component to an installed runtime surface.
 
+::: {.snodec-warning title="Install-tree warning"}
+Do not confuse build-tree success with install-tree success. A running role also needs its installed libraries, modules, configuration, service shape, and writable runtime state.
+:::
+
 ![The build-to-deployment path in which component choices become installed packages, service definition, configuration, and runtime state.](figures/pdf/fig-11-build-install-package-deployment-surface.pdf){#fig:build-install-package-deployment-surface width=90% latex-placement="tbp"}
 
 Figure~\ref{fig:build-install-package-deployment-surface} is intentionally not only a build pipeline. The important point is that each step preserves architectural information. A CMake target expresses a component boundary. An install component gives that boundary a filesystem location. A package component adds dependency metadata. The deployed runtime surface then has to contain everything the running role needs: libraries, executables, runtime-loaded modules, configuration, service definition, writable state, and deployment-specific resources.
@@ -544,8 +548,7 @@ The application may still support daemonization, but on OpenWrt the deployed rol
 
 ### Reading a deployment
 
-#### Practical deployment checklist
-
+::: {.snodec-checklist title="Practical deployment checklist"}
 A SNode.C deployment can be read with a checklist. It is not a command sequence; it is a way to keep deployment architectural.
 
 1. Which executable or service role is being deployed?
@@ -562,6 +565,7 @@ A SNode.C deployment can be read with a checklist. It is not a command sequence;
 12. Which package manager installs or updates the service?
 13. Which repository or feed provides the packages?
 14. Which trust model protects package updates?
+:::
 
 A shorter mental grouping is:
 
@@ -592,14 +596,14 @@ A deployment should not hide:
 
 When these details are hidden, failures appear later as unrelated runtime problems. When they are explicit, deployment becomes another readable part of the system.
 
-### What to remember
-
+::: {.snodec-remember title="What to remember"}
 - Deployment is architecture entering the filesystem.
 - Linking proves that the binary can be built; deployment proves that the runtime environment exists.
 - SNode.C's component model should survive installation and packaging.
 - CPack connects install components to ordinary Linux packages, but it does not replace service, certificate, database, repository, or update policy.
 - Package dependencies should follow component dependencies.
 - Runtime-loaded upgrade and subprotocol modules make installation paths and RPATH part of deployment.
+:::
 
 ### Closing perspective
 
