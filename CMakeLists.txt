@@ -13,8 +13,6 @@ set(BUILD_DIR
     CACHE PATH "Output directory")
 
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/book-files.txt" BOOK_FILES)
-file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/book-files-existing-only.txt"
-     EXISTING_FILES)
 
 set(PANDOC_FROM "markdown+raw_tex+fenced_code_attributes")
 set(PANDOC_CROSSREF_FILTER
@@ -29,21 +27,20 @@ set(PANDOC_LISTINGS_FILTER
     "${CMAKE_CURRENT_SOURCE_DIR}/filters/snodec-listings.lua"
     CACHE STRING "Pandoc Lua filter for book-specific listings styles")
 
-# Reconfigure automatically when one of the manuscript file lists changes.
-# The Pandoc input list is read at configure time and baked into the build rules.
+# Reconfigure automatically when one of the manuscript file lists changes. The
+# Pandoc input list is read at configure time and baked into the build rules.
 set_property(
   DIRECTORY
   APPEND
-  PROPERTY CMAKE_CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/book-files.txt"
-    "${CMAKE_CURRENT_SOURCE_DIR}/book-files-existing-only.txt")
+  PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/book-files.txt"
+           "${CMAKE_CURRENT_SOURCE_DIR}/book-files-existing-only.txt")
 
 # -----------------------------------------------------------------------------
 # TikZ figure build
 # -----------------------------------------------------------------------------
-# Figure source files live in figures/src and are named fig-*.tex.
-# They are compiled to PDF files in figures/pdf so Pandoc can include them from
-# Markdown as ordinary image files.
+# Figure source files live in figures/src and are named fig-*.tex. They are
+# compiled to PDF files in figures/pdf so Pandoc can include them from Markdown
+# as ordinary image files.
 set(FIGURE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/figures/src")
 set(FIGURE_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/figures/pdf")
 set(FIGURE_BUILD_ROOT "${BUILD_DIR}/figures")
@@ -58,8 +55,9 @@ set(FIGURE_PDFS)
 if(FIGURE_SOURCES)
   find_program(XELATEX_EXECUTABLE xelatex)
   if(NOT XELATEX_EXECUTABLE)
-    message(FATAL_ERROR
-      "xelatex was not found. It is required to build TikZ figures.")
+    message(
+      FATAL_ERROR "xelatex was not found. It is required to build TikZ figures."
+    )
   endif()
 
   foreach(FIGURE_SOURCE IN LISTS FIGURE_SOURCES)
@@ -71,12 +69,10 @@ if(FIGURE_SOURCES)
       OUTPUT "${FIGURE_PDF}"
       COMMAND "${CMAKE_COMMAND}" -E make_directory "${FIGURE_BUILD_DIR}"
       COMMAND "${CMAKE_COMMAND}" -E make_directory "${FIGURE_OUTPUT_DIR}"
-      COMMAND
-        "${XELATEX_EXECUTABLE}" -interaction=nonstopmode -halt-on-error
-        -output-directory "${FIGURE_BUILD_DIR}" "${FIGURE_SOURCE}"
-      COMMAND
-        "${CMAKE_COMMAND}" -E copy_if_different
-        "${FIGURE_BUILD_DIR}/${FIGURE_NAME}.pdf" "${FIGURE_PDF}"
+      COMMAND "${XELATEX_EXECUTABLE}" -interaction=nonstopmode -halt-on-error
+              -output-directory "${FIGURE_BUILD_DIR}" "${FIGURE_SOURCE}"
+      COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+              "${FIGURE_BUILD_DIR}/${FIGURE_NAME}.pdf" "${FIGURE_PDF}"
       DEPENDS "${FIGURE_SOURCE}" ${FIGURE_SUPPORT_FILES}
       WORKING_DIRECTORY "${FIGURE_SOURCE_DIR}"
       COMMENT "Building TikZ figure ${FIGURE_NAME}"
@@ -105,9 +101,10 @@ function(make_pandoc_target target_name output_file)
     ${target_name}
     COMMAND "${CMAKE_COMMAND}" -E make_directory "${BUILD_DIR}"
     COMMAND
-      "${PANDOC}" ${ARGN} --lua-filter "${PANDOC_LISTINGS_FILTER}" --lua-filter "${PANDOC_CALLOUT_FILTER}" --filter "${PANDOC_CROSSREF_FILTER}" --syntax-highlighting=idiomatic --from
-      "${PANDOC_FROM}" --top-level-division=part -o
-      "${BUILD_DIR}/${output_file}.tex"
+      "${PANDOC}" ${ARGN} --lua-filter "${PANDOC_LISTINGS_FILTER}" --lua-filter
+      "${PANDOC_CALLOUT_FILTER}" --filter "${PANDOC_CROSSREF_FILTER}"
+      --syntax-highlighting=idiomatic --from "${PANDOC_FROM}"
+      --top-level-division=part -o "${BUILD_DIR}/${output_file}.tex"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     VERBATIM)
 endfunction()
@@ -119,9 +116,11 @@ function(make_pandoc_pdf_target target_name output_file)
     COMMAND "cp" "-fa" "${BUILD_DIR}/${output_file}.pdf"
             "${BUILD_DIR}/${output_file}-old.pdf" || echo ""
     COMMAND
-      "${PANDOC}" ${ARGN} --lua-filter "${PANDOC_LISTINGS_FILTER}" --lua-filter "${PANDOC_CALLOUT_FILTER}" --filter "${PANDOC_CROSSREF_FILTER}" --syntax-highlighting=idiomatic --from
-      "${PANDOC_FROM}" --to pdf --top-level-division=part --pdf-engine
-      "${PDF_ENGINE}" -o "${BUILD_DIR}/${output_file}-temp.pdf"
+      "${PANDOC}" ${ARGN} --lua-filter "${PANDOC_LISTINGS_FILTER}" --lua-filter
+      "${PANDOC_CALLOUT_FILTER}" --filter "${PANDOC_CROSSREF_FILTER}"
+      --syntax-highlighting=idiomatic --from "${PANDOC_FROM}" --to pdf
+      --top-level-division=part --pdf-engine "${PDF_ENGINE}" -o
+      "${BUILD_DIR}/${output_file}-temp.pdf"
     COMMAND "rm" "-f" "${BUILD_DIR}/${output_file}.pdf" || echo ""
     COMMAND "mv" "${BUILD_DIR}/${output_file}-temp.pdf"
             "${BUILD_DIR}/${output_file}.pdf" || echo ""
@@ -132,36 +131,33 @@ endfunction()
 make_pandoc_pdf_target(pdf "snodec-book" --metadata-file metadata.yaml
                        ${BOOK_FILES})
 
-make_pandoc_pdf_target(pdf-existing "snodec-book-existing-only" --metadata-file
-                       metadata.yaml ${EXISTING_FILES})
-
 make_pandoc_target(tex "snodec-book" --metadata-file metadata.yaml
                    ${BOOK_FILES})
-
-make_pandoc_target(tex-existing "snodec-book-existing-only" --metadata-file
-                   metadata.yaml ${EXISTING_FILES})
 
 make_pandoc_pdf_target(proposal "book-proposal-package" --metadata-file
                        metadata.yaml proposal/book-proposal-package.md)
 
-# Main manuscript PDF targets require generated figure PDFs because the
-# Markdown sources include figures/pdf/fig-*.pdf.
+# Main manuscript PDF targets require generated figure PDFs because the Markdown
+# sources include figures/pdf/fig-*.pdf.
 add_dependencies(pdf figures)
-add_dependencies(pdf-existing figures)
 
 add_custom_target(book ALL DEPENDS pdf)
 
-add_custom_target(all-books DEPENDS pdf pdf-existing tex tex-existing proposal)
-
+add_custom_target(all-books DEPENDS pdf tex tex-existing proposal)
 
 # -----------------------------------------------------------------------------
 # Publisher/proposal package
 # -----------------------------------------------------------------------------
-# Create a clean proposal package containing only the files needed to review the
-# book proposal.  The package is written to ./packages and named with a date/time
-# stamp plus an incrementing two-digit version number, for example:
+# Create a clean publisher/reviewer package for the full book proposal.  The
+# package contains the generated proposal PDF, the generated full manuscript
+# PDF, and the source files required to inspect or rebuild the
+# proposal/manuscript without carrying local build artefacts, IDE state, VCS
+# metadata, or workbench reports into the archive.
 #
-#   snodec-book-proposal-package-20260616-214530-v03.tar.gz
+# The package is written to ./packages and named with a date/time stamp plus an
+# incrementing two-digit version number, for example:
+#
+# snodec-book-proposal-package-20260616-214530-v03.tar.gz
 #
 # The version number is computed at build time by scanning existing proposal
 # packages in ./packages and taking the next free number.
@@ -169,7 +165,9 @@ set(PROPOSAL_PACKAGE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/packages")
 set(PROPOSAL_PACKAGE_SCRIPT
     "${CMAKE_CURRENT_BINARY_DIR}/make-proposal-package.cmake")
 
-file(WRITE "${PROPOSAL_PACKAGE_SCRIPT}" [==[
+file(
+  WRITE "${PROPOSAL_PACKAGE_SCRIPT}"
+  [==[
 if(NOT DEFINED SOURCE_DIR)
   message(FATAL_ERROR "SOURCE_DIR is not set")
 endif()
@@ -217,34 +215,190 @@ set(PACKAGE_PATH "${PACKAGE_DIR}/${PACKAGE_BASENAME}.tar.gz")
 set(STAGING_DIR "${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_BASENAME}")
 file(REMOVE_RECURSE "${STAGING_DIR}")
 file(MAKE_DIRECTORY "${STAGING_DIR}")
-file(MAKE_DIRECTORY "${STAGING_DIR}/proposal")
+file(MAKE_DIRECTORY "${STAGING_DIR}/pdf")
 
-set(REQUIRED_PROPOSAL_FILES
-    "proposal/book-proposal-package.md"
-    "metadata.yaml")
+set(REQUIRED_SOURCE_FILES
+    "metadata.yaml"
+    "book-files.txt"
+    "book-files-existing-only.txt"
+    "CMakeLists.txt"
+    "proposal/book-proposal-package.md")
 
-foreach(REQUIRED_FILE IN LISTS REQUIRED_PROPOSAL_FILES)
+set(REQUIRED_SOURCE_DIRS
+    "chapters"
+    "parts"
+    "proposal"
+    "figures/src"
+    "figures/pdf")
+
+set(REQUIRED_BUILD_FILES
+    "snodec-book.pdf"
+    "book-proposal-package.pdf")
+
+foreach(REQUIRED_FILE IN LISTS REQUIRED_SOURCE_FILES)
   if(NOT EXISTS "${SOURCE_DIR}/${REQUIRED_FILE}")
-    message(FATAL_ERROR "Required proposal package file missing: ${REQUIRED_FILE}")
+    message(FATAL_ERROR
+      "Required publisher package source file missing: ${REQUIRED_FILE}")
   endif()
 endforeach()
 
-file(COPY "${SOURCE_DIR}/proposal/book-proposal-package.md"
-     DESTINATION "${STAGING_DIR}/proposal")
-file(COPY "${SOURCE_DIR}/metadata.yaml" DESTINATION "${STAGING_DIR}")
+foreach(REQUIRED_DIR IN LISTS REQUIRED_SOURCE_DIRS)
+  if(NOT IS_DIRECTORY "${SOURCE_DIR}/${REQUIRED_DIR}")
+    message(FATAL_ERROR
+      "Required publisher package source directory missing: ${REQUIRED_DIR}")
+  endif()
+endforeach()
 
-foreach(OPTIONAL_FILE IN ITEMS README.md STRUCTURE.md)
+foreach(REQUIRED_BUILD_FILE IN LISTS REQUIRED_BUILD_FILES)
+  if(NOT EXISTS "${BUILD_DIR}/${REQUIRED_BUILD_FILE}")
+    message(FATAL_ERROR
+      "Required generated package file missing: ${BUILD_DIR}/${REQUIRED_BUILD_FILE}")
+  endif()
+endforeach()
+
+function(copy_source_file RELATIVE_PATH)
+  get_filename_component(PARENT_DIR "${RELATIVE_PATH}" DIRECTORY)
+  if(PARENT_DIR)
+    file(MAKE_DIRECTORY "${STAGING_DIR}/${PARENT_DIR}")
+    file(COPY "${SOURCE_DIR}/${RELATIVE_PATH}"
+         DESTINATION "${STAGING_DIR}/${PARENT_DIR}")
+  else()
+    file(COPY "${SOURCE_DIR}/${RELATIVE_PATH}"
+         DESTINATION "${STAGING_DIR}")
+  endif()
+endfunction()
+
+function(copy_source_dir RELATIVE_PATH)
+  get_filename_component(PARENT_DIR "${RELATIVE_PATH}" DIRECTORY)
+  if(PARENT_DIR)
+    file(MAKE_DIRECTORY "${STAGING_DIR}/${PARENT_DIR}")
+    set(DESTINATION_DIR "${STAGING_DIR}/${PARENT_DIR}")
+  else()
+    set(DESTINATION_DIR "${STAGING_DIR}")
+  endif()
+
+  file(COPY "${SOURCE_DIR}/${RELATIVE_PATH}"
+       DESTINATION "${DESTINATION_DIR}"
+       PATTERN ".git" EXCLUDE
+       PATTERN ".gitignore" EXCLUDE
+       PATTERN ".gitattributes" EXCLUDE
+       PATTERN ".qtcreator" EXCLUDE
+       PATTERN ".idea" EXCLUDE
+       PATTERN ".vscode" EXCLUDE
+       PATTERN "build" EXCLUDE
+       PATTERN "cmake-build-*" EXCLUDE
+       PATTERN "CMakeFiles" EXCLUDE
+       PATTERN "CMakeCache.txt" EXCLUDE
+       PATTERN "packages" EXCLUDE
+       PATTERN "*.aux" EXCLUDE
+       PATTERN "*.log" EXCLUDE
+       PATTERN "*.out" EXCLUDE
+       PATTERN "*.toc" EXCLUDE
+       PATTERN "*.fls" EXCLUDE
+       PATTERN "*.fdb_latexmk" EXCLUDE
+       PATTERN "*.synctex.gz" EXCLUDE)
+endfunction()
+
+# Generated PDFs for publisher/reviewer reading.
+file(COPY "${BUILD_DIR}/snodec-book.pdf" DESTINATION "${STAGING_DIR}/pdf")
+file(COPY "${BUILD_DIR}/book-proposal-package.pdf"
+     DESTINATION "${STAGING_DIR}/pdf")
+
+# Required manuscript/proposal sources and build metadata.
+foreach(REQUIRED_FILE IN LISTS REQUIRED_SOURCE_FILES)
+  copy_source_file("${REQUIRED_FILE}")
+endforeach()
+
+foreach(REQUIRED_DIR IN LISTS REQUIRED_SOURCE_DIRS)
+  copy_source_dir("${REQUIRED_DIR}")
+endforeach()
+
+# Optional high-level publisher-facing orientation files.
+foreach(OPTIONAL_FILE IN ITEMS
+        "README.md"
+        "STRUCTURE.md"
+        "LICENSE"
+        "LICENSE.md"
+        "COPYING"
+        "CHANGELOG.md")
   if(EXISTS "${SOURCE_DIR}/${OPTIONAL_FILE}")
-    file(COPY "${SOURCE_DIR}/${OPTIONAL_FILE}" DESTINATION "${STAGING_DIR}")
+    copy_source_file("${OPTIONAL_FILE}")
   endif()
 endforeach()
 
-if(EXISTS "${BUILD_DIR}/book-proposal-package.pdf")
-  file(COPY "${BUILD_DIR}/book-proposal-package.pdf" DESTINATION "${STAGING_DIR}")
-endif()
+# Optional source-support infrastructure used by the current PDF build.
+foreach(OPTIONAL_DIR IN ITEMS
+        "filters"
+        "latex"
+        "cmake"
+        "scripts"
+        "assets"
+        "images")
+  if(IS_DIRECTORY "${SOURCE_DIR}/${OPTIONAL_DIR}")
+    copy_source_dir("${OPTIONAL_DIR}")
+  endif()
+endforeach()
+
+# Optional bundled examples / MiniGateway material.  Only directories present in
+# the source tree are copied.  Local build artefacts inside them are excluded by
+# copy_source_dir().
+foreach(OPTIONAL_DIR IN ITEMS
+        "examples"
+        "apps"
+        "src/apps"
+        "MiniGateway"
+        "MiniGateway-Base"
+        "MiniGateway-Extended"
+        "minigateway")
+  if(IS_DIRECTORY "${SOURCE_DIR}/${OPTIONAL_DIR}")
+    copy_source_dir("${OPTIONAL_DIR}")
+  endif()
+endforeach()
 
 file(WRITE "${STAGING_DIR}/PACKAGE-CONTENTS.txt"
-"SNode.C book proposal package\n\nThis archive contains only the publisher/reviewer-facing proposal files.\n\nIncluded when present:\n- proposal/book-proposal-package.md\n- book-proposal-package.pdf\n- metadata.yaml\n- README.md\n- STRUCTURE.md\n\nGenerated package: ${PACKAGE_BASENAME}.tar.gz\n")
+"SNode.C full book proposal package
+
+This archive is intended for publisher/reviewer evaluation. It contains the generated proposal PDF, the generated full manuscript PDF, and the clean source material needed to inspect the proposal/manuscript package.
+
+Included:
+- pdf/snodec-book.pdf
+- pdf/book-proposal-package.pdf
+- proposal/
+- chapters/
+- parts/
+- figures/src/
+- figures/pdf/
+- metadata.yaml
+- book-files.txt
+- book-files-existing-only.txt
+- CMakeLists.txt
+
+Included when present:
+- README.md
+- STRUCTURE.md
+- LICENSE / LICENSE.md / COPYING
+- CHANGELOG.md
+- filters/
+- latex/
+- cmake/
+- scripts/
+- assets/
+- images/
+- examples/
+- apps/
+- src/apps/
+- MiniGateway*/
+- minigateway/
+
+Deliberately excluded:
+- .git and other VCS metadata
+- IDE state such as .qtcreator, .idea, .vscode
+- local build directories and CMake cache files
+- generated LaTeX auxiliary files
+- existing package archives
+
+Generated package: ${PACKAGE_BASENAME}.tar.gz
+")
 
 execute_process(
   COMMAND "${CMAKE_COMMAND}" -E tar czf "${PACKAGE_PATH}" --format=gnutar .
@@ -256,21 +410,22 @@ if(NOT TAR_RESULT EQUAL 0)
 endif()
 
 file(REMOVE_RECURSE "${STAGING_DIR}")
-message(STATUS "Created proposal package: ${PACKAGE_PATH}")
+message(STATUS "Created full book proposal package: ${PACKAGE_PATH}")
 ]==])
 
 add_custom_target(
   proposal-package
-  DEPENDS proposal
+  DEPENDS pdf proposal
   COMMAND
     "${CMAKE_COMMAND}" -D "SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}" -D
     "BUILD_DIR=${BUILD_DIR}" -D "PACKAGE_DIR=${PROPOSAL_PACKAGE_DIR}" -P
     "${PROPOSAL_PACKAGE_SCRIPT}"
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-  COMMENT "Creating publisher/reviewer proposal package"
+  COMMENT "Creating full publisher/reviewer book proposal package"
   VERBATIM)
 
-# Convenience alias for generators/users that prefer underscores in target names.
+# Convenience alias for generators/users that prefer underscores in target
+# names. Both targets create the same full publisher/reviewer proposal package.
 add_custom_target(proposal_package DEPENDS proposal-package)
 
 add_custom_target(
