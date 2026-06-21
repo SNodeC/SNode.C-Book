@@ -1,127 +1,325 @@
 \documentclass[tikz,border=7pt]{standalone}
-\usepackage{xcolor}
-\definecolor{figFrame}{RGB}{86,104,120}
-\definecolor{figOuterBg}{RGB}{244,247,250}
-\definecolor{figInnerBg}{RGB}{252,253,254}
-\definecolor{titleBlue}{RGB}{52,91,122}
-\definecolor{titleBlueBg}{RGB}{225,236,245}
-\definecolor{startBorder}{RGB}{64,112,151}
-\definecolor{startFill}{RGB}{226,238,248}
-\definecolor{okBorder}{RGB}{88,137,77}
-\definecolor{okFill}{RGB}{229,241,226}
-\definecolor{failBorder}{RGB}{184,112,63}
-\definecolor{failFill}{RGB}{249,235,221}
-\definecolor{decisionBorder}{RGB}{93,101,143}
-\definecolor{decisionFill}{RGB}{236,238,249}
-\definecolor{stopBorder}{RGB}{118,126,135}
-\definecolor{stopFill}{RGB}{239,242,244}
-\definecolor{timerBorder}{RGB}{166,126,58}
-\definecolor{timerFill}{RGB}{250,242,220}
-\definecolor{arrowColor}{RGB}{77,88,98}
-\definecolor{returnArrow}{RGB}{58,98,130}
-\usetikzlibrary{arrows.meta,calc,positioning}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
 
 \begin{document}
+
+\def\arrowL{10mm}
+\def\halfArrowL{5mm}
+\def\panelInnerSep{5mm}
+
+\def\outcomeGap{15mm}
+\def\columnShift{48mm}
+\def\decisionSplit{24mm}
+\def\branchDrop{5mm}
+\def\smallBoxWidth{32mm}
+
 \begin{tikzpicture}[
-  x=1mm,y=1mm,
-  outerbox/.style={draw=figFrame, fill=figOuterBg, rounded corners=3pt, line width=0.85pt},
-  innerbox/.style={draw=figFrame!75, fill=figInnerBg, rounded corners=3pt, line width=0.8pt},
-  startbox/.style={draw=startBorder, fill=startFill, rounded corners=2.5pt, line width=0.8pt},
-  okbox/.style={draw=okBorder, fill=okFill, rounded corners=2.5pt, line width=0.8pt},
-  failbox/.style={draw=failBorder, fill=failFill, rounded corners=2.5pt, line width=0.8pt},
-  decisionbox/.style={draw=decisionBorder, fill=decisionFill, rounded corners=2.5pt, line width=0.8pt},
-  stopbox/.style={draw=stopBorder, fill=stopFill, rounded corners=2.5pt, line width=0.8pt},
-  timerbox/.style={draw=timerBorder, fill=timerFill, rounded corners=2.5pt, line width=0.8pt},
-  boxtext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex, text=black},
-  titletext/.style={font=\sffamily\bfseries\small, text=titleBlue, fill=titleBlueBg, inner sep=1.4pt},
-  arrow/.style={draw=arrowColor, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.78pt},
-  line/.style={draw=arrowColor, line width=0.78pt},
-  returnarrow/.style={draw=returnArrow, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.82pt}
+  snodec diagram,
+  action block/.style={
+    draw=snodecBlue!72,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=54mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  ok block/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=\smallBoxWidth,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  fail block/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=\smallBoxWidth,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  stop block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=\smallBoxWidth,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  decision block/.style={
+    draw=snodecBlue!55,
+    fill=snodecBlueSoft!45,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=48mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  timer block/.style={
+    draw=snodecOrange!65,
+    fill=snodecOrangeSoft!55,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=\smallBoxWidth,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  classify panel/.style={
+    draw=snodecBlue!55,
+    fill=snodecBlueSoft!30,
+    rounded corners=3pt,
+    line width=0.75pt
+  },
+  flow/.style={
+    snodec muted arrow,
+    draw=snodecMuted!75,
+    line width=0.75pt
+  },
+  flow line/.style={
+    draw=snodecMuted!75,
+    line width=0.75pt
+  },
+  return flow/.style={
+    snodec muted arrow,
+    draw=snodecBlue!65,
+    line width=0.75pt,
+    dashed
+  },
+  arrow label/.style={
+    font=\sffamily\footnotesize,
+    text=snodecMuted,
+    fill=white,
+    inner sep=1.1pt
+  }
 ]
 
-\draw[outerbox] (0,0) rectangle (200,-282);
-\node[titletext, anchor=west] at (5,-6) {Retry and reconnect flow};
+% ----------------------------------------------------------------------
+% Initial connect request and attempt.
+% ----------------------------------------------------------------------
+\node[action block] (connectRequest) {%
+  \textbf{\textcolor{snodecBlue}{Connect requested}}\\[-0.4mm]
+  \texttt{SocketClient::connect()}
+};
 
-% top centered boxes
-\draw[startbox] (74,-18) rectangle (126,-38);
-\node[boxtext] at (100,-28) {\begin{tabular}{@{}c@{}}\textbf{connect requested}\\\texttt{SocketClient::connect()}\end{tabular}};
-\draw[arrow] (100,-38) -- (100,-45);
+\node[action block, below=\arrowL of connectRequest] (connectAttempt) {%
+  \textbf{\textcolor{snodecBlue}{Connect attempt}}\\[-0.4mm]
+  {\footnotesize open / bind / connect}\\[-0.2mm]
+  {\footnotesize async completion / timeout}
+};
 
-\draw[startbox] (74,-45) rectangle (126,-67);
-\node[boxtext] at (100,-56) {\begin{tabular}{@{}c@{}}\textbf{connect attempt}\\open / bind / connect\\async completion / timeout\end{tabular}};
+\draw[flow] (connectRequest.south) -- (connectAttempt.north);
 
-% classify-outcome container
-\draw[innerbox] (10,-78) rectangle (190,-258);
-\node[titletext, anchor=west] at (16,-84) {classify outcome};
+% ----------------------------------------------------------------------
+% Top guard for the inner classification panel.
+% This guarantees:
+% connectAttempt.south -> classifyPanel.north = \halfArrowL
+% because the panel fit adds \panelInnerSep above classifyTopGuard.
+% ----------------------------------------------------------------------
+\coordinate (classifyTopGuard)
+  at ($(connectAttempt.south)+(0,-\halfArrowL-\panelInnerSep)$);
 
-% bus inside container
-\draw[line] (41,-88) -- (159,-88);
-\draw[line] (100,-67) -- (100,-88);
+% ----------------------------------------------------------------------
+% Outcome classification.
+% ----------------------------------------------------------------------
+\node[ok block, below=\outcomeGap of connectAttempt, xshift=-\columnShift] (okOutcome) {%
+  \textbf{\textcolor{snodecGreen}{OK}}\\[-0.4mm]
+  connection established
+};
 
-% outcome row
-\draw[okbox] (20,-95) rectangle (62,-117);
-\node[boxtext] at (41,-106) {\begin{tabular}{@{}c@{}}\textbf{OK}\\connection established\end{tabular}};
-\draw[arrow] (41,-88) -- (41,-95);
+\node[stop block, below=\outcomeGap of connectAttempt] (stopOutcome) {%
+  \textbf{\textcolor{snodecRule}{DISABLED}}\\[-0.4mm]
+  no connection continues
+};
 
-\draw[stopbox] (79,-95) rectangle (121,-117);
-\node[boxtext] at (100,-106) {\begin{tabular}{@{}c@{}}\textbf{DISABLED / stop}\\no connection continues\end{tabular}};
-\draw[arrow] (100,-88) -- (100,-95);
+\node[fail block, below=\outcomeGap of connectAttempt, xshift=\columnShift] (failOutcome) {%
+  \textbf{\textcolor{snodecOrange}{ERROR / FATAL}}\\[-0.4mm]
+  failed attempt
+};
 
-\draw[failbox] (138,-95) rectangle (180,-117);
-\node[boxtext] at (159,-106) {\begin{tabular}{@{}c@{}}\textbf{ERROR / FATAL}\\failed attempt\end{tabular}};
-\draw[arrow] (159,-88) -- (159,-95);
+\coordinate (outcomeBranch) at ([yshift=\branchDrop]stopOutcome.north);
+\coordinate (okBranch)      at (outcomeBranch -| okOutcome.north);
+\coordinate (stopBranch)    at (outcomeBranch -| stopOutcome.north);
+\coordinate (failBranch)    at (outcomeBranch -| failOutcome.north);
 
-% reconnect branch left
-\draw[okbox] (20,-124) rectangle (62,-148);
-\node[boxtext] at (41,-136) {\begin{tabular}{@{}c@{}}\textbf{established connection}\\stream connection\\protocol context active\end{tabular}};
-\draw[arrow] (41,-117) -- (41,-124);
+\draw[flow line] (okBranch) -- (failBranch);
+\draw[flow] (okBranch) -- (okOutcome.north);
+\draw[flow] (stopBranch) -- (stopOutcome.north);
+\draw[flow] (failBranch) -- (failOutcome.north);
 
-\draw[failbox] (20,-155) rectangle (62,-177);
-\node[boxtext] at (41,-166) {\begin{tabular}{@{}c@{}}\textbf{disconnect event}\\established connection\\closed\end{tabular}};
-\draw[arrow] (41,-148) -- (41,-155);
+% ----------------------------------------------------------------------
+% Reconnect path after an established connection.
+% ----------------------------------------------------------------------
+\node[ok block, below=\arrowL of okOutcome] (established) {%
+  \textbf{\textcolor{snodecGreen}{Established connection}}\\[-0.4mm]
+  stream connection\\[-0.2mm]
+  protocol context active
+};
 
-% condition boxes above their own decision buses
-\draw[decisionbox] (18,-184) rectangle (96,-206);
-\node[boxtext] at (57,-195) {\begin{tabular}{@{}c@{}}\textbf{reconnect allowed?}\\reconnect enabled\\flow controller allows it\\event loop running\end{tabular}};
-\draw[arrow] (41,-177) -- (41,-184);
+\node[fail block, below=\arrowL of established] (disconnectEvent) {%
+  \textbf{\textcolor{snodecOrange}{Disconnect event}}\\[-0.4mm]
+  established connection\\[-0.2mm]
+  closed
+};
 
-\draw[decisionbox] (104,-184) rectangle (182,-206);
-\node[boxtext] at (143,-195) {\begin{tabular}{@{}c@{}}\textbf{retry allowed?}\\retry enabled\\tries below limit\\ERROR or retry-on-fatal\\no NO\_RETRY\end{tabular}};
-\draw[line] (159,-117) -- (159,-170);
-\draw[arrow] (159,-170) -- (159,-184);
+\node[decision block, below=\arrowL of disconnectEvent] (reconnectAllowed) {%
+  \textbf{\textcolor{snodecBlue}{Reconnect allowed?}}\\[-0.4mm]
+  reconnect enabled\\[-0.2mm]
+  flow controller allows it\\[-0.2mm]
+  event loop running
+};
 
-% decision buses and consequences
-\draw[line] (35.5,-214) -- (78.5,-214);
-\draw[line] (57,-206) -- (57,-214);
+\draw[flow] (okOutcome.south) -- (established.north);
+\draw[flow] (established.south) -- (disconnectEvent.north);
+\draw[flow] (disconnectEvent.south) -- (reconnectAllowed.north);
 
-\draw[line] (121.5,-214) -- (164.5,-214);
-\draw[line] (143,-206) -- (143,-214);
+% ----------------------------------------------------------------------
+% Retry path after a failed connect attempt.
+% ----------------------------------------------------------------------
+\node[decision block] (retryAllowed) at (failOutcome |- reconnectAllowed) {%
+  \textbf{\textcolor{snodecBlue}{Retry allowed?}}\\[-0.4mm]
+  retry enabled\\[-0.2mm]
+  tries below limit\\[-0.2mm]
+  no \texttt{NO\_RETRY}
+};
 
-% consequence row
-\draw[stopbox] (18,-221) rectangle (53,-239);
-\node[boxtext] at (35.5,-230) {\textbf{stop client}};
-\draw[arrow] (35.5,-214) -- node[boxtext, left, xshift=-0.6mm] {no} (35.5,-221);
+\draw[flow] (failOutcome.south) -- (retryAllowed.north);
 
-\draw[timerbox] (61,-221) rectangle (96,-239);
-\node[boxtext] at (78.5,-230) {\begin{tabular}{@{}c@{}}\textbf{reconnect timer}\\configured\\reconnect time\end{tabular}};
-\draw[arrow] (78.5,-214) -- node[boxtext, right, xshift=0.6mm] {yes} (78.5,-221);
+% ----------------------------------------------------------------------
+% Consequences of reconnect and retry decisions.
+% Each local pair uses the same visible gap as the outcome row.
+% ----------------------------------------------------------------------
+\node[stop block, below=\arrowL of reconnectAllowed, xshift=-\decisionSplit] (stopClient) {%
+  \textbf{\textcolor{snodecRule}{Stop client}}
+};
 
-\draw[timerbox] (104,-221) rectangle (139,-239);
-\node[boxtext] at (121.5,-230) {\begin{tabular}{@{}c@{}}\textbf{retry timer}\\timeout, base,\\limit, jitter\end{tabular}};
-\draw[arrow] (121.5,-214) -- node[boxtext, left, xshift=-0.6mm] {yes} (121.5,-221);
+\node[timer block, below=\arrowL of reconnectAllowed, xshift=\decisionSplit] (reconnectTimer) {%
+  \textbf{\textcolor{snodecOrange!90!black}{Reconnect timer}}\\[-0.4mm]
+  configured\\[-0.2mm]
+  reconnect time
+};
 
-\draw[stopbox] (147,-221) rectangle (182,-239);
-\node[boxtext] at (164.5,-230) {\textbf{stop attempt}};
-\draw[arrow] (164.5,-214) -- node[boxtext, right, xshift=0.6mm] {no} (164.5,-221);
+\node[timer block, below=\arrowL of retryAllowed, xshift=-\decisionSplit] (retryTimer) {%
+  \textbf{\textcolor{snodecOrange!90!black}{Retry timer}}\\[-0.4mm]
+  timeout, base,\\[-0.2mm]
+  limit, jitter
+};
 
-% initiate-next row alone below the two timer boxes; spans both timers
-\draw[startbox] (61,-246) rectangle (139,-254);
-\node[boxtext] at (100,-250) {\begin{tabular}{@{}c@{}}\textbf{initiate next}\\\textbf{connect attempt}\end{tabular}};
-\draw[arrow] (78.5,-239) -- (78.5,-246);
-\draw[arrow] (121.5,-239) -- (121.5,-246);
+\node[stop block, below=\arrowL of retryAllowed, xshift=\decisionSplit] (stopAttempt) {%
+  \textbf{\textcolor{snodecRule}{Stop attempt}}
+};
 
-% solid return arrow: fully outside classify-outcome box, inside outer figure frame
-\draw[returnarrow] (100,-254) -- (100,-272) -- (6,-272) -- (6,-56) -- (74,-56);
+\coordinate (reconnectDecisionBranch) at ([yshift=-\branchDrop]reconnectAllowed.south);
+\coordinate (reconnectLeftBranch)     at (reconnectDecisionBranch -| stopClient.north);
+\coordinate (reconnectRightBranch)    at (reconnectDecisionBranch -| reconnectTimer.north);
+
+\draw[flow line] (reconnectAllowed.south) -- (reconnectDecisionBranch);
+\draw[flow line] (reconnectLeftBranch) -- (reconnectRightBranch);
+\draw[flow]
+  (reconnectLeftBranch)
+  -- node[arrow label, left=1.1mm] {no}
+  (stopClient.north);
+\draw[flow]
+  (reconnectRightBranch)
+  -- node[arrow label, right=1.1mm] {yes}
+  (reconnectTimer.north);
+
+\coordinate (retryDecisionBranch) at ([yshift=-\branchDrop]retryAllowed.south);
+\coordinate (retryLeftBranch)     at (retryDecisionBranch -| retryTimer.north);
+\coordinate (retryRightBranch)    at (retryDecisionBranch -| stopAttempt.north);
+
+\draw[flow line] (retryAllowed.south) -- (retryDecisionBranch);
+\draw[flow line] (retryLeftBranch) -- (retryRightBranch);
+\draw[flow]
+  (retryLeftBranch)
+  -- node[arrow label, left=1.1mm] {yes}
+  (retryTimer.north);
+\draw[flow]
+  (retryRightBranch)
+  -- node[arrow label, right=1.1mm] {no}
+  (stopAttempt.north);
+
+% ----------------------------------------------------------------------
+% Shared merge point inside the classification panel.
+% ----------------------------------------------------------------------
+\coordinate (timerMergeLine) at ([yshift=-\branchDrop]$(reconnectTimer.south)!0.5!(retryTimer.south)$);
+\coordinate (reconnectMerge) at (timerMergeLine -| reconnectTimer.south);
+\coordinate (retryMerge)     at (timerMergeLine -| retryTimer.south);
+
+\draw[flow line] (reconnectTimer.south) -- (reconnectMerge);
+\draw[flow line] (retryTimer.south) -- (retryMerge);
+\draw[flow line] (reconnectMerge) -- (retryMerge);
+
+% ----------------------------------------------------------------------
+% Inner classification panel.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \node[
+    classify panel,
+    fit=(classifyTopGuard)(outcomeBranch)(okOutcome)(stopOutcome)(failOutcome)
+        (established)(disconnectEvent)(reconnectAllowed)(retryAllowed)
+        (stopClient)(reconnectTimer)(retryTimer)(stopAttempt)
+        (timerMergeLine),
+    inner sep=\panelInnerSep,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Classify outcome}
+  ] (classifyPanel) {};
+\end{scope}
+
+% ----------------------------------------------------------------------
+% Arrows into and out of the inner classification panel.
+% These use \halfArrowL outside the panel.
+% ----------------------------------------------------------------------
+\draw[flow] (connectAttempt.south) -- (classifyPanel.north);
+\draw[flow line] (classifyPanel.north) -- (outcomeBranch);
+
+\node[action block, below=\halfArrowL of classifyPanel] (nextAttempt) {%
+  \textbf{\textcolor{snodecBlue}{Initiate next connect attempt}}
+};
+
+\draw[flow line] (timerMergeLine) -- (classifyPanel.south);
+\draw[flow] (classifyPanel.south) -- (nextAttempt.north);
+
+% ----------------------------------------------------------------------
+% Dashed return path outside the classification panel.
+% ----------------------------------------------------------------------
+\coordinate (returnLane)   at ($(classifyPanel.west)+(-7mm,0)$);
+\coordinate (returnBottom) at (returnLane |- nextAttempt.center);
+\coordinate (returnTop)    at (returnLane |- connectAttempt.center);
+
+\draw[return flow]
+  (nextAttempt.west)
+  -- (returnBottom)
+  -- (returnTop)
+  -- (connectAttempt.west);
+
+% ----------------------------------------------------------------------
+% Outer boundary.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \node[
+    fit=(connectRequest)(connectAttempt)(classifyPanel)(nextAttempt)(returnLane),
+    snodec boundary,
+    inner sep=5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Retry and reconnect flow}
+  ] {};
+\end{scope}
 
 \end{tikzpicture}
 \end{document}

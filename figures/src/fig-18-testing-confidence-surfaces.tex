@@ -1,71 +1,151 @@
 \documentclass[tikz,border=7pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{arrows.meta,calc,positioning}
+\usetikzlibrary{positioning,calc,fit,backgrounds}
 
 \begin{document}
+
+\def\topY{33mm}
+\def\upperX{50mm}
+\def\upperY{23mm}
+\def\sideX{66mm}
+\def\lowerX{40mm}
+\def\lowerY{28mm}
+\def\noteGap{14mm}
+
 \begin{tikzpicture}[
-  x=1mm,y=1mm,
-  frame/.style={draw=snodecBlue!58, fill=snodecBlueSoft!28, rounded corners=3pt, line width=0.8pt},
-  systembox/.style={draw=snodecBlue!74, fill=snodecBlueSoft!88, rounded corners=2.5pt, line width=0.78pt},
-  buildbox/.style={draw=snodecBlue!66, fill=snodecBlueSoft!62, rounded corners=2.5pt, line width=0.72pt},
-  protocolbox/.style={draw=snodecGreen!72, fill=snodecGreenSoft!92, rounded corners=2.5pt, line width=0.72pt},
-  runtimebox/.style={draw=snodecOrange!76, fill=snodecOrangeSoft!86, rounded corners=2.5pt, line width=0.72pt},
-  opsbox/.style={draw=snodecRule!78, fill=snodecGraySoft, rounded corners=2.5pt, line width=0.72pt},
-  perfbox/.style={draw=snodecBlue!46!snodecOrange!75, fill=snodecOrangeSoft!55, rounded corners=2.5pt, line width=0.72pt},
-  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!55, inner sep=1.2pt},
-  boxtext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
-  smallnote/.style={font=\sffamily\footnotesize, align=center, text=snodecMuted},
-  surfacetext/.style={font=\sffamily\bfseries\footnotesize, text=snodecMuted, fill=snodecBlueSoft!28, inner sep=1.1pt},
-  line/.style={draw=snodecMuted!82, line width=0.68pt},
-  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.0mm,width=1.45mm]}, line width=0.68pt}
+  snodec diagram,
+  system block/.style={
+    draw=snodecBlue!78,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=48mm,
+    inner xsep=3.5mm,
+    inner ysep=2.6mm,
+    font=\sffamily\small
+  },
+  surface block/.style={
+    draw=snodecBlue!55,
+    fill=snodecBlueSoft!52,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=35mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  note block/.style={
+    draw=snodecBlue!45,
+    fill=snodecBlueSoft!28,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=112mm,
+    inner xsep=3mm,
+    inner ysep=2.5mm,
+    font=\sffamily\footnotesize
+  },
+  connector/.style={
+    draw=snodecBlue!45,
+    line width=0.75pt
+  }
 ]
 
-\draw[frame] (0,0) rectangle (190,-145);
-\node[titletext, anchor=west] at (5,-6) {Testing confidence surfaces};
-\node[smallnote, anchor=west] at (12,-17) {Same system, different confidence questions};
+% ----------------------------------------------------------------------
+% Central tested system.
+% ----------------------------------------------------------------------
+\node[system block] (system) {%
+  \textbf{\textcolor{snodecBlue}{tested SNode.C system}}\\[-0.4mm]
+  {\footnotesize one built, configured, running system}
+};
 
-% central tested system box
-\draw[systembox] (62,-54) rectangle (128,-82);
-\node[boxtext] at (95,-68) {\begin{tabular}{@{}c@{}}\textbf{tested SNode.C system}\\built, installed\\configured, running\end{tabular}};
+% ----------------------------------------------------------------------
+% Surrounding confidence surfaces on a virtual ellipse.
+% ----------------------------------------------------------------------
+\node[surface block] at ($(system.center)+(0,\topY)$) (package) {%
+  \textbf{\textcolor{snodecBlue}{package surface}}\\[-0.4mm]
+  build / install / export\\[-0.2mm]
+  surface is correct
+};
 
-% top row: equal boxes
-\draw[buildbox] (16,-28) rectangle (56,-50);
-\node[boxtext] at (36,-39) {\begin{tabular}{@{}c@{}}\textbf{component surface}\\target honesty\\headers, deps\\minimal builds\end{tabular}};
+\node[surface block] at ($(system.center)+(-\upperX,\upperY)$) (component) {%
+  \textbf{\textcolor{snodecBlue}{component surface}}\\[-0.4mm]
+  local contract\\[-0.2mm]
+  remains correct
+};
 
-\draw[buildbox] (75,-28) rectangle (115,-50);
-\node[boxtext] at (95,-39) {\begin{tabular}{@{}c@{}}\textbf{package surface}\\installed use\\\texttt{find\_package}\\exported targets\end{tabular}};
+\node[surface block] at ($(system.center)+(\upperX,\upperY)$) (deployment) {%
+  \textbf{\textcolor{snodecBlue}{deployment surface}}\\[-0.4mm]
+  target environment\\[-0.2mm]
+  is handled correctly
+};
 
-\draw[protocolbox] (134,-28) rectangle (174,-50);
-\node[boxtext] at (154,-39) {\begin{tabular}{@{}c@{}}\textbf{protocol surface}\\semantic behavior\\parsers, routes\\exact bytes\end{tabular}};
+\node[surface block] at ($(system.center)+(-\sideX,0)$) (protocol) {%
+  \textbf{\textcolor{snodecBlue}{protocol surface}}\\[-0.4mm]
+  wire behavior\\[-0.2mm]
+  matches expectation
+};
 
-% middle side boxes
-\draw[runtimebox] (16,-72) rectangle (56,-94);
-\node[boxtext] at (36,-83) {\begin{tabular}{@{}c@{}}\textbf{runtime surface}\\active behavior\\sockets, timers\\retries, lifetime\end{tabular}};
+\node[surface block] at ($(system.center)+(\sideX,0)$) (runtime) {%
+  \textbf{\textcolor{snodecBlue}{runtime surface}}\\[-0.4mm]
+  events, timers, retries\\[-0.2mm]
+  behave correctly
+};
 
-\draw[opsbox] (134,-72) rectangle (174,-94);
-\node[boxtext] at (154,-83) {\begin{tabular}{@{}c@{}}\textbf{deployment surface}\\installed shape\\modules, configs\\services, paths\end{tabular}};
+\node[surface block] at ($(system.center)+(-\lowerX,-\lowerY)$) (diagnostic) {%
+  \textbf{\textcolor{snodecBlue}{diagnostic surface}}\\[-0.4mm]
+  failures are visible\\[-0.2mm]
+  and attributable
+};
 
-% lower row
-\draw[opsbox] (46,-104) rectangle (86,-126);
-\node[boxtext] at (66,-115) {\begin{tabular}{@{}c@{}}\textbf{diagnostic surface}\\observable cause\\logs, states\\failure locality\end{tabular}};
+\node[surface block] at ($(system.center)+(\lowerX,-\lowerY)$) (performance) {%
+  \textbf{\textcolor{snodecBlue}{performance surface}}\\[-0.4mm]
+  latency / throughput\\[-0.2mm]
+  stay acceptable
+};
 
-\draw[perfbox] (104,-104) rectangle (144,-126);
-\node[boxtext] at (124,-115) {\begin{tabular}{@{}c@{}}\textbf{performance surface}\\load and pressure\\latency, throughput\\bottlenecks\end{tabular}};
+% ----------------------------------------------------------------------
+% Straight radial connector lines.
+% Geometrically center-to-center, visually clipped by the boxes because
+% they are drawn on the background layer.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \draw[connector] (package.center) -- (system.center);
+  \draw[connector] (component.center) -- (system.center);
+  \draw[connector] (deployment.center) -- (system.center);
+  \draw[connector] (protocol.center) -- (system.center);
+  \draw[connector] (runtime.center) -- (system.center);
+  \draw[connector] (diagnostic.center) -- (system.center);
+  \draw[connector] (performance.center) -- (system.center);
+\end{scope}
 
-% Light confidence rays from the central system to surfaces.
-% They use a different neutral color than the borders and avoid becoming category colors.
-\draw[line] (79,-54) -- (56,-50);
-\draw[line] (95,-54) -- (95,-50);
-\draw[line] (111,-54) -- (134,-50);
-\draw[line] (62,-72) -- (56,-83);
-\draw[line] (128,-72) -- (134,-83);
-\draw[line] (79,-82) -- (66,-104);
-\draw[line] (111,-82) -- (124,-104);
+% ----------------------------------------------------------------------
+% Note.
+% ----------------------------------------------------------------------
+\coordinate (bottomRowCenter) at ($(diagnostic.south)!0.5!(performance.south)$);
 
-% A small orientation bus under the map makes the failure-locality message explicit.
-\draw[line] (36,-134) -- (154,-134);
-\draw[arrow] (95,-134) -- (95,-128);
-\node[smallnote] at (95,-139) {A failure should point toward the boundary whose promise was broken.};
+\node[note block, below=\noteGap of bottomRowCenter] (note) {%
+  Each surface answers a different confidence question.\\[-0.2mm]
+  A useful failure should point toward the surface whose architectural promise was broken.
+};
+
+% ----------------------------------------------------------------------
+% Outer boundary.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \node[
+    fit=(component)(package)(deployment)
+        (protocol)(runtime)
+        (system)
+        (diagnostic)(performance)
+        (note),
+    snodec boundary,
+    inner sep=5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Testing confidence surfaces}
+  ] {};
+\end{scope}
 
 \end{tikzpicture}
 \end{document}

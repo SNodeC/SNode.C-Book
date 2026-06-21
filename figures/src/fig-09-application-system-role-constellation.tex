@@ -1,64 +1,42 @@
 \documentclass[tikz,border=7pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{positioning,calc,arrows.meta}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
 
 \begin{document}
+
+\def\majorVGap{11mm}
+\def\sideShift{39mm}
+
 \begin{tikzpicture}[
-  x=1mm,y=1mm,
-  meta/.style={
-    draw=snodecBlue!55,
-    fill=snodecBlueSoft!45,
-    rounded corners=3pt,
-    line width=0.75pt
-  },
-  boundary/.style={
-    draw=snodecGreen!70,
-    fill=snodecGreenSoft,
+  snodec diagram,
+  boundary block/.style={
+    draw=snodecBlue!65,
+    fill=snodecBlueSoft!70,
     rounded corners=2.5pt,
-    line width=0.75pt
+    line width=0.75pt,
+    align=center,
+    text width=54mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
   },
-  config/.style={
+  process block/.style={
     draw=snodecOrange!75,
     fill=snodecOrangeSoft,
     rounded corners=2.5pt,
-    line width=0.75pt
-  },
-  process/.style={
-    draw=snodecBlue!75,
-    fill=snodecBlueSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt
-  },
-  ops/.style={
-    draw=snodecBlue!60,
-    fill=white,
-    rounded corners=2.5pt,
-    line width=0.75pt
-  },
-  boxtext/.style={
-    font=\sffamily\small,
+    line width=0.75pt,
     align=center,
-    text depth=0pt,
-    text height=1.7ex
+    text width=112mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
   },
-  smalltext/.style={
-    font=\sffamily\footnotesize,
-    align=center,
-    text depth=0pt,
-    text height=1.6ex
-  },
-  titletext/.style={
-    font=\sffamily\bfseries\small,
-    text=snodecBlue,
-    fill=snodecBlueSoft!45,
-    inner sep=1.2pt
-  },
-  arrow/.style={
-    draw=snodecMuted!85,
-    -{Latex[length=2.2mm,width=1.7mm]},
+  boundary flow/.style={
+    snodec muted arrow,
+    draw=snodecMuted!75,
     line width=0.75pt
   },
-  arlabel/.style={
+  arrow label/.style={
     font=\sffamily\footnotesize,
     text=snodecMuted,
     fill=white,
@@ -67,72 +45,74 @@
 ]
 
 % ----------------------------------------------------------------------
-% Outer frame.
+% Central running application process
 % ----------------------------------------------------------------------
-\draw[meta] (0,0) rectangle (160,-150);
-\node[titletext, anchor=west] at (5,-6) {Application-to-system role constellation};
+\node[process block] (process) {%
+  \textbf{\textcolor{snodecOrange}{Running application process}}\\[-0.4mm]
+  {\footnotesize event loop, registered instances, connections, contexts, state}
+};
 
 % ----------------------------------------------------------------------
-% Top row: protocol and configuration boundaries.
+% Top boundary roles
 % ----------------------------------------------------------------------
-\draw[boundary] (8,-19) rectangle (72,-46);
-\node[smalltext] at (40,-32.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Protocol-facing boundaries}\\
-  servers, clients, bridges,\\
-  HTTP, MQTT, WebSocket, etc.
-  \end{tabular}};
+\node[boundary block, above=\majorVGap of process, xshift=-\sideShift] (protocols) {%
+  \textbf{\textcolor{snodecBlue}{Protocol-facing boundaries}}\\[-0.4mm]
+  {\footnotesize servers, clients, bridges}\\[-0.2mm]
+  {\footnotesize HTTP, MQTT, WebSocket, etc.}
+};
 
-\draw[config] (88,-19) rectangle (152,-46);
-\node[smalltext] at (120,-32.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Configuration surface}\\
-  CLI options, instance names,\\
-  files, defaults, profiles
-  \end{tabular}};
+\node[boundary block, above=\majorVGap of process, xshift=\sideShift] (configuration) {%
+  \textbf{\textcolor{snodecBlue}{Configuration surface}}\\[-0.4mm]
+  {\footnotesize CLI options, instance names}\\[-0.2mm]
+  {\footnotesize files, defaults, profiles}
+};
 
 % ----------------------------------------------------------------------
-% Center process.
+% Bottom system concerns
 % ----------------------------------------------------------------------
-\draw[process] (18,-73) rectangle (142,-99);
-\node[boxtext] at (80,-86) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Running application process}\\
-  event loop, registered instances, connections, contexts, state
-  \end{tabular}};
+\node[boundary block, below=\majorVGap of process, xshift=-\sideShift] (visibility) {%
+  \textbf{\textcolor{snodecBlue}{Operational visibility}}\\[-0.4mm]
+  {\footnotesize logging, diagnostics}\\[-0.2mm]
+  {\footnotesize counters, lifecycle}
+};
+
+\node[boundary block, below=\majorVGap of process, xshift=\sideShift] (deployment) {%
+  \textbf{\textcolor{snodecBlue}{Deployment identity}}\\[-0.4mm]
+  {\footnotesize executable, service}\\[-0.2mm]
+  {\footnotesize package, host}
+};
 
 % ----------------------------------------------------------------------
-% Top-row connectors.
-% Each relationship is a straight vertical arrow, centered on its smaller box.
-% No shared horizontal bus, no branching connector.
+% Relationships
 % ----------------------------------------------------------------------
-\draw[arrow] (40,-46) -- node[arlabel, left=1.3mm] {communicates} (40,-73);
-\draw[arrow] (120,-46) -- node[arlabel, right=1.3mm] {configures} (120,-73);
+\draw[boundary flow]
+  (protocols.south)
+  -- node[arrow label, left=1.3mm] {communicates}
+  (process.north -| protocols.center);
 
-% ----------------------------------------------------------------------
-% Bottom row: operational and deployment concerns.
-% ----------------------------------------------------------------------
-\draw[ops] (8,-124) rectangle (72,-143);
-\node[smalltext] at (40,-133.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Operational visibility}\\
-  logging, diagnostics, counters, lifecycle
-  \end{tabular}};
+\draw[boundary flow]
+  (configuration.south)
+  -- node[arrow label, right=1.3mm] {configures}
+  (process.north -| configuration.center);
 
-\draw[ops] (88,-124) rectangle (152,-143);
-\node[smalltext] at (120,-133.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Deployment identity}\\
-  executable, service, package, host
-  \end{tabular}};
+\draw[boundary flow]
+  (visibility.north)
+  -- node[arrow label, left=1.3mm] {observes}
+  (process.south -| visibility.center);
 
-% ----------------------------------------------------------------------
-% Bottom-row connectors.
-% Each relationship is a straight vertical arrow, centered on its smaller box.
-% No shared horizontal bus, no branching connector.
-% ----------------------------------------------------------------------
-\draw[arrow] (40,-124) -- node[arlabel, left=1.3mm] {observes} (40,-99);
-\draw[arrow] (120,-124) -- node[arlabel, right=1.3mm] {supervises} (120,-99);
+\draw[boundary flow]
+  (deployment.north)
+  -- node[arrow label, right=1.3mm] {runs as}
+  (process.south -| deployment.center);
+
+\begin{scope}[on background layer]
+  \node[
+    fit=(protocols)(configuration)(process)(visibility)(deployment),
+    snodec boundary,
+    inner sep=5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Application-to-system role constellation}
+  ] {};
+\end{scope}
 
 \end{tikzpicture}
 \end{document}

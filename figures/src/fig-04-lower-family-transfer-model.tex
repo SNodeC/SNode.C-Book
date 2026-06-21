@@ -4,36 +4,34 @@
 
 \begin{document}
 \begin{tikzpicture}[
-  x=1mm,y=1mm,
+  snodec diagram,
   topbox/.style={
     draw=snodecBlue!75,
     fill=snodecBlueSoft,
     rounded corners=2.5pt,
-    line width=0.75pt
+    line width=0.75pt,
+    align=center,
+    text width=100mm,
+    inner xsep=2mm,
+    inner ysep=2mm
   },
   familybox/.style={
     draw=snodecGreen!70,
     fill=snodecGreenSoft,
     rounded corners=2pt,
-    line width=0.7pt
+    line width=0.75pt,
+    align=center,
+    text width=25mm,
+    inner xsep=2mm,
+    inner ysep=2mm
   },
   toptext/.style={
     font=\sffamily\small,
-    align=center,
-    text depth=0pt,
-    text height=1.7ex
+    align=center
   },
   familytext/.style={
     font=\sffamily\footnotesize,
-    align=center,
-    text depth=0pt,
-    text height=1.6ex
-  },
-  valuewide/.style={
-    font=\sffamily\scriptsize,
-    align=center,
-    text depth=0pt,
-    text height=1.45ex
+    align=center
   },
   labtext/.style={
     font=\sffamily\footnotesize,
@@ -43,94 +41,98 @@
   },
   link/.style={
     draw=snodecMuted!75,
-    line width=0.7pt
+    line width=0.75pt
   },
   downarrow/.style={
     draw=snodecMuted!75,
     -{Latex[length=2.1mm,width=1.7mm]},
-    line width=0.7pt
+    line width=0.75pt
   }
 ]
 
-% Geometry: five wider lower boxes.
-% Lower columns: x = 0, 33, 66, 99, 132; width = 29; centers = 14.5, 47.5, 80.5, 113.5, 146.5.
-
 % --- stable protocol box ------------------------------------------------
-\draw[topbox] (28,0) rectangle (133,-31);
-\node[toptext] at (80.5,-15.5) {%
+\node[topbox, toptext] (protocol) {%
   \begin{tabular}{@{}c@{}}
-  Application protocol behavior\\[2.1mm]
+  \textbf{Application protocol behavior}\\[2.1mm]
   SocketContext\\
   SocketContextFactory\\
   callbacks / send / receive / lifecycle
-  \end{tabular}};
-
-% --- one shared stem, then orthogonal branching -------------------------
-\node[labtext] at (80.5,-42) {same protocol idea reused};
-
-% One visible start from the protocol box.
-\draw[link] (80.5,-31) -- (80.5,-56);
-
-% 90-degree branching structure.
-\draw[link] (14.5,-56) -- (146.5,-56);
-
-% Arrows from the branching structure to every lower-family box.
-\foreach \x in {14.5,47.5,80.5,113.5,146.5} {
-  \draw[downarrow] (\x,-56) -- (\x,-69);
-}
+  \end{tabular}
+};
 
 % --- lower family columns -----------------------------------------------
-% Each compartment is vertically centered and has no artificial blank line.
+\node[familybox, familytext, below=18.5mm of protocol] (unix) {%
+  \textbf{Unix domain}\\
+  \texttt{net::un}\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Address}\\
+  path\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Deployment}\\
+  local host
+};
 
-% IPv4
-\draw[familybox] (0,-69) rectangle (29,-108);
-\draw[snodecGreen!70, line width=0.55pt] (0,-82) -- (29,-82);
-\draw[snodecGreen!70, line width=0.55pt] (0,-95) -- (29,-95);
-\node[familytext] at (14.5,-75.5) {\begin{tabular}{@{}c@{}}\textbf{IPv4}\\net::in\end{tabular}};
-\node[familytext] at (14.5,-87.0) {\textbf{Address}};
-\node[valuewide] at (14.5,-91.5) {hostname/IP + port};
-\node[familytext] at (14.5,-100.0) {\textbf{Deployment}};
-\node[familytext] at (14.5,-104.5) {TCP/IP net};
+\node[familybox, familytext, left=4mm of unix] (ipv6) {%
+  \textbf{IPv6}\\
+  \texttt{net::in6}\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Address}\\
+  {\sffamily\scriptsize hostname/IP + port}\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Deployment}\\
+  IPv6 network
+};
 
-% IPv6
-\draw[familybox] (33,-69) rectangle (62,-108);
-\draw[snodecGreen!70, line width=0.55pt] (33,-82) -- (62,-82);
-\draw[snodecGreen!70, line width=0.55pt] (33,-95) -- (62,-95);
-\node[familytext] at (47.5,-75.5) {\begin{tabular}{@{}c@{}}\textbf{IPv6}\\net::in6\end{tabular}};
-\node[familytext] at (47.5,-87.0) {\textbf{Address}};
-\node[valuewide] at (47.5,-91.5) {hostname/IP + port};
-\node[familytext] at (47.5,-100.0) {\textbf{Deployment}};
-\node[familytext] at (47.5,-104.5) {IPv6 net};
+\node[familybox, familytext, left=4mm of ipv6] (ipv4) {%
+  \textbf{IPv4}\\
+  \texttt{net::in}\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Address}\\
+  {\sffamily\scriptsize hostname/IP + port}\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Deployment}\\
+  IP network
+};
 
-% Unix domain
-\draw[familybox] (66,-69) rectangle (95,-108);
-\draw[snodecGreen!70, line width=0.55pt] (66,-82) -- (95,-82);
-\draw[snodecGreen!70, line width=0.55pt] (66,-95) -- (95,-95);
-\node[familytext] at (80.5,-75.5) {\begin{tabular}{@{}c@{}}\textbf{Unix domain}\\net::un\end{tabular}};
-\node[familytext] at (80.5,-87.0) {\textbf{Address}};
-\node[familytext] at (80.5,-91.5) {path};
-\node[familytext] at (80.5,-100.0) {\textbf{Deployment}};
-\node[familytext] at (80.5,-104.5) {local host};
+\node[familybox, familytext, right=4mm of unix] (rfcomm) {%
+  \textbf{RFCOMM}\\
+  \texttt{net::rc}\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Address}\\
+  {\sffamily\scriptsize BD address + channel}\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Deployment}\\
+  Bluetooth
+};
 
-% RFCOMM
-\draw[familybox] (99,-69) rectangle (128,-108);
-\draw[snodecGreen!70, line width=0.55pt] (99,-82) -- (128,-82);
-\draw[snodecGreen!70, line width=0.55pt] (99,-95) -- (128,-95);
-\node[familytext] at (113.5,-75.5) {\begin{tabular}{@{}c@{}}\textbf{RFCOMM}\\net::rc\end{tabular}};
-\node[familytext] at (113.5,-87.0) {\textbf{Address}};
-\node[familytext] at (113.5,-91.5) {BD addr/ch};
-\node[familytext] at (113.5,-100.0) {\textbf{Deployment}};
-\node[familytext] at (113.5,-104.5) {Bluetooth};
+\node[familybox, familytext, right=4mm of rfcomm] (l2cap) {%
+  \textbf{L2CAP}\\
+  \texttt{net::l2}\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Address}\\
+  {\sffamily\scriptsize BD address + PSM}\\[1.5mm]
+  \rule{\linewidth}{0.55pt}\\[1.2mm]
+  \textbf{Deployment}\\
+  Bluetooth
+};
 
-% L2CAP
-\draw[familybox] (132,-69) rectangle (161,-108);
-\draw[snodecGreen!70, line width=0.55pt] (132,-82) -- (161,-82);
-\draw[snodecGreen!70, line width=0.55pt] (132,-95) -- (161,-95);
-\node[familytext] at (146.5,-75.5) {\begin{tabular}{@{}c@{}}\textbf{L2CAP}\\net::l2\end{tabular}};
-\node[familytext] at (146.5,-87.0) {\textbf{Address}};
-\node[familytext] at (146.5,-91.5) {BD addr/PSM};
-\node[familytext] at (146.5,-100.0) {\textbf{Deployment}};
-\node[familytext] at (146.5,-104.5) {Bluetooth};
+% --- one shared stem, then orthogonal branching -------------------------
+\coordinate (branchCenter) at ([yshift=8mm]unix.north);
+\coordinate (branchLeft)   at ([yshift=8mm]ipv4.north);
+\coordinate (branchRight)  at ([yshift=8mm]l2cap.north);
+
+\draw[link]
+  (protocol.south)
+  -- node[labtext, pos=0.38] {same context abstraction reused}
+  (branchCenter);
+
+\draw[link] (branchLeft) -- (branchRight);
+
+\draw[downarrow] ([yshift=8mm]ipv4.north)   -- (ipv4.north);
+\draw[downarrow] ([yshift=8mm]ipv6.north)   -- (ipv6.north);
+\draw[downarrow] ([yshift=8mm]unix.north)   -- (unix.north);
+\draw[downarrow] ([yshift=8mm]rfcomm.north) -- (rfcomm.north);
+\draw[downarrow] ([yshift=8mm]l2cap.north)  -- (l2cap.north);
 
 \end{tikzpicture}
 \end{document}

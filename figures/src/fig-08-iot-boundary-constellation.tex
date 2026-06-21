@@ -1,52 +1,42 @@
 \documentclass[tikz,border=7pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{positioning,calc,arrows.meta}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
 
 \begin{document}
+
+\def\majorVGap{11mm}
+\def\sideShift{39mm}
+
 \begin{tikzpicture}[
-  x=1mm,y=1mm,
-  meta/.style={
-    draw=snodecBlue!55,
-    fill=snodecBlueSoft!38,
-    rounded corners=3pt,
-    line width=0.75pt
-  },
-  boundary/.style={
-    draw=snodecBlue!70,
-    fill=white,
+  snodec diagram,
+  boundary block/.style={
+    draw=snodecBlue!65,
+    fill=snodecBlueSoft!70,
     rounded corners=2.5pt,
-    line width=0.75pt
+    line width=0.75pt,
+    align=center,
+    text width=54mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
   },
-  central/.style={
-    draw=snodecOrange!78,
+  central block/.style={
+    draw=snodecOrange!75,
     fill=snodecOrangeSoft,
     rounded corners=2.5pt,
-    line width=0.8pt
-  },
-  boxtext/.style={
-    font=\sffamily\small,
+    line width=0.75pt,
     align=center,
-    text depth=0pt,
-    text height=1.7ex
+    text width=112mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
   },
-  smalltext/.style={
-    font=\sffamily\footnotesize,
-    align=center,
-    text depth=0pt,
-    text height=1.6ex
-  },
-  titletext/.style={
-    font=\sffamily\bfseries\small,
-    text=snodecBlue,
-    fill=snodecBlueSoft!38,
-    inner sep=1.2pt
-  },
-  arrow/.style={
-    draw=snodecMuted!85,
-    -{Latex[length=2.2mm,width=1.7mm]},
+  boundary flow/.style={
+    snodec muted arrow,
+    draw=snodecMuted!75,
     line width=0.75pt
   },
-  arlabel/.style={
+  arrow label/.style={
     font=\sffamily\footnotesize,
     text=snodecMuted,
     fill=white,
@@ -55,66 +45,74 @@
 ]
 
 % ----------------------------------------------------------------------
-% Outer constellation frame.
+% Central application / gateway process
 % ----------------------------------------------------------------------
-\draw[meta] (0,0) rectangle (160,-146);
-\node[titletext, anchor=west] at (5,-6) {IoT boundary constellation};
+\node[central block] (gateway) {%
+  \textbf{\textcolor{snodecOrange}{IoT application / gateway process}}\\[-0.4mm]
+  {\footnotesize shared state, policy, routing, translation, diagnostics}
+};
 
 % ----------------------------------------------------------------------
-% Upper boundary boxes.
+% Upper boundary actors
 % ----------------------------------------------------------------------
-\draw[boundary] (10,-18) rectangle (72,-45);
-\node[boxtext] at (41,-31.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Field devices}\\
-  sensors, actuators, nodes\\
-  MQTT, Bluetooth, local links
-  \end{tabular}};
+\node[boundary block, above=\majorVGap of gateway, xshift=-\sideShift] (devices) {%
+  \textbf{\textcolor{snodecBlue}{Field devices}}\\[-0.4mm]
+  {\footnotesize sensors, actuators, nodes}\\[-0.2mm]
+  {\footnotesize MQTT, Bluetooth, local links}
+};
 
-\draw[boundary] (88,-18) rectangle (150,-45);
-\node[boxtext] at (119,-31.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Browser / operator surface}\\
-  pages, dashboards, controls\\
-  HTTP, SSE, WebSocket
-  \end{tabular}};
+\node[boundary block, above=\majorVGap of gateway, xshift=\sideShift] (operator) {%
+  \textbf{\textcolor{snodecBlue}{Browser / operator surface}}\\[-0.4mm]
+  {\footnotesize pages, dashboards, controls}\\[-0.2mm]
+  {\footnotesize HTTP, SSE, WebSocket}
+};
 
 % ----------------------------------------------------------------------
-% Central application / gateway process.
+% Lower boundary resources
 % ----------------------------------------------------------------------
-\draw[central] (16,-69) rectangle (144,-94);
-\node[boxtext] at (80,-81.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{IoT application / gateway process}\\
-  shared state, policy, routing, translation, diagnostics
-  \end{tabular}};
+\node[boundary block, below=\majorVGap of gateway, xshift=-\sideShift] (state) {%
+  \textbf{\textcolor{snodecBlue}{Persistent state}}\\[-0.4mm]
+  {\footnotesize database, measurements, history}\\[-0.2mm]
+  {\footnotesize retained view}
+};
 
-% Upper arrows to central box.
-\draw[arrow] (41,-45) -- node[arlabel, right=1.6mm] {telemetry / commands} (41,-69);
-\draw[arrow] (119,-45) -- node[arlabel, right=1.6mm] {observe / control} (119,-69);
+\node[boundary block, below=\majorVGap of gateway, xshift=\sideShift] (services) {%
+  \textbf{\textcolor{snodecBlue}{External services / brokers}}\\[-0.4mm]
+  {\footnotesize MQTT broker, APIs, cloud}\\[-0.2mm]
+  {\footnotesize other systems}
+};
 
 % ----------------------------------------------------------------------
-% Lower boundary boxes.
+% Boundary interactions
 % ----------------------------------------------------------------------
-\draw[boundary] (10,-118) rectangle (72,-139);
-\node[boxtext] at (41,-128.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Persistent state}\\
-  database, measurements,\\
-  history, retained view
-  \end{tabular}};
+\draw[boundary flow]
+  (devices.south)
+  -- node[arrow label, right=1.5mm] {telemetry / commands}
+  (gateway.north -| devices.center);
 
-\draw[boundary] (88,-118) rectangle (150,-139);
-\node[boxtext] at (119,-128.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{External services / brokers}\\
-  MQTT broker, APIs, cloud,\\
-  other systems
-  \end{tabular}};
+\draw[boundary flow]
+  (operator.south)
+  -- node[arrow label, right=1.5mm] {observe / control}
+  (gateway.north -| operator.center);
 
-% Lower arrows to central box.
-\draw[arrow] (41,-118) -- node[arlabel, right=1.6mm] {state read/write} (41,-94);
-\draw[arrow] (119,-118) -- node[arlabel, right=1.6mm] {publish / integrate} (119,-94);
+\draw[boundary flow]
+  (state.north)
+  -- node[arrow label, right=1.5mm] {state read/write}
+  (gateway.south -| state.center);
+
+\draw[boundary flow]
+  (services.north)
+  -- node[arrow label, right=1.5mm] {publish / integrate}
+  (gateway.south -| services.center);
+
+\begin{scope}[on background layer]
+  \node[
+    fit=(devices)(operator)(gateway)(state)(services),
+    snodec boundary,
+    inner sep=5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:IoT boundary constellation}
+  ] {};
+\end{scope}
 
 \end{tikzpicture}
 \end{document}

@@ -19,8 +19,8 @@
   side note/.style={font=\sffamily\footnotesize, text=snodecMuted, align=center, inner sep=0pt}
 ]
 
-\node[layer block] (family) {\textbf{\textcolor{snodecBlue}{Lower communication family}}\\[-0.5mm]
-  {\footnotesize Endpoint family: IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or L2CAP.}
+\node[layer block] (family) {\textbf{\textcolor{snodecBlue}{Endpoint family}}\\[-0.5mm]
+  {\footnotesize IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or L2CAP.}
 };
 
 \node[layer block, above=6mm of family] (transport) {\textbf{\textcolor{snodecBlue}{Transport form}}\\[-0.5mm]
@@ -46,8 +46,9 @@
 
 \draw[snodec muted arrow] ($(family.west)+(-11mm,0)$) -- ($(role.west)+(-11mm,0)$)
   node[side note, midway, rotate=90, above=1.5mm] {more application-specific};
+
 \draw[snodec muted arrow] ($(role.east)+(11mm,0)$) -- ($(family.east)+(11mm,0)$)
-  node[side note, midway, rotate=90, above=1.5mm] {more communication-specific};
+  node[side note, midway, rotate=90, above=1.5mm] {more transport-specific};
 
 \begin{scope}[on background layer]
   \node[fit=(family)(transport)(connection)(protocol)(role), snodec boundary, inner sep=5mm] (stack) {};

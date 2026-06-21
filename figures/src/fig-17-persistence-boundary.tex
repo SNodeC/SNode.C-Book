@@ -1,70 +1,225 @@
 \documentclass[tikz,border=7pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{arrows.meta,calc,positioning}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
 
 \begin{document}
+
+\def\boxW{40mm}
+\def\colGap{13mm}
+\def\rowGap{25mm}
+\def\panelInnerSep{6mm}
+
 \begin{tikzpicture}[
-  x=1mm,y=1mm,
-  frame/.style={draw=snodecBlue!58, fill=snodecBlueSoft!30, rounded corners=3pt, line width=0.8pt},
-  lane/.style={draw=snodecRule!58, fill=white, rounded corners=2.5pt, line width=0.68pt},
-  commbox/.style={draw=snodecBlue!72, fill=snodecBlueSoft!85, rounded corners=2.5pt, line width=0.75pt},
-  appbox/.style={draw=snodecGreen!72, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
-  persistbox/.style={draw=snodecOrange!78, fill=snodecOrangeSoft!82, rounded corners=2.5pt, line width=0.75pt},
-  dbbox/.style={draw=snodecRule!82, fill=snodecGraySoft, rounded corners=2.5pt, line width=0.75pt},
-  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!55, inner sep=1.2pt},
-  lanetext/.style={font=\sffamily\bfseries\footnotesize, text=snodecMuted, fill=white, inner sep=1.1pt},
-  boxtext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
-  note/.style={font=\sffamily\footnotesize, align=center, text=snodecMuted},
-  arrow/.style={draw=snodecMuted!95, -{Latex[length=2.15mm,width=1.6mm]}, line width=0.72pt},
-  line/.style={draw=snodecMuted!95, line width=0.72pt},
-  boundaryline/.style={draw=snodecBlue!70, dashed, dash pattern=on 2.2pt off 1.8pt, line width=0.8pt}
+  snodec diagram,
+  comm block/.style={
+    draw=snodecBlue!72,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=\boxW,
+    minimum height=18mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  app block/.style={
+    draw=snodecGreen!72,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=\boxW,
+    minimum height=18mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  persist block/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=\boxW,
+    minimum height=18mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  store block/.style={
+    draw=snodecRule!82,
+    fill=snodecGraySoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=\boxW,
+    minimum height=18mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  lane panel/.style={
+    draw=snodecRule!58,
+    fill=white,
+    rounded corners=3pt,
+    line width=0.75pt
+  },
+  panel label/.style={
+    font=\sffamily\bfseries\footnotesize,
+    text=snodecMuted,
+    fill=white,
+    inner sep=1.2pt
+  },
+  boundary label/.style={
+    font=\sffamily\bfseries\small,
+    text=snodecBlue,
+    fill=white,
+    inner xsep=1.6pt,
+    inner ysep=0.8pt
+  },
+  flow/.style={
+    snodec muted arrow,
+    draw=snodecMuted!75,
+    line width=0.75pt
+  },
+  flow line/.style={
+    draw=snodecMuted!75,
+    line width=0.75pt
+  },
+  boundary flow/.style={
+    snodec muted arrow,
+    draw=snodecBlue!70,
+    line width=0.85pt
+  },
+  boundary line/.style={
+    draw=snodecBlue!70,
+    line width=0.85pt
+  },
+  note block/.style={
+    font=\sffamily\footnotesize,
+    align=center,
+    text=snodecMuted
+  }
 ]
 
-\draw[frame] (0,0) rectangle (190,-142);
-\node[titletext, anchor=west] at (5,-6) {Persistence boundary};
+% ----------------------------------------------------------------------
+% Transient communication side.
+% ----------------------------------------------------------------------
+\node[comm block] (peerConnection) {%
+  \textbf{\textcolor{snodecBlue}{peer connection}}\\[-0.4mm]
+  socket lifecycle\\[-0.2mm]
+  read/write events
+};
 
-% lane backgrounds: same width, same height, same horizontal margins
-\draw[lane] (8,-16) rectangle (182,-62);
-\node[lanetext, anchor=west] at (13,-21) {transient communication side};
+\node[comm block, right=\colGap of peerConnection] (protocolContext) {%
+  \textbf{\textcolor{snodecBlue}{protocol context}}\\[-0.4mm]
+  protocol meaning\\[-0.2mm]
+  messages, requests
+};
 
-\draw[lane] (8,-78) rectangle (182,-124);
-\node[lanetext, anchor=west] at (13,-83) {durable state side};
+\node[app block, right=\colGap of protocolContext] (applicationState) {%
+  \textbf{\textcolor{snodecGreen}{application state}}\\[-0.4mm]
+  what changed?\\[-0.2mm]
+  what should survive?
+};
 
-% upper lane: three equal boxes on a consistent grid
-\draw[commbox] (20,-31) rectangle (60,-53);
-\node[boxtext] at (40,-42) {\begin{tabular}{@{}c@{}}\textbf{peer connection}\\socket lifecycle\\read/write events\end{tabular}};
+\draw[flow] (peerConnection.east) -- (protocolContext.west);
+\draw[flow] (protocolContext.east) -- (applicationState.west);
 
-\draw[commbox] (75,-31) rectangle (115,-53);
-\node[boxtext] at (95,-42) {\begin{tabular}{@{}c@{}}\textbf{protocol context}\\protocol meaning\\messages, requests\end{tabular}};
+% ----------------------------------------------------------------------
+% Durable state side.
+% ----------------------------------------------------------------------
+\node[persist block, below=\rowGap of peerConnection] (persistenceAdapter) {%
+  \textbf{\textcolor{snodecOrange!90!black}{persistence adapter}}\\[-0.4mm]
+  mapping + policy\\[-0.2mm]
+  schema knowledge
+};
 
-\draw[appbox] (130,-31) rectangle (170,-53);
-\node[boxtext] at (150,-42) {\begin{tabular}{@{}c@{}}\textbf{application state}\\what changed?\\what should survive?\end{tabular}};
+\node[persist block, below=\rowGap of protocolContext] (databaseClient) {%
+  \textbf{\textcolor{snodecOrange!90!black}{database client}}\\[-0.4mm]
+  query execution\\[-0.2mm]
+  result/error callback
+};
 
-\draw[arrow] (60,-42) -- (75,-42);
-\draw[arrow] (115,-42) -- (130,-42);
+\node[store block, below=\rowGap of applicationState] (durableStore) {%
+  \textbf{\textcolor{snodecRule}{database / store}}\\[-0.4mm]
+  tables, indexes\\[-0.2mm]
+  transactions
+};
 
-% boundary with centered label and a clear vertical crossing from application state
-\draw[boundaryline] (20,-70) -- (170,-70);
-\node[titletext] at (95,-70) {persistence boundary};
-\draw[arrow] (150,-53) -- (150,-66.5);
+\draw[flow] (persistenceAdapter.east) -- (databaseClient.west);
+\draw[flow] (databaseClient.east) -- (durableStore.west);
 
-% lower lane: three equal boxes on the same grid
-\draw[persistbox] (20,-94) rectangle (60,-116);
-\node[boxtext] at (40,-105) {\begin{tabular}{@{}c@{}}\textbf{persistence adapter}\\mapping + policy\\schema knowledge\end{tabular}};
+% ----------------------------------------------------------------------
+% Fitted lane panels.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \node[
+    lane panel,
+    fit=(peerConnection)(protocolContext)(applicationState),
+    inner sep=\panelInnerSep
+  ] (transientPanel) {};
 
-\draw[persistbox] (75,-94) rectangle (115,-116);
-\node[boxtext] at (95,-105) {\begin{tabular}{@{}c@{}}\textbf{database client}\\async/sync commands\\state/error callback\end{tabular}};
+  \node[
+    lane panel,
+    fit=(persistenceAdapter)(databaseClient)(durableStore),
+    inner sep=\panelInnerSep
+  ] (durablePanel) {};
+\end{scope}
 
-\draw[dbbox] (130,-94) rectangle (170,-116);
-\node[boxtext] at (150,-105) {\begin{tabular}{@{}c@{}}\textbf{MariaDB / store}\\tables, indexes\\transactions\end{tabular}};
+\node[panel label, anchor=west]
+  at ($(transientPanel.north west)+(5mm,0)$)
+  {Transient communication side};
 
-% Cross-boundary routing: travel on a thin bus at the top of the durable lane, then enter adapter.
-\draw[line] (150,-73.5) -- (150,-86) -- (40,-86);
-\draw[arrow] (40,-86) -- (40,-94);
-\draw[arrow] (60,-105) -- (75,-105);
-\draw[arrow] (115,-105) -- (130,-105);
+\node[panel label, anchor=west]
+  at ($(durablePanel.north west)+(5mm,0)$)
+  {Durable state side};
 
-\node[note] at (95,-134) {Do not persist transport facts blindly. Persist application facts deliberately.};
+% ----------------------------------------------------------------------
+% Persistence boundary carried by the bent arrow itself.
+% The horizontal segment is placed at the vertical midpoint between
+% transientPanel.south and durablePanel.north.
+% ----------------------------------------------------------------------
+\coordinate (boundaryMidY)
+  at ($(transientPanel.south)!0.5!(durablePanel.north)$);
+
+\coordinate (appBoundaryRoute)
+  at (applicationState.south |- boundaryMidY);
+
+\coordinate (adapterBoundaryRoute)
+  at (persistenceAdapter.north |- boundaryMidY);
+
+\coordinate (boundaryLabelPos)
+  at ($(appBoundaryRoute)!0.5!(adapterBoundaryRoute)$);
+
+\draw[boundary line] (applicationState.south) -- (appBoundaryRoute);
+\draw[boundary line] (appBoundaryRoute) -- (adapterBoundaryRoute);
+\draw[boundary flow] (adapterBoundaryRoute) -- (persistenceAdapter.north);
+
+\node[boundary label]
+  at (boundaryLabelPos)
+  {persistence boundary};
+
+% ----------------------------------------------------------------------
+% Figure note.
+% ----------------------------------------------------------------------
+\node[note block, below=8mm of durablePanel] (note) {%
+  Do not persist transport facts blindly.\\[-0.2mm]
+  Persist application facts deliberately.
+};
+
+% ----------------------------------------------------------------------
+% Outer boundary.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \node[
+    fit=(transientPanel)(durablePanel)(note),
+    snodec boundary,
+    inner sep=5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Persistence boundary}
+  ] {};
+\end{scope}
 
 \end{tikzpicture}
 \end{document}

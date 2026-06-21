@@ -1,75 +1,165 @@
 \documentclass[tikz,border=7pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{positioning,calc,arrows.meta}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
 
 \begin{document}
+
+\def\majorVGap{11mm}
+\def\minorVGap{4mm}
+\def\streamPlacementGap{14mm}
+\def\variantShift{37mm}
+
 \begin{tikzpicture}[
-  x=1mm,y=1mm,
-  meta/.style={draw=snodecBlue!55, fill=snodecBlueSoft!45, rounded corners=3pt, line width=0.75pt},
-  rolebox/.style={draw=snodecGreen!70, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
-  familybox/.style={draw=snodecBlue!72, fill=snodecBlueSoft, rounded corners=2.5pt, line width=0.75pt},
-  streambox/.style={draw=snodecOrange!75, fill=snodecOrangeSoft, rounded corners=2.5pt, line width=0.75pt},
-  ctxbox/.style={draw=snodecRule!85, fill=snodecGraySoft, rounded corners=2.5pt, line width=0.75pt},
-  variantbox/.style={draw=snodecRule!85, fill=white, rounded corners=2.5pt, line width=0.75pt},
-  boxtext/.style={font=\sffamily\small, align=center, text depth=0pt, text height=1.7ex},
-  smalltext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
-  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!45, inner sep=1.2pt},
-  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.75pt}
+  snodec diagram,
+  role block/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  family block/.style={
+    draw=snodecBlue!72,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  stream panel/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    inner xsep=3mm,
+    inner ysep=2.4mm
+  },
+  stream title/.style={
+    align=center,
+    text width=140mm,
+    font=\sffamily\small
+  },
+  variant block/.style={
+    draw=snodecOrange!55,
+    fill=snodecOrangeSoft!45,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=61mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  context block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  layer flow/.style={
+    snodec muted arrow,
+    draw=snodecMuted!75,
+    line width=0.75pt
+  },
+  stream note/.style={
+    font=\sffamily\footnotesize,
+    text=snodecMuted,
+    align=center
+  }
 ]
 
-\draw[meta] (0,0) rectangle (168,-175);
-\node[titletext, anchor=west] at (5,-6) {TLS as connection-layer specialization};
+% ----------------------------------------------------------------------
+% Configured server/client role.
+% ----------------------------------------------------------------------
+\node[role block] (role) {%
+  \textbf{\textcolor{snodecGreen}{Server/client instance}}\\[-0.4mm]
+  {\footnotesize configured communication role}\\[-0.2mm]
+  {\footnotesize same application-side role: listen/connect, instance name, sections}
+};
 
-\draw[rolebox] (8,-18) rectangle (160,-41);
-\node[boxtext] at (84,-29.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{server/client instance}\\
-  configured communication role\\
-  same application-side role: listen/connect, instance name, sections
-  \end{tabular}};
+% ----------------------------------------------------------------------
+% Endpoint family.
+% ----------------------------------------------------------------------
+\node[family block, below=\majorVGap of role] (family) {%
+  \textbf{\textcolor{snodecBlue}{Endpoint family}}\\[-0.4mm]
+  {\footnotesize address and carrier family stay the same}\\[-0.2mm]
+  {\footnotesize \texttt{net::in}, \texttt{net::in6}, \texttt{net::un}, \texttt{net::rc}, \texttt{net::l2}}
+};
 
-\draw[arrow] (84,-41) -- (84,-52);
+% ----------------------------------------------------------------------
+% Stream connection form.
+% The larger placement gap compensates for the stream panel's fit inner sep,
+% so the visible box-to-box gap stays consistent with the other layers.
+% ----------------------------------------------------------------------
+\node[stream title, below=\streamPlacementGap of family] (streamTitle) {%
+  \textbf{\textcolor{snodecOrange}{Stream connection form}}
+};
 
-\draw[familybox] (8,-52) rectangle (160,-75);
-\node[boxtext] at (84,-63.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{lower communication family}\\
-  address and carrier family stay the same\\
-  net::in, net::in6, net::un, net::rc, net::l2
-  \end{tabular}};
+\node[variant block, below=\minorVGap of streamTitle, xshift=-\variantShift] (legacyStream) {%
+  \textbf{\textcolor{snodecOrange!90!black}{Legacy stream}}\\[-0.4mm]
+  plain byte transport\\[-0.2mm]
+  no TLS context
+};
 
-\draw[arrow] (84,-75) -- (84,-86);
+\node[variant block, below=\minorVGap of streamTitle, xshift=\variantShift] (tlsStream) {%
+  \textbf{\textcolor{snodecOrange!90!black}{TLS stream}}\\[-0.4mm]
+  encrypted byte transport\\[-0.2mm]
+  \texttt{ConfigTlsClient} / \texttt{ConfigTlsServer}
+};
 
-\draw[streambox] (8,-86) rectangle (160,-136);
-\node[boxtext] at (84,-94) {\textbf{stream connection form}};
+\coordinate (variantBottomCenter) at ($(legacyStream.south)!0.5!(tlsStream.south)$);
 
-\draw[variantbox] (16,-100) rectangle (79,-123);
-\node[smalltext] at (47.5,-111.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{legacy stream}\\
-  plain byte transport\\
-  ConfigLegacy
-  \end{tabular}};
+\node[stream note, below=\minorVGap of variantBottomCenter] (specializationNote) {%
+  specialization point: connection setup, TLS context, certificates, SNI
+};
 
-\draw[variantbox] (89,-100) rectangle (152,-123);
-\node[smalltext] at (120.5,-111.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{TLS stream}\\
-  encrypted byte transport\\
-  ConfigTlsClient/Server
-  \end{tabular}};
+\begin{scope}[on background layer]
+  \node[
+    stream panel,
+    fit=(streamTitle)(legacyStream)(tlsStream)(specializationNote),
+    inner sep=3mm
+  ] (stream) {};
+\end{scope}
 
-\node[smalltext, text=snodecMuted] at (84,-130) {specialization point: connection setup, TLS context, certificates, SNI};
+% ----------------------------------------------------------------------
+% Socket context.
+% ----------------------------------------------------------------------
+\node[context block, below=\majorVGap of stream] (context) {%
+  \textbf{\textcolor{snodecRule}{Socket context}}\\[-0.4mm]
+  {\footnotesize protocol behavior attached to the established stream connection}\\[-0.2mm]
+  {\footnotesize HTTP, WebSocket, MQTT, custom protocol contexts}
+};
 
-\draw[arrow] (84,-136) -- (84,-147);
+% ----------------------------------------------------------------------
+% Layer arrows.
+% ----------------------------------------------------------------------
+\draw[layer flow] (role.south) -- (family.north);
+\draw[layer flow] (family.south) -- (stream.north);
+\draw[layer flow] (stream.south) -- (context.north);
 
-\draw[ctxbox] (8,-147) rectangle (160,-170);
-\node[boxtext] at (84,-158.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{socket context}\\
-  protocol behavior attached to the established stream connection\\
-  HTTP, WebSocket, MQTT, custom protocol contexts
-  \end{tabular}};
+% ----------------------------------------------------------------------
+% Outer boundary.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \node[
+    fit=(role)(family)(stream)(context),
+    snodec boundary,
+    inner sep=5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:TLS as connection-layer specialization}
+  ] {};
+\end{scope}
 
 \end{tikzpicture}
 \end{document}

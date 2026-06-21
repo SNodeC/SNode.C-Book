@@ -1,62 +1,71 @@
 \documentclass[tikz,border=7pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{positioning,calc,arrows.meta}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
 
 \begin{document}
 \begin{tikzpicture}[
-  x=1mm,y=1mm,
-  meta/.style={
-    draw=snodecBlue!55,
-    fill=snodecBlueSoft!45,
-    rounded corners=3pt,
-    line width=0.75pt
-  },
-  protocol/.style={
+  snodec diagram,
+  protocol block/.style={
     draw=snodecBlue!75,
     fill=snodecBlueSoft,
     rounded corners=2.5pt,
-    line width=0.75pt
+    line width=0.75pt,
+    align=center,
+    text width=92mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
   },
-  dependent/.style={
-    draw=snodecGreen!70,
-    fill=snodecGreenSoft,
+  dependent block/.style={
+    draw=snodecBlue!65,
+    fill=snodecBlueSoft!70,
     rounded corners=2.5pt,
-    line width=0.75pt
+    line width=0.75pt,
+    align=center,
+    text width=48mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
   },
-  appstruct/.style={
+  appstruct block/.style={
     draw=snodecOrange!75,
     fill=snodecOrangeSoft,
     rounded corners=2.5pt,
-    line width=0.75pt
-  },
-  appcode/.style={
-    draw=snodecBlue!75,
-    fill=white,
-    rounded corners=2.5pt,
-    line width=0.75pt
-  },
-  boxtext/.style={
-    font=\sffamily\small,
+    line width=0.75pt,
     align=center,
-    text depth=0pt,
-    text height=1.7ex
+    text width=58mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
   },
-  titletext/.style={
-    font=\sffamily\bfseries\small,
-    text=snodecBlue,
-    fill=snodecBlueSoft!45,
-    inner sep=1.2pt
+  app block/.style={
+    draw=snodecGreen!75,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=132mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
   },
-  arrow/.style={
-    draw=snodecMuted!85,
-    -{Latex[length=2.2mm,width=1.7mm]},
-    line width=0.75pt
+  protocol flow/.style={
+    snodec arrow,
+    draw=snodecBlue!65
+  },
+  app flow/.style={
+    snodec arrow,
+    draw=snodecGreen!70
+  },
+  structure flow/.style={
+    snodec arrow,
+    draw=snodecOrange!75
   },
   link/.style={
-    draw=snodecMuted!85,
+    draw=snodecMuted!75,
     line width=0.75pt
   },
-  arlabel/.style={
+  arrow label/.style={
     font=\sffamily\footnotesize,
     text=snodecMuted,
     fill=white,
@@ -64,73 +73,97 @@
   }
 ]
 
-% ----------------------------------------------------------------------
-% Web protocol layer meta-box
-% ----------------------------------------------------------------------
-\draw[meta] (0,0) rectangle (160,-92);
-\node[titletext, anchor=west] at (5,-6) {Web protocol layer};
-
-% HTTP request/response foundation inside web protocol layer.
-\draw[protocol] (24,-17) rectangle (136,-38);
-\node[boxtext] at (80,-27.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{HTTP request/response}\\
-  requests, responses, headers, body, lifecycle, upgrade path
-  \end{tabular}};
-
-% Dependent protocol shapes.
-\draw[dependent] (10,-61) rectangle (74,-84);
-\node[boxtext] at (42,-72.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Server-Sent Events}\\
-  long-lived HTTP response\\
-  server $\rightarrow$ client events
-  \end{tabular}};
-
-\draw[dependent] (86,-61) rectangle (150,-84);
-\node[boxtext] at (118,-72.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{WebSocket}\\
-  HTTP upgrade, then frames\\
-  client $\leftrightarrow$ server
-  \end{tabular}};
-
-% HTTP to dependent shapes: one centered stem, 90-degree split,
-% final arrows to h-center of each child box top border.
-\draw[link] (80,-38) -- (80,-49);
-\draw[link] (42,-49) -- (118,-49);
-\draw[arrow] (42,-49) -- (42,-61);
-\draw[arrow] (118,-49) -- (118,-61);
+\def\majorVGap{11mm}
+\def\branchGap{6mm}
 
 % ----------------------------------------------------------------------
-% Express-like structure, half width and left aligned.
+% Web protocol layer
 % ----------------------------------------------------------------------
-\draw[appstruct] (0,-111) rectangle (78,-139);
-\node[boxtext] at (39,-125) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Express-like application structure}\\
-  routing, middleware, mounted handlers\\
-  organizes routes, SSE endpoints, WS upgrades
-  \end{tabular}};
+\node[protocol block] (http) {%
+  \textbf{\textcolor{snodecBlue}{HTTP request/response}}\\[-0.4mm]
+  {\footnotesize requests, responses, headers, body, lifecycle, upgrade path}
+};
 
-% Express uses the web protocol layer.
-\draw[arrow] (39,-111) -- node[arlabel, right=1.5mm] {uses} (39,-92);
+\node[dependent block, below=13mm of http, xshift=-34mm] (sse) {%
+  \textbf{\textcolor{snodecBlue}{Server-Sent Events}}\\[-0.4mm]
+  {\footnotesize long-lived HTTP response}\\[-0.2mm]
+  {\footnotesize server $\rightarrow$ client events}
+};
+
+\node[dependent block, below=13mm of http, xshift=34mm] (ws) {%
+  \textbf{\textcolor{snodecBlue}{WebSocket}}\\[-0.4mm]
+  {\footnotesize HTTP upgrade, then frames}\\[-0.2mm]
+  {\footnotesize client $\leftrightarrow$ server}
+};
+
+\coordinate (protocolBranch) at ([yshift=\branchGap]$(sse.north)!0.5!(ws.north)$);
+\coordinate (sseBranch)      at ([yshift=\branchGap]sse.north);
+\coordinate (wsBranch)       at ([yshift=\branchGap]ws.north);
+
+\draw[link] (http.south) -- (protocolBranch);
+\draw[link] (sseBranch) -- (wsBranch);
+\draw[protocol flow] (sseBranch) -- (sse.north);
+\draw[protocol flow] (wsBranch) -- (ws.north);
+
+\begin{scope}[on background layer]
+  \node[
+    fit=(http)(sse)(ws)(protocolBranch)(sseBranch)(wsBranch),
+    snodec boundary,
+    inner sep=5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Web protocol layer}
+  ] (webLayer) {};
+\end{scope}
 
 % ----------------------------------------------------------------------
-% Application code: full width, with two paths upward.
+% Express-like application structure
 % ----------------------------------------------------------------------
-\draw[appcode] (0,-160) rectangle (160,-184);
-\node[boxtext] at (80,-172) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{Application code}\\
-  APIs, pages, dashboards, monitoring, commands, sessions
-  \end{tabular}};
+\coordinate (expressAnchor) at ([yshift=-\majorVGap]webLayer.south -| sse.center);
 
-% Application can use Express-like structure...
-\draw[arrow] (39,-160) -- node[arlabel, right=1.5mm] {uses} (39,-139);
+\node[
+  appstruct block,
+  anchor=north
+] (express) at (expressAnchor) {%
+  \textbf{\textcolor{snodecOrange}{Express-like application structure}}\\[-0.4mm]
+  {\footnotesize routing, middleware, mounted handlers}\\[-0.2mm]
+  {\footnotesize organizes routes, SSE endpoints, WS upgrades}
+};
 
-% ...or the web protocol layer directly on the free right half.
-\draw[arrow] (125,-160) -- node[arlabel, right=1.5mm] {direct use} (125,-92);
+\coordinate (expressToWebEnd) at (webLayer.south -| sse.center);
+
+\draw[structure flow]
+  (express.north)
+  -- node[arrow label, right=1.5mm] {uses}
+  (expressToWebEnd);
+
+% ----------------------------------------------------------------------
+% Application code
+% ----------------------------------------------------------------------
+\node[
+  app block,
+  below=\majorVGap of express.south west,
+  anchor=north west
+] (app) {%
+  \textbf{\textcolor{snodecGreen}{Application code}}\\[-0.4mm]
+  {\footnotesize APIs, pages, dashboards, monitoring, commands, sessions}
+};
+
+% Application uses the Express-like structure.
+\coordinate (appToExpressStart) at (app.north -| sse.center);
+\coordinate (appToExpressEnd)   at (express.south -| sse.center);
+
+\draw[app flow]
+  (appToExpressStart)
+  -- node[arrow label, right=1.5mm] {uses}
+  (appToExpressEnd);
+
+% Application can also use the web protocol layer directly.
+\coordinate (directStart) at (app.north -| ws.center);
+\coordinate (directEnd)   at (webLayer.south -| ws.center);
+
+\draw[app flow]
+  (directStart)
+  -- node[arrow label, right=1.5mm] {direct use}
+  (directEnd);
 
 \end{tikzpicture}
 \end{document}

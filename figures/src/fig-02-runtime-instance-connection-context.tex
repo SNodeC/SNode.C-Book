@@ -40,7 +40,7 @@
 };
 
 \node[runtime block, below=11mm of handle] (instance) {\textbf{\textcolor{snodecBlue}{Instance}}\\[-0.5mm]
-  {\footnotesize Registered communication role.}
+  {\footnotesize Registered runtime communication role.}
 };
 
 \node[runtime block, below=5.5mm of instance] (connection) {\textbf{\textcolor{snodecBlue}{Connection}}\\[-0.5mm]
@@ -62,8 +62,12 @@
 \draw[flow] (factory.south) -- (context.north);
 
 \begin{scope}[on background layer]
-  \node[fit=(instance)(connection)(factory)(context), snodec boundary, inner sep=4.5mm,
-        label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1pt]above:core::SNodeC runtime}] (runtime) {};
+  \node[
+    fit=(instance)(connection)(factory)(context),
+    snodec boundary,
+    inner sep=4.5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1pt]above left:core::SNodeC runtime}
+  ] (runtime) {};
 \end{scope}
 
 \end{tikzpicture}

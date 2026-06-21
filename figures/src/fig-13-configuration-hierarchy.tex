@@ -1,99 +1,173 @@
 \documentclass[tikz,border=7pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{positioning,calc,arrows.meta}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
 
 \begin{document}
-\begin{tikzpicture}[
-  x=1mm,y=1mm,
-  meta/.style={draw=snodecBlue!55, fill=snodecBlueSoft!45, rounded corners=3pt, line width=0.75pt},
-  scopebox/.style={draw=snodecBlue!72, fill=snodecBlueSoft, rounded corners=2.5pt, line width=0.75pt},
-  sectionbox/.style={draw=snodecGreen!70, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
-  optionbox/.style={draw=snodecOrange!75, fill=snodecOrangeSoft, rounded corners=2.5pt, line width=0.75pt},
-  viewbox/.style={draw=snodecRule!85, fill=white, rounded corners=2.5pt, line width=0.75pt},
-  boxtext/.style={font=\sffamily\small, align=center, text depth=0pt, text height=1.7ex},
-  smalltext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
-  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!45, inner sep=1.2pt},
-  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.75pt}
-]
 
-% ----------------------------------------------------------------------
-% Outer frame.
-% ----------------------------------------------------------------------
-\draw[meta] (0,0) rectangle (168,-198);
-\node[titletext, anchor=west] at (5,-6) {Configuration hierarchy};
+\def\majorVGap{11mm}
+\def\minorVGap{4mm}
+\def\sectionPlacementGap{14mm}
+\def\viewShift{58mm}
+\def\sectionItemGap{3.5mm}
+
+\begin{tikzpicture}[
+  snodec diagram,
+  scope block/.style={
+    draw=snodecBlue!72,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  section panel/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    inner xsep=3mm,
+    inner ysep=2.4mm
+  },
+  option block/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  section text/.style={
+    align=center,
+    text width=140mm,
+    font=\sffamily\small
+  },
+  section item/.style={
+    draw=snodecBlue!45,
+    fill=snodecBlueSoft!35,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=23mm,
+    inner xsep=2mm,
+    inner ysep=1.5mm,
+    font=\sffamily\footnotesize
+  },
+  view block/.style={
+    draw=snodecBlue!45,
+    fill=snodecBlueSoft!35,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=50mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  hierarchy flow/.style={
+    snodec muted arrow,
+    draw=snodecMuted!75,
+    line width=0.75pt
+  },
+  view label/.style={
+    font=\sffamily\footnotesize,
+    text=snodecMuted,
+    align=center
+  }
+]
 
 % ----------------------------------------------------------------------
 % Main hierarchy.
 % ----------------------------------------------------------------------
-\draw[scopebox] (8,-18) rectangle (160,-40);
-\node[boxtext] at (84,-29) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{application scope}\\
-  executable-level operational shell\\
-  config file, logging, daemonization, help, generated command line
-  \end{tabular}};
+\node[scope block] (application) {%
+  \textbf{\textcolor{snodecBlue}{Application scope}}\\[-0.4mm]
+  {\footnotesize executable-level operational shell}\\[-0.2mm]
+  {\footnotesize config file, logging, daemonization, help, generated command line}
+};
 
-\draw[arrow] (84,-40) -- (84,-51);
-
-\draw[scopebox] (8,-51) rectangle (160,-77);
-\node[boxtext] at (84,-64) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{instance scope}\\
-  configured server/client communication role\\
-  external identity, disabled/enabled state\\
-  e.g. echo, mqtt-uplink, measurement-input
-  \end{tabular}};
-
-\draw[arrow] (84,-77) -- (84,-88);
-
-\draw[sectionbox] (8,-88) rectangle (160,-122);
-\node[boxtext] at (84,-96.5) {\textbf{section scope}};
-\node[smalltext] at (84,-104) {responsibility boundary inside one instance};
-
-\foreach \x/\name in {9/local,40/remote,71/connection,102/socket,133/tls} {
-  \draw[viewbox] (\x,-109) rectangle +(26,-8);
-  \node[smalltext] at (\x+13,-113) {\name};
-}
-
-\draw[arrow] (84,-122) -- (84,-133);
-
-\draw[optionbox] (8,-133) rectangle (160,-154);
-\node[boxtext] at (84,-143.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{option}\\
-  one concrete value inside a section\\
-  host, port, path, timeout, retry, backlog, certificate path
-  \end{tabular}};
+\node[scope block, below=\majorVGap of application] (instance) {%
+  \textbf{\textcolor{snodecBlue}{Instance scope}}\\[-0.4mm]
+  {\footnotesize configured server/client communication role}\\[-0.2mm]
+  {\footnotesize external identity, disabled/enabled state}\\[-0.2mm]
+  {\footnotesize e.g. \texttt{echo}, \texttt{mqtt-uplink}, \texttt{measurement-input}}
+};
 
 % ----------------------------------------------------------------------
-% Three views.
+% Section scope with centered concrete section names.
+% The larger placement gap compensates for the section panel's fit inner sep,
+% so the visible gap from Instance scope to Section scope matches the others.
 % ----------------------------------------------------------------------
-\node[smalltext, text=snodecMuted] at (84,-162.5) {Same hierarchy, three views};
+\node[section text, below=\sectionPlacementGap of instance] (sectionTitle) {%
+  \textbf{\textcolor{snodecGreen}{Section scope}}\\[-0.4mm]
+  {\footnotesize responsibility boundary inside one instance}
+};
 
-\draw[viewbox] (8,-167) rectangle (58,-191);
-\node[smalltext] at (33,-179) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{C++ API}\\
-  \texttt{getConfig()->Local::}\\
-  \texttt{setPort(8080)}
-  \end{tabular}};
+\node[section item, below=\minorVGap of sectionTitle] (connection) {\texttt{connection}};
+\node[section item, left=\sectionItemGap of connection] (remote) {\texttt{remote}};
+\node[section item, left=\sectionItemGap of remote] (local) {\texttt{local}};
+\node[section item, right=\sectionItemGap of connection] (socket) {\texttt{socket}};
+\node[section item, right=\sectionItemGap of socket] (tls) {\texttt{tls}};
 
-\draw[viewbox] (61,-167) rectangle (111,-191);
-\node[smalltext] at (86,-179) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{command line}\\
-  app instance section\\
-  \texttt{--option value}
-  \end{tabular}};
+\begin{scope}[on background layer]
+  \node[
+    section panel,
+    fit=(sectionTitle)(local)(remote)(connection)(socket)(tls),
+    inner sep=3mm
+  ] (section) {};
+\end{scope}
 
-\draw[viewbox] (114,-167) rectangle (160,-191);
-\node[smalltext] at (137,-179) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{config file}\\
-  \texttt{instance.}\\
-  \texttt{section.option}
-  \end{tabular}};
+% ----------------------------------------------------------------------
+% Concrete option.
+% ----------------------------------------------------------------------
+\node[option block, below=\majorVGap of section] (option) {%
+  \textbf{\textcolor{snodecOrange}{Option}}\\[-0.4mm]
+  {\footnotesize one concrete value inside a section}\\[-0.2mm]
+  {\footnotesize host, port, path, timeout, retry, backlog, certificate path}
+};
 
+% ----------------------------------------------------------------------
+% Hierarchy arrows.
+% ----------------------------------------------------------------------
+\draw[hierarchy flow] (application.south) -- (instance.north);
+\draw[hierarchy flow] (instance.south) -- (section.north);
+\draw[hierarchy flow] (section.south) -- (option.north);
+
+% ----------------------------------------------------------------------
+% Same hierarchy, three views.
+% ----------------------------------------------------------------------
+\node[view label, below=8mm of option] (viewsLabel) {Same hierarchy, three views};
+
+\node[view block, below=\minorVGap of viewsLabel, xshift=-\viewShift] (cppApi) {%
+  \textbf{C++ API}\\[-0.4mm]
+  \texttt{getConfig()->Local::setPort(8080)}
+};
+
+\node[view block, below=\minorVGap of viewsLabel] (commandLine) {%
+  \textbf{Command line}\\[-0.4mm]
+  \texttt{app instance local --port 8080}
+};
+
+\node[view block, below=\minorVGap of viewsLabel, xshift=\viewShift] (configFile) {%
+  \textbf{Config file}\\[-0.4mm]
+  \texttt{instance.local.port = 8080}
+};
+
+% ----------------------------------------------------------------------
+% Outer boundary.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \node[
+    fit=(application)(instance)(section)(option)(viewsLabel)(cppApi)(commandLine)(configFile),
+    snodec boundary,
+    inner sep=5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Configuration hierarchy}
+  ] {};
+\end{scope}
 
 \end{tikzpicture}
 \end{document}

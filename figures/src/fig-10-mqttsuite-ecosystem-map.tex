@@ -1,85 +1,142 @@
 \documentclass[tikz,border=7pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{positioning,calc,arrows.meta}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
 
 \begin{document}
+
+\def\majorVGap{11mm}
+\def\sideShift{39mm}
+
 \begin{tikzpicture}[
-  x=1mm,y=1mm,
-  meta/.style={draw=snodecBlue!55, fill=snodecBlueSoft!45, rounded corners=3pt, line width=0.75pt},
-  clientbox/.style={draw=snodecGreen!70, fill=snodecGreenSoft, rounded corners=2.5pt, line width=0.75pt},
-  storebox/.style={draw=snodecOrange!75, fill=snodecOrangeSoft, rounded corners=2.5pt, line width=0.75pt},
-  brokerbox/.style={draw=snodecBlue!75, fill=snodecBlueSoft, rounded corners=2.5pt, line width=0.75pt},
-  toolbox/.style={draw=snodecBlue!60, fill=white, rounded corners=2.5pt, line width=0.75pt},
-  boxtext/.style={font=\sffamily\small, align=center, text depth=0pt, text height=1.7ex},
-  smalltext/.style={font=\sffamily\footnotesize, align=center, text depth=0pt, text height=1.6ex},
-  titletext/.style={font=\sffamily\bfseries\small, text=snodecBlue, fill=snodecBlueSoft!45, inner sep=1.2pt},
-  arrow/.style={draw=snodecMuted!85, -{Latex[length=2.2mm,width=1.7mm]}, line width=0.75pt},
-  arlabel/.style={font=\sffamily\footnotesize, text=snodecMuted, fill=white, inner sep=1.1pt}
+  snodec diagram,
+  client block/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=54mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  store block/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=54mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  broker block/.style={
+    draw=snodecBlue!75,
+    fill=snodecBlueSoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=112mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  support block/.style={
+    draw=snodecBlue!60,
+    fill=snodecBlueSoft!60,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=54mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  interaction flow/.style={
+    snodec muted arrow,
+    draw=snodecMuted!75,
+    line width=0.75pt
+  },
+  arrow label/.style={
+    font=\sffamily\footnotesize,
+    text=snodecMuted,
+    fill=white,
+    inner sep=1.1pt
+  }
 ]
 
 % ----------------------------------------------------------------------
-% Outer frame.
+% Center role
 % ----------------------------------------------------------------------
-\draw[meta] (0,0) rectangle (160,-150);
-\node[titletext, anchor=west] at (5,-6) {MQTTSuite ecosystem};
+\node[broker block] (broker) {%
+  \textbf{\textcolor{snodecBlue}{\texttt{MQTTBroker}}}\\[-0.4mm]
+  {\footnotesize topic space, subscriptions, retained messages, client state}
+};
 
 % ----------------------------------------------------------------------
-% Top row: clients/tools and persistence-facing store.
+% Top row: clients/tools and persistence-facing store
 % ----------------------------------------------------------------------
-\draw[clientbox] (8,-19) rectangle (72,-50);
-\node[smalltext] at (40,-34.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{MQTT clients and tools}\\
-  native MQTT clients, devices,\\
-  tools, services, browsers,\\
-  dashboards, MQTTCli
-  \end{tabular}};
+\node[client block, above=\majorVGap of broker, xshift=-\sideShift] (clients) {%
+  \textbf{\textcolor{snodecGreen}{MQTT clients and tools}}\\[-0.4mm]
+  {\footnotesize native MQTT clients, devices,}\\[-0.2mm]
+  {\footnotesize tools, services, browsers,}\\[-0.2mm]
+  {\footnotesize dashboards, \texttt{MQTTCli}}
+};
 
-\draw[storebox] (88,-19) rectangle (152,-50);
-\node[smalltext] at (120,-34.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{MQTTStore}\\
-  persistent topic/state view,\\
-  retained/state history,\\
-  storage-facing role
-  \end{tabular}};
+\node[store block, above=\majorVGap of broker, xshift=\sideShift] (store) {%
+  \textbf{\textcolor{snodecOrange}{\texttt{MQTTStore}}}\\[-0.4mm]
+  {\footnotesize persistent topic/state view,}\\[-0.2mm]
+  {\footnotesize retained/state history,}\\[-0.2mm]
+  {\footnotesize storage-facing role}
+};
 
 % ----------------------------------------------------------------------
-% Center role.
+% Bottom row: bridge and integration roles
 % ----------------------------------------------------------------------
-\draw[brokerbox] (18,-75) rectangle (142,-101);
-\node[boxtext] at (80,-88) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{MQTTBroker}\\
-  topic space, subscriptions, retained messages, client state
-  \end{tabular}};
+\node[support block, below=\majorVGap of broker, xshift=-\sideShift] (bridge) {%
+  \textbf{\textcolor{snodecBlue}{\texttt{MQTTBridge}}}\\[-0.4mm]
+  {\footnotesize broker-to-broker topic flow,}\\[-0.2mm]
+  {\footnotesize prefixes and loop boundaries}
+};
 
-% Top-row connectors: straight vertical arrows centered at the smaller boxes.
-\draw[arrow] (40,-50) -- node[arlabel, left=1.3mm] {connect / publish / subscribe} (40,-75);
-\draw[arrow] (120,-50) -- node[arlabel, right=1.3mm] {store / retrieve} (120,-75);
+\node[support block, below=\majorVGap of broker, xshift=\sideShift] (integrator) {%
+  \textbf{\textcolor{snodecBlue}{\texttt{MQTTIntegrator}}}\\[-0.4mm]
+  {\footnotesize external services, databases,}\\[-0.2mm]
+  {\footnotesize application-specific systems}
+};
 
 % ----------------------------------------------------------------------
-% Bottom row: bridge and integration roles.
+% Interactions with the broker
 % ----------------------------------------------------------------------
-\draw[toolbox] (8,-124) rectangle (72,-143);
-\node[smalltext] at (40,-133.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{MQTTBridge}\\
-  broker-to-broker topic flow,\\
-  prefixes and loop boundaries
-  \end{tabular}};
+\draw[interaction flow]
+  (clients.south)
+  -- node[arrow label, left=1.3mm] {connect / publish / subscribe}
+  (broker.north -| clients.center);
 
-\draw[toolbox] (88,-124) rectangle (152,-143);
-\node[smalltext] at (120,-133.5) {%
-  \begin{tabular}{@{}c@{}}
-  \textbf{MQTTIntegrator}\\
-  external services, databases,\\
-  application-specific systems
-  \end{tabular}};
+\draw[interaction flow]
+  (store.south)
+  -- node[arrow label, right=1.3mm] {store / retrieve}
+  (broker.north -| store.center);
 
-% Bottom-row connectors: straight vertical arrows centered at the smaller boxes.
-\draw[arrow] (40,-124) -- node[arlabel, left=1.3mm] {bridge / replicate} (40,-101);
-\draw[arrow] (120,-124) -- node[arlabel, right=1.3mm] {integrate / adapt} (120,-101);
+\draw[interaction flow]
+  (bridge.north)
+  -- node[arrow label, left=1.3mm] {bridge / replicate}
+  (broker.south -| bridge.center);
+
+\draw[interaction flow]
+  (integrator.north)
+  -- node[arrow label, right=1.3mm] {integrate / adapt}
+  (broker.south -| integrator.center);
+
+\begin{scope}[on background layer]
+  \node[
+    fit=(clients)(store)(broker)(bridge)(integrator),
+    snodec boundary,
+    inner sep=5mm,
+    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:MQTTSuite ecosystem}
+  ] {};
+\end{scope}
 
 \end{tikzpicture}
 \end{document}
