@@ -4,8 +4,8 @@
 
 \begin{document}
 
-\def\majorVGap{11mm}
-\def\minorVGap{4mm}
+\def\majorVGap{12mm}
+\def\minorVGap{5mm}
 \def\formShift{52mm}
 
 \begin{tikzpicture}[
@@ -118,7 +118,7 @@
 % ----------------------------------------------------------------------
 % Logging forms.
 % ----------------------------------------------------------------------
-\node[form label, below=8mm of context] (formsLabel) {Logging forms};
+\node[form label, below=9mm of context] (formsLabel) {Logging forms};
 
 \node[form block, below=\minorVGap of formsLabel, xshift=-\formShift] (logForm) {%
   \textbf{\texttt{LOG(level)}}\\[-0.4mm]
@@ -141,14 +141,6 @@
 % ----------------------------------------------------------------------
 % Outer boundary.
 % ----------------------------------------------------------------------
-\begin{scope}[on background layer]
-  \node[
-    fit=(application)(instance)(connection)(context)(formsLabel)(logForm)(plogForm)(vlogForm),
-    snodec boundary,
-    inner sep=5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Logging and diagnostic visibility map}
-  ] {};
-\end{scope}
 
 \end{tikzpicture}
 \end{document}

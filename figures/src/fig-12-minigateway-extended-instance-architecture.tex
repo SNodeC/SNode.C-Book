@@ -138,14 +138,18 @@
   -- node[arrow label, right=1.3mm] {bus subscriber}
   (subscriberEnd);
 
-\begin{scope}[on background layer]
-  \node[
-    fit=(webapp)(core)(unixInput)(mqttUplink),
-    snodec boundary,
-    inner sep=5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:MiniGateway-Extended instance architecture}
-  ] {};
-\end{scope}
+
+% DEBUG: absolute foreground 160 mm target guides.
+% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
+\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

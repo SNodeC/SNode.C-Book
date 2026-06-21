@@ -67,7 +67,7 @@
 \node[surface block] at ($(system.center)+(0,\topY)$) (package) {%
   \textbf{\textcolor{snodecBlue}{package surface}}\\[-0.4mm]
   build / install / export\\[-0.2mm]
-  surface is correct
+  exported surface is correct
 };
 
 \node[surface block] at ($(system.center)+(-\upperX,\upperY)$) (component) {%
@@ -127,25 +127,26 @@
 \coordinate (bottomRowCenter) at ($(diagnostic.south)!0.5!(performance.south)$);
 
 \node[note block, below=\noteGap of bottomRowCenter] (note) {%
-  Each surface answers a different confidence question.\\[-0.2mm]
-  A useful failure should point toward the surface whose architectural promise was broken.
+  Each surface asks a different confidence question.\\[-0.2mm]
+  A useful failure points to the surface whose promise was broken.
 };
 
 % ----------------------------------------------------------------------
 % Outer boundary.
 % ----------------------------------------------------------------------
-\begin{scope}[on background layer]
-  \node[
-    fit=(component)(package)(deployment)
-        (protocol)(runtime)
-        (system)
-        (diagnostic)(performance)
-        (note),
-    snodec boundary,
-    inner sep=5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Testing confidence surfaces}
-  ] {};
-\end{scope}
+
+
+% DEBUG: absolute foreground 160 mm target guides.
+% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
+\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

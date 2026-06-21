@@ -50,9 +50,18 @@
 \draw[snodec muted arrow] ($(role.east)+(11mm,0)$) -- ($(family.east)+(11mm,0)$)
   node[side note, midway, rotate=90, above=1.5mm] {more transport-specific};
 
-\begin{scope}[on background layer]
-  \node[fit=(family)(transport)(connection)(protocol)(role), snodec boundary, inner sep=5mm] (stack) {};
-\end{scope}
+
+% DEBUG: absolute foreground 160 mm target guides.
+% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
+\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

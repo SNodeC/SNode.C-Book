@@ -197,7 +197,7 @@
   \textbf{\textcolor{snodecBlue}{Retry allowed?}}\\[-0.4mm]
   retry enabled\\[-0.2mm]
   tries below limit\\[-0.2mm]
-  no \texttt{NO\_RETRY}
+  unless \texttt{NO\_RETRY}
 };
 
 \draw[flow] (failOutcome.south) -- (retryAllowed.north);
@@ -312,14 +312,19 @@
 % ----------------------------------------------------------------------
 % Outer boundary.
 % ----------------------------------------------------------------------
-\begin{scope}[on background layer]
-  \node[
-    fit=(connectRequest)(connectAttempt)(classifyPanel)(nextAttempt)(returnLane),
-    snodec boundary,
-    inner sep=5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Retry and reconnect flow}
-  ] {};
-\end{scope}
+
+
+% DEBUG: absolute foreground 160 mm target guides.
+% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
+\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

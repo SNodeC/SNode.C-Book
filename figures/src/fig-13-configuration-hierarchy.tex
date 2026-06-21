@@ -5,7 +5,7 @@
 \begin{document}
 
 \def\majorVGap{11mm}
-\def\minorVGap{4mm}
+\def\minorVGap{5mm}
 \def\sectionPlacementGap{14mm}
 \def\viewShift{58mm}
 \def\sectionItemGap{3.5mm}
@@ -55,7 +55,7 @@
     align=center,
     text width=23mm,
     inner xsep=2mm,
-    inner ysep=1.5mm,
+    inner ysep=1.7mm,
     font=\sffamily\footnotesize
   },
   view block/.style={
@@ -140,7 +140,7 @@
 % ----------------------------------------------------------------------
 % Same hierarchy, three views.
 % ----------------------------------------------------------------------
-\node[view label, below=8mm of option] (viewsLabel) {Same hierarchy, three views};
+\node[view label, below=9mm of option] (viewsLabel) {Same hierarchy, three views};
 
 \node[view block, below=\minorVGap of viewsLabel, xshift=-\viewShift] (cppApi) {%
   \textbf{C++ API}\\[-0.4mm]
@@ -160,14 +160,19 @@
 % ----------------------------------------------------------------------
 % Outer boundary.
 % ----------------------------------------------------------------------
-\begin{scope}[on background layer]
-  \node[
-    fit=(application)(instance)(section)(option)(viewsLabel)(cppApi)(commandLine)(configFile),
-    snodec boundary,
-    inner sep=5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Configuration hierarchy}
-  ] {};
-\end{scope}
+
+
+% DEBUG: absolute foreground 160 mm target guides.
+% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
+\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

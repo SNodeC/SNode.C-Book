@@ -90,11 +90,11 @@
   boundary flow/.style={
     snodec muted arrow,
     draw=snodecBlue!70,
-    line width=0.85pt
+    line width=0.75pt
   },
   boundary line/.style={
     draw=snodecBlue!70,
-    line width=0.85pt
+    line width=0.75pt
   },
   note block/.style={
     font=\sffamily\footnotesize,
@@ -139,7 +139,7 @@
 \node[persist block, below=\rowGap of protocolContext] (databaseClient) {%
   \textbf{\textcolor{snodecOrange!90!black}{database client}}\\[-0.4mm]
   query execution\\[-0.2mm]
-  result/error callback
+  result and error handling
 };
 
 \node[store block, below=\rowGap of applicationState] (durableStore) {%
@@ -204,7 +204,7 @@
 % ----------------------------------------------------------------------
 % Figure note.
 % ----------------------------------------------------------------------
-\node[note block, below=8mm of durablePanel] (note) {%
+\node[note block, below=9mm of durablePanel] (note) {%
   Do not persist transport facts blindly.\\[-0.2mm]
   Persist application facts deliberately.
 };
@@ -212,14 +212,19 @@
 % ----------------------------------------------------------------------
 % Outer boundary.
 % ----------------------------------------------------------------------
-\begin{scope}[on background layer]
-  \node[
-    fit=(transientPanel)(durablePanel)(note),
-    snodec boundary,
-    inner sep=5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Persistence boundary}
-  ] {};
-\end{scope}
+
+
+% DEBUG: absolute foreground 160 mm target guides.
+% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
+\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
+\draw[overlay, red!95!black, line width=0.9pt]
+  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
+    --
+  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

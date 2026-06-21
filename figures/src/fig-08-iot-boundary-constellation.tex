@@ -105,14 +105,5 @@
   -- node[arrow label, right=1.5mm] {publish / integrate}
   (gateway.south -| services.center);
 
-\begin{scope}[on background layer]
-  \node[
-    fit=(devices)(operator)(gateway)(state)(services),
-    snodec boundary,
-    inner sep=5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:IoT boundary constellation}
-  ] {};
-\end{scope}
-
 \end{tikzpicture}
 \end{document}

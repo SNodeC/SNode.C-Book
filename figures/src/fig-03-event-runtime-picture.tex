@@ -16,15 +16,15 @@
     minimum height=11mm
   },
   source block/.style={
-    draw=snodecGreen!75,
-    fill=snodecGreenSoft,
+    draw=snodecRule!78,
+    fill=snodecGraySoft,
     rounded corners=2.5pt,
     line width=0.75pt,
     align=center,
     text width=34mm,
     inner xsep=3.2mm,
     inner ysep=2.4mm,
-    minimum height=12mm
+    minimum height=13mm
   },
   dispatch block/.style={
     draw=snodecOrange!75,
@@ -38,7 +38,7 @@
     minimum height=11mm
   },
   flow/.style={snodec arrow, draw=snodecBlue!65},
-  source wait/.style={snodec muted arrow, dashed, draw=snodecGreen!55},
+  source wait/.style={snodec muted arrow, dashed, draw=snodecMuted!55},
   dispatch flow/.style={snodec arrow, draw=snodecOrange!75},
   feedback flow/.style={snodec muted arrow, dashed, draw=snodecMuted!55},
   muted label/.style={font=\sffamily\footnotesize, text=snodecMuted, fill=white, inner sep=1.2pt}
@@ -66,22 +66,22 @@
   {\footnotesize Waits for readiness, timers, and queued work.}
 };
 
-\node[source block, below=13mm of mux, xshift=-43mm] (descriptor) {%
-  \textbf{\textcolor{snodecGreen}{Descriptors}}\\[-0.5mm]
+\node[source block, below=14mm of mux, xshift=-43mm] (descriptor) {%
+  \textbf{\textcolor{snodecMuted}{Descriptors}}\\[-0.5mm]
   {\footnotesize socket and file-descriptor readiness}
 };
 
-\node[source block, below=13mm of mux] (timer) {%
-  \textbf{\textcolor{snodecGreen}{Timers}}\\[-0.5mm]
+\node[source block, below=14mm of mux] (timer) {%
+  \textbf{\textcolor{snodecMuted}{Timers}}\\[-0.5mm]
   {\footnotesize scheduled and timeout activity}
 };
 
-\node[source block, below=13mm of mux, xshift=43mm] (queue) {%
-  \textbf{\textcolor{snodecGreen}{Event queue}}\\[-0.5mm]
-  {\footnotesize deferred runtime work \phantom{yyyyyyyyyyyyyyyyyyyyy}}
+\node[source block, below=14mm of mux, xshift=43mm] (queue) {%
+  \textbf{\textcolor{snodecMuted}{Event queue}}\\[-0.5mm]
+  {\footnotesize deferred runtime work}
 };
 
-\node[dispatch block, below=13mm of timer] (dispatch) {%
+\node[dispatch block, below=14mm of timer] (dispatch) {%
   \textbf{\textcolor{snodecOrange}{Dispatch}}\\[-0.5mm]
   {\footnotesize Receivers, callbacks, and protocol contexts react.}
 };

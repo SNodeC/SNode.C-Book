@@ -129,14 +129,5 @@
   -- node[arrow label, right=1.3mm] {integrate / adapt}
   (broker.south -| integrator.center);
 
-\begin{scope}[on background layer]
-  \node[
-    fit=(clients)(store)(broker)(bridge)(integrator),
-    snodec boundary,
-    inner sep=5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:MQTTSuite ecosystem}
-  ] {};
-\end{scope}
-
 \end{tikzpicture}
 \end{document}

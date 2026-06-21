@@ -105,14 +105,5 @@
   -- node[arrow label, right=1.3mm] {runs as}
   (process.south -| deployment.center);
 
-\begin{scope}[on background layer]
-  \node[
-    fit=(protocols)(configuration)(process)(visibility)(deployment),
-    snodec boundary,
-    inner sep=5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Application-to-system role constellation}
-  ] {};
-\end{scope}
-
 \end{tikzpicture}
 \end{document}
