@@ -34,7 +34,7 @@ The configuration model is easiest to read from the outside inward. Figure~\ref{
 | section | `local`, `remote`, `connection`, `socket`, `server`, `tls` | concrete endpoint or behavioral settings |
 | option | individual setting | host, port, timeout, retry, backlog, certificate path |
 
-This hierarchy is not only a way to organize documentation.
+This hierarchy organizes runtime responsibility; documentation follows from that structure.
 
 It is the practical shape used by the framework. It appears in code, on the command line, and in configuration files.
 
@@ -71,7 +71,7 @@ It contains concerns such as:
 
 The visible server/client object in application code is the application-side handle. In the configuration model, a named instance is the externally addressable configuration identity of the communication role that the handle configures and registers.
 
-That distinction matters. The configuration system does not just decorate a local C++ variable. It gives a communication role an operational address.
+That distinction matters. The configuration system gives a communication role an operational address instead of merely decorating a local C++ variable.
 
 #### Section scope
 
@@ -100,7 +100,7 @@ The `server` section describes server-role behavior.
 
 The `tls` section describes TLS-related connection-layer behavior.
 
-Sections are not only help-output headings. They are the boundaries between different kinds of responsibility inside one configured communication role.
+Sections are the boundaries between different kinds of responsibility inside one configured communication role. Help output reflects that boundary.
 
 #### Same hierarchy in code, CLI, and files
 
@@ -185,13 +185,13 @@ The name can appear:
 
 That is why named instances matter.
 
-They connect the application-side handle to the operational surface of the application. The name is not only a readable label in C++ code. It is the address by which operators, scripts, configuration files, and diagnostic output can talk about that role.
+They connect the application-side handle to the operational surface of the application. The name is the address by which operators, scripts, configuration files, and diagnostic output can talk about that role.
 
 #### Role identity: server or client
 
 A configured role also has role identity. In the configuration model, that means an instance is constructed as a server role or a client role.
 
-This is not just descriptive text. It influences how the instance appears in help output and how its configuration is interpreted.
+This text influences how the instance appears in help output and how its configuration is interpreted.
 
 A server role is normally shaped around listening and accepting. A client role is normally shaped around connecting.
 
@@ -218,7 +218,7 @@ This does not make anonymous instances inferior. It only means that they belong 
 
 #### Disablement and requiredness
 
-Disablement is a first-class instance state. It is not only a Boolean label.
+Disablement is a first-class instance state, not a loose Boolean label.
 
 Disablement lets a configured role remain part of the application shape while being removed from the required startup path for a particular run. That matters for multi-instance programs.
 
@@ -456,7 +456,7 @@ application help
 
 The command line can also print command-line representations of the selected configuration. The `--command-line` option supports views such as `standard`, `required`, `active`, and `complete`.
 
-Together with `--show-config` and `--write-config`, this makes the command line more than a parser. It becomes a way to inspect, reproduce, and persist the configuration of an application.
+Together with `--show-config` and `--write-config`, the command line becomes a way to inspect, reproduce, and persist the configuration of an application.
 
 ##### Guided errors for missing configuration
 
@@ -556,9 +556,9 @@ application
           -> host / port
 ```
 
-This is more than error reporting.
+This is scoped error reporting.
 
-It reinforces the structure of the configuration model. The error is not just "something failed." It belongs to a scope that the user can inspect.
+It reinforces the structure of the configuration model. The error belongs to a scope that the user can inspect, instead of appearing as a generic failure.
 
 #### Parameterless activation
 
@@ -629,7 +629,7 @@ Configuration files should primarily describe durable shape. Command-line invoca
 
 ### Generated and shown configuration
 
-Generated configuration and shown configuration are not only convenience features. They make the hierarchy inspectable.
+Generated configuration and shown configuration make the hierarchy inspectable.
 
 A shown configuration helps answer:
 

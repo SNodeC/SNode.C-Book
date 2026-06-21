@@ -236,7 +236,7 @@ There is also an important binary/text distinction. MQTT packet data is byte-ori
 
 #### Runtime event integration
 
-The MQTT-over-WebSocket adapter is not only static type composition. It also has to fit into the event-driven runtime.
+The MQTT-over-WebSocket adapter has to fit into the event-driven runtime and the static type composition.
 
 Runtime integration is explicit. The adapter owns an `OnReceivedFromPeerEvent` that schedules MQTT receive processing after WebSocket message data has been buffered. This keeps MQTT packet processing inside the same event-driven runtime model as the rest of SNode.C.
 
@@ -386,7 +386,7 @@ The build structure mirrors the architectural structure.
 | `mqtt-server-websocket` | server-side MQTT WebSocket subprotocol |
 | `mqtt-client-websocket` | client-side MQTT WebSocket subprotocol |
 
-This matters because MQTT-over-WebSocket is not just an application example outside the framework. It is represented as a dedicated protocol composition in the module structure.
+This matters because MQTT-over-WebSocket is represented as a dedicated protocol composition in the module structure, not as an application example outside the framework.
 
 The WebSocket artifacts do not redefine MQTT. They package the MQTT/WebSocket composition for the corresponding side of the connection.
 

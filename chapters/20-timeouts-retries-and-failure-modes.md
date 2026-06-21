@@ -281,7 +281,7 @@ Retry and reconnect are the most important distinction in this chapter. They are
 | retry | a listen/connect activation attempt failed | try that kind of activation again later |
 | reconnect | an established client connection ended | restore the ongoing client role |
 
-This distinction keeps the application model honest.
+This distinction keeps the application model clear.
 
 
 Figure~\ref{fig:retry-reconnect-flow} separates the two loops visually. Retry belongs to a failed connection attempt before a stable connection exists. Reconnect belongs to a previously established connection that later disconnects. Both paths eventually initiate another connection attempt, but they are triggered by different events and controlled by different configuration decisions.
@@ -342,7 +342,7 @@ connected client instance
               -> connect is attempted again
 ```
 
-Therefore, reconnect belongs to the lifecycle of the client instance. It is not just another failed connect attempt.
+Therefore, reconnect belongs to the lifecycle of the client instance, not to another failed connect attempt.
 
 ### Server and client symmetry and difference
 
@@ -367,7 +367,7 @@ This belongs to role behavior, not to application protocol behavior.
 
 ### Retry timing policy
 
-Retry timing is more than “try again.” It is a policy.
+Retry timing is a policy with its own operational meaning.
 
 A retry policy may need to answer several questions:
 
@@ -460,7 +460,7 @@ always retry
 never retry
 ```
 
-### Failure states are more than Boolean outcomes
+### Failure states carry runtime meaning
 
 Failure handling is easier to understand when the state vocabulary is explicit.
 
@@ -514,7 +514,7 @@ Failure can occur at many points in the lifecycle.
 
 Therefore, a single error category is not enough.
 
-Communication has phases. Failures belong to phases. The diagnostic question is not only:
+Communication has phases. Failures belong to phases. The diagnostic question is broader than:
 
 ```text
 Did it fail?
@@ -562,7 +562,7 @@ Timeouts, retries, and reconnects describe what happens when communication does 
 
 The clearest example is the outgoing write buffer. A fast producer can generate data faster than a peer can receive it. A MQTT broker may fan one publication out to many subscribers. A WebSocket dashboard may have one slow browser among many fast ones. An SSE stream may remain open while the client reads slowly or stops reading altogether.
 
-This is not only a performance problem. It is a failure-policy problem. An unbounded output queue is not robustness; it is delayed failure.
+The issue is not performance alone; it is failure policy. An unbounded output queue is not robustness; it is delayed failure.
 
 A useful SNode.C application should therefore decide which boundary owns output-pressure policy:
 
@@ -687,7 +687,7 @@ This boundary keeps the architecture balanced.
 
 It prevents protocol code from swallowing outer operational policy. It prevents outer role logic from pretending to understand protocol semantics. It keeps failure behavior visible.
 
-The important separation is not only technical. It is explanatory. A reader should be able to answer:
+The important separation is explanatory and technical. A reader should be able to answer:
 
 ```text
 Is this an activation problem?

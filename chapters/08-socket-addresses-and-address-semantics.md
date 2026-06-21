@@ -4,7 +4,7 @@
 
 Chapter 7 showed how SNode.C communication choices are encoded in the layer stack.
 
-The first of those choices is the network family. An application may use IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP. That choice is not only a namespace fragment and not only a build component. It changes what an endpoint *is*.
+The first of those choices is the network family. An application may use IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP. That choice changes what an endpoint *is*; the namespace or build component is only the visible consequence.
 
 It therefore asks a narrower but important question:
 
@@ -37,7 +37,7 @@ net::SocketAddress<SockAddrT>
 
 That template already tells us something useful.
 
-A SNode.C address is not just a string wrapper. It is backed by a concrete socket-address structure and length, and it participates in the framework's broader socket-address abstraction. The template parameter keeps the operating-system address representation visible enough for the family-specific class to remain honest.
+A SNode.C address is backed by a concrete socket-address structure and length, and it participates in the framework's broader socket-address abstraction. The template parameter keeps the operating-system address representation visible enough for the family-specific class to remain honest.
 
 The shared base gives the framework a common shape. The derived family classes preserve the differences.
 
@@ -159,7 +159,7 @@ with port:
 
 This gives IPv6 the same broad wildcard-oriented starting point as IPv4, but in IPv6 vocabulary.
 
-The similarity is useful, but it should not hide the family boundary. IPv6 is not just IPv4 with longer strings. It has its own address syntax, its own operational behavior, and its own deployment consequences. SNode.C gives IPv4 and IPv6 a similar address interface where that helps, while preserving the fact that they are different endpoint families.
+The similarity is useful, but it should not hide the family boundary. IPv6 has its own address syntax, operational behavior, and deployment consequences. SNode.C gives IPv4 and IPv6 a similar address interface where that helps, while preserving the fact that they are different endpoint families.
 
 #### Unix domain sockets: local endpoint identity
 
@@ -289,7 +289,7 @@ Across the supported families, the default address expresses a wildcard-like, br
 
 This matters because socket programming often begins with partial endpoint descriptions.
 
-A server may specify only the service selector it wants to listen on. A client may specify a remote endpoint while leaving its local side broad. A wildcard address is not an error. It is often the correct expression of “this endpoint is intentionally broad until bind or connect makes it concrete.”
+A server may specify only the service selector it wants to listen on. A client may specify a remote endpoint while leaving its local side broad. A wildcard address is not an error. It is often the correct expression of “this endpoint is broad until bind or connect makes it concrete.”
 
 #### Constructors teach identity shape
 
@@ -411,7 +411,7 @@ The following table summarizes the address-level meaning of common terms.
 | Wildcard/default address | Broad or deferred endpoint identity |
 | `toString(...)` | Runtime-readable endpoint representation |
 
-The table is deliberately compact. Its job is not to replace the API reference. Its job is to keep the central question visible:
+The table is compact. Its job is not to replace the API reference. Its job is to keep the central question visible:
 
 > What kind of endpoint identity am I describing?
 

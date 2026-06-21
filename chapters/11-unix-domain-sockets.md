@@ -60,7 +60,7 @@ The Unix-domain address class is:
 net::un::SocketAddress
 ```
 
-Its surface is intentionally smaller than the IPv4 and IPv6 address classes because the endpoint identity is smaller. There is no host name to resolve, no internet port number, and no candidate list of remote network addresses. The address object represents a Unix-domain path and the socket-address structure built from it.
+Its surface is smaller than the IPv4 and IPv6 address classes because the endpoint identity is smaller. There is no host name to resolve, no internet port number, and no candidate list of remote network addresses. The address object represents a Unix-domain path and the socket-address structure built from it.
 
 Its conceptual surface includes:
 
@@ -91,7 +91,7 @@ In application code this may appear as:
 net::un::SocketAddress address("/tmp/my-service.sock");
 ```
 
-The path is not just a filename in the everyday document sense. It is the name through which local processes identify the communication endpoint. In practice, it acts as a rendezvous name inside the local operating-system environment: one side creates or binds that endpoint identity, and the other side uses the same identity to reach the service.
+The path is the name through which local processes identify the communication endpoint. In practice, it acts as a rendezvous name inside the local operating-system environment: one side creates or binds that endpoint identity, and the other side uses the same identity to reach the service.
 
 This avoids two common wrong instincts:
 

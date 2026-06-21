@@ -139,7 +139,7 @@ On the server side, a successful WebSocket upgrade is confirmed as an HTTP upgra
 
 #### Same connection, new protocol context
 
-Upgrade is not just a header exchange. It is the boundary where the connection keeps its transport identity but changes its protocol identity.
+Upgrade is the boundary where the connection keeps its transport identity but changes its protocol identity.
 
 A useful sentence is:
 
@@ -206,7 +206,7 @@ class SocketContextUpgrade
 };
 ```
 
-The class shape is not just an implementation detail. It is the architecture expressed in C++: one base keeps the object attached to HTTP upgrade, while the other exposes the WebSocket and subprotocol surface used after the transition.
+The class shape expresses the architecture in C++: one base keeps the object attached to HTTP upgrade, while the other exposes the WebSocket and subprotocol surface used after the transition.
 
 The template parameters keep both sides visible at the type level:
 
@@ -435,7 +435,7 @@ A compact view is:
 | dynamic loading | optional runtime extension |
 | unload | cleanup of dynamically loaded factories |
 
-This is enough for Chapter 24. The details of plugin architecture and dynamic loading belong later or in reference material. Here, the teaching point is that subprotocols are structured and selectable. They are not just string labels.
+This is enough for Chapter 24. The details of plugin architecture and dynamic loading belong later or in reference material. Here, the teaching point is that subprotocols are structured and selectable elements.
 
 #### Linked and dynamically loaded subprotocols
 

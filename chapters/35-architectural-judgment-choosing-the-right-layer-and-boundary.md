@@ -36,7 +36,7 @@ Here, *role* is often used in the system-design sense. When the text refers to S
 
 ### Good judgment begins by refusing category mistakes
 
-One of the simplest SNode.C habits is to avoid putting the right concern in the wrong layer. A category mistake happens when a concern is implemented in a layer that cannot honestly own it.
+One of the simplest SNode.C habits is to avoid putting the right concern in the wrong layer. A category mistake happens when a concern is implemented in a layer that cannot properly own it.
 
 Common examples are:
 
@@ -62,7 +62,7 @@ A warning sign is one class, callback, configuration section, or executable that
 
 At the lowest practical architectural level, the communication family shapes endpoint identity, deployment assumptions, permissions, diagnostics, and operational boundaries.
 
-IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP do not just differ in address syntax. They imply different kinds of communication situations.
+IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP imply different communication situations, not just different address syntax.
 
 A good first rule is:
 
@@ -71,13 +71,13 @@ A good first rule is:
 - use **Bluetooth RFCOMM/L2CAP** when the role is genuinely nearby, paired, device-near, or commissioning-oriented,
 - and do not choose a family merely because it is familiar.
 
-The right family is not the one the developer already knows best. It is the one that matches the system boundary honestly.
+The right family is not the one the developer already knows best. It is the one that matches the system boundary directly.
 
 Bluetooth is a useful example. It should not be treated as a general-purpose integration bus merely because it can carry byte streams. It belongs where nearby peer exchange, device-local setup, or device-near communication is the real boundary.
 
 ### Choosing the protocol surface
 
-Once the lower family is chosen, the next decision is the protocol surface. The useful question is not only which protocol is available, but:
+Once the lower family is chosen, the next decision is the protocol surface. The useful question is not simply which protocol is available, but:
 
 > What kind of conversation does this boundary actually want to have?
 
@@ -95,7 +95,7 @@ A compact decision view is:
 
 This is not a checklist to memorize; it forces the architectural question into the open.
 
-A plain stream endpoint is not automatically more honest because it is lower. HTTP, Express-like routing, SSE, WebSocket, or MQTT may be simpler when the boundary already has those semantics. The simplest honest stack matches the conversation without pretending it is something else.
+A plain stream endpoint is not automatically more appropriate because it is lower. HTTP, Express-like routing, SSE, WebSocket, or MQTT may be simpler when the boundary already has those semantics. The simplest appropriate stack matches the conversation without pretending it is something else.
 
 ### Choosing native or composed protocol form
 
@@ -122,7 +122,7 @@ A native protocol form means the protocol itself is the boundary. A composed pro
 A good decision rule is:
 
 ```text
-choose the simplest honest stack
+choose the simplest appropriate stack
   -> that matches the actual system boundary
 ```
 
@@ -146,7 +146,7 @@ MQTT over WebSocket
   -> MQTT semantics through a WebSocket-compatible boundary
 ```
 
-The question is not which stack is richer, but which stack is honest.
+The question is not which stack is richer, but which stack fits the boundary.
 
 ### Choosing role boundaries
 
@@ -172,7 +172,7 @@ Visibility matters. When roles differ in audience, protocol, state ownership, or
 
 ### Choosing process and deployment boundaries
 
-SNode.C supports both multi-role single applications and systems built from cooperating executables. The architect must decide which shape is honest.
+SNode.C supports both multi-role single applications and systems built from cooperating executables. The architect must decide which shape fits the system.
 
 Use **one executable** when:
 
@@ -318,7 +318,7 @@ Failure policy belongs to the role that owns the boundary, not just to the lowes
 
 ### Choosing what must be operator-visible
 
-System architecture is not only about internal correctness. It is about operability.
+System architecture is not limited to internal correctness. It is also about operability.
 
 A good SNode.C architect should routinely ask:
 
@@ -334,9 +334,9 @@ A concern that must be operated must be named, configured, logged, or measured s
 
 A useful log message should preserve the boundary: role, configured instance name where applicable, endpoint, state, protocol phase, and reason. Without that information, a system may still be technically correct but operationally opaque.
 
-### Simplicity and honesty usually beat cleverness
+### Simplicity usually beats cleverness
 
-In SNode.C, the best architecture is often not the cleverest one. It is often the simplest honest one.
+In SNode.C, the best architecture is often not the cleverest one. It is often the simplest appropriate one.
 
 That means:
 
@@ -363,13 +363,13 @@ preserve meaning as long as possible
 
 That means:
 
-- keep lower-family meaning visible until it is honestly abstracted,
-- keep role meaning visible until roles are honestly composable,
-- keep protocol meaning visible until a higher protocol layer honestly owns it,
-- keep persistence meaning visible until a durable-state boundary honestly owns it,
-- keep system-boundary meaning visible until deployment packaging honestly hides it.
+- keep lower-family meaning visible until it is properly abstracted,
+- keep role meaning visible until roles are properly composable,
+- keep protocol meaning visible until a higher protocol layer can properly own it,
+- keep persistence meaning visible until a durable-state boundary can properly own it,
+- keep system-boundary meaning visible until deployment packaging properly hides it.
 
-Preserving meaning does not mean refusing abstraction. It means not erasing a distinction before another layer honestly owns it.
+Preserving meaning does not mean refusing abstraction. It means not erasing a distinction before another layer can properly own it.
 
 A system stays maintainable when its important meanings are not erased too early.
 
@@ -402,7 +402,7 @@ Corrected view: SNode.C supports several valid packaging and deployment shapes; 
 
 #### Misunderstanding 3: “Good abstraction means hiding as many layers as possible.”
 
-Corrected view: in SNode.C, good abstraction usually means preserving the right meanings until they can be honestly composed.
+Corrected view: in SNode.C, good abstraction usually means preserving the right meanings until they can be properly composed.
 
 #### Misunderstanding 4: “Once I know the APIs, architectural judgment is automatic.”
 
@@ -414,14 +414,14 @@ Corrected view: this chapter is technical because boundary mistakes become techn
 
 ### The architectural principle
 
-Architectural judgment in SNode.C means choosing the right layer, role boundary, protocol family, packaging style, configuration surface, and diagnostic surface for a real system concern. Good judgment uses those boundaries honestly, so that protocol meaning, operational policy, durable state, and system structure remain clear rather than collapsing into one giant custom abstraction.
+Architectural judgment in SNode.C means choosing the right layer, role boundary, protocol family, packaging style, configuration surface, and diagnostic surface for a real system concern. Good judgment uses those boundaries explicitly, so that protocol meaning, operational policy, durable state, and system structure remain clear rather than collapsing into one giant custom abstraction.
 
 ::: {.snodec-remember title="What to remember"}
 - Architectural judgment means choosing the right layer and boundary for the actual concern.
-- A category mistake happens when a concern is placed in a layer that cannot honestly own it.
+- A category mistake happens when a concern is placed in a layer that cannot properly own it.
 - Choose the lower communication family that matches the system boundary.
 - Choose the protocol surface by asking what kind of conversation the boundary wants to have.
-- The simplest honest stack is not always the lowest stack.
+- The simplest appropriate stack is not always the lowest stack.
 - Native protocols and composed protocols solve different boundary problems.
 :::
 

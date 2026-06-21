@@ -108,7 +108,7 @@ stream
           -> MyFactory
 ```
 
-This is the kind of layered reading introduced in Chapter 7. A long SNode.C type name is not just a long C++ name. It says which lower family is used, which transport form is used, which connection variant is selected, which application-side handle type is visible, and which factory creates the per-connection protocol contexts.
+This is the kind of layered reading introduced in Chapter 7. A long SNode.C type name says which lower family is used, which transport form is used, which connection variant is selected, which application-side handle type is visible, and which factory creates the per-connection protocol contexts.
 
 The IPv4/IPv6 comparison is therefore visible before a single socket operation is called. The type name already tells the reader which lower family has been selected.
 
@@ -330,7 +330,7 @@ This topic should not overwhelm the first example. It should also not be hidden.
 
 At this stage, the important point is not to master every platform switch. The important point is to notice that IPv6 is a separate endpoint family with deployment semantics of its own.
 
-An IPv6 endpoint is not only about writing a different address string. It may also raise configuration and platform questions about whether IPv4 traffic is intentionally included, excluded, or represented through IPv4-mapped IPv6 addresses.
+An IPv6 endpoint is not only a different address string. It may also raise configuration and platform questions about whether IPv4 traffic is included, excluded, or represented through IPv4-mapped IPv6 addresses.
 
 That is one reason SNode.C keeps IPv6 as its own family instead of treating it as an overloaded IPv4 mode.
 
@@ -423,7 +423,7 @@ What did not change?
 - connection lifecycle model,
 - layered reading of the type name.
 
-This comparison is the core result. The point is not only IPv4 and IPv6 themselves. The point is controlled variation across lower communication families.
+This comparison is the core result. The point is controlled variation across lower communication families, with IPv4 and IPv6 as the teaching path.
 
 ### Stable model, different family semantics
 

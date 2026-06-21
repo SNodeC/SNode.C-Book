@@ -78,7 +78,7 @@ Log visibility answers questions such as:
 
 The logger gives those events a controlled output path.
 
-The point is not just that messages are printed. The point is that messages can be placed at the layer that understands their meaning.
+The important point is not that messages are printed. It is that messages can be placed at the layer that understands their meaning.
 
 #### Connection visibility
 

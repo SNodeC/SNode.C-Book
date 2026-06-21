@@ -15,7 +15,7 @@ SNode.C framework ideas
           -> operational ecosystem
 ```
 
-MQTTSuite is therefore more than a collection of examples. It is architectural evidence: SNode.C concepts can be combined into a coherent communication ecosystem without turning every concern into one monolithic executable.
+MQTTSuite is therefore architectural evidence: SNode.C concepts can be combined into a coherent communication ecosystem without turning every concern into one monolithic executable.
 
 Figure~\ref{fig:mqttsuite-ecosystem-map} shows the suite as a role ecosystem around the MQTT broker role and topic space. MQTT clients and operational tools, MQTTStore, MQTTBridge, and MQTTIntegrator all touch the same MQTT-oriented center from different system boundaries.
 
@@ -183,7 +183,7 @@ This is the same layered thinking used throughout the framework.
 
 ### MQTTBroker: broker role plus web administration
 
-MQTTBroker is the central broker application in the suite. From a SNode.C perspective, it is especially useful because it is not only a plain MQTT listener.
+MQTTBroker is the central broker application in the suite. From a SNode.C perspective, it is especially useful because it combines MQTT brokerage with additional application roles.
 
 MQTTBroker is one executable, but not one boundary. It combines related roles inside one operational broker application:
 
@@ -310,7 +310,7 @@ The distinction is the same kind of role clarity developed throughout this part.
 
 #### Administration for integration
 
-MQTTIntegrator is not only a headless transformation loop. It also has an HTTP/Express administration role for mapping management.
+MQTTIntegrator combines its transformation loop with an HTTP/Express administration role for mapping management.
 
 The application combines:
 
@@ -329,7 +329,7 @@ This is a common reference pattern. A long-running integration service often nee
 
 #### Mapping lifecycle and controlled change
 
-Mappings are not only static startup data. They can become managed application state.
+Mappings can become managed application state instead of remaining static startup data.
 
 A compact conceptual model is:
 
@@ -449,7 +449,7 @@ That requires design choices:
 - which SQL types should represent the projected values,
 - and how raw storage and projected state relate to each other.
 
-The projection model makes persistence a system design concern. Persistence is not just another helper function. It is a system boundary with its own design rules.
+The projection model makes persistence a system design concern. Persistence is a system boundary with its own design rules.
 
 ### System surfaces
 
@@ -487,7 +487,7 @@ MQTT client or server components
 optional lower carriers where available
 ```
 
-The same build-system lesson appears here again. The build system is not merely mechanics. It tells the reader which roles and communication boundaries the application can expose.
+The same build-system lesson appears here again. The build system tells the reader which roles and communication boundaries the application can expose.
 
 #### Configuration and repeatable role constellations
 
@@ -570,7 +570,7 @@ The point is cooperation. MQTTSuite shows how SNode.C-based applications can rem
 
 ### Closing perspective
 
-MQTTSuite is best understood here as evidence. It shows that SNode.C is not only a framework for small examples or isolated protocol demonstrations. It can support a coherent ecosystem of focused tools: a broker, an integrator, a bridge, a command-line client, a persistence service, and shared support libraries.
+MQTTSuite is best understood here as evidence that SNode.C can support a coherent ecosystem of focused tools: a broker, an integrator, a bridge, a command-line client, a persistence service, and shared support libraries.
 
 That makes MQTTSuite the right closing example for this part of the book.
 

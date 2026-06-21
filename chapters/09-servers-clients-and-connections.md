@@ -2,7 +2,7 @@
 
 ### Why these three belong in one chapter
 
-Chapter 8 made the network layer concrete. It showed that an address in SNode.C is not merely a string, a number, or a path. It is a family-specific description of endpoint identity. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
+Chapter 8 made the network layer concrete. It showed that an address in SNode.C is a family-specific description of endpoint identity, not an interchangeable string, number, or path. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
 
 This chapter asks the next question:
 
@@ -65,7 +65,7 @@ handle
 
 The handle registers the role. The instance is advanced by the runtime. The connection is a concrete peer relationship. The context implements protocol behavior over that relationship.
 
-This is not just a matter of naming. It has direct consequences for how an application is structured.
+The distinction has direct consequences for how an application is structured.
 
 Configuration belongs naturally to the instance, because configuration describes how the communication role should behave over time. Addresses appear at registration and later on concrete connections, because they describe endpoint identity. Retry and reconnect behavior belongs to the instance and its flow-controller machinery, because it concerns how the role should keep trying or resume later. Protocol behavior belongs to the context, because it is relative to one concrete peer relationship.
 
@@ -166,7 +166,7 @@ onDisconnect
 
 These callbacks receive a `SocketConnection*`.
 
-That detail is important. They are not merely status messages about the server as a whole. They are hooks into the lifecycle of a concrete connection under the server-side instance.
+That detail is important. They are hooks into the lifecycle of a concrete connection under the server-side instance, not status messages about the server as a whole.
 
 Typical uses include:
 
@@ -412,7 +412,7 @@ setWriteTimeout(...)
 
 This also connects back to Chapter 6: timers and event processing make timeout behavior part of the runtime, not a manual sleep loop in protocol code.
 
-A timeout is not merely an application-level preference. It is part of how the runtime supervises a concrete peer relationship.
+A timeout is part of how the runtime supervises a concrete peer relationship, rather than a loose application-level preference.
 
 #### Metrics and duration
 
@@ -561,7 +561,7 @@ A simple legacy echo example may not make the distinction feel dramatic. A more 
 
 #### `onDisconnect`
 
-`onDisconnect` is not merely a destructor-like cleanup moment.
+`onDisconnect` is not a destructor-like cleanup moment.
 
 It is often the place where a completed connection lifecycle becomes interpretable.
 

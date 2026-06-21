@@ -6,7 +6,7 @@ Chapter 31 closed Part IX by reading MQTTSuite as a concrete SNode.C-based ecosy
 
 Part IX looked at applications, systems, and a reference ecosystem. Part X turns toward build structure, component selection, packaging, porting, optional dependencies, and long-term maintenance. That makes CMake the right first topic.
 
-For SNode.C, CMake is not only the mechanism that turns source files into libraries and executables. It is one of the places where the framework declares its own architecture. The build structure expresses many of the same ideas that appeared earlier:
+For SNode.C, CMake is one of the places where the framework declares its own architecture, while also turning source files into libraries and executables. The build structure expresses many of the same ideas that appeared earlier:
 
 - layers,
 - components,
@@ -45,7 +45,7 @@ The answer is: a great deal. The build structure shows which parts are lower run
 
 #### Top-level project shell
 
-The top-level `CMakeLists.txt` stays intentionally small. It declares the project metadata, sets the version, extends the module path, includes helper modules such as formatting, Doxygen, uninstall, and graph visualization support, descends into `src`, and then includes packaging.
+The top-level `CMakeLists.txt` stays small. It declares the project metadata, sets the version, extends the module path, includes helper modules such as formatting, Doxygen, uninstall, and graph visualization support, descends into `src`, and then includes packaging.
 
 That is the right division of responsibility:
 
@@ -76,7 +76,7 @@ The real structural center of the build is `src/CMakeLists.txt`. That file does 
 - declares supported installable components,
 - and generates the exported package configuration.
 
-This is where the build becomes more than compilation mechanics. It becomes an inventory of what the framework believes its component surface is.
+This is where the build becomes an inventory of what the framework believes its component surface is.
 
 The supported component list is especially important. It includes core runtime pieces, stream legacy/TLS pieces, network-family variants, HTTP, Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and more. the CMake component list is also an architectural table of contents.
 
@@ -92,7 +92,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 This matters. SNode.C is not presented as old-style portable C++ that happens to compile with anything. It is a modern C++ framework, and the build makes that identity explicit.
 
-The compiler baseline is not just a convenience check. It is part of the framework contract. A port must provide not only a compiler, but a compiler sufficiently modern for the framework's language and diagnostic expectations.
+The compiler baseline is part of the framework contract. A port must provide a compiler sufficiently modern for the framework's language and diagnostic expectations.
 
 #### Warning policy
 
@@ -136,7 +136,7 @@ The build must be disciplined and practical at the same time.
 
 #### Linker policy
 
-The build does not only treat compiler warnings strictly. It also applies a strict linker posture:
+The build treats compiler warnings strictly and applies a strict linker posture:
 
 ```cmake
 add_link_options(LINKER:--as-needed LINKER:--no-undefined)
@@ -349,7 +349,7 @@ logger
 
 The graph view is useful because it makes several things visible at once.
 
-First, the lower shared base path is deliberately small:
+First, the lower shared base path is small:
 
 ```text
 logger
@@ -566,7 +566,7 @@ The HTTP module introduces protocol-upgrade infrastructure. The build sets expli
 
 That is not random bookkeeping. HTTP upgrade support needs known locations for protocol-upgrade libraries and related runtime composition.
 
-Once dynamic protocol upgrade enters the framework, the build must do more than create ordinary shared libraries. It must preserve enough path and RPATH information for runtime composition to work.
+Once dynamic protocol upgrade enters the framework, the build must preserve enough path and RPATH information for runtime composition to work.
 
 That is why HTTP build strategy belongs in the same architectural discussion as WebSocket and MQTT-over-WebSocket.
 
@@ -576,7 +576,7 @@ HTTP, Express, and WebSocket build files set library output directories and inst
 
 A framework that supports HTTP upgrade and WebSocket subprotocols cannot treat library location as a completely accidental detail. The runtime must be able to find what the build and install process produced.
 
-RPATH decisions are therefore part of the runtime-composition story. They are not only packager concerns. This does not mean RPATH solves every deployment problem, but it does mean the build preserves information that runtime composition needs.
+RPATH decisions are therefore part of the runtime-composition story. This does not mean RPATH solves every deployment problem, but it does mean the build preserves information that runtime composition needs.
 
 #### Express base and concrete carrier targets
 
@@ -714,7 +714,7 @@ The build contains a helper that appends compile definitions to specific source 
 - `CONNECT_TIMEOUT`,
 - `TLS_INIT_TIMEOUT`.
 
-This is a subtle but important build feature. Some framework defaults are not only hard-coded in ordinary source text. They can be shaped at CMake time and compiled into the relevant implementation files.
+This is a subtle but important build feature. Some framework defaults can be shaped at CMake time and compiled into the relevant implementation files instead of being fixed in ordinary source text.
 
 For a systems framework, that can be valuable. It gives builders and packagers another controlled way to shape default behavior.
 
@@ -740,7 +740,7 @@ A distributor may want different compiled defaults for an embedded package. An o
 
 ### Installed packages and external consumers
 
-SNode.C is not only built for itself. It is consumed by external applications. That is where package configuration, exported targets, component selection, and namespaced target names become essential.
+SNode.C is also consumed by external applications. That is where package configuration, exported targets, component selection, and namespaced target names become essential.
 
 #### From build targets to installed package targets
 

@@ -293,7 +293,7 @@ named
 
 A named instance is attached to the external configuration hierarchy. An anonymous instance remains application-internal and does not appear as an independently addressable command-line/config-file subcommand.
 
-#### A name is not only a label
+#### Why names matter
 
 A name such as:
 
@@ -301,7 +301,7 @@ A name such as:
 EchoServer echoServer("echo");
 ```
 
-does more than make the C++ object easier to read. It gives the configured role an address in the configuration hierarchy.
+gives the configured role an address in the configuration hierarchy, with the readable C++ name as its source-level anchor.
 
 That address can appear:
 
@@ -311,7 +311,7 @@ That address can appear:
 - in shown configuration,
 - and in configuration-file keys.
 
-The name becomes part of the operational surface of the application. That is why named instances are central for serious applications. A name is not just documentation. It is a stable handle for operation.
+The name becomes part of the operational surface of the application. That is why named instances are central for serious applications: the name is a stable handle for operation.
 
 #### Disablement as instance-level configuration
 
@@ -339,7 +339,7 @@ This is cleaner than scattering ad hoc application flags across the program.
 
 ### Sections as structural scopes
 
-Sections are not only headings in documentation. They are structural scopes in the configuration hierarchy. A section is the boundary between different kinds of responsibility inside a communication role.
+Sections are structural scopes in the configuration hierarchy. A section is the boundary between different kinds of responsibility inside a communication role.
 
 The common section names make this visible:
 
@@ -459,7 +459,7 @@ This prevents operational commands such as help, display, command-line generatio
 
 #### Generated and shown configuration
 
-Generated configuration files are not only convenient output. They show the configuration model in file form.
+Generated configuration files show the configuration model in file form.
 
 A generated file can contain:
 
@@ -521,11 +521,11 @@ activation uses the shaped role
 
 This is the bridge between configuration and runtime behavior.
 
-A configured role is not only described. It is prepared for activation. The parameterless call is readable precisely because the role has already been shaped.
+A configured role has already been prepared for activation. The parameterless call is readable precisely because the role has already been shaped.
 
 #### Missing configuration is reported structurally
 
-When required configuration is missing, the error path should point back into the same hierarchy. For example, a missing server port is not just a random failure.
+When required configuration is missing, the error path should point back into the same hierarchy. For example, a missing server port belongs to the configured server role that required it.
 
 It belongs to a particular instance and section:
 
@@ -566,7 +566,7 @@ The implementation foundation matters because it makes help output, configuratio
 
 ### Configuration as architectural leverage
 
-Configuration is not only operational convenience. It is architectural leverage.
+Configuration gives the architecture operational leverage.
 
 Because configuration can shape a role without rewriting protocol code, the same application structure can often be reused across deployments.
 

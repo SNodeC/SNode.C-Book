@@ -175,7 +175,7 @@ The same principle from Chapters 13 and 14 still applies: the context implements
 
 ### Client-side HTTP: from connection to requests and responses
 
-The HTTP client follows the same general pattern. It is not just a raw client that writes a manually assembled request line. It is a client-side HTTP protocol layer built on a lower client handle and a registered client instance.
+The HTTP client follows the same general pattern. It is a client-side HTTP protocol layer built on a lower client handle and a registered client instance, not a raw client that writes a manually assembled request line.
 
 Conceptually:
 
@@ -220,7 +220,7 @@ The lower SNode.C architecture remains present. The application-facing unit chan
 
 #### `MasterRequest`, `Request`, and `Response`
 
-The client side has to represent more than one raw write. It needs to manage the relationship between a client connection and one or more HTTP requests and responses.
+The client side has to manage the relationship between a client connection and one or more HTTP requests and responses, rather than a single raw write.
 
 That is why the HTTP client vocabulary contains:
 
@@ -266,7 +266,7 @@ The application does not need to repeat that adaptation in every client.
 
 ### What HTTP adds above the stream layer
 
-The HTTP layer adds more than server and client aliases. It contains the machinery needed to turn stream communication into HTTP message semantics.
+The HTTP layer contains the machinery needed to turn stream communication into HTTP message semantics, in addition to server and client aliases.
 
 | Added concern | Meaning |
 |---|---|
@@ -278,7 +278,7 @@ The HTTP layer adds more than server and client aliases. It contains the machine
 | upgrade machinery | allows HTTP to negotiate another protocol |
 | EventSource support | builds streaming-style behavior on HTTP |
 
-Therefore, HTTP is a real protocol layer in SNode.C. It is not just a convenience function for writing a few text lines to a socket.
+Therefore, HTTP is a real protocol layer in SNode.C, not a convenience function for writing a few text lines to a socket.
 
 #### Parsing and decoding
 
@@ -347,7 +347,7 @@ HTTP is the higher protocol layer. The lower family and connection layer still d
 
 ### HTTP as a bridge to higher web protocols
 
-HTTP is also a bridge. It is not only an endpoint protocol. It can become the place where an application moves upward into more specialized web behavior.
+HTTP is also a bridge. It can become the place where an application moves upward into more specialized web behavior.
 
 Two examples are especially important for the next chapters:
 

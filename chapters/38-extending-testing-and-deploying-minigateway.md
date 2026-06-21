@@ -26,7 +26,7 @@ Do not hide new behavior inside an arbitrary callback merely because that callba
 
 ### What changes in the extended version
 
-The extended version adds one responsibility: measurements can now arrive through a Unix-domain stream socket. The input format is deliberately simple: one comma-separated measurement per line.
+The extended version adds one responsibility: measurements can now arrive through a Unix-domain stream socket. The input format is simple: one comma-separated measurement per line.
 
 Figure~\ref{fig:minigateway-extended-instance-architecture} shows the extended application as an instance architecture. The HTTP/Express `WebApp`, the new `measurement-input` Unix-domain server, and the `mqtt-uplink` client are visible communication roles around one shared application core. The figure is not meant as a complete call graph. It shows which instance owns which boundary, and where the new input role joins the same `acceptMeasurement(...)`, `MeasurementState`, and `MeasurementBus` path.
 
@@ -139,7 +139,7 @@ target_link_libraries(
 
 ### The Unix-domain measurement context
 
-The new `MeasurementUnixSocketContext` owns the local input protocol. Its protocol is intentionally small: read bytes from a stream connection, collect complete lines, parse each line as a measurement, and pass accepted measurements to the application handler.
+The new `MeasurementUnixSocketContext` owns the local input protocol. Its protocol is small: read bytes from a stream connection, collect complete lines, parse each line as a measurement, and pass accepted measurements to the application handler.
 
 This class is not a general CSV library and not a sensor framework. It is the protocol endpoint for one local MiniGateway input boundary.
 
@@ -346,7 +346,7 @@ namespace minigateway {
 
 ### The Unix-domain measurement factory
 
-The factory is deliberately small. Its only job is to construct a `MeasurementUnixSocketContext` for each accepted Unix-domain stream connection and pass the configured measurement handler into it.
+The factory is small. Its only job is to construct a `MeasurementUnixSocketContext` for each accepted Unix-domain stream connection and pass the configured measurement handler into it.
 
 This mirrors the factory pattern used earlier for MQTT, but with a different protocol object:
 
@@ -715,7 +715,7 @@ sse_disconnect_removes_listener
 mqtt_publish_only_when_connected
 ```
 
-These names are not just labels. They preserve architectural intent.
+These names preserve architectural intent.
 
 ### Manual checks while developing
 
@@ -787,7 +787,7 @@ Configured role names are diagnostic handles. `mqtt-uplink` and `measurement-inp
 
 ### Deployment shape
 
-A deployed MiniGateway is not only an executable. It has linked SNode.C components, configuration, runtime state, log output, and possibly service-manager integration.
+A deployed MiniGateway includes linked SNode.C components, configuration, runtime state, log output, and possibly service-manager integration.
 
 A general-purpose Linux deployment should make these questions answerable:
 

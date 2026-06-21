@@ -4,7 +4,7 @@
 
 Chapter 3 built the first working echo pair.
 
-That example was deliberately small. It used one lower communication family, one transport form, one connection mode, one server, one client, one context class, and two factories. The point was not to cover the whole framework. The point was to make the recurring SNode.C application shape visible:
+That example was small. It used one lower communication family, one transport form, one connection mode, one server, one client, one context class, and two factories. The point was not to cover the whole framework. The point was to make the recurring SNode.C application shape visible:
 
 ```text
 runtime
@@ -333,7 +333,7 @@ That question prevents HTTP, WebSocket, MQTT, Express-like routing, and database
 
 ### Use CMake as a navigation tool
 
-CMake files are not only build instructions. They are also maps.
+CMake files are build instructions and maps at the same time.
 
 A `CMakeLists.txt` file can tell you:
 
@@ -528,7 +528,7 @@ Does it pass configuration or shared application state?
 Is one factory used for one role, or does it abstract over several roles?
 ```
 
-A factory is not just boilerplate. It is the handoff point between the framework and the application.
+A factory marks the handoff point between the framework and the application.
 
 ### Avoid common reading mistakes
 
@@ -562,7 +562,7 @@ A practical reading workflow for SNode.C is:
 9. Return to the application and re-read it with the framework roles visible.
 ```
 
-This workflow is not only useful for beginners. It is useful when extending the framework. A new feature should have a clear place in the same map.
+This workflow is not only useful for beginners. It also matters when extending the framework. A new feature should have a clear place in the same map.
 
 ::: {.snodec-remember title="What to remember"}
 - Read SNode.C as a set of layers and recurring roles, not as a flat pile of source files.

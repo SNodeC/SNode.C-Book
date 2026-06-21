@@ -34,7 +34,7 @@ Figure~\ref{fig:persistence-boundary} shows the boundary that should stay visibl
 
 ![Persistence boundary in an SNode.C application: protocol contexts translate peer events into application meaning, application state decides what is worth keeping, and the database client belongs behind an explicit persistence boundary rather than inside transport or protocol mechanics.](figures/pdf/fig-17-persistence-boundary.pdf){#fig:persistence-boundary width=90% latex-placement="tbp"}
 
-Figure~\ref{fig:persistence-boundary} therefore makes two decisions visible at the same time. First, protocol and transport activity do not automatically imply durable storage. Second, persistence is not just a raw database call tacked onto a callback. Between those two sides stands an application-state decision: what changed, what matters, and what is worth keeping. Only after that decision does the database client, its command API, and the durable store become part of the flow.
+Figure~\ref{fig:persistence-boundary} therefore makes two decisions visible at the same time. First, protocol and transport activity do not automatically imply durable storage. Second, persistence begins with an application-state decision: what changed, what matters, and what is worth keeping. Only after that decision does the database client, its command API, and the durable store become part of the flow.
 
 ::: {.snodec-rule title="Persistence rule"}
 Persist application facts, not raw transport accidents.
@@ -42,7 +42,7 @@ Persist application facts, not raw transport accidents.
 
 ### Persistence as an application-state boundary
 
-A database is not just another transport protocol. An HTTP endpoint, MQTT session, WebSocket connection, Bluetooth link, or Unix-domain control socket is usually a communication boundary between active participants. A database connection is different. It is a persistence and query boundary: it stores state, retrieves state, changes state, and may become the durable memory of a larger system.
+A database connection should not be read as another transport protocol. An HTTP endpoint, MQTT session, WebSocket connection, Bluetooth link, or Unix-domain control socket is usually a communication boundary between active participants. A database connection is different. It is a persistence and query boundary: it stores state, retrieves state, changes state, and may become the durable memory of a larger system.
 
 A compact comparison helps:
 
@@ -214,7 +214,7 @@ The state-change callback receives a state object containing:
 - error message,
 - connected flag.
 
-This fits SNode.C’s runtime style. The application does not only issue database operations. It can also observe whether the database resource is connected, unavailable, or in an error state.
+This fits SNode.C’s runtime style. The application issues database operations and can also observe whether the database resource is connected, unavailable, or in an error state.
 
 A database client is not the same kind of configured communication role as a socket server or client instance. It is an application-facing persistence object integrated with the runtime. It may belong to a role or service in the application, but it is not itself the same conceptual object as a registered runtime-visible socket instance.
 
@@ -259,7 +259,7 @@ The state callback is database observability at the application boundary. It mak
 
 ### Database work inside the event-driven runtime
 
-The architectural heart of the MariaDB module is event-loop integration. Database work is not only “call SQL and block.” The MariaDB connection participates in the SNode.C event-driven runtime.
+The architectural heart of the MariaDB module is event-loop integration. Database work participates in the SNode.C event-driven runtime instead of simply calling SQL and blocking.
 
 A useful model is:
 
@@ -433,7 +433,7 @@ startTransactions
           -> endTransactions
 ```
 
-The point is not only that transactions exist. Transaction flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
+The important point is not simply that transactions exist. Transaction flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
 
 A transaction is not outside the event model; it is a policy and ordering boundary expressed through database commands and callbacks.
 
@@ -504,7 +504,7 @@ The design question is:
 What lifetime should this database connection or database service have relative to the roles that use it?
 ```
 
-That is not only a coding detail. It affects shutdown, error handling, resource limits, and system clarity.
+That affects shutdown, error handling, resource limits, and system clarity.
 
 ### Persistence, failure, and backpressure
 

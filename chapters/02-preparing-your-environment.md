@@ -49,7 +49,7 @@ A local install prefix can live outside these source and build directories:
 ~/.local/snodec/
 ```
 
-This separation is not only tidy. It protects the reader from confusing source files with generated files, framework examples with local experiments, and build artifacts with installed package files.
+This separation is not just tidiness. It protects the reader from confusing source files with generated files, framework examples with local experiments, and build artifacts with installed package files.
 
 The framework source tree remains the source of truth for the implementation. The build tree is disposable. The install prefix is what external projects consume. The playground is where you can test your understanding.
 
@@ -288,7 +288,7 @@ To stop the example, interrupt one side with:
 Ctrl-C
 ```
 
-The first time you run such an example, pay attention to the output. You are not only checking that the program works. You are learning how the framework makes runtime behavior visible.
+The first time you run such an example, pay attention to the output. You are not simply checking that the program works. You are learning how the framework makes runtime behavior visible.
 
 ### Do not hide runtime output too early
 
@@ -420,7 +420,7 @@ If the answer to these questions is yes, the environment is ready for the first 
 
 ### Closing perspective
 
-A good development environment is not only about making the compiler happy. It shapes how the reader thinks.
+A good development environment keeps the compiler happy and shapes how the reader thinks.
 
 The example will be small. But it will already expose the recurring shape of SNode.C applications.
 

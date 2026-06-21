@@ -8,7 +8,7 @@ The goal is not to build a useful echo service. The goal is to make the recurrin
 
 An echo pair is ideal for that purpose.
 
-It contains one server and one client. The client sends the first message. The server reflects the received bytes. The client receives the reflected bytes and sends them again. The result is a deliberately visible ping-pong.
+It contains one server and one client. The client sends the first message. The server reflects the received bytes. The client receives the reflected bytes and sends them again. The result is a visible ping-pong.
 
 That behavior is simple, but the structure is already the structure of many later SNode.C programs:
 
@@ -30,7 +30,7 @@ The repository example is more general than the first teaching version in this c
 
 The repository design is important because it demonstrates that the echo application is not tied to one hard-coded socket kind. The same application model can be combined with different lower layers.
 
-For a first chapter, however, that full matrix would hide the essential pattern. We therefore use a deliberately reduced version:
+For a first chapter, however, that full matrix would hide the essential pattern. We therefore use a reduced version:
 
 ```text
 network family: IPv4 / in
@@ -335,7 +335,7 @@ Then the server handle is created with a name:
 EchoServer server("echoserver");
 ```
 
-The name is not only decoration. Named instances become important when configuration and diagnostics enter the book. Even in the first program, the name gives log output and callbacks a clear identity.
+The name already matters. Named instances become important when configuration and diagnostics enter the book. Even in the first program, the name gives log output and callbacks a clear identity.
 
 Finally, the server handle registers the listening role:
 
@@ -521,7 +521,7 @@ SNode.C component
       -> echoclient
 ```
 
-The example is intentionally smaller than the repository build. The repository echo application uses generated variants and shared model headers. It uses one explicit IPv4 legacy variant so that the first build remains readable.
+The example is smaller than the repository build. The repository echo application uses generated variants and shared model headers. It uses one explicit IPv4 legacy variant so that the first build remains readable.
 
 ### Configuring and building the playground
 

@@ -288,7 +288,7 @@ Often, the application keeps:
 
 What changes is the connection machinery below the application protocol.
 
-That is exactly what a good layer model should achieve. It isolates the change without pretending that TLS is trivial. TLS is not just a flag. It has operational and security consequences. But architecturally, it belongs in the connection layer.
+That is exactly what a good layer model should achieve. It isolates the change without pretending that TLS is trivial. TLS has operational and security consequences, but architecturally it belongs in the connection layer.
 
 #### Practical connection-layer combinations
 
@@ -345,9 +345,9 @@ For higher-level framework support, the application layer may involve:
 
 Later chapters also show how application protocols can be connected to persistent application state. That persistence belongs to the larger application architecture; it is not itself another communication layer in this stack.
 
-The architectural lesson is that higher protocols do not erase the lower layers. A web server is not just web code. It is web behavior carried by some lower communication stack.
+The architectural lesson is that higher protocols do not erase the lower layers. A web server is web behavior carried by some lower communication stack.
 
-An MQTT application is not just MQTT code. It is MQTT behavior carried by a connection, which is carried by a transport, which is carried by a network family. MQTT over WebSocket adds another important lesson: an application protocol can itself be carried through another application-layer protocol structure while still relying on the lower stack below it.
+An MQTT application is MQTT behavior carried by a connection, which is carried by a transport, which is carried by a network family. MQTT over WebSocket adds another important lesson: an application protocol can itself be carried through another application-layer protocol structure while still relying on the lower stack below it.
 
 This is the practical value of the layer model. Instead of treating higher protocols as feature islands, it lets the reader ask precise questions:
 
@@ -453,7 +453,7 @@ transport form: stream
 connection handling: TLS
 ```
 
-This matters because the layer model is not only a diagram in prose. It affects how code is organized, how components are built, and how external projects link against the framework.
+This matters because the layer model affects how code is organized, how components are built, and how external projects link against the framework.
 
 A reader who learns the layer names is also learning how to navigate the build.
 
@@ -524,7 +524,7 @@ The correct model is:
 
 > Layers isolate concerns well enough that changes can be reasoned about locally, while still allowing real cross-layer consequences to be understood.
 
-That is a more honest and more useful systems view.
+That is a clearer and more useful systems view.
 
 The layer model should therefore not be used as an excuse to ignore operational reality. It should be used to ask better questions. If TLS is added, ask which connection-layer behavior changes. If IPv4 is replaced by a Unix domain socket, ask which endpoint and deployment assumptions change. If MQTT is carried through WebSocket, ask where each protocol sits and which layer is responsible for which behavior.
 
@@ -532,7 +532,7 @@ This is how the model becomes practical instead of merely tidy.
 
 ### What belongs where?
 
-The following table is a compact orientation aid. It is deliberately simple: its job is not to solve every design decision, but to help the reader ask the right first question.
+The following table is a compact orientation aid. It is simple: its job is not to solve every design decision, but to help the reader ask the right first question.
 
 | Concern | Layer or model |
 |---|---|

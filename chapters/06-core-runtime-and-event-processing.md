@@ -43,7 +43,7 @@ That is the backbone of the chapter.
 
 The first runtime-facing type most users encounter is `core::SNodeC`.
 
-Its public surface is intentionally small:
+Its public surface is small:
 
 - `init(int argc, char* argv[])`
 - `start(const utils::Timeval& timeOut = {LONG_MAX, 0})`
@@ -56,9 +56,9 @@ This compact interface already teaches several important things.
 
 #### The runtime has explicit phases
 
-The existence of `init`, `start`, `stop`, `free`, and `state` tells us that the framework runtime is not just a side effect of object construction. It has lifecycle.
+The existence of `init`, `start`, `stop`, `free`, and `state` tells us that the framework runtime has an explicit lifecycle instead of being a side effect of object construction.
 
-That is a design strength. It reduces ambiguity for applications and gives the reader a stable mental timeline. A typical application does not merely create a server and hope that background machinery appears. It initializes the framework, registers communication roles, and then starts the runtime.
+That is a design strength. It reduces ambiguity for applications and gives the reader a stable mental timeline. A typical application does not simply create a server and hope that background machinery appears. It initializes the framework, registers communication roles, and then starts the runtime.
 
 #### Event-loop control is centralized
 
@@ -274,7 +274,7 @@ A good teaching summary is:
 
 > One tick is the multiplexer coordinating descriptor readiness, timers, queued events, timeout processing, signals, and cleanup.
 
-The multiplexer is not merely a thin wrapper around `epoll`, `poll`, or `select`. It is the runtime hub that combines several kinds of progress into one coordinated event-loop iteration.
+The multiplexer is the runtime hub that combines several kinds of progress into one coordinated event-loop iteration, rather than a thin wrapper around `epoll`, `poll`, or `select`.
 
 Its structure shows that it:
 
@@ -393,7 +393,7 @@ A small table helps to keep the distinction clear.
 | `DescriptorEventPublisher` | Manages the observed population for a descriptor channel | Decides *who is being observed* |
 | `DescriptorEventReceiver` | Defines behavior for one observed descriptor participant | Decides *what happens when observation produces work* |
 
-This distinction will matter again when socket acceptors, connectors, readers, and writers enter the picture. They are not merely callbacks attached to file descriptors. They are specialized runtime participants managed by the event system.
+This distinction will matter again when socket acceptors, connectors, readers, and writers enter the picture. They are specialized runtime participants managed by the event system, not anonymous callbacks attached to file descriptors.
 
 ### Timers are not bolted on
 
@@ -474,7 +474,7 @@ A callback should do the immediate protocol work it is responsible for, preserve
 
 #### Treat callbacks as runtime-owned execution points
 
-A callback is not just an ordinary helper function called by your own code at a predictable place on your own stack. It is a runtime-owned execution point.
+A callback is a runtime-owned execution point, not an ordinary helper function called by your own code at a predictable place on your own stack.
 
 That means callback code should be clear about ownership, reentrancy assumptions, and the amount of work it performs before returning.
 
@@ -488,7 +488,7 @@ A manual sleep inside a callback is almost always the wrong instinct. It stops t
 
 The public call configures and registers an instance. The flow-controller/shared-context path and the event loop advance the actual work.
 
-This is not merely a wording preference. It is the difference between reading SNode.C as a blocking socket wrapper and reading it as an event-driven runtime.
+This wording marks the difference between reading SNode.C as a blocking socket wrapper and reading it as an event-driven runtime.
 
 #### Understand where descriptor activity, timers, and queued work meet
 

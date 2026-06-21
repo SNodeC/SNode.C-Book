@@ -14,7 +14,7 @@ HTTP upgrade
 Chapter 27 widens the lens from one composed stack to a whole IoT system. In such a system, several protocol stacks may coexist because they serve different communication boundaries. The central sentence is:
 
 ::: {.snodec-rule title="Multi-protocol boundary rule"}
-A multi-protocol IoT system is clear when each protocol is assigned to an honest boundary.
+A multi-protocol IoT system is clear when each protocol is assigned to an explicit boundary.
 :::
 
 This chapter is not about using every protocol everywhere. It is about deciding where each protocol belongs. Chapter 25 introduced MQTT as a protocol family. Chapter 26 showed MQTT over WebSocket as one composed stack. Chapter 27 now treats multi-protocol IoT systems as boundary design.
@@ -69,7 +69,7 @@ This role is usually close to physical constraints. It may care about commission
 
 The local-control role connects cooperating processes on the same machine. It may be used for command tools, helper processes, service supervision, local administration, process separation, or device-facing adapters.
 
-Unix domain sockets are often a clean fit here. They express a local process boundary without pretending that the interaction is a remote network service. Not every local interaction needs HTTP, MQTT, or a TCP port. Sometimes the honest boundary is local, same-host, and intentionally not exposed beyond that host.
+Unix domain sockets are often a clean fit here. They express a local process boundary without pretending that the interaction is a remote network service. Not every local interaction needs HTTP, MQTT, or a TCP port. Sometimes the explicit boundary is local, same-host, and intentionally not exposed beyond that host.
 
 #### Integration role
 
@@ -284,7 +284,7 @@ MQTT semantics
       -> HTTP upgrade path
 ```
 
-That is useful when the system genuinely needs that composition. It should not be used only because it sounds more general. Honest boundary placement matters more than maximum reuse of one path.
+That is useful when the system genuinely needs that composition. It should not be used only because it sounds more general. Explicit boundary placement matters more than maximum reuse of one path.
 
 ### Bluetooth at the device edge
 
@@ -305,7 +305,7 @@ This keeps the local device-specific boundary separate from the wider integratio
 
 Unix domain sockets are often a clean same-host boundary. They fit situations such as a command-line tool controlling a long-running service, a helper process talking to a broker or bridge process, a device-facing adapter communicating with a local integration service, a web-facing role coordinating with a local service, or local administration without remote exposure.
 
-This is a good example of an honest boundary. Not every local interaction needs to be a network service. Not every control path needs HTTP. A Unix-domain control plane can make a system simpler by keeping local coordination local.
+This is a good example of an explicit boundary. Not every local interaction needs to be a network service. Not every control path needs HTTP. A Unix-domain control plane can make a system simpler by keeping local coordination local.
 
 ### One process or several cooperating applications
 
@@ -457,7 +457,7 @@ A practical recipe for multi-protocol IoT design is:
 
 1. Identify the real system boundaries.
 2. Name the boundary roles.
-3. Choose the simplest honest protocol family for each role.
+3. Choose the simplest appropriate protocol family for each role.
 4. Keep telemetry, control, observation, administration, and device exchange distinct.
 5. Configure, observe, and diagnose per role.
 6. Match timeout, retry, reconnect, disablement, shutdown, and degraded-state policy to the role.
@@ -511,7 +511,7 @@ SNode.C helps because many different protocol families still share the same arch
 - Multi-protocol design can live in one process or in several cooperating applications.
 - Configuration becomes a map of roles and boundaries.
 - Diagnostics and failure policy should be role-specific.
-- The same domain meaning may appear through several honest protocol surfaces.
+- The same domain meaning may appear through several clear protocol surfaces.
 - Protocol diversity is not chaos when boundaries are clear.
 - Chapter 28 moves from protocol/system design to persistence and application state.
 :::

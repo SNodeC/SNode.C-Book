@@ -48,7 +48,7 @@ configured role name
   -> appears in operational discussion
 ```
 
-This is not just terminology. It is how a running system becomes understandable.
+This terminology is how a running system becomes understandable.
 
 ## Protocols carry meaning, not only bytes {.unnumbered}
 
@@ -87,7 +87,7 @@ A system that is clear only in the source tree is not yet fully clear.
 
 ## The guided project is not the end of the idea {.unnumbered}
 
-MiniGateway was deliberately small. It did not try to become a product. It showed how the pieces can be assembled while preserving the vocabulary of the book.
+MiniGateway was small. It did not try to become a product. It showed how the pieces can be assembled while preserving the vocabulary of the book.
 
 That is the transferable lesson.
 
@@ -106,21 +106,21 @@ When those questions remain answerable, the application can grow without becomin
 
 ## A philosophical review of the book {.unnumbered}
 
-This book has used SNode.C as a concrete framework, but its deeper subject is not only SNode.C. It is the question of how network software can remain intelligible when it grows. That question is older than any particular library. Every serious network application eventually meets the same forces: different carriers, different protocols, changing deployment targets, operational failures, partial knowledge, and the temptation to hide complexity behind one convenient abstraction.
+This book has used SNode.C as a concrete framework, but its deeper subject is the question of how network software can remain intelligible when it grows. That question is older than any particular library. Every serious network application eventually meets the same forces: different carriers, different protocols, changing deployment targets, operational failures, partial knowledge, and the temptation to hide complexity behind one convenient abstraction.
 
 The position taken by this book is deliberately not that complexity can be made to disappear. A framework that pretends to remove all complexity usually only moves it somewhere less visible. SNode.C takes a different path. It gives names and places to concerns that are often blurred: lower communication family, transport form, connection handling, protocol meaning, context, configured role, runtime-visible instance, application state, package component, deployed service, diagnostic boundary. The philosophical value of such a framework is not that it makes design automatic. It makes design discussable.
 
-That is why the book has returned so often to boundaries. A boundary is not a wall erected for its own sake. It is a claim that a certain concern has a natural owner. When the claim is right, the program becomes easier to reason about. When the claim is wrong, the program may still compile, but it becomes conceptually dishonest. The HTTP route begins to own domain state. The MQTT callback begins to decide deployment policy. A socket context becomes a dumping ground for orchestration. A configuration option becomes a disguised invariant. These failures are technical, but they are also failures of thought.
+That is why the book has returned so often to boundaries. A boundary is not a wall erected for its own sake. It is a claim that a certain concern has a natural owner. When the claim is right, the program becomes easier to reason about. When the claim is wrong, the program may still compile, but it becomes conceptually misleading. The HTTP route begins to own domain state. The MQTT callback begins to decide deployment policy. A socket context becomes a dumping ground for orchestration. A configuration option becomes a disguised invariant. These failures are technical, but they are also failures of thought.
 
 The recurring discipline of the book can therefore be read as a kind of engineering humility. Do not pretend that a byte stream already is a protocol. Do not pretend that a protocol already is an application. Do not pretend that an application already is a deployed system. Do not pretend that a running process is understood merely because it is running. Each step adds meaning, and each step deserves a place where that meaning can be named, tested, logged, configured, and maintained.
 
-There is also a positive side to this discipline. Visible boundaries make change less frightening. MiniGateway could be extended because the base application did not collapse measurement input, state ownership, observation, and MQTT publication into one accidental block of code. MQTTSuite can be understood as an ecosystem because its roles are not just executables, but architectural positions. Build targets, package components, and runtime configuration are not administrative noise; they are part of how the architecture survives contact with real machines.
+There is also a positive side to this discipline. Visible boundaries make change less frightening. MiniGateway could be extended because the base application did not collapse measurement input, state ownership, observation, and MQTT publication into one accidental block of code. MQTTSuite can be understood as an ecosystem because its roles are architectural positions expressed as executables. Build targets, package components, and runtime configuration are not administrative noise; they are part of how the architecture survives contact with real machines.
 
 Seen this way, SNode.C is less a library of shortcuts than a vocabulary for layered network systems in C++. It rewards programmers who are willing to be explicit. It asks for more care at the boundary between concepts, but it pays that care back when systems need to be extended, diagnosed, ported, packaged, or taught. That is the philosophical center of the book: clarity is not achieved by hiding all structure. Clarity is achieved by preserving the right structure long enough that the system can still explain itself.
 
 ## Where to go next {.unnumbered}
 
-A reader who finishes this book should know more than the names of SNode.C servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components.
+A reader who finishes this book should know how SNode.C servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components fit together.
 
 The reader should know how to think with them.
 

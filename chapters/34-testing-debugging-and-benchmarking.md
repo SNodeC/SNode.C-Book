@@ -4,7 +4,7 @@
 
 Chapter 33 made deployment visible as installed architecture. Chapter 34 asks how that architecture becomes trustworthy: a built and deployed system must still be tested, inspected, debugged, and measured at the boundaries where it claims to be clear.
 
-SNode.C does not only become an executable. It becomes libraries, component packages, exported CMake targets, runtime-loaded modules, configuration directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages. Testing, debugging, and benchmarking check whether the boundaries taught throughout the book still hold under pressure:
+SNode.C is delivered as libraries, component packages, exported CMake targets, runtime-loaded modules, configuration directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages. Testing, debugging, and benchmarking check whether the boundaries taught throughout the book still hold under pressure:
 
 ```text
 build structure
@@ -128,7 +128,7 @@ This is how strictness remains maintainable.
 
 #### Include discipline protects component truth
 
-Include discipline is not only a formatting preference. It is a component test. Every public header should include what it uses. Every source file should avoid relying on accidental transitive includes.
+Include discipline is a component test and a formatting preference. Every public header should include what it uses. Every source file should avoid relying on accidental transitive includes.
 
 This matters because SNode.C is consumed through components, not only as one monolithic source tree. A header that compiles only because another unrelated header came first is not a stable public interface.
 
@@ -182,7 +182,7 @@ target_link_libraries(myapp
 
 This checks that the package configuration was installed, the requested component is supported, dependencies load recursively, the exported target and namespace are correct, include directories and public dependencies are present, link dependencies are truthful, and the installed library layout can be consumed outside the source tree.
 
-This kind of test is easy to underestimate. For a framework with exported CMake targets, it is one of the most important tests. The question is not only:
+This kind of test is easy to underestimate. For a framework with exported CMake targets, it is one of the most important tests. The question is broader than:
 
 ```text
 Can SNode.C build itself?
@@ -229,7 +229,7 @@ protocol object
       -> exact bytes on the wire
 ```
 
-The closer a layer is to external input, the more important invalid and boundary input becomes. Network code does not only receive beautiful input. It receives incomplete input, split input, malformed input, hostile input, and input that arrives at inconvenient times. A parser that only accepts beautiful examples has not been tested. It has only been demonstrated.
+The closer a layer is to external input, the more important invalid and boundary input becomes. Network code receives incomplete input, split input, malformed input, hostile input, and input that arrives at inconvenient times. A parser that only accepts beautiful examples has not been tested. It has only been demonstrated.
 
 #### Parser tests should include bad input
 
@@ -251,7 +251,7 @@ Exact-byte tests are sometimes criticized as brittle. For protocol serializers, 
 
 #### HTTP tests should check the whole response surface
 
-At the HTTP layer, correctness is not only the response body. A useful HTTP test checks both message correctness and connection correctness:
+At the HTTP layer, a useful test checks both message correctness and connection correctness:
 
 ```text
 message correctness:
@@ -328,7 +328,7 @@ Both matter.
 
 #### MQTT tests must model sessions
 
-MQTT is not only a packet format. It is a session protocol. Packet tests are necessary, but not sufficient.
+MQTT is a session protocol rather than a packet format alone. Packet tests are necessary, but not sufficient.
 
 Useful MQTT tests include connect and disconnect, keep-alive behavior, subscribe and unsubscribe, publish to matching subscribers, retained messages where supported, QoS behavior where supported, duplicate client identifiers, malformed packet rejection, broker restart behavior, bridge reconnect behavior, topic matching, and mapping behavior in integrator-style applications.
 
@@ -373,7 +373,7 @@ configured communication role
           -> context
 ```
 
-Real-socket tests prove that this path is not only a conceptual diagram. They prove that it works against the operating system.
+Real-socket tests prove that this path works against the operating system, outside the conceptual diagram.
 
 #### Timers, retries, reconnects, and shutdown need runtime tests
 
@@ -417,9 +417,9 @@ Long-running tests are useful because some lifetime bugs do not appear in a shor
 
 #### Configuration is runtime behavior
 
-SNode.C configuration is not just parsed input. It shapes the effective runtime system.
+SNode.C configuration shapes the effective runtime system.
 
-A configuration test should therefore check more than whether command-line parsing succeeds. It should check the effective configuration after defaults, command-line options, configuration files, named instances, option groups, generated configuration, and application-specific settings have been combined.
+A configuration test should therefore check the effective configuration after defaults, command-line options, configuration files, named instances, option groups, generated configuration, and application-specific settings have been combined.
 
 Useful checks include whether a configured communication role is enabled or disabled as expected, whether a server binds to the expected address, whether a client connects to the expected remote endpoint, whether TLS settings are applied to the correct role, whether retry and timeout settings have the expected effective values, whether generated configuration can be reused, and whether invalid combinations fail clearly.
 
@@ -453,7 +453,7 @@ start installed application
               -> exchange WebSocket or MQTT-over-WebSocket traffic
 ```
 
-This checks more than protocol correctness. It checks the installed runtime shape.
+This checks the installed runtime shape and protocol correctness.
 
 #### RPATH and library search should be verified by behavior
 
@@ -465,7 +465,7 @@ The last point is especially important for OpenWrt. Cross-compilation can accide
 
 #### Service-level tests protect operational reality
 
-A service is not only a process. It is a process under supervision. General-purpose Linux may use systemd or another service manager. OpenWrt normally uses `procd`.
+A service is a process under supervision. General-purpose Linux may use systemd or another service manager. OpenWrt normally uses `procd`.
 
 A protocol test asks whether HTTP, WebSocket, MQTT, or another protocol behavior works. A service-level test asks whether the deployed role can be operated. It checks whether the service starts as the intended user, has access to configuration files, can create log and pid files, handles restart behavior, shuts down cleanly, exposes useful logs, and fails clearly when required resources are missing.
 
@@ -528,7 +528,7 @@ This boundary-first approach is one of the practical benefits of a layered frame
 
 #### Configured instance names are diagnostic handles
 
-Configured instance names are not only configuration conveniences. They are diagnostic handles when they connect configuration, logs, callbacks, generated files, and operator language.
+Configured instance names become diagnostic handles when they connect configuration, logs, callbacks, generated files, and operator language.
 
 For example, a system may have roles such as:
 
@@ -557,15 +557,15 @@ A bug report is most useful when it can be reproduced at the right boundary. For
 
 A routing bug should ideally be reproducible with a small route tree. A parser bug should ideally be reproducible with a small byte sequence. A deployment bug should ideally be reproducible from package installation and service startup. A reconnect bug should ideally describe the timing of peer availability, failure, retry, and recovery.
 
-The goal is not bureaucracy. The goal is to put the bug at the smallest honest boundary.
+The goal is not bureaucracy. The goal is to put the bug at the smallest explicit boundary.
 
 #### Memory tools verify lifetime assumptions
 
-Valgrind, sanitizers, and similar tools are not only generic C++ debugging aids. In SNode.C they verify architectural lifetime assumptions.
+Valgrind, sanitizers, and similar tools verify architectural lifetime assumptions alongside generic C++ memory behavior.
 
 They help answer questions such as: does a context disappear when its connection disappears; does a callback retain something longer than intended; does a WebSocket upgrade leave old HTTP state reachable; does a reconnect loop accumulate stale objects; does a database command path leak handles; does a dynamically loaded module leave unexpected reachable memory; and does a long-running MQTT broker accumulate session or subscription state incorrectly?
 
-The tool reports are low-level. The interpretation should be architectural. A memory leak is not only “some bytes were lost.” In a framework, it often means an ownership boundary was not expressed correctly.
+The tool reports are low-level. The interpretation should be architectural. In a framework, a memory leak often means an ownership boundary was not expressed correctly.
 
 #### Runtime diagnostics should be designed, not improvised
 
@@ -668,7 +668,7 @@ recommended strategy
   -> what should be protected over time as the framework and applications grow
 ```
 
-This distinction keeps the chapter honest and useful. A reader does not need every test category immediately; they need to learn how to think about confidence in a layered framework.
+This distinction keeps the chapter precise and useful. A reader does not need every test category immediately; they need to learn how to think about confidence in a layered framework.
 
 The practical habit is to add tests at the boundary where a bug mattered. URL decoding may need a parser or utility test; router parameter restoration may need a dispatcher test; installation-only bugs need installed tests; slow-client bugs need pressure tests.
 

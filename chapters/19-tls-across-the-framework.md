@@ -479,7 +479,7 @@ TLS is easier to understand when the non-TLS shape is already clear because the 
 A useful rule is:
 
 ::: {.snodec-rule title="Protocol continuity rule"}
-Write the protocol endpoint as if secure and insecure transport are the same conversation whenever that is honestly true.
+Write the protocol endpoint as if secure and insecure transport are the same conversation whenever that is actually true.
 :::
 
 Then let:

@@ -145,7 +145,7 @@ local-control
   -> exposes host-local control or diagnostics
 ```
 
-This is where SNode.C's named-instance model becomes more than a configuration convenience. Where a role is realized by a SNode.C communication role, the configured instance name can become part of the system vocabulary. A named instance can identify:
+This is where SNode.C's named-instance model enters the system vocabulary. Where a role is realized by a SNode.C communication role, the configured instance name can identify:
 
 - the configuration section,
 - the log context,
@@ -193,7 +193,7 @@ Useful boundary questions include:
 - Which roles own durable state?
 - Which roles should be observable independently?
 
-The result is not only a set of features. It is a set of explicit boundaries.
+The result is a set of explicit boundaries rather than a feature list.
 
 #### Protocol boundaries
 
@@ -500,7 +500,7 @@ That consistency allows a developer, maintainer, or operator to keep thinking cl
 This is the real transition from applications to systems.
 
 ::: {.snodec-remember title="What to remember"}
-- A system is not just a bigger application.
+- A system is not simply a bigger application.
 - A SNode.C system is best understood as a constellation of named roles and boundaries.
 - A role name is system vocabulary; it should help code, configuration, logs, diagnostics, deployment, and operator discussion use the same words.
 - A role may be realized inside one executable or by one of several cooperating executables.
@@ -530,4 +530,4 @@ This chapter moved from executable applications to communication systems. The vo
 
 That vocabulary is deliberately generic. It is not tied to one reference product.
 
-Chapter 31 applies this vocabulary to MQTTSuite. The point is not merely to list programs, but to read MQTTSuite as an ecosystem of communication roles, MQTT messaging paths, bridge boundaries, configuration surfaces, persistence choices, and deployment relationships.
+Chapter 31 applies this vocabulary to MQTTSuite. The point is to read MQTTSuite as an ecosystem of communication roles, MQTT messaging paths, bridge boundaries, configuration surfaces, persistence choices, and deployment relationships, not as a mere list of programs.

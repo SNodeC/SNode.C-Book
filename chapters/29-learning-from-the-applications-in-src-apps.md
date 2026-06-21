@@ -257,7 +257,7 @@ application
       -> CMake propagates those components' public dependencies
 ```
 
-This keeps the boundary honest:
+This keeps the boundary explicit:
 
 ```text
 Which high-level protocol/application component does this application use?
@@ -421,7 +421,7 @@ http-server-express
 net-in-stream-legacy
 ```
 
-Its role in the manuscript should be secondary. It is useful because it shows that the Express-like layer is not only used by one application shell. It can also be used for behavior comparison, compatibility checking, and focused route/middleware experiments.
+Its role in the manuscript should be secondary. It is useful because it shows that the Express-like layer can also be used for behavior comparison, compatibility checking, and focused route/middleware experiments.
 
 A good way to present it is:
 
@@ -568,7 +568,7 @@ const core::pipe::Pipe pipe(
 return core::SNodeC::start();
 ```
 
-This example is useful because it reminds the reader that applications are not only servers. SNode.C also contains core utilities and runtime-managed helpers. The same pattern appears again:
+This example is useful because it reminds the reader that applications are not limited to servers. SNode.C also contains core utilities and runtime-managed helpers. The same pattern appears again:
 
 ```text
 initialize runtime
@@ -672,7 +672,7 @@ select layers
 
 #### Optional dependencies and application availability
 
-Some applications only exist when optional dependencies are available. This is not only a CMake technicality. It is part of the application model.
+Some applications only exist when optional dependencies are available. That is part of the application model, not a minor CMake technicality.
 
 Examples:
 
@@ -744,7 +744,7 @@ The reader should also distinguish local in-tree target names from installed `sn
 
 #### Build structure and operational clarity
 
-A build target does not only produce a binary. It also makes a choice visible.
+A build target produces a binary and makes a choice visible.
 
 For example:
 

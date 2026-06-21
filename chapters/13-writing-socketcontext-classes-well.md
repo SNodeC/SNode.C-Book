@@ -81,7 +81,7 @@ A good SNode.C application keeps those questions visible.
 
 A `SocketContext` acts through a `SocketConnection`.
 
-That means it may send, stream, read, close, inspect metrics, set timeouts, or request shutdown through the surface provided to it. These are real operations. They are not just descriptive helper functions.
+That means it may send, stream, read, close, inspect metrics, set timeouts, or request shutdown through the surface provided to it. These are real operations, not descriptive helper functions.
 
 But the context should not become the connection.
 
@@ -217,7 +217,7 @@ It answers the question:
 
 > What should this endpoint do on this connection?
 
-That question is deliberately narrow. A context becomes harder to understand when it tries to become the whole application.
+That question is narrow. A context becomes harder to understand when it tries to become the whole application.
 
 #### Keep responsibility connection-local
 

@@ -52,7 +52,7 @@ Figure~\ref{fig:snodec-lower-family-transfer} shows the same idea as a transfer 
 
 The visible server/client type changes because the application selects a different lower-family specialization. The registered instance then carries that configured lower-family role into the runtime. The concrete `SocketConnection` represents one peer relationship under that role. The factory creates the per-connection context for that connection. The context implements the protocol endpoint.
 
-This is not merely a naming exercise.
+The naming reflects an architectural boundary.
 
 It prevents one common design mistake: putting lower-family setup, protocol behavior, context construction, and deployment policy into the same class. SNode.C makes those boundaries visible. Application code becomes easier to move across families when it respects them.
 
@@ -125,7 +125,7 @@ The application-side server/client handle type changes. The endpoint identity ch
 
 The context construction shape can still remain familiar.
 
-This is why Chapters 13 and 14 came before this chapter. A well-factored context and a disciplined factory make lower-family transfer practical. The factory does not make the protocol portable by magic. It keeps the construction boundary clean enough that portability can be judged honestly.
+This is why Chapters 13 and 14 came before this chapter. A well-factored context and a disciplined factory make lower-family transfer practical. The factory does not make the protocol portable by magic. It keeps the construction boundary clean enough that portability can be judged clearly.
 
 ### What changes with the lower family
 
@@ -505,9 +505,9 @@ A family transfer may change:
 - deployment files,
 - platform or permission requirements.
 
-That is why the next part of the book turns to configuration. Configuration is not merely operational convenience. It is one of the places where architectural variation becomes explicit.
+That is why the next part of the book turns to configuration. Configuration is one of the places where architectural variation becomes explicit.
 
-Once the same protocol can be carried over different lower families, configuration becomes more than a collection of values. It is where endpoint identity, selected lower family, role naming, TLS/legacy choice, retry behavior, and deployment-specific variation become visible.
+Once the same protocol can be carried over different lower families, configuration becomes the visible home for endpoint identity, selected lower family, role naming, TLS/legacy choice, retry behavior, and deployment-specific variation.
 
 This chapter shows why configuration matters. Chapter 16 begins to explain its philosophy.
 

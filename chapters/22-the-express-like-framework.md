@@ -133,7 +133,7 @@ The result is not a separate web runtime. It is a web-application surface joined
 - `free()`,
 - `state()`.
 
-This keeps the web-application layer connected to the same event-driven runtime story introduced earlier in the book. A web application is not just a set of route functions; it is a route structure that still runs inside the SNode.C runtime.
+This keeps the web-application layer connected to the same event-driven runtime story introduced earlier in the book. A web application is a route structure that still runs inside the SNode.C runtime, not a loose set of route functions.
 
 #### WebAppT as the bridge to a concrete HTTP server
 
@@ -297,7 +297,7 @@ middleware
   -> maybe call next()
 ```
 
-Therefore, middleware is not just another name for a route handler.
+Therefore, middleware should not be read as another name for a route handler.
 
 #### `Next` and middleware flow
 
@@ -328,7 +328,7 @@ A compact view is:
 | `MiddlewareDispatcher` | handles middleware and `next()` flow |
 | `RouterDispatcher` | enters mounted routers |
 
-The dispatchers are not just implementation clutter. They encode the fact that application callbacks, middleware callbacks, and mounted routers have different control-flow meanings.
+The dispatchers encode the fact that application callbacks, middleware callbacks, and mounted routers have different control-flow meanings.
 
 This internal structure mirrors the application model. The framework does not pretend that all web actions are the same. The dispatcher structure reflects those differences.
 

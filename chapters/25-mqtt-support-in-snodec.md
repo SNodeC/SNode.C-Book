@@ -149,7 +149,7 @@ This shared vocabulary is not an application convenience. It is the protocol fou
 
 #### Control packets, fixed headers, sessions, and topics
 
-MQTT should not be described only as “messages.” MQTT is message-oriented in the broad sense, but its protocol unit is not just an unstructured message. It is a control-packet vocabulary with session, topic, acknowledgement, and keep-alive semantics.
+MQTT should not be described only as “messages.” MQTT is message-oriented in the broad sense, but its protocol unit is a control-packet vocabulary with session, topic, acknowledgement, and keep-alive semantics.
 
 A compact model is:
 
@@ -167,7 +167,7 @@ That is why packet classes, fixed-header handling, deserialization, sessions, an
 
 The central code-shaped MQTT object is `iot::mqtt::Mqtt`.
 
-It is the protocol object. It is not just a socket callback, and it is not the complete endpoint by itself. It owns MQTT-level lifecycle, packet delivery, session setup, publish acknowledgement flow, packet identifiers, keep-alive state, and distribution hooks. To become a concrete endpoint, it is connected to a carrier through `MqttContext` and either a native stream `SocketContext` or a WebSocket `SubProtocol`.
+It is the protocol object, not a socket callback and not the complete endpoint by itself. It owns MQTT-level lifecycle, packet delivery, session setup, publish acknowledgement flow, packet identifiers, keep-alive state, and distribution hooks. To become a concrete endpoint, it is connected to a carrier through `MqttContext` and either a native stream `SocketContext` or a WebSocket `SubProtocol`.
 
 A compact view of its responsibilities is:
 
@@ -309,7 +309,7 @@ In the refined instance vocabulary, this means that an application-side server o
 
 #### Server as broker-oriented role
 
-The server-side MQTT role derives from the shared MQTT protocol object and connects it to broker-oriented behavior. It is not only a listener that parses MQTT bytes.
+The server-side MQTT role derives from the shared MQTT protocol object and connects it to broker-oriented behavior, rather than acting as a listener that only parses MQTT bytes.
 
 It handles concerns such as:
 
@@ -327,7 +327,7 @@ This is the right place for broker-oriented behavior. Broker behavior does not b
 
 #### Client as protocol participant
 
-The client side is also a real protocol participant. It is not just a transport wrapper that sends MQTT-looking bytes.
+The client side is also a real protocol participant, not a transport wrapper that sends MQTT-looking bytes.
 
 It handles client-side packet flow such as:
 

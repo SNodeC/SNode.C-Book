@@ -41,7 +41,7 @@ A compact definition is:
 
 > A `SocketContextFactory` creates the right per-connection protocol endpoint for a concrete `SocketConnection`.
 
-This definition is deliberately narrow. The factory does not implement the protocol conversation. It does not replace the registered server-side or client-side instance.
+This definition is narrow. The factory does not implement the protocol conversation. It does not replace the registered server-side or client-side instance.
 
 It does not own the runtime.
 
@@ -71,7 +71,7 @@ When these responsibilities stay separate, application code remains easier to re
 
 #### The factory interface
 
-The stream factory interface is intentionally narrow.
+The stream factory interface is narrow.
 
 Its essential method is:
 
@@ -256,7 +256,7 @@ A server-side factory can create a context configured for server-side protocol b
 
 #### Keeping construction readable and unsurprising
 
-A good factory is often intentionally simple. That is a strength.
+A good factory is often simple. That is a strength.
 
 A developer should be able to open the factory and quickly answer:
 
@@ -446,7 +446,7 @@ The first is a design choice. The second erodes the boundary.
 
 ### Factory design shapes
 
-There is not only one correct factory shape. The right design depends on what needs to vary at construction time. Different factory shapes are acceptable when they make construction-time variation explicit.
+There is more than one correct factory shape. The right design depends on what needs to vary at construction time. Different factory shapes are acceptable when they make construction-time variation explicit.
 
 | Pattern | Use when |
 |---|---|
@@ -543,7 +543,7 @@ Another useful test is:
 
 > Can a developer understand the factory in one glance?
 
-A factory that is hard to skim is often doing more than construction.
+A factory that is hard to skim is often mixing construction with other responsibilities.
 
 One glance does not mean the factory must be trivial. It means the construction decision should be visible. A reader should be able to see which context is created, which stable dependencies are passed, and why that choice belongs at construction time.
 

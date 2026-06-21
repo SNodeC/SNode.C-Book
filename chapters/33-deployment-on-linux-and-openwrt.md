@@ -84,7 +84,7 @@ For example, a small IPv4 stream tool does not need HTTP, WebSocket, MQTT, and M
 
 This is where component packaging becomes practical. A deployment is easier to reason about when installed packages still reflect the same component boundaries that existed in the build.
 
-#### Deployment is not only copying binaries
+#### Deployment as runtime shape
 
 Copying one executable is rarely the whole deployment. A SNode.C application may need:
 
@@ -263,7 +263,7 @@ A deployment package or installation procedure therefore has to prepare the runt
 - avoid world-writable runtime directories,
 - and make sure the application can create or read its configuration, log, and pid files.
 
-This is not only security hygiene. It is operational reliability. A service that cannot create its pid file or log file because deployment forgot directory ownership will fail in a way that looks unrelated to HTTP, MQTT, WebSocket, or database code.
+This supports operational reliability and security hygiene. A service that cannot create its pid file or log file because deployment forgot directory ownership will fail in a way that looks unrelated to HTTP, MQTT, WebSocket, or database code.
 
 #### Daemonization and service managers
 
@@ -314,7 +314,7 @@ Deployment begins with understanding the effective configuration, not with hidin
 
 #### Generated configuration as deployment artifact
 
-SNode.C's ability to show and write configuration is especially important in deployment. A generated configuration file is not only convenience output. It is a reproducible description of the deployed role shape.
+SNode.C's ability to show and write configuration is especially important in deployment. A generated configuration file is a reproducible description of the deployed role shape.
 
 It can record:
 
@@ -494,7 +494,7 @@ This is how an embedded target stays understandable.
 
 OpenWrt packages declare dependencies explicitly. A package that needs TLS depends on the selected TLS library packages. An MQTT or HTTP component that needs JSON support depends on the JSON package if it is dynamically provided, or ensures it is built appropriately. A MariaDB-backed tool depends on the MariaDB client library. A Bluetooth component depends on Bluetooth stack support where applicable.
 
-This is not only build correctness. It is image reproducibility. An OpenWrt image is assembled from many small packages. Hidden dependencies make the final image fragile and difficult to reproduce.
+This is image reproducibility and build correctness. An OpenWrt image is assembled from many small packages. Hidden dependencies make the final image fragile and difficult to reproduce.
 
 #### Package-manager format is release-specific
 
@@ -504,7 +504,7 @@ A package recipe should express the software correctly and let the OpenWrt build
 
 #### Feeds are distribution boundaries
 
-An OpenWrt feed is more than a directory of package recipes. It is a distribution boundary.
+An OpenWrt feed is a distribution boundary expressed through package recipes.
 
 A feed tells downstream systems:
 

@@ -17,11 +17,11 @@ That question matters because SNode.C is not static in practice. New application
 unsafe extension:
   add code where it is easiest to reach today
   hide the real boundary
-  make the next change harder to place honestly
+  make the next change harder to place cleanly
 
 safe extension:
   identify the boundary first
-  extend the smallest honest layer
+  extend the smallest appropriate layer
   keep configuration, diagnostics, build targets, and tests aligned
 ```
 
@@ -112,7 +112,7 @@ The first mistake is **framework pollution**: domain-specific code becomes part 
 
 The second mistake is **application sprawl**: the same layer-shaped behavior is copied into several applications without a shared boundary.
 
-Reuse is good when the reused boundary is honest.
+Reuse is good when the reused boundary fits the concern.
 
 ### Extending with a new `SocketContext`
 
@@ -154,7 +154,7 @@ If that sentence feels false, the extension probably belongs somewhere else.
 
 A `SocketContextFactory` is appropriate when the extension is about constructing the correct context.
 
-The factory is not just an allocation hook; it associates a connection with the correct protocol endpoint object.
+The factory associates a connection with the correct protocol endpoint object; it is not an allocation hook alone.
 
 In MQTTSuite, the MQTT CLI factory retrieves configuration sections and creates an `iot::mqtt::SocketContext` with a client-side MQTT protocol object. That keeps construction policy separate from both the MQTT protocol object and the socket client role.
 
@@ -326,7 +326,7 @@ better target name:
   net-in-stream-tls
 ```
 
-The target should say what architectural role the component plays and own its dependencies honestly. A component that needs HTTP or a selected carrier should declare that fact; a consumer should not have to know private implementation dependencies.
+The target should say what architectural role the component plays and own its dependencies directly. A component that needs HTTP or a selected carrier should declare that fact; a consumer should not have to know private implementation dependencies.
 
 For framework-level extensions, the build and package consequences matter:
 

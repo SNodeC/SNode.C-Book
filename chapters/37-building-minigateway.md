@@ -4,7 +4,7 @@
 
 The previous chapters taught SNode.C in layers: lower communication families, stream connections, protocol contexts, web protocols, MQTT, configuration, deployment, testing, and architectural judgment. MiniGateway is the point where those ideas stop being separate topics and become one small application.
 
-MiniGateway is intentionally modest. It is not a second MQTTSuite. It is not a broker, a dashboard product, or a hardware driver. It is a compact SNode.C application that owns one piece of domain state and exposes that state through several communication boundaries.
+MiniGateway is modest. It is not a second MQTTSuite. It is not a broker, a dashboard product, or a hardware driver. It is a compact SNode.C application that owns one piece of domain state and exposes that state through several communication boundaries.
 
 The application keeps the latest environmental measurement in memory. A measurement contains temperature, humidity, voltage, a sequence number, and a timestamp. Whenever a new measurement enters the application, MiniGateway performs one internal state transition and then fans the result out to the outward-facing roles.
 
@@ -204,7 +204,7 @@ target_link_libraries(
 
 The first application type is `Measurement`. It is deliberately plain. The domain value has no knowledge of HTTP, SSE, MQTT, sockets, configuration, or deployment. It is the fact that the application owns and exposes.
 
-The JSON conversion lives with the measurement because this guided project needs a compact representation for `/status`, SSE payloads, and MQTT publications. In a larger application, the representation layer might be separated further. For MiniGateway, keeping the conversion next to the small value type is honest enough and keeps the example readable.
+The JSON conversion lives with the measurement because this guided project needs a compact representation for `/status`, SSE payloads, and MQTT publications. In a larger application, the representation layer might be separated further. For MiniGateway, keeping the conversion next to the small value type is clear enough and keeps the example readable.
 
 #### `Measurement.h`
 
@@ -863,7 +863,7 @@ int main(int argc, char* argv[]) {
 
 ### Building the base source package
 
-The source package that accompanies this chapter contains a short build note. It is intentionally simple because the chapter assumes SNode.C is already installed as a CMake package.
+The source package that accompanies this chapter contains a short build note. It is simple because the chapter assumes SNode.C is already installed as a CMake package.
 
 #### `README-BUILD.md`
 

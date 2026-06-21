@@ -66,7 +66,7 @@ The answer has four recurring roles and one coordinating runtime. As shown in Fi
 
 ![The runtime view of application-side handles, registered instances, connections, factories, and contexts.](figures/pdf/fig-02-runtime-instance-connection-context.pdf){#fig:snodec-runtime-model width=82% latex-placement="tbp"}
 
-The figure is intentionally simple. It is not a full class diagram. It is the smallest picture that helps the reader stay oriented when moving from the echo pair to larger applications.
+The figure is simple. It is not a full class diagram. It is the smallest picture that helps the reader stay oriented when moving from the echo pair to larger applications.
 
 #### The runtime
 
@@ -106,17 +106,17 @@ This distinction prevents a common beginner mistake. It is tempting to put all b
 
 Named instances deserve special attention.
 
-A name such as `echoserver` or `echoclient` is not only decoration. Instance names become natural anchors for configuration, diagnostics, callbacks, and operational behavior. Later chapters will use that fact more heavily.
+A name such as `echoserver` or `echoclient` already carries architectural weight. Instance names become natural anchors for configuration, diagnostics, callbacks, and operational behavior. Later chapters will use that fact more heavily.
 
 #### The connection
 
 A connection is the concrete communication relationship to a peer.
 
-In the stream-oriented parts of SNode.C, that role is represented by `SocketConnection` and its specializations. A connection is not just a hidden file descriptor. It exposes peer-oriented operations and observable state: local and remote addresses, send and read operations, shutdown and close operations, timeout handling, byte counters, and online timing.
+In the stream-oriented parts of SNode.C, that role is represented by `SocketConnection` and its specializations. A connection exposes peer-oriented operations and observable state: local and remote addresses, send and read operations, shutdown and close operations, timeout handling, byte counters, and online timing.
 
 That tells us something important about the framework.
 
-SNode.C treats a connection as a visible runtime object with lifecycle and measurable behavior. It is not merely an implementation detail behind the protocol code.
+SNode.C treats a connection as a visible runtime object with lifecycle and measurable behavior, not as an implementation detail hidden behind the protocol code.
 
 This is also why connection-level callbacks and context-level callbacks must not be confused. Connection callbacks observe or adapt connection-level events. Context methods implement application protocol behavior for the connection.
 
@@ -328,7 +328,7 @@ The main teaching path in the early chapters is stream communication.
 
 Stream communication gives the application a connection-oriented byte flow. That is why a context can think in terms of reading from and sending to a peer.
 
-Other communication forms may appear in the framework, but the mental model in these chapters is intentionally built around stream-oriented communication first because it is the path that makes server, client, connection, factory, and context easiest to see.
+Other communication forms may appear in the framework, but the mental model in these chapters starts from stream-oriented communication first because it is the path that makes server, client, connection, factory, and context easiest to see.
 
 #### Connection handling
 
@@ -371,7 +371,7 @@ A name such as:
 net::in::stream::legacy::SocketServer
 ```
 
-is not merely long. It is compressed architecture.
+is long because it compresses architecture.
 
 Read it from left to right:
 
@@ -411,7 +411,7 @@ This is where configuration, callbacks, retry behavior, flow control, diagnostic
 
 They are not secondary details.
 
-A SNode.C instance is not merely a C++ object that happens to own a socket. It is managed by the framework through runtime and flow-controller state.
+A SNode.C instance is managed by the framework through runtime and flow-controller state; treating it as a plain C++ object that happens to own a socket misses the runtime model.
 
 That has several consequences.
 
@@ -435,7 +435,7 @@ That idea will become much more important in the configuration chapters.
 
 #### Flow control is runtime behavior
 
-The flow-controller path is what makes `listen(...)` and `connect(...)` more than simple immediate system calls.
+The flow-controller path is what gives `listen(...)` and `connect(...)` their runtime semantics beyond the immediate system call.
 
 A flow can be started, observed, retried, terminated, and associated with runtime-visible state. This is what allows a server or client role to behave operationally rather than just perform one procedural action.
 
@@ -470,7 +470,7 @@ If all protocol behavior is placed in instance-level callbacks, the code tends t
 
 #### Metrics belong to the model
 
-The connection and context abstractions expose quantities such as total sent, total queued, total read, total processed, online-since time, and online duration. Those values are not just debugging extras.
+The connection and context abstractions expose quantities such as total sent, total queued, total read, total processed, online-since time, and online duration. Those values support diagnostics, runtime inspection, and operational reasoning.
 
 They reflect the fact that SNode.C treats communication as observable runtime behavior. This becomes important for logging, diagnostics, flow control, backpressure discussions, deployment, and system-level behavior.
 
