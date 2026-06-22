@@ -7,10 +7,9 @@
 \def\topY{33mm}
 \def\upperX{50mm}
 \def\upperY{23mm}
-\def\sideX{66mm}
+\def\sideX{57mm}
 \def\lowerX{40mm}
 \def\lowerY{28mm}
-\def\noteGap{14mm}
 
 \begin{tikzpicture}[
   snodec diagram,
@@ -34,17 +33,6 @@
     text width=35mm,
     inner xsep=3mm,
     inner ysep=2.4mm,
-    font=\sffamily\footnotesize
-  },
-  note block/.style={
-    draw=snodecBlue!45,
-    fill=snodecBlueSoft!28,
-    rounded corners=2.5pt,
-    line width=0.75pt,
-    align=center,
-    text width=112mm,
-    inner xsep=3mm,
-    inner ysep=2.5mm,
     font=\sffamily\footnotesize
   },
   connector/.style={
@@ -120,33 +108,6 @@
   \draw[connector] (diagnostic.center) -- (system.center);
   \draw[connector] (performance.center) -- (system.center);
 \end{scope}
-
-% ----------------------------------------------------------------------
-% Note.
-% ----------------------------------------------------------------------
-\coordinate (bottomRowCenter) at ($(diagnostic.south)!0.5!(performance.south)$);
-
-\node[note block, below=\noteGap of bottomRowCenter] (note) {%
-  Each surface asks a different confidence question.\\[-0.2mm]
-  A useful failure points to the surface whose promise was broken.
-};
-
-% ----------------------------------------------------------------------
-% Outer boundary.
-% ----------------------------------------------------------------------
-
-
-% DEBUG: absolute foreground 160 mm target guides.
-% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
-\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

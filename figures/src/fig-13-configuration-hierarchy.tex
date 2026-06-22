@@ -1,14 +1,13 @@
 \documentclass[tikz,border=7pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
+\usetikzlibrary{positioning,calc,arrows.meta}
 
 \begin{document}
 
 \def\majorVGap{11mm}
-\def\minorVGap{5mm}
-\def\sectionPlacementGap{14mm}
-\def\viewShift{58mm}
 \def\sectionItemGap{3.5mm}
+\def\viewGap{5mm}
+\def\sectionItemsTopGap{2.6mm}
 
 \begin{tikzpicture}[
   snodec diagram,
@@ -23,13 +22,16 @@
     inner ysep=2.4mm,
     font=\sffamily\small
   },
-  section panel/.style={
+  section block/.style={
     draw=snodecGreen!70,
     fill=snodecGreenSoft,
     rounded corners=2.5pt,
     line width=0.75pt,
+    align=center,
+    text width=140mm,
     inner xsep=3mm,
-    inner ysep=2.4mm
+    inner ysep=2.4mm,
+    font=\sffamily\small
   },
   option block/.style={
     draw=snodecOrange!75,
@@ -42,19 +44,14 @@
     inner ysep=2.4mm,
     font=\sffamily\small
   },
-  section text/.style={
-    align=center,
-    text width=140mm,
-    font=\sffamily\small
-  },
   section item/.style={
     draw=snodecBlue!45,
     fill=snodecBlueSoft!35,
     rounded corners=2.5pt,
     line width=0.75pt,
     align=center,
-    text width=23mm,
-    inner xsep=2mm,
+    text width=21mm,
+    inner xsep=1mm,
     inner ysep=1.7mm,
     font=\sffamily\footnotesize
   },
@@ -64,20 +61,15 @@
     rounded corners=2.5pt,
     line width=0.75pt,
     align=center,
-    text width=50mm,
-    inner xsep=3mm,
-    inner ysep=2.4mm,
+    text width=43mm,
+    inner xsep=1mm,
+    inner ysep=2.0mm,
     font=\sffamily\footnotesize
   },
   hierarchy flow/.style={
     snodec muted arrow,
     draw=snodecMuted!75,
     line width=0.75pt
-  },
-  view label/.style={
-    font=\sffamily\footnotesize,
-    text=snodecMuted,
-    align=center
   }
 ]
 
@@ -98,28 +90,23 @@
 };
 
 % ----------------------------------------------------------------------
-% Section scope with centered concrete section names.
-% The larger placement gap compensates for the section panel's fit inner sep,
-% so the visible gap from Instance scope to Section scope matches the others.
+% Section scope.
 % ----------------------------------------------------------------------
-\node[section text, below=\sectionPlacementGap of instance] (sectionTitle) {%
+\node[section block, below=\majorVGap of instance] (section) {%
   \textbf{\textcolor{snodecGreen}{Section scope}}\\[-0.4mm]
-  {\footnotesize responsibility boundary inside one instance}
+  {\footnotesize responsibility boundary inside one instance}\\[\sectionItemsTopGap]
+  \begin{tikzpicture}[
+    baseline=(connection.base),
+    node distance=\sectionItemGap,
+    section row item/.style={section item}
+  ]
+    \node[section row item] (connection) {\texttt{connection}};
+    \node[section row item, left=of connection] (remote) {\texttt{remote}};
+    \node[section row item, left=of remote] (local) {\texttt{local}};
+    \node[section row item, right=of connection] (socket) {\texttt{socket}};
+    \node[section row item, right=of socket] (tls) {\texttt{tls}};
+  \end{tikzpicture}
 };
-
-\node[section item, below=\minorVGap of sectionTitle] (connection) {\texttt{connection}};
-\node[section item, left=\sectionItemGap of connection] (remote) {\texttt{remote}};
-\node[section item, left=\sectionItemGap of remote] (local) {\texttt{local}};
-\node[section item, right=\sectionItemGap of connection] (socket) {\texttt{socket}};
-\node[section item, right=\sectionItemGap of socket] (tls) {\texttt{tls}};
-
-\begin{scope}[on background layer]
-  \node[
-    section panel,
-    fit=(sectionTitle)(local)(remote)(connection)(socket)(tls),
-    inner sep=3mm
-  ] (section) {};
-\end{scope}
 
 % ----------------------------------------------------------------------
 % Concrete option.
@@ -138,41 +125,25 @@
 \draw[hierarchy flow] (section.south) -- (option.north);
 
 % ----------------------------------------------------------------------
-% Same hierarchy, three views.
+% Same hierarchy expressed in three concrete views.
 % ----------------------------------------------------------------------
-\node[view label, below=9mm of option] (viewsLabel) {Same hierarchy, three views};
-
-\node[view block, below=\minorVGap of viewsLabel, xshift=-\viewShift] (cppApi) {%
-  \textbf{C++ API}\\[-0.4mm]
-  \texttt{getConfig()->Local::setPort(8080)}
-};
-
-\node[view block, below=\minorVGap of viewsLabel] (commandLine) {%
+\node[view block, below=\majorVGap of option] (commandLine) {%
   \textbf{Command line}\\[-0.4mm]
-  \texttt{app instance local --port 8080}
+  \texttt{app instance}\\[-0.2mm]
+  \texttt{local --port 8080}
 };
 
-\node[view block, below=\minorVGap of viewsLabel, xshift=\viewShift] (configFile) {%
+\node[view block, left=\viewGap of commandLine] (cppApi) {%
+  \textbf{C++ API}\\[-0.4mm]
+  \texttt{instanceHandle.getConfig()}\\[-0.2mm]
+  \texttt{->Local::setPort(8080)}
+};
+
+\node[view block, right=\viewGap of commandLine] (configFile) {%
   \textbf{Config file}\\[-0.4mm]
-  \texttt{instance.local.port = 8080}
+  \texttt{instance}\\[-0.2mm]
+  \texttt{.local.port = 8080}
 };
-
-% ----------------------------------------------------------------------
-% Outer boundary.
-% ----------------------------------------------------------------------
-
-
-% DEBUG: absolute foreground 160 mm target guides.
-% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
-\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

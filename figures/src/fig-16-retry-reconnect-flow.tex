@@ -4,15 +4,27 @@
 
 \begin{document}
 
-\def\arrowL{10mm}
+\def\topArrowL{6mm}
+\def\straightArrowL{6mm}
+\def\resultArrowL{10mm}
 \def\halfArrowL{5mm}
 \def\panelInnerSep{5mm}
 
 \def\outcomeGap{15mm}
-\def\columnShift{48mm}
-\def\decisionSplit{24mm}
+\def\columnShift{38mm}
+\def\decisionSplit{16.5mm}
 \def\branchDrop{5mm}
-\def\smallBoxWidth{32mm}
+
+\def\smallBoxWidth{26mm}
+\def\smallBoxXSep{2mm}
+
+\def\resultBoxWidth{24mm}
+\def\resultBoxXSep{1.5mm}
+
+% Reconnect/Retry decision boxes use the original visible width again:
+% 35.2mm + 2*1.4mm = 38mm.
+\def\decisionBoxTextWidth{35.2mm}
+\def\decisionBoxXSep{1.4mm}
 
 \begin{tikzpicture}[
   snodec diagram,
@@ -34,7 +46,7 @@
     line width=0.75pt,
     align=center,
     text width=\smallBoxWidth,
-    inner xsep=3mm,
+    inner xsep=\smallBoxXSep,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
@@ -45,7 +57,7 @@
     line width=0.75pt,
     align=center,
     text width=\smallBoxWidth,
-    inner xsep=3mm,
+    inner xsep=\smallBoxXSep,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
@@ -56,7 +68,7 @@
     line width=0.75pt,
     align=center,
     text width=\smallBoxWidth,
-    inner xsep=3mm,
+    inner xsep=\smallBoxXSep,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
@@ -66,19 +78,30 @@
     rounded corners=2.5pt,
     line width=0.75pt,
     align=center,
-    text width=48mm,
-    inner xsep=3mm,
+    text width=\decisionBoxTextWidth,
+    inner xsep=\decisionBoxXSep,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
-  timer block/.style={
+  result stop block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=2.5pt,
+    line width=0.75pt,
+    align=center,
+    text width=\resultBoxWidth,
+    inner xsep=\resultBoxXSep,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  result timer block/.style={
     draw=snodecOrange!65,
     fill=snodecOrangeSoft!55,
     rounded corners=2.5pt,
     line width=0.75pt,
     align=center,
-    text width=\smallBoxWidth,
-    inner xsep=3mm,
+    text width=\resultBoxWidth,
+    inner xsep=\resultBoxXSep,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
@@ -119,7 +142,7 @@
   \texttt{SocketClient::connect()}
 };
 
-\node[action block, below=\arrowL of connectRequest] (connectAttempt) {%
+\node[action block, below=\topArrowL of connectRequest] (connectAttempt) {%
   \textbf{\textcolor{snodecBlue}{Connect attempt}}\\[-0.4mm]
   {\footnotesize open / bind / connect}\\[-0.2mm]
   {\footnotesize async completion / timeout}
@@ -138,15 +161,16 @@
 
 % ----------------------------------------------------------------------
 % Outcome classification.
+% The outcome bus height is intentionally unchanged in this vertical pass.
 % ----------------------------------------------------------------------
 \node[ok block, below=\outcomeGap of connectAttempt, xshift=-\columnShift] (okOutcome) {%
   \textbf{\textcolor{snodecGreen}{OK}}\\[-0.4mm]
-  connection established
+  successful attempt
 };
 
 \node[stop block, below=\outcomeGap of connectAttempt] (stopOutcome) {%
   \textbf{\textcolor{snodecRule}{DISABLED}}\\[-0.4mm]
-  no connection continues
+  no attempt
 };
 
 \node[fail block, below=\outcomeGap of connectAttempt, xshift=\columnShift] (failOutcome) {%
@@ -167,22 +191,21 @@
 % ----------------------------------------------------------------------
 % Reconnect path after an established connection.
 % ----------------------------------------------------------------------
-\node[ok block, below=\arrowL of okOutcome] (established) {%
-  \textbf{\textcolor{snodecGreen}{Established connection}}\\[-0.4mm]
-  stream connection\\[-0.2mm]
-  protocol context active
+\node[ok block, below=\straightArrowL of okOutcome] (established) {%
+  \textbf{\textcolor{snodecGreen}{Established}}\\[-0.4mm]
+  stream active\\[-0.2mm]
+  protocol context
 };
 
-\node[fail block, below=\arrowL of established] (disconnectEvent) {%
+\node[fail block, below=\straightArrowL of established] (disconnectEvent) {%
   \textbf{\textcolor{snodecOrange}{Disconnect event}}\\[-0.4mm]
-  established connection\\[-0.2mm]
-  closed
+  connection closed
 };
 
-\node[decision block, below=\arrowL of disconnectEvent] (reconnectAllowed) {%
+\node[decision block, below=\straightArrowL of disconnectEvent] (reconnectAllowed) {%
   \textbf{\textcolor{snodecBlue}{Reconnect allowed?}}\\[-0.4mm]
   reconnect enabled\\[-0.2mm]
-  flow controller allows it\\[-0.2mm]
+  controller allows\\[-0.2mm]
   event loop running
 };
 
@@ -204,25 +227,25 @@
 
 % ----------------------------------------------------------------------
 % Consequences of reconnect and retry decisions.
-% Each local pair uses the same visible gap as the outcome row.
+% The branch bus and the straight arrows to the result row keep the previous vertical height.
 % ----------------------------------------------------------------------
-\node[stop block, below=\arrowL of reconnectAllowed, xshift=-\decisionSplit] (stopClient) {%
+\node[result stop block, below=\resultArrowL of reconnectAllowed, xshift=-\decisionSplit] (stopClient) {%
   \textbf{\textcolor{snodecRule}{Stop client}}
 };
 
-\node[timer block, below=\arrowL of reconnectAllowed, xshift=\decisionSplit] (reconnectTimer) {%
+\node[result timer block, below=\resultArrowL of reconnectAllowed, xshift=\decisionSplit] (reconnectTimer) {%
   \textbf{\textcolor{snodecOrange!90!black}{Reconnect timer}}\\[-0.4mm]
   configured\\[-0.2mm]
   reconnect time
 };
 
-\node[timer block, below=\arrowL of retryAllowed, xshift=-\decisionSplit] (retryTimer) {%
+\node[result timer block, below=\resultArrowL of retryAllowed, xshift=-\decisionSplit] (retryTimer) {%
   \textbf{\textcolor{snodecOrange!90!black}{Retry timer}}\\[-0.4mm]
   timeout, base,\\[-0.2mm]
   limit, jitter
 };
 
-\node[stop block, below=\arrowL of retryAllowed, xshift=\decisionSplit] (stopAttempt) {%
+\node[result stop block, below=\resultArrowL of retryAllowed, xshift=\decisionSplit] (stopAttempt) {%
   \textbf{\textcolor{snodecRule}{Stop attempt}}
 };
 
@@ -258,6 +281,7 @@
 
 % ----------------------------------------------------------------------
 % Shared merge point inside the classification panel.
+% The lower merge bus height is intentionally unchanged in this vertical pass.
 % ----------------------------------------------------------------------
 \coordinate (timerMergeLine) at ([yshift=-\branchDrop]$(reconnectTimer.south)!0.5!(retryTimer.south)$);
 \coordinate (reconnectMerge) at (timerMergeLine -| reconnectTimer.south);
@@ -298,33 +322,20 @@
 
 % ----------------------------------------------------------------------
 % Dashed return path outside the classification panel.
+% Starts at the bottom center of "Initiate next connect attempt"
+% and first goes down by \halfArrowL for rhythmic consistency.
 % ----------------------------------------------------------------------
+\coordinate (returnStart)  at ($(nextAttempt.south)+(0,-\halfArrowL)$);
 \coordinate (returnLane)   at ($(classifyPanel.west)+(-7mm,0)$);
-\coordinate (returnBottom) at (returnLane |- nextAttempt.center);
+\coordinate (returnBottom) at (returnLane |- returnStart);
 \coordinate (returnTop)    at (returnLane |- connectAttempt.center);
 
 \draw[return flow]
-  (nextAttempt.west)
+  (nextAttempt.south)
+  -- (returnStart)
   -- (returnBottom)
   -- (returnTop)
   -- (connectAttempt.west);
-
-% ----------------------------------------------------------------------
-% Outer boundary.
-% ----------------------------------------------------------------------
-
-
-% DEBUG: absolute foreground 160 mm target guides.
-% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
-\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

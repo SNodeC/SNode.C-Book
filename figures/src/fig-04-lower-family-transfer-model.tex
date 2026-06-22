@@ -2,6 +2,26 @@
 \input{snodec-figure-style.tex}
 \usetikzlibrary{positioning,calc,arrows.meta}
 
+\newcommand{\familySection}[2]{%
+  \parbox[c][8.0mm][c]{25mm}{\centering
+    \strut\textbf{#1}\\[-0.2mm]#2\strut
+  }%
+}
+
+\newcommand{\familyRule}{%
+  \rule{25mm}{0.25pt}%
+}
+
+\newcommand{\familyBlock}[4]{%
+  \begin{tabular}{@{}c@{}}
+    \familySection{#1}{#2}\\[-0.15mm]
+    \familyRule\\[-0.15mm]
+    \familySection{Address}{#3}\\[-0.15mm]
+    \familyRule\\[-0.15mm]
+    \familySection{Deployment}{#4}
+  \end{tabular}%
+}
+
 \begin{document}
 \begin{tikzpicture}[
   snodec diagram,
@@ -21,8 +41,8 @@
     rounded corners=2pt,
     line width=0.75pt,
     align=center,
-    text width=25mm,
-    inner xsep=2mm,
+    text width=26mm,
+    inner xsep=0.6mm,
     inner ysep=2mm
   },
   toptext/.style={
@@ -53,7 +73,7 @@
 % --- stable protocol box ------------------------------------------------
 \node[topbox, toptext] (protocol) {%
   \begin{tabular}{@{}c@{}}
-  \textbf{Application protocol behavior}\\[2.1mm]
+  \textbf{Application protocol behavior}\\[0.5mm]
   SocketContext\\
   SocketContextFactory\\
   callbacks / send / receive / lifecycle
@@ -62,58 +82,43 @@
 
 % --- lower family columns -----------------------------------------------
 \node[familybox, familytext, below=18.5mm of protocol] (unix) {%
-  \textbf{Unix domain}\\
-  \texttt{net::un}\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Address}\\
-  path\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Deployment}\\
-  local host
+  \familyBlock
+    {Unix domain}
+    {\texttt{net::un}}
+    {path}
+    {local host}
 };
 
 \node[familybox, familytext, left=4mm of unix] (ipv6) {%
-  \textbf{IPv6}\\
-  \texttt{net::in6}\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Address}\\
-  {\sffamily\scriptsize hostname/IP + port}\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Deployment}\\
-  IPv6 network
+  \familyBlock
+    {IPv6}
+    {\texttt{net::in6}}
+    {\mbox{\sffamily\scriptsize hostname/IP + port}}
+    {IPv6 network}
 };
 
 \node[familybox, familytext, left=4mm of ipv6] (ipv4) {%
-  \textbf{IPv4}\\
-  \texttt{net::in}\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Address}\\
-  {\sffamily\scriptsize hostname/IP + port}\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Deployment}\\
-  IP network
+  \familyBlock
+    {IPv4}
+    {\texttt{net::in}}
+    {\mbox{\sffamily\scriptsize hostname/IP + port}}
+    {IP network}
 };
 
 \node[familybox, familytext, right=4mm of unix] (rfcomm) {%
-  \textbf{RFCOMM}\\
-  \texttt{net::rc}\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Address}\\
-  {\sffamily\scriptsize BD address + channel}\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Deployment}\\
-  Bluetooth
+  \familyBlock
+    {RFCOMM}
+    {\texttt{net::rc}}
+    {\mbox{\sffamily\scriptsize BD address + channel}}
+    {Bluetooth}
 };
 
 \node[familybox, familytext, right=4mm of rfcomm] (l2cap) {%
-  \textbf{L2CAP}\\
-  \texttt{net::l2}\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Address}\\
-  {\sffamily\scriptsize BD address + PSM}\\[1.5mm]
-  \rule{\linewidth}{0.55pt}\\[1.2mm]
-  \textbf{Deployment}\\
-  Bluetooth
+  \familyBlock
+    {L2CAP}
+    {\texttt{net::l2}}
+    {\mbox{\sffamily\scriptsize BD address + PSM}}
+    {Bluetooth}
 };
 
 % --- one shared stem, then orthogonal branching -------------------------
@@ -133,19 +138,6 @@
 \draw[downarrow] ([yshift=8mm]unix.north)   -- (unix.north);
 \draw[downarrow] ([yshift=8mm]rfcomm.north) -- (rfcomm.north);
 \draw[downarrow] ([yshift=8mm]l2cap.north)  -- (l2cap.north);
-
-
-% DEBUG: absolute foreground 160 mm target guides.
-% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
-\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

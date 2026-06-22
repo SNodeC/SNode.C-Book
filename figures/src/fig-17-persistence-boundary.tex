@@ -4,7 +4,7 @@
 
 \begin{document}
 
-\def\boxW{40mm}
+\def\boxW{34.5mm}
 \def\colGap{13mm}
 \def\rowGap{25mm}
 \def\panelInnerSep{6mm}
@@ -19,7 +19,7 @@
     align=center,
     text width=\boxW,
     minimum height=18mm,
-    inner xsep=3mm,
+    inner xsep=2mm,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
@@ -31,7 +31,7 @@
     align=center,
     text width=\boxW,
     minimum height=18mm,
-    inner xsep=3mm,
+    inner xsep=2mm,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
@@ -43,7 +43,7 @@
     align=center,
     text width=\boxW,
     minimum height=18mm,
-    inner xsep=3mm,
+    inner xsep=2mm,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
@@ -55,7 +55,7 @@
     align=center,
     text width=\boxW,
     minimum height=18mm,
-    inner xsep=3mm,
+    inner xsep=2mm,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
@@ -95,11 +95,6 @@
   boundary line/.style={
     draw=snodecBlue!70,
     line width=0.75pt
-  },
-  note block/.style={
-    font=\sffamily\footnotesize,
-    align=center,
-    text=snodecMuted
   }
 ]
 
@@ -200,31 +195,6 @@
 \node[boundary label]
   at (boundaryLabelPos)
   {persistence boundary};
-
-% ----------------------------------------------------------------------
-% Figure note.
-% ----------------------------------------------------------------------
-\node[note block, below=9mm of durablePanel] (note) {%
-  Do not persist transport facts blindly.\\[-0.2mm]
-  Persist application facts deliberately.
-};
-
-% ----------------------------------------------------------------------
-% Outer boundary.
-% ----------------------------------------------------------------------
-
-
-% DEBUG: absolute foreground 160 mm target guides.
-% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
-\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}

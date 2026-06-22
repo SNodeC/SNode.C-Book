@@ -44,24 +44,11 @@
 \draw[stack arrow] (connection.north) -- (protocol.south);
 \draw[stack arrow] (protocol.north) -- (role.south);
 
-\draw[snodec muted arrow] ($(family.west)+(-11mm,0)$) -- ($(role.west)+(-11mm,0)$)
+\draw[snodec muted arrow] ($(family.west)+(-9mm,0)$) -- ($(role.west)+(-9mm,0)$)
   node[side note, midway, rotate=90, above=1.5mm] {more application-specific};
 
-\draw[snodec muted arrow] ($(role.east)+(11mm,0)$) -- ($(family.east)+(11mm,0)$)
+\draw[snodec muted arrow] ($(role.east)+(9mm,0)$) -- ($(family.east)+(9mm,0)$)
   node[side note, midway, rotate=90, above=1.5mm] {more transport-specific};
-
-
-% DEBUG: absolute foreground 160 mm target guides.
-% The two red lines mark +/-80 mm from the figure center and do not alter the bounding box.
-\coordinate (snodecDebugFigureCenter) at (current bounding box.center);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(-80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(-80mm,500mm)$);
-\draw[overlay, red!95!black, line width=0.9pt]
-  ($(snodecDebugFigureCenter)+(80mm,-500mm)$)
-    --
-  ($(snodecDebugFigureCenter)+(80mm,500mm)$);
 
 \end{tikzpicture}
 \end{document}
