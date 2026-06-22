@@ -1,4 +1,4 @@
-\documentclass[tikz,border=7pt]{standalone}
+\documentclass[tikz,border=0pt]{standalone}
 \input{snodec-figure-style.tex}
 \usetikzlibrary{positioning,calc,fit,backgrounds}
 
@@ -7,7 +7,7 @@
 \def\topY{33mm}
 \def\upperX{50mm}
 \def\upperY{23mm}
-\def\sideX{57mm}
+\def\sideX{56.7mm}
 \def\lowerX{40mm}
 \def\lowerY{28mm}
 
@@ -108,6 +108,23 @@
   \draw[connector] (diagnostic.center) -- (system.center);
   \draw[connector] (performance.center) -- (system.center);
 \end{scope}
+
+
+% ----------------------------------------------------------------------
+% Fixed 160 mm output canvas.
+% The drawing stays at native size and is centered horizontally.
+% Vertical height remains natural, with the former standalone 7pt margin
+% preserved above and below.
+% ----------------------------------------------------------------------
+\coordinate (snodecCanvasCenter) at (current bounding box.center);
+\coordinate (snodecCanvasSW)
+  at ($(snodecCanvasCenter)+(-80mm,0)$ |- current bounding box.south);
+\coordinate (snodecCanvasNE)
+  at ($(snodecCanvasCenter)+(80mm,0)$ |- current bounding box.north);
+\path[use as bounding box]
+  ([yshift=-7pt]snodecCanvasSW)
+  rectangle
+  ([yshift=7pt]snodecCanvasNE);
 
 \end{tikzpicture}
 \end{document}

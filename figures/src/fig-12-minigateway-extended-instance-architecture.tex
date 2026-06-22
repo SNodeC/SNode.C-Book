@@ -1,4 +1,4 @@
-\documentclass[tikz,border=7pt]{standalone}
+\documentclass[tikz,border=0pt]{standalone}
 \input{snodec-figure-style.tex}
 \usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
 
@@ -38,7 +38,7 @@
     line width=0.75pt,
     align=center,
     text width=66mm,
-    inner xsep=1.5mm,
+    inner xsep=1.3mm,
     inner ysep=2.4mm,
     font=\sffamily\small
   },
@@ -49,7 +49,7 @@
     line width=0.75pt,
     align=center,
     text width=66mm,
-    inner xsep=1.5mm,
+    inner xsep=1.3mm,
     inner ysep=2.4mm,
     font=\sffamily\small
   },
@@ -137,6 +137,23 @@
   (subscriberStart)
   -- node[arrow label, right=1.3mm] {bus subscriber}
   (subscriberEnd);
+
+
+% ----------------------------------------------------------------------
+% Fixed 160 mm output canvas.
+% The drawing stays at native size and is centered horizontally.
+% Vertical height remains natural, with the former standalone 7pt margin
+% preserved above and below.
+% ----------------------------------------------------------------------
+\coordinate (snodecCanvasCenter) at (current bounding box.center);
+\coordinate (snodecCanvasSW)
+  at ($(snodecCanvasCenter)+(-80mm,0)$ |- current bounding box.south);
+\coordinate (snodecCanvasNE)
+  at ($(snodecCanvasCenter)+(80mm,0)$ |- current bounding box.north);
+\path[use as bounding box]
+  ([yshift=-7pt]snodecCanvasSW)
+  rectangle
+  ([yshift=7pt]snodecCanvasNE);
 
 \end{tikzpicture}
 \end{document}
