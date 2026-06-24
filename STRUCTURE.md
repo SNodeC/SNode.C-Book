@@ -94,6 +94,7 @@ examples/HttpUpgrade-Server
 examples/HttpUpgrade-Client
 examples/SSE-Server
 examples/SSE-EventSource-Client
+examples/WebSocket-Echo-ServerSubprotocol
 examples/WebSocket-Echo-ClientSubprotocol
 examples/MQTT-ClientRole
 examples/MariaDB-Minimal

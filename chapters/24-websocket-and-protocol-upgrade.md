@@ -453,11 +453,65 @@ The exact target names are application choices; the contract is the name-to-fact
 
 A WebSocket application is usually not written as a raw byte loop. The application supplies a subprotocol object. The WebSocket layer handles the upgraded carrier, frames, messages, and control behavior; the subprotocol object receives lifecycle and message callbacks.
 
-A minimal echo-like client subprotocol has this shape:
+A minimal echo pair needs one subprotocol on each side. The server-side object receives a complete WebSocket message and sends the same message back on the same upgraded connection:
+
+```cpp
+#include <web/websocket/server/SubProtocol.h>
+#include <log/Logger.h>
+
+#include <cstddef>
+#include <cstdint>
+#include <string>
+
+class EchoServer final : public web::websocket::server::SubProtocol {
+public:
+    EchoServer(web::websocket::SubProtocolContext* context, const std::string& name)
+        : web::websocket::server::SubProtocol(context, name, 90, 3) {
+    }
+
+private:
+    void onConnected() override {
+        VLOG(1) << "WebSocket echo server connected";
+    }
+
+    void onMessageStart(int) override {
+        currentMessage.clear();
+    }
+
+    void onMessageData(const char* chunk, std::size_t chunkLen) override {
+        currentMessage.append(chunk, chunkLen);
+    }
+
+    void onMessageEnd() override {
+        VLOG(1) << "WebSocket echo server received: " << currentMessage;
+        sendMessage(currentMessage);
+        currentMessage.clear();
+    }
+
+    void onMessageError(uint16_t errnum) override {
+        LOG(WARNING) << "WebSocket echo server message error: " << errnum;
+        currentMessage.clear();
+    }
+
+    void onDisconnected() override {
+        VLOG(1) << "WebSocket echo server disconnected";
+        currentMessage.clear();
+    }
+
+    bool onSignal(int) override {
+        sendClose();
+        return false;
+    }
+
+    std::string currentMessage;
+};
+```
+
+The matching client-side object sends one message after the upgrade is complete, logs the echoed response, and then closes the WebSocket connection:
 
 ```cpp
 #include <web/websocket/client/SubProtocol.h>
-#include <web/websocket/SubProtocolFactory.h>
+#include <log/Logger.h>
 
 #include <cstddef>
 #include <cstdint>
@@ -471,6 +525,7 @@ public:
 
 private:
     void onConnected() override {
+        VLOG(1) << "WebSocket echo client connected";
         sendMessage("hello");
     }
 
@@ -483,15 +538,18 @@ private:
     }
 
     void onMessageEnd() override {
-        sendMessage(currentMessage);
+        VLOG(1) << "WebSocket echo client received: " << currentMessage;
         currentMessage.clear();
+        sendClose();
     }
 
-    void onMessageError(uint16_t) override {
+    void onMessageError(uint16_t errnum) override {
+        LOG(WARNING) << "WebSocket echo client message error: " << errnum;
         currentMessage.clear();
     }
 
     void onDisconnected() override {
+        VLOG(1) << "WebSocket echo client disconnected";
         currentMessage.clear();
     }
 
@@ -504,20 +562,13 @@ private:
 };
 ```
 
-The factory makes the subprotocol selectable by name and lets the WebSocket upgrade layer create protocol instances without knowing the concrete C++ type in advance:
+The factories make the subprotocol selectable by name and let the WebSocket upgrade layer create protocol instances without knowing the concrete C++ type in advance. The exported symbol is role-specific:
 
 ```cpp
-class EchoClientFactory final
-    : public web::websocket::SubProtocolFactory<web::websocket::client::SubProtocol> {
-public:
-    using web::websocket::SubProtocolFactory<
-        web::websocket::client::SubProtocol>::SubProtocolFactory;
-
-private:
-    EchoClient* create(web::websocket::SubProtocolContext* context) override {
-        return new EchoClient(context, getName());
-    }
-};
+extern "C" web::websocket::SubProtocolFactory<web::websocket::server::SubProtocol>*
+echoServerSubProtocolFactory() {
+    return new EchoServerFactory("echo");
+}
 
 extern "C" web::websocket::SubProtocolFactory<web::websocket::client::SubProtocol>*
 echoClientSubProtocolFactory() {
@@ -525,15 +576,21 @@ echoClientSubProtocolFactory() {
 }
 ```
 
-The base subprotocol and factory shape belongs to the shared WebSocket component:
+A dynamically loaded deployment must install both role modules with the names expected by the selectors:
 
-```cmake
-target_link_libraries(my_subprotocol PRIVATE snodec::websocket)
+```text
+libsnodec-websocket-echo-server.so.<SOVERSION>
+libsnodec-websocket-echo-client.so.<SOVERSION>
 ```
 
-A concrete client or server application will additionally select the corresponding WebSocket role component, such as `snodec::websocket-client` or `snodec::websocket-server`, depending on where the subprotocol is used.
+The base subprotocol and factory shape belongs to the shared WebSocket component, while each concrete role module links the corresponding role component:
 
-The factory symbol in the example is not only a code convenience. It is the name that a dynamically loaded subprotocol module must export, and it is also the factory entry point that a linked deployment makes available to the selector. The companion source tree for this client subprotocol is `WebSocket-Echo-ClientSubprotocol`.
+```cmake
+target_link_libraries(echo-server PRIVATE snodec::websocket-server)
+target_link_libraries(echo-client PRIVATE snodec::websocket-client)
+```
+
+The factory symbols in the example are not only code conveniences. They are the names that dynamically loaded subprotocol modules must export, and they are also the factory entry points that a linked deployment makes available to the selector. The companion source trees are `WebSocket-Echo-ServerSubprotocol` and `WebSocket-Echo-ClientSubprotocol`; together with `HttpUpgrade-Server` and `HttpUpgrade-Client`, they form the complete runnable WebSocket echo example.
 
 ### Lower layers and diagnostics still matter
 

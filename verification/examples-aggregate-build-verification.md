@@ -4,19 +4,20 @@ This note records the local build status for the aggregate companion-example pro
 
 ## Scope
 
-The checked aggregate project is:
+The current aggregate project is:
 
 ```text
 examples/CMakeLists.txt
 ```
 
-It configures and builds the compact companion examples and the two MiniGateway final-project examples:
+It is intended to configure and build the compact companion examples and the two MiniGateway final-project examples:
 
 ```text
 examples/HttpUpgrade-Server
 examples/HttpUpgrade-Client
 examples/SSE-Server
 examples/SSE-EventSource-Client
+examples/WebSocket-Echo-ServerSubprotocol
 examples/WebSocket-Echo-ClientSubprotocol
 examples/MQTT-ClientRole
 examples/MariaDB-Minimal
@@ -66,4 +67,17 @@ The build log reached `100%` and ended with:
 
 ## Status
 
-The aggregate companion examples are considered compile/link verified against the locally installed SNode.C package used by the author for this check. Before final release, the SNode.C source pin in `SOURCE-VERSION.md` should point to a commit that contains the required public-header fixes listed above.
+The reported build verified the aggregate example set as it existed at the time of the check. The WebSocket echo example was completed later, as described below; therefore the current aggregate project should be rebuilt and redeployed once more before final release. Before final release, the SNode.C source pin in `SOURCE-VERSION.md` should also point to a commit that contains the required public-header fixes listed above.
+
+## Later WebSocket echo completion note
+
+After the reported aggregate build, the WebSocket echo companion example was completed by adding the missing server-side echo subprotocol module and by correcting the subprotocol deployment shape. The updated WebSocket echo set now consists of:
+
+```text
+HttpUpgrade-Server
+HttpUpgrade-Client
+WebSocket-Echo-ServerSubprotocol
+WebSocket-Echo-ClientSubprotocol
+```
+
+The earlier compile/link result does not cover this later WebSocket completion change. The aggregate examples should be rebuilt and redeployed once more before final release.

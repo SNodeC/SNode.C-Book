@@ -389,18 +389,18 @@ req->upgrade(
     "/ws",
     "websocket",
     [](bool success) {
-        std::cout << "upgrade request initiation: "
-                  << (success ? "accepted" : "rejected") << "\n";
+        VLOG(1) << "upgrade request initiation: "
+                << (success ? "accepted" : "rejected");
     },
     [](const std::shared_ptr<Request>&,
        const std::shared_ptr<Response>&,
        bool success) {
-        std::cout << "upgrade response: "
-                  << (success ? "accepted" : "rejected") << "\n";
+        VLOG(1) << "upgrade response: "
+                << (success ? "accepted" : "rejected");
     },
     [](const std::shared_ptr<Request>&,
        const std::string& message) {
-        std::cerr << "upgrade response parse error: " << message << "\n";
+        LOG(ERROR) << "upgrade response parse error: " << message;
     });
 ```
 
