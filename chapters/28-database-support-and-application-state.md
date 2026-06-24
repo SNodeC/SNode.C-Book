@@ -271,6 +271,109 @@ The exact policy belongs to the application. The framework exposes the state. Th
 
 The state callback is database observability at the application boundary. It makes the persistence role visible instead of hiding database availability inside failed commands.
 
+### A minimal MariaDB client example
+
+The following listing is intentionally smaller than the repository's `testmariadb` application. It shows the shape of ordinary application use: configure connection details, construct the database client, observe connection state, submit SQL work, continue through callbacks, and then start the SNode.C runtime.
+
+For the SQL statements below, assume a small table such as:
+
+```sql
+CREATE DATABASE snodec;
+
+CREATE TABLE measurements (
+    sensor VARCHAR(64) NOT NULL,
+    value DOUBLE NOT NULL
+);
+```
+
+This setup note is only there to make the example concrete. Chapter 28 is not a MariaDB administration chapter. A real deployment also needs a deliberate policy for database users, privileges, credentials, schema migration, backup, and secret handling.
+
+```cpp
+#include <core/SNodeC.h>
+#include <database/mariadb/MariaDBClient.h>
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+#include <mysql.h>
+#include <string>
+
+#endif
+
+int main(int argc, char* argv[]) {
+    core::SNodeC::init(argc, argv);
+
+    const database::mariadb::MariaDBConnectionDetails details = {
+        .connectionName = "measurements-db",
+        .hostname = "localhost",
+        .username = "snodec",
+        .password = "<password>",
+        .database = "snodec",
+        .port = 3306,
+        .socket = "",
+        .flags = 0,
+    };
+
+    database::mariadb::MariaDBClient db(details, [](const database::mariadb::MariaDBState& state) {
+        if (state.error != 0) {
+            // Report state.errorMessage and state.error.
+        } else if (state.connected) {
+            // Database connection is available.
+        } else {
+            // Database connection is currently unavailable.
+        }
+    });
+
+    db.exec(
+          "INSERT INTO measurements(sensor, value) VALUES ('temperature', 23.5)",
+          [&db]() {
+              db.affectedRows(
+                  [](my_ulonglong rows) {
+                      // Observe the affected-row count.
+                  },
+                  [](const std::string& error, unsigned int number) {
+                      // Report metadata error.
+                  });
+          },
+          [](const std::string& error, unsigned int number) {
+              // Report execution error.
+          })
+      .query(
+          "SELECT sensor, value FROM measurements",
+          [](const MYSQL_ROW row) {
+              if (row != nullptr) {
+                  // row[0] is sensor, row[1] is value.
+              } else {
+                  // No more rows for this result.
+              }
+          },
+          [](const std::string& error, unsigned int number) {
+              // Report query error.
+          });
+
+    return core::SNodeC::start();
+}
+```
+
+The example deliberately keeps the database details local so that the API shape is visible. That is not a production credential policy. Production code should not hard-code database passwords in the source; it should read them from a controlled configuration or secret mechanism and should avoid logging secret material.
+
+Nothing in this listing makes the database a transport peer. The database client is an application-owned persistence boundary. The SQL work is submitted before the runtime starts, but its progress and completion belong to the event-driven execution model. The row callback receives individual rows; a `nullptr` row marks the end of that result stream.
+
+The corresponding build-side dependency is the MariaDB component:
+
+```cmake
+target_link_libraries(myapp PRIVATE snodec::db-mariadb)
+```
+
+That target exists only in SNode.C builds where `libmariadb` was found. The source-side public header and the build-side component therefore form the usual pair:
+
+```text
+source side:
+  <database/mariadb/MariaDBClient.h>
+
+build side:
+  snodec::db-mariadb
+```
+
 ### Database work inside the event-driven runtime
 
 The architectural heart of the MariaDB module is event-loop integration. Database work participates in the SNode.C event-driven runtime instead of simply calling SQL and blocking.
@@ -450,6 +553,44 @@ startTransactions
 The important point is not simply that transactions exist. Transaction flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
 
 A transaction is not outside the event model; it is a policy and ordering boundary expressed through database commands and callbacks.
+
+#### A compact transaction sequence
+
+A command sequence keeps ordered database work visible. Transaction flow is not hidden behind a helper that silently blocks. The sequence shows when transaction mode begins, which work belongs to the transaction, when the commit is requested, and when transaction mode is left again.
+
+```cpp
+db.startTransactions(
+      []() {
+          // Transaction mode enabled.
+      },
+      [](const std::string& error, unsigned int number) {
+          // Report transaction-start error.
+      })
+  .exec(
+      "INSERT INTO measurements(sensor, value) VALUES ('humidity', 61.0)",
+      []() {
+          // Insert command accepted.
+      },
+      [](const std::string& error, unsigned int number) {
+          // Report insert error.
+      })
+  .commit(
+      []() {
+          // Transaction committed.
+      },
+      [](const std::string& error, unsigned int number) {
+          // Report commit error.
+      })
+  .endTransactions(
+      []() {
+          // Transaction mode disabled.
+      },
+      [](const std::string& error, unsigned int number) {
+          // Report transaction-end error.
+      });
+```
+
+The source uses the plural method names `startTransactions(...)` and `endTransactions(...)`; the listing keeps those exact names. A rollback path would use the same command-sequence shape with `rollback(...)` instead of, or before, a later `commit(...)`, depending on the application policy. The important architectural point is that transaction boundaries remain explicit and ordered.
 
 ### Timers and database work
 
