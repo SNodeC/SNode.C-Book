@@ -341,17 +341,122 @@ Two examples are especially important for the next chapters:
 
 #### Upgrade support
 
-HTTP upgrade support belongs in the HTTP layer because HTTP is where the upgrade decision is negotiated. Server-side upgrade support is represented by HTTP upgrade factories and a selector that chooses an upgrade factory from request/response context.
+HTTP upgrade support belongs in the HTTP layer because HTTP is where the upgrade decision is negotiated. The upgraded protocol may later be WebSocket, but the boundary itself is not WebSocket-specific. An HTTP request names an upgrade target, the HTTP layer selects a socket-context upgrade factory for that name, and the selected upgraded context takes over the same connection episode after the HTTP response confirms the transition.
 
-This prepares the later WebSocket chapter. The point here is not to teach WebSocket yet. The point is to show where the upgrade boundary lives:
+Conceptually:
 
 ```text
 HTTP request/response layer
   -> upgrade decision
-      -> another protocol layer may take over
+      -> selected SocketContextUpgrade
+          -> another protocol layer may take over
 ```
 
-That is a clean architectural boundary.
+This is a clean architectural boundary. The lower connection remains the same peer episode. What changes is the protocol context attached to it.
+
+A compact server-side upgrade route has this shape. The example uses `websocket` because that is the concrete upgrade protocol used in the following WebSocket chapter, but the call itself belongs to the HTTP/Express boundary:
+
+```cpp
+#include <express/legacy/in/WebApp.h>
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#include <memory>
+#include <string>
+#endif
+
+using WebApp = express::legacy::in::WebApp;
+using Request = WebApp::Request;
+using Response = WebApp::Response;
+
+WebApp app("legacy");
+
+app.get("/ws", [](const std::shared_ptr<Request>& req,
+                   const std::shared_ptr<Response>& res) {
+    res->upgrade(req, [res](const std::string& selected) {
+        if (!selected.empty()) {
+            res->end();
+        } else {
+            res->sendStatus(404);
+        }
+    });
+});
+```
+
+The HTTP route is still visible at the boundary. After a successful upgrade, the selected upgraded socket context owns the connection episode. The route does not become the message loop of the upgraded protocol.
+
+On the client side, the HTTP client prepares an upgrade request and names the target upgrade protocol. For WebSocket that target name is `websocket`:
+
+```cpp
+req->upgrade(
+    "/ws",
+    "websocket",
+    []([[maybe_unused]] bool success) {
+        // Upgrade request initiation was accepted or rejected locally.
+    },
+    []([[maybe_unused]] const std::shared_ptr<Request>& request,
+       [[maybe_unused]] const std::shared_ptr<Response>& response,
+       [[maybe_unused]] bool success) {
+        // The HTTP response confirmed or rejected the upgrade.
+    },
+    []([[maybe_unused]] const std::shared_ptr<Request>& request,
+       [[maybe_unused]] const std::string& message) {
+        // The HTTP upgrade response could not be parsed.
+    });
+```
+
+The important point is not the particular upgraded protocol yet. The important point is that the HTTP layer supplies an explicit transition from HTTP request/response handling into a named socket-context upgrade.
+
+From this chapter onward, some examples are printed as compact fragments so that the book can focus on the architectural idea being discussed. Complete buildable source versions are part of the book's electronic companion material; the published edition should make them available through its companion repository or download page. For this HTTP-upgrade example, the corresponding companion programs are `HttpUpgrade-Server` and `HttpUpgrade-Client`.
+
+#### HTTP-upgrade deployment contract
+
+Most SNode.C components follow the ordinary C++ library rule: source files include the public headers they use, the application links the corresponding component, and the installed libraries must be available to the platform loader at runtime. The book does not repeat that ordinary deployment rule for every component. HTTP upgrade is different because the upgrade name is also a runtime selection key.
+
+SNode.C can resolve an HTTP upgrade factory through a linked registration path or by loading a role-specific shared object at runtime. The common dynamic deployment contract is compact:
+
+```text
+HTTP upgrade directory:
+  ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/snode.c/web/http/upgrade
+
+server-side module:
+  libsnodec-<upgrade-name>-server.so.<SOVERSION>
+
+client-side module:
+  libsnodec-<upgrade-name>-client.so.<SOVERSION>
+
+server-side factory symbol:
+  <upgrade-name>ServerSocketContextUpgradeFactory
+
+client-side factory symbol:
+  <upgrade-name>ClientSocketContextUpgradeFactory
+```
+
+For the WebSocket upgrade, the HTTP upgrade name is `websocket`, so the dynamically loaded artifacts are named accordingly:
+
+```text
+libsnodec-websocket-server.so.<SOVERSION>
+libsnodec-websocket-client.so.<SOVERSION>
+
+websocketServerSocketContextUpgradeFactory
+websocketClientSocketContextUpgradeFactory
+```
+
+A linked deployment uses the same upgrade name but resolves it through the selector's linked-factory cache instead of opening the shared object later. For an application that uses the installed WebSocket upgrade components, the build-time shape is to link the HTTP role and the matching WebSocket upgrade role into the executable or into an application-loaded library:
+
+```cmake
+target_link_libraries(my_ws_server PRIVATE
+    snodec::http-server-express-legacy-in
+    snodec::websocket-server
+)
+
+target_link_libraries(my_ws_client PRIVATE
+    snodec::http-client
+    snodec::net-in-stream-legacy
+    snodec::websocket-client
+)
+```
+
+The operational rule is simple: dynamic deployment needs the correctly named module in the HTTP upgrade directory; linked deployment needs the factory registration object to be linked and retained. Both paths must make the same upgrade name resolvable at the HTTP boundary.
 
 #### EventSource and streaming-style HTTP
 

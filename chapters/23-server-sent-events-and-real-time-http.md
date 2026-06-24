@@ -260,7 +260,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-The server-side route produces event-stream syntax. The client-side `EventSource` parses that stream, applies retry and continuity rules, and dispatches ordinary `MessageEvent` callbacks. `readyState()`, `retry()`, `lastEventId()`, and `close()` remain the client-side controls for observing and steering that stream lifecycle.
+The server-side route produces event-stream syntax. The client-side `EventSource` parses that stream, applies retry and continuity rules, and dispatches ordinary `MessageEvent` callbacks. `readyState()`, `retry()`, `lastEventId()`, and `close()` remain the client-side controls for observing and steering that stream lifecycle. The matching companion programs are `SSE-Server` and `SSE-EventSource-Client`.
 
 ### The EventSource client abstraction
 

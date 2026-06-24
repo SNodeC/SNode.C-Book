@@ -85,9 +85,21 @@ The manuscript currently contains all planned chapters and an epilogue.
 
 - What to Take Away from SNode.C — **present**
 
-## Guided project source trees
+## Example source trees
 
-The final technical part uses two source trees as source-of-truth examples:
+The protocol and persistence chapters refer to electronic companion examples that are shown in shortened form in the printed manuscript. In this source package, those companion examples are stored as compact source trees:
+
+```text
+examples/HttpUpgrade-Server
+examples/HttpUpgrade-Client
+examples/SSE-Server
+examples/SSE-EventSource-Client
+examples/WebSocket-Echo-ClientSubprotocol
+examples/MQTT-ClientRole
+examples/MariaDB-Minimal
+```
+
+The final technical part uses two larger source trees as source-of-truth examples:
 
 ```text
 examples/MiniGateway-Base

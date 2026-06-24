@@ -340,7 +340,8 @@ foreach(OPTIONAL_DIR IN ITEMS
 endforeach()
 
 # Optional additional application material. The main examples/ tree is required
-# above because Chapters 37 and 38 use it as source-of-truth material.
+# above because it contains compact chapter examples and the MiniGateway
+# source-of-truth material for Chapters 37 and 38.
 foreach(OPTIONAL_DIR IN ITEMS
         "apps"
         "src/apps"

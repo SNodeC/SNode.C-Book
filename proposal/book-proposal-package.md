@@ -189,6 +189,10 @@ The learning arc of the book is deliberate:
 - **Chapters 37–38** provide the MiniGateway guided project as a concrete capstone.
 - **The epilogue** closes by summarizing the architectural perspective the reader should carry forward.
 
+## Compact example source trees
+
+In addition to the manuscript fragments, the electronic companion material supplies compact standalone source trees for selected HTTP-upgrade, Server-Sent Events, WebSocket subprotocol, MQTT-role, and MariaDB examples. These are teaching examples: they keep the printed chapter fragments short while giving readers complete CMake-based source directories that can be built against the pinned SNode.C package. In this source package, the companion material is stored below `examples/`; in a published edition, the same material should be reachable through the publisher's companion repository or download page.
+
 ## MiniGateway source-of-truth examples
 
 The book ends with two source trees:

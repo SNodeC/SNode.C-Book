@@ -2,7 +2,7 @@
 
 ### Why deployment belongs after CMake
 
-Chapter 32 showed how SNode.C expresses architecture through CMake targets, install components, exported package targets, dependency visibility, and runtime-sensitive library paths. Chapter 33 follows those decisions into the installed system: packages, filesystem layout, service ownership, configuration, runtime state, deployment-specific resources, and constrained Linux targets.
+Chapter 32 showed how SNode.C expresses architecture through CMake targets, install components, exported package targets, dependency visibility, and the build-side boundaries of runtime-selected extensions. Chapter 33 follows those decisions into the installed system: packages, filesystem layout, service ownership, configuration, runtime state, deployment-specific resources, and constrained Linux targets.
 
 ```text
 Chapter 32:
@@ -198,7 +198,7 @@ Some libraries are ordinary link-time dependencies. Others participate in runtim
 
 For ordinary linked libraries, the platform loader must find the dependency. For upgrade and subprotocol composition, SNode.C must also find the libraries that participate in runtime protocol composition. A dynamically loaded or path-sensitive module must therefore be installed where the runtime expects it, or where configuration tells the runtime to find it.
 
-Therefore, Chapter 32 discussed output directories, install directories, RPATH, and upgrade-library locations. In deployment, those choices stop being abstract build details. They become the difference between:
+Chapter 32 identified the build-side properties that make such runtime composition visible. In deployment, those choices stop being abstract build details. They become the difference between:
 
 ```text
 application starts

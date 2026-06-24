@@ -356,7 +356,7 @@ int main(int argc, char* argv[]) {
 
 The example deliberately keeps the database details local so that the API shape is visible. That is not a production credential policy. Production code should not hard-code database passwords in the source; it should read them from a controlled configuration or secret mechanism and should avoid logging secret material.
 
-Nothing in this listing makes the database a transport peer. The database client is an application-owned persistence boundary. The SQL work is submitted before the runtime starts, but its progress and completion belong to the event-driven execution model. The row callback receives individual rows; a `nullptr` row marks the end of that result stream.
+Nothing in this listing makes the database a transport peer. The database client is an application-owned persistence boundary. The SQL work is submitted before the runtime starts, but its progress and completion belong to the event-driven execution model. The row callback receives individual rows; a `nullptr` row marks the end of that result stream. For the database case, the companion source tree is `MariaDB-Minimal`.
 
 The corresponding build-side dependency is the MariaDB component:
 

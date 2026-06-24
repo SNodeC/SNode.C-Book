@@ -597,21 +597,15 @@ Above core and transport composition, SNode.C builds protocol and application-la
 
 #### HTTP and upgrade layout
 
-The HTTP module introduces protocol-upgrade infrastructure. The build sets explicit compile and install library directories for HTTP and upgrade-related libraries. It also stores those paths as target properties.
+Most SNode.C components follow ordinary include/link/deploy rules: include the public header for the abstraction the source names, link the component that owns the binary surface, and install the resulting shared libraries where the platform loader can find them. The book does not repeat those normal library-deployment rules for every component.
 
-That is not random bookkeeping. HTTP upgrade support needs known locations for protocol-upgrade libraries and related runtime composition.
-
-Once dynamic protocol upgrade enters the framework, the build must preserve enough path and RPATH information for runtime composition to work.
-
-That is why HTTP build strategy belongs in the same architectural discussion as WebSocket and MQTT-over-WebSocket.
+HTTP upgrade support is different because an upgrade protocol can be selected later by name. The build therefore records HTTP and upgrade-library directories as target properties. Chapter 21 gives the HTTP-upgrade name-to-factory contract, and Chapter 24 applies the same pattern to WebSocket subprotocols. This chapter only identifies the build-side boundary; Chapter 33 follows that boundary into the installed runtime system.
 
 #### RPATH and runtime composition
 
-HTTP, Express, and WebSocket build files set library output directories and install RPATH-related properties. This is especially relevant for dynamically loaded or nontrivially nested protocol components.
+HTTP, Express, and WebSocket build files set library output directories and install RPATH-related properties. In this chapter, those settings matter as build-side evidence that runtime composition exists; they are not a complete deployment policy.
 
-A framework that supports HTTP upgrade and WebSocket subprotocols cannot treat library location as a completely accidental detail. The runtime must be able to find what the build and install process produced.
-
-RPATH decisions are therefore part of the runtime-composition story. This does not mean RPATH solves every deployment problem, but it does mean the build preserves information that runtime composition needs.
+The deployment question is answered later: the installed system must contain the ordinary shared libraries and the runtime-selected modules in locations the loader and SNode.C can actually find. Chapter 33 treats that installed filesystem shape explicitly.
 
 #### Express base and concrete carrier targets
 
@@ -674,7 +668,7 @@ The lower HTTP server layer is reached through the base Express component. The c
 
 #### WebSocket upgrade components
 
-WebSocket belongs to the HTTP upgrade family. The WebSocket build obtains HTTP upgrade directories from the HTTP target and places WebSocket-related artifacts beneath that layout. This mirrors the protocol model: WebSocket is an HTTP upgrade, not a separate protocol island.
+WebSocket belongs to the HTTP upgrade family. The WebSocket build obtains HTTP upgrade directories from the HTTP target and places WebSocket-related artifacts beneath that layout. This mirrors the protocol model: WebSocket is an HTTP upgrade, not a separate protocol island. Chapter 24 gives the compact deployment contract for WebSocket subprotocol modules beneath the WebSocket upgrade directory.
 
 #### MQTT native and WebSocket-carried components
 
@@ -770,13 +764,13 @@ Keeping those two levels separate avoids confusion.
 
 A distributor may want different compiled defaults for an embedded package. An operator may still want runtime configuration for a particular deployment. Those are not the same decision.
 
-### Installed packages and external consumers
+### Exported package targets and external consumers
 
-SNode.C is also consumed by external applications. That is where package configuration, exported targets, component selection, and namespaced target names become essential.
+SNode.C is also consumed by external applications. That is where package configuration, exported targets, component selection, and namespaced target names become essential. This is still a build-interface topic: it describes how an installed SNode.C package is consumed by another CMake project, not how a running service is deployed.
 
-#### From build targets to installed package targets
+#### From build targets to exported package targets
 
-The internal build tree produces targets. The install/export machinery turns selected targets into an external package interface.
+The internal build tree produces targets. The install/export machinery turns selected targets into an external CMake package interface.
 
 The shape is:
 

@@ -93,72 +93,29 @@ WebSocket
   -> upgraded bidirectional message channel
 ```
 
-### Generic protocol upgrade in SNode.C
+### WebSocket after the HTTP upgrade boundary
 
-The first idea in this chapter is not WebSocket itself. The first idea is generic protocol upgrade.
+Chapter 21 described HTTP upgrade as a generic HTTP-layer boundary. That is where the client names an upgrade target, the server accepts or rejects the transition, and the HTTP layer selects a socket-context upgrade implementation.
 
-SNode.C treats HTTP as a possible gateway into another protocol context. An HTTP upgrade request can be evaluated, an upgrade factory can be selected, and a new socket context can be attached to the existing connection.
-
-Conceptually:
+This chapter now specializes that generic boundary to WebSocket. In the HTTP upgrade layer the selected upgrade name is:
 
 ```text
-HTTP request
-  -> upgrade negotiation
-      -> selected upgraded protocol context
-          -> protocol-specific handling
+websocket
 ```
 
-The selected upgraded protocol does not have to be WebSocket. WebSocket is the concrete upgraded protocol discussed in this chapter, but the architectural boundary is broader. Another protocol can use the same upgrade boundary when the application provides the corresponding upgrade factory and upgraded context.
+That name selects the upgraded connection type. It is not yet an application protocol name. After the WebSocket upgrade has succeeded, the WebSocket layer may perform another selection step: the WebSocket subprotocol.
 
-That gives the general model:
+This gives two separate questions:
 
 ```text
-same lower connection
-  -> HTTP negotiation
-      -> different protocol context
+HTTP upgrade name
+  -> which upgraded connection context should replace ordinary HTTP?
+
+WebSocket subprotocol name
+  -> which application protocol should run inside the WebSocket connection?
 ```
 
-This order matters. It prevents WebSocket from looking like a hard-coded exception in the HTTP layer. HTTP upgrade is the reusable boundary. WebSocket is one protocol that uses that boundary.
-
-#### HTTP as the negotiation layer
-
-Before an upgrade succeeds, the interaction is still HTTP. The client sends an HTTP request. The request carries upgrade information. The server evaluates the request. The response either confirms the transition or rejects it.
-
-During this phase, HTTP request and response objects still matter. They carry the negotiation information, and they provide diagnostic evidence when the upgrade fails.
-
-This makes HTTP the negotiation layer:
-
-```text
-HTTP before upgrade
-  -> request headers
-  -> upgrade negotiation
-  -> response confirming or rejecting the upgrade
-```
-
-On the server side, a successful WebSocket upgrade is confirmed as an HTTP upgrade response. It is not a silent switch. The server still answers the upgrade request before the upgraded context takes over the connection episode.
-
-#### Same connection, new protocol context
-
-Upgrade is the boundary where the connection keeps its transport identity but changes its protocol identity.
-
-A useful sentence is:
-
-```text
-same lower connection
-  -> different protocol context
-```
-
-Before the upgrade, the connection is interpreted through HTTP request/response handling. After the upgrade, it is interpreted through WebSocket frame and message handling.
-
-```text
-before
-  -> HTTP request / response context
-
-after
-  -> WebSocket frame / message context
-```
-
-That is why the upgrade boundary belongs in the architecture, not only in protocol helper code. The lower connection remains relevant. The attached protocol context changes.
+Keeping those questions separate is important. The HTTP upgrade machinery belongs to the web/HTTP layer. The WebSocket subprotocol machinery belongs to the WebSocket layer.
 
 ### WebSocket as the concrete upgraded protocol
 
@@ -362,6 +319,10 @@ The client side initiates the upgrade. It prepares the WebSocket upgrade request
 
 This mirrors earlier server/client distinctions in the book. The symmetry remains. The responsibilities differ.
 
+#### Upgrade calls belong to the HTTP boundary
+
+Chapter 21 showed the compact server-side `res->upgrade(...)` and client-side `req->upgrade(...)` calls. This chapter deliberately does not repeat them. Here the concern is what the selected `websocket` upgrade means after the HTTP boundary has been crossed: WebSocket framing, control frames, subprotocol selection, and subprotocol deployment.
+
 ### The WebSocket module structure
 
 The build/module split mirrors the architectural split: shared WebSocket mechanics are separate from the server-side and client-side HTTP upgrade roles.
@@ -419,24 +380,74 @@ This keeps WebSocket mechanics and application-message semantics separated.
 
 WebSocket provides the upgraded carrier. The subprotocol defines what the messages mean.
 
-#### Factories and selectors
+#### WebSocket subprotocol deployment contract
 
-Subprotocol selection keeps application protocols out of hard-coded WebSocket branching.
+Chapter 21 distinguished ordinary linked-library deployment from runtime-selected upgrade modules. WebSocket subprotocols use the same idea one level later. Subprotocol selection is a second deployment boundary, below the HTTP-upgrade boundary: the HTTP upgrade module makes the connection a WebSocket connection, and the WebSocket subprotocol factory gives that connection its application semantics.
 
-A factory creates subprotocol instances. A selector resolves a requested subprotocol name in a server or client selection context, using linked factories or dynamic loading where allowed.
+For dynamically loaded subprotocols, SNode.C looks below the WebSocket subprotocol directory. The selector first checks an application-specific subdirectory and then falls back to the shared directory:
 
-A compact view is:
+```text
+application-specific directory:
+  ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/snode.c/web/http/upgrade/websocket/<application-name>
 
-| Selector concern | Meaning |
-|---|---|
-| name | which subprotocol is requested |
-| role | server or client selection context |
-| linked factory | factory known at build/link time |
-| dynamic loading | optional runtime extension |
-| unload | cleanup of dynamically loaded factories |
+shared WebSocket subprotocol directory:
+  ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/snode.c/web/http/upgrade/websocket
+```
 
-This is enough for Chapter 24. The details of plugin architecture and dynamic loading belong later or in reference material. Here, the teaching point is that subprotocols are structured and selectable elements.
+The dynamic module contract is role-specific:
 
+```text
+server-side module:
+  libsnodec-websocket-<subprotocol-name>-server.so.<SOVERSION>
+
+client-side module:
+  libsnodec-websocket-<subprotocol-name>-client.so.<SOVERSION>
+
+server-side factory symbol:
+  <subprotocol-name>ServerSubProtocolFactory
+
+client-side factory symbol:
+  <subprotocol-name>ClientSubProtocolFactory
+```
+
+For an `echo` subprotocol this becomes:
+
+```text
+libsnodec-websocket-echo-server.so.<SOVERSION>
+libsnodec-websocket-echo-client.so.<SOVERSION>
+
+echoServerSubProtocolFactory
+echoClientSubProtocolFactory
+```
+
+A linked deployment uses the same subprotocol name but resolves it from the selector's linked-factory cache. For a project that builds its own subprotocol, the CMake shape is compact:
+
+```cmake
+add_library(my-echo-server STATIC Echo.cpp EchoFactory.cpp)
+target_link_libraries(my-echo-server PUBLIC snodec::websocket-server)
+
+target_link_libraries(my_ws_server PRIVATE
+    snodec::http-server-express-legacy-in
+    snodec::websocket-server
+    my-echo-server
+)
+```
+
+The client side mirrors the role:
+
+```cmake
+add_library(my-echo-client STATIC Echo.cpp EchoFactory.cpp)
+target_link_libraries(my-echo-client PUBLIC snodec::websocket-client)
+
+target_link_libraries(my_ws_client PRIVATE
+    snodec::http-client
+    snodec::net-in-stream-legacy
+    snodec::websocket-client
+    my-echo-client
+)
+```
+
+The exact target names are application choices; the contract is the name-to-factory resolution. A WebSocket subprotocol name must resolve to a factory on the correct role side. Dynamic deployment provides that factory through a correctly named module. Linked deployment provides it through linked and retained registration code. A missing HTTP-upgrade module prevents the connection from becoming WebSocket; a missing subprotocol factory means that WebSocket exists, but the requested application protocol cannot be instantiated.
 
 #### A compact WebSocket subprotocol
 
@@ -524,36 +535,7 @@ target_link_libraries(my_subprotocol PRIVATE snodec::websocket)
 
 A concrete client or server application will additionally select the corresponding WebSocket role component, such as `snodec::websocket-client` or `snodec::websocket-server`, depending on where the subprotocol is used.
 
-#### Linked and dynamically loaded subprotocols
-
-A subprotocol may be linked directly into the application or provided through a dynamically loaded factory. That matters because WebSocket can become a carrier for protocols that are not all built into one executable.
-
-For Chapter 24, the important point is not how dynamic loading is implemented. The important point is that WebSocket subprotocol behavior is selected through factories rather than hard-coded into WebSocket framing itself.
-
-The architecture allows a later layer to decide:
-
-```text
-which subprotocol name was requested?
-  -> which factory can provide it?
-      -> which protocol behavior should run on this upgraded connection?
-```
-
-The central lesson remains simple:
-
-```text
-WebSocket is the upgraded carrier.
-The subprotocol gives that carrier its application meaning.
-```
-
-This is also why the later MQTT-over-WebSocket chapter will not feel like a separate trick. The reader will already have the necessary model:
-
-```text
-WebSocket
-  -> upgraded carrier
-
-MQTT
-  -> protocol semantics carried by that carrier
-```
+The factory symbol in the example is not only a code convenience. It is the name that a dynamically loaded subprotocol module must export, and it is also the factory entry point that a linked deployment makes available to the selector. The companion source tree for this client subprotocol is `WebSocket-Echo-ClientSubprotocol`.
 
 ### Lower layers and diagnostics still matter
 
@@ -590,13 +572,15 @@ WebSocket provides the upgraded carrier. MQTT provides the protocol semantics.
 ::: {.snodec-remember title="What to remember"}
 - WebSocket begins as HTTP upgrade and continues as a bidirectional message-oriented connection.
 - Upgrade changes the protocol context while keeping the underlying connection.
-- SNode.C's upgrade mechanism is generic; WebSocket is one concrete upgraded protocol.
+- HTTP upgrade is the generic boundary described in Chapter 21; WebSocket is the concrete upgraded protocol used here.
 - `SocketContextUpgrade` is the boundary object between HTTP negotiation and the upgraded protocol context.
 - WebSocket uses frames, messages, and control frames such as ping, pong, and close.
 - Server and client upgrade paths are related but not identical.
 - The shared `websocket` module contains framing and subprotocol infrastructure; server and client modules connect it to the HTTP sides.
 - WebSocket is an upgraded carrier; the subprotocol gives carried messages their application meaning.
 - Subprotocol factories and selectors keep subprotocol selection structured and extensible.
+- A dynamically loaded WebSocket subprotocol must be installed in the WebSocket subprotocol directory and follow the role-specific file-name and factory-symbol conventions.
+- A linked subprotocol deployment resolves the same subprotocol name through the selector's linked factory path instead of opening a shared object at runtime.
 - Lower-family, TLS, runtime, configuration, diagnostics, timeout, and failure behavior remain relevant.
 - Chapter 25 moves from web protocols to MQTT.
 :::

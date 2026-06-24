@@ -25,10 +25,10 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `proposal/book-proposal-package.md` — publisher-facing proposal material.
 - `chapters/` — one Markdown file per chapter.
 - `parts/` — part divider files.
-- `examples/` — example source trees used by the guided MiniGateway chapters.
+- `examples/` — complete source trees for compact chapter examples and the guided MiniGateway project.
 - `verification/` — non-manuscript verification notes for source/package checks.
 
-The current manuscript contains all planned chapters and an epilogue. Chapters 37 and 38 contain the MiniGateway guided project. The source trees used by those chapters are:
+The current manuscript contains all planned chapters and an epilogue. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `examples/` for the HTTP-upgrade, SSE, WebSocket subprotocol, MQTT-role, and MariaDB examples. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
 
 ```text
 examples/MiniGateway-Base
@@ -42,7 +42,9 @@ This package is aligned with the SNode.C source snapshot recorded in `SOURCE-VER
 
 The manuscript is not intended to describe arbitrary future states of the SNode.C repository. If a newer checkout changes component names, public headers, examples, or package layout, those changes must be reviewed before the manuscript is updated.
 
-## MiniGateway source and tested-code policy
+## Example source and tested-code policy
+
+The compact source trees in `examples/` are intended to be complete buildable versions of the shorter manuscript fragments. The printed book should refer to them as electronic companion material rather than as printed-book contents. They are teaching examples, not replacements for the source snippets in the chapters.
 
 `examples/MiniGateway-Base` is the authoritative source tree for Chapter 37. `examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
 

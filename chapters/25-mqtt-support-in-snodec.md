@@ -401,7 +401,7 @@ private:
 };
 ```
 
-The example deliberately omits the concrete lower connection setup. That setup decides how the MQTT role is attached to a stream or to another carrier. The MQTT role itself shows the protocol behavior: it sends `CONNECT`, waits for `CONNACK`, subscribes, publishes, handles incoming publishes, and sends `DISCONNECT` during shutdown.
+The example deliberately omits the concrete lower connection setup. That setup decides how the MQTT role is attached to a stream or to another carrier. The MQTT role itself shows the protocol behavior: it sends `CONNECT`, waits for `CONNACK`, subscribes, publishes, handles incoming publishes, and sends `DISCONNECT` during shutdown. The complete companion role example is named `MQTT-ClientRole`.
 
 The corresponding native MQTT client component is:
 
