@@ -492,6 +492,18 @@ The timing behavior still depends on the network, server, client, buffering, and
 - `MessageEvent` raises SSE fields into an application-facing event object.
 :::
 
+### EventSource public surface
+
+Server-sent events also follow the public-surface rule. On the source side, a client-side file that directly uses the IPv4 legacy EventSource wrapper includes:
+
+```cpp
+#include <web/http/legacy/in/EventSource.h>
+```
+
+This is higher than including the raw HTTP client header. The EventSource public header selects the EventSource tool over the concrete HTTP client stack. If the application directly names only EventSource behavior, that is the source-facing front door. Lower HTTP and socket details remain part of the selected stack, not a list of headers the application has to assemble manually.
+
+On the build side, the target still needs the HTTP client and carrier component surface required by that concrete EventSource implementation. The header expresses the C++ abstraction used in the source file; the component selection expresses the library surface needed to build and link that abstraction.
+
 ### Closing perspective
 
 Chapter 21 raised stream communication to HTTP messages. Chapter 22 organized HTTP messages into application structure. Chapter 23 kept that structure inside HTTP but stretched one response over time.

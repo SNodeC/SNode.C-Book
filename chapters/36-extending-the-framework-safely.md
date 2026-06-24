@@ -312,7 +312,7 @@ A configurable invariant is not flexibility. It is often an unprotected design e
 
 A reusable extension should eventually be visible in the build. As Chapter 32 showed, target names describe component meaning.
 
-If an extension becomes reusable, it needs a component surface that tells the truth.
+If an extension becomes reusable, it needs a component surface and a public include surface that tell the truth.
 
 ```text
 bad target name:
@@ -326,12 +326,13 @@ better target name:
   net-in-stream-tls
 ```
 
-The target should say what architectural role the component plays and own its dependencies directly. A component that needs HTTP or a selected carrier should declare that fact; a consumer should not have to know private implementation dependencies.
+The target should say what architectural role the component plays and own its dependencies directly. The public header should say what source-facing abstraction the extension exposes. A component that needs HTTP or a selected carrier should declare that fact; a public front-door header should include or export the lower public declarations needed by the abstraction. A consumer should not have to know private implementation dependencies or private header order.
 
 For framework-level extensions, the build and package consequences matter:
 
 ```text
 new framework component
+  -> public front-door header
   -> target name
   -> dependency visibility
   -> exported target
@@ -422,7 +423,7 @@ Which SNode.C boundary does this test protect?
 
 That question should follow every extension.
 
-A new `SocketContext` needs tests for protocol endpoint behavior; middleware needs request/response tests; a WebSocket subprotocol needs upgrade, frame/message, close, and invalid-input tests; MQTT application behavior needs session, topic, publish, and reconnect tests; a build component needs an installed-consumer test. The extension is complete only when its boundary can be tested, debugged, and explained.
+A new `SocketContext` needs tests for protocol endpoint behavior; middleware needs request/response tests; a WebSocket subprotocol needs upgrade, frame/message, close, and invalid-input tests; MQTT application behavior needs session, topic, publish, and reconnect tests; a build component needs an installed-consumer test, including a test that includes its public front-door header. The extension is complete only when its boundary can be tested, debugged, and explained.
 
 ::: {.snodec-checklist title="Extension checklist"}
 - What boundary was added?

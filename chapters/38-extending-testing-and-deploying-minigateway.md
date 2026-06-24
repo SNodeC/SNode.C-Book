@@ -77,7 +77,7 @@ The rest of the source tree remains the base application. A new input carrier sh
 
 ### The build target after extension
 
-The extended CMake file adds the Unix-domain stream component and the two new source files.
+The extended CMake file adds the Unix-domain stream component and the two new source files. The source side adds the matching Unix-domain public server header where the new concrete role is directly named.
 
 ```text
 base components:
@@ -90,6 +90,14 @@ extended component:
 ```
 
 That is the component-level expression of the new boundary: a Unix-domain local input role in addition to the HTTP and MQTT roles.
+
+The include-level expression of the same boundary is:
+
+```cpp
+#include <net/un/stream/legacy/SocketServer.h>
+```
+
+The extension therefore changes the application consistently in three places: a new public include for the source-facing role, a new C++ server instance using that role, and a new CMake component for the link-facing surface.
 
 #### `CMakeLists.txt`
 
@@ -412,6 +420,14 @@ The extended `main.cpp` keeps the base application path and adds one new server 
 This is the key design point already visible in Figure~\ref{fig:minigateway-extended-instance-architecture}. The input changes, but the application state path does not. The HTTP route and the Unix-domain server are different communication roles; after they have produced a `Measurement`, both end at the same acceptance boundary.
 
 Once a measurement reaches `acceptMeasurement`, the rest of the application is identical: current state is updated, the bus publishes, SSE observers are notified, and MQTT publication is attempted if the MQTT role is connected.
+
+Compared with the base version, the new SNode.C include is the Unix-domain stream server front door:
+
+```cpp
+#include <net/un/stream/legacy/SocketServer.h>
+```
+
+It mirrors the new component `net-un-stream-legacy`. The rest of the SNode.C include block remains at the abstraction level used by the source: Express for the HTTP server role, IPv4 legacy socket client for the MQTT carrier role, and Unix-domain legacy socket server for the local measurement input role.
 
 #### `main.cpp`
 
@@ -787,7 +803,7 @@ Configured role names are diagnostic handles. `mqtt-uplink` and `measurement-inp
 
 ### Deployment shape
 
-A deployed MiniGateway includes linked SNode.C components, configuration, runtime state, log output, and possibly service-manager integration.
+A deployed MiniGateway includes linked SNode.C components, installed public headers for development builds, configuration, runtime state, log output, and possibly service-manager integration.
 
 A general-purpose Linux deployment should make these questions answerable:
 

@@ -144,7 +144,7 @@ A one-file example would be shorter, but it would teach the wrong reflex. This c
 
 ### Stage 1: the build target
 
-MiniGateway is an external SNode.C consumer. It therefore uses installed package targets, not private in-tree targets. The selected components already say a lot about the application:
+MiniGateway is an external SNode.C consumer. It therefore uses installed package targets and installed public headers, not private in-tree targets or private implementation headers. The selected components already say a lot about the application:
 
 ```text
 http-server-express-legacy-in
@@ -158,6 +158,8 @@ mqtt-client
 ```
 
 The build file does not manually list every lower library that those components need. SNode.C's exported targets carry that dependency information. That is the same component discipline discussed in Chapter 32, now used by a small application.
+
+The source files follow the matching include discipline. `main.cpp` includes the public Express header because it directly creates the HTTP/Express role, the public IPv4 legacy socket-client header because it directly creates the MQTT carrier client, and MQTT headers where the code directly names MQTT abstractions. It does not include every lower `http`, `core/socket`, or `net` header behind those front doors.
 
 #### `CMakeLists.txt`
 
@@ -702,6 +704,21 @@ Both `/simulate` and later real inputs should enter the application through that
 The HTTP role is intentionally straightforward. `/health` reports process health. `/status` serializes the current measurement. `/events` establishes an SSE stream and subscribes that response to the bus. `/simulate` creates one new measurement and injects it.
 
 The MQTT role is started as a native IPv4 stream client. The role name `mqtt-uplink` appears in configuration, diagnostics, and state reporting.
+
+The SNode.C include block in `main.cpp` is an architectural map of the source-facing roles:
+
+```text
+<express/legacy/in/WebApp.h>
+  -> HTTP/Express server role over IPv4 legacy stream
+
+<net/in/stream/legacy/SocketClient.h>
+  -> native IPv4 legacy stream client used as the MQTT carrier
+
+<iot/mqtt/client/Mqtt.h> and <iot/mqtt/SocketContext.h> in the supporting files
+  -> MQTT client behavior and MQTT socket-context bridge
+```
+
+These headers correspond to, but are not identical with, the CMake components selected by the target. Headers provide the C++ source-facing front doors; components provide the link-facing binary surface.
 
 #### `main.cpp`
 

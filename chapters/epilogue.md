@@ -70,17 +70,18 @@ Therefore, protocol code should not be treated as accidental glue. It is where c
 
 A network framework does not end at the source tree.
 
-The build target says what the application selects. The exported package says what external consumers can depend on. The install component says what files need to exist. The package dependency says what the target system must provide. The runtime path says where loaded modules and services can be found. The configuration file says what role shape is deployed.
+The public include path says which C++ abstraction the source file selects. The build target says what the application links. The exported package says what external consumers can depend on. The install component says what files need to exist. The package dependency says what the target system must provide. The runtime path says where loaded modules and services can be found. The configuration file says what role shape is deployed.
 
 That is why this book treated CMake, packaging, deployment, testing, and debugging as architectural surfaces rather than as afterthoughts.
 
 ```text
-source component
-  -> build target
-      -> installed component
-          -> package dependency
-              -> deployed role
-                  -> observable runtime behavior
+public include path
+  -> source component
+      -> build target
+          -> installed component
+              -> package dependency
+                  -> deployed role
+                      -> observable runtime behavior
 ```
 
 A system that is clear only in the source tree is not yet fully clear.
@@ -120,7 +121,7 @@ Seen this way, SNode.C is less a library of shortcuts than a vocabulary for laye
 
 ## Where to go next {.unnumbered}
 
-A reader who finishes this book should know how SNode.C servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components fit together.
+A reader who finishes this book should know how SNode.C public headers, servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components fit together.
 
 The reader should know how to think with them.
 

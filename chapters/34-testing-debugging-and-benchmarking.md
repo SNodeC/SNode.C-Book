@@ -143,6 +143,8 @@ public header
 
 The component graph drawn by CMake must also be true at the level of headers.
 
+For SNode.C this includes the front-door headers. A minimal consumer that includes `<net/in/stream/legacy/SocketServer.h>` and links `snodec::net-in-stream-legacy` should not need unrelated HTTP, MQTT, WebSocket, or database headers just to compile. Similarly, an Express consumer that includes `<express/legacy/in/WebApp.h>` should receive the source-facing declarations that belong to that abstraction without manually assembling the lower HTTP and socket headers.
+
 #### Minimal builds are boundary tests
 
 Full builds prove that the broad source tree still compiles, but they can hide mistakes: missing includes, missing link dependencies, optional dependencies that appear mandatory, or components that accidentally rely on nearby higher layers.
@@ -180,7 +182,7 @@ target_link_libraries(myapp
 )
 ```
 
-This checks that the package configuration was installed, the requested component is supported, dependencies load recursively, the exported target and namespace are correct, include directories and public dependencies are present, link dependencies are truthful, and the installed library layout can be consumed outside the source tree.
+This checks that the package configuration was installed, the requested component is supported, dependencies load recursively, the exported target and namespace are correct, include directories and public dependencies are present, public front-door headers can be included, link dependencies are truthful, and the installed library layout can be consumed outside the source tree.
 
 This kind of test is easy to underestimate. For a framework with exported CMake targets, it is one of the most important tests. The question is broader than:
 
@@ -678,7 +680,7 @@ Regression tests should protect the semantic boundary that failed.
 - Testing in SNode.C should follow framework boundaries.
 - A test should make clear which boundary it protects.
 - Build-time checks protect component truth, public headers, and dependency surfaces.
-- Include discipline protects component honesty.
+- Include discipline protects component honesty and public include hierarchy honesty.
 - Minimal builds are architectural tests, not only smaller builds.
 - Installed-consumer builds test the exported package interface.
 :::

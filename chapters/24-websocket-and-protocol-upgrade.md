@@ -539,6 +539,14 @@ That later combination becomes easier to understand after Chapter 24. WebSocket 
 - Chapter 25 moves from web protocols to MQTT.
 :::
 
+### WebSocket public surface
+
+WebSocket has more moving parts than a simple stream server because it crosses the HTTP upgrade boundary and may involve subprotocol factories. The same source/build discipline still applies. On the source side, include the highest public header for the WebSocket abstraction the file directly names: an upgrade helper, a client or server WebSocket role, or a subprotocol factory. Do not include lower HTTP or socket headers only because WebSocket is implemented through HTTP upgrade.
+
+On the build side, the WebSocket components express the binary/link side of the same composition. Targets such as `websocket-server`, `websocket-client`, and the MQTT-over-WebSocket components place WebSocket above HTTP upgrade and the selected lower carrier. The source-side include path should therefore express the C++ abstraction actually used in the file, while the linked component should express the library surface selected by the target.
+
+The WebSocket chapter should keep this explanation cautious. WebSocket code often crosses role boundaries: HTTP negotiation, upgraded socket context, WebSocket framing, and optional subprotocol selection. A single universal include rule would hide that structure. The safer rule is to keep headers and components at the same abstraction level as the code being written.
+
 ### Closing perspective
 
 Chapter 21 raised stream communication into HTTP messages. Chapter 22 organized HTTP messages into application structure. Chapter 23 stretched one HTTP response into a one-way event stream. Chapter 24 used HTTP as a negotiation boundary and moved the same connection episode into bidirectional WebSocket communication.

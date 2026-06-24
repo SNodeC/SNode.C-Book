@@ -532,6 +532,24 @@ The next chapter is therefore not only about another protocol. It is about syste
 - Chapter 27 moves from one protocol composition to multi-protocol IoT system design.
 :::
 
+### Native MQTT and MQTT-over-WebSocket public surfaces
+
+The distinction between native MQTT and MQTT-over-WebSocket should be visible on both sides of the public surface. On the source side, native MQTT files include the public MQTT headers for the MQTT abstractions they directly use, such as the client role, server role, topics, packets, or the MQTT socket-context bridge. MQTT-over-WebSocket files include the public headers for the WebSocket-carried MQTT abstraction they directly name.
+
+On the build side, the matching component names make the carrier selection explicit:
+
+```text
+native MQTT:
+  mqtt-client
+  mqtt-server
+
+MQTT carried by WebSocket:
+  mqtt-client-websocket
+  mqtt-server-websocket
+```
+
+The rule is the same as in the lower layers: include the public C++ front door for the abstraction used in the source file, and link the component that represents the binary/link surface selected by the application. Native MQTT and MQTT-over-WebSocket should therefore be read as sibling public surfaces, not as one API plus an incidental include difference.
+
 ### Closing perspective
 
 Chapter 26 showed one concrete cross-stack composition:

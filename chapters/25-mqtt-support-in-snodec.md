@@ -421,6 +421,31 @@ MQTT-over-WebSocket should not be treated as less “real” MQTT. Native MQTT i
 
 Chapter 26 will focus on this composition in detail. Chapter 25 only establishes the model.
 
+### MQTT public surface: protocol headers and components
+
+The MQTT source surface has public entry headers, and the build surface has matching protocol components. A client-side MQTT object is introduced through the client header:
+
+```cpp
+#include <iot/mqtt/client/Mqtt.h>
+```
+
+A server-side MQTT role uses the corresponding server-side MQTT public surface when the application directly names that role. Shared MQTT support uses headers such as:
+
+```cpp
+#include <iot/mqtt/SocketContext.h>
+#include <iot/mqtt/Topic.h>
+```
+
+The application should include the MQTT abstraction it directly names: client role, server role, socket-context bridge, topic, packet, or shared MQTT support. The component selection then supplies the binary side. A compact way to read the two surfaces is:
+
+| Source-side abstraction | Typical public header | Build-side component |
+|---|---|---|
+| Shared MQTT protocol support | headers below `<iot/mqtt/...>` as directly named | `mqtt` |
+| Native MQTT client role | `<iot/mqtt/client/Mqtt.h>` | `mqtt-client` |
+| Native MQTT server role | server-side MQTT public role headers as directly named | `mqtt-server` |
+
+Header selection and component selection are related, but they are not the same mechanism. The header tells the C++ translation unit which MQTT abstraction it uses. The component tells CMake and the linker which compiled MQTT surface the target needs.
+
 ### Build/component note: JSON dependency is not MQTT identity
 
 In the current SNode.C build, the MQTT component is enabled when `nlohmann_json >= 3.11` is found; otherwise CMake emits a warning and does not add the MQTT targets.

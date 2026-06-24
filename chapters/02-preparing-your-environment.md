@@ -12,7 +12,7 @@ If the source tree, build tree, install prefix, and external playground are mixe
 
 The goal of this chapter is therefore simple:
 
-> Prepare a development setup that lets you build SNode.C, run examples, inspect the framework source tree, and later compile small applications against installed SNode.C components.
+> Prepare a development setup that lets you build SNode.C, run examples, inspect the framework source tree, and later compile small applications against installed SNode.C public headers and installed SNode.C components.
 
 This is not a general Linux installation guide. It does not try to cover every distribution, every package manager, every editor, or every cross-compilation target. The concrete commands assume a normal Linux development machine, with Debian-style package names where package installation is shown. The ideas transfer to other systems, but package names and installation commands may need adjustment.
 
@@ -57,7 +57,7 @@ The framework source tree remains the source of truth for the implementation. Th
 
 For the first part of the book, the environment must support five activities. First, it must allow us to **clone and build SNode.C**. Second, it must allow us to **run small server and client examples**.
 
-Third, it must allow us to **inspect the framework source tree and build tree separately**. Fourth, it must allow us to **install the framework into a known prefix**. Fifth, it must allow us to **compile small external programs against installed SNode.C components**.
+Third, it must allow us to **inspect the framework source tree and build tree separately**. Fourth, it must allow us to **install the framework into a known prefix**. Fifth, it must allow us to **compile small external programs against installed SNode.C public headers and installed SNode.C components**.
 
 Optional technologies should also be visible when available. Bluetooth RFCOMM and Bluetooth L2CAP require the appropriate BlueZ development files. MariaDB support requires MariaDB development files. These optional areas do not have to be used immediately, but the environment should not hide them accidentally.
 
@@ -328,9 +328,9 @@ snodec-playground/
 
 Do not worry yet about writing all of this. Chapter 3 introduces the first concrete program. The point here is only to prepare a place where an external application can live.
 
-### Components as installed architecture
+### Components and public headers as installed architecture
 
-When an external application consumes SNode.C, it asks CMake for package components.
+When an external application consumes SNode.C, it asks CMake for package components. The same application also includes public SNode.C headers. These two selections belong together: the component selection describes the binary/link surface, while the include selection describes the C++ source surface.
 
 For the first IPv4 legacy stream example, the relevant component is:
 
@@ -344,7 +344,16 @@ The executable then links against the corresponding imported target:
 target_link_libraries(echoserver PRIVATE snodec::net-in-stream-legacy)
 ```
 
-and similarly for the client.
+The matching public include path has the same architectural shape, expressed with directories rather than CMake component dashes:
+
+```cpp
+#include <net/in/stream/legacy/SocketServer.h>
+#include <net/in/stream/legacy/SocketClient.h>
+```
+
+The application does not include the lower core socket headers merely because the concrete server and client are built from lower socket machinery. It includes the highest public header for the abstraction it directly names. Likewise, the build links the highest component that represents the direct framework surface used by the target.
+
+The actual echo pair has separate server and client targets, but both follow the same public-header/component pairing.
 
 The component name is not arbitrary. It encodes a path through the architecture:
 
@@ -365,7 +374,7 @@ The term `legacy` is important. In this naming context it denotes the non-TLS st
 
 Later chapters will introduce additional component names for IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, TLS variants, HTTP, WebSocket, MQTT, and database support.
 
-Do not try to memorize all names at this stage. Learn the shape instead. SNode.C component names are a compact form of architectural information.
+Do not try to memorize all names at this stage. Learn the shape instead. SNode.C component names and public include paths are compact forms of architectural information. The dashes in a component name and the slashes in an include path often describe the same stack from different technical viewpoints.
 
 ### Source tree, build tree, install tree
 
@@ -413,7 +422,7 @@ If the answer to these questions is yes, the environment is ready for the first 
 - Keep the source tree, build tree, install tree, and playground project separate; each has a different purpose.
 - Use an out-of-tree build so generated files and compiled binaries do not obscure the source tree.
 - A local install prefix makes external examples predictable because headers, libraries, and CMake package files live in one known place.
-- Component names such as `net-in-stream-legacy` encode architectural position; `legacy` means the non-TLS stream connection variant.
+- Component names such as `net-in-stream-legacy` encode architectural position; public include paths such as `<net/in/stream/legacy/SocketServer.h>` encode the corresponding C++ source-facing entry point; `legacy` means the non-TLS stream connection variant.
 - Runtime output is part of the learning process. Do not silence diagnostics before the first examples are understood.
 - The environment is ready when the framework builds, example programs can be found and run, and an external playground project can consume the installed package.
 :::

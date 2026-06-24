@@ -341,6 +341,7 @@ A `CMakeLists.txt` file can tell you:
 - which targets are built,
 - which libraries are linked,
 - which optional dependencies enable additional pieces,
+- which public headers are installed,
 - which components are installed,
 - and how applications relate to framework libraries.
 
@@ -354,9 +355,9 @@ When you do not know where an executable, library, or component comes from, read
 
 Build files reveal boundaries that may be less obvious from implementation files alone.
 
-### Do not confuse source paths and installable components
+### Do not confuse source paths, public includes, and installable components
 
-The source tree is organized as directories. The installed framework is exposed as CMake package components. Those two views are related, but they are not identical.
+The source tree is organized as directories. The installed framework is exposed through public headers and CMake package components. These views are related, but they are not identical.
 
 A source path such as:
 
@@ -382,6 +383,10 @@ src/net/in/stream/legacy
 
 C++ namespace / type path:
 net::in::stream::legacy
+
+public include path:
+<net/in/stream/legacy/SocketServer.h>
+<net/in/stream/legacy/SocketClient.h>
 
 CMake component name:
 net-in-stream-legacy
@@ -448,7 +453,7 @@ That is the right way to read variant-heavy framework code. It also prevents Blu
 
 ### Read headers before implementation files
 
-For orientation, read headers first.
+For orientation, read headers first. In SNode.C, some headers are ordinary local declarations, but many public headers are also architectural front doors. A header such as `net/in/stream/legacy/SocketServer.h` selects a concrete server role and exports or composes the lower public pieces needed by that role.
 
 A header often tells you:
 
@@ -459,12 +464,12 @@ A header often tells you:
 - which names are aliases,
 - and which types are intended for application code.
 
-Implementation files explain behavior. Headers explain shape. When learning SNode.C, shape should come first.
+Implementation files explain behavior. Headers explain shape. Public front-door headers explain source-facing stack selection. When learning SNode.C, shape should come first.
 
 A useful order is:
 
 ```text
-1. Read the header to understand the role.
+1. Read the header to understand the role and its public include boundary.
 2. Read the nearby CMake file to understand the target or component.
 3. Read the implementation to understand behavior.
 4. Return to the header to confirm the public boundary.
@@ -538,7 +543,7 @@ One mistake is to start in the deepest runtime file and try to understand everyt
 
 A second mistake is to treat long names as accidental verbosity. In SNode.C, long names often encode layer position.
 
-A third mistake is to confuse source-tree directories with installable package components. They are related views, not the same object.
+A third mistake is to confuse source-tree directories with public include paths or installable package components. They are related views, not the same object. The source path shows where the framework implementation lives. The public include path shows which C++ front door an application should include. The component name shows which installed binary/link surface an application should select.
 
 A fourth mistake is to treat lower communication families as unrelated worlds. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP differ in addressing and deployment assumptions, but the SNode.C reading strategy remains comparable.
 
@@ -553,7 +558,7 @@ A practical reading workflow for SNode.C is:
 ```text
 1. Start from an application or testable example.
 2. Identify the server or client type.
-3. Decode the namespace and component name.
+3. Decode the public include path, namespace, type path, and component name.
 4. Find the factory.
 5. Read the context class.
 6. Follow the lower-layer alias into net.
@@ -566,8 +571,8 @@ This workflow is not only useful for beginners. It also matters when extending t
 
 ::: {.snodec-remember title="What to remember"}
 - Read SNode.C as a set of layers and recurring roles, not as a flat pile of source files.
-- CMake files are navigation aids: they reveal subdirectories, targets, dependencies, components, and install boundaries.
-- Long namespace and component names usually encode architecture: layer area, network family, transport form, connection mode, and role.
+- CMake files are navigation aids: they reveal subdirectories, targets, dependencies, components, public header installation, and install boundaries.
+- Long public include paths, namespace paths, and component names usually encode architecture: layer area, network family, transport form, connection mode, and role.
 - Example applications show framework usage, but they are not the framework core; separate application decisions from reusable framework patterns.
 - A reliable reading path starts from an application, finds the application-side handle, configured instance, factory, and context, then follows aliases into `net` and abstractions into `core`.
 - Variant-heavy code becomes easier to read once you ask what stayed structurally the same and what changed because a lower layer changed.

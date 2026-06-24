@@ -84,6 +84,8 @@ For example, a small IPv4 stream tool does not need HTTP, WebSocket, MQTT, and M
 
 This is where component packaging becomes practical. A deployment is easier to reason about when installed packages still reflect the same component boundaries that existed in the build.
 
+For runtime packages, this mostly means the right libraries, configuration, service files, and runtime-loadable modules. For development packages, it also means that public headers and exported CMake targets preserve the same component boundaries for external consumers.
+
 #### Deployment as runtime shape
 
 Copying one executable is rarely the whole deployment. A SNode.C application may need:
@@ -131,7 +133,7 @@ CPack provides the packaging bridge. It does not replace system design.
 
 #### Package dependencies follow component dependencies
 
-Package dependencies should follow component dependencies. That is exactly what the SNode.C packaging configuration expresses.
+Package dependencies should follow component dependencies, and development packages should install the public headers that correspond to the components they expose. That is exactly what the SNode.C packaging configuration expresses.
 
 Examples include:
 
@@ -599,7 +601,7 @@ When these details are hidden, failures appear later as unrelated runtime proble
 ::: {.snodec-remember title="What to remember"}
 - Deployment is architecture entering the filesystem.
 - Linking proves that the binary can be built; deployment proves that the runtime environment exists.
-- SNode.C's component model should survive installation and packaging.
+- SNode.C's component model and public include hierarchy should survive installation and packaging.
 - CPack connects install components to ordinary Linux packages, but it does not replace service, certificate, database, repository, or update policy.
 - Package dependencies should follow component dependencies.
 - Runtime-loaded upgrade and subprotocol modules make installation paths and RPATH part of deployment.

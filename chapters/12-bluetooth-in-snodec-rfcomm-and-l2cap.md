@@ -519,6 +519,36 @@ This is especially useful in IoT and embedded systems, where local device commun
 - The Bluetooth wildcard or deferred endpoint shape is the wildcard Bluetooth address plus service selector `0`.
 :::
 
+### Public surface of Bluetooth stream roles
+
+When Bluetooth support is available, the public surface follows the same pattern as the other lower families. RFCOMM stream roles use the `rc` family fragment on the source side:
+
+```cpp
+#include <net/rc/stream/legacy/SocketServer.h>
+#include <net/rc/stream/legacy/SocketClient.h>
+```
+
+and the corresponding build-side component naming pattern is:
+
+```text
+net-rc-stream-legacy
+```
+
+L2CAP stream roles use the `l2` family fragment:
+
+```cpp
+#include <net/l2/stream/legacy/SocketServer.h>
+#include <net/l2/stream/legacy/SocketClient.h>
+```
+
+with the corresponding component naming pattern:
+
+```text
+net-l2-stream-legacy
+```
+
+Those include paths describe the C++ source-facing roles when the corresponding Bluetooth family has been built. They do not remove the platform dependency: the matching components are available only when the required Bluetooth development support is present. The source-side and build-side names should therefore be read together, but both remain conditional on the build environment.
+
 ### Closing perspective
 
 Chapter 10 covered host-plus-port endpoint identity through IPv4 and IPv6. Chapter 11 replaced that with Unix-domain path identity.

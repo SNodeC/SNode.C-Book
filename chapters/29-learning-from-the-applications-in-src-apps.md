@@ -24,7 +24,7 @@ The central sentence for this chapter is:
 In SNode.C, the build target often reveals the application architecture before the entry point is opened.
 :::
 
-That is the main reason `src/apps` is useful as study material. It shows not only C++ entry points, but also executable targets, linked libraries, optional dependencies, and installable application shapes. Chapter 28 showed persistence as a boundary. Chapter 29 shows applications as assembly points.
+That is the main reason `src/apps` is useful as study material. It shows not only C++ entry points, but also public include choices, executable targets, linked libraries, optional dependencies, and installable application shapes. Chapter 28 showed persistence as a boundary. Chapter 29 shows applications as assembly points.
 
 ### `src/apps` as study material
 
@@ -54,7 +54,7 @@ A SNode.C application target tells the reader three things before C++ is opened:
 
 ```text
 which executable is produced
-which framework components form its public face
+which public headers and framework components form its public face
 which optional dependencies decide whether the target exists
 ```
 
@@ -114,7 +114,7 @@ A simplified view of the selected application targets is:
 
 The target name tells the reader what executable is produced. The link line shows which application-facing component or local target is selected. Conditional build rules show which optional components must be available. Install rules show which executables become part of the application installation set.
 
-The link line should not be misread as a manual list of every lower layer. It shows the direct application-facing components selected by the executable. The next section reads this link line in more detail.
+The link line should not be misread as a manual list of every lower layer. It shows the direct application-facing components selected by the executable. The include block should be read in the same disciplined way: it should show the public headers for the abstractions directly named by the source file, not a manual list of every lower header behind them. The next section reads this link line in more detail.
 
 #### Linked components reveal application shape
 
@@ -321,6 +321,20 @@ MariaDB support unavailable
 ```
 
 Optional dependencies therefore influence the set of applications that exist in the build.
+
+### Read include blocks beside link lines
+
+When studying an application, read the include block beside the CMake link line. The two views should agree, but they do different jobs:
+
+```text
+include block
+  -> C++ source-facing abstractions directly named by the file
+
+link line
+  -> binary/link-facing components directly selected by the target
+```
+
+For an external Express IPv4 legacy application, the source might include an Express front-door header while the CMake target links the concrete Express carrier component. If the same source file also directly creates an MQTT carrier client, it includes the matching socket-client or MQTT headers and links the matching components. This is not duplication; it is the same architecture expressed in C++ source and in the build system.
 
 ### Entry points as assembly points
 

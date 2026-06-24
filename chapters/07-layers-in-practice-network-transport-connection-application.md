@@ -59,7 +59,7 @@ A compact separation is:
 | HTTP, WebSocket, MQTT, or custom protocol behavior | Application layer |
 | Factory and context classes | Application-facing protocol endpoint machinery |
 
-This prevents a common confusion. The runtime tells us *how progress happens*. The communication layer stack tells us *what kind of communication structure is making progress*. Each row in the table becomes visible later in type names, component names, configuration choices, and source-tree paths.
+This prevents a common confusion. The runtime tells us *how progress happens*. The communication layer stack tells us *what kind of communication structure is making progress*. Each row in the table becomes visible later in type names, component names, configuration choices, and source-tree paths. In SNode.C that stack appears not only in type names and component names, but also in public include paths.
 
 ### Names are maps of architecture
 
@@ -111,9 +111,9 @@ A useful reading rule is:
 Read a SNode.C communication type as a stack description before reading it as an isolated API name.
 :::
 
-#### Component names tell the same story
+#### Component names and public include paths tell the same story
 
-SNode.C's installable CMake components encode the same architectural discipline.
+SNode.C's installable CMake components encode the same architectural discipline. Public include paths encode the C++ source-side version of that same discipline.
 
 A component such as:
 
@@ -130,6 +130,13 @@ stream    stream transport
 legacy    non-TLS stream connection variant
 ```
 
+The corresponding public include path uses slashes instead of dashes and ends in the concrete public role header:
+
+```cpp
+#include <net/in/stream/legacy/SocketServer.h>
+#include <net/in/stream/legacy/SocketClient.h>
+```
+
 Likewise:
 
 ```text
@@ -144,9 +151,9 @@ IPv6
       -> TLS connection handling
 ```
 
-The source-tree view and the component view are not identical, because one serves the C++ reader and the other serves the build system. But they express the same idea.
+The source-tree view, public include view, namespace/type view, and component view are not identical. They serve different technical purposes, but they express the same idea.
 
-A namespace such as `net::in::stream::legacy` helps the C++ reader locate a type in the layer stack. A component such as `net-in-stream-legacy` helps the CMake user select the corresponding build product.
+A public include path such as `<net/in/stream/legacy/SocketServer.h>` tells the C++ preprocessor and reader which public front door is being used. A namespace such as `net::in::stream::legacy` helps the C++ reader locate a type in the layer stack. A component such as `net-in-stream-legacy` helps the CMake user select the corresponding build product.
 
 These names are examples of the naming discipline, not a vocabulary test. The reader does not need to memorize every component in one sitting. The useful habit is to ask:
 
@@ -312,6 +319,17 @@ net-un-stream-legacy
 net-un-stream-tls
 ```
 
+The matching public include paths follow the same shape, ending in the role header selected by the application:
+
+```cpp
+#include <net/in/stream/legacy/SocketServer.h>
+#include <net/in/stream/tls/SocketServer.h>
+#include <net/in6/stream/legacy/SocketServer.h>
+#include <net/un/stream/legacy/SocketServer.h>
+```
+
+The application includes the role it names. It does not include the whole lower core/socket stack manually just because that role is implemented from lower pieces.
+
 Bluetooth-related stream components follow the same conceptual pattern where Bluetooth support and the corresponding build options are available:
 
 ```text
@@ -394,6 +412,14 @@ http-server-express-tls-un
 
 The point is not to memorize every name at once. The point is to read component names as architectural statements. A component name tells the reader which higher framework behavior is selected and, in many cases, which lower communication stack carries it.
 
+The corresponding include hierarchy is equally important. A source file that names an Express IPv4 legacy WebApp includes a public Express header, not the lower socket headers directly:
+
+```cpp
+#include <express/legacy/in/WebApp.h>
+```
+
+That public header represents an Express WebApp over an HTTP server over the selected lower carrier. If a different source file directly names a lower socket client, that source file includes the matching lower public header as well.
+
 #### The application layer is still connected to sockets
 
 A common beginner mistake is to imagine a sharp psychological break:
@@ -426,6 +452,10 @@ The `src` build adds major framework regions such as `core`, `net`, `web`, `expr
 A small example makes the relationship visible:
 
 ```text
+public include path:
+<net/in/stream/legacy/SocketServer.h>
+<net/in/stream/legacy/SocketClient.h>
+
 C++ namespace / type path:
 net::in::stream::legacy
 
@@ -441,6 +471,10 @@ connection handling: non-TLS stream connection variant
 The same pattern appears in the TLS variant:
 
 ```text
+public include path:
+<net/in/stream/tls/SocketServer.h>
+<net/in/stream/tls/SocketClient.h>
+
 C++ namespace / type path:
 net::in::stream::tls
 
@@ -545,7 +579,8 @@ The following table is a compact orientation aid. It is simple: its job is not t
 | HTTP, WebSocket, MQTT, Express-like routing | Application layer |
 | Timers, descriptor readiness, event queue | Runtime model |
 | Retry/reconnect scheduling | Operational/runtime behavior |
-| CMake component selection | Build expression of the layer stack |
+| Public include selection | C++ source expression of the layer stack |
+| CMake component selection | Build/link expression of the layer stack |
 
 The question to keep asking is:
 
@@ -559,7 +594,7 @@ Sometimes the answer is one layer. Often, it is a primary layer plus consequence
 - The transport layer gives the communication form; in the early teaching path, that form is `stream`.
 - The connection layer manages the concrete peer relationship; `legacy` names the non-TLS stream connection variant, while `tls` adds TLS connection handling.
 - The application layer contains protocol behavior, whether that behavior is a custom `SocketContext`, HTTP, WebSocket, Express-like routing, MQTT, or MQTT over WebSocket.
-- SNode.C type names and component names are compressed architectural statements, and layers are real boundaries without being sealed walls.
+- SNode.C public include paths, type names, and component names are compressed architectural statements, and layers are real boundaries without being sealed walls.
 :::
 
 ### Closing perspective

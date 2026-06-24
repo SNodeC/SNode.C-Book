@@ -417,6 +417,23 @@ The server/client/connection/context model remains available, while the lower-fa
 - The empty Unix-domain path is the family's wildcard or deferred endpoint representation in the SNode.C address model.
 :::
 
+### Public surface of Unix-domain stream roles
+
+The Unix-domain stream hierarchy follows the same source/build pairing as the IPv4 and IPv6 families. An application that directly names a Unix-domain legacy stream server or client includes the corresponding public role header:
+
+```cpp
+#include <net/un/stream/legacy/SocketServer.h>
+#include <net/un/stream/legacy/SocketClient.h>
+```
+
+The matching build-side component is:
+
+```text
+net-un-stream-legacy
+```
+
+The slashes in the include path and the dashes in the component name describe the same lower-family, transport, and connection-mode selection. The header is the C++ front door; the component is the build/link front door. They belong together in the reader's mental model, but they are still different mechanisms.
+
 ### Closing perspective
 
 Chapter 10 showed that IPv4 and IPv6 are closely related host-plus-port families.

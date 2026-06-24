@@ -304,6 +304,8 @@ int main(int argc, char* argv[]) {
 }
 ```
 
+The SNode.C include is the public front-door header for the concrete server role used here: IPv4, stream transport, non-TLS `legacy` connection handling, and server-side behavior. The application does not manually include every lower `core/socket/...` header that participates in that composition. It includes the highest public header for the abstraction it directly names.
+
 The first important line is:
 
 ```cpp
@@ -403,6 +405,8 @@ int main(int argc, char* argv[]) {
     return core::SNodeC::start();
 }
 ```
+
+The client uses the matching public front-door header for the client role. Server and client are different public roles even though they share the same lower family, transport form, and connection variant. The include path therefore changes only at the final role file: `SocketServer.h` versus `SocketClient.h`.
 
 The type alias is the client-side counterpart to the server type:
 
@@ -508,7 +512,7 @@ This build file imports the installed SNode.C package and requests the component
 find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy)
 ```
 
-The context library links publicly to `snodec::net-in-stream-legacy` because its public header derives from SNode.C stream-context types. The two executables then link to the context library.
+The context library links publicly to `snodec::net-in-stream-legacy` because its public header derives from SNode.C stream-context types. The two executables then link to the context library. The source-side and build-side selections now agree: the application includes `<net/in/stream/legacy/SocketServer.h>` or `<net/in/stream/legacy/SocketClient.h>` for the concrete C++ role, and the CMake target links `snodec::net-in-stream-legacy` for the corresponding binary surface.
 
 That means the build structure follows the code structure:
 
@@ -593,7 +597,7 @@ That is why Chapter 2 warned against silencing runtime output too early. The out
 
 The repository version and the chapter version are deliberately not identical.
 
-The repository version uses helper headers such as `servers.h` and `clients.h` to select the concrete server or client type from build-time choices. It can build several variants from the same model.
+The repository version uses helper headers such as `servers.h` and `clients.h` to select the concrete server or client type from build-time choices. It can build several variants from the same model. That does not change the rule used in this simplified version: a source file should include the public header that owns the SNode.C abstraction it directly names.
 
 The chapter version writes the concrete type directly:
 

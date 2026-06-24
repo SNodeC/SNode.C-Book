@@ -522,6 +522,19 @@ This chapter shows why configuration matters. Chapter 16 begins to explain its p
 - Chapter 16 begins the configuration view because lower-family transfer makes configuration visible.
 :::
 
+### The public surface changes with the lower layer
+
+Changing the lower carrier is not only a CMake change. It is also a public include change when the application directly names the concrete lower role. The same protocol context can often remain stable, but the public role header and the component both change with the selected carrier:
+
+| Carrier role | Public include | Matching component |
+|---|---|---|
+| IPv4 legacy stream server | `<net/in/stream/legacy/SocketServer.h>` | `net-in-stream-legacy` |
+| IPv6 legacy stream server | `<net/in6/stream/legacy/SocketServer.h>` | `net-in6-stream-legacy` |
+| Unix-domain legacy stream server | `<net/un/stream/legacy/SocketServer.h>` | `net-un-stream-legacy` |
+| IPv4 TLS stream server | `<net/in/stream/tls/SocketServer.h>` | `net-in-stream-tls` |
+
+This table is the source/build version of the lower-layer transfer model. The application should include the public front-door header for the concrete role it names, and link the component that owns the corresponding binary surface. If only the lower carrier changes, the protocol context and factory code should remain as stable as possible.
+
 ### Closing perspective
 
 Part IV moved from raw connections to application protocol structure. Chapter 13 explained the protocol endpoint. Chapter 14 explained context creation.

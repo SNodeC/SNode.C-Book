@@ -455,6 +455,36 @@ This chapter shows IPv4 and IPv6 as the first concrete comparison pair.
 - Protocol contexts can often be reused across IPv4 and IPv6 when the protocol itself does not depend on address-family details.
 :::
 
+### Public surface of the primary families
+
+The IPv4 and IPv6 families also show the source/build pairing in its simplest form. An application that directly names an IPv4 legacy stream server or client includes the IPv4 public role header:
+
+```cpp
+#include <net/in/stream/legacy/SocketServer.h>
+#include <net/in/stream/legacy/SocketClient.h>
+```
+
+The matching build-side component for that family, transport, and connection mode is:
+
+```text
+net-in-stream-legacy
+```
+
+The IPv6 spelling changes the family fragment, but not the overall structure:
+
+```cpp
+#include <net/in6/stream/legacy/SocketServer.h>
+#include <net/in6/stream/legacy/SocketClient.h>
+```
+
+with the corresponding component:
+
+```text
+net-in6-stream-legacy
+```
+
+The include path, namespace path, and component name should be read together. The header selects the C++ source-facing role, while the component selects the build/link-facing surface. Neither side replaces the other: a source file includes the public role header for the abstraction it names, and the target links the component that owns the corresponding binary surface.
+
 ### Closing perspective
 
 Chapter 9 established the general server/client/connection model. This chapter specialized that model through IPv4 and IPv6.

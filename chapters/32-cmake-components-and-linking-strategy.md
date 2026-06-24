@@ -1,4 +1,4 @@
-## CMake, Components, and Linking Strategy
+## CMake Components, Public Headers, and Linking Strategy
 
 ### Why CMake starts Part X
 
@@ -6,7 +6,7 @@ Chapter 31 closed Part IX by reading MQTTSuite as a concrete SNode.C-based ecosy
 
 Part IX looked at applications, systems, and a reference ecosystem. Part X turns toward build structure, component selection, packaging, porting, optional dependencies, and long-term maintenance. That makes CMake the right first topic.
 
-For SNode.C, CMake is one of the places where the framework declares its own architecture, while also turning source files into libraries and executables. The build structure expresses many of the same ideas that appeared earlier:
+For SNode.C, CMake is one of the places where the framework declares its own architecture, while also turning source files into libraries and executables. The public include tree is the source-side counterpart of that architecture: headers are not only files to make declarations visible, but also front doors into selected C++ abstraction stacks. The build structure expresses many of the same ideas that appeared earlier:
 
 - layers,
 - components,
@@ -16,7 +16,9 @@ For SNode.C, CMake is one of the places where the framework declares its own arc
 - optional dependencies,
 - installable package components,
 - exported targets,
-- and consumer-facing component selection.
+- consumer-facing component selection,
+- installed public headers,
+- and source-facing include selection.
 
 This chapter is therefore not a generic CMake tutorial. It is about how SNode.C uses CMake to preserve architectural clarity.
 
@@ -24,7 +26,8 @@ The central idea is:
 
 ```text
 CMake is not only build mechanics.
-CMake is one place where SNode.C declares its architecture.
+Public headers are not only textual declarations.
+Together they declare how SNode.C is consumed.
 ```
 
 ### The build structure as architecture
@@ -76,7 +79,7 @@ The real structural center of the build is `src/CMakeLists.txt`. That file does 
 - declares supported installable components,
 - and generates the exported package configuration.
 
-This is where the build becomes an inventory of what the framework believes its component surface is.
+This is where the build becomes an inventory of what the framework believes its component surface is. The install rules in the module directories also define the matching public include surface: selected headers are installed below the SNode.C include root so external applications can include the same public front doors that the examples use in-tree.
 
 The supported component list is especially important. It includes core runtime pieces, stream legacy/TLS pieces, network-family variants, HTTP, Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and more. the CMake component list is also an architectural table of contents.
 
@@ -170,7 +173,7 @@ snodec::core-socket-stream-legacy
 
 Those are different build contexts. The architecture is the same, but the target names belong to different views of the build.
 
-### Component targets and dependency surfaces
+### Component targets, public headers, and dependency surfaces
 
 The word *component* appears in two related senses.
 
@@ -340,7 +343,6 @@ logger
         |                       `-- net-l2-stream-tls
         |
         `-- mqtt
-            |-- mqtt-fast
             |-- mqtt-server
             |   `-- mqtt-server-websocket, shared path
             `-- mqtt-client
@@ -363,6 +365,49 @@ Second, the graph has shared public paths. For example, `websocket` links throug
 Third, higher-level components do not all grow from one single branch. HTTP, MQTT, database support, network families, and concrete transport compositions attach to the lower framework surface in different ways.
 
 That is the component architecture the build exposes.
+
+#### Public header hierarchy mirrors the component hierarchy
+
+The component graph is only one public view. The include hierarchy is the source-side view. A SNode.C source file should normally include the highest public header that owns the abstraction it directly names. It should not assemble the whole lower stack by including implementation-support headers manually.
+
+For example, a concrete IPv4 legacy socket server is selected in source by the public role header:
+
+```cpp
+#include <net/in/stream/legacy/SocketServer.h>
+```
+
+That header sits above the lower pieces that make the role work: the generic IPv4 stream server, the legacy acceptor and connection, and the concrete server configuration. The matching component is `net-in-stream-legacy`.
+
+The same pattern is visible at the HTTP and Express levels. An Express IPv4 legacy WebApp is selected by:
+
+```cpp
+#include <express/legacy/in/WebApp.h>
+```
+
+The header-side stack can be read as:
+
+```text
+<express/legacy/in/WebApp.h>
+  -> <web/http/legacy/in/Server.h>
+      -> <web/http/server/Server.h>
+      -> <net/in/stream/legacy/SocketServer.h>
+          -> <net/in/stream/SocketServer.h>
+          -> <core/socket/stream/legacy/SocketAcceptor.h>
+          -> <core/socket/stream/legacy/SocketConnection.h>
+          -> <net/in/stream/legacy/config/ConfigSocketServer.h>
+```
+
+The corresponding component-side stack is not textually identical, but it should rhyme with the same architecture:
+
+```text
+snodec::http-server-express-legacy-in
+  -> snodec::http-server-express
+      -> snodec::http-server
+  -> snodec::net-in-stream-legacy
+      -> lower net/core stream components
+```
+
+The distinction matters. Headers expose declarations, aliases, templates, inline helpers, and source-facing public roles. Components expose compiled libraries, exported targets, usage requirements, and transitive link dependencies. They are two public contracts for the same stack, not one mechanism repeated twice.
 
 #### Namespaced targets are the consumer-facing interface
 
@@ -393,6 +438,8 @@ Express-like HTTP application layer
   + IPv4 legacy stream carrier
 ```
 
+The matching source file should show the same idea through public headers, for example an Express public header for the WebApp surface and a lower socket public header only if the source directly names that lower socket role.
+
 That is clearer than linking every application against one vague monolithic target.
 
 #### `PUBLIC`, `PRIVATE`, and `INTERFACE`
@@ -407,8 +454,8 @@ This is not CMake trivia. It is dependency hygiene. A framework that gets this w
 
 The central rule is simple:
 
-::: {.snodec-rule title="Dependency ownership rule"}
-The target that needs a dependency should declare it.
+::: {.snodec-rule title="Dependency and include ownership rule"}
+The target that needs a dependency should declare it. The source file that names an abstraction should include the public header that owns that abstraction.
 :::
 
 That is why a consumer-facing link line does not manually repeat the whole lower dependency chain. A direct link line should describe the application face:
@@ -439,12 +486,15 @@ too little:
 too much:
   link every lower layer manually
   even though selected components already own those dependencies
+  or include every lower header manually
+  even though a public front-door header owns the selected C++ abstraction
 ```
 
 The correct model is:
 
 ```text
 choose the direct building blocks
+  -> include the public headers for the abstractions named in source
   -> let the component targets carry their declared lower dependencies
 ```
 
@@ -560,6 +610,8 @@ What is the concrete family/transport component?
 Which dependency is owned by which layer?
 ```
 
+The following subsections focus on the build-side graph. The corresponding source-side rule remains the same: application code includes the public header for the abstraction it directly names, while the target links the component that owns the corresponding binary surface. The two views should rhyme architecturally, but they do not have to repeat the same tree node for node.
+
 #### HTTP and upgrade layout
 
 The HTTP module introduces protocol-upgrade infrastructure. The build sets explicit compile and install library directories for HTTP and upgrade-related libraries. It also stores those paths as target properties.
@@ -603,12 +655,15 @@ http-server-express-legacy-in
 
 has a different role. It represents the Express-like server over a concrete carrier shape.
 
+The source-side counterpart is the concrete Express public header, for example `<express/legacy/in/WebApp.h>` or `<express/legacy/in/Server.h>`. That header is the C++ entry into the Express/HTTP/carrier stack. The graph below shows the corresponding build-side ownership.
+
 The intended dependency model is:
 
 ```text
 http-server-express-legacy-in
   -> net-in-stream-legacy
   -> http-server-express
+      -> http-server
 ```
 
 The concrete target selects the IPv4 legacy stream carrier and the base Express component. The same pattern applies to the other concrete Express family targets:
@@ -636,6 +691,8 @@ The lower HTTP server layer is reached through the base Express component. The c
 
 #### WebSocket upgrade components
 
+On the source side, WebSocket code should still include the public header for the WebSocket abstraction it directly names: upgrade helper, client or server role, or subprotocol factory. The build-side discussion here explains where the compiled upgrade components live and how they are found at runtime.
+
 The WebSocket build obtains HTTP upgrade directories from the HTTP target and places WebSocket-related artifacts beneath the HTTP upgrade layout.
 
 The build layout mirrors the protocol model. WebSocket is an HTTP upgrade, not a completely unrelated protocol island.
@@ -643,6 +700,8 @@ The build layout mirrors the protocol model. WebSocket is an HTTP upgrade, not a
 The CMake structure therefore expresses the same architectural fact that the WebSocket chapters expressed in protocol terms. The WebSocket component belongs to the HTTP upgrade family. Its build placement reflects that.
 
 #### MQTT native and WebSocket-carried components
+
+The MQTT chapters discussed the public headers for the MQTT abstractions an application names in source code. Here the same distinction is shown from the build side: native MQTT and MQTT-over-WebSocket are separate component selections.
 
 The MQTT build constructs a base `mqtt` target and then descends into client and server subdirectories. In the current build, the MQTT component is built only when `nlohmann_json >= 3.11` is found.
 
@@ -763,6 +822,8 @@ The package interface is therefore part of the framework design.
 
 The installed package configuration verifies requested components, recursively loads component dependencies, and includes the exported target files. That keeps the consumer-facing build line short while preserving the component model underneath.
 
+The installed public headers do the corresponding source-side job. A consumer includes the public front-door header for the abstraction it names; the header hierarchy exposes the required lower declarations through the public include surface. The consumer should not depend on an accidental transitive include from an unrelated header.
+
 #### External project example
 
 A minimal external application that uses the Express-like HTTP layer over an IPv4 legacy stream could look like this:
@@ -793,6 +854,12 @@ target_link_libraries(my-ipv4-legacy-webapp
 )
 ```
 
+A matching `main.cpp` would include the public header for the source abstraction it directly uses. For example, a file that directly uses the Express WebApp surface would include:
+
+```cpp
+#include <express/legacy/in/WebApp.h>
+```
+
 This is a minimal consumer shape, not the only possible application structure. The important part is the application face:
 
 ```text
@@ -803,13 +870,13 @@ net-in-stream-legacy
   -> selected IPv4 legacy stream carrier
 ```
 
-The application does not list `core`, `core-socket`, `http`, `http-server`, `utils`, or `logger` manually. Those lower dependencies belong to the selected SNode.C component targets.
+The application does not list `core`, `core-socket`, `http`, `http-server`, `utils`, or `logger` manually. Those lower dependencies belong to the selected SNode.C component targets. Likewise, the source file does not include every lower HTTP and socket header manually when a public Express front-door header owns the abstraction it names.
 
 #### Component selection is not “select everything”
 
 The list of supported components should not be treated as a menu from which every application selects everything.
 
-A consumer-facing link line selects the components that describe the application face:
+A consumer-facing link line selects the components that describe the application face. A source file selects public headers that describe the abstractions it names:
 
 ```text
 protocol/application component
@@ -819,7 +886,7 @@ optional feature components directly used by the application
 
 For example, a web application over IPv4 legacy stream does not need to link every HTTP, WebSocket, MQTT, database, IPv6, Unix-domain, Bluetooth, TLS, and utility component.
 
-That would make the build line noisy and misleading. The direct link line should remain a short architectural statement.
+That would make the build line noisy and misleading. The same is true of source files that include every lower header behind a selected public abstraction. The direct link line and the include block should both remain short architectural statements.
 
 #### In-tree names and external names
 
@@ -888,7 +955,7 @@ mqttbroker
 mqttstore
 ```
 
-This distinction matters. A base component often represents a protocol or application layer. A concrete composition component often binds a role to a carrier, family, or connection mode. A lower operational component provides reusable machinery below both. An application target assembles selected pieces into an executable.
+This distinction matters. A base component often represents a protocol or application layer. A concrete composition component often binds a role to a carrier, family, or connection mode. A lower operational component provides reusable machinery below both. An application target assembles selected pieces into an executable. Public headers follow the same abstraction levels: some expose base protocol types, some expose concrete role aliases, and some expose lower operational support for code that directly names those lower types.
 
 Reading the target name with this distinction in mind prevents many linking misunderstandings.
 
@@ -898,14 +965,15 @@ A SNode.C CMake target can be read systematically. A practical recipe is:
 
 1. Identify the target name.
 2. Decide whether it is a framework component, concrete composition component, lower operational component, or application target.
-3. Read `target_link_libraries`.
-4. Separate `PUBLIC`, `PRIVATE`, and `INTERFACE` dependencies before opening C++ source files.
-5. Check whether the target has an installed/exported alias.
-6. Check whether it is listed as a supported component.
-7. Look for optional dependency gates around the target.
-8. Check install destinations and RPATH-related properties.
-9. For external use, translate local target names to `snodec::...`.
-10. Only then inspect the C++ source if the build shape is not enough.
+3. Identify the public headers used by the source files and the SNode.C abstractions directly named there.
+4. Read `target_link_libraries`.
+5. Separate `PUBLIC`, `PRIVATE`, and `INTERFACE` dependencies before opening C++ source files.
+6. Check whether the target has an installed/exported alias.
+7. Check whether it is listed as a supported component.
+8. Look for optional dependency gates around the target.
+9. Check header install destinations, library install destinations, and RPATH-related properties.
+10. For external use, translate local target names to `snodec::...`.
+11. Only then inspect implementation files if the public header and build shape are not enough.
 
 This method follows the same pattern used in Chapter 29. The build target often reveals the architecture before the implementation file is opened.
 
@@ -914,13 +982,14 @@ This method follows the same pattern used in Chapter 29. The build target often 
 - The top-level build creates the project shell; `src/CMakeLists.txt` exposes the framework surface.
 - Compiler, warning, and linker policies are part of the maintenance strategy.
 - `SNODEC_INTREE_BUILD` separates the in-tree build context from the installed consumer view.
-- Component targets should own their dependencies.
+- Component targets should own their dependencies, and public headers should own their source-facing abstraction boundary.
 - `PUBLIC`, `PRIVATE`, and `INTERFACE` describe dependency visibility.
+- Include paths and component names are parallel public contracts: one for C++ source, one for linking and installation.
 :::
 
 ### Closing perspective
 
 Chapter 32 starts Part X by making the build system visible as architecture.
 
-Chapter 32 made the component surface visible. The remaining chapters in Part X can now discuss porting, packaging, optional dependencies, constrained systems, and maintenance without treating the build as a black box.
+Chapter 32 made the component surface and public include surface visible. The remaining chapters in Part X can now discuss porting, packaging, optional dependencies, constrained systems, and maintenance without treating the build as a black box.
 

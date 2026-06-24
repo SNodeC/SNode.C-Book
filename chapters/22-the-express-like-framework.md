@@ -506,6 +506,38 @@ Chapter 23 then asks what happens when a route is not a short request/response e
 - Application callbacks and middleware callbacks have different responsibilities.
 :::
 
+### Express public surface: WebApp header and carrier component
+
+The Express-like layer continues the same source/build pairing. On the source side, a file that directly uses the WebApp type for an IPv4 legacy Express server includes:
+
+```cpp
+#include <express/legacy/in/WebApp.h>
+```
+
+That public header selects an Express WebApp over the HTTP server for the IPv4 legacy stream stack. A source file that uses the convenience server helper overloads includes the corresponding server header:
+
+```cpp
+#include <express/legacy/in/Server.h>
+```
+
+On the build side, the matching front door is the concrete Express carrier component, for example:
+
+```text
+http-server-express-legacy-in
+```
+
+Its dependency path includes the base Express component and the concrete carrier component. The base Express component depends on the HTTP server layer; the concrete carrier component supplies the selected lower stream role. In abbreviated form, the relationship is:
+
+```text
+snodec::http-server-express-legacy-in
+  -> snodec::http-server-express
+      -> snodec::http-server
+  -> snodec::net-in-stream-legacy
+      -> lower net/core stream components
+```
+
+The include-side and link-side hierarchies therefore rhyme: Express sits above HTTP, and HTTP sits above the selected lower stream role. The header makes that stack visible to C++ source; the component makes it visible to the linker and package configuration.
+
 ### Closing perspective
 
 Chapter 21 raised stream communication to HTTP messages. Chapter 22 raised HTTP messages into application structure.

@@ -456,6 +456,24 @@ Chapter 21 explains how HTTP becomes request/response semantics. Chapter 22 asks
 - HTTP-specific client configuration lives in the `http` subcommand for behavior such as Host header and pipelining.
 :::
 
+### HTTP public surface: role headers and components
+
+The HTTP layer has its own public surface above the raw stream layer. On the source side, an application that directly names an HTTP server over an IPv4 legacy stream includes the HTTP public role header:
+
+```cpp
+#include <web/http/legacy/in/Server.h>
+```
+
+An HTTP client over the same lower carrier uses the matching client header:
+
+```cpp
+#include <web/http/legacy/in/Client.h>
+```
+
+On the build side, the application links the HTTP component surface that corresponds to the HTTP role and carrier used by the target. The generic HTTP server and client components provide the HTTP layer, while concrete carrier-specific components add the selected lower stream stack where such concrete targets exist.
+
+The important rule is the same as in the lower layers. The HTTP header selects the C++ source-facing abstraction. The HTTP component selection supplies the binary/link-facing surface. An HTTP application should not include the lower socket server header merely because HTTP is carried by that socket stack; it should include the HTTP front door unless it directly names the lower socket role as well.
+
 ### Closing perspective
 
 Chapter 21 showed how SNode.C raises stream communication to HTTP request/response semantics.

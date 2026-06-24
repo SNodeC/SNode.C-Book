@@ -393,6 +393,14 @@ net-un-stream-legacy
 
 Those names are not decorative. They encode layer decisions.
 
+The same logic also applies to public include paths. A source file that directly names an IPv4 legacy stream server normally includes the public front door for that role:
+
+```cpp
+#include <net/in/stream/legacy/SocketServer.h>
+```
+
+That path encodes the same stack as the namespace and the component name, but in the syntax of the C++ include tree.
+
 This gives a useful reading habit:
 
 ::: {.snodec-note title="Reading habit"}

@@ -88,6 +88,20 @@ db-mariadb
 
 and installs MariaDB-specific headers under the MariaDB database include path.
 
+For ordinary application use, the public surface has a clear source side and build side. The source-side front door is the MariaDB client header:
+
+```cpp
+#include <database/mariadb/MariaDBClient.h>
+```
+
+The matching build-side component is:
+
+```text
+db-mariadb
+```
+
+That header is the source-facing entry to the normal MariaDB client abstraction. Application code should not include individual command headers merely to use the usual client API; those lower headers belong behind the public client surface unless the application directly names a lower command type. The component supplies the binary/library surface for the same MariaDB module.
+
 The module contains the concrete pieces needed for MariaDB integration:
 
 - `MariaDBClient`,

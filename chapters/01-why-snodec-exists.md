@@ -171,7 +171,7 @@ The similarity is deeper: both environments place event-driven flow and network 
 
 But SNode.C is not node.js in C++.
 
-It is a C++ framework with a C++ way of expressing structure. Types matter. Namespaces matter. Construction matters. Ownership matters. Build components matter. Configuration and deployment surfaces matter. The architecture is not hidden behind a dynamic runtime; it is expressed through classes, templates, specializations, modules, and explicit roles.
+It is a C++ framework with a C++ way of expressing structure. Types matter. Namespaces matter. Public include paths matter. Construction matters. Ownership matters. Build components matter. Configuration and deployment surfaces matter. The architecture is not hidden behind a dynamic runtime; it is expressed through classes, templates, specializations, modules, and explicit roles. The include tree and the component tree are two public views of the same layered design: one is the C++ source-facing view, the other is the build/link-facing view.
 
 That gives SNode.C its particular teaching value.
 
