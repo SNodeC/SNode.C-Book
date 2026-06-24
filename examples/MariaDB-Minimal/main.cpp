@@ -1,7 +1,7 @@
 #include <core/SNodeC.h>
 #include <database/mariadb/MariaDBClient.h>
+#include <log/Logger.h>
 
-#include <iostream>
 #include <mysql.h>
 #include <string>
 
@@ -21,12 +21,12 @@ int main(int argc, char* argv[]) {
 
     database::mariadb::MariaDBClient db(details, [](const database::mariadb::MariaDBState& state) {
         if (state.error != 0) {
-            std::cerr << "MariaDB state error " << state.error << ": "
-                      << state.errorMessage << "\n";
+            LOG(ERROR) << "MariaDB state error " << state.error << ": "
+                       << state.errorMessage;
         } else if (state.connected) {
-            std::cout << "MariaDB connected\n";
+            VLOG(1) << "MariaDB connected";
         } else {
-            std::cout << "MariaDB disconnected\n";
+            VLOG(1) << "MariaDB disconnected";
         }
     });
 
@@ -35,27 +35,27 @@ int main(int argc, char* argv[]) {
           [&db]() {
               db.affectedRows(
                   [](my_ulonglong rows) {
-                      std::cout << "insert affected rows: " << rows << "\n";
+                      VLOG(1) << "insert affected rows: " << rows;
                   },
                   [](const std::string& error, unsigned int number) {
-                      std::cerr << "affectedRows error " << number << ": "
-                                << error << "\n";
+                      LOG(ERROR) << "affectedRows error " << number << ": "
+                                 << error;
                   });
           },
           [](const std::string& error, unsigned int number) {
-              std::cerr << "insert error " << number << ": " << error << "\n";
+              LOG(ERROR) << "insert error " << number << ": " << error;
           })
       .query(
           "SELECT sensor, value FROM measurements",
           [](const MYSQL_ROW row) {
               if (row != nullptr) {
-                  std::cout << "measurement: " << row[0] << " = " << row[1] << "\n";
+                  VLOG(1) << "measurement: " << row[0] << " = " << row[1];
               } else {
-                  std::cout << "measurement query complete\n";
+                  VLOG(1) << "measurement query complete";
               }
           },
           [](const std::string& error, unsigned int number) {
-              std::cerr << "query error " << number << ": " << error << "\n";
+              LOG(ERROR) << "query error " << number << ": " << error;
           });
 
     return core::SNodeC::start();

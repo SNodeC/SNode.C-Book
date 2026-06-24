@@ -1,8 +1,8 @@
 #include <core/socket/State.h>
 #include <express/legacy/in/WebApp.h>
 #include <web/websocket/server/SocketContextUpgradeFactory.h>
+#include <log/Logger.h>
 
-#include <iostream>
 #include <memory>
 #include <string>
 
@@ -22,10 +22,10 @@ int main(int argc, char* argv[]) {
                        const std::shared_ptr<Response>& res) {
         res->upgrade(req, [res](const std::string& selected) {
             if (!selected.empty()) {
-                std::cout << "HTTP upgrade selected: " << selected << "\n";
+                VLOG(1) << "HTTP upgrade selected: " << selected;
                 res->end();
             } else {
-                std::cerr << "HTTP upgrade rejected\n";
+                LOG(WARNING) << "HTTP upgrade rejected";
                 res->sendStatus(404);
             }
         });
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 
     app.listen([](const SocketAddress& socketAddress,
                   const core::socket::State&) {
-        std::cout << "HTTP upgrade server listening on " << socketAddress.toString() << "\n";
+        VLOG(1) << "HTTP upgrade server listening on " << socketAddress.toString();
     });
 
     return express::WebApp::start();

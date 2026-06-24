@@ -1,11 +1,11 @@
 #include <core/socket/State.h>
 #include <express/legacy/in/WebApp.h>
 #include <nlohmann/json.hpp>
+#include <log/Logger.h>
 
 #include <algorithm>
 #include <cstdint>
 #include <functional>
-#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
 
     app.listen([](const SocketAddress& socketAddress,
                   const core::socket::State&) {
-        std::cout << "SSE server listening on " << socketAddress.toString() << "\n";
+        VLOG(1) << "SSE server listening on " << socketAddress.toString();
     });
 
     return express::WebApp::start();

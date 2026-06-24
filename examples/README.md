@@ -12,6 +12,7 @@ examples/HttpUpgrade-Server
 examples/HttpUpgrade-Client
 examples/SSE-Server
 examples/SSE-EventSource-Client
+examples/WebSocket-Echo-ServerSubprotocol
 examples/WebSocket-Echo-ClientSubprotocol
 examples/MQTT-ClientRole
 examples/MariaDB-Minimal
@@ -37,6 +38,10 @@ cmake -S examples -B build/examples \
 cmake --build build/examples --target all-examples
 cmake --build build/examples --target deploy-examples
 ```
+
+The WebSocket echo example is split across the HTTP-upgrade server/client and the
+matching server/client subprotocol modules. Deploy both subprotocol modules before
+running `HttpUpgrade-Server` and `HttpUpgrade-Client` as a complete echo check.
 
 Some examples are intended to demonstrate compilation and framework integration
 rather than standalone runtime behavior. For example, `MQTT-ClientRole` builds the

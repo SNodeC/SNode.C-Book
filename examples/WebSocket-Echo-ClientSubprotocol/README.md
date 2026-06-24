@@ -7,11 +7,9 @@ used in `CMakeLists.txt`, the built module follows the dynamic subprotocol namin
 contract:
 
 ```text
-libsnodec-websocket-echo-client.so
+libsnodec-websocket-echo-client.so.<SOVERSION>
 ```
 
-For an installed SNode.C build, package/install policy may add the ABI suffix
-used by that build.
 
 Build with an installed SNode.C package:
 
@@ -27,4 +25,11 @@ cmake --build build --target deploy-websocket-echo-client-subprotocol
 ```
 
 Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
-deployment prefix.
+deployment prefix. The module is installed below
+`lib/snode.c/web/http/upgrade/websocket`, where the WebSocket client selector
+looks for dynamically loadable subprotocol modules.
+
+
+For a complete runtime check, deploy this module together with
+`WebSocket-Echo-ServerSubprotocol`, start `HttpUpgrade-Server`, and then run
+`HttpUpgrade-Client`.

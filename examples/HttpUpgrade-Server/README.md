@@ -22,3 +22,6 @@ cmake --build build --target deploy-http-upgrade-server
 
 Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
 deployment prefix.
+
+For a complete WebSocket echo check, deploy `WebSocket-Echo-ServerSubprotocol` and
+`WebSocket-Echo-ClientSubprotocol`, then run this server and `HttpUpgrade-Client`.

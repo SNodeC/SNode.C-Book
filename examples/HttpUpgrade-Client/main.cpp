@@ -2,8 +2,8 @@
 #include <core/socket/State.h>
 #include <web/http/legacy/in/Client.h>
 #include <web/websocket/client/SocketContextUpgradeFactory.h>
+#include <log/Logger.h>
 
-#include <iostream>
 #include <memory>
 #include <string>
 
@@ -27,27 +27,27 @@ int main(int argc, char* argv[]) {
                 "/ws",
                 "websocket",
                 [](bool success) {
-                    std::cout << "upgrade request initiation: "
-                              << (success ? "accepted" : "rejected") << "\n";
+                    VLOG(1) << "upgrade request initiation: "
+                            << (success ? "accepted" : "rejected");
                 },
                 [](const std::shared_ptr<Request>&,
                    const std::shared_ptr<Response>&,
                    bool success) {
-                    std::cout << "upgrade response: "
-                              << (success ? "accepted" : "rejected") << "\n";
+                    VLOG(1) << "upgrade response: "
+                            << (success ? "accepted" : "rejected");
                 },
                 [](const std::shared_ptr<Request>&,
                    const std::string& message) {
-                    std::cerr << "upgrade response parse error: " << message << "\n";
+                    LOG(ERROR) << "upgrade response parse error: " << message;
                 });
         },
         [](const std::shared_ptr<MasterRequest>&) {
-            std::cout << "HTTP request completed or disconnected\n";
+            VLOG(1) << "HTTP request completed or disconnected";
         });
 
     client.connect([](const SocketAddress& socketAddress,
                       const core::socket::State&) {
-        std::cout << "HTTP client connection status for " << socketAddress.toString() << "\n";
+        VLOG(1) << "HTTP client connection status for " << socketAddress.toString();
     });
 
     return core::SNodeC::start();

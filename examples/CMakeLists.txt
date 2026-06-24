@@ -12,6 +12,7 @@ add_subdirectory(HttpUpgrade-Server)
 add_subdirectory(HttpUpgrade-Client)
 add_subdirectory(SSE-Server)
 add_subdirectory(SSE-EventSource-Client)
+add_subdirectory(WebSocket-Echo-ServerSubprotocol)
 add_subdirectory(WebSocket-Echo-ClientSubprotocol)
 add_subdirectory(MQTT-ClientRole)
 add_subdirectory(MariaDB-Minimal)
@@ -23,6 +24,7 @@ set(SNODEC_BOOK_EXAMPLE_TARGETS
     http-upgrade-client
     sse-server
     sse-eventsource-client
+    websocket-echo-server-subprotocol
     websocket-echo-client-subprotocol
     mqtt-client-role
     mariadb-minimal

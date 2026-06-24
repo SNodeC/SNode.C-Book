@@ -1,8 +1,7 @@
 #include <core/SNodeC.h>
 #include <net/in/SocketAddress.h>
 #include <web/http/legacy/in/EventSource.h>
-
-#include <iostream>
+#include <log/Logger.h>
 
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
@@ -12,21 +11,21 @@ int main(int argc, char* argv[]) {
     auto events = web::http::legacy::in::EventSource("http", address, "/events");
 
     events->onOpen([] {
-        std::cout << "SSE stream opened\n";
+        VLOG(1) << "SSE stream opened";
     });
 
     events->onMessage([](const web::http::client::tools::EventSource::MessageEvent& event) {
-        std::cout << "message: " << event.data << "\n";
+        VLOG(1) << "message: " << event.data;
     });
 
     events->addEventListener(
         "measurement",
         [](const web::http::client::tools::EventSource::MessageEvent& event) {
-            std::cout << "measurement: " << event.data << "\n";
+            VLOG(1) << "measurement: " << event.data;
         });
 
     events->onError([] {
-        std::cout << "SSE stream error\n";
+        LOG(ERROR) << "SSE stream error";
     });
 
     return core::SNodeC::start();

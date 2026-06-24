@@ -15,6 +15,7 @@ add_library(websocket-echo-client-subprotocol SHARED EchoClient.cpp EchoClientFa
 set_target_properties(
     websocket-echo-client-subprotocol
     PROPERTIES OUTPUT_NAME snodec-websocket-echo-client
+               SOVERSION ${SNODEC_SOVERSION}
 )
 
 target_link_libraries(
@@ -25,7 +26,7 @@ target_link_libraries(
 install(
     TARGETS websocket-echo-client-subprotocol
     COMPONENT WebSocketEchoClientSubprotocol
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/snodec/web/http/upgrade/websocket
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/snode.c/web/http/upgrade/websocket
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 

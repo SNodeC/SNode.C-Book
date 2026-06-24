@@ -1,6 +1,6 @@
 #include "SensorClient.h"
 
-#include <iostream>
+#include <log/Logger.h>
 
 SensorClient::SensorClient()
     : iot::mqtt::client::Mqtt(
@@ -34,7 +34,7 @@ void SensorClient::onPublish(const iot::mqtt::packets::Publish& publish) {
     const std::string topic = publish.getTopic();
     const std::string message = publish.getMessage();
 
-    std::cout << "MQTT command on " << topic << ": " << message << "\n";
+    VLOG(1) << "MQTT command on " << topic << ": " << message;
 }
 
 bool SensorClient::onSignal(int) {
