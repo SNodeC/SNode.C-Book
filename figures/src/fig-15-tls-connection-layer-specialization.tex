@@ -1,13 +1,13 @@
-\documentclass[tikz,border=0pt]{standalone}
+﻿\documentclass[tikz,border=0pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
+\usetikzlibrary{positioning,calc,arrows.meta}
 
 \begin{document}
 
 \def\majorVGap{11mm}
-\def\minorVGap{4mm}
-\def\streamPlacementGap{14mm}
-\def\variantShift{37mm}
+\def\streamRowGap{5mm}
+\def\streamNoteGap{2.5mm}
+\def\variantGap{5mm}
 
 \begin{tikzpicture}[
   snodec diagram,
@@ -33,17 +33,15 @@
     inner ysep=2.4mm,
     font=\sffamily\small
   },
-  stream panel/.style={
+  stream block/.style={
     draw=snodecOrange!75,
     fill=snodecOrangeSoft,
     rounded corners=2.5pt,
     line width=0.75pt,
-    inner xsep=3mm,
-    inner ysep=2.4mm
-  },
-  stream title/.style={
     align=center,
     text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
     font=\sffamily\small
   },
   variant block/.style={
@@ -52,8 +50,8 @@
     rounded corners=2.5pt,
     line width=0.75pt,
     align=center,
-    text width=61mm,
-    inner xsep=3mm,
+    text width=58mm,
+    inner xsep=2mm,
     inner ysep=2.4mm,
     font=\sffamily\footnotesize
   },
@@ -100,38 +98,29 @@
 
 % ----------------------------------------------------------------------
 % Stream connection form.
-% The larger placement gap compensates for the stream panel's fit inner sep,
-% so the visible box-to-box gap stays consistent with the other layers.
+% This is an ordinary content node, not a fit panel. Its headline spacing
+% follows the same inner-ysep logic as the other major boxes.
 % ----------------------------------------------------------------------
-\node[stream title, below=\streamPlacementGap of family] (streamTitle) {%
-  \textbf{\textcolor{snodecOrange}{Stream connection form}}
+\node[stream block, below=\majorVGap of family] (stream) {%
+  \textbf{\textcolor{snodecOrange}{Stream connection form}}\\[\streamRowGap]
+  \begin{tikzpicture}[
+    baseline=(legacyStream.base),
+    variant row block/.style={variant block}
+  ]
+    \node[variant row block] (legacyStream) {%
+      \textbf{\textcolor{snodecOrange!90!black}{Legacy stream}}\\[-0.4mm]
+      plain byte transport\\[-0.2mm]
+      \texttt{ConfigLegacy}
+    };
+
+    \node[variant row block, right=\variantGap of legacyStream] (tlsStream) {%
+      \textbf{\textcolor{snodecOrange!90!black}{TLS stream}}\\[-0.4mm]
+      encrypted byte transport\\[-0.2mm]
+      \texttt{ConfigTlsClient} / \texttt{ConfigTlsServer}
+    };
+  \end{tikzpicture}\\[\streamNoteGap]
+  {\footnotesize\textcolor{snodecMuted}{specialization point: connection setup, TLS context, certificates, SNI}}
 };
-
-\node[variant block, below=\minorVGap of streamTitle, xshift=-\variantShift] (legacyStream) {%
-  \textbf{\textcolor{snodecOrange!90!black}{Legacy stream}}\\[-0.4mm]
-  plain byte transport\\[-0.2mm]
-  no TLS context
-};
-
-\node[variant block, below=\minorVGap of streamTitle, xshift=\variantShift] (tlsStream) {%
-  \textbf{\textcolor{snodecOrange!90!black}{TLS stream}}\\[-0.4mm]
-  encrypted byte transport\\[-0.2mm]
-  \texttt{ConfigTlsClient} / \texttt{ConfigTlsServer}
-};
-
-\coordinate (variantBottomCenter) at ($(legacyStream.south)!0.5!(tlsStream.south)$);
-
-\node[stream note, below=\minorVGap of variantBottomCenter] (specializationNote) {%
-  specialization point: connection setup, TLS context, certificates, SNI
-};
-
-\begin{scope}[on background layer]
-  \node[
-    stream panel,
-    fit=(streamTitle)(legacyStream)(tlsStream)(specializationNote),
-    inner sep=3mm
-  ] (stream) {};
-\end{scope}
 
 % ----------------------------------------------------------------------
 % Socket context.
@@ -148,11 +137,6 @@
 \draw[layer flow] (role.south) -- (family.north);
 \draw[layer flow] (family.south) -- (stream.north);
 \draw[layer flow] (stream.south) -- (context.north);
-
-% ----------------------------------------------------------------------
-% Outer boundary.
-% ----------------------------------------------------------------------
-
 
 % ----------------------------------------------------------------------
 % Fixed 160 mm output canvas.
