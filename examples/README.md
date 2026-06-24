@@ -27,7 +27,8 @@ cmake --build <example-dir>/build
 ```
 
 The `examples/` directory also contains an aggregate `CMakeLists.txt` that
-configures and builds all examples together:
+configures, builds, and installs/deploys all examples together. The aggregate
+compile/link result is recorded in `../verification/examples-aggregate-build-verification.md`:
 
 ```bash
 cmake -S examples -B build/examples \

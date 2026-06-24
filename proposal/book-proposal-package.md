@@ -191,7 +191,7 @@ The learning arc of the book is deliberate:
 
 ## Compact example source trees
 
-In addition to the manuscript fragments, the electronic companion material supplies compact standalone source trees for selected HTTP-upgrade, Server-Sent Events, WebSocket subprotocol, MQTT-role, and MariaDB examples. These are teaching examples: they keep the printed chapter fragments short while giving readers complete CMake-based source directories that can be built against the pinned SNode.C package. The companion examples also include an aggregate CMake project for building and installing/deploying the complete example set. In this source package, the companion material is stored below `examples/`; in a published edition, the same material should be reachable through the publisher's companion repository or download page.
+In addition to the manuscript fragments, the electronic companion material supplies compact standalone source trees for selected HTTP-upgrade, Server-Sent Events, WebSocket subprotocol, MQTT-role, and MariaDB examples. These are teaching examples: they keep the printed chapter fragments short while giving readers complete CMake-based source directories that can be built against the installed SNode.C package. The companion examples also include an aggregate CMake project for building and installing/deploying the complete example set, and the package records a successful local aggregate compile/link check in `verification/examples-aggregate-build-verification.md`. In this source package, the companion material is stored below `examples/`; in a published edition, the same material should be reachable through the publisher's companion repository or download page.
 
 ## MiniGateway source-of-truth examples
 
