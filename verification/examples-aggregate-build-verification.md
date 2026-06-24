@@ -67,7 +67,7 @@ The build log reached `100%` and ended with:
 
 ## Status
 
-The reported build verified the aggregate example set as it existed at the time of the check. The WebSocket echo example was completed later, as described below; therefore the current aggregate project should be rebuilt and redeployed once more before final release. Before final release, the SNode.C source pin in `SOURCE-VERSION.md` should also point to a commit that contains the required public-header fixes listed above.
+The reported build verified the aggregate example set as it existed at the time of the check. The WebSocket echo example was completed later, as described below; therefore the current aggregate project should be rebuilt and redeployed once more before final release. The SNode.C source pin in `SOURCE-VERSION.md` now points to the `Book` tag commit containing the required public-header fixes listed above.
 
 ## Later WebSocket echo completion note
 

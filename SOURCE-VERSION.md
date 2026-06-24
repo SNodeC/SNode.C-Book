@@ -6,9 +6,9 @@ This manuscript targets the following SNode.C source snapshot:
 - Repository identifier: `SNodeC/snode.c`
 - Branch used for the source line: `master`
 - Tag used for the manuscript pin: `Book`
-- Commit: `a4deec7317c16c28dad801b999c4a1f9837ca672`
+- Commit: `6e475262084ae2dab2daef8781ab9e4adb82d18e`
 - SNode.C project version: `1.0.1`
-- Verified on: `2026-06-24`
+- Verified on: `2026-06-25`
 
 The manuscript, examples, component names, public include paths, and package descriptions should be read against this exact source snapshot. Later repository changes may introduce, rename, or remove components, headers, examples, package components, or implementation details.
 

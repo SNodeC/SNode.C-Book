@@ -104,7 +104,7 @@ This book is not:
 
 ### Source version used by this book
 
-SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the source snapshot recorded in `SOURCE-VERSION.md`: tag `Book`, commit `a4deec7317c16c28dad801b999c4a1f9837ca672`, project version `1.0.1`. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
+SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the source snapshot recorded in `SOURCE-VERSION.md`: tag `Book`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`, project version `1.0.1`. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
 
 ### Why “layered” matters here
 

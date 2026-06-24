@@ -38,7 +38,7 @@ examples/MiniGateway-Extended
 
 ## Target SNode.C source version
 
-This package is aligned with the SNode.C source snapshot recorded in `SOURCE-VERSION.md`. The authoritative source pin is the full commit SHA `a4deec7317c16c28dad801b999c4a1f9837ca672`. The human-facing tag is `Book` on the `master` source line, and the recorded SNode.C project version is `1.0.1`.
+This package is aligned with the SNode.C source snapshot recorded in `SOURCE-VERSION.md`. The authoritative source pin is the full commit SHA `6e475262084ae2dab2daef8781ab9e4adb82d18e`. The human-facing tag is `Book` on the `master` source line, and the recorded SNode.C project version is `1.0.1`.
 
 The manuscript is not intended to describe arbitrary future states of the SNode.C repository. If a newer checkout changes component names, public headers, examples, or package layout, those changes must be reviewed before the manuscript is updated.
 
