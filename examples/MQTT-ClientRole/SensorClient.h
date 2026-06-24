@@ -6,12 +6,6 @@
 #include <iot/mqtt/packets/Connack.h>
 #include <iot/mqtt/packets/Publish.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-#include <string>
-
-#endif
-
 class SensorClient final : public iot::mqtt::client::Mqtt {
 public:
     SensorClient();

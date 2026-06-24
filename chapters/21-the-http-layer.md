@@ -359,10 +359,8 @@ A compact server-side upgrade route has this shape. The example uses `websocket`
 ```cpp
 #include <express/legacy/in/WebApp.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #include <memory>
 #include <string>
-#endif
 
 using WebApp = express::legacy::in::WebApp;
 using Request = WebApp::Request;
@@ -390,17 +388,19 @@ On the client side, the HTTP client prepares an upgrade request and names the ta
 req->upgrade(
     "/ws",
     "websocket",
-    []([[maybe_unused]] bool success) {
-        // Upgrade request initiation was accepted or rejected locally.
+    [](bool success) {
+        std::cout << "upgrade request initiation: "
+                  << (success ? "accepted" : "rejected") << "\n";
     },
-    []([[maybe_unused]] const std::shared_ptr<Request>& request,
-       [[maybe_unused]] const std::shared_ptr<Response>& response,
-       [[maybe_unused]] bool success) {
-        // The HTTP response confirmed or rejected the upgrade.
+    [](const std::shared_ptr<Request>&,
+       const std::shared_ptr<Response>&,
+       bool success) {
+        std::cout << "upgrade response: "
+                  << (success ? "accepted" : "rejected") << "\n";
     },
-    []([[maybe_unused]] const std::shared_ptr<Request>& request,
-       [[maybe_unused]] const std::string& message) {
-        // The HTTP upgrade response could not be parsed.
+    [](const std::shared_ptr<Request>&,
+       const std::string& message) {
+        std::cerr << "upgrade response parse error: " << message << "\n";
     });
 ```
 

@@ -348,9 +348,8 @@ A compact MQTT client example should show the protocol role, not an entire trans
 #include <iot/mqtt/packets/Publish.h>
 #include <iot/mqtt/Topic.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#include <iostream>
 #include <string>
-#endif
 
 class SensorClient final : public iot::mqtt::client::Mqtt {
 public:
@@ -375,7 +374,7 @@ private:
             false);      // loop prevention
     }
 
-    void onConnack([[maybe_unused]] const iot::mqtt::packets::Connack& connack) override {
+    void onConnack(const iot::mqtt::packets::Connack&) override {
         sendSubscribe({
             iot::mqtt::Topic("sensors/+/command", 0)
         });
@@ -391,10 +390,10 @@ private:
         const std::string topic = publish.getTopic();
         const std::string message = publish.getMessage();
 
-        // Interpret the command identified by topic and message here.
+        std::cout << "MQTT command on " << topic << ": " << message << "\n";
     }
 
-    bool onSignal([[maybe_unused]] int sig) override {
+    bool onSignal(int) override {
         sendDisconnect();
         return false;
     }

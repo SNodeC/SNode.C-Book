@@ -209,6 +209,13 @@ app.get("/events", [&measurements] APPLICATION(req, res) {
         return true;
     });
 });
+
+app.get("/simulate", [&measurements] APPLICATION(req, res) {
+    const Measurement measurement = measurements.publish("temperature", 24.0);
+
+    res->set("Content-Type", "application/json")
+       .send(measurement.toJson().dump());
+});
 ```
 
 The `Measurement` type and the `measurements` publisher are application code, not special SSE machinery. The SNode.C-specific shape is the HTTP route and response handling. The route rejects non-SSE requests with an ordinary HTTP response; only a request that accepts `text/event-stream` receives the streaming response.
@@ -224,9 +231,7 @@ The corresponding client side enters through the concrete EventSource wrapper fo
 #include <net/in/SocketAddress.h>
 #include <web/http/legacy/in/EventSource.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #include <iostream>
-#endif
 
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);

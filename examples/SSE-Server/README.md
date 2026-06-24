@@ -4,7 +4,8 @@ Compact server-side Server-Sent Events example used by Chapter 23.
 
 It exposes `/events`, rejects requests that do not accept `text/event-stream`,
 sends the event-stream response header, and then writes event records as response
-fragments.
+fragments. The `/simulate` route publishes a new measurement so connected SSE
+clients receive another event.
 
 Build with an installed SNode.C package:
 

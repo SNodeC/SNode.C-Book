@@ -459,11 +459,9 @@ A minimal echo-like client subprotocol has this shape:
 #include <web/websocket/client/SubProtocol.h>
 #include <web/websocket/SubProtocolFactory.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #include <cstddef>
 #include <cstdint>
 #include <string>
-#endif
 
 class EchoClient final : public web::websocket::client::SubProtocol {
 public:
@@ -476,7 +474,7 @@ private:
         sendMessage("hello");
     }
 
-    void onMessageStart([[maybe_unused]] int opCode) override {
+    void onMessageStart(int) override {
         currentMessage.clear();
     }
 
@@ -489,7 +487,7 @@ private:
         currentMessage.clear();
     }
 
-    void onMessageError([[maybe_unused]] uint16_t errnum) override {
+    void onMessageError(uint16_t) override {
         currentMessage.clear();
     }
 
@@ -497,7 +495,7 @@ private:
         currentMessage.clear();
     }
 
-    bool onSignal([[maybe_unused]] int sig) override {
+    bool onSignal(int) override {
         sendClose();
         return false;
     }

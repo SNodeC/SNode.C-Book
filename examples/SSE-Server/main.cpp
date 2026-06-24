@@ -2,16 +2,14 @@
 #include <express/legacy/in/WebApp.h>
 #include <nlohmann/json.hpp>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 #include <algorithm>
 #include <cstdint>
 #include <functional>
+#include <iostream>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
-
-#endif
 
 using WebApp = express::legacy::in::WebApp;
 using Request = WebApp::Request;
@@ -40,6 +38,11 @@ public:
 
     void subscribe(std::function<bool(const Measurement&)> listener) {
         listeners.push_back(std::move(listener));
+    }
+
+    Measurement publish(std::string sensor, double value) {
+        publish(Measurement{last.sequence + 1, std::move(sensor), value});
+        return last;
     }
 
     void publish(Measurement measurement) {
@@ -103,9 +106,18 @@ int main(int argc, char* argv[]) {
         });
     });
 
-    app.listen([]([[maybe_unused]] const SocketAddress& socketAddress,
-                  [[maybe_unused]] const core::socket::State& state) {
-    }).getFlowController();
+    app.get("/simulate", [&measurements](const std::shared_ptr<Request>&,
+                                          const std::shared_ptr<Response>& res) {
+        const Measurement measurement = measurements.publish("temperature", 24.0);
+
+        res->set("Content-Type", "application/json")
+           .send(measurement.toJson().dump());
+    });
+
+    app.listen([](const SocketAddress& socketAddress,
+                  const core::socket::State&) {
+        std::cout << "SSE server listening on " << socketAddress.toString() << "\n";
+    });
 
     return express::WebApp::start();
 }

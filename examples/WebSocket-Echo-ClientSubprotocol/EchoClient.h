@@ -3,13 +3,9 @@
 
 #include <web/websocket/client/SubProtocol.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 #include <cstddef>
 #include <cstdint>
 #include <string>
-
-#endif
 
 class EchoClient final : public web::websocket::client::SubProtocol {
 public:

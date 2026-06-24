@@ -2,12 +2,9 @@
 #include <express/legacy/in/WebApp.h>
 #include <web/websocket/server/SocketContextUpgradeFactory.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
+#include <iostream>
 #include <memory>
 #include <string>
-
-#endif
 
 using WebApp = express::legacy::in::WebApp;
 using Request = WebApp::Request;
@@ -25,16 +22,19 @@ int main(int argc, char* argv[]) {
                        const std::shared_ptr<Response>& res) {
         res->upgrade(req, [res](const std::string& selected) {
             if (!selected.empty()) {
+                std::cout << "HTTP upgrade selected: " << selected << "\n";
                 res->end();
             } else {
+                std::cerr << "HTTP upgrade rejected\n";
                 res->sendStatus(404);
             }
         });
     });
 
-    app.listen([]([[maybe_unused]] const SocketAddress& socketAddress,
-                  [[maybe_unused]] const core::socket::State& state) {
-    }).getFlowController();
+    app.listen([](const SocketAddress& socketAddress,
+                  const core::socket::State&) {
+        std::cout << "HTTP upgrade server listening on " << socketAddress.toString() << "\n";
+    });
 
     return express::WebApp::start();
 }

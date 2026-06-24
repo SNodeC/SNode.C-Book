@@ -4,7 +4,8 @@ Compact client-side HTTP upgrade example used by Chapter 21.
 
 The client prepares an HTTP request, names the requested upgrade protocol as
 `websocket`, and installs the WebSocket client upgrade factory through the linked
-registration path.
+registration path. It prints the local upgrade initiation result, the HTTP upgrade
+response result, parse errors, and connection-status callbacks.
 
 Build with an installed SNode.C package:
 

@@ -1,5 +1,7 @@
 #include "SensorClient.h"
 
+#include <iostream>
+
 SensorClient::SensorClient()
     : iot::mqtt::client::Mqtt(
           "sensor-mqtt",
@@ -20,7 +22,7 @@ void SensorClient::onConnected() {
         false);
 }
 
-void SensorClient::onConnack([[maybe_unused]] const iot::mqtt::packets::Connack& connack) {
+void SensorClient::onConnack(const iot::mqtt::packets::Connack&) {
     sendSubscribe({
         iot::mqtt::Topic("sensors/+/command", 0),
     });
@@ -32,11 +34,10 @@ void SensorClient::onPublish(const iot::mqtt::packets::Publish& publish) {
     const std::string topic = publish.getTopic();
     const std::string message = publish.getMessage();
 
-    static_cast<void>(topic);
-    static_cast<void>(message);
+    std::cout << "MQTT command on " << topic << ": " << message << "\n";
 }
 
-bool SensorClient::onSignal([[maybe_unused]] int sig) {
+bool SensorClient::onSignal(int) {
     sendDisconnect();
     return false;
 }

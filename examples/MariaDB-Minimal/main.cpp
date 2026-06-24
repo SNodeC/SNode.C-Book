@@ -1,12 +1,9 @@
 #include <core/SNodeC.h>
 #include <database/mariadb/MariaDBClient.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
+#include <iostream>
 #include <mysql.h>
 #include <string>
-
-#endif
 
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
@@ -24,11 +21,12 @@ int main(int argc, char* argv[]) {
 
     database::mariadb::MariaDBClient db(details, [](const database::mariadb::MariaDBState& state) {
         if (state.error != 0) {
-            // Report state.errorMessage and state.error.
+            std::cerr << "MariaDB state error " << state.error << ": "
+                      << state.errorMessage << "\n";
         } else if (state.connected) {
-            // Database connection is available.
+            std::cout << "MariaDB connected\n";
         } else {
-            // Database connection is currently unavailable.
+            std::cout << "MariaDB disconnected\n";
         }
     });
 
@@ -37,29 +35,27 @@ int main(int argc, char* argv[]) {
           [&db]() {
               db.affectedRows(
                   [](my_ulonglong rows) {
-                      static_cast<void>(rows);
+                      std::cout << "insert affected rows: " << rows << "\n";
                   },
                   [](const std::string& error, unsigned int number) {
-                      static_cast<void>(error);
-                      static_cast<void>(number);
+                      std::cerr << "affectedRows error " << number << ": "
+                                << error << "\n";
                   });
           },
           [](const std::string& error, unsigned int number) {
-              static_cast<void>(error);
-              static_cast<void>(number);
+              std::cerr << "insert error " << number << ": " << error << "\n";
           })
       .query(
           "SELECT sensor, value FROM measurements",
           [](const MYSQL_ROW row) {
               if (row != nullptr) {
-                  // row[0] is sensor, row[1] is value.
+                  std::cout << "measurement: " << row[0] << " = " << row[1] << "\n";
               } else {
-                  // No more rows for this result.
+                  std::cout << "measurement query complete\n";
               }
           },
           [](const std::string& error, unsigned int number) {
-              static_cast<void>(error);
-              static_cast<void>(number);
+              std::cerr << "query error " << number << ": " << error << "\n";
           });
 
     return core::SNodeC::start();

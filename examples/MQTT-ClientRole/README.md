@@ -4,7 +4,8 @@ Compact MQTT client role example used by Chapter 25.
 
 This source tree intentionally builds a library, not a standalone executable. It
 shows the MQTT protocol role that is later attached to a concrete lower
-connection by application code.
+connection by application code. Incoming publishes are printed so the command
+path is visible instead of being silently discarded.
 
 Build with an installed SNode.C package:
 

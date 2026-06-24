@@ -2,11 +2,7 @@
 #include <net/in/SocketAddress.h>
 #include <web/http/legacy/in/EventSource.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 #include <iostream>
-
-#endif
 
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);

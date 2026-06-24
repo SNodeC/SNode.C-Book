@@ -3,12 +3,9 @@
 #include <web/http/legacy/in/Client.h>
 #include <web/websocket/client/SocketContextUpgradeFactory.h>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
+#include <iostream>
 #include <memory>
 #include <string>
-
-#endif
 
 using Client = web::http::legacy::in::Client;
 using MasterRequest = Client::MasterRequest;
@@ -29,25 +26,28 @@ int main(int argc, char* argv[]) {
             req->upgrade(
                 "/ws",
                 "websocket",
-                []([[maybe_unused]] bool success) {
-                    // Upgrade request initiation was accepted or rejected locally.
+                [](bool success) {
+                    std::cout << "upgrade request initiation: "
+                              << (success ? "accepted" : "rejected") << "\n";
                 },
-                []([[maybe_unused]] const std::shared_ptr<Request>& request,
-                   [[maybe_unused]] const std::shared_ptr<Response>& response,
-                   [[maybe_unused]] bool success) {
-                    // The HTTP response confirmed or rejected the upgrade.
+                [](const std::shared_ptr<Request>&,
+                   const std::shared_ptr<Response>&,
+                   bool success) {
+                    std::cout << "upgrade response: "
+                              << (success ? "accepted" : "rejected") << "\n";
                 },
-                []([[maybe_unused]] const std::shared_ptr<Request>& request,
-                   [[maybe_unused]] const std::string& message) {
-                    // The HTTP upgrade response could not be parsed.
+                [](const std::shared_ptr<Request>&,
+                   const std::string& message) {
+                    std::cerr << "upgrade response parse error: " << message << "\n";
                 });
         },
-        []([[maybe_unused]] const std::shared_ptr<MasterRequest>& req) {
-            // HTTP-side request completion or disconnect handling.
+        [](const std::shared_ptr<MasterRequest>&) {
+            std::cout << "HTTP request completed or disconnected\n";
         });
 
-    client.connect([]([[maybe_unused]] const SocketAddress& socketAddress,
-                      [[maybe_unused]] const core::socket::State& state) {
+    client.connect([](const SocketAddress& socketAddress,
+                      const core::socket::State&) {
+        std::cout << "HTTP client connection status for " << socketAddress.toString() << "\n";
     });
 
     return core::SNodeC::start();

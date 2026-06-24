@@ -8,7 +8,7 @@ void EchoClient::onConnected() {
     sendMessage("hello");
 }
 
-void EchoClient::onMessageStart([[maybe_unused]] int opCode) {
+void EchoClient::onMessageStart(int) {
     currentMessage.clear();
 }
 
@@ -21,7 +21,7 @@ void EchoClient::onMessageEnd() {
     currentMessage.clear();
 }
 
-void EchoClient::onMessageError([[maybe_unused]] uint16_t errnum) {
+void EchoClient::onMessageError(uint16_t) {
     currentMessage.clear();
 }
 
@@ -29,7 +29,7 @@ void EchoClient::onDisconnected() {
     currentMessage.clear();
 }
 
-bool EchoClient::onSignal([[maybe_unused]] int sig) {
+bool EchoClient::onSignal(int) {
     sendClose();
     return false;
 }
