@@ -26,6 +26,7 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `chapters/` — one Markdown file per chapter.
 - `parts/` — part divider files.
 - `examples/` — example source trees used by the guided MiniGateway chapters.
+- `verification/` — non-manuscript verification notes for source/package checks.
 
 The current manuscript contains all planned chapters and an epilogue. Chapters 37 and 38 contain the MiniGateway guided project. The source trees used by those chapters are:
 
@@ -46,6 +47,8 @@ The manuscript is not intended to describe arbitrary future states of the SNode.
 `examples/MiniGateway-Base` is the authoritative source tree for Chapter 37. `examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
 
 Both MiniGateway versions are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C source snapshot recorded in `SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
+
+The current package records the author-confirmed Step 8 MiniGateway build/run smoke-test result in `verification/minigateway-step8-author-verification.md`. That file is package evidence, not manuscript prose.
 
 ## Heading convention
 

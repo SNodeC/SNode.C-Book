@@ -332,7 +332,8 @@ foreach(OPTIONAL_DIR IN ITEMS
         "cmake"
         "scripts"
         "assets"
-        "images")
+        "images"
+        "verification")
   if(IS_DIRECTORY "${SOURCE_DIR}/${OPTIONAL_DIR}")
     copy_source_dir("${OPTIONAL_DIR}")
   endif()
@@ -380,6 +381,7 @@ Included when present:
 - scripts/
 - assets/
 - images/
+- verification/
 - apps/
 - src/apps/
 - MiniGateway*/

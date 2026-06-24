@@ -13,6 +13,7 @@ Included:
 - filters/
 - latex/
 - examples/
+- verification/
 - metadata.yaml
 - book-files.txt
 - CMakeLists.txt
