@@ -16,3 +16,4 @@
 *.txt.user
 /packages/
 /figures/pdf/
+/examples/build/

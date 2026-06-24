@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+include(GNUInstallDirs)
 
 find_package(
     snodec 1.0.0 REQUIRED COMPONENTS http-client net-in-stream-legacy
@@ -18,4 +19,18 @@ target_link_libraries(
     http-upgrade-client
     PRIVATE snodec::http-client snodec::net-in-stream-legacy
             snodec::websocket-client
+)
+
+install(
+    TARGETS http-upgrade-client
+    COMPONENT HttpUpgradeClient
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+add_custom_target(
+    deploy-http-upgrade-client
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component HttpUpgradeClient
+    DEPENDS http-upgrade-client
+    COMMENT "Installing http-upgrade-client"
+    VERBATIM
 )

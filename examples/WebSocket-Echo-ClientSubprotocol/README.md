@@ -17,5 +17,14 @@ Build with an installed SNode.C package:
 
 ```bash
 cmake -S . -B build -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec
-cmake --build build
+cmake --build build --target websocket-echo-client-subprotocol
 ```
+
+Install/deploy this example into the configured install prefix:
+
+```bash
+cmake --build build --target deploy-websocket-echo-client-subprotocol
+```
+
+Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
+deployment prefix.

@@ -10,5 +10,14 @@ Build with an installed SNode.C package:
 
 ```bash
 cmake -S . -B build -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec
-cmake --build build
+cmake --build build --target mqtt-client-role
 ```
+
+Install/deploy this example into the configured install prefix:
+
+```bash
+cmake --build build --target deploy-mqtt-client-role
+```
+
+Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
+deployment prefix.

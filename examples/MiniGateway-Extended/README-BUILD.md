@@ -18,9 +18,18 @@ It contains the complete source tree used by Chapter 38:
 Expected build shape, assuming SNode.C is installed as a CMake package:
 
 ```sh
-cmake -S . -B build
-cmake --build build
+cmake -S . -B build -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec
+cmake --build build --target minigateway-extended
 ```
+
+Install/deploy this example into the configured install prefix:
+
+```sh
+cmake --build build --target deploy-minigateway-extended
+```
+
+Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
+deployment prefix.
 
 Measurements can be injected through the Unix domain socket `/tmp/minigateway-measurements.sock`. Send one comma-separated line per measurement:
 

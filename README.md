@@ -44,7 +44,7 @@ The manuscript is not intended to describe arbitrary future states of the SNode.
 
 ## Example source and tested-code policy
 
-The compact source trees in `examples/` are intended to be complete buildable versions of the shorter manuscript fragments. The printed book should refer to them as electronic companion material rather than as printed-book contents. They are teaching examples, not replacements for the source snippets in the chapters.
+The compact source trees in `examples/` are intended to be complete buildable versions of the shorter manuscript fragments. The printed book should refer to them as electronic companion material rather than as printed-book contents. They are teaching examples, not replacements for the source snippets in the chapters. The directory `examples/` also contains an aggregate CMake project that configures, builds, and installs/deploys all companion examples together.
 
 `examples/MiniGateway-Base` is the authoritative source tree for Chapter 37. `examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
 

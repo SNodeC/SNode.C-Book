@@ -26,6 +26,17 @@ cmake -S <example-dir> -B <example-dir>/build \
 cmake --build <example-dir>/build
 ```
 
+The `examples/` directory also contains an aggregate `CMakeLists.txt` that
+configures and builds all examples together:
+
+```bash
+cmake -S examples -B build/examples \
+    -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec \
+    -DCMAKE_INSTALL_PREFIX=/path/to/deploy-prefix
+cmake --build build/examples --target all-examples
+cmake --build build/examples --target deploy-examples
+```
+
 Some examples are intended to demonstrate compilation and framework integration
 rather than standalone runtime behavior. For example, `MQTT-ClientRole` builds the
 MQTT role as a library because the concrete lower connection is intentionally
@@ -40,4 +51,7 @@ examples/MiniGateway-Base
 examples/MiniGateway-Extended
 ```
 
-These are the source-of-truth examples for Chapters 37 and 38.
+These are the source-of-truth examples for Chapters 37 and 38.  They are included
+in the aggregate build as `minigateway-base` and `minigateway-extended`; their
+individual deployment targets are `deploy-minigateway-base` and
+`deploy-minigateway-extended`.

@@ -16,8 +16,17 @@ It contains the complete source tree used by Chapter 37:
 Expected build shape, assuming SNode.C is installed as a CMake package:
 
 ```sh
-cmake -S . -B build
-cmake --build build
+cmake -S . -B build -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec
+cmake --build build --target minigateway-base
 ```
+
+Install/deploy this example into the configured install prefix:
+
+```sh
+cmake --build build --target deploy-minigateway-base
+```
+
+Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
+deployment prefix.
 
 This package intentionally contains no TLS, no persistence, no MQTT-over-WebSocket, no frontend, and no real sensor input.
