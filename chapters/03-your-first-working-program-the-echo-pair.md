@@ -195,7 +195,7 @@ EchoSocketContext::EchoSocketContext(
 void EchoSocketContext::onConnected() {
     VLOG(1) << "Echo connected";
 
-if (role == Role::CLIENT) {
+    if (role == Role::CLIENT) {
         sendToPeer("Hello peer! Nice to see you!!!");
     }
 }
@@ -211,14 +211,14 @@ bool EchoSocketContext::onSignal([[maybe_unused]] int signum) {
 std::size_t EchoSocketContext::onReceivedFromPeer() {
     char chunk[4096];
 
-const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
+    const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
 
-if (chunkLen > 0) {
+    if (chunkLen > 0) {
         VLOG(1) << "Data to reflect: " << std::string(chunk, chunkLen);
         sendToPeer(chunk, chunkLen);
     }
 
-return chunkLen;
+    return chunkLen;
 }
 
 core::socket::stream::SocketContext*
@@ -268,17 +268,16 @@ The server entry point is small because the protocol behavior already lives in t
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
 
-using EchoServer =
+    using EchoServer =
         net::in::stream::legacy::SocketServer<EchoServerSocketContextFactory>;
 
-EchoServer server("echoserver");
+    EchoServer server("echoserver");
 
-server.listen(
+    server.listen(
         8080,
         5,
         [instanceName = server.getConfig()->getInstanceName()]
-        (const EchoServer::SocketAddress& socketAddress,
-         const core::socket::State& state) {
+        (const EchoServer::SocketAddress& socketAddress, const core::socket::State& state) {
             switch (state) {
                 case core::socket::State::OK:
                     VLOG(1) << instanceName << ": listening on '"
@@ -301,7 +300,7 @@ server.listen(
         }
     );
 
-return core::SNodeC::start();
+    return core::SNodeC::start();
 }
 ```
 
@@ -369,17 +368,16 @@ The client mirrors the server.
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
 
-using EchoClient =
+    using EchoClient =
         net::in::stream::legacy::SocketClient<EchoClientSocketContextFactory>;
 
-EchoClient client("echoclient");
+    EchoClient client("echoclient");
 
-client.connect(
+    client.connect(
         "localhost",
         8080,
         [instanceName = client.getConfig()->getInstanceName()]
-        (const EchoClient::SocketAddress& socketAddress,
-         const core::socket::State& state) {
+        (const EchoClient::SocketAddress& socketAddress, const core::socket::State& state) {
             switch (state) {
                 case core::socket::State::OK:
                     VLOG(1) << instanceName << ": connected to '"
@@ -402,7 +400,7 @@ client.connect(
         }
     );
 
-return core::SNodeC::start();
+    return core::SNodeC::start();
 }
 ```
 
