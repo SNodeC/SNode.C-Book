@@ -32,8 +32,7 @@ set(PANDOC_LISTINGS_FILTER
 set_property(
   DIRECTORY
   APPEND
-  PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/book-files.txt"
-           "${CMAKE_CURRENT_SOURCE_DIR}/book-files-existing-only.txt")
+  PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/book-files.txt")
 
 # -----------------------------------------------------------------------------
 # TikZ figure build
@@ -220,7 +219,6 @@ file(MAKE_DIRECTORY "${STAGING_DIR}/pdf")
 set(REQUIRED_SOURCE_FILES
     "metadata.yaml"
     "book-files.txt"
-    "book-files-existing-only.txt"
     "CMakeLists.txt"
     "proposal/book-proposal-package.md")
 
@@ -370,7 +368,6 @@ Included:
 - figures/pdf/
 - metadata.yaml
 - book-files.txt
-- book-files-existing-only.txt
 - CMakeLists.txt
 
 Included when present:
