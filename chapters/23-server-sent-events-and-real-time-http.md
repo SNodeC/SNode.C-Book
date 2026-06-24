@@ -173,6 +173,95 @@ data: {"state":"online"}
 
 The blank line ends the accumulated event record. This is enough server-side format detail for this chapter. The central architectural point is that the server writes event-stream records over an HTTP response that remains open.
 
+
+### A compact server-side SSE endpoint
+
+A server-side SSE endpoint is still an ordinary HTTP route. The route must first verify that the request actually asks for an event stream. In practice, that means checking the request's `Accept` header for `text/event-stream` before the route switches into long-lived streaming behavior.
+
+The following sketch uses an application-owned measurement source. The important framework-facing points are the request validation, the response headers, the explicit header send, and the use of response fragments while the connection remains open:
+
+```cpp
+app.get("/events", [&measurements] APPLICATION(req, res) {
+    if (!web::http::ciContains(req->get("Accept"), "text/event-stream")) {
+        res->status(406).send("SSE requires Accept: text/event-stream");
+        return;
+    }
+
+    res->set("Content-Type", "text/event-stream")
+       .set("Cache-Control", "no-cache")
+       .set("Connection", "keep-alive")
+       .sendHeader();
+
+    if (const Measurement current = measurements.current(); current.sequence > 0) {
+        res->sendFragment("event: measurement\n");
+        res->sendFragment("id: " + std::to_string(current.sequence) + "\n");
+        res->sendFragment("data: " + current.toJson().dump() + "\n\n");
+    }
+
+    measurements.subscribe([res](const Measurement& measurement) {
+        if (!res->isConnected()) {
+            return false;
+        }
+
+        res->sendFragment("event: measurement\n");
+        res->sendFragment("id: " + std::to_string(measurement.sequence) + "\n");
+        res->sendFragment("data: " + measurement.toJson().dump() + "\n\n");
+        return true;
+    });
+});
+```
+
+The `Measurement` type and the `measurements` publisher are application code, not special SSE machinery. The SNode.C-specific shape is the HTTP route and response handling. The route rejects non-SSE requests with an ordinary HTTP response; only a request that accepts `text/event-stream` receives the streaming response.
+
+After `sendHeader()`, the response body is written as SSE records. Each record is plain text. A blank line terminates the current event. The response is intentionally not ended after the first record. It remains open until the application decides to close it or until the peer disconnects.
+
+### A compact EventSource client
+
+The corresponding client side enters through the concrete EventSource wrapper for the selected HTTP client stack. A compact IPv4 legacy client looks like this:
+
+```cpp
+#include <core/SNodeC.h>
+#include <net/in/SocketAddress.h>
+#include <web/http/legacy/in/EventSource.h>
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#include <iostream>
+#endif
+
+int main(int argc, char* argv[]) {
+    core::SNodeC::init(argc, argv);
+
+    const net::in::SocketAddress address{"127.0.0.1", 8080};
+
+    auto events = web::http::legacy::in::EventSource(
+        "http",
+        address,
+        "/events");
+
+    events->onOpen([] {
+        std::cout << "SSE stream opened\n";
+    });
+
+    events->onMessage([](const web::http::client::tools::EventSource::MessageEvent& event) {
+        std::cout << "message: " << event.data << "\n";
+    });
+
+    events->addEventListener(
+        "measurement",
+        [](const web::http::client::tools::EventSource::MessageEvent& event) {
+            std::cout << "measurement: " << event.data << "\n";
+        });
+
+    events->onError([] {
+        std::cout << "SSE stream error\n";
+    });
+
+    return core::SNodeC::start();
+}
+```
+
+The server-side route produces event-stream syntax. The client-side `EventSource` parses that stream, applies retry and continuity rules, and dispatches ordinary `MessageEvent` callbacks. `readyState()`, `retry()`, `lastEventId()`, and `close()` remain the client-side controls for observing and steering that stream lifecycle.
+
 ### The EventSource client abstraction
 
 The client-side `EventSource` abstraction gives the application an event-stream model while the lower stream and HTTP details remain underneath. The application sees a higher-level surface:

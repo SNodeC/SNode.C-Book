@@ -409,6 +409,40 @@ snodec::http-server-express-legacy-in
 
 The distinction matters. Headers expose declarations, aliases, templates, inline helpers, and source-facing public roles. Components expose compiled libraries, exported targets, usage requirements, and transitive link dependencies. They are two public contracts for the same stack, not one mechanism repeated twice.
 
+#### Source-derived component/header matrix
+
+The following matrix is read from the pinned SNode.C source snapshot recorded in `SOURCE-VERSION.md`. It is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a role, and the component target or targets it would normally link when it needs the corresponding compiled surface.
+
+In the source tree, examples and framework code include headers relative to the SNode.C source include root, for example `<express/legacy/in/WebApp.h>`. Installed consumers use the same public header shape below the installed `include/snode.c` prefix.
+
+| Area | Public header front | Link component(s) | What the selection means |
+|---|---|---|---|
+| Core runtime | `<core/SNodeC.h>` | `snodec::core` | Event-loop/runtime entry and framework initialization surface. |
+| IPv4 legacy stream socket | `<net/in/stream/legacy/SocketServer.h>` / `<net/in/stream/legacy/SocketClient.h>` | `snodec::net-in-stream-legacy` | IPv4 stream sockets over the unencrypted legacy stream layer. |
+| IPv4 TLS stream socket | `<net/in/stream/tls/SocketServer.h>` / `<net/in/stream/tls/SocketClient.h>` | `snodec::net-in-stream-tls` | IPv4 stream sockets over the TLS stream layer. |
+| IPv6 legacy stream socket | `<net/in6/stream/legacy/SocketServer.h>` / `<net/in6/stream/legacy/SocketClient.h>` | `snodec::net-in6-stream-legacy` | IPv6 stream sockets over the unencrypted legacy stream layer. |
+| Unix-domain legacy stream socket | `<net/un/stream/legacy/SocketServer.h>` / `<net/un/stream/legacy/SocketClient.h>` | `snodec::net-un-stream-legacy` | Local stream sockets over the legacy stream layer. |
+| Unix-domain datagram socket | `<net/un/dgram/Socket.h>` | `snodec::net-un-dgram` | Local datagram socket surface. |
+| HTTP server/client role | `<web/http/legacy/in/Server.h>` / `<web/http/legacy/in/Client.h>` | `snodec::http-server` or `snodec::http-client`, plus the selected carrier component when the source directly names one | Raw HTTP role over a concrete carrier. Unlike Express, raw HTTP does not use a separate concrete Express carrier target. |
+| EventSource client | `<web/http/legacy/in/EventSource.h>` | `snodec::http-client`, plus the selected carrier component when needed | SSE client role over the selected HTTP client carrier. Server-side SSE is ordinary HTTP response streaming, not a separate component. |
+| Express base layer | `<express/WebApp.h>` and other base Express headers | `snodec::http-server-express` | Express-like routing and middleware layer above the HTTP server surface. |
+| Express IPv4 legacy WebApp | `<express/legacy/in/WebApp.h>` | `snodec::http-server-express-legacy-in` | Express-like server over IPv4 legacy stream. The concrete target owns both the carrier choice and the Express base layer. |
+| Express IPv4 TLS WebApp | `<express/tls/in/WebApp.h>` | `snodec::http-server-express-tls-in` | Express-like server over IPv4 TLS stream. |
+| WebSocket base | `<web/websocket/SubProtocolFactory.h>` and related base WebSocket headers | `snodec::websocket` | Shared WebSocket/subprotocol machinery. This alone is not a concrete server or client role. |
+| WebSocket server/client role | `<web/websocket/server/SubProtocol.h>` / `<web/websocket/client/SubProtocol.h>` | `snodec::websocket-server` or `snodec::websocket-client` | Role-specific WebSocket upgrade/subprotocol surface. |
+| MQTT shared layer | `<iot/mqtt/Mqtt.h>` / `<iot/mqtt/Topic.h>` | `snodec::mqtt` | Shared MQTT packet/session/protocol machinery. This component is available only when the MQTT dependency gate is satisfied. |
+| MQTT native client | `<iot/mqtt/client/Mqtt.h>` | `snodec::mqtt-client` | Native MQTT client role. |
+| MQTT native server | `<iot/mqtt/server/Mqtt.h>` | `snodec::mqtt-server` | Native MQTT server role. |
+| MQTT-over-WebSocket client | `<iot/mqtt/client/SubProtocol.h>` plus the MQTT client role header directly named by the application | `snodec::mqtt-client-websocket` | MQTT client role carried through a WebSocket subprotocol. |
+| MQTT-over-WebSocket server | `<iot/mqtt/server/SubProtocol.h>` plus the MQTT server role header directly named by the application | `snodec::mqtt-server-websocket` | MQTT server role carried through a WebSocket subprotocol. |
+| MariaDB application state | `<database/mariadb/MariaDBClient.h>` | `snodec::db-mariadb` | MariaDB persistence boundary for application state. This component is available only when the MariaDB client library is found. |
+
+The table should be read with two cautions.
+
+First, headers and components are related public surfaces, not the same mechanism. A public header can expose inline/template surfaces, aliases, or a role front; a component target exposes compiled code, usage requirements, transitive link dependencies, and packaging identity.
+
+Second, a consumer should not include lower-layer headers merely because a selected component depends on them. Include the public header for the abstraction the source file directly names, and link the component that owns the binary surface selected by the application. The component target should carry its declared lower dependencies.
+
 #### Namespaced targets are the consumer-facing interface
 
 Most library targets also receive namespaced aliases such as:

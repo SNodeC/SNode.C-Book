@@ -347,6 +347,80 @@ and it exposes client-originated operations such as:
 
 This keeps the client/server model balanced. Both sides share the MQTT protocol family. Each side has its own role-specific behavior.
 
+
+### A compact MQTT client role
+
+A compact MQTT client example should show the protocol role, not an entire transport setup. The following class expresses the MQTT side of the application: connect, subscribe, publish, receive publishes, and disconnect on shutdown.
+
+```cpp
+#include <iot/mqtt/client/Mqtt.h>
+#include <iot/mqtt/packets/Connack.h>
+#include <iot/mqtt/packets/Publish.h>
+#include <iot/mqtt/Topic.h>
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#include <string>
+#endif
+
+class SensorClient final : public iot::mqtt::client::Mqtt {
+public:
+    SensorClient()
+        : iot::mqtt::client::Mqtt(
+              "sensor-mqtt",
+              "sensor-client-1",
+              60,
+              "sensor-client.session") {
+    }
+
+private:
+    void onConnected() override {
+        sendConnect(
+            true,        // clean session
+            "",          // will topic
+            "",          // will message
+            0,           // will QoS
+            false,       // will retain
+            "",          // username
+            "",          // password
+            false);      // loop prevention
+    }
+
+    void onConnack([[maybe_unused]] const iot::mqtt::packets::Connack& connack) override {
+        sendSubscribe({
+            iot::mqtt::Topic("sensors/+/command", 0)
+        });
+
+        sendPublish(
+            "sensors/temperature/value",
+            "23.5",
+            0,
+            false);
+    }
+
+    void onPublish(const iot::mqtt::packets::Publish& publish) override {
+        const std::string topic = publish.getTopic();
+        const std::string message = publish.getMessage();
+
+        // Interpret the command identified by topic and message here.
+    }
+
+    bool onSignal([[maybe_unused]] int sig) override {
+        sendDisconnect();
+        return false;
+    }
+};
+```
+
+The example deliberately omits the concrete lower connection setup. That setup decides how the MQTT role is attached to a stream or to another carrier. The MQTT role itself shows the protocol behavior: it sends `CONNECT`, waits for `CONNACK`, subscribes, publishes, handles incoming publishes, and sends `DISCONNECT` during shutdown.
+
+The corresponding native MQTT client component is:
+
+```cmake
+target_link_libraries(my_mqtt_client PRIVATE snodec::mqtt-client)
+```
+
+The shared `mqtt` component is the protocol core. The `mqtt-client` component adds the client role on top of that core. The component exists only when the MQTT build prerequisites are available.
+
 ### MQTT as a WebSocket subprotocol
 
 MQTT-over-WebSocket is where Chapter 25 connects back to Chapter 24. The relevant composition is:

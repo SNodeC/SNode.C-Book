@@ -405,6 +405,42 @@ runtime structure
 
 That consistency helps the reader reason about the feature.
 
+
+### MQTT-over-WebSocket as component selection
+
+MQTT-over-WebSocket should not repeat the MQTT client example from Chapter 25. The important point here is the carrier selection. The MQTT role remains an MQTT role; the WebSocket-carried variant adds the WebSocket subprotocol component that lets MQTT packets travel through an HTTP/WebSocket upgrade path.
+
+A compact client-side build fragment therefore looks like this:
+
+```cmake
+target_link_libraries(gateway
+    PRIVATE
+        snodec::mqtt-client
+        snodec::mqtt-client-websocket
+        snodec::websocket-client)
+```
+
+The native MQTT component expresses the MQTT client role. The WebSocket-carried component expresses the MQTT/WebSocket adapter. The WebSocket client component expresses the upgraded carrier side. This is a component-level statement of the same architecture described in prose:
+
+```text
+MQTT client role
+  + MQTT-over-WebSocket subprotocol
+      + WebSocket client carrier
+          -> MQTT semantics over an upgraded HTTP/WebSocket connection
+```
+
+The server side follows the same rule in the opposite role:
+
+```cmake
+target_link_libraries(gateway
+    PRIVATE
+        snodec::mqtt-server
+        snodec::mqtt-server-websocket
+        snodec::websocket-server)
+```
+
+The two fragments do not define a different MQTT API. They select a different carrier composition for the same MQTT protocol family.
+
 ### Diagnostics across the composed stack
 
 A failure in MQTT-over-WebSocket may belong to several layers.

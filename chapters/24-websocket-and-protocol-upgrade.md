@@ -437,6 +437,93 @@ A compact view is:
 
 This is enough for Chapter 24. The details of plugin architecture and dynamic loading belong later or in reference material. Here, the teaching point is that subprotocols are structured and selectable elements.
 
+
+#### A compact WebSocket subprotocol
+
+A WebSocket application is usually not written as a raw byte loop. The application supplies a subprotocol object. The WebSocket layer handles the upgraded carrier, frames, messages, and control behavior; the subprotocol object receives lifecycle and message callbacks.
+
+A minimal echo-like client subprotocol has this shape:
+
+```cpp
+#include <web/websocket/client/SubProtocol.h>
+#include <web/websocket/SubProtocolFactory.h>
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#include <cstddef>
+#include <cstdint>
+#include <string>
+#endif
+
+class EchoClient final : public web::websocket::client::SubProtocol {
+public:
+    EchoClient(web::websocket::SubProtocolContext* context, const std::string& name)
+        : web::websocket::client::SubProtocol(context, name, 90, 3) {
+    }
+
+private:
+    void onConnected() override {
+        sendMessage("hello");
+    }
+
+    void onMessageStart([[maybe_unused]] int opCode) override {
+        currentMessage.clear();
+    }
+
+    void onMessageData(const char* chunk, std::size_t chunkLen) override {
+        currentMessage.append(chunk, chunkLen);
+    }
+
+    void onMessageEnd() override {
+        sendMessage(currentMessage);
+        currentMessage.clear();
+    }
+
+    void onMessageError([[maybe_unused]] uint16_t errnum) override {
+        currentMessage.clear();
+    }
+
+    void onDisconnected() override {
+        currentMessage.clear();
+    }
+
+    bool onSignal([[maybe_unused]] int sig) override {
+        sendClose();
+        return false;
+    }
+
+    std::string currentMessage;
+};
+```
+
+The factory makes the subprotocol selectable by name and lets the WebSocket upgrade layer create protocol instances without knowing the concrete C++ type in advance:
+
+```cpp
+class EchoClientFactory final
+    : public web::websocket::SubProtocolFactory<web::websocket::client::SubProtocol> {
+public:
+    using web::websocket::SubProtocolFactory<
+        web::websocket::client::SubProtocol>::SubProtocolFactory;
+
+private:
+    EchoClient* create(web::websocket::SubProtocolContext* context) override {
+        return new EchoClient(context, getName());
+    }
+};
+
+extern "C" web::websocket::SubProtocolFactory<web::websocket::client::SubProtocol>*
+echoClientSubProtocolFactory() {
+    return new EchoClientFactory("echo");
+}
+```
+
+The base subprotocol and factory shape belongs to the shared WebSocket component:
+
+```cmake
+target_link_libraries(my_subprotocol PRIVATE snodec::websocket)
+```
+
+A concrete client or server application will additionally select the corresponding WebSocket role component, such as `snodec::websocket-client` or `snodec::websocket-server`, depending on where the subprotocol is used.
+
 #### Linked and dynamically loaded subprotocols
 
 A subprotocol may be linked directly into the application or provided through a dynamically loaded factory. That matters because WebSocket can become a carrier for protocols that are not all built into one executable.
