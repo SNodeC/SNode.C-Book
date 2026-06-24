@@ -77,27 +77,17 @@ MQTT-over-WebSocket is not a new transport trick. It is MQTT semantics carried a
 
 ### Native MQTT and MQTT over WebSocket side by side
 
-A compact comparison helps keep the two forms separate without turning them into unrelated implementations.
+A compact comparison is enough here; Chapter 26 treats the WebSocket-carried form in detail.
 
 | Concern | Native MQTT | MQTT over WebSocket |
 |---|---|---|
 | carrier | stream connection | WebSocket upgraded connection |
 | SNode.C integration | stream `SocketContext` plus `MqttContext` | WebSocket subprotocol role plus `MqttContext` |
 | protocol identity | MQTT directly above stream | MQTT above WebSocket |
-| lower layers | lower family / stream / legacy or TLS | HTTP upgrade / WebSocket / lower layers |
 | MQTT meaning | sessions, topics, control packets, publish flow | same MQTT semantics |
 | book focus | introduced in this chapter | treated in detail in Chapter 26 |
 
-The point is not that there are two unrelated MQTT implementations. The important point is:
-
-```text
-same MQTT semantics
-  -> different carrier
-```
-
-Native MQTT and MQTT over WebSocket both preserve the MQTT layer. They differ in how MQTT data reaches that layer. Native MQTT is simpler to place because MQTT sits directly above the stream connection. MQTT over WebSocket is more layered because HTTP first negotiates an upgrade, WebSocket becomes the bidirectional carrier, and MQTT then appears as the selected WebSocket subprotocol.
-
-That makes MQTT a higher-level example of a recurring SNode.C idea. Earlier chapters showed that protocol logic can remain recognizable while lower communication families change. MQTT shows the same kind of stability one level higher: the carrier above the stream may also change while MQTT packet, session, topic, and publish-flow semantics remain MQTT.
+The important point is not that there are two unrelated MQTT implementations. The MQTT semantics remain stable; the carrier path changes.
 
 ### MQTT as a protocol family
 
@@ -431,94 +421,19 @@ WebSocket subprotocol role
       -> MQTT-over-WebSocket endpoint
 ```
 
-The WebSocket layer provides the upgraded bidirectional carrier. The MQTT layer provides the protocol semantics. The endpoint has to understand both sides:
+Native MQTT uses a stream `SocketContext` plus `MqttContext`. MQTT-over-WebSocket changes the carrier-facing side to a WebSocket subprotocol role, while the MQTT-facing context remains recognizable. That is the symmetry Chapter 26 develops in detail.
 
-```text
-WebSocket message flow
-  -> carries MQTT data
-
-MqttContext
-  -> gives that data MQTT meaning
-```
-
-This is not an ad hoc transport trick. It is structured layering.
-
-#### WebSocket subprotocol role plus `MqttContext`
-
-The MQTT WebSocket subprotocol type derives from a WebSocket subprotocol role and privately uses `MqttContext`. This is the WebSocket-carried counterpart of the native `SocketContext` pattern.
-
-Native MQTT:
-
-```text
-stream SocketContext
-  + MqttContext
-      -> native MQTT endpoint
-```
-
-MQTT over WebSocket:
-
-```text
-WebSocket subprotocol role
-  + MqttContext
-      -> MQTT-over-WebSocket endpoint
-```
-
-The symmetry is the important architectural point:
-
-```text
-same MQTT-facing context
-different carrier-facing side
-```
-
-The carrier changes. The MQTT-facing context remains part of the composition.
-
-#### Same MQTT semantics, different carrier
-
-The MQTT protocol family remains MQTT.
-
-The carrier can differ:
-
-```text
-native MQTT
-  -> MQTT semantics above stream connection
-
-MQTT over WebSocket
-  -> MQTT semantics above WebSocket subprotocol
-
-same protocol family
-  -> sessions, packets, topics, publish flow
-```
-
-This connects back to Chapter 15 and also extends the idea introduced in Chapter 24. Not only can lower communication families vary; a protocol can also be carried natively or through an upgraded WebSocket carrier while preserving the same protocol identity.
-
-MQTT-over-WebSocket should not be treated as less “real” MQTT. Native MQTT is simpler to place, but the WebSocket-carried form is also a structured composition: MQTT semantics ride on a WebSocket subprotocol, and the WebSocket subprotocol rides on the upgraded HTTP connection.
-
-Chapter 26 will focus on this composition in detail. Chapter 25 only establishes the model.
+Chapter 25 only establishes the model: MQTT remains MQTT, while the carrier can be native stream or WebSocket.
 
 ### MQTT public surface: protocol headers and components
 
-The MQTT source surface has public entry headers, and the build surface has matching protocol components. A client-side MQTT object is introduced through the client header:
+The MQTT source surface has public entry headers, and the build surface has matching protocol components. A client-side MQTT object is introduced through:
 
 ```cpp
 #include <iot/mqtt/client/Mqtt.h>
 ```
 
-A server-side MQTT role uses the corresponding server-side MQTT public surface when the application directly names that role. Shared MQTT support uses headers such as:
-
-```cpp
-#include <iot/mqtt/SocketContext.h>
-#include <iot/mqtt/Topic.h>
-```
-
-The application should include the MQTT abstraction it directly names: client role, server role, socket-context bridge, topic, packet, or shared MQTT support. The component selection then supplies the binary side. A compact way to read the two surfaces is:
-
-| Source-side abstraction | Typical public header | Build-side component |
-|---|---|---|
-| Shared MQTT protocol support | headers below `<iot/mqtt/...>` as directly named | `mqtt` |
-| Native MQTT client role | `<iot/mqtt/client/Mqtt.h>` | `mqtt-client` |
-| Native MQTT server role | server-side MQTT public role headers as directly named | `mqtt-server` |
-
-Header selection and component selection are related, but they are not the same mechanism. The header tells the C++ translation unit which MQTT abstraction it uses. The component tells CMake and the linker which compiled MQTT surface the target needs.
+Shared MQTT support uses headers below `<iot/mqtt/...>` for the abstractions the file directly names, such as topics, packets, socket-context bridging, or protocol support. The build-side components distinguish shared support, native roles, and WebSocket-carried compositions; Chapter 32 collects those mappings in one source-derived table.
 
 ### Build/component note: JSON dependency is not MQTT identity
 

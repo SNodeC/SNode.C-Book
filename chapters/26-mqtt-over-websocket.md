@@ -101,13 +101,11 @@ That distinction matters. It prevents the reader from treating MQTT-over-WebSock
 
 ### Native MQTT and MQTT-over-WebSocket side by side
 
-Chapter 25 introduced native MQTT first. That remains the simpler model, and Chapter 26 now sharpens the contrast.
+Chapter 25 introduced native MQTT first. Chapter 26 sharpens the carrier contrast.
 
-Figure~\ref{fig:native-mqtt-vs-mqtt-over-websocket} shows the carrier distinction. Native MQTT writes MQTT packets directly to a stream or TLS stream. MQTT over WebSocket reaches the same MQTT packet and session semantics through an HTTP upgrade path and WebSocket frames.
+Figure~\ref{fig:native-mqtt-vs-mqtt-over-websocket} shows the distinction. Native MQTT writes MQTT packets directly to a stream or TLS stream. MQTT over WebSocket reaches the same MQTT packet and session semantics through an HTTP upgrade path and WebSocket frames.
 
 ![Native MQTT and MQTT over WebSocket share MQTT protocol semantics but use different carrier paths.](figures/pdf/fig-07-native-mqtt-vs-mqtt-over-websocket.pdf){#fig:native-mqtt-vs-mqtt-over-websocket width=90% latex-placement="tbp"}
-
-The table below describes the same distinction in words. Read it together with Figure~\ref{fig:native-mqtt-vs-mqtt-over-websocket}: the MQTT part of the application should not be mentally duplicated. The same MQTT concepts remain; only the carrier path changes.
 
 | Concern | Native MQTT | MQTT over WebSocket |
 |---|---|---|
@@ -118,38 +116,13 @@ The table below describes the same distinction in words. Read it together with F
 | MQTT semantics | sessions, packets, topics, keep-alive, publish flow | same MQTT semantics |
 | failure surface | stream and MQTT layers | HTTP upgrade, WebSocket, subprotocol, and MQTT layers |
 
-The MQTT protocol family remains the same. The carrier changes. That is the central message of Figure~\ref{fig:native-mqtt-vs-mqtt-over-websocket}.
-
-The native form has a direct carrier-facing side:
-
-```text
-stream SocketContext
-  + MqttContext
-      -> native MQTT endpoint
-```
-
-The WebSocket-carried form changes the carrier-facing side:
-
-```text
-WebSocket subprotocol role
-  + MqttContext
-      -> MQTT-over-WebSocket endpoint
-```
-
-In both cases, `MqttContext` is the MQTT-facing bridge. It gives the MQTT protocol object a way to receive bytes, send bytes, end the relationship, or close it, without making the protocol object depend directly on the carrier used underneath.
+The central message is simple: MQTT semantics stay MQTT; the carrier path changes.
 
 ### Why this carrier composition matters
 
-MQTT-over-WebSocket exists because some systems want MQTT semantics while using a WebSocket-capable communication path. That can matter when communication already lives inside web-facing infrastructure, when an HTTP upgrade path is already available, or when MQTT has to participate in a system that otherwise uses HTTP and WebSocket boundaries.
+MQTT-over-WebSocket exists for systems that want MQTT semantics while using a WebSocket-capable communication path. That can matter when communication already lives inside web-facing infrastructure, when an HTTP upgrade path is available, or when MQTT participates in a system that otherwise uses HTTP and WebSocket boundaries.
 
-For this book, however, the important point is not that every deployment needs MQTT-over-WebSocket. The important point is architectural:
-
-```text
-MQTT remains MQTT
-  while the carrier changes from native stream to WebSocket
-```
-
-This is a higher-stack version of a recurring SNode.C idea. Protocol meaning can remain recognizable while the carrier changes. Earlier chapters showed this idea with lower communication families and stream-based protocols. Chapter 26 shows it above the web stack.
+For this book, the architectural point is more important than any single deployment reason: protocol meaning can remain recognizable while the carrier changes. Chapter 26 shows that idea above the web stack.
 
 ### The MQTT-over-WebSocket subprotocol type
 
@@ -332,10 +305,6 @@ This is exactly why the layered model is useful. It gives each concern a place.
 
 Native MQTT and MQTT-over-WebSocket are sibling compositions of the same MQTT protocol family.
 
-One places MQTT above a stream connection. The other places MQTT above a WebSocket subprotocol role.
-
-That is different from thinking of MQTT-over-WebSocket as “native MQTT with a few extra headers.” The two forms have different carrier paths:
-
 ```text
 native MQTT
   -> lower stream connection
@@ -346,31 +315,6 @@ MQTT over WebSocket
       -> WebSocket
           -> WebSocket subprotocol
               -> MQTT
-```
-
-But both preserve MQTT protocol identity.
-
-That identity includes:
-
-- control packets,
-- fixed headers,
-- sessions,
-- topics,
-- keep-alive behavior,
-- publish and acknowledgement flow.
-
-This connects back to Chapter 15. Chapter 15 showed that protocol meaning can survive movement across carriers. MQTT-over-WebSocket is the higher-stack version of that idea.
-
-A more implementation-shaped comparison is:
-
-```text
-native MQTT:
-  carrier-facing side = stream SocketContext
-  MQTT-facing side = MqttContext
-
-MQTT over WebSocket:
-  carrier-facing side = WebSocket subprotocol role
-  MQTT-facing side = MqttContext
 ```
 
 The carrier-facing side changes. The MQTT-facing bridge remains recognizable.
@@ -386,25 +330,7 @@ The build structure mirrors the architectural structure.
 | `mqtt-server-websocket` | server-side MQTT WebSocket subprotocol |
 | `mqtt-client-websocket` | client-side MQTT WebSocket subprotocol |
 
-This matters because MQTT-over-WebSocket is represented as a dedicated protocol composition in the module structure, not as an application example outside the framework.
-
-The WebSocket artifacts do not redefine MQTT. They package the MQTT/WebSocket composition for the corresponding side of the connection.
-
-The same distinction appears in several places:
-
-```text
-type structure
-  -> generic subprotocol template and role aliases
-
-module structure
-  -> native MQTT and WebSocket-carried MQTT artifacts
-
-runtime structure
-  -> WebSocket message flow feeding MQTT receive processing
-```
-
-That consistency helps the reader reason about the feature.
-
+MQTT-over-WebSocket is therefore not an application trick outside the framework. It has an explicit component surface for the server and client sides of the composition.
 
 ### MQTT-over-WebSocket as component selection
 
@@ -570,9 +496,9 @@ The next chapter is therefore not only about another protocol. It is about syste
 
 ### Native MQTT and MQTT-over-WebSocket public surfaces
 
-The distinction between native MQTT and MQTT-over-WebSocket should be visible on both sides of the public surface. On the source side, native MQTT files include the public MQTT headers for the MQTT abstractions they directly use, such as the client role, server role, topics, packets, or the MQTT socket-context bridge. MQTT-over-WebSocket files include the public headers for the WebSocket-carried MQTT abstraction they directly name.
+Native MQTT files include the public MQTT headers for the abstractions they directly use. MQTT-over-WebSocket files include the public headers for the WebSocket-carried MQTT abstraction they directly name.
 
-On the build side, the matching component names make the carrier selection explicit:
+The build-side distinction is explicit:
 
 ```text
 native MQTT:
@@ -584,7 +510,7 @@ MQTT carried by WebSocket:
   mqtt-server-websocket
 ```
 
-The rule is the same as in the lower layers: include the public C++ front door for the abstraction used in the source file, and link the component that represents the binary/link surface selected by the application. Native MQTT and MQTT-over-WebSocket should therefore be read as sibling public surfaces, not as one API plus an incidental include difference.
+Chapter 32 gives the consolidated source-derived component/header matrix for these public surfaces.
 
 ### Closing perspective
 

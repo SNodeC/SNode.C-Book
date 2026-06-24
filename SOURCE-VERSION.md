@@ -9,7 +9,6 @@ This manuscript targets the following SNode.C source snapshot:
 - Commit: `a4deec7317c16c28dad801b999c4a1f9837ca672`
 - SNode.C project version: `1.0.1`
 - Verified on: `2026-06-24`
-- Source-state assumption: `mqtt-fast` is not part of the documented public component surface.
 
 The manuscript, examples, component names, public include paths, and package descriptions should be read against this exact source snapshot. Later repository changes may introduce, rename, or remove components, headers, examples, package components, or implementation details.
 

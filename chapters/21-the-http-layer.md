@@ -319,22 +319,7 @@ These pieces are part of the protocol layer. They keep HTTP concerns grouped wit
 
 ### Lower families and connection handling still matter
 
-Using HTTP does not make the lower carrier disappear. The HTTP layer is organized with variants across lower families and connection-handling choices, such as:
-
-- IPv4 legacy and TLS variants,
-- IPv6 legacy and TLS variants,
-- Unix-domain legacy and TLS variants,
-- RFCOMM legacy and TLS variants,
-- EventSource variants over several of those combinations.
-
-This is important because it prevents a common misconception:
-
-```text
-HTTP
-  -> therefore only IPv4 TCP
-```
-
-That is not the SNode.C model. The model is:
+Using HTTP does not make the lower carrier disappear. In SNode.C, HTTP remains above a selected communication family and connection mode:
 
 ```text
 lower communication family
@@ -343,7 +328,7 @@ lower communication family
           -> HTTP
 ```
 
-HTTP is the higher protocol layer. The lower family and connection layer still define how the peer relationship is carried.
+That is enough to prevent the main misconception. HTTP is the higher protocol layer; IPv4, IPv6, Unix-domain sockets, Bluetooth families where available, and legacy or TLS connection handling still define how the peer relationship is carried.
 
 ### HTTP as a bridge to higher web protocols
 
@@ -370,56 +355,22 @@ That is a clean architectural boundary.
 
 #### EventSource and streaming-style HTTP
 
-EventSource support shows that HTTP is not limited to a short request/response exchange. It can also carry streaming-style behavior.
-
-Here, EventSource is important because it proves that HTTP support is not limited to short request/response exchanges. The response remains HTTP-based, but the behavior becomes stream-like from the application’s point of view:
+EventSource support shows that HTTP is not limited to short request/response exchanges. The response remains HTTP-based, but the application behavior becomes stream-like:
 
 ```text
 HTTP response stream
   -> Server-Sent Events / EventSource behavior
 ```
 
-Chapter 23 treats Server-Sent Events and real-time HTTP in detail. Here, the important point is placement:
-
-```text
-EventSource
-  -> belongs naturally near HTTP
-      -> because it uses HTTP semantics for streaming-style behavior
-```
+Chapter 23 treats Server-Sent Events in detail. Here, the important point is placement: EventSource belongs naturally near HTTP because it uses HTTP semantics for streaming-style behavior.
 
 ### What remains from the lower architecture
 
-An HTTP server still has much in common with the earlier echo server. Both involve:
+An HTTP server still has the same lower architectural skeleton as the stream examples: configured roles, registered instances, lower-family stream connections, context factories, runtime lifecycle, configuration, diagnostics, timing, and failure behavior. What changes is the semantic level of the application handler. The echo-style context interprets stream data directly; the HTTP handler receives request and response objects.
 
-- an application-side server/client handle,
-- a configured communication role,
-- a registered runtime-visible instance,
-- a lower-family stream connection,
-- a context factory,
-- per-connection protocol endpoints,
-- runtime-driven lifecycle,
-- lower-family choices,
-- legacy or TLS connection handling,
-- configuration,
-- diagnostics,
-- timing and failure behavior.
+The same transfer applies to clients. An HTTP client still depends on endpoint configuration, connection establishment, lifecycle callbacks, and runtime integration, but the application now works in HTTP terms.
 
-What changes is the semantic level of the application handler. The echo-style context may interpret stream data directly. The HTTP server handler receives request and response objects.
-
-The same transfer applies to clients. An HTTP client still has:
-
-- an application-side client handle,
-- a configured client-side communication role,
-- a registered runtime-visible client instance,
-- local and remote endpoint configuration underneath,
-- connection establishment,
-- lifecycle callbacks,
-- retry and reconnect behavior where configured,
-- runtime integration.
-
-What changes is that the application works in HTTP terms. The lower architecture remains visible.
-
-The diagnostic story also carries forward. Lower diagnostics explain connection lifecycle, counters, timeouts, retry, reconnect, and shutdown. HTTP diagnostics add parse errors, request boundaries, response completion, upgrade decisions, and streaming state. HTTP does not erase lower-layer evidence; it adds message-level evidence above it.
+Diagnostics also become layered rather than replaced. Lower diagnostics explain connection lifecycle, counters, timeouts, retry, reconnect, and shutdown. HTTP adds parse errors, request boundaries, response completion, upgrade decisions, and streaming state.
 
 ### From HTTP support to web application structure
 
@@ -458,7 +409,7 @@ Chapter 21 explains how HTTP becomes request/response semantics. Chapter 22 asks
 
 ### HTTP public surface: role headers and components
 
-The HTTP layer has its own public surface above the raw stream layer. On the source side, an application that directly names an HTTP server over an IPv4 legacy stream includes the HTTP public role header:
+The HTTP layer has its own public source-facing front doors. An HTTP server over an IPv4 legacy stream uses the HTTP role header:
 
 ```cpp
 #include <web/http/legacy/in/Server.h>
@@ -470,9 +421,7 @@ An HTTP client over the same lower carrier uses the matching client header:
 #include <web/http/legacy/in/Client.h>
 ```
 
-On the build side, the application links the HTTP component surface that corresponds to the HTTP role and carrier used by the target. The generic HTTP server and client components provide the HTTP layer, while concrete carrier-specific components add the selected lower stream stack where such concrete targets exist.
-
-The important rule is the same as in the lower layers. The HTTP header selects the C++ source-facing abstraction. The HTTP component selection supplies the binary/link-facing surface. An HTTP application should not include the lower socket server header merely because HTTP is carried by that socket stack; it should include the HTTP front door unless it directly names the lower socket role as well.
+The application should not include the lower socket server header merely because HTTP is carried by that socket stack. It should include the HTTP abstraction it directly names, and link the HTTP component surface that corresponds to the role and carrier used by the target. Chapter 32 consolidates the full source/header and component mapping.
 
 ### Closing perspective
 

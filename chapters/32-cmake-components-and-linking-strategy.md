@@ -183,33 +183,9 @@ That is why the target names matter. They are not arbitrary labels. They are par
 
 #### Libraries mirror layers
 
-The library target names in SNode.C are unusually instructive. Examples include:
+The library target names in SNode.C are architectural statements. Names such as `net-in-stream-legacy`, `http-server-express-legacy-in`, `websocket-client`, and `mqtt-client-websocket` tell the reader which family, role, protocol layer, or carrier composition is being selected.
 
-- `core`,
-- `core-socket`,
-- `core-socket-stream`,
-- `core-socket-stream-legacy`,
-- `core-socket-stream-tls`,
-- `net`,
-- `net-in`,
-- `net-in-stream`,
-- `net-in-stream-legacy`,
-- `net-in-stream-tls`,
-- `http`,
-- `http-server`,
-- `http-client`,
-- `http-server-express`,
-- `http-server-express-legacy-in`,
-- `websocket`,
-- `websocket-server`,
-- `websocket-client`,
-- `mqtt`,
-- `mqtt-server`,
-- `mqtt-client`,
-- `mqtt-server-websocket`,
-- `mqtt-client-websocket`.
-
-These names are readable architectural statements. For example:
+For example:
 
 ```text
 net-in-stream-tls
@@ -237,7 +213,7 @@ role: client
 carrier composition: WebSocket
 ```
 
-A target name should make the role of the component visible before the source file is opened. The example list is intentionally written without intermediate library holes: `net-in-stream-legacy` and `net-in-stream-tls` are not shown as if they appeared directly below `net`; the intermediate `net-in` and `net-in-stream` targets are part of the visible layering. SNode.C largely follows that principle. Therefore, renaming a target is not a cosmetic act in SNode.C.
+This is why target names are not cosmetic in SNode.C. They are part of the public build surface.
 
 #### A public component graph read from `logger` upward
 
@@ -368,46 +344,30 @@ That is the component architecture the build exposes.
 
 #### Public header hierarchy mirrors the component hierarchy
 
-The component graph is only one public view. The include hierarchy is the source-side view. A SNode.C source file should normally include the highest public header that owns the abstraction it directly names. It should not assemble the whole lower stack by including implementation-support headers manually.
+The component graph is the build-side view. The include hierarchy is the source-side view. A SNode.C source file should normally include the highest public header that owns the abstraction it directly names; it should not assemble the whole lower stack by including implementation-support headers manually.
 
-For example, a concrete IPv4 legacy socket server is selected in source by the public role header:
+For example, a concrete IPv4 legacy socket server is selected in source by:
 
 ```cpp
 #include <net/in/stream/legacy/SocketServer.h>
 ```
 
-That header sits above the lower pieces that make the role work: the generic IPv4 stream server, the legacy acceptor and connection, and the concrete server configuration. The matching component is `net-in-stream-legacy`.
-
-The same pattern is visible at the HTTP and Express levels. An Express IPv4 legacy WebApp is selected by:
+The matching component is `net-in-stream-legacy`. At the Express level, an IPv4 legacy WebApp is selected by:
 
 ```cpp
 #include <express/legacy/in/WebApp.h>
 ```
 
-The header-side stack can be read as:
-
-```text
-<express/legacy/in/WebApp.h>
-  -> <web/http/legacy/in/Server.h>
-      -> <web/http/server/Server.h>
-      -> <net/in/stream/legacy/SocketServer.h>
-          -> <net/in/stream/SocketServer.h>
-          -> <core/socket/stream/legacy/SocketAcceptor.h>
-          -> <core/socket/stream/legacy/SocketConnection.h>
-          -> <net/in/stream/legacy/config/ConfigSocketServer.h>
-```
-
-The corresponding component-side stack is not textually identical, but it should rhyme with the same architecture:
+The corresponding component-side stack is not textually identical, but it rhymes with the same architecture:
 
 ```text
 snodec::http-server-express-legacy-in
   -> snodec::http-server-express
       -> snodec::http-server
   -> snodec::net-in-stream-legacy
-      -> lower net/core stream components
 ```
 
-The distinction matters. Headers expose declarations, aliases, templates, inline helpers, and source-facing public roles. Components expose compiled libraries, exported targets, usage requirements, and transitive link dependencies. They are two public contracts for the same stack, not one mechanism repeated twice.
+Headers expose declarations, aliases, templates, inline helpers, and source-facing public roles. Components expose compiled libraries, exported targets, usage requirements, and transitive link dependencies. They are two public contracts for the same stack, not one mechanism repeated twice.
 
 #### Source-derived component/header matrix
 
@@ -633,18 +593,7 @@ TLS is a connection-layer specialization, not a rewrite of the application model
 
 ### Protocol and application-layer components
 
-Above core and transport composition, SNode.C builds protocol and application-layer targets.
-
-These targets should be read in the same disciplined way:
-
-```text
-What is the base protocol component?
-What is the role-specific component?
-What is the concrete family/transport component?
-Which dependency is owned by which layer?
-```
-
-The following subsections focus on the build-side graph. The corresponding source-side rule remains the same: application code includes the public header for the abstraction it directly names, while the target links the component that owns the corresponding binary surface. The two views should rhyme architecturally, but they do not have to repeat the same tree node for node.
+Above core and transport composition, SNode.C builds protocol and application-layer targets. The rule remains the same: read each target as the layer, role, and composition it owns; include the public header for the abstraction the source file directly names; link the component that owns the corresponding binary surface.
 
 #### HTTP and upgrade layout
 
@@ -725,23 +674,13 @@ The lower HTTP server layer is reached through the base Express component. The c
 
 #### WebSocket upgrade components
 
-On the source side, WebSocket code should still include the public header for the WebSocket abstraction it directly names: upgrade helper, client or server role, or subprotocol factory. The build-side discussion here explains where the compiled upgrade components live and how they are found at runtime.
-
-The WebSocket build obtains HTTP upgrade directories from the HTTP target and places WebSocket-related artifacts beneath the HTTP upgrade layout.
-
-The build layout mirrors the protocol model. WebSocket is an HTTP upgrade, not a completely unrelated protocol island.
-
-The CMake structure therefore expresses the same architectural fact that the WebSocket chapters expressed in protocol terms. The WebSocket component belongs to the HTTP upgrade family. Its build placement reflects that.
+WebSocket belongs to the HTTP upgrade family. The WebSocket build obtains HTTP upgrade directories from the HTTP target and places WebSocket-related artifacts beneath that layout. This mirrors the protocol model: WebSocket is an HTTP upgrade, not a separate protocol island.
 
 #### MQTT native and WebSocket-carried components
 
-The MQTT chapters discussed the public headers for the MQTT abstractions an application names in source code. Here the same distinction is shown from the build side: native MQTT and MQTT-over-WebSocket are separate component selections.
+Native MQTT and MQTT-over-WebSocket are separate component selections. The base `mqtt` target supplies shared MQTT support, while `mqtt-client` and `mqtt-server` express native endpoint roles. `mqtt-client-websocket` and `mqtt-server-websocket` express the WebSocket-carried composition.
 
-The MQTT build constructs a base `mqtt` target and then descends into client and server subdirectories. In the current build, the MQTT component is built only when `nlohmann_json >= 3.11` is found.
-
-SNode.C also supports WebSocket-carried MQTT through explicit MQTT-over-WebSocket targets. This is another important build lesson. The build does not treat MQTT-over-WebSocket as an application trick. It appears as a first-class component surface.
-
-Native MQTT and MQTT over WebSocket are related protocol compositions, but they deserve distinct build artifacts. The build tree makes that distinction visible:
+The distinction is intentional:
 
 ```text
 mqtt-client
@@ -750,7 +689,7 @@ mqtt-client-websocket
 mqtt-server-websocket
 ```
 
-A consumer can therefore select the protocol role and carrier composition deliberately.
+A consumer can therefore select the MQTT role and carrier composition deliberately.
 
 ### Optional features and generated configuration
 
@@ -948,7 +887,7 @@ Therefore, examples for external applications should use namespaced targets.
 
 Not every target sits at the same abstraction level.
 
-Some targets are base components:
+Base components name reusable protocol or application layers, for example:
 
 ```text
 http
@@ -958,7 +897,7 @@ mqtt
 websocket
 ```
 
-Some targets are concrete composition components:
+Concrete composition components bind those layers to a family, role, or carrier:
 
 ```text
 net-in-stream-legacy
@@ -969,29 +908,7 @@ mqtt-server-websocket
 mqtt-client-websocket
 ```
 
-Some targets are lower operational components:
-
-```text
-core
-core-socket
-core-socket-stream
-core-socket-stream-legacy
-core-socket-stream-tls
-```
-
-Some targets are application targets:
-
-```text
-snode.c
-testpost
-jsonserver
-mqttbroker
-mqttstore
-```
-
-This distinction matters. A base component often represents a protocol or application layer. A concrete composition component often binds a role to a carrier, family, or connection mode. A lower operational component provides reusable machinery below both. An application target assembles selected pieces into an executable. Public headers follow the same abstraction levels: some expose base protocol types, some expose concrete role aliases, and some expose lower operational support for code that directly names those lower types.
-
-Reading the target name with this distinction in mind prevents many linking misunderstandings.
+Lower operational components provide reusable machinery below both, while application targets assemble selected pieces into executables. Reading target names with this distinction in mind prevents many linking misunderstandings.
 
 ### Reading a SNode.C CMake target
 

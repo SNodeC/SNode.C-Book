@@ -527,33 +527,9 @@ This pairing is useful, but it is not the same abstraction on both sides. The se
 
 ### Lower layers and diagnostics still matter
 
-SSE is a high-level event-stream behavior, but it still depends on lower-layer behavior. The event stream can be affected by DNS or address selection, lower-family endpoint configuration, legacy or TLS connection handling, HTTP response validation, read/write behavior, disconnects, retry and reconnect timing, intentional close, parser errors, and server-side application behavior.
+SSE is high-level event-stream behavior, but it is still a long-lived HTTP response over a lower connection. Operationally, the relevant evidence is layered: connection establishment, response validation, transition to `OPEN`, parser errors, retry interval, last event ID, disconnects, and intentional close.
 
-For SSE, the operator often needs to know:
-
-- whether the HTTP connection was established,
-- whether the SSE response opened,
-- whether the stream entered `OPEN`,
-- whether an error listener fired,
-- whether reconnect is expected,
-- which retry interval is active,
-- which last event ID is known,
-- whether the stream was closed intentionally.
-
-This connects directly to the diagnostic model from Chapter 18 and the retry/reconnect model from Chapter 20:
-
-```text
-Chapter 18
-  -> logs, connection identity, counters, visible configuration
-
-Chapter 20
-  -> reconnect, retry, timeout, intentional close
-
-Chapter 23
-  -> ready state, response validation, parser errors, last event ID, retry interval
-```
-
-SSE does not need a new operational philosophy. It needs the existing one applied to a long-lived HTTP stream.
+That connects directly to the diagnostic model from Chapter 18 and the configuration/timing model from Chapter 20. SSE does not need a new operational philosophy; it applies the existing one to a long-lived HTTP stream.
 
 ### Real-time-style HTTP
 
@@ -583,15 +559,13 @@ The timing behavior still depends on the network, server, client, buffering, and
 
 ### EventSource public surface
 
-Server-sent events also follow the public-surface rule. On the source side, a client-side file that directly uses the IPv4 legacy EventSource wrapper includes:
+Client-side EventSource follows the same public-surface rule. A source file that directly uses the IPv4 legacy EventSource wrapper includes:
 
 ```cpp
 #include <web/http/legacy/in/EventSource.h>
 ```
 
-This is higher than including the raw HTTP client header. The EventSource public header selects the EventSource tool over the concrete HTTP client stack. If the application directly names only EventSource behavior, that is the source-facing front door. Lower HTTP and socket details remain part of the selected stack, not a list of headers the application has to assemble manually.
-
-On the build side, the target still needs the HTTP client and carrier component surface required by that concrete EventSource implementation. The header expresses the C++ abstraction used in the source file; the component selection expresses the library surface needed to build and link that abstraction.
+That header is higher than the raw HTTP client header because the file names EventSource behavior. Server-side SSE, in contrast, is an HTTP or Express route that validates the request and streams `text/event-stream` response fragments. Chapter 32 summarizes the broader component/header mapping.
 
 ### Closing perspective
 

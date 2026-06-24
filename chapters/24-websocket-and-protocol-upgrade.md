@@ -569,48 +569,23 @@ lower connection
                       -> application shutdown
 ```
 
-That is why the earlier diagnostic chapters still matter.
-
-Chapter 18 gave the reader the visibility vocabulary: logs, connection identity, counters, effective configuration, and runtime evidence. Chapter 20 gave the reader the timing and failure vocabulary: timeout, retry, reconnect, shutdown, and failure phase. Chapter 24 adds upgrade-boundary evidence: negotiation, selected subprotocol, frame parsing, control frames, and close behavior.
-
-Useful operational questions include:
-
-- Did the lower connection exist?
-- Did TLS succeed, if TLS was used?
-- Did the HTTP upgrade request reach the server?
-- Was `Connection: Upgrade` present?
-- Was an upgrade factory selected?
-- Was the upgrade accepted or rejected?
-- Was the WebSocket accept key valid on the client side?
-- Which subprotocol was requested?
-- Which subprotocol was selected?
-- Was the socket context replaced successfully?
-- Did frame parsing fail?
-- Was a close frame sent or received?
-- Did the application close intentionally?
-- Did the lower connection fail unexpectedly?
-
-WebSocket does not need a separate diagnostic philosophy. It needs the existing layered diagnostic model applied at the upgrade boundary and above it.
+Chapter 24 adds upgrade-boundary evidence to the earlier diagnostic vocabulary: negotiation, selected subprotocol, frame parsing, control frames, and close behavior. The operational question is not “which single layer failed?”, but where the first observable failure appears in this stack.
 
 ### From WebSocket carriers to MQTT semantics
 
-WebSocket also prepares the next part of the book.
+The next chapter moves to MQTT. MQTT can be used directly in SNode.C, and Chapter 26 will show how it can also be carried as a WebSocket subprotocol.
 
-The next chapter moves to MQTT. MQTT is a message-oriented protocol family. It can be used directly in SNode.C, and later it can also reappear over WebSocket.
-
-The connection to this chapter is:
+The bridge from this chapter is simple:
 
 ```text
 WebSocket
   -> upgraded bidirectional message channel
 
 MQTT over WebSocket
-  -> MQTT semantics carried as a WebSocket subprotocol
+  -> MQTT semantics carried through that channel
 ```
 
-MQTT over WebSocket will not be a new architectural trick. It will be a protocol semantic layer carried as a WebSocket subprotocol over an upgraded HTTP connection.
-
-That later combination becomes easier to understand after Chapter 24. WebSocket provides the upgraded message channel. MQTT provides the protocol semantics.
+WebSocket provides the upgraded carrier. MQTT provides the protocol semantics.
 
 ::: {.snodec-remember title="What to remember"}
 - WebSocket begins as HTTP upgrade and continues as a bidirectional message-oriented connection.
@@ -628,11 +603,9 @@ That later combination becomes easier to understand after Chapter 24. WebSocket 
 
 ### WebSocket public surface
 
-WebSocket has more moving parts than a simple stream server because it crosses the HTTP upgrade boundary and may involve subprotocol factories. The same source/build discipline still applies. On the source side, include the highest public header for the WebSocket abstraction the file directly names: an upgrade helper, a client or server WebSocket role, or a subprotocol factory. Do not include lower HTTP or socket headers only because WebSocket is implemented through HTTP upgrade.
+WebSocket crosses several role boundaries: HTTP negotiation, upgraded socket context, WebSocket framing, and optional subprotocol selection. The safe rule is therefore local: include the highest public header for the WebSocket abstraction the file directly names, and link the WebSocket component surface selected by the target.
 
-On the build side, the WebSocket components express the binary/link side of the same composition. Targets such as `websocket-server`, `websocket-client`, and the MQTT-over-WebSocket components place WebSocket above HTTP upgrade and the selected lower carrier. The source-side include path should therefore express the C++ abstraction actually used in the file, while the linked component should express the library surface selected by the target.
-
-The WebSocket chapter should keep this explanation cautious. WebSocket code often crosses role boundaries: HTTP negotiation, upgraded socket context, WebSocket framing, and optional subprotocol selection. A single universal include rule would hide that structure. The safer rule is to keep headers and components at the same abstraction level as the code being written.
+On the build side, `websocket`, `websocket-server`, and `websocket-client` express different levels of that composition. MQTT-over-WebSocket components then add the MQTT/WebSocket adapter on top of the relevant WebSocket role. Chapter 32 gives the consolidated component/header matrix.
 
 ### Closing perspective
 

@@ -450,32 +450,9 @@ common request-processing behavior
 
 ### Lower layers still matter
 
-The Express-like layer changes application organization. It does not remove lower-layer facts.
+The Express-like layer changes application organization. It does not remove the lower stack. A route handler may look high-level, but bind/listen activation, TLS setup, HTTP parsing, response streaming, upgrade behavior, timeout boundaries, diagnostics, and shutdown still belong to the same layered runtime model.
 
-A web application still has:
-
-- an application-side web app/server handle,
-- a registered server instance,
-- a lower communication family,
-- legacy or TLS connection handling,
-- HTTP parsing and response generation underneath,
-- runtime lifecycle,
-- configuration,
-- diagnostics,
-- timeouts,
-- failure behavior.
-
-This matters during operation. A route handler may look high-level, but failures can still originate in:
-
-- bind or listen activation,
-- TLS setup,
-- read/write timeout boundaries,
-- retry or reconnect policy,
-- HTTP parsing errors,
-- response streaming behavior,
-- protocol upgrade behavior.
-
-The Express-like layer is useful because it organizes application logic. It is not a reason to forget the architecture beneath it.
+That is the useful distinction: Express organizes web application logic; it does not hide the architecture beneath it.
 
 ### From Express-like routing to Server-Sent Events
 
@@ -508,35 +485,34 @@ Chapter 23 then asks what happens when a route is not a short request/response e
 
 ### Express public surface: WebApp header and carrier component
 
-The Express-like layer continues the same source/build pairing. On the source side, a file that directly uses the WebApp type for an IPv4 legacy Express server includes:
+The Express-like layer continues the source/build pairing. A file that directly uses the WebApp type for an IPv4 legacy Express server includes:
 
 ```cpp
 #include <express/legacy/in/WebApp.h>
 ```
 
-That public header selects an Express WebApp over the HTTP server for the IPv4 legacy stream stack. A source file that uses the convenience server helper overloads includes the corresponding server header:
+A file that uses the convenience server helper overloads includes the corresponding server header:
 
 ```cpp
 #include <express/legacy/in/Server.h>
 ```
 
-On the build side, the matching front door is the concrete Express carrier component, for example:
+The matching build-side front door is the concrete Express carrier component:
 
 ```text
 http-server-express-legacy-in
 ```
 
-Its dependency path includes the base Express component and the concrete carrier component. The base Express component depends on the HTTP server layer; the concrete carrier component supplies the selected lower stream role. In abbreviated form, the relationship is:
+That component selects the base Express layer and the concrete IPv4 legacy stream carrier. In abbreviated form:
 
 ```text
 snodec::http-server-express-legacy-in
   -> snodec::http-server-express
       -> snodec::http-server
   -> snodec::net-in-stream-legacy
-      -> lower net/core stream components
 ```
 
-The include-side and link-side hierarchies therefore rhyme: Express sits above HTTP, and HTTP sits above the selected lower stream role. The header makes that stack visible to C++ source; the component makes it visible to the linker and package configuration.
+The source-side and build-side hierarchies therefore rhyme without being the same mechanism. Chapter 32 gives the source-derived matrix for the broader set of components and headers.
 
 ### Closing perspective
 
