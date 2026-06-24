@@ -102,6 +102,10 @@ This book is not:
   a complete TLS, HTTP, MQTT, Bluetooth, or database reference
 ```
 
+### Source version used by this book
+
+SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the source snapshot recorded in `SOURCE-VERSION.md`: tag `Book`, commit `a4deec7317c16c28dad801b999c4a1f9837ca672`, project version `1.0.1`. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
+
 ### Why “layered” matters here
 
 In technical writing, the word *layered* is sometimes used lazily. It can mean almost anything from “we have modules” to “there are several abstraction levels.” In SNode.C, however, layering is not decorative. It is operational.

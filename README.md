@@ -20,8 +20,8 @@ The book is written for experienced C++ developers, advanced students, and syste
 
 - `metadata.yaml` — Pandoc/LaTeX metadata for the book build.
 - `book-files.txt` — main manuscript file order.
-- `book-files-existing-only.txt` — alternate file order used by the existing-only build target.
 - `STRUCTURE.md` — human-readable overview of the manuscript structure.
+- `SOURCE-VERSION.md` — exact SNode.C source snapshot used for manuscript alignment.
 - `proposal/book-proposal-package.md` — publisher-facing proposal material.
 - `chapters/` — one Markdown file per chapter.
 - `parts/` — part divider files.
@@ -34,11 +34,18 @@ examples/MiniGateway-Base
 examples/MiniGateway-Extended
 ```
 
+
+## Target SNode.C source version
+
+This package is aligned with the SNode.C source snapshot recorded in `SOURCE-VERSION.md`. The authoritative source pin is the full commit SHA `a4deec7317c16c28dad801b999c4a1f9837ca672`. The human-facing tag is `Book` on the `master` source line, and the recorded SNode.C project version is `1.0.1`.
+
+The manuscript is not intended to describe arbitrary future states of the SNode.C repository. If a newer checkout changes component names, public headers, examples, or package layout, those changes must be reviewed before the manuscript is updated.
+
 ## MiniGateway source and tested-code policy
 
 `examples/MiniGateway-Base` is the authoritative source tree for Chapter 37. `examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
 
-Both MiniGateway versions are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C version or commit named for the manuscript. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
+Both MiniGateway versions are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C source snapshot recorded in `SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
 
 ## Heading convention
 
@@ -60,42 +67,38 @@ Manual chapter numbers are not part of chapter headings. LaTeX/Pandoc numbers pa
 
 ## Build
 
-Install Pandoc and a XeLaTeX-capable TeX distribution. The ordinary manuscript build can be run through the Makefile wrapper:
-
-```bash
-make pdf
-```
-
-To build the existing-only file list:
-
-```bash
-make pdf-existing
-```
-
-To generate LaTeX only:
-
-```bash
-make tex
-```
-
-The same manuscript can also be built directly through CMake:
+Install Pandoc, `pandoc-crossref`, and a XeLaTeX-capable TeX distribution. The manuscript is built through CMake:
 
 ```bash
 cmake -S . -B build
 cmake --build build --target pdf
 ```
 
-The CMake build reads `book-files.txt` and `book-files-existing-only.txt` during configuration. If either file list changes, reconfigure the build directory.
+To generate LaTeX only:
 
-## Proposal / publisher package
+```bash
+cmake --build build --target tex
+```
 
-The proposal package target creates a clean reviewer-facing archive in `packages/`:
+To build the publisher-facing proposal PDF:
+
+```bash
+cmake --build build --target proposal
+```
+
+The CMake build reads `book-files.txt` during configuration. If the manuscript file list changes, reconfigure the build directory.
+
+## Source package and publisher/reviewer package
+
+During editing, a source package may contain the Markdown manuscript, proposal source, metadata, figures, filters, LaTeX support, and example source trees without a freshly generated full manuscript PDF. Such a package is useful for inspection and refinement, but the full PDF must be rebuilt before distribution.
+
+The `proposal-package` target creates the final publisher/reviewer archive in `packages/`:
 
 ```bash
 cmake --build build --target proposal-package
 ```
 
-The generated archive contains the proposal, manuscript Markdown sources, metadata, structure files, and example source trees needed for publisher or reviewer inspection. It should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
+That generated archive is intended to contain both generated PDFs, the manuscript/proposal sources, source-version pin, metadata, structure files, filters, LaTeX support, figures, and example source trees needed for publisher or reviewer inspection. It should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
 
 ## Positioning
 

@@ -2,7 +2,7 @@
 
 This is the current event-driven MiniGateway source package extracted from the book project.
 
-It contains the complete source tree used by Chapter 37:
+It contains the complete source tree used by Chapter 38:
 
 - `CMakeLists.txt`
 - `main.cpp`

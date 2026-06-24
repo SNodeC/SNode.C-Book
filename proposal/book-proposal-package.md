@@ -23,6 +23,11 @@ The book is written for experienced C++ developers, advanced students, and syste
 
 The manuscript starts with small working examples and gradually expands toward HTTP, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, persistence, deployment, testing, and system design. It ends with MiniGateway, a complete guided application in two forms: a base version and an extended version. The base version demonstrates HTTP, SSE, MQTT, application-owned state, and event-driven measurement flow. The extended version shows how an additional Unix-domain input boundary can be added without disturbing the existing protocol surfaces.
 
+
+## Source-version baseline
+
+The manuscript is aligned with the SNode.C source snapshot recorded in `SOURCE-VERSION.md`: repository `SNodeC/snode.c`, tag `Book`, commit `a4deec7317c16c28dad801b999c4a1f9837ca672`, project version `1.0.1`. This matters because SNode.C is an active framework and repository branches may move after a manuscript package is produced.
+
 ## Audience
 
 ### Primary audience

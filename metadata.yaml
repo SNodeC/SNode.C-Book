@@ -18,8 +18,8 @@ geometry: margin=25mm
 papersize: a4
 
 toc: true
-toc-depth: 2
-secnumdepth: 3
+toc-depth: 1
+secnumdepth: 1
 
 hyperrefoptions:
   - bookmarks=true
