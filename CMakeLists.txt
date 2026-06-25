@@ -35,65 +35,11 @@ set_property(
   PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/book-files.txt")
 
 # -----------------------------------------------------------------------------
-# TikZ figure build
+# Figure build
 # -----------------------------------------------------------------------------
-# Figure source files live in figures/src and are named fig-*.tex. They are
-# compiled to PDF files in figures/pdf so Pandoc can include them from Markdown
-# as ordinary image files.
-set(FIGURE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/figures/src")
-set(FIGURE_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/figures/pdf")
-set(FIGURE_BUILD_ROOT "${BUILD_DIR}/figures")
-
-file(GLOB FIGURE_SOURCES CONFIGURE_DEPENDS "${FIGURE_SOURCE_DIR}/fig-*.tex")
-file(GLOB FIGURE_SUPPORT_FILES CONFIGURE_DEPENDS "${FIGURE_SOURCE_DIR}/*.tex")
-if(FIGURE_SUPPORT_FILES AND FIGURE_SOURCES)
-  list(REMOVE_ITEM FIGURE_SUPPORT_FILES ${FIGURE_SOURCES})
-endif()
-
-set(FIGURE_PDFS)
-if(FIGURE_SOURCES)
-  find_program(XELATEX_EXECUTABLE xelatex)
-  if(NOT XELATEX_EXECUTABLE)
-    message(
-      FATAL_ERROR "xelatex was not found. It is required to build TikZ figures."
-    )
-  endif()
-
-  foreach(FIGURE_SOURCE IN LISTS FIGURE_SOURCES)
-    get_filename_component(FIGURE_NAME "${FIGURE_SOURCE}" NAME_WE)
-    set(FIGURE_BUILD_DIR "${FIGURE_BUILD_ROOT}/${FIGURE_NAME}")
-    set(FIGURE_PDF "${FIGURE_OUTPUT_DIR}/${FIGURE_NAME}.pdf")
-
-    add_custom_command(
-      OUTPUT "${FIGURE_PDF}"
-      COMMAND "${CMAKE_COMMAND}" -E make_directory "${FIGURE_BUILD_DIR}"
-      COMMAND "${CMAKE_COMMAND}" -E make_directory "${FIGURE_OUTPUT_DIR}"
-      COMMAND "${XELATEX_EXECUTABLE}" -interaction=nonstopmode -halt-on-error
-              -output-directory "${FIGURE_BUILD_DIR}" "${FIGURE_SOURCE}"
-      COMMAND "${CMAKE_COMMAND}" -E copy_if_different
-              "${FIGURE_BUILD_DIR}/${FIGURE_NAME}.pdf" "${FIGURE_PDF}"
-      DEPENDS "${FIGURE_SOURCE}" ${FIGURE_SUPPORT_FILES}
-      WORKING_DIRECTORY "${FIGURE_SOURCE_DIR}"
-      COMMENT "Building TikZ figure ${FIGURE_NAME}"
-      VERBATIM)
-
-    list(APPEND FIGURE_PDFS "${FIGURE_PDF}")
-  endforeach()
-
-  add_custom_target(figures DEPENDS ${FIGURE_PDFS})
-else()
-  add_custom_target(
-    figures
-    COMMAND "${CMAKE_COMMAND}" -E make_directory "${FIGURE_OUTPUT_DIR}"
-    COMMENT "No TikZ figure sources found"
-    VERBATIM)
-endif()
-
-add_custom_target(
-  figures-clean
-  COMMAND "${CMAKE_COMMAND}" -E rm -rf "${FIGURE_BUILD_ROOT}"
-  COMMAND "${CMAKE_COMMAND}" -E rm -rf "${FIGURE_OUTPUT_DIR}"
-  VERBATIM)
+# Figure-specific build rules live in figures/CMakeLists.txt.  The subdirectory
+# creates the `figures`, `figures-contact-sheet`, and `figures-clean` targets.
+add_subdirectory(figures)
 
 function(make_pandoc_target target_name output_file)
   add_custom_target(
@@ -220,6 +166,7 @@ set(REQUIRED_SOURCE_FILES
     "book-files.txt"
     "SOURCE-VERSION.md"
     "CMakeLists.txt"
+    "figures/CMakeLists.txt"
     "proposal/book-proposal-package.md")
 
 set(REQUIRED_SOURCE_DIRS
@@ -363,6 +310,7 @@ Included:
 - proposal/
 - chapters/
 - parts/
+- figures/CMakeLists.txt
 - figures/src/
 - figures/pdf/
 - filters/
