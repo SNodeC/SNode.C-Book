@@ -24,24 +24,30 @@
 % ----------------------------------------------------------------------
 % Palette.
 % ----------------------------------------------------------------------
-\definecolor{snodecInk}{HTML}{1F2933}
-\definecolor{snodecMuted}{HTML}{52616B}
-\definecolor{snodecRule}{HTML}{7C8E9B}
-\definecolor{snodecBlue}{HTML}{0B3D4A}
-\definecolor{snodecBlueSoft}{HTML}{E3EEF4}
-\definecolor{snodecGreen}{HTML}{2F6F5E}
-\definecolor{snodecGreenSoft}{HTML}{E9F3EE}
-\definecolor{snodecOrange}{HTML}{B86B2B}
-\definecolor{snodecOrangeSoft}{HTML}{F8EEE5}
-\definecolor{snodecRed}{HTML}{A64B4B}
-\definecolor{snodecRedSoft}{HTML}{F7EAEA}
-\definecolor{snodecGraySoft}{HTML}{F2F2EF}
+\definecolor{snodecInk}{HTML}{17212B}
+\definecolor{snodecMuted}{HTML}{4B5F68}
+\definecolor{snodecRule}{HTML}{7A8B93}
 
-% Title-color palette: same hue family as the box, but with stronger contrast.
+\definecolor{snodecBlue}{HTML}{0B4F6C}
+\definecolor{snodecBlueSoft}{HTML}{E3F2F8}
+
+\definecolor{snodecGreen}{HTML}{1F7A68}
+\definecolor{snodecGreenSoft}{HTML}{E5F4EF}
+
+\definecolor{snodecOrange}{HTML}{C46A1B}
+\definecolor{snodecOrangeSoft}{HTML}{FAEFE3}
+
+\definecolor{snodecRed}{HTML}{B24A4A}
+\definecolor{snodecRedSoft}{HTML}{F8E8E8}
+
+\definecolor{snodecGraySoft}{HTML}{F1F3F2}
+
+% Title-color palette:
+% same hue family as the box, but with stronger contrast.
 \colorlet{snodecTitleBlue}{snodecBlue}
-\colorlet{snodecTitleGreen}{snodecGreen!70!black}
-\colorlet{snodecTitleOrange}{snodecOrange!90!black}
-\definecolor{snodecTitleGray}{HTML}{52616B}
+\definecolor{snodecTitleGreen}{HTML}{155F51}
+\definecolor{snodecTitleOrange}{HTML}{A95516}
+\definecolor{snodecTitleGray}{HTML}{4B5F68}
 \colorlet{snodecTitleRed}{snodecRed}
 
 % ----------------------------------------------------------------------
@@ -131,7 +137,7 @@
   },
   snodec boundary title/.style={
     font=\sffamily\bfseries\small,
-    text=snodecBlue,
+    text=snodecTitleBlue,
     fill=white,
     fill opacity=1,
     text opacity=1,
@@ -177,7 +183,7 @@
   },
   snodec label/.style={
     font=\sffamily\bfseries\small,
-    text=snodecBlue
+    text=snodecTitleBlue
   },
   % Backward-compatible aliases for old figure sources.
   snodec box/.style={snodec runtime box},
