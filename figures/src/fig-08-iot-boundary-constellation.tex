@@ -82,7 +82,7 @@
 % ----------------------------------------------------------------------
 \draw[boundary flow]
   (devices.south)
-  -- node[arrow label, right=1.5mm] {telemetry / commands}
+  -- node[arrow label, left=1.5mm] {telemetry / commands}
   (gateway.north -| devices.center);
 
 \draw[boundary flow]
@@ -92,7 +92,7 @@
 
 \draw[boundary flow]
   (state.north)
-  -- node[arrow label, right=1.5mm] {state read/write}
+  -- node[arrow label, left=1.5mm] {state read/write}
   (gateway.south -| state.center);
 
 \draw[boundary flow]

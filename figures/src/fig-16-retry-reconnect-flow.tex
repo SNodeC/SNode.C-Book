@@ -289,9 +289,12 @@
 % ----------------------------------------------------------------------
 % Arrows into and out of the inner classification panel.
 % These use \halfArrowL outside the panel.
+% The incoming arrow now ends below the title area so its arrow head does not
+% show through the boundary title mask.
 % ----------------------------------------------------------------------
-\draw[flow] (connectAttempt.south) -- (classifyPanel.north);
-\draw[flow line] (classifyPanel.north) -- (outcomeBranch);
+\coordinate (classifyEntry) at ([yshift=-4mm]classifyPanel.north);
+\draw[flow line] (connectAttempt.south) -- (classifyEntry);
+\draw[flow line] (classifyEntry) -- (outcomeBranch);
 
 \node[action block, below=\halfArrowL of classifyPanel] (nextAttempt) {%
   \textbf{\textcolor{snodecBlue}{Initiate next connect attempt}}

@@ -155,12 +155,12 @@
   ] (durablePanel) {};
 \end{scope}
 
-\node[panel label, anchor=west]
-  at ($(transientPanel.north west)+(5mm,0)$)
+\node[panel label]
+  at (transientPanel.north)
   {Transient communication side};
 
-\node[panel label, anchor=west]
-  at ($(durablePanel.north west)+(5mm,0)$)
+\node[panel label]
+  at (durablePanel.north)
   {Durable state side};
 
 % ----------------------------------------------------------------------
