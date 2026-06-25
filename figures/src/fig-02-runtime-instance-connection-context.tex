@@ -8,8 +8,8 @@
   app block/.style={
     draw=snodecGreen!75,
     fill=snodecGreenSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=left,
     text width=92mm,
     inner xsep=4.5mm,
@@ -19,45 +19,45 @@
   runtime block/.style={
     draw=snodecBlue!75,
     fill=snodecBlueSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=left,
     text width=92mm,
     inner xsep=4.5mm,
     inner ysep=2.6mm,
     minimum height=11mm
   },
-  flow/.style={snodec arrow, draw=snodecBlue!65},
-  register flow/.style={snodec arrow, draw=snodecGreen!70},
-  arrow label/.style={font=\sffamily\footnotesize, text=snodecMuted, fill=white, inner sep=1.2pt}
+  flow/.style={snodec main arrow, draw=snodecBlue!65},
+  register flow/.style={snodec main arrow, draw=snodecGreen!70},
+  arrow label/.style={snodec arrow label}
 ]
 
 \node[app block] (appcode) {\textbf{\textcolor{snodecGreen}{Application code}}\\[-0.5mm]
   {\footnotesize Creates and configures communication roles.}
 };
 
-\node[app block, below=5.5mm of appcode] (handle) {\textbf{\textcolor{snodecGreen}{Application-side handle}}\\[-0.5mm]
+\node[app block, below=\snodecGapSmall of appcode] (handle) {\textbf{\textcolor{snodecGreen}{Application-side handle}}\\[-0.5mm]
   {\footnotesize Visible \texttt{SocketServer} or \texttt{SocketClient} object.}
 };
 
-\node[runtime block, below=11mm of handle] (instance) {\textbf{\textcolor{snodecBlue}{Instance}}\\[-0.5mm]
+\node[runtime block, below=\snodecGapLarge of handle] (instance) {\textbf{\textcolor{snodecBlue}{Instance}}\\[-0.5mm]
   {\footnotesize Registered runtime communication role.}
 };
 
-\node[runtime block, below=5.5mm of instance] (connection) {\textbf{\textcolor{snodecBlue}{Connection}}\\[-0.5mm]
+\node[runtime block, below=\snodecGapSmall of instance] (connection) {\textbf{\textcolor{snodecBlue}{Connection}}\\[-0.5mm]
   {\footnotesize Concrete peer relationship.}
 };
 
-\node[runtime block, below=5.5mm of connection] (factory) {\textbf{\textcolor{snodecBlue}{Context factory}}\\[-0.5mm]
+\node[runtime block, below=\snodecGapSmall of connection] (factory) {\textbf{\textcolor{snodecBlue}{Context factory}}\\[-0.5mm]
   {\footnotesize Creates contexts for connections.}
 };
 
-\node[runtime block, below=5.5mm of factory] (context) {\textbf{\textcolor{snodecBlue}{Context}}\\[-0.5mm]
+\node[runtime block, below=\snodecGapSmall of factory] (context) {\textbf{\textcolor{snodecBlue}{Context}}\\[-0.5mm]
   {\footnotesize Per-connection protocol behavior.}
 };
 
 \draw[register flow] (appcode.south) -- (handle.north);
-\draw[register flow] (handle.south) -- node[arrow label, right=1.5mm] {registers role} (instance.north);
+\draw[register flow] (handle.south) -- (instance.north);
 \draw[flow] (instance.south) -- (connection.north);
 \draw[flow] (connection.south) -- (factory.north);
 \draw[flow] (factory.south) -- (context.north);
@@ -66,27 +66,15 @@
   \node[
     fit=(instance)(connection)(factory)(context),
     snodec boundary,
-    inner sep=4.5mm,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1pt]above left:core::SNodeC runtime}
+    inner sep=\snodecBoundaryInnerSep
   ] (runtime) {};
 \end{scope}
 
+% Foreground overlay title: masks the dashed border and any arrow below it.
 
-% ----------------------------------------------------------------------
-% Fixed 160 mm output canvas.
-% The drawing stays at native size and is centered horizontally.
-% Vertical height remains natural, with the former standalone 7pt margin
-% preserved above and below.
-% ----------------------------------------------------------------------
-\coordinate (snodecCanvasCenter) at (current bounding box.center);
-\coordinate (snodecCanvasSW)
-  at ($(snodecCanvasCenter)+(-80mm,0)$ |- current bounding box.south);
-\coordinate (snodecCanvasNE)
-  at ($(snodecCanvasCenter)+(80mm,0)$ |- current bounding box.north);
-\path[use as bounding box]
-  ([yshift=-7pt]snodecCanvasSW)
-  rectangle
-  ([yshift=7pt]snodecCanvasNE);
+\node[snodec boundary title] at (runtime.north) {core::SNodeC runtime};
+
+\snodecApplyFixedCanvas
 
 \end{tikzpicture}
 \end{document}

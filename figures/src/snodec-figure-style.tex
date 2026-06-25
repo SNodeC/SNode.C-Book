@@ -1,18 +1,12 @@
 % Shared TikZ style for figures in
 % Layered Network Programming with SNode.C.
 %
-% Figure source files should normally use:
-%
-%   \documentclass[tikz,border=6pt]{standalone}
-%   \input{snodec-figure-style.tex}
-%   \begin{document}
-%   \begin{tikzpicture}[snodec diagram]
-%     ...
-%   \end{tikzpicture}
-%   \end{document}
-%
-% Keep this file deliberately conservative. The book needs precise engineering
-% diagrams, not decorative artwork.
+% Contract for this figure set:
+% - every figure PDF has an exact 160 mm canvas width;
+% - the TikZ drawing is rendered at native size, not scaled;
+% - the drawing is horizontally centered on that canvas;
+% - semantic colors, line widths, arrow widths, boundary titles, and spacing
+%   are kept consistent unless a local exception is needed to fit the canvas.
 
 \usepackage{xcolor}
 \usepackage{tikz}
@@ -27,19 +21,54 @@
   shapes.multipart
 }
 
-% Restrained palette. These colors are intentionally quiet so that the diagrams
-% print well and do not dominate the surrounding prose.
+% ----------------------------------------------------------------------
+% Palette.
+% ----------------------------------------------------------------------
 \definecolor{snodecInk}{HTML}{1F2933}
 \definecolor{snodecMuted}{HTML}{52616B}
-\definecolor{snodecRule}{HTML}{8A9BA8}
+\definecolor{snodecRule}{HTML}{7C8E9B}
 \definecolor{snodecBlue}{HTML}{0B3D4A}
-\definecolor{snodecBlueSoft}{HTML}{E8F1F4}
+\definecolor{snodecBlueSoft}{HTML}{E3EEF4}
 \definecolor{snodecGreen}{HTML}{2F6F5E}
-\definecolor{snodecGreenSoft}{HTML}{EAF4EF}
+\definecolor{snodecGreenSoft}{HTML}{E9F3EE}
 \definecolor{snodecOrange}{HTML}{B86B2B}
-\definecolor{snodecOrangeSoft}{HTML}{F7EFE7}
-\definecolor{snodecGraySoft}{HTML}{F3F5F6}
+\definecolor{snodecOrangeSoft}{HTML}{F8EEE5}
+\definecolor{snodecRed}{HTML}{A64B4B}
+\definecolor{snodecRedSoft}{HTML}{F7EAEA}
+\definecolor{snodecGraySoft}{HTML}{F2F2EF}
 
+% ----------------------------------------------------------------------
+% Geometry and line constants.
+% ----------------------------------------------------------------------
+\newcommand{\snodecCanvasHalfWidth}{80mm}
+\newcommand{\snodecCanvasVMargin}{7pt}
+
+\newcommand{\snodecBoxCorner}{2.5pt}
+\newcommand{\snodecBoundaryCorner}{3pt}
+
+\newcommand{\snodecBoxLineWidth}{0.70pt}
+\newcommand{\snodecInnerLineWidth}{0.58pt}
+\newcommand{\snodecBoundaryLineWidth}{0.58pt}
+\newcommand{\snodecArrowLineWidth}{0.70pt}
+\newcommand{\snodecSecondaryLineWidth}{0.58pt}
+\newcommand{\snodecBusLineWidth}{0.58pt}
+
+\newcommand{\snodecBoxXSep}{3mm}
+\newcommand{\snodecBoxYSep}{2.5mm}
+\newcommand{\snodecSmallBoxXSep}{1.2mm}
+\newcommand{\snodecSmallBoxYSep}{1.6mm}
+\newcommand{\snodecBoundaryInnerSep}{4.5mm}
+
+\newcommand{\snodecGapSmall}{6mm}
+\newcommand{\snodecGapNormal}{8mm}
+\newcommand{\snodecGapLarge}{11mm}
+\newcommand{\snodecGapMajor}{14mm}
+\newcommand{\snodecBendLeg}{6mm}
+\newcommand{\snodecOutsideLane}{8mm}
+
+% ----------------------------------------------------------------------
+% Shared TikZ styles.
+% ----------------------------------------------------------------------
 \tikzset{
   snodec diagram/.style={
     font=\sffamily\small,
@@ -48,54 +77,87 @@
     line join=round,
     >=Latex
   },
-  snodec box/.style={
-    draw=snodecBlue!75,
-    fill=snodecBlueSoft,
-    rounded corners=2pt,
-    very thick,
+  snodec base box/.style={
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
-    inner xsep=5mm,
-    inner ysep=2.5mm,
-    minimum height=8mm
+    inner xsep=\snodecBoxXSep,
+    inner ysep=\snodecBoxYSep
   },
-  snodec layer/.style={
-    snodec box,
-    text width=48mm,
-    minimum height=9mm
+  snodec runtime box/.style={
+    snodec base box,
+    draw=snodecBlue!78,
+    fill=snodecBlueSoft
   },
-  snodec role/.style={
-    snodec box,
-    fill=snodecGreenSoft,
-    draw=snodecGreen!75,
-    text width=38mm
+  snodec application box/.style={
+    snodec base box,
+    draw=snodecGreen!78,
+    fill=snodecGreenSoft
   },
-  snodec protocol/.style={
-    snodec box,
-    fill=snodecOrangeSoft,
-    draw=snodecOrange!75,
-    text width=42mm
+  snodec protocol box/.style={
+    snodec base box,
+    draw=snodecOrange!80,
+    fill=snodecOrangeSoft
   },
-  snodec neutral/.style={
-    snodec box,
-    fill=snodecGraySoft,
-    draw=snodecRule!80,
-    text width=42mm
+  snodec neutral box/.style={
+    snodec base box,
+    draw=snodecRule!85,
+    fill=snodecGraySoft
+  },
+  snodec failure box/.style={
+    snodec base box,
+    draw=snodecRed!82,
+    fill=snodecRedSoft
+  },
+  snodec inner box/.style={
+    snodec neutral box,
+    line width=\snodecInnerLineWidth,
+    inner xsep=\snodecSmallBoxXSep,
+    inner ysep=\snodecSmallBoxYSep
   },
   snodec boundary/.style={
-    draw=snodecRule,
+    draw=snodecRule!82,
     dashed,
-    rounded corners=3pt,
-    inner sep=4mm
+    rounded corners=\snodecBoundaryCorner,
+    line width=\snodecBoundaryLineWidth,
+    inner sep=\snodecBoundaryInnerSep
   },
-  snodec arrow/.style={
+  snodec boundary title/.style={
+    font=\sffamily\bfseries\small,
+    text=snodecBlue,
+    fill=white,
+    fill opacity=1,
+    text opacity=1,
+    draw=none,
+    inner sep=1.2pt
+  },
+  snodec arrow label/.style={
+    font=\sffamily\bfseries\footnotesize,
+    text=snodecInk,
+    fill=white,
+    fill opacity=1,
+    text opacity=1,
+    draw=none,
+    inner sep=1.0pt
+  },
+  snodec main arrow/.style={
     -{Latex[length=2.2mm,width=1.6mm]},
-    very thick,
-    draw=snodecBlue!80
+    line width=\snodecArrowLineWidth,
+    draw=snodecMuted!76
   },
-  snodec muted arrow/.style={
-    -{Latex[length=2mm,width=1.4mm]},
-    thick,
-    draw=snodecMuted!70
+  snodec secondary arrow/.style={
+    -{Latex[length=2.0mm,width=1.4mm]},
+    line width=\snodecSecondaryLineWidth,
+    draw=snodecMuted!68
+  },
+  snodec bus line/.style={
+    draw=snodecMuted!72,
+    line width=\snodecBusLineWidth
+  },
+  snodec return arrow/.style={
+    snodec secondary arrow,
+    dashed,
+    draw=snodecMuted!72
   },
   snodec note/.style={
     font=\sffamily\footnotesize,
@@ -105,5 +167,28 @@
   snodec label/.style={
     font=\sffamily\bfseries\small,
     text=snodecBlue
-  }
+  },
+  % Backward-compatible aliases for old figure sources.
+  snodec box/.style={snodec runtime box},
+  snodec layer/.style={snodec runtime box,text width=48mm,minimum height=9mm},
+  snodec role/.style={snodec application box,text width=38mm},
+  snodec protocol/.style={snodec protocol box,text width=42mm},
+  snodec neutral/.style={snodec neutral box,text width=42mm},
+  snodec failure/.style={snodec failure box,text width=42mm},
+  snodec arrow/.style={snodec main arrow,draw=snodecBlue!70},
+  snodec muted arrow/.style={snodec secondary arrow}
+}
+
+% Fixed-width page/canvas helper. The drawing is not scaled. The natural
+% drawing is centered horizontally on a 160 mm wide canvas.
+\newcommand{\snodecApplyFixedCanvas}{%
+  \coordinate (snodecCanvasCenter) at (current bounding box.center);%
+  \coordinate (snodecCanvasSW)%
+    at ($(snodecCanvasCenter)+(-\snodecCanvasHalfWidth,0)$ |- current bounding box.south);%
+  \coordinate (snodecCanvasNE)%
+    at ($(snodecCanvasCenter)+(\snodecCanvasHalfWidth,0)$ |- current bounding box.north);%
+  \path[use as bounding box]
+    ([yshift=-\snodecCanvasVMargin]snodecCanvasSW)
+    rectangle
+    ([yshift=\snodecCanvasVMargin]snodecCanvasNE);%
 }

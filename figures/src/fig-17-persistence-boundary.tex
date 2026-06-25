@@ -14,8 +14,8 @@
   comm block/.style={
     draw=snodecBlue!72,
     fill=snodecBlueSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\boxW,
     minimum height=18mm,
@@ -26,8 +26,8 @@
   app block/.style={
     draw=snodecGreen!72,
     fill=snodecGreenSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\boxW,
     minimum height=18mm,
@@ -38,8 +38,8 @@
   persist block/.style={
     draw=snodecOrange!75,
     fill=snodecOrangeSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\boxW,
     minimum height=18mm,
@@ -50,8 +50,8 @@
   store block/.style={
     draw=snodecRule!82,
     fill=snodecGraySoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\boxW,
     minimum height=18mm,
@@ -60,41 +60,33 @@
     font=\sffamily\footnotesize
   },
   lane panel/.style={
-    draw=snodecRule!58,
-    fill=white,
-    rounded corners=3pt,
-    line width=0.75pt
+    snodec boundary,
+    fill=none
   },
   panel label/.style={
+    snodec boundary title,
     font=\sffamily\bfseries\footnotesize,
-    text=snodecMuted,
-    fill=white,
-    inner sep=1.2pt
+    text=snodecMuted
   },
   boundary label/.style={
-    font=\sffamily\bfseries\small,
-    text=snodecBlue,
-    fill=white,
+    snodec boundary title,
     inner xsep=1.6pt,
     inner ysep=0.8pt
   },
   flow/.style={
-    snodec muted arrow,
+    snodec secondary arrow,
     draw=snodecMuted!75,
-    line width=0.75pt
+    line width=\snodecBoxLineWidth
   },
-  flow line/.style={
-    draw=snodecMuted!75,
-    line width=0.75pt
-  },
+  flow line/.style={snodec bus line},
   boundary flow/.style={
-    snodec muted arrow,
+    snodec secondary arrow,
     draw=snodecBlue!70,
-    line width=0.75pt
+    line width=\snodecBoxLineWidth
   },
   boundary line/.style={
     draw=snodecBlue!70,
-    line width=0.75pt
+    line width=\snodecBoxLineWidth
   }
 ]
 
@@ -197,21 +189,7 @@
   {persistence boundary};
 
 
-% ----------------------------------------------------------------------
-% Fixed 160 mm output canvas.
-% The drawing stays at native size and is centered horizontally.
-% Vertical height remains natural, with the former standalone 7pt margin
-% preserved above and below.
-% ----------------------------------------------------------------------
-\coordinate (snodecCanvasCenter) at (current bounding box.center);
-\coordinate (snodecCanvasSW)
-  at ($(snodecCanvasCenter)+(-80mm,0)$ |- current bounding box.south);
-\coordinate (snodecCanvasNE)
-  at ($(snodecCanvasCenter)+(80mm,0)$ |- current bounding box.north);
-\path[use as bounding box]
-  ([yshift=-7pt]snodecCanvasSW)
-  rectangle
-  ([yshift=7pt]snodecCanvasNE);
+\snodecApplyFixedCanvas
 
 \end{tikzpicture}
 \end{document}

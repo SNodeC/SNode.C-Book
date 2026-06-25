@@ -31,8 +31,8 @@
   action block/.style={
     draw=snodecBlue!72,
     fill=snodecBlueSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=54mm,
     inner xsep=3mm,
@@ -42,8 +42,8 @@
   ok block/.style={
     draw=snodecGreen!70,
     fill=snodecGreenSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\smallBoxWidth,
     inner xsep=\smallBoxXSep,
@@ -51,10 +51,10 @@
     font=\sffamily\footnotesize
   },
   fail block/.style={
-    draw=snodecOrange!75,
-    fill=snodecOrangeSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    draw=snodecRed!82,
+    fill=snodecRedSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\smallBoxWidth,
     inner xsep=\smallBoxXSep,
@@ -64,8 +64,8 @@
   stop block/.style={
     draw=snodecRule!85,
     fill=snodecGraySoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\smallBoxWidth,
     inner xsep=\smallBoxXSep,
@@ -73,10 +73,10 @@
     font=\sffamily\footnotesize
   },
   decision block/.style={
-    draw=snodecBlue!55,
-    fill=snodecBlueSoft!45,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    draw=snodecBlue!78,
+    fill=snodecBlueSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\decisionBoxTextWidth,
     inner xsep=\decisionBoxXSep,
@@ -86,8 +86,8 @@
   result stop block/.style={
     draw=snodecRule!85,
     fill=snodecGraySoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\resultBoxWidth,
     inner xsep=\resultBoxXSep,
@@ -95,10 +95,10 @@
     font=\sffamily\footnotesize
   },
   result timer block/.style={
-    draw=snodecOrange!65,
-    fill=snodecOrangeSoft!55,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    draw=snodecOrange!80,
+    fill=snodecOrangeSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=\resultBoxWidth,
     inner xsep=\resultBoxXSep,
@@ -106,32 +106,13 @@
     font=\sffamily\footnotesize
   },
   classify panel/.style={
-    draw=snodecBlue!55,
-    fill=snodecBlueSoft!30,
-    rounded corners=3pt,
-    line width=0.75pt
+    snodec boundary,
+    fill=none
   },
-  flow/.style={
-    snodec muted arrow,
-    draw=snodecMuted!75,
-    line width=0.75pt
-  },
-  flow line/.style={
-    draw=snodecMuted!75,
-    line width=0.75pt
-  },
-  return flow/.style={
-    snodec muted arrow,
-    draw=snodecBlue!65,
-    line width=0.75pt,
-    dashed
-  },
-  arrow label/.style={
-    font=\sffamily\footnotesize,
-    text=snodecMuted,
-    fill=white,
-    inner sep=1.1pt
-  }
+  flow/.style={snodec secondary arrow},
+  flow line/.style={snodec bus line},
+  return flow/.style={snodec return arrow},
+  arrow label/.style={snodec arrow label}
 ]
 
 % ----------------------------------------------------------------------
@@ -174,7 +155,7 @@
 };
 
 \node[fail block, below=\outcomeGap of connectAttempt, xshift=\columnShift] (failOutcome) {%
-  \textbf{\textcolor{snodecOrange}{ERROR / FATAL}}\\[-0.4mm]
+  \textbf{\textcolor{snodecRed}{ERROR / FATAL}}\\[-0.4mm]
   failed attempt
 };
 
@@ -198,7 +179,7 @@
 };
 
 \node[fail block, below=\straightArrowL of established] (disconnectEvent) {%
-  \textbf{\textcolor{snodecOrange}{Disconnect event}}\\[-0.4mm]
+  \textbf{\textcolor{snodecRed}{Disconnect event}}\\[-0.4mm]
   connection closed
 };
 
@@ -301,8 +282,7 @@
         (established)(disconnectEvent)(reconnectAllowed)(retryAllowed)
         (stopClient)(reconnectTimer)(retryTimer)(stopAttempt)
         (timerMergeLine),
-    inner sep=\panelInnerSep,
-    label={[font=\sffamily\bfseries\small,text=snodecBlue,fill=white,inner sep=1.2pt]above:Classify outcome}
+    inner sep=\panelInnerSep
   ] (classifyPanel) {};
 \end{scope}
 
@@ -338,21 +318,11 @@
   -- (connectAttempt.west);
 
 
-% ----------------------------------------------------------------------
-% Fixed 160 mm output canvas.
-% The drawing stays at native size and is centered horizontally.
-% Vertical height remains natural, with the former standalone 7pt margin
-% preserved above and below.
-% ----------------------------------------------------------------------
-\coordinate (snodecCanvasCenter) at (current bounding box.center);
-\coordinate (snodecCanvasSW)
-  at ($(snodecCanvasCenter)+(-80mm,0)$ |- current bounding box.south);
-\coordinate (snodecCanvasNE)
-  at ($(snodecCanvasCenter)+(80mm,0)$ |- current bounding box.north);
-\path[use as bounding box]
-  ([yshift=-7pt]snodecCanvasSW)
-  rectangle
-  ([yshift=7pt]snodecCanvasNE);
+% Foreground overlay title: masks the dashed border and the incoming arrow below it.
+
+\node[snodec boundary title] at (classifyPanel.north) {Classify outcome};
+
+\snodecApplyFixedCanvas
 
 \end{tikzpicture}
 \end{document}

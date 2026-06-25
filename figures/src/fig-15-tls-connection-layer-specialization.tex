@@ -14,8 +14,8 @@
   role block/.style={
     draw=snodecGreen!70,
     fill=snodecGreenSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=140mm,
     inner xsep=3mm,
@@ -25,8 +25,8 @@
   family block/.style={
     draw=snodecBlue!72,
     fill=snodecBlueSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=140mm,
     inner xsep=3mm,
@@ -36,8 +36,8 @@
   stream block/.style={
     draw=snodecOrange!75,
     fill=snodecOrangeSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=140mm,
     inner xsep=3mm,
@@ -47,8 +47,8 @@
   variant block/.style={
     draw=snodecOrange!55,
     fill=snodecOrangeSoft!45,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=58mm,
     inner xsep=2mm,
@@ -58,8 +58,8 @@
   context block/.style={
     draw=snodecRule!85,
     fill=snodecGraySoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=center,
     text width=140mm,
     inner xsep=3mm,
@@ -67,9 +67,9 @@
     font=\sffamily\small
   },
   layer flow/.style={
-    snodec muted arrow,
+    snodec secondary arrow,
     draw=snodecMuted!75,
-    line width=0.75pt
+    line width=\snodecBoxLineWidth
   },
   stream note/.style={
     font=\sffamily\footnotesize,
@@ -138,21 +138,7 @@
 \draw[layer flow] (family.south) -- (stream.north);
 \draw[layer flow] (stream.south) -- (context.north);
 
-% ----------------------------------------------------------------------
-% Fixed 160 mm output canvas.
-% The drawing stays at native size and is centered horizontally.
-% Vertical height remains natural, with the former standalone 7pt margin
-% preserved above and below.
-% ----------------------------------------------------------------------
-\coordinate (snodecCanvasCenter) at (current bounding box.center);
-\coordinate (snodecCanvasSW)
-  at ($(snodecCanvasCenter)+(-80mm,0)$ |- current bounding box.south);
-\coordinate (snodecCanvasNE)
-  at ($(snodecCanvasCenter)+(80mm,0)$ |- current bounding box.north);
-\path[use as bounding box]
-  ([yshift=-7pt]snodecCanvasSW)
-  rectangle
-  ([yshift=7pt]snodecCanvasNE);
+\snodecApplyFixedCanvas
 
 \end{tikzpicture}
 \end{document}

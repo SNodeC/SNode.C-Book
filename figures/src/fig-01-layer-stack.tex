@@ -8,35 +8,35 @@
   layer block/.style={
     draw=snodecBlue!75,
     fill=snodecBlueSoft,
-    rounded corners=2.5pt,
-    line width=0.75pt,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
     align=left,
     text width=122mm,
     inner xsep=5mm,
     inner ysep=2.8mm,
     minimum height=13mm
   },
-  stack arrow/.style={snodec arrow, draw=snodecBlue!65},
-  side note/.style={font=\sffamily\footnotesize, text=snodecMuted, align=center, inner sep=0pt}
+  stack arrow/.style={snodec main arrow, draw=snodecBlue!65},
+  side note/.style={snodec arrow label, align=center, inner sep=0.8pt}
 ]
 
 \node[layer block] (family) {\textbf{\textcolor{snodecBlue}{Endpoint family}}\\[-0.5mm]
   {\footnotesize IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or L2CAP.}
 };
 
-\node[layer block, above=6mm of family] (transport) {\textbf{\textcolor{snodecBlue}{Transport form}}\\[-0.5mm]
+\node[layer block, above=\snodecGapSmall of family] (transport) {\textbf{\textcolor{snodecBlue}{Transport form}}\\[-0.5mm]
   {\footnotesize Connection-oriented stream communication in the main path of this book.}
 };
 
-\node[layer block, above=6mm of transport] (connection) {\textbf{\textcolor{snodecBlue}{Connection handling}}\\[-0.5mm]
+\node[layer block, above=\snodecGapSmall of transport] (connection) {\textbf{\textcolor{snodecBlue}{Connection handling}}\\[-0.5mm]
   {\footnotesize Peer relationship: lifecycle, data exchange, and optional TLS encryption/decryption.}
 };
 
-\node[layer block, above=6mm of connection] (protocol) {\textbf{\textcolor{snodecBlue}{Application protocol}}\\[-0.5mm]
+\node[layer block, above=\snodecGapSmall of connection] (protocol) {\textbf{\textcolor{snodecBlue}{Application protocol}}\\[-0.5mm]
   {\footnotesize Stream meaning: custom protocol, HTTP, WebSocket, MQTT, or another protocol layer.}
 };
 
-\node[layer block, above=6mm of protocol] (role) {\textbf{\textcolor{snodecBlue}{Application role}}\\[-0.5mm]
+\node[layer block, above=\snodecGapSmall of protocol] (role) {\textbf{\textcolor{snodecBlue}{Application role}}\\[-0.5mm]
   {\footnotesize Endpoint job: server, client, bridge, broker, integrator, gateway, or custom role.}
 };
 
@@ -45,28 +45,14 @@
 \draw[stack arrow] (connection.north) -- (protocol.south);
 \draw[stack arrow] (protocol.north) -- (role.south);
 
-\draw[snodec muted arrow] ($(family.west)+(-9mm,0)$) -- ($(role.west)+(-9mm,0)$)
+\draw[snodec secondary arrow] ($(family.west)+(-9mm,0)$) -- ($(role.west)+(-9mm,0)$)
   node[side note, midway, rotate=90, above=1.5mm] {more application-specific};
 
-\draw[snodec muted arrow] ($(role.east)+(9mm,0)$) -- ($(family.east)+(9mm,0)$)
+\draw[snodec secondary arrow] ($(role.east)+(9mm,0)$) -- ($(family.east)+(9mm,0)$)
   node[side note, midway, rotate=90, above=1.5mm] {more transport-specific};
 
 
-% ----------------------------------------------------------------------
-% Fixed 160 mm output canvas.
-% The drawing stays at native size and is centered horizontally.
-% Vertical height remains natural, with the former standalone 7pt margin
-% preserved above and below.
-% ----------------------------------------------------------------------
-\coordinate (snodecCanvasCenter) at (current bounding box.center);
-\coordinate (snodecCanvasSW)
-  at ($(snodecCanvasCenter)+(-80mm,0)$ |- current bounding box.south);
-\coordinate (snodecCanvasNE)
-  at ($(snodecCanvasCenter)+(80mm,0)$ |- current bounding box.north);
-\path[use as bounding box]
-  ([yshift=-7pt]snodecCanvasSW)
-  rectangle
-  ([yshift=7pt]snodecCanvasNE);
+\snodecApplyFixedCanvas
 
 \end{tikzpicture}
 \end{document}
