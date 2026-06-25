@@ -20,23 +20,23 @@
   side note/.style={snodec arrow label, align=center, inner sep=0.8pt}
 ]
 
-\node[layer block] (family) {\textbf{\textcolor{snodecBlue}{Endpoint family}}\\[-0.5mm]
+\node[layer block] (family) {\textbf{\textcolor{snodecTitleBlue}{Endpoint family}}\\[-0.5mm]
   {\footnotesize IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or L2CAP.}
 };
 
-\node[layer block, above=\snodecGapSmall of family] (transport) {\textbf{\textcolor{snodecBlue}{Transport form}}\\[-0.5mm]
+\node[layer block, above=\snodecGapSmall of family] (transport) {\textbf{\textcolor{snodecTitleBlue}{Transport form}}\\[-0.5mm]
   {\footnotesize Connection-oriented stream communication in the main path of this book.}
 };
 
-\node[layer block, above=\snodecGapSmall of transport] (connection) {\textbf{\textcolor{snodecBlue}{Connection handling}}\\[-0.5mm]
+\node[layer block, above=\snodecGapSmall of transport] (connection) {\textbf{\textcolor{snodecTitleBlue}{Connection handling}}\\[-0.5mm]
   {\footnotesize Peer relationship: lifecycle, data exchange, and optional TLS encryption/decryption.}
 };
 
-\node[layer block, above=\snodecGapSmall of connection] (protocol) {\textbf{\textcolor{snodecBlue}{Application protocol}}\\[-0.5mm]
+\node[layer block, above=\snodecGapSmall of connection] (protocol) {\textbf{\textcolor{snodecTitleBlue}{Application protocol}}\\[-0.5mm]
   {\footnotesize Stream meaning: custom protocol, HTTP, WebSocket, MQTT, or another protocol layer.}
 };
 
-\node[layer block, above=\snodecGapSmall of protocol] (role) {\textbf{\textcolor{snodecBlue}{Application role}}\\[-0.5mm]
+\node[layer block, above=\snodecGapSmall of protocol] (role) {\textbf{\textcolor{snodecTitleBlue}{Application role}}\\[-0.5mm]
   {\footnotesize Endpoint job: server, client, bridge, broker, integrator, gateway, or custom role.}
 };
 

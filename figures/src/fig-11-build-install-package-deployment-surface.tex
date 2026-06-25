@@ -91,19 +91,19 @@
 % Build / install / package path
 % ----------------------------------------------------------------------
 \node[build block] (cmake) {%
-  \textbf{\textcolor{snodecBlue}{CMake component}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{CMake component}}\\[-0.4mm]
   {\footnotesize target, options,}\\[-0.2mm]
   {\footnotesize link dependencies}
 };
 
 \node[install block, right=\hGap of cmake] (install) {%
-  \textbf{\textcolor{snodecRule}{Install component}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{Install component}}\\[-0.4mm]
   {\footnotesize libraries, apps,}\\[-0.2mm]
   {\footnotesize exported config}
 };
 
 \node[package block, right=\hGap of install] (package) {%
-  \textbf{\textcolor{snodecRule}{Package component}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{Package component}}\\[-0.4mm]
   {\footnotesize package metadata,}\\[-0.2mm]
   {\footnotesize dependencies}
 };
@@ -118,7 +118,7 @@
   surface block,
   below=\majorVGap of install
 ] (surface) {%
-  \textbf{\textcolor{snodecRule}{Deployed runtime surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{Deployed runtime surface}}\\[-0.4mm]
   {\footnotesize libraries and executables, runtime-loaded modules, package exports}\\[-0.2mm]
   {\footnotesize service definition, configuration files, logs, pid files, writable state}
 };
@@ -141,7 +141,7 @@
   service block,
   below=\majorVGap of surface
 ] (service) {%
-  \textbf{\textcolor{snodecGreen}{Running service role}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{Running service role}}\\[-0.4mm]
   {\footnotesize complete runtime environment exists}
 };
 

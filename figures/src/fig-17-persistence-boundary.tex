@@ -94,19 +94,19 @@
 % Transient communication side.
 % ----------------------------------------------------------------------
 \node[comm block] (peerConnection) {%
-  \textbf{\textcolor{snodecBlue}{peer connection}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{peer connection}}\\[-0.4mm]
   socket lifecycle\\[-0.2mm]
   read/write events
 };
 
 \node[comm block, right=\colGap of peerConnection] (protocolContext) {%
-  \textbf{\textcolor{snodecBlue}{protocol context}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{protocol context}}\\[-0.4mm]
   protocol meaning\\[-0.2mm]
   messages, requests
 };
 
 \node[app block, right=\colGap of protocolContext] (applicationState) {%
-  \textbf{\textcolor{snodecGreen}{application state}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{application state}}\\[-0.4mm]
   what changed?\\[-0.2mm]
   what should survive?
 };
@@ -118,19 +118,19 @@
 % Durable state side.
 % ----------------------------------------------------------------------
 \node[persist block, below=\rowGap of peerConnection] (persistenceAdapter) {%
-  \textbf{\textcolor{snodecOrange!90!black}{persistence adapter}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{persistence adapter}}\\[-0.4mm]
   mapping + policy\\[-0.2mm]
   schema knowledge
 };
 
 \node[persist block, below=\rowGap of protocolContext] (databaseClient) {%
-  \textbf{\textcolor{snodecOrange!90!black}{database client}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{database client}}\\[-0.4mm]
   query execution\\[-0.2mm]
   result and error handling
 };
 
 \node[store block, below=\rowGap of applicationState] (durableStore) {%
-  \textbf{\textcolor{snodecRule}{database / store}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{database / store}}\\[-0.4mm]
   tables, indexes\\[-0.2mm]
   transactions
 };

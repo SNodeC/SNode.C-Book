@@ -42,7 +42,7 @@
 % Central tested system.
 % ----------------------------------------------------------------------
 \node[system block] (system) {%
-  \textbf{\textcolor{snodecBlue}{tested SNode.C system}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{tested SNode.C system}}\\[-0.4mm]
   {\footnotesize one built, configured, running system}
 };
 
@@ -50,43 +50,43 @@
 % Surrounding confidence surfaces on a virtual ellipse.
 % ----------------------------------------------------------------------
 \node[surface block] at ($(system.center)+(0,\topY)$) (package) {%
-  \textbf{\textcolor{snodecBlue}{package surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{package surface}}\\[-0.4mm]
   build / install / export\\[-0.2mm]
   exported surface is correct
 };
 
 \node[surface block] at ($(system.center)+(-\upperX,\upperY)$) (component) {%
-  \textbf{\textcolor{snodecBlue}{component surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{component surface}}\\[-0.4mm]
   local contract\\[-0.2mm]
   remains correct
 };
 
 \node[surface block] at ($(system.center)+(\upperX,\upperY)$) (deployment) {%
-  \textbf{\textcolor{snodecBlue}{deployment surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{deployment surface}}\\[-0.4mm]
   target environment\\[-0.2mm]
   is handled correctly
 };
 
 \node[surface block] at ($(system.center)+(-\sideX,0)$) (protocol) {%
-  \textbf{\textcolor{snodecBlue}{protocol surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{protocol surface}}\\[-0.4mm]
   wire behavior\\[-0.2mm]
   matches expectation
 };
 
 \node[surface block] at ($(system.center)+(\sideX,0)$) (runtime) {%
-  \textbf{\textcolor{snodecBlue}{runtime surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{runtime surface}}\\[-0.4mm]
   events, timers, retries\\[-0.2mm]
   behave correctly
 };
 
 \node[surface block] at ($(system.center)+(-\lowerX,-\lowerY)$) (diagnostic) {%
-  \textbf{\textcolor{snodecBlue}{diagnostic surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{diagnostic surface}}\\[-0.4mm]
   failures are visible\\[-0.2mm]
   and attributable
 };
 
 \node[surface block] at ($(system.center)+(\lowerX,-\lowerY)$) (performance) {%
-  \textbf{\textcolor{snodecBlue}{performance surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{performance surface}}\\[-0.4mm]
   latency / throughput\\[-0.2mm]
   stay acceptable
 };

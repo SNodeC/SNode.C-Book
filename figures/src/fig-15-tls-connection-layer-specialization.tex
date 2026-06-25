@@ -82,7 +82,7 @@
 % Configured server/client role.
 % ----------------------------------------------------------------------
 \node[role block] (role) {%
-  \textbf{\textcolor{snodecGreen}{Server/client instance}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{Server/client instance}}\\[-0.4mm]
   {\footnotesize configured communication role}\\[-0.2mm]
   {\footnotesize same application-side role: listen/connect, instance name, sections}
 };
@@ -91,7 +91,7 @@
 % Endpoint family.
 % ----------------------------------------------------------------------
 \node[family block, below=\majorVGap of role] (family) {%
-  \textbf{\textcolor{snodecBlue}{Endpoint family}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Endpoint family}}\\[-0.4mm]
   {\footnotesize address and carrier family stay the same}\\[-0.2mm]
   {\footnotesize \texttt{net::in}, \texttt{net::in6}, \texttt{net::un}, \texttt{net::rc}, \texttt{net::l2}}
 };
@@ -102,19 +102,19 @@
 % follows the same inner-ysep logic as the other major boxes.
 % ----------------------------------------------------------------------
 \node[stream block, below=\majorVGap of family] (stream) {%
-  \textbf{\textcolor{snodecOrange}{Stream connection form}}\\[\streamRowGap]
+  \textbf{\textcolor{snodecTitleOrange}{Stream connection form}}\\[\streamRowGap]
   \begin{tikzpicture}[
     baseline=(legacyStream.base),
     variant row block/.style={variant block}
   ]
     \node[variant row block] (legacyStream) {%
-      \textbf{\textcolor{snodecOrange!90!black}{Legacy stream}}\\[-0.4mm]
+      \textbf{\textcolor{snodecTitleOrange}{Legacy stream}}\\[-0.4mm]
       plain byte transport\\[-0.2mm]
       \texttt{ConfigLegacy}
     };
 
     \node[variant row block, right=\variantGap of legacyStream] (tlsStream) {%
-      \textbf{\textcolor{snodecOrange!90!black}{TLS stream}}\\[-0.4mm]
+      \textbf{\textcolor{snodecTitleOrange}{TLS stream}}\\[-0.4mm]
       encrypted byte transport\\[-0.2mm]
       \texttt{ConfigTlsClient} / \texttt{ConfigTlsServer}
     };
@@ -126,7 +126,7 @@
 % Socket context.
 % ----------------------------------------------------------------------
 \node[context block, below=\majorVGap of stream] (context) {%
-  \textbf{\textcolor{snodecRule}{Socket context}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{Socket context}}\\[-0.4mm]
   {\footnotesize protocol behavior attached to the established stream connection}\\[-0.2mm]
   {\footnotesize HTTP, WebSocket, MQTT, custom protocol contexts}
 };

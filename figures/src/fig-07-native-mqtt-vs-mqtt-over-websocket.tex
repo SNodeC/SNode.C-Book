@@ -83,17 +83,17 @@
 ]
 
 \node[semantics block] (semantics) {%
-  \textbf{\textcolor{snodecBlue}{MQTT protocol semantics}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{MQTT protocol semantics}}\\[-0.4mm]
   {\footnotesize CONNECT, SUBSCRIBE, PUBLISH, QoS, session state, topic flow}
 };
 
 \node[native block, below=\splitGap of semantics, xshift=-\carrierHalfSep] (nativeCarrier) {%
-  \textbf{\textcolor{snodecGreen}{Native MQTT carrier}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{Native MQTT carrier}}\\[-0.4mm]
   {\footnotesize MQTT packets directly on stream}
 };
 
 \node[websocket block, below=\splitGap of semantics, xshift=\carrierHalfSep] (wsCarrier) {%
-  \textbf{\textcolor{snodecOrange}{MQTT over WebSocket}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{MQTT over WebSocket}}\\[-0.4mm]
   {\footnotesize MQTT packets inside WebSocket frames}
 };
 
@@ -112,12 +112,12 @@
 \draw[semantics flow] (wsBranch) -- (wsCarrier.north);
 
 \node[native basis block, below=\majorVGap of nativeCarrier] (streamBase) {%
-  \textbf{\textcolor{snodecGreen!70!black}{Stream / TLS stream}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{Stream / TLS stream}}\\[-0.4mm]
   {\footnotesize lower family + transport}
 };
 
 \node[websocket basis block, below=\majorVGap of wsCarrier] (httpUpgrade) {%
-  \textbf{\textcolor{snodecOrange!90!black}{HTTP upgrade path}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{HTTP upgrade path}}\\[-0.4mm]
   {\footnotesize HTTP handshake then WebSocket frames}
 };
 
@@ -125,12 +125,12 @@
 \draw[websocket flow] (wsCarrier.south) -- (httpUpgrade.north);
 
 \node[native basis block, below=\majorVGap of streamBase] (endpoints) {%
-  \textbf{\textcolor{snodecGreen!70!black}{Endpoint families}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{Endpoint families}}\\[-0.4mm]
   {\footnotesize IPv4, IPv6, Unix, Bluetooth, \dots}
 };
 
 \node[websocket basis block, below=\majorVGap of httpUpgrade] (webCarrier) {%
-  \textbf{\textcolor{snodecOrange!90!black}{Web-capable carrier}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{Web-capable carrier}}\\[-0.4mm]
   {\footnotesize HTTP runs over stream / TLS stream}
 };
 

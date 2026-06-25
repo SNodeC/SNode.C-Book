@@ -32,27 +32,27 @@
   arrow label/.style={snodec arrow label}
 ]
 
-\node[app block] (appcode) {\textbf{\textcolor{snodecGreen}{Application code}}\\[-0.5mm]
+\node[app block] (appcode) {\textbf{\textcolor{snodecTitleGreen}{Application code}}\\[-0.5mm]
   {\footnotesize Creates and configures communication roles.}
 };
 
-\node[app block, below=\snodecGapSmall of appcode] (handle) {\textbf{\textcolor{snodecGreen}{Application-side handle}}\\[-0.5mm]
+\node[app block, below=\snodecGapSmall of appcode] (handle) {\textbf{\textcolor{snodecTitleGreen}{Application-side handle}}\\[-0.5mm]
   {\footnotesize Visible \texttt{SocketServer} or \texttt{SocketClient} object.}
 };
 
-\node[runtime block, below=\snodecGapLarge of handle] (instance) {\textbf{\textcolor{snodecBlue}{Instance}}\\[-0.5mm]
+\node[runtime block, below=\snodecGapLarge of handle] (instance) {\textbf{\textcolor{snodecTitleBlue}{Instance}}\\[-0.5mm]
   {\footnotesize Registered runtime communication role.}
 };
 
-\node[runtime block, below=\snodecGapSmall of instance] (connection) {\textbf{\textcolor{snodecBlue}{Connection}}\\[-0.5mm]
+\node[runtime block, below=\snodecGapSmall of instance] (connection) {\textbf{\textcolor{snodecTitleBlue}{Connection}}\\[-0.5mm]
   {\footnotesize Concrete peer relationship.}
 };
 
-\node[runtime block, below=\snodecGapSmall of connection] (factory) {\textbf{\textcolor{snodecBlue}{Context factory}}\\[-0.5mm]
+\node[runtime block, below=\snodecGapSmall of connection] (factory) {\textbf{\textcolor{snodecTitleBlue}{Context factory}}\\[-0.5mm]
   {\footnotesize Creates contexts for connections.}
 };
 
-\node[runtime block, below=\snodecGapSmall of factory] (context) {\textbf{\textcolor{snodecBlue}{Context}}\\[-0.5mm]
+\node[runtime block, below=\snodecGapSmall of factory] (context) {\textbf{\textcolor{snodecTitleBlue}{Context}}\\[-0.5mm]
   {\footnotesize Per-connection protocol behavior.}
 };
 

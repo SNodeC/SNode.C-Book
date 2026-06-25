@@ -49,12 +49,12 @@
 
 % --- application side ----------------------------------------------------
 \node[app box] (handle) {%
-  \textbf{\textcolor{snodecGreen}{Application-side handle}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{Application-side handle}}\\[-0.4mm]
   {\footnotesize \texttt{SocketServer} / \texttt{SocketClient} visible in user code}
 };
 
 \node[app box, below=7mm of handle] (registration) {%
-  \textbf{\textcolor{snodecGreen}{Registration call}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{Registration call}}\\[-0.4mm]
   {\footnotesize \texttt{listen(...)} registers a server role}\\[-0.2mm]
   {\footnotesize \texttt{connect(...)} registers a client role}
 };
@@ -65,12 +65,12 @@
 \node[coordinate, below=18mm of registration] (splitCenter) {};
 
 \node[split box, left=7mm of splitCenter] (server) {%
-  \textbf{\textcolor{snodecBlue}{Server-side instance}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Server-side instance}}\\[-0.4mm]
   {\footnotesize listens and accepts peers}
 };
 
 \node[split box, right=7mm of splitCenter] (client) {%
-  \textbf{\textcolor{snodecBlue}{Client-side instance}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Client-side instance}}\\[-0.4mm]
   {\footnotesize initiates a peer relationship}
 };
 
@@ -88,7 +88,7 @@
 \coordinate (splitBottom) at ($(server.south)!0.5!(client.south)$);
 
 \node[runtime box, below=12mm of splitBottom] (machinery) {%
-  \textbf{\textcolor{snodecBlue}{Accept/connect machinery}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Accept/connect machinery}}\\[-0.4mm]
   {\footnotesize runtime and flow controller progress the role}
 };
 
@@ -103,22 +103,22 @@
 \draw[runtime flow] (mergeBusCenter) -- (machinery.north);
 
 \node[runtime box, below=7mm of machinery] (connection) {%
-  \textbf{\textcolor{snodecBlue}{\texttt{SocketConnection}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{\texttt{SocketConnection}}}\\[-0.4mm]
   {\footnotesize one concrete peer relationship}
 };
 
 \node[runtime box, below=7mm of connection] (factory) {%
-  \textbf{\textcolor{snodecBlue}{\texttt{SocketContextFactory}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{\texttt{SocketContextFactory}}}\\[-0.4mm]
   {\footnotesize creates a fresh context for the connection}
 };
 
 \node[runtime box, below=7mm of factory] (context) {%
-  \textbf{\textcolor{snodecBlue}{\texttt{SocketContext}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{\texttt{SocketContext}}}\\[-0.4mm]
   {\footnotesize per-connection protocol endpoint}
 };
 
 \node[outcome box, below=7mm of context] (protocol) {%
-  \textbf{\textcolor{snodecBlue}{Protocol behavior}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Protocol behavior}}\\[-0.4mm]
   {\footnotesize application meaning over the peer relationship}
 };
 

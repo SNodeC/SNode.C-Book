@@ -46,44 +46,44 @@
 ]
 
 \node[core block, draw=snodecGreen!78, fill=snodecGreenSoft] (app) {%
-  \makebox[\linewidth][c]{\textbf{\textcolor{snodecGreen}{Application code}}}\\[-0.5mm]
+  \makebox[\linewidth][c]{\textbf{\textcolor{snodecTitleGreen}{Application code}}}\\[-0.5mm]
   {\footnotesize Calls \texttt{init(...)}, registers roles, then starts or ticks the runtime.}
 };
 
 % Intentionally 11mm so the dashed runtime border sits visually halfway
 % between the first and second box: 5.5mm above core::SNodeC and 5.5mm below Application code.
 \node[core block, below=\snodecGapLarge of app] (snodec) {%
-  \makebox[\linewidth][c]{\textbf{\textcolor{snodecBlue}{core::SNodeC}}}\\[-0.5mm]
+  \makebox[\linewidth][c]{\textbf{\textcolor{snodecTitleBlue}{core::SNodeC}}}\\[-0.5mm]
   {\footnotesize Public runtime control surface.}
 };
 
 \node[core block, below=\snodecGapSmall of snodec] (loop) {%
-  \makebox[\linewidth][c]{\textbf{\textcolor{snodecBlue}{core::EventLoop}}}\\[-0.5mm]
+  \makebox[\linewidth][c]{\textbf{\textcolor{snodecTitleBlue}{core::EventLoop}}}\\[-0.5mm]
   {\footnotesize Orchestrates one event-processing step after another.}
 };
 
 \node[core block, below=\snodecGapSmall of loop] (mux) {%
-  \makebox[\linewidth][c]{\textbf{\textcolor{snodecBlue}{core::EventMultiplexer}}}\\[-0.5mm]
+  \makebox[\linewidth][c]{\textbf{\textcolor{snodecTitleBlue}{core::EventMultiplexer}}}\\[-0.5mm]
   {\footnotesize Waits for readiness, timers, and queued work.}
 };
 
 \node[source block, below=\snodecGapMajor of mux, xshift=-43mm] (descriptor) {%
-  \textbf{\textcolor{snodecMuted}{Descriptors}}\\[-0.5mm]
+  \textbf{\textcolor{snodecTitleNeutral}{Descriptors}}\\[-0.5mm]
   {\footnotesize socket and file-descriptor readiness}
 };
 
 \node[source block, below=\snodecGapMajor of mux] (timer) {%
-  \textbf{\textcolor{snodecMuted}{Timers}}\\[-0.5mm]
+  \textbf{\textcolor{snodecTitleNeutral}{Timers}}\\[-0.5mm]
   {\footnotesize scheduled and timeout activity}
 };
 
 \node[source block, below=\snodecGapMajor of mux, xshift=43mm] (queue) {%
-  \textbf{\textcolor{snodecMuted}{Event queue}}\\[-0.5mm]
+  \textbf{\textcolor{snodecTitleNeutral}{Event queue}}\\[-0.5mm]
   {\footnotesize deferred runtime work}
 };
 
 \node[dispatch block, below=\snodecGapLarge of timer] (dispatch) {%
-  \textbf{\textcolor{snodecOrange}{Dispatch}}\\[-0.5mm]
+  \textbf{\textcolor{snodecTitleOrange}{Dispatch}}\\[-0.5mm]
   {\footnotesize Receivers, callbacks, and protocol contexts react.}
 };
 

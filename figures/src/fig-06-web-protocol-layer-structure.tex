@@ -72,18 +72,18 @@
 % Web protocol layer
 % ----------------------------------------------------------------------
 \node[protocol block] (http) {%
-  \textbf{\textcolor{snodecBlue}{HTTP request/response}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{HTTP request/response}}\\[-0.4mm]
   {\footnotesize requests, responses, headers, body, lifecycle, upgrade path}
 };
 
 \node[dependent block, below=13mm of http, xshift=-34mm] (sse) {%
-  \textbf{\textcolor{snodecBlue}{Server-Sent Events}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{Server-Sent Events}}\\[-0.4mm]
   {\footnotesize long-lived HTTP response}\\[-0.2mm]
   {\footnotesize server $\rightarrow$ client events}
 };
 
 \node[dependent block, below=13mm of http, xshift=34mm] (ws) {%
-  \textbf{\textcolor{snodecBlue}{WebSocket}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{WebSocket}}\\[-0.4mm]
   {\footnotesize HTTP upgrade, then frames}\\[-0.2mm]
   {\footnotesize client $\leftrightarrow$ server}
 };
@@ -114,7 +114,7 @@
   appstruct block,
   anchor=north
 ] (express) at (expressAnchor) {%
-  \textbf{\textcolor{snodecOrange}{Express-like application structure}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{Express-like application structure}}\\[-0.4mm]
   {\footnotesize routing, middleware, mounted handlers}\\[-0.2mm]
   {\footnotesize organizes routes, SSE endpoints, WS upgrades}
 };
@@ -134,7 +134,7 @@
   below=\majorVGap of express.south west,
   anchor=north west
 ] (app) {%
-  \textbf{\textcolor{snodecGreen}{Application code}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{Application code}}\\[-0.4mm]
   {\footnotesize APIs, pages, dashboards, monitoring, commands, sessions}
 };
 

@@ -4,7 +4,7 @@
 
 \newcommand{\familySection}[2]{%
   \parbox[c][8.0mm][c]{25mm}{\centering
-    \strut\textbf{#1}\\[-0.2mm]#2\strut
+    \strut\textbf{\textcolor{snodecTitleNeutral}{#1}}\\[-0.2mm]#2\strut
   }%
 }
 
@@ -65,7 +65,7 @@
 % --- stable protocol box ------------------------------------------------
 \node[topbox, toptext] (protocol) {%
   \begin{tabular}{@{}c@{}}
-  \textbf{Application protocol behavior}\\[0.5mm]
+  \textbf{\textcolor{snodecTitleOrange}{Application protocol behavior}}\\[0.5mm]
   SocketContext\\
   SocketContextFactory\\
   callbacks / send / receive / lifecycle

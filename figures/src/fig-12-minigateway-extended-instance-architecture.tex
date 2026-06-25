@@ -65,7 +65,7 @@
 % HTTP / Express role.
 % ----------------------------------------------------------------------
 \node[server block] (webapp) {%
-  \textbf{\textcolor{snodecGreen}{\texttt{express::legacy::in::WebApp}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{\texttt{express::legacy::in::WebApp}}}\\[-0.4mm]
   {\footnotesize HTTP/Express server instance}\\[-0.2mm]
   {\footnotesize routes: \texttt{/health}, \texttt{/status}, \texttt{/events}, \texttt{/simulate}}
 };
@@ -74,7 +74,7 @@
 % Shared application core.
 % ----------------------------------------------------------------------
 \node[core block, below=\majorVGap of webapp] (core) {%
-  \textbf{\textcolor{snodecBlue}{Shared application core}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Shared application core}}\\[-0.4mm]
   {\footnotesize \texttt{acceptMeasurement(...)} / \texttt{MeasurementState} / \texttt{MeasurementBus}}
 };
 
@@ -82,14 +82,14 @@
 % Bottom roles / instances.
 % ----------------------------------------------------------------------
 \node[input block, below=\majorVGap of core, xshift=-\sideShift] (unixInput) {%
-  \textbf{\textcolor{snodecGreen}{\texttt{net::un::stream::legacy::SocketServer}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{\texttt{net::un::stream::legacy::SocketServer}}}\\[-0.4mm]
   {\footnotesize measurement-input server instance}\\[-0.2mm]
   {\footnotesize \texttt{MeasurementUnixSocketContextFactory}}\\[-0.2mm]
   {\footnotesize \texttt{MeasurementUnixSocketContext}}
 };
 
 \node[mqtt block, below=\majorVGap of core, xshift=\sideShift] (mqttUplink) {%
-  \textbf{\textcolor{snodecOrange}{\texttt{net::in::stream::legacy::SocketClient}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{\texttt{net::in::stream::legacy::SocketClient}}}\\[-0.4mm]
   {\footnotesize mqtt-uplink client instance}\\[-0.2mm]
   {\footnotesize \texttt{MiniGatewaySocketContextFactory}}\\[-0.2mm]
   {\footnotesize \texttt{MiniGatewayMqtt}}

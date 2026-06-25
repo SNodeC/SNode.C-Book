@@ -65,7 +65,7 @@
 % Center role
 % ----------------------------------------------------------------------
 \node[broker block] (broker) {%
-  \textbf{\textcolor{snodecBlue}{\texttt{MQTTBroker}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{\texttt{MQTTBroker}}}\\[-0.4mm]
   {\footnotesize topic space, subscriptions, retained messages, client state}
 };
 
@@ -73,14 +73,14 @@
 % Top row: clients/tools and persistence-facing store
 % ----------------------------------------------------------------------
 \node[client block, above=\majorVGap of broker, xshift=-\sideShift] (clients) {%
-  \textbf{\textcolor{snodecGreen}{MQTT clients and tools}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{MQTT clients and tools}}\\[-0.4mm]
   {\footnotesize native MQTT clients, devices,}\\[-0.2mm]
   {\footnotesize tools, services, browsers,}\\[-0.2mm]
   {\footnotesize dashboards, \texttt{MQTTCli}}
 };
 
 \node[store block, above=\majorVGap of broker, xshift=\sideShift] (store) {%
-  \textbf{\textcolor{snodecOrange}{\texttt{MQTTStore}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{\texttt{MQTTStore}}}\\[-0.4mm]
   {\footnotesize persistent topic/state view,}\\[-0.2mm]
   {\footnotesize retained/state history,}\\[-0.2mm]
   {\footnotesize storage-facing role}
@@ -90,13 +90,13 @@
 % Bottom row: bridge and integration roles
 % ----------------------------------------------------------------------
 \node[support block, below=\majorVGap of broker, xshift=-\sideShift] (bridge) {%
-  \textbf{\textcolor{snodecBlue}{\texttt{MQTTBridge}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{\texttt{MQTTBridge}}}\\[-0.4mm]
   {\footnotesize broker-to-broker topic flow,}\\[-0.2mm]
   {\footnotesize prefixes and loop boundaries}
 };
 
 \node[support block, below=\majorVGap of broker, xshift=\sideShift] (integrator) {%
-  \textbf{\textcolor{snodecBlue}{\texttt{MQTTIntegrator}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{\texttt{MQTTIntegrator}}}\\[-0.4mm]
   {\footnotesize external services, databases,}\\[-0.2mm]
   {\footnotesize application-specific systems}
 };

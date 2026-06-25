@@ -119,12 +119,12 @@
 % Initial connect request and attempt.
 % ----------------------------------------------------------------------
 \node[action block] (connectRequest) {%
-  \textbf{\textcolor{snodecBlue}{Connect requested}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Connect requested}}\\[-0.4mm]
   \texttt{SocketClient::connect()}
 };
 
 \node[action block, below=\topArrowL of connectRequest] (connectAttempt) {%
-  \textbf{\textcolor{snodecBlue}{Connect attempt}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Connect attempt}}\\[-0.4mm]
   {\footnotesize open / bind / connect}\\[-0.2mm]
   {\footnotesize async completion / timeout}
 };
@@ -145,17 +145,17 @@
 % The outcome bus height is intentionally unchanged in this vertical pass.
 % ----------------------------------------------------------------------
 \node[ok block, below=\outcomeGap of connectAttempt, xshift=-\columnShift] (okOutcome) {%
-  \textbf{\textcolor{snodecGreen}{OK}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{OK}}\\[-0.4mm]
   successful attempt
 };
 
 \node[stop block, below=\outcomeGap of connectAttempt] (stopOutcome) {%
-  \textbf{\textcolor{snodecRule}{DISABLED}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleNeutral}{DISABLED}}\\[-0.4mm]
   no attempt
 };
 
 \node[fail block, below=\outcomeGap of connectAttempt, xshift=\columnShift] (failOutcome) {%
-  \textbf{\textcolor{snodecRed}{ERROR / FATAL}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleRed}{ERROR / FATAL}}\\[-0.4mm]
   failed attempt
 };
 
@@ -173,18 +173,18 @@
 % Reconnect path after an established connection.
 % ----------------------------------------------------------------------
 \node[ok block, below=\straightArrowL of okOutcome] (established) {%
-  \textbf{\textcolor{snodecGreen}{Established}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGreen}{Established}}\\[-0.4mm]
   stream active\\[-0.2mm]
   protocol context
 };
 
 \node[fail block, below=\straightArrowL of established] (disconnectEvent) {%
-  \textbf{\textcolor{snodecRed}{Disconnect event}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleRed}{Disconnect event}}\\[-0.4mm]
   connection closed
 };
 
 \node[decision block, below=\straightArrowL of disconnectEvent] (reconnectAllowed) {%
-  \textbf{\textcolor{snodecBlue}{Reconnect allowed?}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Reconnect allowed?}}\\[-0.4mm]
   reconnect enabled\\[-0.2mm]
   controller allows\\[-0.2mm]
   event loop running
@@ -198,7 +198,7 @@
 % Retry path after a failed connect attempt.
 % ----------------------------------------------------------------------
 \node[decision block] (retryAllowed) at (failOutcome |- reconnectAllowed) {%
-  \textbf{\textcolor{snodecBlue}{Retry allowed?}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleBlue}{Retry allowed?}}\\[-0.4mm]
   retry enabled\\[-0.2mm]
   tries below limit\\[-0.2mm]
   unless \texttt{NO\_RETRY}
@@ -211,23 +211,23 @@
 % The branch bus and the straight arrows to the result row keep the previous vertical height.
 % ----------------------------------------------------------------------
 \node[result stop block, below=\resultArrowL of reconnectAllowed, xshift=-\decisionSplit] (stopClient) {%
-  \textbf{\textcolor{snodecRule}{Stop client}}
+  \textbf{\textcolor{snodecTitleNeutral}{Stop client}}
 };
 
 \node[result timer block, below=\resultArrowL of reconnectAllowed, xshift=\decisionSplit] (reconnectTimer) {%
-  \textbf{\textcolor{snodecOrange!90!black}{Reconnect timer}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{Reconnect timer}}\\[-0.4mm]
   configured\\[-0.2mm]
   reconnect time
 };
 
 \node[result timer block, below=\resultArrowL of retryAllowed, xshift=-\decisionSplit] (retryTimer) {%
-  \textbf{\textcolor{snodecOrange!90!black}{Retry timer}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleOrange}{Retry timer}}\\[-0.4mm]
   timeout, base,\\[-0.2mm]
   limit, jitter
 };
 
 \node[result stop block, below=\resultArrowL of retryAllowed, xshift=\decisionSplit] (stopAttempt) {%
-  \textbf{\textcolor{snodecRule}{Stop attempt}}
+  \textbf{\textcolor{snodecTitleNeutral}{Stop attempt}}
 };
 
 \coordinate (reconnectDecisionBranch) at ([yshift=-\branchDrop]reconnectAllowed.south);
@@ -297,7 +297,7 @@
 \draw[flow line] (classifyEntry) -- (outcomeBranch);
 
 \node[action block, below=\halfArrowL of classifyPanel] (nextAttempt) {%
-  \textbf{\textcolor{snodecBlue}{Initiate next connect attempt}}
+  \textbf{\textcolor{snodecTitleBlue}{Initiate next connect attempt}}
 };
 
 \draw[flow line] (timerMergeLine) -- (classifyPanel.south);
