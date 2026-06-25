@@ -100,7 +100,7 @@ examples/MQTT-ClientRole
 examples/MariaDB-Minimal
 ```
 
-The directory `examples/` also has an aggregate `CMakeLists.txt` for configuring, building, and installing/deploying all companion examples together. The aggregate compile/link result is recorded in `verification/examples-aggregate-build-verification.md`.
+The directory `examples/` also has an aggregate `CMakeLists.txt` for configuring, building, and installing/deploying all companion examples together. The aggregate build-status note is recorded in `verification/examples-aggregate-build-verification.md`; it distinguishes the last reported aggregate build from later WebSocket echo additions that still require a fresh rebuild/redeploy.
 
 The final technical part uses two larger source trees as source-of-truth examples:
 

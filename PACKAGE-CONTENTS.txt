@@ -1,6 +1,6 @@
 SNode.C source/editing package
 
-This archive is intended for manuscript inspection and refinement. It contains the Markdown manuscript, proposal material, source-version pin, metadata, figures, filters, LaTeX support, and example source trees needed to inspect or rebuild the book sources. The full manuscript PDF is intentionally omitted from this source/editing package and must be rebuilt from the Markdown sources before publisher/reviewer distribution.
+This archive is intended for manuscript inspection and refinement. It contains the Markdown manuscript, proposal material, source-version pin, metadata, figures, filters, LaTeX support, and example source trees needed to inspect or rebuild the book sources. The full manuscript PDF is intentionally omitted from this source/editing package and must be rebuilt from the Markdown sources before publisher/reviewer distribution. If proposal source material has changed after the included proposal PDF was generated, rebuild the proposal PDF as well before distribution.
 
 Included:
 - pdf/book-proposal-package.pdf

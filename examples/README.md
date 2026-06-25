@@ -29,7 +29,9 @@ cmake --build <example-dir>/build
 
 The `examples/` directory also contains an aggregate `CMakeLists.txt` that
 configures, builds, and installs/deploys all examples together. The aggregate
-compile/link result is recorded in `../verification/examples-aggregate-build-verification.md`:
+build-status note is recorded in `../verification/examples-aggregate-build-verification.md`;
+it records the last reported aggregate build and the later WebSocket echo additions
+that still require a fresh rebuild/redeploy before final release:
 
 ```bash
 cmake -S examples -B build/examples \
