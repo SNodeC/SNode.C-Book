@@ -12,11 +12,11 @@ The answer brings together three concepts that should not be learned as unrelate
 
 A server-side instance uses a local endpoint identity to listen and accept peers. A client-side instance uses a remote endpoint identity, and optionally a local one, to initiate a connection. A connection is the concrete peer relationship that appears when the listen or connect flow succeeds.
 
-Figure~\ref{fig:server-client-path} turns that sequence into a single path. It starts with the application-side handle, passes through the registration call and the runtime-visible server or client role, and then follows the accept/connect machinery to the concrete connection, factory, context, and protocol behavior.
+Figure \ref{fig:server-client-path} turns that sequence into a single path. It starts with the application-side handle, passes through the registration call and the runtime-visible server or client role, and then follows the accept/connect machinery to the concrete connection, factory, context, and protocol behavior.
 
 ![The server/client role path from application-side handle to protocol behavior.](figures/pdf/fig-05-server-client-connection-context-path.pdf){#fig:server-client-path width=88% latex-placement="tbp"}
 
-Read Figure~\ref{fig:server-client-path} as the bridge between the previous chapters, not as a full implementation diagram. Chapter 3 showed the first echo pair. Chapter 5 distinguished handles, instances, connections, factories, and contexts. Chapter 6 explained the runtime and flow-controller machinery that advances registered instances. Chapter 7 placed communication choices into a layer stack. Chapter 8 explained endpoint identity.
+Read Figure \ref{fig:server-client-path} as the bridge between the previous chapters, not as a full implementation diagram. Chapter 3 showed the first echo pair. Chapter 5 distinguished handles, instances, connections, factories, and contexts. Chapter 6 explained the runtime and flow-controller machinery that advances registered instances. Chapter 7 placed communication choices into a layer stack. Chapter 8 explained endpoint identity.
 
 Chapter 9 now brings those ideas together around the most important practical boundary in the stream layer:
 

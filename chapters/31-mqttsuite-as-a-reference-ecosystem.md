@@ -17,7 +17,7 @@ SNode.C framework ideas
 
 MQTTSuite is therefore architectural evidence: SNode.C concepts can be combined into a coherent communication ecosystem without turning every concern into one monolithic executable.
 
-Figure~\ref{fig:mqttsuite-ecosystem-map} shows the suite as a role ecosystem around the MQTT broker role and topic space. MQTT clients and operational tools, MQTTStore, MQTTBridge, and MQTTIntegrator all touch the same MQTT-oriented center from different system boundaries.
+Figure \ref{fig:mqttsuite-ecosystem-map} shows the suite as a role ecosystem around the MQTT broker role and topic space. MQTT clients and operational tools, MQTTStore, MQTTBridge, and MQTTIntegrator all touch the same MQTT-oriented center from different system boundaries.
 
 ![MQTTSuite as an ecosystem around the MQTTBroker role and topic space.](figures/pdf/fig-10-mqttsuite-ecosystem-map.pdf){#fig:mqttsuite-ecosystem-map width=90% latex-placement="tbp"}
 

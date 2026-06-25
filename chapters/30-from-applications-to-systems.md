@@ -43,11 +43,11 @@ A SNode.C system may be one executable with several named roles. It may also be 
 
 A system is not simply a larger single application. That distinction matters.
 
-A larger application may still have one main role, one deployment boundary, and one dominant operational shape. A system introduces a constellation of concerns around the running process. Figure~\ref{fig:application-system-role-constellation} shows the application as a system role rather than as an isolated program: protocol-facing boundaries, configuration, operational visibility, and deployment identity all meet at the running application process.
+A larger application may still have one main role, one deployment boundary, and one dominant operational shape. A system introduces a constellation of concerns around the running process. Figure \ref{fig:application-system-role-constellation} shows the application as a system role rather than as an isolated program: protocol-facing boundaries, configuration, operational visibility, and deployment identity all meet at the running application process.
 
 ![An application as a system role, with protocol-facing boundaries, configuration, operational visibility, and deployment identity around the running process.](figures/pdf/fig-09-application-system-role-constellation.pdf){#fig:application-system-role-constellation width=90% latex-placement="tbp"}
 
-Figure~\ref{fig:application-system-role-constellation} is intentionally not a build pipeline. The important point is that the running process is where configured instances, protocol boundaries, connection state, diagnostics, and deployment assumptions meet.
+Figure \ref{fig:application-system-role-constellation} is intentionally not a build pipeline. The important point is that the running process is where configured instances, protocol boundaries, connection state, diagnostics, and deployment assumptions meet.
 
 Those are architectural concerns, not only size concerns. A useful first question is therefore:
 

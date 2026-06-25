@@ -103,7 +103,7 @@ That distinction matters. It prevents the reader from treating MQTT-over-WebSock
 
 Chapter 25 introduced native MQTT first. Chapter 26 sharpens the carrier contrast.
 
-Figure~\ref{fig:native-mqtt-vs-mqtt-over-websocket} shows the distinction. Native MQTT writes MQTT packets directly to a stream or TLS stream. MQTT over WebSocket reaches the same MQTT packet and session semantics through an HTTP upgrade path and WebSocket frames. The point is the carrier contrast, not a split in MQTT semantics.
+Figure \ref{fig:native-mqtt-vs-mqtt-over-websocket} shows the distinction. Native MQTT writes MQTT packets directly to a stream or TLS stream. MQTT over WebSocket reaches the same MQTT packet and session semantics through an HTTP upgrade path and WebSocket frames. The point is the carrier contrast, not a split in MQTT semantics.
 
 ![Native MQTT and MQTT over WebSocket share MQTT protocol semantics but use different carrier paths.](figures/pdf/fig-07-native-mqtt-vs-mqtt-over-websocket.pdf){#fig:native-mqtt-vs-mqtt-over-websocket width=90% latex-placement="tbp"}
 

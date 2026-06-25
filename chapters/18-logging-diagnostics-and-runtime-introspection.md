@@ -293,7 +293,7 @@ SNode.C already has clear architectural boundaries. Logging should follow them.
 
 This avoids a common failure mode: placing all messages wherever they are convenient to print. A log line is most useful when its location matches the meaning of the message.
 
-Figure~\ref{fig:logging-diagnostic-visibility-map} summarizes that responsibility map. The figure should not be read as a logging pipeline. It shows where different kinds of runtime evidence belong: the application shell explains operational setup, the instance scope explains role activation, the connection scope explains one peer episode, and the context scope explains protocol meaning.
+Figure \ref{fig:logging-diagnostic-visibility-map} summarizes that responsibility map. The figure should not be read as a logging pipeline. It shows where different kinds of runtime evidence belong: the application shell explains operational setup, the instance scope explains role activation, the connection scope explains one peer episode, and the context scope explains protocol meaning.
 
 ![Logging and diagnostic visibility in SNode.C: application shell, instance, connection, and context each expose different runtime evidence and should log from the layer that owns the meaning.](figures/pdf/fig-14-logging-diagnostic-visibility-map.pdf){#fig:logging-diagnostic-visibility-map width=90% latex-placement="tbp"}
 

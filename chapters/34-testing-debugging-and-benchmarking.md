@@ -68,7 +68,7 @@ End-to-end success does not prove that every boundary is well protected. Use it 
 
 A focused failure should point toward a focused cause: parser syntax handling, exported targets, public headers, package configuration, runtime module paths, RPATH, upgrade selector configuration, buffering, backpressure, fan-out, or event-loop pressure.
 
-Testing is a map of confidence surfaces, not a flat checklist. Figure~\ref{fig:testing-confidence-surfaces} turns that idea into a boundary map. SNode.C is not protected by one abstract test category. It is protected by tests that make specific architectural promises observable: components should be honest, installed packages should be consumable, protocols should preserve semantics, runtime behavior should remain stable, deployment should match the installed shape, diagnostics should localize failures, and benchmarks should measure the relevant pressure point.
+Testing is a map of confidence surfaces, not a flat checklist. Figure \ref{fig:testing-confidence-surfaces} turns that idea into a boundary map. SNode.C is not protected by one abstract test category. It is protected by tests that make specific architectural promises observable: components should be honest, installed packages should be consumable, protocols should preserve semantics, runtime behavior should remain stable, deployment should match the installed shape, diagnostics should localize failures, and benchmarks should measure the relevant pressure point.
 
 ::: {.snodec-checklist title="Testing confidence surfaces"}
 - component surface
