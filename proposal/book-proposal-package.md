@@ -26,7 +26,7 @@ The manuscript starts with small working examples and gradually expands toward H
 
 ## Source-version baseline
 
-The manuscript is aligned with the SNode.C source snapshot recorded in `SOURCE-VERSION.md`: repository `SNodeC/snode.c`, tag `Book`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`, project version `1.0.1`. This matters because SNode.C is an active framework and repository branches may move after a manuscript package is produced.
+The manuscript is aligned with the SNode.C source baseline recorded in `SOURCE-VERSION.md`: repository `SNodeC/snode.c`, public release tag `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. This matters because SNode.C is an active framework and repository branches may move after a manuscript package is produced.
 
 ## Audience
 

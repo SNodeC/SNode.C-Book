@@ -27,7 +27,7 @@ examples/MiniGateway-Extended
 
 ## Required SNode.C public-header fixes
 
-The companion examples require the SNode.C `Book` tag commit recorded in `SOURCE-VERSION.md`. That commit contains two SNode.C public header-surface fixes exposed by the companion examples:
+The companion examples require the SNode.C `v1.0.2` release tag commit recorded in `SOURCE-VERSION.md`. That commit contains two SNode.C public header-surface fixes exposed by the companion examples:
 
 1. The concrete EventSource convenience headers, such as `web/http/legacy/in/EventSource.h`, are installed with the HTTP client component.
 2. `database/mariadb/MariaDBClient.h` exposes the complete `MariaDBCommandSequence` type needed by the fluent MariaDB command-sequence API.
@@ -87,7 +87,7 @@ The earlier compile/link result does not cover this later WebSocket completion c
 - MiniGateway Step 8 build/run smoke status is recorded separately in `verification/minigateway-step8-author-verification.md`.
 - The aggregate examples project has a reported successful build for the pre-WebSocket-completion target set.
 - The current aggregate examples project should be rebuilt and redeployed once more before final release, because the WebSocket echo server subprotocol was added after the last reported aggregate build.
-- The SNode.C source pin in `SOURCE-VERSION.md` points to the `Book` tag commit containing the required public-header fixes listed above.
+- The SNode.C source pin in `SOURCE-VERSION.md` points to the `v1.0.2` release tag commit containing the required public-header fixes listed above.
 
 Recommended final local check:
 

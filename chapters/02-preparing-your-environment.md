@@ -125,25 +125,34 @@ Choose a directory where you keep source repositories:
 mkdir -p ~/projects
 cd ~/projects
 git clone https://github.com/SNodeC/snode.c.git
+cd snode.c
+git checkout v1.0.2
 ```
 
-This creates:
+This creates and selects the public SNode.C release tag used by this book:
 
 ```text
 ~/projects/snode.c/
 ```
 
-The SNode.C framework repository uses `master` as its primary branch. Check the active branch with:
+The exact source baseline is recorded in `SOURCE-VERSION.md`. The tag is the reader-facing checkout target. The full commit SHA in that file is the authoritative pin used for verification. To confirm that the checkout matches the book baseline, run:
+
+```sh
+git rev-parse HEAD
+```
+
+The expected commit is:
+
+```text
+6e475262084ae2dab2daef8781ab9e4adb82d18e
+```
+
+The SNode.C repository uses `master` as its moving development line. Do not build the examples against an arbitrary newer `master` checkout unless you deliberately want to check the book against a newer framework state. If you already have a clone, update the tag information and select the book release explicitly:
 
 ```sh
 cd ~/projects/snode.c
-git branch --show-current
-```
-
-If you already have a clone, update it before working through the examples:
-
-```sh
-git pull
+git fetch --tags
+git checkout v1.0.2
 ```
 
 For normal reading, do not edit the framework repository immediately. First learn where examples are located, how the build is organized, and which parts of the framework are source code, generated build output, or installation artifacts.

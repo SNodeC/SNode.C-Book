@@ -26,7 +26,7 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `chapters/` — one Markdown file per chapter.
 - `parts/` — part divider files.
 - `examples/` — complete source trees for compact chapter examples and the guided MiniGateway project.
-- `verification/` — non-manuscript verification notes for source/package checks.
+- `verification/` — non-manuscript verification notes for source/package checks, including the machine-readable SNode.C source baseline.
 
 The current manuscript contains all planned chapters and an epilogue. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `examples/` for the HTTP-upgrade, SSE, WebSocket echo server/client subprotocol, MQTT-role, and MariaDB examples. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
 
@@ -38,7 +38,7 @@ examples/MiniGateway-Extended
 
 ## Target SNode.C source version
 
-This package is aligned with the SNode.C source snapshot recorded in `SOURCE-VERSION.md`. The authoritative source pin is the full commit SHA `6e475262084ae2dab2daef8781ab9e4adb82d18e`. The human-facing tag is `Book` on the `master` source line, and the recorded SNode.C project version is `1.0.1`.
+This package is aligned with the SNode.C source baseline recorded in `SOURCE-VERSION.md`. The reader-facing release tag is `v1.0.2`; the authoritative source pin is the full commit SHA `6e475262084ae2dab2daef8781ab9e4adb82d18e`. Later verification scripts should read `verification/book-source-baseline.env` so this baseline is not duplicated in multiple places.
 
 The manuscript is not intended to describe arbitrary future states of the SNode.C repository. If a newer checkout changes component names, public headers, examples, or package layout, those changes must be reviewed before the manuscript is updated.
 
