@@ -632,6 +632,8 @@ stream SocketConnection
 
 The factory reads the MiniGateway MQTT configuration from the configured connection instance. That keeps configuration on the role side and protocol behavior on the protocol-object side.
 
+This is also the point where the example separates two lifetimes that are easy to confuse. The application-side `SocketClient` handle configures and registers the `mqtt-uplink` role. The concrete `MiniGatewayMqtt` objects are not that handle. They are protocol objects created by the context factory when SNode.C establishes concrete stream connections. In other words, the startup code names and configures the role; the factory creates the per-connection protocol object that later owns the MQTT session behavior.
+
 #### `MiniGatewaySocketContextFactory.h`
 
 ```cpp
@@ -704,6 +706,8 @@ Both `/simulate` and later real inputs should enter the application through that
 The HTTP role is intentionally straightforward. `/health` reports process health. `/status` serializes the current measurement. `/events` establishes an SSE stream and subscribes that response to the bus. `/simulate` creates one new measurement and injects it.
 
 The MQTT role is started as a native IPv4 stream client. The role name `mqtt-uplink` appears in configuration, diagnostics, and state reporting.
+
+In the base source, `startMqttClient()` returns the application-side client handle, and `main()` does not keep that handle because the example does not need to reconfigure, stop, or inspect the `mqtt-uplink` role after startup. That is intentional. The call to `connect()` has registered the configured role with SNode.C's runtime model; it has not created the `MiniGatewayMqtt` protocol object directly in `main()`. Concrete MQTT protocol objects are created later through `MiniGatewaySocketContextFactory` when actual connections exist. In an application that needs later control over the role, keeping the returned handle would be the appropriate design.
 
 The SNode.C include block in `main.cpp` is an architectural map of the source-facing roles:
 
@@ -918,4 +922,5 @@ This package intentionally contains no TLS, no persistence, no MQTT-over-WebSock
 - Measurement arrival is event-driven. The application does not poll for measurements.
 - `MeasurementState` owns the current value.
 - `MeasurementBus` distributes state changes without knowing about HTTP, SSE, or MQTT.
+- The `mqtt-uplink` startup handle configures and registers the client role; `MiniGatewayMqtt` protocol objects are created by the context factory for concrete connections.
 :::
