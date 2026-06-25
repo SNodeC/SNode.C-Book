@@ -58,7 +58,7 @@ Unix-domain input line
 
 What matters is what does not change: `/status` does not learn Unix-domain sockets, the SSE route does not parse CSV, `MiniGatewayMqtt` does not read the local socket, and the new input boundary ends at the same `acceptMeasurement` function from Chapter 37.
 
-The ownership vocabulary also stays the same. The extended version keeps the measurement-input server handle and the MQTT client handle as named local objects in `main()` because the chapter is explicitly comparing the registered runtime roles. This is a source-layout choice, not a different connection model. The MQTT session behavior still lives in `MiniGatewayMqtt` objects created by the factory for concrete connections, and the Unix-domain input behavior lives in measurement socket contexts created for accepted local connections.
+The ownership vocabulary also stays the same. The extended version keeps the measurement-input server handle and the MQTT client handle as named local objects in `main()` because this chapter compares the registered runtime roles. This is a source-layout choice, not a different connection model.
 
 ### Extension overview
 
