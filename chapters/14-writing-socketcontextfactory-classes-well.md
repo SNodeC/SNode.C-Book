@@ -93,6 +93,38 @@ The factory is therefore not a general-purpose object creation service. It is th
 
 This narrowness is useful. It prevents the factory interface from becoming a second application framework. A concrete factory may still hold stable construction data, but the moment represented by `create(connection)` remains precise: a connection has appeared, and the correct context object must be created for that connection.
 
+#### Source anchor: attaching the created context
+
+The pinned stream-connection source in `src/core/socket/stream/SocketConnection.cpp` shows the same boundary in compact form. The connection asks the factory to create a context for `this` connection, attaches the result when creation succeeds, and closes the connection if no context can be created:
+
+```cpp
+void SocketConnection::setSocketContext(
+    const std::shared_ptr<SocketContextFactory>& socketContextFactory) {
+    SocketContext* socketContext = socketContextFactory->create(this);
+
+    if (socketContext != nullptr) {
+        setSocketContext(socketContext);
+    } else {
+        close();
+    }
+}
+```
+
+The next step is equally important: the newly created context is attached to the connection. If a context already exists, the new one is staged as a replacement rather than treated as a shared global endpoint.
+
+```cpp
+void SocketConnection::setSocketContext(SocketContext* socketContext) {
+    if (this->socketContext == nullptr) {
+        this->socketContext = socketContext;
+        socketContext->attach();
+    } else {
+        newSocketContext = socketContext;
+    }
+}
+```
+
+The excerpt does not add a new responsibility to the factory. It confirms the narrow construction boundary: connection exists, factory creates the endpoint, connection attaches it, and protocol behavior then belongs to the context.
+
 ### The construction path from connection to context
 
 The factory sits in the connection creation path.

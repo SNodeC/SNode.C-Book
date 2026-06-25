@@ -39,6 +39,55 @@ The application normally talks to `core::SNodeC`. `core::SNodeC` forwards runtim
 
 That is the backbone of the chapter.
 
+### A short source-level reading
+
+The implementation follows the same shape. The excerpts below are abridged from the pinned SNode.C `v1.0.2` source in `src/core/SNodeC.cpp`, `src/core/EventLoop.cpp`, and `src/core/EventMultiplexer.cpp`. They are not a second model of the runtime; they are source anchors for the model used in this chapter.
+
+First, the public facade really is a facade. `core::SNodeC` forwards runtime control to `core::EventLoop`:
+
+```cpp
+int SNodeC::start(const utils::Timeval& timeOut) {
+    return EventLoop::start(timeOut);
+}
+
+TickStatus SNodeC::tick(const utils::Timeval& timeOut) {
+    return EventLoop::tick(timeOut);
+}
+
+State SNodeC::state() {
+    return EventLoop::getEventLoopState();
+}
+```
+
+Second, `EventLoop::start(...)` bootstraps configuration, enters the running state, and then advances the runtime through repeated calls to `_tick(...)` while the loop remains active:
+
+```cpp
+if (utils::Config::bootstrap()) {
+    eventLoopState = State::RUNNING;
+
+    do {
+        tickStatus = EventLoop::instance()._tick(timeOut);
+    } while ((tickStatus == TickStatus::SUCCESS ||
+              tickStatus == TickStatus::INTERRUPTED) &&
+             eventLoopState == State::RUNNING);
+}
+```
+
+Third, a multiplexer tick has the expected coordination shape: wait, publish active work, execute queued work, check timeouts, and release expired resources:
+
+```cpp
+const TickStatus tickStatus = waitForEvents(...);
+
+if (tickStatus == TickStatus::SUCCESS) {
+    spanActiveEvents(...);
+    executeEventQueue(...);
+    checkTimedOutEvents(...);
+    releaseExpiredResources(...);
+}
+```
+
+Those excerpts are deliberately small. They show that the diagram's main path is not only a teaching abstraction: facade, event loop, multiplexer, descriptor readiness, timers, queued work, timeout handling, and cleanup are visible as source-level responsibilities.
+
 ### The public runtime surface: `core::SNodeC`
 
 The first runtime-facing type most users encounter is `core::SNodeC`.

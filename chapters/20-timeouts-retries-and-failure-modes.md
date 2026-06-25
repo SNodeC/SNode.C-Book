@@ -294,6 +294,45 @@ The important point is that retry and reconnect are not synonyms. Retry reacts t
 Retry belongs to failed connection attempts. Reconnect belongs to established connections that later disconnect.
 :::
 
+#### Source anchor: two timer paths, one reconnecting client role
+
+The client-side stream source in `src/core/socket/stream/SocketClient.h` keeps the two decisions in different branches of the same role-level flow. After a disconnect, reconnect policy can arm a reconnect timer and then re-enter the connect path for the ongoing client role:
+
+```cpp
+if (config->getReconnect() &&
+    sharedContext->flowController.isReconnectEnabled() &&
+    core::eventLoopState() == core::State::RUNNING) {
+    sharedContext->flowController.armReconnectTimer(
+        relativeReconnectTimeout,
+        [config, sharedContext, onStatus]() {
+            sharedContext->flowController.reportFlowReconnect();
+            SocketClient(config, sharedContext)
+                .realConnect(onStatus, 0, config->getRetryBase());
+        });
+}
+```
+
+A failed connect attempt follows the retry branch instead. The status is classified, retry policy is checked, and a retry timer can schedule another activation attempt with updated retry state:
+
+```cpp
+if (retryFlag && config->getRetry() &&
+    sharedContext->flowController.isRetryEnabled() &&
+    (state == core::socket::State::ERROR ||
+     (state == core::socket::State::FATAL &&
+      config->getRetryOnFatal()))) {
+    sharedContext->flowController.armRetryTimer(
+        relativeRetryTimeout,
+        [config, sharedContext, onStatus, tries, retryTimeoutScale]() {
+            sharedContext->flowController.reportFlowRetry();
+            SocketClient(config, sharedContext)
+                .realConnect(onStatus, tries + 1,
+                             retryTimeoutScale * config->getRetryBase());
+        });
+}
+```
+
+The shared call back into `realConnect(...)` is not evidence that retry and reconnect are the same concept. It shows the opposite: different lifecycle decisions can return to the same connect machinery after their own policy checks have been made.
+
 A failed initial connect attempt is not the same situation as a client that was connected for an hour and then lost its peer. A server that cannot bind its listening endpoint is not in the same situation as a protocol context that decides to close a connection.
 
 #### Server retry
