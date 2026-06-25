@@ -51,13 +51,13 @@
 % Upper boundary actors
 % ----------------------------------------------------------------------
 \node[boundary block, above=\majorVGap of gateway, xshift=-\sideShift] (devices) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Field devices}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Field devices}}\\[-0.4mm]
   {\footnotesize sensors, actuators, nodes}\\[-0.2mm]
   {\footnotesize MQTT, Bluetooth, local links}
 };
 
 \node[boundary block, above=\majorVGap of gateway, xshift=\sideShift] (operator) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Browser / operator surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Browser / operator surface}}\\[-0.4mm]
   {\footnotesize pages, dashboards, controls}\\[-0.2mm]
   {\footnotesize HTTP, SSE, WebSocket}
 };
@@ -66,13 +66,13 @@
 % Lower boundary resources
 % ----------------------------------------------------------------------
 \node[boundary block, below=\majorVGap of gateway, xshift=-\sideShift] (state) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Persistent state}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Persistent state}}\\[-0.4mm]
   {\footnotesize database, measurements, history}\\[-0.2mm]
   {\footnotesize retained view}
 };
 
 \node[boundary block, below=\majorVGap of gateway, xshift=\sideShift] (services) {%
-  \textbf{\textcolor{snodecTitleNeutral}{External services / brokers}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{External services / brokers}}\\[-0.4mm]
   {\footnotesize MQTT broker, APIs, cloud}\\[-0.2mm]
   {\footnotesize other systems}
 };

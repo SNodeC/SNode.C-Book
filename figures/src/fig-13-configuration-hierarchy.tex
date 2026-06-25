@@ -128,19 +128,19 @@
 % Same hierarchy expressed in three concrete views.
 % ----------------------------------------------------------------------
 \node[view block, below=\majorVGap of option] (commandLine) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Command line}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Command line}}\\[-0.4mm]
   \texttt{app instance}\\[-0.2mm]
   \texttt{local --port 8080}
 };
 
 \node[view block, left=\viewGap of commandLine] (cppApi) {%
-  \textbf{\textcolor{snodecTitleNeutral}{C++ API}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{C++ API}}\\[-0.4mm]
   \texttt{instanceHandle.getConfig()}\\[-0.2mm]
   \texttt{->Local::setPort(8080)}
 };
 
 \node[view block, right=\viewGap of commandLine] (configFile) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Config file}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Config file}}\\[-0.4mm]
   \texttt{instance}\\[-0.2mm]
   \texttt{.local.port = 8080}
 };

@@ -97,13 +97,13 @@
 };
 
 \node[install block, right=\hGap of cmake] (install) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Install component}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Install component}}\\[-0.4mm]
   {\footnotesize libraries, apps,}\\[-0.2mm]
   {\footnotesize exported config}
 };
 
 \node[package block, right=\hGap of install] (package) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Package component}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Package component}}\\[-0.4mm]
   {\footnotesize package metadata,}\\[-0.2mm]
   {\footnotesize dependencies}
 };
@@ -118,7 +118,7 @@
   surface block,
   below=\majorVGap of install
 ] (surface) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Deployed runtime surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Deployed runtime surface}}\\[-0.4mm]
   {\footnotesize libraries and executables, runtime-loaded modules, package exports}\\[-0.2mm]
   {\footnotesize service definition, configuration files, logs, pid files, writable state}
 };
@@ -141,7 +141,7 @@
   service block,
   below=\majorVGap of surface
 ] (service) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Running service role}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Running service role}}\\[-0.4mm]
   {\footnotesize complete runtime environment exists}
 };
 

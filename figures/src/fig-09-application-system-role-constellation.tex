@@ -51,13 +51,13 @@
 % Top boundary roles
 % ----------------------------------------------------------------------
 \node[boundary block, above=\majorVGap of process, xshift=-\sideShift] (protocols) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Protocol-facing boundaries}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Protocol-facing boundaries}}\\[-0.4mm]
   {\footnotesize servers, clients, bridges}\\[-0.2mm]
   {\footnotesize HTTP, MQTT, WebSocket, etc.}
 };
 
 \node[boundary block, above=\majorVGap of process, xshift=\sideShift] (configuration) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Configuration surface}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Configuration surface}}\\[-0.4mm]
   {\footnotesize CLI options, instance names}\\[-0.2mm]
   {\footnotesize files, defaults, profiles}
 };
@@ -66,13 +66,13 @@
 % Bottom system concerns
 % ----------------------------------------------------------------------
 \node[boundary block, below=\majorVGap of process, xshift=-\sideShift] (visibility) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Operational visibility}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Operational visibility}}\\[-0.4mm]
   {\footnotesize logging, diagnostics}\\[-0.2mm]
   {\footnotesize counters, lifecycle}
 };
 
 \node[boundary block, below=\majorVGap of process, xshift=\sideShift] (deployment) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Deployment identity}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Deployment identity}}\\[-0.4mm]
   {\footnotesize executable, service}\\[-0.2mm]
   {\footnotesize package, host}
 };

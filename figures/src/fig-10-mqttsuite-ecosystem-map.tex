@@ -73,14 +73,14 @@
 % Top row: clients/tools and persistence-facing store
 % ----------------------------------------------------------------------
 \node[client block, above=\majorVGap of broker, xshift=-\sideShift] (clients) {%
-  \textbf{\textcolor{snodecTitleNeutral}{MQTT clients and tools}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{MQTT clients and tools}}\\[-0.4mm]
   {\footnotesize native MQTT clients, devices,}\\[-0.2mm]
   {\footnotesize tools, services, browsers,}\\[-0.2mm]
   {\footnotesize dashboards, \texttt{MQTTCli}}
 };
 
 \node[store block, above=\majorVGap of broker, xshift=\sideShift] (store) {%
-  \textbf{\textcolor{snodecTitleNeutral}{\texttt{MQTTStore}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{\texttt{MQTTStore}}}\\[-0.4mm]
   {\footnotesize persistent topic/state view,}\\[-0.2mm]
   {\footnotesize retained/state history,}\\[-0.2mm]
   {\footnotesize storage-facing role}

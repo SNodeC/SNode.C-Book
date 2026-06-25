@@ -98,7 +98,7 @@
 };
 
 \node[context block, below=\majorVGap of connection] (context) {%
-  \textbf{\textcolor{snodecTitleNeutral}{Context scope}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{Context scope}}\\[-0.4mm]
   {\footnotesize protocol behavior attached to one connection}\\[-0.2mm]
   {\footnotesize protocol state, accepted/rejected frames, application-level events}\\[-0.2mm]
   {\footnotesize diagnostic evidence: protocol meaning, state transitions, close decisions}
@@ -117,19 +117,19 @@
 \node[form label, below=9mm of context] (formsLabel) {Logging forms};
 
 \node[form block, below=\minorVGap of formsLabel, xshift=-\formShift] (logForm) {%
-  \textbf{\textcolor{snodecTitleNeutral}{\texttt{LOG(level)}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{\texttt{LOG(level)}}}\\[-0.4mm]
   ordinary lifecycle\\[-0.2mm]
   and severity
 };
 
 \node[form block, below=\minorVGap of formsLabel] (plogForm) {%
-  \textbf{\textcolor{snodecTitleNeutral}{\texttt{PLOG(level)}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{\texttt{PLOG(level)}}}\\[-0.4mm]
   lifecycle plus captured\\[-0.2mm]
   system-error context
 };
 
 \node[form block, below=\minorVGap of formsLabel, xshift=\formShift] (vlogForm) {%
-  \textbf{\textcolor{snodecTitleNeutral}{\texttt{VLOG(n)}}}\\[-0.4mm]
+  \textbf{\textcolor{snodecTitleGray}{\texttt{VLOG(n)}}}\\[-0.4mm]
   optional diagnostic\\[-0.2mm]
   depth
 };
