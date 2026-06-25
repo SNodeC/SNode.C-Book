@@ -66,7 +66,7 @@ The answer has four recurring roles and one coordinating runtime. As shown in Fi
 
 ![The runtime view of application-side handles, registered instances, connections, factories, and contexts.](figures/pdf/fig-02-runtime-instance-connection-context.pdf){#fig:snodec-runtime-model width=82% latex-placement="tbp"}
 
-The figure is simple. It is not a full class diagram. It is the smallest picture that helps the reader stay oriented when moving from the echo pair to larger applications.
+The figure is deliberately small. Its purpose is to keep the handle, instance, connection, factory, and context roles distinct when moving from the echo pair to larger applications: a handle is visible in application code, an instance is registered in the runtime, connections appear under that role, and contexts carry per-connection protocol behavior.
 
 #### The runtime
 

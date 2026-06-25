@@ -284,7 +284,7 @@ Retry and reconnect are the most important distinction in this chapter. They are
 This distinction keeps the application model clear.
 
 
-Figure~\ref{fig:retry-reconnect-flow} separates the two loops visually. Retry belongs to a failed connection attempt before a stable connection exists. Reconnect belongs to a previously established connection that later disconnects. Both paths eventually initiate another connection attempt, but they are triggered by different events and controlled by different configuration decisions.
+Figure~\ref{fig:retry-reconnect-flow} separates the two loops visually. Retry belongs to a failed connection attempt before a stable connection exists. Reconnect belongs to a previously established connection that later disconnects. Both paths eventually initiate another connection attempt, but they are triggered by different events and controlled by different configuration decisions. The diagram sketches the controlling decisions; it does not enumerate every socket or protocol error state.
 
 ![Retry and reconnect flow for a client-side stream role: failed connection attempts enter the retry path, established connections enter the reconnect path after disconnect, and both paths return through the same controlled connect initiation.](figures/pdf/fig-16-retry-reconnect-flow.pdf){#fig:retry-reconnect-flow width=90% latex-placement="tbp"}
 

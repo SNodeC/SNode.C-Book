@@ -82,7 +82,7 @@ Testing is a map of confidence surfaces, not a flat checklist. Figure~\ref{fig:t
 
 ![Testing confidence surfaces in SNode.C: different tests protect different architectural boundaries, from component truth and installed-package consumption to protocol semantics, runtime behavior, deployment shape, diagnostics, and performance.](figures/pdf/fig-18-testing-confidence-surfaces.pdf){#fig:testing-confidence-surfaces width=90% latex-placement="tbp"}
 
-The figure is intentionally not a testing pyramid. A pyramid answers how many tests of each kind a project might want. A confidence-surface map asks a different question: when something fails, which boundary did the failure make visible?
+The figure is intentionally different from a testing pyramid. A pyramid answers how many tests of each kind a project might want. Here, the question is architectural: when something fails, which boundary did the failure make visible?
 
 | SNode.C surface | What may be wrong | Useful confidence method |
 |---|---|---|

@@ -27,6 +27,8 @@ The configuration model is easiest to read from the outside inward. Figure~\ref{
 
 ![The SNode.C configuration hierarchy: application scope contains named communication-role instances; each instance contains responsibility sections; each section owns concrete options.](figures/pdf/fig-13-configuration-hierarchy.pdf){#fig:configuration-hierarchy width=90% latex-placement="tbp"}
 
+The figure is a placement model. It shows where configuration meaning belongs: executable-wide concerns at application scope, externally addressable communication roles at instance scope, responsibility groups at section scope, and individual values at option scope. The concrete sections and options in real applications are narrower and more numerous than the diagram needs to show.
+
 | Scope | Addressed by | Typical concerns |
 |---|---|---|
 | application | executable-level options | config file, logging, daemonization, help, generated command line |

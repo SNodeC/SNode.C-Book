@@ -46,7 +46,7 @@ The transfer model keeps four questions apart:
 
 This separation is the reason the same protocol core can often move across lower families without rewriting the protocol itself.
 
-Figure~\ref{fig:snodec-lower-family-transfer} shows the same idea as a transfer model: the protocol-side boundary remains stable, while the lower-family side changes endpoint identity, concrete server/client type, configuration, and deployment assumptions.
+Figure~\ref{fig:snodec-lower-family-transfer} shows the same idea as a transfer model: the protocol-side boundary remains stable, while the lower-family side changes endpoint identity, concrete server/client type, configuration, and deployment assumptions. It is a portability map for deciding what may stay stable and what must be reselected.
 
 ![The lower-family transfer model. The protocol-side boundary remains stable while endpoint families change address types, concrete server/client types, configuration, and deployment assumptions.](figures/pdf/fig-04-lower-family-transfer-model.pdf){#fig:snodec-lower-family-transfer width=95% latex-placement="tbp"}
 
