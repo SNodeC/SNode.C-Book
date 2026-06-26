@@ -1,7 +1,6 @@
 ## Layers are not decoration {.unnumbered}
 
 \index{layered architecture}
-\index{layered architecture}
 
 
 The word layered can be used lazily. In SNode.C, it is meant operationally.

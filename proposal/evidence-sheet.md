@@ -76,6 +76,10 @@ The SNode.C README publicly ties the framework's origin to a teaching context: t
 
 This supports the book's educational positioning, but it should not be overstated as independent course adoption of the finished book unless such adoption is documented separately.
 
+## Educational and interdisciplinary technical use cases
+
+The manuscript explicitly supports educational and interdisciplinary technical use cases, including networked measurement, environmental monitoring, field sensing, lab instrumentation, gateway-style integration systems, and technical data-collection projects. These are presented as architectural use cases for readers who need to understand, build, teach, specify, adapt, or supervise such systems, not as claims of external adoption.
+
 ## Author-confirmed professional context
 
 The following background items are author-confirmed and relevant to credibility, but should be treated as author-supplied CV context unless independent public sources are attached later:

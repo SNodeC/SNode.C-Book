@@ -15,3 +15,11 @@ Parts IX and X widen the view to persistence, larger applications, MQTTSuite, co
 Parts XI and XII bring the material together. The design chapters discuss judgment and extension boundaries. The MiniGateway chapters then use the earlier concepts in a guided application that is larger than the introductory examples.
 
 The book can be read linearly, but it is also useful with the source tree open. When a chapter names a component, public header, example, or source-derived excerpt, treat the source tree as part of the reading experience. The text explains the architecture; the source tree shows where that architecture becomes code.
+
+Different readers may emphasize different routes through the same material. C++ developers and technical system builders can read linearly, or they can first concentrate on Chapters 3--20 to understand the core model before moving into the web, MQTT, persistence, deployment, and MiniGateway chapters.
+
+Teachers and lecturers can treat the book as a course spine: introductory examples, architecture chapters, protocol chapters, system-design chapters, and MiniGateway as an integrating project.
+
+Advanced students benefit from the full progression: echo pair, architecture, network families, contexts and factories, configuration, protocols, systems, and MiniGateway. Makers and prototypers may prefer a practical route through Chapters 1, 3, 5, 7, 16--20, 23--28, 31, 33, and the MiniGateway chapters.
+
+Scientists, domain researchers, and interdisciplinary technical teams may first read the architectural and system-design chapters to understand how sensing, transport, storage, observation, control, and management surfaces fit together, then return to implementation details as needed.

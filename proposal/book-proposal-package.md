@@ -15,11 +15,11 @@
 
 This is a complete, architecture-first technical book about SNode.C, a layered, event-driven C++ framework for network applications. It is written as a first-party guide: the author is the creator and maintainer of the framework and explains the design from inside the system. The manuscript teaches SNode.C as a coherent model for building multi-protocol applications, not as a generic survey of C++ networking libraries.
 
-The book is best positioned as a specialist professional title, course companion, or project-authoritative guide for experienced C++ developers, advanced students, and system builders working with layered network software, IoT communication, embedded Linux, or multi-protocol application design. It should not be positioned as a broad Boost.Asio competitor, a beginner C++ book, or a general socket-programming survey.
+The book is best positioned as a specialist professional title, course companion, or project-authoritative guide for experienced C++ developers and technical system builders. It also supports teachers, advanced students, makers and prototypers, and technically involved domain teams working with layered network software, IoT communication, embedded Linux, networked data collection, or multi-protocol application design. It should not be positioned as a broad Boost.Asio competitor, a beginner C++ book, a nontechnical science handbook, or a general socket-programming survey.
 
 ## One-sentence positioning
 
-An architecture-first guide to SNode.C for mature C++ readers who want to build layered, event-driven, multi-protocol network applications with explicit boundaries between endpoint identity, transport, connection handling, protocol behavior, configuration, diagnostics, deployment, persistence, and application roles.
+An architecture-first guide to SNode.C for mature technical readers who want to build, teach, prototype, or supervise layered, event-driven, multi-protocol network applications with explicit boundaries between endpoint identity, transport, connection handling, protocol behavior, configuration, diagnostics, deployment, persistence, and application roles.
 
 ## Back-cover description
 
@@ -53,21 +53,17 @@ The reader-facing workflow is to check out the public tag. The full commit SHA r
 
 ## Audience
 
-### Primary audience
+The center of the audience is the experienced C++ developer or technical system builder who needs to understand how SNode.C applications are structured, extended, diagnosed, configured, and deployed. This reader is expected to read C++ code, reason about framework boundaries, and care about long-lived maintainability rather than only about the shortest path to a demo.
 
-Experienced C++ developers evaluating or using SNode.C who want to understand the framework deeply enough to build, extend, test, and deploy real network applications.
+The most important adjacent channel is teaching. The book has a course-friendly shape: small examples, visible architecture, protocol layering, operational behavior, deployment, and a MiniGateway capstone. Teachers and lecturers can use it as a spine for advanced courses or laboratories in network programming, IoT systems, embedded Linux, media technology, or systems-oriented software design.
 
-### Secondary audience
+Advanced students are a natural audience when they already know the broad idea of protocol layers but need to see those layers expressed in real C++ code. Makers and prototypers are also plausible readers when their device, dashboard, gateway, router, sensor, home-lab, artistic, or experimental systems have grown beyond recipe-level composition.
 
-Advanced students in networking, IoT, embedded Linux, media technology, or systems-programming courses who already know the broad idea of protocol layers and want to see those ideas expressed in modern C++ code.
-
-### Tertiary audience
-
-Engineers and makers building Linux-based network or IoT systems who are willing to work at framework and architecture level rather than only at recipe level.
+The book can also support technically involved scientists, domain researchers, and interdisciplinary teams who work with data-collection and integration systems alongside developers. That audience is addressed through architectural relevance--sensing, transport, storage, observation, control, and management surfaces--not by turning the book into a nontechnical science handbook.
 
 ### Not the audience
 
-This book is not primarily for readers looking for a general survey of C++ networking libraries, a Boost.Asio tutorial, a beginner C++ book, a general TLS/HTTP/MQTT reference, or an introductory IoT cookbook.
+This book is not primarily for readers looking for a general survey of C++ networking libraries, a Boost.Asio tutorial, a beginner C++ book, a general TLS/HTTP/MQTT reference, an introductory IoT cookbook, or a nontechnical handbook for scientific measurement projects.
 
 ## Reader promise
 
@@ -82,13 +78,14 @@ After reading this book, the reader will be able to:
 - structure applications around configured roles, handles, runtime-visible instances, connections, `SocketContextFactory`, and `SocketContext`;
 - reason about timeouts, retries, reconnects, logging, diagnostics, and backpressure;
 - understand CMake components, public headers, linking, Linux/OpenWrt deployment, and testing shape;
-- extend SNode.C applications without damaging architectural boundaries.
+- extend SNode.C applications without damaging architectural boundaries;
+- reason about sensing, transport, storage, observation, control, and management surfaces in networked data-collection systems.
 
 ## Why this book should exist
 
-Many networking books focus either on raw sockets or on one application protocol. Many web books abstract away transport and connection structure. Many IoT books stay at solution level and never explain the system underneath.
+Many networking books focus either on raw sockets or on one application protocol. Many web books abstract away transport and connection structure. Many IoT and data-collection books stay at solution level and never explain the system underneath.
 
-SNode.C is useful as a book subject because it connects those layers without hiding them. It gives readers a concrete framework in which endpoint identity, transport form, connection lifetime, protocol meaning, configuration, diagnostics, deployment, and application state can be explained together.
+SNode.C is useful as a book subject because it connects those layers without hiding them. It gives readers a concrete framework in which endpoint identity, transport form, connection lifetime, protocol meaning, configuration, diagnostics, deployment, application state, and management surfaces can be explained together.
 
 The book therefore has two purposes:
 
@@ -254,7 +251,7 @@ The strongest realistic channels are:
 - official SNode.C guide;
 - specialist professional C++/network-programming title;
 - project-authoritative reference;
-- course companion for advanced networking, IoT, embedded Linux, media technology, or distributed-systems teaching;
+- course companion for advanced networking, IoT, embedded Linux, media technology, interdisciplinary data-collection, or distributed-systems teaching;
 - print-on-demand or community-supported technical book.
 
 A standard broad professional-trade acquisition is harder because the named framework has a capped market unless adoption evidence grows. The proposal therefore should not exaggerate market size. Its best case is depth, completeness, transparency, and usefulness for a defined specialist audience.

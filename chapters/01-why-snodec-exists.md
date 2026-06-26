@@ -20,17 +20,11 @@ If the framework hides the deeper structure of the system, the reader may learn 
 
 SNode.C is interesting because it takes a different path. It is a layered, event-driven C++ framework that keeps the structure of networked applications visible without reducing networking to socket helpers, HTTP handlers, or MQTT utilities.
 
-That visibility gives the framework a specific teaching value. This book is written for three kinds of readers in particular.
+That visibility gives the framework a specific teaching value. SNode.C is useful where software stops being a single endpoint and becomes a small ecosystem: a service and its clients, devices and dashboards, a lab setup, an artistic or experimental installation, a course project, or a measurement system with observation, control, storage, and a management surface.
 
-The first kind is the experienced C++ developer who already understands classes, templates, ownership, build systems, and long-lived software. Such a reader wants more than a recipe. They want to understand where the boundaries are, which pieces can be reused, which pieces should remain separate, and how new behavior can be added without turning the application into an accidental collection of callbacks.
+In such systems, the central question is not only how to open a socket. It is how to organize roles, protocols, configuration, diagnostics, persistence, deployment, and operational surfaces so the result can still be understood and maintained.
 
-The second kind is the advanced learner or student who already knows the broad idea of a protocol stack: perhaps Ethernet, IP, TCP, TLS, HTTP, WebSocket, MQTT, local IPC, or Bluetooth. Such a reader may understand the layers in theory, but still have difficulty recognizing those layers in real C++ code.
-
-The third kind is the enthusiastic maker who builds systems by combining devices, protocols, networks, and small services. Such a reader may come from microcontrollers, home labs, sensor systems, Linux boards, routers, or artistic and experimental installations. They may not want a purely academic treatment, but they do need a framework that helps them keep growing systems understandable.
-
-SNode.C lives where these interests meet.
-
-It lets the reader build real network applications, but it also exposes the architectural boundaries that make those applications understandable. For that reason, SNode.C is useful as both a framework and a learning object.
+SNode.C lets the reader build real network applications, but it also exposes the architectural boundaries those applications depend on.
 
 The promise of this book is therefore practical and architectural at the same time:
 

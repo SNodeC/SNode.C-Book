@@ -46,6 +46,12 @@ That question is the main design rule of this chapter: boundary first, protocol 
 
 IoT architecture is not defined by sensors alone. Sensors, boards, radio modules, and local devices matter, but they do not define the communication architecture by themselves. The architecture is defined by the points where information crosses from device-near code to local services, from local services to integration infrastructure, from integration infrastructure to user interfaces, and from live state into persistent or external systems.
 
+\index{data-collection systems}
+\index{scientific data collection}
+\index{management surface!HTTP}
+
+Scientific and environmental data-collection systems are typical examples of this shape. Instruments or field nodes produce measurements, local services buffer or pre-process them, gateways forward them, MQTT may carry integration traffic, HTTP or SSE surfaces may expose observation and status, persistence stores long-running data, and a management HTTP instance may provide configuration or operational control. The domain may be biology, environmental monitoring, lab instrumentation, field sensing, or another measurement area; the architectural question remains how to keep the boundaries explicit.
+
 Figure \ref{fig:iot-boundary-constellation} shows an IoT system as a constellation of boundaries rather than as a single protocol chain. Field devices, browser/operator surfaces, persistent state, and external services all meet at the application or gateway process. The diagram frames boundary placement, not executable topology: one process may own several boundaries, and one boundary may be realized by more than one deployable part. The important design question is where each boundary belongs and which protocol surface is appropriate for that boundary.
 
 ![An IoT system as a constellation of protocol and state boundaries around an application or gateway process.](figures/pdf/fig-08-iot-boundary-constellation.pdf){#fig:iot-boundary-constellation width=90% latex-placement="tbp"}

@@ -8,11 +8,19 @@ SNode.C is the worked system throughout the book. That is deliberate. A general 
 
 ### Who this book is for {.unnumbered}
 
-The primary reader is an experienced C++ developer who wants to build and understand networked applications rather than only copy endpoint recipes. The book assumes comfort with modern C++ syntax, classes, templates, build systems, and the idea of long-lived software components.
+The book is centered on technically engaged readers who need to understand how C++ components, protocols, configuration, diagnostics, deployment, and long-running data flows become maintainable systems. Many readers will arrive from professional C++ development; others will arrive because a course, a prototype, an installation, or a measurement system has grown large enough that its communication boundaries can no longer remain implicit.
 
-A second reader is the advanced student or systems learner who already knows the broad idea of protocol stacks and wants to see those ideas expressed in real C++ code. The book does not replace formal networking theory, but it gives concrete structure to concepts that are otherwise easy to discuss abstractly.
+Experienced C++ developers and technical system builders are the closest readers. They already understand classes, templates, ownership, build systems, and long-lived software, and they want more than a recipe. They want to see where the boundaries are, which pieces can be reused, which pieces should remain separate, and how new behavior can be added without turning an application into an accidental collection of callbacks.
 
-A third reader is the system builder who combines devices, local services, web protocols, MQTT, Linux boards, routers, or operational tooling. For that reader, the important question is not only whether an example runs, but whether the growing system remains understandable.
+Teachers and lecturers are another important audience. For them, the value is not only in the individual examples, but in the path through the material: a small echo pair, a visible runtime model, network families, protocol contexts, configuration, diagnostics, deployment, and finally an integrating MiniGateway project. The book can serve as a course spine for event-driven programming, network protocols, IoT architecture, and systems thinking.
+
+Advanced learners and students may already know the broad idea of a protocol stack: perhaps Ethernet, IP, TCP, TLS, HTTP, WebSocket, MQTT, local IPC, or Bluetooth. Such readers may understand the layers in theory, but still have difficulty recognizing those layers in real C++ code. The book gives them a concrete source tree in which abstract networking concepts become roles, types, callbacks, configuration sections, components, and deployable applications.
+
+Makers and prototypers may come from microcontrollers, home labs, sensor systems, Linux boards, routers, dashboards, artistic installations, or experimental technical setups. They may not want a purely academic treatment, but they do need growing systems to remain understandable. For these readers, SNode.C is useful because it lets practical work keep an architectural shape while devices, protocols, and services accumulate.
+
+The book can also support technically involved scientists, domain researchers, and interdisciplinary teams who specify, adapt, or supervise data-collection and integration systems together with developers. Environmental monitoring, biological observation, lab instrumentation, field sensing, distributed measurement stations, and similar systems all face the same architectural question: how sensing, transport, storage, observation, control, and management interfaces fit together without becoming an opaque tangle.
+
+The book remains a technical book. It does not hide C++, protocols, build systems, or operational detail. Its aim is to make those details readable as parts of a system.
 
 ### What this book assumes {.unnumbered}
 
