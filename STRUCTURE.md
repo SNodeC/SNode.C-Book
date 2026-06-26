@@ -111,6 +111,8 @@ examples/SSE-Server
 examples/SSE-EventSource-Client
 examples/WebSocket-Echo-ServerSubprotocol
 examples/WebSocket-Echo-ClientSubprotocol
+examples/LineProtocol-Server
+examples/LineProtocol-Client
 examples/MQTT-ClientRole
 examples/MariaDB-Minimal
 ```

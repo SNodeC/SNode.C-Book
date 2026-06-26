@@ -10,7 +10,7 @@ The examples were checked against the SNode.C book baseline recorded in `SOURCE-
 Repository: https://github.com/SNodeC/snode.c.git
 Release tag: v1.0.2
 Commit: 6e475262084ae2dab2daef8781ab9e4adb82d18e
-Verification date: 2026-06-26
+Verification date: 2026-06-27
 Verification type: author-confirmed local build and behavior check
 ```
 
@@ -33,6 +33,8 @@ examples/SSE-Server
 examples/SSE-EventSource-Client
 examples/WebSocket-Echo-ServerSubprotocol
 examples/WebSocket-Echo-ClientSubprotocol
+examples/LineProtocol-Server
+examples/LineProtocol-Client
 examples/MQTT-ClientRole
 examples/MariaDB-Minimal
 examples/MiniGateway-Base
@@ -50,15 +52,16 @@ These are SNode.C public-surface requirements, not book-example workarounds. The
 
 ## Author-confirmed result
 
-The author confirms that the current companion-example set configures, compiles, links, installs/deploys where applicable, runs where intended, and behaves as expected against the pinned SNode.C `v1.0.2` baseline.
+The complete companion-example set configured, compiled, linked, installed/deployed where applicable, ran where intended, and behaved as expected against the pinned SNode.C `v1.0.2` baseline. This now includes the newly added line-protocol server/client examples.
 
 | Area | Status | Evidence type |
 |---|---:|---|
-| SNode.C baseline | confirmed | public tag `v1.0.2` and exact commit pin |
-| Aggregate companion-example configure/build/link | confirmed | author local verification |
+| SNode.C baseline | confirmed | release tag `v1.0.2` and exact commit pin |
+| Aggregate companion-example configure/build/link | confirmed | author local aggregate build check |
 | HTTP upgrade examples | confirmed | author local build and behavior check |
 | SSE server and EventSource client examples | confirmed | author local build and behavior check |
 | WebSocket echo client/server subprotocol examples | confirmed | author local build and behavior check |
+| Line protocol server/client examples | confirmed | author local build and runtime check |
 | MQTT client-role example | confirmed | author local build and behavior check |
 | MariaDB minimal example | confirmed | author local build and behavior check in the expected database setup |
 | MiniGateway-Base | confirmed | author local build and smoke check |
@@ -99,6 +102,10 @@ The final command is expected to print:
 
 The examples should then be configured against that installed SNode.C package, preferably through an isolated installation prefix rather than an unrelated system installation.
 
+## Line-protocol example coverage
+
+`examples/LineProtocol-Server` and `examples/LineProtocol-Client` are included in the aggregate example CMake project. They follow the same public SNode.C IPv4 legacy stream role pattern used by the repository echo example, but replace byte reflection with a small command protocol. The author confirmed that both new examples compile and run successfully.
+
 ## Conclusion
 
-The companion-example set is considered verified for this manuscript package based on the author-confirmed local build and behavior result against SNode.C `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. There are no remaining known incomplete companion-example verification items recorded for this package.
+The full companion-example set is considered verified for this manuscript package based on the author-confirmed local build and behavior result against SNode.C `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`.

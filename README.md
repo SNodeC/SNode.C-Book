@@ -31,7 +31,7 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `examples/` — complete source trees for compact chapter examples and the guided MiniGateway project.
 - `verification/` — non-manuscript verification notes for source/package checks, including the machine-readable SNode.C source baseline.
 
-The current manuscript contains all planned front matter, chapters, an epilogue, and back matter. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `examples/` for the HTTP-upgrade, SSE, WebSocket echo server/client subprotocol, MQTT-role, and MariaDB examples. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
+The current manuscript contains all planned front matter, chapters, an epilogue, and back matter. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `examples/` for the HTTP-upgrade, SSE, WebSocket echo server/client subprotocol, line-protocol server/client, MQTT-role, and MariaDB examples. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
 
 ```text
 examples/MiniGateway-Base
@@ -53,7 +53,7 @@ The compact source trees in `examples/` are intended to be complete buildable ve
 
 Both MiniGateway versions are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C source snapshot recorded in `SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
 
-The current package records author-confirmed local verification for the complete companion-example set in `verification/examples-aggregate-build-verification.md`, with MiniGateway-specific details retained in `verification/minigateway-step8-author-verification.md`. The verification notes target the public SNode.C `v1.0.2` release tag and its exact pinned commit. These files are package evidence, not manuscript prose, and they are not presented as independent continuous-integration evidence.
+The current package records author-confirmed local verification for the full companion-example set in `verification/examples-aggregate-build-verification.md`, including the line-protocol server/client examples added for Chapter 13. MiniGateway-specific details are retained in `verification/minigateway-step8-author-verification.md`. The verification notes target the SNode.C `v1.0.2` release tag and its exact pinned commit. These files are package evidence, not manuscript prose, and they are not presented as independent continuous-integration evidence.
 
 ## Heading convention
 

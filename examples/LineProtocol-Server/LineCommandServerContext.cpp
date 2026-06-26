@@ -1,0 +1,78 @@
+#include "LineCommandServerContext.h"
+
+#include <core/socket/SocketAddress.h>
+#include <core/socket/stream/SocketConnection.h>
+#include <log/Logger.h>
+
+#include <string>
+
+LineCommandServerContext::LineCommandServerContext(core::socket::stream::SocketConnection* socketConnection)
+    : core::socket::stream::SocketContext(socketConnection) {
+}
+
+void LineCommandServerContext::onConnected() {
+    VLOG(1) << "Line command server connected to " << getSocketConnection()->getRemoteAddress().toString();
+    sendToPeer("READY\n");
+}
+
+void LineCommandServerContext::onDisconnected() {
+    VLOG(1) << "Line command server disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+    receiveBuffer.clear();
+}
+
+bool LineCommandServerContext::onSignal(int signum) {
+    VLOG(1) << "Line command server closing due to signal " << signum;
+    close();
+
+    return true;
+}
+
+std::size_t LineCommandServerContext::onReceivedFromPeer() {
+    char chunk[1024];
+    const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
+
+    if (chunkLen == 0) {
+        return 0;
+    }
+
+    receiveBuffer.append(chunk, chunkLen);
+
+    std::size_t lineEnd = receiveBuffer.find('\n');
+    while (lineEnd != std::string::npos) {
+        std::string line = receiveBuffer.substr(0, lineEnd);
+        if (!line.empty() && line.back() == '\r') {
+            line.pop_back();
+        }
+
+        processLine(line);
+        receiveBuffer.erase(0, lineEnd + 1);
+        lineEnd = receiveBuffer.find('\n');
+    }
+
+    if (receiveBuffer.length() > maxLineLength) {
+        LOG(WARNING) << "Line command server closing after overlong pending line";
+        sendToPeer("ERR line too long\n");
+        receiveBuffer.clear();
+        close();
+    }
+
+    return chunkLen;
+}
+
+void LineCommandServerContext::processLine(const std::string& line) {
+    if (line.empty()) {
+        return;
+    }
+
+    VLOG(1) << "Line command server received '" << line << "'";
+
+    if (line == "PING") {
+        sendToPeer("PONG\n");
+    } else if (line == "STATUS") {
+        sendToPeer("OK\n");
+    } else if (line == "QUIT") {
+        close();
+    } else {
+        sendToPeer("ERR unknown command\n");
+    }
+}

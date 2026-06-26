@@ -348,6 +348,8 @@ Closure also has protocol meaning. `QUIT` closes because the peer requested the 
 
 This is still not a full application. It is a compact worked context whose only job is to show how lifecycle handling, input handling, output behavior, state, and closure discipline fit inside one per-connection endpoint.
 
+The complete runnable server and client version of this line protocol is included in `examples/LineProtocol-Server` and `examples/LineProtocol-Client`. Those source trees use the same public IPv4 legacy stream front-door roles as the Chapter 3 echo pair, but they replace byte reflection with command parsing, response writing, and protocol-driven closure.
+
 ### Design habits for good context code
 
 \index{context design}

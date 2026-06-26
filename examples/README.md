@@ -14,6 +14,8 @@ examples/SSE-Server
 examples/SSE-EventSource-Client
 examples/WebSocket-Echo-ServerSubprotocol
 examples/WebSocket-Echo-ClientSubprotocol
+examples/LineProtocol-Server
+examples/LineProtocol-Client
 examples/MQTT-ClientRole
 examples/MariaDB-Minimal
 ```
@@ -30,7 +32,7 @@ cmake --build <example-dir>/build
 The `examples/` directory also contains an aggregate `CMakeLists.txt` that
 configures, builds, and installs/deploys all examples together. The aggregate
 build-status note is recorded in `../verification/examples-aggregate-build-verification.md`;
-it records the last reported aggregate build and the later WebSocket echo additions
+it records the last reported aggregate build and any later example additions
 that still require a fresh rebuild/redeploy before final release:
 
 ```bash
@@ -44,6 +46,11 @@ cmake --build build/examples --target deploy-examples
 The WebSocket echo example is split across the HTTP-upgrade server/client and the
 matching server/client subprotocol modules. Deploy both subprotocol modules before
 running `HttpUpgrade-Server` and `HttpUpgrade-Client` as a complete echo check.
+
+The line-protocol examples are the complete runnable server/client version of
+the Chapter 13 worked `SocketContext`. Start `line-protocol-server`, then run
+`line-protocol-client`. The client waits for `READY`, sends `PING`, `STATUS`,
+an intentionally unknown command, and then `QUIT`.
 
 Some examples are intended to demonstrate compilation and framework integration
 rather than standalone runtime behavior. For example, `MQTT-ClientRole` builds the

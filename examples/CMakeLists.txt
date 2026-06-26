@@ -14,6 +14,8 @@ add_subdirectory(SSE-Server)
 add_subdirectory(SSE-EventSource-Client)
 add_subdirectory(WebSocket-Echo-ServerSubprotocol)
 add_subdirectory(WebSocket-Echo-ClientSubprotocol)
+add_subdirectory(LineProtocol-Server)
+add_subdirectory(LineProtocol-Client)
 add_subdirectory(MQTT-ClientRole)
 add_subdirectory(MariaDB-Minimal)
 add_subdirectory(MiniGateway-Base)
@@ -26,6 +28,8 @@ set(SNODEC_BOOK_EXAMPLE_TARGETS
     sse-eventsource-client
     websocket-echo-server-subprotocol
     websocket-echo-client-subprotocol
+    line-protocol-server
+    line-protocol-client
     mqtt-client-role
     mariadb-minimal
     minigateway-base
