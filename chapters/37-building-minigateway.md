@@ -1,5 +1,10 @@
 ## Building MiniGateway
 
+\index{MiniGateway}
+\index{guided project}
+\index{gateway application}
+
+
 ### Why this chapter exists
 
 The previous chapters taught SNode.C in layers: lower communication families, stream connections, protocol contexts, web protocols, MQTT, configuration, deployment, testing, and architectural judgment. MiniGateway is the point where those ideas stop being separate topics and become one small application.
@@ -19,6 +24,10 @@ new measurement
 This is the core of the project. Everything else in the chapter exists to keep this path honest.
 
 ### What the application does
+
+\index{MiniGateway!application purpose}
+\index{measurement gateway}
+
 
 The base version built in this chapter has two outward-facing communication roles.
 
@@ -103,6 +112,12 @@ This is not a MiniGateway-specific trick. It is part of testing deployed communi
 
 ### The shape of the base application
 
+\index{MiniGateway!base architecture}
+\index{MQTT client role}
+\index{HTTP administration role}
+\index{SSE observation role}
+
+
 MiniGateway has a small source tree, but the files are separated by responsibility:
 
 ```text
@@ -143,6 +158,10 @@ role assembly
 A one-file example would be shorter, but it would teach the wrong reflex. This chapter wants the reader to see how a small SNode.C application is assembled from visible boundaries. Chapter 38 keeps the same split visible when it adds the Unix-domain measurement input. That extension is introduced as another SNode.C communication role, not as behavior hidden inside the HTTP routes, the SSE response path, or the MQTT client object.
 
 ### Stage 1: the build target
+
+\index{MiniGateway!build target}
+\index{CMakeLists.txt@\texttt{CMakeLists.txt}}
+
 
 MiniGateway is an external SNode.C consumer. It therefore uses installed package targets and installed public headers, not private in-tree targets or private implementation headers. The selected components already say a lot about the application:
 
@@ -204,6 +223,10 @@ target_link_libraries(
 
 ### Stage 2: the domain fact
 
+\index{MiniGateway!measurement model}
+\index{Measurement@\texttt{Measurement}}
+
+
 The first application type is `Measurement`. It is deliberately plain. The domain value has no knowledge of HTTP, SSE, MQTT, sockets, configuration, or deployment. It is the fact that the application owns and exposes.
 
 The JSON conversion lives with the measurement because this guided project needs a compact representation for `/status`, SSE payloads, and MQTT publications. In a larger application, the representation layer might be separated further. For MiniGateway, keeping the conversion next to the small value type is clear enough and keeps the example readable.
@@ -246,6 +269,10 @@ namespace minigateway {
 
 
 ### Stage 3: the current state
+
+\index{MeasurementState@\texttt{MeasurementState}}
+\index{MiniGateway!current state}
+
 
 `MeasurementState` holds the latest accepted measurement. It is not a cache for HTTP and it is not an MQTT buffer. It is the application-local state owner.
 
@@ -295,6 +322,10 @@ namespace minigateway {
 
 
 ### Stage 4: the internal measurement bus
+
+\index{MeasurementBus@\texttt{MeasurementBus}}
+\index{internal event bus}
+
 
 The bus is the smallest useful separation between accepting a measurement and deciding which outward-facing role should react to it. It keeps the measurement path event-driven.
 
@@ -363,6 +394,10 @@ namespace minigateway {
 
 
 ### Stage 5: MiniGateway-specific MQTT configuration
+
+\index{ConfigSections@\texttt{ConfigSections}}
+\index{MiniGateway!MQTT configuration}
+
 
 The MQTT client role needs application-specific MQTT settings: client id, keep-alive, command topic, measurement topic, QoS, and retain behavior. These are not hard-coded inside `MiniGatewayMqtt`. They belong to the configured communication role.
 
@@ -464,6 +499,10 @@ namespace minigateway {
 
 
 ### Stage 6: the MQTT protocol object
+
+\index{MiniGatewayMqtt@\texttt{MiniGatewayMqtt}}
+\index{MQTT!MiniGateway protocol object}
+
 
 `MiniGatewayMqtt` is the MQTT client-side protocol object for this application. It owns MQTT session behavior, not domain state. On connection, it sends `CONNECT`. After a successful `CONNACK`, it subscribes to the command topic and announces a small status message. When a measurement is available, it publishes the measurement payload if the MQTT session is connected.
 
@@ -621,6 +660,10 @@ namespace minigateway {
 
 ### Stage 7: constructing MQTT contexts
 
+\index{MiniGatewaySocketContextFactory@\texttt{MiniGatewaySocketContextFactory}}
+\index{MiniGateway!MQTT context construction}
+
+
 SNode.C's MQTT layer is used through a socket context. The factory creates an `iot::mqtt::SocketContext` and passes it a `MiniGatewayMqtt` protocol object. This is the same shape used by MQTTSuite-style MQTT applications:
 
 ```text
@@ -682,6 +725,11 @@ namespace minigateway {
 
 
 ### Stage 8: assembling the runtime roles
+
+\index{MiniGateway!runtime assembly}
+\index{runtime roles}
+\index{handle lifetime}
+
 
 The main file is where the small application becomes a running SNode.C program. It performs five tasks:
 
@@ -881,6 +929,10 @@ int main(int argc, char* argv[]) {
 
 
 ### Building the base source package
+
+\index{MiniGateway!base source package}
+\index{README-BUILD.md@\texttt{README-BUILD.md}}
+
 
 The source package that accompanies this chapter contains a short build note. It is simple because the chapter assumes SNode.C is already installed as a CMake package.
 

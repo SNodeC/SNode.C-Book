@@ -1,5 +1,10 @@
 ## The Express-Like Framework
 
+\index{Express-like framework}
+\index{web application framework}
+\index{routing}
+
+
 ### From HTTP messages to application structure
 
 Chapter 21 showed how SNode.C raises stream communication to HTTP request and response objects. Chapter 22 moves one level higher: HTTP messages are no longer handled only by an HTTP request-ready callback, but by a web-application structure made of routers, routes, middleware chains, request/response facades, and explicit continuation.
@@ -25,6 +30,9 @@ The Express-like layer is therefore not a different universe. It is the applicat
 Part VII now moves in steps. Chapter 21 introduced HTTP messages. Chapter 22 shows how those messages become routed application flow. Chapter 23 will keep that web-application structure, but change the temporal shape of a handler: instead of answering once, a route may keep an HTTP response open and emit events over time.
 
 ### The Express-like layer in the layered SNode.C model
+
+\index{Express-like framework!layered model}
+
 
 The stack now reads:
 
@@ -70,6 +78,9 @@ The HTTP layer gives the application request and response objects. The Express-l
 
 ### What “Express-like” means here
 
+\index{Express-like framework!semantics}
+
+
 “Express-like” does not mean that SNode.C embeds Node.js or the JavaScript Express runtime. It means that the C++ web-application layer uses a familiar application model:
 
 - `WebApp`,
@@ -87,6 +98,11 @@ The layer is Express-like in its programming model. It is still SNode.C in its r
 This distinction matters because the familiar surface should not hide the underlying model. A SNode.C Express-like application is still carried by an application-side web-app/server handle, a registered server instance, an HTTP server layer, legacy or TLS connection handling, lower-family choices, configuration, diagnostics, timing, and failure behavior.
 
 ### WebApp, WebAppT, and the HTTP server below
+
+\index{WebApp@\texttt{WebApp}}
+\index{WebAppT@\texttt{WebAppT}}
+\index{HTTP server}
+
 
 The core composition is visible in two steps.
 
@@ -183,6 +199,12 @@ The `Controller` is the dispatch-time object that carries the Express request/re
 
 ### Router as the application composition unit
 
+\index{Router@\texttt{Router}}
+\index{routes}
+\index{mounted routers}
+\index{middleware}
+
+
 `Router` is the main composition unit of the Express-like layer. It lets a web application be assembled from parts instead of being written as one large request callback.
 
 A router can contribute:
@@ -251,6 +273,11 @@ These policies belong to the router. They are not socket concerns and not generi
 
 ### Application callbacks and middleware callbacks
 
+\index{application callbacks}
+\index{middleware callbacks}
+\index{Next@\texttt{Next}}
+
+
 The Express-like layer distinguishes two important callback shapes.
 
 | Callback shape | Meaning |
@@ -318,6 +345,10 @@ This makes flow control part of the application model. The chain is visible to t
 
 ### Dispatchers behind the API
 
+\index{dispatcher}
+\index{routing dispatch}
+
+
 The user-facing API is built on internal dispatcher roles.
 
 A compact view is:
@@ -333,6 +364,11 @@ The dispatchers encode the fact that application callbacks, middleware callbacks
 This internal structure mirrors the application model. The framework does not pretend that all web actions are the same. The dispatcher structure reflects those differences.
 
 ### Request and Response as web-application facades
+
+\index{Request@\texttt{Request}}
+\index{Response@\texttt{Response}}
+\index{facade}
+
 
 Chapter 21 introduced HTTP request and response objects. Chapter 22 raises them into Express-like application facades.
 
@@ -417,6 +453,13 @@ The facade is not a wall. It is a raised application surface with deliberate acc
 
 ### Built-in middleware as reusable application behavior
 
+\index{middleware}
+\index{static serving}
+\index{virtual hosts}
+\index{JSON middleware}
+\index{authentication middleware}
+
+
 The Express-like module also provides reusable middleware. Built-in middleware packages common request-processing behavior so it can be mounted once and reused across routes.
 
 Examples include:
@@ -484,6 +527,10 @@ Chapter 23 then asks what happens when a route is not a short request/response e
 :::
 
 ### Express public surface: WebApp header and carrier component
+
+\index{express components}
+\index{WebApp@\texttt{WebApp}!public surface}
+
 
 A file that directly uses the IPv4 legacy Express WebApp includes:
 

@@ -1,5 +1,10 @@
 ## Database Support and Application State
 
+\index{database support}
+\index{application state}
+\index{persistence}
+
+
 ### From protocol boundaries to persistence boundaries
 
 Chapter 27 described IoT systems as collections of communication boundaries. Chapter 28 adds a different kind of boundary: persistence. Communication boundaries decide how information moves between active participants; persistence boundaries decide what information should remain after the immediate conversation is over.
@@ -42,6 +47,10 @@ Persist application facts, not raw transport accidents.
 
 ### Persistence as an application-state boundary
 
+\index{persistence boundary}
+\index{application-state boundary}
+
+
 A database connection should not be read as another transport protocol. An HTTP endpoint, MQTT session, WebSocket connection, Bluetooth link, or Unix-domain control socket is usually a communication boundary between active participants. A database connection is different. It is a persistence and query boundary: it stores state, retrieves state, changes state, and may become the durable memory of a larger system.
 
 A compact comparison helps:
@@ -58,6 +67,10 @@ A compact comparison helps:
 This distinction matters because database work should not be treated as random helper code hidden inside protocol callbacks. It belongs to the application-state architecture. A protocol callback may trigger a persistence decision, but the database boundary should still remain visible as its own architectural concern.
 
 ### What SNode.C currently supports
+
+\index{MariaDB}
+\index{database module}
+
 
 The database support in SNode.C has a concrete scope. The current concrete database module is MariaDB-focused. It should not be presented as a generic multi-backend ORM or database-independent abstraction.
 
@@ -139,6 +152,10 @@ The test application shows how the pieces work. A real application must decide h
 
 ### Runtime state and database state
 
+\index{runtime state}
+\index{database state}
+
+
 Runtime state and database state are not the same thing. Runtime state exists while the application is running. Database state survives beyond the current runtime episode.
 
 A useful distinction is:
@@ -194,6 +211,11 @@ A practical table helps:
 This table is not a rulebook. It is a way to force the application to say which state is transient, which state is durable, and which state is cached. The database should not become a dumping ground for every transient detail. Runtime memory should not pretend to be durable when it is not. The persistence boundary should be explicit.
 
 ### `MariaDBClient` as the application-facing database object
+
+\index{MariaDBClient@\texttt{MariaDBClient}}
+\index{MariaDBConnectionDetails@\texttt{MariaDBConnectionDetails}}
+\index{database client}
+
 
 The main application-facing object is `database::mariadb::MariaDBClient`. It combines the asynchronous command API and the sync-style metadata API, owns the internal connection object, stores the connection details, and reports connection state through a state-change callback.
 
@@ -272,6 +294,9 @@ The exact policy belongs to the application. The framework exposes the state. Th
 The state callback is database observability at the application boundary. It makes the persistence role visible instead of hiding database availability inside failed commands.
 
 ### A minimal MariaDB client example
+
+\index{MariaDB!minimal client example}
+
 
 The following listing is intentionally smaller than the repository's `testmariadb` application. It shows the shape of ordinary application use: configure connection details, construct the database client, observe connection state, submit SQL work, continue through callbacks, and then start the SNode.C runtime.
 
@@ -375,6 +400,10 @@ build side:
 
 ### Database work inside the event-driven runtime
 
+\index{MariaDBConnection@\texttt{MariaDBConnection}}
+\index{event-driven database access}
+
+
 The architectural heart of the MariaDB module is event-loop integration. Database work participates in the SNode.C event-driven runtime instead of simply calling SQL and blocking.
 
 A useful model is:
@@ -434,6 +463,12 @@ start command
 The point is not the exact MariaDB C API detail. Database work is expressed as explicit continuation, not as an invisible blocking detour inside a protocol callback.
 
 ### Database work as commands and command sequences
+
+\index{database commands}
+\index{command sequences}
+\index{query()@\texttt{query()}}
+\index{exec()@\texttt{exec()}}
+
 
 The MariaDB layer represents database work explicitly. Database operations become command objects. Command objects can be grouped into command sequences. That gives database work structure inside the event-driven runtime.
 
@@ -538,6 +573,11 @@ Both can appear together, but they are different ideas.
 
 ### Transactions as sequenced database work
 
+\index{transactions}
+\index{commit@\texttt{commit}}
+\index{rollback@\texttt{rollback}}
+
+
 Transactions are not outside the event model. They are represented as ordered database commands in the same command-sequence mechanism.
 
 A useful model is:
@@ -610,6 +650,10 @@ The timer starts the work. The database layer does not become a blocking loop. I
 
 ### Persistence service design
 
+\index{persistence service design}
+\index{database client ownership}
+
+
 Database access should be designed as part of the application architecture. It should not automatically be scattered through every protocol callback. Sometimes direct access is acceptable. But in larger systems, a persistence service or application-level component is often clearer.
 
 A useful shape is:
@@ -661,6 +705,10 @@ What lifetime should this database connection or database service have relative 
 That affects shutdown, error handling, resource limits, and system clarity.
 
 ### Persistence, failure, and backpressure
+
+\index{persistence!backpressure}
+\index{database failure}
+
 
 Persistence changes failure thinking. A system may be partially healthy:
 

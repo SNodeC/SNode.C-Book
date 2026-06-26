@@ -1,5 +1,11 @@
 ## CMake Components, Public Headers, and Linking Strategy
 
+\index{CMake@\texttt{CMake}}
+\index{components}
+\index{public headers}
+\index{linking strategy}
+
+
 ### Why CMake starts Part X
 
 Chapter 31 closed Part IX by reading MQTTSuite as a concrete SNode.C-based ecosystem. Chapter 32 opens Part X by asking how such ecosystems are built, linked, installed, exported, and consumed. The subject is CMake, but the real topic is architectural visibility in the build system.
@@ -31,6 +37,10 @@ Together they declare how SNode.C is consumed.
 ```
 
 ### The build structure as architecture
+
+\index{build structure}
+\index{architecture!build structure}
+
 
 A beginner may look at a CMake build structure and see only commands:
 
@@ -175,6 +185,11 @@ Those are different build contexts. The architecture is the same, but the target
 
 ### Component targets, public headers, and dependency surfaces
 
+\index{component targets}
+\index{public headers}
+\index{dependency surface}
+
+
 The word *component* appears in two related senses.
 
 At the CMake package level, a component is a selectable install/package component. At the architecture level, a component is a named framework piece represented by a target. SNode.C tries to keep these meanings aligned, but they are not literally the same concept in CMake semantics.
@@ -182,6 +197,10 @@ At the CMake package level, a component is a selectable install/package componen
 That is why the target names matter. They are not arbitrary labels. They are part of the public shape of the framework.
 
 #### Libraries mirror layers
+
+\index{libraries}
+\index{layered architecture!libraries}
+
 
 The library target names in SNode.C are architectural statements. Names such as `net-in-stream-legacy`, `http-server-express-legacy-in`, `websocket-client`, and `mqtt-client-websocket` tell the reader which family, role, protocol layer, or carrier composition is being selected.
 
@@ -371,6 +390,10 @@ Headers expose declarations, aliases, templates, inline helpers, and source-faci
 
 #### Source-derived component/header matrix
 
+\index{component/header matrix}
+\index{public surface}
+
+
 The following matrix is read from the pinned SNode.C source snapshot recorded in `SOURCE-VERSION.md`. It is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a role, and the component target or targets it would normally link when it needs the corresponding compiled surface.
 
 In the source tree, examples and framework code include headers relative to the SNode.C source include root, for example `<express/legacy/in/WebApp.h>`. Installed consumers use the same public header shape below the installed `include/snode.c` prefix.
@@ -405,6 +428,10 @@ Second, a consumer should not include lower-layer headers merely because a selec
 
 #### Namespaced targets are the consumer-facing interface
 
+\index{namespaced targets}
+\index{exported targets}
+
+
 Most library targets also receive namespaced aliases such as:
 
 ```cmake
@@ -437,6 +464,12 @@ The matching source file should show the same idea through public headers, for e
 That is clearer than linking every application against one vague monolithic target.
 
 #### `PUBLIC`, `PRIVATE`, and `INTERFACE`
+
+\index{PUBLIC@\texttt{PUBLIC}}
+\index{PRIVATE@\texttt{PRIVATE}}
+\index{INTERFACE@\texttt{INTERFACE}}
+\index{CMake@\texttt{CMake}!link interfaces}
+
 
 CMake's visibility keywords are architectural words in a framework. They decide which dependencies become part of a component's public surface and which remain implementation details.
 
@@ -495,6 +528,11 @@ choose the direct building blocks
 A concrete Express carrier target shows this well. `http-server-express-legacy-in` owns both sides of its composition: the selected IPv4 legacy carrier and the base Express component.
 
 ### Core, network, and transport composition
+
+\index{core components}
+\index{network-family targets}
+\index{transport variants}
+
 
 The lower build layers show how SNode.C separates runtime machinery, socket abstractions, network families, stream behavior, and connection variants.
 
@@ -571,6 +609,10 @@ The combined target becomes the usable carrier component.
 
 #### Legacy and TLS variants
 
+\index{legacy variants}
+\index{TLS variants}
+
+
 The separation between legacy and TLS stream targets is central to the build model. TLS is not hidden behind one global Boolean that silently changes the meaning of every target.
 
 Instead, TLS variants have their own targets. A consumer can choose:
@@ -593,6 +635,12 @@ TLS is a connection-layer specialization, not a rewrite of the application model
 
 ### Protocol and application-layer components
 
+\index{HTTP components}
+\index{Express components}
+\index{WebSocket components}
+\index{MQTT components}
+
+
 Above core and transport composition, SNode.C builds protocol and application-layer targets. The rule remains the same: read each target as the layer, role, and composition it owns; include the public header for the abstraction the source file directly names; link the component that owns the corresponding binary surface.
 
 #### HTTP and upgrade layout
@@ -602,6 +650,10 @@ Most SNode.C components follow ordinary include/link/deploy rules: include the p
 HTTP upgrade support is different because an upgrade protocol can be selected later by name. The build therefore records HTTP and upgrade-library directories as target properties. Chapter 21 gives the HTTP-upgrade name-to-factory contract, and Chapter 24 applies the same pattern to WebSocket subprotocols. This chapter only identifies the build-side boundary; Chapter 33 follows that boundary into the installed runtime system.
 
 #### RPATH and runtime composition
+
+\index{RPATH@\texttt{RPATH}}
+\index{runtime composition}
+
 
 HTTP, Express, and WebSocket build files set library output directories and install RPATH-related properties. In this chapter, those settings matter as build-side evidence that runtime composition exists; they are not a complete deployment policy.
 
@@ -687,6 +739,11 @@ A consumer can therefore select the MQTT role and carrier composition deliberate
 
 ### Optional features and generated configuration
 
+\index{optional features}
+\index{generated configuration}
+\index{build-time defaults}
+
+
 Not every feature is always available. Some depend on external libraries. Some affect compile definitions. Some determine whether a component is built at all.
 
 SNode.C keeps these boundaries visible in the build.
@@ -765,6 +822,11 @@ Keeping those two levels separate avoids confusion.
 A distributor may want different compiled defaults for an embedded package. An operator may still want runtime configuration for a particular deployment. Those are not the same decision.
 
 ### Exported package targets and external consumers
+
+\index{exported package targets}
+\index{external consumers}
+\index{component selection}
+
 
 SNode.C is also consumed by external applications. That is where package configuration, exported targets, component selection, and namespaced target names become essential. This is still a build-interface topic: it describes how an installed SNode.C package is consumed by another CMake project, not how a running service is deployed.
 

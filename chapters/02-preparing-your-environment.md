@@ -1,5 +1,10 @@
 ## Preparing Your Environment
 
+\index{build environment}
+\index{development environment}
+\index{source checkout}
+
+
 ### Why the environment matters
 
 Chapter 1 introduced SNode.C as a framework whose teaching value comes from visible structure: event-driven runtime behavior, explicit layers, named roles, and reusable application boundaries.
@@ -63,6 +68,11 @@ Optional technologies should also be visible when available. Bluetooth RFCOMM an
 
 ### Compiler and CMake expectations
 
+\index{compiler requirements}
+\index{CMake@\texttt{CMake}}
+\index{C++20@C++20}
+
+
 SNode.C is a modern C++ framework.
 
 The build system expects CMake and a C++20-capable compiler. The top-level build requires CMake 3.18 or newer, and the `src` build configures the project as C++20.
@@ -85,6 +95,11 @@ clang++ --version
 It is fine if only one of GCC or Clang is used, as long as it satisfies the required version.
 
 ### Required and optional packages
+
+\index{dependencies}
+\index{optional dependencies}
+\index{packages}
+
 
 Package names differ across distributions. On a Debian-style development system, the baseline tools are usually:
 
@@ -118,6 +133,10 @@ sudo apt install iwyu clang-format cmake-format doxygen
 These tools are not required for the first echo example. They are mentioned here because SNode.C is a framework, and framework work eventually benefits from include checking, formatting, and documentation generation.
 
 ### Cloning the framework
+
+\index{SNode.C!cloning}
+\index{git checkout@\texttt{git checkout}}
+
 
 Choose a directory where you keep source repositories:
 
@@ -159,6 +178,10 @@ For normal reading, do not edit the framework repository immediately. First lear
 
 ### Use an out-of-tree build
 
+\index{out-of-tree build}
+\index{build tree}
+
+
 A build directory should be separate from the source directory. This keeps generated files away from the code you want to read.
 
 A simple layout is:
@@ -195,6 +218,10 @@ The build can take some time. That is normal. The framework uses many templates 
 
 ### Installing the framework
 
+\index{installation}
+\index{install tree}
+
+
 For experimenting inside the framework build tree, installation is not always necessary.
 
 For compiling separate applications against SNode.C with `find_package(snodec ...)`, installation is useful. It turns the framework from “source tree plus build tree” into a package that another CMake project can consume.
@@ -227,6 +254,10 @@ Use a system-wide install only when you are comfortable installing development l
 For the book, a local prefix is often the safer teaching setup. It makes it clear which installation belongs to the experiments and avoids accidental interaction with other system packages.
 
 ### Build options worth knowing early
+
+\index{build options}
+\index{CMake@\texttt{CMake}!options}
+
 
 The first chapters do not require many CMake options.
 
@@ -283,6 +314,11 @@ Do not confuse these three. Many build problems become easier to diagnose once t
 
 ### Running server and client programs
 
+\index{server program}
+\index{client program}
+\index{runtime output}
+
+
 The basic pattern for server/client examples is simple. Open one terminal for the server. Open another terminal for the client.
 
 Start the server first. Then start the client.
@@ -311,6 +347,10 @@ A quiet program is not automatically a clean program. Sometimes it is only a pro
 
 ### Preparing a separate playground project
 
+\index{playground project}
+\index{external consumer project}
+
+
 Besides building the framework source tree itself, it is useful to have a small external playground project.
 
 For example:
@@ -338,6 +378,11 @@ snodec-playground/
 Do not worry yet about writing all of this. Chapter 3 introduces the first concrete program. The point here is only to prepare a place where an external application can live.
 
 ### Components and public headers as installed architecture
+
+\index{components}
+\index{public headers}
+\index{installed architecture}
+
 
 When an external application consumes SNode.C, it asks CMake for package components. The same application also includes public SNode.C headers. These two selections belong together: the component selection describes the binary/link surface, while the include selection describes the C++ source surface.
 
@@ -386,6 +431,11 @@ Later chapters will introduce additional component names for IPv6, Unix domain s
 Do not try to memorize all names at this stage. Learn the shape instead. SNode.C component names and public include paths are compact forms of architectural information. The dashes in a component name and the slashes in an include path often describe the same stack from different technical viewpoints.
 
 ### Source tree, build tree, install tree
+
+\index{source tree}
+\index{build tree}
+\index{install tree}
+
 
 Before moving on, keep three locations distinct:
 

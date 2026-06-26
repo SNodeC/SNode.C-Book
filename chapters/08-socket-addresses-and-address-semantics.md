@@ -1,5 +1,10 @@
 ## Socket Addresses and Address Semantics
 
+\index{SocketAddress@\texttt{SocketAddress}}
+\index{address semantics}
+\index{endpoint identity}
+
+
 ### From layers to endpoint identity
 
 Chapter 7 showed how SNode.C communication choices are encoded in the layer stack.
@@ -29,6 +34,10 @@ Therefore, SNode.C does not collapse all endpoints into one vague address class.
 
 ### The shared `SocketAddress` pattern
 
+\index{SocketAddress@\texttt{SocketAddress}}
+\index{address classes}
+
+
 The common base is:
 
 ```cpp
@@ -51,6 +60,10 @@ This mirrors the layer model from Chapter 7. The application shape may stay reco
 
 ### Local and remote endpoint roles
 
+\index{local endpoint}
+\index{remote endpoint}
+
+
 Before looking at the concrete families, it helps to separate two questions that are often mixed together.
 
 The first question is:
@@ -71,6 +84,10 @@ This is one reason address semantics deserve careful treatment. A value such as 
 
 ### Endpoint identity by family
 
+\index{endpoint identity}
+\index{network family}
+
+
 The concrete address families are:
 
 | Family | Class | Endpoint identity |
@@ -90,6 +107,11 @@ Do not ask only what values an address object stores. Ask what kind of endpoint 
 :::
 
 #### IPv4: host plus port
+
+\index{IPv4}
+\index{net::in::SocketAddress@\texttt{net::in::SocketAddress}}
+\index{host and port}
+
 
 The IPv4 address class is:
 
@@ -131,6 +153,10 @@ The IPv4 class also contains the resolution-oriented pieces that belong to IP-st
 
 #### IPv6: similar shape, different family
 
+\index{IPv6}
+\index{net::in6::SocketAddress@\texttt{net::in6::SocketAddress}}
+
+
 The IPv6 address class is:
 
 ```cpp
@@ -163,6 +189,11 @@ The similarity is useful, but it should not hide the family boundary. IPv6 has i
 
 #### Unix domain sockets: local endpoint identity
 
+\index{Unix domain sockets}
+\index{net::un::SocketAddress@\texttt{net::un::SocketAddress}}
+\index{path identity}
+
+
 The Unix domain socket address class is:
 
 ```cpp
@@ -190,6 +221,11 @@ In the SNode.C address model, that is the wildcard or not-yet-specific Unix-doma
 Unix domain sockets are pedagogically useful because they break a common habit. They remind the reader that not every endpoint is internet-shaped. The same server/client/context architecture can still appear, but the network-layer identity is different.
 
 #### RFCOMM: Bluetooth address plus channel
+
+\index{RFCOMM}
+\index{Bluetooth!RFCOMM}
+\index{channel}
+
 
 The RFCOMM address class is:
 
@@ -227,6 +263,11 @@ with channel:
 That means the address can express a broad or deferred Bluetooth endpoint identity until the application or configuration makes it more specific.
 
 #### L2CAP: Bluetooth address plus PSM
+
+\index{L2CAP}
+\index{Bluetooth!L2CAP}
+\index{PSM}
+
 
 The L2CAP address class is:
 
@@ -274,6 +315,10 @@ The point of this section is not to list every constructor or every member funct
 > What does the API shape teach about endpoint identity?
 
 #### Default construction and wildcard meaning
+
+\index{wildcard address}
+\index{default construction}
+
 
 Default construction is meaningful. It is not uninitialized data.
 
@@ -372,6 +417,10 @@ It shows:
 This is the practical value of separating layers. The application writer does not have to relearn the whole framework for every family, but neither does the framework pretend that every family has the same endpoint semantics.
 
 ### Why IP families have richer resolution behavior
+
+\index{address resolution}
+\index{DNS}
+
 
 IPv4 and IPv6 differ from Unix domain sockets, RFCOMM, and L2CAP in one especially important way.
 

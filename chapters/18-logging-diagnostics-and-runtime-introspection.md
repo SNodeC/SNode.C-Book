@@ -1,5 +1,10 @@
 ## Logging, Diagnostics, and Runtime Introspection
 
+\index{logging}
+\index{diagnostics}
+\index{runtime introspection}
+
+
 ### From configured roles to visible runtime behavior
 
 Chapter 17 showed how the configuration hierarchy shapes the executable, named communication roles, sections, and option values.
@@ -30,6 +35,11 @@ That makes runtime visibility essential.
 The source code may explain what can happen, but diagnostics show what did happen in one concrete run. They show which configured roles entered the runtime, which endpoints were used, which connection episodes existed, which system boundaries failed, which retries were scheduled, and which protocol decisions were made by a context.
 
 ### Runtime visibility as a diagnostic map
+
+\index{runtime visibility}
+\index{diagnostic map}
+\index{observability}
+
 
 Runtime visibility in SNode.C is broader than printing log lines.
 
@@ -112,6 +122,12 @@ Protocol visibility answers questions such as:
 This belongs in the `SocketContext`, because the context is where protocol behavior lives. The connection layer can say that bytes arrived. The context can say what those bytes meant.
 
 ### The logging surface: ordinary logs, system-error logs, and verbose depth
+
+\index{LOG()@\texttt{LOG()}}
+\index{PLOG()@\texttt{PLOG()}}
+\index{VLOG()@\texttt{VLOG()}}
+\index{logging surface}
+
 
 SNode.C exposes three main logging forms:
 
@@ -202,6 +218,10 @@ This keeps ordinary logs readable while still allowing deep inspection when need
 
 ### Severity and diagnostic depth
 
+\index{severity}
+\index{diagnostic depth}
+
+
 SNode.C uses two related visibility controls.
 
 The ordinary log level controls operational class:
@@ -240,6 +260,10 @@ A low ordinary log level should be able to show the shape of a run. A higher ver
 
 ### Output modes in real deployments
 
+\index{logging!output modes}
+\index{deployment logging}
+
+
 Logging also has operational modes.
 
 A network application may run in the foreground, as a daemon, with file logging, in quiet mode, with colored terminal output, or in monochrome output for files and pipes.
@@ -275,6 +299,12 @@ context
 ```
 
 ### Logging should follow responsibility boundaries
+
+\index{logging!responsibility boundaries}
+\index{application-level logging}
+\index{connection-level logging}
+\index{context-level logging}
+
 
 The central rule is:
 
@@ -376,6 +406,12 @@ context layer
 
 ### Visibility at lifecycle boundaries
 
+\index{lifecycle logging}
+\index{onConnect@\texttt{onConnect}}
+\index{onConnected@\texttt{onConnected}}
+\index{onDisconnect@\texttt{onDisconnect}}
+
+
 Lifecycle boundaries are natural diagnostic points. They correspond to meaningful transitions in the framework.
 
 #### Listen and connect activation
@@ -467,6 +503,10 @@ What did the socket do?
 
 ### Configuration as a diagnostic source
 
+\index{configuration!diagnostics}
+\index{effective configuration}
+
+
 Many runtime surprises are configuration surprises. Before assuming that protocol code is wrong, inspect the effective configuration.
 
 ::: {.snodec-checklist title="Configuration diagnostic checklist"}
@@ -519,6 +559,10 @@ A generated command line can also expose accidental complexity. If reproducing a
 
 ### Connection metrics and identity
 
+\index{connection metrics}
+\index{connection identity}
+
+
 The connection model carries important diagnostic information.
 
 A useful table is:
@@ -563,6 +607,10 @@ If total read grows but total processed does not, the protocol endpoint may not 
 The exact interpretation depends on the layer, but the values give the reader a starting point.
 
 ### Runtime introspection is broader than logging
+
+\index{runtime introspection}
+\index{metrics}
+
 
 In this chapter, runtime introspection means practical runtime visibility.
 
@@ -617,6 +665,10 @@ If the message does not answer a useful question, it probably adds noise. This r
 It also helps decide where the log belongs. A message about a selected configuration file belongs at application level. A message about retry scheduling belongs at instance level. A message about queued bytes belongs at connection level. A message about an invalid MQTT packet belongs at context level.
 
 ### A practical diagnostic workflow
+
+\index{diagnostic workflow}
+\index{debugging}
+
 
 A useful SNode.C diagnostic workflow is:
 

@@ -1,5 +1,10 @@
 ## Unix Domain Sockets
 
+\index{Unix domain sockets}
+\index{local IPC}
+\index{path identity}
+
+
 ### From host-plus-port to local path identity
 
 Chapter 10 used IPv4 and IPv6 as the first concrete lower-family comparison. Both families still used a host-plus-port endpoint identity.
@@ -31,6 +36,10 @@ This shows that SNode.C's role model is not tied to host-plus-port addressing. T
 
 ### Same SNode.C model, different endpoint identity
 
+\index{Unix domain sockets!SNode.C model}
+\index{endpoint identity}
+
+
 The transition from IPv4/IPv6 to Unix domain sockets can be summarized as follows.
 
 | Aspect | IPv4 / IPv6 | Unix domain sockets |
@@ -53,6 +62,10 @@ The table should therefore be read as a transfer map, not as a feature compariso
 This is the same teaching pattern as in Chapter 10, but the shift is stronger. IPv4 and IPv6 were different internet families with a similar host-plus-port shape. Unix domain sockets change the addressing category itself.
 
 ### Path identity in `net::un::SocketAddress`
+
+\index{net::un::SocketAddress@\texttt{net::un::SocketAddress}}
+\index{path identity}
+
 
 The Unix-domain address class is:
 
@@ -157,6 +170,11 @@ The lower-family choice is not decorative. It changes the operational shape of t
 
 ### Server and client use with path-based endpoints
 
+\index{Unix domain sockets!server/client use}
+\index{listen()@\texttt{listen()}}
+\index{connect()@\texttt{connect()}}
+
+
 The stream Unix-domain wrappers follow the same SNode.C pattern as the IPv4 and IPv6 wrappers.
 
 The convenience calls set family-specific configuration and then delegate to the general `listen(onStatus)` or `connect(onStatus)` path.
@@ -258,6 +276,10 @@ A connection can still have bind, local, and remote address views. The address f
 
 ### What remains stable
 
+\index{Unix domain sockets!stable model}
+\index{SocketContext@\texttt{SocketContext}}
+
+
 Unix domain sockets change endpoint identity, but they do not require a different application architecture.
 
 #### Server/client/connection/context model
@@ -318,6 +340,11 @@ Here `legacy` is the non-TLS stream connection variant. `tls` adds TLS connectio
 This matters because Unix domain sockets are not a special branch outside the framework. In SNode.C's terminology, they are another lower communication family in the network-layer part of the stack, while stream transport and connection-layer handling remain recognizable.
 
 ### What changes operationally
+
+\index{Unix domain sockets!deployment}
+\index{path cleanup}
+\index{path ownership}
+
 
 Unix domain sockets are local, path-based endpoints. That changes deployment habits.
 
@@ -387,6 +414,10 @@ This keeps the comparison architectural rather than emotional. The lower family 
 
 ### Stream focus and a datagram note
 
+\index{datagram sockets}
+\index{stream sockets}
+
+
 It focuses on stream Unix domain sockets. That is intentional for architectural continuity. Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
 
 The SNode.C build also contains a `net-un-dgram` component. That is useful to know, but it is not the focus here. Datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8--12.
@@ -418,6 +449,10 @@ The server/client/connection/context model remains available, while the lower-fa
 :::
 
 ### Public surface of Unix-domain stream roles
+
+\index{net::un::stream::legacy@\texttt{net::un::stream::legacy}}
+\index{public headers}
+
 
 Unix-domain legacy stream roles use the `un` family fragment on both public surfaces. Source files that directly name those roles include:
 

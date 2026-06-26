@@ -1,5 +1,10 @@
 ## Testing, Debugging, and Benchmarking
 
+\index{testing}
+\index{debugging}
+\index{benchmarking}
+
+
 ### Why testing follows deployment
 
 Chapter 33 made deployment visible as installed architecture. Chapter 34 asks how that architecture becomes trustworthy: a built and deployed system must still be tested, inspected, debugged, and measured at the boundaries where it claims to be clear.
@@ -31,6 +36,10 @@ A test is useful when it says which SNode.C boundary it protects.
 :::
 
 ### Testing follows framework boundaries
+
+\index{boundary testing}
+\index{framework boundaries}
+
 
 Testing strategy should follow the framework's boundaries:
 
@@ -101,6 +110,12 @@ The figure is intentionally different from a testing pyramid. A pyramid answers 
 The rest of this chapter expands these surfaces: build, protocol, runtime, deployment, diagnostic, and performance confidence.
 
 ### Build-time confidence
+
+\index{build-time confidence}
+\index{minimal builds}
+\index{installed-consumer builds}
+\index{package builds}
+
 
 #### Build policy is the first test surface
 
@@ -209,6 +224,17 @@ OpenWrt-targeted package builds add another confidence surface. They can check w
 A package build is therefore not just a release step. It is a test of the deployable shape of the architecture.
 
 ### Protocol-boundary confidence
+
+\index{protocol tests}
+\index{parser tests}
+\index{serializer tests}
+\index{HTTP tests}
+\index{Express routing tests}
+\index{WebSocket tests}
+\index{EventSource tests}
+\index{MQTT tests}
+\index{database-backed tests}
+
 
 #### Protocol tests protect meaning boundaries
 
@@ -358,6 +384,16 @@ State is useful. Uncontrolled state is a source of false confidence.
 
 ### Runtime confidence
 
+\index{runtime tests}
+\index{real sockets}
+\index{timers}
+\index{retries}
+\index{reconnects}
+\index{shutdown}
+\index{backpressure}
+\index{lifetime checks}
+
+
 #### Real sockets are not optional
 
 Mocks are useful for local logic. They cannot replace real-socket tests for a socket framework.
@@ -429,6 +465,13 @@ This matters because configuration is one of the main ways SNode.C systems becom
 
 ### Deployment confidence
 
+\index{deployment tests}
+\index{runtime-loaded modules}
+\index{RPATH@\texttt{RPATH}}
+\index{service-level tests}
+\index{OpenWrt tests}
+
+
 #### Installed behavior is not the same as build-tree behavior
 
 A program that works from the build tree may fail after installation. That is not unusual. The installed environment is different: library search paths change, RPATH behavior matters, runtime-loaded modules move to installed locations, configuration directories change, service users may differ from development users, TLS material may be read from protected paths, database access may depend on system configuration, and package dependencies may be incomplete.
@@ -490,6 +533,13 @@ OpenWrt deployment
 The test strategy should respect those constraints instead of pretending that all Linux targets are the same.
 
 ### Debugging and diagnostics
+
+\index{debugging}
+\index{diagnostics}
+\index{configured instance names}
+\index{reproducibility}
+\index{memory tools}
+
 
 #### Debugging begins by finding the broken boundary
 

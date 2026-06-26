@@ -1,5 +1,10 @@
 ## Servers, Clients, and Connections
 
+\index{SocketServer@\texttt{SocketServer}}
+\index{SocketClient@\texttt{SocketClient}}
+\index{SocketConnection@\texttt{SocketConnection}}
+
+
 ### Why these three belong in one chapter
 
 Chapter 8 made the network layer concrete. It showed that an address in SNode.C is a family-specific description of endpoint identity, not an interchangeable string, number, or path. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
@@ -27,6 +32,10 @@ A server or client instance is not a connection. It is the runtime-visible role 
 That distinction is simple, but it carries a large part of the framework's architecture. If it is missed, everything tends to collapse into one vague object: the thing that listens, connects, owns the socket, handles data, stores state, performs retries, and implements the protocol. SNode.C does not use that collapsed model. It separates those responsibilities deliberately.
 
 ### From registered instance to concrete connection
+
+\index{registered instance}
+\index{connection}
+
 
 The useful first distinction is not a class hierarchy. It is a responsibility map.
 
@@ -73,6 +82,11 @@ Once that separation is clear, the rest of the chapter becomes much easier to re
 
 ### Server and client instances as runtime-visible roles
 
+\index{server role}
+\index{client role}
+\index{runtime-visible instance}
+
+
 At the application-facing level, SNode.C exposes stream server and stream client templates. Concrete user-facing handle types are formed by combining the lower communication family, the transport form, and the connection handling variant.
 
 Examples include:
@@ -115,6 +129,10 @@ The local handle is the application-side entry point through which the role is c
 This is especially important for examples. A small example may keep the handle visible in `main()` until `core::SNodeC::start()` returns. That is a clear and readable style. But the architectural model is not “the local variable is the whole runtime entity.” The registered instance is carried by framework-owned state and advanced by the runtime.
 
 ### Server instances
+
+\index{SocketServer@\texttt{SocketServer}}
+\index{listen()@\texttt{listen()}}
+
 
 A server-side instance is often introduced with a simple phrase such as “the server listens on a port.” That phrase is useful, but it is incomplete.
 
@@ -192,6 +210,10 @@ That distinction becomes more valuable as applications grow. In a tiny echo exam
 
 ### Client instances
 
+\index{SocketClient@\texttt{SocketClient}}
+\index{connect()@\texttt{connect()}}
+
+
 A client-side instance is the client counterpart of the server-side role. It is often introduced as “the object that connects somewhere,” but that is again only the beginning.
 
 A more accurate description is:
@@ -237,6 +259,11 @@ The callbacks are structurally parallel to the server side, but the operational 
 This symmetry helps the reader transfer understanding from server code to client code. Once the callback layers are understood on one side, the other side feels familiar. But the direction of setup remains different: the server accepts, the client initiates.
 
 ### Server and client symmetry, and where it ends
+
+\index{server/client symmetry}
+\index{retry}
+\index{reconnect}
+
 
 Server and client instances are conceptually parallel.
 
@@ -295,6 +322,11 @@ Retry and reconnect are behavior of the configured instance and its flow-control
 The context may react to a connection while it exists. It may send application data, parse incoming data, close the connection, or keep protocol-side state. But it should not be responsible for recreating the whole communication role after a connection ends. That responsibility belongs to the role and its runtime machinery.
 
 ### `SocketConnection`: the concrete peer relationship
+
+\index{SocketConnection@\texttt{SocketConnection}}
+\index{peer relationship}
+\index{connection metrics}
+
 
 If the server or client instance is the outer role, the `SocketConnection` is the concrete peer relationship.
 
@@ -460,6 +492,12 @@ A server-side instance may have one name that remains stable across the process 
 
 ### Callback layers
 
+\index{callbacks}
+\index{onConnect@\texttt{onConnect}}
+\index{onConnected@\texttt{onConnected}}
+\index{onDisconnect@\texttt{onDisconnect}}
+
+
 Chapter 9 needs one especially clear distinction: not all callbacks report the same kind of event.
 
 SNode.C has several callback layers.
@@ -504,6 +542,10 @@ this failure is fatal
 The status callback belongs to the outer role, not to a per-connection protocol context.
 
 #### `core::socket::State`
+
+\index{core::socket::State@\texttt{core::socket::State}}
+\index{socket state}
+
 
 `core::socket::State` is richer than a Boolean.
 
@@ -596,6 +638,10 @@ This is the same distinction introduced earlier, but Chapter 9 is where it becom
 In the echo example, the context decides what to do when data arrives. It reads from the peer and sends data back. That is protocol behavior. It belongs in the context, not in the server-side or client-side instance callback.
 
 ### Where the context factory fits
+
+\index{SocketContextFactory@\texttt{SocketContextFactory}}
+\index{context construction}
+
 
 Even though this chapter focuses on servers, clients, and connections, the factory is still part of the story.
 

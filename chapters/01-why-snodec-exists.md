@@ -1,6 +1,16 @@
 ## Why SNode.C Exists
 
+\index{SNode.C}
+\index{event-driven network applications}
+\index{layered architecture}
+
+
 ### A framework that teaches systems, not only APIs
+
+\index{SNode.C!teaching context}
+\index{systems thinking}
+\index{network frameworks}
+
 
 Many networking frameworks are optimized for speed of first use. That is not a criticism. In practice, speed matters. A developer often wants to start a web server, connect a client to a broker, or move data from one endpoint to another without first studying the whole internal architecture.
 
@@ -29,6 +39,11 @@ The promise of this book is therefore practical and architectural at the same ti
 The goal is not simple copying. The goal is that you can explain why the example has its shape.
 
 ### The problem SNode.C addresses
+
+\index{multi-protocol applications}
+\index{M2M communication}
+\index{IoT}
+
 
 To understand why SNode.C is worth studying, it helps to look at what often goes wrong in networking code.
 
@@ -104,9 +119,19 @@ This book is not:
 
 ### Source version used by this book
 
+\index{SNode.C!source baseline}
+\index{source baseline}
+\index{v1.0.2@\texttt{v1.0.2}}
+
+
 SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the source baseline recorded in `SOURCE-VERSION.md`: public release tag `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
 
 ### Why “layered” matters here
+
+\index{layered architecture!motivation}
+\index{boundary discipline}
+\index{protocol boundaries}
+
 
 In technical writing, the word *layered* is sometimes used lazily. It can mean almost anything from “we have modules” to “there are several abstraction levels.” In SNode.C, however, layering is not decorative. It is operational.
 
@@ -167,6 +192,10 @@ That is the architectural lens the reader should keep from the beginning.
 
 ### In the spirit of node.js, but not node.js in C++
 
+\index{node.js}
+\index{event loop!node.js comparison}
+
+
 A reader encountering SNode.C for the first time may notice a relationship to node.js-style thinking. That relationship is real, but it should be understood carefully.
 
 The similarity is not that SNode.C imitates JavaScript.
@@ -207,6 +236,13 @@ SNode.C is especially interesting in the context of IoT and machine-to-machine c
 MQTTSuite is the reference ecosystem that makes this concrete. It builds focused MQTT applications on top of SNode.C, including broker, integrator, bridge, command-line, and store roles. MQTTSuite appears later, after the framework model has been established. That order is deliberate: the reader first needs to understand the recurring SNode.C roles and boundaries before seeing them at application and system scale.
 
 ### The central pattern you will meet again and again
+
+\index{role}
+\index{handle}
+\index{connection}
+\index{context}
+\index{factory}
+
 
 Although the details come later, the recurring SNode.C application shape can already be previewed.
 

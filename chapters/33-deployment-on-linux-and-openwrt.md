@@ -1,5 +1,10 @@
 ## Deployment on Linux and OpenWrt
 
+\index{deployment}
+\index{Linux deployment}
+\index{OpenWrt}
+
+
 ### Why deployment belongs after CMake
 
 Chapter 32 showed how SNode.C expresses architecture through CMake targets, install components, exported package targets, dependency visibility, and the build-side boundaries of runtime-selected extensions. Chapter 33 follows those decisions into the installed system: packages, filesystem layout, service ownership, configuration, runtime state, deployment-specific resources, and constrained Linux targets.
@@ -43,6 +48,10 @@ What changes on embedded Linux or OpenWrt?
 These questions are not afterthoughts. They decide whether the built architecture can actually run.
 
 ### Deployment as installed architecture
+
+\index{installed architecture}
+\index{filesystem layout}
+
 
 #### Architecture entering the filesystem
 
@@ -105,6 +114,12 @@ The binary is only one part of the deployed system. Deployment proves that all t
 
 ### Packages and installed component surfaces
 
+\index{packages}
+\index{CPack@\texttt{CPack}}
+\index{package dependencies}
+\index{runtime-loaded modules}
+
+
 #### CPack as the ordinary Linux packaging bridge
 
 SNode.C's top-level build enters `src` and then includes the project packaging configuration. Packaging is therefore part of the project build story, not an unrelated external script.
@@ -162,6 +177,10 @@ This mirrors the component graph from Chapter 32. A package manager should not h
 
 #### Multiplexer packages and runtime overrides
 
+\index{multiplexer packages}
+\index{runtime overrides}
+
+
 Chapter 32 introduced the multiplexer choice. Deployment makes that choice visible.
 
 SNode.C has package components for the multiplexer libraries:
@@ -218,6 +237,10 @@ A missing WebSocket upgrade or subprotocol module may look like an application f
 
 #### RPATH as deployment policy
 
+\index{RPATH@\texttt{RPATH}}
+\index{deployment policy}
+
+
 RPATH is often treated as a linker detail. For SNode.C it can also be part of deployment policy.
 
 In a build tree, library locations are usually convenient and known. In an installed system, the runtime loader must still find the libraries. For ordinary system libraries, the platform linker configuration may be enough. For nested SNode.C protocol-extension layouts, install RPATH and well-defined library directories can be part of the runtime contract.
@@ -232,6 +255,13 @@ A deployment should answer:
 RPATH can preserve intended lookup paths for installed components, but deployment still has to ensure that the files, permissions, and package dependencies are actually present on the target. The last question becomes especially important for OpenWrt and other cross-compiled environments.
 
 ### Runtime state and service operation
+
+\index{runtime state}
+\index{service operation}
+\index{daemonization}
+\index{service managers}
+\index{pid files}
+
 
 #### Configuration directories
 
@@ -345,6 +375,11 @@ A pid file and a log file are not architectural features, but unmanaged pid and 
 
 ### Deployment-specific resources
 
+\index{TLS certificates}
+\index{database dependencies}
+\index{web assets}
+
+
 #### TLS certificate material
 
 TLS deployment is not finished when an application links against TLS-capable components. A TLS deployment also installs and protects certificate material:
@@ -397,6 +432,11 @@ Those files belong to different parts of the filesystem and have different updat
 
 ### Embedded Linux and OpenWrt
 
+\index{embedded Linux}
+\index{OpenWrt!deployment}
+\index{OpenWrt SDK}
+
+
 #### Embedded Linux changes the deployment priorities
 
 General-purpose Linux teaches the basic model. Embedded Linux does not change the architecture, but it changes the cost of every dependency.
@@ -448,6 +488,11 @@ The target may differ in:
 The SDK provides a target-specific cross-compilation environment. That is the right environment for C++ applications with shared libraries, optional dependencies, and package metadata.
 
 #### OpenWrt deployment flow
+
+\index{OpenWrt!deployment flow}
+\index{feeds}
+\index{package recipes}
+
 
 A compact OpenWrt deployment flow looks like this:
 
@@ -536,6 +581,10 @@ This is especially important for routers and network infrastructure devices. A t
 
 #### `procd` service integration
 
+\index{procd@\texttt{procd}}
+\index{OpenWrt!service integration}
+
+
 On OpenWrt, `procd` is the normal service supervision layer. A continuously running SNode.C application packaged for OpenWrt should therefore be described as a `procd`-managed service.
 
 That service definition is where deployment expresses:
@@ -549,6 +598,9 @@ That service definition is where deployment expresses:
 The application may still support daemonization, but on OpenWrt the deployed role should fit the platform service model.
 
 ### Reading a deployment
+
+\index{deployment reading workflow}
+
 
 ::: {.snodec-checklist title="Practical deployment checklist"}
 A SNode.C deployment can be read with a checklist. It is not a command sequence; it is a way to keep deployment architectural.

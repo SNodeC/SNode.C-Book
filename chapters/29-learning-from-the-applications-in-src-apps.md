@@ -1,5 +1,10 @@
 ## Learning from the Applications in `src/apps`
 
+\index{src/apps@\texttt{src/apps}}
+\index{example applications}
+\index{application structure}
+
+
 ### From framework pieces to application structure
 
 Chapter 28 introduced persistence as an application-state boundary. Chapter 29 now turns to executable applications: the point where runtime setup, selected components, application-side objects, configured communication roles, callbacks, routes, persistence objects, and installable targets meet in concrete programs.
@@ -28,6 +33,9 @@ That is the main reason `src/apps` is useful as study material. It shows not onl
 
 ### `src/apps` as study material
 
+\index{src/apps@\texttt{src/apps}!study material}
+
+
 The applications in `src/apps` should not all be read in the same way. Some are application shells, some are focused examples, some are utility programs, and some are test or demonstration targets. Some demonstrate a protocol family. Some demonstrate a build pattern. They are not all production templates.
 
 For this chapter, we will not discuss every target in the directory. Instead, we select a representative set:
@@ -47,6 +55,11 @@ The selection is broad enough to show different application shapes and narrow en
 The top-level app build also contains other targets, such as `configtest`, `warema-jalousien`, and a conditional `testregex`. Those are useful in their own contexts, but they are not needed for the main teaching path here.
 
 ### Build targets as the first architectural reading layer
+
+\index{build targets}
+\index{application targets}
+\index{linked components}
+
 
 Before opening the C++ entry point, the build target already tells part of the application story.
 
@@ -324,6 +337,10 @@ Optional dependencies therefore influence the set of applications that exist in 
 
 ### Read include blocks beside link lines
 
+\index{include blocks}
+\index{link lines}
+
+
 When studying an application, read the include block beside the CMake link line. The two views should agree, but they do different jobs:
 
 ```text
@@ -337,6 +354,11 @@ link line
 For an external Express IPv4 legacy application, the source might include an Express front-door header while the CMake target links the concrete Express carrier component. If the same source file also directly creates an MQTT carrier client, it includes the matching socket-client or MQTT headers and links the matching components. This is not duplication; it is the same architecture expressed in C++ source and in the build system.
 
 ### Entry points as assembly points
+
+\index{entry point}
+\index{assembly point}
+\index{snode.c@\texttt{snode.c}}
+
 
 After the build target has established the application face, the entry point shows how the selected pieces are assembled.
 
@@ -450,6 +472,14 @@ express-compat-server
 The goal is not to study both applications deeply, but to show that the same layer composition can serve different application intentions.
 
 ### Application families and focused examples
+
+\index{application families}
+\index{echo examples}
+\index{JSON examples}
+\index{testpost@\texttt{testpost}}
+\index{testpipe@\texttt{testpipe}}
+\index{testmariadb@\texttt{testmariadb}}
+
 
 The selected examples show different application shapes without turning the chapter into a directory catalogue.
 
@@ -639,6 +669,10 @@ configuration
 `testmariadb` is a focused demonstration target. It is not a recommended production persistence architecture. Its value is that it makes the Chapter 28 API concrete.
 
 ### Reading applications in `src/apps`
+
+\index{application reading workflow}
+\index{composition depth}
+
 
 The examples lead to a practical reading method for unfamiliar SNode.C applications.
 

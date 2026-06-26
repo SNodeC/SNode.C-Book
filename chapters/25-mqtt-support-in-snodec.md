@@ -1,5 +1,10 @@
 ## MQTT Support in SNode.C
 
+\index{MQTT}
+\index{message-oriented communication}
+\index{IoT}
+
+
 ### From web protocols to message-oriented communication
 
 Chapter 24 closed the web-protocol climb by showing how HTTP upgrade can move the same lower connection into bidirectional WebSocket communication. Chapter 25 opens the message-oriented part of the book. The focus now moves away from HTTP, routing, event streams, and upgrade negotiation toward MQTT as a packet-structured protocol family.
@@ -37,6 +42,10 @@ MQTT over WebSocket
 Chapter 25 introduces MQTT as a protocol family and shows how both forms belong to the same architecture. Chapter 26 then narrows the view to MQTT carried as a WebSocket subprotocol.
 
 ### MQTT in the layered SNode.C model
+
+\index{MQTT!layered model}
+\index{application protocol}
+
 
 The native MQTT layer can be placed into the model the reader already knows:
 
@@ -77,6 +86,10 @@ MQTT-over-WebSocket is not a new transport trick. It is MQTT semantics carried a
 
 ### Native MQTT and MQTT over WebSocket side by side
 
+\index{MQTT!native}
+\index{MQTT!over WebSocket}
+
+
 A compact comparison is enough here; Chapter 26 treats the WebSocket-carried form in detail.
 
 | Concern | Native MQTT | MQTT over WebSocket |
@@ -90,6 +103,12 @@ A compact comparison is enough here; Chapter 26 treats the WebSocket-carried for
 The important point is not that there are two unrelated MQTT implementations. The MQTT semantics remain stable; the carrier path changes.
 
 ### MQTT as a protocol family
+
+\index{MQTT!protocol family}
+\index{control packets}
+\index{topics}
+\index{sessions}
+
 
 MQTT support in SNode.C is broader than a broker application or a client helper. The shared MQTT module contains protocol structure. It provides the vocabulary and mechanics that server and client roles build on.
 
@@ -154,6 +173,11 @@ packet shape
 That is why packet classes, fixed-header handling, deserialization, sessions, and topics belong in the core MQTT module. They are part of the MQTT protocol layer, not incidental application helpers.
 
 ### `Mqtt` as the protocol object
+
+\index{Mqtt@\texttt{Mqtt}}
+\index{MQTT!protocol object}
+\index{keep-alive}
+
 
 The central code-shaped MQTT object is `iot::mqtt::Mqtt`.
 
@@ -232,6 +256,11 @@ The lower connection may have read or write timeouts. A configured client or ser
 
 ### Native MQTT over stream connections
 
+\index{MQTT!native over streams}
+\index{MqttContext@\texttt{MqttContext}}
+\index{SocketContext@\texttt{SocketContext}}
+
+
 Native MQTT uses the lower stream architecture directly. Its code shape is:
 
 ```text
@@ -280,6 +309,11 @@ The difference is the application-layer interpretation. At the HTTP layer, incom
 The structure changes at the protocol level. The lower transport architecture remains.
 
 ### Server and client specialization
+
+\index{MQTT!server role}
+\index{MQTT!client role}
+\index{broker role}
+
 
 The MQTT module separates shared protocol infrastructure from role-specific behavior.
 
@@ -339,6 +373,11 @@ This keeps the client/server model balanced. Both sides share the MQTT protocol 
 
 
 ### A compact MQTT client role
+
+\index{MQTT!client example}
+\index{Publish@\texttt{Publish}}
+\index{Connack@\texttt{Connack}}
+
 
 A compact MQTT client example should show the protocol role, not an entire transport setup. The following class expresses the MQTT side of the application: connect, subscribe, publish, receive publishes, and disconnect on shutdown.
 
@@ -412,6 +451,10 @@ The shared `mqtt` component is the protocol core. The `mqtt-client` component ad
 
 ### MQTT as a WebSocket subprotocol
 
+\index{MQTT!WebSocket subprotocol}
+\index{WebSocket!subprotocols}
+
+
 MQTT-over-WebSocket is where Chapter 25 connects back to Chapter 24. The relevant composition is:
 
 ```text
@@ -426,6 +469,10 @@ Chapter 25 only establishes the model: MQTT remains MQTT, while the carrier can 
 
 ### MQTT public surface: protocol headers and components
 
+\index{MQTT!public surface}
+\index{iot::mqtt@\texttt{iot::mqtt}}
+
+
 MQTT code includes the MQTT abstraction it directly names. A client-side MQTT protocol object is introduced through:
 
 ```cpp
@@ -435,6 +482,10 @@ MQTT code includes the MQTT abstraction it directly names. A client-side MQTT pr
 Shared support remains below `<iot/mqtt/...>` for topics, packets, socket-context bridging, and protocol support. The build-side components distinguish shared support, native roles, and WebSocket-carried compositions; Chapter 32 collects those mappings in one source-derived table.
 
 ### Build/component note: JSON dependency is not MQTT identity
+
+\index{JSON dependency}
+\index{MQTT!component identity}
+
 
 In the current SNode.C build, the MQTT component is enabled when `nlohmann_json >= 3.11` is found; otherwise CMake emits a warning and does not add the MQTT targets.
 

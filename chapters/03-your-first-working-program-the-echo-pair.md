@@ -1,5 +1,10 @@
 ## Your First Working Program: The Echo Pair
 
+\index{echo pair}
+\index{first program}
+\index{minimal application}
+
+
 ### From environment to first program
 
 Chapter 2 prepared the practical ground: source tree, build tree, install tree, and a separate playground project. It uses that environment for the first complete program.
@@ -62,9 +67,19 @@ The echo protocol itself should not be mixed into `main()`. The server and clien
 
 ### The three roles in the first example
 
+\index{instance}
+\index{factory}
+\index{context}
+
+
 Before writing code, it helps to name the three roles.
 
 #### The instance
+
+\index{instance}
+\index{SocketServer@\texttt{SocketServer}}
+\index{SocketClient@\texttt{SocketClient}}
+
 
 In everyday discussion, it is natural to call the visible `SocketServer` or `SocketClient` object an instance. That is acceptable as long as the basic idea is clear. In SNode.C's stricter architectural vocabulary, however, the visible C++ object is the application-side handle. Through that handle, the application configures and registers a server-side or client-side communication role. After `listen(...)` or `connect(...)`, that configured role is the instance the framework can advance through the runtime and flow-controller machinery. It is not yet a concrete peer connection; connections appear later.
 
@@ -81,11 +96,19 @@ The server-side role listens. The client-side role connects. Neither one contain
 
 #### The factory
 
+\index{factory}
+\index{SocketContextFactory@\texttt{SocketContextFactory}}
+
+
 A `SocketContextFactory` creates a new context object for each established connection.
 
 That is an important design choice. Connection-specific protocol state should not be stored globally and should not be constructed manually in `main()` whenever a peer appears. The framework asks the factory for a context when a connection needs one.
 
 #### The context
+
+\index{context}
+\index{SocketContext@\texttt{SocketContext}}
+
 
 A `SocketContext` contains the application protocol behavior for one connection.
 
@@ -106,6 +129,10 @@ onDisconnected()
 This is the first place where the event-driven nature of SNode.C becomes visible. The program does not write its own blocking read loop. It implements callback methods that the framework calls when the connection lifecycle or input state changes.
 
 ### The echo context header
+
+\index{EchoSocketContext@\texttt{EchoSocketContext}}
+\index{SocketContext@\texttt{SocketContext}}
+
 
 We first define the context and the two factories.
 
@@ -254,6 +281,11 @@ framework-managed connection
 
 ### The server application
 
+\index{server application}
+\index{SocketServer@\texttt{SocketServer}}
+\index{listen()@\texttt{listen()}}
+
+
 The server entry point is small because the protocol behavior already lives in the context.
 
 #### `echoserver.cpp`
@@ -356,6 +388,11 @@ This distinction will matter later for configuration, retries, and runtime behav
 
 ### The client application
 
+\index{client application}
+\index{SocketClient@\texttt{SocketClient}}
+\index{connect()@\texttt{connect()}}
+
+
 The client mirrors the server.
 
 #### `echoclient.cpp`
@@ -448,6 +485,11 @@ client
 This symmetry is one reason the echo pair is a useful first example.
 
 ### Building the simplified echo pair
+
+\index{CMake@\texttt{CMake}}
+\index{target linking}
+\index{example build}
+
 
 Assume the four source files are in the playground directory prepared in Chapter 2:
 
@@ -624,6 +666,10 @@ application-side handle
 ```
 
 ### What changed compared with ordinary socket programming
+
+\index{ordinary socket programming}
+\index{framework boundary}
+
 
 If you have written direct POSIX socket code before, this example may look unusual. There is no explicit `accept()` loop in `main()`. There is no blocking `recv()` loop in the application entry point.
 

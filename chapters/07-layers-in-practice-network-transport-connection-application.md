@@ -1,5 +1,9 @@
 ## Layers in Practice: Network, Transport, Connection, Application
 
+\index{layered architecture}
+\index{communication stack}
+
+
 ### Why this chapter comes here
 
 Chapter 5 introduced the mental model of SNode.C.
@@ -28,6 +32,12 @@ Chapter 5 introduced this stack as part of the general mental model. Chapter 6 s
 The goal is not to repeat a textbook theory of layering. The goal is more practical: after this chapter, a reader should be able to look at a SNode.C type name, component name, or source-tree path and understand what it says about the communication stack.
 
 ### The communication stack in four layers
+
+\index{network layer}
+\index{transport layer}
+\index{connection layer}
+\index{application layer}
+
 
 For practical work, SNode.C can be read through four communication layers.
 
@@ -62,6 +72,11 @@ A compact separation is:
 This prevents a common confusion. The runtime tells us *how progress happens*. The communication layer stack tells us *what kind of communication structure is making progress*. Each row in the table becomes visible later in type names, component names, configuration choices, and source-tree paths. In SNode.C that stack appears not only in type names and component names, but also in public include paths.
 
 ### Names are maps of architecture
+
+\index{component names}
+\index{public include paths}
+\index{names as architecture}
+
 
 The fastest practical way to understand SNode.C layering is to read names from left to right.
 
@@ -163,6 +178,10 @@ That question turns long names into maps.
 
 ### The network layer: endpoint identity
 
+\index{network layer}
+\index{endpoint identity}
+
+
 The network layer answers the first concrete communication question:
 
 > Which kind of endpoint identity are we using?
@@ -209,6 +228,10 @@ That is the topic of socket addresses and address semantics.
 
 ### The transport layer: communication form
 
+\index{transport layer}
+\index{stream transport}
+
+
 Above the network family sits the transport form.
 
 For the early and central parts of this book, the important transport form is:
@@ -248,6 +271,11 @@ Bluetooth L2CAP stream communication?
 That question is more useful than asking only which socket class is involved. It places the code in the communication stack. Once the endpoint family and transport form are fixed, the next question is how the concrete peer relationship is managed while it exists.
 
 ### The connection layer: managing the peer relationship
+
+\index{connection layer}
+\index{peer relationship}
+\index{TLS!connection layer}
+
 
 The network layer chooses the endpoint family. The transport layer chooses the communication form.
 
@@ -349,6 +377,10 @@ network family
 
 ### The application layer: protocol behavior
 
+\index{application layer}
+\index{protocol behavior}
+
+
 Above the connection layer sits the application layer. This is where communication receives meaning.
 
 For a small custom protocol, the application layer may be a `SocketContext` derived class written by the user. The context reacts to lifecycle and data events for one concrete connection. That is what the echo example did in Chapter 3.
@@ -445,6 +477,10 @@ Those questions are exactly the kind of thinking SNode.C is meant to support.
 
 ### The build system as confirmation
 
+\index{build system}
+\index{component architecture}
+
+
 A useful way to test an architectural description is to ask whether the build system reflects it. In SNode.C, it does.
 
 The `src` build adds major framework regions such as `core`, `net`, `web`, `express`, `database`, `iot`, and `apps`. The supported components include core stream components, concrete network stream components, HTTP, Express, WebSocket, MQTT, and MQTT-over-WebSocket components.
@@ -493,6 +529,10 @@ A reader who learns the layer names is also learning how to navigate the build.
 
 ### One protocol, many lower carriers
 
+\index{lower carriers}
+\index{protocol reuse}
+
+
 The layer model becomes most useful when the reader asks a transfer question. Suppose you write one simple application protocol using a `SocketContext`.
 
 What changes if the same protocol is carried over:
@@ -537,6 +577,10 @@ This is especially important for IoT, embedded, and machine-to-machine systems. 
 Once the reader understands that RFCOMM and L2CAP belong to the same architectural model, later chapters can discuss their concrete address and API details without repeatedly defending their presence.
 
 ### Layers are real, but not walls
+
+\index{layer boundaries}
+\index{cross-layer responsibility}
+
 
 A good systems book should avoid two opposite mistakes. The first mistake is to collapse everything into one big communication soup. The second mistake is to imagine layers as perfectly sealed walls that never influence one another.
 

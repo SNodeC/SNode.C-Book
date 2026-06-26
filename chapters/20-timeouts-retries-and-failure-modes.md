@@ -1,5 +1,11 @@
 ## Timeouts, Retries, and Failure Modes
 
+\index{timeouts}
+\index{retries}
+\index{failure modes}
+\index{failure handling}
+
+
 ### Communication over time
 
 Chapter 19 showed that TLS adds meaningful connection-layer phases to the same SNode.C architecture. A secure stream may have to create and configure an SSL object, complete a TLS handshake, handle close-notify behavior, and shut the secure layer down before the underlying socket episode is fully over.
@@ -25,6 +31,13 @@ configured role
 Timeouts, retries, reconnects, shutdown behavior, failure states, and termination are different ways of describing communication over time. They belong together in one mental model, but they must not be collapsed into one concept.
 
 ### The time-and-failure map
+
+\index{timeout}
+\index{retry}
+\index{reconnect}
+\index{shutdown}
+\index{termination}
+
 
 The title of the chapter names three ideas:
 
@@ -130,6 +143,13 @@ Should the role-level flow end instead of scheduling more work?
 A stopped flow is not automatically a broken flow. It may be the intended result of application shutdown, disablement, runtime teardown, or an explicit decision not to continue retrying or reconnecting.
 
 ### Where waiting is bounded
+
+\index{bounded waiting}
+\index{connection timeout}
+\index{read timeout}
+\index{write timeout}
+\index{termination timeout}
+
 
 There is no single global timeout.
 
@@ -274,6 +294,12 @@ is not precise enough. Timeouts improve robustness when they match the lifecycle
 
 ### Retry and reconnect are not the same thing
 
+\index{retry}
+\index{reconnect}
+\index{failure handling!retry}
+\index{failure handling!reconnect}
+
+
 Retry and reconnect are the most important distinction in this chapter. They are close enough to be confused, but different enough that the distinction matters.
 
 | Mechanism | Situation | Meaning |
@@ -295,6 +321,11 @@ Retry belongs to failed connection attempts. Reconnect belongs to established co
 :::
 
 #### Source anchor: two timer paths, one reconnecting client role
+
+\index{retry timer}
+\index{reconnect timer}
+\index{SocketClient@\texttt{SocketClient}!retry and reconnect}
+
 
 The client-side stream source in `src/core/socket/stream/SocketClient.h` keeps the two decisions in different branches of the same role-level flow. After a disconnect, reconnect policy can arm a reconnect timer and then re-enter the connect path for the ongoing client role:
 
@@ -406,6 +437,12 @@ This belongs to role behavior, not to application protocol behavior.
 
 ### Retry timing policy
 
+\index{retry policy}
+\index{jitter}
+\index{retry tries}
+\index{retry on fatal}
+
+
 Retry timing is a policy with its own operational meaning.
 
 A retry policy may need to answer several questions:
@@ -466,6 +503,10 @@ The framework separates the failure category from the retry policy. That separat
 
 ### `NO_RETRY` as retry-control information
 
+\index{NO_RETRY@\texttt{NO\_RETRY}}
+\index{retry control}
+
+
 `NO_RETRY` is part of the failure-control vocabulary.
 
 It should be understood carefully. It is not a separate ordinary outcome like `OK` or `ERROR`. It is retry-control information attached to a state.
@@ -500,6 +541,10 @@ never retry
 ```
 
 ### Failure states carry runtime meaning
+
+\index{failure state}
+\index{disablement}
+
 
 Failure handling is easier to understand when the state vocabulary is explicit.
 
@@ -567,6 +612,10 @@ Where in the lifecycle did it fail, and what policy applies there?
 
 ### Flow controllers as role-level owners
 
+\index{flow controllers}
+\index{role-level ownership}
+
+
 Retry and reconnect policy belong to role-level flow control.
 
 That is why server and client flow controllers matter. They keep outer lifecycle behavior out of ordinary protocol contexts.
@@ -596,6 +645,11 @@ The second mistake is forcing the outer role to understand protocol semantics it
 The flow controller keeps the role coherent. The context keeps the protocol coherent.
 
 ### Output pressure and bounded write-buffer policy
+
+\index{backpressure}
+\index{write buffer}
+\index{output pressure}
+
 
 Timeouts, retries, and reconnects describe what happens when communication does not progress in time. Event-driven systems also need a policy for what happens when communication cannot progress in space.
 
@@ -631,6 +685,10 @@ This topic connects Chapter 20 with later chapters on diagnostics, deployment, t
 
 ### Protocol-level timeout use
 
+\index{protocol timeout}
+\index{timeout!protocol level}
+
+
 Timeout controls are useful only when they express meaningful waiting.
 
 A protocol endpoint should use timeouts for protocol reasons, such as:
@@ -663,6 +721,10 @@ is not precise enough.
 The protocol timeout should encode an expectation of the protocol conversation. It should not become a substitute for understanding the protocol state machine.
 
 ### Failure visibility
+
+\index{failure visibility}
+\index{diagnostics}
+
 
 A retry or reconnect system must be observable.
 

@@ -1,5 +1,10 @@
 ## Writing `SocketContext` Classes Well
 
+\index{SocketContext@\texttt{SocketContext}}
+\index{context design}
+\index{protocol behavior}
+
+
 ### From lower-family choice to protocol behavior
 
 Chapters 10, 11, and 12 completed the lower-family tour.
@@ -27,6 +32,10 @@ That is the starting point for this chapter.
 
 ### What a `SocketContext` is
 
+\index{SocketContext@\texttt{SocketContext}}
+\index{connection-local behavior}
+
+
 A compact definition is:
 
 ::: {.snodec-rule title="Context responsibility rule"}
@@ -49,6 +58,11 @@ This distinction is easy to underestimate. A context is close enough to the conn
 That makes the context the place where the book moves upward again. The previous part asked which lower family carries the connection. This part asks what the application protocol does once a connection exists.
 
 #### Context, connection, and factory
+
+\index{context}
+\index{connection}
+\index{factory}
+
 
 The three objects should be kept separate:
 
@@ -101,6 +115,10 @@ This boundary is one of the most important design habits in SNode.C application 
 
 ### The context surface seen by protocol code
 
+\index{context surface}
+\index{protocol code}
+
+
 The stream `SocketContext` surface is focused. It gives derived protocol classes enough operations to implement real stream protocols while still keeping transport machinery outside the protocol class.
 
 There are two layers worth keeping apart.
@@ -139,6 +157,11 @@ Fourth, it can observe useful connection-derived metrics. Some of those observat
 Fifth, it must handle signals and read/write errors explicitly enough that exceptional runtime situations are not invisible. That is a strong but focused contract.
 
 ### Lifecycle, input, signals, and errors
+
+\index{SocketContext@\texttt{SocketContext}!lifecycle}
+\index{input processing}
+\index{error handling}
+
 
 A good way to understand a context is to group its hooks by responsibility.
 
@@ -211,6 +234,11 @@ The important habit is explicitness.
 
 ### Design habits for good context code
 
+\index{context design}
+\index{protocol state}
+\index{event-driven design}
+
+
 A good `SocketContext` is usually small, connection-local, and protocol-specific.
 
 It answers the question:
@@ -220,6 +248,10 @@ It answers the question:
 That question is narrow. A context becomes harder to understand when it tries to become the whole application.
 
 #### Keep responsibility connection-local
+
+\index{connection-local state}
+\index{responsibility boundary}
+
 
 A context should represent one endpoint of one protocol conversation on one connection.
 
@@ -311,6 +343,9 @@ This avoids the common mistake of reimplementing output buffering or transport s
 
 #### Use timeouts with protocol intent
 
+\index{timeouts!protocol intent}
+
+
 The context can set a timeout through `setTimeout(...)`. That does not mean every context should immediately set a custom timeout.
 
 Timeouts should express protocol intent, such as:
@@ -346,6 +381,9 @@ The context is allowed to close the connection. It should still know why it is d
 
 #### Use metrics as protocol information
 
+\index{metrics!protocol information}
+
+
 Connection-derived metrics can be useful inside or around a context.
 
 Examples include:
@@ -368,6 +406,10 @@ It can interpret them in protocol terms:
 The metrics are most useful when they help explain protocol behavior.
 
 ### What not to put into a context
+
+\index{context anti-patterns}
+\index{server/client role logic}
+
 
 The context is an important object, but it should not absorb every responsibility nearby.
 
@@ -413,6 +455,9 @@ A good context can be understood locally. It should be possible to read the clas
 
 ### Logging in a context
 
+\index{logging!context level}
+
+
 Logging in context code should illuminate protocol behavior.
 
 Useful logging often includes:
@@ -437,6 +482,10 @@ What state was reached before disconnect?
 Per-byte noise may be useful during a narrow diagnostic session. It should not be the default shape of a readable protocol implementation.
 
 ### The echo context as a minimal pattern
+
+\index{EchoSocketContext@\texttt{EchoSocketContext}}
+\index{minimal context}
+
 
 The echo context is valuable because it is small.
 

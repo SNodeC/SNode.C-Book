@@ -1,5 +1,10 @@
 ## TLS Across the Framework
 
+\index{TLS}
+\index{secure communication}
+\index{connection layer}
+
+
 ### From runtime visibility to secure connection handling
 
 Chapter 18 closed the operational visibility part of the book. It treated configuration, generated command lines, logging, connection identity, counters, durations, and protocol decisions as diagnostic evidence.
@@ -31,6 +36,10 @@ What changes is the connection handling between the lower transport and the appl
 That distinction matters. TLS is serious: it brings identity material, trust material, handshake behavior, shutdown behavior, close-notify semantics, timeout handling, and TLS-specific diagnostics. But those concerns have a place in the architecture. They belong to secure connection handling and its configuration. They should not be spread randomly through the protocol context merely because encryption is involved.
 
 ### TLS as a connection-layer specialization
+
+\index{TLS!connection layer}
+\index{connection-layer specialization}
+
 
 The layered model is:
 
@@ -79,6 +88,11 @@ Figure \ref{fig:tls-connection-layer-specialization} shows the intended mental m
 
 ### Legacy and TLS streams as neighboring connection variants
 
+\index{legacy streams}
+\index{TLS streams}
+\index{connection variants}
+
+
 A compact comparison makes the teaching point visible.
 
 | Concern | Legacy stream | TLS stream |
@@ -98,6 +112,10 @@ This table is the chapter in miniature. TLS adds real work. It does not erase th
 That is why TLS is easiest to understand after the legacy stream shape is already clear. The legacy stream shows the connection model without secure transport. The TLS stream then shows which parts are added by secure connection handling.
 
 ### The TLS wrapper shape in code
+
+\index{TLS wrapper}
+\index{TLS connection}
+
 
 The code shape confirms the model. The TLS server is not a completely separate hand-built server type. It reuses the ordinary IPv4 stream server shell and changes the connection-layer pieces.
 
@@ -141,6 +159,11 @@ The protocol endpoint can often remain stable.
 
 ### What TLS adds to the connection layer
 
+\index{TLS!handshake}
+\index{TLS!certificate handling}
+\index{TLS!shutdown}
+
+
 TLS changes real parts of the communication path. It adds concerns that do not exist in a plain legacy stream.
 
 The most important groups are:
@@ -163,6 +186,10 @@ That is why the `tls` configuration section exists. The section is not decorativ
 
 ### What can remain stable above TLS
 
+\index{TLS!protocol independence}
+\index{SocketContext@\texttt{SocketContext}}
+
+
 TLS often leaves the higher-level application structure recognizable.
 
 The following parts can often remain stable:
@@ -182,6 +209,10 @@ Therefore, TLS is teachable inside the same architecture. The reader does not ne
 The word *often* matters. TLS independence is not a universal law. It is a design result that holds when the protocol conversation after secure connection readiness is the same. If the protocol uses peer certificates, secure-transport properties, or SNI-derived policy as part of its own semantics, then TLS meaning may deliberately rise into the protocol layer.
 
 ### The TLS connection object as the layer boundary
+
+\index{TLS!layer boundary}
+\index{getSSL()@\texttt{getSSL()}}
+
 
 The TLS connection object is the clearest boundary.
 
@@ -222,6 +253,11 @@ Examples include:
 It should not make every ordinary protocol context TLS-dependent by default. A protocol context should care about TLS only when TLS has protocol meaning.
 
 ### TLS configuration and the `tls` section
+
+\index{TLS!configuration}
+\index{tls section}
+\index{SNI}
+
 
 TLS configuration is added to the existing configuration model. It does not create a separate configuration universe.
 
@@ -420,6 +456,9 @@ In those cases, TLS-specific meaning may rise into protocol logic. But it should
 
 ### TLS diagnostics through the Chapter 18 lens
 
+\index{TLS!diagnostics}
+
+
 TLS makes diagnostics more important. A plain socket failure is already meaningful.
 
 A TLS failure may involve several additional questions:
@@ -495,6 +534,9 @@ carry the secure-transport differences. Only promote TLS details into protocol l
 It also keeps the architecture readable.
 
 ### TLS capability and deployment responsibility
+
+\index{TLS!deployment responsibility}
+
 
 TLS-capable components make secure connection handling possible; they do not by themselves complete a secure deployment. Certificate files, private-key permissions, trust anchors, SNI policy, and diagnostics still belong to the deployed role and its configuration.
 

@@ -1,5 +1,11 @@
 ## Server-Sent Events and Real-Time HTTP
 
+\index{Server-Sent Events}
+\index{SSE}
+\index{EventSource@\texttt{EventSource}}
+\index{real-time HTTP}
+
+
 ### From request / response to event streams
 
 Chapter 22 showed how HTTP handling becomes application structure through routing, middleware, and request/response facades. Chapter 23 keeps that structure inside the HTTP world, but changes the temporal shape of one response: a route may start a response stream and keep it open while the server sends event-stream records over time.
@@ -35,6 +41,10 @@ Chapter 24: HTTP upgrade to bidirectional WebSocket communication
 ```
 
 ### SSE in the layered SNode.C web stack
+
+\index{SSE!layered model}
+\index{event streams}
+
 
 The stack now looks like this:
 
@@ -80,6 +90,10 @@ A compact comparison helps place SSE without turning this chapter into a protoco
 SSE is not WebSocket with fewer features. It is a different fit. It is useful when the server should push events and the client does not need to send messages back over the same long-lived channel. If both sides need to send independent messages over one long-lived channel, WebSocket becomes the more natural fit. Chapter 24 treats that case.
 
 ### SSE as long-lived HTTP
+
+\index{SSE!long-lived HTTP}
+\index{HTTP streaming}
+
 
 SSE begins as HTTP. The client sends an HTTP request for an event-stream endpoint. If the server accepts the request and responds with an event-stream response, the response remains open.
 
@@ -138,6 +152,10 @@ server state changes
 That pattern is common in monitoring and dashboard applications. The application still has to think about reconnect, retry, timeouts, and diagnostics, but it does not need the full protocol shape of a bidirectional upgraded connection.
 
 ### Client-side EventSource and server-side streaming endpoints
+
+\index{EventSource@\texttt{EventSource}}
+\index{streaming endpoints}
+
 
 It is important to distinguish the two sides carefully.
 
@@ -268,6 +286,11 @@ The server-side route produces event-stream syntax. The client-side `EventSource
 
 ### The EventSource client abstraction
 
+\index{EventSource@\texttt{EventSource}!client abstraction}
+\index{ReadyState@\texttt{ReadyState}}
+\index{MessageEvent@\texttt{MessageEvent}}
+
+
 The client-side `EventSource` abstraction gives the application an event-stream model while the lower stream and HTTP details remain underneath. The application sees a higher-level surface:
 
 | EventSource concept | Meaning |
@@ -367,6 +390,10 @@ That matches the retry/reconnect vocabulary from Chapter 20.
 
 ### SSE starts as an HTTP request
 
+\index{SSE!HTTP request setup}
+\index{event-stream validation}
+
+
 Even though the application eventually receives events, SSE starts as HTTP. The client sends a request for the event-stream endpoint.
 
 A simplified request shape is:
@@ -410,6 +437,11 @@ response Content-Type contains text/event-stream
 The request still carries `Accept: text/event-stream`. If validation fails, the socket context is closed and the error callback is invoked. This prevents a normal HTML page, redirect, error page, or unrelated response from being interpreted as SSE data.
 
 ### Parsing the event stream
+
+\index{SSE!parsing}
+\index{event stream fields}
+\index{blank-line dispatch}
+
 
 Once the stream is open, the client receives bytes over time. The parser turns those bytes into event records:
 
@@ -461,6 +493,11 @@ That is part of making SSE operationally usable. Long-lived inputs need limits.
 
 ### Retry and continuity
 
+\index{SSE!retry}
+\index{retry field}
+\index{Last-Event-ID}
+
+
 SSE interacts naturally with retry and reconnect behavior. This should be read through the vocabulary of Chapter 20.
 
 SSE has protocol-level retry information. SNode.C maps that information into the underlying client reconnect/retry configuration. That means the event-stream layer and the client role cooperate.
@@ -510,6 +547,10 @@ closed intentionally
 This is where Chapter 20’s retry/reconnect distinction becomes visible at the SSE layer.
 
 ### Express-like routes and SSE endpoints
+
+\index{SSE!Express routes}
+\index{streaming endpoints}
+
 
 Express-like applications are a natural place to expose SSE endpoints. They already organize routes, middleware, authentication, static assets, application APIs, and response behavior.
 
@@ -562,6 +603,9 @@ The timing behavior still depends on the network, server, client, buffering, and
 :::
 
 ### EventSource public surface
+
+\index{EventSource@\texttt{EventSource}!public surface}
+
 
 Client-side EventSource code includes the EventSource abstraction it names. For the IPv4 legacy wrapper, that front door is:
 

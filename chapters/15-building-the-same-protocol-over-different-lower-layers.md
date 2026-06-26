@@ -1,5 +1,10 @@
 ## Building the Same Protocol over Different Lower Layers
 
+\index{lower-family transfer}
+\index{protocol reuse}
+\index{lower carriers}
+
+
 ### From context and factory separation to lower-family transfer
 
 Chapter 13 placed application protocol behavior in the `SocketContext`. Chapter 14 placed context construction in the `SocketContextFactory`. This chapter uses both separations together.
@@ -35,6 +40,11 @@ The lower family matters. It does not always have to rewrite the protocol endpoi
 
 ### The lower-family transfer model
 
+\index{lower-family transfer}
+\index{network family}
+\index{carrier choice}
+
+
 The transfer model keeps four questions apart:
 
 | Question | Best home |
@@ -57,6 +67,11 @@ The naming reflects an architectural boundary.
 It prevents one common design mistake: putting lower-family setup, protocol behavior, context construction, and deployment policy into the same class. SNode.C makes those boundaries visible. Application code becomes easier to move across families when it respects them.
 
 ### What can remain stable
+
+\index{protocol shape}
+\index{context behavior}
+\index{factory construction policy}
+
 
 Not everything transfers. But several important parts often can.
 
@@ -128,6 +143,11 @@ The context construction shape can still remain familiar.
 This is why Chapters 13 and 14 came before this chapter. A well-factored context and a disciplined factory make lower-family transfer practical. The factory does not make the protocol portable by magic. It keeps the construction boundary clean enough that portability can be judged clearly.
 
 ### What changes with the lower family
+
+\index{handle type}
+\index{endpoint configuration}
+\index{deployment assumptions}
+
 
 Lower-family transfer is not the same as pretending all families are identical. Several things usually change.
 
@@ -207,6 +227,9 @@ The lower family matters, but it does not always have to rewrite the protocol en
 
 ### Echo as the smallest transfer microscope
 
+\index{echo pair!lower-family transfer}
+
+
 The echo application gives the smallest useful example. Echo is not interesting because echo is sophisticated. It is interesting because it exposes the placement boundary.
 
 The protocol behavior lives in one context type:
@@ -272,6 +295,10 @@ A more complex protocol can grow from the same discipline.
 
 ### One protocol, several carriers
 
+\index{protocol reuse}
+\index{lower carriers}
+
+
 A compact comparison makes the transfer visible.
 
 | Carrier | Endpoint identity | What changes | What may remain |
@@ -289,6 +316,10 @@ If the protocol's meaning is independent of the lower-family identity, the conte
 The table is useful precisely because it does not hide the changing column. It shows how far reuse can go before honesty requires a different context, a different factory, or a different deployment shape.
 
 ### Designing for lower-family transfer
+
+\index{lower-family transfer!design rules}
+\index{endpoint identity}
+
 
 A protocol that should travel well across lower families should be designed with clear boundaries. The following rules are not mechanical requirements. They are design habits that make transfer easier to reason about.
 
@@ -395,6 +426,10 @@ Construction-time variation is healthy when it makes the protocol roles clear. I
 
 ### Preconfigured factories and endpoint roles
 
+\index{preconfigured factories}
+\index{endpoint roles}
+
+
 Chapter 14 explained that server and client constructors can forward an argument pack into the factory constructor. That makes it possible to preconfigure factories with stable role and dependency information. This matters for lower-family transfer because the same mechanism can create role-specific endpoints over different carriers.
 
 Examples include:
@@ -431,6 +466,10 @@ An L2CAP service depends on Bluetooth stack support, pairing/trust setup, adapte
 A good design lets the stable protocol core remain visible while keeping the family-specific deployment surface explicit.
 
 ### When reuse should stop
+
+\index{over-abstraction}
+\index{protocol specialization}
+
 
 Lower-family transfer is useful only when it preserves clarity. There are cases where reuse should stop.
 
@@ -489,6 +528,9 @@ The following table summarizes the chapter.
 This table is the practical transfer model. Reuse is strongest when the stable column stays honest and the changing column is not hidden.
 
 ### Configuration becomes visible here
+
+\index{configuration!lower-family transfer}
+
 
 Lower-family transfer naturally makes configuration more visible.
 

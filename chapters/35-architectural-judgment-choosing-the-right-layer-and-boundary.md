@@ -1,5 +1,10 @@
 ## Architectural Judgment: Choosing the Right Layer and Boundary
 
+\index{architectural judgment}
+\index{layer choice}
+\index{boundary choice}
+
+
 ### Why this chapter matters now
 
 Chapter 34 asked how to test, debug, and measure whether SNode.C boundaries hold. Chapter 35 asks the prior architectural question: how should those boundaries be chosen in the first place?
@@ -60,6 +65,10 @@ A warning sign is one class, callback, configuration section, or executable that
 
 ### Choosing the communication family
 
+\index{communication family}
+\index{network family selection}
+
+
 At the lowest practical architectural level, the communication family shapes endpoint identity, deployment assumptions, permissions, diagnostics, and operational boundaries.
 
 IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP imply different communication situations, not just different address syntax.
@@ -76,6 +85,10 @@ The right family is not the one the developer already knows best. It is the one 
 Bluetooth is a useful example. It should not be treated as a general-purpose integration bus merely because it can carry byte streams. It belongs where nearby peer exchange, device-local setup, or device-near communication is the real boundary.
 
 ### Choosing the protocol surface
+
+\index{protocol surface}
+\index{API surface}
+
 
 Once the lower family is chosen, the next decision is the protocol surface. The useful question is not simply which protocol is available, but:
 
@@ -98,6 +111,11 @@ This is not a checklist to memorize; it forces the architectural question into t
 A plain stream endpoint is not automatically more appropriate because it is lower. HTTP, Express-like routing, SSE, WebSocket, or MQTT may be simpler when the boundary already has those semantics. The simplest appropriate stack matches the conversation without pretending it is something else.
 
 ### Choosing native or composed protocol form
+
+\index{native protocol}
+\index{composed protocol}
+\index{protocol composition}
+
 
 Protocol composition raises a second question: not only *which* protocol family to use, but whether to use it directly or as part of a larger stack.
 
@@ -150,6 +168,10 @@ The question is not which stack is richer, but which stack fits the boundary.
 
 ### Choosing role boundaries
 
+\index{role boundaries}
+\index{process boundaries}
+
+
 At application and system scale, the architect must decide how many roles should exist. A common mistake is to begin with one all-purpose communication role and keep adding responsibilities until it becomes impossible to reason about.
 
 SNode.C encourages a healthier question:
@@ -172,6 +194,10 @@ Visibility matters. When roles differ in audience, protocol, state ownership, or
 
 ### Choosing process and deployment boundaries
 
+\index{deployment boundaries}
+\index{service boundaries}
+
+
 SNode.C supports both multi-role single applications and systems built from cooperating executables. The architect must decide which shape fits the system.
 
 Use **one executable** when:
@@ -193,6 +219,10 @@ Use **several executables or services** when:
 Packaging is an operational boundary decision, not a moral ranking. Good architecture has an operational shape that matches the real system boundary.
 
 ### Choosing the implementation layer
+
+\index{implementation layer}
+\index{layer responsibility}
+
 
 At the code-organization level, a very practical question appears again and again:
 
@@ -217,6 +247,10 @@ A useful map is:
 A `SocketContext` is not a dumping ground for every connection-adjacent concern. It owns behavior that belongs to the protocol endpoint of a concrete connection. Construction policy belongs in factories, web request flow in middleware or routers, semantics above WebSocket in subprotocols, and cross-role orchestration above the connection-local endpoint when it truly spans roles.
 
 ### Choosing code or configuration
+
+\index{code versus configuration}
+\index{configuration design}
+
 
 Earlier chapters showed that SNode.C treats configuration as a first-class architectural surface. That means the reader frequently has to decide whether a choice should live in code, in configuration, or in both.
 
@@ -249,6 +283,10 @@ Strong boundaries make this question easier to ask.
 
 ### Separating protocol meaning from carrier mechanics
 
+\index{protocol meaning}
+\index{carrier mechanics}
+
+
 Another frequent category mistake is to confuse protocol semantics with carrier mechanics.
 
 A useful discipline is to ask:
@@ -271,6 +309,10 @@ For example:
 A richer protocol layer does not erase the carrier beneath it; it gives meaning to communication carried by that lower layer.
 
 ### Choosing the extensibility point
+
+\index{extensibility point}
+\index{extension design}
+
 
 SNode.C offers several extensibility points. Choose the one that matches the actual variation.
 
@@ -302,6 +344,10 @@ The wrong extensibility point can feel flexible at first and chaotic later.
 
 ### Placing failure policy
 
+\index{failure policy}
+\index{retry policy}
+
+
 The framework's timeout, retry, reconnect, shutdown, disablement, and state model gives the architect strong tools. But the key question remains:
 
 > Where should this failure policy be expressed?
@@ -317,6 +363,10 @@ A useful rule is:
 Failure policy belongs to the role that owns the boundary, not just to the lowest socket that notices the error.
 
 ### Choosing what must be operator-visible
+
+\index{operator visibility}
+\index{observability}
+
 
 System architecture is not limited to internal correctness. It is also about operability.
 
@@ -413,6 +463,10 @@ Corrected view: API knowledge is necessary, but judgment comes from learning whe
 Corrected view: this chapter is technical because boundary mistakes become technical debt. Bad boundary decisions are among the most expensive technical mistakes in real systems.
 
 ### The architectural principle
+
+\index{architectural principle}
+\index{meaning preservation}
+
 
 Architectural judgment in SNode.C means choosing the right layer, role boundary, protocol family, packaging style, configuration surface, and diagnostic surface for a real system concern. Good judgment uses those boundaries explicitly, so that protocol meaning, operational policy, durable state, and system structure remain clear rather than collapsing into one giant custom abstraction.
 

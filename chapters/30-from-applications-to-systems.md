@@ -1,5 +1,10 @@
 ## From Applications to Systems
 
+\index{systems}
+\index{role constellations}
+\index{system design}
+
+
 ### Why this chapter comes after applications
 
 Chapter 29 showed how SNode.C framework pieces become executable applications: build targets, entry points, linked components, configured roles, callbacks, and runtime start. Chapter 30 widens the view again. The question is no longer only how one executable is assembled, but how several roles, boundaries, state responsibilities, and operational policies form a system.
@@ -40,6 +45,11 @@ Chapter 31
 A SNode.C system may be one executable with several named roles. It may also be several cooperating executables. It may run on one host, across several processes, or across several machines. The word *system* does not automatically mean a distributed cloud of services. It means that the design is now understood as a constellation of roles and boundaries rather than as one application in isolation.
 
 ### From applications to role constellations
+
+\index{role constellation}
+\index{named roles}
+\index{services}
+
 
 A system is not simply a larger single application. That distinction matters.
 
@@ -179,6 +189,13 @@ This is not a moral distinction. A single executable is not automatically less s
 
 ### Boundaries define the system
 
+\index{system boundaries}
+\index{protocol boundaries}
+\index{local boundary}
+\index{network-facing boundary}
+\index{upgraded boundary}
+
+
 A system becomes understandable when its boundaries are visible before its features are listed.
 
 Useful boundary questions include:
@@ -266,6 +283,10 @@ Different boundaries can remain different while the architecture remains consist
 
 #### Stateful and stateless roles
 
+\index{stateful roles}
+\index{stateless roles}
+
+
 System design also requires a clear distinction between stateful and stateless roles.
 
 ```text
@@ -300,6 +321,12 @@ Which failure mode can leave it inconsistent?
 Without state ownership, a system sketch is only a communication sketch.
 
 ### System operation
+
+\index{system operation}
+\index{configuration}
+\index{diagnostics}
+\index{failure behavior}
+
 
 Once roles and boundaries are visible, operation becomes more concrete. Configuration, diagnostics, failure behavior, and build structure no longer describe isolated applications only. They describe the system surface.
 
@@ -423,6 +450,10 @@ The build system does not describe the whole runtime topology. Configuration, de
 
 ### Stable protocol cores and domain code
 
+\index{stable protocol core}
+\index{domain code}
+
+
 Chapter 15 introduced an important idea: protocol logic can often remain stable while lower carriers change. In a system, that idea becomes a design strategy.
 
 A system is easier to evolve when:
@@ -468,6 +499,10 @@ domain code
 The framework's job is to give domain logic a clear communication architecture to live in. That separates communication structure from domain decisions without pretending that either one can replace the other.
 
 ### Reading a SNode.C system
+
+\index{system reading workflow}
+\index{SNode.C!system reading}
+
 
 Chapter 29 gave a way to read an application. A SNode.C system can be read with a wider checklist:
 

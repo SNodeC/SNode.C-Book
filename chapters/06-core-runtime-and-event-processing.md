@@ -1,5 +1,10 @@
 ## Core Runtime and Event Processing
 
+\index{core runtime}
+\index{event processing}
+\index{event-driven runtime}
+
+
 ### Why this chapter matters
 
 The first working echo pair introduced the runtime shape, and the mental model chapter named its recurring roles: handles, instances, connections, contexts, factories, layers, and operational concerns. It also made the central distinction precise: the visible `SocketServer` or `SocketClient` object is the application-side handle, while the instance is the registered communication role advanced by the framework.
@@ -40,6 +45,10 @@ The application normally talks to `core::SNodeC`. `core::SNodeC` forwards runtim
 That is the backbone of the chapter.
 
 ### A short source-level reading
+
+\index{source-level reading}
+\index{SNode.C!source reading}
+
 
 The implementation follows the same shape. The excerpts below are abridged from the pinned SNode.C `v1.0.2` source in `src/core/SNodeC.cpp`, `src/core/EventLoop.cpp`, and `src/core/EventMultiplexer.cpp`. They are not a second model of the runtime; they are source anchors for the model used in this chapter.
 
@@ -90,6 +99,10 @@ Those excerpts are deliberately small. They show that the diagram's main path is
 
 ### The public runtime surface: `core::SNodeC`
 
+\index{core::SNodeC@\texttt{core::SNodeC}}
+\index{runtime facade}
+
+
 The first runtime-facing type most users encounter is `core::SNodeC`.
 
 Its public surface is small:
@@ -104,6 +117,12 @@ Its public surface is small:
 This compact interface already teaches several important things.
 
 #### The runtime has explicit phases
+
+\index{runtime phases}
+\index{init()@\texttt{init()}}
+\index{start()@\texttt{start()}}
+\index{stop()@\texttt{stop()}}
+
 
 The existence of `init`, `start`, `stop`, `free`, and `state` tells us that the framework runtime has an explicit lifecycle instead of being a side effect of object construction.
 
@@ -125,6 +144,10 @@ That is the style already used in the echo pair. It is the natural mode when SNo
 
 #### `tick()` is the controlled stepping mode
 
+\index{tick()@\texttt{tick()}}
+\index{controlled stepping}
+
+
 The presence of `tick(...)` shows that SNode.C is not limited to one usage pattern. It can run in the classical “start the event loop and let it own the thread” mode, but it also exposes a per-iteration stepping model.
 
 A framework that offers `tick()` is telling you:
@@ -134,6 +157,10 @@ A framework that offers `tick()` is telling you:
 That matters for testing, embedding, integration with another outer loop, or simply understanding what the runtime does one iteration at a time.
 
 ### The orchestrator behind the facade: `core::EventLoop`
+
+\index{core::EventLoop@\texttt{core::EventLoop}}
+\index{event loop}
+
 
 Although most application code touches `core::SNodeC`, the actual loop orchestrator is `core::EventLoop`.
 
@@ -158,6 +185,9 @@ On the positive side, it gives the framework one primary event domain per proces
 The tradeoff is equally important. The framework is not centered around multiple independent reactor domains inside one process. That is a real architectural choice, and it is better to understand it early. For the kind of layered network applications SNode.C is built to express, one central event domain is a clarifying design.
 
 ### Runtime state is coarse on purpose
+
+\index{runtime state}
+
 
 The `core::State` enum is small:
 
@@ -184,6 +214,10 @@ Runtime state is not background decoration. It is part of the control logic.
 :::
 
 ### Tick-by-tick execution and `TickStatus`
+
+\index{TickStatus@\texttt{TickStatus}}
+\index{event loop!tick cycle}
+
 
 If `State` describes coarse lifecycle phases, `TickStatus` describes the result of a single event-loop iteration.
 
@@ -247,6 +281,10 @@ This prevents the wrong intuition that SNode.C is a blocking socket wrapper tied
 
 ### From runtime intent to event delivery
 
+\index{event delivery}
+\index{runtime intent}
+
+
 To understand event processing, we need to distinguish between two different meanings of “event” in SNode.C:
 
 - a **runtime scheduling event**,
@@ -285,6 +323,10 @@ Both meet in the same runtime, but they enter it through different doors.
 
 ### `EventReceiver` and `Event`: the small but important abstraction pair
 
+\index{EventReceiver@\texttt{EventReceiver}}
+\index{Event@\texttt{Event}}
+
+
 The `EventReceiver` and `Event` headers are compact, but together they reveal a lot about the runtime's shape.
 
 An `EventReceiver`:
@@ -316,6 +358,11 @@ Both `EventReceiver` and `Event` expose `span()` and `relax()`-style operations.
 At the level of the runtime vocabulary, these names suggest a lifecycle-oriented model. Runtime work can be published into, withdrawn from, and dispatched by the event system. The reader does not need to memorize every internal method here. The important point is the shape of the runtime: work is represented, published, dispatched, and eventually released.
 
 ### The multiplexer is the coordination backbone
+
+\index{EventMultiplexer@\texttt{EventMultiplexer}}
+\index{multiplexer}
+\index{event queue}
+
 
 At the center of event processing sits `core::EventMultiplexer`. This is the most important internal runtime concept in this chapter.
 
@@ -383,6 +430,10 @@ Descriptor event sources connect the runtime to file descriptors. Timer event so
 
 ### Descriptor event publishers: managing observed descriptor populations
 
+\index{descriptor events}
+\index{descriptor publishers}
+
+
 A descriptor event publisher manages a population of observed descriptor receivers.
 
 It can:
@@ -418,6 +469,10 @@ That distinction becomes important in real systems where backpressure, staged ac
 
 ### Descriptor event receivers: behavior attached to observed descriptors
 
+\index{descriptor receivers}
+\index{event receivers}
+
+
 If publishers manage descriptor-facing populations, receivers express the behavior of one observed descriptor participant.
 
 A descriptor receiver:
@@ -446,6 +501,10 @@ This distinction will matter again when socket acceptors, connectors, readers, a
 
 ### Timers are not bolted on
 
+\index{timers}
+\index{event loop!timers}
+
+
 A good runtime design treats timers as first-class event sources. SNode.C does exactly that.
 
 The `TimerEventPublisher` maintains a timer set, supports insertion and removal, computes the next timeout, spans active events, and can stop the timer publisher itself.
@@ -472,6 +531,11 @@ Therefore retries and reconnects do not need to be improvised as sleeps, blockin
 This is the architectural reason why retry, reconnect, and timeout behavior feel like part of SNode.C rather than add-ons.
 
 ### One tick, conceptually
+
+\index{event loop!tick cycle}
+\index{timeouts}
+\index{cleanup}
+
 
 With the main pieces now placed, we can describe one conceptual event-loop iteration. This is not a line-by-line implementation trace. It is the teaching model that best fits the implementation structure.
 

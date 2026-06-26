@@ -1,5 +1,10 @@
 ## Configuration Philosophy in SNode.C
 
+\index{configuration}
+\index{configuration philosophy}
+\index{configured communication role}
+
+
 ### From lower-family transfer to configured communication roles
 
 Chapter 15 showed why configuration becomes visible as soon as a protocol is carried over different lower communication families.
@@ -23,6 +28,10 @@ The visible `SocketServer` or `SocketClient` object is the application-side hand
 Configuration is therefore not decoration around an otherwise complete object. It is one of the places where the role receives its operational shape.
 
 ### Configuration as part of the architecture
+
+\index{configuration!architecture}
+\index{configured communication role}
+
 
 Configuration in SNode.C is not a separate afterthought beside the framework architecture. It is part of the architecture.
 
@@ -87,6 +96,11 @@ The configuration file gives deployment a durable expression. The command line g
 That matters because the same conceptual role can be shaped in code, persisted in a file, and overridden for one invocation without changing its identity.
 
 ### Three input paths, one configuration model
+
+\index{configuration!C++ API}
+\index{configuration!command line}
+\index{configuration!file}
+
 
 The three input paths have different strengths. They should be understood together.
 
@@ -206,6 +220,10 @@ It is operational because it can be used by a deployed application. It is inspec
 
 ### Precedence and the startup boundary
 
+\index{configuration!precedence}
+\index{startup boundary}
+
+
 The precedence rule is part of the configuration philosophy.
 
 The order is:
@@ -251,6 +269,11 @@ That is not a weakness. It is the natural boundary between startup configuration
 The command line and configuration file are external startup inputs. They can shape what has been made addressable before startup parsing completes. They cannot retroactively reach into a role that did not yet exist in that hierarchy.
 
 ### Named instances as configuration addresses
+
+\index{named instances}
+\index{configuration addresses}
+\index{instance names}
+
 
 One of the most important ideas in the configuration model is the difference between anonymous and named instances. An anonymous instance exists as a configured role in application code. A named instance also becomes addressable by the external configuration hierarchy.
 
@@ -338,6 +361,13 @@ Disablement belongs to the configured role. It lets the role remain part of the 
 This is cleaner than scattering ad hoc application flags across the program.
 
 ### Sections as structural scopes
+
+\index{configuration sections}
+\index{section hierarchy}
+\index{local section}
+\index{remote section}
+\index{tls section}
+
 
 Sections are structural scopes in the configuration hierarchy. A section is the boundary between different kinds of responsibility inside a communication role.
 
@@ -427,6 +457,11 @@ This keeps configuration readable. A timeout, an address, a TLS certificate path
 
 ### Configuration as discovery, persistence, and inspection
 
+\index{configuration!discovery}
+\index{persistent options}
+\index{generated configuration}
+
+
 A good configuration system should not only accept values. It should help users discover what can be configured, inspect the active shape, and persist durable choices. SNode.C does this through command-line help, configuration display, command-line generation, and generated configuration files.
 
 #### Help output as discovery
@@ -476,6 +511,11 @@ Shown configuration and generated command lines serve a similar purpose from dif
 It is an inspectable artifact of the same hierarchy used by the command line and the C++ API.
 
 ### Parameterless `listen()` and `connect()`
+
+\index{listen()@\texttt{listen()}!parameterless}
+\index{connect()@\texttt{connect()}!parameterless}
+\index{parameterless activation}
+
 
 Parameterless activation is one of the clearest expressions of the configuration philosophy.
 
@@ -539,6 +579,10 @@ application
 A missing client host or port likewise belongs to the remote section of a particular client instance. Therefore, parameterless activation is a strong proof point. It works only because the role has a structured configuration identity.
 
 ### CLI11 as implementation foundation
+
+\index{CLI11@\texttt{CLI11}}
+\index{command-line parsing}
+
 
 SNode.C uses CLI11 as part of the implementation foundation for this unified model. That matters, but it should stay in the background of the chapter. The book does not need to become a CLI11 manual here.
 

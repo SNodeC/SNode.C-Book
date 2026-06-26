@@ -1,5 +1,10 @@
 ## Bluetooth in SNode.C: RFCOMM and L2CAP
 
+\index{Bluetooth}
+\index{RFCOMM}
+\index{L2CAP}
+
+
 ### From path identity to Bluetooth endpoint identity
 
 Chapter 11 replaced host-plus-port endpoint identity with Unix-domain path identity. This chapter changes endpoint identity again.
@@ -32,6 +37,11 @@ The lower communication family changes. The endpoint identity changes. The appli
 
 ### Two Bluetooth families, two service selectors
 
+\index{Bluetooth!service selectors}
+\index{channel}
+\index{PSM}
+
+
 SNode.C represents Bluetooth through two distinct lower communication families:
 
 | Aspect | RFCOMM | L2CAP |
@@ -52,6 +62,11 @@ RFCOMM and L2CAP share the idea of Bluetooth device identity. They differ in the
 That difference is not cosmetic. An RFCOMM channel is not an L2CAP PSM, and a PSM is not an RFCOMM channel.
 
 #### RFCOMM: Bluetooth address plus channel
+
+\index{RFCOMM}
+\index{Bluetooth!RFCOMM}
+\index{net::rc::SocketAddress@\texttt{net::rc::SocketAddress}}
+
 
 RFCOMM endpoint identity is built from:
 
@@ -79,6 +94,11 @@ setChannel(...)
 That naming is important because it keeps RFCOMM vocabulary visible in code.
 
 #### L2CAP: Bluetooth address plus PSM
+
+\index{L2CAP}
+\index{Bluetooth!L2CAP}
+\index{net::l2::SocketAddress@\texttt{net::l2::SocketAddress}}
+
 
 L2CAP endpoint identity is built from:
 
@@ -124,6 +144,11 @@ SNode.C preserves this separation in three places:
 This prevents the convenience of a shared framework pattern from hiding the real endpoint semantics.
 
 ### Bluetooth address classes
+
+\index{Bluetooth address}
+\index{net::rc::SocketAddress@\texttt{net::rc::SocketAddress}}
+\index{net::l2::SocketAddress@\texttt{net::l2::SocketAddress}}
+
 
 The address classes make the RFCOMM/L2CAP distinction concrete.
 
@@ -217,6 +242,11 @@ This does not make RFCOMM and L2CAP the same family.
 It means the broad default/wildcard idea exists in both Bluetooth address models, while the service selector remains family-specific.
 
 ### Server and client use with Bluetooth endpoints
+
+\index{Bluetooth!server/client use}
+\index{listen()@\texttt{listen()}}
+\index{connect()@\texttt{connect()}}
+
 
 The stream Bluetooth wrappers follow the SNode.C pattern already seen for IPv4, IPv6, and Unix domain sockets. The convenience calls configure the application-side handle and then enter the usual registration path.
 
@@ -374,6 +404,10 @@ depending on the overload and family. This continues Chapter 9's connection mode
 
 ### Pairing before SNode.C communication
 
+\index{Bluetooth!pairing}
+\index{adapter state}
+
+
 Bluetooth endpoint identity is not the whole operational story.
 
 Before two devices can communicate through SNode.C over RFCOMM or L2CAP, the devices must already be paired using the operating-system Bluetooth tools or user interface.
@@ -463,6 +497,10 @@ network family
 
 ### What changes operationally
 
+\index{Bluetooth!deployment}
+\index{permissions}
+
+
 Bluetooth is device-near, radio-based communication. That changes the operational setting.
 
 #### Platform and build reality
@@ -520,6 +558,10 @@ This is especially useful in IoT and embedded systems, where local device commun
 :::
 
 ### Public surface of Bluetooth stream roles
+
+\index{net::rc::stream::legacy@\texttt{net::rc::stream::legacy}}
+\index{net::l2::stream::legacy@\texttt{net::l2::stream::legacy}}
+
 
 Bluetooth stream roles follow the same source/build rule, but only when the required Bluetooth development support is present. RFCOMM uses the `rc` family fragment:
 

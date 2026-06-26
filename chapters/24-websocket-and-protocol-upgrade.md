@@ -1,5 +1,10 @@
 ## WebSocket and Protocol Upgrade
 
+\index{WebSocket}
+\index{protocol upgrade}
+\index{HTTP upgrade}
+
+
 ### From event streams to upgraded bidirectional communication
 
 Chapter 23 showed how HTTP can remain open as a one-way event stream. Chapter 24 takes the next step: HTTP can also negotiate an upgrade. After a successful upgrade, the same lower connection no longer behaves as ordinary request/response HTTP; that connection episode continues as a bidirectional, message-oriented WebSocket connection.
@@ -27,6 +32,9 @@ Figure \ref{fig:web-protocol-layer-structure} also prevents a wrong reading of t
 Chapter 24 therefore closes the main web-protocol climb before the book moves to MQTT.
 
 ### WebSocket in the layered SNode.C web stack
+
+\index{WebSocket!layered model}
+
 
 The stack now looks like this:
 
@@ -95,6 +103,10 @@ WebSocket
 
 ### WebSocket after the HTTP upgrade boundary
 
+\index{HTTP upgrade}
+\index{WebSocket!upgrade boundary}
+
+
 Chapter 21 described HTTP upgrade as a generic HTTP-layer boundary. That is where the client names an upgrade target, the server accepts or rejects the transition, and the HTTP layer selects a socket-context upgrade implementation.
 
 This chapter now specializes that generic boundary to WebSocket. In the HTTP upgrade layer the selected upgrade name is:
@@ -147,6 +159,10 @@ That means the protocol layer now cares about:
 The connection is still the same peer relationship underneath. The protocol interpretation has changed.
 
 ### `SocketContextUpgrade` as the boundary object
+
+\index{SocketContextUpgrade@\texttt{SocketContextUpgrade}}
+\index{upgrade boundary}
+
 
 The central code-shaped concept in this chapter is `SocketContextUpgrade`.
 
@@ -223,6 +239,13 @@ This keeps the layer boundary explicit. The framework does not pretend WebSocket
 
 ### WebSocket messages and frames
 
+\index{WebSocket frames}
+\index{WebSocket messages}
+\index{ping frame}
+\index{pong frame}
+\index{close frame}
+
+
 After the upgrade, the application-facing model changes again.
 
 Earlier chapters showed:
@@ -295,6 +318,10 @@ This distinction matters because it keeps application semantics separate from We
 
 ### Server-side and client-side upgrade responsibilities
 
+\index{WebSocket!server-side upgrade}
+\index{WebSocket!client-side upgrade}
+
+
 Server and client WebSocket support are related, but not identical.
 
 Both sides use the same broad idea:
@@ -325,6 +352,9 @@ Chapter 21 showed the compact server-side `res->upgrade(...)` and client-side `r
 
 ### The WebSocket module structure
 
+\index{WebSocket!module structure}
+
+
 The build/module split mirrors the architectural split: shared WebSocket mechanics are separate from the server-side and client-side HTTP upgrade roles.
 
 | Module | Meaning |
@@ -348,6 +378,11 @@ The server and client layers build on that shared base and connect it to the cor
 This module split is useful because the protocol mechanics are shared while the upgrade roles differ.
 
 ### Subprotocols as the next semantic layer
+
+\index{WebSocket!subprotocols}
+\index{SubProtocol@\texttt{SubProtocol}}
+\index{SubProtocolContext@\texttt{SubProtocolContext}}
+
 
 WebSocket is not the final semantic layer in SNode.C. It is a bidirectional message channel with a subprotocol layer.
 
@@ -610,6 +645,10 @@ Chapter 24 adds upgrade-boundary evidence to the earlier diagnostic vocabulary: 
 
 ### From WebSocket carriers to MQTT semantics
 
+\index{MQTT over WebSocket}
+\index{WebSocket!as carrier}
+
+
 The next chapter moves to MQTT. MQTT can be used directly in SNode.C, and Chapter 26 will show how it can also be carried as a WebSocket subprotocol.
 
 The bridge from this chapter is simple:
@@ -641,6 +680,10 @@ WebSocket provides the upgraded carrier. MQTT provides the protocol semantics.
 :::
 
 ### WebSocket public surface
+
+\index{WebSocket!public surface}
+\index{web::websocket@\texttt{web::websocket}}
+
 
 WebSocket crosses HTTP negotiation, upgraded socket context, framing, and optional subprotocol selection. The local rule is therefore to include the highest public header for the WebSocket abstraction directly named by the file and link the matching WebSocket component surface. Chapter 32 gives the consolidated component/header matrix, including the MQTT-over-WebSocket adapters.
 

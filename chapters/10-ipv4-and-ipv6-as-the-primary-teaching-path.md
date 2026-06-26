@@ -1,5 +1,10 @@
 ## IPv4 and IPv6 as the First Concrete Network Families
 
+\index{IPv4}
+\index{IPv6}
+\index{network families}
+
+
 ### Why IPv4 and IPv6 come first
 
 Chapter 9 separated the application-side server or client handle, the registered runtime-visible instance, the concrete `SocketConnection`, the context factory, and the per-connection context.
@@ -25,6 +30,11 @@ different lower-family semantics
 That controlled variation is the main teaching value of this chapter. The reader can see what changes when the lower family changes, and just as importantly, what does not change.
 
 ### What stays shared across IPv4 and IPv6
+
+\index{IPv4!shared model}
+\index{IPv6!shared model}
+\index{server/client/context model}
+
 
 For both IPv4 and IPv6, the outer application shape remains recognizable.
 
@@ -76,6 +86,11 @@ That is the model to keep in mind while reading the examples. The lower namespac
 
 #### Parallel type names
 
+\index{net::in@\texttt{net::in}}
+\index{net::in6@\texttt{net::in6}}
+\index{type naming}
+
+
 The type names show the parallelism immediately.
 
 For IPv4, a minimal legacy stream pair often begins like this:
@@ -113,6 +128,10 @@ This is the kind of layered reading introduced in Chapter 7. A long SNode.C type
 The IPv4/IPv6 comparison is therefore visible before a single socket operation is called. The type name already tells the reader which lower family has been selected.
 
 #### Parallel address classes
+
+\index{net::in::SocketAddress@\texttt{net::in::SocketAddress}}
+\index{net::in6::SocketAddress@\texttt{net::in6::SocketAddress}}
+
 
 Chapter 8 introduced address semantics. That model now applies directly to the two IP families.
 
@@ -221,6 +240,10 @@ Moving from IPv4 to IPv6 does not collapse those callback layers. The lower-fami
 
 ### What changes
 
+\index{address family}
+\index{wildcard form}
+
+
 The stable structure does not mean IPv4 and IPv6 are identical. They are not.
 
 The goal is not to turn this into a full IPv6 chapter, but to show where SNode.C keeps the architecture stable and where the lower family still matters.
@@ -323,6 +346,11 @@ This directly continues Chapter 8 and Chapter 9.
 Chapter 8 explained what endpoint identity means. Chapter 9 explained how servers and clients use endpoint identity. Chapter 10 shows that IPv4 and IPv6 use the same local/remote role distinction with different address-family semantics.
 
 #### IPv6-only, IPv4-mapped, and dual-stack thinking
+
+\index{IPv6!IPv6-only}
+\index{IPv6!IPv4-mapped addresses}
+\index{dual-stack deployment}
+
 
 IPv6 introduces one additional technical point: deployment can involve IPv6-only behavior, IPv4-mapped IPv6 addresses, or platform-specific dual-stack behavior.
 
@@ -456,6 +484,11 @@ This chapter shows IPv4 and IPv6 as the first concrete comparison pair.
 :::
 
 ### Public surface of the primary families
+
+\index{public headers}
+\index{net::in::stream::legacy@\texttt{net::in::stream::legacy}}
+\index{net::in6::stream::legacy@\texttt{net::in6::stream::legacy}}
+
 
 IPv4 and IPv6 are the simplest place to see the source/build pairing. A file that directly names an IPv4 legacy stream role uses the IPv4 public role headers:
 

@@ -1,5 +1,10 @@
 ## Extending, Testing, and Deploying MiniGateway
 
+\index{MiniGateway!extension}
+\index{MiniGateway!testing}
+\index{MiniGateway!deployment}
+
+
 ### Why this chapter follows the base build
 
 Chapter 37 built the base MiniGateway: an HTTP/Express surface, an SSE observation path, a native MQTT client role, an in-memory current measurement, and `/simulate` as a controlled input boundary.
@@ -25,6 +30,10 @@ Do not hide new behavior inside an arbitrary callback merely because that callba
 :::
 
 ### What changes in the extended version
+
+\index{MiniGateway!extended version}
+\index{Unix domain socket input}
+
 
 The extended version adds one responsibility: measurements can now arrive through a Unix-domain stream socket. The input format is simple: one comma-separated measurement per line.
 
@@ -78,6 +87,9 @@ changed:
 The rest of the source tree remains the base application. A new input carrier should not force a rewrite of the output roles.
 
 ### The build target after extension
+
+\index{MiniGateway!extended build target}
+
 
 The extended CMake file adds the Unix-domain stream component and the two new source files. The source side adds the matching Unix-domain public server header where the new concrete role is directly named.
 
@@ -148,6 +160,10 @@ target_link_libraries(
 
 
 ### The Unix-domain measurement context
+
+\index{MeasurementUnixSocketContext@\texttt{MeasurementUnixSocketContext}}
+\index{Unix domain sockets!MiniGateway input}
+
 
 The new `MeasurementUnixSocketContext` owns the local input protocol. Its protocol is small: read bytes from a stream connection, collect complete lines, parse each line as a measurement, and pass accepted measurements to the application handler.
 
@@ -356,6 +372,10 @@ namespace minigateway {
 
 ### The Unix-domain measurement factory
 
+\index{MeasurementUnixSocketContextFactory@\texttt{MeasurementUnixSocketContextFactory}}
+\index{MiniGateway!Unix-domain factory}
+
+
 The factory is small. Its only job is to construct a `MeasurementUnixSocketContext` for each accepted Unix-domain stream connection and pass the configured measurement handler into it.
 
 This mirrors the factory pattern used earlier for MQTT, but with a different protocol object:
@@ -416,6 +436,10 @@ namespace minigateway {
 
 
 ### Runtime assembly after extension
+
+\index{MiniGateway!runtime assembly after extension}
+\index{role assembly}
+
 
 The extended `main.cpp` keeps the base application path and adds one new server role named `measurement-input`. The new role listens on `/tmp/minigateway-measurements.sock` and uses the same `acceptMeasurement` function as `/simulate`.
 
@@ -614,6 +638,9 @@ int main(int argc, char* argv[]) {
 
 ### Build and usage note for the extended version
 
+\index{MiniGateway!extended build and usage}
+
+
 The extended README documents the new local measurement input. The example uses `nc -U`, but the same socket could be written by a helper process, a data-acquisition script, a serial-to-local-socket adapter, or another local service.
 
 #### `README-BUILD.md`
@@ -657,6 +684,10 @@ This package intentionally contains no TLS, no persistence, no MQTT-over-WebSock
 
 ### What the extension teaches
 
+\index{MiniGateway!extension lessons}
+\index{boundary extension}
+
+
 The extension is small, but it teaches a general SNode.C lesson. A new carrier or local input path should be added where that communication concern belongs. It should not be smeared across the existing output protocols.
 
 ```text
@@ -693,6 +724,10 @@ A serial input adapter would still be a device-facing input boundary. A Bluetoot
 The pattern is always the same: identify the concern first, then choose the owner.
 
 ### Testing MiniGateway by boundaries
+
+\index{MiniGateway!boundary testing}
+\index{boundary tests}
+
 
 ::: {.snodec-warning title="MiniGateway testing warning"}
 Do not treat testing and deployment as an afterthought after the architecture is already fixed. End-to-end checks are useful, but they often hide the boundary that failed.
@@ -782,6 +817,10 @@ This last command matters. A wrong response from `localhost:8080` may mean the w
 
 ### Debugging by role
 
+\index{MiniGateway!debugging}
+\index{debugging by role}
+
+
 When MiniGateway fails, start with the role or boundary, not with the whole application.
 
 ```text
@@ -805,6 +844,9 @@ Configured role names are diagnostic handles. `mqtt-uplink` and `measurement-inp
 
 ### Deployment shape
 
+\index{MiniGateway!deployment shape}
+
+
 A deployed MiniGateway includes linked SNode.C components, installed public headers for development builds, configuration, runtime state, log output, and possibly service-manager integration.
 
 A general-purpose Linux deployment should make these questions answerable:
@@ -823,6 +865,10 @@ For the extended version, the Unix-domain socket path is a deployment surface. `
 
 ### OpenWrt and constrained systems
 
+\index{MiniGateway!OpenWrt deployment}
+\index{constrained systems}
+
+
 On OpenWrt or another constrained Linux target, MiniGateway's architecture does not change, but the cost of each dependency becomes more visible. The package should include only the required SNode.C components. The service definition should expose the configured roles clearly. Runtime paths must fit the platform's filesystem and permission model.
 
 For an OpenWrt-style deployment, ask:
@@ -839,6 +885,10 @@ What happens if the broker is temporarily unavailable?
 These are not questions for CMake alone. They are application-deployment questions.
 
 ### When to split the application
+
+\index{MiniGateway!process split}
+\index{service split}
+
 
 MiniGateway is intentionally one process. That is appropriate for the guided project because it keeps the role constellation visible. A larger system may eventually need process separation.
 
@@ -862,6 +912,10 @@ separate processes may be better when:
 Process splitting is not automatically more mature. It is useful when it makes an existing operational boundary honest.
 
 ### Extending safely in general
+
+\index{safe extension}
+\index{MiniGateway!safe extension}
+
 
 The MiniGateway extension is a concrete example, but the rule applies throughout SNode.C applications.
 

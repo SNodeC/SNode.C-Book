@@ -1,5 +1,10 @@
 ## Application and Instance Configuration in Detail
 
+\index{application configuration}
+\index{instance configuration}
+\index{configuration hierarchy}
+
+
 ### From configuration philosophy to configuration anatomy
 
 Chapter 16 introduced configuration as one of the main ways an application-side server/client handle shapes a communication role before that role is registered as a runtime-visible instance.
@@ -22,6 +27,12 @@ An option is one concrete value inside such a scope.
 This chapter follows that hierarchy from the outside inward. The goal is not to memorize every possible option. The goal is to understand where a value belongs, why it belongs there, and how the same structure appears in C++ code, on the command line, and in configuration files.
 
 ### The anatomy of the configuration hierarchy
+
+\index{configuration hierarchy}
+\index{application scope}
+\index{instance scope}
+\index{section scope}
+
 
 The configuration model is easiest to read from the outside inward. Figure \ref{fig:configuration-hierarchy} shows that hierarchy as one structural model. The named-instance level is where a configured server/client role receives an externally addressable identity and can be enabled or disabled without removing the role from the application shape.
 
@@ -120,6 +131,10 @@ That consistency is the main reason the detailed configuration model remains und
 
 ### Application configuration: the operational envelope
 
+\index{application configuration}
+\index{operational envelope}
+
+
 Application configuration shapes the operational shell of the executable. It should not be confused with the configuration of one communication role.
 
 Application-level options answer questions such as:
@@ -162,6 +177,11 @@ That distinction prevents operational commands from becoming durable configurati
 The distinction keeps the configuration file focused on lasting application behavior.
 
 ### Instance configuration: the configured communication role
+
+\index{instance configuration}
+\index{configured communication role}
+\index{required options}
+
 
 Instance configuration shapes one communication role.
 
@@ -236,6 +256,15 @@ That is cleaner than removing the role from the application or inventing separat
 It also keeps help output, configuration files, and generated command lines honest: the role still exists as part of the application design, but configuration decides whether it participates.
 
 ### Section configuration: scoped responsibilities
+
+\index{section configuration}
+\index{local section}
+\index{remote section}
+\index{connection section}
+\index{socket section}
+\index{server section}
+\index{tls section}
+
 
 Sections are the most important practical organizing device inside an instance. A section is a structural scope. It groups options that belong to one aspect of the communication role.
 
@@ -389,6 +418,11 @@ Chapter 19 discusses TLS in depth. Here the important point is the section bound
 
 ### Three views of the same model
 
+\index{configuration!C++ API}
+\index{configuration!command line}
+\index{configuration!file}
+
+
 Chapter 16 established that SNode.C has three input paths into one model.
 
 Chapter 17 makes the practical consequence visible: the same hierarchy can be read in code, on the command line, and in configuration files.
@@ -538,6 +572,11 @@ The file is therefore not a separate configuration universe. It is the persisten
 
 ### Required values and progressive disclosure
 
+\index{required values}
+\index{progressive disclosure}
+\index{parameterless activation}
+
+
 Parameterless `listen()` and `connect()` rely on configuration that is already present. If required configuration is missing, the error path can reveal the missing part of the hierarchy.
 
 For a server, a missing port can be understood as:
@@ -604,6 +643,10 @@ This is especially valuable in multi-instance programs. Instead of forcing every
 
 ### Persistent and nonpersistent values
 
+\index{persistent options}
+\index{nonpersistent options}
+
+
 Persistent options describe durable configuration. Nonpersistent options perform run-specific inspection or control. This distinction appears throughout the configuration model.
 
 Persistent examples include values such as:
@@ -631,6 +674,10 @@ Configuration files should primarily describe durable shape. Command-line invoca
 
 ### Generated and shown configuration
 
+\index{shown configuration}
+\index{generated configuration}
+
+
 Generated configuration and shown configuration make the hierarchy inspectable.
 
 A shown configuration helps answer:
@@ -656,6 +703,10 @@ These views are diagnostic tools. They make configuration visible instead of imp
 That matters because configuration errors are often not bugs in protocol code. They are mismatches between intended deployment shape and actual configured values.
 
 ### Configuration files as operational artifacts
+
+\index{configuration files}
+\index{operational artifacts}
+
 
 Configuration files are operational artifacts.
 
@@ -687,6 +738,10 @@ backend.remote.port = 1883
 Each key says which configured role it belongs to. That is the value of named instances. They make configuration files describe application structure, not just isolated values.
 
 ### Designing configuration for real applications
+
+\index{configuration design}
+\index{deployment shape}
+
 
 The detailed model also suggests design habits.
 

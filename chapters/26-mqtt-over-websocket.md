@@ -1,6 +1,15 @@
 ## MQTT over WebSocket
 
+\index{MQTT over WebSocket}
+\index{MQTT!over WebSocket}
+\index{WebSocket!MQTT carrier}
+
+
 ### MQTT carried by the WebSocket upgrade stack
+
+\index{MQTT over WebSocket!upgrade stack}
+\index{WebSocket upgrade}
+
 
 Chapter 25 introduced MQTT as a message-oriented protocol family in SNode.C. It showed two carrier forms:
 
@@ -63,6 +72,10 @@ That is the main point of the chapter.
 
 ### The composition in one model
 
+\index{protocol composition}
+\index{composed protocol}
+
+
 The full stack can be read from bottom to top:
 
 ```text
@@ -101,6 +114,10 @@ That distinction matters. It prevents the reader from treating MQTT-over-WebSock
 
 ### Native MQTT and MQTT-over-WebSocket side by side
 
+\index{MQTT!native}
+\index{MQTT!over WebSocket}
+
+
 Chapter 25 introduced native MQTT first. Chapter 26 sharpens the carrier contrast.
 
 Figure \ref{fig:native-mqtt-vs-mqtt-over-websocket} shows the distinction. Native MQTT writes MQTT packets directly to a stream or TLS stream. MQTT over WebSocket reaches the same MQTT packet and session semantics through an HTTP upgrade path and WebSocket frames. The point is the carrier contrast, not a split in MQTT semantics.
@@ -125,6 +142,10 @@ MQTT-over-WebSocket exists for systems that want MQTT semantics while using a We
 For this book, the architectural point is more important than any single deployment reason: protocol meaning can remain recognizable while the carrier changes. Chapter 26 shows that idea above the web stack.
 
 ### The MQTT-over-WebSocket subprotocol type
+
+\index{MqttContext@\texttt{MqttContext}}
+\index{WebSocket!subprotocols}
+
 
 The code-shaped center of this chapter is the generic MQTT WebSocket subprotocol type.
 
@@ -284,6 +305,10 @@ This keeps reuse and role clarity together. The server/client distinction is not
 
 ### Each layer keeps its responsibility
 
+\index{layer responsibility}
+\index{protocol composition}
+
+
 MQTT-over-WebSocket is easy to misunderstand if the stack is flattened. Each layer has a different job.
 
 | Layer | Responsibility |
@@ -321,6 +346,10 @@ The carrier-facing side changes. The MQTT-facing bridge remains recognizable.
 
 ### Build artifacts mirror the composition
 
+\index{build artifacts}
+\index{component selection}
+
+
 The build structure mirrors the architectural structure.
 
 | Artifact | Meaning |
@@ -333,6 +362,10 @@ The build structure mirrors the architectural structure.
 MQTT-over-WebSocket is therefore not an application trick outside the framework. It has an explicit component surface for the server and client sides of the composition.
 
 ### MQTT-over-WebSocket as component selection
+
+\index{MQTT over WebSocket!component selection}
+\index{linking strategy}
+
 
 MQTT-over-WebSocket should not repeat the MQTT client example from Chapter 25. The important point here is the carrier selection. The MQTT role remains an MQTT role; the WebSocket-carried variant adds the WebSocket subprotocol component that lets MQTT packets travel through an HTTP/WebSocket upgrade path.
 
@@ -368,6 +401,10 @@ target_link_libraries(gateway
 The two fragments do not define a different MQTT API. They select a different carrier composition for the same MQTT protocol family.
 
 ### Diagnostics across the composed stack
+
+\index{MQTT over WebSocket!diagnostics}
+\index{stack diagnostics}
+
 
 A failure in MQTT-over-WebSocket may belong to several layers.
 
@@ -495,6 +532,10 @@ The next chapter is therefore not only about another protocol. It is about syste
 :::
 
 ### Native MQTT and MQTT-over-WebSocket public surfaces
+
+\index{MQTT!public surface}
+\index{MQTT over WebSocket!public surface}
+
 
 Native MQTT files include the MQTT headers they directly use. MQTT-over-WebSocket files include the WebSocket-carried MQTT abstraction they directly name. On the build side, the distinction is explicit:
 

@@ -1,5 +1,9 @@
 ## Layers are not decoration {.unnumbered}
 
+\index{layered architecture}
+\index{layers}
+
+
 The word layered can be used lazily. In SNode.C, it is meant operationally.
 
 Lower communication families, stream transport, TLS or legacy connection handling, protocol layers, application roles, configuration, diagnostics, build targets, packages, and deployment shape all have their own responsibilities.
@@ -18,6 +22,10 @@ A reader who understands this stack can move between IPv4, IPv6, Unix domain soc
 
 ## Boundaries are design decisions {.unnumbered}
 
+\index{boundaries}
+\index{design decisions}
+
+
 Many mistakes in network applications are not caused by the wrong syntax. They are caused by the wrong boundary.
 
 A protocol concern is placed in a transport layer. A deployment concern is hidden in a parser. A domain rule is buried in a socket callback. A persistence policy is smuggled into an HTTP route. A retry policy becomes invisible because it is treated as a low-level accident.
@@ -33,6 +41,11 @@ Which boundary honestly owns this concern?
 That question is useful before writing code, while debugging code, while designing configuration, while packaging the application, and while deciding whether a system should remain one executable or become several cooperating services.
 
 ## Roles and instances need precise language {.unnumbered}
+
+\index{roles}
+\index{instances}
+\index{precise language}
+
 
 The book deliberately distinguishes system-design roles, application-side server or client handles, configured communication roles, registered runtime-visible instances, connections, contexts, factories, middleware, subprotocols, and application services.
 
@@ -52,6 +65,10 @@ This terminology is how a running system becomes understandable.
 
 ## Protocols carry meaning, not only bytes {.unnumbered}
 
+\index{protocol meaning}
+\index{bytes versus meaning}
+
+
 The book started with simple communication and gradually moved upward: custom stream protocols, HTTP, Express-like routing, SSE, WebSocket, MQTT, MQTT-over-WebSocket, and multi-protocol IoT systems.
 
 The recurring lesson is that bytes become useful only when a layer gives them meaning.
@@ -67,6 +84,10 @@ raw data
 Therefore, protocol code should not be treated as accidental glue. It is where communication becomes part of an application.
 
 ## Build and deployment are part of architecture {.unnumbered}
+
+\index{build architecture}
+\index{deployment architecture}
+
 
 A network framework does not end at the source tree.
 
@@ -87,6 +108,10 @@ public include path
 A system that is clear only in the source tree is not yet fully clear.
 
 ## The guided project is not the end of the idea {.unnumbered}
+
+\index{MiniGateway}
+\index{guided project}
+
 
 MiniGateway was small. It did not try to become a product. It showed how the pieces can be assembled while preserving the vocabulary of the book.
 

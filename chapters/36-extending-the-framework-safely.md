@@ -1,5 +1,10 @@
 ## Extending the Framework Safely
 
+\index{extension}
+\index{safe extension}
+\index{framework extension}
+
+
 ### Why this chapter follows architectural judgment
 
 Chapter 35 asked where behavior should live: lower family, transport layer, connection context, middleware, WebSocket subprotocol, MQTT, configuration, deployment role, or application/domain code.
@@ -29,6 +34,10 @@ This chapter does not introduce a new API. It teaches how to grow a SNode.C code
 
 ### What safe extension means
 
+\index{safe extension}
+\index{boundary preservation}
+
+
 An extension is safe when it preserves four kinds of clarity.
 
 First, it preserves **layer clarity**. Lower communication families, stream transport, connection handling, protocol parsing, application semantics, configuration, and deployment should not collapse into one large callback.
@@ -51,6 +60,10 @@ safe extension:
 This is stricter than compilation.
 
 ### Start application-local unless the boundary is reusable
+
+\index{application-local extension}
+\index{reusable boundary}
+
 
 A common mistake is moving behavior into the framework too early. A concern appears in one application, and the developer immediately creates a generic abstraction. SNode.C encourages reusable layers, but not every application concern belongs in SNode.C itself.
 
@@ -91,6 +104,9 @@ The framework should make application architecture possible, not absorb every ap
 
 ### Three extension levels
 
+\index{extension levels}
+
+
 Most SNode.C extensions fit one of three levels.
 
 ```text
@@ -115,6 +131,10 @@ The second mistake is **application sprawl**: the same layer-shaped behavior is 
 Reuse is good when the reused boundary fits the concern.
 
 ### Extending with a new `SocketContext`
+
+\index{SocketContext@\texttt{SocketContext}!extension}
+\index{new protocol behavior}
+
 
 A new `SocketContext` is appropriate when the extension is connection-local protocol endpoint behavior.
 
@@ -152,6 +172,10 @@ If that sentence feels false, the extension probably belongs somewhere else.
 
 ### Extending with a new `SocketContextFactory`
 
+\index{SocketContextFactory@\texttt{SocketContextFactory}!extension}
+\index{factory extension}
+
+
 A `SocketContextFactory` is appropriate when the extension is about constructing the correct context.
 
 The factory associates a connection with the correct protocol endpoint object; it is not an allocation hook alone.
@@ -185,6 +209,10 @@ At that point, the factory has become an accidental orchestrator.
 
 ### Extending with middleware or routers
 
+\index{middleware extension}
+\index{router extension}
+
+
 Middleware and routers are the right extension point for web-application flow: request logging, preprocessing, authentication or authorization, content negotiation, route grouping, static assets, structured REST-like endpoints, and application-specific HTTP behavior.
 
 Middleware is not a general-purpose place for every cross-cutting concern. A concern is suitable for middleware when it is naturally expressed as part of request/response flow.
@@ -208,6 +236,10 @@ not automatically middleware:
 Middleware is attractive, especially when the application already has a web surface. SNode.C's Express-like layer is powerful because it keeps web flow explicit, not because it should swallow the system.
 
 ### Extending with a WebSocket subprotocol
+
+\index{WebSocket!subprotocol extension}
+\index{SubProtocol@\texttt{SubProtocol}}
+
 
 A WebSocket subprotocol is appropriate for bidirectional WebSocket message exchange with semantics above the carrier.
 
@@ -238,6 +270,9 @@ Which diagnostics identify the selected subprotocol?
 If the extension is merely an HTTP route, use an HTTP route. If it is bidirectional live interaction with its own message rules, a WebSocket subprotocol may be right.
 
 ### Extending MQTT behavior
+
+\index{MQTT!extension}
+
 
 MQTT extensions need discipline because MQTT already owns connection setup, sessions, topics, subscriptions, QoS flow, keep-alive, acknowledgements, and disconnect behavior. Application semantics can sit above MQTT; they should not casually change MQTT itself.
 
@@ -276,6 +311,9 @@ The boundary remains: MQTT owns MQTT semantics; the application owns application
 
 ### Extending configuration
 
+\index{configuration!extension}
+
+
 Configuration is often where an extension becomes operationally real. A feature that cannot be configured, shown, disabled, logged, or reproduced may work locally but fail as a maintainable system feature.
 
 SNode.C uses named configured instances and subcommands to make role-specific options visible. An extension should follow that discipline instead of inventing a parallel configuration universe.
@@ -309,6 +347,10 @@ configuration:
 A configurable invariant is not flexibility. It is often an unprotected design error.
 
 ### Extending the build and component surface
+
+\index{component surface!extension}
+\index{build extension}
+
 
 A reusable extension should eventually be visible in the build. As Chapter 32 showed, target names describe component meaning.
 
@@ -344,6 +386,9 @@ new framework component
 If that chain is not considered, the extension may compile in-tree but fail as part of the installed framework.
 
 ### Extending diagnostics
+
+\index{diagnostics!extension}
+
 
 A new feature should be diagnosable at the boundary it introduces. That means preserving the right vocabulary, not flooding logs.
 
@@ -385,6 +430,9 @@ Diagnostics are part of extension safety because they let maintainers reason abo
 
 ### Extending failure policy
 
+\index{failure policy!extension}
+
+
 Failure policy should be deliberate. A low-level socket may detect an error, but the role that owns the boundary usually owns the policy response: retry, reconnect, disablement, shutdown, or degraded behavior.
 
 ```text
@@ -415,6 +463,9 @@ new behavior with visible failure policy:
 
 ### Extending tests with the same boundary vocabulary
 
+\index{testing!extension}
+
+
 Chapter 34 used one question:
 
 ```text
@@ -436,6 +487,10 @@ A new `SocketContext` needs tests for protocol endpoint behavior; middleware nee
 :::
 
 ### Avoiding framework pollution
+
+\index{framework pollution}
+\index{over-abstraction}
+
 
 Framework pollution happens when project-specific behavior enters the framework merely because the framework was the easiest place to modify.
 

@@ -1,5 +1,10 @@
 ## The HTTP Layer
 
+\index{HTTP}
+\index{HTTP layer}
+\index{web protocols}
+
+
 ### From robust streams to HTTP messages
 
 Chapter 20 completed the foundation for robust communication over time. It described activation, establishment, connected operation, interruption, timeout, retry, reconnect, shutdown, and failure state. That foundation remains in place as the book moves into Part VII.
@@ -36,6 +41,10 @@ An HTTP server or client still depends on:
 HTTP does not erase those parts. It builds on them. The application sees richer message-level objects, but the lower framework model remains visible underneath.
 
 ### HTTP in the layered SNode.C model
+
+\index{HTTP!layered model}
+\index{application layer}
+
 
 The layer model now looks like this:
 
@@ -83,6 +92,11 @@ This is the same architectural pattern at a higher semantic level. The pattern i
 The application is no longer forced to decide where an HTTP request begins and ends. More precisely, the HTTP layer takes responsibility for message boundary recognition, start-line and header parsing, content and trailer handling, request/response object construction, and HTTP-specific connection behavior.
 
 ### Server-side HTTP: from bytes to ready requests
+
+\index{HTTP server}
+\index{Request@\texttt{Request}}
+\index{Response@\texttt{Response}}
+
 
 At the plain stream level, the protocol endpoint may react to incoming bytes. At the HTTP server level, the central application-facing event is different:
 
@@ -175,6 +189,12 @@ The same principle from Chapters 13 and 14 still applies: the context implements
 
 ### Client-side HTTP: from connection to requests and responses
 
+\index{HTTP client}
+\index{MasterRequest@\texttt{MasterRequest}}
+\index{Request@\texttt{Request}}
+\index{Response@\texttt{Response}}
+
+
 The HTTP client follows the same general pattern. It is a client-side HTTP protocol layer built on a lower client handle and a registered client instance, not a raw client that writes a manually assembled request line.
 
 Conceptually:
@@ -266,6 +286,12 @@ The application does not need to repeat that adaptation in every client.
 
 ### What HTTP adds above the stream layer
 
+\index{HTTP parsing}
+\index{MIME}
+\index{HTTP headers}
+\index{HTTP status}
+
+
 The HTTP layer contains the machinery needed to turn stream communication into HTTP message semantics, in addition to server and client aliases.
 
 | Added concern | Meaning |
@@ -331,6 +357,11 @@ lower communication family
 That is enough to prevent the main misconception. HTTP is the higher protocol layer; IPv4, IPv6, Unix-domain sockets, Bluetooth families where available, and legacy or TLS connection handling still define how the peer relationship is carried.
 
 ### HTTP as a bridge to higher web protocols
+
+\index{HTTP upgrade}
+\index{WebSocket upgrade}
+\index{EventSource@\texttt{EventSource}}
+
 
 HTTP is also a bridge. It can become the place where an application moves upward into more specialized web behavior.
 
@@ -513,6 +544,11 @@ Chapter 21 explains how HTTP becomes request/response semantics. Chapter 22 asks
 :::
 
 ### HTTP public surface: role headers and components
+
+\index{web::http@\texttt{web::http}}
+\index{HTTP components}
+\index{public headers}
+
 
 HTTP code includes the HTTP abstraction it directly names. An IPv4 legacy HTTP server uses:
 

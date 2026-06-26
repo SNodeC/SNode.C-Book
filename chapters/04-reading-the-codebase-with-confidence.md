@@ -1,5 +1,9 @@
 ## Reading the Codebase with Confidence
 
+\index{source-tree reading}
+\index{codebase orientation}
+
+
 ### From first program to source-tree orientation
 
 Chapter 3 built the first working echo pair.
@@ -31,6 +35,10 @@ Do not read SNode.C as a pile of files. Read it as a set of layers, roles, and r
 This chapter does not try to explain every file. It teaches a reading strategy. Later chapters will move into the runtime, the lower communication families, application protocols, configuration, TLS, HTTP, WebSocket, MQTT, persistence, deployment, and testing in detail. Here the goal is more basic: learn how to open the repository and stay oriented.
 
 ### Use the build structure as the first map
+
+\index{build structure}
+\index{CMake@\texttt{CMake}!as navigation}
+
 
 The first useful map is not a class diagram. It is the build structure.
 
@@ -83,6 +91,10 @@ That question is more useful than immediately searching for every occurrence of 
 
 ### Start from applications, then follow inward
 
+\index{application-first reading}
+\index{src/apps@\texttt{src/apps}}
+
+
 There are two common ways to read a framework.
 
 One way is to start at the lowest-level runtime code and work upward. That can be useful after the architecture is already familiar, but it is a hard way to begin. The reader sees many abstractions before seeing why they matter.
@@ -126,6 +138,10 @@ That question turns a complex C++ type into a readable design artifact.
 
 ### Separate example code from framework code
 
+\index{example code}
+\index{framework code}
+
+
 The `apps` directory is a practical guide to how SNode.C is used, but it is not the framework core.
 
 That distinction is important.
@@ -147,6 +163,10 @@ For the echo application, the framework pattern is the server/client/factory/con
 Those are related, but they are not the same.
 
 ### Follow names as architecture
+
+\index{names as architecture}
+\index{namespace structure}
+
 
 SNode.C names are intentionally descriptive. They are sometimes long because they encode architectural position.
 
@@ -190,6 +210,10 @@ This is one of the main reasons the source tree is readable once the naming sche
 
 ### Learn to read type aliases
 
+\index{type aliases}
+\index{alias types}
+
+
 SNode.C uses type aliases and templates to turn generic machinery into concrete, usable types.
 
 An application may use a convenient concrete type for IPv4, stream-oriented, non-TLS communication. That type may be an alias or specialization of a more general server or client template. This is normal in a modern C++ framework.
@@ -220,6 +244,12 @@ application supplies per-connection protocol behavior
 This boundary is why the echo application can stay conceptually small while the framework around it supports many communication variants.
 
 ### The recurring path from role to context
+
+\index{role}
+\index{connection}
+\index{context}
+\index{factory}
+
 
 Most SNode.C applications can be read through the same path.
 
@@ -255,6 +285,12 @@ That question restores orientation because it reconnects the file to a role.
 
 ### Reading `core`
 
+\index{core@\texttt{core}}
+\index{runtime control}
+\index{socket abstractions}
+\index{flow control}
+
+
 The `core` directory contains foundational runtime machinery. It is not the best place to begin the book, but it is the place where many later explanations eventually arrive.
 
 Read `core` in conceptual groups rather than linearly.
@@ -278,6 +314,10 @@ The flow-controller path explains why `listen(...)` and `connect(...)` should no
 They register communication intent. The runtime-visible flow is then carried by configuration, connection, and flow-controller state. This distinction matters later for retries, timeouts, configuration, diagnostics, and shutdown behavior.
 
 ### Reading `net`
+
+\index{net@\texttt{net}}
+\index{network families}
+
 
 The `net` directory is where lower communication families become concrete.
 
@@ -333,6 +373,10 @@ That question prevents HTTP, WebSocket, MQTT, Express-like routing, and database
 
 ### Use CMake as a navigation tool
 
+\index{CMake@\texttt{CMake}!as navigation}
+\index{linked components}
+
+
 CMake files are build instructions and maps at the same time.
 
 A `CMakeLists.txt` file can tell you:
@@ -356,6 +400,11 @@ When you do not know where an executable, library, or component comes from, read
 Build files reveal boundaries that may be less obvious from implementation files alone.
 
 ### Do not confuse source paths, public includes, and installable components
+
+\index{source paths}
+\index{public includes}
+\index{installable components}
+
 
 The source tree is organized as directories. The installed framework is exposed through public headers and CMake package components. These views are related, but they are not identical.
 
@@ -479,6 +528,10 @@ This order prevents implementation details from hiding the architecture.
 
 ### How to read a server or client type
 
+\index{server type}
+\index{client type}
+
+
 When you encounter a server or client type, use this checklist:
 
 ```text
@@ -496,6 +549,10 @@ Which context is created when a connection is established?
 These questions turn a complex type into a structured reading exercise. They also keep the focus on architecture. The exact spelling of a template instantiation matters, but it matters because it encodes a boundary decision.
 
 ### How to read a context class
+
+\index{context class}
+\index{SocketContext@\texttt{SocketContext}}
+
 
 When you encounter a `SocketContext`-derived class, use a different checklist:
 
@@ -515,6 +572,10 @@ In Chapter 3, the echo context used a role enum so one context class could serve
 A context class is often the best place to understand application behavior, because it is where incoming data becomes protocol meaning.
 
 ### How to read a factory
+
+\index{factory class}
+\index{SocketContextFactory@\texttt{SocketContextFactory}}
+
 
 A `SocketContextFactory` looks small, but it marks an important boundary.
 

@@ -1,5 +1,10 @@
 ## Writing `SocketContextFactory` Classes Well
 
+\index{SocketContextFactory@\texttt{SocketContextFactory}}
+\index{factory design}
+\index{context construction}
+
+
 ### From protocol endpoint to construction boundary
 
 Chapter 13 explained where application protocol behavior belongs.
@@ -36,6 +41,10 @@ The server or client role does not implement the protocol conversation. The conn
 The factory creates the context that will contain that behavior. That is the construction boundary this chapter is about.
 
 ### What a `SocketContextFactory` is
+
+\index{SocketContextFactory@\texttt{SocketContextFactory}}
+\index{factory interface}
+
 
 A compact definition is:
 
@@ -95,6 +104,10 @@ This narrowness is useful. It prevents the factory interface from becoming a sec
 
 #### Source anchor: attaching the created context
 
+\index{SocketConnection@\texttt{SocketConnection}!context attachment}
+\index{SocketContextFactory@\texttt{SocketContextFactory}!create}
+
+
 The pinned stream-connection source in `src/core/socket/stream/SocketConnection.cpp` shows the same boundary in compact form. The connection asks the factory to create a context for `this` connection, attaches the result when creation succeeds, and closes the connection if no context can be created:
 
 ```cpp
@@ -127,6 +140,10 @@ The excerpt does not add a new responsibility to the factory. It confirms the na
 
 ### The construction path from connection to context
 
+\index{context construction}
+\index{connection-to-context path}
+
+
 The factory sits in the connection creation path.
 
 A compact view is:
@@ -149,6 +166,10 @@ The factory creates the context that will handle protocol behavior once attached
 That is why the factory is a boundary object. It is close to the connection, because it receives the connection. It is close to the protocol, because it creates the context. But it is not itself the connection and not itself the protocol endpoint.
 
 ### One fresh context per creation
+
+\index{fresh context per connection}
+\index{per-connection state}
+
 
 The most important rule is simple:
 
@@ -176,6 +197,10 @@ The framework also supports context replacement as a more advanced connection op
 For the ordinary creation path, the rule remains simple: create the context that belongs to the connection you received, then hand it back.
 
 ### Construction responsibilities of a factory
+
+\index{factory responsibilities}
+\index{dependency injection}
+
 
 A factory contains construction policy.
 
@@ -305,6 +330,10 @@ It is acceptable for a factory to express a real construction decision. It is no
 
 ### Responsibilities that should stay out of the factory
 
+\index{factory anti-patterns}
+\index{protocol behavior}
+
+
 Because the factory sits at an important boundary, it is tempting to put too much into it. That should be avoided.
 
 #### Protocol behavior does not belong in the factory
@@ -376,6 +405,10 @@ Factory state should usually be stable construction state, not evolving per-mess
 
 ### Ownership and lifecycle
 
+\index{ownership}
+\index{lifecycle}
+
+
 The factory interface returns a raw `SocketContext*`.
 
 This deserves a careful explanation. The raw pointer return should not be read as permission for arbitrary manual ownership throughout the application.
@@ -398,6 +431,10 @@ The raw pointer belongs to this construction boundary. It is not an invitation t
 The connection side of the framework decides what happens after creation. If the factory returns a context, the connection attaches it. If creation fails and returns no context, the connection cannot continue with protocol behavior and closes the relationship. The application author should therefore treat `create(...)` as a narrow handoff point: allocate the correct context, return it, and let the framework manage the connection/context lifecycle from there.
 
 ### Passing shared application state
+
+\index{shared application state}
+\index{dependency passing}
+
 
 Real applications often need shared services. A small factory does not mean an isolated factory.
 
@@ -477,6 +514,11 @@ The context can reach everything through the factory.
 The first is a design choice. The second erodes the boundary.
 
 ### Factory design shapes
+
+\index{factory design shapes}
+\index{parameterized factories}
+\index{preconfigured factories}
+
 
 There is more than one correct factory shape. The right design depends on what needs to vary at construction time. Different factory shapes are acceptable when they make construction-time variation explicit.
 
@@ -562,6 +604,10 @@ If the factory begins reading from the peer, interpreting protocol frames, or ma
 That belongs in the context.
 
 ### The strongest factory tests
+
+\index{factory tests}
+\index{construction tests}
+
 
 A useful practical test is:
 

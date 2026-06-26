@@ -1,5 +1,10 @@
 ## MQTTSuite as a Reference Ecosystem
 
+\index{MQTTSuite}
+\index{reference ecosystem}
+\index{MQTT applications}
+
+
 ### From system vocabulary to a concrete ecosystem
 
 Chapter 30 introduced the vocabulary of systems: named roles, boundaries, protocol families, configuration, observability, persistence, and failure behavior. Chapter 31 applies that vocabulary to MQTTSuite, not as a second manual, but as a concrete SNode.C-based ecosystem whose applications make those ideas visible.
@@ -24,6 +29,10 @@ Figure \ref{fig:mqttsuite-ecosystem-map} shows the suite as a role ecosystem aro
 The figure is intentionally not a pipeline. A deployment may use only the broker, one bridge, one store, one integrator, or several cooperating processes. The important point is that each tool occupies a distinct system role around topic flow, client state, persistence, bridging, and integration.
 
 ### Ecosystem shape
+
+\index{MQTTSuite!ecosystem shape}
+\index{role map}
+
 
 The first architectural fact is that MQTTSuite is not one large executable with every feature hidden behind switches. It is structured as focused applications plus shared support where useful. That is the first system lesson.
 
@@ -129,6 +138,10 @@ This is the same build-first reading method from Chapter 29, now applied to a mu
 
 ### Shared infrastructure where it belongs
 
+\index{MQTTSuite!shared infrastructure}
+\index{mapping}
+
+
 The `lib` directory is important because it contains shared support code. One visible piece is the `mqtt-mapping` library.
 
 It contains mapping-related infrastructure such as mapping reading, mapping execution, schema validation and schema generation, template support, mapping administration routing, and configuration helpers. This shared layer is used where mapping and mapping administration belong, especially around broker and integrator behavior.
@@ -182,6 +195,11 @@ The administration surface can then be discussed in terms such as inspection, de
 This is the same layered thinking used throughout the framework.
 
 ### MQTTBroker: broker role plus web administration
+
+\index{MQTTBroker}
+\index{broker role}
+\index{web administration}
+
 
 MQTTBroker is the central broker application in the suite. From a SNode.C perspective, it is especially useful because it combines MQTT brokerage with additional application roles.
 
@@ -276,6 +294,12 @@ security mode
 Where such a name belongs to a configured communication role, it can also become a registered runtime-visible instance. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
 
 ### Integration and topology: MQTTIntegrator and MQTTBridge
+
+\index{MQTTIntegrator}
+\index{MQTTBridge}
+\index{topic mapping}
+\index{bridge topology}
+
 
 MQTTIntegrator and MQTTBridge both connect MQTT worlds, but they do not solve the same problem.
 
@@ -374,6 +398,11 @@ A SNode.C-based bridge can remain an MQTT bridge while the lower connectivity op
 
 ### Operational and persistence roles
 
+\index{MQTTCli}
+\index{MQTTStore}
+\index{persistence role}
+
+
 Not every important ecosystem member is a large service. Some roles exist because practical systems need operational access and durable state. MQTTCli and MQTTStore represent those edges.
 
 #### MQTTCli
@@ -453,6 +482,12 @@ The projection model makes persistence a system design concern. Persistence is a
 
 ### System surfaces
 
+\index{transport vocabulary}
+\index{build options}
+\index{configuration}
+\index{OpenWrt!MQTTSuite deployment}
+
+
 The applications differ, but the recurring communication surfaces remain familiar. This is why MQTTSuite works well as a reference ecosystem.
 
 #### Transport vocabulary
@@ -513,6 +548,9 @@ The suite is built from focused applications rather than one giant server platfo
 This does not mean that every deployment must use OpenWrt, and it does not turn this chapter into package documentation. It means the architecture is compatible with constrained operational environments. That is an important part of the deployment story.
 
 ### Reading MQTTSuite architecturally
+
+\index{MQTTSuite!architectural reading}
+
 
 Read MQTTSuite by roles and boundaries first; read command-line options, mapping schema fields, bridge JSON properties, database columns, and web UI routes second.
 

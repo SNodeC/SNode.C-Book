@@ -1,5 +1,10 @@
 ## The Mental Model of SNode.C
 
+\index{mental model}
+\index{SNode.C!mental model}
+\index{layered architecture}
+
+
 ### From source-tree orientation to architectural thinking
 
 Chapter 4 showed how to read the SNode.C source tree without getting lost in individual files.
@@ -58,6 +63,10 @@ They are not separate frameworks. They are three views of the same design.
 
 ### The runtime model
 
+\index{runtime model}
+\index{event-driven runtime}
+
+
 The runtime model answers the question:
 
 > How does a SNode.C application come alive?
@@ -69,6 +78,10 @@ The answer has four recurring roles and one coordinating runtime. As shown in Fi
 The figure is deliberately small. Its purpose is to keep the handle, instance, connection, factory, and context roles distinct when moving from the echo pair to larger applications: a handle is visible in application code, an instance is registered in the runtime, connections appear under that role, and contexts carry per-connection protocol behavior.
 
 #### The runtime
+
+\index{runtime}
+\index{core::SNodeC@\texttt{core::SNodeC}}
+
 
 At the top of the runtime picture is `core::SNodeC`.
 
@@ -92,6 +105,10 @@ This is the reason `core::SNodeC::start()` is not a ceremonial final line. It is
 
 #### The instance
 
+\index{instance}
+\index{configured communication role}
+
+
 An instance is a configured communication role managed by the framework after registration. It participates in the SNode.C runtime and is advanced through the flow-controller machinery.
 
 In everyday discussion, the visible `SocketServer` or `SocketClient` object in user code may also be called an instance. That is natural and often harmless. In the stricter architectural vocabulary used here, however, the visible C++ object is the application-side handle. Through `listen(...)` or `connect(...)`, that handle registers a configured communication role with the framework. That registered role is the instance. It is carried by framework-owned runtime and flow-controller state, and it must not be confused with the concrete peer connection that may appear later.
@@ -110,6 +127,10 @@ A name such as `echoserver` or `echoclient` already carries architectural weight
 
 #### The connection
 
+\index{connection}
+\index{peer relationship}
+
+
 A connection is the concrete communication relationship to a peer.
 
 In the stream-oriented parts of SNode.C, that role is represented by `SocketConnection` and its specializations. A connection exposes peer-oriented operations and observable state: local and remote addresses, send and read operations, shutdown and close operations, timeout handling, byte counters, and online timing.
@@ -121,6 +142,10 @@ SNode.C treats a connection as a visible runtime object with lifecycle and measu
 This is also why connection-level callbacks and context-level callbacks must not be confused. Connection callbacks observe or adapt connection-level events. Context methods implement application protocol behavior for the connection.
 
 #### The context
+
+\index{context}
+\index{protocol behavior}
+
 
 A context is the application protocol endpoint attached to one connection.
 
@@ -137,6 +162,10 @@ The instance is the runtime-facing communication role; the context expresses pro
 The echo pair used that rule in a very small form: the server and client handles registered roles, the framework advanced those roles through runtime flow, and the context performed the echo behavior once a connection existed. Larger applications follow the same boundary even when the protocol is HTTP, WebSocket, MQTT, or a custom stream protocol.
 
 #### The factory
+
+\index{factory}
+\index{context construction}
+
 
 The factory creates contexts.
 
@@ -158,6 +187,10 @@ configured instance
 Once this boundary is understood, the factory becomes one of the most natural parts of the design.
 
 ### The normal startup-to-protocol flow
+
+\index{startup flow}
+\index{protocol flow}
+
 
 A SNode.C stream application can be read as a sequence of phases.
 
@@ -245,6 +278,13 @@ That flow is one of the best compact mental models for SNode.C.
 
 ### Lifetimes: role, handle, connection, context
 
+\index{lifetime}
+\index{handle}
+\index{role}
+\index{connection}
+\index{context}
+
+
 A large part of SNode.C becomes clearer when lifetimes are separated carefully.
 
 There are at least four different things that beginners may accidentally merge into one idea.
@@ -265,11 +305,19 @@ The instance is the long-lived entity in the framework model. The local server o
 
 #### The connection
 
+\index{connection}
+\index{peer relationship}
+
+
 This is the concrete relationship to one peer.
 
 A server instance can produce many connections over time. A client instance may create a connection, lose it, and reconnect depending on configuration. A connection therefore has a different lifetime from the instance that produced it.
 
 #### The context
+
+\index{context}
+\index{protocol behavior}
+
 
 This is the protocol object attached to one connection.
 
@@ -284,6 +332,13 @@ The lifetime rule is:
 That rule is conceptual rather than a claim about exact ownership mechanics in every implementation detail. It is the mental ordering that matters. An instance can outlive one connection. A connection carries one context at a time. The context is meaningful only in relation to the connection it serves.
 
 ### The layer model
+
+\index{layer model}
+\index{network family}
+\index{transport form}
+\index{connection handling}
+\index{application protocol}
+
 
 The layer model answers the question:
 
@@ -363,6 +418,10 @@ That question is more useful than treating every type name as an unrelated API.
 
 ### Names are compressed architecture
 
+\index{naming convention}
+\index{names as architecture}
+
+
 The source-tree reading strategy from Chapter 4 continues here.
 
 A name such as:
@@ -410,6 +469,12 @@ When a SNode.C name feels long, do not shorten it mentally too early. First ask 
 Often the long name tells you exactly where the type sits in the framework.
 
 ### The operational model
+
+\index{operational model}
+\index{configuration}
+\index{flow control}
+\index{metrics}
+
 
 The operational model answers the question:
 
