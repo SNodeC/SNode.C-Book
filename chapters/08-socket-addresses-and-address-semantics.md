@@ -85,7 +85,7 @@ This is one reason address semantics deserve careful treatment. A value such as 
 ### Endpoint identity by family
 
 \index{endpoint identity}
-\index{network family}
+\index{network families}
 
 
 The concrete address families are:
@@ -224,7 +224,7 @@ Unix domain sockets are pedagogically useful because they break a common habit. 
 
 \index{RFCOMM}
 \index{Bluetooth!RFCOMM}
-\index{channel}
+\index{RFCOMM!channel}
 
 
 The RFCOMM address class is:
@@ -266,7 +266,7 @@ That means the address can express a broad or deferred Bluetooth endpoint identi
 
 \index{L2CAP}
 \index{Bluetooth!L2CAP}
-\index{PSM}
+\index{L2CAP!PSM}
 
 
 The L2CAP address class is:

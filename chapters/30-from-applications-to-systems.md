@@ -1,6 +1,6 @@
 ## From Applications to Systems
 
-\index{systems}
+\index{system design}
 \index{role constellations}
 \index{system design}
 
@@ -46,9 +46,9 @@ A SNode.C system may be one executable with several named roles. It may also be 
 
 ### From applications to role constellations
 
-\index{role constellation}
+\index{role constellations}
 \index{named roles}
-\index{services}
+\index{system design!services}
 
 
 A system is not simply a larger single application. That distinction matters.

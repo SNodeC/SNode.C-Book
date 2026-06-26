@@ -1,7 +1,7 @@
 ## Timeouts, Retries, and Failure Modes
 
 \index{timeouts}
-\index{retries}
+\index{retry}
 \index{failure modes}
 \index{failure handling}
 
@@ -32,11 +32,11 @@ Timeouts, retries, reconnects, shutdown behavior, failure states, and terminatio
 
 ### The time-and-failure map
 
-\index{timeout}
+\index{timeouts}
 \index{retry}
 \index{reconnect}
 \index{shutdown}
-\index{termination}
+\index{failure handling!termination}
 
 
 The title of the chapter names three ideas:
@@ -686,7 +686,7 @@ This topic connects Chapter 20 with later chapters on diagnostics, deployment, t
 ### Protocol-level timeout use
 
 \index{protocol timeout}
-\index{timeout!protocol level}
+\index{timeouts!protocol level}
 
 
 Timeout controls are useful only when they express meaningful waiting.

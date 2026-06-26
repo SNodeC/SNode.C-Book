@@ -145,7 +145,7 @@ Those questions usually lead to a clearer protocol choice than starting with a f
 ### A constellation of protocol stacks
 
 \index{protocol stacks}
-\index{role constellation}
+\index{role constellations}
 
 
 An IoT system in SNode.C is often not one tall vertical stack. It is a constellation of smaller stacks that meet at domain state, integration points, dashboards, local control paths, or persistence boundaries.
@@ -180,10 +180,10 @@ The result is not protocol uniformity. The result is architectural coherence acr
 
 ### Telemetry, control, observation, and administration are different conversations
 
-\index{telemetry}
-\index{control}
-\index{observation}
-\index{administration}
+\index{IoT systems!telemetry}
+\index{IoT systems!control}
+\index{IoT systems!observation}
+\index{IoT systems!administration}
 
 
 Many weak IoT architectures become confusing because they collapse several conversations into one channel. A stronger design keeps the differences visible.

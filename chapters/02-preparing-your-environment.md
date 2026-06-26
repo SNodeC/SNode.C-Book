@@ -96,9 +96,9 @@ It is fine if only one of GCC or Clang is used, as long as it satisfies the requ
 
 ### Required and optional packages
 
-\index{dependencies}
-\index{optional dependencies}
-\index{packages}
+\index{build environment!dependencies}
+\index{build environment!optional dependencies}
+\index{build environment!packages}
 
 
 Package names differ across distributions. On a Debian-style development system, the baseline tools are usually:

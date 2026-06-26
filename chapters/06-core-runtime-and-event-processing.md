@@ -534,7 +534,7 @@ This is the architectural reason why retry, reconnect, and timeout behavior feel
 
 \index{event loop!tick cycle}
 \index{timeouts}
-\index{cleanup}
+\index{event loop!cleanup}
 
 
 With the main pieces now placed, we can describe one conceptual event-loop iteration. This is not a line-by-line implementation trace. It is the teaching model that best fits the implementation structure.

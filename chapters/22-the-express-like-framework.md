@@ -528,7 +528,7 @@ Chapter 23 then asks what happens when a route is not a short request/response e
 
 ### Express public surface: WebApp header and carrier component
 
-\index{express components}
+\index{Express components}
 \index{WebApp@\texttt{WebApp}!public surface}
 
 

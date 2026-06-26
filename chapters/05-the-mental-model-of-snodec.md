@@ -105,7 +105,7 @@ This is the reason `core::SNodeC::start()` is not a ceremonial final line. It is
 
 #### The instance
 
-\index{instance}
+\index{instances}
 \index{configured communication role}
 
 
@@ -280,7 +280,7 @@ That flow is one of the best compact mental models for SNode.C.
 
 \index{lifetime}
 \index{handle}
-\index{role}
+\index{roles}
 \index{connection}
 \index{context}
 
@@ -334,7 +334,7 @@ That rule is conceptual rather than a claim about exact ownership mechanics in e
 ### The layer model
 
 \index{layer model}
-\index{network family}
+\index{network families}
 \index{transport form}
 \index{connection handling}
 \index{application protocol}

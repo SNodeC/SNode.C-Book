@@ -198,7 +198,7 @@ That is why the target names matter. They are not arbitrary labels. They are par
 
 #### Libraries mirror layers
 
-\index{libraries}
+\index{components!libraries}
 \index{layered architecture!libraries}
 
 

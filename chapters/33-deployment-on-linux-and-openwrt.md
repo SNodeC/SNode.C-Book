@@ -114,7 +114,7 @@ The binary is only one part of the deployed system. Deployment proves that all t
 
 ### Packages and installed component surfaces
 
-\index{packages}
+\index{deployment!packages}
 \index{CPack@\texttt{CPack}}
 \index{package dependencies}
 \index{runtime-loaded modules}

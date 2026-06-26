@@ -1,7 +1,7 @@
 ## Layers are not decoration {.unnumbered}
 
 \index{layered architecture}
-\index{layers}
+\index{layered architecture}
 
 
 The word layered can be used lazily. In SNode.C, it is meant operationally.
@@ -22,7 +22,7 @@ A reader who understands this stack can move between IPv4, IPv6, Unix domain soc
 
 ## Boundaries are design decisions {.unnumbered}
 
-\index{boundaries}
+\index{system boundaries}
 \index{design decisions}
 
 

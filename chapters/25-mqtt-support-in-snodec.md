@@ -105,9 +105,9 @@ The important point is not that there are two unrelated MQTT implementations. Th
 ### MQTT as a protocol family
 
 \index{MQTT!protocol family}
-\index{control packets}
-\index{topics}
-\index{sessions}
+\index{MQTT!control packets}
+\index{MQTT!topics}
+\index{MQTT!sessions}
 
 
 MQTT support in SNode.C is broader than a broker application or a client helper. The shared MQTT module contains protocol structure. It provides the vocabulary and mechanics that server and client roles build on.

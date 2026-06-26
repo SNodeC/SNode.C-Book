@@ -387,8 +387,8 @@ State is useful. Uncontrolled state is a source of false confidence.
 \index{runtime tests}
 \index{real sockets}
 \index{timers}
-\index{retries}
-\index{reconnects}
+\index{retry}
+\index{reconnect}
 \index{shutdown}
 \index{backpressure}
 \index{lifetime checks}

@@ -41,7 +41,7 @@ The lower family matters. It does not always have to rewrite the protocol endpoi
 ### The lower-family transfer model
 
 \index{lower-family transfer}
-\index{network family}
+\index{network families}
 \index{carrier choice}
 
 

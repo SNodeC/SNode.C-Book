@@ -245,7 +245,7 @@ This boundary is why the echo application can stay conceptually small while the 
 
 ### The recurring path from role to context
 
-\index{role}
+\index{roles}
 \index{connection}
 \index{context}
 \index{factory}

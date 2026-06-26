@@ -67,7 +67,7 @@ The echo protocol itself should not be mixed into `main()`. The server and clien
 
 ### The three roles in the first example
 
-\index{instance}
+\index{instances}
 \index{factory}
 \index{context}
 
@@ -76,7 +76,7 @@ Before writing code, it helps to name the three roles.
 
 #### The instance
 
-\index{instance}
+\index{instances}
 \index{SocketServer@\texttt{SocketServer}}
 \index{SocketClient@\texttt{SocketClient}}
 
@@ -668,7 +668,7 @@ application-side handle
 ### What changed compared with ordinary socket programming
 
 \index{ordinary socket programming}
-\index{framework boundary}
+\index{framework boundaries}
 
 
 If you have written direct POSIX socket code before, this example may look unusual. There is no explicit `accept()` loop in `main()`. There is no blocking `recv()` loop in the application entry point.

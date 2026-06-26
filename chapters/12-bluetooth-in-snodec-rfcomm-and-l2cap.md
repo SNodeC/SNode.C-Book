@@ -38,8 +38,8 @@ The lower communication family changes. The endpoint identity changes. The appli
 ### Two Bluetooth families, two service selectors
 
 \index{Bluetooth!service selectors}
-\index{channel}
-\index{PSM}
+\index{RFCOMM!channel}
+\index{L2CAP!PSM}
 
 
 SNode.C represents Bluetooth through two distinct lower communication families:

@@ -237,7 +237,7 @@ MQTTSuite is the reference ecosystem that makes this concrete. It builds focused
 
 ### The central pattern you will meet again and again
 
-\index{role}
+\index{roles}
 \index{handle}
 \index{connection}
 \index{context}
