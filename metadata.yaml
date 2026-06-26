@@ -30,6 +30,8 @@ header-includes:
     ```{=latex}
     \providecommand{\passthrough}[1]{#1}
     \usepackage{tocloft}
+    \usepackage{makeidx}
+    \makeindex
     \setlength{\cftchapnumwidth}{1.5em}
     \setlength{\cftsecnumwidth}{3em}
     \setlength{\cftsubsecnumwidth}{3.8em}

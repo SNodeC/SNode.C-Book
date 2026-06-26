@@ -95,7 +95,8 @@ The manuscript currently contains the planned front matter, all planned chapters
 
 ## Back matter
 
-- Further Reading and Bibliography — **present**
+- Further Reading — **present**
+- Index — **infrastructure present; curated index entries are pending**
 
 ## Example source trees
 

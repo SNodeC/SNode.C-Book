@@ -26,7 +26,7 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `frontmatter/` — preface, reading guidance, conventions, author note, and acknowledgements.
 - `chapters/` — one Markdown file per chapter.
 - `parts/` — part divider files.
-- `backmatter/` — further reading and bibliography material.
+- `backmatter/` — further reading material and the generated-index entry point.
 - `examples/` — complete source trees for compact chapter examples and the guided MiniGateway project.
 - `verification/` — non-manuscript verification notes for source/package checks, including the machine-readable SNode.C source baseline.
 
@@ -80,6 +80,8 @@ Install Pandoc, `pandoc-crossref`, and a XeLaTeX-capable TeX distribution. The m
 cmake -S . -B build
 cmake --build build --target pdf
 ```
+
+The manuscript PDF build uses LaTeX indexing support. The `pdf` target generates LaTeX, runs `xelatex`, runs `makeindex`, and then runs `xelatex` twice more so that index pages and cross-references settle.
 
 To generate LaTeX only:
 
