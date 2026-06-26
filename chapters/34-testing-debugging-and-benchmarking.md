@@ -734,5 +734,5 @@ Regression tests should protect the semantic boundary that failed.
 
 ### Closing perspective
 
-Testing asks whether the chosen boundaries hold under build, runtime, deployment, and failure pressure. Chapter 35 turns to the prior question: how to choose those boundaries wisely in the first place.
+Testing asks whether the chosen boundaries hold under build, runtime, deployment, diagnostic, and measurement pressure. The chapter's practical standard is deliberately narrow: every confidence activity should name the boundary it protects. Chapter 35 turns to the prior question: how to choose those boundaries wisely in the first place.
 

@@ -10,7 +10,6 @@ The examples were checked against the SNode.C book baseline recorded in `SOURCE-
 Repository: https://github.com/SNodeC/snode.c.git
 Release tag: v1.0.2
 Commit: 6e475262084ae2dab2daef8781ab9e4adb82d18e
-Project version: 1.0.1
 Verification date: 2026-06-26
 Verification type: author-confirmed local build and behavior check
 ```

@@ -7,11 +7,7 @@
 
 ### From protocol endpoint to construction boundary
 
-Chapter 13 explained where application protocol behavior belongs.
-
-It belongs in the `SocketContext`.
-
-It explains how such contexts are created for concrete connections.
+Chapter 13 treated the `SocketContext` as the per-connection protocol endpoint. This chapter looks at the construction boundary that creates such endpoints: the `SocketContextFactory`.
 
 The transition is small in API surface but important in design:
 
@@ -19,26 +15,12 @@ The transition is small in API surface but important in design:
 SocketConnection
   -> SocketContextFactory::create(connection)
       -> SocketContext
+          -> protocol behavior
 ```
 
-If the context is the protocol endpoint, the factory is the construction boundary.
+If the context is the protocol endpoint, the factory is the construction boundary. It receives a concrete connection and creates the context that will contain the protocol behavior.
 
-The visible `SocketServer` or `SocketClient` object is the application-side handle. The registered instance is the long-lived runtime-visible server-side or client-side communication role. A `SocketConnection` is one concrete peer relationship under that role. A `SocketContextFactory` creates the protocol endpoint that is attached to such a connection.
-
-That distinction keeps the application architecture readable:
-
-```text
-application-side SocketServer / SocketClient handle
-  -> registered server/client instance
-      -> concrete SocketConnection
-          -> SocketContextFactory::create(connection)
-              -> SocketContext
-                  -> protocol behavior
-```
-
-The server or client role does not implement the protocol conversation. The connection does not decide which application endpoint class should exist. The context implements the behavior.
-
-The factory creates the context that will contain that behavior. That is the construction boundary this chapter is about.
+That distinction keeps the application architecture readable. The server or client role does not implement the protocol conversation. The connection does not decide which application endpoint class should exist. The context implements the behavior. The factory makes the construction decision.
 
 ### What a `SocketContextFactory` is
 
@@ -157,11 +139,9 @@ application-side SocketServer / SocketClient handle
                   -> protocol behavior
 ```
 
-This diagram connects Chapters 9, 13, and 14. Chapter 9 explained the server/client/connection relationship. Chapter 13 explained the context as the per-connection protocol endpoint.
+This diagram connects Chapters 9, 13, and 14. Chapter 9 explained the server/client/connection relationship. Chapter 13 explained the context as the per-connection protocol endpoint. This chapter explains the construction step between connection and context.
 
-It explains the construction step between connection and context. The accept or connect path makes the connection real; the context processes protocol messages; the factory creates the context.
-
-The factory creates the context that will handle protocol behavior once attached to the connection.
+The accept or connect path makes the connection real. The factory creates the context that will handle protocol behavior once attached to the connection. The context then processes protocol messages.
 
 That is why the factory is a boundary object. It is close to the connection, because it receives the connection. It is close to the protocol, because it creates the context. But it is not itself the connection and not itself the protocol endpoint.
 

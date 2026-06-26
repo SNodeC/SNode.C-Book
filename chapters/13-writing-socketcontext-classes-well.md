@@ -26,7 +26,7 @@ For application code, the most important object in this part of the design is th
 SocketContext
 ```
 
-The visible `SocketServer` or `SocketClient` object is the application-side handle used to configure and register a role. The registered instance is the long-lived runtime-visible server-side or client-side communication role. A `SocketConnection` is one concrete peer relationship below that role. A `SocketContextFactory` creates protocol endpoints for such connections. A `SocketContext` is the object in which the protocol behavior of one endpoint is written.
+Chapters 5 and 9 established the handle, instance, connection, factory, and context vocabulary. This chapter now uses that vocabulary from the context side: once a concrete connection exists, the context is where one endpoint's protocol behavior is written.
 
 That is the starting point for this chapter.
 
@@ -231,6 +231,122 @@ This does not mean every example must build an elaborate signal or error policy.
 A small teaching example may keep these hooks minimal. A real protocol may use them to close a connection, record diagnostics, reject invalid state, or translate lower-level problems into protocol-level decisions.
 
 The important habit is explicitness.
+
+### A compact worked context
+
+\index{SocketContext@\texttt{SocketContext}!worked example}
+\index{line protocol}
+
+
+The echo context in Chapter 3 showed the smallest useful pattern. A slightly more realistic teaching context can still remain compact: a line-command endpoint that remembers only a receive buffer, reacts to complete lines, writes protocol responses, and closes only for clear protocol reasons.
+
+The protocol is deliberately small:
+
+```text
+PING
+  -> PONG
+
+STATUS
+  -> OK
+
+QUIT
+  -> close the connection
+
+anything else
+  -> ERR unknown command
+```
+
+The point is not the protocol. The point is where the responsibilities land. Input accumulation, command interpretation, response writing, and protocol-driven closure all stay inside the context. Listening, connecting, retrying, reconnecting, and choosing the lower communication family stay outside it.
+
+An abridged context can look like this:
+
+```cpp
+#include <core/socket/stream/SocketContext.h>
+
+#include <cstddef>
+#include <string>
+
+namespace core::socket::stream {
+    class SocketConnection;
+}
+
+class LineCommandContext : public core::socket::stream::SocketContext {
+public:
+    explicit LineCommandContext(
+        core::socket::stream::SocketConnection* socketConnection)
+        : core::socket::stream::SocketContext(socketConnection) {
+    }
+
+private:
+    static constexpr std::size_t maxLineLength = 4096;
+
+    void onConnected() override {
+        sendToPeer("READY\n");
+    }
+
+    void onDisconnected() override {
+        receiveBuffer.clear();
+    }
+
+    bool onSignal([[maybe_unused]] int signum) override {
+        close();
+        return true;
+    }
+
+    std::size_t onReceivedFromPeer() override {
+        char chunk[1024];
+        const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
+
+        if (chunkLen == 0) {
+            return 0;
+        }
+
+        receiveBuffer.append(chunk, chunkLen);
+
+        std::size_t lineEnd = receiveBuffer.find('\n');
+        while (lineEnd != std::string::npos) {
+            std::string line = receiveBuffer.substr(0, lineEnd);
+            if (!line.empty() && line.back() == '\r') {
+                line.pop_back();
+            }
+
+            processLine(line);
+            receiveBuffer.erase(0, lineEnd + 1);
+            lineEnd = receiveBuffer.find('\n');
+        }
+
+        if (receiveBuffer.length() > maxLineLength) {
+            close();
+        }
+
+        return chunkLen;
+    }
+
+    void processLine(const std::string& line) {
+        if (line == "PING") {
+            sendToPeer("PONG\n");
+        } else if (line == "STATUS") {
+            sendToPeer("OK\n");
+        } else if (line == "QUIT") {
+            close();
+        } else if (!line.empty()) {
+            sendToPeer("ERR unknown command\n");
+        }
+    }
+
+    std::string receiveBuffer;
+};
+```
+
+The example has one piece of connection-local state: `receiveBuffer`. It exists because stream input is byte-oriented, while the protocol is line-oriented. The context accumulates bytes only until it can process a complete line.
+
+The input path stays honest. `onReceivedFromPeer()` reads a chunk, appends it to the connection-local buffer, processes each complete line, and returns the number of bytes read from the peer. It does not claim to have interpreted bytes that were never read, and it does not hide incomplete input in unrelated global state.
+
+The output path is equally narrow. The context sends protocol responses through `sendToPeer(...)`. It decides that `PING` means `PONG`, that `STATUS` means `OK`, and that an unknown command produces an error line. It does not build a second output queue or bypass the connection surface.
+
+Closure also has protocol meaning. `QUIT` closes because the peer requested the end of the conversation. A signal closes because the runtime environment asks the endpoint to stop. An overlong pending line closes because the input no longer fits the protocol's safety rule. Those are different reasons, and good context code makes such reasons visible.
+
+This is still not a full application. It is a compact worked context whose only job is to show how lifecycle handling, input handling, output behavior, state, and closure discipline fit inside one per-connection endpoint.
 
 ### Design habits for good context code
 
