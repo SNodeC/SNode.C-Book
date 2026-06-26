@@ -53,7 +53,7 @@ The compact source trees in `examples/` are intended to be complete buildable ve
 
 Both MiniGateway versions are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C source snapshot recorded in `SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
 
-The current package records author-confirmed local verification for the full companion-example set in `verification/examples-aggregate-build-verification.md`, including the line-protocol server/client examples added for Chapter 13. MiniGateway-specific details are retained in `verification/minigateway-step8-author-verification.md`. The verification notes target the SNode.C `v1.0.2` release tag and its exact pinned commit. These files are package evidence, not manuscript prose, and they are not presented as independent continuous-integration evidence.
+The current package records author-confirmed local verification history for the companion-example set in `verification/examples-aggregate-build-verification.md`. The example sources and matching manuscript listings were later aligned to single-exit style and are now marked for fresh author re-check. MiniGateway-specific details are retained in `verification/minigateway-step8-author-verification.md`. The verification notes target the SNode.C `v1.0.2` release tag and its exact pinned commit. These files are package evidence, not manuscript prose, and they are not presented as independent continuous-integration evidence.
 
 ## Heading convention
 

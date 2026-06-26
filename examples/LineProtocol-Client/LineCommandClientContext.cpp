@@ -54,22 +54,20 @@ std::size_t LineCommandClientContext::onReceivedFromPeer() {
     char chunk[1024];
     const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
 
-    if (chunkLen == 0) {
-        return 0;
-    }
+    if (chunkLen > 0) {
+        receiveBuffer.append(chunk, chunkLen);
 
-    receiveBuffer.append(chunk, chunkLen);
+        std::size_t lineEnd = receiveBuffer.find('\n');
+        while (lineEnd != std::string::npos) {
+            std::string line = receiveBuffer.substr(0, lineEnd);
+            if (!line.empty() && line.back() == '\r') {
+                line.pop_back();
+            }
 
-    std::size_t lineEnd = receiveBuffer.find('\n');
-    while (lineEnd != std::string::npos) {
-        std::string line = receiveBuffer.substr(0, lineEnd);
-        if (!line.empty() && line.back() == '\r') {
-            line.pop_back();
+            processLine(line);
+            receiveBuffer.erase(0, lineEnd + 1);
+            lineEnd = receiveBuffer.find('\n');
         }
-
-        processLine(line);
-        receiveBuffer.erase(0, lineEnd + 1);
-        lineEnd = receiveBuffer.find('\n');
     }
 
     return chunkLen;
@@ -82,39 +80,29 @@ void LineCommandClientContext::processLine(const std::string& line) {
         if (readyReceived) {
             LOG(WARNING) << "Line command client received duplicate READY greeting";
             close();
-            return;
+        } else {
+            readyReceived = true;
+            sendNextCommand();
         }
-
-        readyReceived = true;
-        sendNextCommand();
-        return;
-    }
-
-    if (!readyReceived) {
+    } else if (!readyReceived) {
         LOG(WARNING) << "Line command client received protocol data before READY";
         close();
-        return;
-    }
-
-    if (line == "PONG" || line == "OK" || line == "ERR unknown command") {
+    } else if (line == "PONG" || line == "OK" || line == "ERR unknown command") {
         sendNextCommand();
-        return;
+    } else {
+        LOG(WARNING) << "Line command client received unexpected response '" << line << "'";
+        close();
     }
-
-    LOG(WARNING) << "Line command client received unexpected response '" << line << "'";
-    close();
 }
 
 void LineCommandClientContext::sendNextCommand() {
-    if (nextCommandIndex >= commandSequence.size()) {
-        return;
-    }
+    if (nextCommandIndex < commandSequence.size()) {
+        const std::string_view command = commandSequence[nextCommandIndex++];
+        VLOG(1) << "Line command client sending '" << printableCommand(command) << "'";
+        sendToPeer(command.data(), command.length());
 
-    const std::string_view command = commandSequence[nextCommandIndex++];
-    VLOG(1) << "Line command client sending '" << printableCommand(command) << "'";
-    sendToPeer(command.data(), command.length());
-
-    if (command == "QUIT\n") {
-        VLOG(1) << "Line command client waiting for server-side close";
+        if (command == "QUIT\n") {
+            VLOG(1) << "Line command client waiting for server-side close";
+        }
     }
 }

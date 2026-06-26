@@ -119,12 +119,12 @@ int main(int argc, char* argv[]) {
             }
 
             bus.subscribe([res](const minigateway::Measurement& measurement) {
-                if (!res->isConnected()) {
-                    return false;
+                const bool keepSubscriber = res->isConnected();
+                if (keepSubscriber) {
+                    sendMeasurementEvent(measurement, res);
                 }
 
-                sendMeasurementEvent(measurement, res);
-                return true;
+                return keepSubscriber;
             });
         } else {
             res->status(406).send("SSE requires Accept: text/event-stream");

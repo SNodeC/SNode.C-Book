@@ -297,26 +297,24 @@ private:
         char chunk[1024];
         const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
 
-        if (chunkLen == 0) {
-            return 0;
-        }
+        if (chunkLen > 0) {
+            receiveBuffer.append(chunk, chunkLen);
 
-        receiveBuffer.append(chunk, chunkLen);
+            std::size_t lineEnd = receiveBuffer.find('\n');
+            while (lineEnd != std::string::npos) {
+                std::string line = receiveBuffer.substr(0, lineEnd);
+                if (!line.empty() && line.back() == '\r') {
+                    line.pop_back();
+                }
 
-        std::size_t lineEnd = receiveBuffer.find('\n');
-        while (lineEnd != std::string::npos) {
-            std::string line = receiveBuffer.substr(0, lineEnd);
-            if (!line.empty() && line.back() == '\r') {
-                line.pop_back();
+                processLine(line);
+                receiveBuffer.erase(0, lineEnd + 1);
+                lineEnd = receiveBuffer.find('\n');
             }
 
-            processLine(line);
-            receiveBuffer.erase(0, lineEnd + 1);
-            lineEnd = receiveBuffer.find('\n');
-        }
-
-        if (receiveBuffer.length() > maxLineLength) {
-            close();
+            if (receiveBuffer.length() > maxLineLength) {
+                close();
+            }
         }
 
         return chunkLen;

@@ -1,6 +1,6 @@
 # Companion Examples Author Verification
 
-This note records the final author-confirmed local verification status for the companion-example project under `examples/`. It is package evidence, not manuscript prose, and is not intended to appear in the printed book.
+This note records the current author-confirmed local verification status for the companion-example project under `examples/`. It is package evidence, not manuscript prose, and is not intended to appear in the printed book.
 
 ## Verification baseline
 
@@ -52,20 +52,20 @@ These are SNode.C public-surface requirements, not book-example workarounds. The
 
 ## Author-confirmed result
 
-The complete companion-example set configured, compiled, linked, installed/deployed where applicable, ran where intended, and behaved as expected against the pinned SNode.C `v1.0.2` baseline. This now includes the newly added line-protocol server/client examples.
+The complete companion-example set configured, compiled, linked, installed/deployed where applicable, ran where intended, and behaved as expected against the pinned SNode.C `v1.0.2` baseline before the later single-exit style rewrite. Because that rewrite now touches the example source trees and the matching manuscript listings, the full companion-example set requires a fresh author re-check.
 
 | Area | Status | Evidence type |
 |---|---:|---|
 | SNode.C baseline | confirmed | release tag `v1.0.2` and exact commit pin |
-| Aggregate companion-example configure/build/link | confirmed | author local aggregate build check |
-| HTTP upgrade examples | confirmed | author local build and behavior check |
-| SSE server and EventSource client examples | confirmed | author local build and behavior check |
-| WebSocket echo client/server subprotocol examples | confirmed | author local build and behavior check |
-| Line protocol server/client examples | confirmed | author local build and runtime check |
-| MQTT client-role example | confirmed | author local build and behavior check |
-| MariaDB minimal example | confirmed | author local build and behavior check in the expected database setup |
-| MiniGateway-Base | confirmed | author local build and smoke check |
-| MiniGateway-Extended | confirmed | author local build and smoke check |
+| Aggregate companion-example configure/build/link | pending re-check | example sources were mechanically aligned to single-exit style after previous confirmation |
+| HTTP upgrade examples | pending re-check | part of the aggregate example set after style pass |
+| SSE server and EventSource client examples | pending re-check | SSE server source changed for single-exit route/subscriber flow |
+| WebSocket echo client/server subprotocol examples | pending re-check | part of the aggregate example set after style pass |
+| Line protocol server/client examples | pending re-check | source and Chapter 13 listing already aligned to single-exit style |
+| MQTT client-role example | pending re-check | part of the aggregate example set after style pass |
+| MariaDB minimal example | pending re-check | part of the aggregate example set after style pass |
+| MiniGateway-Base | pending re-check | MQTT publish and SSE subscriber flow changed for single-exit style |
+| MiniGateway-Extended | pending re-check | MQTT publish, SSE subscriber flow, and Unix-socket line handling changed for single-exit style |
 
 ## MiniGateway coverage summary
 
@@ -104,8 +104,8 @@ The examples should then be configured against that installed SNode.C package, p
 
 ## Line-protocol example coverage
 
-`examples/LineProtocol-Server` and `examples/LineProtocol-Client` are included in the aggregate example CMake project. They follow the same public SNode.C IPv4 legacy stream role pattern used by the repository echo example, but replace byte reflection with a small command protocol. The author confirmed that both new examples compile and run successfully.
+`examples/LineProtocol-Server` and `examples/LineProtocol-Client` are included in the aggregate example CMake project. They follow the same public SNode.C IPv4 legacy stream role pattern used by the repository echo example, but replace byte reflection with a small command protocol. The author confirmed that both new examples compiled and ran successfully before the broader single-exit style pass. A fresh confirmation is required for the current example set.
 
 ## Conclusion
 
-The full companion-example set is considered verified for this manuscript package based on the author-confirmed local build and behavior result against SNode.C `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`.
+The companion-example set was previously verified by author-confirmed local build and behavior checks against SNode.C `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. Because the example sources and matching manuscript listings were subsequently aligned to single-exit style, the aggregate example status is pending a fresh author re-check.

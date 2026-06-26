@@ -200,32 +200,31 @@ The following sketch uses an application-owned measurement source. The important
 
 ```cpp
 app.get("/events", [&measurements] APPLICATION(req, res) {
-    if (!web::http::ciContains(req->get("Accept"), "text/event-stream")) {
-        res->status(406).send("SSE requires Accept: text/event-stream");
-        return;
-    }
+    if (web::http::ciContains(req->get("Accept"), "text/event-stream")) {
+        res->set("Content-Type", "text/event-stream")
+           .set("Cache-Control", "no-cache")
+           .set("Connection", "keep-alive")
+           .sendHeader();
 
-    res->set("Content-Type", "text/event-stream")
-       .set("Cache-Control", "no-cache")
-       .set("Connection", "keep-alive")
-       .sendHeader();
-
-    if (const Measurement current = measurements.current(); current.sequence > 0) {
-        res->sendFragment("event: measurement\n");
-        res->sendFragment("id: " + std::to_string(current.sequence) + "\n");
-        res->sendFragment("data: " + current.toJson().dump() + "\n\n");
-    }
-
-    measurements.subscribe([res](const Measurement& measurement) {
-        if (!res->isConnected()) {
-            return false;
+        if (const Measurement current = measurements.current(); current.sequence > 0) {
+            res->sendFragment("event: measurement\n");
+            res->sendFragment("id: " + std::to_string(current.sequence) + "\n");
+            res->sendFragment("data: " + current.toJson().dump() + "\n\n");
         }
 
-        res->sendFragment("event: measurement\n");
-        res->sendFragment("id: " + std::to_string(measurement.sequence) + "\n");
-        res->sendFragment("data: " + measurement.toJson().dump() + "\n\n");
-        return true;
-    });
+        measurements.subscribe([res](const Measurement& measurement) {
+            const bool keepSubscriber = res->isConnected();
+            if (keepSubscriber) {
+                res->sendFragment("event: measurement\n");
+                res->sendFragment("id: " + std::to_string(measurement.sequence) + "\n");
+                res->sendFragment("data: " + measurement.toJson().dump() + "\n\n");
+            }
+
+            return keepSubscriber;
+        });
+    } else {
+        res->status(406).send("SSE requires Accept: text/event-stream");
+    }
 });
 
 app.get("/simulate", [&measurements] APPLICATION(req, res) {

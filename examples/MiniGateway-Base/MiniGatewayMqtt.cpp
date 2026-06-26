@@ -67,11 +67,9 @@ namespace minigateway {
     }
 
     void MiniGatewayMqtt::publishMeasurement(const Measurement& measurement) const {
-        if (!connected) {
-            return;
+        if (connected) {
+            sendPublish(measurementTopic, toPayload(measurement), qoS, retain);
         }
-
-        sendPublish(measurementTopic, toPayload(measurement), qoS, retain);
     }
 
     void MiniGatewayMqtt::publishMeasurementToConnected(const Measurement& measurement) {

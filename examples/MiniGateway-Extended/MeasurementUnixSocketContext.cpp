@@ -135,15 +135,13 @@ namespace minigateway {
     }
 
     void MeasurementUnixSocketContext::processLine(const std::string& line) const {
-        if (line.empty()) {
-            return;
-        }
-
-        try {
-            Measurement measurement = parseMeasurementLine(line);
-            measurementHandler(std::move(measurement));
-        } catch (const std::exception& ex) {
-            LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+        if (!line.empty()) {
+            try {
+                Measurement measurement = parseMeasurementLine(line);
+                measurementHandler(std::move(measurement));
+            } catch (const std::exception& ex) {
+                LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+            }
         }
     }
 

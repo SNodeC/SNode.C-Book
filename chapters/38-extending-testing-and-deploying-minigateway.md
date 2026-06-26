@@ -354,15 +354,13 @@ namespace minigateway {
     }
 
     void MeasurementUnixSocketContext::processLine(const std::string& line) const {
-        if (line.empty()) {
-            return;
-        }
-
-        try {
-            Measurement measurement = parseMeasurementLine(line);
-            measurementHandler(std::move(measurement));
-        } catch (const std::exception& ex) {
-            LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+        if (!line.empty()) {
+            try {
+                Measurement measurement = parseMeasurementLine(line);
+                measurementHandler(std::move(measurement));
+            } catch (const std::exception& ex) {
+                LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+            }
         }
     }
 
@@ -601,12 +599,12 @@ int main(int argc, char* argv[]) {
             }
 
             bus.subscribe([res](const minigateway::Measurement& measurement) {
-                if (!res->isConnected()) {
-                    return false;
+                const bool keepSubscriber = res->isConnected();
+                if (keepSubscriber) {
+                    sendMeasurementEvent(measurement, res);
                 }
 
-                sendMeasurementEvent(measurement, res);
-                return true;
+                return keepSubscriber;
             });
         } else {
             res->status(406).send("SSE requires Accept: text/event-stream");

@@ -637,11 +637,9 @@ namespace minigateway {
     }
 
     void MiniGatewayMqtt::publishMeasurement(const Measurement& measurement) const {
-        if (!connected) {
-            return;
+        if (connected) {
+            sendPublish(measurementTopic, toPayload(measurement), qoS, retain);
         }
-
-        sendPublish(measurementTopic, toPayload(measurement), qoS, retain);
     }
 
     void MiniGatewayMqtt::publishMeasurementToConnected(const Measurement& measurement) {
@@ -894,12 +892,12 @@ int main(int argc, char* argv[]) {
             }
 
             bus.subscribe([res](const minigateway::Measurement& measurement) {
-                if (!res->isConnected()) {
-                    return false;
+                const bool keepSubscriber = res->isConnected();
+                if (keepSubscriber) {
+                    sendMeasurementEvent(measurement, res);
                 }
 
-                sendMeasurementEvent(measurement, res);
-                return true;
+                return keepSubscriber;
             });
         } else {
             res->status(406).send("SSE requires Accept: text/event-stream");

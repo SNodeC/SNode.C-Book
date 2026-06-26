@@ -82,28 +82,27 @@ int main(int argc, char* argv[]) {
 
     app.get("/events", [&measurements](const std::shared_ptr<Request>& req,
                                         const std::shared_ptr<Response>& res) {
-        if (!acceptsEventStream(req)) {
-            res->status(406).send("SSE requires Accept: text/event-stream");
-            return;
-        }
+        if (acceptsEventStream(req)) {
+            res->set("Content-Type", "text/event-stream")
+               .set("Cache-Control", "no-cache")
+               .set("Connection", "keep-alive")
+               .sendHeader();
 
-        res->set("Content-Type", "text/event-stream")
-           .set("Cache-Control", "no-cache")
-           .set("Connection", "keep-alive")
-           .sendHeader();
-
-        if (const Measurement current = measurements.current(); current.sequence > 0) {
-            sendMeasurement(res, current);
-        }
-
-        measurements.subscribe([res](const Measurement& measurement) {
-            if (!res->isConnected()) {
-                return false;
+            if (const Measurement current = measurements.current(); current.sequence > 0) {
+                sendMeasurement(res, current);
             }
 
-            sendMeasurement(res, measurement);
-            return true;
-        });
+            measurements.subscribe([res](const Measurement& measurement) {
+                const bool keepSubscriber = res->isConnected();
+                if (keepSubscriber) {
+                    sendMeasurement(res, measurement);
+                }
+
+                return keepSubscriber;
+            });
+        } else {
+            res->status(406).send("SSE requires Accept: text/event-stream");
+        }
     });
 
     app.get("/simulate", [&measurements](const std::shared_ptr<Request>&,
