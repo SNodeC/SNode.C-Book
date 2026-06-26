@@ -1,3 +1,10 @@
+frontmatter/frontmatter.md
+frontmatter/preface.md
+frontmatter/how-to-read-this-book.md
+frontmatter/conventions.md
+frontmatter/author-note.md
+frontmatter/acknowledgements.md
+frontmatter/mainmatter.md
 parts/part-01-getting-oriented.md
 chapters/01-why-snodec-exists.md
 chapters/02-preparing-your-environment.md
@@ -50,3 +57,5 @@ chapters/37-building-minigateway.md
 chapters/38-extending-testing-and-deploying-minigateway.md
 parts/part-13-epilogue.md
 chapters/epilogue.md
+backmatter/backmatter.md
+backmatter/further-reading.md

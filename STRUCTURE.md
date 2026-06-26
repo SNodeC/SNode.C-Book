@@ -5,7 +5,15 @@
 
 This structure belongs to an architecture-first SNode.C book. The manuscript is not positioned as a general C++ networking survey. Its subject is layered network programming with SNode.C: lower communication families, transport form, connection handling, protocol meaning, configuration, diagnostics, deployment, and application roles.
 
-The manuscript currently contains all planned chapters and an epilogue.
+The manuscript currently contains the planned front matter, all planned chapters, an epilogue, and back matter.
+
+## Front matter
+
+- Preface — **present**
+- How to Read This Book — **present**
+- Conventions Used in This Book — **present**
+- Author and Framework Note — **present**
+- Acknowledgements — **present**
 
 ## Part I — Getting Oriented
 
@@ -85,6 +93,10 @@ The manuscript currently contains all planned chapters and an epilogue.
 
 - What to Take Away from SNode.C — **present**
 
+## Back matter
+
+- Further Reading and Bibliography — **present**
+
 ## Example source trees
 
 The protocol and persistence chapters refer to electronic companion examples that are shown in shortened form in the printed manuscript. In this source package, those companion examples are stored as compact source trees:
@@ -100,7 +112,7 @@ examples/MQTT-ClientRole
 examples/MariaDB-Minimal
 ```
 
-The directory `examples/` also has an aggregate `CMakeLists.txt` for configuring, building, and installing/deploying all companion examples together. The aggregate build-status note is recorded in `verification/examples-aggregate-build-verification.md`; it distinguishes the last reported aggregate build from later WebSocket echo additions that still require a fresh rebuild/redeploy.
+The directory `examples/` also has an aggregate `CMakeLists.txt` for configuring, building, and installing/deploying all companion examples together. The aggregate verification note is recorded in `verification/examples-aggregate-build-verification.md`.
 
 The final technical part uses two larger source trees as source-of-truth examples:
 

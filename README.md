@@ -23,12 +23,14 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `STRUCTURE.md` — human-readable overview of the manuscript structure.
 - `SOURCE-VERSION.md` — exact SNode.C source snapshot used for manuscript alignment.
 - `proposal/book-proposal-package.md` — publisher-facing proposal material.
+- `frontmatter/` — preface, reading guidance, conventions, author note, and acknowledgements.
 - `chapters/` — one Markdown file per chapter.
 - `parts/` — part divider files.
+- `backmatter/` — further reading and bibliography material.
 - `examples/` — complete source trees for compact chapter examples and the guided MiniGateway project.
 - `verification/` — non-manuscript verification notes for source/package checks, including the machine-readable SNode.C source baseline.
 
-The current manuscript contains all planned chapters and an epilogue. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `examples/` for the HTTP-upgrade, SSE, WebSocket echo server/client subprotocol, MQTT-role, and MariaDB examples. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
+The current manuscript contains all planned front matter, chapters, an epilogue, and back matter. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `examples/` for the HTTP-upgrade, SSE, WebSocket echo server/client subprotocol, MQTT-role, and MariaDB examples. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
 
 ```text
 examples/MiniGateway-Base
@@ -103,7 +105,7 @@ The `proposal-package` target creates the final publisher/reviewer archive in `p
 cmake --build build --target proposal-package
 ```
 
-That generated archive is intended to contain both generated PDFs, the manuscript/proposal sources, source-version pin, metadata, structure files, filters, LaTeX support, figures, and example source trees needed for publisher or reviewer inspection. It should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
+That generated archive is intended to contain both generated PDFs, the manuscript/proposal sources, front matter, back matter, source-version pin, metadata, structure files, filters, LaTeX support, figures, and example source trees needed for publisher or reviewer inspection. It should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
 
 ## Positioning
 

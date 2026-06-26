@@ -170,8 +170,10 @@ set(REQUIRED_SOURCE_FILES
     "proposal/book-proposal-package.md")
 
 set(REQUIRED_SOURCE_DIRS
+    "frontmatter"
     "chapters"
     "parts"
+    "backmatter"
     "proposal"
     "figures/src"
     "figures/pdf"
@@ -308,8 +310,10 @@ Included:
 - pdf/snodec-book.pdf
 - pdf/book-proposal-package.pdf
 - proposal/
+- frontmatter/
 - chapters/
 - parts/
+- backmatter/
 - figures/CMakeLists.txt
 - figures/src/
 - figures/pdf/
