@@ -642,25 +642,8 @@ WebSocket provides the upgraded carrier. MQTT provides the protocol semantics.
 
 ### WebSocket public surface
 
-WebSocket crosses several role boundaries: HTTP negotiation, upgraded socket context, WebSocket framing, and optional subprotocol selection. The safe rule is therefore local: include the highest public header for the WebSocket abstraction the file directly names, and link the WebSocket component surface selected by the target.
-
-On the build side, `websocket`, `websocket-server`, and `websocket-client` express different levels of that composition. MQTT-over-WebSocket components then add the MQTT/WebSocket adapter on top of the relevant WebSocket role. Chapter 32 gives the consolidated component/header matrix.
+WebSocket crosses HTTP negotiation, upgraded socket context, framing, and optional subprotocol selection. The local rule is therefore to include the highest public header for the WebSocket abstraction directly named by the file and link the matching WebSocket component surface. Chapter 32 gives the consolidated component/header matrix, including the MQTT-over-WebSocket adapters.
 
 ### Closing perspective
 
-Chapter 21 raised stream communication into HTTP messages. Chapter 22 organized HTTP messages into application structure. Chapter 23 stretched one HTTP response into a one-way event stream. Chapter 24 used HTTP as a negotiation boundary and moved the same connection episode into bidirectional WebSocket communication.
-
-The path through Part VII now reads:
-
-```text
-HTTP request / response
-  -> Express-like application structure
-      -> Server-Sent Events
-          -> long-lived one-way event streaming
-              -> WebSocket
-                  -> upgraded bidirectional message communication
-```
-
-That completes the main web-protocol climb.
-
-Chapter 25 moves to MQTT, a message-oriented protocol family that can use SNode.C directly and later reappear over WebSocket.
+WebSocket completes the web-protocol climb by using HTTP as a negotiation boundary and then moving the connection episode into bidirectional message communication. Chapter 25 turns to MQTT, a message-oriented protocol family that can use SNode.C directly and later reappear over WebSocket.

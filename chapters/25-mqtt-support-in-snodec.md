@@ -426,13 +426,13 @@ Chapter 25 only establishes the model: MQTT remains MQTT, while the carrier can 
 
 ### MQTT public surface: protocol headers and components
 
-The MQTT source surface has public entry headers, and the build surface has matching protocol components. A client-side MQTT object is introduced through:
+MQTT code includes the MQTT abstraction it directly names. A client-side MQTT protocol object is introduced through:
 
 ```cpp
 #include <iot/mqtt/client/Mqtt.h>
 ```
 
-Shared MQTT support uses headers below `<iot/mqtt/...>` for the abstractions the file directly names, such as topics, packets, socket-context bridging, or protocol support. The build-side components distinguish shared support, native roles, and WebSocket-carried compositions; Chapter 32 collects those mappings in one source-derived table.
+Shared support remains below `<iot/mqtt/...>` for topics, packets, socket-context bridging, and protocol support. The build-side components distinguish shared support, native roles, and WebSocket-carried compositions; Chapter 32 collects those mappings in one source-derived table.
 
 ### Build/component note: JSON dependency is not MQTT identity
 

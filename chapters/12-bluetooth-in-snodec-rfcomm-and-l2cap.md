@@ -521,37 +521,35 @@ This is especially useful in IoT and embedded systems, where local device commun
 
 ### Public surface of Bluetooth stream roles
 
-When Bluetooth support is available, the public surface follows the same pattern as the other lower families. RFCOMM stream roles use the `rc` family fragment on the source side:
+Bluetooth stream roles follow the same source/build rule, but only when the required Bluetooth development support is present. RFCOMM uses the `rc` family fragment:
 
 ```cpp
 #include <net/rc/stream/legacy/SocketServer.h>
 #include <net/rc/stream/legacy/SocketClient.h>
 ```
 
-and the corresponding build-side component naming pattern is:
+with the corresponding component:
 
 ```text
 net-rc-stream-legacy
 ```
 
-L2CAP stream roles use the `l2` family fragment:
+L2CAP uses the `l2` fragment:
 
 ```cpp
 #include <net/l2/stream/legacy/SocketServer.h>
 #include <net/l2/stream/legacy/SocketClient.h>
 ```
 
-with the corresponding component naming pattern:
+with the corresponding component:
 
 ```text
 net-l2-stream-legacy
 ```
 
-Those include paths describe the C++ source-facing roles when the corresponding Bluetooth family has been built. They do not remove the platform dependency: the matching components are available only when the required Bluetooth development support is present. The source-side and build-side names should therefore be read together, but both remain conditional on the build environment.
+The local lesson is the conditional family surface. Chapter 32 gives the broader include/component matrix.
 
 ### Closing perspective
 
-Chapter 10 covered host-plus-port endpoint identity through IPv4 and IPv6. Chapter 11 replaced that with Unix-domain path identity.
-
-The next part can now move upward. The question becomes less "Which endpoint family carries the connection?" and more "How should protocol behavior be written inside a `SocketContext`, and how should factories create those contexts?"
+With host-plus-port, path-based, and Bluetooth endpoint identities in view, the lower-family tour has done its job. The next part moves upward to protocol behavior inside `SocketContext` objects and to the factories that create them.
 

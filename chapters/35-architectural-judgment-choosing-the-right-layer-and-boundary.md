@@ -427,7 +427,5 @@ Architectural judgment in SNode.C means choosing the right layer, role boundary,
 
 ### Closing perspective
 
-Chapter 35 does not add another protocol. It asks the reader to use the existing protocol, role, configuration, deployment, diagnostic, and testing vocabulary with judgment.
-
-Chapter 36 therefore turns from choosing boundaries to evolving them safely.
+Architectural judgment uses the existing protocol, role, configuration, deployment, diagnostic, and testing vocabulary to place each concern at the boundary that can own it. Chapter 36 turns from choosing boundaries to evolving them safely.
 

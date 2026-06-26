@@ -677,19 +677,12 @@ The practical habit is to add tests at the boundary where a bug mattered. URL de
 Regression tests should protect the semantic boundary that failed.
 
 ::: {.snodec-remember title="What to remember"}
-- Testing in SNode.C should follow framework boundaries.
-- A test should make clear which boundary it protects.
-- Build-time checks protect component truth, public headers, and dependency surfaces.
-- Include discipline protects component honesty and public include hierarchy honesty.
-- Minimal builds are architectural tests, not only smaller builds.
-- Installed-consumer builds test the exported package interface.
+- Testing in SNode.C should follow framework boundaries and make clear which boundary each test protects.
+- Build-time checks, include discipline, minimal builds, and installed-consumer builds protect component truth, public headers, dependency surfaces, and exported package behavior.
+- Runtime tests, diagnostics, and benchmarks should preserve the same layer and boundary vocabulary used in the design.
 :::
 
 ### Closing perspective
 
-Chapter 32 showed how SNode.C expresses architecture through CMake components, targets, and dependency surfaces. Chapter 33 showed how that architecture enters the filesystem through packages, installed paths, service definitions, configuration directories, and embedded deployment constraints. This chapter showed how that installed architecture becomes trustworthy.
-
-Chapter 34 asked how to verify whether boundaries hold. Chapter 35 asks how to choose those boundaries wisely in the first place.
-
-That is the step from testing a SNode.C system to designing one wisely.
+Testing asks whether the chosen boundaries hold under build, runtime, deployment, and failure pressure. Chapter 35 turns to the prior question: how to choose those boundaries wisely in the first place.
 

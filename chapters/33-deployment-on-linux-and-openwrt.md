@@ -609,7 +609,5 @@ When these details are hidden, failures appear later as unrelated runtime proble
 
 ### Closing perspective
 
-Chapter 33 moved from build artifacts to deployed systems. The same architecture that appears in SNode.C targets and packages also appears in installed libraries, runtime module paths, configuration directories, service definitions, package repositories, and trust relationships.
-
-Chapter 33 made deployment visible as installed architecture. Chapter 34 then asks how to verify that this installed architecture behaves correctly: how to test it, inspect it, debug it, and measure it without losing the layer and boundary vocabulary built so far.
+Deployment is installed architecture: libraries, runtime module paths, configuration directories, service definitions, package repositories, and trust relationships. Chapter 34 asks how to verify that this installed architecture behaves correctly.
 

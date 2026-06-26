@@ -485,34 +485,25 @@ Chapter 23 then asks what happens when a route is not a short request/response e
 
 ### Express public surface: WebApp header and carrier component
 
-The Express-like layer continues the source/build pairing. A file that directly uses the WebApp type for an IPv4 legacy Express server includes:
+A file that directly uses the IPv4 legacy Express WebApp includes:
 
 ```cpp
 #include <express/legacy/in/WebApp.h>
 ```
 
-A file that uses the convenience server helper overloads includes the corresponding server header:
+Code using the convenience server helpers includes:
 
 ```cpp
 #include <express/legacy/in/Server.h>
 ```
 
-The matching build-side front door is the concrete Express carrier component:
+The corresponding carrier component is:
 
 ```text
 http-server-express-legacy-in
 ```
 
-That component selects the base Express layer and the concrete IPv4 legacy stream carrier. In abbreviated form:
-
-```text
-snodec::http-server-express-legacy-in
-  -> snodec::http-server-express
-      -> snodec::http-server
-  -> snodec::net-in-stream-legacy
-```
-
-The source-side and build-side hierarchies therefore rhyme without being the same mechanism. Chapter 32 gives the source-derived matrix for the broader set of components and headers.
+It selects the Express layer together with the IPv4 legacy stream carrier. The source-side and build-side names rhyme without being the same mechanism. Chapter 32 gives the source-derived matrix for the broader set of components and headers.
 
 ### Closing perspective
 

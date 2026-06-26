@@ -2,7 +2,7 @@
 
 ### Why this chapter matters
 
-Chapter 3 showed the first working echo pair, and Chapter 5 turned that experience into a mental model of handles, instances, connections, contexts, factories, layers, and operational concerns. Chapter 5 also made an important distinction precise: the visible `SocketServer` or `SocketClient` object is the application-side handle, while the instance is the registered communication role advanced by the framework.
+The first working echo pair introduced the runtime shape, and the mental model chapter named its recurring roles: handles, instances, connections, contexts, factories, layers, and operational concerns. It also made the central distinction precise: the visible `SocketServer` or `SocketClient` object is the application-side handle, while the instance is the registered communication role advanced by the framework.
 
 That model is necessary, but it still leaves an important question open.
 

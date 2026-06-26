@@ -807,18 +807,4 @@ These are application-design decisions. The build system records them.
 
 ### Closing perspective
 
-Chapter 29 showed how repository applications turn framework layers into executable programs.
-
-The path is:
-
-```text
-framework layer
-  -> linked library
-      -> application object or role
-          -> executable target
-              -> installable program
-```
-
-This is the bridge from framework knowledge to application reading. Chapter 29 showed individual applications as assembly points. Chapter 30 now widens the view again: several applications, roles, deployment boundaries, configuration files, and operational relationships form a system.
-
-Chapter 31 will then study MQTTSuite as a concrete reference ecosystem.
+Repository applications turn framework layers into executable programs. Chapter 30 widens that application view into system structure: several roles, deployment boundaries, configuration files, and operational relationships. Chapter 31 then studies MQTTSuite as a concrete reference ecosystem.

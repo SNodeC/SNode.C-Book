@@ -496,9 +496,7 @@ The next chapter is therefore not only about another protocol. It is about syste
 
 ### Native MQTT and MQTT-over-WebSocket public surfaces
 
-Native MQTT files include the public MQTT headers for the abstractions they directly use. MQTT-over-WebSocket files include the public headers for the WebSocket-carried MQTT abstraction they directly name.
-
-The build-side distinction is explicit:
+Native MQTT files include the MQTT headers they directly use. MQTT-over-WebSocket files include the WebSocket-carried MQTT abstraction they directly name. On the build side, the distinction is explicit:
 
 ```text
 native MQTT:
@@ -510,21 +508,8 @@ MQTT carried by WebSocket:
   mqtt-server-websocket
 ```
 
-Chapter 32 gives the consolidated source-derived component/header matrix for these public surfaces.
+Chapter 32 gives the consolidated source-derived component/header matrix.
 
 ### Closing perspective
 
-Chapter 26 showed one concrete cross-stack composition:
-
-```text
-HTTP upgrade
-  -> WebSocket
-      -> WebSocket subprotocol
-          -> MQTT
-```
-
-The important point is that no layer disappears.
-
-HTTP negotiates the upgrade. WebSocket carries bidirectional messages. The WebSocket subprotocol role provides the selected protocol surface. `MqttContext` bridges that carrier to the MQTT protocol object. MQTT gives the payload its protocol meaning.
-
-Chapter 25 introduced MQTT as a protocol family. Chapter 26 showed how that family can be carried through the WebSocket upgrade stack. Chapter 27 now widens the view from one composed stack to systems that combine several protocol families at once.
+MQTT-over-WebSocket is a concrete cross-stack composition: HTTP negotiates the upgrade, WebSocket carries messages, the subprotocol selects MQTT, and `MqttContext` bridges the carrier to the MQTT protocol object. Chapter 27 widens the view from one composed stack to systems that combine several protocol families at once.

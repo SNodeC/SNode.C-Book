@@ -563,25 +563,14 @@ The timing behavior still depends on the network, server, client, buffering, and
 
 ### EventSource public surface
 
-Client-side EventSource follows the same public-surface rule. A source file that directly uses the IPv4 legacy EventSource wrapper includes:
+Client-side EventSource code includes the EventSource abstraction it names. For the IPv4 legacy wrapper, that front door is:
 
 ```cpp
 #include <web/http/legacy/in/EventSource.h>
 ```
 
-That header is higher than the raw HTTP client header because the file names EventSource behavior. Server-side SSE, in contrast, is an HTTP or Express route that validates the request and streams `text/event-stream` response fragments. Chapter 32 summarizes the broader component/header mapping.
+Server-side SSE remains an HTTP or Express route that validates the request and streams `text/event-stream` response fragments. Chapter 32 summarizes the broader component/header mapping.
 
 ### Closing perspective
 
-Chapter 21 raised stream communication to HTTP messages. Chapter 22 organized HTTP messages into application structure. Chapter 23 kept that structure inside HTTP but stretched one response over time.
-
-The path now looks like this:
-
-```text
-HTTP request / response
-  -> Express-like application structure
-      -> Server-Sent Events
-          -> long-lived one-way event streaming
-```
-
-The next chapter turns to WebSocket. There, HTTP is used to negotiate an upgrade, after which WebSocket provides a bidirectional message-oriented connection.
+SSE keeps the HTTP/Express structure but stretches one response over time. WebSocket, the next step, uses HTTP differently: as an upgrade negotiation before bidirectional message communication begins.

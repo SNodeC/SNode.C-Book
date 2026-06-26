@@ -934,7 +934,5 @@ This method follows the same pattern used in Chapter 29. The build target often 
 
 ### Closing perspective
 
-Chapter 32 starts Part X by making the build system visible as architecture.
-
-Chapter 32 made the component surface and public include surface visible. The remaining chapters in Part X can now discuss porting, packaging, optional dependencies, constrained systems, and maintenance without treating the build as a black box.
+The build system is now visible as architecture: components, public include surfaces, exported targets, optional dependencies, and installable boundaries. The remaining chapters can discuss deployment, testing, and extension without treating the build as a black box.
 

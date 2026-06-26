@@ -134,7 +134,7 @@ This gives one of the most important rules in the book:
 The instance is the runtime-facing communication role; the context expresses protocol behavior for a concrete connection.
 :::
 
-The echo pair from Chapter 3 used that rule in a very small form. The server and client handles registered roles. The framework advanced those roles through runtime flow, and the context performed the echo behavior once a connection existed. Larger applications follow the same boundary even when the protocol is HTTP, WebSocket, MQTT, or a custom stream protocol.
+The echo pair used that rule in a very small form: the server and client handles registered roles, the framework advanced those roles through runtime flow, and the context performed the echo behavior once a connection existed. Larger applications follow the same boundary even when the protocol is HTTP, WebSocket, MQTT, or a custom stream protocol.
 
 #### The factory
 

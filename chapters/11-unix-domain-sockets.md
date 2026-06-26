@@ -419,29 +419,21 @@ The server/client/connection/context model remains available, while the lower-fa
 
 ### Public surface of Unix-domain stream roles
 
-The Unix-domain stream hierarchy follows the same source/build pairing as the IPv4 and IPv6 families. An application that directly names a Unix-domain legacy stream server or client includes the corresponding public role header:
+Unix-domain legacy stream roles use the `un` family fragment on both public surfaces. Source files that directly name those roles include:
 
 ```cpp
 #include <net/un/stream/legacy/SocketServer.h>
 #include <net/un/stream/legacy/SocketClient.h>
 ```
 
-The matching build-side component is:
+and link the matching component:
 
 ```text
 net-un-stream-legacy
 ```
 
-The slashes in the include path and the dashes in the component name describe the same lower-family, transport, and connection-mode selection. The header is the C++ front door; the component is the build/link front door. They belong together in the reader's mental model, but they are still different mechanisms.
+The same include/component rule from the primary families applies; only the family fragment changes. The consolidated mapping is collected in Chapter 32.
 
 ### Closing perspective
 
-Chapter 10 showed that IPv4 and IPv6 are closely related host-plus-port families.
-
-This chapter changed the endpoint identity to a Unix-domain path while keeping the same broad SNode.C role model.
-
-The next chapter changes the endpoint identity again.
-
-Bluetooth RFCOMM and L2CAP are neither host-plus-port nor path-based. They use Bluetooth device addresses together with family-specific service selectors.
-
-That makes Bluetooth the next controlled variation in the lower-layer part of the book.
+Unix-domain sockets replace host-plus-port identity with path identity while preserving the same application shape. Bluetooth is the next variation: endpoint identity becomes device-oriented and family-specific service selectors enter the address model.

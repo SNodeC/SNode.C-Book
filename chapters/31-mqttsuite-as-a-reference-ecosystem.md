@@ -554,18 +554,13 @@ The point is cooperation. MQTTSuite shows how SNode.C-based applications can rem
 
 ::: {.snodec-remember title="What to remember"}
 - MQTTSuite is a reference ecosystem, not a second framework manual.
-- The suite consists of focused applications plus shared support where useful.
-- The top-level build layout exposes the ecosystem shape: shared library support and separate operational applications.
-- `mqttbroker` demonstrates direct MQTT listener roles, web/admin roles, live observation, and MQTT-over-WebSocket.
+- `mqttbroker` demonstrates MQTT listener roles, web/admin roles, live observation, and MQTT-over-WebSocket.
 - `mqttintegrator` demonstrates mapping-driven integration semantics above MQTT.
 - `mqttbridge` demonstrates topology management and selected traffic movement between MQTT worlds.
 - `mqttcli` demonstrates the MQTT stack as an operational tool.
 - `mqttstore` demonstrates a persistence boundary: raw MQTT envelope storage plus optional typed projections.
-- `mqtt-mapping` is shared support for mapping and mapping administration, not the whole ecosystem.
-- Mapping, bridging, CLI operation, and persistence are application semantics above MQTT core.
+- Shared support exists where it serves reusable ecosystem semantics, such as mapping and mapping administration.
 - The build system and configuration surfaces expose much of the system surface.
-- MQTTSuite closes Part IX by showing how SNode.C applications can form a coherent ecosystem.
-- Chapter 32 moves into building, components, and linking strategy.
 :::
 
 ### Closing perspective

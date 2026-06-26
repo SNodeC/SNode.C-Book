@@ -514,40 +514,20 @@ Chapter 21 explains how HTTP becomes request/response semantics. Chapter 22 asks
 
 ### HTTP public surface: role headers and components
 
-The HTTP layer has its own public source-facing front doors. An HTTP server over an IPv4 legacy stream uses the HTTP role header:
+HTTP code includes the HTTP abstraction it directly names. An IPv4 legacy HTTP server uses:
 
 ```cpp
 #include <web/http/legacy/in/Server.h>
 ```
 
-An HTTP client over the same lower carrier uses the matching client header:
+and the matching client role uses:
 
 ```cpp
 #include <web/http/legacy/in/Client.h>
 ```
 
-The application should not include the lower socket server header merely because HTTP is carried by that socket stack. It should include the HTTP abstraction it directly names, and link the HTTP component surface that corresponds to the role and carrier used by the target. Chapter 32 consolidates the full source/header and component mapping.
+It should not include a lower socket header merely because HTTP is carried by that socket stack. Chapter 32 consolidates the complete source/header and component mapping.
 
 ### Closing perspective
 
-Chapter 21 showed how SNode.C raises stream communication to HTTP request/response semantics.
-
-The lower architecture remains in place:
-
-```text
-runtime
-  -> configured role
-      -> registered instance
-          -> connection
-              -> context
-                  -> configuration and diagnostics
-```
-
-The meaning exposed to application code becomes richer:
-
-```text
-stream data
-  -> HTTP request and response
-```
-
-The next chapter moves one level higher again. Chapter 22 introduces the Express-like framework, where HTTP handling becomes routing, middleware, and application structure.
+HTTP raises stream communication to request/response semantics without removing the lower runtime, role, connection, context, configuration, and diagnostic surfaces. The next chapter moves one level higher again: the Express-like framework turns HTTP handling into routing, middleware, and application structure.

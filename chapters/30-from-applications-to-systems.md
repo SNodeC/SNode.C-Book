@@ -500,34 +500,13 @@ That consistency allows a developer, maintainer, or operator to keep thinking cl
 This is the real transition from applications to systems.
 
 ::: {.snodec-remember title="What to remember"}
-- A system is not simply a bigger application.
-- A SNode.C system is best understood as a constellation of named roles and boundaries.
-- A role name is system vocabulary; it should help code, configuration, logs, diagnostics, deployment, and operator discussion use the same words.
-- A role may be realized inside one executable or by one of several cooperating executables.
-- Packaging is an operational boundary decision, not a measure of architectural maturity.
-- Protocol choice is boundary-specific, not necessarily system-wide.
-- Configuration can describe system architecture, not only application setup.
-- Persistence introduces state ownership at the system level.
-- Diagnostics become observability across role boundaries.
-- Failure behavior becomes topology-aware and role-owned.
+- A system is not simply a bigger application; it is a constellation of named roles and boundaries.
+- Role names should align code, configuration, logs, diagnostics, deployment, and operator discussion.
+- Protocol choice, packaging, persistence, diagnostics, and failure behavior are boundary decisions.
 - Stable protocol cores and domain logic are easier to evolve when they are not fused unnecessarily to one carrier or deployment shape.
 - SNode.C provides communication architecture; domain code still owns domain semantics.
-- Chapter 31 applies this vocabulary to MQTTSuite as a concrete reference ecosystem.
 :::
 
 ### Closing perspective
 
-This chapter moved from executable applications to communication systems. The vocabulary is now in place:
-
-- roles,
-- boundaries,
-- protocol families,
-- deployment shape,
-- configuration,
-- observability,
-- persistence,
-- and failure topology.
-
-That vocabulary is deliberately generic. It is not tied to one reference product.
-
-Chapter 31 applies this vocabulary to MQTTSuite. The point is to read MQTTSuite as an ecosystem of communication roles, MQTT messaging paths, bridge boundaries, configuration surfaces, persistence choices, and deployment relationships, not as a mere list of programs.
+This chapter moved from executable applications to communication systems: roles, boundaries, protocol families, deployment shape, configuration, observability, persistence, and failure topology. Chapter 31 applies that vocabulary to MQTTSuite as an ecosystem, not merely as a list of programs.

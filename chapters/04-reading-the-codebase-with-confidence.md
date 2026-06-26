@@ -14,7 +14,7 @@ runtime
               -> application protocol behavior
 ```
 
-Here, as in Chapter 3, read *instance* as the configured server-side or client-side communication role, not as an already established peer connection.
+Here, read *instance* in the refined sense used throughout the book: the configured server-side or client-side communication role, not an already established peer connection.
 
 After that first program, the next difficulty is orientation.
 
@@ -273,7 +273,7 @@ They form the bridge between framework-managed connection machinery and user-def
 
 #### Flow control
 
-The flow-controller path explains a point introduced in Chapter 3: `listen(...)` and `connect(...)` should not be read as blocking calls that perform all communication immediately on the caller's stack.
+The flow-controller path explains why `listen(...)` and `connect(...)` should not be read as blocking calls that perform all communication immediately on the caller's stack.
 
 They register communication intent. The runtime-visible flow is then carried by configuration, connection, and flow-controller state. This distinction matters later for retries, timeouts, configuration, diagnostics, and shutdown behavior.
 

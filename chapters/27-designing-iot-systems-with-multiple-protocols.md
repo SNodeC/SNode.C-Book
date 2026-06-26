@@ -499,21 +499,12 @@ SNode.C helps because many different protocol families still share the same arch
 
 ::: {.snodec-remember title="What to remember"}
 - IoT architecture is defined by communication boundaries, not only by devices.
-- A protocol should be chosen for the boundary it serves.
-- Boundary roles in this chapter are design positions; concrete SNode.C applications realize them through configured roles and registered instances.
 - Telemetry, control, observation, administration, and device exchange are different conversations.
-- MQTT is often an integration spine, not the whole system.
-- HTTP/Express often fits management and operator-facing surfaces.
-- SSE and WebSocket often fit live observation and bidirectional interaction.
+- MQTT often fits integration; HTTP/Express often fits management; SSE and WebSocket often fit live observation and interaction.
+- Bluetooth belongs near device edges, while Unix-domain sockets often fit same-host control.
 - MQTT-over-WebSocket is a bridge boundary, not a universal default.
-- Bluetooth belongs near device edges.
-- Unix domain sockets often fit same-host control.
-- Multi-protocol design can live in one process or in several cooperating applications.
-- Configuration becomes a map of roles and boundaries.
-- Diagnostics and failure policy should be role-specific.
-- The same domain meaning may appear through several clear protocol surfaces.
+- Multi-protocol design can live in one process or in several cooperating applications when roles, configuration, diagnostics, and failure policy stay boundary-specific.
 - Protocol diversity is not chaos when boundaries are clear.
-- Chapter 28 moves from protocol/system design to persistence and application state.
 :::
 
 ### Closing perspective

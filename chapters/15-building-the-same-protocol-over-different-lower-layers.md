@@ -524,7 +524,7 @@ This chapter shows why configuration matters. Chapter 16 begins to explain its p
 
 ### The public surface changes with the lower layer
 
-Changing the lower carrier is not only a CMake change. It is also a public include change when the application directly names the concrete lower role. The same protocol context can often remain stable, but the public role header and the component both change with the selected carrier:
+Changing the lower carrier changes the public role header and the linked component when application code directly names that carrier. The protocol context can remain stable, but the source/build front door follows the selected lower family and connection mode.
 
 | Carrier role | Public include | Matching component |
 |---|---|---|
@@ -533,35 +533,10 @@ Changing the lower carrier is not only a CMake change. It is also a public inclu
 | Unix-domain legacy stream server | `<net/un/stream/legacy/SocketServer.h>` | `net-un-stream-legacy` |
 | IPv4 TLS stream server | `<net/in/stream/tls/SocketServer.h>` | `net-in-stream-tls` |
 
-This table is the source/build version of the lower-layer transfer model. The application should include the public front-door header for the concrete role it names, and link the component that owns the corresponding binary surface. If only the lower carrier changes, the protocol context and factory code should remain as stable as possible.
+Chapter 32 gives the complete matrix. Here the point is the transfer rule: keep protocol behavior stable where possible, and change the carrier-facing surface deliberately.
 
 ### Closing perspective
 
-Part IV moved from raw connections to application protocol structure. Chapter 13 explained the protocol endpoint. Chapter 14 explained context creation.
+Part IV has separated protocol behavior, context creation, carrier selection, registration, and configuration. That separation is what makes lower-family transfer a design technique rather than a copy-and-edit exercise.
 
-This chapter showed how those two separations make lower-family transfer possible.
-
-The result is the central pattern:
-
-```text
-SocketContext
-  -> protocol behavior
-
-SocketContextFactory
-  -> construction and role preconfiguration
-
-application-side SocketServer / SocketClient handle
-  -> concrete lower-family selection
-
-registered server/client instance
-  -> runtime-visible configured communication role
-
-configuration
-  -> endpoint identity and deployment shape
-```
-
-With that structure in place, SNode.C is no longer just a set of socket-family APIs.
-
-It becomes a communication architecture in which protocol behavior, context creation, lower-family selection, registration, and operational configuration each have a clear place.
-
-The next part begins the configuration view. It shows how applications are shaped, named, configured, and operated in practice.
+The next part turns to configuration: how applications are named, shaped, and operated after those architectural roles are in place.

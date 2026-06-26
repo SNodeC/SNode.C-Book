@@ -457,20 +457,20 @@ This chapter shows IPv4 and IPv6 as the first concrete comparison pair.
 
 ### Public surface of the primary families
 
-The IPv4 and IPv6 families also show the source/build pairing in its simplest form. An application that directly names an IPv4 legacy stream server or client includes the IPv4 public role header:
+IPv4 and IPv6 are the simplest place to see the source/build pairing. A file that directly names an IPv4 legacy stream role uses the IPv4 public role headers:
 
 ```cpp
 #include <net/in/stream/legacy/SocketServer.h>
 #include <net/in/stream/legacy/SocketClient.h>
 ```
 
-The matching build-side component for that family, transport, and connection mode is:
+with the matching component:
 
 ```text
 net-in-stream-legacy
 ```
 
-The IPv6 spelling changes the family fragment, but not the overall structure:
+The IPv6 variant changes only the family fragment:
 
 ```cpp
 #include <net/in6/stream/legacy/SocketServer.h>
@@ -483,11 +483,9 @@ with the corresponding component:
 net-in6-stream-legacy
 ```
 
-The include path, namespace path, and component name should be read together. The header selects the C++ source-facing role, while the component selects the build/link-facing surface. Neither side replaces the other: a source file includes the public role header for the abstraction it names, and the target links the component that owns the corresponding binary surface.
+The local point is the family selection. Chapter 32 gives the consolidated include/component matrix.
 
 ### Closing perspective
 
-Chapter 9 established the general server/client/connection model. This chapter specialized that model through IPv4 and IPv6.
-
-That makes Unix domain sockets the next useful step: the reader can keep the handle, instance, connection, factory, context, and runtime model while changing what an endpoint address means.
+IPv4 and IPv6 keep the familiar host-plus-port view while introducing the lower-family distinction that later chapters vary. Unix-domain sockets are the next controlled change: the role model remains stable, but endpoint identity becomes local and path-based.
 
