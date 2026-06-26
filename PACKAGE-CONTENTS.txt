@@ -6,6 +6,7 @@ Included:
 - pdf/snodec-book.pdf
 - pdf/book-proposal-package.pdf
 - proposal/
+- proposal/evidence-sheet.md
 - frontmatter/
 - chapters/
 - parts/

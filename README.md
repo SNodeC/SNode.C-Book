@@ -23,6 +23,7 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `STRUCTURE.md` — human-readable overview of the manuscript structure.
 - `SOURCE-VERSION.md` — exact SNode.C source snapshot used for manuscript alignment.
 - `proposal/book-proposal-package.md` — publisher-facing proposal material.
+- `proposal/evidence-sheet.md` — conservative evidence/adoption status sheet for acquisition review.
 - `frontmatter/` — preface, reading guidance, conventions, author note, and acknowledgements.
 - `chapters/` — one Markdown file per chapter.
 - `parts/` — part divider files.
@@ -89,7 +90,7 @@ To generate LaTeX only:
 cmake --build build --target tex
 ```
 
-To build the publisher-facing proposal PDF:
+To build the publisher-facing proposal PDF, including the attached evidence sheet:
 
 ```bash
 cmake --build build --target proposal
@@ -107,7 +108,7 @@ The `proposal-package` target creates the final publisher/reviewer archive in `p
 cmake --build build --target proposal-package
 ```
 
-That generated archive is intended to contain both generated PDFs, the manuscript/proposal sources, front matter, back matter, source-version pin, metadata, structure files, filters, LaTeX support, figures, and example source trees needed for publisher or reviewer inspection. It should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
+That generated archive is intended to contain both generated PDFs, the manuscript/proposal sources, the proposal evidence sheet, front matter, back matter, source-version pin, metadata, structure files, filters, LaTeX support, figures, and example source trees needed for publisher or reviewer inspection. It should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
 
 ## Positioning
 

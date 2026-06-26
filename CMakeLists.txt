@@ -87,7 +87,8 @@ make_pandoc_target(tex "snodec-book" --metadata-file metadata.yaml
                    ${BOOK_FILES})
 
 make_pandoc_pdf_target(proposal "book-proposal-package" --metadata-file
-                       metadata.yaml proposal/book-proposal-package.md)
+                       metadata.yaml proposal/book-proposal-package.md
+                       proposal/evidence-sheet.md)
 
 # Main manuscript PDF targets require generated figure PDFs because the Markdown
 # sources include figures/pdf/fig-*.pdf.

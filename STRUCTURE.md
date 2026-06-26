@@ -7,6 +7,8 @@ This structure belongs to an architecture-first SNode.C book. The manuscript is 
 
 The manuscript currently contains the planned front matter, all planned chapters, an epilogue, and back matter.
 
+The publisher-facing proposal material now also includes a separate evidence sheet that distinguishes public repository evidence, author-confirmed professional context, and adoption claims that are not yet made.
+
 ## Front matter
 
 - Preface — **present**
@@ -96,7 +98,7 @@ The manuscript currently contains the planned front matter, all planned chapters
 ## Back matter
 
 - Further Reading — **present**
-- Index — **infrastructure present; curated index entries are pending**
+- Index — **present; infrastructure and curated entries added**
 
 ## Example source trees
 
