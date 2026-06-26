@@ -85,7 +85,7 @@ This is one reason address semantics deserve careful treatment. A value such as 
 ### Endpoint identity by family
 
 \index{endpoint identity}
-\index{network families}
+\index{network family}
 
 
 The concrete address families are:
@@ -224,7 +224,7 @@ Unix domain sockets are pedagogically useful because they break a common habit. 
 
 \index{RFCOMM}
 \index{Bluetooth!RFCOMM}
-\index{RFCOMM!channel}
+\index{channel}
 
 
 The RFCOMM address class is:
@@ -266,7 +266,7 @@ That means the address can express a broad or deferred Bluetooth endpoint identi
 
 \index{L2CAP}
 \index{Bluetooth!L2CAP}
-\index{L2CAP!PSM}
+\index{PSM}
 
 
 The L2CAP address class is:
@@ -353,9 +353,9 @@ Full constructors express a fully specified peer or an explicitly specified loca
 ```cpp
 net::in::SocketAddress ip4("127.0.0.1", 8080);
 net::in6::SocketAddress ip6("::1", 8080);
-net::un::SocketAddress un("/tmp/snodec.sock");
-net::rc::SocketAddress rc("00:11:22:33:44:55", 3);
-net::l2::SocketAddress l2("00:11:22:33:44:55", 0x1001);
+net::un::SocketAddress unixAddress("/tmp/snodec.sock");
+net::rc::SocketAddress rfcommAddress("00:11:22:33:44:55", 3);
+net::l2::SocketAddress l2capAddress("00:11:22:33:44:55", 0x1001);
 ```
 
 These examples are not application programs. They are anchors for the address model.
