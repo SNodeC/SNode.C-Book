@@ -1,10 +1,10 @@
-# Step 11 Full PDF / Package QA Report
+# Full PDF / Package QA Report
 
 Package inspected: `snodec-book-proposal-package-20260626-210243-v16.tar.gz`
 
 ## Verdict
 
-**PASS for Step 11 QA.**
+**PASS for QA.**
 
 I found no blocking production defect in the supplied package. The generated full manuscript PDF and proposal PDF are present, readable, linked, A4, text-extractable, and internally consistent. The recent fixes for index, proposal/evidence sheet, syntax coloring, header filenames, `.socket`, `.database`, and variable-name collisions are present in the package and visible in the rendered PDF.
 
@@ -153,16 +153,16 @@ Result: **pass.**
 
 ## Build/rebuild note
 
-This QA pass inspected the generated PDFs supplied inside the package. It did not require generating a new PDF. The local container has Pandoc and XeLaTeX, but this report treats the supplied PDFs as authoritative because the user provided the current built package for Step 11 QA.
+This QA pass inspected the generated PDFs supplied inside the package. It did not require generating a new PDF. The local container has Pandoc and XeLaTeX, but this report treats the supplied PDFs as authoritative because the user provided the current built package for QA.
 
 ## Remaining non-blocking editorial decisions
 
-These are not Step 11 defects:
+These are not defects:
 
 1. The manuscript remains long and specialist. That is a market-positioning decision, not a package-consistency defect.
 2. The proposal correctly frames the book as specialist / professional / course-friendly rather than a broad mainstream C++ networking title.
 3. A final external reviewer may still ask for a hard length reduction depending on publisher target.
 
-## Step 11 conclusion
+## Conclusion
 
-The package passes full PDF/package QA. It is ready to proceed to Step 12: final publisher/reviewer package preparation.
+The package passes full PDF/package QA. It is ready to proceed to: final publisher/reviewer package preparation.
