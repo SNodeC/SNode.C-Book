@@ -516,7 +516,7 @@ The sync-style API exposes metadata calls such as:
 | `affectedRows(...)` | report affected-row count |
 | `fieldCount(...)` | report field count |
 
-“Sync-style” here identifies metadata-style command surfaces; the application-facing flow still uses callbacks. A reader should not assume that sync-style metadata calls mean arbitrary blocking procedural database code inside an event-driven application.
+“Sync-style” here identifies metadata-style command surfaces; the application-facing flow still uses callbacks. These calls read state that the MariaDB client library already has after a completed command or result step. They do not stand for arbitrary blocking SQL work inside an event-driven application.
 
 #### `query(...)` versus `exec(...)`
 
@@ -570,6 +570,41 @@ transaction
 ```
 
 Both can appear together, but they are different ideas.
+
+#### Chaining, callbacks, and metadata reads
+
+The call shape is important. A chained call appends to the command sequence returned by the previous operation:
+
+```cpp
+db.exec(...).query(...);
+```
+
+Here the `query(...)` belongs to the same sequence as the preceding `exec(...)`. It is not a second immediate operation on the client object.
+
+Starting async work from inside a callback has different meaning:
+
+```cpp
+db.exec(..., [&db]() {
+    db.exec(...);
+}, ...);
+```
+
+The inner `exec(...)` creates a new command sequence and queues it on the same connection. It does not splice itself into the current sequence, and it does not jump ahead of commands already chained onto that sequence.
+
+Metadata calls such as `affectedRows(...)` are the narrow exception to this “queue more SQL work” rule. They are synchronous metadata reads of the just-completed command state. Used inside an `exec(...)` success callback, `affectedRows(...)` observes the completed command before the connection advances to the next queued SQL command.
+
+A compact mental model is:
+
+```text
+chained call
+  -> append to the current returned sequence
+
+async call created inside a callback
+  -> create a new queued sequence
+
+metadata call inside a callback
+  -> read already available command/result state immediately
+```
 
 ### Transactions as sequenced database work
 
