@@ -1,0 +1,206 @@
+if(NOT DEFINED SOURCE_DIR)
+  message(FATAL_ERROR "SOURCE_DIR is not set")
+endif()
+
+if(NOT DEFINED BUILD_DIR)
+  message(FATAL_ERROR "BUILD_DIR is not set")
+endif()
+
+if(NOT DEFINED PACKAGE_DIR)
+  message(FATAL_ERROR "PACKAGE_DIR is not set")
+endif()
+
+file(MAKE_DIRECTORY "${PACKAGE_DIR}")
+
+file(GLOB EXISTING_PACKAGES
+     "${PACKAGE_DIR}/snodec-book-proposal-package-*-v[0-9][0-9].tar.gz")
+
+set(NEXT_VERSION 1)
+foreach(PACKAGE_FILE IN LISTS EXISTING_PACKAGES)
+  get_filename_component(PACKAGE_NAME "${PACKAGE_FILE}" NAME)
+  if(PACKAGE_NAME MATCHES "-v([0-9][0-9])\\.tar\\.gz$")
+    set(CURRENT_VERSION "${CMAKE_MATCH_1}")
+    math(EXPR CANDIDATE_VERSION "${CURRENT_VERSION} + 1")
+    if(CANDIDATE_VERSION GREATER NEXT_VERSION)
+      set(NEXT_VERSION "${CANDIDATE_VERSION}")
+    endif()
+  endif()
+endforeach()
+
+if(NEXT_VERSION GREATER 99)
+  message(FATAL_ERROR "Proposal package version would exceed v99")
+endif()
+
+string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d-%H%M%S")
+if(NEXT_VERSION LESS 10)
+  set(PACKAGE_VERSION "0${NEXT_VERSION}")
+else()
+  set(PACKAGE_VERSION "${NEXT_VERSION}")
+endif()
+
+set(PACKAGE_BASENAME
+    "snodec-book-proposal-package-${PACKAGE_TIMESTAMP}-v${PACKAGE_VERSION}")
+set(PACKAGE_PATH "${PACKAGE_DIR}/${PACKAGE_BASENAME}.tar.gz")
+set(STAGING_ROOT "${PACKAGE_DIR}/.staging")
+set(STAGING_DIR "${STAGING_ROOT}/${PACKAGE_BASENAME}")
+
+file(REMOVE_RECURSE "${STAGING_DIR}")
+file(MAKE_DIRECTORY "${STAGING_DIR}")
+file(MAKE_DIRECTORY "${STAGING_DIR}/dist/pdf")
+
+set(REQUIRED_SOURCE_FILES
+    "CMakeLists.txt"
+    "README.md"
+    "STRUCTURE.md"
+    "production/CMakeLists.txt"
+    "production/cmake/SNodeCBookPaths.cmake"
+    "production/cmake/SNodeCBookTools.cmake"
+    "production/cmake/SNodeCPandocBook.cmake"
+    "production/metadata/metadata.yaml"
+    "assets/CMakeLists.txt"
+    "assets/figures/CMakeLists.txt"
+    "manuscript/CMakeLists.txt"
+    "manuscript/book-files.txt"
+    "review/CMakeLists.txt"
+    "review/proposal/CMakeLists.txt"
+    "review/proposal/book-proposal-package.md"
+    "review/proposal/evidence-sheet.md"
+    "packaging/CMakeLists.txt"
+    "packaging/cmake/MakeProposalPackage.cmake"
+    "packaging/PACKAGE-CONTENTS.txt"
+    "source-baseline/CMakeLists.txt"
+    "source-baseline/SOURCE-VERSION.md")
+
+set(REQUIRED_SOURCE_DIRS
+    "manuscript/frontmatter"
+    "manuscript/chapters"
+    "manuscript/parts"
+    "manuscript/backmatter"
+    "production/filters"
+    "production/latex"
+    "production/cmake"
+    "assets/figures/src"
+    "assets/figures/pdf"
+    "companion/examples"
+    "source-baseline"
+    "review/proposal"
+    "review/verification"
+    "packaging"
+    "packaging/cmake")
+
+set(REQUIRED_BUILD_FILES
+    "snodec-book.pdf"
+    "book-proposal-package.pdf")
+
+foreach(REQUIRED_FILE IN LISTS REQUIRED_SOURCE_FILES)
+  if(NOT EXISTS "${SOURCE_DIR}/${REQUIRED_FILE}")
+    message(FATAL_ERROR
+      "Required publisher package source file missing: ${REQUIRED_FILE}")
+  endif()
+endforeach()
+
+foreach(REQUIRED_DIR IN LISTS REQUIRED_SOURCE_DIRS)
+  if(NOT IS_DIRECTORY "${SOURCE_DIR}/${REQUIRED_DIR}")
+    message(FATAL_ERROR
+      "Required publisher package source directory missing: ${REQUIRED_DIR}")
+  endif()
+endforeach()
+
+foreach(REQUIRED_BUILD_FILE IN LISTS REQUIRED_BUILD_FILES)
+  if(NOT EXISTS "${BUILD_DIR}/${REQUIRED_BUILD_FILE}")
+    message(FATAL_ERROR
+      "Required generated package file missing: ${BUILD_DIR}/${REQUIRED_BUILD_FILE}")
+  endif()
+endforeach()
+
+function(copy_source_file RELATIVE_PATH)
+  get_filename_component(PARENT_DIR "${RELATIVE_PATH}" DIRECTORY)
+  if(PARENT_DIR)
+    file(MAKE_DIRECTORY "${STAGING_DIR}/${PARENT_DIR}")
+    file(COPY "${SOURCE_DIR}/${RELATIVE_PATH}"
+         DESTINATION "${STAGING_DIR}/${PARENT_DIR}")
+  else()
+    file(COPY "${SOURCE_DIR}/${RELATIVE_PATH}"
+         DESTINATION "${STAGING_DIR}")
+  endif()
+endfunction()
+
+function(copy_source_dir RELATIVE_PATH)
+  get_filename_component(PARENT_DIR "${RELATIVE_PATH}" DIRECTORY)
+  if(PARENT_DIR)
+    file(MAKE_DIRECTORY "${STAGING_DIR}/${PARENT_DIR}")
+    set(DESTINATION_DIR "${STAGING_DIR}/${PARENT_DIR}")
+  else()
+    set(DESTINATION_DIR "${STAGING_DIR}")
+  endif()
+
+  file(COPY "${SOURCE_DIR}/${RELATIVE_PATH}"
+       DESTINATION "${DESTINATION_DIR}"
+       PATTERN ".git" EXCLUDE
+       PATTERN ".gitignore" EXCLUDE
+       PATTERN ".gitattributes" EXCLUDE
+       PATTERN ".qtcreator" EXCLUDE
+       PATTERN ".idea" EXCLUDE
+       PATTERN ".vscode" EXCLUDE
+       PATTERN "build" EXCLUDE
+       PATTERN "cmake-build-*" EXCLUDE
+       PATTERN "CMakeFiles" EXCLUDE
+       PATTERN "CMakeCache.txt" EXCLUDE
+       PATTERN "dist/packages" EXCLUDE
+       PATTERN ".staging" EXCLUDE
+       PATTERN "*.aux" EXCLUDE
+       PATTERN "*.log" EXCLUDE
+       PATTERN "*.out" EXCLUDE
+       PATTERN "*.toc" EXCLUDE
+       PATTERN "*.idx" EXCLUDE
+       PATTERN "*.ind" EXCLUDE
+       PATTERN "*.ilg" EXCLUDE
+       PATTERN "*.fls" EXCLUDE
+       PATTERN "*.fdb_latexmk" EXCLUDE
+       PATTERN "*.synctex.gz" EXCLUDE)
+endfunction()
+
+# Generated PDFs for publisher/reviewer reading.
+file(COPY "${BUILD_DIR}/snodec-book.pdf" DESTINATION "${STAGING_DIR}/dist/pdf")
+file(COPY "${BUILD_DIR}/book-proposal-package.pdf"
+     DESTINATION "${STAGING_DIR}/dist/pdf")
+
+# Required manuscript/proposal sources and build metadata.
+foreach(REQUIRED_FILE IN LISTS REQUIRED_SOURCE_FILES)
+  copy_source_file("${REQUIRED_FILE}")
+endforeach()
+
+foreach(REQUIRED_DIR IN LISTS REQUIRED_SOURCE_DIRS)
+  copy_source_dir("${REQUIRED_DIR}")
+endforeach()
+
+# Optional high-level publisher-facing orientation files.
+foreach(OPTIONAL_FILE IN ITEMS
+        "LICENSE"
+        "LICENSE.md"
+        "COPYING"
+        "CHANGELOG.md")
+  if(EXISTS "${SOURCE_DIR}/${OPTIONAL_FILE}")
+    copy_source_file("${OPTIONAL_FILE}")
+  endif()
+endforeach()
+
+# Optional source-support infrastructure used by the current PDF build.
+foreach(OPTIONAL_DIR IN ITEMS
+        "production/scripts")
+  if(IS_DIRECTORY "${SOURCE_DIR}/${OPTIONAL_DIR}")
+    copy_source_dir("${OPTIONAL_DIR}")
+  endif()
+endforeach()
+
+execute_process(
+  COMMAND "${CMAKE_COMMAND}" -E tar czf "${PACKAGE_PATH}" --format=gnutar .
+  WORKING_DIRECTORY "${STAGING_DIR}"
+  RESULT_VARIABLE TAR_RESULT)
+
+if(NOT TAR_RESULT EQUAL 0)
+  message(FATAL_ERROR "Failed to create proposal package: ${PACKAGE_PATH}")
+endif()
+
+file(REMOVE_RECURSE "${STAGING_ROOT}")
+message(STATUS "Created full book proposal package: ${PACKAGE_PATH}")

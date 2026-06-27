@@ -105,25 +105,43 @@ The publisher-facing proposal material now also includes a separate evidence she
 The protocol and persistence chapters refer to electronic companion examples that are shown in shortened form in the printed manuscript. In this source package, those companion examples are stored as compact source trees:
 
 ```text
-examples/HttpUpgrade-Server
-examples/HttpUpgrade-Client
-examples/SSE-Server
-examples/SSE-EventSource-Client
-examples/WebSocket-Echo-ServerSubprotocol
-examples/WebSocket-Echo-ClientSubprotocol
-examples/LineProtocol-Server
-examples/LineProtocol-Client
-examples/MQTT-ClientRole
-examples/MariaDB-Minimal
+companion/examples/HttpUpgrade-Server
+companion/examples/HttpUpgrade-Client
+companion/examples/SSE-Server
+companion/examples/SSE-EventSource-Client
+companion/examples/WebSocket-Echo-ServerSubprotocol
+companion/examples/WebSocket-Echo-ClientSubprotocol
+companion/examples/LineProtocol-Server
+companion/examples/LineProtocol-Client
+companion/examples/MQTT-ClientRole
+companion/examples/MariaDB-Minimal
 ```
 
-The directory `examples/` also has an aggregate `CMakeLists.txt` for configuring, building, and installing/deploying all companion examples together. The aggregate verification note is recorded in `verification/examples-aggregate-build-verification.md`.
+The directory `companion/examples/` also has an aggregate `CMakeLists.txt` for configuring, building, and installing/deploying all companion examples together. The aggregate verification note is recorded in `review/verification/examples-aggregate-build-verification.md`.
 
 The final technical part uses two larger source trees as source-of-truth examples:
 
 ```text
-examples/MiniGateway-Base
-examples/MiniGateway-Extended
+companion/examples/MiniGateway-Base
+companion/examples/MiniGateway-Extended
 ```
 
 Chapter 37 uses the base version. Chapter 38 uses the extended version to show how a SNode.C application can be extended without disturbing existing protocol surfaces.
+
+
+## Build-system structure
+
+The root `CMakeLists.txt` is an orchestration file. Build rules are split by responsibility:
+
+```text
+production/cmake/      shared path, tool, and Pandoc helper functions
+assets/CMakeLists.txt  figure build entry point
+assets/figures/        TikZ figure build rules
+manuscript/            full book `tex`, `pdf`, and `book` targets
+review/proposal/       publisher proposal PDF target
+packaging/             publisher/reviewer tar.gz package target
+source-baseline/       source-baseline check target
+companion/examples/    standalone C++ companion examples
+```
+
+The companion examples are not part of the default book build because they require an installed SNode.C development package. They can be configured through the main build with `SNODEC_BOOK_BUILD_COMPANION_EXAMPLES=ON`, or built separately from `companion/examples/`.
