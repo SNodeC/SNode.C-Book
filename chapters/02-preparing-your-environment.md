@@ -154,7 +154,7 @@ This creates and selects the public SNode.C release tag used by this book:
 ~/projects/snode.c/
 ```
 
-The exact source baseline is recorded in `SOURCE-VERSION.md`. The tag is the reader-facing checkout target. The full commit SHA in that file is the authoritative pin used for verification. To confirm that the checkout matches the book baseline, run:
+The book baseline is SNode.C release tag `v1.0.2`, with commit `6e475262084ae2dab2daef8781ab9e4adb82d18e` as the authoritative source pin used for verification. The tag is the reader-facing checkout target. To confirm that the checkout matches the book baseline, run:
 
 ```sh
 git rev-parse HEAD

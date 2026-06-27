@@ -394,7 +394,7 @@ Headers expose declarations, aliases, templates, inline helpers, and source-faci
 \index{public surface}
 
 
-The following matrix is read from the pinned SNode.C source snapshot recorded in `SOURCE-VERSION.md`. It is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a role, and the component target or targets it would normally link when it needs the corresponding compiled surface.
+The following matrix reflects the pinned SNode.C source snapshot used to prepare this edition of the book: release tag `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. It is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a role, and the component target or targets it would normally link when it needs the corresponding compiled surface.
 
 In the source tree, examples and framework code include headers relative to the SNode.C source include root, for example `<express/legacy/in/WebApp.h>`. Installed consumers use the same public header shape below the installed `include/snode.c` prefix.
 

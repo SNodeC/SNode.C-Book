@@ -26,7 +26,7 @@ The book remains a technical book. It does not hide C++, protocols, build system
 
 The book assumes that you can read C++ source code, build CMake projects, work in a POSIX-like shell, and recognize common networking terms such as socket, address, connection, TLS, HTTP, WebSocket, and MQTT. It does not assume prior knowledge of SNode.C.
 
-The examples are written for the SNode.C baseline recorded in `SOURCE-VERSION.md`. The reader-facing tag is `v1.0.2`, and the authoritative commit is `6e475262084ae2dab2daef8781ab9e4adb82d18e`. Later versions of the framework may remain compatible, but the book's examples and source-derived explanations are tied to that baseline unless the manuscript is deliberately updated.
+The examples are written for SNode.C release tag `v1.0.2`, with commit `6e475262084ae2dab2daef8781ab9e4adb82d18e` as the source baseline used during preparation of this edition. Later versions of the framework may remain compatible, but the book's examples and source-derived explanations are tied to that baseline unless the manuscript is deliberately updated.
 
 ### What this book is not {.unnumbered}
 
