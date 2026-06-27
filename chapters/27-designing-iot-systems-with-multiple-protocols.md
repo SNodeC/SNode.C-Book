@@ -184,6 +184,8 @@ SNode.C's component structure reflects this breadth: lower-family stream compone
 
 The result is not protocol uniformity. The result is architectural coherence across protocol diversity.
 
+\SNodeCNextSectionMark{27.6. TELEMETRY, CONTROL, OBSERVATION, ADMINISTRATION}
+
 ### Telemetry, control, observation, and administration are different conversations
 
 \index{IoT systems!telemetry}

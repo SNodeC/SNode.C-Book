@@ -303,7 +303,7 @@ A compact comparison makes the transfer visible.
 
 | Carrier | Endpoint identity | What changes | What may remain |
 |---|---|---|---|
-| IPv4 | host + port | address/configuration/deployment | context, factory shape, protocol behavior |
+| IPv4 | host + port | address, configuration, and deployment | context, factory shape, protocol behavior |
 | IPv6 | host + port | address form, IPv6 semantics, deployment | context, factory shape, protocol behavior |
 | Unix domain sockets | local path | local IPC path and lifecycle | context, factory shape, protocol behavior |
 | RFCOMM | Bluetooth address + channel | Bluetooth stack, pairing/trust setup, channel semantics | context, factory shape, protocol behavior |

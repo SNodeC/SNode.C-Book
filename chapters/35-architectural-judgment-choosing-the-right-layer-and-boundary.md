@@ -1,5 +1,7 @@
 ## Architectural Judgment: Choosing the Right Layer and Boundary
 
+\markboth{CHAPTER 35. ARCHITECTURAL JUDGMENT}{CHAPTER 35. ARCHITECTURAL JUDGMENT}
+
 \index{architectural judgment}
 \index{layer choice}
 \index{boundary choice}

@@ -121,6 +121,8 @@ Protocol visibility answers questions such as:
 
 This belongs in the `SocketContext`, because the context is where protocol behavior lives. The connection layer can say that bytes arrived. The context can say what those bytes meant.
 
+\SNodeCNextSectionMark{18.3. THE LOGGING SURFACE}
+
 ### The logging surface: ordinary logs, system-error logs, and verbose depth
 
 \index{LOG()@\texttt{LOG()}}

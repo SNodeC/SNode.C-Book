@@ -39,6 +39,26 @@ header-includes:
     \usepackage{xcolor}
     \input{latex/snodec-callouts.tex}
 
+    % One-shot running-head override for long section titles.
+    % Use immediately before a Markdown section heading when the printed
+    % heading and TOC entry should stay full, but the page header needs
+    % a shorter navigation label.
+    \makeatletter
+    \let\snodec@nextsectionmark\@empty
+    \newcommand{\SNodeCNextSectionMark}[1]{%
+      \gdef\snodec@nextsectionmark{#1}%
+    }
+    \let\snodec@origsectionmark\sectionmark
+    \renewcommand{\sectionmark}[1]{%
+      \ifx\snodec@nextsectionmark\@empty
+        \snodec@origsectionmark{#1}%
+      \else
+        \markright{\snodec@nextsectionmark}%
+        \global\let\snodec@nextsectionmark\@empty
+      \fi
+    }
+    \makeatother
+
     % Keep short part introductions on the part page instead of forcing
     % a nearly empty page between the part title and the first chapter.
     % The next chapter still starts on its own page.

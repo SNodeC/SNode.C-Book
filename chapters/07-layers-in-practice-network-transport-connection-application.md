@@ -1,5 +1,7 @@
 ## Layers in Practice: Network, Transport, Connection, Application
 
+\markboth{CHAPTER 7. LAYERS IN PRACTICE}{CHAPTER 7. LAYERS IN PRACTICE}
+
 \index{layered architecture}
 \index{communication stack}
 

@@ -399,7 +399,9 @@ When you do not know where an executable, library, or component comes from, read
 
 Build files reveal boundaries that may be less obvious from implementation files alone.
 
-### Do not confuse source paths, public includes, and installable components
+\SNodeCNextSectionMark{4.12. SOURCE PATHS, PUBLIC INCLUDES, COMPONENTS}
+
+### Do not confuse source paths, public includes, and installable components {#do-not-confuse-source-paths-public-includes-and-installable-components}
 
 \index{source paths}
 \index{public includes}
