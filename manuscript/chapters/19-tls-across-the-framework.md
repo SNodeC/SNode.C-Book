@@ -23,7 +23,7 @@ TLS changes the connection layer; it does not replace the application architectu
 
 A TLS-enabled SNode.C application still has:
 
-- application-side server/client handles,
+- server/client handles,
 - registered runtime-visible server/client instances,
 - configuration sections,
 - factories,
@@ -31,7 +31,7 @@ A TLS-enabled SNode.C application still has:
 - connection lifecycle,
 - runtime diagnostics.
 
-What changes is the connection handling between the lower transport and the application protocol.
+The connection handling between the lower transport and the application protocol changes.
 
 That distinction matters. TLS is serious: it brings identity material, trust material, handshake behavior, shutdown behavior, close-notify semantics, timeout handling, and TLS-specific diagnostics. But those concerns have a place in the architecture. They belong to secure connection handling and its configuration. They should not be spread randomly through the protocol context merely because encryption is involved.
 
@@ -50,7 +50,7 @@ lower communication family
           -> application protocol
 ```
 
-TLS belongs in the connection-handling position. It sits above the lower communication family and transport form. It sits below the application protocol.
+TLS belongs in the connection-handling position. It sits above the lower family and transport form. It sits below the application protocol.
 
 That means:
 
@@ -77,14 +77,14 @@ lower communication family
           -> SocketContext
 ```
 
-Where a TLS wrapper exists for a lower family, this pattern applies. The chapter uses IPv4 examples because they are familiar, not because the architectural idea is IPv4-specific. The same connection-layer specialization can be expressed for other lower communication families where the corresponding TLS stream components are available.
+Where a TLS wrapper exists for a lower family, this pattern applies. The chapter uses IPv4 examples because they are familiar, not because the architectural idea is IPv4-specific. The same connection-layer specialization can be expressed for other lower families where the corresponding TLS stream components are available.
 
-The point is not that every lower family has identical deployment meaning. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP still have different endpoint identities and operating-system assumptions. The point is that TLS does not erase that lower-family identity. It specializes the stream connection handling above it.
+Not every lower family has identical deployment meaning. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP still have different endpoint identities and operating-system assumptions. The point is that TLS does not erase that lower-family identity. It specializes the stream connection handling above it.
 
 
-Figure \ref{fig:tls-connection-layer-specialization} shows the intended mental model. TLS is not a different application protocol and not a different lower communication family. It specializes the stream connection form. The surrounding role, address family, and socket-context structure remain recognizable. The diagram focuses on that specialization point rather than enumerating every TLS-enabled class variant.
+Figure \ref{fig:tls-connection-layer-specialization} shows the intended mental model. TLS is not a different application protocol and not a different lower family. It specializes the stream connection form. The surrounding role, address family, and socket-context structure remain recognizable. The diagram focuses on that specialization point rather than enumerating every TLS-enabled class variant.
 
-![TLS as a connection-layer specialization: the lower communication family, application protocol, and socket context shape remain stable, while the stream connection is specialized from legacy byte transport to TLS-secured byte transport.](assets/figures/pdf/fig-15-tls-connection-layer-specialization.pdf){#fig:tls-connection-layer-specialization width=90% latex-placement="tbp"}
+![TLS as a connection-layer specialization: the lower family, application protocol, and socket context shape remain stable, while the stream connection is specialized from legacy byte transport to TLS-secured byte transport.](assets/figures/pdf/fig-15-tls-connection-layer-specialization.pdf){#fig:tls-connection-layer-specialization width=90% latex-placement="tbp"}
 
 ### Legacy and TLS streams as neighboring connection variants
 
@@ -97,7 +97,7 @@ A compact comparison makes the teaching point visible.
 
 | Concern | Legacy stream | TLS stream |
 |---|---|---|
-| application-side handle | selects a lower-family stream role | selects a lower-family TLS stream role |
+| handle | selects a lower-family stream role | selects a lower-family TLS stream role |
 | registered instance | same runtime-visible role model | same runtime-visible role model |
 | lower family | IPv4, IPv6, Unix domain sockets, Bluetooth, etc. | still present beneath TLS |
 | connection machinery | legacy reader/writer | TLS reader/writer |
@@ -194,7 +194,7 @@ TLS often leaves the higher-level application structure recognizable.
 
 The following parts can often remain stable:
 
-- application-side handle usage shape,
+- handle usage shape,
 - registered instance naming,
 - configuration hierarchy,
 - factory pattern,
@@ -383,7 +383,7 @@ protocol wants to close
               -> disconnect summary
 ```
 
-This matters because failures and timeouts can occur during shutdown as well as during setup.
+Failures and timeouts can occur during shutdown as well as during setup.
 
 A TLS-enabled connection therefore has two important TLS-sensitive phases:
 
@@ -403,7 +403,7 @@ This is one reason TLS diagnostics belong together with connection lifecycle vis
 
 ### TLS does not erase the lower family
 
-A TLS connection is still carried over a lower communication family. The lower family does not disappear just because the connection is encrypted.
+A TLS connection is still carried over a lower family. The lower family does not disappear just because the connection is encrypted.
 
 The application may still need to know whether the carrier beneath TLS is:
 
@@ -434,7 +434,7 @@ The context still needs to:
 
 That means the same protocol endpoint may often work over legacy and TLS streams.
 
-The application-side handle type, registered instance, connection-layer wrapper, and TLS configuration decide whether the connection is secure.
+The handle type, registered instance, connection-layer wrapper, and TLS configuration decide whether the connection is secure.
 
 The context implements the conversation. A context can stay TLS-independent when the protocol conversation after connection readiness is the same.
 
@@ -501,7 +501,7 @@ legacy stream first
 
 First understand the legacy application:
 
-- application-side server/client handle,
+- server/client handle,
 - registered instance,
 - instance configuration,
 - factory,
@@ -523,7 +523,7 @@ Write the protocol endpoint as if secure and insecure transport are the same con
 
 Then let:
 
-- the application-side handle type,
+- the handle type,
 - the registered instance and its configuration,
 - the connection-layer wrapper,
 - the `tls` section,
@@ -544,9 +544,9 @@ That distinction will matter again in the deployment chapters. A binary may be l
 
 ::: {.snodec-remember title="What to remember"}
 - TLS is a connection-layer specialization, not a second application architecture.
-- The lower communication family and transport form remain present beneath TLS.
+- The lower family and transport form remain present beneath TLS.
 - TLS changes reader/writer behavior, SSL object setup, handshake, shutdown, close-notify handling, certificate/trust configuration, and diagnostics.
-- The application-side handle and registered instance model remain recognizable; the TLS wrapper changes the connection-layer machinery.
+- The handle and registered instance model remain recognizable; the TLS wrapper changes the connection-layer machinery.
 - A `SocketContext` can often remain TLS-independent when the protocol conversation is the same after secure connection setup.
 - TLS-specific meaning should enter protocol logic only when certificate, trust, SNI, or secure-transport properties are part of the protocol semantics.
 :::

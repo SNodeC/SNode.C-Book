@@ -510,7 +510,7 @@ core build target depends on an application library
 
 Framework pollution makes the next application inherit assumptions from the previous one. The cure is not to avoid reuse, but to reuse only the right boundary.
 
-A project-specific rule may be shared by several executables in that project. That suggests a project library, not a framework component. A generic MQTT mapping mechanism may be shared by many applications. That may justify reusable support. A new lower communication family belongs in the framework only if it really fits the lower-family abstraction and can carry several upper layers without becoming application-specific.
+A project-specific rule may be shared by several executables in that project. That suggests a project library, not a framework component. A generic MQTT mapping mechanism may be shared by many applications. That may justify reusable support. A new lower family belongs in the framework only if it really fits the lower-family abstraction and can carry several upper layers without becoming application-specific.
 
 ### Avoiding abstraction too early
 

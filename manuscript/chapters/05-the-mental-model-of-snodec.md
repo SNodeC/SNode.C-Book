@@ -43,11 +43,11 @@ That sentence is dense, but it contains the core of the book.
 
 `layer-based` means that network family, transport form, connection handling, and application protocol are separated enough to be reasoned about independently.
 
-`configured server and client instances` are communication roles registered with and managed by the framework's runtime and flow-controller machinery. In user code, they are configured and registered through visible server or client objects.
+`configured server and client instances` are communication roles registered with and managed by the framework's runtime and flow-controller machinery. In user code, they are configured and registered through server/client objects.
 
 `communication intent` is the fact that an application wants to listen or connect. Calling `listen(...)` or `connect(...)` is best read as registering that intent with the framework, not as performing all later communication immediately on the caller's stack.
 
-`per-connection contexts` are the protocol endpoints attached to concrete peer connections.
+`per-connection contexts` are the protocol endpoints attached to peer connections.
 
 `selectable lower communication layers` are what make the same application shape usable over IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, and TLS-capable stream variants where the corresponding modules support that combination.
 
@@ -111,7 +111,7 @@ This is the reason `core::SNodeC::start()` is not a ceremonial final line. It is
 
 An instance is a configured communication role managed by the framework after registration. It participates in the SNode.C runtime and is advanced through the flow-controller machinery.
 
-In everyday discussion, the visible `SocketServer` or `SocketClient` object in user code may also be called an instance. That is natural and often harmless. In the stricter architectural vocabulary used here, however, the visible C++ object is the application-side handle. Through `listen(...)` or `connect(...)`, that handle registers a configured communication role with the framework. That registered role is the instance. It is carried by framework-owned runtime and flow-controller state, and it must not be confused with the concrete peer connection that may appear later.
+In everyday discussion, the `SocketServer`/`SocketClient` handle in user code may also be called an instance. That is natural and often harmless. In the stricter architectural vocabulary used here, however, the visible C++ object is the application-side handle. Through `listen(...)` or `connect(...)`, that handle registers a configured communication role with the framework. That registered role is the instance. It is carried by framework-owned runtime and flow-controller state, and it must not be confused with the peer connection that may appear later.
 
 For example, an IPv4 stream legacy server object in `main()` is the handle through which the application names the role, adjusts configuration, attaches callbacks, and finally registers the listening role. The exact type name encodes lower-layer choices, but the architectural sequence is stable: handle, registered instance, runtime flow, connection, context.
 
@@ -212,7 +212,7 @@ The application creates server or client handles.
 
 For a simple program, that may be one server and one client. For a real system, there may be several configured instances: perhaps an HTTP server, an MQTT client, a WebSocket bridge, or several independent communication endpoints.
 
-The important point is that each instance represents a configured communication role, while the visible object is the handle used to configure and register that role.
+Each instance represents a configured communication role; the handle configures and registers that role.
 
 #### Phase 3: register communication intent
 
@@ -403,7 +403,7 @@ The application protocol is the behavior above the connection.
 
 It may be tiny and custom, like the echo protocol. It may be HTTP. It may be WebSocket. It may be MQTT. It may be an Express-like application built on routing and middleware. It may be a bridge or integrator in a larger system.
 
-The important point is that protocol behavior belongs above the lower communication layers.
+Protocol behavior belongs above the lower communication layers.
 
 That separation is what gives the framework its transfer value.
 
@@ -635,7 +635,7 @@ Together they form the working mental model of SNode.C.
 ::: {.snodec-remember title="What to remember"}
 - SNode.C is best understood as an event-driven, layer-based framework built from recurring roles.
 - `core::SNodeC` owns the visible runtime lifecycle; `listen(...)` and `connect(...)` register instances that the runtime and flow-controller machinery advance.
-- A server or client instance is the long-lived runtime-managed role; the visible `SocketServer` or `SocketClient` object is the application-side handle used to configure and register it.
+- A server or client instance is the long-lived runtime-managed role; the `SocketServer`/`SocketClient` handle is the application-side handle used to configure and register it.
 - A connection is a concrete peer relationship, not the same thing as an instance.
 - A `SocketContextFactory` creates per-connection contexts, and a `SocketContext` is where protocol behavior belongs.
 - The practical layer stack is network family, transport form, connection handling, and application protocol.

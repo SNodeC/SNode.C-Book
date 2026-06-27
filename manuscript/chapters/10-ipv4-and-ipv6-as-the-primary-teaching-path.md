@@ -7,7 +7,7 @@
 
 ### Why IPv4 and IPv6 come first
 
-Chapter 9 separated the application-side server or client handle, the registered runtime-visible instance, the concrete `SocketConnection`, the context factory, and the per-connection context.
+Chapter 9 separated the server/client handle, the registered instance, the concrete `SocketConnection`, the context factory, and the per-connection context.
 
 This chapter keeps that model intact and changes only the first concrete lower-family choice:
 
@@ -62,9 +62,9 @@ IPv4 and IPv6 show this without changing endpoint identity as radically as Unix 
 
 The server/client distinction from Chapter 9 remains stable.
 
-An IPv4 server handle and an IPv6 server handle are both application-side handles used to configure and register server-side instances.
+An IPv4 server handle and an IPv6 server handle are both handles used to configure and register server-side instances.
 
-An IPv4 client handle and an IPv6 client handle are both application-side handles used to configure and register client-side instances.
+An IPv4 client handle and an IPv6 client handle are both handles used to configure and register client-side instances.
 
 After registration, the instance remains the runtime-visible role. The connection remains the concrete peer relationship. The context remains the application protocol endpoint attached to that connection.
 
@@ -123,7 +123,7 @@ stream
           -> MyFactory
 ```
 
-This is the kind of layered reading introduced in Chapter 7. A long SNode.C type name says which lower family is used, which transport form is used, which connection variant is selected, which application-side handle type is visible, and which factory creates the per-connection protocol contexts.
+This is the kind of layered reading introduced in Chapter 7. A long SNode.C type name says which lower family is used, which transport form is used, which connection variant is selected, which handle type is visible, and which factory creates the per-connection protocol contexts.
 
 The IPv4/IPv6 comparison is therefore visible before a single socket operation is called. The type name already tells the reader which lower family has been selected.
 
@@ -160,7 +160,7 @@ The IPv4 and IPv6 server wrappers provide parallel `listen(...)` convenience ove
 
 Likewise, the IPv4 and IPv6 client wrappers provide parallel `connect(...)` convenience overloads. These overloads set the remote host and port, optionally set local bind information, and then delegate to the general `connect(onStatus)` path.
 
-So the convenience API is not a separate communication model. It configures the application-side handle and then enters the same registration path that Chapter 9 described.
+So the convenience API is not a separate communication model. It configures the handle and then enters the same registration path that Chapter 9 described.
 
 The pattern can be summarized like this:
 
@@ -200,9 +200,9 @@ Moving from IPv4 to IPv6 should not feel like changing the application architect
 
 This is the main transfer point.
 
-If the application protocol is written in a `SocketContext`, it does not automatically become an “IPv4 protocol” or an “IPv6 protocol.” It is application behavior carried over a lower communication family. The same context class can often be reused when the protocol behavior does not inspect or depend on family-specific address details.
+If the application protocol is written in a `SocketContext`, it does not automatically become an “IPv4 protocol” or an “IPv6 protocol.” It is application behavior carried over a lower family. The same context class can often be reused when the protocol behavior does not inspect or depend on family-specific address details.
 
-What changes is the lower family and therefore the endpoint representation, bind/connect configuration, and deployment environment.
+The lower family changes, and with it the endpoint representation, bind/connect configuration, and deployment environment.
 
 What often remains stable is the protocol class, the factory structure, the connection lifecycle, the runtime, and the overall server/client model.
 
@@ -212,7 +212,7 @@ The runtime is not replaced when the network family changes.
 
 An IPv4 server and an IPv6 server still participate in the same kind of event-driven runtime. They still register communication intent through `listen(...)`. They still produce connection objects. They still attach contexts through factories.
 
-The same applies on the client side. An IPv4 client and an IPv6 client both register connection intent through `connect(...)`, enter the runtime and flow-controller machinery, and produce concrete connection episodes when the connection succeeds.
+The same applies on the client side. An IPv4 client and an IPv6 client both register connection intent through `connect(...)`, enter the runtime machinery, and produce concrete connection episodes when the connection succeeds.
 
 IPv4 and IPv6 therefore show that the runtime and instance model are not tied to one address family. The event loop does not become an “IPv4 event loop” or an “IPv6 event loop.” The lower family affects the physical and address layer. The runtime architecture remains the same.
 
@@ -232,7 +232,7 @@ Chapter 9 distinguished status callbacks from connection lifecycle callbacks. Th
 
 A `listen(...)` or `connect(...)` status callback reports outer role status. It sees the relevant address object and a `core::socket::State` value.
 
-Connection lifecycle callbacks observe concrete connections. They receive a `SocketConnection*` and can inspect local and remote addresses, timing, metrics, and connection names.
+Connection lifecycle callbacks observe connections. They receive a `SocketConnection*` and can inspect local and remote addresses, timing, metrics, and connection names.
 
 Context callbacks implement protocol behavior.
 
@@ -260,7 +260,7 @@ net::in6
   -> IPv6
 ```
 
-This is not cosmetic. It tells the reader that the lower communication family has changed.
+This is not cosmetic. It tells the reader that the lower family has changed.
 
 The address class changes too:
 
@@ -356,7 +356,7 @@ IPv6 introduces one additional technical point: deployment can involve IPv6-only
 
 This topic should not overwhelm the first example. It should also not be hidden.
 
-At this stage, the important point is not to master every platform switch. The important point is to notice that IPv6 is a separate endpoint family with deployment semantics of its own.
+At this stage, do not try to master every platform switch. Notice instead that IPv6 is a separate endpoint family with deployment semantics of its own.
 
 An IPv6 endpoint is not only a different address string. It may also raise configuration and platform questions about whether IPv4 traffic is included, excluded, or represented through IPv4-mapped IPv6 addresses.
 
@@ -451,7 +451,7 @@ What did not change?
 - connection lifecycle model,
 - layered reading of the type name.
 
-This comparison is the core result. The point is controlled variation across lower communication families, with IPv4 and IPv6 as the teaching path.
+This comparison is the core result. The point is controlled variation across lower families, with IPv4 and IPv6 as the teaching path.
 
 ### Stable model, different family semantics
 
@@ -478,7 +478,7 @@ This chapter shows IPv4 and IPv6 as the first concrete comparison pair.
 - IPv4 and IPv6 are the first concrete lower-family comparison because they are familiar, parallel, and still meaningfully different.
 - `net::in` selects IPv4; `net::in6` selects IPv6.
 - Both families use host-plus-port endpoint identity, but their textual forms, wildcard forms, and deployment questions differ.
-- The application-side server/client handle, registered instance, connection, factory, context, and runtime model stay structurally the same.
+- The server/client handle, registered instance, connection, factory, context, and runtime model stay structurally the same.
 - Convenience `listen(...)` and `connect(...)` overloads set configuration and then delegate to the general registration path.
 - Protocol contexts can often be reused across IPv4 and IPv6 when the protocol itself does not depend on address-family details.
 :::

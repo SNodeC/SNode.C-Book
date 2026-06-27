@@ -596,14 +596,14 @@ net-in-stream
 core-socket-stream-legacy
 ```
 
-The IPv4 TLS stream component follows the same shape, but with the TLS core stream variant:
+The IPv4 TLS stream component follows the same structure, but with the TLS core stream variant:
 
 ```text
 net-in-stream
 core-socket-stream-tls
 ```
 
-This is the build-system equivalent of the architectural layering used throughout the framework. The family-specific side provides IPv4, IPv6, Unix-domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, or another lower communication family. The core stream side provides generic stream operation and the legacy or TLS connection mode.
+This is the build-system equivalent of the architectural layering used throughout the framework. The family-specific side provides IPv4, IPv6, Unix-domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, or another lower family. The core stream side provides generic stream operation and the legacy or TLS connection mode.
 
 The combined target becomes the usable carrier component.
 

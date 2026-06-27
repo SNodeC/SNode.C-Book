@@ -25,7 +25,7 @@ The key word for the WebSocket path in Figure \ref{fig:web-protocol-layer-struct
 upgrade
 ```
 
-Upgrade does not mean that the lower connection disappears. The lower communication family, stream transport, TLS state if present, connection identity, counters, runtime lifecycle, and diagnostic surface remain part of the same peer episode. What changes is the protocol context that interprets that episode.
+Upgrade does not mean that the lower connection disappears. The lower family, stream transport, TLS state if present, connection identity, counters, runtime lifecycle, and diagnostic surface remain part of the same peer episode. The protocol context interpreting that episode changes.
 
 Figure \ref{fig:web-protocol-layer-structure} also prevents a wrong reading of the web chapters. Express-like routing is an application-structuring layer, not the protocol parent of SSE or WebSocket. Application code can use the Express-like structure to organize ordinary HTTP routes, SSE endpoints, and WebSocket upgrade entry points, or it can use the web protocol layer directly where that is the better fit.
 
@@ -48,7 +48,7 @@ lower communication family
                       -> subprotocol semantics
 ```
 
-This is still the same layered architecture. WebSocket does not erase the lower communication family. It does not erase TLS. It does not erase HTTP. It uses HTTP as the negotiation layer for moving the same connection episode into a different protocol context.
+This is still the same structure. WebSocket does not erase the lower family. It does not erase TLS. It does not erase HTTP. It uses HTTP as the negotiation layer for moving the same connection episode into a different protocol context.
 
 After a successful upgrade, ordinary request/response handling no longer owns that connection episode. The upgraded WebSocket context does.
 
@@ -222,7 +222,7 @@ same connection
           -> subprotocol behavior
 ```
 
-This is important for diagnostics and application reasoning. Connection identity, lower endpoint, TLS state, counters, timeout behavior, and runtime lifecycle still belong to the same peer episode. What changes is the protocol context interpreting that episode.
+This is important for diagnostics and application reasoning. Connection identity, lower endpoint, TLS state, counters, timeout behavior, and runtime lifecycle still belong to the same peer episode. The protocol context interpreting that episode changes.
 
 #### HTTP upgrade context plus WebSocket subprotocol context
 

@@ -27,9 +27,9 @@ HTTP raises the application-facing meaning from stream data to request and respo
 An HTTP server or client still depends on:
 
 - the runtime,
-- application-side server/client handles,
+- server/client handles,
 - registered runtime-visible server/client instances,
-- lower communication families,
+- lower families,
 - stream transport,
 - legacy or TLS connection handling,
 - contexts,
@@ -56,7 +56,7 @@ lower communication family
               -> request / response application logic
 ```
 
-The earlier chapters taught the lower part of this structure. They showed how a configured communication role becomes a registered instance, how that instance produces concrete connections, how factories create per-connection contexts, and how configuration and diagnostics make the runtime shape visible.
+The earlier chapters taught the lower part of this structure. They showed how a configured role becomes a registered instance, how that instance produces connections, how factories create per-connection contexts, and how configuration and diagnostics make the runtime shape visible.
 
 Chapter 21 introduces the first major web-facing protocol layer above that foundation. The transfer question therefore changes direction. Earlier chapters often asked:
 
@@ -126,7 +126,7 @@ The generic HTTP server wrapper has a simple shape:
 web::http::server::Server<LowerSocketServerT>
 ```
 
-The lower server template supplies the application-side handle shape and the registered server-instance machinery. The HTTP wrapper supplies the HTTP context factory and the request-ready callback shape.
+The lower server template supplies the handle shape and the registered server-instance machinery. The HTTP wrapper supplies the HTTP context factory and the request-ready callback shape.
 
 In simplified form:
 
@@ -267,7 +267,7 @@ It contains HTTP behavior such as:
 --pipelined-requests
 ```
 
-This continues the configuration model from Chapters 16 and 17. HTTP-specific configuration is not a random side channel. It is attached to the configured communication role.
+This continues the configuration model from Chapters 16 and 17. HTTP-specific configuration is not a random side channel. It is attached to the configured role.
 
 The HTTP layer can also derive HTTP meaning from lower connection configuration where appropriate. For example, if the HTTP Host header is empty, the client setup can derive a default Host header from the remote socket address. That is a small but useful example of responsibility placement:
 
@@ -383,7 +383,7 @@ HTTP request/response layer
           -> another protocol layer may take over
 ```
 
-This is a clean architectural boundary. The lower connection remains the same peer episode. What changes is the protocol context attached to it.
+This is a clean architectural boundary. The lower connection remains the same peer episode. The protocol context attached to it changes.
 
 A compact server-side upgrade route has this shape. The example uses `websocket` because that is the concrete upgrade protocol used in the following WebSocket chapter, but the call itself belongs to the HTTP/Express boundary:
 
@@ -435,7 +435,7 @@ req->upgrade(
     });
 ```
 
-The important point is not the particular upgraded protocol yet. The important point is that the HTTP layer supplies an explicit transition from HTTP request/response handling into a named socket-context upgrade.
+The particular upgraded protocol is not important yet. The HTTP layer supplies an explicit transition from request/response handling into a named socket-context upgrade.
 
 From this chapter onward, some examples are printed as compact fragments so that the book can focus on the architectural idea being discussed. Complete buildable source versions are part of the book's electronic companion material; the published edition should make them available through its companion repository or download page. For this HTTP-upgrade example, the corresponding companion programs are `HttpUpgrade-Server` and `HttpUpgrade-Client`.
 
@@ -502,7 +502,7 @@ Chapter 23 treats Server-Sent Events in detail. Here, the important point is pla
 
 ### What remains from the lower architecture
 
-An HTTP server still has the same lower architectural skeleton as the stream examples: configured roles, registered instances, lower-family stream connections, context factories, runtime lifecycle, configuration, diagnostics, timing, and failure behavior. What changes is the semantic level of the application handler. The echo-style context interprets stream data directly; the HTTP handler receives request and response objects.
+An HTTP server still has the same lower architectural skeleton as the stream examples: configured roles, registered instances, lower-family stream connections, context factories, runtime lifecycle, configuration, diagnostics, timing, and failure behavior. The semantic level of the application handler changes. The echo-style context interprets stream data directly; the HTTP handler receives request and response objects.
 
 The same transfer applies to clients. An HTTP client still depends on endpoint configuration, connection establishment, lifecycle callbacks, and runtime integration, but the application now works in HTTP terms.
 

@@ -441,7 +441,7 @@ Both the `SocketServer` and the `SocketClient` template accept an argument pack:
 typename... Args
 ```
 
-Those arguments are forwarded to the concrete `SocketContextFactory` constructor when the application-side server or client handle is constructed.
+Those arguments are forwarded to the concrete `SocketContextFactory` constructor when the server/client handle is constructed.
 
 In schematic form, the pattern is:
 
@@ -451,7 +451,7 @@ std::make_shared<SocketContextFactory>(
 )
 ```
 
-the argument pack allows the factory to be preconfigured at the point where the server or client handle is created. The resulting factory object is then part of the shared state used by the registered instance when concrete connections appear.
+the argument pack allows the factory to be preconfigured at the point where the server or client handle is created. The resulting factory object is then part of the shared state used by the registered instance when connections appear.
 
 This means the server or client constructor can provide the stable information the factory needs. That information may then be stored in the factory and used later when `create(connection)` is called.
 
@@ -555,7 +555,7 @@ This can be a clean design when the factory remains easy to read and the variati
 
 Preconfigured factories allow the same framework mechanism to create different communication roles without changing the surrounding server/client machinery.
 
-An application-side server or client handle can pass stable role and dependency information into the factory constructor. The factory can then use that information whenever it creates a context for a new connection.
+An server/client handle can pass stable role and dependency information into the factory constructor. The factory can then use that information whenever it creates a context for a new connection.
 
 This can be used for simple role distinctions, such as server-side versus client-side contexts, but also for higher-level endpoint roles:
 
@@ -607,7 +607,7 @@ One glance does not mean the factory must be trivial. It means the construction 
 
 ### The factory as the Chapter 15 bridge
 
-Chapter 15 will show how the same protocol can be carried over different lower communication families.
+Chapter 15 will show how the same protocol can be carried over different lower families.
 
 The separation is:
 
@@ -639,7 +639,7 @@ The factory supports that portability story because it keeps context creation se
 
 ### Closing perspective
 
-Chapter 13 established the context as the place where protocol behavior lives. Chapter 14 established the factory as the construction boundary that creates those contexts for concrete connections.
+Chapter 13 established the context as the place where protocol behavior lives. Chapter 14 established the factory as the construction boundary that creates those contexts for connections.
 
 Chapter 15 uses that separation to show how the same protocol can move across different lower layers without turning the application into a pile of special cases.
 

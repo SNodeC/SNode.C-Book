@@ -7,7 +7,7 @@
 
 ### From lower-family transfer to configured communication roles
 
-Chapter 15 showed why configuration becomes visible as soon as a protocol is carried over different lower communication families.
+Chapter 15 showed why configuration becomes visible as soon as a protocol is carried over different lower families.
 
 The protocol behavior may remain in the same `SocketContext`. The context creation policy may remain in the same `SocketContextFactory`.
 
@@ -23,7 +23,7 @@ The central idea is:
 In SNode.C, configuration is one of the main ways a communication role becomes concrete.
 :::
 
-The visible `SocketServer` or `SocketClient` object is the application-side handle. Through that handle, the application configures a server-side or client-side communication role. When `listen(...)` or `connect(...)` registers that role, the configured instance enters the runtime.
+The `SocketServer`/`SocketClient` handle is the handle. Through that handle, the application configures a server-side or client-side communication role. When `listen(...)` or `connect(...)` registers that role, the configured instance enters the runtime.
 
 Configuration is therefore not decoration around an otherwise complete object. It is one of the places where the role receives its operational shape.
 
@@ -108,7 +108,7 @@ The three input paths have different strengths. They should be understood togeth
 
 The C++ API is the most direct configuration path.
 
-The application-side server or client handle exposes its configuration object, and the application can set values on it directly.
+The server/client handle exposes its configuration object, and the application can set values on it directly.
 
 For an IPv4 server, a minimal example may look like:
 
@@ -144,7 +144,7 @@ connect("localhost", 8001, onStatus)
 
 participate in the same idea.
 
-They are readable API calls. Conceptually, they also fill configuration values on the application-side handle before the role enters the activation path.
+They are readable API calls. Conceptually, they also fill configuration values on the handle before the role enters the activation path.
 
 In-code configuration is therefore useful for:
 
@@ -622,7 +622,7 @@ In SNode.C, configuration is one of those places.
 
 ::: {.snodec-remember title="What to remember"}
 - Configuration is part of the SNode.C architecture, not an afterthought beside it.
-- The application-side handle configures a server-side or client-side communication role; the registered instance carries that configured role into the runtime.
+- The handle configures a server-side or client-side communication role; the registered instance carries that configured role into the runtime.
 - The C++ API, configuration files, and command line feed one hierarchical configuration model.
 - Named instances become addressable in that hierarchy; anonymous instances remain internal to application code.
 - Sections such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` scope options by responsibility.

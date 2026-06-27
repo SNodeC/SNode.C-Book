@@ -88,7 +88,7 @@ Log visibility answers questions such as:
 
 The logger gives those events a controlled output path.
 
-The important point is not that messages are printed. It is that messages can be placed at the layer that understands their meaning.
+The value is not that messages are printed, but that they are placed at the layer that understands their meaning.
 
 #### Connection visibility
 
@@ -360,7 +360,7 @@ Examples include:
 - instance is disabled,
 - listen/connect fails or succeeds.
 
-These messages belong to the configured communication role that has entered the runtime as an instance.
+These messages belong to the configured role that has entered the runtime as an instance.
 
 They should not be hidden inside protocol code, because protocol code should not have to explain why a role was activated, disabled, or retried.
 
@@ -483,7 +483,7 @@ VLOG(3)
 
 This keeps normal debug output readable while preserving deeper information when needed.
 
-The point is not the exact numeric verbose level chosen for every project. The important point is the separation of ordinary lifecycle facts from optional deeper evidence.
+The exact numeric verbose level is project-specific; the durable distinction is between ordinary lifecycle facts and optional deeper evidence.
 
 #### Context-level protocol events
 

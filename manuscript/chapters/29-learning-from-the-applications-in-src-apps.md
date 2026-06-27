@@ -7,7 +7,7 @@
 
 ### From framework pieces to application structure
 
-Chapter 28 introduced persistence as an application-state boundary. Chapter 29 now turns to executable applications: the point where runtime setup, selected components, application-side objects, configured communication roles, callbacks, routes, persistence objects, and installable targets meet in concrete programs.
+Chapter 28 introduced persistence as an application-state boundary. Chapter 29 now turns to executable applications: the point where runtime setup, selected components, application-side objects, configured roles, callbacks, routes, persistence objects, and installable targets meet in concrete programs.
 
 The question changes from:
 
@@ -21,7 +21,7 @@ to:
 How do the layers become executable programs?
 ```
 
-That is an important shift. Up to this point, the book has introduced many framework pieces separately: runtime initialization, communication roles, contexts and factories, lower communication families, configuration, diagnostics, TLS, timeouts and failure behavior, HTTP, the Express-like layer, SSE, WebSocket, MQTT, MQTT over WebSocket, and database support. The applications in `src/apps` show how those pieces are assembled.
+That is an important shift. Up to this point, the book has introduced many framework pieces separately: runtime initialization, communication roles, contexts and factories, lower families, configuration, diagnostics, TLS, timeouts and failure behavior, HTTP, the Express-like layer, SSE, WebSocket, MQTT, MQTT over WebSocket, and database support. The applications in `src/apps` show how those pieces are assembled.
 
 The central sentence for this chapter is:
 
@@ -281,7 +281,7 @@ What do those components need internally?
   -> their targets declare it
 ```
 
-The point is not that the application knows the whole graph. It selects the components that define its public shape: the HTTP application layer and the concrete transport carrier. The remaining dependencies belong to those selected components.
+The application does not need to know the whole graph. It selects the components that define its public shape: the HTTP application layer and the concrete transport carrier. The remaining dependencies belong to those selected components.
 
 When reading another SNode.C application, start with the executable target, then read the linked protocol/application component, the selected transport component, and any optional feature components. Only then open the C++ entry point. A direct application link line should describe the application face, not repeat every implementation layer below it.
 
@@ -370,7 +370,7 @@ A typical entry point answers questions such as:
 
 - How is the runtime initialized?
 - Which application-side object or communication role is created?
-- Which configured communication roles and registered runtime-visible instances become relevant?
+- Which configured roles and registered instances become relevant?
 - Which middleware, routes, contexts, factories, or command objects are registered?
 - Which listen or connect action is started?
 - Where do diagnostics and state callbacks enter?
@@ -753,7 +753,7 @@ When reading a SNode.C application, use a repeatable method:
 4. Identify whether this is a main application, focused example, utility, or demonstration.
 5. Identify the executable entry point.
 6. Find runtime initialization.
-7. Identify application-side objects, configured communication roles, and registered runtime-visible instances.
+7. Identify application-side objects, configured roles, and registered instances.
 8. Find contexts/factories, routes, middleware, command objects, or persistence objects.
 9. Look for configuration hooks.
 10. Look for diagnostics, state callbacks, and operational reporting.

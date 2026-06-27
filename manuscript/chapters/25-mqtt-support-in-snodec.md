@@ -27,7 +27,7 @@ next part
   -> message-oriented protocol families
 ```
 
-What changes is the application-layer protocol meaning. What remains is the SNode.C model the reader already knows: runtime, configured communication roles, registered runtime-visible instances, lower communication families, stream transport, legacy or TLS connection handling, per-connection contexts, configuration, diagnostics, timing, and failure behavior.
+The application-layer protocol meaning changes, while the familiar SNode.C model remains: runtime, configured roles, registered instances, lower families, stream transport, legacy or TLS connection handling, per-connection contexts, configuration, diagnostics, timing, and failure behavior.
 
 SNode.C supports MQTT in two important forms:
 
@@ -100,7 +100,7 @@ A compact comparison is enough here; Chapter 26 treats the WebSocket-carried for
 | MQTT meaning | sessions, topics, control packets, publish flow | same MQTT semantics |
 | book focus | introduced in this chapter | treated in detail in Chapter 26 |
 
-The important point is not that there are two unrelated MQTT implementations. The MQTT semantics remain stable; the carrier path changes.
+These are not two unrelated MQTT implementations. The MQTT semantics remain stable; the carrier path changes.
 
 ### MQTT as a protocol family
 
@@ -297,7 +297,7 @@ That composition is important. Native MQTT does not replace the lower architectu
 
 Native MQTT still sits above:
 
-- a lower communication family,
+- a lower family,
 - stream transport,
 - legacy or TLS connection handling,
 - runtime-driven lifecycle,
@@ -329,7 +329,7 @@ A useful module view is:
 
 This mirrors earlier patterns in the book. There is a shared protocol core. Server and client roles specialize that core. WebSocket-carried forms then connect the same protocol family to the upgrade/subprotocol architecture from Chapter 24.
 
-In the refined instance vocabulary, this means that an application-side server or client handle configures a communication role, which becomes a registered runtime-visible instance. The per-connection MQTT-aware context and the MQTT protocol object then carry protocol behavior inside that established framework shape.
+In the refined instance vocabulary, this means that an server/client handle configures a communication role, which becomes a registered instance. The per-connection MQTT-aware context and the MQTT protocol object then carry protocol behavior inside that established framework shape.
 
 #### Server as broker-oriented role
 

@@ -7,11 +7,11 @@
 
 ### From context and factory separation to lower-family transfer
 
-Chapter 13 placed application protocol behavior in the `SocketContext`. Chapter 14 placed context construction in the `SocketContextFactory`. This chapter uses both separations together.
+Chapter 13 placed protocol behavior in the `SocketContext`. Chapter 14 placed context construction in the `SocketContextFactory`. This chapter uses both separations together.
 
 The central question is:
 
-> What does the separation buy us when the lower communication family changes?
+> What does the separation buy us when the lower family changes?
 
 The short answer is that a protocol can often keep its core shape even when the carrier changes:
 
@@ -51,7 +51,7 @@ The transfer model keeps four questions apart:
 |---|---|
 | What does the protocol do on one connection? | `SocketContext` |
 | Which context should be created for this connection? | `SocketContextFactory` |
-| Which lower communication family is selected? | the application-side server/client handle type and its registration |
+| Which lower family is selected? | the server/client handle type and its registration |
 | Which endpoint identity and deployment values are used? | `SocketAddress`, configuration, and startup/deployment data |
 
 This separation is the reason the same protocol core can often move across lower families without rewriting the protocol itself.
@@ -136,7 +136,7 @@ or:
 new EchoSocketContext(connection, Role::Client)
 ```
 
-The application-side server/client handle type changes. The endpoint identity changes. The deployment setting changes.
+The server/client handle type changes. The endpoint identity changes. The deployment setting changes.
 
 The context construction shape can still remain familiar.
 
@@ -281,7 +281,7 @@ same context type
           -> different possible outer carriers
 ```
 
-The point is not that every real protocol is as simple as echo.
+Real protocols are not all as simple as echo.
 
 The point is that the echo example makes the boundary visible:
 
@@ -410,7 +410,7 @@ A command-sink endpoint may receive:
 Role::CommandSink
 ```
 
-The point is not the exact enum.
+The exact enum is not the issue.
 
 The point is the boundary:
 

@@ -16,9 +16,9 @@ The book has now shown that SNode.C can express several different endpoint ident
 - Bluetooth address plus RFCOMM channel,
 - Bluetooth address plus L2CAP PSM.
 
-Those endpoint identities differ strongly. They belong to different lower communication families, have different address classes, and lead to different operational questions. Yet the application-side shape remained recognizable across all of them.
+Those endpoint identities differ strongly. They belong to different lower families, have different address classes, and lead to different operational questions. Yet the application-side shape remained recognizable across all of them.
 
-The reason is that application protocol behavior does not live in the address class, the transport family, or the connection wrapper. It lives in the per-connection context.
+The reason is that protocol behavior does not live in the address class, the transport family, or the connection wrapper. It lives in the per-connection context.
 
 For application code, the most important object in this part of the design is therefore:
 
@@ -206,7 +206,7 @@ A simple echo protocol may only read available bytes and send them back. A more 
 - validation,
 - state transitions.
 
-The important point is the same in both cases:
+In both cases:
 
 > `onReceivedFromPeer()` should read and process data intentionally.
 
@@ -256,7 +256,7 @@ anything else
   -> ERR unknown command
 ```
 
-The point is not the protocol. The point is where the responsibilities land. Input accumulation, command interpretation, response writing, and protocol-driven closure all stay inside the context. Listening, connecting, retrying, reconnecting, and choosing the lower communication family stay outside it.
+The protocol is not the issue; responsibility placement is. Input accumulation, command interpretation, response writing, and protocol-driven closure all stay inside the context. Listening, connecting, retrying, reconnecting, and choosing the lower family stay outside it.
 
 An abridged context can look like this:
 
@@ -605,7 +605,7 @@ Per-byte noise may be useful during a narrow diagnostic session. It should not b
 
 The echo context is valuable because it is small.
 
-The point of echo is not that echo is interesting. The point is that echo makes the boundary visible: input handling belongs in `onReceivedFromPeer()`, connection-ready behavior belongs in `onConnected()` when the protocol needs it, and the application-side server/client handle remains free of protocol details.
+The point of echo is not that echo is interesting. The point is that echo makes the boundary visible: input handling belongs in `onReceivedFromPeer()`, connection-ready behavior belongs in `onConnected()` when the protocol needs it, and the server/client handle remains free of protocol details.
 
 The minimal pattern is:
 
@@ -624,7 +624,7 @@ The useful habits are:
 - receive handling is where protocol action occurs,
 - responses are sent through the connection-facing surface,
 - behavior remains local to the context,
-- the application-side server/client handle stays clean.
+- the server/client handle stays clean.
 
 A more complex protocol should grow from these habits, not abandon them.
 

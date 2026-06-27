@@ -332,7 +332,7 @@ Across the supported families, the default address expresses a wildcard-like, br
 | RFCOMM | `00:00:00:00:00:00`, channel `0` |
 | L2CAP | `00:00:00:00:00:00`, PSM `0` |
 
-This matters because socket programming often begins with partial endpoint descriptions.
+Socket programming often begins with partial endpoint descriptions.
 
 A server may specify only the service selector it wants to listen on. A client may specify a remote endpoint while leaving its local side broad. A wildcard address is not an error. It is often the correct expression of “this endpoint is broad until bind or connect makes it concrete.”
 
@@ -479,5 +479,5 @@ Once that question becomes natural, the address classes become much easier to re
 
 Chapter 7 explained the communication stack. This chapter made the first layer of that stack concrete by studying endpoint identity.
 
-Chapter 9 can therefore ask the next architectural question with sharper vocabulary: how do server instances, client instances, and concrete connections use those endpoint identities while the runtime advances the communication flow?
+Chapter 9 can therefore ask the next architectural question with sharper vocabulary: how do server instances, client instances, and connections use those endpoint identities while the runtime advances the communication flow?
 

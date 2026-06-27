@@ -13,7 +13,7 @@ The goal is not to build a useful echo service. The goal is to make the recurrin
 
 An echo pair is ideal for that purpose.
 
-It contains one server and one client. The client sends the first message. The server reflects the received bytes. The client receives the reflected bytes and sends them again. The result is a visible ping-pong.
+It contains one server and one client. The client sends the first message. The server reflects the received bytes. The client receives the reflected bytes and sends them again. The visible behavior is a ping-pong.
 
 That behavior is simple, but the structure is already the structure of many later SNode.C programs:
 
@@ -81,7 +81,7 @@ Before writing code, it helps to name the three roles.
 \index{SocketClient@\texttt{SocketClient}}
 
 
-In everyday discussion, it is natural to call the visible `SocketServer` or `SocketClient` object an instance. That is acceptable as long as the basic idea is clear. In SNode.C's stricter architectural vocabulary, however, the visible C++ object is the application-side handle. Through that handle, the application configures and registers a server-side or client-side communication role. After `listen(...)` or `connect(...)`, that configured role is the instance the framework can advance through the runtime and flow-controller machinery. It is not yet a concrete peer connection; connections appear later.
+In everyday discussion, it is natural to call the `SocketServer`/`SocketClient` handle an instance. That is acceptable as long as the basic idea is clear. In SNode.C's stricter architectural vocabulary, however, the visible C++ object is the application-side handle. Through that handle, the application configures and registers a server-side or client-side communication role. After `listen(...)` or `connect(...)`, that configured role is the instance the framework can advance through the runtime machinery. It is not yet a peer connection; connections appear later.
 
 For this chapter, the visible handle types are:
 
@@ -385,7 +385,7 @@ For a first reading, it is tempting to say that this line â€œstarts the server.â
 A better mental model is:
 
 ::: {.snodec-rule title="Runtime registration rule"}
-`listen(...)` configures and registers the server-side communication role. The runtime and flow-controller machinery advance the actual event-driven flow after `core::SNodeC::start()` is called.
+`listen(...)` configures and registers the server-side communication role. The runtime machinery advances the actual event-driven flow after `core::SNodeC::start()` is called.
 :::
 
 This distinction will matter later for configuration, retries, and runtime behavior.
@@ -468,7 +468,7 @@ The client handle registers the connecting role in the code:
 client.connect("localhost", 8080, callback);
 ```
 
-Again, this should not be read as a blocking call that performs the entire communication on the caller's stack. It registers the client-side communication role. The runtime and flow-controller machinery then perform the actual event-driven work.
+Again, this should not be read as a blocking call that performs the entire communication on the caller's stack. It registers the client-side communication role. The runtime machinery then performs the actual event-driven work.
 
 The symmetry between server and client is intentional:
 
@@ -695,10 +695,10 @@ This does not make the low-level details disappear. It organizes where they belo
 
 ::: {.snodec-remember title="What to remember"}
 - The first working example is small, but it already contains the core SNode.C application pattern.
-- The visible server or client object is the application-side handle; the instance is the configured communication role registered through `listen(...)` or `connect(...)`.
+- The server/client object is the application-side handle; the instance is the configured communication role registered through `listen(...)` or `connect(...)`.
 - A `SocketContextFactory` creates one context for each established connection and hands it to the framework-owned connection lifecycle.
 - A `SocketContext` contains the application protocol behavior for that connection.
-- `listen(...)` and `connect(...)` register communication roles; the runtime and flow-controller machinery advance the actual event-driven work.
+- `listen(...)` and `connect(...)` register communication roles; the runtime machinery advances the actual event-driven work.
 - The same structure used for IPv4 legacy streams can later be recognized again when the lower family, stream mode, or application protocol changes.
 :::
 

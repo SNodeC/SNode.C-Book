@@ -7,7 +7,7 @@
 
 ### Why this chapter exists
 
-The previous chapters taught SNode.C in layers: lower communication families, stream connections, protocol contexts, web protocols, MQTT, configuration, deployment, testing, and architectural judgment. MiniGateway is the point where those ideas stop being separate topics and become one small application.
+The previous chapters taught SNode.C in layers: lower families, stream connections, protocol contexts, web protocols, MQTT, configuration, deployment, testing, and architectural judgment. MiniGateway is the point where those ideas stop being separate topics and become one small application.
 
 MiniGateway is modest. It is not a second MQTTSuite. It is not a broker, a dashboard product, or a hardware driver. It is a compact SNode.C application that owns one piece of domain state and exposes that state through several communication boundaries.
 
@@ -399,7 +399,7 @@ namespace minigateway {
 \index{MiniGateway!MQTT configuration}
 
 
-The MQTT client role needs application-specific MQTT settings: client id, keep-alive, command topic, measurement topic, QoS, and retain behavior. These are not hard-coded inside `MiniGatewayMqtt`. They belong to the configured communication role.
+The MQTT client role needs application-specific MQTT settings: client id, keep-alive, command topic, measurement topic, QoS, and retain behavior. These are not hard-coded inside `MiniGatewayMqtt`. They belong to the configured role.
 
 The shape follows the same general pattern as MQTTSuite's command-line/configuration sections: the application adds a subcommand to the configured instance, exposes configurable options, and the protocol object reads the effective values when the connection context is constructed.
 
@@ -662,7 +662,7 @@ namespace minigateway {
 \index{MiniGateway!MQTT context construction}
 
 
-SNode.C's MQTT layer is used through a socket context. The factory creates an `iot::mqtt::SocketContext` and passes it a `MiniGatewayMqtt` protocol object. This is the same shape used by MQTTSuite-style MQTT applications:
+SNode.C's MQTT layer is used through a socket context. The factory creates an `iot::mqtt::SocketContext` and passes it a `MiniGatewayMqtt` protocol object. This is the same structure used by MQTTSuite-style MQTT applications:
 
 ```text
 stream SocketConnection

@@ -8,11 +8,11 @@
 
 ### Communication over time
 
-Chapter 19 showed that TLS adds meaningful connection-layer phases to the same SNode.C architecture. A secure stream may have to create and configure an SSL object, complete a TLS handshake, handle close-notify behavior, and shut the secure layer down before the underlying socket episode is fully over.
+Chapter 19 showed that TLS adds meaningful connection-layer phases to the same structure. A secure stream may have to create and configure an SSL object, complete a TLS handshake, handle close-notify behavior, and shut the secure layer down before the underlying socket episode is fully over.
 
 Chapter 20 widens that view from TLS to the whole framework.
 
-Communication is not a single action. It unfolds over time. A configured communication role may be activated. The role may be registered as a runtime-visible server or client instance. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client instance may reconnect. A failed activation attempt may be retried. A role-level flow may be stopped.
+Communication is not a single action. It unfolds over time. A configured role may be activated. The role may be registered as a runtime-visible server or client instance. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client instance may reconnect. A failed activation attempt may be retried. A role-level flow may be stopped.
 
 These are not side cases. They are part of the normal shape of networked software.
 
@@ -231,7 +231,7 @@ It answers:
 When should this instance try again after a failed activation attempt?
 ```
 
-For a server, that may mean retrying listen activation. For a client, that may mean retrying connect activation. This is role-level behavior because it concerns the configured communication role as a whole. It should not be hidden inside one protocol context.
+For a server, that may mean retrying listen activation. For a client, that may mean retrying connect activation. This is role-level behavior because it concerns the configured role as a whole. It should not be hidden inside one protocol context.
 
 #### Client reconnect timing
 
@@ -314,7 +314,7 @@ Figure \ref{fig:retry-reconnect-flow} separates the two loops visually. Retry be
 
 ![Retry and reconnect flow for a client-side stream role: failed connection attempts enter the retry path, established connections enter the reconnect path after disconnect, and both paths return through the same controlled connect initiation.](assets/figures/pdf/fig-16-retry-reconnect-flow.pdf){#fig:retry-reconnect-flow width=90% latex-placement="tbp"}
 
-The important point is that retry and reconnect are not synonyms. Retry reacts to classified connection-attempt failure. Reconnect reacts to connection loss after success. This distinction keeps failure handling predictable: an application can reason separately about failed startup attempts, address iteration, retry backoff, and later connection recovery.
+Retry and reconnect are not synonyms. Retry reacts to classified connection-attempt failure. Reconnect reacts to connection loss after success. This distinction keeps failure handling predictable: an application can reason separately about failed startup attempts, address iteration, retry backoff, and later connection recovery.
 
 ::: {.snodec-rule title="Retry/reconnect rule"}
 Retry belongs to failed connection attempts. Reconnect belongs to established connections that later disconnect.
@@ -418,7 +418,7 @@ Therefore, reconnect belongs to the lifecycle of the client instance, not to ano
 
 Servers and clients share a broad role model.
 
-Both are configured communication roles. Both may be registered as runtime-visible instances. Both participate in the runtime. Both can use flow-control machinery. Both may retry activation.
+Both are configured roles. Both may be registered as runtime-visible instances. Both participate in the runtime. Both can use flow-control machinery. Both may retry activation.
 
 But they are not identical.
 
@@ -433,7 +433,7 @@ A useful summary is:
 | server | retry listen activation | normally not applicable |
 | client | retry connect activation | restore client role after disconnect |
 
-This belongs to role behavior, not to application protocol behavior.
+This belongs to role behavior, not to protocol behavior.
 
 ### Retry timing policy
 
@@ -638,7 +638,7 @@ connection/context
 
 This prevents two design mistakes.
 
-The first mistake is putting retry and reconnect policy into every protocol context. That makes each protocol endpoint responsible for operational behavior that belongs to the configured communication role.
+The first mistake is putting retry and reconnect policy into every protocol context. That makes each protocol endpoint responsible for operational behavior that belongs to the configured role.
 
 The second mistake is forcing the outer role to understand protocol semantics it does not own. That makes the role-level machinery too clever and too protocol-specific.
 

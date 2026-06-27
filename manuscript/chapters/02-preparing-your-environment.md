@@ -386,7 +386,7 @@ The executable then links against the corresponding imported target:
 target_link_libraries(echoserver PRIVATE snodec::net-in-stream-legacy)
 ```
 
-The matching public include path has the same architectural shape, expressed with directories rather than CMake component dashes:
+The matching public include path has the same structure, expressed with directories rather than CMake component dashes:
 
 ```cpp
 #include <net/in/stream/legacy/SocketServer.h>

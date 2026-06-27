@@ -91,7 +91,7 @@ lower communication family
 
 This stack combines several layers that were introduced separately:
 
-- lower communication families,
+- lower families,
 - stream transport,
 - legacy and TLS connection handling,
 - HTTP request/response,
@@ -99,7 +99,7 @@ This stack combines several layers that were introduced separately:
 - WebSocket frames and subprotocols,
 - MQTT as a message-oriented protocol family.
 
-The result is not a flattened protocol name. It is a composed stack whose layers remain architecturally and diagnostically visible.
+This is not a flattened protocol name, but a composed stack whose layers remain architecturally and diagnostically visible.
 
 A useful way to read the stack is:
 
@@ -108,7 +108,7 @@ same MQTT semantics
   -> different carrier path
 ```
 
-Native MQTT and MQTT-over-WebSocket preserve the same MQTT protocol identity. What changes is the carrier path that delivers bytes into the MQTT receive flow.
+Native MQTT and MQTT-over-WebSocket preserve the same MQTT protocol identity. The carrier path delivering bytes into the MQTT receive flow changes.
 
 That distinction matters. It prevents the reader from treating MQTT-over-WebSocket as a special-case shortcut or as a second unrelated MQTT implementation. It is a composition of already introduced mechanisms.
 
@@ -245,7 +245,7 @@ The subprotocol therefore participates in several runtime-facing actions:
 - message-error handling,
 - scheduled peer-data processing.
 
-The important point is:
+Remember:
 
 ```text
 WebSocket delivers protocol data over time.

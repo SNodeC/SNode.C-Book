@@ -279,7 +279,7 @@ SocketClient
 
 This path is more important than any single file name. When a file feels difficult, ask where it sits in the path.
 
-Is it part of the application-side server or client handle, the configured instance, its configuration, the lower-layer socket machinery, a connection object, a factory, the per-connection context, or an application protocol implementation?
+Is it part of the server/client handle, the configured instance, its configuration, the lower-layer socket machinery, a connection object, a factory, the per-connection context, or an application protocol implementation?
 
 That question restores orientation because it reconnects the file to a role.
 
@@ -569,7 +569,7 @@ Does it set timeouts or close the connection?
 Does it distinguish server and client roles?
 ```
 
-In Chapter 3, the echo context used a role enum so one context class could serve both server and client behavior. Other applications may use separate context classes. Both designs can be valid. The important point is whether the per-connection protocol state is located in the context rather than being spread through unrelated code.
+In Chapter 3, the echo context used a role enum so one context class could serve both server and client behavior. Other applications may use separate context classes. Both designs can be valid. What matters is whether the per-connection protocol state is located in the context rather than spread through unrelated code.
 
 A context class is often the best place to understand application behavior, because it is where incoming data becomes protocol meaning.
 

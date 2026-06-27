@@ -182,7 +182,7 @@ The consequence is simple but powerful:
 
 > Not everything changes at once.
 
-A protocol implemented in a SNode.C context can often remain recognizable when the lower family changes. That is true for small teaching protocols, but it is not limited to them. Larger protocols also keep their application-level structure when the lower communication family changes, even though their internal behavior may be richer. The endpoint identity and deployment environment may change, but the protocol does not have to be redesigned merely because the communication is carried differently.
+A protocol implemented in a SNode.C context can often remain recognizable when the lower family changes. That is true for small teaching protocols, but it is not limited to them. Larger protocols also keep their application-level structure when the lower communication family changes, even though their internal behavior may be richer. The endpoint identity and deployment environment may change, but the protocol usually stays recognizable across carriers.
 
 This does not mean lower layers are irrelevant. They are very relevant. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP have different addressing models, operating-system assumptions, and deployment consequences.
 
@@ -248,9 +248,9 @@ MQTTSuite is the reference ecosystem that makes this concrete. It builds focused
 \index{factory}
 
 
-Although the details come later, the recurring SNode.C application shape can already be previewed. A configured server or client role is advanced by the runtime; concrete connections receive per-connection contexts through factories; those contexts hold the application protocol behavior.
+Although the details come later, the recurring SNode.C application shape can already be previewed. A configured server or client role is advanced by the runtime; connections receive per-connection contexts through factories; those contexts hold the application protocol behavior.
 
-At this point, this is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. The important point is regularity: the same few roles reappear in different protocol settings.
+At this point, this is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. Regularity is the point: the same few roles reappear in different protocol settings.
 
 The first concrete program will therefore be modest: an echo server and client.
 

@@ -252,7 +252,7 @@ The state-change callback receives a state object containing:
 
 This fits SNode.C’s runtime style. The application issues database operations and can also observe whether the database resource is connected, unavailable, or in an error state.
 
-A database client is not the same kind of configured communication role as a socket server or client instance. It is an application-facing persistence object integrated with the runtime. It may belong to a role or service in the application, but it is not itself the same conceptual object as a registered runtime-visible socket instance.
+A database client is not the same kind of configured role as a socket server or client instance. It is an application-facing persistence object integrated with the runtime. It may belong to a role or service in the application, but it is not itself the same conceptual object as a registered runtime-visible socket instance.
 
 #### `MariaDBConnectionDetails`
 
@@ -460,7 +460,7 @@ start command
               -> command completes or waits again
 ```
 
-The point is not the exact MariaDB C API detail. Database work is expressed as explicit continuation, not as an invisible blocking detour inside a protocol callback.
+The exact MariaDB C API detail is secondary. Database work is expressed as explicit continuation, not as an invisible blocking detour inside a protocol callback.
 
 ### Database work as commands and command sequences
 
@@ -547,7 +547,7 @@ The database receives SQL text in both cases. The application-facing API makes t
 
 A `MariaDBCommandSequence` allows database operations to be chained. The sequence itself is also an API surface: it inherits the asynchronous and sync-style API shapes so commands can be appended in order.
 
-This matters because many database workflows are ordered. For example:
+Many database workflows are ordered. For example:
 
 ```text
 delete old rows
@@ -624,7 +624,7 @@ startTransactions
           -> endTransactions
 ```
 
-The important point is not simply that transactions exist. Transaction flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
+Transactions are not just present; their flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
 
 A transaction is not outside the event model; it is a policy and ordering boundary expressed through database commands and callbacks.
 

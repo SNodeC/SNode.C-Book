@@ -11,7 +11,7 @@
 
 Chapter 34 asked how to test, debug, and measure whether SNode.C boundaries hold. Chapter 35 asks the prior architectural question: how should those boundaries be chosen in the first place?
 
-By this point, the reader has seen the runtime, lower communication families, connection model, contexts and factories, configuration, diagnostics, TLS, HTTP, Express-like routing, SSE, WebSocket, MQTT, MQTT over WebSocket, applications, systems, build components, deployment, and testing strategy. That is enough knowledge to build many things; judgment turns that familiarity into architectural maturity.
+By this point, the reader has seen the runtime, lower families, connection model, contexts and factories, configuration, diagnostics, TLS, HTTP, Express-like routing, SSE, WebSocket, MQTT, MQTT over WebSocket, applications, systems, build components, deployment, and testing strategy. That is enough knowledge to build many things; judgment turns that familiarity into architectural maturity.
 
 The hardest questions in real systems are often not questions of syntax or API usage. They are questions like these:
 
@@ -39,7 +39,7 @@ The following questions are not a mechanical checklist. They are recurring press
 - Which failure policy belongs here?
 :::
 
-Here, *role* is often used in the system-design sense. When the text refers to SNode.C runtime entities, it uses the more precise language of configured communication roles and registered runtime-visible instances.
+Here, *role* is often used in the system-design sense. When the text refers to SNode.C runtime entities, it uses the more precise language of configured roles and registered instances.
 
 ### Good judgment begins by refusing category mistakes
 
@@ -47,7 +47,7 @@ One of the simplest SNode.C habits is to avoid putting the right concern in the 
 
 Common examples are:
 
-- putting protocol behavior into the application-side server/client handle or configuration shell,
+- putting protocol behavior into the server/client handle or configuration shell,
 - putting connection policy into an arbitrary application handler,
 - putting role orchestration into a factory,
 - putting transport concerns into the web layer,
@@ -234,7 +234,7 @@ A useful map is:
 
 | Concern | Usually belongs near |
 |---|---|
-| endpoint identity | lower communication family / configured role |
+| endpoint identity | lower family / configured role |
 | byte interpretation | parser, context, or protocol object |
 | connection-local protocol endpoint behavior | `SocketContext` or protocol context |
 | endpoint construction policy | factory |
@@ -375,7 +375,7 @@ System architecture is not limited to internal correctness. It is also about ope
 A good SNode.C architect should routinely ask:
 
 - Which roles should be named explicitly?
-- Which configured communication roles need visible instance names?
+- Which configured roles need visible instance names?
 - Which settings should be externally configurable?
 - Which boundaries need clear logs?
 - Which connection or protocol counters matter?
@@ -475,7 +475,7 @@ Architectural judgment in SNode.C means choosing the right layer, role boundary,
 ::: {.snodec-remember title="What to remember"}
 - Architectural judgment means choosing the right layer and boundary for the actual concern.
 - A category mistake happens when a concern is placed in a layer that cannot properly own it.
-- Choose the lower communication family that matches the system boundary.
+- Choose the lower family that matches the system boundary.
 - Choose the protocol surface by asking what kind of conversation the boundary wants to have.
 - The simplest appropriate stack is not always the lowest stack.
 - Native protocols and composed protocols solve different boundary problems.

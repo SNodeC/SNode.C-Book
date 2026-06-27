@@ -7,7 +7,7 @@
 
 ### From configuration philosophy to configuration anatomy
 
-Chapter 16 introduced configuration as one of the main ways an application-side server/client handle shapes a communication role before that role is registered as a runtime-visible instance.
+Chapter 16 introduced configuration as one of the main ways an server/client handle shapes a communication role before that role is registered as a runtime-visible instance.
 
 This chapter looks at the practical anatomy of that model.
 
@@ -82,7 +82,7 @@ It contains concerns such as:
 - configurability,
 - and the set of sections that shape the role.
 
-The visible server/client object in application code is the application-side handle. In the configuration model, a named instance is the externally addressable configuration identity of the communication role that the handle configures and registers.
+The server/client object in application code is the handle. In the configuration model, a named instance is the externally addressable configuration identity of the communication role that the handle configures and registers.
 
 That distinction matters. The configuration system gives a communication role an operational address instead of merely decorating a local C++ variable.
 
@@ -207,7 +207,7 @@ The name can appear:
 
 That is why named instances matter.
 
-They connect the application-side handle to the operational surface of the application. The name is the address by which operators, scripts, configuration files, and diagnostic output can talk about that role.
+They connect the handle to the operational surface of the application. The name is the address by which operators, scripts, configuration files, and diagnostic output can talk about that role.
 
 #### Role identity: server or client
 
@@ -412,7 +412,7 @@ Representative examples include:
 
 TLS is not a minor socket flag.
 
-It is a connection-layer specialization. Grouping TLS configuration under `tls` keeps that concern separate from endpoint identity, socket retry behavior, and application protocol behavior.
+It is a connection-layer specialization. Grouping TLS configuration under `tls` keeps that concern separate from endpoint identity, socket retry behavior, and protocol behavior.
 
 Chapter 19 discusses TLS in depth. Here the important point is the section boundary.
 
@@ -526,7 +526,7 @@ $ echoserver echo local --port 8080
 2026-06-06 18:04:05 0000000000001 echo: listening on '0.0.0.0:8080 (0.0.0.0)'
 ```
 
-The exact timestamp and tick counter are run-specific. The important point is the direction. The CLI leads from application, to instance, to section, to option.
+The exact timestamp and tick counter are run-specific. The direction matters: application, instance, section, option.
 
 A named client instance follows the same idea, but the required section is usually `remote` rather than `local`. The CLI therefore teaches the structure while it reports the missing values.
 
@@ -806,7 +806,7 @@ application
 
 The application gives the operational envelope. The instance gives the configured communication role an address. The section gives one responsibility scope.
 
-The option gives one value. The same shape appears in C++ API calls, command-line traversal, and configuration-file keys. Therefore, the configuration model scales from a small echo example to applications with several communication roles.
+The option gives one value. The same structure appears in C++ API calls, command-line traversal, and configuration-file keys. Therefore, the configuration model scales from a small echo example to applications with several communication roles.
 
 ::: {.snodec-remember title="What to remember"}
 - The configuration hierarchy is `application -> instance -> section -> option`.

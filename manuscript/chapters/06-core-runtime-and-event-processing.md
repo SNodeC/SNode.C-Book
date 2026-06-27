@@ -7,7 +7,7 @@
 
 ### Why this chapter matters
 
-The first working echo pair introduced the runtime shape, and the mental model chapter named its recurring roles: handles, instances, connections, contexts, factories, layers, and operational concerns. It also made the central distinction precise: the visible `SocketServer` or `SocketClient` object is the application-side handle, while the instance is the registered communication role advanced by the framework.
+The first working echo pair introduced the runtime shape, and the mental model chapter named its recurring roles: handles, instances, connections, contexts, factories, layers, and operational concerns. It also made the central distinction precise: the `SocketServer`/`SocketClient` handle is the application-side handle, while the instance is the registered communication role advanced by the framework.
 
 That model is necessary, but it still leaves an important question open.
 
@@ -50,7 +50,7 @@ That is the backbone of the chapter.
 \index{SNode.C!source reading}
 
 
-The implementation follows the same shape. The excerpts below are abridged from the pinned SNode.C `v1.0.2` source in `src/core/SNodeC.cpp`, `src/core/EventLoop.cpp`, and `src/core/EventMultiplexer.cpp`. They are not a second model of the runtime; they are source anchors for the model used in this chapter.
+The implementation follows the same structure. The excerpts below are abridged from the pinned SNode.C `v1.0.2` source in `src/core/SNodeC.cpp`, `src/core/EventLoop.cpp`, and `src/core/EventMultiplexer.cpp`. They are not a second model of the runtime; they are source anchors for the model used in this chapter.
 
 First, the public facade really is a facade. `core::SNodeC` forwards runtime control to `core::EventLoop`:
 
@@ -355,7 +355,7 @@ That is a useful split. It means SNode.C can talk about *who handles work* and *
 
 Both `EventReceiver` and `Event` expose `span()` and `relax()`-style operations. The names may feel unusual at first, but conceptually they fit the framework.
 
-At the level of the runtime vocabulary, these names suggest a lifecycle-oriented model. Runtime work can be published into, withdrawn from, and dispatched by the event system. The reader does not need to memorize every internal method here. The important point is the shape of the runtime: work is represented, published, dispatched, and eventually released.
+At the level of the runtime vocabulary, these names suggest a lifecycle-oriented model. Runtime work can be published into, withdrawn from, and dispatched by the event system. The reader does not need to memorize every internal method here. The runtime shape is what matters: work is represented, published, dispatched, and eventually released.
 
 ### The multiplexer is the coordination backbone
 
@@ -412,7 +412,7 @@ The architecture tells us that queued event work is a first-class part of a loop
 
 The conceptual role of the multiplexer is stable, but the concrete waiting mechanism can vary. The source tree separates lower-level multiplexer backends for mechanisms such as `epoll`, `poll`, and `select`.
 
-For the reader, the important point is not to memorize a backend first. The important point is the architectural contract:
+For the reader, the goal is not to memorize a backend first, but to understand the architectural contract:
 
 > The multiplexer is the place where observed descriptors, timers, queued work, timeout processing, signals, and cleanup meet.
 
@@ -633,7 +633,7 @@ Still, a book should distinguish stable concepts from implementation details. Fu
 
 Two stable distinctions matter especially for the rest of the book.
 
-The first is the distinction between a handle and an instance. The visible server or client object is the application-side handle. The registered instance is advanced by shared runtime and flow-controller machinery.
+The first is the distinction between a handle and an instance. The server/client object is the application-side handle. The registered instance is advanced by shared runtime and flow-controller machinery.
 
 The second is the distinction between an instance and a connection. The instance is the long-lived communication role. A connection is a concrete peer relationship that appears through runtime progress.
 
@@ -643,7 +643,7 @@ Those are the ideas the reader should carry forward.
 - `core::SNodeC` is the public runtime facade; `core::EventLoop` is the central event-loop orchestrator behind it.
 - `core::EventMultiplexer` coordinates descriptor readiness, timers, queued work, timeout checks, signals, and cleanup.
 - `listen(...)` and `connect(...)` do not perform the whole operation on the caller's stack; they enter the flow-controller path and schedule runtime work.
-- The visible server or client object is an application-side handle; the registered instance is advanced through shared state and flow-controller machinery.
+- The server/client object is an application-side handle; the registered instance is advanced through shared state and flow-controller machinery.
 - Descriptor receivers and timer receivers are managed runtime participants with enable/disable, suspend/resume, timeout, and cleanup behavior.
 - Application callbacks should return control to the event loop rather than blocking the runtime.
 :::

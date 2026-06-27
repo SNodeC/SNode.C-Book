@@ -46,7 +46,7 @@ runtime
                       -> Express-like routing and middleware
 ```
 
-The visible `WebAppT<ServerT>` object in application code is the application-side handle. Through that handle, the application configures a server-side communication role and registers a runtime-visible server instance. The Express-like layer does not change that model; it changes what happens when a ready HTTP request reaches application code.
+The visible `WebAppT<ServerT>` object in application code is the handle. Through that handle, the application configures a server-side communication role and registers a runtime-visible server instance. The Express-like layer does not change that model; it changes what happens when a ready HTTP request reaches application code.
 
 Earlier chapters established the lower parts. Chapter 21 introduced HTTP request and response semantics. Chapter 22 now asks what happens when HTTP handling becomes application structure. The answer is:
 
@@ -134,7 +134,7 @@ This composition explains how HTTP request handling becomes Express-like applica
 | `ServerT` | concrete HTTP server type underneath |
 | `WebAppT<ServerT>` | combined Express-like application surface and HTTP server handle |
 
-The result is not a separate web runtime. It is a web-application surface joined to a concrete HTTP server.
+This is not a separate web runtime. It is a web-application surface joined to a concrete HTTP server.
 
 #### WebApp as router-shaped application
 
@@ -229,7 +229,7 @@ The routing surface includes familiar methods such as:
 - `.patch()`,
 - `.head()`.
 
-The method list matters because each method attaches structure to the route tree. The point is not that there are many methods; it is that routing, middleware, and mounted routers become composable:
+The method list matters because each method attaches structure to the route tree. The method count is secondary; routing, middleware, and mounted routers become composable:
 
 ```text
 application

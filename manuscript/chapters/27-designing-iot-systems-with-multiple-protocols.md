@@ -24,7 +24,7 @@ A multi-protocol IoT system is clear when each protocol is assigned to an explic
 
 This chapter is not about using every protocol everywhere. It is about deciding where each protocol belongs. Chapter 25 introduced MQTT as a protocol family. Chapter 26 showed MQTT over WebSocket as one composed stack. Chapter 27 now treats multi-protocol IoT systems as boundary design.
 
-The earlier chapters introduced the pieces one at a time: lower communication families, Unix domain sockets, Bluetooth RFCOMM and L2CAP, HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, TLS, configuration, diagnostics, timeouts, and failure behavior. The question is no longer only:
+The earlier chapters introduced the pieces one at a time: lower families, Unix domain sockets, Bluetooth RFCOMM and L2CAP, HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, TLS, configuration, diagnostics, timeouts, and failure behavior. The question is no longer only:
 
 ```text
 How does this protocol work?
@@ -69,7 +69,7 @@ A clear IoT design starts by naming the boundaries. Only then should it choose p
 \index{administration role}
 
 
-A useful starting point is to name recurring boundary roles. In this chapter, a boundary role is a design position in the system. It is not automatically a fixed framework class. A concrete SNode.C application may realize such a role through one or more configured communication roles and registered runtime-visible instances.
+A useful starting point is to name recurring boundary roles. In this chapter, a boundary role is a design position in the system. It is not automatically a fixed framework class. A concrete SNode.C application may realize such a role through one or more configured roles and registered instances.
 
 | Boundary role | Question |
 |---|---|
@@ -79,13 +79,13 @@ A useful starting point is to name recurring boundary roles. In this chapter, a 
 | observation role | How do humans or monitoring consumers see state changes? |
 | administration role | How is the system configured, controlled, and inspected? |
 
-These roles help discussion; they do not force implementation structure. A small application may combine several of them. A larger deployment may split them across several processes. The important point is that the roles are different conversations.
+These roles help discussion; they do not force implementation structure. A small application may combine several of them. A larger deployment may split them across several processes. The roles are different conversations.
 
 #### Device-facing role
 
 The device-facing role talks toward hardware or device-near components. This may involve Bluetooth RFCOMM, Bluetooth L2CAP, a custom stream protocol, a serial or local helper process, or another device-near boundary.
 
-This role is usually close to physical constraints. It may care about commissioning, local range, device identity, pairing, sampling, or hardware-specific timing. Device-facing does not automatically mean globally reachable, brokered, or web-facing. It means that the system is close to the physical edge and should not pretend that this boundary has the same shape as a dashboard, a broker, or an administration API.
+This role is usually close to physical constraints. It may care about commissioning, local range, device identity, pairing, sampling, or hardware-specific timing. Device-facing does not automatically mean globally reachable, brokered, or web-facing. It means that the system is close to the physical edge and should not pretend that this boundary has the same structure as a dashboard, a broker, or an administration API.
 
 #### Local-control role
 
@@ -182,7 +182,7 @@ These stacks are not redundant duplicates. They are different conversations at d
 
 SNode.C's component structure reflects this breadth: lower-family stream components, HTTP/Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and IoT modules are separate but architecturally related pieces. The protocol surfaces can differ, but the framework keeps a shared architectural language: runtime lifecycle, configured roles, registered instances, contexts, factories, configuration, logging, diagnostics, timeouts, and failure handling.
 
-The result is not protocol uniformity. The result is architectural coherence across protocol diversity.
+The goal is architectural coherence across protocol diversity, not protocol uniformity.
 
 \SNodeCNextSectionMark{27.6. TELEMETRY, CONTROL, OBSERVATION, ADMINISTRATION}
 
@@ -417,7 +417,7 @@ Chapter 27
   -> configuration as a system boundary map
 ```
 
-In SNode.C terms, configuration should make configured communication roles and registered runtime-visible instances legible. At the system-design level, it should also show which boundary each role serves. A configuration file should not be only a pile of values. In a multi-protocol IoT system, it should help answer:
+In SNode.C terms, configuration should make configured roles and registered instances legible. At the system-design level, it should also show which boundary each role serves. A configuration file should not be only a pile of values. In a multi-protocol IoT system, it should help answer:
 
 ```text
 Which boundary is this?

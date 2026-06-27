@@ -33,7 +33,7 @@ The larger SNode.C model remains recognizable:
 - connection lifecycle callbacks,
 - and the same broad stream-based server/client/connection model.
 
-The lower communication family changes. The endpoint identity changes. The application architecture does not need to be reinvented.
+The lower family changes. The endpoint identity changes. The application architecture is preserved.
 
 ### Two Bluetooth families, two service selectors
 
@@ -42,7 +42,7 @@ The lower communication family changes. The endpoint identity changes. The appli
 \index{L2CAP!PSM}
 
 
-SNode.C represents Bluetooth through two distinct lower communication families:
+SNode.C represents Bluetooth through two distinct lower families:
 
 | Aspect | RFCOMM | L2CAP |
 |---|---|---|
@@ -127,7 +127,7 @@ The shared Bluetooth-address part makes RFCOMM and L2CAP look related. The servi
 
 #### Channel and PSM are not interchangeable
 
-The most important conceptual mistake would be to collapse RFCOMM and L2CAP into one vague "Bluetooth socket" idea. They belong in the same chapter because they are both Bluetooth-related lower communication families.
+The most important conceptual mistake would be to collapse RFCOMM and L2CAP into one vague "Bluetooth socket" idea. They belong in the same chapter because they are both Bluetooth-related lower families.
 
 They must still remain conceptually separate:
 
@@ -248,7 +248,7 @@ It means the broad default/wildcard idea exists in both Bluetooth address models
 \index{connect()@\texttt{connect()}}
 
 
-The stream Bluetooth wrappers follow the SNode.C pattern already seen for IPv4, IPv6, and Unix domain sockets. The convenience calls configure the application-side handle and then enter the usual registration path.
+The stream Bluetooth wrappers follow the SNode.C pattern already seen for IPv4, IPv6, and Unix domain sockets. The convenience calls configure the handle and then enter the usual registration path.
 
 The difference is the configured endpoint identity:
 
@@ -412,7 +412,7 @@ Bluetooth endpoint identity is not the whole operational story.
 
 Before two devices can communicate through SNode.C over RFCOMM or L2CAP, the devices must already be paired using the operating-system Bluetooth tools or user interface.
 
-SNode.C uses the Bluetooth stack as a lower communication family. It does not replace Bluetooth discovery, pairing, trust management, or adapter setup.
+SNode.C uses the Bluetooth stack as a lower family. It does not replace Bluetooth discovery, pairing, trust management, or adapter setup.
 
 That separation is important:
 
@@ -438,11 +438,11 @@ The stable core roles remain:
 
 | Role | Meaning with Bluetooth stream families |
 |---|---|
-| Application-side handle | the visible `SocketServer` or `SocketClient` object used to configure and register the role |
+| Application-side handle | the `SocketServer`/`SocketClient` handle used to configure and register the role |
 | Registered instance | the runtime-visible server-side or client-side communication role |
 | `SocketConnection` | one concrete peer relationship |
 | `SocketContextFactory` | creates a context for a connection |
-| `SocketContext` | implements application protocol behavior |
+| `SocketContext` | implements protocol behavior |
 
 The server is still the listening role. The client is still the connecting role. The connection is still the concrete peer relationship.
 
@@ -462,7 +462,7 @@ or:
 net::l2::stream::legacy
 ```
 
-What changes is the lower communication family.
+The lower family changes.
 
 What often remains stable is:
 
@@ -509,9 +509,9 @@ Bluetooth support depends on platform Bluetooth support.
 
 On Linux, that usually means BlueZ and the corresponding development files must be available when building the Bluetooth-enabled components.
 
-The framework can model RFCOMM and L2CAP as lower communication families, but the build can only provide those components where the platform Bluetooth stack and development files are available.
+The framework can model RFCOMM and L2CAP as lower families, but the build can only provide those components where the platform Bluetooth stack and development files are available.
 
-That is normal for system-level Bluetooth support. SNode.C exposes RFCOMM and L2CAP as lower communication families, while still respecting the platform dependency.
+That is normal for system-level Bluetooth support. SNode.C exposes RFCOMM and L2CAP as lower families, while still respecting the platform dependency.
 
 #### Pairing, permissions, and adapter state
 
@@ -549,11 +549,11 @@ SNode.C's value is that these worlds can be understood through one layered model
 This is especially useful in IoT and embedded systems, where local device communication and network communication often coexist.
 
 ::: {.snodec-remember title="What to remember"}
-- Bluetooth support in this part is represented by two lower communication families: RFCOMM in `net::rc` and L2CAP in `net::l2`.
+- Bluetooth support in this part is represented by two lower families: RFCOMM in `net::rc` and L2CAP in `net::l2`.
 - RFCOMM endpoint identity is Bluetooth address plus channel; L2CAP endpoint identity is Bluetooth address plus PSM.
 - Channel and PSM are not interchangeable service selectors.
-- The application-side handle, registered instance, connection, factory, context, callbacks, and runtime model remain structurally familiar.
-- Bluetooth convenience calls configure the application-side handle and then enter the usual registration path.
+- The handle, registered instance, connection, factory, context, callbacks, and runtime model remain structurally familiar.
+- Bluetooth convenience calls configure the handle and then enter the usual registration path.
 - The Bluetooth wildcard or deferred endpoint shape is the wildcard Bluetooth address plus service selector `0`.
 :::
 

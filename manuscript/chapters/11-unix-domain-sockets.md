@@ -53,9 +53,9 @@ The transition from IPv4/IPv6 to Unix domain sockets can be summarized as follow
 | Server/client role model | stable | stable |
 | Context/factory model | stable | stable |
 
-The key point is the controlled change. The lower communication family changes. The endpoint identity changes.
+The key point is the controlled change. The lower family changes. The endpoint identity changes.
 
-The application architecture does not need to be reinvented.
+The application architecture is preserved.
 
 The table should therefore be read as a transfer map, not as a feature comparison. It shows which ideas move unchanged into the Unix-domain family and which words must be reinterpreted once endpoint identity becomes path-based.
 
@@ -127,7 +127,7 @@ Default construction is meaningful in the Unix-domain address model.
 
 In the SNode.C address vocabulary used here, an empty Unix-domain path acts as the wildcard or deferred endpoint indicator for this family. It gives SNode.C a way to represent an address object whose concrete path has not yet been made specific.
 
-The point is not to turn this into a long operating-system detour. The important point is consistency across families:
+This is not a long operating-system detour. The key is consistency across families:
 
 | Family | Default / wildcard shape |
 |---|---|
@@ -192,7 +192,7 @@ LocalServer server("local-service");
 server.listen("/tmp/my-service.sock", 5, onStatus);
 ```
 
-The visible `LocalServer` object is the application-side handle. The `listen(...)` call configures the server-side path and registers the server-side instance through the usual runtime path.
+The visible `LocalServer` object is the handle. The `listen(...)` call configures the server-side path and registers the server-side instance through the usual runtime path.
 
 The server is still a server role.
 
@@ -217,7 +217,7 @@ The server-side convenience overloads are path-centered:
 | `listen(sunPath, ...)` | `Local::setSunPath(sunPath)` |
 | `listen(sunPath, backlog, ...)` | `Local::setSunPath(sunPath)` + backlog |
 
-This mirrors the Chapter 10 pattern. A readable convenience call configures the application-side handle and then enters the same registration path.
+This mirrors the Chapter 10 pattern. A readable convenience call configures the handle and then enters the same registration path.
 
 #### Client-side `connect(...)`
 
@@ -230,7 +230,7 @@ LocalClient client("local-client");
 client.connect("/tmp/my-service.sock", onStatus);
 ```
 
-Here the visible `LocalClient` object is again the application-side handle. The `connect(...)` call configures the remote Unix-domain service path and registers the client-side instance through the usual runtime path.
+Here the visible `LocalClient` object is again the handle. The `connect(...)` call configures the remote Unix-domain service path and registers the client-side instance through the usual runtime path.
 
 If the client also needs an explicit local bind path, the call can express that too:
 
@@ -293,7 +293,7 @@ The same core model remains:
 | Registered instance | runtime-visible server/client role using `net::un` endpoint semantics |
 | `SocketConnection` | one concrete peer relationship |
 | `SocketContextFactory` | creates a context for a connection |
-| `SocketContext` | implements application protocol behavior |
+| `SocketContext` | implements protocol behavior |
 
 The server-side instance is still the listening role. The client-side instance is still the connecting role. The connection is still the concrete peer relationship.
 
@@ -309,7 +309,7 @@ A `SocketContext` implementing a small request/response or streaming protocol do
 net::un::stream::legacy
 ```
 
-What changes is the carrier.
+The carrier changes.
 
 What often remains stable is:
 
@@ -337,7 +337,7 @@ net::un
 
 Here `legacy` is the non-TLS stream connection variant. `tls` adds TLS connection handling.
 
-This matters because Unix domain sockets are not a special branch outside the framework. In SNode.C's terminology, they are another lower communication family in the network-layer part of the stack, while stream transport and connection-layer handling remain recognizable.
+Unix domain sockets are not a special branch outside the framework. In SNode.C's terminology, they are another lower family in the network-layer part of the stack, while stream transport and connection-layer handling remain recognizable.
 
 ### What changes operationally
 
@@ -442,7 +442,7 @@ The server/client/connection/context model remains available, while the lower-fa
 ::: {.snodec-remember title="What to remember"}
 - Unix domain sockets replace host-plus-port endpoint identity with local path identity.
 - `net::un` selects the Unix-domain family, and `net::un::SocketAddress` represents the path-based endpoint.
-- The application-side handle, registered instance, connection, factory, context, callbacks, and runtime model remain structurally familiar.
+- The handle, registered instance, connection, factory, context, callbacks, and runtime model remain structurally familiar.
 - `listen(sunPath, ...)` configures the server's local Unix-domain path; `connect(sunPath, ...)` configures the client's remote Unix-domain service path.
 - `connect(sunPath, bindSunPath, ...)` keeps the local/remote distinction visible even though both endpoints are path-based.
 - The empty Unix-domain path is the family's wildcard or deferred endpoint representation in the SNode.C address model.

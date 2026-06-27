@@ -9,7 +9,7 @@
 
 Chapter 29 showed how SNode.C framework pieces become executable applications: build targets, entry points, linked components, configured roles, callbacks, and runtime start. Chapter 30 widens the view again. The question is no longer only how one executable is assembled, but how several roles, boundaries, state responsibilities, and operational policies form a system.
 
-An executable remains an important architectural object. It has a build target, an entry point, linked components, application-side objects, configured communication roles, instance names, configuration, and runtime behavior. But a communication framework becomes most useful when applications are no longer seen only as isolated endpoints. They become parts of larger arrangements:
+An executable remains an important architectural object. It has a build target, an entry point, linked components, application-side objects, configured roles, instance names, configuration, and runtime behavior. But a communication framework becomes most useful when applications are no longer seen only as isolated endpoints. They become parts of larger arrangements:
 
 - several communication roles,
 - several protocol families,
@@ -57,7 +57,7 @@ A larger application may still have one main role, one deployment boundary, and 
 
 ![An application as a system role, with protocol-facing boundaries, configuration, operational visibility, and deployment identity around the running process.](assets/figures/pdf/fig-09-application-system-role-constellation.pdf){#fig:application-system-role-constellation width=90% latex-placement="tbp"}
 
-Figure \ref{fig:application-system-role-constellation} is intentionally not a build pipeline. The important point is that the running process is where configured instances, protocol boundaries, connection state, diagnostics, and deployment assumptions meet.
+Figure \ref{fig:application-system-role-constellation} is intentionally not a build pipeline. The running process is where configured instances, protocol boundaries, connection state, diagnostics, and deployment assumptions meet.
 
 Those are architectural concerns, not only size concerns. A useful first question is therefore:
 
@@ -71,7 +71,7 @@ not only:
 Which classes are instantiated?
 ```
 
-In this chapter, a role is a system-design responsibility. A concrete SNode.C program may realize such a role through an application-side server or client handle, a configured communication role, and a registered runtime-visible instance. These terms should not be collapsed into one another. The role belongs to the system design; the configured communication role belongs to the SNode.C configuration surface; the registered runtime-visible instance is what the runtime can observe and operate.
+In this chapter, a role is a system-design responsibility. A concrete SNode.C program may realize such a role through an server/client handle, a configured role, and a registered instance. These terms should not be collapsed into one another. The role belongs to the system design; the configured role belongs to the SNode.C configuration surface; the registered instance is what the runtime can observe and operate.
 
 #### A concrete system sketch
 
@@ -126,7 +126,7 @@ database-state
   -> persistence boundary
 ```
 
-These are role names, not necessarily executable names. Some roles may be routes inside one application. Some may be configured communication roles. Some may be service-level responsibilities. Some roles are nested inside others: an SSE route may belong to a web role, while still being useful as a named observation boundary.
+These are role names, not necessarily executable names. Some roles may be routes inside one application. Some may be configured roles. Some may be service-level responsibilities. Some roles are nested inside others: an SSE route may belong to a web role, while still being useful as a named observation boundary.
 
 The role `database-state` is intentionally different from `admin-http` or `mqtt-ingest`. It is not the same kind of communication role as a socket server or client. It names the persistence boundary that owns durable application state.
 
@@ -210,7 +210,7 @@ Useful boundary questions include:
 - Which roles own durable state?
 - Which roles should be observable independently?
 
-The result is a set of explicit boundaries rather than a feature list.
+The system becomes a set of explicit boundaries rather than a feature list.
 
 #### Protocol boundaries
 
@@ -238,7 +238,7 @@ A system may legitimately use:
 - IPv4 or IPv6 stream carriers for network-facing roles,
 - TLS where the boundary requires encryption and authentication support.
 
-The point is not to use many protocols for decoration. The point is to choose the protocol family that matches each boundary. SNode.C's component structure supports that kind of breadth, but system design still has to decide where each protocol belongs.
+Do not use many protocols for decoration; choose the protocol family that matches each boundary. SNode.C's component structure supports that kind of breadth, but system design still has to decide where each protocol belongs.
 
 #### Local, network-facing, and upgraded boundaries
 

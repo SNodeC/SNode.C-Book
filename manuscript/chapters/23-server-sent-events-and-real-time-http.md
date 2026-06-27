@@ -57,7 +57,7 @@ lower communication family
                   -> MessageEvent handling
 ```
 
-SSE does not bypass the lower architecture. It still depends on the runtime, a lower communication family, stream transport, legacy or TLS connection handling, HTTP client/server behavior, connection lifecycle, retry and reconnect policy, and diagnostics.
+SSE still uses the lower stack. It still depends on the runtime, a lower family, stream transport, legacy or TLS connection handling, HTTP client/server behavior, connection lifecycle, retry and reconnect policy, and diagnostics.
 
 The application-facing unit changes again. Earlier chapters showed a sequence of semantic lifts:
 

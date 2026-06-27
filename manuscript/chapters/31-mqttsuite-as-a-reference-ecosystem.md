@@ -26,7 +26,7 @@ Figure \ref{fig:mqttsuite-ecosystem-map} shows the suite as a role ecosystem aro
 
 ![MQTTSuite as an ecosystem around the MQTTBroker role and topic space.](assets/figures/pdf/fig-10-mqttsuite-ecosystem-map.pdf){#fig:mqttsuite-ecosystem-map width=90% latex-placement="tbp"}
 
-The figure is intentionally not a pipeline. A deployment may use only the broker, one bridge, one store, one integrator, or several cooperating processes. The important point is that each tool occupies a distinct system role around topic flow, client state, persistence, bridging, and integration.
+The figure is intentionally not a pipeline. A deployment may use only the broker, one bridge, one store, one integrator, or several cooperating processes. Each tool occupies a distinct system role around topic flow, client state, persistence, bridging, and integration.
 
 ### Ecosystem shape
 
@@ -190,7 +190,7 @@ administration layer
   -> controlled runtime management of mapping behavior
 ```
 
-The administration surface can then be discussed in terms such as inspection, deployment or reload, persistence, history, and rollback where supported by the concrete application. The important architectural point is not the exact route vocabulary. The important point is that changing integration rules is an application-management concern above MQTT core.
+The administration surface can then be discussed in terms such as inspection, deployment or reload, persistence, history, and rollback where supported by the concrete application. The exact route vocabulary is secondary; changing integration rules is an application-management concern above MQTT core.
 
 This is the same layered thinking used throughout the framework.
 
@@ -291,7 +291,7 @@ security mode
   -> legacy/plain or TLS
 ```
 
-Where such a name belongs to a configured communication role, it can also become a registered runtime-visible instance. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
+Where such a name belongs to a configured role, it can also become a registered instance. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
 
 ### Integration and topology: MQTTIntegrator and MQTTBridge
 

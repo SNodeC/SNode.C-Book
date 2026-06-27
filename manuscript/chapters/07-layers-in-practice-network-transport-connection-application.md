@@ -323,7 +323,7 @@ Often, the application keeps:
 - the same runtime model,
 - and the same lower family choice.
 
-What changes is the connection machinery below the application protocol.
+The connection machinery below the application protocol changes.
 
 That is exactly what a good layer model should achieve. It isolates the change without pretending that TLS is trivial. TLS has operational and security consequences, but architecturally it belongs in the connection layer.
 
@@ -349,7 +349,7 @@ net-un-stream-legacy
 net-un-stream-tls
 ```
 
-The matching public include paths follow the same shape, ending in the role header selected by the application:
+The matching public include paths follow the same structure, ending in the role header selected by the application:
 
 ```cpp
 #include <net/in/stream/legacy/SocketServer.h>
@@ -444,7 +444,7 @@ http-server-express-tls-rc
 http-server-express-tls-un
 ```
 
-The point is not to memorize every name at once. The point is to read component names as architectural statements. A component name tells the reader which higher framework behavior is selected and, in many cases, which lower communication stack carries it.
+Do not memorize every name at once; read component names as architectural statements. A component name tells the reader which higher framework behavior is selected and, in many cases, which lower communication stack carries it.
 
 The corresponding include hierarchy is equally important. A source file that names an Express IPv4 legacy WebApp includes a public Express header, not the lower socket headers directly:
 
@@ -525,7 +525,7 @@ transport form: stream
 connection handling: TLS
 ```
 
-This matters because the layer model affects how code is organized, how components are built, and how external projects link against the framework.
+The layer model affects code organization, component builds, and external linking.
 
 A reader who learns the layer names is also learning how to navigate the build.
 

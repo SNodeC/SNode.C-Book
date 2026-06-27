@@ -65,7 +65,7 @@ Do not confuse build-tree success with install-tree success. A running role also
 
 ![The build-to-deployment path in which component choices become installed packages, service definition, configuration, and runtime state.](assets/figures/pdf/fig-11-build-install-package-deployment-surface.pdf){#fig:build-install-package-deployment-surface width=90% latex-placement="tbp"}
 
-Figure \ref{fig:build-install-package-deployment-surface} is intentionally not only a build pipeline. The important point is that each step preserves architectural information. A CMake target expresses a component boundary. An install component gives that boundary a filesystem location. A package component adds dependency metadata. The deployed runtime surface then has to contain everything the running role needs: libraries, executables, runtime-loaded modules, configuration, service definition, writable state, and deployment-specific resources.
+Figure \ref{fig:build-install-package-deployment-surface} is intentionally not only a build pipeline. Each step preserves architectural information. A CMake target expresses a component boundary. An install component gives that boundary a filesystem location. A package component adds dependency metadata. The deployed runtime surface then has to contain everything the running role needs: libraries, executables, runtime-loaded modules, configuration, service definition, writable state, and deployment-specific resources.
 
 The installed system should still reveal what was built. If the build selected HTTP, Express, MQTT, WebSocket, TLS, MariaDB support, or a particular network family, deployment should not hide those choices behind one opaque pile of files.
 
@@ -350,8 +350,8 @@ SNode.C's ability to show and write configuration is especially important in dep
 
 It can record:
 
-- which configured communication roles exist,
-- which registered runtime-visible instances are enabled,
+- which configured roles exist,
+- which registered instances are enabled,
 - which local and remote addresses are used,
 - which TLS settings are active,
 - which retry and timeout policies matter,

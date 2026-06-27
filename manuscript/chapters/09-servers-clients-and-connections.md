@@ -17,16 +17,16 @@ The answer brings together three concepts that should not be learned as unrelate
 
 A server-side instance uses a local endpoint identity to listen and accept peers. A client-side instance uses a remote endpoint identity, and optionally a local one, to initiate a connection. A connection is the concrete peer relationship that appears when the listen or connect flow succeeds.
 
-Figure \ref{fig:server-client-path} turns that sequence into a single path. It starts with the application-side handle, passes through the registration call and the runtime-visible server or client role, and then follows the accept/connect machinery to the concrete connection, factory, context, and protocol behavior.
+Figure \ref{fig:server-client-path} turns that sequence into a single path. It starts with the handle, passes through the registration call and the runtime-visible server or client role, and then follows the accept/connect machinery to the concrete connection, factory, context, and protocol behavior.
 
-![The server/client role path from application-side handle to protocol behavior.](assets/figures/pdf/fig-05-server-client-connection-context-path.pdf){#fig:server-client-path width=88% latex-placement="tbp"}
+![The server/client role path from handle to protocol behavior.](assets/figures/pdf/fig-05-server-client-connection-context-path.pdf){#fig:server-client-path width=88% latex-placement="tbp"}
 
-Read Figure \ref{fig:server-client-path} as the bridge between the previous chapters, not as a full implementation diagram. Chapter 3 showed the first echo pair. Chapter 5 distinguished handles, instances, connections, factories, and contexts. Chapter 6 explained the runtime and flow-controller machinery that advances registered instances. Chapter 7 placed communication choices into a layer stack. Chapter 8 explained endpoint identity.
+Read Figure \ref{fig:server-client-path} as the bridge between the previous chapters, not as a full implementation diagram. Chapter 3 showed the first echo pair. Chapter 5 distinguished handles, instances, connections, factories, and contexts. Chapter 6 explained the runtime machinery that advances registered instances. Chapter 7 placed communication choices into a layer stack. Chapter 8 explained endpoint identity.
 
 Chapter 9 now brings those ideas together around the most important practical boundary in the stream layer:
 
 ::: {.snodec-warning title="Instance/connection warning"}
-A server or client instance is not a connection. It is the runtime-visible role under which concrete connections appear.
+A server or client instance is not a connection. It is the runtime-visible role under which connections appear.
 :::
 
 That distinction is simple, but it carries a large part of the framework's architecture. If it is missed, everything tends to collapse into one vague object: the thing that listens, connects, owns the socket, handles data, stores state, performs retries, and implements the protocol. SNode.C does not use that collapsed model. It separates those responsibilities deliberately.
@@ -49,7 +49,7 @@ The useful first distinction is not a class hierarchy. It is a responsibility ma
 
 The table is deliberately phrased in concepts first and class names second.
 
-The visible `SocketServer` or `SocketClient` object is the application-side handle through which application code configures and registers a role. After `listen(...)` or `connect(...)`, the registered instance is represented by framework-owned shared state and flow-controller machinery. That instance may then create or accept one or more concrete connections over time.
+The `SocketServer`/`SocketClient` handle is the handle through which application code configures and registers a role. After `listen(...)` or `connect(...)`, the registered instance is represented by framework-owned shared state and flow-controller machinery. That instance may then create or accept one or more connections over time.
 
 The connection is the peer relationship. It has addresses, a descriptor, data flow, shutdown behavior, timeouts, timing information, counters, and names.
 
@@ -76,7 +76,7 @@ The handle registers the role. The instance is advanced by the runtime. The conn
 
 The distinction has direct consequences for how an application is structured.
 
-Configuration belongs naturally to the instance, because configuration describes how the communication role should behave over time. Addresses appear at registration and later on concrete connections, because they describe endpoint identity. Retry and reconnect behavior belongs to the instance and its flow-controller machinery, because it concerns how the role should keep trying or resume later. Protocol behavior belongs to the context, because it is relative to one concrete peer relationship.
+Configuration belongs naturally to the instance, because configuration describes how the communication role should behave over time. Addresses appear at registration and later on connections, because they describe endpoint identity. Retry and reconnect behavior belongs to the instance and its flow-controller machinery, because it concerns how the role should keep trying or resume later. Protocol behavior belongs to the context, because it is relative to one concrete peer relationship.
 
 Once that separation is clear, the rest of the chapter becomes much easier to read.
 
@@ -104,7 +104,7 @@ The important conceptual point is:
 
 > A server or client instance is not the protocol endpoint.
 
-It is the configured communication role that participates in the runtime, creates or accepts concrete connections, and arranges for contexts to be attached to them.
+It is the configured communication role that participates in the runtime, creates or accepts connections, and arranges for contexts to be attached to them.
 
 The protocol endpoint lives in the context.
 
@@ -148,7 +148,7 @@ Calling `listen(...)` should be understood as registering listening intent.
 
 The call does not mean that all listening and accepting work happens immediately on the caller's stack. It enters the flow-controller path and lets the runtime advance the work.
 
-This matters because retry logic, status reporting, accept-event observation, and context creation all belong to the managed runtime story.
+Retry logic, status reporting, accept-event observation, and context creation all belong to the managed runtime story.
 
 The application says, in effect:
 
@@ -156,7 +156,7 @@ The application says, in effect:
 This server-side role should listen here.
 ```
 
-The runtime and flow-controller machinery then move that intention forward.
+The runtime machinery then move that intention forward.
 
 That is different from a small blocking wrapper around `bind(...)`, `listen(...)`, and `accept(...)`. SNode.C uses the same operating-system concepts underneath, but the framework-level design is event-driven and role-based.
 
@@ -194,7 +194,7 @@ Typical uses include:
 - adding operational diagnostics,
 - applying role-level setup that should not live in the application protocol context.
 
-These callbacks should not be confused with context callbacks. A server lifecycle callback observes or supervises a connection. The context implements application protocol behavior over that connection.
+These callbacks should not be confused with context callbacks. A server lifecycle callback observes or supervises a connection. The context implements protocol behavior over that connection.
 
 A useful rule is:
 
@@ -238,7 +238,7 @@ The application says, in effect:
 This client-side role should connect there.
 ```
 
-The runtime and flow-controller machinery then move that intention forward.
+The runtime machinery then move that intention forward.
 
 A client-side instance may produce one connection, no connection, or several connection episodes over time if retry or reconnect behavior is configured. That is why the instance must not be confused with a single successful connection.
 
@@ -561,7 +561,7 @@ NO_RETRY
 
 It also carries explanatory information through functions such as `what()` and `where()`.
 
-For Chapter 9, the important point is not to turn `State` into its own topic. The important point is:
+For Chapter 9, do not turn `State` into its own topic. Remember:
 
 > Status callbacks report role-level outcomes using a richer state object, not just true or false.
 
@@ -651,7 +651,7 @@ The server-side or client-side instance carries the factory.
 
 When a concrete connection is created, the factory creates a context for that connection.
 
-The context then expresses the application protocol behavior.
+The context then expresses the protocol behavior.
 
 The sequence is:
 
@@ -742,7 +742,7 @@ When reading a new SNode.C type or callback, the first question should be:
 That question usually prevents the most common misunderstandings.
 
 ::: {.snodec-remember title="What to remember"}
-- The visible `SocketServer` or `SocketClient` object is the application-side handle used to configure and register a server-side or client-side instance.
+- The `SocketServer`/`SocketClient` handle is the handle used to configure and register a server-side or client-side instance.
 - The registered instance is the long-lived runtime-visible role; a `SocketConnection` is one concrete peer relationship under that role.
 - `listen(...)` and `connect(...)` register intent and enter runtime/flow-controller machinery; they do not make the local handle itself become a peer connection.
 - Server and client roles share the same broad pattern, but differ in setup direction: servers accept peers, clients initiate connection attempts and may reconnect.

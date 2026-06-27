@@ -145,7 +145,7 @@ This is how strictness remains maintainable.
 
 Include discipline is a component test and a formatting preference. Every public header should include what it uses. Every source file should avoid relying on accidental transitive includes.
 
-This matters because SNode.C is consumed through components, not only as one monolithic source tree. A header that compiles only because another unrelated header came first is not a stable public interface.
+SNode.C is consumed through components, not only as one monolithic source tree. A header that compiles only because another unrelated header came first is not a stable public interface.
 
 The repository already treats include checking as a build concern. When `include-what-you-use` is available, the build can configure it, while cross-compilation contexts are handled more carefully. This supports the architectural promise that a public header expresses its own requirements.
 
@@ -459,9 +459,9 @@ SNode.C configuration shapes the effective runtime system.
 
 A configuration test should therefore check the effective configuration after defaults, command-line options, configuration files, named instances, option groups, generated configuration, and application-specific settings have been combined.
 
-Useful checks include whether a configured communication role is enabled or disabled as expected, whether a server binds to the expected address, whether a client connects to the expected remote endpoint, whether TLS settings are applied to the correct role, whether retry and timeout settings have the expected effective values, whether generated configuration can be reused, and whether invalid combinations fail clearly.
+Useful checks include whether a configured role is enabled or disabled as expected, whether a server binds to the expected address, whether a client connects to the expected remote endpoint, whether TLS settings are applied to the correct role, whether retry and timeout settings have the expected effective values, whether generated configuration can be reused, and whether invalid combinations fail clearly.
 
-This matters because configuration is one of the main ways SNode.C systems become multi-role systems. A generated configuration file can be a map of the deployed role constellation. Testing that map protects the operational shape of the application.
+Configuration is one of the main ways SNode.C systems become multi-role systems. A generated configuration file can be a map of the deployed role constellation. Testing that map protects the operational shape of the application.
 
 ### Deployment confidence
 
