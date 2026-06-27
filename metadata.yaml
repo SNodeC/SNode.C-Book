@@ -38,6 +38,61 @@ header-includes:
     \setlength{\cftsubsecindent}{5.5em}
     \usepackage{xcolor}
     \input{latex/snodec-callouts.tex}
+
+    % Keep short part introductions on the part page instead of forcing
+    % a nearly empty page between the part title and the first chapter.
+    % The next chapter still starts on its own page.
+    \makeatletter
+    \newif\ifsnodec@partintroopen
+    \newcommand{\snodec@endpartintro}{%
+      \ifsnodec@partintroopen
+        \par
+        \endgroup
+      \fi
+    }
+    \renewcommand\part{%
+      \snodec@endpartintro
+      \if@openright
+        \cleardoublepage
+      \else
+        \clearpage
+      \fi
+      \thispagestyle{plain}%
+      \if@twocolumn
+        \onecolumn
+        \@tempswatrue
+      \else
+        \@tempswafalse
+      \fi
+      \null\vspace*{0.16\textheight}%
+      \secdef\@part\@spart
+    }
+    \renewcommand\@endpart{%
+      \par
+      \nobreak
+      \vspace{2.8em}%
+      \begingroup
+        \snodec@partintroopentrue
+        \normalfont\large\itshape
+        \setlength{\parindent}{0pt}%
+        \setlength{\parskip}{0.6\baselineskip}%
+        \setlength{\leftskip}{0.13\textwidth}%
+        \setlength{\rightskip}{0.13\textwidth}%
+        \@afterindentfalse
+        \@afterheading
+    }
+    \let\snodec@origchapter\chapter
+    \renewcommand{\chapter}{%
+      \snodec@endpartintro
+      \snodec@origchapter
+    }
+    \let\snodec@origbackmatter\backmatter
+    \renewcommand{\backmatter}{%
+      \snodec@endpartintro
+      \snodec@origbackmatter
+    }
+    \makeatother
+
     \usepackage{listings}
     \definecolor{codebg}{HTML}{F8F8F8}
     \definecolor{codeframe}{HTML}{D0D0D0}
