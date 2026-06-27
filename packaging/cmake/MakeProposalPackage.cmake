@@ -137,7 +137,6 @@ function(copy_source_dir RELATIVE_PATH)
   file(COPY "${SOURCE_DIR}/${RELATIVE_PATH}"
        DESTINATION "${DESTINATION_DIR}"
        PATTERN ".git" EXCLUDE
-       PATTERN ".gitignore" EXCLUDE
        PATTERN ".gitattributes" EXCLUDE
        PATTERN ".qtcreator" EXCLUDE
        PATTERN ".idea" EXCLUDE
