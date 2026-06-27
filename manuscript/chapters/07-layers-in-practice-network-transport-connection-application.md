@@ -8,11 +8,9 @@
 
 ### Why this chapter comes here
 
-Chapter 5 introduced the mental model of SNode.C.
+The mental model and runtime core explain how SNode.C roles are organized and advanced. Descriptor readiness, timers, queued work, callbacks, and flow-controller progress are not scattered side effects; they are coordinated by the runtime core.
 
-Chapter 6 then explained how the runtime advances registered instances. Descriptor readiness, timers, queued work, callbacks, and flow-controller progress are not scattered side effects. They are coordinated by the runtime core.
-
-This chapter turns to a different question:
+A different question now becomes central:
 
 > What kind of communication structure is the runtime advancing?
 
@@ -29,7 +27,7 @@ network family
 
 This is not a decorative diagram. It explains why long SNode.C names are readable and why components can be selected systematically. It also explains why the same application shape can move from IPv4 to IPv6, from a Unix domain socket to Bluetooth RFCOMM or L2CAP, or from the non-TLS stream variant to TLS without becoming unrelated code. Higher protocols such as HTTP, WebSocket, MQTT, and MQTT over WebSocket add their own structure, but they do not make the lower stack disappear.
 
-Chapter 5 introduced this stack as part of the general mental model. Chapter 6 showed how registered instances make progress inside the runtime. It explains how the communication choices behind those instances are named, built, and composed.
+This chapter explains how the communication choices behind registered instances are named, built, and composed.
 
 The goal is not to repeat a textbook theory of layering. The goal is more practical: after this chapter, a reader should be able to look at a SNode.C type name, component name, or source-tree path and understand what it says about the communication stack.
 
@@ -645,9 +643,9 @@ Sometimes the answer is one layer. Often, it is a primary layer plus consequence
 
 ### Closing perspective
 
-Chapter 5 gave the mental model. Chapter 6 explained how registered instances are advanced by the runtime machinery. This chapter has shown how the communication layer stack appears in SNode.C names, components, and transfer questions.
+The communication layer stack now has concrete consequences in SNode.C names, components, and transfer questions.
 
-The layer model tells us that address semantics belong to the network layer. Chapter 8 therefore moves from the general stack to the first concrete network-layer question:
+Address semantics belong to the network layer. The next concrete question is therefore:
 
 > What does an endpoint identity mean for each supported family?
 

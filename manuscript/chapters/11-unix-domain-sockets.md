@@ -7,9 +7,9 @@
 
 ### From host-plus-port to local path identity
 
-Chapter 10 used IPv4 and IPv6 as the first concrete lower-family comparison. Both families still used a host-plus-port endpoint identity.
+IPv4 and IPv6 provide the first lower-family comparison while keeping host-plus-port endpoint identity.
 
-This chapter keeps the same SNode.C runtime model, but changes endpoint identity more strongly:
+Unix-domain sockets keep the same SNode.C runtime model, but change endpoint identity more strongly:
 
 ```text
 host + port
@@ -471,4 +471,4 @@ The same include/component rule from the primary families applies; only the fami
 
 ### Closing perspective
 
-Unix-domain sockets replace host-plus-port identity with path identity while preserving the same application shape. Bluetooth is the next variation: endpoint identity becomes device-oriented and family-specific service selectors enter the address model.
+Unix-domain sockets replace host-plus-port identity with path identity while preserving the same application shape. Bluetooth is the next variation: endpoint identity becomes device-oriented, and family-specific service selectors enter the address model.

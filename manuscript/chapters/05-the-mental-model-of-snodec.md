@@ -7,9 +7,9 @@
 
 ### From source-tree orientation to architectural thinking
 
-Chapter 4 showed how to read the SNode.C source tree without getting lost in individual files.
+Source-tree orientation becomes useful when it turns into architectural thinking.
 
-The most important rule was to read the source tree as a set of layers, roles, and recurring boundaries. That rule is useful when navigating the codebase. It is also the starting point for understanding the framework itself.
+The source tree is best read as a set of layers, roles, and recurring boundaries. That rule is useful when navigating the codebase; it is also the starting point for understanding the framework itself.
 
 This chapter turns that reading strategy into a compact mental model.
 

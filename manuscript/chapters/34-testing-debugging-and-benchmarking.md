@@ -7,7 +7,7 @@
 
 ### Why testing follows deployment
 
-Chapter 33 made deployment visible as installed architecture. Chapter 34 asks how that architecture becomes trustworthy: a built and deployed system must still be tested, inspected, debugged, and measured at the boundaries where it claims to be clear.
+Deployment makes architecture visible as an installed system. Trustworthiness comes later: a built and deployed system must still be tested, inspected, debugged, and measured at the boundaries where it claims to be clear.
 
 SNode.C is delivered as libraries, component packages, exported CMake targets, runtime-loaded modules, configuration directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages. Testing, debugging, and benchmarking check whether the boundaries taught throughout the book still hold under pressure:
 
@@ -734,5 +734,5 @@ Regression tests should protect the semantic boundary that failed.
 
 ### Closing perspective
 
-Testing asks whether the chosen boundaries hold under build, runtime, deployment, diagnostic, and measurement pressure. The chapter's practical standard is deliberately narrow: every confidence activity should name the boundary it protects. Chapter 35 turns to the prior question: how to choose those boundaries wisely in the first place.
+Testing, debugging, and measurement are most useful when each activity names the boundary it protects.
 

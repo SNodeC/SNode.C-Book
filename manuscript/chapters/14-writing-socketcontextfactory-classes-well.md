@@ -7,7 +7,7 @@
 
 ### From protocol endpoint to construction boundary
 
-Chapter 13 treated the `SocketContext` as the per-connection protocol endpoint. This chapter looks at the construction boundary that creates such endpoints: the `SocketContextFactory`.
+A `SocketContext` owns per-connection protocol behavior; a `SocketContextFactory` defines how such contexts are created.
 
 The transition is small in API surface but important in design:
 
@@ -639,7 +639,5 @@ The factory supports that portability story because it keeps context creation se
 
 ### Closing perspective
 
-Chapter 13 established the context as the place where protocol behavior lives. Chapter 14 established the factory as the construction boundary that creates those contexts for connections.
-
-Chapter 15 uses that separation to show how the same protocol can move across different lower layers without turning the application into a pile of special cases.
+Protocol behavior and context construction now have separate homes. That separation makes it possible to move the same protocol across different lower layers without turning the application into a pile of special cases.
 

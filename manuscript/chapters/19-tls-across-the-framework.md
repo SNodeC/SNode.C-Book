@@ -7,9 +7,9 @@
 
 ### From runtime visibility to secure connection handling
 
-Chapter 18 closed the operational visibility part of the book. It treated configuration, generated command lines, logging, connection identity, counters, durations, and protocol decisions as diagnostic evidence.
+Operational visibility turns configuration, generated command lines, logging, connection identity, counters, durations, and protocol decisions into diagnostic evidence.
 
-Chapter 19 begins the next part by adding secure connection handling to the same architecture.
+Secure connection handling belongs in the same architecture.
 
 Security and robustness do not remove the SNode.C model. They add stricter connection-layer responsibilities, more timing-sensitive transitions, and more failure states.
 
@@ -553,7 +553,7 @@ That distinction will matter again in the deployment chapters. A binary may be l
 
 ### Closing perspective
 
-Chapter 19 showed how secure connection handling fits into the same architecture. TLS is serious.
+Secure connection handling fits the same architecture, but TLS is serious.
 
-The next chapter generalizes this view into timeouts, retries, and failure modes across the framework.
+Timeouts, retries, and failure modes generalize that view across the framework.
 

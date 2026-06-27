@@ -7,7 +7,7 @@
 
 ### Why these three belong in one chapter
 
-Chapter 8 made the network layer concrete. It showed that an address in SNode.C is a family-specific description of endpoint identity, not an interchangeable string, number, or path. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
+An address in SNode.C is a family-specific endpoint identity, not an interchangeable string, number, or path. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
 
 This chapter asks the next question:
 
@@ -21,9 +21,9 @@ Figure \ref{fig:server-client-path} turns that sequence into a single path. It s
 
 ![The server/client role path from handle to protocol behavior.](assets/figures/pdf/fig-05-server-client-connection-context-path.pdf){#fig:server-client-path width=88% latex-placement="tbp"}
 
-Read Figure \ref{fig:server-client-path} as the bridge between the previous chapters, not as a full implementation diagram. Chapter 3 showed the first echo pair. Chapter 5 distinguished handles, instances, connections, factories, and contexts. Chapter 6 explained the runtime machinery that advances registered instances. Chapter 7 placed communication choices into a layer stack. Chapter 8 explained endpoint identity.
+Read Figure \ref{fig:server-client-path} as a bridge among the book's early concepts, not as a full implementation diagram. It brings together the echo pair, the handle/instance/connection/context vocabulary, the runtime machinery, the communication layer stack, and endpoint identity.
 
-Chapter 9 now brings those ideas together around the most important practical boundary in the stream layer:
+Those ideas meet at the most important practical boundary in the stream layer:
 
 ::: {.snodec-warning title="Instance/connection warning"}
 A server or client instance is not a connection. It is the runtime-visible role under which connections appear.
@@ -753,9 +753,9 @@ That question usually prevents the most common misunderstandings.
 
 ### Closing perspective
 
-Chapter 8 explained endpoint identity. This chapter explained the runtime roles that use those identities and the concrete connection objects that appear when communication succeeds.
+Endpoint identity, runtime role, and concrete connection are now separate questions.
 
-We can now separate three questions that are often mixed together:
+That separation keeps three questions from being mixed together:
 
 ```text
 Which endpoint identity is being used?
@@ -763,8 +763,4 @@ Which instance is registering listen or connect intent?
 Which concrete connection exists after success?
 ```
 
-That separation prepares the next step.
-
-Chapter 10 uses IPv4 and IPv6 as the primary teaching path. With the distinctions from this chapter in place, we can read those examples more precisely. A server-side instance binds to a local endpoint identity. A client-side instance connects to a remote endpoint identity. A `SocketConnection` then exposes the actual local and remote endpoints of the concrete peer relationship.
-
-The next chapter therefore does not need to reintroduce the whole model. It can use IPv4 and IPv6 to show the model in its most familiar network-family setting.
+With those distinctions in place, IPv4 and IPv6 examples can be read more precisely: a server-side instance binds to a local endpoint identity, a client-side instance connects to a remote endpoint identity, and a `SocketConnection` exposes the actual local and remote endpoints of the peer relationship. IPv4 and IPv6 provide the most familiar network-family setting for that model.

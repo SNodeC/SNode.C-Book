@@ -8,9 +8,9 @@
 
 ### Communication over time
 
-Chapter 19 showed that TLS adds meaningful connection-layer phases to the same structure. A secure stream may have to create and configure an SSL object, complete a TLS handshake, handle close-notify behavior, and shut the secure layer down before the underlying socket episode is fully over.
+TLS adds meaningful connection-layer phases to the same structure. A secure stream may have to create and configure an SSL object, complete a TLS handshake, handle close-notify behavior, and shut the secure layer down before the underlying socket episode is fully over.
 
-Chapter 20 widens that view from TLS to the whole framework.
+Timeouts, retries, and failure modes widen that view to the whole framework.
 
 Communication is not a single action. It unfolds over time. A configured role may be activated. The role may be registered as a runtime-visible server or client instance. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client instance may reconnect. A failed activation attempt may be retried. A role-level flow may be stopped.
 
@@ -811,7 +811,7 @@ When the answer is clear, the system is easier to operate and easier to debug.
 
 ### Closing perspective
 
-Chapter 20 completed the foundation for robust communication over time.
+Robust communication over time requires timeouts, retries, reconnects, shutdown, and failure visibility.
 
-Once time, failure, retry, reconnect, and shutdown are understood at the stream layer, HTTP and WebSocket can be introduced as protocol-specific structures on top of the same event-driven timing and failure model. Chapter 21 begins that move with HTTP.
+With that foundation in place at the stream layer, HTTP and WebSocket can be read as protocol-specific structures on top of the same event-driven timing and failure model.
 

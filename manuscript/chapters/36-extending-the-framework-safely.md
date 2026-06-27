@@ -7,9 +7,9 @@
 
 ### Why this chapter follows architectural judgment
 
-Chapter 35 asked where behavior should live: lower family, transport layer, connection context, middleware, WebSocket subprotocol, MQTT, configuration, deployment role, or application/domain code.
+Architectural judgment asks where behavior should live: lower family, transport layer, connection context, middleware, WebSocket subprotocol, MQTT, configuration, deployment role, or application/domain code.
 
-This chapter asks the next question:
+Safe extension asks the next question:
 
 ```text
 After the right boundary has been chosen,

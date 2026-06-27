@@ -7,7 +7,7 @@
 
 ### From HTTP messages to application structure
 
-Chapter 21 showed how SNode.C raises stream communication to HTTP request and response objects. Chapter 22 moves one level higher: HTTP messages are no longer handled only by an HTTP request-ready callback, but by a web-application structure made of routers, routes, middleware chains, request/response facades, and explicit continuation.
+HTTP messages are no longer handled only by an HTTP request-ready callback; the Express-like layer organizes them through routers, routes, middleware chains, request/response facades, and explicit continuation.
 
 That is the central idea of this chapter:
 
@@ -27,7 +27,7 @@ lower communication family
 
 The Express-like layer is therefore not a different universe. It is the application-organization layer above HTTP. HTTP gives message meaning; the Express-like layer gives application structure.
 
-Part VII now moves in steps. Chapter 21 introduced HTTP messages. Chapter 22 shows how those messages become routed application flow. Chapter 23 will keep that web-application structure, but change the temporal shape of a handler: instead of answering once, a route may keep an HTTP response open and emit events over time.
+Routed application flow is the next web-protocol step: HTTP messages become organized handler chains rather than isolated callbacks.
 
 ### The Express-like layer in the layered SNode.C model
 
@@ -48,7 +48,7 @@ runtime
 
 The visible `WebAppT<ServerT>` object in application code is the handle. Through that handle, the application configures a server-side communication role and registers a runtime-visible server instance. The Express-like layer does not change that model; it changes what happens when a ready HTTP request reaches application code.
 
-Earlier chapters established the lower parts. Chapter 21 introduced HTTP request and response semantics. Chapter 22 now asks what happens when HTTP handling becomes application structure. The answer is:
+With HTTP request and response semantics in place, the question becomes what happens when HTTP handling becomes application structure. The answer is:
 
 ```text
 HTTP request ready
@@ -554,7 +554,7 @@ It selects the Express layer together with the IPv4 legacy stream carrier. The s
 
 ### Closing perspective
 
-Chapter 21 raised stream communication to HTTP messages. Chapter 22 raised HTTP messages into application structure.
+Routing, middleware, request/response facades, and continuation turn HTTP messages into application structure.
 
-Chapter 23 keeps that structure but changes the temporal shape of a handler: instead of answering once, a route may keep an HTTP response open and emit events over time. There, HTTP is used for long-lived one-way event streaming.
+That structure can also support a different handler lifetime: instead of answering once, a route may keep an HTTP response open and emit events over time.
 

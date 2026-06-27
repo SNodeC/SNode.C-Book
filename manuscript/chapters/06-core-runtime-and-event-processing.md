@@ -7,7 +7,7 @@
 
 ### Why this chapter matters
 
-The first working echo pair introduced the runtime shape, and the mental model chapter named its recurring roles: handles, instances, connections, contexts, factories, layers, and operational concerns. It also made the central distinction precise: the `SocketServer`/`SocketClient` handle is the application-side handle, while the instance is the registered communication role advanced by the framework.
+The first working echo pair introduced the runtime shape, and the mental model named its recurring roles: handles, instances, connections, contexts, factories, layers, and operational concerns. It also made the central distinction precise: the `SocketServer`/`SocketClient` handle belongs to application code, while the instance is the registered communication role advanced by the framework.
 
 That model is necessary, but it still leaves an important question open.
 
@@ -671,7 +671,7 @@ SNodeC facade
           -> cleanup
 ```
 
-That picture will support the next chapters. When we later discuss socket layers, connection objects, contexts, HTTP, WebSocket, MQTT, and system-level applications, the same runtime story will still be underneath.
+That picture remains underneath socket layers, connection objects, contexts, HTTP, WebSocket, MQTT, and system-level applications.
 
 SNode.C applications are not driven by scattered blocking calls.
 

@@ -7,7 +7,7 @@
 
 ### Why this chapter comes after applications
 
-Chapter 29 showed how SNode.C framework pieces become executable applications: build targets, entry points, linked components, configured roles, callbacks, and runtime start. Chapter 30 widens the view again. The question is no longer only how one executable is assembled, but how several roles, boundaries, state responsibilities, and operational policies form a system.
+Executable applications assemble build targets, entry points, linked components, configured roles, callbacks, and runtime start. Systems widen that view: several roles, boundaries, state responsibilities, and operational policies must form one architecture.
 
 An executable remains an important architectural object. It has a build target, an entry point, linked components, application-side objects, configured roles, instance names, configuration, and runtime behavior. But a communication framework becomes most useful when applications are no longer seen only as isolated endpoints. They become parts of larger arrangements:
 
@@ -544,4 +544,4 @@ This is the real transition from applications to systems.
 
 ### Closing perspective
 
-This chapter moved from executable applications to communication systems: roles, boundaries, protocol families, deployment shape, configuration, observability, persistence, and failure topology. Chapter 31 applies that vocabulary to MQTTSuite as an ecosystem, not merely as a list of programs.
+Communication systems combine roles, boundaries, protocol families, deployment shape, configuration, observability, persistence, and failure topology. MQTTSuite applies that vocabulary as an ecosystem, not merely as a list of programs.

@@ -7,9 +7,9 @@
 
 ### Why this chapter follows the base build
 
-Chapter 37 built the base MiniGateway: an HTTP/Express surface, an SSE observation path, a native MQTT client role, an in-memory current measurement, and `/simulate` as a controlled input boundary.
+The base MiniGateway has an HTTP/Express surface, an SSE observation path, a native MQTT client role, an in-memory current measurement, and `/simulate` as a controlled input boundary.
 
-Chapter 38 shows how the application can grow without losing its shape. The concrete source extension is `MiniGateway-Extended`, which adds a Unix-domain socket input for external measurement injection. The larger topic is how SNode.C applications can be extended, tested, debugged, and deployed while keeping boundaries visible.
+The application can now grow without losing its shape. The concrete source extension is `MiniGateway-Extended`, which adds a Unix-domain socket input for external measurement injection. The larger topic is how SNode.C applications can be extended, tested, debugged, and deployed while keeping boundaries visible.
 
 ```text
 base MiniGateway

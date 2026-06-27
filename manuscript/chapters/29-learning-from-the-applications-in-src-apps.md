@@ -7,7 +7,7 @@
 
 ### From framework pieces to application structure
 
-Chapter 28 introduced persistence as an application-state boundary. Chapter 29 now turns to executable applications: the point where runtime setup, selected components, application-side objects, configured roles, callbacks, routes, persistence objects, and installable targets meet in concrete programs.
+Executable applications are the point where runtime setup, selected components, application-side objects, configured roles, callbacks, routes, persistence objects, and installable targets meet in concrete programs.
 
 The question changes from:
 
@@ -29,7 +29,7 @@ The central sentence for this chapter is:
 In SNode.C, the build target often reveals the application architecture before the entry point is opened.
 :::
 
-That is the main reason `src/apps` is useful as study material. It shows not only C++ entry points, but also public include choices, executable targets, linked libraries, optional dependencies, and installable application shapes. Chapter 28 showed persistence as a boundary. Chapter 29 shows applications as assembly points.
+That is the main reason `src/apps` is useful as study material. It shows not only C++ entry points, but also public include choices, executable targets, linked libraries, optional dependencies, and installable application shapes. Applications are assembly points.
 
 ### `src/apps` as study material
 
@@ -841,4 +841,4 @@ These are application-design decisions. The build system records them.
 
 ### Closing perspective
 
-Repository applications turn framework layers into executable programs. Chapter 30 widens that application view into system structure: several roles, deployment boundaries, configuration files, and operational relationships. Chapter 31 then studies MQTTSuite as a concrete reference ecosystem.
+Repository applications turn framework layers into executable programs. System structure adds several roles, deployment boundaries, configuration files, and operational relationships; MQTTSuite is the concrete reference ecosystem.

@@ -8,7 +8,7 @@
 
 ### Why CMake starts Part X
 
-Chapter 31 closed Part IX by reading MQTTSuite as a concrete SNode.C-based ecosystem. Chapter 32 opens Part X by asking how such ecosystems are built, linked, installed, exported, and consumed. The subject is CMake, but the real topic is architectural visibility in the build system.
+SNode.C ecosystems must be built, linked, installed, exported, and consumed. The subject is CMake, but the real topic is architectural visibility in the build system.
 
 Part IX looked at applications, systems, and a reference ecosystem. Part X turns toward build structure, component selection, packaging, porting, optional dependencies, and long-term maintenance. That makes CMake the right first topic.
 
@@ -996,5 +996,5 @@ This method follows the same pattern used in Chapter 29. The build target often 
 
 ### Closing perspective
 
-The build system is now visible as architecture: components, public include surfaces, exported targets, optional dependencies, and installable boundaries. The remaining chapters can discuss deployment, testing, and extension without treating the build as a black box.
+The build system is architecture: components, public include surfaces, exported targets, optional dependencies, and installable boundaries. Deployment, testing, and extension can now be discussed without treating the build as a black box.
 

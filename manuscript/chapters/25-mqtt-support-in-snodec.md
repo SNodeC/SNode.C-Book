@@ -7,7 +7,7 @@
 
 ### From web protocols to message-oriented communication
 
-Chapter 24 closed the web-protocol climb by showing how HTTP upgrade can move the same lower connection into bidirectional WebSocket communication. Chapter 25 opens the message-oriented part of the book. The focus now moves away from HTTP, routing, event streams, and upgrade negotiation toward MQTT as a packet-structured protocol family.
+HTTP upgrade can move the same lower connection into bidirectional WebSocket communication. MQTT shifts the focus away from HTTP, routing, event streams, and upgrade negotiation toward a packet-structured protocol family.
 
 MQTT is not part of the web stack. It has its own packet vocabulary, session behavior, topic model, keep-alive timing, publish flow, and client/server roles. But the architectural discipline does not change.
 
@@ -544,7 +544,5 @@ Chapter 27 will later combine these ideas with multiple protocols and IoT system
 
 ### Closing perspective
 
-Chapter 25 introduced MQTT as a message-oriented protocol family in SNode.C.
-
-Chapter 25 established MQTT as a protocol family and introduced its two carrier forms. Chapter 26 now narrows the view to one specific composition:
+MQTT is now established as a message-oriented protocol family with more than one carrier form. One specific composition is MQTT over WebSocket:
 

@@ -6,9 +6,9 @@
 
 ### From first program to source-tree orientation
 
-Chapter 3 built the first working echo pair.
+The echo pair works; the next task is to read the framework structure it exercised.
 
-That example was small. It used one lower communication family, one transport form, one connection mode, one server, one client, one context class, and two factories. The point was not to cover the whole framework. The point was to make the recurring SNode.C application shape visible:
+That example used one lower communication family, one transport form, one connection mode, one server, one client, one context class, and two factories. Its purpose was to make the recurring SNode.C application shape visible:
 
 ```text
 runtime

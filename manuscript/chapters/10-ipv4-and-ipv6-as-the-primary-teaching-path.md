@@ -7,7 +7,7 @@
 
 ### Why IPv4 and IPv6 come first
 
-Chapter 9 separated the server/client handle, the registered instance, the concrete `SocketConnection`, the context factory, and the per-connection context.
+The server/client handle, registered instance, concrete `SocketConnection`, context factory, and per-connection context remain separate.
 
 This chapter keeps that model intact and changes only the first concrete lower-family choice:
 
@@ -520,5 +520,5 @@ The local point is the family selection. Chapter 32 gives the consolidated inclu
 
 ### Closing perspective
 
-IPv4 and IPv6 keep the familiar host-plus-port view while introducing the lower-family distinction that later chapters vary. Unix-domain sockets are the next controlled change: the role model remains stable, but endpoint identity becomes local and path-based.
+IPv4 and IPv6 keep the familiar host-plus-port view while making the lower-family distinction concrete. Unix-domain sockets make the next controlled change: the role model remains stable, but endpoint identity becomes local and path-based.
 

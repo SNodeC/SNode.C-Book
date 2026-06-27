@@ -7,7 +7,7 @@
 
 ### From configured roles to visible runtime behavior
 
-Chapter 17 showed how the configuration hierarchy shapes the executable, named communication roles, sections, and option values.
+The configuration hierarchy shapes the executable, named communication roles, sections, and option values.
 
 The structure was:
 
@@ -24,7 +24,7 @@ Once those configured roles are activated and registered as runtime-visible inst
 
 That is the subject of this chapter.
 
-Chapter 16 introduced configuration as architectural structure. Chapter 17 showed the anatomy of that structure. This chapter treats configuration, generated command lines, logging, connection identity, counters, and protocol-level decisions as parts of one diagnostic surface.
+Configuration, generated command lines, logging, connection identity, counters, and protocol-level decisions belong to one diagnostic surface.
 
 SNode.C is event-driven. Connections are accepted or established later. Callbacks fire later.
 
@@ -711,7 +711,7 @@ That order matters. If the endpoint is wrong, deeper protocol logs may only prod
 
 ### Closing perspective
 
-Part V began with configuration as part of the architecture. It then looked at the detailed hierarchy of application, instance, section, and option. This chapter has shown that the same structure is also diagnostic structure.
+Configuration structure is also diagnostic structure: the executable, instances, sections, options, connection identities, counters, and logs describe what the application actually did.
 
-With that diagnostic foundation in place, the book can now look at secure communication without treating it as a black box.
+That diagnostic foundation helps make secure communication visible rather than opaque.
 

@@ -7,18 +7,7 @@
 
 ### Why deployment belongs after CMake
 
-Chapter 32 showed how SNode.C expresses architecture through CMake targets, install components, exported package targets, dependency visibility, and the build-side boundaries of runtime-selected extensions. Chapter 33 follows those decisions into the installed system: packages, filesystem layout, service ownership, configuration, runtime state, deployment-specific resources, and constrained Linux targets.
-
-```text
-Chapter 32:
-  component and linking strategy
-
-Chapter 33:
-  installed runtime environment
-
-Chapter 34:
-  testing, debugging, and benchmarking
-```
+CMake expresses SNode.C architecture through targets, install components, exported package targets, dependency visibility, and build-side boundaries. Deployment follows those decisions into the installed system: packages, filesystem layout, service ownership, configuration, runtime state, deployment-specific resources, and constrained Linux targets.
 
 The subject is deployment, but the real topic is still architectural visibility. Deployment is where SNode.C's build choices enter the filesystem. Shared libraries, component packages, executable applications, exported CMake package files, runtime-loaded protocol modules, configuration directories, log directories, pid directories, service definitions, and package-manager metadata are not unrelated operational leftovers. They are the installed form of the architecture.
 
@@ -661,5 +650,5 @@ When these details are hidden, failures appear later as unrelated runtime proble
 
 ### Closing perspective
 
-Deployment is installed architecture: libraries, runtime module paths, configuration directories, service definitions, package repositories, and trust relationships. Chapter 34 asks how to verify that this installed architecture behaves correctly.
+Deployment is installed architecture: libraries, runtime module paths, configuration directories, service definitions, package repositories, and trust relationships. The installed shape must then be tested, inspected, debugged, and measured.
 

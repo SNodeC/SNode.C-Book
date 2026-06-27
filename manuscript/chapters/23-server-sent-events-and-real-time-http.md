@@ -8,7 +8,7 @@
 
 ### From request / response to event streams
 
-Chapter 22 showed how HTTP handling becomes application structure through routing, middleware, and request/response facades. Chapter 23 keeps that structure inside the HTTP world, but changes the temporal shape of one response: a route may start a response stream and keep it open while the server sends event-stream records over time.
+Routing, middleware, and request/response facades stay inside the HTTP world, but Server-Sent Events change the temporal shape of one response: a route may start a response stream and keep it open while the server sends event-stream records over time.
 
 That is the central idea of this chapter:
 
@@ -616,4 +616,4 @@ Server-side SSE remains an HTTP or Express route that validates the request and 
 
 ### Closing perspective
 
-SSE keeps the HTTP/Express structure but stretches one response over time. WebSocket, the next step, uses HTTP differently: as an upgrade negotiation before bidirectional message communication begins.
+SSE keeps the HTTP/Express structure but stretches one response over time. WebSocket uses HTTP differently: as an upgrade negotiation before bidirectional message communication begins.

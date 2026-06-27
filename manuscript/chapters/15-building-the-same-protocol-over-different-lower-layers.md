@@ -7,7 +7,7 @@
 
 ### From context and factory separation to lower-family transfer
 
-Chapter 13 placed protocol behavior in the `SocketContext`. Chapter 14 placed context construction in the `SocketContextFactory`. This chapter uses both separations together.
+Protocol behavior belongs in the `SocketContext`; context construction belongs in the `SocketContextFactory`. Lower-family transfer uses both separations together.
 
 The central question is:
 
@@ -581,4 +581,4 @@ Chapter 32 gives the complete matrix. Here the point is the transfer rule: keep 
 
 Part IV has separated protocol behavior, context creation, carrier selection, registration, and configuration. That separation is what makes lower-family transfer a design technique rather than a copy-and-edit exercise.
 
-The next part turns to configuration: how applications are named, shaped, and operated after those architectural roles are in place.
+Configuration is where those architectural roles become named, shaped, and operable.

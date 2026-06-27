@@ -7,7 +7,7 @@
 
 ### From system vocabulary to a concrete ecosystem
 
-Chapter 30 introduced the vocabulary of systems: named roles, boundaries, protocol families, configuration, observability, persistence, and failure behavior. Chapter 31 applies that vocabulary to MQTTSuite, not as a second manual, but as a concrete SNode.C-based ecosystem whose applications make those ideas visible.
+System vocabulary becomes concrete in MQTTSuite: named roles, boundaries, protocol families, configuration, observability, persistence, and failure behavior appear as a SNode.C-based ecosystem rather than as a second manual.
 
 MQTTSuite is the concrete reference ecosystem for the system vocabulary developed in Chapter 30. A reference ecosystem is not the only possible way to build systems with SNode.C. It is a source-backed example that shows how the design vocabulary can be used in a real family of cooperating applications.
 
@@ -609,4 +609,4 @@ That makes MQTTSuite the right closing example for this part of the book.
 
 Part IX moved from persistence, to applications, to systems, and finally to a concrete SNode.C-based reference ecosystem.
 
-Part X turns from systems to building, porting, and maintaining. Chapter 32 returns to CMake components and linking strategy with this larger system view now in place.
+Part X turns from systems to building, porting, and maintaining. CMake components and linking strategy provide the next architectural surface.

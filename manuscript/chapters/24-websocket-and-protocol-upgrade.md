@@ -7,7 +7,7 @@
 
 ### From event streams to upgraded bidirectional communication
 
-Chapter 23 showed how HTTP can remain open as a one-way event stream. Chapter 24 takes the next step: HTTP can also negotiate an upgrade. After a successful upgrade, the same lower connection no longer behaves as ordinary request/response HTTP; that connection episode continues as a bidirectional, message-oriented WebSocket connection.
+HTTP can remain open as a one-way event stream; it can also negotiate an upgrade. After a successful WebSocket upgrade, the same lower connection no longer behaves as ordinary request/response HTTP. The connection episode continues as bidirectional, message-oriented communication.
 
 That is the central idea of this chapter:
 
@@ -29,7 +29,7 @@ Upgrade does not mean that the lower connection disappears. The lower family, st
 
 Figure \ref{fig:web-protocol-layer-structure} also prevents a wrong reading of the web chapters. Express-like routing is an application-structuring layer, not the protocol parent of SSE or WebSocket. Application code can use the Express-like structure to organize ordinary HTTP routes, SSE endpoints, and WebSocket upgrade entry points, or it can use the web protocol layer directly where that is the better fit.
 
-Chapter 24 therefore closes the main web-protocol climb before the book moves to MQTT.
+WebSocket closes the main web-protocol climb before the book moves to MQTT.
 
 ### WebSocket in the layered SNode.C web stack
 
@@ -689,4 +689,4 @@ WebSocket crosses HTTP negotiation, upgraded socket context, framing, and option
 
 ### Closing perspective
 
-WebSocket completes the web-protocol climb by using HTTP as a negotiation boundary and then moving the connection episode into bidirectional message communication. Chapter 25 turns to MQTT, a message-oriented protocol family that can use SNode.C directly and later reappear over WebSocket.
+WebSocket completes the web-protocol climb by using HTTP as a negotiation boundary and then moving the connection episode into bidirectional message communication. MQTT is the next message-oriented protocol family: it can use SNode.C directly and later reappear over WebSocket.

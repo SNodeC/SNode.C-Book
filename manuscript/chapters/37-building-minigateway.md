@@ -7,7 +7,7 @@
 
 ### Why this chapter exists
 
-The previous chapters taught SNode.C in layers: lower families, stream connections, protocol contexts, web protocols, MQTT, configuration, deployment, testing, and architectural judgment. MiniGateway is the point where those ideas stop being separate topics and become one small application.
+SNode.C has now been developed through lower families, stream connections, protocol contexts, web protocols, MQTT, configuration, deployment, testing, and architectural judgment. MiniGateway is the point where those ideas stop being separate topics and become one small application.
 
 MiniGateway is modest. It is not a second MQTTSuite. It is not a broker, a dashboard product, or a hardware driver. It is a compact SNode.C application that owns one piece of domain state and exposes that state through several communication boundaries.
 

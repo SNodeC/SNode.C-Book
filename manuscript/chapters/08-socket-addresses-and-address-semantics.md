@@ -7,9 +7,9 @@
 
 ### From layers to endpoint identity
 
-Chapter 7 showed how SNode.C communication choices are encoded in the layer stack.
+SNode.C communication choices are encoded in the layer stack.
 
-The first of those choices is the network family. An application may use IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP. That choice changes what an endpoint *is*; the namespace or build component is only the visible consequence.
+The first concrete choice is the network family. An application may use IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP. That choice changes what an endpoint *is*; the namespace or build component is only the visible consequence.
 
 It therefore asks a narrower but important question:
 
@@ -477,7 +477,7 @@ Once that question becomes natural, the address classes become much easier to re
 
 ### Closing perspective
 
-Chapter 7 explained the communication stack. This chapter made the first layer of that stack concrete by studying endpoint identity.
+Endpoint identity makes the first layer of the communication stack concrete.
 
-Chapter 9 can therefore ask the next architectural question with sharper vocabulary: how do server instances, client instances, and connections use those endpoint identities while the runtime advances the communication flow?
+With that vocabulary in place, the next architectural question becomes sharper: how do server instances, client instances, and connections use endpoint identities while the runtime advances the communication flow?
 

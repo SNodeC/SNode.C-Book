@@ -7,7 +7,7 @@
 
 ### From lower-family transfer to configured communication roles
 
-Chapter 15 showed why configuration becomes visible as soon as a protocol is carried over different lower families.
+Configuration becomes visible as soon as a protocol is carried over different lower families.
 
 The protocol behavior may remain in the same `SocketContext`. The context creation policy may remain in the same `SocketContextFactory`.
 
@@ -631,7 +631,7 @@ In SNode.C, configuration is one of those places.
 
 ### Closing perspective
 
-This chapter opened the configuration part of the book. The preceding part showed that protocol behavior, context creation, lower-family choice, and endpoint identity can be separated.
+Protocol behavior, context creation, lower-family choice, and endpoint identity can be separated. Configuration makes those choices visible to applications and operators.
 
-It looks more closely at application configuration, instance configuration, sections, and the concrete option structure that turns this model into something an application can expose and an operator can use.
+The practical structure is application configuration, instance configuration, sections, and the concrete options that expose the model.
 

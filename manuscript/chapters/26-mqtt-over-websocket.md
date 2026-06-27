@@ -11,7 +11,7 @@
 \index{WebSocket upgrade}
 
 
-Chapter 25 introduced MQTT as a message-oriented protocol family in SNode.C. It showed two carrier forms:
+MQTT appears in SNode.C in two carrier forms:
 
 ```text
 native MQTT
@@ -21,7 +21,7 @@ MQTT over WebSocket
   -> MQTT above a WebSocket subprotocol
 ```
 
-Chapter 26 narrows the view to the second form and follows the complete stack: HTTP upgrade, WebSocket, selected subprotocol role, `MqttContext`, and MQTT protocol semantics.
+The second form follows the complete stack: HTTP upgrade, WebSocket, selected subprotocol role, `MqttContext`, and MQTT protocol semantics.
 
 The central sentence is:
 
@@ -553,4 +553,4 @@ Chapter 32 gives the consolidated source-derived component/header matrix.
 
 ### Closing perspective
 
-MQTT-over-WebSocket is a concrete cross-stack composition: HTTP negotiates the upgrade, WebSocket carries messages, the subprotocol selects MQTT, and `MqttContext` bridges the carrier to the MQTT protocol object. Chapter 27 widens the view from one composed stack to systems that combine several protocol families at once.
+MQTT-over-WebSocket is a concrete cross-stack composition: HTTP negotiates the upgrade, WebSocket carries messages, the subprotocol selects MQTT, and `MqttContext` bridges the carrier to the MQTT protocol object. Multi-protocol systems combine several such boundaries at once.

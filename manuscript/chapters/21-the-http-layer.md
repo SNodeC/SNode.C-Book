@@ -7,9 +7,9 @@
 
 ### From robust streams to HTTP messages
 
-Chapter 20 completed the foundation for robust communication over time. It described activation, establishment, connected operation, interruption, timeout, retry, reconnect, shutdown, and failure state. That foundation remains in place as the book moves into Part VII.
+Robust stream communication includes activation, establishment, connected operation, interruption, timeout, retry, reconnect, shutdown, and failure visibility. That foundation remains in place as the book moves into web protocols.
 
-Part VI established robust stream communication: TLS, timing, retry, reconnect, shutdown, and failure visibility. Part VII keeps that lower architecture in place and moves upward into web protocols. Chapter 21 begins that move with HTTP.
+HTTP is the first step upward from the stream layer.
 
 At the stream level, application code often works close to received data and protocol-specific byte interpretation. At the HTTP level, the application-facing unit changes:
 
@@ -566,4 +566,4 @@ It should not include a lower socket header merely because HTTP is carried by th
 
 ### Closing perspective
 
-HTTP raises stream communication to request/response semantics without removing the lower runtime, role, connection, context, configuration, and diagnostic surfaces. The next chapter moves one level higher again: the Express-like framework turns HTTP handling into routing, middleware, and application structure.
+HTTP raises stream communication to request/response semantics without removing the lower runtime, role, connection, context, configuration, and diagnostic surfaces. The Express-like framework turns that HTTP handling into routing, middleware, and application structure.

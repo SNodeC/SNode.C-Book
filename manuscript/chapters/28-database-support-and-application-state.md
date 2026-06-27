@@ -7,7 +7,7 @@
 
 ### From protocol boundaries to persistence boundaries
 
-Chapter 27 described IoT systems as collections of communication boundaries. Chapter 28 adds a different kind of boundary: persistence. Communication boundaries decide how information moves between active participants; persistence boundaries decide what information should remain after the immediate conversation is over.
+IoT systems contain communication boundaries; application state adds a different kind of boundary: persistence. Communication boundaries decide how information moves between active participants; persistence boundaries decide what information should remain after the immediate conversation is over.
 
 A protocol boundary asks:
 
@@ -843,9 +843,9 @@ That coordination is application architecture. The database module provides the 
 
 ### Closing perspective
 
-Chapter 28 introduced persistence as an application-state boundary.
+Persistence is now visible as an application-state boundary.
 
-The path now looks like this:
+The path looks like this:
 
 ```text
 protocol event
@@ -857,4 +857,4 @@ protocol event
 
 That boundary changes application design. It introduces durable memory, query flow, transactions, database failure, and database backpressure into the same event-driven world as the protocol layers.
 
-Chapter 28 introduced persistence as a boundary. Chapter 29 now turns to complete applications, where protocol roles, persistence choices, configuration, runtime lifecycle, and diagnostics meet in executable form.
+Complete applications are where protocol roles, persistence choices, configuration, runtime lifecycle, and diagnostics meet in executable form.

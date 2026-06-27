@@ -7,7 +7,7 @@
 
 ### From configuration philosophy to configuration anatomy
 
-Chapter 16 introduced configuration as one of the main ways an server/client handle shapes a communication role before that role is registered as a runtime-visible instance.
+Configuration shapes a communication role before it becomes a registered runtime instance.
 
 This chapter looks at the practical anatomy of that model.
 
@@ -819,7 +819,7 @@ The option gives one value. The same structure appears in C++ API calls, command
 
 ### Closing perspective
 
-Chapter 16 explained the philosophy of configuration. This chapter made the anatomy concrete.
+The configuration philosophy now has a concrete anatomy.
 
-Chapter 18 therefore turns to logging, diagnostics, generated command lines, shown configuration, and runtime introspection as ways to understand what an application actually did.
+Logging, diagnostics, generated command lines, shown configuration, and runtime introspection make that anatomy observable at runtime.
 

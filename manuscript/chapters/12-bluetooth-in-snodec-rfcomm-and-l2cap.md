@@ -7,7 +7,7 @@
 
 ### From path identity to Bluetooth endpoint identity
 
-Chapter 11 replaced host-plus-port endpoint identity with Unix-domain path identity. This chapter changes endpoint identity again.
+Unix-domain sockets replaced host-plus-port identity with local path identity. Bluetooth changes endpoint identity again.
 
 Bluetooth RFCOMM and L2CAP are neither host-plus-port families nor path-based local IPC families. They use Bluetooth device identity together with a family-specific service selector:
 
@@ -19,7 +19,7 @@ L2CAP:
 Bluetooth address + PSM
 ```
 
-After IPv4, IPv6, and Unix domain sockets, Bluetooth is the final lower-family variation in this part of the book before the focus moves upward to application protocol contexts.
+After IPv4, IPv6, and Unix domain sockets, Bluetooth is the final lower-family variation before the focus moves upward to application protocol contexts.
 
 The larger SNode.C model remains recognizable:
 

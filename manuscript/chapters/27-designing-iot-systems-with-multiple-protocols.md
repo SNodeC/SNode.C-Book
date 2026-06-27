@@ -7,7 +7,7 @@
 
 ### From protocol composition to system boundaries
 
-Chapter 26 showed one carefully composed stack:
+MQTT-over-WebSocket is one carefully composed stack:
 
 ```text
 HTTP upgrade
@@ -16,15 +16,15 @@ HTTP upgrade
           -> MQTT
 ```
 
-Chapter 27 widens the lens from one composed stack to a whole IoT system. In such a system, several protocol stacks may coexist because they serve different communication boundaries. The central sentence is:
+A whole IoT system widens the lens from one composed stack to several cooperating boundaries. In such a system, several protocol stacks may coexist because they serve different communication boundaries. The central sentence is:
 
 ::: {.snodec-rule title="Multi-protocol boundary rule"}
 A multi-protocol IoT system is clear when each protocol is assigned to an explicit boundary.
 :::
 
-This chapter is not about using every protocol everywhere. It is about deciding where each protocol belongs. Chapter 25 introduced MQTT as a protocol family. Chapter 26 showed MQTT over WebSocket as one composed stack. Chapter 27 now treats multi-protocol IoT systems as boundary design.
+This chapter is not about using every protocol everywhere. It is about deciding where each protocol belongs. Multi-protocol IoT systems are boundary design.
 
-The earlier chapters introduced the pieces one at a time: lower families, Unix domain sockets, Bluetooth RFCOMM and L2CAP, HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, TLS, configuration, diagnostics, timeouts, and failure behavior. The question is no longer only:
+The pieces are now available: lower families, Unix domain sockets, Bluetooth RFCOMM and L2CAP, HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, TLS, configuration, diagnostics, timeouts, and failure behavior. The question is no longer only:
 
 ```text
 How does this protocol work?
@@ -573,7 +573,7 @@ SNode.C helps because many different protocol families still share the same arch
 
 ### Closing perspective
 
-Chapter 27 completed the protocol-facing IoT design view. The path through this part was:
+The protocol-facing IoT design path is:
 
 ```text
 MQTT as protocol family
@@ -590,4 +590,4 @@ clear boundary
           -> maintainable system
 ```
 
-Chapter 27 decided where communication belongs. Chapter 28 asks what happens after communication: which state is transient, which state is durable, and where persistence enters the system architecture.
+Once communication boundaries are placed, the next question is what happens after communication: which state is transient, which state is durable, and where persistence enters the system architecture.

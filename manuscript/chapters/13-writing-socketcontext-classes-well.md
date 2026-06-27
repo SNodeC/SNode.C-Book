@@ -7,9 +7,7 @@
 
 ### From lower-family choice to protocol behavior
 
-Chapters 10, 11, and 12 completed the lower-family tour.
-
-The book has now shown that SNode.C can express several different endpoint identities:
+The lower-family tour has shown that SNode.C can express several different endpoint identities:
 
 - host plus port,
 - Unix-domain path,
@@ -26,9 +24,7 @@ For application code, the most important object in this part of the design is th
 SocketContext
 ```
 
-Chapters 5 and 9 established the handle, instance, connection, factory, and context vocabulary. This chapter now uses that vocabulary from the context side: once a concrete connection exists, the context is where one endpoint's protocol behavior is written.
-
-That is the starting point for this chapter.
+The handle, instance, connection, factory, and context vocabulary now matters from the context side: once a concrete connection exists, the context is where one endpoint's protocol behavior is written.
 
 ### What a `SocketContext` is
 
@@ -677,7 +673,7 @@ If the context is the protocol endpoint, the factory is the construction boundar
 
 ### Closing perspective
 
-This chapter moves the book upward again.
+A context owns per-connection protocol behavior, but it still needs a construction boundary.
 
-Chapter 14 turns to that bridge.
+That bridge is the `SocketContextFactory`.
 

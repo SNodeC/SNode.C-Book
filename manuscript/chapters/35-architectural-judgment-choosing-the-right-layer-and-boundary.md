@@ -9,7 +9,7 @@
 
 ### Why this chapter matters now
 
-Chapter 34 asked how to test, debug, and measure whether SNode.C boundaries hold. Chapter 35 asks the prior architectural question: how should those boundaries be chosen in the first place?
+Testing, debugging, and measurement ask whether SNode.C boundaries hold. Architectural judgment asks the prior question: how should those boundaries be chosen in the first place?
 
 By this point, the reader has seen the runtime, lower families, connection model, contexts and factories, configuration, diagnostics, TLS, HTTP, Express-like routing, SSE, WebSocket, MQTT, MQTT over WebSocket, applications, systems, build components, deployment, and testing strategy. That is enough knowledge to build many things; judgment turns that familiarity into architectural maturity.
 
@@ -483,5 +483,5 @@ Architectural judgment in SNode.C means choosing the right layer, role boundary,
 
 ### Closing perspective
 
-Architectural judgment uses the existing protocol, role, configuration, deployment, diagnostic, and testing vocabulary to place each concern at the boundary that can own it. Chapter 36 turns from choosing boundaries to evolving them safely.
+Architectural judgment uses the existing protocol, role, configuration, deployment, diagnostic, and testing vocabulary to place each concern at the boundary that can own it. Extension is the next pressure test: the boundary must remain visible as the system evolves.
 

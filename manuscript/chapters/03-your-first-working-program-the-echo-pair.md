@@ -7,7 +7,7 @@
 
 ### From environment to first program
 
-Chapter 2 prepared the practical ground: source tree, build tree, install tree, and a separate playground project. It uses that environment for the first complete program.
+With the build environment in place, the first complete program can stay small enough to read and real enough to run.
 
 The goal is not to build a useful echo service. The goal is to make the recurring shape of SNode.C visible in real code. A good first example should be small enough that the reader can hold the whole program in mind, but complete enough that it is not pseudocode.
 
@@ -704,7 +704,7 @@ This does not make the low-level details disappear. It organizes where they belo
 
 ### Closing perspective
 
-This chapter turned the prepared environment into a working program.
+The prepared environment now supports a complete working SNode.C program.
 
-That is the next step from “it works” to “I understand why it works.”
+The next step is to move from “it works” to “I understand why it works.”
 
