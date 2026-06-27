@@ -640,12 +640,3 @@ Sometimes the answer is one layer. Often, it is a primary layer plus consequence
 - The application layer contains protocol behavior, whether that behavior is a custom `SocketContext`, HTTP, WebSocket, Express-like routing, MQTT, or MQTT over WebSocket.
 - SNode.C public include paths, type names, and component names are compressed architectural statements, and layers are real boundaries without being sealed walls.
 :::
-
-### Closing perspective
-
-The communication layer stack now has concrete consequences in SNode.C names, components, and transfer questions.
-
-Address semantics belong to the network layer. The next concrete question is therefore:
-
-> What does an endpoint identity mean for each supported family?
-

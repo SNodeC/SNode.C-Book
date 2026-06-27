@@ -636,8 +636,3 @@ The factory supports that portability story because it keeps context creation se
 - Factory constructor arguments are a clean way to pass stable dependencies into future contexts.
 - Construction-time selection is acceptable; mid-protocol behavior belongs in the context.
 :::
-
-### Closing perspective
-
-Protocol behavior and context construction now have separate homes. That separation makes it possible to move the same protocol across different lower layers without turning the application into a pile of special cases.
-

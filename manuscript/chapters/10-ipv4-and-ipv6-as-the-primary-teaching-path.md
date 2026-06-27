@@ -478,7 +478,7 @@ This chapter shows IPv4 and IPv6 as the first concrete comparison pair.
 - IPv4 and IPv6 are the first concrete lower-family comparison because they are familiar, parallel, and still meaningfully different.
 - `net::in` selects IPv4; `net::in6` selects IPv6.
 - Both families use host-plus-port endpoint identity, but their textual forms, wildcard forms, and deployment questions differ.
-- The server/client handle, registered instance, connection, factory, context, and runtime model stay structurally the same.
+- IPv4/IPv6 differences appear mainly in endpoint identity, resolution, wildcard forms, and deployment assumptions, not in a new application architecture.
 - Convenience `listen(...)` and `connect(...)` overloads set configuration and then delegate to the general registration path.
 - Protocol contexts can often be reused across IPv4 and IPv6 when the protocol itself does not depend on address-family details.
 :::
@@ -517,8 +517,3 @@ net-in6-stream-legacy
 ```
 
 The local point is the family selection. Chapter 32 gives the consolidated include/component matrix.
-
-### Closing perspective
-
-IPv4 and IPv6 keep the familiar host-plus-port view while making the lower-family distinction concrete. Unix-domain sockets make the next controlled change: the role model remains stable, but endpoint identity becomes local and path-based.
-

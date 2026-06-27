@@ -675,8 +675,7 @@ WebSocket provides the upgraded carrier. MQTT provides the protocol semantics.
 - Subprotocol factories and selectors keep subprotocol selection structured and extensible.
 - A dynamically loaded WebSocket subprotocol must be installed in the WebSocket subprotocol directory and follow the role-specific file-name and factory-symbol conventions.
 - A linked subprotocol deployment resolves the same subprotocol name through the selector's linked factory path instead of opening a shared object at runtime.
-- Lower-family, TLS, runtime, configuration, diagnostics, timeout, and failure behavior remain relevant.
-- Chapter 25 moves from web protocols to MQTT.
+- Lower-family, TLS, runtime, configuration, diagnostics, timeout, and failure behavior remain relevant after upgrade.
 :::
 
 ### WebSocket public surface
@@ -689,4 +688,4 @@ WebSocket crosses HTTP negotiation, upgraded socket context, framing, and option
 
 ### Closing perspective
 
-WebSocket completes the web-protocol climb by using HTTP as a negotiation boundary and then moving the connection episode into bidirectional message communication. MQTT is the next message-oriented protocol family: it can use SNode.C directly and later reappear over WebSocket.
+WebSocket completes the web-protocol climb by using HTTP as a negotiation boundary and then moving the connection episode into bidirectional message communication. The result is not just another HTTP handler but an upgraded carrier for message-oriented protocols.

@@ -561,7 +561,6 @@ This chapter shows why configuration matters. Chapter 16 begins to explain its p
 - Deployment assumptions still matter; protocol reuse does not make systems operationally identical.
 - Reuse should stop when lower-family semantics become part of the protocol's meaning.
 - Small family-specific outer code is often clearer than an over-generalized abstraction.
-- Chapter 16 begins the configuration view because lower-family transfer makes configuration visible.
 :::
 
 ### The public surface changes with the lower layer
@@ -580,5 +579,3 @@ Chapter 32 gives the complete matrix. Here the point is the transfer rule: keep 
 ### Closing perspective
 
 Part IV has separated protocol behavior, context creation, carrier selection, registration, and configuration. That separation is what makes lower-family transfer a design technique rather than a copy-and-edit exercise.
-
-Configuration is where those architectural roles become named, shaped, and operable.

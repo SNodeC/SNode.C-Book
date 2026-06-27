@@ -589,5 +589,3 @@ clear boundary
       -> observable role
           -> maintainable system
 ```
-
-Once communication boundaries are placed, the next question is what happens after communication: which state is transient, which state is durable, and where persistence enters the system architecture.

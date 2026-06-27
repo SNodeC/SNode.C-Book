@@ -442,7 +442,7 @@ The server/client/connection/context model remains available, while the lower-fa
 ::: {.snodec-remember title="What to remember"}
 - Unix domain sockets replace host-plus-port endpoint identity with local path identity.
 - `net::un` selects the Unix-domain family, and `net::un::SocketAddress` represents the path-based endpoint.
-- The handle, registered instance, connection, factory, context, callbacks, and runtime model remain structurally familiar.
+- The path-based endpoint changes configuration and deployment concerns while preserving the server/client construction path.
 - `listen(sunPath, ...)` configures the server's local Unix-domain path; `connect(sunPath, ...)` configures the client's remote Unix-domain service path.
 - `connect(sunPath, bindSunPath, ...)` keeps the local/remote distinction visible even though both endpoints are path-based.
 - The empty Unix-domain path is the family's wildcard or deferred endpoint representation in the SNode.C address model.
@@ -468,7 +468,3 @@ net-un-stream-legacy
 ```
 
 The same include/component rule from the primary families applies; only the family fragment changes. The consolidated mapping is collected in Chapter 32.
-
-### Closing perspective
-
-Unix-domain sockets replace host-plus-port identity with path identity while preserving the same application shape. Bluetooth is the next variation: endpoint identity becomes device-oriented, and family-specific service selectors enter the address model.

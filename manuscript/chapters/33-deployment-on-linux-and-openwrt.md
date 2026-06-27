@@ -647,8 +647,3 @@ When these details are hidden, failures appear later as unrelated runtime proble
 - Package dependencies should follow component dependencies.
 - Runtime-loaded upgrade and subprotocol modules make installation paths and RPATH part of deployment.
 :::
-
-### Closing perspective
-
-Deployment is installed architecture: libraries, runtime module paths, configuration directories, service definitions, package repositories, and trust relationships. The installed shape must then be tested, inspected, debugged, and measured.
-

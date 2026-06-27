@@ -643,22 +643,16 @@ Those are the ideas the reader should carry forward.
 - `core::SNodeC` is the public runtime facade; `core::EventLoop` is the central event-loop orchestrator behind it.
 - `core::EventMultiplexer` coordinates descriptor readiness, timers, queued work, timeout checks, signals, and cleanup.
 - `listen(...)` and `connect(...)` do not perform the whole operation on the caller's stack; they enter the flow-controller path and schedule runtime work.
-- The server/client object is an application-side handle; the registered instance is advanced through shared state and flow-controller machinery.
+- Server/client handles register runtime roles; shared state and flow-controller machinery advance those roles after registration.
 - Descriptor receivers and timer receivers are managed runtime participants with enable/disable, suspend/resume, timeout, and cleanup behavior.
 - Application callbacks should return control to the event loop rather than blocking the runtime.
 :::
 
 ### Closing perspective
 
-The runtime core is the reason the higher layers of SNode.C can remain regular.
+The runtime core is the reason the higher layers of SNode.C can remain regular. Listening roles, connecting roles, connection contexts, timers, descriptor readiness, retry behavior, and cleanup all become runtime-managed work instead of scattered blocking calls.
 
-A server can register a listening instance because the runtime can later advance that instance. A client can register a connecting instance because the runtime can later progress the connection attempt. A context can express protocol behavior because the runtime knows when to call it.
-
-Retries and reconnects can exist as part of the model because timers are first-class event sources. Descriptor readiness can become protocol progress because descriptor receivers participate in a managed event system.
-
-This is why the event loop is not a footnote. It is the machinery that turns the framework's architecture into motion.
-
-The reader does not need to memorize every internal method in this chapter. But the reader should leave with a durable picture:
+The durable picture is still compact:
 
 ```text
 SNodeC facade
@@ -671,8 +665,4 @@ SNodeC facade
           -> cleanup
 ```
 
-That picture remains underneath socket layers, connection objects, contexts, HTTP, WebSocket, MQTT, and system-level applications.
-
-SNode.C applications are not driven by scattered blocking calls.
-
-They are driven by a coordinated event-processing core.
+That machinery turns the framework's architecture into motion.

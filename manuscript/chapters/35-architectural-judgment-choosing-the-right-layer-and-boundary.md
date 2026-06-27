@@ -483,5 +483,5 @@ Architectural judgment in SNode.C means choosing the right layer, role boundary,
 
 ### Closing perspective
 
-Architectural judgment uses the existing protocol, role, configuration, deployment, diagnostic, and testing vocabulary to place each concern at the boundary that can own it. Extension is the next pressure test: the boundary must remain visible as the system evolves.
+Architectural judgment uses the existing protocol, role, configuration, deployment, diagnostic, and testing vocabulary to place each concern at the boundary that can own it. Extension is one pressure test for that judgment because the boundary must remain visible as the system evolves.
 

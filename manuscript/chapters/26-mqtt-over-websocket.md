@@ -528,7 +528,6 @@ The next chapter is therefore not only about another protocol. It is about syste
 - Native MQTT and MQTT-over-WebSocket are sibling compositions of the same MQTT protocol family.
 - The carrier path changes; MQTT packet, session, topic, keep-alive, and publish-flow semantics remain recognizable.
 - Failures can belong to lower connection, TLS, HTTP upgrade, WebSocket framing, subprotocol selection, MQTT parsing, MQTT session, or keep-alive behavior.
-- Chapter 27 moves from one protocol composition to multi-protocol IoT system design.
 :::
 
 ### Native MQTT and MQTT-over-WebSocket public surfaces
@@ -553,4 +552,4 @@ Chapter 32 gives the consolidated source-derived component/header matrix.
 
 ### Closing perspective
 
-MQTT-over-WebSocket is a concrete cross-stack composition: HTTP negotiates the upgrade, WebSocket carries messages, the subprotocol selects MQTT, and `MqttContext` bridges the carrier to the MQTT protocol object. Multi-protocol systems combine several such boundaries at once.
+MQTT-over-WebSocket is a concrete cross-stack composition: HTTP negotiates the upgrade, WebSocket carries messages, the subprotocol selects MQTT, and `MqttContext` bridges the carrier to the MQTT protocol object.

@@ -537,7 +537,7 @@ Chapter 21 explains how HTTP becomes request/response semantics. Chapter 22 asks
 ::: {.snodec-remember title="What to remember"}
 - HTTP is a protocol layer above the stream connection model.
 - HTTP raises the application-facing unit from stream data to request and response objects.
-- The lower SNode.C architecture remains present: runtime, configured roles, registered instances, connections, contexts, factories, configuration, diagnostics, timing, and failure behavior.
+- HTTP adds request/response semantics while the lower runtime, connection, configuration, diagnostic, timing, and failure surfaces remain visible.
 - HTTP server wrappers plug an HTTP context factory and request-ready callback into lower server shells.
 - HTTP client wrappers plug an HTTP context factory, HTTP connection callbacks, and `MasterRequest` coordination into lower client shells.
 - HTTP-specific client configuration lives in the `http` subcommand for behavior such as Host header and pipelining.
@@ -563,7 +563,3 @@ and the matching client role uses:
 ```
 
 It should not include a lower socket header merely because HTTP is carried by that socket stack. Chapter 32 consolidates the complete source/header and component mapping.
-
-### Closing perspective
-
-HTTP raises stream communication to request/response semantics without removing the lower runtime, role, connection, context, configuration, and diagnostic surfaces. The Express-like framework turns that HTTP handling into routing, middleware, and application structure.

@@ -613,7 +613,3 @@ Client-side EventSource code includes the EventSource abstraction it names. For 
 ```
 
 Server-side SSE remains an HTTP or Express route that validates the request and streams `text/event-stream` response fragments. Chapter 32 summarizes the broader component/header mapping.
-
-### Closing perspective
-
-SSE keeps the HTTP/Express structure but stretches one response over time. WebSocket uses HTTP differently: as an upgrade negotiation before bidirectional message communication begins.

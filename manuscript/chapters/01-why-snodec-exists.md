@@ -278,10 +278,6 @@ Here it is enough to understand why the book starts small: the small example giv
 
 A good framework should provide features and help its users think clearly.
 
-This chapter has explained why SNode.C is worth studying as a framework and as a teaching object. It offers a concrete way to think about networked applications in modern C++ without hiding the boundaries among lower communication families, protocol layers, configuration, TLS, deployment, diagnostics, and persistence.
+SNode.C is worth studying here because it gives networked C++ applications visible boundaries: lower communication families, protocol layers, configuration, TLS, deployment, diagnostics, and persistence do not collapse into one undifferentiated program.
 
-The next step is practical: before writing the echo pair, the reader needs a working environment. Architecture becomes meaningful only when examples can be built, run, inspected, and modified.
-
-The goal of this book is not simply that you can write code *with* SNode.C, but that, after some chapters, you begin to see networked systems *through* the architectural lens that SNode.C makes available.
-
-Once that happens, the framework becomes a way of organizing thought with practical tooling behind it. And that is the right place to begin.
+The book's larger goal is not simply that you can write code *with* SNode.C. It is that you begin to see networked systems *through* the architectural lens that SNode.C makes available.

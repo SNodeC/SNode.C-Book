@@ -552,7 +552,7 @@ This is especially useful in IoT and embedded systems, where local device commun
 - Bluetooth support in this part is represented by two lower families: RFCOMM in `net::rc` and L2CAP in `net::l2`.
 - RFCOMM endpoint identity is Bluetooth address plus channel; L2CAP endpoint identity is Bluetooth address plus PSM.
 - Channel and PSM are not interchangeable service selectors.
-- The handle, registered instance, connection, factory, context, callbacks, and runtime model remain structurally familiar.
+- Bluetooth changes addressing, pairing assumptions, and service selection while preserving the server/client construction path.
 - Bluetooth convenience calls configure the handle and then enter the usual registration path.
 - The Bluetooth wildcard or deferred endpoint shape is the wildcard Bluetooth address plus service selector `0`.
 :::
@@ -593,5 +593,5 @@ The local lesson is the conditional family surface. Chapter 32 gives the broader
 
 ### Closing perspective
 
-With host-plus-port, path-based, and Bluetooth endpoint identities in view, the lower-family tour has done its job. The next part moves upward to protocol behavior inside `SocketContext` objects and to the factories that create them.
+Host-plus-port, path-based, and Bluetooth endpoint identities show the same architectural question from three lower-family angles. The lower-family tour has done its job once endpoint identity can be separated from protocol behavior.
 

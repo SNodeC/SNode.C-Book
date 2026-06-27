@@ -731,8 +731,3 @@ Regression tests should protect the semantic boundary that failed.
 - Build-time checks, include discipline, minimal builds, and installed-consumer builds protect component truth, public headers, dependency surfaces, and exported package behavior.
 - Runtime tests, diagnostics, and benchmarks should preserve the same layer and boundary vocabulary used in the design.
 :::
-
-### Closing perspective
-
-Testing, debugging, and measurement are most useful when each activity names the boundary it protects.
-

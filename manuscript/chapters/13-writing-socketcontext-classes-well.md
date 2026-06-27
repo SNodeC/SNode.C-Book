@@ -670,10 +670,3 @@ If the context is the protocol endpoint, the factory is the construction boundar
 - Protocol state should be explicit, connection-local when possible, and named in protocol terms.
 - Sending, streaming, timeout, shutdown, close, and metrics operations act through the connection-facing surface.
 :::
-
-### Closing perspective
-
-A context owns per-connection protocol behavior, but it still needs a construction boundary.
-
-That bridge is the `SocketContextFactory`.
-

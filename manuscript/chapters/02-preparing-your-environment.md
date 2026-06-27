@@ -473,10 +473,3 @@ If the answer to these questions is yes, the environment is ready for the first 
 - Runtime output is part of the learning process. Do not silence diagnostics before the first examples are understood.
 - The environment is ready when the framework builds, example programs can be found and run, and an external playground project can consume the installed package.
 :::
-
-### Closing perspective
-
-A good development environment keeps the compiler happy and shapes how the reader thinks.
-
-The example will be small. But it will already expose the recurring shape of SNode.C applications.
-

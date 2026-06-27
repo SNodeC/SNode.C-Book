@@ -550,10 +550,3 @@ That distinction will matter again in the deployment chapters. A binary may be l
 - A `SocketContext` can often remain TLS-independent when the protocol conversation is the same after secure connection setup.
 - TLS-specific meaning should enter protocol logic only when certificate, trust, SNI, or secure-transport properties are part of the protocol semantics.
 :::
-
-### Closing perspective
-
-Secure connection handling fits the same architecture, but TLS is serious.
-
-Timeouts, retries, and failure modes generalize that view across the framework.
-

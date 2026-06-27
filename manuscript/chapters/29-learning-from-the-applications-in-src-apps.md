@@ -838,7 +838,3 @@ These are application-design decisions. The build system records them.
 - A direct link line shows the application-facing component choices; component-owned dependency graphs may be deeper.
 - The executable entry point is usually an assembly point for runtime initialization, application objects, routes, callbacks, configuration, diagnostics, and runtime start.
 :::
-
-### Closing perspective
-
-Repository applications turn framework layers into executable programs. System structure adds several roles, deployment boundaries, configuration files, and operational relationships; MQTTSuite is the concrete reference ecosystem.

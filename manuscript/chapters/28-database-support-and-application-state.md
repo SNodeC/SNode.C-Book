@@ -843,9 +843,7 @@ That coordination is application architecture. The database module provides the 
 
 ### Closing perspective
 
-Persistence is now visible as an application-state boundary.
-
-The path looks like this:
+Persistence is an application-state boundary:
 
 ```text
 protocol event
@@ -855,6 +853,4 @@ protocol event
               -> durable state
 ```
 
-That boundary changes application design. It introduces durable memory, query flow, transactions, database failure, and database backpressure into the same event-driven world as the protocol layers.
-
-Complete applications are where protocol roles, persistence choices, configuration, runtime lifecycle, and diagnostics meet in executable form.
+That boundary changes application design because durable memory, query flow, transactions, database failure, and database backpressure enter the same event-driven world as the protocol layers.

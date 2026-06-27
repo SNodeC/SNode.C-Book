@@ -631,7 +631,7 @@ In SNode.C, configuration is one of those places.
 
 ### Closing perspective
 
-Protocol behavior, context creation, lower-family choice, and endpoint identity can be separated. Configuration makes those choices visible to applications and operators.
+Configuration makes protocol behavior, context creation, lower-family choice, and endpoint identity visible to applications and operators.
 
 The practical structure is application configuration, instance configuration, sections, and the concrete options that expose the model.
 

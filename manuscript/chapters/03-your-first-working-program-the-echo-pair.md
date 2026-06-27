@@ -701,10 +701,3 @@ This does not make the low-level details disappear. It organizes where they belo
 - `listen(...)` and `connect(...)` register communication roles; the runtime machinery advances the actual event-driven work.
 - The same structure used for IPv4 legacy streams can later be recognized again when the lower family, stream mode, or application protocol changes.
 :::
-
-### Closing perspective
-
-The prepared environment now supports a complete working SNode.C program.
-
-The next step is to move from “it works” to “I understand why it works.”
-

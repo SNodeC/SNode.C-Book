@@ -551,10 +551,3 @@ http-server-express-legacy-in
 ```
 
 It selects the Express layer together with the IPv4 legacy stream carrier. The source-side and build-side names rhyme without being the same mechanism. Chapter 32 gives the source-derived matrix for the broader set of components and headers.
-
-### Closing perspective
-
-Routing, middleware, request/response facades, and continuation turn HTTP messages into application structure.
-
-That structure can also support a different handler lifetime: instead of answering once, a route may keep an HTTP response open and emit events over time.
-

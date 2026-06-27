@@ -753,9 +753,7 @@ That question usually prevents the most common misunderstandings.
 
 ### Closing perspective
 
-Endpoint identity, runtime role, and concrete connection are now separate questions.
-
-That separation keeps three questions from being mixed together:
+Endpoint identity, runtime role, and concrete connection are separate questions:
 
 ```text
 Which endpoint identity is being used?
@@ -763,4 +761,4 @@ Which instance is registering listen or connect intent?
 Which concrete connection exists after success?
 ```
 
-With those distinctions in place, IPv4 and IPv6 examples can be read more precisely: a server-side instance binds to a local endpoint identity, a client-side instance connects to a remote endpoint identity, and a `SocketConnection` exposes the actual local and remote endpoints of the peer relationship. IPv4 and IPv6 provide the most familiar network-family setting for that model.
+Keeping those questions separate makes the familiar IPv4/IPv6 examples precise rather than merely familiar.

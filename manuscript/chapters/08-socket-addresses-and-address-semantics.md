@@ -474,10 +474,3 @@ Once that question becomes natural, the address classes become much easier to re
 - RFCOMM and L2CAP use Bluetooth device identity with different service selectors: channel for RFCOMM, PSM for L2CAP.
 - Default construction is meaningful and wildcard-oriented in family-specific ways.
 :::
-
-### Closing perspective
-
-Endpoint identity makes the first layer of the communication stack concrete.
-
-With that vocabulary in place, the next architectural question becomes sharper: how do server instances, client instances, and connections use endpoint identities while the runtime advances the communication flow?
-

@@ -603,10 +603,6 @@ The point is cooperation. MQTTSuite shows how SNode.C-based applications can rem
 
 ### Closing perspective
 
-MQTTSuite is best understood here as evidence that SNode.C can support a coherent ecosystem of focused tools: a broker, an integrator, a bridge, a command-line client, a persistence service, and shared support libraries.
+MQTTSuite is evidence that SNode.C can support a coherent ecosystem of focused tools: a broker, an integrator, a bridge, a command-line client, a persistence service, and shared support libraries.
 
-That makes MQTTSuite the right closing example for this part of the book.
-
-Part IX moved from persistence, to applications, to systems, and finally to a concrete SNode.C-based reference ecosystem.
-
-Part X turns from systems to building, porting, and maintaining. CMake components and linking strategy provide the next architectural surface.
+It closes this part of the book by showing persistence, applications, systems, and ecosystem structure in one SNode.C-based reference project.

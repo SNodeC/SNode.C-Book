@@ -541,8 +541,3 @@ Chapter 27 will later combine these ideas with multiple protocols and IoT system
 - `MqttContext` bridges the MQTT protocol object to the carrier underneath.
 - Native MQTT combines stream `SocketContext` with `MqttContext`.
 :::
-
-### Closing perspective
-
-MQTT is now established as a message-oriented protocol family with more than one carrier form. One specific composition is MQTT over WebSocket:
-

@@ -993,8 +993,3 @@ This method follows the same pattern used in Chapter 29. The build target often 
 - `PUBLIC`, `PRIVATE`, and `INTERFACE` describe dependency visibility.
 - Include paths and component names are parallel public contracts: one for C++ source, one for linking and installation.
 :::
-
-### Closing perspective
-
-The build system is architecture: components, public include surfaces, exported targets, optional dependencies, and installable boundaries. Deployment, testing, and extension can now be discussed without treating the build as a black box.
-

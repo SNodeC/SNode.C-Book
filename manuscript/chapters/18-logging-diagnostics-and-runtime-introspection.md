@@ -708,10 +708,3 @@ That order matters. If the endpoint is wrong, deeper protocol logs may only prod
 - `VLOG(n)` is for optional diagnostic depth controlled by the verbose level.
 - Good log placement follows responsibility boundaries: application, instance, connection, and context.
 :::
-
-### Closing perspective
-
-Configuration structure is also diagnostic structure: the executable, instances, sections, options, connection identities, counters, and logs describe what the application actually did.
-
-That diagnostic foundation helps make secure communication visible rather than opaque.
-

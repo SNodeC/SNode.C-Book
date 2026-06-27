@@ -816,10 +816,3 @@ The option gives one value. The same structure appears in C++ API calls, command
 - The same hierarchy appears through the C++ API, command line, and configuration files.
 - Disablement lets a role remain present while no longer blocking startup as a required participant.
 :::
-
-### Closing perspective
-
-The configuration philosophy now has a concrete anatomy.
-
-Logging, diagnostics, generated command lines, shown configuration, and runtime introspection make that anatomy observable at runtime.
-

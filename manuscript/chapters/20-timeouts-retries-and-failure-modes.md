@@ -811,7 +811,5 @@ When the answer is clear, the system is easier to operate and easier to debug.
 
 ### Closing perspective
 
-Robust communication over time requires timeouts, retries, reconnects, shutdown, and failure visibility.
-
-With that foundation in place at the stream layer, HTTP and WebSocket can be read as protocol-specific structures on top of the same event-driven timing and failure model.
+Robust communication over time requires timeouts, retries, reconnects, shutdown, and failure visibility. Those mechanisms are not only transport details; they shape how higher protocol layers report progress, interruption, and recovery.
 

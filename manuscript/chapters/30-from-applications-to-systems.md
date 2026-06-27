@@ -541,7 +541,3 @@ This is the real transition from applications to systems.
 - Stable protocol cores and domain logic are easier to evolve when they are not fused unnecessarily to one carrier or deployment shape.
 - SNode.C provides communication architecture; domain code still owns domain semantics.
 :::
-
-### Closing perspective
-
-Communication systems combine roles, boundaries, protocol families, deployment shape, configuration, observability, persistence, and failure topology. MQTTSuite applies that vocabulary as an ecosystem, not merely as a list of programs.
