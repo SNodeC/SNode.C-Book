@@ -71,7 +71,7 @@ virtual core::socket::stream::SocketContext*
 create(core::socket::stream::SocketConnection* socketConnection) = 0;
 ```
 
-The interface receives a `SocketConnection*` and returns a `SocketContext*`.
+The interface receives a `SocketConnection*` and returns a `SocketContext*`. The raw pointer return is part of the framework construction contract: the factory creates the context object, returns it once, and the connection side of the framework attaches and manages it. Application code should not keep separate ownership of that object or delete it manually.
 
 That shape says exactly what the framework needs:
 
@@ -389,9 +389,9 @@ Factory state should usually be stable construction state, not evolving per-mess
 \index{lifecycle}
 
 
-The factory interface returns a raw `SocketContext*`.
+The factory interface returns a raw `SocketContext*`. This point was introduced at the interface boundary above, but it is important enough to repeat near the concrete factory examples.
 
-This deserves a careful explanation. The raw pointer return should not be read as permission for arbitrary manual ownership throughout the application.
+The raw pointer return should not be read as permission for arbitrary manual ownership throughout the application.
 
 It should be read as part of this framework contract:
 

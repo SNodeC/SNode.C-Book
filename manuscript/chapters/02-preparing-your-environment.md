@@ -7,11 +7,9 @@
 
 ### Why the environment matters
 
-Chapter 1 introduced SNode.C as a framework whose teaching value comes from visible structure: event-driven runtime behavior, explicit layers, named roles, and reusable application boundaries.
+Chapter 1 introduced SNode.C as a framework whose teaching value comes from visible structure: event-driven runtime behavior, explicit layers, named roles, and reusable application boundaries. Before we can study that structure in code, the development environment must keep the source tree, build tree, install prefix, and later playground project separate.
 
-Before we can study that structure in code, the development environment must make it visible.
-
-That may sound like a purely practical concern. It is not. For this book, the environment is part of the learning model. SNode.C is not a single-file demonstration library. It is a real C++ framework with a core runtime, network-family components, stream transports, legacy and TLS connection variants, higher protocol layers, example applications, generated CMake targets, installable package components, and optional support for technologies such as Bluetooth and MariaDB.
+This is more than tidiness. SNode.C is a real C++ framework with a core runtime, network-family components, stream transports, legacy and TLS connection variants, higher protocol layers, example applications, generated CMake targets, installable package components, and optional support for technologies such as Bluetooth and MariaDB.
 
 If the source tree, build tree, install prefix, and external playground are mixed together, the architecture becomes harder to see. If they are kept separate, the structure of the framework becomes much easier to inspect.
 

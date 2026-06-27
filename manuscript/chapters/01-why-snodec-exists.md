@@ -90,9 +90,19 @@ understand the boundary
 
 SNode.C is not trying to replace every C++ networking approach. It is most useful when an application needs explicit communication roles, layered protocol structure, runtime-visible configuration, diagnostics, and several transport or protocol surfaces within one architectural model.
 
-If an application only needs a small one-off TCP client, direct POSIX sockets, Boost.Asio, standalone Asio, or another focused library may be the simpler choice. If the application wants a narrowly optimized HTTP service, a specialized web framework may be more direct. SNode.C is useful when the structure of the communication system itself matters.
+A rough comparison is useful at the beginning:
 
-This book therefore does not position SNode.C as a universal answer to every networking problem. It positions SNode.C as a coherent framework for readers who want to build multi-protocol applications while keeping the communication model visible.
+```text
+POSIX sockets        system API baseline; explicit but low-level
+Boost.Asio/Asio     general asynchronous I/O model and portable C++ abstraction
+libuv               event-loop and asynchronous system-services layer
+web frameworks      focused HTTP/service frameworks
+SNode.C             layered application framework with explicit roles,
+                    factories, contexts, protocol composition, and
+                    multi-transport symmetry
+```
+
+If an application only needs a small one-off TCP client, direct POSIX sockets, Boost.Asio, standalone Asio, or another focused library may be simpler. If the application wants a narrowly optimized HTTP service, a specialized web framework may be more direct. This book positions SNode.C for the case where the communication architecture itself matters and several protocol surfaces must remain understandable together.
 
 ### What this book is, and what it is not
 
@@ -238,25 +248,9 @@ MQTTSuite is the reference ecosystem that makes this concrete. It builds focused
 \index{factory}
 
 
-Although the details come later, the recurring SNode.C application shape can already be previewed.
+Although the details come later, the recurring SNode.C application shape can already be previewed. A configured server or client role is advanced by the runtime; concrete connections receive per-connection contexts through factories; those contexts hold the application protocol behavior.
 
-Many SNode.C applications involve:
-
-```text
-runtime
-  -> server or client instance
-      -> connection
-          -> context factory
-              -> per-connection context
-```
-
-At this introductory point, read *instance* as the server-side or client-side communication role of an application. It is not a concrete peer connection. Chapter 3 connects that role to the visible C++ objects used in the first program, and Chapter 5 sharpens the term: the visible object is the application-side handle, while the instance is the configured role registered with the framework and advanced by the runtime.
-
-The connection represents a concrete peer relationship. The factory creates the context. The context contains the application protocol behavior for one connection.
-
-The runtime coordinates event-driven progress.
-
-At this point, this is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. The important point is that SNode.C is regular: the same few roles reappear in different protocol settings, and that regularity is one of the reasons the framework is teachable.
+At this point, this is only a preview. Chapter 3 shows the first working program, and Chapter 5 names the model more formally. The important point is regularity: the same few roles reappear in different protocol settings.
 
 The first concrete program will therefore be modest: an echo server and client.
 
@@ -284,9 +278,9 @@ Here it is enough to understand why the book starts small: the small example giv
 
 A good framework should provide features and help its users think clearly.
 
-This chapter has explained why SNode.C is worth studying as a framework and as a teaching object. The next step is practical: before writing the echo pair, the reader needs a working environment. Architecture becomes meaningful only when examples can be built, run, inspected, and modified.
+This chapter has explained why SNode.C is worth studying as a framework and as a teaching object. It offers a concrete way to think about networked applications in modern C++ without hiding the boundaries among lower communication families, protocol layers, configuration, TLS, deployment, diagnostics, and persistence.
 
-SNode.C is worth studying because it offers a coherent way to think about networked applications in modern C++. It connects lower communication families such as IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP with higher protocol systems such as HTTP, WebSocket, and MQTT. It supports practical concerns such as configuration, TLS, deployment, diagnostics, and persistence. Most importantly, it does so without erasing the architecture.
+The next step is practical: before writing the echo pair, the reader needs a working environment. Architecture becomes meaningful only when examples can be built, run, inspected, and modified.
 
 The goal of this book is not simply that you can write code *with* SNode.C, but that, after some chapters, you begin to see networked systems *through* the architectural lens that SNode.C makes available.
 

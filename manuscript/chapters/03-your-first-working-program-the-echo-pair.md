@@ -271,6 +271,10 @@ This file contains the whole protocol behavior.
 
 The factories allocate the concrete context. The framework owns the surrounding connection machinery; the user supplies the protocol object that belongs to a connection.
 
+::: {.snodec-note title="Ownership at the factory boundary"}
+The `create(...)` function returns a raw `SocketContext*` because that is the SNode.C socket-layer construction contract. The application allocates the context object, but after a non-null pointer is returned, the framework attaches it to the connection and manages the connection/context lifecycle. User code must not delete the returned object manually. The `new` expression here marks a handoff to the framework; it is not a recommendation to use unmanaged ownership as a general C++ style.
+:::
+
 This is the first important boundary in code:
 
 ```text
@@ -692,7 +696,7 @@ This does not make the low-level details disappear. It organizes where they belo
 ::: {.snodec-remember title="What to remember"}
 - The first working example is small, but it already contains the core SNode.C application pattern.
 - The visible server or client object is the application-side handle; the instance is the configured communication role registered through `listen(...)` or `connect(...)`.
-- A `SocketContextFactory` creates one context for each established connection.
+- A `SocketContextFactory` creates one context for each established connection and hands it to the framework-owned connection lifecycle.
 - A `SocketContext` contains the application protocol behavior for that connection.
 - `listen(...)` and `connect(...)` register communication roles; the runtime and flow-controller machinery advance the actual event-driven work.
 - The same structure used for IPv4 legacy streams can later be recognized again when the lower family, stream mode, or application protocol changes.

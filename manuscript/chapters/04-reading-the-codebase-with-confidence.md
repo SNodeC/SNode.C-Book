@@ -42,7 +42,7 @@ This chapter does not try to explain every file. It teaches a reading strategy. 
 
 The first useful map is not a class diagram. It is the build structure.
 
-The top-level `CMakeLists.txt` defines the project, prepares project-level helper modules, delegates into `src`, and then includes packaging support. the top-level file is mostly a gateway into the framework source tree rather than the place where the framework structure itself is expressed.
+The top-level `CMakeLists.txt` defines the project, prepares project-level helper modules, delegates into `src`, and then includes packaging support. The top-level file is mostly a gateway into the framework source tree rather than the place where the framework structure itself is expressed.
 
 ```text
 CMakeLists.txt
@@ -643,7 +643,7 @@ This workflow is not only useful for beginners. It also matters when extending t
 
 ### Transition to the architecture chapters
 
-Part I began with motivation, prepared the build environment, built the first echo pair, and now established a way to read the source tree. The next part can therefore become more architectural. Chapter 5 names the mental model more formally. It will discuss SNode.C as an event-driven, layered framework built from recurring roles: runtime, instance, connection, factory, context, configuration, and protocol behavior.
+Part I began with motivation, prepared the build environment, built the first echo pair, and established a way to read the source tree. The next part can therefore become more architectural: Chapter 5 names the mental model formally and connects the recurring roles introduced here.
 
 The important result of this chapter is not a memorized directory list. The important result is confidence:
 
