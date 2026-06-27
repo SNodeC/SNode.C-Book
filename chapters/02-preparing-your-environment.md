@@ -154,17 +154,7 @@ This creates and selects the public SNode.C release tag used by this book:
 ~/projects/snode.c/
 ```
 
-The book baseline is SNode.C release tag `v1.0.2`, with commit `6e475262084ae2dab2daef8781ab9e4adb82d18e` as the authoritative source pin used for verification. The tag is the reader-facing checkout target. To confirm that the checkout matches the book baseline, run:
-
-```sh
-git rev-parse HEAD
-```
-
-The expected commit is:
-
-```text
-6e475262084ae2dab2daef8781ab9e4adb82d18e
-```
+The book baseline is SNode.C\textsubscript{\texttt{v1.0.2}}. The tag `v1.0.2` is the reader-facing checkout target. For exact reproducibility, compare your checkout with the source pin stated once in the Preface.
 
 The SNode.C repository uses `master` as its moving development line. Do not build the examples against an arbitrary newer `master` checkout unless you deliberately want to check the book against a newer framework state. If you already have a clone, update the tag information and select the book release explicitly:
 

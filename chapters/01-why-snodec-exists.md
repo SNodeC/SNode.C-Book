@@ -118,7 +118,7 @@ This book is not:
 \index{v1.0.2@\texttt{v1.0.2}}
 
 
-SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in SNode.C release tag `v1.0.2`, with commit `6e475262084ae2dab2daef8781ab9e4adb82d18e` as the source baseline used during preparation of this edition. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
+SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the SNode.C\textsubscript{\texttt{v1.0.2}} baseline used for this edition. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
 
 ### Why “layered” matters here
 
