@@ -1,0 +1,152 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+
+\begin{document}
+
+\def\majorVGap{11mm}
+\def\sectionItemGap{3.5mm}
+\def\viewGap{5mm}
+\def\sectionItemsTopGap{2.6mm}
+
+\begin{tikzpicture}[
+  snodec diagram,
+  scope block/.style={
+    draw=snodecBlue!72,
+    fill=snodecBlueSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  section block/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  option block/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  section item/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecInnerLineWidth,
+    align=center,
+    text width=21mm,
+    inner xsep=1mm,
+    inner ysep=1.7mm,
+    font=\sffamily\footnotesize
+  },
+  view block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecInnerLineWidth,
+    align=center,
+    text width=43mm,
+    inner xsep=1mm,
+    inner ysep=2.0mm,
+    font=\sffamily\footnotesize
+  },
+  hierarchy flow/.style={
+    snodec secondary arrow,
+    draw=snodecMuted!75,
+    line width=\snodecBoxLineWidth
+  }
+]
+
+% ----------------------------------------------------------------------
+% Main hierarchy.
+% ----------------------------------------------------------------------
+\node[scope block] (application) {%
+  \textbf{\textcolor{snodecTitleBlue}{Application scope}}\\[-0.4mm]
+  {\footnotesize executable-level operational shell}\\[-0.2mm]
+  {\footnotesize config file, logging, daemonization, help, generated command line}
+};
+
+\node[scope block, below=\majorVGap of application] (instance) {%
+  \textbf{\textcolor{snodecTitleBlue}{Instance scope}}\\[-0.4mm]
+  {\footnotesize configured server/client communication role}\\[-0.2mm]
+  {\footnotesize external identity, disabled/enabled state}\\[-0.2mm]
+  {\footnotesize e.g. \texttt{echo}, \texttt{mqtt-uplink}, \texttt{measurement-input}}
+};
+
+% ----------------------------------------------------------------------
+% Section scope.
+% ----------------------------------------------------------------------
+\node[section block, below=\majorVGap of instance] (section) {%
+  \textbf{\textcolor{snodecTitleGreen}{Section scope}}\\[-0.4mm]
+  {\footnotesize responsibility boundary inside one instance}\\[\sectionItemsTopGap]
+  \begin{tikzpicture}[
+    baseline=(connection.base),
+    node distance=\sectionItemGap,
+    section row item/.style={section item}
+  ]
+    \node[section row item] (connection) {\texttt{connection}};
+    \node[section row item, left=of connection] (remote) {\texttt{remote}};
+    \node[section row item, left=of remote] (local) {\texttt{local}};
+    \node[section row item, right=of connection] (socket) {\texttt{socket}};
+    \node[section row item, right=of socket] (tls) {\texttt{tls}};
+  \end{tikzpicture}
+};
+
+% ----------------------------------------------------------------------
+% Concrete option.
+% ----------------------------------------------------------------------
+\node[option block, below=\majorVGap of section] (option) {%
+  \textbf{\textcolor{snodecTitleOrange}{Option}}\\[-0.4mm]
+  {\footnotesize one concrete value inside a section}\\[-0.2mm]
+  {\footnotesize host, port, path, timeout, retry, backlog, certificate path}
+};
+
+% ----------------------------------------------------------------------
+% Hierarchy arrows.
+% ----------------------------------------------------------------------
+\draw[hierarchy flow] (application.south) -- (instance.north);
+\draw[hierarchy flow] (instance.south) -- (section.north);
+\draw[hierarchy flow] (section.south) -- (option.north);
+
+% ----------------------------------------------------------------------
+% Same hierarchy expressed in three concrete views.
+% ----------------------------------------------------------------------
+\node[view block, below=\majorVGap of option] (commandLine) {%
+  \textbf{\textcolor{snodecTitleGray}{Command line}}\\[-0.4mm]
+  \texttt{app instance}\\[-0.2mm]
+  \texttt{local --port 8080}
+};
+
+\node[view block, left=\viewGap of commandLine] (cppApi) {%
+  \textbf{\textcolor{snodecTitleGray}{C++ API}}\\[-0.4mm]
+  \texttt{instanceHandle.getConfig()}\\[-0.2mm]
+  \texttt{->Local::setPort(8080)}
+};
+
+\node[view block, right=\viewGap of commandLine] (configFile) {%
+  \textbf{\textcolor{snodecTitleGray}{Config file}}\\[-0.4mm]
+  \texttt{instance}\\[-0.2mm]
+  \texttt{.local.port = 8080}
+};
+
+
+\snodecApplyFixedCanvas
+
+\end{tikzpicture}
+\end{document}

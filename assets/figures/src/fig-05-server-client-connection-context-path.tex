@@ -1,0 +1,134 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}[
+  snodec diagram,
+  app box/.style={
+    draw=snodecGreen!75,
+    fill=snodecGreenSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=100mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  runtime box/.style={
+    draw=snodecBlue!75,
+    fill=snodecBlueSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=100mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  split box/.style={
+    runtime box,
+    text width=48mm
+  },
+  outcome box/.style={
+    draw=snodecBlue!60,
+    fill=snodecBlueSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=100mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  register flow/.style={snodec main arrow, draw=snodecGreen!70},
+  runtime flow/.style={snodec main arrow, draw=snodecBlue!65},
+  link/.style={snodec bus line}
+]
+
+% --- application side ----------------------------------------------------
+\node[app box] (handle) {%
+  \textbf{\textcolor{snodecTitleGreen}{Application-side handle}}\\[-0.4mm]
+  {\footnotesize \texttt{SocketServer} / \texttt{SocketClient} visible in user code}
+};
+
+\node[app box, below=7mm of handle] (registration) {%
+  \textbf{\textcolor{snodecTitleGreen}{Registration call}}\\[-0.4mm]
+  {\footnotesize \texttt{listen(...)} registers a server role}\\[-0.2mm]
+  {\footnotesize \texttt{connect(...)} registers a client role}
+};
+
+\draw[register flow] (handle.south) -- (registration.north);
+
+% --- registered runtime roles -------------------------------------------
+\node[coordinate, below=18mm of registration] (splitCenter) {};
+
+\node[split box, left=7mm of splitCenter] (server) {%
+  \textbf{\textcolor{snodecTitleBlue}{Server-side instance}}\\[-0.4mm]
+  {\footnotesize listens and accepts peers}
+};
+
+\node[split box, right=7mm of splitCenter] (client) {%
+  \textbf{\textcolor{snodecTitleBlue}{Client-side instance}}\\[-0.4mm]
+  {\footnotesize initiates a peer relationship}
+};
+
+\coordinate (splitTop)       at ($(server.north)!0.5!(client.north)$);
+\coordinate (splitBusCenter) at ([yshift=5.5mm]splitTop);
+\coordinate (splitBusLeft)   at ([yshift=5.5mm]server.north);
+\coordinate (splitBusRight)  at ([yshift=5.5mm]client.north);
+
+\draw[register flow] (registration.south) -- (splitBusCenter);
+\draw[link] (splitBusLeft) -- (splitBusRight);
+\draw[runtime flow] (splitBusLeft) -- (server.north);
+\draw[runtime flow] (splitBusRight) -- (client.north);
+
+% --- runtime progression ------------------------------------------------
+\coordinate (splitBottom) at ($(server.south)!0.5!(client.south)$);
+
+\node[runtime box, below=12mm of splitBottom] (machinery) {%
+  \textbf{\textcolor{snodecTitleBlue}{Accept/connect machinery}}\\[-0.4mm]
+  {\footnotesize runtime and flow controller progress the role}
+};
+
+\coordinate (mergeBottom)    at ($(server.south)!0.5!(client.south)$);
+\coordinate (mergeBusCenter) at ([yshift=-5.5mm]mergeBottom);
+\coordinate (mergeBusLeft)   at ([yshift=-5.5mm]server.south);
+\coordinate (mergeBusRight)  at ([yshift=-5.5mm]client.south);
+
+\draw[link] (server.south) -- (mergeBusLeft);
+\draw[link] (client.south) -- (mergeBusRight);
+\draw[link] (mergeBusLeft) -- (mergeBusRight);
+\draw[runtime flow] (mergeBusCenter) -- (machinery.north);
+
+\node[runtime box, below=7mm of machinery] (connection) {%
+  \textbf{\textcolor{snodecTitleBlue}{\texttt{SocketConnection}}}\\[-0.4mm]
+  {\footnotesize one concrete peer relationship}
+};
+
+\node[runtime box, below=7mm of connection] (factory) {%
+  \textbf{\textcolor{snodecTitleBlue}{\texttt{SocketContextFactory}}}\\[-0.4mm]
+  {\footnotesize creates a fresh context for the connection}
+};
+
+\node[runtime box, below=7mm of factory] (context) {%
+  \textbf{\textcolor{snodecTitleBlue}{\texttt{SocketContext}}}\\[-0.4mm]
+  {\footnotesize per-connection protocol endpoint}
+};
+
+\node[outcome box, below=7mm of context] (protocol) {%
+  \textbf{\textcolor{snodecTitleBlue}{Protocol behavior}}\\[-0.4mm]
+  {\footnotesize application meaning over the peer relationship}
+};
+
+\draw[runtime flow] (machinery.south) -- (connection.north);
+\draw[runtime flow] (connection.south) -- (factory.north);
+\draw[runtime flow] (factory.south) -- (context.north);
+\draw[runtime flow] (context.south) -- (protocol.north);
+
+
+\snodecApplyFixedCanvas
+
+\end{tikzpicture}
+\end{document}

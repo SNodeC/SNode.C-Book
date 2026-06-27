@@ -1,0 +1,138 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta}
+
+\newcommand{\familySection}[2]{%
+  \parbox[c][8.0mm][c]{25mm}{\centering
+    \strut\textbf{\textcolor{snodecTitleGray}{#1}}\\[-0.2mm]#2\strut
+  }%
+}
+
+\newcommand{\familyRule}{%
+  \rule{25mm}{0.25pt}%
+}
+
+\newcommand{\familyBlock}[4]{%
+  \begin{tabular}{@{}c@{}}
+    \familySection{#1}{#2}\\[-0.15mm]
+    \familyRule\\[-0.15mm]
+    \familySection{Address}{#3}\\[-0.15mm]
+    \familyRule\\[-0.15mm]
+    \familySection{Deployment}{#4}
+  \end{tabular}%
+}
+
+\begin{document}
+\begin{tikzpicture}[
+  snodec diagram,
+  topbox/.style={
+    draw=snodecOrange!80,
+    fill=snodecOrangeSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=100mm,
+    inner xsep=2mm,
+    inner ysep=2mm
+  },
+  familybox/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=26mm,
+    inner xsep=0.6mm,
+    inner ysep=2mm
+  },
+  toptext/.style={
+    font=\sffamily\small,
+    align=center
+  },
+  familytext/.style={
+    font=\sffamily\footnotesize,
+    align=center
+  },
+  labtext/.style={snodec arrow label},
+  link/.style={snodec bus line},
+  downarrow/.style={
+    draw=snodecMuted!75,
+    -{Latex[length=2.1mm,width=1.7mm]},
+    line width=\snodecSecondaryLineWidth
+  }
+]
+
+% --- stable protocol box ------------------------------------------------
+\node[topbox, toptext] (protocol) {%
+  \begin{tabular}{@{}c@{}}
+  \textbf{\textcolor{snodecTitleOrange}{Application protocol behavior}}\\[0.5mm]
+  SocketContext\\
+  SocketContextFactory\\
+  callbacks / send / receive / lifecycle
+  \end{tabular}
+};
+
+% --- lower family columns -----------------------------------------------
+\node[familybox, familytext, below=18.5mm of protocol] (unix) {%
+  \familyBlock
+    {Unix domain}
+    {\texttt{net::un}}
+    {path}
+    {local host}
+};
+
+\node[familybox, familytext, left=4mm of unix] (ipv6) {%
+  \familyBlock
+    {IPv6}
+    {\texttt{net::in6}}
+    {\mbox{\sffamily\scriptsize hostname/IP + port}}
+    {IPv6 network}
+};
+
+\node[familybox, familytext, left=4mm of ipv6] (ipv4) {%
+  \familyBlock
+    {IPv4}
+    {\texttt{net::in}}
+    {\mbox{\sffamily\scriptsize hostname/IP + port}}
+    {IP network}
+};
+
+\node[familybox, familytext, right=4mm of unix] (rfcomm) {%
+  \familyBlock
+    {RFCOMM}
+    {\texttt{net::rc}}
+    {\mbox{\sffamily\scriptsize BD address + channel}}
+    {Bluetooth}
+};
+
+\node[familybox, familytext, right=4mm of rfcomm] (l2cap) {%
+  \familyBlock
+    {L2CAP}
+    {\texttt{net::l2}}
+    {\mbox{\sffamily\scriptsize BD address + PSM}}
+    {Bluetooth}
+};
+
+% --- one shared stem, then orthogonal branching -------------------------
+\coordinate (branchCenter) at ([yshift=8mm]unix.north);
+\coordinate (branchLeft)   at ([yshift=8mm]ipv4.north);
+\coordinate (branchRight)  at ([yshift=8mm]l2cap.north);
+
+\draw[link]
+  (protocol.south)
+  -- node[labtext, pos=0.38] {same context abstraction reused}
+  (branchCenter);
+
+\draw[link] (branchLeft) -- (branchRight);
+
+\draw[downarrow] ([yshift=8mm]ipv4.north)   -- (ipv4.north);
+\draw[downarrow] ([yshift=8mm]ipv6.north)   -- (ipv6.north);
+\draw[downarrow] ([yshift=8mm]unix.north)   -- (unix.north);
+\draw[downarrow] ([yshift=8mm]rfcomm.north) -- (rfcomm.north);
+\draw[downarrow] ([yshift=8mm]l2cap.north)  -- (l2cap.north);
+
+
+\snodecApplyFixedCanvas
+
+\end{tikzpicture}
+\end{document}

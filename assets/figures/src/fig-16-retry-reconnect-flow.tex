@@ -1,0 +1,331 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
+
+\begin{document}
+
+\def\topArrowL{6mm}
+\def\straightArrowL{6mm}
+\def\resultArrowL{10mm}
+\def\halfArrowL{5mm}
+\def\panelInnerSep{5mm}
+
+\def\outcomeGap{15mm}
+\def\columnShift{38mm}
+\def\decisionSplit{16.5mm}
+\def\branchDrop{5mm}
+
+\def\smallBoxWidth{26mm}
+\def\smallBoxXSep{2mm}
+
+\def\resultBoxWidth{24mm}
+\def\resultBoxXSep{1.5mm}
+
+% Reconnect/Retry decision boxes use the original visible width again:
+% 35.2mm + 2*1.4mm = 38mm.
+\def\decisionBoxTextWidth{35.2mm}
+\def\decisionBoxXSep{1.4mm}
+
+\begin{tikzpicture}[
+  snodec diagram,
+  action block/.style={
+    draw=snodecBlue!72,
+    fill=snodecBlueSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=54mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  ok block/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=\smallBoxWidth,
+    inner xsep=\smallBoxXSep,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  fail block/.style={
+    draw=snodecRed!82,
+    fill=snodecRedSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=\smallBoxWidth,
+    inner xsep=\smallBoxXSep,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  stop block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=\smallBoxWidth,
+    inner xsep=\smallBoxXSep,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  decision block/.style={
+    draw=snodecBlue!78,
+    fill=snodecBlueSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=\decisionBoxTextWidth,
+    inner xsep=\decisionBoxXSep,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  result stop block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=\resultBoxWidth,
+    inner xsep=\resultBoxXSep,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  result timer block/.style={
+    draw=snodecOrange!80,
+    fill=snodecOrangeSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=\resultBoxWidth,
+    inner xsep=\resultBoxXSep,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  classify panel/.style={
+    snodec boundary,
+    fill=none
+  },
+  flow/.style={snodec secondary arrow},
+  flow line/.style={snodec bus line},
+  return flow/.style={snodec return arrow},
+  arrow label/.style={snodec arrow label}
+]
+
+% ----------------------------------------------------------------------
+% Initial connect request and attempt.
+% ----------------------------------------------------------------------
+\node[action block] (connectRequest) {%
+  \textbf{\textcolor{snodecBlue}{Connect requested}}\\[-0.4mm]
+  \texttt{SocketClient::connect()}
+};
+
+\node[action block, below=\topArrowL of connectRequest] (connectAttempt) {%
+  \textbf{\textcolor{snodecBlue}{Connect attempt}}\\[-0.4mm]
+  {\footnotesize open / bind / connect}\\[-0.2mm]
+  {\footnotesize async completion / timeout}
+};
+
+\draw[flow] (connectRequest.south) -- (connectAttempt.north);
+
+% ----------------------------------------------------------------------
+% Top guard for the inner classification panel.
+% This guarantees:
+% connectAttempt.south -> classifyPanel.north = \halfArrowL
+% because the panel fit adds \panelInnerSep above classifyTopGuard.
+% ----------------------------------------------------------------------
+\coordinate (classifyTopGuard)
+  at ($(connectAttempt.south)+(0,-\halfArrowL-\panelInnerSep)$);
+
+% ----------------------------------------------------------------------
+% Outcome classification.
+% The outcome bus height is intentionally unchanged in this vertical pass.
+% ----------------------------------------------------------------------
+\node[ok block, below=\outcomeGap of connectAttempt, xshift=-\columnShift] (okOutcome) {%
+  \textbf{\textcolor{snodecGreen}{OK}}\\[-0.4mm]
+  successful attempt
+};
+
+\node[stop block, below=\outcomeGap of connectAttempt] (stopOutcome) {%
+  \textbf{\textcolor{snodecRule}{DISABLED}}\\[-0.4mm]
+  no attempt
+};
+
+\node[fail block, below=\outcomeGap of connectAttempt, xshift=\columnShift] (failOutcome) {%
+  \textbf{\textcolor{snodecRed}{ERROR / FATAL}}\\[-0.4mm]
+  failed attempt
+};
+
+\coordinate (outcomeBranch) at ([yshift=\branchDrop]stopOutcome.north);
+\coordinate (okBranch)      at (outcomeBranch -| okOutcome.north);
+\coordinate (stopBranch)    at (outcomeBranch -| stopOutcome.north);
+\coordinate (failBranch)    at (outcomeBranch -| failOutcome.north);
+
+\draw[flow line] (okBranch) -- (failBranch);
+\draw[flow] (okBranch) -- (okOutcome.north);
+\draw[flow] (stopBranch) -- (stopOutcome.north);
+\draw[flow] (failBranch) -- (failOutcome.north);
+
+% ----------------------------------------------------------------------
+% Reconnect path after an established connection.
+% ----------------------------------------------------------------------
+\node[ok block, below=\straightArrowL of okOutcome] (established) {%
+  \textbf{\textcolor{snodecGreen}{Established}}\\[-0.4mm]
+  stream active\\[-0.2mm]
+  protocol context
+};
+
+\node[fail block, below=\straightArrowL of established] (disconnectEvent) {%
+  \textbf{\textcolor{snodecRed}{Disconnect event}}\\[-0.4mm]
+  connection closed
+};
+
+\node[decision block, below=\straightArrowL of disconnectEvent] (reconnectAllowed) {%
+  \textbf{\textcolor{snodecBlue}{Reconnect allowed?}}\\[-0.4mm]
+  reconnect enabled\\[-0.2mm]
+  controller allows\\[-0.2mm]
+  event loop running
+};
+
+\draw[flow] (okOutcome.south) -- (established.north);
+\draw[flow] (established.south) -- (disconnectEvent.north);
+\draw[flow] (disconnectEvent.south) -- (reconnectAllowed.north);
+
+% ----------------------------------------------------------------------
+% Retry path after a failed connect attempt.
+% ----------------------------------------------------------------------
+\node[decision block] (retryAllowed) at (failOutcome |- reconnectAllowed) {%
+  \textbf{\textcolor{snodecBlue}{Retry allowed?}}\\[-0.4mm]
+  retry enabled\\[-0.2mm]
+  tries below limit\\[-0.2mm]
+  unless \texttt{NO\_RETRY}
+};
+
+\draw[flow] (failOutcome.south) -- (retryAllowed.north);
+
+% ----------------------------------------------------------------------
+% Consequences of reconnect and retry decisions.
+% The branch bus and the straight arrows to the result row keep the previous vertical height.
+% ----------------------------------------------------------------------
+\node[result stop block, below=\resultArrowL of reconnectAllowed, xshift=-\decisionSplit] (stopClient) {%
+  \textbf{\textcolor{snodecRule}{Stop client}}
+};
+
+\node[result timer block, below=\resultArrowL of reconnectAllowed, xshift=\decisionSplit] (reconnectTimer) {%
+  \textbf{\textcolor{snodecOrange!90!black}{Reconnect timer}}\\[-0.4mm]
+  configured\\[-0.2mm]
+  reconnect time
+};
+
+\node[result timer block, below=\resultArrowL of retryAllowed, xshift=-\decisionSplit] (retryTimer) {%
+  \textbf{\textcolor{snodecOrange!90!black}{Retry timer}}\\[-0.4mm]
+  timeout, base,\\[-0.2mm]
+  limit, jitter
+};
+
+\node[result stop block, below=\resultArrowL of retryAllowed, xshift=\decisionSplit] (stopAttempt) {%
+  \textbf{\textcolor{snodecRule}{Stop attempt}}
+};
+
+\coordinate (reconnectDecisionBranch) at ([yshift=-\branchDrop]reconnectAllowed.south);
+\coordinate (reconnectLeftBranch)     at (reconnectDecisionBranch -| stopClient.north);
+\coordinate (reconnectRightBranch)    at (reconnectDecisionBranch -| reconnectTimer.north);
+
+\draw[flow line] (reconnectAllowed.south) -- (reconnectDecisionBranch);
+\draw[flow line] (reconnectLeftBranch) -- (reconnectRightBranch);
+\draw[flow]
+  (reconnectLeftBranch)
+  -- node[arrow label, left=1.1mm] {no}
+  (stopClient.north);
+\draw[flow]
+  (reconnectRightBranch)
+  -- node[arrow label, right=1.1mm] {yes}
+  (reconnectTimer.north);
+
+\coordinate (retryDecisionBranch) at ([yshift=-\branchDrop]retryAllowed.south);
+\coordinate (retryLeftBranch)     at (retryDecisionBranch -| retryTimer.north);
+\coordinate (retryRightBranch)    at (retryDecisionBranch -| stopAttempt.north);
+
+\draw[flow line] (retryAllowed.south) -- (retryDecisionBranch);
+\draw[flow line] (retryLeftBranch) -- (retryRightBranch);
+\draw[flow]
+  (retryLeftBranch)
+  -- node[arrow label, left=1.1mm] {yes}
+  (retryTimer.north);
+\draw[flow]
+  (retryRightBranch)
+  -- node[arrow label, right=1.1mm] {no}
+  (stopAttempt.north);
+
+% ----------------------------------------------------------------------
+% Shared merge point inside the classification panel.
+% The lower merge bus height is intentionally unchanged in this vertical pass.
+% ----------------------------------------------------------------------
+\coordinate (timerMergeLine) at ([yshift=-\branchDrop]$(reconnectTimer.south)!0.5!(retryTimer.south)$);
+\coordinate (reconnectMerge) at (timerMergeLine -| reconnectTimer.south);
+\coordinate (retryMerge)     at (timerMergeLine -| retryTimer.south);
+
+\draw[flow line] (reconnectTimer.south) -- (reconnectMerge);
+\draw[flow line] (retryTimer.south) -- (retryMerge);
+\draw[flow line] (reconnectMerge) -- (retryMerge);
+
+% ----------------------------------------------------------------------
+% Inner classification panel.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \node[
+    classify panel,
+    fit=(classifyTopGuard)(outcomeBranch)(okOutcome)(stopOutcome)(failOutcome)
+        (established)(disconnectEvent)(reconnectAllowed)(retryAllowed)
+        (stopClient)(reconnectTimer)(retryTimer)(stopAttempt)
+        (timerMergeLine),
+    inner sep=\panelInnerSep
+  ] (classifyPanel) {};
+\end{scope}
+
+% ----------------------------------------------------------------------
+% Arrows into and out of the inner classification panel.
+% These use \halfArrowL outside the panel.
+% The incoming arrow now ends below the title area so its arrow head does not
+% show through the boundary title mask.
+% ----------------------------------------------------------------------
+\coordinate (classifyEntry) at ([yshift=-4mm]classifyPanel.north);
+\draw[flow] (connectAttempt.south) -- (classifyEntry);
+\draw[flow line] (classifyEntry) -- (outcomeBranch);
+
+\node[action block, below=\halfArrowL of classifyPanel] (nextAttempt) {%
+  \textbf{\textcolor{snodecBlue}{Initiate next connect attempt}}
+};
+
+\draw[flow line] (timerMergeLine) -- (classifyPanel.south);
+\draw[flow] (classifyPanel.south) -- (nextAttempt.north);
+
+% ----------------------------------------------------------------------
+% Dashed return path outside the classification panel.
+% Starts at the bottom center of "Initiate next connect attempt"
+% and first goes down by \halfArrowL for rhythmic consistency.
+% ----------------------------------------------------------------------
+\coordinate (returnStart)  at ($(nextAttempt.south)+(0,-\halfArrowL)$);
+\coordinate (returnLane)   at ($(classifyPanel.west)+(-7mm,0)$);
+\coordinate (returnBottom) at (returnLane |- returnStart);
+\coordinate (returnTop)    at (returnLane |- connectAttempt.center);
+
+\draw[return flow]
+  (nextAttempt.south)
+  -- (returnStart)
+  -- (returnBottom)
+  -- (returnTop)
+  -- (connectAttempt.west);
+
+
+% Foreground overlay title: masks the dashed border and the incoming arrow below it.
+
+\node[snodec boundary title] at (classifyPanel.north) {Classify outcome};
+
+\snodecApplyFixedCanvas
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,107 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
+
+\begin{document}
+
+\def\majorVGap{11mm}
+\def\sideShift{39mm}
+
+\begin{tikzpicture}[
+  snodec diagram,
+  boundary block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=54mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  central block/.style={
+    draw=snodecGreen!78,
+    fill=snodecGreenSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=112mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  boundary flow/.style={
+    snodec secondary arrow,
+    draw=snodecMuted!75,
+    line width=\snodecBoxLineWidth
+  },
+  arrow label/.style={snodec arrow label}
+]
+
+% ----------------------------------------------------------------------
+% Central application / gateway process
+% ----------------------------------------------------------------------
+\node[central block] (gateway) {%
+  \textbf{\textcolor{snodecTitleGreen}{IoT application / gateway process}}\\[-0.4mm]
+  {\footnotesize shared state, policy, routing, translation, diagnostics}
+};
+
+% ----------------------------------------------------------------------
+% Upper boundary actors
+% ----------------------------------------------------------------------
+\node[boundary block, above=\majorVGap of gateway, xshift=-\sideShift] (devices) {%
+  \textbf{\textcolor{snodecTitleGray}{Field devices}}\\[-0.4mm]
+  {\footnotesize sensors, actuators, nodes}\\[-0.2mm]
+  {\footnotesize MQTT, Bluetooth, local links}
+};
+
+\node[boundary block, above=\majorVGap of gateway, xshift=\sideShift] (operator) {%
+  \textbf{\textcolor{snodecTitleGray}{Browser / operator surface}}\\[-0.4mm]
+  {\footnotesize pages, dashboards, controls}\\[-0.2mm]
+  {\footnotesize HTTP, SSE, WebSocket}
+};
+
+% ----------------------------------------------------------------------
+% Lower boundary resources
+% ----------------------------------------------------------------------
+\node[boundary block, below=\majorVGap of gateway, xshift=-\sideShift] (state) {%
+  \textbf{\textcolor{snodecTitleGray}{Persistent state}}\\[-0.4mm]
+  {\footnotesize database, measurements, history}\\[-0.2mm]
+  {\footnotesize retained view}
+};
+
+\node[boundary block, below=\majorVGap of gateway, xshift=\sideShift] (services) {%
+  \textbf{\textcolor{snodecTitleGray}{External services / brokers}}\\[-0.4mm]
+  {\footnotesize MQTT broker, APIs, cloud}\\[-0.2mm]
+  {\footnotesize other systems}
+};
+
+% ----------------------------------------------------------------------
+% Boundary interactions
+% ----------------------------------------------------------------------
+\draw[boundary flow]
+  (devices.south)
+  -- node[arrow label, left=1.5mm] {telemetry / commands}
+  (gateway.north -| devices.center);
+
+\draw[boundary flow]
+  (operator.south)
+  -- node[arrow label, right=1.5mm] {observe / control}
+  (gateway.north -| operator.center);
+
+\draw[boundary flow]
+  (state.north)
+  -- node[arrow label, left=1.5mm] {state read/write}
+  (gateway.south -| state.center);
+
+\draw[boundary flow]
+  (services.north)
+  -- node[arrow label, right=1.5mm] {publish / integrate}
+  (gateway.south -| services.center);
+
+
+\snodecApplyFixedCanvas
+
+\end{tikzpicture}
+\end{document}

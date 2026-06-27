@@ -1,0 +1,113 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,fit,backgrounds}
+
+\begin{document}
+
+\def\topY{33mm}
+\def\upperX{50mm}
+\def\upperY{23mm}
+\def\sideX{56.7mm}
+\def\lowerX{40mm}
+\def\lowerY{28mm}
+
+\begin{tikzpicture}[
+  snodec diagram,
+  system block/.style={
+    draw=snodecBlue!78,
+    fill=snodecBlueSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=48mm,
+    inner xsep=3.5mm,
+    inner ysep=2.6mm,
+    font=\sffamily\small
+  },
+  surface block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=35mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  connector/.style={snodec bus line}
+]
+
+% ----------------------------------------------------------------------
+% Central tested system.
+% ----------------------------------------------------------------------
+\node[system block] (system) {%
+  \textbf{\textcolor{snodecTitleBlue}{tested SNode.C system}}\\[-0.4mm]
+  {\footnotesize one built, configured, running system}
+};
+
+% ----------------------------------------------------------------------
+% Surrounding confidence surfaces on a virtual ellipse.
+% ----------------------------------------------------------------------
+\node[surface block] at ($(system.center)+(0,\topY)$) (package) {%
+  \textbf{\textcolor{snodecTitleGray}{package surface}}\\[-0.4mm]
+  build / install / export\\[-0.2mm]
+  exported surface is correct
+};
+
+\node[surface block] at ($(system.center)+(-\upperX,\upperY)$) (component) {%
+  \textbf{\textcolor{snodecTitleGray}{component surface}}\\[-0.4mm]
+  local contract\\[-0.2mm]
+  remains correct
+};
+
+\node[surface block] at ($(system.center)+(\upperX,\upperY)$) (deployment) {%
+  \textbf{\textcolor{snodecTitleGray}{deployment surface}}\\[-0.4mm]
+  target environment\\[-0.2mm]
+  is handled correctly
+};
+
+\node[surface block] at ($(system.center)+(-\sideX,0)$) (protocol) {%
+  \textbf{\textcolor{snodecTitleGray}{protocol surface}}\\[-0.4mm]
+  wire behavior\\[-0.2mm]
+  matches expectation
+};
+
+\node[surface block] at ($(system.center)+(\sideX,0)$) (runtime) {%
+  \textbf{\textcolor{snodecTitleGray}{runtime surface}}\\[-0.4mm]
+  events, timers, retries\\[-0.2mm]
+  behave correctly
+};
+
+\node[surface block] at ($(system.center)+(-\lowerX,-\lowerY)$) (diagnostic) {%
+  \textbf{\textcolor{snodecTitleGray}{diagnostic surface}}\\[-0.4mm]
+  failures are visible\\[-0.2mm]
+  and attributable
+};
+
+\node[surface block] at ($(system.center)+(\lowerX,-\lowerY)$) (performance) {%
+  \textbf{\textcolor{snodecTitleGray}{performance surface}}\\[-0.4mm]
+  latency / throughput\\[-0.2mm]
+  stay acceptable
+};
+
+% ----------------------------------------------------------------------
+% Straight radial connector lines.
+% Geometrically center-to-center, visually clipped by the boxes because
+% they are drawn on the background layer.
+% ----------------------------------------------------------------------
+\begin{scope}[on background layer]
+  \draw[connector] (package.center) -- (system.center);
+  \draw[connector] (component.center) -- (system.center);
+  \draw[connector] (deployment.center) -- (system.center);
+  \draw[connector] (protocol.center) -- (system.center);
+  \draw[connector] (runtime.center) -- (system.center);
+  \draw[connector] (diagnostic.center) -- (system.center);
+  \draw[connector] (performance.center) -- (system.center);
+\end{scope}
+
+
+\snodecApplyFixedCanvas
+
+\end{tikzpicture}
+\end{document}

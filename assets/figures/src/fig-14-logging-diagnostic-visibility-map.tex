@@ -1,0 +1,145 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
+
+\begin{document}
+
+\def\majorVGap{12mm}
+\def\minorVGap{5mm}
+\def\formShift{52mm}
+
+\begin{tikzpicture}[
+  snodec diagram,
+  app block/.style={
+    draw=snodecBlue!72,
+    fill=snodecBlueSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  instance block/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  connection block/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  context block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=140mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  form block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecInnerLineWidth,
+    align=center,
+    text width=44mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\footnotesize
+  },
+  diagnostic flow/.style={
+    snodec secondary arrow,
+    draw=snodecMuted!75,
+    line width=\snodecBoxLineWidth
+  },
+  form label/.style={snodec arrow label, align=center}
+]
+
+% ----------------------------------------------------------------------
+% Responsibility / visibility hierarchy.
+% ----------------------------------------------------------------------
+\node[app block] (application) {%
+  \textbf{\textcolor{snodecTitleBlue}{Application shell}}\\[-0.4mm]
+  {\footnotesize operational program boundary}\\[-0.2mm]
+  {\footnotesize config file, generated command line, logging, daemonization, quiet mode}\\[-0.2mm]
+  {\footnotesize diagnostic evidence: effective configuration, output mode, startup state}
+};
+
+\node[instance block, below=\majorVGap of application] (instance) {%
+  \textbf{\textcolor{snodecTitleGreen}{Instance scope}}\\[-0.4mm]
+  {\footnotesize configured server/client role visible at runtime}\\[-0.2mm]
+  {\footnotesize enabled/disabled state, listen/connect activation, retry scheduling}\\[-0.2mm]
+  {\footnotesize diagnostic evidence: role lifecycle, endpoint selection, activation result}
+};
+
+\node[connection block, below=\majorVGap of instance] (connection) {%
+  \textbf{\textcolor{snodecTitleOrange}{Connection scope}}\\[-0.4mm]
+  {\footnotesize one concrete peer relationship}\\[-0.2mm]
+  {\footnotesize connection name, local/remote addresses, queued/sent/read/processed data}\\[-0.2mm]
+  {\footnotesize diagnostic evidence: peer episode, counters, duration, disconnect summary}
+};
+
+\node[context block, below=\majorVGap of connection] (context) {%
+  \textbf{\textcolor{snodecTitleGray}{Context scope}}\\[-0.4mm]
+  {\footnotesize protocol behavior attached to one connection}\\[-0.2mm]
+  {\footnotesize protocol state, accepted/rejected frames, application-level events}\\[-0.2mm]
+  {\footnotesize diagnostic evidence: protocol meaning, state transitions, close decisions}
+};
+
+% ----------------------------------------------------------------------
+% Hierarchy arrows.
+% ----------------------------------------------------------------------
+\draw[diagnostic flow] (application.south) -- (instance.north);
+\draw[diagnostic flow] (instance.south) -- (connection.north);
+\draw[diagnostic flow] (connection.south) -- (context.north);
+
+% ----------------------------------------------------------------------
+% Logging forms.
+% ----------------------------------------------------------------------
+\node[form label, below=9mm of context] (formsLabel) {Logging forms};
+
+\node[form block, below=\minorVGap of formsLabel, xshift=-\formShift] (logForm) {%
+  \textbf{\textcolor{snodecTitleGray}{\texttt{LOG(level)}}}\\[-0.4mm]
+  ordinary lifecycle\\[-0.2mm]
+  and severity
+};
+
+\node[form block, below=\minorVGap of formsLabel] (plogForm) {%
+  \textbf{\textcolor{snodecTitleGray}{\texttt{PLOG(level)}}}\\[-0.4mm]
+  lifecycle plus captured\\[-0.2mm]
+  system-error context
+};
+
+\node[form block, below=\minorVGap of formsLabel, xshift=\formShift] (vlogForm) {%
+  \textbf{\textcolor{snodecTitleGray}{\texttt{VLOG(n)}}}\\[-0.4mm]
+  optional diagnostic\\[-0.2mm]
+  depth
+};
+
+% ----------------------------------------------------------------------
+% Outer boundary.
+% ----------------------------------------------------------------------
+
+
+\snodecApplyFixedCanvas
+
+\end{tikzpicture}
+\end{document}

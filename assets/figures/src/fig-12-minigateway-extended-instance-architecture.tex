@@ -1,0 +1,140 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
+
+\begin{document}
+
+\def\majorVGap{11mm}
+\def\sideShift{43mm}
+
+\begin{tikzpicture}[
+  snodec diagram,
+  server block/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=130mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  core block/.style={
+    draw=snodecBlue!75,
+    fill=snodecBlueSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=130mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  input block/.style={
+    draw=snodecGreen!70,
+    fill=snodecGreenSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=66mm,
+    inner xsep=1.3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  mqtt block/.style={
+    draw=snodecOrange!75,
+    fill=snodecOrangeSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=66mm,
+    inner xsep=1.3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  interaction flow/.style={
+    snodec secondary arrow,
+    draw=snodecMuted!75,
+    line width=\snodecBoxLineWidth
+  },
+  arrow label/.style={snodec arrow label}
+]
+
+% ----------------------------------------------------------------------
+% HTTP / Express role.
+% ----------------------------------------------------------------------
+\node[server block] (webapp) {%
+  \textbf{\textcolor{snodecTitleGreen}{\texttt{express::legacy::in::WebApp}}}\\[-0.4mm]
+  {\footnotesize HTTP/Express server instance}\\[-0.2mm]
+  {\footnotesize routes: \texttt{/health}, \texttt{/status}, \texttt{/events}, \texttt{/simulate}}
+};
+
+% ----------------------------------------------------------------------
+% Shared application core.
+% ----------------------------------------------------------------------
+\node[core block, below=\majorVGap of webapp] (core) {%
+  \textbf{\textcolor{snodecTitleBlue}{Shared application core}}\\[-0.4mm]
+  {\footnotesize \texttt{acceptMeasurement(...)} / \texttt{MeasurementState} / \texttt{MeasurementBus}}
+};
+
+% ----------------------------------------------------------------------
+% Bottom roles / instances.
+% ----------------------------------------------------------------------
+\node[input block, below=\majorVGap of core, xshift=-\sideShift] (unixInput) {%
+  \textbf{\textcolor{snodecTitleGreen}{\texttt{net::un::stream::legacy::SocketServer}}}\\[-0.4mm]
+  {\footnotesize measurement-input server instance}\\[-0.2mm]
+  {\footnotesize \texttt{MeasurementUnixSocketContextFactory}}\\[-0.2mm]
+  {\footnotesize \texttt{MeasurementUnixSocketContext}}
+};
+
+\node[mqtt block, below=\majorVGap of core, xshift=\sideShift] (mqttUplink) {%
+  \textbf{\textcolor{snodecTitleOrange}{\texttt{net::in::stream::legacy::SocketClient}}}\\[-0.4mm]
+  {\footnotesize mqtt-uplink client instance}\\[-0.2mm]
+  {\footnotesize \texttt{MiniGatewaySocketContextFactory}}\\[-0.2mm]
+  {\footnotesize \texttt{MiniGatewayMqtt}}
+};
+
+% ----------------------------------------------------------------------
+% HTTP/core relationships.
+% ----------------------------------------------------------------------
+\coordinate (simulateStart) at (webapp.south -| unixInput.center);
+\coordinate (simulateEnd)   at (core.north -| unixInput.center);
+
+\coordinate (statusStart) at (core.north -| mqttUplink.center);
+\coordinate (statusEnd)   at (webapp.south -| mqttUplink.center);
+
+\draw[interaction flow]
+  (simulateStart)
+  -- node[arrow label, left=1.3mm] {\texttt{/simulate}}
+  (simulateEnd);
+
+\draw[interaction flow]
+  (statusStart)
+  -- node[arrow label, right=1.3mm] {\texttt{/status}, \texttt{/events}}
+  (statusEnd);
+
+% ----------------------------------------------------------------------
+% Bottom-role relationships.
+% ----------------------------------------------------------------------
+\coordinate (measurementStart) at (unixInput.north);
+\coordinate (measurementEnd)   at (core.south -| unixInput.center);
+
+\coordinate (subscriberStart) at (core.south -| mqttUplink.center);
+\coordinate (subscriberEnd)   at (mqttUplink.north);
+
+\draw[interaction flow]
+  (measurementStart)
+  -- node[arrow label, left=1.3mm] {parsed measurement}
+  (measurementEnd);
+
+\draw[interaction flow]
+  (subscriberStart)
+  -- node[arrow label, right=1.3mm] {bus subscriber}
+  (subscriberEnd);
+
+
+\snodecApplyFixedCanvas
+
+\end{tikzpicture}
+\end{document}

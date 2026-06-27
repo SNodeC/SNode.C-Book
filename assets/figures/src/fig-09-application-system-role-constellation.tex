@@ -1,0 +1,107 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{positioning,calc,arrows.meta,fit,backgrounds}
+
+\begin{document}
+
+\def\majorVGap{11mm}
+\def\sideShift{39mm}
+
+\begin{tikzpicture}[
+  snodec diagram,
+  boundary block/.style={
+    draw=snodecRule!85,
+    fill=snodecGraySoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=54mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  process block/.style={
+    draw=snodecGreen!78,
+    fill=snodecGreenSoft,
+    rounded corners=\snodecBoxCorner,
+    line width=\snodecBoxLineWidth,
+    align=center,
+    text width=112mm,
+    inner xsep=3mm,
+    inner ysep=2.4mm,
+    font=\sffamily\small
+  },
+  boundary flow/.style={
+    snodec secondary arrow,
+    draw=snodecMuted!75,
+    line width=\snodecBoxLineWidth
+  },
+  arrow label/.style={snodec arrow label}
+]
+
+% ----------------------------------------------------------------------
+% Central running application process
+% ----------------------------------------------------------------------
+\node[process block] (process) {%
+  \textbf{\textcolor{snodecTitleGreen}{Running application process}}\\[-0.4mm]
+  {\footnotesize event loop, registered instances, connections, contexts, state}
+};
+
+% ----------------------------------------------------------------------
+% Top boundary roles
+% ----------------------------------------------------------------------
+\node[boundary block, above=\majorVGap of process, xshift=-\sideShift] (protocols) {%
+  \textbf{\textcolor{snodecTitleGray}{Protocol-facing boundaries}}\\[-0.4mm]
+  {\footnotesize servers, clients, bridges}\\[-0.2mm]
+  {\footnotesize HTTP, MQTT, WebSocket, etc.}
+};
+
+\node[boundary block, above=\majorVGap of process, xshift=\sideShift] (configuration) {%
+  \textbf{\textcolor{snodecTitleGray}{Configuration surface}}\\[-0.4mm]
+  {\footnotesize CLI options, instance names}\\[-0.2mm]
+  {\footnotesize files, defaults, profiles}
+};
+
+% ----------------------------------------------------------------------
+% Bottom system concerns
+% ----------------------------------------------------------------------
+\node[boundary block, below=\majorVGap of process, xshift=-\sideShift] (visibility) {%
+  \textbf{\textcolor{snodecTitleGray}{Operational visibility}}\\[-0.4mm]
+  {\footnotesize logging, diagnostics}\\[-0.2mm]
+  {\footnotesize counters, lifecycle}
+};
+
+\node[boundary block, below=\majorVGap of process, xshift=\sideShift] (deployment) {%
+  \textbf{\textcolor{snodecTitleGray}{Deployment identity}}\\[-0.4mm]
+  {\footnotesize executable, service}\\[-0.2mm]
+  {\footnotesize package, host}
+};
+
+% ----------------------------------------------------------------------
+% Relationships
+% ----------------------------------------------------------------------
+\draw[boundary flow]
+  (protocols.south)
+  --
+  (process.north -| protocols.center);
+
+\draw[boundary flow]
+  (configuration.south)
+  --
+  (process.north -| configuration.center);
+
+\draw[boundary flow]
+  (visibility.north)
+  --
+  (process.south -| visibility.center);
+
+\draw[boundary flow]
+  (deployment.north)
+  --
+  (process.south -| deployment.center);
+
+
+\snodecApplyFixedCanvas
+
+\end{tikzpicture}
+\end{document}
