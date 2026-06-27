@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(snodec-book NONE)
+project(SNodeCBook NONE)
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/production/cmake/SNodeCBookPaths.cmake")
 include("${CMAKE_CURRENT_SOURCE_DIR}/production/cmake/SNodeCBookTools.cmake")
