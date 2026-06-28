@@ -101,3 +101,4 @@ __pycache__/
 venv/
 /.qtcreator/
 /assets/figures/pdf/
+/snode.c/
