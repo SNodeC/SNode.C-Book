@@ -9,9 +9,10 @@
   group label/.style={snodec boundary title, font=\sffamily\bfseries\footnotesize, text=snodecTitleBlue, inner xsep=1.8pt, inner ysep=0.8pt},
   role/.style={snodec application box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=39mm, minimum height=11mm, inner xsep=1.0mm, inner ysep=0.9mm, font=\sffamily\scriptsize},
   mqtt/.style={snodec protocol box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=39mm, minimum height=11mm, inner xsep=1.0mm, inner ysep=0.9mm, font=\sffamily\scriptsize},
-  model/.style={snodec runtime box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=40mm, minimum height=14mm, inner xsep=1.2mm, inner ysep=1.2mm, font=\sffamily\scriptsize},
-  util/.style={snodec inner box, rounded corners=\snodecBoxCorner, line width=\snodecInnerLineWidth, minimum width=33mm, minimum height=9mm, inner xsep=0.9mm, inner ysep=0.8mm, font=\sffamily\scriptsize},
-  support/.style={snodec neutral box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=122mm, minimum height=13.5mm, inner xsep=1.2mm, inner ysep=1.0mm, font=\sffamily\scriptsize},
+  modelshell/.style={snodec runtime box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=40mm, minimum height=41.6mm, inner xsep=1.2mm, inner ysep=1.2mm, fill=snodecBlueSoft!35!white, draw=snodecBlue!72},
+  supporttype/.style={snodec inner box, rounded corners=\snodecBoxCorner, line width=\snodecInnerLineWidth, minimum width=33mm, minimum height=8mm, inner xsep=0.9mm, inner ysep=0.45mm, font=\sffamily\scriptsize, fill=snodecGraySoft!72!white, draw=snodecRule!78},
+  modelcore/.style={snodec runtime box, rounded corners=\snodecBoxCorner, line width=\snodecInnerLineWidth, minimum width=33mm, minimum height=12mm, inner xsep=0.9mm, inner ysep=0.55mm, font=\sffamily\scriptsize, fill=snodecBlueSoft, draw=snodecBlue!78},
+  support/.style={snodec neutral box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=146mm, minimum height=13.5mm, inner xsep=1.2mm, inner ysep=1.0mm, font=\sffamily\scriptsize},
   flow/.style={snodec main arrow},
   supportflow/.style={snodec return arrow}
 ]
@@ -20,58 +21,58 @@
 \path[use as bounding box] (-80,-45) rectangle (80,29);
 
 % Group boundaries use the shared dashed boundary style.
-\draw[snodec boundary] (-76,-24) rectangle (-27,25);
-\node[group label] at (-51.5,25) {input roles};
+\draw[snodec boundary] (-79,-24) rectangle (-30,25);
+\node[group label] at (-54.5,25) {input roles};
 
-\draw[snodec boundary] (-24,-24) rectangle (24,25);
+\draw[snodec boundary] (-25,-24) rectangle (25,25);
 \node[group label] at (0,25) {shared model};
 
-\draw[snodec boundary] (27,-24) rectangle (76,25);
-\node[group label] at (51.5,25) {observation / integration roles};
-
-% Center model group.
-\node[util] (codec) at (0,15.3) {\texttt{MeasurementJsonCodec}\\[-0.2mm]JSON boundary utility};
-\node[model] (model) at (0,0) {\textbf{\textcolor{snodecTitleBlue}{\texttt{MeasurementModel}}}\\[-0.3mm]shared application state\\[-0.2mm]latest value + subscribers};
-\node[util] (value) at (0,-15.3) {\texttt{Measurement}\\[-0.2mm]domain value};
+\draw[snodec boundary] (30,-24) rectangle (79,25);
+\node[group label] at (54.5,25) {observation / integration roles};
 
 % Input roles.
-\node[role] (httpSim) at (-51.5,15.3) {\textbf{HTTP input}\\[-0.25mm]\texttt{/simulate}\\[-0.25mm]\texttt{MiniGatewayWeb}};
-\node[mqtt] (mqttIn) at (-51.5,0) {\textbf{MQTT input}\\[-0.25mm]broker subscription\\[-0.25mm]\texttt{MiniGatewayMqtt}};
-\node[role] (unixIn) at (-51.5,-15.3) {\textbf{Unix-domain input}\\[-0.25mm]local producer role\\[-0.25mm]\texttt{MeasurementUnixSocketContext}};
+\node[role] (httpSim) at (-54.5,15.3) {\textbf{HTTP input}\\[-0.25mm]\texttt{/simulate}\\[-0.25mm]\texttt{MiniGatewayWeb}};
+\node[mqtt] (mqttIn) at (-54.5,0) {\textbf{MQTT input}\\[-0.25mm]broker subscription\\[-0.25mm]\texttt{MiniGatewayMqtt}};
+\node[role] (unixIn) at (-54.5,-15.3) {\textbf{Unix-domain input}\\[-0.25mm]local producer role\\[-0.25mm]\texttt{MeasurementUnixSocketContext}};
 
 % Observation and integration roles.
-\node[role] (httpStatus) at (51.5,15.3) {\textbf{HTTP observation}\\[-0.25mm]\texttt{/status} snapshot\\[-0.25mm]\texttt{MiniGatewayWeb}};
-\node[role] (sseEvents) at (51.5,0) {\textbf{SSE observation}\\[-0.25mm]\texttt{/events} live stream\\[-0.25mm]model subscriber};
-\node[mqtt] (mqttOut) at (51.5,-15.3) {\textbf{MQTT output}\\[-0.25mm]broker publication\\[-0.25mm]\texttt{MiniGatewayMqtt}};
+\node[role] (httpStatus) at (54.5,15.3) {\textbf{HTTP observation}\\[-0.25mm]\texttt{/status} snapshot\\[-0.25mm]\texttt{MiniGatewayWeb}};
+\node[role] (sseEvents) at (54.5,0) {\textbf{SSE observation}\\[-0.25mm]\texttt{/events} live stream\\[-0.25mm]model subscriber};
+\node[mqtt] (mqttOut) at (54.5,-15.3) {\textbf{MQTT output}\\[-0.25mm]broker publication\\[-0.25mm]\texttt{MiniGatewayMqtt}};
+
+% Shared-model area: one quiet grouping box containing three application-level types.
+% The outer solid box keeps the same height as before; spacing is created by shorter
+% inner boxes and wider gaps between them.
+\node[modelshell] (modelbox) at (0,0) {};
+\node[supporttype] (codec) at (0,12.45) {\texttt{MeasurementJsonCodec}\\[-0.2mm]JSON boundary utility};
+\node[modelcore] (modelcore) at (0,0) {\textbf{\textcolor{snodecTitleBlue}{\texttt{MeasurementModel}}}\\[-0.3mm]shared application state\\[-0.2mm]update + snapshot API};
+\node[supporttype] (value) at (0,-12.45) {\texttt{Measurement}\\[-0.2mm]domain value};
 
 % Bottom support band, kept close enough to the role groups while leaving visible separation.
 \node[support] (support) at (0,-36.5) {\textbf{Protocol adapters and support objects}\\[-0.25mm]\texttt{MiniGatewayMqttSocketContextFactory}\\[-0.25mm]\texttt{MeasurementUnixSocketContextFactory}\quad\texttt{SocketStateReporter}};
 
-% Distributed model-border anchor points.
-\coordinate (modelLWTop) at ($(model.west)+(0,4.4mm)$);
-\coordinate (modelLWMid) at (model.west);
-\coordinate (modelLWBot) at ($(model.west)+(0,-4.4mm)$);
-\coordinate (modelRETop) at ($(model.east)+(0,4.4mm)$);
-\coordinate (modelREMid) at (model.east);
-\coordinate (modelREBot) at ($(model.east)+(0,-4.4mm)$);
+% Model-border anchor points aligned horizontally with the role rows.
+\coordinate (modelLWTop) at ($(modelbox.west |- httpSim.center)$);
+\coordinate (modelLWMid) at ($(modelbox.west |- mqttIn.center)$);
+\coordinate (modelLWBot) at ($(modelbox.west |- unixIn.center)$);
+\coordinate (modelRETop) at ($(modelbox.east |- httpStatus.center)$);
+\coordinate (modelREMid) at ($(modelbox.east |- sseEvents.center)$);
+\coordinate (modelREBot) at ($(modelbox.east |- mqttOut.center)$);
 
-% Main data/control flow arrows.
-\draw[flow] (httpSim.east) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, sloped, above] {accept} (modelLWTop);
+% Main data/control flow arrows, all horizontal.
+\draw[flow] (httpSim.east) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, above] {accept} (modelLWTop);
 \draw[flow] (mqttIn.east) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, above] {accept} (modelLWMid);
-\draw[flow] (unixIn.east) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, sloped, below] {accept} (modelLWBot);
+\draw[flow] (unixIn.east) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, above] {accept} (modelLWBot);
 
-\draw[flow] (modelRETop) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, sloped, above] {read} (httpStatus.west);
+\draw[flow] (modelRETop) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, above] {read} (httpStatus.west);
 \draw[flow] (modelREMid) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, above] {notify} (sseEvents.west);
-\draw[flow] (modelREBot) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, sloped, below] {publish} (mqttOut.west);
-
-% Utility support inside the shared model group.
-\draw[supportflow] (codec.south) -- (model.north);
-\draw[supportflow] (model.south) -- (value.north);
+\draw[flow] (modelREBot) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, above] {publish} (mqttOut.west);
 
 % Support arrows from the adapter/support band. They stop outside the dashed role groups.
-\draw[supportflow] (-45,-29.75) -- (-45,-24.8);
+% The outer arrows are vertical and aligned to the horizontal centers of the role-group boxes.
+\draw[supportflow] (-54.5,-29.75) -- (-54.5,-24.8);
 \draw[supportflow] (0,-29.75) -- (0,-24.8);
-\draw[supportflow] (45,-29.75) -- (45,-24.8);
+\draw[supportflow] (54.5,-29.75) -- (54.5,-24.8);
 
 \end{tikzpicture}
 \end{document}
