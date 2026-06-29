@@ -32,7 +32,7 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `companion/examples/` — complete source trees for compact chapter examples and the guided MiniGateway project.
 - `review/verification/` — non-manuscript verification notes for source/package checks, including the machine-readable SNode.C source baseline.
 
-The current manuscript contains all planned front matter, chapters, an epilogue, and back matter. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `companion/examples/` for the HTTP-upgrade, SSE, WebSocket echo server/client subprotocol, line-protocol server/client, MQTT-role, and MariaDB examples. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
+The current manuscript contains all planned front matter, chapters, an epilogue, and back matter. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `companion/examples/` in source trees named `HttpUpgrade-Server`, `HttpUpgrade-Client`, `SSE-Server`, `SSE-EventSource-Client`, `WebSocket-Echo-ServerSubprotocol`, `WebSocket-Echo-ClientSubprotocol`, `LineProtocol-Server`, `LineProtocol-Client`, `MQTT-ClientRole`, and `MariaDB-Minimal`. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
 
 ```text
 companion/examples/MiniGateway
@@ -52,9 +52,9 @@ The compact source trees in `companion/examples/` are intended to be complete bu
 
 `companion/examples/MiniGateway` is the authoritative source tree for Chapter 37. `companion/examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
 
-Both MiniGateway versions are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C source snapshot recorded in `source-baseline/SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
+MiniGateway and MiniGateway Extended are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C source snapshot recorded in `source-baseline/SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
 
-The current package records author-confirmed local verification history for the companion-example set in `review/verification/examples-aggregate-build-verification.md`. The example sources and matching manuscript listings were later aligned to single-exit style and are now marked for fresh author re-check. MiniGateway-specific details are retained in `review/verification/minigateway-step8-author-verification.md`. The verification notes target the SNode.C `v1.0.2` release tag and its exact pinned commit. These files are package evidence, not manuscript prose, and they are not presented as independent continuous-integration evidence.
+The current package records author-confirmed local verification history for the companion-example set in `review/verification/examples-aggregate-build-verification.md`. MiniGateway-specific details are retained in `review/verification/minigateway-step8-author-verification.md`. The verification notes target the SNode.C `v1.0.2` release tag and its exact pinned commit. These files are package evidence, not manuscript prose, and they are not presented as independent continuous-integration evidence.
 
 ## Heading convention
 

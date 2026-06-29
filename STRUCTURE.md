@@ -89,7 +89,7 @@ The publisher-facing proposal material now also includes a separate evidence she
 ## Part XII — Building a MiniGateway Application
 
 - 37. Building MiniGateway — **present**
-- 38. Extending, Testing, and Deploying MiniGateway — **present**
+- 38. Extending MiniGateway with a New Network Role — **present**
 
 ## Epilogue
 

@@ -37,7 +37,7 @@ set(SNODEC_BOOK_EXAMPLE_TARGETS
     line-protocol-client
     mqtt-client-role
     mariadb-minimal
-    minigateway-base
+    minigateway
     minigateway-extended)
 
 add_custom_target(all-examples DEPENDS ${SNODEC_BOOK_EXAMPLE_TARGETS})

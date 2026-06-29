@@ -207,7 +207,7 @@ The book uses recurring teaching patterns:
 ### Part XII — Building a MiniGateway Application
 
 37. Building MiniGateway
-38. Extending, Testing, and Deploying MiniGateway
+38. Extending MiniGateway with a New Network Role
 
 ### Epilogue
 
@@ -215,7 +215,7 @@ What to Take Away from SNode.C
 
 ## Companion source material
 
-The package contains compact source trees for selected HTTP-upgrade, SSE, WebSocket echo server/client subprotocol, MQTT-role, and MariaDB examples. These examples keep the printed chapter fragments focused while giving readers complete CMake-based source directories that can be built against an installed SNode.C package.
+The package contains compact source trees named `HttpUpgrade-Server`, `HttpUpgrade-Client`, `SSE-Server`, `SSE-EventSource-Client`, `WebSocket-Echo-ServerSubprotocol`, `WebSocket-Echo-ClientSubprotocol`, `LineProtocol-Server`, `LineProtocol-Client`, `MQTT-ClientRole`, and `MariaDB-Minimal`. These examples keep the printed chapter fragments focused while giving readers complete CMake-based source directories that can be built against an installed SNode.C package.
 
 The final project source trees are:
 

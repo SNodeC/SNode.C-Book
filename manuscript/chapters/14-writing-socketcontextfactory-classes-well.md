@@ -571,7 +571,7 @@ This can be used for simple role distinctions, such as server-side versus client
 
 The important point in this chapter is still the mechanism, not the full pattern catalogue.
 
-A factory does not implement MVC, publish/subscribe, or gateway behavior by itself. It creates the correctly preconfigured context objects that participate in such patterns.
+A factory does not implement publisher/subscriber, gateway, adapter, or command/event architecture by itself. It creates the correctly preconfigured context objects that can take those roles when the application composes them around state, configuration, and protocol boundaries.
 
 #### Context-type-selecting factories
 

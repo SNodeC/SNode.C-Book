@@ -451,9 +451,7 @@ same endpoint role
           -> lower family selected by application-side handle and configuration
 ```
 
-The broader discussion of higher-level communication patterns belongs later.
-
-Later chapters return to patterns such as publisher/subscriber, request/response, command/event, gateways, adapters, bridges, and protocol translators. Here the narrower point is lower-family transfer: a factory can keep endpoint construction stable while the outer communication family changes.
+Later chapters, especially the MiniGateway part, return to publisher/subscriber, request/response, command/event, gateway, adapter, bridge, and protocol-translator roles. Here the narrower point is lower-family transfer: a factory can keep endpoint construction stable while the outer communication family changes.
 
 ### Same protocol shape does not mean same deployment
 

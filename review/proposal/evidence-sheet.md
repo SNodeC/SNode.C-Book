@@ -68,7 +68,7 @@ MiniGateway is evidence of pedagogical completeness and architectural applicabil
 
 ### Companion examples
 
-The package also contains companion source trees for selected protocol and persistence examples, including HTTP upgrade, SSE, WebSocket echo subprotocol examples, MQTT client role, and MariaDB. These examples support the reader promise and reduce the risk that the manuscript is only prose without buildable companion material.
+The package also contains companion source trees named `HttpUpgrade-Server`, `HttpUpgrade-Client`, `SSE-Server`, `SSE-EventSource-Client`, `WebSocket-Echo-ServerSubprotocol`, `WebSocket-Echo-ClientSubprotocol`, `LineProtocol-Server`, `LineProtocol-Client`, `MQTT-ClientRole`, and `MariaDB-Minimal`. These examples support the reader promise and reduce the risk that the manuscript is only prose without buildable companion material.
 
 ## Teaching-context evidence
 

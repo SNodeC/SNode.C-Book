@@ -26,14 +26,14 @@ an installed SNode.C package:
 ```bash
 cmake -S <example-dir> -B <example-dir>/build \
     -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec
-cmake --build <example-dir>/build
+cmake --build <example-dir>/build --target <example-target>
 ```
 
 The `companion/examples/` directory also contains an aggregate `CMakeLists.txt` that
 configures, builds, and installs/deploys all examples together. The aggregate
 build-status note is recorded in `../../review/verification/examples-aggregate-build-verification.md`;
-it records the last reported aggregate build and any later example additions
-that still require a fresh rebuild/redeploy before final release:
+it records the author-confirmed local configure/build/deploy verification status
+for the companion example set:
 
 ```bash
 cmake -S companion/examples -B build/examples \
@@ -62,11 +62,11 @@ outside that compact example.
 The final project chapters use two larger source trees:
 
 ```text
-companion/examples/MiniGateway-Base
+companion/examples/MiniGateway
 companion/examples/MiniGateway-Extended
 ```
 
-These are the source-of-truth examples for Chapters 37 and 38.  They are included
-in the aggregate build as `minigateway-base` and `minigateway-extended`; their
-individual deployment targets are `deploy-minigateway-base` and
+These are the source-of-truth examples for Chapters 37 and 38. They are included
+in the aggregate build as `minigateway` and `minigateway-extended`; their
+individual deployment targets are `deploy-minigateway` and
 `deploy-minigateway-extended`.

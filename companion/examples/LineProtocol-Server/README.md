@@ -24,12 +24,20 @@ QUIT    -> close the connection
 other   -> ERR unknown command
 ```
 
-Build the example against an installed SNode.C package:
+Build with an installed SNode.C package:
 
 ```bash
-cmake -S companion/examples/LineProtocol-Server -B build/line-protocol-server \
-    -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec
-cmake --build build/line-protocol-server
+cmake -S . -B build -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec
+cmake --build build --target line-protocol-server
 ```
+
+Install/deploy this example into the configured install prefix:
+
+```bash
+cmake --build build --target deploy-line-protocol-server
+```
+
+Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
+deployment prefix.
 
 Run the server before starting `LineProtocol-Client`.

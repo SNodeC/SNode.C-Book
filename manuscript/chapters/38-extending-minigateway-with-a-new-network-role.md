@@ -204,8 +204,7 @@ The server startup files play the same role for Unix-domain input that `MiniGate
 The header defines the concrete server alias and exposes `startMeasurementSocketServer(...)`. The model again travels into the role through a reference wrapper.
 
 ```cpp
-#ifndef MINIGATEWAY_MEASUREMENT_UNIX_SOCKET_SERVER_H
-#define MINIGATEWAY_MEASUREMENT_UNIX_SOCKET_SERVER_H
+#pragma once
 
 #include "MeasurementModel.h"
 #include "MeasurementUnixSocketContextFactory.h"
@@ -221,8 +220,6 @@ namespace minigateway {
     MeasurementSocketServer startMeasurementSocketServer(MeasurementModel& measurementModel);
 
 } // namespace minigateway
-
-#endif // MINIGATEWAY_MEASUREMENT_UNIX_SOCKET_SERVER_H
 ```
 
 #### `MeasurementUnixSocketServer.cpp`
@@ -261,8 +258,7 @@ The factory receives the same `MeasurementModel` instance that `main()` passed t
 The factory declaration names the context type and stores the model reference used by new connections.
 
 ```cpp
-#ifndef MINIGATEWAY_MEASUREMENT_UNIX_SOCKET_CONTEXT_FACTORY_H
-#define MINIGATEWAY_MEASUREMENT_UNIX_SOCKET_CONTEXT_FACTORY_H
+#pragma once
 
 #include "MeasurementModel.h"
 
@@ -282,8 +278,6 @@ namespace minigateway {
     };
 
 } // namespace minigateway
-
-#endif // MINIGATEWAY_MEASUREMENT_UNIX_SOCKET_CONTEXT_FACTORY_H
 ```
 
 #### `MeasurementUnixSocketContextFactory.cpp`
@@ -329,8 +323,7 @@ The context does not update the web role. It does not publish MQTT messages. It 
 The header shows the stream-context boundary. The context owns receive buffering and a reference to the shared model.
 
 ```cpp
-#ifndef MINIGATEWAY_MEASUREMENT_UNIX_SOCKET_CONTEXT_H
-#define MINIGATEWAY_MEASUREMENT_UNIX_SOCKET_CONTEXT_H
+#pragma once
 
 #include "MeasurementModel.h"
 
@@ -357,8 +350,6 @@ namespace minigateway {
     };
 
 } // namespace minigateway
-
-#endif // MINIGATEWAY_MEASUREMENT_UNIX_SOCKET_CONTEXT_H
 ```
 
 #### `MeasurementUnixSocketContext.cpp`
@@ -598,7 +589,7 @@ new concern
           -> same observers and output adapters
 ```
 
-That is the architectural payoff of the MiniGateway part. The SNode.C reactor runtime dispatches events, but the application decides how those events are composed into a clean design. Here the composition produces a small gateway with input roles, read views, live observers, and output adapters, all centered on one protocol-independent model.
+That is the architectural payoff of the MiniGateway part. The SNode.C reactor runtime dispatches events, but the application decides how those events are composed into a clean design. The recurring roles remain visible because the composition stays in application code: input roles, read views, live observers, and output adapters all remain centered on one protocol-independent model.
 
 This final technical example should therefore be read as more than a Unix-domain socket exercise. It closes the loop opened by the early runtime chapters, the factory chapters, the web chapters, the MQTT chapters, the configuration chapters, and the architectural-judgment chapters. The same rules that kept small examples understandable are now used to keep a complete multi-protocol application understandable.
 
