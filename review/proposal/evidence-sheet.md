@@ -58,11 +58,11 @@ MQTTSuite gives the book a concrete applied context beyond the framework itself.
 The book package contains two MiniGateway source trees:
 
 ```text
-companion/examples/MiniGateway-Base
+companion/examples/MiniGateway
 companion/examples/MiniGateway-Extended
 ```
 
-They support Chapters 37 and 38 and demonstrate a small SNode.C application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an added Unix-domain input boundary in the extended version.
+They support Chapters 37 and 38 and demonstrate a small SNode.C application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an added Unix-domain input boundary in MiniGateway Extended.
 
 MiniGateway is evidence of pedagogical completeness and architectural applicability inside the manuscript package. It is not presented as external market adoption.
 

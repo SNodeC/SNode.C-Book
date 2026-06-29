@@ -7,14 +7,18 @@
 
 namespace minigateway {
 
-    class MeasurementBus {
+    class MeasurementModel {
     public:
         using Listener = std::function<bool(const Measurement&)>;
 
+        Measurement current() const;
+        Measurement accept(Measurement measurement);
         void subscribe(Listener listener);
-        void publish(const Measurement& measurement);
 
     private:
+        void publish(const Measurement& measurement);
+
+        Measurement currentMeasurement;
         std::list<Listener> listeners;
     };
 

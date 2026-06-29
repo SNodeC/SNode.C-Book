@@ -1,0 +1,1881 @@
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/README.md name_cleanup_work2/README.md
+--- name_cleanup_latest/README.md	2026-06-28 18:08:30.000000000 +0000
++++ name_cleanup_work2/README.md	2026-06-28 19:11:44.028351017 +0000
+@@ -35,7 +35,7 @@
+ The current manuscript contains all planned front matter, chapters, an epilogue, and back matter. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `companion/examples/` for the HTTP-upgrade, SSE, WebSocket echo server/client subprotocol, line-protocol server/client, MQTT-role, and MariaDB examples. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
+ 
+ ```text
+-companion/examples/MiniGateway-Base
++companion/examples/MiniGateway
+ companion/examples/MiniGateway-Extended
+ ```
+ 
+@@ -50,7 +50,7 @@
+ 
+ The compact source trees in `companion/examples/` are intended to be complete buildable versions of the shorter manuscript fragments. The printed book should refer to them as electronic companion material rather than as printed-book contents. They are teaching examples, not replacements for the source snippets in the chapters. The directory `companion/examples/` also contains an aggregate CMake project that configures, builds, and installs/deploys all companion examples together.
+ 
+-`companion/examples/MiniGateway-Base` is the authoritative source tree for Chapter 37. `companion/examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
++`companion/examples/MiniGateway` is the authoritative source tree for Chapter 37. `companion/examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
+ 
+ Both MiniGateway versions are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C source snapshot recorded in `source-baseline/SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
+ 
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/STRUCTURE.md name_cleanup_work2/STRUCTURE.md
+--- name_cleanup_latest/STRUCTURE.md	2026-06-28 18:08:31.000000000 +0000
++++ name_cleanup_work2/STRUCTURE.md	2026-06-28 19:12:31.352972018 +0000
+@@ -122,11 +122,11 @@
+ The final technical part uses two larger source trees as source-of-truth examples:
+ 
+ ```text
+-companion/examples/MiniGateway-Base
++companion/examples/MiniGateway
+ companion/examples/MiniGateway-Extended
+ ```
+ 
+-Chapter 37 uses the base version. Chapter 38 uses the extended version to show how a SNode.C application can be extended without disturbing existing protocol surfaces.
++Chapter 37 builds MiniGateway. Chapter 38 continues with MiniGateway Extended to show how a SNode.C application can be extended without disturbing existing protocol surfaces.
+ 
+ 
+ ## Build-system structure
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/CMakeLists.txt name_cleanup_work2/companion/examples/CMakeLists.txt
+--- name_cleanup_latest/companion/examples/CMakeLists.txt	2026-06-27 16:14:50.000000000 +0000
++++ name_cleanup_work2/companion/examples/CMakeLists.txt	2026-06-28 19:11:44.031362515 +0000
+@@ -19,7 +19,7 @@
+     LineProtocol-Client
+     MQTT-ClientRole
+     MariaDB-Minimal
+-    MiniGateway-Base
++    MiniGateway
+     MiniGateway-Extended)
+ 
+ foreach(EXAMPLE_DIR IN LISTS SNODEC_BOOK_EXAMPLE_DIRS)
+@@ -37,7 +37,7 @@
+     line-protocol-client
+     mqtt-client-role
+     mariadb-minimal
+-    minigateway-base
++    minigateway
+     minigateway-extended)
+ 
+ add_custom_target(all-examples DEPENDS ${SNODEC_BOOK_EXAMPLE_TARGETS})
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/CMakeLists.txt name_cleanup_work2/companion/examples/MiniGateway/CMakeLists.txt
+--- name_cleanup_latest/companion/examples/MiniGateway/CMakeLists.txt	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/CMakeLists.txt	2026-06-28 19:11:44.037280360 +0000
+@@ -0,0 +1,59 @@
++cmake_minimum_required(VERSION 3.14)
++
++project(MiniGateway LANGUAGES CXX)
++
++set(CMAKE_CXX_STANDARD 20)
++set(CMAKE_CXX_STANDARD_REQUIRED ON)
++set(CMAKE_CXX_EXTENSIONS OFF)
++
++include(GNUInstallDirs)
++
++find_package(nlohmann_json 3.7.0 REQUIRED)
++
++find_package(
++    snodec 1.0.0 REQUIRED COMPONENTS http-server-express-legacy-in
++                                     net-in-stream-legacy mqtt-client
++)
++
++add_executable(
++    minigateway
++    main.cpp
++    MeasurementModel.cpp
++    MeasurementJsonCodec.cpp
++    MiniGatewayWeb.cpp
++    MiniGatewayMqttClient.cpp
++    MiniGatewayMqtt.cpp
++    MiniGatewayMqttSocketContextFactory.cpp
++    SocketStateReporter.cpp
++    ConfigSections.cpp
++    Measurement.h
++    MeasurementModel.h
++    MeasurementJsonCodec.h
++    MiniGatewayWeb.h
++    MiniGatewayMqttClient.h
++    MiniGatewayMqtt.h
++    MiniGatewayMqttSocketContextFactory.h
++    SocketStateReporter.h
++    ConfigSections.h
++)
++
++target_link_libraries(
++    minigateway
++    PRIVATE snodec::http-server-express-legacy-in snodec::net-in-stream-legacy
++            snodec::mqtt-client nlohmann_json::nlohmann_json
++)
++
++
++install(
++    TARGETS minigateway
++    COMPONENT MiniGateway
++    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++)
++
++add_custom_target(
++    deploy-minigateway
++    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGateway
++    DEPENDS minigateway
++    COMMENT "Installing minigateway"
++    VERBATIM
++)
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/ConfigSections.cpp name_cleanup_work2/companion/examples/MiniGateway/ConfigSections.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway/ConfigSections.cpp	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/ConfigSections.cpp	2026-06-28 16:28:39.000000000 +0000
+@@ -0,0 +1,49 @@
++#include "ConfigSections.h"
++
++namespace minigateway {
++
++    ConfigMqtt::ConfigMqtt(utils::SubCommand* parent)
++        : utils::SubCommand(parent, this, "MiniGateway")
++        , clientIdOpt(
++              setConfigurable(addOption("--client-id", "MQTT Client-ID", "string", "minigateway", CLI::TypeValidator<std::string>()), true))
++        , keepAliveOpt(setConfigurable(
++              addOption("--keep-alive", "MQTT keep-alive in seconds", "uint16_t", "30", CLI::TypeValidator<std::uint16_t>()), true))
++        , measurementInputTopicOpt(setConfigurable(
++              addOption("--measurement-input-topic", "MQTT measurement input topic", "string", "minigateway/measurement/input", CLI::TypeValidator<std::string>()), true))
++        , measurementOutputTopicOpt(setConfigurable(
++              addOption(
++                  "--measurement-output-topic", "MQTT measurement output topic", "string", "minigateway/measurement/output", CLI::TypeValidator<std::string>()),
++              true))
++        , qoSOpt(setConfigurable(
++              addOption("--qos", "MQTT QoS for MiniGateway input and output topics", "uint8_t", "0", CLI::Range(0, 2)), true))
++        , retainOpt(setConfigurable(
++              addFlag("--retain{true}", "Retain outgoing measurement publications", "bool", "false", CLI::IsMember({"true", "false"})), true)) {
++    }
++
++    ConfigMqtt::~ConfigMqtt() = default;
++
++    std::string ConfigMqtt::getClientId() const {
++        return clientIdOpt->as<std::string>();
++    }
++
++    std::uint16_t ConfigMqtt::getKeepAlive() const {
++        return keepAliveOpt->as<std::uint16_t>();
++    }
++
++    std::string ConfigMqtt::getMeasurementInputTopic() const {
++        return measurementInputTopicOpt->as<std::string>();
++    }
++
++    std::string ConfigMqtt::getMeasurementOutputTopic() const {
++        return measurementOutputTopicOpt->as<std::string>();
++    }
++
++    std::uint8_t ConfigMqtt::getQoS() const {
++        return qoSOpt->as<std::uint8_t>();
++    }
++
++    bool ConfigMqtt::getRetain() const {
++        return retainOpt->as<bool>();
++    }
++
++} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/ConfigSections.h name_cleanup_work2/companion/examples/MiniGateway/ConfigSections.h
+--- name_cleanup_latest/companion/examples/MiniGateway/ConfigSections.h	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/ConfigSections.h	2026-06-28 19:01:16.000000000 +0000
+@@ -0,0 +1,37 @@
++#ifndef MINIGATEWAY_CONFIG_SECTIONS_H
++#define MINIGATEWAY_CONFIG_SECTIONS_H
++
++#include <cstdint>
++#include <string>
++#include <string_view>
++#include <utils/SubCommand.h>
++
++namespace minigateway {
++
++    class ConfigMqtt : public utils::SubCommand {
++    public:
++        constexpr static std::string_view NAME{"mqtt"};
++        constexpr static std::string_view DESCRIPTION{"MiniGateway MQTT integration"};
++
++        explicit ConfigMqtt(utils::SubCommand* parent);
++        ~ConfigMqtt() override;
++
++        std::string getClientId() const;
++        std::uint16_t getKeepAlive() const;
++        std::string getMeasurementInputTopic() const;
++        std::string getMeasurementOutputTopic() const;
++        std::uint8_t getQoS() const;
++        bool getRetain() const;
++
++    private:
++        CLI::Option* clientIdOpt;
++        CLI::Option* keepAliveOpt;
++        CLI::Option* measurementInputTopicOpt;
++        CLI::Option* measurementOutputTopicOpt;
++        CLI::Option* qoSOpt;
++        CLI::Option* retainOpt;
++    };
++
++} // namespace minigateway
++
++#endif // MINIGATEWAY_CONFIG_SECTIONS_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/Measurement.h name_cleanup_work2/companion/examples/MiniGateway/Measurement.h
+--- name_cleanup_latest/companion/examples/MiniGateway/Measurement.h	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/Measurement.h	2026-06-28 19:01:16.000000000 +0000
+@@ -0,0 +1,19 @@
++#ifndef MINIGATEWAY_MEASUREMENT_H
++#define MINIGATEWAY_MEASUREMENT_H
++
++#include <chrono>
++#include <cstdint>
++
++namespace minigateway {
++
++    struct Measurement {
++        double temperature = 0.0;
++        double humidity = 0.0;
++        double voltage = 0.0;
++        std::uint64_t sequence = 0;
++        std::chrono::system_clock::time_point timestamp = std::chrono::system_clock::now();
++    };
++
++} // namespace minigateway
++
++#endif // MINIGATEWAY_MEASUREMENT_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MeasurementJsonCodec.cpp name_cleanup_work2/companion/examples/MiniGateway/MeasurementJsonCodec.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway/MeasurementJsonCodec.cpp	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MeasurementJsonCodec.cpp	2026-06-28 16:28:20.000000000 +0000
+@@ -0,0 +1,50 @@
++#include "MeasurementJsonCodec.h"
++
++#include <chrono>
++#include <cmath>
++#include <stdexcept>
++
++namespace minigateway {
++
++    namespace {
++
++        double readFiniteDouble(const nlohmann::json& json, const char* fieldName) {
++            const double value = json.at(fieldName).get<double>();
++            if (!std::isfinite(value)) {
++                throw std::invalid_argument(std::string("invalid ") + fieldName + " value");
++            }
++
++            return value;
++        }
++
++    } // namespace
++
++    nlohmann::json toJson(const Measurement& measurement) {
++        return {
++            {"temperature", measurement.temperature},
++            {"humidity", measurement.humidity},
++            {"voltage", measurement.voltage},
++            {"sequence", measurement.sequence}
++        };
++    }
++
++    std::string toJsonPayload(const Measurement& measurement) {
++        return toJson(measurement).dump();
++    }
++
++    Measurement fromJson(const nlohmann::json& json) {
++        Measurement measurement;
++        measurement.temperature = readFiniteDouble(json, "temperature");
++        measurement.humidity = readFiniteDouble(json, "humidity");
++        measurement.voltage = readFiniteDouble(json, "voltage");
++        measurement.sequence = json.value("sequence", static_cast<std::uint64_t>(0));
++        measurement.timestamp = std::chrono::system_clock::now();
++
++        return measurement;
++    }
++
++    Measurement fromJsonPayload(const std::string& payload) {
++        return fromJson(nlohmann::json::parse(payload));
++    }
++
++} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MeasurementJsonCodec.h name_cleanup_work2/companion/examples/MiniGateway/MeasurementJsonCodec.h
+--- name_cleanup_latest/companion/examples/MiniGateway/MeasurementJsonCodec.h	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MeasurementJsonCodec.h	2026-06-28 19:01:16.000000000 +0000
+@@ -0,0 +1,18 @@
++#ifndef MINIGATEWAY_MEASUREMENT_JSON_CODEC_H
++#define MINIGATEWAY_MEASUREMENT_JSON_CODEC_H
++
++#include "Measurement.h"
++
++#include <nlohmann/json.hpp>
++#include <string>
++
++namespace minigateway {
++
++    nlohmann::json toJson(const Measurement& measurement);
++    std::string toJsonPayload(const Measurement& measurement);
++    Measurement fromJson(const nlohmann::json& json);
++    Measurement fromJsonPayload(const std::string& payload);
++
++} // namespace minigateway
++
++#endif // MINIGATEWAY_MEASUREMENT_JSON_CODEC_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MeasurementModel.cpp name_cleanup_work2/companion/examples/MiniGateway/MeasurementModel.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway/MeasurementModel.cpp	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MeasurementModel.cpp	2026-06-28 16:45:42.000000000 +0000
+@@ -0,0 +1,34 @@
++#include "MeasurementModel.h"
++
++#include <utility>
++
++namespace minigateway {
++
++    Measurement MeasurementModel::current() const {
++        return currentMeasurement;
++    }
++
++    Measurement MeasurementModel::accept(Measurement measurement) {
++        measurement.sequence = currentMeasurement.sequence + 1;
++
++        currentMeasurement = std::move(measurement);
++        publish(currentMeasurement);
++
++        return currentMeasurement;
++    }
++
++    void MeasurementModel::subscribe(Listener listener) {
++        listeners.push_back(std::move(listener));
++    }
++
++    void MeasurementModel::publish(const Measurement& measurement) {
++        for (auto listenerIt = listeners.begin(); listenerIt != listeners.end();) {
++            if ((*listenerIt)(measurement)) {
++                ++listenerIt;
++            } else {
++                listenerIt = listeners.erase(listenerIt);
++            }
++        }
++    }
++
++} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MeasurementModel.h name_cleanup_work2/companion/examples/MiniGateway/MeasurementModel.h
+--- name_cleanup_latest/companion/examples/MiniGateway/MeasurementModel.h	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MeasurementModel.h	2026-06-28 19:01:16.000000000 +0000
+@@ -0,0 +1,28 @@
++#ifndef MINIGATEWAY_MEASUREMENT_MODEL_H
++#define MINIGATEWAY_MEASUREMENT_MODEL_H
++
++#include "Measurement.h"
++
++#include <functional>
++#include <list>
++
++namespace minigateway {
++
++    class MeasurementModel {
++    public:
++        using Listener = std::function<bool(const Measurement&)>;
++
++        Measurement current() const;
++        Measurement accept(Measurement measurement);
++        void subscribe(Listener listener);
++
++    private:
++        void publish(const Measurement& measurement);
++
++        Measurement currentMeasurement;
++        std::list<Listener> listeners;
++    };
++
++} // namespace minigateway
++
++#endif // MINIGATEWAY_MEASUREMENT_MODEL_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqtt.cpp name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqtt.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqtt.cpp	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqtt.cpp	2026-06-28 16:45:42.000000000 +0000
+@@ -0,0 +1,100 @@
++#include "MiniGatewayMqtt.h"
++
++#include "MeasurementJsonCodec.h"
++
++#include <algorithm>
++#include <exception>
++#include <iot/mqtt/Topic.h>
++#include <list>
++#include <log/Logger.h>
++#include <utility>
++#include <utils/system/signal.h>
++
++namespace minigateway {
++
++    std::vector<MiniGatewayMqtt*> MiniGatewayMqtt::clients;
++
++    MiniGatewayMqtt::MiniGatewayMqtt(const std::string& connectionName,
++                                     MeasurementModel& measurementModel,
++                                     const std::string& clientId,
++                                     std::uint16_t keepAlive,
++                                     std::string measurementInputTopic,
++                                     std::string measurementOutputTopic,
++                                     std::uint8_t qoS,
++                                     bool retain)
++        : iot::mqtt::client::Mqtt(connectionName, clientId, keepAlive, "")
++        , measurementModel(measurementModel)
++        , measurementInputTopic(std::move(measurementInputTopic))
++        , measurementOutputTopic(std::move(measurementOutputTopic))
++        , qoS(qoS)
++        , retain(retain) {
++        clients.push_back(this);
++    }
++
++    MiniGatewayMqtt::~MiniGatewayMqtt() {
++        clients.erase(std::remove(clients.begin(), clients.end(), this), clients.end());
++    }
++
++    void MiniGatewayMqtt::onConnected() {
++        VLOG(1) << "MQTT: initiating session";
++
++        sendConnect(true, "", "", 0, false, "", "", true);
++    }
++
++    void MiniGatewayMqtt::onDisconnected() {
++        connected = false;
++
++        Super::onDisconnected();
++    }
++
++    bool MiniGatewayMqtt::onSignal(int signum) {
++        VLOG(1) << "MQTT: exit due to signal " << signum << " (SIG" << utils::system::sigabbrev_np(signum) << ")";
++
++        sendDisconnect();
++
++        return Super::onSignal(signum);
++    }
++
++    void MiniGatewayMqtt::onConnack(const iot::mqtt::packets::Connack& connack) {
++        if (connack.getReturnCode() == 0) {
++            connected = true;
++
++            sendSubscribe(std::list<iot::mqtt::Topic>{iot::mqtt::Topic(measurementInputTopic, qoS)});
++        } else {
++            connected = false;
++            sendDisconnect();
++        }
++    }
++
++    void MiniGatewayMqtt::onPublish(const iot::mqtt::packets::Publish& publish) {
++        if (publish.getTopic() != measurementInputTopic) {
++            VLOG(1) << "Ignoring MQTT publish on unsubscribed topic " << publish.getTopic();
++            return;
++        }
++
++        VLOG(1) << "MQTT measurement input on " << publish.getTopic() << ": " << publish.getMessage();
++
++        try {
++            measurementModel.accept(fromJsonPayload(publish.getMessage()));
++        } catch (const std::exception& ex) {
++            LOG(WARNING) << "Ignoring invalid MQTT measurement payload on " << publish.getTopic() << ": " << ex.what();
++        }
++    }
++
++    void MiniGatewayMqtt::publishMeasurement(const Measurement& measurement) const {
++        if (connected) {
++            sendPublish(measurementOutputTopic, toJsonPayload(measurement), qoS, retain);
++        }
++    }
++
++    void MiniGatewayMqtt::publishMeasurementToConnected(const Measurement& measurement) {
++        const std::vector<MiniGatewayMqtt*> currentClients = clients;
++
++        for (MiniGatewayMqtt* client : currentClients) {
++            if (client != nullptr) {
++                client->publishMeasurement(measurement);
++            }
++        }
++    }
++
++} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqtt.h name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqtt.h
+--- name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqtt.h	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqtt.h	2026-06-28 19:01:16.000000000 +0000
+@@ -0,0 +1,55 @@
++#ifndef MINIGATEWAY_MQTT_H
++#define MINIGATEWAY_MQTT_H
++
++#include "Measurement.h"
++#include "MeasurementModel.h"
++
++#include <cstdint>
++#include <iot/mqtt/client/Mqtt.h>
++#include <iot/mqtt/packets/Connack.h>
++#include <iot/mqtt/packets/Publish.h>
++#include <string>
++#include <vector>
++
++namespace minigateway {
++
++    class MiniGatewayMqtt : public iot::mqtt::client::Mqtt {
++    public:
++        MiniGatewayMqtt(const std::string& connectionName,
++                        MeasurementModel& measurementModel,
++                        const std::string& clientId,
++                        std::uint16_t keepAlive,
++                        std::string measurementInputTopic,
++                        std::string measurementOutputTopic,
++                        std::uint8_t qoS,
++                        bool retain);
++
++        ~MiniGatewayMqtt() override;
++
++        static void publishMeasurementToConnected(const Measurement& measurement);
++
++    private:
++        using Super = iot::mqtt::client::Mqtt;
++
++        void onConnected() final;
++        void onDisconnected() final;
++        [[nodiscard]] bool onSignal(int signum) final;
++
++        void onConnack(const iot::mqtt::packets::Connack& connack) final;
++        void onPublish(const iot::mqtt::packets::Publish& publish) final;
++
++        void publishMeasurement(const Measurement& measurement) const;
++
++        static std::vector<MiniGatewayMqtt*> clients;
++
++        MeasurementModel& measurementModel;
++        bool connected = false;
++        const std::string measurementInputTopic;
++        const std::string measurementOutputTopic;
++        const std::uint8_t qoS;
++        const bool retain;
++    };
++
++} // namespace minigateway
++
++#endif // MINIGATEWAY_MQTT_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqttClient.cpp name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqttClient.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqttClient.cpp	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqttClient.cpp	2026-06-28 16:23:32.000000000 +0000
+@@ -0,0 +1,43 @@
++#include "MiniGatewayMqttClient.h"
++
++#include "ConfigSections.h"
++#include "MiniGatewayMqtt.h"
++#include "SocketStateReporter.h"
++
++#include <net/config/ConfigInstance.h>
++
++namespace minigateway {
++
++    namespace {
++
++        void createMqttConfig(net::in::stream::legacy::config::ConfigSocketClient& config) {
++            config.Instance::newSubCommand<ConfigMqtt>();
++        }
++
++    } // namespace
++
++    MiniGatewayMqttClient startMqttClient(MeasurementModel& measurementModel) {
++        MiniGatewayMqttClient socketClient("mqtt-uplink", std::ref(measurementModel));
++
++        auto* config = socketClient.getConfig();
++        config->Remote::setPort(1883);
++        config->setDisableNagleAlgorithm();
++        createMqttConfig(*config);
++
++        socketClient.getConfig()->setRetry();
++        socketClient.getConfig()->setRetryBase(1);
++        socketClient.getConfig()->setReconnect();
++
++        measurementModel.subscribe([](const Measurement& measurement) {
++            MiniGatewayMqtt::publishMeasurementToConnected(measurement);
++            return true;
++        });
++
++        socketClient.connect([](const MiniGatewayMqttClient::SocketAddress& socketAddress, const core::socket::State& state) {
++            reportState("mqtt-uplink", socketAddress, state);
++        });
++
++        return socketClient;
++    }
++
++} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqttClient.h name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqttClient.h
+--- name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqttClient.h	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqttClient.h	2026-06-28 19:01:16.000000000 +0000
+@@ -0,0 +1,19 @@
++#ifndef MINIGATEWAY_MQTT_CLIENT_H
++#define MINIGATEWAY_MQTT_CLIENT_H
++
++#include "MeasurementModel.h"
++#include "MiniGatewayMqttSocketContextFactory.h"
++
++#include <functional>
++#include <net/in/stream/legacy/SocketClient.h>
++
++namespace minigateway {
++
++    using MiniGatewayMqttClient =
++        net::in::stream::legacy::SocketClient<MiniGatewayMqttSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
++
++    MiniGatewayMqttClient startMqttClient(MeasurementModel& measurementModel);
++
++} // namespace minigateway
++
++#endif // MINIGATEWAY_MQTT_CLIENT_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.cpp name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.cpp	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.cpp	2026-06-28 16:28:20.000000000 +0000
+@@ -0,0 +1,30 @@
++#include "MiniGatewayMqttSocketContextFactory.h"
++
++#include "ConfigSections.h"
++#include "MiniGatewayMqtt.h"
++
++#include <core/socket/stream/SocketConnection.h>
++#include <iot/mqtt/SocketContext.h>
++#include <net/config/ConfigInstance.h>
++
++namespace minigateway {
++
++    MiniGatewayMqttSocketContextFactory::MiniGatewayMqttSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel)
++        : measurementModel(measurementModel.get()) {
++    }
++
++    core::socket::stream::SocketContext* MiniGatewayMqttSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
++        const ConfigMqtt* configMqtt = socketConnection->getConfigInstance()->getSubCommand<ConfigMqtt>();
++
++        return new iot::mqtt::SocketContext(socketConnection,
++                                            new MiniGatewayMqtt(socketConnection->getConnectionName(),
++                                                                measurementModel,
++                                                                configMqtt->getClientId(),
++                                                                configMqtt->getKeepAlive(),
++                                                                configMqtt->getMeasurementInputTopic(),
++                                                                configMqtt->getMeasurementOutputTopic(),
++                                                                configMqtt->getQoS(),
++                                                                configMqtt->getRetain()));
++    }
++
++} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.h name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.h
+--- name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.h	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.h	2026-06-28 19:01:16.000000000 +0000
+@@ -0,0 +1,23 @@
++#ifndef MINIGATEWAY_MQTT_SOCKET_CONTEXT_FACTORY_H
++#define MINIGATEWAY_MQTT_SOCKET_CONTEXT_FACTORY_H
++
++#include "MeasurementModel.h"
++
++#include <core/socket/stream/SocketContextFactory.h>
++#include <functional>
++
++namespace minigateway {
++
++    class MiniGatewayMqttSocketContextFactory : public core::socket::stream::SocketContextFactory {
++    public:
++        explicit MiniGatewayMqttSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel);
++
++    private:
++        core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* socketConnection) final;
++
++        MeasurementModel& measurementModel;
++    };
++
++} // namespace minigateway
++
++#endif // MINIGATEWAY_MQTT_SOCKET_CONTEXT_FACTORY_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayWeb.cpp name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayWeb.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayWeb.cpp	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayWeb.cpp	2026-06-28 16:28:39.000000000 +0000
+@@ -0,0 +1,92 @@
++#include "MiniGatewayWeb.h"
++
++#include "MeasurementJsonCodec.h"
++#include "SocketStateReporter.h"
++
++#include <chrono>
++#include <cstdint>
++#include <express/middleware/VerboseRequest.h>
++#include <string>
++#include <web/http/http_utils.h>
++
++namespace minigateway {
++
++    namespace {
++
++        Measurement makeSimulatedMeasurement(std::uint64_t sampleIndex) {
++            Measurement measurement;
++            measurement.temperature = 20.0 + static_cast<double>(sampleIndex % 50) / 10.0;
++            measurement.humidity = 40.0 + static_cast<double>(sampleIndex % 20);
++            measurement.voltage = 3.7 + static_cast<double>(sampleIndex % 10) / 100.0;
++            measurement.timestamp = std::chrono::system_clock::now();
++
++            return measurement;
++        }
++
++        template <typename ResponseT>
++        void sendMeasurementEvent(const Measurement& measurement, const ResponseT& res) {
++            res->sendFragment("event: measurement");
++            res->sendFragment("id:" + std::to_string(measurement.sequence));
++            res->sendFragment("retry: 1000");
++            res->sendFragment("data: " + toJsonPayload(measurement) + "\r\n");
++        }
++
++        void registerWebRoutes(const MiniGatewayWebApp& app, MeasurementModel& measurementModel) {
++            app.use(express::middleware::VerboseRequest());
++
++            app.get("/health", [] APPLICATION(req, res) {
++                res->json({{"ok", true}});
++            });
++
++            app.get("/status", [&measurementModel] APPLICATION(req, res) {
++                res->json(toJson(measurementModel.current()));
++            });
++
++            app.get("/events", [&measurementModel] APPLICATION(req, res) {
++                if (web::http::ciContains(req->get("Accept"), "text/event-stream")) {
++                    res->set("Content-Type", "text/event-stream").set("Cache-Control", "no-cache").set("Connection", "keep-alive");
++                    res->sendHeader();
++
++                    const Measurement current = measurementModel.current();
++                    if (current.sequence > 0) {
++                        sendMeasurementEvent(current, res);
++                    }
++
++                    measurementModel.subscribe([res](const Measurement& measurement) {
++                        const bool keepSubscriber = res->isConnected();
++                        if (keepSubscriber) {
++                            sendMeasurementEvent(measurement, res);
++                        }
++
++                        return keepSubscriber;
++                    });
++                } else {
++                    res->status(406).send("SSE requires Accept: text/event-stream");
++                }
++            });
++
++            app.get("/simulate", [&measurementModel] APPLICATION(req, res) {
++                const Measurement measurement = makeSimulatedMeasurement(measurementModel.current().sequence + 1);
++                const Measurement acceptedMeasurement = measurementModel.accept(measurement);
++
++                res->json(toJson(acceptedMeasurement));
++            });
++        }
++
++    } // namespace
++
++    MiniGatewayWebApp startWebInstance(MeasurementModel& measurementModel) {
++        MiniGatewayWebApp app;
++
++        registerWebRoutes(app, measurementModel);
++
++        app.listen(8080,
++                   [instanceName = app.getConfig()->getInstanceName()](const MiniGatewayWebApp::SocketAddress& socketAddress,
++                                                                       const core::socket::State& listenState) {
++                       reportState(instanceName, socketAddress, listenState);
++                   });
++
++        return app;
++    }
++
++} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayWeb.h name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayWeb.h
+--- name_cleanup_latest/companion/examples/MiniGateway/MiniGatewayWeb.h	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/MiniGatewayWeb.h	2026-06-28 19:01:16.000000000 +0000
+@@ -0,0 +1,16 @@
++#ifndef MINIGATEWAY_WEB_H
++#define MINIGATEWAY_WEB_H
++
++#include "MeasurementModel.h"
++
++#include <express/legacy/in/WebApp.h>
++
++namespace minigateway {
++
++    using MiniGatewayWebApp = express::legacy::in::WebApp;
++
++    MiniGatewayWebApp startWebInstance(MeasurementModel& measurementModel);
++
++} // namespace minigateway
++
++#endif // MINIGATEWAY_WEB_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/SocketStateReporter.cpp name_cleanup_work2/companion/examples/MiniGateway/SocketStateReporter.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway/SocketStateReporter.cpp	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/SocketStateReporter.cpp	2026-06-28 16:23:32.000000000 +0000
+@@ -0,0 +1,24 @@
++#include "SocketStateReporter.h"
++
++#include <log/Logger.h>
++
++namespace minigateway {
++
++    void reportState(const std::string& instanceName, const core::socket::SocketAddress& socketAddress, const core::socket::State& state) {
++        switch (state) {
++            case core::socket::State::OK:
++                VLOG(1) << instanceName << ": connected/listening on '" << socketAddress.toString() << "'";
++                break;
++            case core::socket::State::DISABLED:
++                VLOG(1) << instanceName << ": disabled";
++                break;
++            case core::socket::State::ERROR:
++                LOG(ERROR) << instanceName << " " << socketAddress.toString() << ": " << state.what();
++                break;
++            case core::socket::State::FATAL:
++                LOG(FATAL) << instanceName << " " << socketAddress.toString() << ": " << state.what();
++                break;
++        }
++    }
++
++} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/SocketStateReporter.h name_cleanup_work2/companion/examples/MiniGateway/SocketStateReporter.h
+--- name_cleanup_latest/companion/examples/MiniGateway/SocketStateReporter.h	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/SocketStateReporter.h	2026-06-28 19:01:16.000000000 +0000
+@@ -0,0 +1,14 @@
++#ifndef MINIGATEWAY_SOCKET_STATE_REPORTER_H
++#define MINIGATEWAY_SOCKET_STATE_REPORTER_H
++
++#include <core/socket/SocketAddress.h>
++#include <core/socket/State.h>
++#include <string>
++
++namespace minigateway {
++
++    void reportState(const std::string& instanceName, const core::socket::SocketAddress& socketAddress, const core::socket::State& state);
++
++} // namespace minigateway
++
++#endif // MINIGATEWAY_SOCKET_STATE_REPORTER_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway/main.cpp name_cleanup_work2/companion/examples/MiniGateway/main.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway/main.cpp	1970-01-01 00:00:00.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway/main.cpp	2026-06-28 16:23:32.000000000 +0000
+@@ -0,0 +1,16 @@
++#include "MeasurementModel.h"
++#include "MiniGatewayMqttClient.h"
++#include "MiniGatewayWeb.h"
++
++#include <core/SNodeC.h>
++
++int main(int argc, char* argv[]) {
++    core::SNodeC::init(argc, argv);
++
++    minigateway::MeasurementModel measurementModel;
++
++    const auto webApp = minigateway::startWebInstance(measurementModel);
++    const auto mqttClient = minigateway::startMqttClient(measurementModel);
++
++    return core::SNodeC::start();
++}
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/CMakeLists.txt name_cleanup_work2/companion/examples/MiniGateway-Base/CMakeLists.txt
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/CMakeLists.txt	2026-06-28 16:28:20.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/CMakeLists.txt	1970-01-01 00:00:00.000000000 +0000
+@@ -1,59 +0,0 @@
+-cmake_minimum_required(VERSION 3.14)
+-
+-project(MiniGatewayBase LANGUAGES CXX)
+-
+-set(CMAKE_CXX_STANDARD 20)
+-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+-set(CMAKE_CXX_EXTENSIONS OFF)
+-
+-include(GNUInstallDirs)
+-
+-find_package(nlohmann_json 3.7.0 REQUIRED)
+-
+-find_package(
+-    snodec 1.0.0 REQUIRED COMPONENTS http-server-express-legacy-in
+-                                     net-in-stream-legacy mqtt-client
+-)
+-
+-add_executable(
+-    minigateway-base
+-    main.cpp
+-    MeasurementModel.cpp
+-    MeasurementJsonCodec.cpp
+-    MiniGatewayWeb.cpp
+-    MiniGatewayMqttClient.cpp
+-    MiniGatewayMqtt.cpp
+-    MiniGatewayMqttSocketContextFactory.cpp
+-    SocketStateReporter.cpp
+-    ConfigSections.cpp
+-    Measurement.h
+-    MeasurementModel.h
+-    MeasurementJsonCodec.h
+-    MiniGatewayWeb.h
+-    MiniGatewayMqttClient.h
+-    MiniGatewayMqtt.h
+-    MiniGatewayMqttSocketContextFactory.h
+-    SocketStateReporter.h
+-    ConfigSections.h
+-)
+-
+-target_link_libraries(
+-    minigateway-base
+-    PRIVATE snodec::http-server-express-legacy-in snodec::net-in-stream-legacy
+-            snodec::mqtt-client nlohmann_json::nlohmann_json
+-)
+-
+-
+-install(
+-    TARGETS minigateway-base
+-    COMPONENT MiniGatewayBase
+-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+-)
+-
+-add_custom_target(
+-    deploy-minigateway-base
+-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGatewayBase
+-    DEPENDS minigateway-base
+-    COMMENT "Installing minigateway-base"
+-    VERBATIM
+-)
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/ConfigSections.cpp name_cleanup_work2/companion/examples/MiniGateway-Base/ConfigSections.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/ConfigSections.cpp	2026-06-28 16:28:39.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/ConfigSections.cpp	1970-01-01 00:00:00.000000000 +0000
+@@ -1,49 +0,0 @@
+-#include "ConfigSections.h"
+-
+-namespace minigateway {
+-
+-    ConfigMqtt::ConfigMqtt(utils::SubCommand* parent)
+-        : utils::SubCommand(parent, this, "MiniGateway")
+-        , clientIdOpt(
+-              setConfigurable(addOption("--client-id", "MQTT Client-ID", "string", "minigateway", CLI::TypeValidator<std::string>()), true))
+-        , keepAliveOpt(setConfigurable(
+-              addOption("--keep-alive", "MQTT keep-alive in seconds", "uint16_t", "30", CLI::TypeValidator<std::uint16_t>()), true))
+-        , measurementInputTopicOpt(setConfigurable(
+-              addOption("--measurement-input-topic", "MQTT measurement input topic", "string", "minigateway/measurement/input", CLI::TypeValidator<std::string>()), true))
+-        , measurementOutputTopicOpt(setConfigurable(
+-              addOption(
+-                  "--measurement-output-topic", "MQTT measurement output topic", "string", "minigateway/measurement/output", CLI::TypeValidator<std::string>()),
+-              true))
+-        , qoSOpt(setConfigurable(
+-              addOption("--qos", "MQTT QoS for MiniGateway input and output topics", "uint8_t", "0", CLI::Range(0, 2)), true))
+-        , retainOpt(setConfigurable(
+-              addFlag("--retain{true}", "Retain outgoing measurement publications", "bool", "false", CLI::IsMember({"true", "false"})), true)) {
+-    }
+-
+-    ConfigMqtt::~ConfigMqtt() = default;
+-
+-    std::string ConfigMqtt::getClientId() const {
+-        return clientIdOpt->as<std::string>();
+-    }
+-
+-    std::uint16_t ConfigMqtt::getKeepAlive() const {
+-        return keepAliveOpt->as<std::uint16_t>();
+-    }
+-
+-    std::string ConfigMqtt::getMeasurementInputTopic() const {
+-        return measurementInputTopicOpt->as<std::string>();
+-    }
+-
+-    std::string ConfigMqtt::getMeasurementOutputTopic() const {
+-        return measurementOutputTopicOpt->as<std::string>();
+-    }
+-
+-    std::uint8_t ConfigMqtt::getQoS() const {
+-        return qoSOpt->as<std::uint8_t>();
+-    }
+-
+-    bool ConfigMqtt::getRetain() const {
+-        return retainOpt->as<bool>();
+-    }
+-
+-} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/ConfigSections.h name_cleanup_work2/companion/examples/MiniGateway-Base/ConfigSections.h
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/ConfigSections.h	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/ConfigSections.h	1970-01-01 00:00:00.000000000 +0000
+@@ -1,37 +0,0 @@
+-#ifndef MINIGATEWAY_CONFIG_SECTIONS_H
+-#define MINIGATEWAY_CONFIG_SECTIONS_H
+-
+-#include <cstdint>
+-#include <string>
+-#include <string_view>
+-#include <utils/SubCommand.h>
+-
+-namespace minigateway {
+-
+-    class ConfigMqtt : public utils::SubCommand {
+-    public:
+-        constexpr static std::string_view NAME{"mqtt"};
+-        constexpr static std::string_view DESCRIPTION{"MiniGateway MQTT integration"};
+-
+-        explicit ConfigMqtt(utils::SubCommand* parent);
+-        ~ConfigMqtt() override;
+-
+-        std::string getClientId() const;
+-        std::uint16_t getKeepAlive() const;
+-        std::string getMeasurementInputTopic() const;
+-        std::string getMeasurementOutputTopic() const;
+-        std::uint8_t getQoS() const;
+-        bool getRetain() const;
+-
+-    private:
+-        CLI::Option* clientIdOpt;
+-        CLI::Option* keepAliveOpt;
+-        CLI::Option* measurementInputTopicOpt;
+-        CLI::Option* measurementOutputTopicOpt;
+-        CLI::Option* qoSOpt;
+-        CLI::Option* retainOpt;
+-    };
+-
+-} // namespace minigateway
+-
+-#endif // MINIGATEWAY_CONFIG_SECTIONS_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/Measurement.h name_cleanup_work2/companion/examples/MiniGateway-Base/Measurement.h
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/Measurement.h	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/Measurement.h	1970-01-01 00:00:00.000000000 +0000
+@@ -1,19 +0,0 @@
+-#ifndef MINIGATEWAY_MEASUREMENT_H
+-#define MINIGATEWAY_MEASUREMENT_H
+-
+-#include <chrono>
+-#include <cstdint>
+-
+-namespace minigateway {
+-
+-    struct Measurement {
+-        double temperature = 0.0;
+-        double humidity = 0.0;
+-        double voltage = 0.0;
+-        std::uint64_t sequence = 0;
+-        std::chrono::system_clock::time_point timestamp = std::chrono::system_clock::now();
+-    };
+-
+-} // namespace minigateway
+-
+-#endif // MINIGATEWAY_MEASUREMENT_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MeasurementJsonCodec.cpp name_cleanup_work2/companion/examples/MiniGateway-Base/MeasurementJsonCodec.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MeasurementJsonCodec.cpp	2026-06-28 16:28:20.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MeasurementJsonCodec.cpp	1970-01-01 00:00:00.000000000 +0000
+@@ -1,50 +0,0 @@
+-#include "MeasurementJsonCodec.h"
+-
+-#include <chrono>
+-#include <cmath>
+-#include <stdexcept>
+-
+-namespace minigateway {
+-
+-    namespace {
+-
+-        double readFiniteDouble(const nlohmann::json& json, const char* fieldName) {
+-            const double value = json.at(fieldName).get<double>();
+-            if (!std::isfinite(value)) {
+-                throw std::invalid_argument(std::string("invalid ") + fieldName + " value");
+-            }
+-
+-            return value;
+-        }
+-
+-    } // namespace
+-
+-    nlohmann::json toJson(const Measurement& measurement) {
+-        return {
+-            {"temperature", measurement.temperature},
+-            {"humidity", measurement.humidity},
+-            {"voltage", measurement.voltage},
+-            {"sequence", measurement.sequence}
+-        };
+-    }
+-
+-    std::string toJsonPayload(const Measurement& measurement) {
+-        return toJson(measurement).dump();
+-    }
+-
+-    Measurement fromJson(const nlohmann::json& json) {
+-        Measurement measurement;
+-        measurement.temperature = readFiniteDouble(json, "temperature");
+-        measurement.humidity = readFiniteDouble(json, "humidity");
+-        measurement.voltage = readFiniteDouble(json, "voltage");
+-        measurement.sequence = json.value("sequence", static_cast<std::uint64_t>(0));
+-        measurement.timestamp = std::chrono::system_clock::now();
+-
+-        return measurement;
+-    }
+-
+-    Measurement fromJsonPayload(const std::string& payload) {
+-        return fromJson(nlohmann::json::parse(payload));
+-    }
+-
+-} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MeasurementJsonCodec.h name_cleanup_work2/companion/examples/MiniGateway-Base/MeasurementJsonCodec.h
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MeasurementJsonCodec.h	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MeasurementJsonCodec.h	1970-01-01 00:00:00.000000000 +0000
+@@ -1,18 +0,0 @@
+-#ifndef MINIGATEWAY_MEASUREMENT_JSON_CODEC_H
+-#define MINIGATEWAY_MEASUREMENT_JSON_CODEC_H
+-
+-#include "Measurement.h"
+-
+-#include <nlohmann/json.hpp>
+-#include <string>
+-
+-namespace minigateway {
+-
+-    nlohmann::json toJson(const Measurement& measurement);
+-    std::string toJsonPayload(const Measurement& measurement);
+-    Measurement fromJson(const nlohmann::json& json);
+-    Measurement fromJsonPayload(const std::string& payload);
+-
+-} // namespace minigateway
+-
+-#endif // MINIGATEWAY_MEASUREMENT_JSON_CODEC_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MeasurementModel.cpp name_cleanup_work2/companion/examples/MiniGateway-Base/MeasurementModel.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MeasurementModel.cpp	2026-06-28 16:45:42.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MeasurementModel.cpp	1970-01-01 00:00:00.000000000 +0000
+@@ -1,34 +0,0 @@
+-#include "MeasurementModel.h"
+-
+-#include <utility>
+-
+-namespace minigateway {
+-
+-    Measurement MeasurementModel::current() const {
+-        return currentMeasurement;
+-    }
+-
+-    Measurement MeasurementModel::accept(Measurement measurement) {
+-        measurement.sequence = currentMeasurement.sequence + 1;
+-
+-        currentMeasurement = std::move(measurement);
+-        publish(currentMeasurement);
+-
+-        return currentMeasurement;
+-    }
+-
+-    void MeasurementModel::subscribe(Listener listener) {
+-        listeners.push_back(std::move(listener));
+-    }
+-
+-    void MeasurementModel::publish(const Measurement& measurement) {
+-        for (auto listenerIt = listeners.begin(); listenerIt != listeners.end();) {
+-            if ((*listenerIt)(measurement)) {
+-                ++listenerIt;
+-            } else {
+-                listenerIt = listeners.erase(listenerIt);
+-            }
+-        }
+-    }
+-
+-} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MeasurementModel.h name_cleanup_work2/companion/examples/MiniGateway-Base/MeasurementModel.h
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MeasurementModel.h	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MeasurementModel.h	1970-01-01 00:00:00.000000000 +0000
+@@ -1,28 +0,0 @@
+-#ifndef MINIGATEWAY_MEASUREMENT_MODEL_H
+-#define MINIGATEWAY_MEASUREMENT_MODEL_H
+-
+-#include "Measurement.h"
+-
+-#include <functional>
+-#include <list>
+-
+-namespace minigateway {
+-
+-    class MeasurementModel {
+-    public:
+-        using Listener = std::function<bool(const Measurement&)>;
+-
+-        Measurement current() const;
+-        Measurement accept(Measurement measurement);
+-        void subscribe(Listener listener);
+-
+-    private:
+-        void publish(const Measurement& measurement);
+-
+-        Measurement currentMeasurement;
+-        std::list<Listener> listeners;
+-    };
+-
+-} // namespace minigateway
+-
+-#endif // MINIGATEWAY_MEASUREMENT_MODEL_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqtt.cpp name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqtt.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqtt.cpp	2026-06-28 16:45:42.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqtt.cpp	1970-01-01 00:00:00.000000000 +0000
+@@ -1,100 +0,0 @@
+-#include "MiniGatewayMqtt.h"
+-
+-#include "MeasurementJsonCodec.h"
+-
+-#include <algorithm>
+-#include <exception>
+-#include <iot/mqtt/Topic.h>
+-#include <list>
+-#include <log/Logger.h>
+-#include <utility>
+-#include <utils/system/signal.h>
+-
+-namespace minigateway {
+-
+-    std::vector<MiniGatewayMqtt*> MiniGatewayMqtt::clients;
+-
+-    MiniGatewayMqtt::MiniGatewayMqtt(const std::string& connectionName,
+-                                     MeasurementModel& measurementModel,
+-                                     const std::string& clientId,
+-                                     std::uint16_t keepAlive,
+-                                     std::string measurementInputTopic,
+-                                     std::string measurementOutputTopic,
+-                                     std::uint8_t qoS,
+-                                     bool retain)
+-        : iot::mqtt::client::Mqtt(connectionName, clientId, keepAlive, "")
+-        , measurementModel(measurementModel)
+-        , measurementInputTopic(std::move(measurementInputTopic))
+-        , measurementOutputTopic(std::move(measurementOutputTopic))
+-        , qoS(qoS)
+-        , retain(retain) {
+-        clients.push_back(this);
+-    }
+-
+-    MiniGatewayMqtt::~MiniGatewayMqtt() {
+-        clients.erase(std::remove(clients.begin(), clients.end(), this), clients.end());
+-    }
+-
+-    void MiniGatewayMqtt::onConnected() {
+-        VLOG(1) << "MQTT: initiating session";
+-
+-        sendConnect(true, "", "", 0, false, "", "", true);
+-    }
+-
+-    void MiniGatewayMqtt::onDisconnected() {
+-        connected = false;
+-
+-        Super::onDisconnected();
+-    }
+-
+-    bool MiniGatewayMqtt::onSignal(int signum) {
+-        VLOG(1) << "MQTT: exit due to signal " << signum << " (SIG" << utils::system::sigabbrev_np(signum) << ")";
+-
+-        sendDisconnect();
+-
+-        return Super::onSignal(signum);
+-    }
+-
+-    void MiniGatewayMqtt::onConnack(const iot::mqtt::packets::Connack& connack) {
+-        if (connack.getReturnCode() == 0) {
+-            connected = true;
+-
+-            sendSubscribe(std::list<iot::mqtt::Topic>{iot::mqtt::Topic(measurementInputTopic, qoS)});
+-        } else {
+-            connected = false;
+-            sendDisconnect();
+-        }
+-    }
+-
+-    void MiniGatewayMqtt::onPublish(const iot::mqtt::packets::Publish& publish) {
+-        if (publish.getTopic() != measurementInputTopic) {
+-            VLOG(1) << "Ignoring MQTT publish on unsubscribed topic " << publish.getTopic();
+-            return;
+-        }
+-
+-        VLOG(1) << "MQTT measurement input on " << publish.getTopic() << ": " << publish.getMessage();
+-
+-        try {
+-            measurementModel.accept(fromJsonPayload(publish.getMessage()));
+-        } catch (const std::exception& ex) {
+-            LOG(WARNING) << "Ignoring invalid MQTT measurement payload on " << publish.getTopic() << ": " << ex.what();
+-        }
+-    }
+-
+-    void MiniGatewayMqtt::publishMeasurement(const Measurement& measurement) const {
+-        if (connected) {
+-            sendPublish(measurementOutputTopic, toJsonPayload(measurement), qoS, retain);
+-        }
+-    }
+-
+-    void MiniGatewayMqtt::publishMeasurementToConnected(const Measurement& measurement) {
+-        const std::vector<MiniGatewayMqtt*> currentClients = clients;
+-
+-        for (MiniGatewayMqtt* client : currentClients) {
+-            if (client != nullptr) {
+-                client->publishMeasurement(measurement);
+-            }
+-        }
+-    }
+-
+-} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqtt.h name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqtt.h
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqtt.h	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqtt.h	1970-01-01 00:00:00.000000000 +0000
+@@ -1,55 +0,0 @@
+-#ifndef MINIGATEWAY_MQTT_H
+-#define MINIGATEWAY_MQTT_H
+-
+-#include "Measurement.h"
+-#include "MeasurementModel.h"
+-
+-#include <cstdint>
+-#include <iot/mqtt/client/Mqtt.h>
+-#include <iot/mqtt/packets/Connack.h>
+-#include <iot/mqtt/packets/Publish.h>
+-#include <string>
+-#include <vector>
+-
+-namespace minigateway {
+-
+-    class MiniGatewayMqtt : public iot::mqtt::client::Mqtt {
+-    public:
+-        MiniGatewayMqtt(const std::string& connectionName,
+-                        MeasurementModel& measurementModel,
+-                        const std::string& clientId,
+-                        std::uint16_t keepAlive,
+-                        std::string measurementInputTopic,
+-                        std::string measurementOutputTopic,
+-                        std::uint8_t qoS,
+-                        bool retain);
+-
+-        ~MiniGatewayMqtt() override;
+-
+-        static void publishMeasurementToConnected(const Measurement& measurement);
+-
+-    private:
+-        using Super = iot::mqtt::client::Mqtt;
+-
+-        void onConnected() final;
+-        void onDisconnected() final;
+-        [[nodiscard]] bool onSignal(int signum) final;
+-
+-        void onConnack(const iot::mqtt::packets::Connack& connack) final;
+-        void onPublish(const iot::mqtt::packets::Publish& publish) final;
+-
+-        void publishMeasurement(const Measurement& measurement) const;
+-
+-        static std::vector<MiniGatewayMqtt*> clients;
+-
+-        MeasurementModel& measurementModel;
+-        bool connected = false;
+-        const std::string measurementInputTopic;
+-        const std::string measurementOutputTopic;
+-        const std::uint8_t qoS;
+-        const bool retain;
+-    };
+-
+-} // namespace minigateway
+-
+-#endif // MINIGATEWAY_MQTT_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqttClient.cpp name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqttClient.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqttClient.cpp	2026-06-28 16:23:32.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqttClient.cpp	1970-01-01 00:00:00.000000000 +0000
+@@ -1,43 +0,0 @@
+-#include "MiniGatewayMqttClient.h"
+-
+-#include "ConfigSections.h"
+-#include "MiniGatewayMqtt.h"
+-#include "SocketStateReporter.h"
+-
+-#include <net/config/ConfigInstance.h>
+-
+-namespace minigateway {
+-
+-    namespace {
+-
+-        void createMqttConfig(net::in::stream::legacy::config::ConfigSocketClient& config) {
+-            config.Instance::newSubCommand<ConfigMqtt>();
+-        }
+-
+-    } // namespace
+-
+-    MiniGatewayMqttClient startMqttClient(MeasurementModel& measurementModel) {
+-        MiniGatewayMqttClient socketClient("mqtt-uplink", std::ref(measurementModel));
+-
+-        auto* config = socketClient.getConfig();
+-        config->Remote::setPort(1883);
+-        config->setDisableNagleAlgorithm();
+-        createMqttConfig(*config);
+-
+-        socketClient.getConfig()->setRetry();
+-        socketClient.getConfig()->setRetryBase(1);
+-        socketClient.getConfig()->setReconnect();
+-
+-        measurementModel.subscribe([](const Measurement& measurement) {
+-            MiniGatewayMqtt::publishMeasurementToConnected(measurement);
+-            return true;
+-        });
+-
+-        socketClient.connect([](const MiniGatewayMqttClient::SocketAddress& socketAddress, const core::socket::State& state) {
+-            reportState("mqtt-uplink", socketAddress, state);
+-        });
+-
+-        return socketClient;
+-    }
+-
+-} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqttClient.h name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqttClient.h
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqttClient.h	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqttClient.h	1970-01-01 00:00:00.000000000 +0000
+@@ -1,19 +0,0 @@
+-#ifndef MINIGATEWAY_MQTT_CLIENT_H
+-#define MINIGATEWAY_MQTT_CLIENT_H
+-
+-#include "MeasurementModel.h"
+-#include "MiniGatewayMqttSocketContextFactory.h"
+-
+-#include <functional>
+-#include <net/in/stream/legacy/SocketClient.h>
+-
+-namespace minigateway {
+-
+-    using MiniGatewayMqttClient =
+-        net::in::stream::legacy::SocketClient<MiniGatewayMqttSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
+-
+-    MiniGatewayMqttClient startMqttClient(MeasurementModel& measurementModel);
+-
+-} // namespace minigateway
+-
+-#endif // MINIGATEWAY_MQTT_CLIENT_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqttSocketContextFactory.cpp name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqttSocketContextFactory.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqttSocketContextFactory.cpp	2026-06-28 16:28:20.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqttSocketContextFactory.cpp	1970-01-01 00:00:00.000000000 +0000
+@@ -1,30 +0,0 @@
+-#include "MiniGatewayMqttSocketContextFactory.h"
+-
+-#include "ConfigSections.h"
+-#include "MiniGatewayMqtt.h"
+-
+-#include <core/socket/stream/SocketConnection.h>
+-#include <iot/mqtt/SocketContext.h>
+-#include <net/config/ConfigInstance.h>
+-
+-namespace minigateway {
+-
+-    MiniGatewayMqttSocketContextFactory::MiniGatewayMqttSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel)
+-        : measurementModel(measurementModel.get()) {
+-    }
+-
+-    core::socket::stream::SocketContext* MiniGatewayMqttSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
+-        const ConfigMqtt* configMqtt = socketConnection->getConfigInstance()->getSubCommand<ConfigMqtt>();
+-
+-        return new iot::mqtt::SocketContext(socketConnection,
+-                                            new MiniGatewayMqtt(socketConnection->getConnectionName(),
+-                                                                measurementModel,
+-                                                                configMqtt->getClientId(),
+-                                                                configMqtt->getKeepAlive(),
+-                                                                configMqtt->getMeasurementInputTopic(),
+-                                                                configMqtt->getMeasurementOutputTopic(),
+-                                                                configMqtt->getQoS(),
+-                                                                configMqtt->getRetain()));
+-    }
+-
+-} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqttSocketContextFactory.h name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqttSocketContextFactory.h
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayMqttSocketContextFactory.h	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayMqttSocketContextFactory.h	1970-01-01 00:00:00.000000000 +0000
+@@ -1,23 +0,0 @@
+-#ifndef MINIGATEWAY_MQTT_SOCKET_CONTEXT_FACTORY_H
+-#define MINIGATEWAY_MQTT_SOCKET_CONTEXT_FACTORY_H
+-
+-#include "MeasurementModel.h"
+-
+-#include <core/socket/stream/SocketContextFactory.h>
+-#include <functional>
+-
+-namespace minigateway {
+-
+-    class MiniGatewayMqttSocketContextFactory : public core::socket::stream::SocketContextFactory {
+-    public:
+-        explicit MiniGatewayMqttSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel);
+-
+-    private:
+-        core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* socketConnection) final;
+-
+-        MeasurementModel& measurementModel;
+-    };
+-
+-} // namespace minigateway
+-
+-#endif // MINIGATEWAY_MQTT_SOCKET_CONTEXT_FACTORY_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayWeb.cpp name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayWeb.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayWeb.cpp	2026-06-28 16:28:39.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayWeb.cpp	1970-01-01 00:00:00.000000000 +0000
+@@ -1,92 +0,0 @@
+-#include "MiniGatewayWeb.h"
+-
+-#include "MeasurementJsonCodec.h"
+-#include "SocketStateReporter.h"
+-
+-#include <chrono>
+-#include <cstdint>
+-#include <express/middleware/VerboseRequest.h>
+-#include <string>
+-#include <web/http/http_utils.h>
+-
+-namespace minigateway {
+-
+-    namespace {
+-
+-        Measurement makeSimulatedMeasurement(std::uint64_t sampleIndex) {
+-            Measurement measurement;
+-            measurement.temperature = 20.0 + static_cast<double>(sampleIndex % 50) / 10.0;
+-            measurement.humidity = 40.0 + static_cast<double>(sampleIndex % 20);
+-            measurement.voltage = 3.7 + static_cast<double>(sampleIndex % 10) / 100.0;
+-            measurement.timestamp = std::chrono::system_clock::now();
+-
+-            return measurement;
+-        }
+-
+-        template <typename ResponseT>
+-        void sendMeasurementEvent(const Measurement& measurement, const ResponseT& res) {
+-            res->sendFragment("event: measurement");
+-            res->sendFragment("id:" + std::to_string(measurement.sequence));
+-            res->sendFragment("retry: 1000");
+-            res->sendFragment("data: " + toJsonPayload(measurement) + "\r\n");
+-        }
+-
+-        void registerWebRoutes(const MiniGatewayWebApp& app, MeasurementModel& measurementModel) {
+-            app.use(express::middleware::VerboseRequest());
+-
+-            app.get("/health", [] APPLICATION(req, res) {
+-                res->json({{"ok", true}});
+-            });
+-
+-            app.get("/status", [&measurementModel] APPLICATION(req, res) {
+-                res->json(toJson(measurementModel.current()));
+-            });
+-
+-            app.get("/events", [&measurementModel] APPLICATION(req, res) {
+-                if (web::http::ciContains(req->get("Accept"), "text/event-stream")) {
+-                    res->set("Content-Type", "text/event-stream").set("Cache-Control", "no-cache").set("Connection", "keep-alive");
+-                    res->sendHeader();
+-
+-                    const Measurement current = measurementModel.current();
+-                    if (current.sequence > 0) {
+-                        sendMeasurementEvent(current, res);
+-                    }
+-
+-                    measurementModel.subscribe([res](const Measurement& measurement) {
+-                        const bool keepSubscriber = res->isConnected();
+-                        if (keepSubscriber) {
+-                            sendMeasurementEvent(measurement, res);
+-                        }
+-
+-                        return keepSubscriber;
+-                    });
+-                } else {
+-                    res->status(406).send("SSE requires Accept: text/event-stream");
+-                }
+-            });
+-
+-            app.get("/simulate", [&measurementModel] APPLICATION(req, res) {
+-                const Measurement measurement = makeSimulatedMeasurement(measurementModel.current().sequence + 1);
+-                const Measurement acceptedMeasurement = measurementModel.accept(measurement);
+-
+-                res->json(toJson(acceptedMeasurement));
+-            });
+-        }
+-
+-    } // namespace
+-
+-    MiniGatewayWebApp startWebInstance(MeasurementModel& measurementModel) {
+-        MiniGatewayWebApp app;
+-
+-        registerWebRoutes(app, measurementModel);
+-
+-        app.listen(8080,
+-                   [instanceName = app.getConfig()->getInstanceName()](const MiniGatewayWebApp::SocketAddress& socketAddress,
+-                                                                       const core::socket::State& listenState) {
+-                       reportState(instanceName, socketAddress, listenState);
+-                   });
+-
+-        return app;
+-    }
+-
+-} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayWeb.h name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayWeb.h
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/MiniGatewayWeb.h	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/MiniGatewayWeb.h	1970-01-01 00:00:00.000000000 +0000
+@@ -1,16 +0,0 @@
+-#ifndef MINIGATEWAY_WEB_H
+-#define MINIGATEWAY_WEB_H
+-
+-#include "MeasurementModel.h"
+-
+-#include <express/legacy/in/WebApp.h>
+-
+-namespace minigateway {
+-
+-    using MiniGatewayWebApp = express::legacy::in::WebApp;
+-
+-    MiniGatewayWebApp startWebInstance(MeasurementModel& measurementModel);
+-
+-} // namespace minigateway
+-
+-#endif // MINIGATEWAY_WEB_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/SocketStateReporter.cpp name_cleanup_work2/companion/examples/MiniGateway-Base/SocketStateReporter.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/SocketStateReporter.cpp	2026-06-28 16:23:32.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/SocketStateReporter.cpp	1970-01-01 00:00:00.000000000 +0000
+@@ -1,24 +0,0 @@
+-#include "SocketStateReporter.h"
+-
+-#include <log/Logger.h>
+-
+-namespace minigateway {
+-
+-    void reportState(const std::string& instanceName, const core::socket::SocketAddress& socketAddress, const core::socket::State& state) {
+-        switch (state) {
+-            case core::socket::State::OK:
+-                VLOG(1) << instanceName << ": connected/listening on '" << socketAddress.toString() << "'";
+-                break;
+-            case core::socket::State::DISABLED:
+-                VLOG(1) << instanceName << ": disabled";
+-                break;
+-            case core::socket::State::ERROR:
+-                LOG(ERROR) << instanceName << " " << socketAddress.toString() << ": " << state.what();
+-                break;
+-            case core::socket::State::FATAL:
+-                LOG(FATAL) << instanceName << " " << socketAddress.toString() << ": " << state.what();
+-                break;
+-        }
+-    }
+-
+-} // namespace minigateway
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/SocketStateReporter.h name_cleanup_work2/companion/examples/MiniGateway-Base/SocketStateReporter.h
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/SocketStateReporter.h	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/SocketStateReporter.h	1970-01-01 00:00:00.000000000 +0000
+@@ -1,14 +0,0 @@
+-#ifndef MINIGATEWAY_SOCKET_STATE_REPORTER_H
+-#define MINIGATEWAY_SOCKET_STATE_REPORTER_H
+-
+-#include <core/socket/SocketAddress.h>
+-#include <core/socket/State.h>
+-#include <string>
+-
+-namespace minigateway {
+-
+-    void reportState(const std::string& instanceName, const core::socket::SocketAddress& socketAddress, const core::socket::State& state);
+-
+-} // namespace minigateway
+-
+-#endif // MINIGATEWAY_SOCKET_STATE_REPORTER_H
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/MiniGateway-Base/main.cpp name_cleanup_work2/companion/examples/MiniGateway-Base/main.cpp
+--- name_cleanup_latest/companion/examples/MiniGateway-Base/main.cpp	2026-06-28 16:23:32.000000000 +0000
++++ name_cleanup_work2/companion/examples/MiniGateway-Base/main.cpp	1970-01-01 00:00:00.000000000 +0000
+@@ -1,16 +0,0 @@
+-#include "MeasurementModel.h"
+-#include "MiniGatewayMqttClient.h"
+-#include "MiniGatewayWeb.h"
+-
+-#include <core/SNodeC.h>
+-
+-int main(int argc, char* argv[]) {
+-    core::SNodeC::init(argc, argv);
+-
+-    minigateway::MeasurementModel measurementModel;
+-
+-    const auto webApp = minigateway::startWebInstance(measurementModel);
+-    const auto mqttClient = minigateway::startMqttClient(measurementModel);
+-
+-    return core::SNodeC::start();
+-}
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/companion/examples/README.md name_cleanup_work2/companion/examples/README.md
+--- name_cleanup_latest/companion/examples/README.md	2026-06-27 16:14:50.000000000 +0000
++++ name_cleanup_work2/companion/examples/README.md	2026-06-28 19:11:44.031049338 +0000
+@@ -62,11 +62,11 @@
+ The final project chapters use two larger source trees:
+ 
+ ```text
+-companion/examples/MiniGateway-Base
++companion/examples/MiniGateway
+ companion/examples/MiniGateway-Extended
+ ```
+ 
+ These are the source-of-truth examples for Chapters 37 and 38.  They are included
+-in the aggregate build as `minigateway-base` and `minigateway-extended`; their
+-individual deployment targets are `deploy-minigateway-base` and
++in the aggregate build as `minigateway` and `minigateway-extended`; their
++individual deployment targets are `deploy-minigateway` and
+ `deploy-minigateway-extended`.
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/manuscript/chapters/37-building-minigateway.md name_cleanup_work2/manuscript/chapters/37-building-minigateway.md
+--- name_cleanup_latest/manuscript/chapters/37-building-minigateway.md	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/manuscript/chapters/37-building-minigateway.md	2026-06-28 19:11:44.043446530 +0000
+@@ -95,7 +95,7 @@
+ 
+ ### Running MiniGateway
+ 
+-Build and start the companion example in `companion/examples/MiniGateway-Base`. The generated command-line help is still the first diagnostic tool:
++Build and start the companion example in `companion/examples/MiniGateway`. The generated command-line help is still the first diagnostic tool:
+ 
+ ```sh
+ ./minigateway --help
+@@ -173,7 +173,7 @@
+ ```cmake
+ cmake_minimum_required(VERSION 3.14)
+ 
+-project(MiniGatewayBase LANGUAGES CXX)
++project(MiniGateway LANGUAGES CXX)
+ 
+ set(CMAKE_CXX_STANDARD 20)
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+@@ -189,7 +189,7 @@
+ )
+ 
+ add_executable(
+-    minigateway-base
++    minigateway
+     main.cpp
+     MeasurementModel.cpp
+     MeasurementJsonCodec.cpp
+@@ -211,23 +211,23 @@
+ )
+ 
+ target_link_libraries(
+-    minigateway-base
++    minigateway
+     PRIVATE snodec::http-server-express-legacy-in snodec::net-in-stream-legacy
+             snodec::mqtt-client nlohmann_json::nlohmann_json
+ )
+ 
+ 
+ install(
+-    TARGETS minigateway-base
+-    COMPONENT MiniGatewayBase
++    TARGETS minigateway
++    COMPONENT MiniGateway
+     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+ )
+ 
+ add_custom_target(
+-    deploy-minigateway-base
+-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGatewayBase
+-    DEPENDS minigateway-base
+-    COMMENT "Installing minigateway-base"
++    deploy-minigateway
++    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGateway
++    DEPENDS minigateway
++    COMMENT "Installing minigateway"
+     VERBATIM
+ )
+ ```
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/manuscript/chapters/38-extending-minigateway-with-a-new-network-role.md name_cleanup_work2/manuscript/chapters/38-extending-minigateway-with-a-new-network-role.md
+--- name_cleanup_latest/manuscript/chapters/38-extending-minigateway-with-a-new-network-role.md	2026-06-28 19:01:16.000000000 +0000
++++ name_cleanup_work2/manuscript/chapters/38-extending-minigateway-with-a-new-network-role.md	2026-06-28 19:12:31.352195527 +0000
+@@ -73,7 +73,7 @@
+ ConfigSections.h/.cpp
+ ```
+ 
+-This chapter therefore shows the integration and extension code needed to move from MiniGateway to MiniGateway Extended. The base application remains the reference point. The unchanged files are not repeated in full because their stability is the point: the extension proves that the clean center and the existing roles do not need to be reopened.
++This chapter therefore shows the integration and extension code needed to move from MiniGateway to MiniGateway Extended. MiniGateway remains the reference point. The unchanged files are not repeated in full because their stability is the point: the extension proves that the clean center and the existing roles do not need to be reopened.
+ 
+ ### Stage 1: the build target after extension
+ 
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/review/proposal/book-proposal-package.md name_cleanup_work2/review/proposal/book-proposal-package.md
+--- name_cleanup_latest/review/proposal/book-proposal-package.md	2026-06-27 16:14:50.000000000 +0000
++++ name_cleanup_work2/review/proposal/book-proposal-package.md	2026-06-28 19:12:31.352624025 +0000
+@@ -40,7 +40,7 @@
+ - a LaTeX-generated technical index;
+ - figures and diagrams;
+ - companion example source trees;
+-- MiniGateway base and extended source trees;
++- MiniGateway and MiniGateway Extended source trees;
+ - source-version and verification notes.
+ 
+ The package uses a public SNode.C source baseline: release tag `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. The manuscript is not presented as a description of arbitrary future repository state.
+@@ -119,7 +119,7 @@
+    The book starts with an echo pair and gradually reaches multi-protocol system design.
+ 
+ 5. **Complete guided application**  
+-   MiniGateway gives the book a concrete capstone: a base version and an extended version that preserve existing protocol surfaces while adding another input boundary.
++   MiniGateway gives the book a concrete capstone: MiniGateway and MiniGateway Extended preserve existing protocol surfaces while adding another input boundary.
+ 
+ ## Pedagogical approach
+ 
+@@ -220,11 +220,11 @@
+ The final project source trees are:
+ 
+ ```text
+-companion/examples/MiniGateway-Base
++companion/examples/MiniGateway
+ companion/examples/MiniGateway-Extended
+ ```
+ 
+-`MiniGateway-Base` is the source of truth for Chapter 37. `MiniGateway-Extended` is the source of truth for Chapter 38. If a chapter listing and its corresponding example source tree disagree, the example source tree is authoritative and the chapter should be corrected.
++`MiniGateway` is the source of truth for Chapter 37. `MiniGateway Extended` is the source of truth for Chapter 38. If a chapter listing and its corresponding example source tree disagree, the example source tree is authoritative and the chapter should be corrected.
+ 
+ ## Verification status
+ 
+@@ -286,7 +286,7 @@
+ - further reading;
+ - technical index;
+ - companion examples;
+-- MiniGateway base and extended examples;
++- MiniGateway and MiniGateway Extended examples;
+ - explicit author/framework disclosure;
+ - transparent verification notes;
+ - proposal evidence sheet.
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/review/proposal/evidence-sheet.md name_cleanup_work2/review/proposal/evidence-sheet.md
+--- name_cleanup_latest/review/proposal/evidence-sheet.md	2026-06-27 16:14:50.000000000 +0000
++++ name_cleanup_work2/review/proposal/evidence-sheet.md	2026-06-28 19:12:37.692969936 +0000
+@@ -58,11 +58,11 @@
+ The book package contains two MiniGateway source trees:
+ 
+ ```text
+-companion/examples/MiniGateway-Base
++companion/examples/MiniGateway
+ companion/examples/MiniGateway-Extended
+ ```
+ 
+-They support Chapters 37 and 38 and demonstrate a small SNode.C application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an added Unix-domain input boundary in the extended version.
++They support Chapters 37 and 38 and demonstrate a small SNode.C application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an added Unix-domain input boundary in MiniGateway Extended.
+ 
+ MiniGateway is evidence of pedagogical completeness and architectural applicability inside the manuscript package. It is not presented as external market adoption.
+ 
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/review/verification/examples-aggregate-build-verification.md name_cleanup_work2/review/verification/examples-aggregate-build-verification.md
+--- name_cleanup_latest/review/verification/examples-aggregate-build-verification.md	2026-06-28 17:56:31.000000000 +0000
++++ name_cleanup_work2/review/verification/examples-aggregate-build-verification.md	2026-06-28 19:12:11.122704581 +0000
+@@ -37,7 +37,7 @@
+ companion/examples/LineProtocol-Client
+ companion/examples/MQTT-ClientRole
+ companion/examples/MariaDB-Minimal
+-companion/examples/MiniGateway-Base
++companion/examples/MiniGateway
+ companion/examples/MiniGateway-Extended
+ ```
+ 
+@@ -66,14 +66,14 @@
+ | Line protocol server/client examples | pending re-check | part of the aggregate example set after later edits |
+ | MQTT client-role example | pending re-check | part of the aggregate example set after later edits |
+ | MariaDB minimal example | pending re-check | part of the aggregate example set after later edits |
+-| MiniGateway-Base | build-confirmed | author-confirmed configure/build of current refactor |
+-| MiniGateway-Extended | build-confirmed | author-confirmed configure/build of current refactor |
++| MiniGateway | build-confirmed | author-confirmed configure/build of current refactor |
++| MiniGateway Extended | build-confirmed | author-confirmed configure/build of current refactor |
+ 
+ ## MiniGateway coverage summary
+ 
+ MiniGateway-specific details are retained in `review/verification/minigateway-step8-author-verification.md`. In summary, the current confirmed MiniGateway coverage is configure/build confirmation for both current source trees:
+ 
+-- configure and build `companion/examples/MiniGateway-Base/`;
++- configure and build `companion/examples/MiniGateway/`;
+ - configure and build `companion/examples/MiniGateway-Extended/`.
+ 
+ The intended MiniGateway runtime smoke coverage includes HTTP `/health`, `/status`, `/simulate`, SSE `/events`, MQTT input/output topic testing, and Unix-domain socket measurement input for MiniGateway Extended. Those checks should be rerun before final release packaging.
+@@ -103,4 +103,4 @@
+ 
+ ## Conclusion
+ 
+-The companion-example set was previously verified by author-confirmed local build and behavior checks against SNode.C `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. The current package requires a fresh aggregate companion-example re-check. The MiniGateway-Base and MiniGateway-Extended source trees are separately build-confirmed for the current refactor.
++The companion-example set was previously verified by author-confirmed local build and behavior checks against SNode.C `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. The current package requires a fresh aggregate companion-example re-check. The MiniGateway and MiniGateway Extended source trees are separately build-confirmed for the current refactor.
+diff -ruN '--exclude=*.pdf' '--exclude=*.tar.gz' name_cleanup_latest/review/verification/minigateway-step8-author-verification.md name_cleanup_work2/review/verification/minigateway-step8-author-verification.md
+--- name_cleanup_latest/review/verification/minigateway-step8-author-verification.md	2026-06-28 17:56:31.000000000 +0000
++++ name_cleanup_work2/review/verification/minigateway-step8-author-verification.md	2026-06-28 19:12:11.123095022 +0000
+@@ -19,7 +19,7 @@
+ ## Checked example source trees
+ 
+ ```text
+-companion/examples/MiniGateway-Base/
++companion/examples/MiniGateway/
+ companion/examples/MiniGateway-Extended/
+ ```
+ 
+@@ -29,14 +29,14 @@
+ 
+ | Example | Configure | Build | Run | Smoke checks | Status |
+ |---|---:|---:|---:|---:|---|
+-| MiniGateway-Base | pass | pass | not rechecked in this note | not rechecked in this note | build-confirmed |
+-| MiniGateway-Extended | pass | pass | not rechecked in this note | not rechecked in this note | build-confirmed |
++| MiniGateway | pass | pass | not rechecked in this note | not rechecked in this note | build-confirmed |
++| MiniGateway Extended | pass | pass | not rechecked in this note | not rechecked in this note | build-confirmed |
+ 
+ ## Intended smoke-test coverage
+ 
+ The intended MiniGateway smoke-test scope remains:
+ 
+-- configure and build `companion/examples/MiniGateway-Base/`;
++- configure and build `companion/examples/MiniGateway/`;
+ - run the MiniGateway executable;
+ - check `/health`, `/status`, and `/simulate`;
+ - check `/events` with `Accept: text/event-stream`;

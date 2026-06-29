@@ -122,11 +122,11 @@ The directory `companion/examples/` also has an aggregate `CMakeLists.txt` for c
 The final technical part uses two larger source trees as source-of-truth examples:
 
 ```text
-companion/examples/MiniGateway-Base
+companion/examples/MiniGateway
 companion/examples/MiniGateway-Extended
 ```
 
-Chapter 37 uses the base version. Chapter 38 uses the extended version to show how a SNode.C application can be extended without disturbing existing protocol surfaces.
+Chapter 37 builds MiniGateway. Chapter 38 extends it as MiniGateway Extended to show how a SNode.C application can be extended without disturbing existing protocol surfaces.
 
 
 ## Build-system structure

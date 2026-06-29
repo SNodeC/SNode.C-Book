@@ -17,16 +17,16 @@ namespace minigateway {
 
         std::string getClientId() const;
         std::uint16_t getKeepAlive() const;
-        std::string getCommandTopic() const;
-        std::string getMeasurementTopic() const;
+        std::string getMeasurementInputTopic() const;
+        std::string getMeasurementOutputTopic() const;
         std::uint8_t getQoS() const;
         bool getRetain() const;
 
     private:
         CLI::Option* clientIdOpt;
         CLI::Option* keepAliveOpt;
-        CLI::Option* commandTopicOpt;
-        CLI::Option* measurementTopicOpt;
+        CLI::Option* measurementInputTopicOpt;
+        CLI::Option* measurementOutputTopicOpt;
         CLI::Option* qoSOpt;
         CLI::Option* retainOpt;
     };

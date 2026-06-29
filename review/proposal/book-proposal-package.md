@@ -40,7 +40,7 @@ The manuscript is complete in draft form. It contains:
 - a LaTeX-generated technical index;
 - figures and diagrams;
 - companion example source trees;
-- MiniGateway base and extended source trees;
+- MiniGateway and MiniGateway Extended source trees;
 - source-version and verification notes.
 
 The package uses a public SNode.C source baseline: release tag `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. The manuscript is not presented as a description of arbitrary future repository state.
@@ -119,7 +119,7 @@ His author-confirmed professional background includes theoretical physics studie
    The book starts with an echo pair and gradually reaches multi-protocol system design.
 
 5. **Complete guided application**  
-   MiniGateway gives the book a concrete capstone: a base version and an extended version that preserve existing protocol surfaces while adding another input boundary.
+   MiniGateway gives the book a concrete capstone: MiniGateway and MiniGateway Extended preserve existing protocol surfaces while adding another input boundary.
 
 ## Pedagogical approach
 
@@ -220,11 +220,11 @@ The package contains compact source trees for selected HTTP-upgrade, SSE, WebSoc
 The final project source trees are:
 
 ```text
-companion/examples/MiniGateway-Base
+companion/examples/MiniGateway
 companion/examples/MiniGateway-Extended
 ```
 
-`MiniGateway-Base` is the source of truth for Chapter 37. `MiniGateway-Extended` is the source of truth for Chapter 38. If a chapter listing and its corresponding example source tree disagree, the example source tree is authoritative and the chapter should be corrected.
+`companion/examples/MiniGateway` is the source of truth for Chapter 37. `companion/examples/MiniGateway-Extended` is the source of truth for Chapter 38. If a chapter listing and its corresponding example source tree disagree, the example source tree is authoritative and the chapter should be corrected.
 
 ## Verification status
 
@@ -286,7 +286,7 @@ Current public adoption evidence is modest. The package should not invent users,
 - further reading;
 - technical index;
 - companion examples;
-- MiniGateway base and extended examples;
+- MiniGateway and MiniGateway Extended examples;
 - explicit author/framework disclosure;
 - transparent verification notes;
 - proposal evidence sheet.

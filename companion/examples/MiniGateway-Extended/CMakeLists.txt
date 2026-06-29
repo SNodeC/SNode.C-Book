@@ -12,33 +12,43 @@ find_package(nlohmann_json 3.7.0 REQUIRED)
 
 find_package(
     snodec 1.0.0 REQUIRED COMPONENTS http-server-express-legacy-in
-                                     net-in-stream-legacy net-un-stream-legacy mqtt-client
+                                     net-in-stream-legacy mqtt-client
+                                     net-un-stream-legacy
 )
 
 add_executable(
     minigateway-extended
     main.cpp
-    MeasurementState.cpp
-    MeasurementBus.cpp
+    MeasurementModel.cpp
+    MeasurementJsonCodec.cpp
+    MiniGatewayWeb.cpp
+    MeasurementUnixSocketServer.cpp
     MeasurementUnixSocketContext.cpp
     MeasurementUnixSocketContextFactory.cpp
+    MiniGatewayMqttClient.cpp
     MiniGatewayMqtt.cpp
-    MiniGatewaySocketContextFactory.cpp
+    MiniGatewayMqttSocketContextFactory.cpp
+    SocketStateReporter.cpp
     ConfigSections.cpp
-    MeasurementState.h
-    MeasurementBus.h
+    Measurement.h
+    MeasurementModel.h
+    MeasurementJsonCodec.h
+    MiniGatewayWeb.h
+    MeasurementUnixSocketServer.h
     MeasurementUnixSocketContext.h
     MeasurementUnixSocketContextFactory.h
+    MiniGatewayMqttClient.h
     MiniGatewayMqtt.h
-    MiniGatewaySocketContextFactory.h
+    MiniGatewayMqttSocketContextFactory.h
+    SocketStateReporter.h
     ConfigSections.h
 )
 
 target_link_libraries(
     minigateway-extended
     PRIVATE snodec::http-server-express-legacy-in snodec::net-in-stream-legacy
-            snodec::net-un-stream-legacy snodec::mqtt-client
-            nlohmann_json::nlohmann_json
+            snodec::mqtt-client nlohmann_json::nlohmann_json
+            snodec::net-un-stream-legacy
 )
 
 

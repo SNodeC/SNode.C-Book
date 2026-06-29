@@ -1,5 +1,4 @@
 #include "MeasurementModel.h"
-#include "MeasurementUnixSocketServer.h"
 #include "MiniGatewayMqttClient.h"
 #include "MiniGatewayWeb.h"
 
@@ -11,7 +10,6 @@ int main(int argc, char* argv[]) {
     minigateway::MeasurementModel measurementModel;
 
     const auto webApp = minigateway::startWebInstance(measurementModel);
-    const auto measurementSocketServer = minigateway::startMeasurementSocketServer(measurementModel);
     const auto mqttClient = minigateway::startMqttClient(measurementModel);
 
     return core::SNodeC::start();

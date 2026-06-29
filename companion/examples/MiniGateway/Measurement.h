@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MINIGATEWAY_MEASUREMENT_H
+#define MINIGATEWAY_MEASUREMENT_H
 
 #include <chrono>
 #include <cstdint>
@@ -14,3 +15,5 @@ namespace minigateway {
     };
 
 } // namespace minigateway
+
+#endif // MINIGATEWAY_MEASUREMENT_H

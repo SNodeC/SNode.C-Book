@@ -1,4 +1,4 @@
-#include "MiniGatewaySocketContextFactory.h"
+#include "MiniGatewayMqttSocketContextFactory.h"
 
 #include "ConfigSections.h"
 #include "MiniGatewayMqtt.h"
@@ -9,15 +9,20 @@
 
 namespace minigateway {
 
-    core::socket::stream::SocketContext* MiniGatewaySocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
+    MiniGatewayMqttSocketContextFactory::MiniGatewayMqttSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel)
+        : measurementModel(measurementModel.get()) {
+    }
+
+    core::socket::stream::SocketContext* MiniGatewayMqttSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
         const ConfigMqtt* configMqtt = socketConnection->getConfigInstance()->getSubCommand<ConfigMqtt>();
 
         return new iot::mqtt::SocketContext(socketConnection,
                                             new MiniGatewayMqtt(socketConnection->getConnectionName(),
+                                                                measurementModel,
                                                                 configMqtt->getClientId(),
                                                                 configMqtt->getKeepAlive(),
-                                                                configMqtt->getCommandTopic(),
-                                                                configMqtt->getMeasurementTopic(),
+                                                                configMqtt->getMeasurementInputTopic(),
+                                                                configMqtt->getMeasurementOutputTopic(),
                                                                 configMqtt->getQoS(),
                                                                 configMqtt->getRetain()));
     }

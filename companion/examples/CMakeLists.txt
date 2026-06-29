@@ -19,7 +19,7 @@ set(SNODEC_BOOK_EXAMPLE_DIRS
     LineProtocol-Client
     MQTT-ClientRole
     MariaDB-Minimal
-    MiniGateway-Base
+    MiniGateway
     MiniGateway-Extended)
 
 foreach(EXAMPLE_DIR IN LISTS SNODEC_BOOK_EXAMPLE_DIRS)

@@ -35,7 +35,7 @@ The book is written for experienced C++ developers, advanced students, and syste
 The current manuscript contains all planned front matter, chapters, an epilogue, and back matter. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `companion/examples/` for the HTTP-upgrade, SSE, WebSocket echo server/client subprotocol, line-protocol server/client, MQTT-role, and MariaDB examples. Chapters 37 and 38 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
 
 ```text
-companion/examples/MiniGateway-Base
+companion/examples/MiniGateway
 companion/examples/MiniGateway-Extended
 ```
 
@@ -50,7 +50,7 @@ The manuscript is not intended to describe arbitrary future states of the SNode.
 
 The compact source trees in `companion/examples/` are intended to be complete buildable versions of the shorter manuscript fragments. The printed book should refer to them as electronic companion material rather than as printed-book contents. They are teaching examples, not replacements for the source snippets in the chapters. The directory `companion/examples/` also contains an aggregate CMake project that configures, builds, and installs/deploys all companion examples together.
 
-`companion/examples/MiniGateway-Base` is the authoritative source tree for Chapter 37. `companion/examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
+`companion/examples/MiniGateway` is the authoritative source tree for Chapter 37. `companion/examples/MiniGateway-Extended` is the authoritative source tree for Chapter 38. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
 
 Both MiniGateway versions are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C source snapshot recorded in `source-baseline/SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
 

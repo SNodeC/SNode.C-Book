@@ -1,19 +1,16 @@
 #pragma once
 
-#include "Measurement.h"
+#include "MeasurementModel.h"
 
 #include <core/socket/stream/SocketContext.h>
 #include <cstdint>
-#include <functional>
 #include <string>
 
 namespace minigateway {
 
     class MeasurementUnixSocketContext : public core::socket::stream::SocketContext {
     public:
-        using MeasurementHandler = std::function<void(Measurement)>;
-
-        MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection, MeasurementHandler measurementHandler);
+        MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection, MeasurementModel& measurementModel);
 
     private:
         void onConnected() final;
@@ -23,7 +20,7 @@ namespace minigateway {
 
         void processLine(const std::string& line) const;
 
-        MeasurementHandler measurementHandler;
+        MeasurementModel& measurementModel;
         std::string receiveBuffer;
     };
 

@@ -1,17 +1,16 @@
 #include "MeasurementUnixSocketContextFactory.h"
 
-#include <utility>
+#include "MeasurementUnixSocketContext.h"
 
 namespace minigateway {
 
-    MeasurementUnixSocketContextFactory::MeasurementUnixSocketContextFactory(
-        MeasurementUnixSocketContext::MeasurementHandler measurementHandler)
-        : measurementHandler(std::move(measurementHandler)) {
+    MeasurementUnixSocketContextFactory::MeasurementUnixSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel)
+        : measurementModel(measurementModel.get()) {
     }
 
     core::socket::stream::SocketContext*
     MeasurementUnixSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
-        return new MeasurementUnixSocketContext(socketConnection, measurementHandler);
+        return new MeasurementUnixSocketContext(socketConnection, measurementModel);
     }
 
 } // namespace minigateway

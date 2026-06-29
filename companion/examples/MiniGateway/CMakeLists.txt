@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(MiniGatewayBase LANGUAGES CXX)
+project(MiniGateway LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -16,37 +16,44 @@ find_package(
 )
 
 add_executable(
-    minigateway-base
+    minigateway
     main.cpp
-    MeasurementState.cpp
-    MeasurementBus.cpp
+    MeasurementModel.cpp
+    MeasurementJsonCodec.cpp
+    MiniGatewayWeb.cpp
+    MiniGatewayMqttClient.cpp
     MiniGatewayMqtt.cpp
-    MiniGatewaySocketContextFactory.cpp
+    MiniGatewayMqttSocketContextFactory.cpp
+    SocketStateReporter.cpp
     ConfigSections.cpp
-    MeasurementState.h
-    MeasurementBus.h
+    Measurement.h
+    MeasurementModel.h
+    MeasurementJsonCodec.h
+    MiniGatewayWeb.h
+    MiniGatewayMqttClient.h
     MiniGatewayMqtt.h
-    MiniGatewaySocketContextFactory.h
+    MiniGatewayMqttSocketContextFactory.h
+    SocketStateReporter.h
     ConfigSections.h
 )
 
 target_link_libraries(
-    minigateway-base
+    minigateway
     PRIVATE snodec::http-server-express-legacy-in snodec::net-in-stream-legacy
             snodec::mqtt-client nlohmann_json::nlohmann_json
 )
 
 
 install(
-    TARGETS minigateway-base
-    COMPONENT MiniGatewayBase
+    TARGETS minigateway
+    COMPONENT MiniGateway
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 add_custom_target(
-    deploy-minigateway-base
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGatewayBase
-    DEPENDS minigateway-base
-    COMMENT "Installing minigateway-base"
+    deploy-minigateway
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGateway
+    DEPENDS minigateway
+    COMMENT "Installing minigateway"
     VERBATIM
 )

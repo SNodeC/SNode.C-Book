@@ -5,14 +5,14 @@
 \index{MiniGateway!deployment}
 
 
-### Why this chapter follows the base build
+### Why this chapter follows MiniGateway
 
-The base MiniGateway has an HTTP/Express surface, an SSE observation path, a native MQTT client role, an in-memory current measurement, and `/simulate` as a controlled input boundary.
+The MiniGateway has an HTTP/Express surface, an SSE observation path, a native MQTT client role, an in-memory current measurement, and `/simulate` as a controlled input boundary.
 
-The application can now grow without losing its shape. The concrete source extension is `MiniGateway-Extended`, which adds a Unix-domain socket input for external measurement injection. The larger topic is how SNode.C applications can be extended, tested, debugged, and deployed while keeping boundaries visible.
+The application can now grow without losing its shape. MiniGateway Extended (`companion/examples/MiniGateway-Extended`) adds a Unix-domain socket input for external measurement injection. The larger topic is how SNode.C applications can be extended, tested, debugged, and deployed while keeping boundaries visible.
 
 ```text
-base MiniGateway
+MiniGateway
   -> explicit new input boundary
       -> same domain state
           -> same MeasurementBus
@@ -29,17 +29,17 @@ Add the boundary that owns the new concern.
 Do not hide new behavior inside an arbitrary callback merely because that callback is convenient.
 :::
 
-### What changes in the extended version
+### What changes in MiniGateway Extended
 
-\index{MiniGateway!extended version}
+\index{MiniGateway!MiniGateway Extended}
 \index{Unix domain socket input}
 
 
-The extended version adds one responsibility: measurements can now arrive through a Unix-domain stream socket. The input format is simple: one comma-separated measurement per line.
+MiniGateway Extended adds one responsibility: measurements can now arrive through a Unix-domain stream socket. The input format is simple: one comma-separated measurement per line.
 
 Figure \ref{fig:minigateway-extended-instance-architecture} shows the extended application as an instance architecture. The HTTP/Express `WebApp`, the new `measurement-input` Unix-domain server, and the `mqtt-uplink` client are visible communication roles around one shared application core. The figure is not meant as a complete call graph. It shows which instance owns which boundary, and where the new input role joins the same `acceptMeasurement(...)`, `MeasurementState`, and `MeasurementBus` path.
 
-![MiniGateway-Extended as SNode.C communication roles around one shared application core. The Unix-domain measurement input is a separate server instance, while HTTP routes, state, bus distribution, and MQTT publication remain separated.](assets/figures/pdf/fig-12-minigateway-extended-instance-architecture.pdf){#fig:minigateway-extended-instance-architecture width=90% latex-placement="tbp"}
+![MiniGateway Extended as SNode.C communication roles around one shared application core. The Unix-domain measurement input is a separate server instance, while HTTP routes, state, bus distribution, and MQTT publication remain separated.](assets/figures/pdf/fig-12-minigateway-extended-instance-architecture.pdf){#fig:minigateway-extended-instance-architecture width=90% latex-placement="tbp"}
 
 ```sh
 printf '21.5,43.0,3.72
@@ -67,11 +67,11 @@ Unix-domain input line
 
 What matters is what does not change: `/status` does not learn Unix-domain sockets, the SSE route does not parse CSV, `MiniGatewayMqtt` does not read the local socket, and the new input boundary ends at the same `acceptMeasurement` function from Chapter 37.
 
-The ownership vocabulary also stays the same. The extended version keeps the measurement-input server handle and the MQTT client handle as named local objects in `main()` because this chapter compares the registered runtime roles. This is a source-layout choice, not a different connection model.
+The ownership vocabulary also stays the same. MiniGateway Extended keeps the measurement-input server handle and the MQTT client handle as named local objects in `main()` because this chapter compares the registered runtime roles. This is a source-layout choice, not a different connection model.
 
 ### Extension overview
 
-Compared with the base source tree, the extended version adds two new classes and changes three existing files:
+Compared with the MiniGateway source tree, MiniGateway Extended adds two new classes and changes three existing files:
 
 ```text
 new:
@@ -84,7 +84,7 @@ changed:
   README-BUILD.md
 ```
 
-The rest of the source tree remains the base application. A new input carrier should not force a rewrite of the output roles.
+The rest of the source tree remains MiniGateway. A new input carrier should not force a rewrite of the output roles.
 
 ### The build target after extension
 
@@ -94,7 +94,7 @@ The rest of the source tree remains the base application. A new input carrier sh
 The extended CMake file adds the Unix-domain stream component and the two new source files. The source side adds the matching Unix-domain public server header where the new concrete role is directly named.
 
 ```text
-base components:
+MiniGateway components:
   http-server-express-legacy-in
   net-in-stream-legacy
   mqtt-client
@@ -439,13 +439,13 @@ namespace minigateway {
 \index{role assembly}
 
 
-The extended `main.cpp` keeps the base application path and adds one new server role named `measurement-input`. The new role listens on `/tmp/minigateway-measurements.sock` and uses the same `acceptMeasurement` function as `/simulate`.
+The extended `main.cpp` keeps the MiniGateway application path and adds one new server role named `measurement-input`. The new role listens on `/tmp/minigateway-measurements.sock` and uses the same `acceptMeasurement` function as `/simulate`.
 
 This is the key design point already visible in Figure \ref{fig:minigateway-extended-instance-architecture}. The input changes, but the application state path does not. The HTTP route and the Unix-domain server are different communication roles; after they have produced a `Measurement`, both end at the same acceptance boundary.
 
 Once a measurement reaches `acceptMeasurement`, the rest of the application is identical: current state is updated, the bus publishes, SSE observers are notified, and MQTT publication is attempted if the MQTT role is connected.
 
-Compared with the base version, the new SNode.C include is the Unix-domain stream server front door:
+Compared with MiniGateway, the new SNode.C include is the Unix-domain stream server front door:
 
 ```cpp
 #include <net/un/stream/legacy/SocketServer.h>
@@ -634,7 +634,7 @@ int main(int argc, char* argv[]) {
 ```
 
 
-### Build and usage note for the extended version
+### Build and usage note for MiniGateway Extended
 
 \index{MiniGateway!extended build and usage}
 
@@ -736,7 +736,7 @@ Do not treat testing and deployment as an afterthought after the architecture is
 | CMake build | external SNode.C consumer shape |
 | `/health` | basic HTTP request/response path |
 | `/status` | current measurement representation |
-| `/simulate` | controlled base input boundary |
+| `/simulate` | controlled MiniGateway input boundary |
 | `/events` | SSE lifetime and event formatting |
 | `measurement-input` Unix socket | line parsing and local input role |
 | `MeasurementState` | current-value ownership |
@@ -859,7 +859,7 @@ Which user/group owns the service?
 How is restart handled?
 ```
 
-For the extended version, the Unix-domain socket path is a deployment surface. `/tmp/minigateway-measurements.sock` is convenient for a guided project, but a packaged service may want a path below a runtime directory owned by the service user. That is a deployment decision, not a parser decision.
+For MiniGateway Extended, the Unix-domain socket path is a deployment surface. `/tmp/minigateway-measurements.sock` is convenient for a guided project, but a packaged service may want a path below a runtime directory owned by the service user. That is a deployment decision, not a parser decision.
 
 ### OpenWrt and constrained systems
 
@@ -940,10 +940,34 @@ new failure policy
 If an extension requires unrelated parts of the application to know too much about each other, the boundary is probably wrong. That does not always mean a new framework abstraction is needed. Sometimes the correct answer is simply a small application-local class with a clear name and a narrow responsibility.
 
 ::: {.snodec-remember title="What to remember"}
-- The extended version adds a Unix-domain measurement input, not a new application architecture.
+- MiniGateway Extended adds a Unix-domain measurement input, not a new application architecture.
 - The new input path ends at the same `acceptMeasurement` function used by `/simulate`.
 - HTTP, SSE, and MQTT behavior remain unchanged because the extension is placed at the input boundary.
 - A `SocketContext` is a good owner for local line-oriented stream input.
 - A factory should construct the context and inject the application handler, not own the domain state.
 - New requirements should be placed at the boundary that owns their variation.
 :::
+
+
+### Author-confirmed runtime smoke evidence
+
+The accepted input format is one measurement per line:
+
+```text
+temperature,humidity,voltage
+temperature,humidity,voltage,sequence
+```
+
+The current author-confirmed smoke test covers this input path together with the existing observation paths. A representative local test injects one measurement through the Unix-domain socket and then observes the accepted state through HTTP:
+
+```sh
+printf '22.0,44.0,3.80
+' | nc -U /tmp/minigateway-measurements.sock
+curl http://localhost:8080/status
+```
+
+A representative confirmed result is a normal MiniGateway measurement payload, not a special Unix-socket payload:
+
+```text
+{"temperature":22.0,"humidity":44.0,"voltage":3.80,"sequence":3}
+```

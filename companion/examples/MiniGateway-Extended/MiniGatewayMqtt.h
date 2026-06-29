@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Measurement.h"
+#include "MeasurementModel.h"
 
 #include <cstdint>
 #include <iot/mqtt/client/Mqtt.h>
@@ -14,10 +15,11 @@ namespace minigateway {
     class MiniGatewayMqtt : public iot::mqtt::client::Mqtt {
     public:
         MiniGatewayMqtt(const std::string& connectionName,
+                        MeasurementModel& measurementModel,
                         const std::string& clientId,
                         std::uint16_t keepAlive,
-                        std::string commandTopic,
-                        std::string measurementTopic,
+                        std::string measurementInputTopic,
+                        std::string measurementOutputTopic,
                         std::uint8_t qoS,
                         bool retain);
 
@@ -39,9 +41,10 @@ namespace minigateway {
 
         static std::vector<MiniGatewayMqtt*> clients;
 
+        MeasurementModel& measurementModel;
         bool connected = false;
-        const std::string commandTopic;
-        const std::string measurementTopic;
+        const std::string measurementInputTopic;
+        const std::string measurementOutputTopic;
         const std::uint8_t qoS;
         const bool retain;
     };

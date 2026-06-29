@@ -29,7 +29,7 @@ This is the core of the project. Everything else in the chapter exists to keep t
 \index{measurement gateway}
 
 
-The base version built in this chapter has two outward-facing communication roles.
+MiniGateway, as built in this chapter, has two outward-facing communication roles.
 
 The first role is an HTTP/Express role. It is the browser-friendly and command-line-friendly observation surface. It exposes four paths:
 
@@ -47,9 +47,9 @@ GET /simulate
   -> create one synthetic measurement and inject it into the normal application path
 ```
 
-The second role is a native MQTT client role named `mqtt-uplink`. It connects to an MQTT broker, starts an MQTT session, subscribes to a command topic, and publishes measurements to a measurement topic. In the base version, incoming MQTT commands are logged only. That is deliberate. The chapter shows an incoming MQTT boundary without turning the guided project into a control system.
+The second role is a native MQTT client role named `mqtt-uplink`. It connects to an MQTT broker, starts an MQTT session, subscribes to a command topic, and publishes measurements to a measurement topic. In MiniGateway, incoming MQTT commands are logged only. That is deliberate. The chapter shows an incoming MQTT boundary without turning the guided project into a control system.
 
-The base version does not poll measurements. SNode.C runs the application in its event-driven runtime model, and MiniGateway keeps the project consistent with that model. A new measurement is handled when a new measurement event appears.
+MiniGateway does not poll measurements. SNode.C runs the application in its event-driven runtime model, and MiniGateway keeps the project consistent with that model. A new measurement is handled when a new measurement event appears.
 
 ::: {.snodec-checklist title="MiniGateway role checklist"}
 - HTTP administration role
@@ -60,9 +60,9 @@ The base version does not poll measurements. SNode.C runs the application in its
 - runtime startup
 :::
 
-The base version creates such events through `/simulate`. That route is not the final device interface. It is a controlled teaching input. Chapter 38 replaces this with a small Unix-domain socket input to demonstrate how the application can grow without changing the HTTP, SSE, MQTT, or domain-state structure.
+MiniGateway creates such events through `/simulate`. That route is not the final device interface. It is a controlled teaching input. Chapter 38 replaces this with a small Unix-domain socket input to demonstrate how the application can grow without changing the HTTP, SSE, MQTT, or domain-state structure.
 
-### How to use the base version
+### How to use MiniGateway
 
 The first useful command for an SNode.C application is still the generated help output:
 
@@ -84,6 +84,16 @@ curl http://localhost:8080/simulate
 curl http://localhost:8080/status
 ```
 
+A representative confirmed smoke-test run produces normal JSON measurement output. The exact timestamp depends on the local run, but the important observable behavior is that `/simulate` accepts a measurement and `/status` reports the same accepted state:
+
+```text
+$ curl http://localhost:8080/simulate
+{"temperature":20.1,"humidity":41.0,"voltage":3.71,"sequence":1}
+
+$ curl http://localhost:8080/status
+{"temperature":20.1,"humidity":41.0,"voltage":3.71,"sequence":1}
+```
+
 To watch live events, keep one terminal connected to the SSE endpoint:
 
 ```sh
@@ -96,7 +106,22 @@ Then trigger another measurement from a second terminal:
 curl http://localhost:8080/simulate
 ```
 
-The SSE terminal should receive an event. If an MQTT broker is reachable and the MQTT role is connected, the same measurement is also published through MQTT.
+The SSE terminal should receive an event. A representative confirmed SSE smoke run shows a measurement event on the open stream:
+
+```text
+event: measurement
+id: 2
+data: {"temperature":20.2,"humidity":42.0,"voltage":3.72,"sequence":2}
+```
+
+If an MQTT broker is reachable and the MQTT role is connected, the same measurement is also published through MQTT. The current author verification includes MQTT input/output smoke coverage for MiniGateway and MiniGateway Extended.
+
+```sh
+mosquitto_sub -t minigateway/measurement/output
+mosquitto_pub -t minigateway/measurement/input   -m '{"temperature":21.5,"humidity":43.0,"voltage":3.72}'
+```
+
+The subscriber should receive a normalized measurement payload from the application, with sequencing owned by MiniGateway rather than trusted from the incoming payload.
 
 ::: {.snodec-warning title="Port ownership warning"}
 Before testing `/status`, verify that MiniGateway really owns the configured HTTP port. If another SNode.C application, for example MQTTBroker, is already listening on the same port, `curl` may reach the wrong process.
@@ -110,9 +135,9 @@ ss -ltnp 'sport = :8080'
 
 This is not a MiniGateway-specific trick. It is part of testing deployed communication roles honestly.
 
-### The shape of the base application
+### The shape of MiniGateway
 
-\index{MiniGateway!base architecture}
+\index{MiniGateway!application architecture}
 \index{MQTT client role}
 \index{HTTP administration role}
 \index{SSE observation role}
@@ -276,7 +301,7 @@ namespace minigateway {
 
 `MeasurementState` holds the latest accepted measurement. It is not a cache for HTTP and it is not an MQTT buffer. It is the application-local state owner.
 
-The state object is deliberately plain. MiniGateway is written for the SNode.C single-event-loop execution model used throughout the book, so the base application keeps state ownership simple and explicit.
+The state object is deliberately plain. MiniGateway is written for the SNode.C single-event-loop execution model used throughout the book, so MiniGateway keeps state ownership simple and explicit.
 
 #### `MeasurementState.h`
 
@@ -508,7 +533,7 @@ namespace minigateway {
 
 The static client list is a small guided-project convenience. It gives the application a simple way to publish a measurement to the currently connected MQTT protocol objects without making `MeasurementBus` know anything about MQTT. A production system might wrap this in a more explicit integration service. In this chapter, the static list keeps the source small while preserving the important boundary: the bus still distributes measurements, and the MQTT object still owns MQTT publication.
 
-Incoming command messages are logged only. This keeps the incoming MQTT boundary visible while avoiding a new command/domain policy in the base project.
+Incoming command messages are logged only. This keeps the incoming MQTT boundary visible while avoiding a new command/domain policy in MiniGateway.
 
 #### `MiniGatewayMqtt.h`
 
@@ -751,7 +776,7 @@ The HTTP role is intentionally straightforward. `/health` reports process health
 
 The MQTT role is started as a native IPv4 stream client. The role name `mqtt-uplink` appears in configuration, diagnostics, and state reporting.
 
-In the base source, `startMqttClient()` returns the application-side client handle, and `main()` does not keep that handle because the example does not later reconfigure, stop, or inspect the `mqtt-uplink` role. The call to `connect()` registers the configured runtime role; concrete `MiniGatewayMqtt` protocol objects are created later through `MiniGatewaySocketContextFactory` when actual connections exist. In an application that needs later control over the role, keeping the returned handle would be the appropriate design.
+In MiniGateway, `startMqttClient()` returns the application-side client handle, and `main()` does not keep that handle because the example does not later reconfigure, stop, or inspect the `mqtt-uplink` role. The call to `connect()` registers the configured runtime role; concrete `MiniGatewayMqtt` protocol objects are created later through `MiniGatewaySocketContextFactory` when actual connections exist. In an application that needs later control over the role, keeping the returned handle would be the appropriate design.
 
 The SNode.C include block in `main.cpp` is an architectural map of the source-facing roles:
 
@@ -926,9 +951,9 @@ int main(int argc, char* argv[]) {
 ```
 
 
-### Building the base source package
+### Building the MiniGateway source package
 
-\index{MiniGateway!base source package}
+\index{MiniGateway!source package}
 \index{README-BUILD.md@\texttt{README-BUILD.md}}
 
 
@@ -965,7 +990,7 @@ This package intentionally contains no TLS, no persistence, no MQTT-over-WebSock
 
 ::: {.snodec-remember title="What to remember"}
 - MiniGateway is a guided application, not a framework subsystem.
-- The base version owns one current measurement and exposes it through HTTP, SSE, and MQTT.
+- MiniGateway owns one current measurement and exposes it through HTTP, SSE, and MQTT.
 - `/simulate` is a teaching input boundary; it injects a measurement into the same path that a real input source can use later.
 - Measurement arrival is event-driven. The application does not poll for measurements.
 - `MeasurementState` owns the current value.

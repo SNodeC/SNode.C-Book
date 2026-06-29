@@ -10,8 +10,8 @@ The aggregate companion-example verification note in `review/verification/exampl
 Repository: https://github.com/SNodeC/snode.c.git
 Release tag: v1.0.2
 Commit: 6e475262084ae2dab2daef8781ab9e4adb82d18e
-Verification date: 2026-06-26
-Verification type: author-confirmed local build and behavior check
+Verification date: 2026-06-28
+Verification type: author-confirmed local configure/build/run and runtime smoke check
 ```
 
 This verification is author-confirmed local verification. It is not presented as independent continuous-integration evidence.
@@ -19,33 +19,51 @@ This verification is author-confirmed local verification. It is not presented as
 ## Checked example source trees
 
 ```text
-companion/examples/MiniGateway-Base/
+companion/examples/MiniGateway/
 companion/examples/MiniGateway-Extended/
 ```
 
 ## Confirmed status
 
-| Example | Configure | Build | Run | Smoke checks | Status |
+| Example | Configure | Build | Run | Runtime smoke checks | Status |
 |---|---:|---:|---:|---:|---|
-| MiniGateway-Base | pass | pass | pass | pass | confirmed |
-| MiniGateway-Extended | pass | pass | pass | pass | confirmed |
+| MiniGateway | pass | pass | pass | pass | confirmed |
+| MiniGateway Extended | pass | pass | pass | pass | confirmed |
 
-## Confirmed smoke-test coverage
+## Confirmed MiniGateway smoke-test coverage
 
 The author-confirmed result covers the intended MiniGateway verification scope:
 
-- configure and build `companion/examples/MiniGateway-Base/`;
-- run the MiniGateway-Base executable;
-- check `/health`, `/status`, and `/simulate`;
+- configure and build `companion/examples/MiniGateway/`;
+- run the MiniGateway executable;
+- check `/health`;
+- check `/status` before and after an accepted measurement;
+- check `/simulate`;
 - check `/events` with `Accept: text/event-stream`;
-- check `/events` without `Accept: text/event-stream`, expecting non-SSE rejection or fallback behavior;
+- publish a JSON measurement to the MQTT measurement input topic;
+- subscribe to the MQTT measurement output topic;
+- verify that MQTT input updates the shared model;
+- verify that MQTT output publishes normalized measurement payloads;
+- verify that the model assigns the accepted sequence number.
+
+## Confirmed MiniGateway Extended smoke-test coverage
+
+The author-confirmed result covers the intended MiniGateway Extended verification scope:
+
 - configure and build `companion/examples/MiniGateway-Extended/`;
-- run the MiniGateway-Extended executable;
-- check `/health`, `/status`, and `/simulate`;
+- run the MiniGateway Extended executable;
+- check `/health`;
+- check `/status` before and after an accepted measurement;
+- check `/simulate`;
 - check `/events` with `Accept: text/event-stream`;
-- check `/events` without `Accept: text/event-stream`, expecting non-SSE rejection or fallback behavior;
-- check the Unix-domain socket measurement input path in the extended example.
+- publish a JSON measurement to the MQTT measurement input topic;
+- subscribe to the MQTT measurement output topic;
+- verify that MQTT input updates the shared model;
+- verify that MQTT output publishes normalized measurement payloads;
+- check the Unix-domain socket measurement input path;
+- verify that Unix-domain socket input updates the shared model;
+- verify that SSE and MQTT output observe the measurement accepted through the Unix-domain socket input.
 
 ## Conclusion
 
-The MiniGateway examples are considered verified for this manuscript package based on the author-confirmed local build and behavior result against SNode.C `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. No manuscript or example-source change was required for this verification-note update.
+The MiniGateway examples are considered verified for this manuscript package based on the author-confirmed local configure/build/run and behavior result against SNode.C `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. No MiniGateway runtime-smoke status remains pending in this verification note.

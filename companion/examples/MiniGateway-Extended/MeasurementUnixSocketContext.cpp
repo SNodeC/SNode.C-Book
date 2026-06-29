@@ -87,9 +87,9 @@ namespace minigateway {
     } // namespace
 
     MeasurementUnixSocketContext::MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection,
-                                                               MeasurementHandler measurementHandler)
+                                                               MeasurementModel& measurementModel)
         : core::socket::stream::SocketContext(socketConnection)
-        , measurementHandler(std::move(measurementHandler)) {
+        , measurementModel(measurementModel) {
     }
 
     void MeasurementUnixSocketContext::onConnected() {
@@ -137,8 +137,7 @@ namespace minigateway {
     void MeasurementUnixSocketContext::processLine(const std::string& line) const {
         if (!line.empty()) {
             try {
-                Measurement measurement = parseMeasurementLine(line);
-                measurementHandler(std::move(measurement));
+                measurementModel.accept(parseMeasurementLine(line));
             } catch (const std::exception& ex) {
                 LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
             }
