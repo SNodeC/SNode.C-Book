@@ -75,7 +75,8 @@
 % ----------------------------------------------------------------------
 \node[core block, below=\majorVGap of webapp] (core) {%
   \textbf{\textcolor{snodecTitleBlue}{Shared application core}}\\[-0.4mm]
-  {\footnotesize \texttt{acceptMeasurement(...)} / \texttt{MeasurementState} / \texttt{MeasurementBus}}
+  {\footnotesize \texttt{MeasurementModel}}\\[-0.2mm]
+  {\footnotesize \texttt{accept(...)} and subscriber notification}
 };
 
 % ----------------------------------------------------------------------
@@ -91,7 +92,7 @@
 \node[mqtt block, below=\majorVGap of core, xshift=\sideShift] (mqttUplink) {%
   \textbf{\textcolor{snodecTitleOrange}{\texttt{net::in::stream::legacy::SocketClient}}}\\[-0.4mm]
   {\footnotesize mqtt-uplink client instance}\\[-0.2mm]
-  {\footnotesize \texttt{MiniGatewaySocketContextFactory}}\\[-0.2mm]
+  {\footnotesize \texttt{MiniGatewayMqttSocketContextFactory}}\\[-0.2mm]
   {\footnotesize \texttt{MiniGatewayMqtt}}
 };
 
