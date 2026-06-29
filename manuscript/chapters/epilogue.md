@@ -1,4 +1,6 @@
-## Layers are not decoration {.unnumbered}
+## What to Take Away from SNode.C {.unnumbered}
+
+### Layers are not decoration {.unnumbered}
 
 \index{layered architecture}
 
@@ -19,7 +21,7 @@ lower family
 
 A reader who understands this stack can move between IPv4, IPv6, Unix domain sockets, Bluetooth, HTTP, WebSocket, MQTT, persistence, and deployment without treating each subject as a separate world.
 
-## Boundaries are design decisions {.unnumbered}
+### Boundaries are design decisions {.unnumbered}
 
 \index{system boundaries}
 \index{design decisions}
@@ -39,7 +41,7 @@ Which boundary honestly owns this concern?
 
 That question is useful before writing code, while debugging code, while designing configuration, while packaging the application, and while deciding whether a system should remain one executable or become several cooperating services.
 
-## Roles and instances need precise language {.unnumbered}
+### Roles and instances need precise language {.unnumbered}
 
 \index{roles}
 \index{instances}
@@ -62,7 +64,7 @@ configured role name
 
 This terminology is how a running system becomes understandable.
 
-## Protocols carry meaning, not only bytes {.unnumbered}
+### Protocols carry meaning, not only bytes {.unnumbered}
 
 \index{protocol meaning}
 \index{bytes versus meaning}
@@ -82,7 +84,7 @@ raw data
 
 Therefore, protocol code should not be treated as accidental glue. It is where communication becomes part of an application.
 
-## Build and deployment are part of architecture {.unnumbered}
+### Build and deployment are part of architecture {.unnumbered}
 
 \index{build architecture}
 \index{deployment architecture}
@@ -106,7 +108,7 @@ public include path
 
 A system that is clear only in the source tree is not yet fully clear.
 
-## The guided project is not the end of the idea {.unnumbered}
+### The guided project is not the end of the idea {.unnumbered}
 
 \index{MiniGateway}
 \index{guided project}
@@ -129,7 +131,7 @@ Which tests protect the real boundaries?
 
 When those questions remain answerable, the application can grow without becoming opaque.
 
-## A philosophical review of the book {.unnumbered}
+### A philosophical review of the book {.unnumbered}
 
 This book has used SNode.C as a concrete framework, but its deeper subject is the question of how network software can remain intelligible when it grows. That question is older than any particular library. Every serious network application eventually meets the same forces: different carriers, different protocols, changing deployment targets, operational failures, partial knowledge, and the temptation to hide complexity behind one convenient abstraction.
 
@@ -143,7 +145,7 @@ There is also a positive side to this discipline. Visible boundaries make change
 
 Seen this way, SNode.C is less a library of shortcuts than a vocabulary for layered network systems in C++. It rewards programmers who are willing to be explicit. It asks for more care at the boundary between concepts, but it pays that care back when systems need to be extended, diagnosed, ported, packaged, or taught. That is the philosophical center of the book: clarity is not achieved by hiding all structure. Clarity is achieved by preserving the right structure long enough that the system can still explain itself.
 
-## Where to go next {.unnumbered}
+### Where to go next {.unnumbered}
 
 A reader who finishes this book should know how SNode.C public headers, servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components fit together.
 
@@ -162,7 +164,7 @@ only then generalize or split the system
 
 SNode.C rewards this discipline because its architecture makes the boundaries explicit. It does not force good design automatically, but it gives good design places to live.
 
-## Closing perspective {.unnumbered}
+### Closing perspective {.unnumbered}
 
 The promise of SNode.C is not that networking becomes trivial.
 

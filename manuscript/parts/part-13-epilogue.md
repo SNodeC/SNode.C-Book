@@ -1,4 +1,4 @@
-# Epilogue — What to Take Away from SNode.C {.unnumbered}
+# Epilogue {.unnumbered}
 
 SNode.C is not primarily a shortcut for opening sockets.
 
