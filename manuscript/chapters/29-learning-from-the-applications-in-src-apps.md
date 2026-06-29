@@ -398,16 +398,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-This small shape already shows application assembly:
-
-```text
-runtime initialization
-  -> web application object
-      -> middleware
-          -> route
-              -> listen action
-                  -> runtime start
-```
+This small shape already shows the assembly sequence: runtime initialization, web application object, middleware, route registration, listen action, and runtime start.
 
 The real file contains more routes, nested routers, SSE behavior, timer-driven output, and listen-state handling. But the assembly principle is already visible in the compact form. The executable is not a giant custom abstraction. It wires framework pieces and application behavior together.
 
@@ -415,13 +406,7 @@ Chapter 16 and Chapter 17 become practical here: application entry points and bu
 
 #### `snode.c` as application-shell example
 
-The `snode.c` target is the best main example for application-shell structure. It combines:
-
-```text
-snode.c
-  -> Express-like HTTP application layer
-  -> IPv4 legacy stream carrier
-```
+The `snode.c` target is the best main example for application-shell structure. It combines the Express-like HTTP application layer with an IPv4 legacy stream carrier.
 
 Its entry point demonstrates several useful patterns:
 
@@ -435,16 +420,7 @@ Its entry point demonstrates several useful patterns:
 - listen-state callback handling,
 - runtime start.
 
-A useful reading model is:
-
-```text
-build target
-  -> linked layers
-      -> application object
-          -> middleware and routes
-              -> listen/connect/state handling
-                  -> runtime start
-```
+A useful reading model runs from the build target to the linked layers, then to the application object, middleware and routes, listen/connect/state handling, and finally runtime start.
 
 This is the path from CMake to application behavior. For a reader, that path is more useful than memorizing individual API calls. It shows how to approach a SNode.C application file.
 
@@ -459,15 +435,7 @@ net-in-stream-legacy
 
 Its role in the manuscript should be secondary. It is useful because it shows that the Express-like layer can also be used for behavior comparison, compatibility checking, and focused route/middleware experiments.
 
-A good way to present it is:
-
-```text
-snode.c
-  -> application-shell example
-
-express-compat-server
-  -> compatibility / behavior-comparison example
-```
+In this reading, `snode.c` is the application-shell example, while `express-compat-server` is a compatibility and behavior-comparison example.
 
 The goal is not to study both applications deeply, but to show that the same layer composition can serve different application intentions.
 
@@ -485,25 +453,11 @@ The selected examples show different application shapes without turning the chap
 
 #### Echo as an application family
 
-Chapter 3 introduced a deliberately simplified echo pair:
-
-```text
-EchoSocketContext
-  -> echoserver
-  -> echoclient
-  -> IPv4 / stream / legacy
-```
+Chapter 3 introduced `EchoSocketContext` through the deliberately simplified `echoserver` and `echoclient` pair over IPv4, stream transport, and legacy connection handling.
 
 The repository echo family generalizes the same idea. The full echo application structure uses a shared echo protocol model, generated server executables, generated client executables, several network families, legacy and TLS stream modes, and compile definitions for the selected combination.
 
-The key idea is:
-
-```text
-stable protocol model
-  -> generated client/server targets
-      -> selected network family
-          -> selected legacy/TLS stream mode
-```
+The repository echo family keeps a stable protocol model while generating client/server targets for selected network families and legacy/TLS stream modes.
 
 This is one of the most useful application patterns in the repository. It shows how SNode.C can keep the protocol core stable while changing the outer communication boundary.
 
@@ -513,27 +467,9 @@ The build includes IPv4, IPv6, and Unix-domain variants by default. Bluetooth L2
 
 The JSON examples are useful because they show a clean server/client split.
 
-The server side combines the Express-like HTTP server layer with the selected stream carrier and JSON middleware:
+The server side, `jsonserver`, combines an Express legacy `WebApp`, `JsonMiddleware`, a `POST /index.html` route, JSON attribute access, and a response.
 
-```text
-jsonserver
-  -> Express legacy WebApp
-      -> JsonMiddleware
-          -> POST /index.html
-              -> JSON attribute access
-                  -> response
-```
-
-The client side combines the HTTP client layer with the selected stream carrier:
-
-```text
-jsonclient
-  -> HTTP legacy client
-      -> MasterRequest
-          -> POST /index.html
-              -> application/json body
-                  -> response / parse-error callbacks
-```
+The client side, `jsonclient`, combines the HTTP legacy client, `MasterRequest`, a `POST /index.html` request, an `application/json` body, and response or parse-error callbacks.
 
 This pair is good manuscript material because it shows both sides of an HTTP interaction. It also shows optional feature availability: the server target depends on JSON support being present, while the client demonstrates an outgoing HTTP request shape.
 
@@ -541,35 +477,11 @@ This pair is good manuscript material because it shows both sides of an HTTP int
 
 `testpost` should be presented as a focused example, not as a polished application. It demonstrates an HTTP POST-oriented surface and links both legacy and TLS stream support.
 
-A useful model is:
+The legacy web app provides the `GET` form and `POST` body handling. The TLS web app reuses that application behavior on a TLS-capable endpoint.
 
-```text
-legacy web app
-  -> GET form
-      -> POST body handling
+The source structure is useful because it shows two related application roles in one file: `express::legacy::in::WebApp` for the legacy HTTP endpoint and `express::tls::in::WebApp` for the TLS HTTP endpoint.
 
-TLS web app
-  -> reuses legacy app behavior
-      -> listens on TLS-capable endpoint
-```
-
-The source structure is useful because it shows two related application roles in one file:
-
-```text
-express::legacy::in::WebApp
-  -> legacy HTTP endpoint
-
-express::tls::in::WebApp
-  -> TLS HTTP endpoint
-```
-
-The TLS app reuses the legacy app behavior. That makes `testpost` useful for Chapter 29 because it shows application composition rather than only route syntax. It also connects back to Chapter 19:
-
-```text
-same application behavior
-  -> legacy carrier
-  -> TLS carrier
-```
+The TLS app reuses the legacy app behavior. That makes `testpost` useful for Chapter 29 because it shows the same application behavior exposed over both the legacy carrier and the TLS carrier.
 
 This example should remain compact in the manuscript. The point is the application shape, not the details of the HTML upload form or the example certificate configuration.
 
@@ -577,15 +489,7 @@ This example should remain compact in the manuscript. The point is the applicati
 
 `testpipe` is useful because it does not depend on HTTP, MQTT, WebSocket, or database support. It links only against the core layer. That makes it a small example of runtime-managed utility behavior.
 
-A compact model is:
-
-```text
-core runtime
-  -> Pipe
-      -> PipeSink callbacks
-          -> PipeSource send
-              -> runtime start
-```
+`testpipe` shows the core runtime, a `Pipe`, `PipeSink` callbacks, `PipeSource::send`, and runtime start without involving a network protocol.
 
 A simplified excerpt captures the idea:
 
@@ -612,14 +516,7 @@ const core::pipe::Pipe pipe(
 return core::SNodeC::start();
 ```
 
-This example is useful because it reminds the reader that applications are not limited to servers. SNode.C also contains core utilities and runtime-managed helpers. The same pattern appears again:
-
-```text
-initialize runtime
-  -> create runtime object
-      -> register callbacks
-          -> start runtime
-```
+This example is useful because it reminds the reader that applications are not limited to servers. The recurring shape is simple: initialize the runtime, create the runtime-managed object, register callbacks, and start the runtime.
 
 Not every application target is a server/client communication-role example. Some targets demonstrate core runtime objects or database integration.
 
@@ -655,16 +552,7 @@ This is a good continuation from Chapter 28. The target does not need HTTP, MQTT
 - timers that trigger database work,
 - transaction sequences with rollback and commit.
 
-A compact application model is:
-
-```text
-configuration
-  -> MariaDBConnectionDetails
-      -> MariaDBClient
-          -> command sequence
-              -> callback result/error handling
-                  -> timer-driven repeated queries
-```
+The MariaDB example combines configuration, `MariaDBConnectionDetails`, `MariaDBClient`, command sequences, result/error callbacks, and timer-driven repeated queries.
 
 `testmariadb` is a focused demonstration target. It is not a recommended production persistence architecture. Its value is that it makes the Chapter 28 API concrete.
 
@@ -708,40 +596,17 @@ Small applications and larger applications often use the same pattern. They diff
 
 This keeps the mental model stable. A larger application is not necessarily a different kind of thing. It may simply compose more roles, more layers, and more operational behavior.
 
-The recurring structure is:
-
-```text
-select layers
-  -> create application object or role
-      -> register behavior
-          -> expose configuration
-              -> start runtime
-```
+Across these examples, the practical reading path is: select layers, create the application object or role, register behavior, expose configuration, and start the runtime.
 
 #### Optional dependencies and application availability
 
 Some applications only exist when optional dependencies are available. That is part of the application model, not a minor CMake technicality.
 
-Examples:
-
-```text
-JSON support available
-  -> JSON server target can be built
-
-MariaDB support available
-  -> database demonstration target can be built
-```
+If JSON support is available, the JSON server target can be built. If MariaDB support is available, the database demonstration target can be built.
 
 This prepares the reader for later build and deployment chapters. A deployed system may not contain every possible SNode.C component. It contains the components enabled by selected modules, available dependencies, build configuration, install rules, and deployment purpose.
 
-The application tree therefore teaches a practical lesson:
-
-```text
-available framework capability
-  -> build target
-      -> installable executable
-          -> deployed application
-```
+The application tree therefore teaches a practical lesson: available framework capability becomes a build target, the build target becomes an installable executable, and the executable becomes part of the deployed application.
 
 #### Reading a SNode.C application: a practical recipe
 
@@ -761,25 +626,16 @@ When reading a SNode.C application, use a repeatable method:
 
 This recipe works well because SNode.C applications are often explicit about their layers. The build target and the entry point usually agree.
 
-For example:
+The same principle can be read from common link patterns:
 
-```text
-in-tree:  target_link_libraries(... http-server-express net-in-stream-legacy ...)
-external: target_link_libraries(... snodec::http-server-express snodec::net-in-stream-legacy ...)
-  -> expect an HTTP / Express-style application over an IPv4 legacy stream carrier
+| Link pattern | Expected application behavior |
+|---|---|
+| `http-server-express` + `net-in-stream-legacy` | HTTP / Express-style application over an IPv4 legacy stream carrier |
+| `http-client` + `net-in-stream-legacy` | outgoing HTTP client behavior over an IPv4 legacy stream carrier |
+| `db-mariadb` | MariaDB client and command flow |
+| `core` | runtime/core utility behavior |
 
-in-tree:  target_link_libraries(... http-client net-in-stream-legacy ...)
-external: target_link_libraries(... snodec::http-client snodec::net-in-stream-legacy ...)
-  -> expect outgoing HTTP client behavior over an IPv4 legacy stream carrier
-
-in-tree:  target_link_libraries(... db-mariadb ...)
-external: target_link_libraries(... snodec::db-mariadb ...)
-  -> expect MariaDB client and command flow
-
-in-tree:  target_link_libraries(... core ...)
-external: target_link_libraries(... snodec::core ...)
-  -> expect runtime/core utility behavior
-```
+Inside the source tree those are local target names. Outside the source tree, the installed package exposes the corresponding `snodec::...` imported targets.
 
 The reader should learn to move between CMake and C++. Both files are part of the application:
 
@@ -808,25 +664,9 @@ one universal executable with every carrier hidden behind runtime branching
 
 The echo family demonstrates this. A separate generated target can make each variant easier to test, install, run, and explain. That does not mean one executable per variant is always the right design. It means the build structure can express operational clarity when the variants are meaningful.
 
-The JSON examples demonstrate a different form of clarity:
+The JSON examples demonstrate a different form of clarity: separate targets keep server-side behavior and client-side behavior visible.
 
-```text
-server target
-  -> server-side behavior
-
-client target
-  -> client-side behavior
-```
-
-The database example demonstrates feature-dependent clarity:
-
-```text
-MariaDB available
-  -> database target exists
-
-MariaDB unavailable
-  -> database target is absent
-```
+The database example demonstrates feature-dependent clarity: when MariaDB is available the database target exists, and when it is unavailable the target is absent.
 
 These are application-design decisions. The build system records them.
 

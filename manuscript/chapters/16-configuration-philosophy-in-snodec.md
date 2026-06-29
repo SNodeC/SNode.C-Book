@@ -168,14 +168,7 @@ EchoServer echoServer("echo");
 
 can appear as an addressable communication role on the command line. Under that instance, sections expose the available configuration scopes.
 
-A typical hierarchy is:
-
-```text
-application
-  -> instance
-      -> section
-          -> option
-```
+A typical hierarchy is application, instance, section, and option.
 
 The command line is therefore not only a way to override values. It is a discovery surface.
 
@@ -384,14 +377,7 @@ A section groups options that belong to a particular part of the role.
 
 #### Section hierarchy
 
-The shape is:
-
-```text
-application
-  -> instance
-      -> section
-          -> option
-```
+The same application/instance/section/option hierarchy applies here; only the concrete section and option change.
 
 For a named instance `echo`, examples include:
 
@@ -478,15 +464,7 @@ Not every option should be written into a configuration file. Some options descr
 
 SNode.C makes that distinction visible by separating persistent and nonpersistent options.
 
-The practical rule is:
-
-```text
-persistent options
-  -> may be stored in configuration files
-
-nonpersistent options
-  -> affect inspection, generation, help, or the current run only
-```
+The practical rule is simple: persistent options may be stored in configuration files, while nonpersistent options affect inspection, generation, help, or the current run only.
 
 Persistent options describe the desired shape of an application or instance. Nonpersistent options trigger inspection, generation, display, help, or one-run control actions.
 
@@ -567,14 +545,7 @@ A configured role has already been prepared for activation. The parameterless ca
 
 When required configuration is missing, the error path should point back into the same hierarchy. For example, a missing server port belongs to the configured server role that required it.
 
-It belongs to a particular instance and section:
-
-```text
-application
-  -> instance
-      -> local
-          -> port
-```
+For a server-side role, the hierarchy commonly narrows to the `local` section and then to a concrete option such as `port`.
 
 A missing client host or port likewise belongs to the remote section of a particular client instance. Therefore, parameterless activation is a strong proof point. It works only because the role has a structured configuration identity.
 
@@ -595,14 +566,7 @@ through code, command line, and files.
 
 CLI11 helps implement that model.
 
-The important thing for the SNode.C reader is the resulting structure:
-
-```text
-application
-  -> named instance
-      -> section
-          -> option
-```
+For the SNode.C reader, the important point is that command-line form moves from the application to a named instance, then to a section, and finally to a concrete option.
 
 That is the model the application author and operator see.
 

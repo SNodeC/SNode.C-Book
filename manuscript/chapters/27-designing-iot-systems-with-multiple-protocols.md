@@ -7,14 +7,7 @@
 
 ### From protocol composition to system boundaries
 
-MQTT-over-WebSocket is one carefully composed stack:
-
-```text
-HTTP upgrade
-  -> WebSocket
-      -> WebSocket subprotocol
-          -> MQTT
-```
+MQTT-over-WebSocket is one composed stack: HTTP upgrade, WebSocket, WebSocket subprotocol, and MQTT.
 
 A whole IoT system widens the lens from one composed stack to several cooperating boundaries. In such a system, several protocol stacks may coexist because they serve different communication boundaries. The central sentence is:
 
@@ -158,25 +151,14 @@ An IoT system in SNode.C is often not one tall vertical stack. It is a constella
 
 For example:
 
-```text
-device edge stack
-  -> Bluetooth / custom stream
-
-integration stack
-  -> MQTT
-
-admin stack
-  -> HTTP / Express
-
-observation stack
-  -> SSE
-
-interactive stack
-  -> WebSocket
-
-local-control stack
-  -> Unix domain socket
-```
+| Stack role | Typical protocol surface |
+|---|---|
+| device edge | Bluetooth or custom stream |
+| integration | MQTT |
+| administration | HTTP / Express |
+| observation | SSE |
+| interaction | WebSocket |
+| local control | Unix domain socket |
 
 These stacks are not redundant duplicates. They are different conversations at different system boundaries. That is the main reason SNode.C can be useful in larger IoT designs.
 
@@ -219,15 +201,7 @@ sensor reading
 
 This is one piece of information moving through several roles. Each role can have a different protocol surface. That is not necessarily duplication. It may be the clearest design.
 
-A compact principle is:
-
-```text
-same domain fact
-  -> different conversations
-      -> different protocol surfaces
-```
-
-This helps keep protocol-specific behavior out of the domain model. The domain meaning is shared; the surfaces are boundary-specific.
+The compact principle is that the same domain fact may legitimately appear in different conversations and on different protocol surfaces. This helps keep protocol-specific behavior out of the domain model. The domain meaning is shared; the surfaces are boundary-specific.
 
 ### MQTT as an integration spine, not the whole system
 
@@ -255,17 +229,7 @@ MQTT is an integration spine, not a universal surface. It is most valuable when 
 
 HTTP and the Express-like layer often fit management and operator-facing boundaries. They are useful for dashboards, status pages, management APIs, REST-like control surfaces, authentication middleware, static assets, and structured routing.
 
-A useful distinction is:
-
-```text
-MQTT
-  -> machine-facing integration
-
-HTTP / Express
-  -> operator-facing structure
-```
-
-This distinction is not a law. It is a design pattern. HTTP APIs may also be consumed by machines, and MQTT data may ultimately be visualized by humans. The point is that HTTP/Express naturally gives structure to operator-facing and application-facing surfaces, while MQTT naturally gives structure to brokered machine messaging. Part XII turns the same division of labor into source code instead of treating it as a separate pattern catalogue.
+A useful distinction is that MQTT often expresses machine-facing integration, while HTTP and the Express-like layer often express operator-facing structure. This distinction is not a law. It is a design pattern. HTTP APIs may also be consumed by machines, and MQTT data may ultimately be visualized by humans. The point is that HTTP/Express naturally gives structure to operator-facing and application-facing surfaces, while MQTT naturally gives structure to brokered machine messaging.
 
 A compact comparison:
 
@@ -292,23 +256,7 @@ SSE and WebSocket become useful when the human-facing or monitoring-facing side 
 
 SSE is a good fit when updates flow mainly from server to client: live metrics, state changes, activity feeds, alerts, and dashboard updates. WebSocket is a good fit when the interaction is bidirectional: browser control sessions, live command channels, collaborative dashboards, interactive monitoring tools, or custom bidirectional protocols.
 
-SSE and WebSocket are often presentation or interaction boundaries. They do not automatically replace the MQTT integration role. A clear design may use all of these:
-
-```text
-device data
-  -> MQTT integration
-
-dashboard view
-  -> HTTP / Express
-
-live dashboard updates
-  -> SSE
-
-interactive browser control
-  -> WebSocket
-```
-
-The protocols are not competing when the boundaries are different.
+SSE and WebSocket are often presentation or interaction boundaries. They do not automatically replace the MQTT integration role. A clear design may use MQTT for device data, HTTP/Express for dashboard structure, SSE for live dashboard updates, and WebSocket for interactive browser control. The protocols are not competing when the boundaries are different.
 
 ### MQTT-over-WebSocket as a bridge boundary
 
@@ -317,18 +265,7 @@ The protocols are not competing when the boundaries are different.
 
 MQTT-over-WebSocket is useful when MQTT semantics must travel through a WebSocket-oriented path. It is not a universal default, and it is not “more general MQTT.” It is MQTT semantics intentionally carried through a WebSocket-oriented boundary.
 
-A good decision rule is:
-
-```text
-use native MQTT
-  -> when the integration boundary is naturally MQTT
-
-use MQTT over WebSocket
-  -> when the surrounding path is WebSocket-oriented
-     and MQTT semantics must survive there
-```
-
-This follows directly from Chapter 26. MQTT-over-WebSocket connects:
+A good decision rule is simple: use native MQTT when the integration boundary is naturally MQTT, and use MQTT over WebSocket only when the surrounding path is WebSocket-oriented and MQTT semantics must survive there. This follows directly from Chapter 26. MQTT-over-WebSocket connects:
 
 ```text
 MQTT semantics
@@ -345,16 +282,7 @@ That is useful when the system genuinely needs that composition. It should not b
 
 Bluetooth belongs where the system is close to devices. RFCOMM and L2CAP are useful near boundaries such as local device exchange, commissioning, nearby peer communication, appliance or sensor interaction, and device-local service roles.
 
-Bluetooth usually should not become the integration spine of the whole system. It normally belongs at one system edge:
-
-```text
-Bluetooth device edge
-  -> local adapter role
-      -> MQTT integration
-          -> dashboard / storage / external services
-```
-
-This keeps the local device-specific boundary separate from the wider integration boundary. Bluetooth can be exactly the right tool near the physical edge without being the right tool for brokered system-wide distribution.
+Bluetooth usually should not become the integration spine of the whole system. It normally belongs at one system edge, as a local adapter role that may feed MQTT integration, dashboard views, storage, or external services. This keeps the local device-specific boundary separate from the wider integration boundary. Bluetooth can be exactly the right tool near the physical edge without being the right tool for brokered system-wide distribution.
 
 ### Unix domain sockets for local control
 
@@ -371,19 +299,12 @@ Multi-protocol design does not require one process that contains every role. Som
 
 For example:
 
-```text
-device-facing process
-  -> talks to hardware or Bluetooth
-
-integration process
-  -> publishes/subscribes via MQTT
-
-web-facing process
-  -> serves dashboard and admin endpoints
-
-bridge process
-  -> maps between protocol families
-```
+| Process role | Typical responsibility |
+|---|---|
+| device-facing process | talks to hardware or Bluetooth |
+| integration process | publishes/subscribes via MQTT |
+| web-facing process | serves dashboard and admin endpoints |
+| bridge process | maps between protocol families |
 
 The right choice depends on deployment, failure isolation, configuration, resource limits, and operational clarity. The goal is not to maximize consolidation. The goal is to choose process boundaries that preserve system clarity.
 
@@ -404,18 +325,7 @@ A multi-protocol system may be a single executable when the roles are tightly re
 
 In a multi-protocol system, configuration becomes a map of roles and boundaries. It can express which roles exist, which roles are enabled, which protocol family each role uses, which endpoints each role binds or connects to, which TLS material belongs to which role, which MQTT peers or brokers are used, which web interfaces are exposed, which retry or reconnect policies apply, and which local-control sockets exist.
 
-This connects directly to Chapters 16 and 17:
-
-```text
-Chapter 16
-  -> named instances and role visibility
-
-Chapter 17
-  -> structured configuration
-
-Chapter 27
-  -> configuration as a system boundary map
-```
+This connects directly to Chapter 16's named instances and role visibility and Chapter 17's structured configuration model. In this chapter, those ideas become configuration as a system boundary map.
 
 In SNode.C terms, configuration should make configured roles and registered instances legible. At the system-design level, it should also show which boundary each role serves. A configuration file should not be only a pile of values. In a multi-protocol IoT system, it should help answer:
 
@@ -484,15 +394,7 @@ is usually too crude. Different roles need different temporal behavior.
 | Bluetooth commissioning | optional / disabled until needed |
 | web admin interface | fail clearly, do not hide configuration errors |
 
-This connects to Chapter 20:
-
-```text
-Chapter 20
-  -> timeout, retry, reconnect, disablement, shutdown, and failure state
-
-Chapter 27
-  -> apply that separation per boundary
-```
+This connects to Chapter 20's vocabulary of timeout, retry, reconnect, disablement, shutdown, and failure state; this chapter applies that separation per boundary.
 
 A retry policy that is sensible for an MQTT integration client may be actively misleading for a local administration endpoint. The role that owns the boundary should also own its failure policy. Timeouts, retries, reconnects, disablement, shutdown, and degraded state should be chosen for the boundary, not imposed globally.
 
@@ -506,14 +408,7 @@ For example, the same sensor state may be published to MQTT, shown through an HT
 
 The meaning is shared. The surfaces are different.
 
-A useful distinction is:
-
-```text
-shared domain meaning
-  -> several honest protocol surfaces
-```
-
-This is better than forcing one protocol surface to serve every consumer. It also helps keep protocol-specific behavior out of the domain model. The domain model should not become an MQTT model, an HTTP model, or a WebSocket model merely because the same state is visible through those surfaces.
+The useful distinction is between shared domain meaning and the several honest protocol surfaces that expose it. This is better than forcing one protocol surface to serve every consumer. It also helps keep protocol-specific behavior out of the domain model. The domain model should not become an MQTT model, an HTTP model, or a WebSocket model merely because the same state is visible through those surfaces.
 
 ### Practical design recipe
 
@@ -540,14 +435,7 @@ and:
 many protocols without clear boundaries
 ```
 
-The first mistake hides real differences. The second mistake creates accidental complexity. The better path is:
-
-```text
-different protocols
-  -> clear roles
-      -> explicit boundaries
-          -> coherent system
-```
+The first mistake hides real differences. The second mistake creates accidental complexity. The better path is to let different protocols serve clear roles at explicit boundaries so the resulting system remains coherent.
 
 The goal is not to minimize the number of protocols at all costs. The goal is to make every protocol choice explainable.
 
@@ -573,19 +461,4 @@ SNode.C helps because many different protocol families still share the same arch
 
 ### Closing perspective
 
-The protocol-facing IoT design path is:
-
-```text
-MQTT as protocol family
-  -> MQTT over WebSocket as protocol composition
-      -> multi-protocol IoT systems as boundary design
-```
-
-The important conclusion is simple:
-
-```text
-clear boundary
-  -> honest protocol choice
-      -> observable role
-          -> maintainable system
-```
+The protocol-facing IoT design path moves from MQTT as a protocol family, through MQTT over WebSocket as protocol composition, to multi-protocol IoT systems as boundary design. The important conclusion is simple: clear boundaries support honest protocol choices, observable roles, and maintainable systems.

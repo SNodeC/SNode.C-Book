@@ -11,14 +11,7 @@ Configuration shapes a communication role before it becomes a registered runtime
 
 This chapter looks at the practical anatomy of that model.
 
-The core hierarchy is:
-
-```text
-application
-  -> instance
-      -> section
-          -> option
-```
+The core hierarchy is application, instance, section, and option.
 
 The application is the executable-level operational shell. A named instance is the externally addressable configuration identity of one configured communication role inside that application. A section is one scoped part of that instance configuration.
 
@@ -244,12 +237,7 @@ Disablement is a first-class instance state, not a loose Boolean label.
 
 Disablement lets a configured role remain part of the application shape while being removed from the required startup path for a particular run. That matters for multi-instance programs.
 
-An executable may contain several possible communication roles, while only some of them are active in a particular deployment. Configuration can then express:
-
-```text
-this role exists
-  -> but it is disabled for this run
-```
+An executable may contain several possible communication roles, while only some of them are active in a particular deployment. Configuration can then express that a role still exists, but is disabled for this run.
 
 That is cleaner than removing the role from the application or inventing separate ad hoc flags.
 
@@ -481,14 +469,7 @@ echoserver echo --help
 echoserver echo local --help
 ```
 
-This mirrors the hierarchy:
-
-```text
-application help
-  -> instance help
-      -> section help
-          -> option details
-```
+This mirrors the hierarchy: application help, then instance help, then section help, and finally option details.
 
 The command line can also print command-line representations of the selected configuration. The `--command-line` option supports views such as `standard`, `required`, `active`, and `complete`.
 
@@ -498,14 +479,7 @@ Together with `--show-config` and `--write-config`, the command line becomes a w
 
 The same guided behavior appears when required configuration is missing.
 
-A parameterless `listen()` or `connect()` can fail in a way that points the user back into the hierarchy:
-
-```text
-application
-  -> instance
-      -> section
-          -> required option
-```
+A parameterless `listen()` or `connect()` can fail in a way that points the user back into the hierarchy: application, instance, section, and the required option inside that section.
 
 A compact server-side session shows the idea. Here the executable is `echoserver` and the named server instance is `echo`:
 
@@ -536,15 +510,7 @@ This command-line guidance belongs to startup and run configuration. It should n
 
 As Chapter 16 explained, command-line and file configuration apply to startup-known instances. Runtime-created roles must be shaped through the C++ API.
 
-That boundary keeps the model clear:
-
-```text
-startup-known roles
-  -> guided by code, command line, and configuration files
-
-runtime-created roles
-  -> configured by code
-```
+That boundary keeps the model clear: startup-known roles are guided by code, command-line arguments, and configuration files, while runtime-created roles must be configured by code.
 
 The command line traverses the startup configuration model. It does not become a live management protocol for roles created later by application logic.
 
@@ -558,13 +524,7 @@ echo.remote.host = "localhost"
 echo.remote.port = 8080
 ```
 
-The dotted key is the file representation of:
-
-```text
-instance
-  -> section
-      -> option
-```
+The dotted key represents the same model: instance, section, option.
 
 The syntax is different from the command line. The model is the same.
 
@@ -579,23 +539,9 @@ The file is therefore not a separate configuration universe. It is the persisten
 
 Parameterless `listen()` and `connect()` rely on configuration that is already present. If required configuration is missing, the error path can reveal the missing part of the hierarchy.
 
-For a server, a missing port can be understood as:
+For a server, a missing port belongs to the `local` section of a specific configured instance.
 
-```text
-application
-  -> instance
-      -> local
-          -> port
-```
-
-For a client, missing peer information can be understood as:
-
-```text
-application
-  -> instance
-      -> remote
-          -> host / port
-```
+For a client, missing peer information belongs to the `remote` section of that configured instance.
 
 This is scoped error reporting.
 
@@ -630,14 +576,7 @@ Therefore, parameterless activation is such a strong proof point for the configu
 
 Progressive disclosure is useful for operators, but it is also useful for readers.
 
-It teaches the model in the order in which the model is structured:
-
-```text
-application
-  -> instance
-      -> section
-          -> option
-```
+It teaches the model in the order in which the model is structured. The same application/instance/section/option structure is therefore both an operator model and a reading model.
 
 This is especially valuable in multi-instance programs. Instead of forcing every option into one flat help page, the hierarchy lets the user ask increasingly specific questions.
 
@@ -795,14 +734,7 @@ A good application can use both: source-level defaults for clarity and external 
 
 ### What remains stable
 
-Across all these details, the stable model is:
-
-```text
-application
-  -> instance
-      -> section
-          -> option
-```
+Across all these details, the application/instance/section/option hierarchy remains the stable spine of configuration.
 
 The application gives the operational envelope. The instance gives the configured communication role an address. The section gives one responsibility scope.
 

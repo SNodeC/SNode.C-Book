@@ -41,14 +41,7 @@ That distinction matters. TLS is serious: it brings identity material, trust mat
 \index{connection-layer specialization}
 
 
-The layered model is:
-
-```text
-lower communication family
-  -> transport form
-      -> connection handling
-          -> application protocol
-```
+The familiar layered reading path still applies: lower communication family, transport form, connection handling, and application protocol.
 
 TLS belongs in the connection-handling position. It sits above the lower family and transport form. It sits below the application protocol.
 
@@ -68,14 +61,7 @@ The lower family still exists. The registered server/client instance still exist
 
 TLS adds secure connection handling between those parts.
 
-A more general view is:
-
-```text
-lower communication family
-  -> stream transport
-      -> legacy or TLS connection layer
-          -> SocketContext
-```
+More generally, a `SocketContext` still sits above the lower family, stream transport, and the selected legacy-or-TLS connection layer.
 
 Where a TLS wrapper exists for a lower family, this pattern applies. The chapter uses IPv4 examples because they are familiar, not because the architectural idea is IPv4-specific. The same connection-layer specialization can be expressed for other lower families where the corresponding TLS stream components are available.
 
@@ -279,15 +265,7 @@ A TLS-enabled instance still has the ordinary sections that describe endpoint id
 
 It additionally has a `tls` section for secure connection handling.
 
-```text
-instance
-  -> local
-  -> remote
-  -> socket
-  -> server/client-specific sections
-  -> connection
-  -> tls
-```
+The instance-level configuration keeps several scopes visible: `local`, `remote`, `socket`, server/client-specific sections, `connection`, and `tls`.
 
 The `tls` section groups TLS-specific responsibilities:
 
@@ -492,12 +470,7 @@ It makes the existing one more important.
 
 ### A useful teaching path: legacy first, TLS second
 
-The clearest way to understand TLS in SNode.C is:
-
-```text
-legacy stream first
-  -> then TLS stream
-```
+The clearest way to understand TLS in SNode.C is still to read the legacy stream first, then the TLS stream.
 
 First understand the legacy application:
 

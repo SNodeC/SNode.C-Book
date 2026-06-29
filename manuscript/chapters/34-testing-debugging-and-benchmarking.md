@@ -9,15 +9,7 @@
 
 Deployment makes architecture visible as an installed system. Trustworthiness comes later: a built and deployed system must still be tested, inspected, debugged, and measured at the boundaries where it claims to be clear.
 
-SNode.C is delivered as libraries, component packages, exported CMake targets, runtime-loaded modules, configuration directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages. Testing, debugging, and benchmarking check whether the boundaries taught throughout the book still hold under pressure:
-
-```text
-build structure
-  -> installed structure
-      -> runtime behavior
-          -> diagnosed behavior
-              -> measured behavior
-```
+SNode.C is delivered as libraries, component packages, exported CMake targets, runtime-loaded modules, configuration directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages. Testing, debugging, and benchmarking check whether the boundaries taught throughout the book still hold under pressure. The chapter follows the path from build structure to installed structure, runtime behavior, diagnosed behavior, and measured behavior.
 
 A network framework is not finished when it compiles or installs. Compilation accepts the build graph; installation produces the filesystem shape. Trustworthiness requires reproducible, diagnosable, measurable behavior.
 
@@ -41,33 +33,18 @@ A test is useful when it says which SNode.C boundary it protects.
 \index{framework boundaries}
 
 
-Testing strategy should follow the framework's boundaries:
+Testing strategy should follow the framework's boundaries. The relevant boundaries are easiest to read as responsibilities:
 
-```text
-component boundary
-  -> what a library target promises to provide
-
-package boundary
-  -> what an installed component brings to a target system
-
-protocol boundary
-  -> where bytes become HTTP, WebSocket, MQTT, or another meaning
-
-runtime boundary
-  -> where configured communication roles become active connections and contexts
-
-configuration boundary
-  -> where defaults, command-line arguments, files, and named instances combine
-
-deployment boundary
-  -> where the installed filesystem layout must match runtime expectations
-
-operational boundary
-  -> where logs, diagnostics, memory behavior, and service supervision matter
-
-performance boundary
-  -> where load reveals the limiting part of the system
-```
+| Boundary | What it protects |
+|---|---|
+| component | what a library target promises to provide |
+| package | what an installed component brings to a target system |
+| protocol | where bytes become HTTP, WebSocket, MQTT, or another meaning |
+| runtime | where configured communication roles become active connections and contexts |
+| configuration | where defaults, command-line arguments, files, and named instances combine |
+| deployment | where the installed filesystem layout must match runtime expectations |
+| operational | where logs, diagnostics, memory behavior, and service supervision matter |
+| performance | where load reveals the limiting part of the system |
 
 A good test does not have to cover all of these at once. A broad end-to-end test is useful, but it is not a substitute for a focused boundary test when the boundary itself has a contract.
 
@@ -551,30 +528,15 @@ The better first question is:
 
 > Which boundary is failing?
 
-Examples:
+Useful boundary-first checks include:
 
-```text
-Does the component fail to build?
-  -> check includes, link dependencies, exported targets
-
-Does the application work in-tree but fail installed?
-  -> check exported package, installed paths, RPATH, runtime modules, service user
-
-Does the connection never establish?
-  -> check endpoint configuration, bind/connect status, firewall, TLS handshake, retry state
-
-Does HTTP parse incorrectly?
-  -> check parser boundary and input bytes
-
-Does routing choose the wrong handler?
-  -> check Express-style dispatcher semantics
-
-Does MQTT publish flow fail?
-  -> check session state, topic matching, QoS path, subscriber fan-out
-
-Does behavior degrade over time?
-  -> check lifetime, buffering, backpressure, leaks, slow peers
-```
+- **Component build failure:** check includes, link dependencies, and exported targets.
+- **Works in-tree but fails installed:** check exported packages, installed paths, RPATH, runtime modules, and service user.
+- **Connection never establishes:** check endpoint configuration, bind/connect status, firewall, TLS handshake, and retry state.
+- **HTTP parses incorrectly:** check the parser boundary and input bytes.
+- **Routing chooses the wrong handler:** check Express-style dispatcher semantics.
+- **MQTT publish flow fails:** check session state, topic matching, QoS path, and subscriber fan-out.
+- **Behavior degrades over time:** check lifetime, buffering, backpressure, leaks, and slow peers.
 
 This boundary-first approach is one of the practical benefits of a layered framework. SNode.C gives the developer names for the places where failure can occur. Debugging should use those names.
 
@@ -707,18 +669,7 @@ The benchmark identifies the workload. The profile identifies the cost. The arch
 
 A chapter like this must be honest: not every confidence surface is already automated. Some checks are daily development practice, some manual debugging, some desirable CI coverage, and some future hardening work.
 
-A useful distinction is:
-
-```text
-existing repository practice
-  -> what is already present and used
-
-manual development practice
-  -> what a developer can run while diagnosing or refining behavior
-
-recommended strategy
-  -> what should be protected over time as the framework and applications grow
-```
+This chapter separates existing repository practice, manual development practice, and the recommended strategy for protecting behavior as the framework and applications grow.
 
 This distinction keeps the chapter precise and useful. A reader does not need every test category immediately; they need to learn how to think about confidence in a layered framework.
 

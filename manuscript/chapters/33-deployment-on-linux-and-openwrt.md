@@ -62,15 +62,7 @@ The installed system should still reveal what was built. If the build selected H
 
 The first deployment target is general-purpose Linux: development workstations, servers, virtual machines, single-board computers running Debian-like distributions, and Linux-based lab systems. This environment is easiest to understand because it is close to the development system:
 
-```text
-CMake build
-  -> CMake install
-      -> CPack component package
-          -> package manager installation
-              -> filesystem layout
-                  -> service definition
-                      -> runtime configuration and state
-```
+CMake build, CMake install, CPack component package, package-manager installation, filesystem layout, service definition, and runtime configuration/state.
 
 Even there, SNode.C has a richer deployment story than a single executable. The framework installs component libraries, exported package configuration, runtime-sensitive protocol-extension layouts, and applications that may need logs, pid files, TLS material, database access, web assets, and service supervision.
 
@@ -115,15 +107,7 @@ SNode.C's top-level build enters `src` and then includes the project packaging c
 
 The packaging configuration enables Debian package generation, shared-library dependency generation, shared-library metadata generation, component dependency handling, component installation, and one package per component group. That matters because it lets the component model survive into deployable packages.
 
-A useful deployment path is:
-
-```text
-SNode.C component target
-  -> install component
-      -> CPack component package
-          -> package dependency metadata
-              -> target installation
-```
+A useful deployment path is: SNode.C component target, install component, CPack component package, package dependency metadata, and target installation.
 
 The component model is therefore not only useful while compiling from source. It can become visible to the target system's package manager.
 
@@ -141,26 +125,12 @@ Package dependencies should follow component dependencies, and development packa
 
 Examples include:
 
-```text
-utils
-  -> logger
-
-core
-  -> mux-${IO_Multiplexer}
-  -> utils
-
-websocket-server
-  -> websocket
-  -> http-server
-
-websocket-client
-  -> websocket
-  -> http-client
-
-net-in-stream-tls
-  -> net-in-stream
-  -> core-socket-stream-tls
-```
+| Package or component group | Declared dependency |
+|---|---|
+| `utils` | `logger` |
+| `core` | `mux-${IO_Multiplexer}`, `utils` |
+| WebSocket server/client packages | shared WebSocket layer and the corresponding HTTP side |
+| `net-in-stream-tls` | `net-in-stream`, `core-socket-stream-tls` |
 
 This mirrors the component graph from Chapter 32. A package manager should not have to rediscover the architecture from filenames. The package metadata should already carry the dependency story.
 
@@ -182,23 +152,13 @@ mux-select
 
 The `core` package depends on the selected default multiplexer component:
 
-```text
-core
-  -> mux-${IO_Multiplexer}
-  -> utils
-```
+`core` with the selected `mux-${IO_Multiplexer}` component and `utils`.
 
 That is the ordinary deployment path. A deployment may still install additional multiplexer libraries deliberately if process-local override techniques such as `LD_PRELOAD` are part of the operational or diagnostic strategy. That gives two deployment modes:
 
-```text
-normal package dependency
-  -> selected default multiplexer installed with core
+normal package dependency, where the selected default multiplexer is installed with `core`; and explicit operational override, where an additional multiplexer library is available for process-local override.
 
-explicit operational override
-  -> additional multiplexer library available for process-local override
-```
-
-both mechanisms remain deployment decisions. They do not change the application-facing event-driven model.
+Both mechanisms remain deployment decisions. They do not change the application-facing event-driven model.
 
 #### Installed paths and runtime-loaded modules
 
@@ -208,19 +168,11 @@ For ordinary linked libraries, the platform loader must find the dependency. For
 
 Chapter 32 identified the build-side properties that make such runtime composition visible. In deployment, those choices stop being abstract build details. They become the difference between:
 
-```text
-application starts
-  -> runtime protocol extension is found
-      -> WebSocket or MQTT-over-WebSocket works
-```
+application starts, the runtime protocol extension is found, and WebSocket or MQTT-over-WebSocket works.
 
 and:
 
-```text
-application starts
-  -> runtime protocol extension is missing
-      -> upgrade path fails
-```
+application starts, runtime protocol extension is missing, and the upgrade path fails.
 
 A missing WebSocket upgrade or subprotocol module may look like an application failure, but it can be a deployment-path failure.
 
@@ -321,15 +273,7 @@ SNode.C gives applications an operational shell. Deployment integrates that shel
 
 During development and debugging, foreground execution is usually the clearest mode. It keeps process output, configuration experiments, and failure behavior visible before the role is hidden behind a service manager.
 
-A typical development rhythm is:
-
-```text
-run in the foreground
-  -> inspect help and effective configuration
-      -> increase verbose level if needed
-          -> write a configuration file
-              -> move the role into a managed service
-```
+A typical development rhythm is to run in the foreground, inspect help and effective configuration, increase verbose level if needed, write a configuration file, and move the role into a managed service.
 
 Deployment begins with understanding the effective configuration, not with hiding the process in the background.
 
@@ -448,13 +392,7 @@ Therefore, SNode.C's componentized design matters. A constrained target does not
 
 OpenWrt is Linux, but it is not ordinary server deployment. It targets routers and embedded network devices, and it commonly appears with BusyBox, musl, `procd`, overlay filesystems, cross-compilation workflows, and package-manager-based system assembly rather than a full desktop/server distribution model.
 
-A compact mental model is:
-
-```text
-OpenWrt deployment
-  -> SNode.C Linux deployment
-      -> under embedded, cross-compiled, package-managed constraints
-```
+A compact mental model is SNode.C Linux deployment under embedded, cross-compiled, package-managed constraints.
 
 That is the heart of the OpenWrt part of the chapter.
 
@@ -483,17 +421,7 @@ The SDK provides a target-specific cross-compilation environment. That is the ri
 \index{package recipes}
 
 
-A compact OpenWrt deployment flow looks like this:
-
-```text
-OpenWrt SDK
-  -> package recipe
-      -> cross-compiled package
-          -> feed or image build
-              -> package manager installation
-                  -> procd service definition
-                      -> SNode.C configuration and runtime state
-```
+A compact OpenWrt deployment flow runs through the OpenWrt SDK, package recipe, cross-compiled package, feed or image build, package-manager installation, `procd` service definition, and SNode.C configuration/runtime state.
 
 The exact commands depend on the OpenWrt release and build setup. The architectural flow remains stable.
 
@@ -517,12 +445,7 @@ A feed may choose to split packages along component lines such as:
 
 The exact split is a packaging policy decision, not a statement that the SNode.C repository already ships this particular OpenWrt feed layout. The principle is stable:
 
-```text
-small target
-  -> small package surface
-      -> explicit dependencies
-          -> reproducible image
-```
+small target, small package surface, explicit dependencies, and reproducible image.
 
 This is how an embedded target stays understandable.
 
@@ -550,15 +473,7 @@ A feed tells downstream systems:
 - which target architectures are supported,
 - and which packages can be installed or built into an image.
 
-A compact view is:
-
-```text
-feed
-  -> package recipes
-      -> package dependencies
-          -> target architecture builds
-              -> repository metadata
-```
+A compact view is: package recipes, package dependencies, target-architecture builds, and repository metadata.
 
 A clear feed layout makes the system easier to build, install, update, and reproduce.
 
@@ -610,17 +525,7 @@ A SNode.C deployment can be read with a checklist. It is not a command sequence;
 14. Which trust model protects package updates?
 :::
 
-A shorter mental grouping is:
-
-```text
-artifact
-  -> dependencies
-      -> configuration
-          -> runtime state
-              -> service manager
-                  -> package source
-                      -> trust/update model
-```
+A shorter mental grouping is: artifact, dependencies, configuration, runtime state, service manager, package source, and trust/update model.
 
 #### What deployment should not hide
 

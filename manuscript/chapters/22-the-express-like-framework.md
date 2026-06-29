@@ -15,15 +15,7 @@ That is the central idea of this chapter:
 The Express-like layer does not replace HTTP; it organizes HTTP handling into application structure.
 :::
 
-The lower stack remains visible:
-
-```text
-lower communication family
-  -> stream transport
-      -> legacy or TLS connection handling
-          -> HTTP request / response layer
-              -> Express-like application layer
-```
+The lower stack remains visible: the Express-like application layer sits above HTTP request/response, which still sits above the selected stream and connection handling.
 
 The Express-like layer is therefore not a different universe. It is the application-organization layer above HTTP. HTTP gives message meaning; the Express-like layer gives application structure.
 
@@ -34,17 +26,7 @@ Routed application flow is the next web-protocol step: HTTP messages become orga
 \index{Express-like framework!layered model}
 
 
-The stack now reads:
-
-```text
-runtime
-  -> registered server instance
-      -> lower communication family
-          -> stream transport
-              -> legacy or TLS connection handling
-                  -> HTTP request / response
-                      -> Express-like routing and middleware
-```
+Read the layer from runtime registration through the selected lower family and HTTP request/response handling to Express-like routing and middleware.
 
 The visible `WebAppT<ServerT>` object in application code is the handle. Through that handle, the application configures a server-side communication role and registers a runtime-visible server instance. The Express-like layer does not change that model; it changes what happens when a ready HTTP request reaches application code.
 

@@ -46,16 +46,7 @@ Chapter 24: HTTP upgrade to bidirectional WebSocket communication
 \index{event streams}
 
 
-The stack now looks like this:
-
-```text
-lower communication family
-  -> stream transport
-      -> legacy or TLS connection handling
-          -> HTTP request / response
-              -> long-lived event-stream response
-                  -> MessageEvent handling
-```
+SSE keeps the same lower stack and HTTP request/response foundation, but the response becomes a long-lived event stream that produces `MessageEvent` objects.
 
 SSE still uses the lower stack. It still depends on the runtime, a lower family, stream transport, legacy or TLS connection handling, HTTP client/server behavior, connection lifecycle, retry and reconnect policy, and diagnostics.
 
@@ -121,16 +112,7 @@ request
       -> done
 ```
 
-SSE changes the response phase:
-
-```text
-request
-  -> response starts
-      -> event
-      -> event
-      -> event
-      -> ...
-```
+SSE changes the response phase: the request starts one response, and that response carries event records over time until the stream is closed.
 
 This makes SSE suitable for live updates without repeatedly polling the server. The server can keep the response open and emit changes as they happen.
 
@@ -166,17 +148,7 @@ It is important to distinguish the two sides carefully.
 
 The inspected source strongly exposes the client-side `EventSource` facility. Server-side SSE is not a different server instance type and not a symmetric server-side `EventSource` abstraction. It is a route or HTTP handler that keeps the response open and writes data in event-stream format.
 
-Conceptually:
-
-```text
-server route
-  -> emits text/event-stream response
-
-client EventSource
-  -> requests text/event-stream
-      -> parses events
-          -> dispatches MessageEvent objects
-```
+Conceptually, the server route emits a `text/event-stream` response. The client-side `EventSource` requests that response, parses the event stream, and dispatches `MessageEvent` objects.
 
 The two sides meet at the HTTP/SSE boundary, but they are not the same API surface.
 
@@ -555,17 +527,7 @@ Express-like applications are a natural place to expose SSE endpoints. They alre
 
 An SSE endpoint can be one route in that application. Server-side code can keep the HTTP response open and write event-stream records over time. The built-in `EventSource` facility discussed in this chapter is the client-side counterpart.
 
-The two sides meet at the HTTP/SSE boundary:
-
-```text
-server route
-  -> emits text/event-stream response
-
-client EventSource
-  -> requests text/event-stream
-      -> parses events
-          -> dispatches MessageEvent objects
-```
+The two sides meet at the HTTP/SSE boundary: the server route emits a `text/event-stream` response, while the client-side `EventSource` requests that response, parses the event stream, and dispatches `MessageEvent` objects.
 
 This pairing is useful, but it is not the same abstraction on both sides. The server route produces event-stream syntax; the client `EventSource` interprets it as events.
 

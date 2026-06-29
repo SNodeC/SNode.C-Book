@@ -44,11 +44,7 @@ The first useful map is not a class diagram. It is the build structure.
 
 The top-level `CMakeLists.txt` defines the project, prepares project-level helper modules, delegates into `src`, and then includes packaging support. The top-level file is mostly a gateway into the framework source tree rather than the place where the framework structure itself is expressed.
 
-```text
-CMakeLists.txt
-  -> src/
-  -> packaging support
-```
+`CMakeLists.txt`, then `src/`, then packaging support.
 
 The `src/CMakeLists.txt` file is more informative for architectural orientation. It defines compiler requirements and options, configures logging switches, and adds the major source subdirectories:
 
@@ -99,17 +95,7 @@ There are two common ways to read a framework.
 
 One way is to start at the lowest-level runtime code and work upward. That can be useful after the architecture is already familiar, but it is a hard way to begin. The reader sees many abstractions before seeing why they matter.
 
-The better first strategy for SNode.C is the reverse:
-
-```text
-application
-  -> concrete server/client type
-      -> factory
-          -> context
-              -> lower communication type aliases
-                  -> core abstractions
-                      -> runtime machinery
-```
+The better first strategy for SNode.C is the reverse: start with the application, then read the concrete server/client type, factory, context, lower communication type aliases, core abstractions, and runtime machinery.
 
 Therefore, the echo pair is valuable. It gives the reader a concrete entry point. A good first reading path is:
 
@@ -152,11 +138,7 @@ Confusing those regions leads to wrong conclusions.
 
 An example application may choose a shape because it is readable, demonstrative, or useful for testing a combination of layers. A framework layer must support more than one application shape. When reading code under `apps`, therefore, separate three things:
 
-```text
-framework pattern
-  -> application-specific decision
-      -> build or variant mechanism
-```
+framework pattern, application-specific decision, and build or variant mechanism.
 
 For the echo application, the framework pattern is the server/client/factory/context structure. The application-specific decision is echo behavior. The variant mechanism is the way the application model is combined with several lower-layer choices.
 
@@ -253,29 +235,9 @@ This boundary is why the echo application can stay conceptually small while the 
 
 Most SNode.C applications can be read through the same path.
 
-For a server, the path is:
+For a server, the path is `SocketServer`, configuration, `listen(...)`, registered server instance / listen-flow machinery, `SocketConnection`, `SocketContextFactory`, and `SocketContext`.
 
-```text
-SocketServer
-  -> configuration
-  -> listen(...)
-  -> registered server instance / listen flow machinery
-  -> SocketConnection
-  -> SocketContextFactory
-  -> SocketContext
-```
-
-For a client, the path is:
-
-```text
-SocketClient
-  -> configuration
-  -> connect(...)
-  -> registered client instance / connect flow machinery
-  -> SocketConnection
-  -> SocketContextFactory
-  -> SocketContext
-```
+For a client, the path is `SocketClient`, configuration, `connect(...)`, registered client instance / connect-flow machinery, `SocketConnection`, `SocketContextFactory`, and `SocketContext`.
 
 This path is more important than any single file name. When a file feels difficult, ask where it sits in the path.
 

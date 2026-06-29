@@ -11,7 +11,8 @@ The book is intentionally focused on SNode.C. The references below give stable b
 - ISO/IEC 14882, *Programming Languages — C++*. The language standard is the authoritative reference for C++ itself.
 - Bjarne Stroustrup, *The C++ Programming Language*. A broad reference for the language and its design vocabulary.
 - Scott Meyers, *Effective Modern C++*. A compact guide to many C++11/14 idioms that remain relevant in framework and application code.
-- CMake documentation, especially the manuals for `cmake-buildsystem(7)`, `cmake-packages(7)`, and `cmake(1)`. These are useful when reading Chapter 32 and the example build files.
+- CMake documentation, especially the manuals for `cmake-buildsystem(7)`, `cmake-packages(7)`, `cmake(1)`, and `cmake-presets(7)`. These are useful when reading Chapter 32, the installed package exports, and the example build files.
+- CMake package configuration examples and the documentation for `find_package`, imported targets, `install(EXPORT)`, and generated config files. These are useful background for understanding how a framework becomes consumable outside its own source tree.
 
 ### POSIX, Linux, and network programming {.unnumbered}
 
@@ -39,14 +40,20 @@ The book is intentionally focused on SNode.C. The references below give stable b
 
 ### Deployment and embedded Linux {.unnumbered}
 
-- OpenWrt documentation. Useful background for package layout, init scripts, configuration, and deployment on router-class Linux systems.
-- systemd documentation. Useful when adapting SNode.C applications to service supervision on general-purpose Linux distributions.
+- OpenWrt documentation, especially the build-system, package Makefile, `procd`, UCI, and init-script material. Useful background for package layout, configuration, and deployment on router-class Linux systems.
+- systemd documentation, especially unit files, service supervision, logging, and restart behavior. Useful when adapting SNode.C applications to service supervision on general-purpose Linux distributions.
 
 ### Databases and persistence {.unnumbered}
 
-- MariaDB documentation, especially the client library and connector documentation. Useful background for applications that move from transient protocol state to durable application state.
+- MariaDB documentation, especially MariaDB Connector/C and the client-library API documentation. Useful background for applications that move from transient protocol state to durable application state.
+
+
+### Testing, diagnostics, and runtime inspection {.unnumbered}
+
+- Valgrind documentation and compiler sanitizer documentation for AddressSanitizer, UndefinedBehaviorSanitizer, and ThreadSanitizer. These tools are useful when moving from example builds to runtime checks.
+- `curl`, Mosquitto client tools, `tcpdump`, Wireshark, `strace`, and Linux `perf` documentation. These tools are useful for confirming HTTP/SSE/WebSocket/MQTT behavior, observing network traffic, tracing system calls, and measuring runtime behavior.
 
 ### SNode.C project material {.unnumbered}
 
 - The SNode.C repository is the authoritative source for framework development beyond the version discussed in this book. This edition covers the SNode.C\textsubscript{\texttt{v1.0.2}} baseline.
-- The companion source trees under `companion/examples/` are the authoritative sources for the book's compact examples and MiniGateway variants.
+- The companion source trees under `companion/examples/` are the authoritative sources for the book's compact examples, MiniGateway, and MiniGateway Extended.

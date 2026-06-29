@@ -31,30 +31,11 @@ MQTT over WebSocket in SNode.C is MQTT expressed as a WebSocket subprotocol on t
 
 This sentence defines the composition precisely. MQTT-over-WebSocket is not ordinary native MQTT with a few additional HTTP headers. The HTTP headers belong to the upgrade negotiation. After a successful upgrade, MQTT packet data is carried as WebSocket message payload and interpreted by the MQTT layer.
 
-It is also not ordinary HTTP, and it is not plain WebSocket without higher protocol meaning. It is a layered composition:
+It is also not ordinary HTTP, and it is not plain WebSocket without higher protocol meaning. The compact composition is HTTP upgrade, WebSocket, selected WebSocket subprotocol, and MQTT semantics.
 
-```text
-HTTP upgrade
-  -> WebSocket
-      -> WebSocket subprotocol
-          -> MQTT semantics
-```
+This chapter depends on two earlier steps. Chapter 24 supplied the HTTP-upgrade and WebSocket-subprotocol path.
 
-This chapter depends on two earlier steps. Chapter 24 explained the WebSocket side:
-
-```text
-HTTP upgrade
-  -> WebSocket
-      -> subprotocol
-```
-
-Chapter 25 explained the MQTT side:
-
-```text
-MQTT
-  -> MqttContext
-      -> packet, session, topic, keep-alive, and publish-flow semantics
-```
+Chapter 25 supplied `MqttContext` and the packet, session, topic, keep-alive, and publish-flow semantics.
 
 Chapter 26 combines them:
 
@@ -76,18 +57,7 @@ That is the main point of the chapter.
 \index{composed protocol}
 
 
-The full stack can be read from bottom to top:
-
-```text
-lower communication family
-  -> stream transport
-      -> legacy or TLS connection handling
-          -> HTTP request / response
-              -> HTTP upgrade
-                  -> WebSocket
-                      -> WebSocket subprotocol role
-                          -> MQTT protocol semantics
-```
+Read the full stack from the lower communication family through stream transport and legacy-or-TLS connection handling, then through HTTP request/response, HTTP upgrade, WebSocket, the selected WebSocket subprotocol role, and finally MQTT protocol semantics.
 
 This stack combines several layers that were introduced separately:
 

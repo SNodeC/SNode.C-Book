@@ -23,15 +23,7 @@ What information should remain after the immediate conversation is over?
 
 That second question changes the architecture of an application. The application now has to decide what belongs in memory, what belongs in durable storage, when database work should be started, how database results flow back into the event-driven application, what happens when the database is unavailable, and how persistence interacts with protocol roles such as HTTP, MQTT, WebSocket, SSE, and local-control interfaces.
 
-A useful model is:
-
-```text
-protocol event
-  -> application interpretation
-      -> runtime state
-          -> optional persistence boundary
-              -> durable application state
-```
+A useful model is that a protocol event first receives application interpretation, then may update runtime state, and only then crosses an optional persistence boundary into durable application state.
 
 Persistence is not automatically part of every request or every message. It is an application-state boundary that should be chosen deliberately.
 
@@ -80,16 +72,7 @@ The accurate statement is:
 SNode.C currently provides a MariaDB integration layer shaped to work inside the same event-driven runtime discipline as the rest of the framework.
 :::
 
-This narrower statement keeps the chapter aligned with the implementation. It lets the chapter focus on what the code actually provides:
-
-```text
-MariaDB client object
-  -> connection details
-      -> event-integrated MariaDB connection
-          -> command objects
-              -> command sequences
-                  -> callbacks for result and error handling
-```
+This narrower statement keeps the chapter aligned with the implementation. It lets the chapter focus on what the code actually provides: a client object, connection details, an event-integrated connection, command objects, command sequences, and callbacks for result or error handling.
 
 #### MariaDB-focused database module
 
@@ -160,36 +143,12 @@ Runtime state and database state are not the same thing. Runtime state exists wh
 
 A useful distinction is:
 
-```text
-runtime state
-  -> live connections
-  -> sessions
-  -> timers
-  -> pending work
-  -> queues
-  -> caches
-  -> current protocol relationships
+| State kind | Typical contents |
+|---|---|
+| runtime state | live connections, sessions, timers, pending work, queues, caches, and current protocol relationships |
+| database state | persisted facts, measurement history, users, audit records, durable configuration, and long-lived application data |
 
-database state
-  -> persisted facts
-  -> measurement history
-  -> users
-  -> audit records
-  -> durable configuration
-  -> long-lived application data
-```
-
-The decision is not always obvious. Some information may exist in both places:
-
-```text
-database
-  -> durable source of truth
-
-runtime cache
-  -> current fast-access representation
-```
-
-The application must decide how those representations are synchronized. A cache without a synchronization policy is not architecture; it is an assumption.
+The decision is not always obvious. Some information may exist in both places: the database as durable source of truth, and a runtime cache as the current fast-access representation. The application must decide how those representations are synchronized. A cache without a synchronization policy is not architecture; it is an assumption.
 
 #### What belongs where?
 
@@ -277,17 +236,7 @@ The credential fields deserve care. A test program may place credentials close t
 
 The state-change callback makes the database connection visible to the application. That matters because a database is a runtime participant. It may be connected, disconnected, unavailable, misconfigured, rejected by authentication, or failed during operation.
 
-The callback gives the application a place to react:
-
-```text
-database connected
-  -> enable persistence-dependent work
-
-database unavailable
-  -> report degraded state
-      -> pause periodic writes
-          -> keep protocol roles alive if possible
-```
+The callback gives the application a place to react. When the database connects, persistence-dependent work may be enabled. When it is unavailable, the application may report degraded state, pause periodic writes, and keep protocol roles alive when that is the right policy.
 
 The exact policy belongs to the application. The framework exposes the state. The application decides what the state means operationally.
 
@@ -417,15 +366,7 @@ MariaDB socket descriptor
 
 Internally, `MariaDBConnection` participates as a read, write, and exceptional-condition event receiver. The database descriptor becomes part of the same event-driven discipline as socket descriptors. It handles command execution, command continuation, command completion, read events, write events, exceptional-condition events, related timeouts, and connection state.
 
-Conceptually:
-
-```text
-database command
-  -> MariaDB nonblocking operation
-      -> wait for descriptor readiness
-          -> continue command
-              -> complete, fail, or wait again
-```
+Conceptually, a database command starts a MariaDB nonblocking operation, waits for descriptor readiness when needed, continues the command, and then completes, fails, or waits again.
 
 The application-facing API remains callback-shaped. The internal connection handles the event-driven continuation.
 
@@ -435,14 +376,7 @@ Event-integrated database work avoids blocking the application around ordinary c
 
 The internal connection owns the active database interaction. It tracks the active command, queues command sequences, observes connection state, and reacts to read, write, and exceptional-condition readiness.
 
-A compact source-shaped model is:
-
-```text
-start command
-  -> wait for read/write readiness or completion
-      -> commandContinue(...)
-          -> commandCompleted()
-```
+The source-shaped progression is: start a command, wait for read/write readiness or completion, continue the command, and then mark the command as completed.
 
 This is the database equivalent of the earlier event-driven communication model. The specific resource is different. The runtime discipline remains familiar.
 
@@ -450,15 +384,7 @@ This is the database equivalent of the earlier event-driven communication model.
 
 A database command may not complete immediately. It may need the underlying MariaDB socket to become readable or writable. The event loop tells the connection when progress is possible. Then the connection continues the current command.
 
-A compact model is:
-
-```text
-start command
-  -> command needs read/write readiness
-      -> event loop wakes connection
-          -> command continues
-              -> command completes or waits again
-```
+If the command needs read/write readiness, the event loop wakes the connection; the command then continues and either completes or waits again.
 
 The exact MariaDB C API detail is secondary. Database work is expressed as explicit continuation, not as an invisible blocking detour inside a protocol callback.
 
@@ -470,17 +396,7 @@ The exact MariaDB C API detail is secondary. Database work is expressed as expli
 \index{exec()@\texttt{exec()}}
 
 
-The MariaDB layer represents database work explicitly. Database operations become command objects. Command objects can be grouped into command sequences. That gives database work structure inside the event-driven runtime.
-
-A useful model is:
-
-```text
-command
-  -> command sequence
-      -> connection queue
-          -> event-driven continuation
-              -> success/error callback
-```
+The MariaDB layer represents database work explicitly. Database operations become command objects. Command objects can be grouped into command sequences. That gives database work structure inside the event-driven runtime: command objects enter a sequence, the sequence is queued on the connection, the event loop continues the work, and success or error callbacks report the result.
 
 This pattern is central to the database API. The application describes ordered database work. The connection drives that work through the event loop.
 
@@ -497,13 +413,7 @@ The asynchronous API exposes the main database operations:
 | `commit(...)` | commit current transaction work |
 | `rollback(...)` | roll back current transaction work |
 
-Each method uses success and error callbacks. The exact SQL is application-specific. The API shape is the important teaching point:
-
-```text
-database operation
-  -> success callback
-  -> error callback
-```
+Each method uses success and error callbacks. The exact SQL is application-specific; the important teaching point is that every database operation has an explicit success path and an explicit error path.
 
 The source uses the plural method names `startTransactions(...)` and `endTransactions(...)`; prose may speak about a transaction, but code-form sections should keep the actual names.
 
@@ -527,19 +437,7 @@ The difference between `query(...)` and `exec(...)` is an application intention.
 | `exec(...)` | the SQL statement performs an action and row iteration is not the main result |
 | `query(...)` | the SQL statement produces rows the application wants to inspect |
 
-Examples:
-
-```text
-exec
-  -> insert
-  -> update
-  -> delete
-  -> schema modification
-
-query
-  -> select rows
-  -> inspect result records
-```
+`exec(...)` covers action-oriented statements such as insert, update, delete, and schema modification. `query(...)` covers row-producing statements where the application wants to inspect result records.
 
 The database receives SQL text in both cases. The application-facing API makes the intended use clearer.
 
@@ -559,15 +457,7 @@ delete old rows
 
 The command sequence expresses the order. The application does not need to write its own blocking loop. It describes the sequence and lets the database connection advance it through the event-driven runtime.
 
-A command sequence is not the same thing as a transaction:
-
-```text
-command sequence
-  -> ordered database work
-
-transaction
-  -> database consistency boundary represented through ordered commands
-```
+A command sequence is not the same thing as a transaction. A command sequence expresses ordered database work. A transaction is a database consistency boundary represented through ordered commands.
 
 Both can appear together, but they are different ideas.
 
@@ -593,18 +483,7 @@ The inner `exec(...)` creates a new command sequence and queues it on the same c
 
 Metadata calls such as `affectedRows(...)` are the narrow exception to this “queue more SQL work” rule. They are synchronous metadata reads of the just-completed command state. Used inside an `exec(...)` success callback, `affectedRows(...)` observes the completed command before the connection advances to the next queued SQL command.
 
-A compact mental model is:
-
-```text
-chained call
-  -> append to the current returned sequence
-
-async call created inside a callback
-  -> create a new queued sequence
-
-metadata call inside a callback
-  -> read already available command/result state immediately
-```
+A compact mental model is that a chained call appends to the current returned sequence, an async call created inside a callback creates a new queued sequence, and a metadata call inside a callback reads already available command/result state immediately.
 
 ### Transactions as sequenced database work
 
@@ -668,16 +547,7 @@ The source uses the plural method names `startTransactions(...)` and `endTransac
 
 ### Timers and database work
 
-Timers can trigger database work. The database commands then continue through the MariaDB event integration.
-
-A simple model is:
-
-```text
-timer fires
-  -> start database command sequence
-      -> MariaDB event integration continues the work
-          -> callback reports result or error
-```
+Timers can trigger database work. The timer starts a database command sequence, the MariaDB event integration continues the work, and a callback reports result or error.
 
 This is especially relevant for IoT systems. A service may periodically aggregate sensor values, clean old rows, reconcile database state with runtime state, refresh derived status, publish stored values, or check for pending commands.
 
@@ -689,16 +559,7 @@ The timer starts the work. The database layer does not become a blocking loop. I
 \index{database client ownership}
 
 
-Database access should be designed as part of the application architecture. It should not automatically be scattered through every protocol callback. Sometimes direct access is acceptable. But in larger systems, a persistence service or application-level component is often clearer.
-
-A useful shape is:
-
-```text
-protocol callback
-  -> domain operation
-      -> persistence service
-          -> MariaDB command sequence
-```
+Database access should be designed as part of the application architecture. It should not automatically be scattered through every protocol callback. Sometimes direct access is acceptable. But in larger systems, a persistence service or application-level component is often clearer. In that shape, a protocol callback interprets input, a domain operation decides what it means, a persistence service owns durable work, and the MariaDB command sequence executes that work.
 
 The protocol layer interprets protocol input. The domain layer decides what the input means. The persistence layer decides what must be stored, updated, read, or rolled back.
 
@@ -708,15 +569,7 @@ In the boundary language of Chapter 27, persistence may be its own role or servi
 
 A protocol callback should usually interpret protocol input, not become the whole persistence layer. For example, an HTTP handler, MQTT callback, WebSocket message handler, or `SocketContext` method may receive an event. It should not automatically contain all SQL construction, transaction policy, retry policy, and error handling inline.
 
-A cleaner design is often:
-
-```text
-HTTP / MQTT / WebSocket / local-control input
-  -> validate and interpret
-      -> call application service
-          -> schedule persistence work
-              -> report result/degraded state
-```
+A cleaner design validates and interprets HTTP, MQTT, WebSocket, or local-control input first, then calls an application service, schedules persistence work, and reports success, failure, or degraded state.
 
 This keeps protocol code readable. It also prevents database details from leaking into every communication boundary.
 
@@ -747,19 +600,11 @@ That affects shutdown, error handling, resource limits, and system clarity.
 
 Persistence changes failure thinking. A system may be partially healthy:
 
-```text
-HTTP route healthy
-  + database unavailable
-      -> degraded application behavior
-
-MQTT connected
-  + insert fails
-      -> buffering, dropping, retry, or error policy needed
-
-timer fires
-  + previous sequence still pending
-      -> scheduling/backpressure policy needed
-```
+| Situation | Likely design question |
+|---|---|
+| HTTP route is healthy, but the database is unavailable | Should the application report degraded behavior? |
+| MQTT is connected, but an insert fails | Should the application buffer, drop, retry, or report an error? |
+| A timer fires while the previous sequence is still pending | What scheduling or backpressure policy applies? |
 
 A database failure is not always an application failure. It may mean stop accepting certain operations, keep reading but stop writing, buffer with limits, drop non-critical values, show degraded status, retry later, or fail fast for administrative operations.
 
@@ -771,13 +616,7 @@ Chapter 20’s vocabulary still applies: timeout, retry, shutdown, failure state
 
 Database work can accumulate. This happens when incoming protocol activity is faster than database completion.
 
-A useful model is:
-
-```text
-incoming protocol rate
-  > database completion rate
-      -> pending command sequences grow
-```
+When the incoming protocol rate exceeds the database completion rate, pending command sequences grow.
 
 This is a system-design problem. The application needs a policy.
 
@@ -843,14 +682,4 @@ That coordination is application architecture. The database module provides the 
 
 ### Closing perspective
 
-Persistence is an application-state boundary:
-
-```text
-protocol event
-  -> application meaning
-      -> runtime state
-          -> persistence boundary
-              -> durable state
-```
-
-That boundary changes application design because durable memory, query flow, transactions, database failure, and database backpressure enter the same event-driven world as the protocol layers.
+Persistence is an application-state boundary. Protocol events become application meaning, application meaning changes runtime state, and selected state crosses the persistence boundary into durable storage. That boundary changes application design because durable memory, query flow, transactions, database failure, and database backpressure enter the same event-driven world as the protocol layers.

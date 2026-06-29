@@ -46,15 +46,7 @@ HTTP does not erase those parts. It builds on them. The application sees richer 
 \index{application layer}
 
 
-The layer model now looks like this:
-
-```text
-lower communication family
-  -> stream transport
-      -> legacy or TLS connection handling
-          -> HTTP protocol layer
-              -> request / response application logic
-```
+The layer model now adds HTTP request/response meaning above the familiar lower family, stream transport, and legacy-or-TLS connection handling.
 
 The earlier chapters taught the lower part of this structure. They showed how a configured role becomes a registered instance, how that instance produces connections, how factories create per-connection contexts, and how configuration and diagnostics make the runtime shape visible.
 
@@ -345,14 +337,7 @@ These pieces are part of the protocol layer. They keep HTTP concerns grouped wit
 
 ### Lower families and connection handling still matter
 
-Using HTTP does not make the lower carrier disappear. In SNode.C, HTTP remains above a selected communication family and connection mode:
-
-```text
-lower communication family
-  -> stream
-      -> legacy or TLS
-          -> HTTP
-```
+Using HTTP does not make the lower carrier disappear. In SNode.C, HTTP remains above a selected communication family and connection mode: lower family, stream transport, legacy or TLS handling, then HTTP.
 
 That is enough to prevent the main misconception. HTTP is the higher protocol layer; IPv4, IPv6, Unix-domain sockets, Bluetooth families where available, and legacy or TLS connection handling still define how the peer relationship is carried.
 
@@ -510,25 +495,9 @@ Diagnostics also become layered rather than replaced. Lower diagnostics explain 
 
 ### From HTTP support to web application structure
 
-Chapter 21 is a bridge between two parts of the book. Earlier chapters taught:
+Chapter 21 is a bridge between two parts of the book. HTTP relies on the earlier runtime, lower-family, stream-connection, context/factory, configuration, diagnostics, TLS, and failure-handling material.
 
-```text
-runtime
-  -> lower families
-      -> stream connections
-          -> contexts and factories
-              -> configuration and diagnostics
-                  -> TLS and robust failure behavior
-```
-
-This chapter raises that structure to HTTP. Later chapters move higher again:
-
-```text
-HTTP
-  -> Express-like routing and middleware
-  -> Server-Sent Events
-  -> WebSocket upgrade
-```
+This chapter raises that structure to HTTP. The later web chapters build on HTTP through Express-like routing and middleware, Server-Sent Events, and WebSocket upgrade.
 
 That is why Chapter 21 should not become a complete HTTP reference. Its job is to show where HTTP sits in SNode.C. It teaches the architectural transition from streams to HTTP messages.
 

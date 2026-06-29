@@ -153,15 +153,7 @@ A stopped flow is not automatically a broken flow. It may be the intended result
 
 There is no single global timeout.
 
-Timeouts and delays appear in several parts of the communication lifecycle. The distinction between them matters:
-
-```text
-timeout
-  -> bounds a phase that is already in progress
-
-delay
-  -> schedules a later attempt
-```
+Timeouts and delays appear in several parts of the communication lifecycle. The distinction matters: a timeout bounds a phase that is already in progress, while a delay schedules a later attempt.
 
 A useful map is:
 
@@ -209,15 +201,7 @@ A client connection attempt may also need a time bound.
 
 This is not the same as retry. A connect timeout bounds the attempt that is already underway. Retry policy decides whether another attempt should be scheduled after the failed attempt has produced a status.
 
-The distinction is:
-
-```text
-connect timeout
-  -> this attempt did not complete in time
-
-retry policy
-  -> should another attempt be scheduled?
-```
+The distinction is simple: the connect timeout says that the current attempt did not complete in time; the retry policy decides whether another attempt should be scheduled.
 
 That separation keeps the timing model readable.
 
@@ -248,17 +232,7 @@ It is not another word for retry. It describes the long-term lifecycle of a clie
 
 #### TLS timing
 
-TLS adds timed phases to the connection lifecycle. Chapter 19 described those phases:
-
-```text
-TLS startup
-  -> handshake
-
-TLS shutdown
-  -> close-notify / shutdown behavior
-```
-
-Chapter 20 treats them as part of the broader time model. TLS initialization and TLS shutdown can both need time bounds. Both can fail. Both belong to the connection layer.
+TLS adds timed phases to the connection lifecycle. Chapter 19 described TLS startup as the handshake phase and TLS shutdown as close-notify/shutdown behavior. Chapter 20 treats them as part of the broader time model. TLS initialization and TLS shutdown can both need time bounds. Both can fail. Both belong to the connection layer.
 
 #### Protocol-level timing
 
@@ -388,13 +362,7 @@ A client instance may retry connect activation when a connect attempt fails.
 
 That retry path is similar in spirit to server retry:
 
-```text
-connect attempt fails
-  -> state is reported
-      -> retry policy is checked
-          -> retry timer may be armed
-              -> connect is attempted again
-```
+connect attempt fails, state is reported, retry policy is checked, a retry timer may be armed, and connect is attempted again.
 
 This still belongs to the client instance. The protocol context does not yet represent a stable peer conversation.
 
@@ -404,13 +372,7 @@ Reconnect is different.
 
 A client reconnect path starts after a connection existed and then ended. The client instance may still be intended to remain active. In that case, reconnect behavior can schedule a later attempt to restore the relationship:
 
-```text
-connected client instance
-  -> disconnect
-      -> reconnect policy checked
-          -> reconnect timer armed
-              -> connect is attempted again
-```
+connected client instance, disconnect, reconnect policy check, reconnect timer, and another connect attempt.
 
 Therefore, reconnect belongs to the lifecycle of the client instance, not to another failed connect attempt.
 
@@ -469,13 +431,7 @@ Retry scaling lets repeated attempts be spaced out over time.
 
 A retry limit can cap the maximum delay. That gives the role a bounded retry rhythm:
 
-```text
-try
-  -> wait
-      -> try again
-          -> wait longer
-              -> try again
-```
+try, wait, try again, wait longer, and try again.
 
 without allowing the delay to grow without bound.
 
@@ -513,23 +469,7 @@ It should be understood carefully. It is not a separate ordinary outcome like `O
 
 It lets a status report remain an error or fatal condition while telling role-level retry logic not to continue automatically.
 
-Conceptually:
-
-```text
-ERROR | NO_RETRY
-  -> report an error
-  -> do not automatically retry
-```
-
-The useful distinction is:
-
-```text
-what happened?
-  -> OK / DISABLED / ERROR / FATAL
-
-what should retry logic do?
-  -> retry allowed or retry suppressed
-```
+Conceptually, `ERROR | NO_RETRY` still reports an error while also suppressing automatic retry. The useful distinction is between what happened (`OK`, `DISABLED`, `ERROR`, or `FATAL`) and what retry logic should do (retry allowed or retry suppressed).
 
 `NO_RETRY` modifies retry policy. It does not replace the operational state that is reported to the application.
 
@@ -568,19 +508,7 @@ It represents intentional non-participation. That distinction matters in multi-i
 
 A disabled role should not be confused with a broken role.
 
-The configuration says:
-
-```text
-this role exists
-  -> but it is intentionally inactive
-```
-
-That is different from:
-
-```text
-this role tried to participate
-  -> and failed
-```
+The configuration may say that a role exists but is intentionally inactive. That is different from a role that tried to participate and failed.
 
 #### Failure can happen in different phases
 
@@ -620,21 +548,7 @@ Retry and reconnect policy belong to role-level flow control.
 
 That is why server and client flow controllers matter. They keep outer lifecycle behavior out of ordinary protocol contexts.
 
-A useful boundary is:
-
-```text
-server/client flow controller
-  -> start role-level flow
-  -> retry timer
-  -> reconnect timer where supported
-  -> retry/reconnect enabled state
-  -> flow termination
-
-connection/context
-  -> peer relationship
-  -> protocol behavior
-  -> protocol-meaningful timeout use
-```
+A useful boundary is that the server/client flow controller owns role-level flow, retry timers, reconnect timers where supported, retry/reconnect enabled state, and flow termination. The connection/context side owns the peer relationship, protocol behavior, and protocol-meaningful timeout use.
 
 This prevents two design mistakes.
 
@@ -657,18 +571,7 @@ The clearest example is the outgoing write buffer. A fast producer can generate 
 
 The issue is not performance alone; it is failure policy. An unbounded output queue is not robustness; it is delayed failure.
 
-A useful SNode.C application should therefore decide which boundary owns output-pressure policy:
-
-```text
-producer
-  -> creates data
-
-connection write buffer
-  -> stores pending output for one peer
-
-role/application policy
-  -> decides what happens when the buffer limit is reached
-```
+A useful SNode.C application should therefore decide which boundary owns output-pressure policy: the producer creates data, the connection write buffer stores pending output for one peer, and the role or application policy decides what happens when the buffer limit is reached.
 
 Possible policies include:
 
@@ -742,47 +645,21 @@ The operator should be able to answer:
 
 This connects directly to Chapter 18.
 
-The diagnostic map is:
+A useful diagnostic map keeps several surfaces visible:
 
-```text
-configuration visibility
-  -> intended retry/reconnect/timeout behavior
-
-status callback visibility
-  -> activation outcome and state
-
-ordinary logs
-  -> lifecycle events
-
-PLOG / system / TLS diagnostics
-  -> boundary failures with system or secure-transport context
-
-VLOG
-  -> deeper timing and retry decisions
-
-connection counters and durations
-  -> evidence from one peer episode
-
-context-level protocol logs
-  -> protocol meaning
-```
+- configuration visibility for intended retry, reconnect, and timeout behavior,
+- status callbacks for activation outcomes and reported state,
+- ordinary logs for lifecycle events,
+- `PLOG` / system / TLS diagnostics for boundary failures with system or secure-transport context,
+- `VLOG` for deeper timing and retry decisions,
+- connection counters and durations as evidence from one peer episode,
+- and context-level protocol logs for protocol meaning.
 
 Failure handling without visibility is difficult to operate. Retry without visibility is especially dangerous because it can turn a clear failure into a quiet loop.
 
 ### The architectural boundary for failure behavior
 
-A compact rule keeps the chapter together:
-
-```text
-role-level configuration and flow controllers
-  -> retry and reconnect policy
-
-connection/context layer
-  -> peer relationship and protocol-meaningful timeout use
-
-status and logging surfaces
-  -> failure visibility
-```
+A compact rule keeps the chapter together: role-level configuration and flow controllers own retry/reconnect policy; the connection/context layer owns peer relationships and protocol-meaningful timeout use; status and logging surfaces provide failure visibility.
 
 This boundary keeps the architecture balanced.
 

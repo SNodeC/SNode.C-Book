@@ -18,12 +18,7 @@ The answer is the communication layer stack.
 
 SNode.C organizes communication concerns into a practical sequence:
 
-```text
-network family
-  -> transport form
-      -> connection handling
-          -> application protocol
-```
+network family, transport form, connection handling, and application protocol.
 
 This is not a decorative diagram. It explains why long SNode.C names are readable and why components can be selected systematically. It also explains why the same application shape can move from IPv4 to IPv6, from a Unix domain socket to Bluetooth RFCOMM or L2CAP, or from the non-TLS stream variant to TLS without becoming unrelated code. Higher protocols such as HTTP, WebSocket, MQTT, and MQTT over WebSocket add their own structure, but they do not make the lower stack disappear.
 
@@ -90,14 +85,7 @@ net::in::stream::legacy::SocketClient<MyFactory>
 
 Read it as a sentence:
 
-```text
-network-facing code
-  -> IPv4 family
-      -> stream transport
-          -> non-TLS stream connection variant
-              -> client-side handle type
-                  -> factory for per-connection contexts
-```
+network-facing code, IPv4 family, stream transport, non-TLS stream connection variant, client-side handle type, and factory for per-connection contexts.
 
 The visible `SocketClient` object in application code is still the handle, in the sense established in Chapters 5 and 6. It is the object through which the application names, configures, and registers the client-side instance. The name of the type tells us which lower-layer choices that instance will use when the runtime advances it.
 
@@ -107,16 +95,7 @@ A similar server type can be read the same way:
 net::rc::stream::tls::SocketServer<MyFactory>
 ```
 
-This says:
-
-```text
-network-facing code
-  -> Bluetooth RFCOMM family
-      -> stream transport
-          -> TLS connection handling
-              -> server-side handle type
-                  -> factory for per-connection contexts
-```
+This says: network-facing code, Bluetooth RFCOMM family, stream transport, TLS connection handling, server-side handle type, and factory for per-connection contexts.
 
 Once this habit is learned, long names become useful instead of intimidating. They are not random C++ namespace growth. They are compact layer descriptions.
 
@@ -369,11 +348,7 @@ net-l2-stream-tls
 
 The exact availability of Bluetooth components depends on the build environment and enabled options. The architectural reading strategy remains the same:
 
-```text
-network family
-  -> stream transport
-      -> non-TLS or TLS connection handling
-```
+network family, stream transport, and non-TLS or TLS connection handling.
 
 ### The application layer: protocol behavior
 

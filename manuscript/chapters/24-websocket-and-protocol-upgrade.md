@@ -36,17 +36,7 @@ WebSocket closes the main web-protocol climb before the book moves to MQTT.
 \index{WebSocket!layered model}
 
 
-The stack now looks like this:
-
-```text
-lower communication family
-  -> stream transport
-      -> legacy or TLS connection handling
-          -> HTTP request / response
-              -> upgrade negotiation
-                  -> WebSocket frames
-                      -> subprotocol semantics
-```
+The WebSocket stack keeps the lower family, stream transport, and legacy-or-TLS connection handling, then uses HTTP request/response for upgrade negotiation before WebSocket frames and subprotocol semantics take over.
 
 This is still the same structure. WebSocket does not erase the lower family. It does not erase TLS. It does not erase HTTP. It uses HTTP as the negotiation layer for moving the same connection episode into a different protocol context.
 
@@ -64,13 +54,7 @@ HTTP request
 
 With TLS, the WebSocket upgrade happens above the secure stream connection. The secure connection remains the carrier underneath the HTTP negotiation and the WebSocket frames.
 
-The guiding sentence for this chapter is:
-
-```text
-same lower connection
-  -> HTTP negotiation
-      -> new protocol context
-```
+In short, the same lower connection performs HTTP negotiation before the connection episode is handed to a new protocol context.
 
 ### HTTP, SSE, and WebSocket side by side
 
@@ -88,18 +72,7 @@ The position of WebSocket becomes clearer when it is placed next to ordinary HTT
 
 SSE remains inside HTTP. WebSocket begins in HTTP and then moves to WebSocket frame handling. That distinction is the main reason WebSocket deserves its own chapter.
 
-This is not a question of one protocol being “better” than the other. The fit is different:
-
-```text
-HTTP
-  -> short request / response
-
-SSE
-  -> one-way long-lived HTTP response
-
-WebSocket
-  -> upgraded bidirectional message channel
-```
+This is not a question of one protocol being “better” than the other. The table shows different fits: short request/response, one-way event streaming, or an upgraded bidirectional message channel.
 
 ### WebSocket after the HTTP upgrade boundary
 
@@ -181,17 +154,7 @@ class SocketContextUpgrade
 
 The class shape expresses the architecture in C++: one base keeps the object attached to HTTP upgrade, while the other exposes the WebSocket and subprotocol surface used after the transition.
 
-The template parameters keep both sides visible at the type level:
-
-```text
-Request / Response
-  -> HTTP negotiation side
-
-SubProtocolT
-  -> upgraded WebSocket meaning
-```
-
-The object therefore lives exactly at the transition point. It is still able to explain where the connection came from, and it also provides the surface needed for the protocol that now takes over.
+The template parameters keep both sides visible at the type level: `Request` and `Response` describe the HTTP negotiation side, while `SubProtocolT` names the upgraded WebSocket meaning. The object therefore lives exactly at the transition point. It is still able to explain where the connection came from, and it also provides the surface needed for the protocol that now takes over.
 
 | Base / role | Meaning |
 |---|---|
@@ -651,17 +614,7 @@ Chapter 24 adds upgrade-boundary evidence to the earlier diagnostic vocabulary: 
 
 The next chapter moves to MQTT. MQTT can be used directly in SNode.C, and Chapter 26 will show how it can also be carried as a WebSocket subprotocol.
 
-The bridge from this chapter is simple:
-
-```text
-WebSocket
-  -> upgraded bidirectional message channel
-
-MQTT over WebSocket
-  -> MQTT semantics carried through that channel
-```
-
-WebSocket provides the upgraded carrier. MQTT provides the protocol semantics.
+The bridge from this chapter is simple: WebSocket provides the upgraded bidirectional carrier; MQTT over WebSocket later places MQTT semantics inside that carrier.
 
 ::: {.snodec-remember title="What to remember"}
 - WebSocket begins as HTTP upgrade and continues as a bidirectional message-oriented connection.

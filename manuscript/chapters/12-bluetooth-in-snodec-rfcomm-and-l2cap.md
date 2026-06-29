@@ -488,12 +488,7 @@ The point here is architectural, not cryptographic.
 
 Bluetooth support does not sit outside the connection-layer model. The same separation still applies:
 
-```text
-network family
-  -> transport form
-      -> connection handling
-          -> application context
-```
+network family, transport form, connection handling, and application context.
 
 ### What changes operationally
 

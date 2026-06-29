@@ -372,18 +372,15 @@ The target should say what architectural role the component plays and own its de
 
 For framework-level extensions, the build and package consequences matter:
 
-```text
-new framework component
-  -> public front-door header
-  -> target name
-  -> dependency visibility
-  -> exported target
-  -> package component
-  -> optional dependency behavior
-  -> installed runtime layout if needed
-```
+- public front-door header,
+- target name,
+- dependency visibility,
+- exported target,
+- package component,
+- optional dependency behavior,
+- and installed runtime layout if needed.
 
-If that chain is not considered, the extension may compile in-tree but fail as part of the installed framework.
+If these considerations are ignored, the extension may compile in-tree but fail as part of the installed framework.
 
 ### Extending diagnostics
 
@@ -516,12 +513,7 @@ A project-specific rule may be shared by several executables in that project. Th
 
 The opposite danger is abstraction too early. Two similar fragments become a generic layer; later the uses diverge, and the layer fills with flags, callbacks, special cases, and conditional behavior.
 
-A useful warning sign is this:
-
-```text
-one abstraction
-  -> too many unrelated reasons for change
-```
+A useful warning sign is one abstraction with too many unrelated reasons for change.
 
 In SNode.C terms, this may appear as:
 

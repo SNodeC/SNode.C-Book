@@ -47,15 +47,7 @@ Chapter 25 introduces MQTT as a protocol family and shows how both forms belong 
 \index{application protocol}
 
 
-The native MQTT layer can be placed into the model the reader already knows:
-
-```text
-lower communication family
-  -> stream transport
-      -> legacy or TLS connection handling
-          -> MQTT protocol layer
-              -> sessions, topics, control packets, publish flow
-```
+Native MQTT fits the same stack discipline the reader already knows: lower communication family, stream transport, legacy-or-TLS connection handling, then MQTT protocol semantics.
 
 This looks different from HTTP, but the architectural discipline is familiar. The lower layers still provide the communication relationship. MQTT changes the application-layer interpretation of that relationship. Incoming bytes are no longer raised into HTTP requests and responses. They are raised into MQTT control packets, sessions, topics, publish flows, acknowledgements, and keep-alive behavior.
 
@@ -68,19 +60,9 @@ HTTP upgrade
           -> MQTT protocol semantics
 ```
 
-Therefore, Chapter 25 belongs after Chapter 24. Chapter 24 explained the carrier:
+Therefore, Chapter 25 belongs after Chapter 24, which explained WebSocket as the upgraded bidirectional carrier.
 
-```text
-WebSocket
-  -> upgraded bidirectional message carrier
-```
-
-Chapter 25 introduces a protocol family that can use that carrier:
-
-```text
-MQTT
-  -> packet-structured message-oriented protocol semantics
-```
+Chapter 25 adds MQTT as packet-structured, message-oriented protocol semantics that can use that carrier.
 
 MQTT-over-WebSocket is not a new transport trick. It is MQTT semantics carried as a WebSocket subprotocol over an upgraded HTTP connection. The carrier changes. The MQTT protocol identity remains recognizable.
 

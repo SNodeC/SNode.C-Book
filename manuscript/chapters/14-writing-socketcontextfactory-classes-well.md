@@ -555,7 +555,7 @@ This can be a clean design when the factory remains easy to read and the variati
 
 Preconfigured factories allow the same framework mechanism to create different communication roles without changing the surrounding server/client machinery.
 
-An server/client handle can pass stable role and dependency information into the factory constructor. The factory can then use that information whenever it creates a context for a new connection.
+A server/client handle can pass stable role and dependency information into the factory constructor. The factory can then use that information whenever it creates a context for a new connection.
 
 This can be used for simple role distinctions, such as server-side versus client-side contexts, but also for higher-level endpoint roles:
 
@@ -571,7 +571,7 @@ This can be used for simple role distinctions, such as server-side versus client
 
 The important point in this chapter is still the mechanism, not the full pattern catalogue.
 
-A factory does not implement publisher/subscriber, gateway, adapter, or command/event architecture by itself. It creates the correctly preconfigured context objects that can take those roles when the application composes them around state, configuration, and protocol boundaries.
+A factory does not implement a higher-level application pattern by itself. It creates the correctly preconfigured context objects that participate in such patterns.
 
 #### Context-type-selecting factories
 

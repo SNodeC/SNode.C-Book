@@ -60,18 +60,7 @@ The answer is: a great deal. The build structure shows which parts are lower run
 
 The top-level `CMakeLists.txt` stays small. It declares the project metadata, sets the version, extends the module path, includes helper modules such as formatting, Doxygen, uninstall, and graph visualization support, descends into `src`, and then includes packaging.
 
-That is the right division of responsibility:
-
-```text
-top level
-  -> project shell
-
-src
-  -> framework shape
-
-packaging
-  -> distribution
-```
+That is the right division of responsibility: the top level provides the project shell, `src` expresses the framework shape, and packaging turns the result into distributable components.
 
 A top-level file that tried to describe every target directly would hide the architecture in one overloaded script. SNode.C does the opposite. It delegates target construction to the module tree.
 
@@ -135,13 +124,7 @@ A strict build is one of the ways a systems framework protects itself over time.
 
 The build is strict, but it is not naïve. It also includes carefully chosen suppressions for warnings that would be unhelpful, compiler-specific, or platform-specific.
 
-Examples include suppressions for shadowing, ABI notes on Raspberry Pi, Android/Termux deprecations, and several Clang-specific diagnostics. That is the right style:
-
-```text
-strict default
-  + documented practical suppressions
-      -> maintainable diagnostic policy
-```
+Examples include suppressions for shadowing, ABI notes on Raspberry Pi, Android/Termux deprecations, and several Clang-specific diagnostics. That is the right style: a strict default, combined with documented practical suppressions, produces a maintainable diagnostic policy.
 
 A serious build does not blindly enable every warning forever and pretend that context does not matter. It chooses a strict default, then documents exceptions through build flags. This is especially important for a framework that targets Linux desktops, embedded Linux, routers, and other constrained systems.
 
@@ -346,14 +329,7 @@ logger
 
 The graph view is useful because it makes several things visible at once.
 
-First, the lower shared base path is small:
-
-```text
-logger
-  -> utils
-      -> core
-          -> core-socket
-```
+First, the lower shared base is small: `logger` sits at the bottom, with `utils`, `core`, and `core-socket` layered above it.
 
 Second, the graph has shared public paths. For example, `websocket` links through `utils`, while `websocket-server` also belongs to the HTTP upgrade side. MQTT-over-WebSocket targets similarly connect MQTT roles with WebSocket roles.
 
@@ -379,12 +355,7 @@ The matching component is `net-in-stream-legacy`. At the Express level, an IPv4 
 
 The corresponding component-side stack is not textually identical, but it rhymes with the same architecture:
 
-```text
-snodec::http-server-express-legacy-in
-  -> snodec::http-server-express
-      -> snodec::http-server
-  -> snodec::net-in-stream-legacy
-```
+`snodec::http-server-express-legacy-in`, carrying its base Express/HTTP server side and the selected `snodec::net-in-stream-legacy` carrier.
 
 Headers expose declarations, aliases, templates, inline helpers, and source-facing public roles. Components expose compiled libraries, exported targets, usage requirements, and transitive link dependencies. They are two public contracts for the same stack, not one mechanism repeated twice.
 
@@ -487,12 +458,7 @@ The target that needs a dependency should declare it. The source file that names
 
 That is why a consumer-facing link line does not manually repeat the whole lower dependency chain. A direct link line should describe the application face:
 
-```text
-application
-  -> protocol/application component
-  -> selected transport component
-  -> optional feature components directly used by the application
-```
+application, protocol/application component, selected transport component, and optional feature components directly used by the application.
 
 The selected component targets then propagate their own public dependencies. This keeps the public link line small without hiding the architecture.
 
@@ -517,13 +483,7 @@ too much:
   even though a public front-door header owns the selected C++ abstraction
 ```
 
-The correct model is:
-
-```text
-choose the direct building blocks
-  -> include the public headers for the abstractions named in source
-  -> let the component targets carry their declared lower dependencies
-```
+The correct model is to choose the direct building blocks, include the public headers for the abstractions named in source, and let the component targets carry their declared lower dependencies.
 
 A concrete Express carrier target shows this well. `http-server-express-legacy-in` owns both sides of its composition: the selected IPv4 legacy carrier and the base Express component.
 
@@ -554,13 +514,7 @@ The normal build selects the default low-level waiting backend. The multiplexer 
 
 The two levels should be kept distinct:
 
-```text
-build/default choice
-  -> selected by CMake
-
-process-local override technique
-  -> useful for diagnostics or deployment experiments
-```
+the build/default choice selected by CMake, and the process-local override technique used for diagnostics or deployment experiments.
 
 Both mechanisms affect the low-level waiting backend, not the application-facing event-driven model.
 
@@ -578,10 +532,7 @@ This progression mirrors the architecture. First there is runtime and core infra
 
 The important current dependency shape is:
 
-```text
-core-socket-stream
-  -> core-socket
-```
+`core-socket-stream` depends on `core-socket`.
 
 That distinction matters. The core stream machinery belongs to the core/socket side. The network-family side is selected separately through targets such as `net-in-stream-legacy`.
 
@@ -623,13 +574,7 @@ Instead, TLS variants have their own targets. A consumer can choose:
 
 This matches the architectural model:
 
-```text
-application protocol
-  -> remains mostly stable
-
-connection layer
-  -> selected as legacy or TLS
-```
+the application protocol remains mostly stable, while the connection layer is selected as legacy or TLS.
 
 TLS is a connection-layer specialization, not a rewrite of the application model. The build system reinforces that directly.
 
@@ -688,12 +633,7 @@ The source-side counterpart is the concrete Express public header, for example `
 
 The intended dependency model is:
 
-```text
-http-server-express-legacy-in
-  -> net-in-stream-legacy
-  -> http-server-express
-      -> http-server
-```
+`http-server-express-legacy-in`, combining the `net-in-stream-legacy` carrier with the base Express and HTTP server components.
 
 The concrete target selects the IPv4 legacy stream carrier and the base Express component. The same pattern applies to the other concrete Express family targets:
 
@@ -709,12 +649,7 @@ and to optional Bluetooth RFCOMM targets where available.
 
 This is the same dependency-hygiene rule in another form:
 
-```text
-concrete Express carrier target
-  -> selected carrier component
-  -> base Express component
-      -> HTTP server dependency
-```
+a concrete Express carrier target, the selected carrier component, the base Express component, and the HTTP server dependency.
 
 The lower HTTP server layer is reached through the base Express component. The concrete target stays responsible for the concrete carrier choice. That keeps the direct dependency face meaningful.
 
@@ -752,16 +687,7 @@ SNode.C keeps these boundaries visible in the build.
 
 Different external dependencies have different meanings:
 
-```text
-optional enhancement
-  -> improves a component when available
-
-required dependency for a component
-  -> the component needs it to build
-
-availability gate for a component family
-  -> the component family is absent when the dependency is absent
-```
+optional enhancements that improve a component when available, required dependencies that a component needs to build, and availability gates that remove a component family when a dependency is absent.
 
 For example:
 
@@ -809,13 +735,7 @@ A build-time default defines the library's compiled baseline. Runtime configurat
 
 Both are useful, but they operate at different times:
 
-```text
-CMake-time default
-  -> compiled into the library or component
-
-runtime configuration
-  -> selected by application options, configuration files, or instance settings
-```
+a CMake-time default compiled into the library or component, and runtime configuration selected by application options, configuration files, or instance settings.
 
 Keeping those two levels separate avoids confusion.
 
@@ -834,14 +754,7 @@ SNode.C is also consumed by external applications. That is where package configu
 
 The internal build tree produces targets. The install/export machinery turns selected targets into an external CMake package interface.
 
-The shape is:
-
-```text
-internal target
-  -> install/export rule
-      -> exported snodec:: target
-          -> find_package(snodec COMPONENTS ...)
-```
+The shape is: internal target, install/export rule, exported `snodec::` target, and `find_package(snodec COMPONENTS ...)`.
 
 This is the bridge between framework build architecture and consumer build architecture.
 
@@ -891,13 +804,7 @@ A matching `main.cpp` would include the public header for the source abstraction
 
 This is a minimal consumer shape, not the only possible application structure. The important part is the application face:
 
-```text
-http-server-express
-  -> Express-like HTTP application layer
-
-net-in-stream-legacy
-  -> selected IPv4 legacy stream carrier
-```
+`http-server-express` as the Express-like HTTP application layer, and `net-in-stream-legacy` as the selected IPv4 legacy stream carrier.
 
 The application does not list `core`, `core-socket`, `http`, `http-server`, `utils`, or `logger` manually. Those lower dependencies belong to the selected SNode.C component targets. Likewise, the source file does not include every lower HTTP and socket header manually when a public Express front-door header owns the abstraction it names.
 

@@ -11,14 +11,7 @@ System vocabulary becomes concrete in MQTTSuite: named roles, boundaries, protoc
 
 MQTTSuite is the concrete reference ecosystem for the system vocabulary developed in Chapter 30. A reference ecosystem is not the only possible way to build systems with SNode.C. It is a source-backed example that shows how the design vocabulary can be used in a real family of cooperating applications.
 
-It shows how SNode.C concepts become a family of MQTT-centered tools: broker, integrator, bridge, command-line client, persistence service, and shared support libraries. A compact model is:
-
-```text
-SNode.C framework ideas
-  -> MQTT and web infrastructure
-      -> focused applications
-          -> operational ecosystem
-```
+It shows how SNode.C concepts become a family of MQTT-centered tools: broker, integrator, bridge, command-line client, persistence service, and shared support libraries. In compact form, framework ideas become MQTT and web infrastructure, then focused applications, and finally an operational ecosystem.
 
 MQTTSuite is therefore architectural evidence: SNode.C concepts can be combined into a coherent communication ecosystem without turning every concern into one monolithic executable.
 
@@ -63,76 +56,32 @@ MQTTSuite demonstrates that clearly.
 
 #### A first role map
 
-A compact way to read the suite is:
+A compact role map is clearer as one table:
 
-```text
-MQTTBroker
-  -> central MQTT broker role
-  -> web/admin surface
-  -> live observation surface
-  -> MQTT-over-WebSocket entry point
+| Component | Primary role | Supporting surfaces | Architectural lesson |
+|---|---|---|---|
+| `MQTTBroker` / `mqttbroker` | central MQTT broker role | web/admin surface, live observation, MQTT-over-WebSocket entry point | one executable can host several related broker boundaries |
+| `MQTTIntegrator` / `mqttintegrator` | mapping-driven integration service | subscribes, maps/transforms, republishes | application semantics can live above MQTT core |
+| `MQTTBridge` / `mqttbridge` | broker-to-broker topology role | selected topic movement between broker connections | topology and selected traffic movement are separate from mapping |
+| `MQTTCli` / `mqttcli` | operational command-line role | access for testing and operation | the same protocol stack can become an operational tool |
+| `MQTTStore` / `mqttstore` | MQTT-to-MariaDB persistence role | raw envelope storage, optional typed-table projection | MQTT publishes can become durable and queryable state |
+| `mqtt-mapping` | shared mapping/admin support | used where mapping and administration belong | selected applications can share integration semantics without becoming the same application |
 
-MQTTIntegrator
-  -> subscribes
-  -> maps and transforms
-  -> republishes
-
-MQTTBridge
-  -> connects MQTT worlds
-  -> moves selected traffic between broker connections
-
-MQTTCli
-  -> command-line access for operation and testing
-
-MQTTStore
-  -> MQTT-to-MariaDB persistence boundary
-  -> raw envelope storage
-  -> optional projection into typed tables
-```
-
-The sketch is an architectural map, not a deployment prescription. A concrete installation may use all of these applications, or only one or two of them. The point is that each application has a recognizable ecosystem role.
-
-#### MQTTSuite roles at a glance
-
-The applications can be summarized like this:
-
-| Component | Ecosystem role | Architectural lesson |
-|---|---|---|
-| `mqttbroker` | broker plus web/admin and observation surfaces | one executable can host several related broker boundaries |
-| `mqttintegrator` | mapping-driven integration service | application semantics can live above MQTT core |
-| `mqttbridge` | broker-to-broker traffic bridge | topology and selected traffic movement are separate from mapping |
-| `mqttcli` | command-line MQTT utility | the same protocol stack can become an operational tool |
-| `mqttstore` | MQTT-to-MariaDB persistence service | MQTT publishes can become durable and queryable state |
-| `mqtt-mapping` | shared mapping/admin support where needed | selected applications can share integration semantics without becoming the same application |
-
-The table shows the suite as a set of roles rather than as a flat feature list. It also keeps shared support separate from executable applications. `mqtt-mapping` is important, but it is not the whole ecosystem and it is not an application executable.
+This role map is architectural, not a deployment prescription. A concrete installation may use all of these applications, or only one or two of them. The point is that each application has a recognizable ecosystem role, while shared support remains separate from executable applications.
 
 #### Reading the repository
 
-A useful reading path is:
+The repository reading path can also be tabular:
 
-```text
-top-level CMakeLists.txt
-  -> suite structure
-
-lib/CMakeLists.txt
-  -> shared mapping support
-
-mqttbroker/CMakeLists.txt
-  -> broker and web/admin surface
-
-mqttintegrator/CMakeLists.txt
-  -> mapping integration and administration
-
-mqttbridge/CMakeLists.txt
-  -> bridge topology and optional carriers
-
-mqttcli/CMakeLists.txt
-  -> operational client tool
-
-mqttstore/CMakeLists.txt
-  -> persistence-facing MQTT client role
-```
+| Build file | What it reveals |
+|---|---|
+| top-level `CMakeLists.txt` | suite structure |
+| `lib/CMakeLists.txt` | shared mapping support |
+| `mqttbroker/CMakeLists.txt` | broker and web/admin surface |
+| `mqttintegrator/CMakeLists.txt` | mapping integration and administration |
+| `mqttbridge/CMakeLists.txt` | bridge topology and optional carriers |
+| `mqttcli/CMakeLists.txt` | operational client tool |
+| `mqttstore/CMakeLists.txt` | persistence-facing MQTT client role |
 
 This is the same build-first reading method from Chapter 29, now applied to a multi-application repository. Only after the build shape is clear should the corresponding entry points, factories, configuration classes, and route handlers be opened.
 
@@ -166,29 +115,9 @@ focused MQTT applications
 
 Mapping is an important architectural lesson because it is clearly above MQTT core. MQTT itself provides topics, subscriptions, publishes, QoS, retain flags, and session behavior. Mapping is a higher-level integration concern. It decides how selected topics and payloads should be transformed and republished.
 
-A mapping may say:
+A mapping subscribes to a selected topic pattern, extracts relevant payload information, transforms it, and publishes the result to another topic. That is not broker behavior. It is integration behavior. The lower MQTT layer should not become a template engine, a mapping editor, or a domain-rule interpreter. The mapping layer belongs above it, and the administration layer belongs above the mapping layer.
 
-```text
-subscribe to this topic pattern
-  -> extract this payload information
-      -> transform it
-          -> publish the result to another topic
-```
-
-That is not broker behavior. It is integration behavior. The lower MQTT layer should not become a template engine, a mapping editor, or a domain-rule interpreter. The mapping layer belongs above it, and the administration layer belongs above the mapping layer.
-
-A useful shape is:
-
-```text
-MQTT protocol layer
-  -> message transport and broker/client semantics
-
-mapping layer
-  -> integration semantics
-
-administration layer
-  -> controlled runtime management of mapping behavior
-```
+A useful shape is to keep the MQTT protocol layer responsible for message transport and broker/client semantics, the mapping layer responsible for integration semantics, and the administration layer responsible for controlled runtime management of mapping behavior.
 
 The administration surface can then be discussed in terms such as inspection, deployment or reload, persistence, history, and rollback where supported by the concrete application. The exact route vocabulary is secondary; changing integration rules is an application-management concern above MQTT core.
 
@@ -234,22 +163,7 @@ These listeners handle brokered machine messaging directly. They are not a side 
 
 #### Web-facing administration and observation
 
-MQTTBroker should also be read as a web-facing application. That connects several earlier chapters:
-
-```text
-MQTT server layer
-  -> plain MQTT/TCP listeners
-  -> MQTT/TCP listeners with TLS
-  -> Unix-domain MQTT listeners, where enabled
-
-HTTP layer
-  -> Express-like composition
-      -> static assets
-      -> JSON administration routes
-      -> SSE live events
-      -> WebSocket upgrade
-          -> MQTT subprotocol
-```
+MQTTBroker should also be read as a web-facing application. The broker combines two visible groups of boundaries. The MQTT server layer exposes plain MQTT/TCP listeners, MQTT/TCP listeners with TLS, and Unix-domain MQTT listeners where enabled. The HTTP layer uses Express-like composition for static assets, JSON administration routes, SSE live events, and WebSocket upgrade with MQTT as the selected subprotocol.
 
 Direct MQTT listeners handle brokered machine messaging directly. HTTP/Express handles web-facing and administrative interaction. SSE supports live observation. WebSocket provides the upgraded HTTP path for MQTT-over-WebSocket, while MQTT remains the selected WebSocket subprotocol.
 
@@ -278,18 +192,7 @@ un-https
 
 The exact available instances depend on the build configuration and enabled roles. The naming pattern is the lesson.
 
-The names encode:
-
-```text
-address family
-  -> IPv4, IPv6, Unix-domain
-
-protocol role
-  -> MQTT, HTTP
-
-security mode
-  -> legacy/plain or TLS
-```
+The names encode three dimensions: address family (`IPv4`, `IPv6`, or Unix-domain), protocol role (`MQTT` or `HTTP`), and security mode (`legacy`/plain or TLS).
 
 Where such a name belongs to a configured role, it can also become a registered instance. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
 
@@ -305,28 +208,13 @@ MQTTIntegrator and MQTTBridge both connect MQTT worlds, but they do not solve th
 
 One is mainly about transformation. The other is mainly about topology.
 
-Keeping this distinction visible prevents the ecosystem from becoming a vague collection of MQTT clients:
-
-```text
-MQTTIntegrator
-  -> transformation / mapping semantics
-
-MQTTBridge
-  -> topology / selected traffic movement
-```
+Keeping this distinction visible prevents the ecosystem from becoming a vague collection of MQTT clients: `MQTTIntegrator` is mainly about transformation and mapping semantics, while `MQTTBridge` is mainly about topology and selected traffic movement.
 
 #### MQTTIntegrator
 
 MQTTIntegrator does not primarily own the MQTT universe as a broker. It connects to MQTT brokers, subscribes according to mapping rules, transforms selected traffic, and republishes mapped results.
 
-A useful shape is:
-
-```text
-MQTT client role
-  -> receives selected publishes
-      -> mapping layer interprets rules
-          -> publishes transformed output
-```
+`MQTTIntegrator` receives selected publishes through an MQTT client role, lets the mapping layer interpret rules, and publishes transformed output.
 
 This makes MQTTIntegrator the clearest example of application semantics above MQTT core. Broker and integrator both live in the MQTT world, but they do different work. MQTTBroker accepts and distributes client traffic. MQTTIntegrator interprets and transforms traffic.
 
@@ -336,18 +224,7 @@ The distinction is the same kind of role clarity developed throughout this part.
 
 MQTTIntegrator combines its transformation loop with an HTTP/Express administration role for mapping management.
 
-The application combines:
-
-```text
-MQTT client role
-  -> machine-message integration
-
-HTTP/Express administration role
-  -> mapping inspection and management
-
-shared mapping support
-  -> domain-specific integration rules
-```
+The application combines an MQTT client role for machine-message integration, an HTTP/Express administration role for mapping inspection and management, and shared mapping support for domain-specific integration rules.
 
 This is a common reference pattern. A long-running integration service often needs both a machine-facing protocol role and an operator-facing administration role. SNode.C makes that composition natural without collapsing the roles into one opaque block.
 
@@ -355,15 +232,7 @@ This is a common reference pattern. A long-running integration service often nee
 
 Mappings can become managed application state instead of remaining static startup data.
 
-A compact conceptual model is:
-
-```text
-mapping data
-  -> inspection
-      -> deployment or reload
-          -> persistence
-              -> history or rollback where supported
-```
+Managed mapping data may move through inspection, deployment or reload, persistence, and history or rollback where supported.
 
 The MQTT protocol layer still transports messages. The mapping layer expresses integration rules. The administration layer controls changes to those rules.
 
@@ -375,14 +244,7 @@ MQTTBridge solves a different integration problem. It is not the mapping story r
 
 A bridge connects MQTT worlds to each other. At the architectural level, it can manage logical bridge definitions, broker connections, selected topic movement, and loop-prevention policy.
 
-Its responsibility can be read as:
-
-```text
-broker connection A
-  -> selected topic traffic
-      -> bridge policy
-          -> broker connection B
-```
+Its responsibility is to carry selected topic traffic from one broker connection to another under explicit bridge policy.
 
 MQTTBridge does not primarily own the MQTT universe like a broker. It does not primarily transform payloads like an integrator. It moves selected traffic among broker connections. That makes it a separate ecosystem role.
 
@@ -409,12 +271,7 @@ Not every important ecosystem member is a large service. Some roles exist becaus
 
 MQTTCli is the operator and developer surface of the ecosystem. It can publish, subscribe, test paths, inspect connectivity, and exercise the same MQTT client infrastructure that larger applications use.
 
-The architectural lesson is:
-
-```text
-same SNode.C MQTT/client transport stack
-  -> packaged as a command-line tool
-```
+The architectural lesson is that the same SNode.C MQTT/client transport stack can also be packaged as a command-line tool.
 
 Not every SNode.C application has to be a daemon, broker, web application, or long-running integration service. Some applications are focused operational tools. They still benefit from the same configuration, transport, TLS, WebSocket, and runtime model.
 
@@ -442,14 +299,7 @@ This preserves the original message shape.
 
 But MQTTStore can also go further. It can project selected JSON payload fields into typed database tables. That makes it not only a subscriber with a database connection, but a persistence boundary where MQTT traffic can become queryable application state.
 
-A useful model is:
-
-```text
-MQTT publish
-  -> raw envelope storage
-      -> optional JSON interpretation
-          -> optional typed table projection
-```
+A useful model is that an MQTT publish is first preserved as a raw envelope, may then receive optional JSON interpretation, and may finally be projected into typed tables.
 
 The first level preserves what arrived. The projection level gives the application a more queryable database shape. Both belong to the persistence boundary.
 
@@ -526,14 +376,7 @@ The same build-system lesson appears here again. The build system tells the read
 
 #### Configuration and repeatable role constellations
 
-MQTTSuite also demonstrates a useful operational style:
-
-```text
-start with explicit options
-  -> verify the instance constellation
-      -> persist selected configuration where supported
-          -> restart later from repeatable configuration
-```
+MQTTSuite also demonstrates a useful operational style: start with explicit options, verify the instance constellation, persist selected configuration where supported, and later restart from repeatable configuration.
 
 The architectural point is that command-line and configuration surfaces can describe repeatable role constellations. Mapping configuration also has explicit persistence support.
 
@@ -554,37 +397,9 @@ This does not mean that every deployment must use OpenWrt, and it does not turn 
 
 Read MQTTSuite by roles and boundaries first; read command-line options, mapping schema fields, bridge JSON properties, database columns, and web UI routes second.
 
-An architectural reading of MQTTSuite focuses on roles and boundaries rather than on every detail of every tool. The architectural view is narrower:
+An architectural reading of MQTTSuite focuses on roles and boundaries rather than on every detail of every tool. Architecturally, MQTTSuite is a set of real SNode.C applications: several focused executables, shared support where useful, web/admin surfaces, and bridging, CLI, and persistence roles.
 
-```text
-real SNode.C applications
-  -> several focused executables
-      -> shared support where useful
-          -> web/admin surfaces
-              -> bridging, CLI, and persistence roles
-```
-
-A possible deployment flow might look like this:
-
-```text
-device publishes MQTT
-  -> MQTTBroker
-
-MQTTIntegrator
-  <- subscribes to selected broker traffic
-  -> republishes mapped results
-
-MQTTBridge
-  <- forwards selected broker traffic
-  -> another broker world
-
-MQTTStore
-  <- subscribes to selected broker traffic
-  -> raw storage and typed projections
-
-MQTTCli
-  -> observes, tests, or injects traffic
-```
+One possible deployment uses `MQTTBroker` as the brokered entry point, `MQTTIntegrator` to subscribe to selected traffic and republish mapped results, `MQTTBridge` to forward selected traffic to another broker world, `MQTTStore` to store selected traffic as raw or typed data, and `MQTTCli` to observe, test, or inject traffic.
 
 This is only a teaching view. A real deployment may use a different topology or only a subset of the tools.
 
