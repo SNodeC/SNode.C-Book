@@ -1,0 +1,77 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1mm,y=1mm,
+  snodec diagram,
+  every node/.style={text=snodecInk, align=center},
+  group label/.style={snodec boundary title, font=\sffamily\bfseries\footnotesize, text=snodecTitleBlue, inner xsep=1.8pt, inner ysep=0.8pt},
+  role/.style={snodec application box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=39mm, minimum height=11mm, inner xsep=1.0mm, inner ysep=0.9mm, font=\sffamily\scriptsize},
+  mqtt/.style={snodec protocol box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=39mm, minimum height=11mm, inner xsep=1.0mm, inner ysep=0.9mm, font=\sffamily\scriptsize},
+  model/.style={snodec runtime box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=40mm, minimum height=14mm, inner xsep=1.2mm, inner ysep=1.2mm, font=\sffamily\scriptsize},
+  util/.style={snodec inner box, rounded corners=\snodecBoxCorner, line width=\snodecInnerLineWidth, minimum width=33mm, minimum height=9mm, inner xsep=0.9mm, inner ysep=0.8mm, font=\sffamily\scriptsize},
+  support/.style={snodec neutral box, rounded corners=\snodecBoxCorner, line width=\snodecBoxLineWidth, minimum width=122mm, minimum height=13.5mm, inner xsep=1.2mm, inner ysep=1.0mm, font=\sffamily\scriptsize},
+  flow/.style={snodec main arrow},
+  supportflow/.style={snodec return arrow}
+]
+
+% Fixed 160 mm canvas.
+\path[use as bounding box] (-80,-45) rectangle (80,29);
+
+% Group boundaries use the shared dashed boundary style.
+\draw[snodec boundary] (-76,-24) rectangle (-27,25);
+\node[group label] at (-51.5,25) {input roles};
+
+\draw[snodec boundary] (-24,-24) rectangle (24,25);
+\node[group label] at (0,25) {shared model};
+
+\draw[snodec boundary] (27,-24) rectangle (76,25);
+\node[group label] at (51.5,25) {observation / integration roles};
+
+% Center model group.
+\node[util] (codec) at (0,15.3) {\texttt{MeasurementJsonCodec}\\[-0.2mm]JSON boundary utility};
+\node[model] (model) at (0,0) {\textbf{\textcolor{snodecTitleBlue}{\texttt{MeasurementModel}}}\\[-0.3mm]shared application state\\[-0.2mm]latest value + subscribers};
+\node[util] (value) at (0,-15.3) {\texttt{Measurement}\\[-0.2mm]domain value};
+
+% Input roles.
+\node[role] (httpSim) at (-51.5,15.3) {\textbf{HTTP input}\\[-0.25mm]\texttt{/simulate}\\[-0.25mm]\texttt{MiniGatewayWeb}};
+\node[mqtt] (mqttIn) at (-51.5,0) {\textbf{MQTT input}\\[-0.25mm]broker subscription\\[-0.25mm]\texttt{MiniGatewayMqtt}};
+\node[role] (unixIn) at (-51.5,-15.3) {\textbf{Unix-domain input}\\[-0.25mm]local producer role\\[-0.25mm]\texttt{MeasurementUnixSocketContext}};
+
+% Observation and integration roles.
+\node[role] (httpStatus) at (51.5,15.3) {\textbf{HTTP observation}\\[-0.25mm]\texttt{/status} snapshot\\[-0.25mm]\texttt{MiniGatewayWeb}};
+\node[role] (sseEvents) at (51.5,0) {\textbf{SSE observation}\\[-0.25mm]\texttt{/events} live stream\\[-0.25mm]model subscriber};
+\node[mqtt] (mqttOut) at (51.5,-15.3) {\textbf{MQTT output}\\[-0.25mm]broker publication\\[-0.25mm]\texttt{MiniGatewayMqtt}};
+
+% Bottom support band, kept close enough to the role groups while leaving visible separation.
+\node[support] (support) at (0,-36.5) {\textbf{Protocol adapters and support objects}\\[-0.25mm]\texttt{MiniGatewayMqttSocketContextFactory}\\[-0.25mm]\texttt{MeasurementUnixSocketContextFactory}\quad\texttt{SocketStateReporter}};
+
+% Distributed model-border anchor points.
+\coordinate (modelLWTop) at ($(model.west)+(0,4.4mm)$);
+\coordinate (modelLWMid) at (model.west);
+\coordinate (modelLWBot) at ($(model.west)+(0,-4.4mm)$);
+\coordinate (modelRETop) at ($(model.east)+(0,4.4mm)$);
+\coordinate (modelREMid) at (model.east);
+\coordinate (modelREBot) at ($(model.east)+(0,-4.4mm)$);
+
+% Main data/control flow arrows.
+\draw[flow] (httpSim.east) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, sloped, above] {accept} (modelLWTop);
+\draw[flow] (mqttIn.east) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, above] {accept} (modelLWMid);
+\draw[flow] (unixIn.east) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, sloped, below] {accept} (modelLWBot);
+
+\draw[flow] (modelRETop) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, sloped, above] {read} (httpStatus.west);
+\draw[flow] (modelREMid) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, above] {notify} (sseEvents.west);
+\draw[flow] (modelREBot) -- node[snodec arrow label, font=\sffamily\bfseries\scriptsize, sloped, below] {publish} (mqttOut.west);
+
+% Utility support inside the shared model group.
+\draw[supportflow] (codec.south) -- (model.north);
+\draw[supportflow] (model.south) -- (value.north);
+
+% Support arrows from the adapter/support band. They stop outside the dashed role groups.
+\draw[supportflow] (-45,-29.75) -- (-45,-24.8);
+\draw[supportflow] (0,-29.75) -- (0,-24.8);
+\draw[supportflow] (45,-29.75) -- (45,-24.8);
+
+\end{tikzpicture}
+\end{document}

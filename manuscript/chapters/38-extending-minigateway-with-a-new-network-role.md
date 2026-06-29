@@ -40,9 +40,9 @@ Do not hide a new input path inside an unrelated callback merely because that ca
 
 The new concern is local measurement injection through a Unix-domain stream socket. That concern belongs to a new socket-server role. It does not belong in the HTTP route code, the SSE response path, or the MQTT client context.
 
-The following figure shows the resulting instance architecture. The picture is intentionally close to the source structure: one model, several network roles, and one event-driven runtime underneath them.
+Figure @fig:minigateway-extended-network-role-architecture shows the resulting network-role architecture. The extension does not add a second application core. It adds another input role around the same `MeasurementModel`: HTTP simulation, MQTT subscription, and Unix-domain socket input all accept measurements into the model, while HTTP status, SSE events, and MQTT publication expose selected model state outward through separate roles.
 
-![MiniGateway Extended as an instance architecture: web, MQTT, and Unix-domain socket roles are preconfigured around the same application-owned measurement model.](assets/figures/pdf/fig-12-minigateway-extended-instance-architecture.pdf){#fig:minigateway-extended-instance-architecture width=90% latex-placement="tbp"}
+![MiniGateway Extended as a network-role architecture: protocol-specific input, observation, and integration roles stay separate while sharing the same application-owned measurement model.](assets/figures/pdf/fig-12-minigateway-extended-network-role-architecture.pdf){#fig:minigateway-extended-network-role-architecture width=100% latex-placement="tbp"}
 
 ### What changes
 
