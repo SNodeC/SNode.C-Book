@@ -46,4 +46,17 @@ for pdf in "${pdfs[@]}"; do
   fi
 done
 
+package="dist/packages/snodec-book-proposal-package.tar.gz"
+if [[ ! -s "$package" ]]; then
+  echo "ERROR: expected generated publisher package missing or empty: $package" >&2
+  exit 1
+fi
+
+historic_packages=$(find dist/packages -maxdepth 1 -type f -name 'snodec-book-proposal-package-*.tar.gz' -print)
+if [[ -n "$historic_packages" ]]; then
+  echo "ERROR: historic versioned publisher packages found in dist/packages:" >&2
+  echo "$historic_packages" >&2
+  exit 1
+fi
+
 echo "Book package build passed."

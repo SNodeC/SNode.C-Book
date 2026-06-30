@@ -12,38 +12,21 @@ endif()
 
 file(MAKE_DIRECTORY "${PACKAGE_DIR}")
 
-file(GLOB EXISTING_PACKAGES
-     "${PACKAGE_DIR}/snodec-book-proposal-package-*-v[0-9][0-9].tar.gz")
-
-set(NEXT_VERSION 1)
-foreach(PACKAGE_FILE IN LISTS EXISTING_PACKAGES)
-  get_filename_component(PACKAGE_NAME "${PACKAGE_FILE}" NAME)
-  if(PACKAGE_NAME MATCHES "-v([0-9][0-9])\\.tar\\.gz$")
-    set(CURRENT_VERSION "${CMAKE_MATCH_1}")
-    math(EXPR CANDIDATE_VERSION "${CURRENT_VERSION} + 1")
-    if(CANDIDATE_VERSION GREATER NEXT_VERSION)
-      set(NEXT_VERSION "${CANDIDATE_VERSION}")
-    endif()
-  endif()
-endforeach()
-
-if(NEXT_VERSION GREATER 99)
-  message(FATAL_ERROR "Proposal package version would exceed v99")
-endif()
-
-string(TIMESTAMP PACKAGE_TIMESTAMP "%Y%m%d-%H%M%S")
-if(NEXT_VERSION LESS 10)
-  set(PACKAGE_VERSION "0${NEXT_VERSION}")
-else()
-  set(PACKAGE_VERSION "${NEXT_VERSION}")
-endif()
-
-set(PACKAGE_BASENAME
-    "snodec-book-proposal-package-${PACKAGE_TIMESTAMP}-v${PACKAGE_VERSION}")
+# The CI/publisher artifact must be stable and unversioned.  Do not create
+# timestamped packages here: wildcard artifact uploads would otherwise collect
+# historic packages from previous local or CI runs.
+set(PACKAGE_BASENAME "snodec-book-proposal-package")
 set(PACKAGE_PATH "${PACKAGE_DIR}/${PACKAGE_BASENAME}.tar.gz")
 set(STAGING_ROOT "${PACKAGE_DIR}/.staging")
 set(STAGING_DIR "${STAGING_ROOT}/${PACKAGE_BASENAME}")
 
+file(GLOB HISTORIC_PACKAGE_PATHS
+     "${PACKAGE_DIR}/snodec-book-proposal-package-*.tar.gz")
+if(HISTORIC_PACKAGE_PATHS)
+  file(REMOVE ${HISTORIC_PACKAGE_PATHS})
+endif()
+
+file(REMOVE "${PACKAGE_PATH}")
 file(REMOVE_RECURSE "${STAGING_DIR}")
 file(MAKE_DIRECTORY "${STAGING_DIR}")
 file(MAKE_DIRECTORY "${STAGING_DIR}/dist/pdf")
