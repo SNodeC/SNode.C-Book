@@ -2,6 +2,7 @@
 #include <express/legacy/in/WebApp.h>
 #include <nlohmann/json.hpp>
 #include <log/Logger.h>
+#include <web/http/http_utils.h>
 
 #include <algorithm>
 #include <cstdint>
@@ -63,15 +64,15 @@ private:
 };
 
 static bool acceptsEventStream(const std::shared_ptr<Request>& req) {
-    const std::string accept = req->get("Accept");
-    return accept.find("text/event-stream") != std::string::npos;
+    return web::http::ciContains(req->get("Accept"), "text/event-stream");
 }
 
 static void sendMeasurement(const std::shared_ptr<Response>& res,
                             const Measurement& measurement) {
-    res->sendFragment("event: measurement\n");
-    res->sendFragment("id: " + std::to_string(measurement.sequence) + "\n");
-    res->sendFragment("data: " + measurement.toJson().dump() + "\n\n");
+    res->sendFragment("event: measurement");
+    res->sendFragment("id: " + std::to_string(measurement.sequence));
+    res->sendFragment("data: " + measurement.toJson().dump());
+    res->sendFragment("");
 }
 
 int main(int argc, char* argv[]) {
