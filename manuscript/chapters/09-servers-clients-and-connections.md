@@ -7,7 +7,7 @@
 
 ### Why these three belong in one chapter
 
-An address in SNode.C is a family-specific endpoint identity, not an interchangeable string, number, or path. IPv4 and IPv6 use host-plus-port identity. Unix domain sockets use local socket identity. RFCOMM uses Bluetooth address plus channel. L2CAP uses Bluetooth address plus PSM.
+A server or client in SNode.C is more than an address wrapped in convenience code. It is an application-side handle for a role that will later appear as a registered runtime instance and produce concrete connections.
 
 This chapter asks the next question:
 

@@ -7,7 +7,7 @@
 
 ### From host-plus-port to local path identity
 
-IPv4 and IPv6 provide the first lower-family comparison while keeping host-plus-port endpoint identity.
+A Unix-domain endpoint moves the conversation from network reachability to local IPC.
 
 Unix-domain sockets keep the same SNode.C runtime model, but change endpoint identity more strongly:
 

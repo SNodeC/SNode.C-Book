@@ -8,7 +8,7 @@
 
 ### Why this chapter comes here
 
-The mental model and runtime core explain how SNode.C roles are organized and advanced. Descriptor readiness, timers, queued work, callbacks, and flow-controller progress are not scattered side effects; they are coordinated by the runtime core.
+Layers are easiest to misunderstand when they are treated as directory names only. In SNode.C they describe where a responsibility lives: endpoint family, transport form, connection handling, protocol behavior, and application role.
 
 A different question now becomes central:
 

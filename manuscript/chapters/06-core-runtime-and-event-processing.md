@@ -7,7 +7,7 @@
 
 ### Why this chapter matters
 
-The first working echo pair introduced the runtime shape, and the mental model named its recurring roles: handles, instances, connections, contexts, factories, layers, and operational concerns. It also made the central distinction precise: the `SocketServer`/`SocketClient` handle belongs to application code, while the instance is the registered communication role advanced by the framework.
+The runtime is where the model becomes observable. Descriptors become ready, timers expire, queued work runs, callbacks fire, and connection objects advance without each application inventing its own event loop.
 
 That model is necessary, but it still leaves an important question open.
 

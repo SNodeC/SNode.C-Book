@@ -7,7 +7,7 @@
 
 ### From path identity to Bluetooth endpoint identity
 
-Unix-domain sockets replaced host-plus-port identity with local path identity. Bluetooth changes endpoint identity again.
+Bluetooth is local in a different sense from Unix-domain sockets: the peer is nearby, device-specific, and mediated by the platform Bluetooth stack.
 
 Bluetooth RFCOMM and L2CAP are neither host-plus-port families nor path-based local IPC families. They use Bluetooth device identity together with a family-specific service selector:
 

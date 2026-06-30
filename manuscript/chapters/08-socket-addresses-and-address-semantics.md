@@ -7,7 +7,7 @@
 
 ### From layers to endpoint identity
 
-SNode.C communication choices are encoded in the layer stack.
+Every connection begins with an address, but an address is not merely a string to be parsed.
 
 The first concrete choice is the network family. An application may use IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP. That choice changes what an endpoint *is*; the namespace or build component is only the visible consequence.
 

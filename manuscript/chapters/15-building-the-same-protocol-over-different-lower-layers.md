@@ -209,21 +209,7 @@ Deployment also changes.
 | RFCOMM | Bluetooth stack availability, pairing/trust setup, channel semantics |
 | L2CAP | Bluetooth stack availability, pairing/trust setup, PSM semantics |
 
-These differences are real. The protocol may transfer. The deployment does not become identical.
-
-For Bluetooth, for example, the protocol may still be a simple stream protocol. But the devices still need the platform Bluetooth stack, suitable permissions, adapter state, and pairing/trust setup before SNode.C can communicate between them. For Unix domain sockets, the same protocol may run locally, but path placement and cleanup become part of the service design. For IP families, routing, exposure, firewall behavior, and address selection remain operational concerns.
-
-The correct design statement is therefore not:
-
-```text
-The lower family does not matter.
-```
-
-The correct design statement is:
-
-```text
-The lower family matters, but it does not always have to rewrite the protocol endpoint.
-```
+These differences are real. The protocol may transfer, but deployment does not become identical. Bluetooth still depends on stack support, permissions, adapter state, and pairing/trust setup. Unix-domain sockets still depend on path placement and cleanup. IP families still raise routing, exposure, firewall, and address-selection questions. The lower family matters; it simply does not always have to rewrite the protocol endpoint.
 
 ### Echo as the smallest transfer microscope
 
@@ -298,22 +284,13 @@ A more complex protocol can grow from the same discipline.
 \index{protocol reuse}
 \index{lower carriers}
 
+The carrier comparison is useful as a design test, not as a promise of automatic portability. If the protocol's meaning is independent of host/port, path, channel, or PSM, the same context and factory shape can often remain recognizable while the outer handle, address, configuration, and deployment surface change. If the protocol's meaning depends on one of those facts, the context should specialize instead of pretending that all carriers are the same.
 
-A compact comparison makes the transfer visible.
+This is the useful transfer question:
 
-| Carrier | Endpoint identity | What changes | What may remain |
-|---|---|---|---|
-| IPv4 | host + port | address, configuration, and deployment | context, factory shape, protocol behavior |
-| IPv6 | host + port | address form, IPv6 semantics, deployment | context, factory shape, protocol behavior |
-| Unix domain sockets | local path | local IPC path and lifecycle | context, factory shape, protocol behavior |
-| RFCOMM | Bluetooth address + channel | Bluetooth stack, pairing/trust setup, channel semantics | context, factory shape, protocol behavior |
-| L2CAP | Bluetooth address + PSM | Bluetooth stack, pairing/trust setup, PSM semantics | context, factory shape, protocol behavior |
-
-This table is not a portability guarantee. It is a design test.
-
-If the protocol's meaning is independent of the lower-family identity, the context can often remain stable. If the protocol's meaning depends on lower-family identity, the context may need to specialize.
-
-The table is useful precisely because it does not hide the changing column. It shows how far reuse can go before honesty requires a different context, a different factory, or a different deployment shape.
+::: {.snodec-rule title="Lower-family transfer test"}
+Can the protocol conversation stay honest when the carrier changes, or has carrier identity become part of the protocol meaning?
+:::
 
 ### Designing for lower-family transfer
 
@@ -509,54 +486,28 @@ This is not failure. It is clean factoring. The goal is not to make all lower fa
 
 The goal is to keep the stable protocol core stable and the real family-specific differences visible.
 
-### What remains stable and what changes
+### Stable core, explicit variation
 
-The following table summarizes the chapter.
+A good transfer design does not try to hide the changing parts. It keeps the protocol core stable where possible and makes variation explicit where necessary:
 
-| Concern | Often stable | Often changes |
-|---|---|---|
-| Protocol behavior | `SocketContext` logic | only when family semantics matter |
-| Context creation | factory shape and role construction | factory constructor data or selected context type |
-| Application-side handle | conceptual server/client shape | concrete lower-family type |
-| Registered instance | long-lived runtime-visible communication role | configured family, endpoint identity, operational behavior |
-| Endpoint identity | local/remote distinction | host/port, path, channel, PSM |
-| Runtime model | event-driven lifecycle | operational startup/configuration details |
-| Deployment | broad application intent | reachability, locality, platform, pairing, permissions, security assumptions |
+- protocol behavior remains in the `SocketContext`, unless family-specific semantics are part of the protocol;
+- role construction remains in the factory, unless a different context type is more honest;
+- carrier choice remains in the application-side handle and registered instance;
+- endpoint identity remains in addresses and configuration;
+- deployment differences remain visible in package, service, permission, security, and platform choices.
 
-This table is the practical transfer model. Reuse is strongest when the stable column stays honest and the changing column is not hidden.
+That is the practical transfer model. Reuse is valuable only while the stable core and the explicit variation both remain clear.
 
 ### Configuration becomes visible here
 
 \index{configuration!lower-family transfer}
 
 
-Lower-family transfer naturally makes configuration more visible.
-
-A family transfer may change:
-
-- selected server/client handle type,
-- registered instance name,
-- local endpoint values,
-- remote endpoint values,
-- role-specific factory arguments,
-- TLS or legacy selection,
-- retry or reconnect behavior,
-- startup arguments,
-- deployment files,
-- platform or permission requirements.
-
-That is why the next part of the book turns to configuration. Configuration is one of the places where architectural variation becomes explicit.
-
-Once the same protocol can be carried over different lower families, configuration becomes the visible home for endpoint identity, selected lower family, role naming, TLS/legacy choice, retry behavior, and deployment-specific variation.
-
-This chapter shows why configuration matters. Chapter 16 begins to explain its philosophy.
+Lower-family transfer naturally makes configuration more visible. Changing the carrier may change the selected handle type, registered instance name, local and remote endpoint values, factory arguments, TLS/legacy choice, retry policy, startup arguments, deployment files, and platform or permission requirements. Configuration is where that variation becomes explicit instead of leaking into protocol code.
 
 ::: {.snodec-remember title="What to remember"}
-- Lower-family transfer is possible when protocol behavior is kept in the `SocketContext`.
-- The factory keeps context creation, role preconfiguration, and stable dependency passing separate from protocol behavior.
-- The application-side server/client type and the registered instance change with the lower family; the protocol endpoint may remain stable.
-- Endpoint identity and configuration change with the lower family: host/port, path, channel, or PSM.
-- Deployment assumptions still matter; protocol reuse does not make systems operationally identical.
+- A protocol can often keep its context and factory shape while the lower family changes.
+- Carrier choice, endpoint identity, configuration, and deployment remain explicit; they are not hidden by reuse.
 - Reuse should stop when lower-family semantics become part of the protocol's meaning.
 - Small family-specific outer code is often clearer than an over-generalized abstraction.
 :::
@@ -576,4 +527,4 @@ Chapter 32 gives the complete matrix. Here the point is the transfer rule: keep 
 
 ### Closing perspective
 
-Part IV has separated protocol behavior, context creation, carrier selection, registration, and configuration. That separation is what makes lower-family transfer a design technique rather than a copy-and-edit exercise.
+Lower-family transfer is useful when it preserves clarity: stable protocol behavior stays stable, and family-specific facts stay visible where they belong.
