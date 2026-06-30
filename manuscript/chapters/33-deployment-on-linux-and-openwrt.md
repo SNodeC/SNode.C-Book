@@ -7,7 +7,7 @@
 
 ### Why deployment belongs after CMake
 
-CMake expresses SNode.C architecture through targets, install components, exported package targets, dependency visibility, and build-side boundaries. Deployment follows those decisions into the installed system: packages, filesystem layout, service ownership, configuration, runtime state, deployment-specific resources, and constrained Linux targets.
+Deployment is where build decisions meet the operating system.
 
 The subject is deployment, but the real topic is still architectural visibility. Deployment is where SNode.C's build choices enter the filesystem. Shared libraries, component packages, executable applications, exported CMake package files, runtime-loaded protocol modules, configuration directories, log directories, pid directories, service definitions, and package-manager metadata are not unrelated operational leftovers. They are the installed form of the architecture.
 

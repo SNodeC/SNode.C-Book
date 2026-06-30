@@ -7,7 +7,7 @@
 
 ### From system vocabulary to a concrete ecosystem
 
-System vocabulary becomes concrete in MQTTSuite: named roles, boundaries, protocol families, configuration, observability, persistence, and failure behavior appear as a SNode.C-based ecosystem rather than as a second manual.
+MQTTSuite is useful here because it is not a toy example. It is a set of SNode.C-based programs whose roles, protocols, configuration, observability, persistence, and failure behavior have to work as an ecosystem.
 
 MQTTSuite is the concrete reference ecosystem for the system vocabulary developed in Chapter 30. A reference ecosystem is not the only possible way to build systems with SNode.C. It is a source-backed example that shows how the design vocabulary can be used in a real family of cooperating applications.
 

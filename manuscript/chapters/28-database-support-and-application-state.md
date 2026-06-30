@@ -7,7 +7,7 @@
 
 ### From protocol boundaries to persistence boundaries
 
-IoT systems contain communication boundaries; application state adds a different kind of boundary: persistence. Communication boundaries decide how information moves between active participants; persistence boundaries decide what information should remain after the immediate conversation is over.
+Persistence answers a question that protocols alone cannot answer: which information should survive after a connection, request, message, or process has ended?
 
 A protocol boundary asks how information moves between active participants. A persistence boundary asks what information should remain after the immediate conversation is over. That second question changes the architecture of an application. The application now has to decide what belongs in memory, what belongs in durable storage, when database work should be started, how database results flow back into the event-driven application, what happens when the database is unavailable, and how persistence interacts with protocol roles such as HTTP, MQTT, WebSocket, SSE, and local-control interfaces.
 

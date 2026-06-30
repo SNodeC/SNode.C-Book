@@ -7,7 +7,7 @@
 
 ### Why this chapter comes after applications
 
-Executable applications assemble build targets, entry points, linked components, configured roles, callbacks, and runtime start. Systems widen that view: several roles, boundaries, state responsibilities, and operational policies must form one architecture.
+A system appears when several executable roles, state responsibilities, and operational surfaces have to be understood together.
 
 An executable remains an important architectural object. It has a build target, an entry point, linked components, application-side objects, configured roles, instance names, configuration, and runtime behavior. But a communication framework becomes most useful when applications are no longer seen only as isolated endpoints. They become parts of larger arrangements:
 

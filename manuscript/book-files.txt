@@ -17,7 +17,7 @@ manuscript/chapters/07-layers-in-practice-network-transport-connection-applicati
 manuscript/parts/part-03-networking-foundations-in-snodec.md
 manuscript/chapters/08-socket-addresses-and-address-semantics.md
 manuscript/chapters/09-servers-clients-and-connections.md
-manuscript/chapters/10-ipv4-and-ipv6-as-the-primary-teaching-path.md
+manuscript/chapters/10-ipv4-and-ipv6-as-the-first-concrete-network-families.md
 manuscript/chapters/11-unix-domain-sockets.md
 manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md
 manuscript/parts/part-04-from-raw-connections-to-application-protocols.md
