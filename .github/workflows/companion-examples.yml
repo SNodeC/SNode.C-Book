@@ -1,0 +1,38 @@
+name: Companion examples
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-companion-examples:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out book repository
+        uses: actions/checkout@v4
+
+      - name: Check out pinned SNode.C
+        uses: actions/checkout@v4
+        with:
+          repository: SNodeC/snode.c
+          ref: v1.0.2
+          path: external/snode.c
+
+      - name: Install C++ build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake ninja-build g++ pkg-config python3 \
+            libssl-dev zlib1g-dev libbluetooth-dev libmariadb-dev \
+            nlohmann-json3-dev
+
+      - name: Build SNode.C and companion examples
+        run: |
+          SNODEC_SOURCE_DIR="$PWD/external/snode.c" \
+          SNODEC_PREFIX="$PWD/install/snodec" \
+          bash ci/build-companion-examples.sh

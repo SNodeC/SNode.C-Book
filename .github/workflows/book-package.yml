@@ -1,0 +1,41 @@
+name: Book package
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-book-package:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install publication dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake ninja-build python3 \
+            pandoc pandoc-crossref \
+            texlive-xetex texlive-latex-extra texlive-fonts-recommended \
+            texlive-fonts-extra texlive-pictures fonts-lmodern
+
+      - name: Check source hygiene
+        run: bash ci/check-source-hygiene.sh
+
+      - name: Build proposal package and PDFs
+        run: bash ci/build-book-package.sh
+
+      - name: Upload generated PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: snodec-book-pdfs
+          path: |
+            dist/pdf/book-proposal-package.pdf
+            dist/pdf/book-proposal-sample-package.pdf
+            dist/pdf/snodec-book.pdf
