@@ -1,5 +1,5 @@
 # Building a MiniGateway Application
 
-This part turns the book's architectural vocabulary into a compact guided project. MiniGateway combines web administration, SSE observation, MQTT integration, shared application state, configuration, diagnostics, and deployment thinking in one small application.
+Part XI turned the framework vocabulary into design judgment. This part makes the judgment executable. MiniGateway combines web administration, SSE observation, MQTT integration, shared application state, configuration, diagnostics, and deployment thinking in one small application.
 
-The theme is composition: SNode.C roles can be assembled into a real application without losing the layer and boundary discipline developed throughout the book. Recurring application roles appear through factories, contexts, and shared state, not through a separate pattern framework.
+The theme is composition. The application is not presented as a separate pattern framework; it is a concrete assembly of SNode.C roles, factories, contexts, and shared state. The extension chapter then shows whether that structure survives a new network-facing role.

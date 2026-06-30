@@ -7,7 +7,7 @@
 
 ### Why this chapter exists
 
-SNode.C has now been developed through lower communication families, stream connections, protocol contexts, web protocols, MQTT, configuration, deployment, testing, and architectural judgment. MiniGateway is the point where those ideas stop being separate topics and become one small application.
+MiniGateway is the point where the book's vocabulary becomes one deliberately small application.
 
 MiniGateway is modest. It is not a second MQTTSuite. It is not a broker, a dashboard product, or a hardware driver. It is a compact SNode.C application that owns one piece of domain state and exposes that state through several communication boundaries.
 
@@ -115,8 +115,7 @@ The SSE terminal should receive an event. A representative confirmed SSE smoke r
 
 ```text
 event: measurement
-id:2
-retry: 1000
+id: 2
 data: {"temperature":20.2,"humidity":42.0,"voltage":3.72,"sequence":2}
 ```
 
@@ -696,12 +695,16 @@ namespace minigateway {
 #include <chrono>
 #include <cstdint>
 #include <express/middleware/VerboseRequest.h>
+#include <memory>
 #include <string>
 #include <web/http/http_utils.h>
 
 namespace minigateway {
 
     namespace {
+
+        using Request = MiniGatewayWebApp::Request;
+        using Response = MiniGatewayWebApp::Response;
 
         Measurement makeSimulatedMeasurement(std::uint64_t sampleIndex) {
             Measurement measurement;
@@ -713,12 +716,16 @@ namespace minigateway {
             return measurement;
         }
 
-        template <typename ResponseT>
-        void sendMeasurementEvent(const Measurement& measurement, const ResponseT& res) {
+        static bool acceptsEventStream(const std::shared_ptr<Request>& req) {
+            return web::http::ciContains(req->get("Accept"), "text/event-stream");
+        }
+
+        static void sendMeasurement(const std::shared_ptr<Response>& res,
+                                    const Measurement& measurement) {
             res->sendFragment("event: measurement");
-            res->sendFragment("id:" + std::to_string(measurement.sequence));
-            res->sendFragment("retry: 1000");
-            res->sendFragment("data: " + toJsonPayload(measurement) + "\r\n");
+            res->sendFragment("id: " + std::to_string(measurement.sequence));
+            res->sendFragment("data: " + toJsonPayload(measurement));
+            res->sendFragment("");
         }
 
         void registerWebRoutes(const MiniGatewayWebApp& app, MeasurementModel& measurementModel) {
@@ -733,19 +740,19 @@ namespace minigateway {
             });
 
             app.get("/events", [&measurementModel] APPLICATION(req, res) {
-                if (web::http::ciContains(req->get("Accept"), "text/event-stream")) {
+                if (acceptsEventStream(req)) {
                     res->set("Content-Type", "text/event-stream").set("Cache-Control", "no-cache").set("Connection", "keep-alive");
                     res->sendHeader();
 
                     const Measurement current = measurementModel.current();
                     if (current.sequence > 0) {
-                        sendMeasurementEvent(current, res);
+                        sendMeasurement(res, current);
                     }
 
                     measurementModel.subscribe([res](const Measurement& measurement) {
                         const bool keepSubscriber = res->isConnected();
                         if (keepSubscriber) {
-                            sendMeasurementEvent(measurement, res);
+                            sendMeasurement(res, measurement);
                         }
 
                         return keepSubscriber;

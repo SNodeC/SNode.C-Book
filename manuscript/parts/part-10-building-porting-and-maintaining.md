@@ -1,5 +1,5 @@
 # Building, Porting, and Maintaining
 
-This part treats build, deployment, testing, debugging, and benchmarking as architectural surfaces. CMake targets, install components, package dependencies, runtime paths, deployed services, and confidence strategies are all part of the framework story.
+Part IX showed systems as executable compositions. This part asks how those systems remain trustworthy after they leave the source tree.
 
-The goal is to show how a layered design remains trustworthy outside the source tree.
+CMake components, public headers, install surfaces, package dependencies, Linux/OpenWrt deployment, testing, debugging, and benchmarking are treated as part of the same architectural story. Part XI then turns the accumulated material into explicit design judgment.

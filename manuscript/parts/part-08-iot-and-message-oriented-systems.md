@@ -1,5 +1,5 @@
 # IoT and Message-Oriented Systems
 
-This part introduces MQTT and then places MQTT inside larger IoT communication structures. Native MQTT, MQTT over WebSocket, and multi-protocol IoT system design are treated as related boundary choices.
+The web chapters ended with upgraded and long-lived communication. This part introduces MQTT and then places it beside WebSocket and HTTP as one surface in larger IoT designs.
 
-The recurring question is which protocol surface best matches the conversation a system boundary needs to have.
+Native MQTT, MQTT over WebSocket, and multi-protocol systems are treated as choices about who talks to whom, through which surface, and for what purpose. Part IX then adds durable application state and reads complete applications as systems rather than isolated protocol examples.

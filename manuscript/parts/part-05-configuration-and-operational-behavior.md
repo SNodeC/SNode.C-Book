@@ -1,5 +1,5 @@
 # Configuration and Operational Behavior
 
-This part explains configuration as part of the architecture rather than as a late convenience layer. It connects application-side handles, configured communication roles, registered runtime-visible instances, generated configuration, logging, diagnostics, and runtime introspection.
+Part IV separated protocol behavior from carrier selection. This part shows where many of those choices become visible in a real executable.
 
-The goal is to make operational behavior visible before systems become large.
+Configuration is treated as architecture, not as decoration: application-side handles, named roles, registered instances, generated command lines, logging, diagnostics, and runtime introspection all make operational behavior observable. With that surface established, Part VI can discuss secure and robust communication without hiding policy inside arbitrary callbacks.

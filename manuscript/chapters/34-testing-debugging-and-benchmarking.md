@@ -7,7 +7,7 @@
 
 ### Why testing follows deployment
 
-Deployment makes architecture visible as an installed system. Trustworthiness comes later: a built and deployed system must still be tested, inspected, debugged, and measured at the boundaries where it claims to be clear.
+A built system is not yet a trustworthy system. Trust comes from checking behavior at the surfaces where the design makes promises.
 
 SNode.C is delivered as libraries, component packages, exported CMake targets, runtime-loaded modules, configuration directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages. Testing, debugging, and benchmarking check whether the boundaries taught throughout the book still hold under pressure. The chapter follows the path from build structure to installed structure, runtime behavior, diagnosed behavior, and measured behavior.
 

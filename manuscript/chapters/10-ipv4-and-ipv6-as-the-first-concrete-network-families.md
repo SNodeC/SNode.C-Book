@@ -7,7 +7,7 @@
 
 ### Why IPv4 and IPv6 come first
 
-The server/client handle, registered instance, concrete `SocketConnection`, context factory, and per-connection context remain separate.
+IPv4 and IPv6 are the cleanest place to see the SNode.C server/client model without the extra locality of Unix-domain sockets or the device-near assumptions of Bluetooth.
 
 This chapter keeps that model intact and changes only the first concrete lower-family choice:
 

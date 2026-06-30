@@ -1,5 +1,5 @@
 # Web Protocols and Web Applications
 
-This part raises the communication model into HTTP, Express-like routing, Server-Sent Events, WebSocket upgrade, and WebSocket subprotocols. It shows how SNode.C supports web-facing protocol layers without erasing the lower connection model.
+Part VI dealt with connection behavior before web semantics entered the picture. This part raises the model into HTTP, Express-like routing, Server-Sent Events, WebSocket upgrade, and WebSocket subprotocols.
 
-The web stack is presented as a sequence of boundaries, not as one monolithic abstraction.
+The web stack is presented as a sequence of protocol surfaces built on lower connection machinery, not as one monolithic abstraction. Part VIII then shifts from web-facing interaction to MQTT and message-oriented IoT systems.

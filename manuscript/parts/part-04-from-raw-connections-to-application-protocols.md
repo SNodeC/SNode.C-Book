@@ -1,5 +1,5 @@
 # From Raw Connections to Application Protocols
 
-This part moves from configured lower-family connections to protocol behavior. It focuses on writing `SocketContext` and `SocketContextFactory` classes well and then shows how the same protocol idea can remain recognizable over different lower layers.
+The previous part showed that endpoint identity changes with the lower family. This part asks how application protocol meaning can remain recognizable anyway.
 
-The central lesson is that protocol meaning should live at the layer that can honestly own it.
+The focus is `SocketContext`, `SocketContextFactory`, and the transfer of one protocol shape across several lower layers. The lesson is not that carriers are irrelevant; it is that protocol behavior, context construction, carrier selection, and deployment policy become easier to reason about when each has a clear home. Part V then makes those choices visible through configuration and diagnostics.

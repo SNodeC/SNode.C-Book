@@ -7,7 +7,7 @@
 
 ### Why this chapter follows architectural judgment
 
-Architectural judgment asks where behavior should live: lower family, transport layer, connection context, middleware, WebSocket subprotocol, MQTT, configuration, deployment role, or application/domain code.
+Extension is safe only when the new behavior has a clear home.
 
 Safe extension asks the next question:
 

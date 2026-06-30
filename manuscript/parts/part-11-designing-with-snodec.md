@@ -1,5 +1,5 @@
 # Designing with SNode.C
 
-This part turns the accumulated technical vocabulary into design judgment. After the reader has seen layers, roles, protocols, applications, systems, build structure, deployment, and testing, the remaining question is how to choose and evolve boundaries wisely.
+The previous parts built the technical vocabulary: families, transports, connections, contexts, factories, protocols, systems, builds, deployment, and tests. This part asks how to choose among them when a real application has several plausible shapes.
 
-Chapter 35 focuses on architectural judgment: choosing the right layer and boundary for a concern. Chapter 36 then asks how an application or framework codebase can be extended safely once those boundaries are understood.
+Chapter 35 condenses the decision model. Chapter 36 then applies it to safe extension: adding capabilities without mixing responsibilities that should remain separate. Part XII will demonstrate that discipline in a compact MiniGateway application.

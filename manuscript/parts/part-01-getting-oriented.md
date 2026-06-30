@@ -1,5 +1,5 @@
 # Getting Oriented
 
-This part gives the reader the first stable map of the book. It explains why SNode.C exists, prepares the development environment, builds the first echo pair, and shows how to read the repository without getting lost in details too early.
+Every later design decision in this book depends on a small set of shared terms. This first part builds that base before the framework becomes large: why SNode.C exists, what environment is needed, how the first echo pair runs, and how the repository can be read without treating every file as equal.
 
-The goal is not to teach every API immediately. The goal is to establish the first vocabulary: runtime, role, connection, layer, context, and application shape.
+The part should leave the reader with a practical starting point and a first vocabulary: runtime, role, connection, layer, context, and application shape. Part II will turn that vocabulary into the explicit architecture used by the rest of the book.

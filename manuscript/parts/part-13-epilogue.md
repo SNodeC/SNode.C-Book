@@ -1,7 +1,5 @@
 # Epilogue — What to Take Away from SNode.C {.unnumbered}
 
-SNode.C is not primarily a shortcut for opening sockets.
+The MiniGateway chapters close the practical arc: the same vocabulary used for small examples can describe an application that combines web observation, MQTT integration, local state, configuration, diagnostics, and extension.
 
-It is a way of keeping network-system architecture visible while the application grows from simple connections to protocols, protocols to roles, roles to applications, and applications to deployable systems.
-
-That visibility is the real subject of this book.
+The epilogue gathers that arc into the book's final point. SNode.C is not primarily a shortcut for opening sockets; it is a way of keeping network-system architecture visible while applications grow from simple connections to protocols, protocols to roles, roles to applications, and applications to deployable systems.
