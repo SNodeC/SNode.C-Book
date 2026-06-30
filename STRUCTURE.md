@@ -34,7 +34,7 @@ The publisher-facing proposal material now also includes a separate evidence she
 
 - 08. Socket Addresses and Address Semantics — **present**
 - 09. Servers, Clients, and Connections — **present**
-- 10. IPv4 and IPv6 as the Primary Teaching Path — **present**
+- 10. IPv4 and IPv6 as the First Concrete Network Families — **present**
 - 11. Unix Domain Sockets — **present**
 - 12. Bluetooth in SNode.C: RFCOMM and L2CAP — **present**
 
