@@ -152,7 +152,7 @@ The book uses recurring teaching patterns:
 
 8. Socket Addresses and Address Semantics
 9. Servers, Clients, and Connections
-10. IPv4 and IPv6 as the Primary Teaching Path
+10. IPv4 and IPv6 as the First Concrete Network Families
 11. Unix Domain Sockets
 12. Bluetooth in SNode.C: RFCOMM and L2CAP
 
