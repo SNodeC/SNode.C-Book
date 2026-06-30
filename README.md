@@ -19,12 +19,14 @@ The book is written for experienced C++ developers, advanced students, and syste
 ## What this repository contains
 
 - `production/metadata/metadata.yaml` — Pandoc/LaTeX metadata for the book build.
+- `production/metadata/proposal-metadata.yaml` — article-style Pandoc/LaTeX metadata for proposal PDFs.
 - `production/cmake/` — reusable CMake path, tool, and Pandoc build helpers.
 - `manuscript/book-files.txt` — main manuscript file order.
 - `STRUCTURE.md` — human-readable overview of the manuscript structure.
 - `source-baseline/SOURCE-VERSION.md` — exact SNode.C source snapshot used for manuscript alignment.
 - `review/proposal/book-proposal-package.md` — publisher-facing proposal material.
 - `review/proposal/evidence-sheet.md` — conservative evidence/adoption status sheet for acquisition review.
+- `review/proposal/sample-chapters.md` — short bridge inserted before sample chapters in the proposal-sample PDF.
 - `manuscript/frontmatter/` — preface, reading guidance, conventions, author note, and acknowledgements.
 - `manuscript/chapters/` — one Markdown file per chapter.
 - `manuscript/parts/` — part divider files.
@@ -91,10 +93,22 @@ To generate LaTeX only:
 cmake --build build --target tex
 ```
 
-To build the publisher-facing proposal PDF, including the attached evidence sheet:
+To build the publisher-facing proposal PDF as a compact article-style acquisition dossier, including the attached evidence sheet:
 
 ```bash
 cmake --build build --target proposal
+```
+
+The explicit alias is also available:
+
+```bash
+cmake --build build --target proposal-pdf
+```
+
+To build the proposal plus selected sample chapters:
+
+```bash
+cmake --build build --target proposal-sample-pdf
 ```
 
 The CMake build reads `manuscript/book-files.txt` during configuration. If the manuscript file list changes, reconfigure the build directory. The root `CMakeLists.txt` is intentionally small; manuscript, proposal, figure, package, and baseline targets are defined in the corresponding subdirectory `CMakeLists.txt` files.
@@ -109,7 +123,7 @@ The `proposal-package` target creates the final publisher/reviewer archive in `d
 cmake --build build --target proposal-package
 ```
 
-That generated archive is intended to contain both generated PDFs, the manuscript/proposal sources, the proposal evidence sheet, front matter, back matter, source-version pin, metadata, structure files, filters, LaTeX support, figures, and example source trees needed for publisher or reviewer inspection. It should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
+That generated archive is intended to contain the generated article-style proposal PDF, the generated proposal-with-sample-chapters PDF, the manuscript PDF, the manuscript/proposal sources, the proposal evidence sheet, front matter, back matter, source-version pin, metadata, structure files, filters, LaTeX support, figures, and example source trees needed for publisher or reviewer inspection. It should not include local build directories, editor state, `.git` internals, or other working-directory artifacts.
 
 ## Positioning
 

@@ -1,12 +1,9 @@
 ---
-title: "Layered Network Programming with SNode.C"
+title: "Book Proposal: Layered Network Programming with SNode.C"
 subtitle: "Building Multi-Protocol Applications in Modern C++"
 author: "Volker Christian"
 
-documentclass: book
-classoption:
-  - openany
-
+documentclass: article
 numbersections: true
 
 mainfont: "Latin Modern Roman"
@@ -18,8 +15,8 @@ geometry: margin=25mm
 papersize: a4
 
 toc: true
-toc-depth: 1
-secnumdepth: 1
+toc-depth: 2
+secnumdepth: 2
 
 hyperrefoptions:
   - bookmarks=true
@@ -29,89 +26,10 @@ header-includes:
   - |
     ```{=latex}
     \providecommand{\passthrough}[1]{#1}
-    \usepackage{tocloft}
+    \usepackage{xcolor}
     \usepackage{makeidx}
     \makeindex
-    \setlength{\cftchapnumwidth}{1.5em}
-    \setlength{\cftsecnumwidth}{3em}
-    \setlength{\cftsubsecnumwidth}{3.8em}
-    \setlength{\cftsubsecindent}{5.5em}
-    \usepackage{xcolor}
     \input{production/latex/snodec-callouts.tex}
-
-    % One-shot running-head override for long section titles.
-    % Use immediately before a Markdown section heading when the printed
-    % heading and TOC entry should stay full, but the page header needs
-    % a shorter navigation label.
-    \makeatletter
-    \let\snodec@nextsectionmark\@empty
-    \newcommand{\SNodeCNextSectionMark}[1]{%
-      \gdef\snodec@nextsectionmark{#1}%
-    }
-    \let\snodec@origsectionmark\sectionmark
-    \renewcommand{\sectionmark}[1]{%
-      \ifx\snodec@nextsectionmark\@empty
-        \snodec@origsectionmark{#1}%
-      \else
-        \markright{\snodec@nextsectionmark}%
-        \global\let\snodec@nextsectionmark\@empty
-      \fi
-    }
-    \makeatother
-
-    % Keep short part introductions on the part page instead of forcing
-    % a nearly empty page between the part title and the first chapter.
-    % The next chapter still starts on its own page.
-    \makeatletter
-    \newif\ifsnodec@partintroopen
-    \newcommand{\snodec@endpartintro}{%
-      \ifsnodec@partintroopen
-        \par
-        \endgroup
-      \fi
-    }
-    \renewcommand\part{%
-      \snodec@endpartintro
-      \if@openright
-        \cleardoublepage
-      \else
-        \clearpage
-      \fi
-      \thispagestyle{plain}%
-      \if@twocolumn
-        \onecolumn
-        \@tempswatrue
-      \else
-        \@tempswafalse
-      \fi
-      \null\vspace*{0.16\textheight}%
-      \secdef\@part\@spart
-    }
-    \renewcommand\@endpart{%
-      \par
-      \nobreak
-      \vspace{2.8em}%
-      \begingroup
-        \snodec@partintroopentrue
-        \normalfont\large\itshape
-        \setlength{\parindent}{0pt}%
-        \setlength{\parskip}{0.6\baselineskip}%
-        \setlength{\leftskip}{0.13\textwidth}%
-        \setlength{\rightskip}{0.13\textwidth}%
-        \@afterindentfalse
-        \@afterheading
-    }
-    \let\snodec@origchapter\chapter
-    \renewcommand{\chapter}{%
-      \snodec@endpartintro
-      \snodec@origchapter
-    }
-    \let\snodec@origbackmatter\backmatter
-    \renewcommand{\backmatter}{%
-      \snodec@endpartintro
-      \snodec@origbackmatter
-    }
-    \makeatother
 
     \usepackage{listings}
     \definecolor{codebg}{HTML}{F8F8F8}
@@ -253,5 +171,6 @@ header-includes:
       style=snodec-plain,
       defaultdialect=[SNodeC]C++
     }
+
     ```
 ---

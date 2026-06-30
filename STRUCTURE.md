@@ -7,7 +7,7 @@ This structure belongs to an architecture-first SNode.C book. The manuscript is 
 
 The manuscript currently contains the planned front matter, all planned chapters, an epilogue, and back matter.
 
-The publisher-facing proposal material now also includes a separate evidence sheet that distinguishes public repository evidence, author-confirmed professional context, and adoption claims that are not yet made.
+The publisher-facing proposal material now uses an article-style proposal structure: a compact proposal PDF, a proposal-with-sample-chapters PDF, and a separate evidence sheet that distinguishes public repository evidence, author-confirmed professional context, and adoption claims that are not yet made.
 
 ## Front matter
 
@@ -138,10 +138,25 @@ production/cmake/      shared path, tool, and Pandoc helper functions
 assets/CMakeLists.txt  figure build entry point
 assets/figures/        TikZ figure build rules
 manuscript/            full book `tex`, `pdf`, and `book` targets
-review/proposal/       publisher proposal PDF target
+review/proposal/       article-style proposal and proposal-sample PDF targets
 packaging/             publisher/reviewer tar.gz package target
 source-baseline/       source-baseline check target
 companion/examples/    standalone C++ companion examples
 ```
 
 The companion examples are not part of the default book build because they require an installed SNode.C development package. They can be configured through the main build with `SNODEC_BOOK_BUILD_COMPANION_EXAMPLES=ON`, or built separately from `companion/examples/`.
+
+
+## Proposal structure
+
+The proposal source is now structured as a compact acquisition dossier rather than as a miniature book. Its major sections are:
+
+1. Project Snapshot
+2. Book Concept
+3. Audience and Market Positioning
+4. Manuscript Overview
+5. Companion Material and Technical Verification
+6. Author, Evidence, and Project Context
+7. Acquisition Case and Risk Handling
+
+The `proposal` / `proposal-pdf` target uses `production/metadata/proposal-metadata.yaml`, `documentclass: article`, and `--top-level-division=section`. The `proposal-sample-pdf` target appends Chapter 1, Chapter 3, Chapter 23, Chapter 35, and Chapter 37 after the proposal and evidence sheet. The main manuscript continues to use the book metadata and `--top-level-division=part`.

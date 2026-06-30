@@ -57,14 +57,17 @@ set(REQUIRED_SOURCE_FILES
     "production/cmake/SNodeCBookTools.cmake"
     "production/cmake/SNodeCPandocBook.cmake"
     "production/metadata/metadata.yaml"
+    "production/metadata/proposal-metadata.yaml"
     "assets/CMakeLists.txt"
     "assets/figures/CMakeLists.txt"
+    "companion/CMakeLists.txt"
     "manuscript/CMakeLists.txt"
     "manuscript/book-files.txt"
     "review/CMakeLists.txt"
     "review/proposal/CMakeLists.txt"
     "review/proposal/book-proposal-package.md"
     "review/proposal/evidence-sheet.md"
+    "review/proposal/sample-chapters.md"
     "packaging/CMakeLists.txt"
     "packaging/cmake/MakeProposalPackage.cmake"
     "packaging/PACKAGE-CONTENTS.txt"
@@ -90,7 +93,8 @@ set(REQUIRED_SOURCE_DIRS
 
 set(REQUIRED_BUILD_FILES
     "snodec-book.pdf"
-    "book-proposal-package.pdf")
+    "book-proposal-package.pdf"
+    "book-proposal-sample-package.pdf")
 
 foreach(REQUIRED_FILE IN LISTS REQUIRED_SOURCE_FILES)
   if(NOT EXISTS "${SOURCE_DIR}/${REQUIRED_FILE}")
@@ -162,6 +166,8 @@ endfunction()
 # Generated PDFs for publisher/reviewer reading.
 file(COPY "${BUILD_DIR}/snodec-book.pdf" DESTINATION "${STAGING_DIR}/dist/pdf")
 file(COPY "${BUILD_DIR}/book-proposal-package.pdf"
+     DESTINATION "${STAGING_DIR}/dist/pdf")
+file(COPY "${BUILD_DIR}/book-proposal-sample-package.pdf"
      DESTINATION "${STAGING_DIR}/dist/pdf")
 
 # Required manuscript/proposal sources and build metadata.

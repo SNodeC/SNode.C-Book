@@ -20,7 +20,7 @@ if(SNODEC_BOOK_BUILD_COMPANION_EXAMPLES)
   add_subdirectory(companion)
 endif()
 
-add_custom_target(all-books DEPENDS pdf tex proposal)
+add_custom_target(all-books DEPENDS pdf tex proposal proposal-sample-pdf)
 
 add_custom_target(
   book-clean

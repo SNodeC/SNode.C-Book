@@ -1,6 +1,6 @@
 add_custom_target(
   proposal-package
-  DEPENDS pdf proposal
+  DEPENDS pdf proposal proposal-sample-pdf
   COMMAND
     "${CMAKE_COMMAND}"
     -D "SOURCE_DIR=${SNODEC_BOOK_ROOT}"

@@ -1,16 +1,18 @@
 SNode.C publisher/reviewer package
 
-This archive is intended for publisher/reviewer evaluation. It contains the generated proposal PDF, the generated full manuscript PDF, the exact SNode.C source-version pin, and the clean source material needed to inspect or rebuild the proposal/manuscript package.
+This archive is intended for publisher/reviewer evaluation. It contains the generated article-style proposal PDF, the generated proposal-with-sample-chapters PDF, the generated full manuscript PDF, the exact SNode.C source-version pin, and the clean source material needed to inspect or rebuild the proposal/manuscript package.
 
 Included:
 - dist/pdf/snodec-book.pdf
 - dist/pdf/book-proposal-package.pdf
+- dist/pdf/book-proposal-sample-package.pdf
 - manuscript/
 - manuscript/CMakeLists.txt
 - manuscript/book-files.txt
 - production/CMakeLists.txt
 - production/cmake/
 - production/metadata/metadata.yaml
+- production/metadata/proposal-metadata.yaml
 - production/filters/
 - production/latex/
 - assets/CMakeLists.txt
@@ -24,6 +26,7 @@ Included:
 - review/CMakeLists.txt
 - review/proposal/CMakeLists.txt
 - review/proposal/
+- review/proposal/sample-chapters.md
 - review/verification/
 - packaging/CMakeLists.txt
 - packaging/cmake/
