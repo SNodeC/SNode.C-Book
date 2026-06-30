@@ -70,7 +70,7 @@ A concrete connection exists.
 Create the protocol endpoint that belongs to it.
 ```
 
-The factory is therefore not a general-purpose object creation service. It is the construction bridge between a connection and the protocol context that will run on that connection.
+The factory is therefore the construction bridge between a connection and the protocol context that will run on that connection, not a general-purpose object creation service.
 
 This narrowness is useful. It prevents the factory interface from becoming a second application framework. A concrete factory may still hold stable construction data, but the moment represented by `create(connection)` remains precise: a connection has appeared, and the correct context object must be created for that connection.
 
@@ -133,7 +133,7 @@ This diagram connects Chapters 9, 13, and 14. Chapter 9 explained the server/cli
 
 The accept or connect path makes the connection real. The factory creates the context that will handle protocol behavior once attached to the connection. The context then processes protocol messages.
 
-That is why the factory is a boundary object. It is close to the connection, because it receives the connection. It is close to the protocol, because it creates the context. But it is not itself the connection and not itself the protocol endpoint.
+The factory is a boundary object: close to the connection because it receives the connection, close to the protocol because it creates the context, but neither the connection nor the protocol endpoint.
 
 ### One fresh context per creation
 
@@ -507,7 +507,7 @@ The same rule applies to all of them:
 The selection should remain a construction-time decision, not protocol execution.
 :::
 
-This section is therefore not a pattern catalogue. It is a set of examples showing how the construction-boundary idea can be expressed without moving protocol behavior into the factory.
+This section therefore uses examples to show how the construction-boundary idea can be expressed without moving protocol behavior into the factory.
 
 #### Separate server/client factories
 

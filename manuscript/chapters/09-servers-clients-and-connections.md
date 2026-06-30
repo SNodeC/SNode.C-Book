@@ -26,7 +26,7 @@ Read Figure \ref{fig:server-client-path} as a bridge among the book's early conc
 Those ideas meet at the most important practical boundary in the stream layer:
 
 ::: {.snodec-warning title="Instance/connection warning"}
-A server or client instance is not a connection. It is the runtime-visible role under which connections appear.
+A server or client instance names the runtime-visible role under which connections appear; it is not itself a connection.
 :::
 
 That distinction is simple, but it carries a large part of the framework's architecture. If it is missed, everything tends to collapse into one vague object: the thing that listens, connects, owns the socket, handles data, stores state, performs retries, and implements the protocol. SNode.C does not use that collapsed model. It separates those responsibilities deliberately.
@@ -37,7 +37,7 @@ That distinction is simple, but it carries a large part of the framework's archi
 \index{connection}
 
 
-The useful first distinction is not a class hierarchy. It is a responsibility map.
+Start with a responsibility map rather than a class hierarchy.
 
 | Concept | Typical C++ representation | Responsibility |
 |---|---|---|
@@ -166,7 +166,7 @@ When the server-side instance succeeds in listening, peers can be accepted.
 
 Each accepted peer becomes a concrete `SocketConnection`.
 
-That connection is not the server itself. It is one peer relationship under the server-side role.
+That connection represents one peer relationship under the server-side role, not the server itself.
 
 A server may therefore create many connection lifecycles over its own lifetime. Some may be short. Some may be long. Some may close normally. Some may fail. Each one is still a concrete connection under the same server-side instance.
 
@@ -220,7 +220,7 @@ A more accurate description is:
 
 > A client-side instance is a configured runtime-visible role that registers connection intent, starts connect machinery through the runtime, establishes peer relationships through the selected lower layer, attaches contexts through a factory, and can coordinate retry and reconnect behavior over time.
 
-That is why a SNode.C client is more substantial than a blocking `connect()` call wrapped in a class.
+A SNode.C client is therefore more substantial than a blocking `connect()` call wrapped in a class.
 
 It is a communication role with lifecycle.
 
@@ -292,7 +292,7 @@ The structure is shared.
 
 The direction of communication setup is different.
 
-That is why the same mental model can carry both sides without pretending that server and client behavior are identical.
+The same mental model can carry both sides without pretending that server and client behavior are identical.
 
 #### Retry, reconnect, and role lifetime
 
@@ -348,7 +348,7 @@ The connection object carries several groups of responsibility:
 
 This table is not meant to replace API documentation. Its job is to show why the connection is a runtime object with identity, data flow, time, diagnostics, and protocol attachment.
 
-The connection is therefore not a hidden pipe. It is a visible runtime object with identity, timing, addresses, data flow, protocol attachment, and operational metrics.
+The connection is therefore a visible runtime object with identity, timing, addresses, data flow, protocol attachment, and operational metrics rather than a hidden pipe.
 
 #### Connection versus context
 
@@ -658,7 +658,7 @@ registered instance
           -> SocketContext
 ```
 
-This is why the factory belongs conceptually between instance and context.
+The factory therefore belongs conceptually between instance and context.
 
 Without the factory, a server accepting multiple peers would have no clean general mechanism for producing a fresh protocol endpoint for each connection. The application entry point would have to know too much about connection creation timing. The role would begin to absorb protocol construction. The structure would become less reusable.
 

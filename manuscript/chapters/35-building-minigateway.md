@@ -9,7 +9,7 @@
 
 MiniGateway is the point where the book's vocabulary becomes one deliberately small application.
 
-MiniGateway is modest. It is not a second MQTTSuite. It is not a broker, a dashboard product, or a hardware driver. It is a compact SNode.C application that owns one piece of domain state and exposes that state through several communication boundaries.
+MiniGateway is modest. It is neither a second MQTTSuite nor a broker, dashboard product, or hardware driver. It is a compact SNode.C application that owns one piece of domain state and exposes that state through several communication boundaries.
 
 The application keeps the latest environmental measurement in memory. A measurement contains temperature, humidity, voltage, a sequence number, and a timestamp. Whenever a new measurement enters the application, MiniGateway performs one internal state transition and then lets the outward-facing roles observe the accepted state.
 
@@ -139,7 +139,7 @@ A simple check is:
 ss -ltnp 'sport = :8080'
 ```
 
-This is not a MiniGateway-specific trick. It is part of testing deployed communication roles honestly.
+This belongs to honest testing of deployed communication roles, not to a MiniGateway-specific trick.
 
 ### The shape of MiniGateway
 
@@ -292,7 +292,7 @@ add_custom_target(
 \index{MeasurementJsonCodec@\texttt{MeasurementJsonCodec}}
 
 
-The first application type is `Measurement`. It is deliberately plain. The domain value has no knowledge of HTTP, SSE, MQTT, sockets, configuration, or deployment. It is the fact that the application owns and exposes.
+The first application type is `Measurement`, deliberately plain. The domain value has no knowledge of HTTP, SSE, MQTT, sockets, configuration, or deployment. It is the fact that the application owns and exposes.
 
 The JSON conversion is separated into `MeasurementJsonCodec`. This keeps `Measurement` as a simple value type while still giving the web, SSE, and MQTT roles one shared representation.
 
@@ -1136,7 +1136,7 @@ namespace minigateway {
 \index{composition root}
 
 
-The main file is deliberately small. It performs four tasks:
+The main file stays deliberately small and performs four tasks:
 
 1. initialize SNode.C,
 2. create the shared `MeasurementModel`,

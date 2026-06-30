@@ -8,7 +8,7 @@
 
 ### Communication over time
 
-Reliable communication is not only the ability to establish a connection. It is also the ability to decide what happens when establishment, operation, shutdown, or recovery does not complete as expected.
+Reliable communication includes more than establishing a connection; it also means deciding what happens when establishment, operation, shutdown, or recovery does not complete as expected.
 
 Timeouts, retries, and failure modes widen that view to the whole framework.
 
@@ -465,7 +465,7 @@ The framework separates the failure category from the retry policy. That separat
 
 `NO_RETRY` is part of the failure-control vocabulary.
 
-It should be understood carefully. It is not a separate ordinary outcome like `OK` or `ERROR`. It is retry-control information attached to a state.
+It should be understood carefully. It attaches retry-control information to a state rather than adding a separate ordinary outcome like `OK` or `ERROR`.
 
 It lets a status report remain an error or fatal condition while telling role-level retry logic not to continue automatically.
 

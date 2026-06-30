@@ -150,7 +150,7 @@ This small excerpt shows the extension rule in code. The factory constructs. The
 | Where is application ordering? | still `MeasurementModel::accept(...)` |
 | What would be pollution? | putting local IPC parsing into HTTP, SSE, MQTT, or the model |
 
-The example is deliberately small. It does not justify a reusable framework component, because the line protocol and measurement shape are project-specific. It does justify a separate application role, because the input boundary has a different peer identity, communication family, diagnostic surface, and future-change path from the web and MQTT roles.
+The example stays deliberately small. It does not justify a reusable framework component, because the line protocol and measurement shape are project-specific. It does justify a separate application role, because the input boundary has a different peer identity, communication family, diagnostic surface, and future-change path from the web and MQTT roles.
 
 
 ### Extending with a new `SocketContext`
@@ -354,7 +354,7 @@ configuration:
   operator-adjustable behavior
 ```
 
-A configurable invariant is not flexibility. It is often an unprotected design error.
+A configurable invariant often signals an unprotected design error rather than flexibility.
 
 ### Extending the build and component surface
 

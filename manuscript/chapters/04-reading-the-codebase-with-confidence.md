@@ -40,7 +40,7 @@ This chapter does not try to explain every file. It teaches a reading strategy. 
 \index{CMake@\texttt{CMake}!as navigation}
 
 
-The first useful map is not a class diagram. It is the build structure.
+The first useful map is the build structure, not a class diagram.
 
 The top-level `CMakeLists.txt` defines the project, prepares project-level helper modules, delegates into `src`, and then includes packaging support. The top-level file is mostly a gateway into the framework source tree rather than the place where the framework structure itself is expressed.
 
@@ -62,7 +62,7 @@ apps/
 
 That list is the first practical source-tree map.
 
-It says that SNode.C is not arranged around one monolithic executable. It is arranged around framework regions. When reading the codebase, begin with those regions before jumping into individual implementation files.
+It says that SNode.C is arranged around framework regions rather than one monolithic executable. When reading the codebase, begin with those regions before jumping into individual implementation files.
 
 A first mental map is:
 
@@ -79,7 +79,7 @@ src/
   apps/       example and reference applications
 ```
 
-This map is not an exhaustive inventory. It is an orientation tool. It answers the first question a reader should ask about any file:
+This map serves as orientation, not as an exhaustive inventory. It answers the first question a reader should ask about any file:
 
 > Which architectural region am I reading?
 
@@ -515,7 +515,7 @@ It answers this question:
 
 > When the framework has a connection, which application context should be attached to it?
 
-That is why factories are so useful for orientation. They connect framework-managed connection lifetime with user-defined protocol behavior.
+Factories help orientation because they connect framework-managed connection lifetime with user-defined protocol behavior.
 
 When reading a factory, ask:
 

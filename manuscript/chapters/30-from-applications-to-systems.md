@@ -130,7 +130,7 @@ These are role names, not necessarily executable names. Some roles may be routes
 
 The role `database-state` is intentionally different from `admin-http` or `mqtt-ingest`. It is not the same kind of communication role as a socket server or client. It names the persistence boundary that owns durable application state.
 
-The system is not defined by one large binary name. It is defined by the roles that cooperate. Some roles may live inside one executable. Some may be separate services. That is an architectural decision, not a limitation imposed by the framework.
+The cooperating roles define the system, not one large binary name. Some roles may live inside one executable. Some may be separate services. That is an architectural decision, not a limitation imposed by the framework.
 
 #### Named roles as system vocabulary
 
@@ -334,7 +334,7 @@ Once roles and boundaries are visible, operation becomes more concrete. Configur
 
 At the application level, configuration shapes one communication role. At the system level, configuration can describe a constellation of roles.
 
-Chapters 16 and 17 introduced named instances and structured configuration. At system scale, those ideas become a role map. The purpose of the following pseudo-configuration is not syntax. It is to show how names can make role boundaries visible.
+Chapters 16 and 17 introduced named instances and structured configuration. At system scale, those ideas become a role map. The following pseudo-configuration shows how names can make role boundaries visible; syntax is not the point.
 
 ```ini
 [admin-http]
@@ -470,7 +470,7 @@ The earlier carrier-change idea now becomes a system-evolution strategy: keep pr
 
 For example, a message-oriented domain protocol may begin as a native internal service. Later it may also be exposed through a WebSocket path, an HTTP-facing endpoint, or an MQTT integration boundary. The system remains easier to evolve if the protocol logic is not fused unnecessarily to one carrier or deployment shape.
 
-This is where the earlier layer discipline pays off. SNode.C gives the architect communication roles, protocol layers, configuration structure, diagnostics, runtime behavior, and reusable web and messaging facilities.
+Here the earlier layer discipline pays off. SNode.C gives the architect communication roles, protocol layers, configuration structure, diagnostics, runtime behavior, and reusable web and messaging facilities.
 
 It does not replace domain-specific code. Real systems still need:
 
@@ -518,7 +518,7 @@ Chapter 29 gave a way to read an application. A SNode.C system can be read with 
 10. Which parts may fail or restart independently?
 11. Which protocol cores should remain reusable if carriers or deployment boundaries change?
 
-This checklist is not a rigid method. It is a way to prevent system design from collapsing into a pile of features.
+Use this checklist to prevent system design from collapsing into a pile of features, not as a rigid method.
 
 A framework can tolerate some inconsistency in tiny examples. In a system, inconsistency becomes expensive. This is why SNode.C's consistency matters:
 

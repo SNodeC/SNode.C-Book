@@ -101,7 +101,7 @@ return core::SNodeC::start();
 
 Between those two lines, the application creates communication roles and registers what they should do.
 
-This is the reason `core::SNodeC::start()` is not a ceremonial final line. It is the point where registered communication work can be advanced by the framework runtime.
+For that reason, `core::SNodeC::start()` is the point where registered communication work can be advanced by the framework runtime, not a ceremonial final line.
 
 #### The instance
 
@@ -161,7 +161,7 @@ The echo pair used that rule in a very small form: the server and client handles
 \index{context construction}
 
 
-A `SocketContextFactory` creates contexts because a context belongs to a connection, and connections appear dynamically. A server may accept many peers over time; each peer needs its own protocol endpoint object. The indirection is deliberate: it connects a longer-lived communication role to shorter-lived per-connection protocol state.
+A `SocketContextFactory` creates contexts because a context belongs to a connection, and connections appear dynamically. A server may accept many peers over time; each peer needs its own protocol endpoint object. The indirection connects a longer-lived communication role to shorter-lived per-connection protocol state.
 
 Read the factory as the boundary between these two lifetimes:
 
@@ -464,7 +464,7 @@ Configuration is not an external side channel.
 
 Server and client templates consult configuration while advancing the communication lifecycle. Addresses, backlog, retry behavior, retry limits, retry-on-fatal behavior, jitter, reconnect behavior, instance requirements, timeouts, and similar settings shape what the instance actually does.
 
-This is why the book treats named instances and configuration as part of architecture, not merely as command-line convenience.
+For this reason, the book treats named instances and configuration as part of architecture, not merely as command-line convenience.
 
 The better mental model is not:
 

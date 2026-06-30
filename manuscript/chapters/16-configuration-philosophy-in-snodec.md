@@ -25,7 +25,7 @@ In SNode.C, configuration is one of the main ways a communication role becomes c
 
 The `SocketServer`/`SocketClient` handle is the handle. Through that handle, the application configures a server-side or client-side communication role. When `listen(...)` or `connect(...)` registers that role, the configured instance enters the runtime.
 
-Configuration is therefore not decoration around an otherwise complete object. It is one of the places where the role receives its operational shape.
+Configuration is therefore one of the places where the role receives its operational shape, not decoration around an otherwise complete object.
 
 ### Configuration as part of the architecture
 
@@ -33,7 +33,7 @@ Configuration is therefore not decoration around an otherwise complete object. I
 \index{configured communication role}
 
 
-Configuration in SNode.C is not a separate afterthought beside the framework architecture. It is part of the architecture.
+In SNode.C, configuration belongs to the framework architecture rather than standing beside it as an afterthought.
 
 A communication role has several aspects:
 
@@ -154,7 +154,7 @@ In-code configuration is therefore useful for:
 - tests and experiments,
 - application-level decisions known at construction time.
 
-It is not a second-class configuration path. It is one native way to shape a communication role.
+It is one native way to shape a communication role, not a second-class configuration path.
 
 #### Configuration through the command line
 
@@ -170,7 +170,7 @@ can appear as an addressable communication role on the command line. Under that 
 
 A typical hierarchy is application, instance, section, and option.
 
-The command line is therefore not only a way to override values. It is a discovery surface.
+The command line is therefore a discovery surface as well as a way to override values.
 
 A user can ask for help at different levels:
 
@@ -182,7 +182,7 @@ echoserver echo local --help
 
 Each level reveals another part of the configuration model.
 
-This is important for applications that expose more than one communication role. Instead of hiding all options behind a flat list, the configuration hierarchy shows how options belong to roles and sections.
+Applications that expose more than one communication role benefit from this hierarchy: instead of hiding all options behind a flat list, it shows how options belong to roles and sections.
 
 #### Configuration through configuration files
 
@@ -257,7 +257,7 @@ runtime-created roles
   -> C++ API configuration is the available path
 ```
 
-That is not a weakness. It is the natural boundary between startup configuration and runtime object creation.
+That boundary between startup configuration and runtime object creation is natural, not a weakness.
 
 The command line and configuration file are external startup inputs. They can shape what has been made addressable before startup parsing completes. They cannot retroactively reach into a role that did not yet exist in that hierarchy.
 
@@ -396,7 +396,7 @@ echo.remote.port = 8080
 
 The command-line hierarchy and the configuration-file hierarchy express the same structure.
 
-That is the main point: the hierarchy is not an accidental CLI shape. It is the visible form of the configured communication role.
+The main point is that the hierarchy is the visible form of the configured communication role, not an accidental CLI shape.
 
 #### Local and remote sections
 

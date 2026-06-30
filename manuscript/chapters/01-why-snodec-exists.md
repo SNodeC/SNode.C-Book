@@ -61,7 +61,7 @@ It is also not merely an API reference. A reference answers questions such as �
 
 This book therefore treats SNode.C abstractions in four linked ways. It explains **why** a particular abstraction exists, shows **how** that abstraction is used in small but realistic examples, connects the mechanism back to the **layered model** of the framework, and repeatedly asks the transfer question: what remains the same, and what changes, if the lower communication family changes, TLS is inserted, or a higher protocol layer is added?
 
-The book will touch many technologies, but it will not become a specialist book about all of them. It is not a complete TLS book, Bluetooth book, HTTP book, MQTT book, database book, or OpenWrt deployment manual.
+The book will touch many technologies without becoming a specialist book about all of them: not a complete TLS book, Bluetooth book, HTTP book, MQTT book, database book, or OpenWrt deployment manual.
 
 Instead, it uses these technologies to explain how SNode.C organizes networked software. Bluetooth RFCOMM and Bluetooth L2CAP are lower communication families that exercise the same architectural model in a device-near setting. HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, and MQTT over WebSocket are higher protocol structures built on the lower communication model. Persistence and MQTTSuite then show how SNode.C concepts become larger systems.
 
@@ -125,7 +125,7 @@ SNode.C is an active framework. This book describes the public architecture, com
 \index{protocol boundaries}
 
 
-In technical writing, the word *layered* is sometimes used lazily. It can mean almost anything from “we have modules” to “there are several abstraction levels.” In SNode.C, however, layering is not decorative. It is operational.
+In technical writing, the word *layered* is sometimes used lazily. It can mean almost anything from “we have modules” to “there are several abstraction levels.” In SNode.C, however, layering is operational rather than decorative.
 
 Figure \ref{fig:snodec-layer-stack} is the first compact view of that structure: each row names a design question that becomes more concrete in later chapters, from endpoint family up to application role.
 
@@ -206,7 +206,7 @@ SNode.C rewards that effort.
 
 ### Why this matters for multi-protocol application development
 
-The phrase *multi-protocol application* is used deliberately here. This book is not limited to exposing an HTTP route, opening a TCP socket, or publishing an MQTT message. It is about recognizing how several communication surfaces can belong to one application while still keeping their responsibilities separate.
+The phrase *multi-protocol application* is used deliberately here. This book goes beyond exposing an HTTP route, opening a TCP socket, or publishing an MQTT message; it shows how several communication surfaces can belong to one application while still keeping their responsibilities separate.
 
 A useful SNode.C application may need to reason across communication layers and protocol boundaries.
 
@@ -225,7 +225,7 @@ These are not separate worlds. In a real system, they meet.
 
 SNode.C is especially interesting in the context of IoT and machine-to-machine communication because such systems rarely live at only one level. They often touch devices, local transports, network transports, secure channels, web interfaces, broker-oriented messaging, persistence, deployment, and diagnostics at the same time.
 
-MQTTSuite is the reference ecosystem that makes this concrete. It builds focused MQTT applications on top of SNode.C, including broker, integrator, bridge, command-line, and store roles. MQTTSuite appears later, after the framework model has been established. That order is deliberate: the reader first needs to understand the recurring SNode.C roles and boundaries before seeing them at application and system scale.
+MQTTSuite is the reference ecosystem that makes this concrete. It builds focused MQTT applications on top of SNode.C, including broker, integrator, bridge, command-line, and store roles. MQTTSuite appears later, after the framework model has been established. That order matters because the reader first needs to understand the recurring SNode.C roles and boundaries before seeing them at application and system scale.
 
 ### The central pattern you will meet again and again
 
@@ -248,7 +248,7 @@ Some readers see an echo example and assume it is too simple to matter. That rea
 
 It exposes server and client creation, context construction, callback flow, data input and output, runtime startup, and the boundary between framework logic and application logic with very little distraction.
 
-The first echo pair is not meant to impress with protocol sophistication. It is meant to show the shape of the framework before higher layers add vocabulary of their own.
+The first echo pair is meant less to impress with protocol sophistication than to show the shape of the framework before higher layers add vocabulary of their own.
 
 Chapter 3 gives the first full example.
 

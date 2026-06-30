@@ -122,7 +122,7 @@ The shared MQTT module provides the common pieces that both server and client ro
 | `Session` | MQTT session state |
 | `Topic` | topic representation |
 
-This shared vocabulary is not an application convenience. It is the protocol foundation from which server/broker-oriented behavior and client behavior are built.
+This shared vocabulary forms the protocol foundation from which server/broker-oriented behavior and client behavior are built, not an application convenience.
 
 #### Control packets, fixed headers, sessions, and topics
 
@@ -249,7 +249,7 @@ The native MQTT `SocketContext` combines two sides.
 | `MqttContext` | bridge between the MQTT protocol object and the carrier underneath |
 | MQTT `SocketContext` | MQTT-aware endpoint over a native stream connection |
 
-`MqttContext` is not a replacement for the lower socket context. It is the bridge that lets the protocol object read from, write to, end, or close whichever carrier is used underneath.
+`MqttContext` bridges the protocol object to whichever carrier is used underneath, letting it read, write, end, or close without replacing the lower socket context.
 
 A useful way to read the composition is:
 

@@ -251,7 +251,7 @@ SNode.C applications expose daemonization-related options through the configurat
 --enforce-log-file
 ```
 
-An application can run in foreground mode or daemon mode, write pid files, and switch user or group privileges. That is useful, but it does not remove the need for a host service manager.
+An application can run in foreground mode or daemon mode, write pid files, and switch user or group privileges, but those capabilities do not remove the need for a host service manager.
 
 On general-purpose Linux, a long-running service is often better supervised by systemd or the local service manager. That service manager can own restart policy, logging integration, dependencies, user identity, and lifecycle. On OpenWrt, a continuously running packaged SNode.C application should normally be integrated with the platform service supervision model, commonly `procd`.
 

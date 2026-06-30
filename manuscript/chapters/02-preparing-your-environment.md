@@ -184,7 +184,7 @@ Then build:
 cmake --build snode.c-build -j$(nproc)
 ```
 
-Using `cmake --build` is deliberate. It does not force the reader to care immediately whether the generator is Make, Ninja, or something else.
+Using `cmake --build` keeps the generator choice out of the foreground; the reader does not need to care immediately whether the generator is Make, Ninja, or something else.
 
 If you prefer Ninja explicitly, configure with:
 

@@ -140,7 +140,7 @@ The server/client handle type changes. The endpoint identity changes. The deploy
 
 The context construction shape can still remain familiar.
 
-This is why Chapters 13 and 14 came before this chapter. A well-factored context and a disciplined factory make lower-family transfer practical. The factory does not make the protocol portable by magic. It keeps the construction boundary clean enough that portability can be judged clearly.
+Chapters 13 and 14 came first because a well-factored context and a disciplined factory make lower-family transfer practical. The factory does not make the protocol portable by magic. It keeps the construction boundary clean enough that portability can be judged clearly.
 
 ### What changes with the lower family
 
@@ -216,7 +216,7 @@ These differences are real. The protocol may transfer, but deployment does not b
 \index{echo pair!lower-family transfer}
 
 
-The echo application gives the smallest useful example. Echo is not interesting because echo is sophisticated. It is interesting because it exposes the placement boundary.
+The echo application gives the smallest useful example. Echo is interesting not because it is sophisticated, but because it exposes the placement boundary.
 
 The protocol behavior lives in one context type:
 
@@ -482,7 +482,7 @@ A good design may have:
 - small role-specific factories,
 - and explicit deployment choices.
 
-This is not failure. It is clean factoring. The goal is not to make all lower families look identical.
+This is clean factoring rather than failure. The goal is not to make all lower families look identical.
 
 The goal is to keep the stable protocol core stable and the real family-specific differences visible.
 

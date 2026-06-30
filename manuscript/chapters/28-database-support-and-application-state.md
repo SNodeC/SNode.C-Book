@@ -13,7 +13,7 @@ A protocol boundary asks how information moves between active participants. A pe
 
 A useful model is that a protocol event first receives application interpretation, then may update runtime state, and only then crosses an optional persistence boundary into durable application state.
 
-Persistence is not automatically part of every request or every message. It is an application-state boundary that should be chosen deliberately. In SNode.C, the concrete implementation discussed here is the MariaDB integration layer: a client object, connection details, event-integrated connection handling, command objects, command sequences, and result or error callbacks.
+Persistence is an application-state boundary that should be chosen deliberately, not an automatic part of every request or every message. In SNode.C, the concrete implementation discussed here is the MariaDB integration layer: a client object, connection details, event-integrated connection handling, command objects, command sequences, and result or error callbacks.
 
 Figure \ref{fig:persistence-boundary} shows the boundary that should stay visible when database support enters an SNode.C application. The upper lane stays on the transient communication side: peer connections, protocol contexts, and application interpretation live in the runtime and give incoming events their application meaning. The lower lane stays on the durable-state side: once the application has decided that something should survive process lifetime, the work crosses the persistence boundary and becomes explicit persistence work. The diagram keeps database integration behind that boundary instead of presenting persistence as part of transport or protocol mechanics.
 
@@ -106,7 +106,7 @@ The module structure presents this part of the framework as concrete MariaDB sup
 
 The `testmariadb` application should be read as a demonstration and test program for the API shape and runtime integration, not as a production persistence architecture. A test application can be compact, direct, and repetitive because its purpose is to exercise and show the pieces.
 
-That is useful. It can demonstrate database configuration, runtime initialization, construction of connection details, use of client objects, state-change reporting, command execution, result handling, metadata access, command sequencing, transaction flow, and scheduling patterns.
+Such an application can demonstrate database configuration, runtime initialization, construction of connection details, use of client objects, state-change reporting, command execution, result handling, metadata access, command sequencing, transaction flow, and scheduling patterns.
 
 But a real application must make its own architectural decisions.
 
@@ -155,7 +155,7 @@ A practical table helps:
 | durable configuration | maybe loaded into memory | often source of truth |
 | currently displayed dashboard state | yes | maybe derived from stored data |
 
-This table is not a rulebook. It is a way to force the application to say which state is transient, which state is durable, and which state is cached. The database should not become a dumping ground for every transient detail. Runtime memory should not pretend to be durable when it is not. The persistence boundary should be explicit.
+This table forces the application to say which state is transient, durable, or cached; it is not a rulebook. The database should not become a dumping ground for every transient detail. Runtime memory should not pretend to be durable when it is not. The persistence boundary should be explicit.
 
 ### `MariaDBClient` as the application-facing database object
 
@@ -199,7 +199,7 @@ The state-change callback receives a state object containing:
 
 This fits SNode.C’s runtime style. The application issues database operations and can also observe whether the database resource is connected, unavailable, or in an error state.
 
-A database client is not the same kind of configured role as a socket server or client instance. It is an application-facing persistence object integrated with the runtime. It may belong to a role or service in the application, but it is not itself the same conceptual object as a registered runtime-visible socket instance.
+A database client is an application-facing persistence object integrated with the runtime, not the same kind of configured role as a socket server or client instance. It may belong to a role or service in the application, but it is not itself the same conceptual object as a registered runtime-visible socket instance.
 
 #### `MariaDBConnectionDetails`
 

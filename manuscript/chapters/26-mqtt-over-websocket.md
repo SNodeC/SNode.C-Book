@@ -129,7 +129,7 @@ The class shape is the architecture expressed in C++. The WebSocket role supplie
 | `SubProtocol<WSSubProtocolRoleT>` | MQTT protocol behavior carried over a WebSocket subprotocol |
 | `OnReceivedFromPeerEvent` | scheduling hook that feeds buffered WebSocket payload into MQTT receive processing |
 
-This is not a second MQTT implementation. It is MQTT protocol behavior attached to a different carrier.
+This is MQTT protocol behavior attached to a different carrier, not a second MQTT implementation.
 
 #### WebSocket role plus `MqttContext`
 
@@ -182,7 +182,7 @@ recv(...)
   -> present buffered bytes to the MQTT protocol object
 ```
 
-This is why the adapter needs both sides. WebSocket framing and MQTT packet semantics remain distinct. WebSocket decides how payload arrives. MQTT decides what the payload means.
+The adapter needs both sides because WebSocket framing and MQTT packet semantics remain distinct. WebSocket decides how payload arrives. MQTT decides what the payload means.
 
 There is also an important binary/text distinction. MQTT packet data is byte-oriented. In this adapter, text WebSocket messages are not the MQTT-over-WebSocket path. MQTT data is processed through the binary message path into the MQTT receive buffer. A text frame is therefore not simply “another way to carry MQTT”; it belongs to the wrong WebSocket message type for this adapter.
 
@@ -380,7 +380,7 @@ It may be caused by:
 - MQTT keep-alive behavior,
 - application shutdown.
 
-This is not a weakness. It is the reality of a composed stack.
+That separation reflects the reality of a composed stack, not a weakness.
 
 The diagnostic question is:
 

@@ -78,7 +78,7 @@ A compact comparison helps place SSE without turning this chapter into a protoco
 | typical use | documents, APIs, files | notifications, dashboards, feeds | bidirectional interaction |
 | complexity | lowest | moderate | higher |
 
-SSE is not WebSocket with fewer features. It is a different fit. It is useful when the server should push events and the client does not need to send messages back over the same long-lived channel. If both sides need to send independent messages over one long-lived channel, WebSocket becomes the more natural fit. Chapter 24 treats that case.
+SSE is a different fit from WebSocket, not a weaker version of it. It fits cases where the server should push events and the client does not need to send messages back over the same long-lived channel. If both sides need to send independent messages over one long-lived channel, WebSocket becomes the more natural fit. Chapter 24 treats that case.
 
 ### SSE as long-lived HTTP
 
@@ -139,14 +139,14 @@ That pattern is common in monitoring and dashboard applications. The application
 \index{streaming endpoints}
 
 
-It is important to distinguish the two sides carefully.
+The two sides need to be distinguished carefully.
 
 | Side | SNode.C view |
 |---|---|
 | client side | built-in `EventSource` abstraction on top of an HTTP client |
 | server side | HTTP/Express endpoint that keeps a response open and writes event-stream records |
 
-SNode.C exposes the client-side `EventSource` facility explicitly. Server-side SSE is not a different server instance type and not a symmetric server-side `EventSource` abstraction. It is a route or HTTP handler that keeps the response open and writes data in event-stream format.
+SNode.C exposes the client-side `EventSource` facility explicitly. Server-side SSE is a route or HTTP handler that keeps the response open and writes data in event-stream format, not a different server instance type or a symmetric server-side `EventSource` abstraction.
 
 Conceptually, the server route emits a `text/event-stream` response. The client-side `EventSource` requests that response, parses the event stream, and dispatches `MessageEvent` objects.
 
@@ -495,7 +495,7 @@ retry: 5000
       -> client reconnect/retry timing is updated
 ```
 
-`retry:` is not a generic transport timeout. It is event-stream protocol information that updates the client-side recovery interval. The SSE value is expressed in milliseconds; the underlying client configuration receives the corresponding seconds value.
+`retry:` carries event-stream protocol information that updates the client-side recovery interval; it is not a generic transport timeout. The SSE value is expressed in milliseconds; the underlying client configuration receives the corresponding seconds value.
 
 #### Last-Event-ID
 

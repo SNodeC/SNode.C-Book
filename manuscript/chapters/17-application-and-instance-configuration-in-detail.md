@@ -198,7 +198,7 @@ The name can appear:
 - in shown configuration,
 - and in configuration-file keys.
 
-That is why named instances matter.
+Named instances matter for that reason.
 
 They connect the handle to the operational surface of the application. The name is the address by which operators, scripts, configuration files, and diagnostic output can talk about that role.
 
@@ -455,7 +455,7 @@ option:      port
 value:       8080
 ```
 
-The command line is therefore not just a flat collection of flags. It is a textual traversal of the configuration hierarchy.
+The command line is therefore a textual traversal of the configuration hierarchy rather than a flat collection of flags.
 
 ##### Command-line configuration as guided traversal
 
@@ -528,7 +528,7 @@ The dotted key represents the same model: instance, section, option.
 
 The syntax is different from the command line. The model is the same.
 
-The file is therefore not a separate configuration universe. It is the persistent expression of the same hierarchy that the command line traverses and the C++ API configures directly.
+The file is therefore the persistent expression of the same hierarchy that the command line traverses and the C++ API configures directly, not a separate configuration universe.
 
 ### Required values and progressive disclosure
 

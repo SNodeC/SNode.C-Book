@@ -121,7 +121,7 @@ A compact mapping is:
 | bridge boundary | MQTT over WebSocket | MQTT semantics through a WebSocket path |
 | persistence boundary | database/client integration | durable state or external service state |
 
-This table is not a rulebook. It is a starting point. The decision should always come back to the boundary:
+Use this table as a starting point, not as a rulebook. The decision should always come back to the boundary:
 
 ```text
 What crosses this boundary?
@@ -143,7 +143,7 @@ Those questions usually lead to a clearer protocol choice than starting with a f
 \index{role constellations}
 
 
-An IoT system in SNode.C is often not one tall vertical stack. It is a constellation of smaller stacks that meet at domain state, integration points, dashboards, local control paths, or persistence boundaries.
+An IoT system in SNode.C often becomes a constellation of smaller stacks that meet at domain state, integration points, dashboards, local control paths, or persistence boundaries, rather than one tall vertical stack.
 
 For example:
 
@@ -215,7 +215,7 @@ Use MQTT where brokered machine messaging is the real boundary.
 Do not force MQTT to replace every other boundary.
 ```
 
-MQTT is an integration spine, not a universal surface. It is most valuable when it is used for the conversation it expresses well.
+MQTT works best as an integration spine for the conversation it expresses well, not as a universal surface.
 
 ### HTTP and Express as management and operator-facing surfaces
 
@@ -225,7 +225,7 @@ MQTT is an integration spine, not a universal surface. It is most valuable when 
 
 HTTP and the Express-like layer often fit management and operator-facing boundaries. They are useful for dashboards, status pages, management APIs, REST-like control surfaces, authentication middleware, static assets, and structured routing.
 
-A useful distinction is that MQTT often expresses machine-facing integration, while HTTP and the Express-like layer often express operator-facing structure. This distinction is not a law. It is a design pattern. HTTP APIs may also be consumed by machines, and MQTT data may ultimately be visualized by humans. The point is that HTTP/Express naturally gives structure to operator-facing and application-facing surfaces, while MQTT naturally gives structure to brokered machine messaging.
+A useful distinction is that MQTT often expresses machine-facing integration, while HTTP and the Express-like layer often express operator-facing structure. Treat this distinction as a design pattern rather than a law. HTTP APIs may also be consumed by machines, and MQTT data may ultimately be visualized by humans. The point is that HTTP/Express naturally gives structure to operator-facing and application-facing surfaces, while MQTT naturally gives structure to brokered machine messaging.
 
 A compact comparison:
 
@@ -269,7 +269,7 @@ MQTT semantics
       -> HTTP upgrade path
 ```
 
-That is useful when the system genuinely needs that composition. It should not be used only because it sounds more general. Explicit boundary placement matters more than maximum reuse of one path.
+That composition helps when the system genuinely needs it; it should not be used only because it sounds more general. Explicit boundary placement matters more than maximum reuse of one path.
 
 ### Bluetooth at the device edge
 
@@ -417,7 +417,7 @@ A practical recipe for multi-protocol IoT design is:
 7. Split into several processes when that improves clarity.
 8. Reuse domain meaning without forcing every surface to use the same protocol.
 
-This is not the only valid method. It is a design discipline. It helps prevent two common mistakes:
+This design discipline is not the only valid method. It helps prevent two common mistakes:
 
 ```text
 one protocol everywhere

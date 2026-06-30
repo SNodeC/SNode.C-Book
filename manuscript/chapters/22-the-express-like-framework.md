@@ -112,7 +112,7 @@ This composition explains how HTTP request handling becomes Express-like applica
 | `ServerT` | concrete HTTP server type underneath |
 | `WebAppT<ServerT>` | combined Express-like application surface and HTTP server handle |
 
-This is not a separate web runtime. It is a web-application surface joined to a concrete HTTP server.
+This web-application surface is joined to a concrete HTTP server rather than acting as a separate web runtime.
 
 #### WebApp as router-shaped application
 
@@ -317,7 +317,7 @@ middleware(req, res, next)
           -> following middleware / router / handler
 ```
 
-`Next` is not a scheduler and not a thread handoff. It is the application-visible continuation object for the dispatcher chain.
+`Next` is the application-visible continuation object for the dispatcher chain, not a scheduler or thread handoff.
 
 This makes flow control part of the application model. The chain is visible to the user. That is one of the main differences between a simple HTTP callback and an Express-like application framework.
 
@@ -427,7 +427,7 @@ Examples include:
 - socket-context access,
 - lower header control.
 
-The facade is not a wall. It is a raised application surface with deliberate access points back to lower HTTP capabilities when the application genuinely needs them. This keeps the application interface convenient without pretending that lower HTTP and connection realities no longer exist.
+The facade is a raised application surface with deliberate access points back to lower HTTP capabilities when the application genuinely needs them, not a wall. This keeps the application interface convenient without pretending that lower HTTP and connection realities no longer exist.
 
 ### Built-in middleware as reusable application behavior
 

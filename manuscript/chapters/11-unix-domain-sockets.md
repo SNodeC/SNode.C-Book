@@ -32,7 +32,7 @@ The larger SNode.C model remains recognizable:
 - connection lifecycle callbacks,
 - and the same broad stream-based server/client/connection model.
 
-This shows that SNode.C's role model is not tied to host-plus-port addressing. The point of the chapter is therefore not only to introduce another address class. It is to test whether the mental model from the previous chapters survives when the most familiar shape of a socket endpoint disappears.
+This shows that SNode.C's role model is not tied to host-plus-port addressing. The chapter therefore introduces another address class while testing whether the mental model from the previous chapters survives when the most familiar shape of a socket endpoint disappears.
 
 ### Same SNode.C model, different endpoint identity
 
@@ -86,7 +86,7 @@ Its conceptual surface includes:
 
 This surface reflects the family.
 
-A Unix-domain endpoint is not a host with a strange name. It is a local IPC endpoint identified primarily by a path.
+A Unix-domain endpoint is a local IPC endpoint identified primarily by a path, not a host with a strange name.
 
 #### Path as endpoint identity
 
@@ -420,7 +420,7 @@ This keeps the comparison architectural rather than emotional. The lower family 
 
 It focuses on stream Unix domain sockets. That is intentional for architectural continuity. Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
 
-The SNode.C build also contains a `net-un-dgram` component. That is useful to know, but it is not the focus here. Datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8--12.
+The SNode.C build also contains a `net-un-dgram` component, but datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8--12.
 
 The practical lesson is simple: Unix domain sockets are not limited to one possible socket style, but this chapter follows the stream path because the book is still building the layered server/client/connection model.
 

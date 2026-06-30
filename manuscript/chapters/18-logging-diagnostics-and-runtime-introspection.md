@@ -162,7 +162,7 @@ That distinction keeps the ordinary log level focused on severity and lifecycle,
 
 #### `PLOG(level)`
 
-`PLOG(level)` follows the ordinary log-level filtering path, but it also records captured system-error context. It is useful when `errno` or comparable system-boundary context is part of the diagnosis.
+`PLOG(level)` follows the ordinary log-level filtering path, but it also records captured system-error context when `errno` or comparable system-boundary context is part of the diagnosis.
 
 Typical cases include:
 
@@ -624,7 +624,7 @@ Therefore, runtime introspection is broader than logging. Logs are one form of r
 
 ### Too much logging is a failure mode
 
-More logging is not automatically better diagnostics. Too much logging can make a system harder to understand. Too much logging is not visibility. It is another kind of opacity.
+More logging is not automatically better diagnostics. Too much logging can make a system harder to understand. Too much logging creates another kind of opacity rather than visibility.
 
 This happens when:
 
@@ -679,7 +679,7 @@ A useful SNode.C diagnostic workflow is:
 7. Inspect connection identity, addresses, counters, and duration.
 8. Use context-level logs for protocol meaning.
 
-This is not a rigid law. It is a useful rhythm.
+Treat this as a useful rhythm, not a rigid law.
 
 In compact form:
 

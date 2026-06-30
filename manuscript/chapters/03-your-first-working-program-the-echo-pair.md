@@ -40,7 +40,7 @@ role:           one server, one client
 
 Here `legacy` has the same meaning introduced in Chapter 2: it denotes the non-TLS stream connection variant. It does not mean that the component is obsolete.
 
-The reduced chapter example is not meant to replace the repository version. It is the smallest readable form of the same architectural pattern.
+The reduced chapter example does not replace the repository version; it gives the smallest readable form of the same architectural pattern.
 
 ### The four files
 
@@ -604,7 +604,7 @@ The client connects to `localhost` on port `8080` and sends the first message. T
 
 That produces intentional ping-pong behavior.
 
-This is not a production protocol. It is a visibility tool. It shows that:
+This visibility tool is intentionally not a production protocol. It shows that:
 
 ```text
 the server role was registered
@@ -625,7 +625,7 @@ Do not treat the output as noise.
 
 The first example is meant to connect source code to runtime behavior. When you see a log line from `onConnected()`, it corresponds to the lifecycle callback. When you see the reflected message, it corresponds to `onReceivedFromPeer()`. When the callback passed to `listen(...)` or `connect(...)` logs a state, it tells you whether the configured communication role was registered successfully.
 
-That is why Chapter 2 warned against silencing runtime output too early. The output is part of the teaching instrument.
+Chapter 2 warned against silencing runtime output too early because the output is part of the teaching instrument.
 
 ### Comparing the chapter version with the repository version
 

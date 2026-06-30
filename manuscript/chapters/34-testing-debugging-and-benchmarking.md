@@ -186,7 +186,7 @@ The question is also:
 Can a separate project consume the installed SNode.C package exactly as the book teaches?
 ```
 
-For a framework, the installed consumer is not a secondary scenario. It is the public contract.
+For a framework, the installed consumer is the public contract, not a secondary scenario.
 
 #### Package builds test deployable truth
 
@@ -196,7 +196,7 @@ A CPack package build can reveal mistakes that a source build misses: missing in
 
 OpenWrt-targeted package builds add another confidence surface. They can check whether SNode.C and applications built on top of it survive cross-compilation, target ABI assumptions, package recipes, feed layout, and embedded filesystem constraints. This is deployment/testing guidance, not a claim that every such OpenWrt package test already exists in the repository.
 
-A package build is therefore not just a release step. It is a test of the deployable shape of the architecture.
+A package build therefore tests the deployable shape of the architecture as well as preparing a release.
 
 ### Protocol-boundary confidence
 

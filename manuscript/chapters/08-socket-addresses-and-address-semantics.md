@@ -304,7 +304,7 @@ with PSM:
 
 RFCOMM and L2CAP therefore share the idea of Bluetooth device identity, but they do not share the same service selector vocabulary. RFCOMM uses a channel. L2CAP uses a PSM.
 
-That is why SNode.C gives them distinct address classes. Similar Bluetooth vocabulary does not mean identical endpoint semantics.
+SNode.C gives them distinct address classes because similar Bluetooth vocabulary does not mean identical endpoint semantics.
 
 ### Patterns that repeat across families
 
@@ -334,7 +334,7 @@ Across the supported families, the default address expresses a wildcard-like, br
 
 Socket programming often begins with partial endpoint descriptions.
 
-A server may specify only the service selector it wants to listen on. A client may specify a remote endpoint while leaving its local side broad. A wildcard address is not an error. It is often the correct expression of “this endpoint is broad until bind or connect makes it concrete.”
+A server may specify only the service selector it wants to listen on. A client may specify a remote endpoint while leaving its local side broad. A wildcard address often expresses “this endpoint is broad until bind or connect makes it concrete” rather than an error.
 
 #### Constructors teach identity shape
 
@@ -404,7 +404,7 @@ This chapter is the first concrete network-layer chapter after the general layer
 
 The runtime may still advance registered instances in the same broad way. The application may still use a factory and a context. The connection layer may still distinguish non-TLS stream handling from TLS stream handling.
 
-But the network layer changes the meaning of the endpoint being bound or connected. That is why `SocketAddress` is such a useful bridge between architecture and code.
+But the network layer changes the meaning of the endpoint being bound or connected, which makes `SocketAddress` a useful bridge between architecture and code.
 
 It shows:
 

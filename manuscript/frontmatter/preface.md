@@ -4,7 +4,7 @@ This book is an architecture-first guide to SNode.C. It teaches layered, event-d
 
 The subject is practical, but the purpose is not only practical. The examples show how to start servers, connect clients, expose HTTP routes, stream events, upgrade to WebSocket, publish and consume MQTT traffic, persist application state, and deploy applications on Linux-oriented systems. The larger purpose is to make the boundaries visible while doing that work: lower communication family, transport form, connection handling, protocol meaning, configuration, diagnostics, deployment, and application role.
 
-SNode.C is the worked system throughout the book. That is deliberate. A general survey can compare many libraries, but it often cannot follow one design deeply enough to show how the pieces hold together. This book makes the opposite choice. It follows one framework across many layers so that the same vocabulary can be recognized in small examples, protocol-specific chapters, and the MiniGateway capstone.
+SNode.C is the worked system throughout the book by design. A general survey can compare many libraries, but it often cannot follow one design deeply enough to show how the pieces hold together. This book makes the opposite choice. It follows one framework across many layers so that the same vocabulary can be recognized in small examples, protocol-specific chapters, and the MiniGateway capstone.
 
 ### Who this book is for {.unnumbered}
 

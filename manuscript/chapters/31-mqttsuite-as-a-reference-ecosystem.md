@@ -27,7 +27,7 @@ The figure is intentionally not a pipeline. A deployment may use only the broker
 \index{role map}
 
 
-The first architectural fact is that MQTTSuite is not one large executable with every feature hidden behind switches. It is structured as focused applications plus shared support where useful. That is the first system lesson.
+The first architectural fact is that MQTTSuite is structured as focused applications plus shared support where useful, not as one large executable with every feature hidden behind switches. That is the first system lesson.
 
 The suite exposes the following visible application roles:
 
@@ -115,7 +115,7 @@ focused MQTT applications
 
 Mapping is an important architectural lesson because it is clearly above MQTT core. MQTT itself provides topics, subscriptions, publishes, QoS, retain flags, and session behavior. Mapping is a higher-level integration concern. It decides how selected topics and payloads should be transformed and republished.
 
-A mapping subscribes to a selected topic pattern, extracts relevant payload information, transforms it, and publishes the result to another topic. That is not broker behavior. It is integration behavior. The lower MQTT layer should not become a template engine, a mapping editor, or a domain-rule interpreter. The mapping layer belongs above it, and the administration layer belongs above the mapping layer.
+A mapping subscribes to a selected topic pattern, extracts relevant payload information, transforms it, and publishes the result to another topic. That behavior belongs to integration rather than to the broker. The lower MQTT layer should not become a template engine, a mapping editor, or a domain-rule interpreter. The mapping layer belongs above it, and the administration layer belongs above the mapping layer.
 
 A useful shape is to keep the MQTT protocol layer responsible for message transport and broker/client semantics, the mapping layer responsible for integration semantics, and the administration layer responsible for controlled runtime management of mapping behavior.
 
@@ -240,7 +240,7 @@ That separation prevents the lower protocol layer from becoming responsible for 
 
 #### MQTTBridge
 
-MQTTBridge solves a different integration problem. It is not the mapping story repeated. It is the topology story.
+MQTTBridge solves a different integration problem. This is the topology story, not the mapping story repeated.
 
 A bridge connects MQTT worlds to each other. At the architectural level, it can manage logical bridge definitions, broker connections, selected topic movement, and loop-prevention policy.
 
@@ -338,7 +338,7 @@ The projection model makes persistence a system design concern. Persistence is a
 \index{OpenWrt!MQTTSuite deployment}
 
 
-The applications differ, but the recurring communication surfaces remain familiar. This is why MQTTSuite works well as a reference ecosystem.
+The applications differ, but the recurring communication surfaces remain familiar, which makes MQTTSuite work well as a reference ecosystem.
 
 #### Transport vocabulary
 

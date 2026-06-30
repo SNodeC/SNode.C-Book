@@ -156,7 +156,7 @@ These are not superficial options. They are part of secure connection handling. 
 
 It adds identity, trust, handshake timing, shutdown semantics, and new diagnostic surfaces to the connection layer.
 
-That is why the `tls` configuration section exists. The section is not decorative. It is the place where secure connection handling receives its configuration.
+That is why the `tls` configuration section exists. The section gives secure connection handling its configuration; it is not decorative.
 
 ### What can remain stable above TLS
 
@@ -180,7 +180,7 @@ The following parts can often remain stable:
 
 Therefore, TLS is teachable inside the same architecture. The reader does not need to learn a new framework model. The reader needs to understand where the secure connection layer fits.
 
-The word *often* matters. TLS independence is not a universal law. It is a design result that holds when the protocol conversation after secure connection readiness is the same. If the protocol uses peer certificates, secure-transport properties, or SNI-derived policy as part of its own semantics, then TLS meaning may deliberately rise into the protocol layer.
+The word *often* matters. TLS independence is a design result, not a universal law: it holds when the protocol conversation after secure connection readiness is the same. If the protocol uses peer certificates, secure-transport properties, or SNI-derived policy as part of its own semantics, then TLS meaning may deliberately rise into the protocol layer.
 
 ### The TLS connection object as the layer boundary
 
@@ -210,7 +210,7 @@ The context can still talk to the peer through the same conceptual operations. I
 
 #### `getSSL()` as TLS-specific access
 
-The TLS connection exposes access to the underlying `SSL*`. That is useful, but it should be understood carefully.
+The TLS connection exposes access to the underlying `SSL*`, but that access should be understood carefully.
 
 `getSSL()` is not the normal protocol interface.
 
@@ -294,7 +294,7 @@ server side
   -> optionally require SNI
 ```
 
-SNI is therefore not just another string option. It is part of TLS identity selection during handshake.
+SNI is therefore part of TLS identity selection during handshake, not just another string option.
 
 ### TLS adds work between connection creation and readiness
 
@@ -363,7 +363,7 @@ shutdown
 
 Both phases belong to the connection layer. Both phases are relevant for diagnostics.
 
-Close-notify is not an application message. It is part of the TLS connection ending correctly. A missing or unexpected close-notify can therefore be a connection-layer diagnostic fact even when the application protocol itself has already decided to close.
+Close-notify belongs to correct TLS connection shutdown rather than to the application message stream. A missing or unexpected close-notify can therefore be a connection-layer diagnostic fact even when the application protocol itself has already decided to close.
 
 This is one reason TLS diagnostics belong together with connection lifecycle visibility.
 

@@ -185,7 +185,7 @@ same connection
           -> subprotocol behavior
 ```
 
-This is important for diagnostics and application reasoning. Connection identity, lower endpoint, TLS state, counters, timeout behavior, and runtime lifecycle still belong to the same peer episode. The protocol context interpreting that episode changes.
+Diagnostics and application reasoning still depend on the same peer episode: connection identity, lower endpoint, TLS state, counters, timeout behavior, and runtime lifecycle remain attached to it. The protocol context interpreting that episode changes.
 
 #### HTTP upgrade context plus WebSocket subprotocol context
 

@@ -182,7 +182,7 @@ The singleton event loop is a tradeoff.
 
 On the positive side, it gives the framework one primary event domain per process. That simplifies ownership, coordination, and runtime reasoning. For the applications emphasized in this book, that is helpful: the reader does not need to imagine several unrelated event loops competing inside the same process. There is one central runtime story.
 
-The tradeoff is equally important. The framework is not centered around multiple independent reactor domains inside one process. That is a real architectural choice, and it is better to understand it early. For the kind of layered network applications SNode.C is built to express, one central event domain is a clarifying design.
+The tradeoff is equally important. The framework centers on one runtime domain rather than multiple independent reactor domains inside one process. Understanding that architectural choice early helps the rest of the model make sense. For the kind of layered network applications SNode.C is built to express, one central event domain is a clarifying design.
 
 ### Runtime state is coarse on purpose
 
@@ -210,7 +210,7 @@ That is enough to reason about many important behaviors. Server and client flows
 This sharpens what Chapters 3 and 5 introduced:
 
 ::: {.snodec-rule title="Runtime-state rule"}
-Runtime state is not background decoration. It is part of the control logic.
+Runtime state belongs to the control logic, not to background decoration.
 :::
 
 ### Tick-by-tick execution and `TickStatus`
@@ -234,7 +234,7 @@ This enum is more informative than it may first appear.
 
 `INTERRUPTED` matters because an event loop can be interrupted by signals or other control conditions. Exposing this as a separate status keeps interruption explicit instead of silently collapsing it into generic success or failure.
 
-`NOOBSERVER` is architecturally revealing. It says that the event-loop iteration can recognize the absence of observed runtime participants. Descriptor receivers, timers, and queued work form a population of things the runtime can observe or advance. The runtime is therefore not looping blindly. It is managing a set of event participants.
+`NOOBSERVER` is architecturally revealing. It says that the event-loop iteration can recognize the absence of observed runtime participants. Descriptor receivers, timers, and queued work form a population of things the runtime can observe or advance. The runtime therefore manages a set of event participants rather than looping blindly.
 
 `TRACE` is part of the per-tick vocabulary, but it should not be mistaken for a full tracing subsystem. The important point for this chapter is narrower: per-tick outcomes are explicit enough to be named and propagated.
 
@@ -514,11 +514,11 @@ The `core::Timer` base class is a small ownership-oriented handle around a timer
 - `intervalTimer(...)`
 - `singleshotTimer(...)`
 
-This means the timer story fits naturally into the broader runtime story. A timer is not a foreign utility living outside the event loop. It is part of the loop's own scheduled event fabric.
+This means the timer story fits naturally into the broader runtime story. A timer participates in the loop's own scheduled event fabric rather than living as a foreign utility outside the event loop.
 
 #### Timers share the same central loop worldview
 
-A timeout does not require a second runtime model. It is simply another kind of event source participating in the same tick progression.
+A timeout fits the same runtime model: another kind of event source participating in the same tick progression.
 
 The multiplexer computes timeout information together with descriptor observation and queued event work. That is why time-based behavior can be integrated without inventing a second scheduler beside the event loop.
 
@@ -617,7 +617,7 @@ Use `tick()` when you deliberately want controlled stepping: for embedding, test
 
 ### Stable concepts versus implementation details
 
-This chapter has intentionally stayed close to the SNode.C headers. That is useful because SNode.C is a systems framework, and systems frameworks should not be taught as vague abstractions only.
+This chapter has intentionally stayed close to the SNode.C headers because SNode.C is a systems framework, and systems frameworks should not be taught as vague abstractions only.
 
 Still, a book should distinguish stable concepts from implementation details. Function bodies may change. Additional event receiver types may appear. Multiplexer backends may vary. But the architectural concepts are durable:
 

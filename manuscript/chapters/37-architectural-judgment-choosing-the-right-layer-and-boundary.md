@@ -24,7 +24,7 @@ right concern
           -> right operational visibility
 ```
 
-This is not another API tour. It is a synthesis chapter: it turns local decisions from the preceding parts into a compact design model.
+This synthesis chapter turns local decisions from the preceding parts into a compact design model rather than adding another API tour.
 
 ::: {.snodec-checklist title="Judgment checklist"}
 - What kind of concern is this?
@@ -68,7 +68,7 @@ Most design choices in this book reduce to five questions:
 | Lifetime | How long should this state or policy live? | context, application model, database, service, deployment |
 | Visibility | Who must diagnose or operate this behavior? | logs, counters, configuration, service files, tests |
 
-This table is not a recipe. It is a way to slow down the decision before code hardens around the wrong abstraction.
+Use this table to slow down the decision before code hardens around the wrong abstraction; it is not a recipe.
 
 ### Worked decision: who owns the measurement sequence?
 

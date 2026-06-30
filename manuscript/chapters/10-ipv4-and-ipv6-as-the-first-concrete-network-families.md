@@ -181,7 +181,7 @@ The architectural idea is:
 
 > Easy-looking calls set configuration and then use the same underlying registration and flow machinery.
 
-This is important for understanding SNode.C code. A short `listen(8080, ...)` call is not a different runtime concept from constructing a `SocketAddress` and calling the more general path. It is a convenience surface over the same role configuration and registration model.
+This matters for understanding SNode.C code. A short `listen(8080, ...)` call is a convenience surface over the same role configuration and registration model as constructing a `SocketAddress` and calling the more general path.
 
 ### What remains stable
 
@@ -372,7 +372,7 @@ This keeps the lower-family comparison sharp. It also prepares the next variatio
 
 #### Start with IPv4
 
-IPv4 remains the easiest first concrete example for many readers. That is not because it is more important. It is because its notation and everyday expectations are familiar.
+IPv4 remains the easiest first concrete example for many readers. The reason is familiarity, not greater importance: its notation and everyday expectations are familiar.
 
 A minimal IPv4 server may look like this in outline:
 

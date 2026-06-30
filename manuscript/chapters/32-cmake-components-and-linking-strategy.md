@@ -92,7 +92,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 ```
 
-This matters. SNode.C is not presented as old-style portable C++ that happens to compile with anything. It is a modern C++ framework, and the build makes that identity explicit.
+This matters. SNode.C is presented as a modern C++ framework, and the build makes that identity explicit rather than treating it as old-style portable C++ that happens to compile with anything.
 
 The compiler baseline is part of the framework contract. A port must provide a compiler sufficiently modern for the framework's language and diagnostic expectations.
 
@@ -146,7 +146,7 @@ For SNode.C's component model, a target should not just compile; it should have 
 
 #### In-tree and installed build contexts
 
-SNode.C distinguishes between building the framework itself and consuming the installed framework. The in-tree build defines `SNODEC_INTREE_BUILD`. That is useful, but it is not the consumer-facing package interface.
+SNode.C distinguishes between building the framework itself and consuming the installed framework. The in-tree build defines `SNODEC_INTREE_BUILD`, but the consumer-facing package interface is different.
 
 Inside the SNode.C source tree, targets can refer to local target names such as:
 
@@ -177,7 +177,7 @@ The word *component* appears in two related senses.
 
 At the CMake package level, a component is a selectable install/package component. At the architecture level, a component is a named framework piece represented by a target. SNode.C tries to keep these meanings aligned, but they are not literally the same concept in CMake semantics.
 
-That is why the target names matter. They are not arbitrary labels. They are part of the public shape of the framework.
+Target names matter because they are part of the public shape of the framework, not arbitrary labels.
 
 #### Libraries mirror layers
 
@@ -215,7 +215,7 @@ role: client
 carrier composition: WebSocket
 ```
 
-This is why target names are not cosmetic in SNode.C. They are part of the public build surface.
+Target names are part of the public build surface in SNode.C, not cosmetic labels.
 
 #### A public component graph read from `logger` upward
 
@@ -446,7 +446,7 @@ CMake's visibility keywords are architectural words in a framework. They decide 
 
 A dependency linked as `PUBLIC` becomes part of what consumers of the target also need. A dependency linked as `PRIVATE` remains internal to the target. An `INTERFACE` usage requirement shapes consumers without necessarily being a compiled object in the same way.
 
-This is not CMake trivia. It is dependency hygiene. A framework that gets this wrong can make downstream applications difficult to build, difficult to package, or accidentally dependent on internals.
+This is dependency hygiene, not CMake trivia. A framework that gets this wrong can make downstream applications difficult to build, difficult to package, or accidentally dependent on internals.
 
 #### Component-owned dependencies
 

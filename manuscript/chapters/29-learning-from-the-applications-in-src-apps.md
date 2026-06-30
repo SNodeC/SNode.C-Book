@@ -419,7 +419,7 @@ http-server-express
 net-in-stream-legacy
 ```
 
-Its role in the manuscript should be secondary. It is useful because it shows that the Express-like layer can also be used for behavior comparison, compatibility checking, and focused route/middleware experiments.
+Its role in the manuscript should be secondary, but it shows that the Express-like layer can also support behavior comparison, compatibility checking, and focused route/middleware experiments.
 
 In this reading, `snode.c` is the application-shell example, while `express-compat-server` is a compatibility and behavior-comparison example.
 

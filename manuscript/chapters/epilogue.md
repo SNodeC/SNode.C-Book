@@ -82,7 +82,7 @@ raw data
               -> system behavior
 ```
 
-Therefore, protocol code should not be treated as accidental glue. It is where communication becomes part of an application.
+Therefore, protocol code is where communication becomes part of an application, not accidental glue.
 
 ### Build and deployment are part of architecture {.unnumbered}
 
@@ -94,7 +94,7 @@ A network framework does not end at the source tree.
 
 The public include path says which C++ abstraction the source file selects. The build target says what the application links. The exported package says what external consumers can depend on. The install component says what files need to exist. The package dependency says what the target system must provide. The runtime path says where loaded modules and services can be found. The configuration file says what role shape is deployed.
 
-That is why this book treated CMake, packaging, deployment, testing, and debugging as architectural surfaces rather than as afterthoughts.
+For that reason, this book treated CMake, packaging, deployment, testing, and debugging as architectural surfaces rather than as afterthoughts.
 
 ```text
 public include path
@@ -137,7 +137,7 @@ This book has used SNode.C as a concrete framework, but its deeper subject is th
 
 The position taken by this book is deliberately not that complexity can be made to disappear. A framework that pretends to remove all complexity usually only moves it somewhere less visible. SNode.C takes a different path. It gives names and places to concerns that are often blurred: lower family, transport form, connection handling, protocol meaning, context, configured role, runtime-visible instance, application state, package component, deployed service, diagnostic boundary. The philosophical value of such a framework is not that it makes design automatic. It makes design discussable.
 
-That is why the book has returned so often to boundaries. A boundary is not a wall erected for its own sake. It is a claim that a certain concern has a natural owner. When the claim is right, the program becomes easier to reason about. When the claim is wrong, the program may still compile, but it becomes conceptually misleading. The HTTP route begins to own domain state. The MQTT callback begins to decide deployment policy. A socket context becomes a dumping ground for orchestration. A configuration option becomes a disguised invariant. These failures are technical, but they are also failures of thought.
+That is why the book has returned so often to boundaries. A boundary claims that a certain concern has a natural owner; it is not a wall erected for its own sake. When the claim is right, the program becomes easier to reason about. When the claim is wrong, the program may still compile, but it becomes conceptually misleading. The HTTP route begins to own domain state. The MQTT callback begins to decide deployment policy. A socket context becomes a dumping ground for orchestration. A configuration option becomes a disguised invariant. These failures are technical, but they are also failures of thought.
 
 The recurring discipline of the book can therefore be read as a kind of engineering humility. Do not pretend that a byte stream already is a protocol. Do not pretend that a protocol already is an application. Do not pretend that an application already is a deployed system. Do not pretend that a running process is understood merely because it is running. Each step adds meaning, and each step deserves a place where that meaning can be named, tested, logged, configured, and maintained.
 

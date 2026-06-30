@@ -155,7 +155,7 @@ A good way to understand a context is to group its hooks by responsibility.
 
 This grouping is more useful than memorizing method names in isolation.
 
-It shows what kind of thinking a context needs. A context is not one sequential script. It is a set of reactions to events that occur during a connection's lifetime.
+It shows what kind of thinking a context needs. A context gathers reactions to events that occur during a connection's lifetime rather than one sequential script.
 
 #### Lifecycle hooks
 
@@ -372,7 +372,7 @@ A context may receive references, pointers, or shared services through factory c
 
 SNode.C is event-driven.
 
-Chapter 6 explained that the runtime advances registered work through events. A context is the protocol-level expression of that model. It is not a blocking script. It is a collection of event reactions attached to one connection.
+Chapter 6 explained that the runtime advances registered work through events. A context is the protocol-level expression of that model. It is a collection of event reactions attached to one connection, not a blocking script.
 
 A context should therefore not be designed as if the whole protocol were one blocking sequence such as:
 

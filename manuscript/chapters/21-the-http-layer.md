@@ -62,7 +62,7 @@ This chapter asks:
 Can the same lower architecture support a richer protocol layer?
 ```
 
-For HTTP, the answer is yes. The lower architecture stays visible. The protocol meaning becomes richer. HTTP is not a replacement for context, factory, connection, configuration, or runtime progress. It is a protocol layer implemented through HTTP-specific contexts and factories on top of the stream model.
+For HTTP, the answer is yes. The lower architecture stays visible. The protocol meaning becomes richer. HTTP adds a protocol layer through HTTP-specific contexts and factories on top of the stream model; it does not replace context, factory, connection, configuration, or runtime progress.
 
 ### Plain streams and HTTP messages side by side
 
@@ -259,7 +259,7 @@ It contains HTTP behavior such as:
 --pipelined-requests
 ```
 
-This continues the configuration model from Chapters 16 and 17. HTTP-specific configuration is not a random side channel. It is attached to the configured role.
+This continues the configuration model from Chapters 16 and 17. HTTP-specific configuration attaches to the configured role rather than acting as a random side channel.
 
 The HTTP layer can also derive HTTP meaning from lower connection configuration where appropriate. For example, if the HTTP Host header is empty, the client setup can derive a default Host header from the remote socket address. That is a small but useful example of responsibility placement:
 
@@ -499,7 +499,7 @@ Chapter 21 is a bridge between two parts of the book. HTTP relies on the earlier
 
 This chapter raises that structure to HTTP. The later web chapters build on HTTP through Express-like routing and middleware, Server-Sent Events, and WebSocket upgrade.
 
-That is why Chapter 21 should not become a complete HTTP reference. Its job is to show where HTTP sits in SNode.C. It teaches the architectural transition from streams to HTTP messages.
+Chapter 21 should not become a complete HTTP reference; its job is to show where HTTP sits in SNode.C and to teach the architectural transition from streams to HTTP messages.
 
 Chapter 21 explains how HTTP becomes request/response semantics. Chapter 22 asks how larger HTTP applications organize those request/response handlers into routing, middleware, and application structure.
 
