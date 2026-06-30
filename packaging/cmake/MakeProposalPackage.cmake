@@ -52,7 +52,6 @@ set(REQUIRED_SOURCE_FILES
     "CMakeLists.txt"
     "README.md"
     "STRUCTURE.md"
-    "REVIEW-V40C-CI-EVIDENCE-ARTIFACTS.md"
     ".github/workflows/book-package.yml"
     ".github/workflows/companion-examples.yml"
     "ci/check-source-hygiene.sh"
