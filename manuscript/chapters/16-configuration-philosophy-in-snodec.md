@@ -7,7 +7,7 @@
 
 ### From lower-family transfer to configured communication roles
 
-Configuration becomes visible as soon as a protocol is carried over different lower families.
+Configuration is where many architectural choices become visible to the executable and to the operator.
 
 The protocol behavior may remain in the same `SocketContext`. The context creation policy may remain in the same `SocketContextFactory`.
 

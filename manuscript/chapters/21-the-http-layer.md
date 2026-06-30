@@ -7,7 +7,7 @@
 
 ### From robust streams to HTTP messages
 
-Robust stream communication includes activation, establishment, connected operation, interruption, timeout, retry, reconnect, shutdown, and failure visibility. That foundation remains in place as the book moves into web protocols.
+HTTP is the first layer in the book where byte streams become request/response semantics.
 
 HTTP is the first step upward from the stream layer.
 

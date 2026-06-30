@@ -7,7 +7,7 @@
 
 ### From runtime visibility to secure connection handling
 
-Operational visibility turns configuration, generated command lines, logging, connection identity, counters, durations, and protocol decisions into diagnostic evidence. Secure connection handling belongs in the same architecture: it does not remove the SNode.C model, but adds stricter connection-layer responsibilities, more timing-sensitive transitions, and more failure states. TLS does not introduce a second application model; it changes the connection layer.
+TLS is a connection-layer specialization with operational consequences. It does not introduce a second application model; it changes how a secure stream is established, verified, diagnosed, and shut down.
 
 That is the central idea of this chapter:
 

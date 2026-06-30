@@ -8,7 +8,7 @@
 
 ### Communication over time
 
-TLS adds meaningful connection-layer phases to the same structure. A secure stream may have to create and configure an SSL object, complete a TLS handshake, handle close-notify behavior, and shut the secure layer down before the underlying socket episode is fully over.
+Reliable communication is not only the ability to establish a connection. It is also the ability to decide what happens when establishment, operation, shutdown, or recovery does not complete as expected.
 
 Timeouts, retries, and failure modes widen that view to the whole framework.
 

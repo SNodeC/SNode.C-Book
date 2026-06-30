@@ -7,7 +7,7 @@
 
 ### From web protocols to message-oriented communication
 
-HTTP upgrade can move the same lower connection into bidirectional WebSocket communication. MQTT shifts the focus away from HTTP, routing, event streams, and upgrade negotiation toward a packet-structured protocol family.
+MQTT changes the unit of communication. The application is no longer mainly handling requests, routes, event streams, or upgraded message frames; it is exchanging broker-mediated publications and subscriptions.
 
 MQTT is not part of the web stack. It has its own packet vocabulary, session behavior, topic model, keep-alive timing, publish flow, and client/server roles. But the architectural discipline does not change.
 

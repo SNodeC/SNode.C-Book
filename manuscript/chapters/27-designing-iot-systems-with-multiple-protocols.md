@@ -7,7 +7,7 @@
 
 ### From protocol composition to system boundaries
 
-MQTT-over-WebSocket is one composed stack: HTTP upgrade, WebSocket, WebSocket subprotocol, and MQTT. A whole IoT system widens the lens from one composed stack to several cooperating boundaries, where several protocol stacks may coexist because they serve different communication boundaries. The central sentence is:
+A whole IoT system rarely has only one conversation. Devices, dashboards, brokers, local tools, databases, and administration surfaces often need different protocol shapes in the same design. The central sentence is:
 
 ::: {.snodec-rule title="Multi-protocol boundary rule"}
 A multi-protocol IoT system is clear when each protocol is assigned to an explicit boundary.

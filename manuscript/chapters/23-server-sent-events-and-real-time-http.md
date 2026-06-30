@@ -161,7 +161,7 @@ data: {"state":"online"}
 
 ```
 
-The blank line ends the accumulated event record. This is enough server-side format detail for this chapter. The central architectural point is that the server writes event-stream records over an HTTP response that remains open.
+The blank line ends the accumulated event record. In SNode.C response streaming, each `sendFragment(...)` call emits one response fragment with line termination; SSE field fragments should therefore be passed without embedded `\n` or `\r\n`. Emit the blank event boundary as a separate empty fragment. The central architectural point is that the server writes event-stream records over an HTTP response that remains open.
 
 
 ### A compact server-side SSE endpoint
@@ -171,25 +171,35 @@ A server-side SSE endpoint is still an ordinary HTTP route. The route must first
 The following sketch uses an application-owned measurement source. The important framework-facing points are the request validation, the response headers, the explicit header send, and the use of response fragments while the connection remains open:
 
 ```cpp
+#include <web/http/http_utils.h>
+
+static bool acceptsEventStream(const std::shared_ptr<Request>& req) {
+    return web::http::ciContains(req->get("Accept"), "text/event-stream");
+}
+
+static void sendMeasurement(const std::shared_ptr<Response>& res,
+                            const Measurement& measurement) {
+    res->sendFragment("event: measurement");
+    res->sendFragment("id: " + std::to_string(measurement.sequence));
+    res->sendFragment("data: " + measurement.toJson().dump());
+    res->sendFragment("");
+}
+
 app.get("/events", [&measurements] APPLICATION(req, res) {
-    if (web::http::ciContains(req->get("Accept"), "text/event-stream")) {
+    if (acceptsEventStream(req)) {
         res->set("Content-Type", "text/event-stream")
            .set("Cache-Control", "no-cache")
            .set("Connection", "keep-alive")
            .sendHeader();
 
         if (const Measurement current = measurements.current(); current.sequence > 0) {
-            res->sendFragment("event: measurement\n");
-            res->sendFragment("id: " + std::to_string(current.sequence) + "\n");
-            res->sendFragment("data: " + current.toJson().dump() + "\n\n");
+            sendMeasurement(res, current);
         }
 
         measurements.subscribe([res](const Measurement& measurement) {
             const bool keepSubscriber = res->isConnected();
             if (keepSubscriber) {
-                res->sendFragment("event: measurement\n");
-                res->sendFragment("id: " + std::to_string(measurement.sequence) + "\n");
-                res->sendFragment("data: " + measurement.toJson().dump() + "\n\n");
+                sendMeasurement(res, measurement);
             }
 
             return keepSubscriber;
@@ -207,7 +217,7 @@ app.get("/simulate", [&measurements] APPLICATION(req, res) {
 });
 ```
 
-The `Measurement` type and the `measurements` publisher are application code, not special SSE machinery. The SNode.C-specific shape is the HTTP route and response handling. The route rejects non-SSE requests with an ordinary HTTP response; only a request that accepts `text/event-stream` receives the streaming response.
+The `Measurement` type and the `measurements` publisher are application code, not special SSE machinery. The SNode.C-specific shape is the HTTP route and response handling. The small `acceptsEventStream(...)` helper keeps request validation visible, and `sendMeasurement(...)` centralizes the event-stream record shape. The route rejects non-SSE requests with an ordinary HTTP response; only a request that accepts `text/event-stream` receives the streaming response. Notice that the SSE field strings themselves do not contain line endings; the empty fragment marks the blank line between events.
 
 After `sendHeader()`, the response body is written as SSE records. Each record is plain text. A blank line terminates the current event. The response is intentionally not ended after the first record. It remains open until the application decides to close it or until the peer disconnects.
 

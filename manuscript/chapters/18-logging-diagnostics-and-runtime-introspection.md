@@ -7,7 +7,7 @@
 
 ### From configured roles to visible runtime behavior
 
-The configuration hierarchy shapes the executable, named communication roles, sections, and option values.
+Diagnostics begin where static configuration stops: at runtime, the system must explain what its configured roles are actually doing.
 
 The structure was:
 
