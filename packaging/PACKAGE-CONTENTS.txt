@@ -32,6 +32,9 @@ Included:
 - packaging/cmake/
 - packaging/PACKAGE-CONTENTS.txt
 - CMakeLists.txt
+- ci/
+- .github/workflows/book-package.yml
+- .github/workflows/companion-examples.yml
 
 Included when present:
 - README.md

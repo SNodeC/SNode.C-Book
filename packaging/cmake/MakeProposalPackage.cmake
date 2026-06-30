@@ -52,6 +52,11 @@ set(REQUIRED_SOURCE_FILES
     "CMakeLists.txt"
     "README.md"
     "STRUCTURE.md"
+    ".github/workflows/book-package.yml"
+    ".github/workflows/companion-examples.yml"
+    "ci/check-source-hygiene.sh"
+    "ci/build-book-package.sh"
+    "ci/build-companion-examples.sh"
     "production/CMakeLists.txt"
     "production/cmake/SNodeCBookPaths.cmake"
     "production/cmake/SNodeCBookTools.cmake"
@@ -89,7 +94,9 @@ set(REQUIRED_SOURCE_DIRS
     "review/proposal"
     "review/verification"
     "packaging"
-    "packaging/cmake")
+    "packaging/cmake"
+    "ci"
+    ".github/workflows")
 
 set(REQUIRED_BUILD_FILES
     "snodec-book.pdf"

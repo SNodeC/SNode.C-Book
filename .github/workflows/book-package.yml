@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-book-package:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Check out repository
@@ -19,11 +19,17 @@ jobs:
       - name: Install publication dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            cmake ninja-build python3 \
-            pandoc pandoc-crossref \
-            texlive-xetex texlive-latex-extra texlive-fonts-recommended \
-            texlive-fonts-extra texlive-pictures fonts-lmodern
+          sudo apt-get install -y             cmake ninja-build python3 curl ca-certificates             texlive-xetex texlive-latex-extra texlive-fonts-recommended             texlive-fonts-extra texlive-pictures fonts-lmodern
+
+          # Install pandoc 3.9.0.2 from GitHub releases.
+          curl -fsSL https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb             -o /tmp/pandoc.deb
+          sudo dpkg -i /tmp/pandoc.deb
+
+          # Install matching pandoc-crossref v0.3.24a.
+          curl -fsSL https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.24a/pandoc-crossref-Linux-X64.tar.xz             | sudo tar -xJ -C /usr/local/bin pandoc-crossref
+
+          pandoc --version
+          pandoc-crossref --version
 
       - name: Check source hygiene
         run: bash ci/check-source-hygiene.sh
@@ -39,3 +45,10 @@ jobs:
             dist/pdf/book-proposal-package.pdf
             dist/pdf/book-proposal-sample-package.pdf
             dist/pdf/snodec-book.pdf
+
+      - name: Upload generated publisher package
+        uses: actions/upload-artifact@v4
+        with:
+          name: snodec-book-proposal-package
+          path: dist/packages/*.tar.gz
+          if-no-files-found: warn
