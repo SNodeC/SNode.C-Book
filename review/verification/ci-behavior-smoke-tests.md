@@ -1,7 +1,8 @@
 # CI Behavioral Smoke Tests
 
 This package includes a deliberately small runtime smoke-test layer in addition
-to the companion-example compile checks.
+to the companion-example compile checks. For the current package, this CI layer
+is complete and has been confirmed in the public GitHub Actions workflow.
 
 The smoke tests live in:
 
@@ -12,7 +13,9 @@ ci/run-behavior-smoke-tests.py
 
 They are executed by `.github/workflows/companion-examples.yml` after the pinned
 SNode.C release and the companion examples have been built. The workflow runs the
-checks in the existing GCC/Clang compiler matrix.
+checks in the existing GCC/Clang compiler matrix. The checked status for this
+package is: companion-example build verification complete; selected behavioral
+smoke-test verification complete.
 
 ## Covered paths
 
@@ -55,3 +58,4 @@ an external MQTT broker, exercise OpenWrt packaging, perform load tests, run
 long-lived service supervision checks, or claim broad third-party validation.
 Their purpose is to close the most important gap between “the examples compile”
 and “the showcase event-stream and Unix-domain input paths behave as described.”
+For this package, that selected smoke-test layer is no longer an open item.

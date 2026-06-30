@@ -105,11 +105,11 @@ source-baseline/book-source-baseline.md
 source-baseline/book-source-baseline.env
 ```
 
-The first two documents record author-confirmed local verification against the public SNode.C source baseline. The CI smoke-test note documents the selected runtime checks executed by the public workflow. These files are package evidence, not adoption evidence.
+The first two documents record author-confirmed local verification against the public SNode.C source baseline. The CI smoke-test note records the completed public workflow checks for the selected runtime paths. These files are package evidence, not adoption evidence.
 
 ## Continuous-integration evidence
 
-The public book repository contains GitHub Actions workflows for reproducible package and companion-example verification. The `book-package.yml` workflow builds the compact proposal PDF, the proposal-with-sample-chapters PDF, the full manuscript PDF, and the publisher/reviewer archive from source, then uploads the generated artifacts. The `companion-examples.yml` workflow checks out the pinned SNode.C `v1.0.2` release, compiles the companion examples against that installed framework baseline, and runs selected behavioral smoke tests. Those smoke tests exercise the SSE event-stream path and the MiniGateway Extended Unix-domain input path, then verify the resulting HTTP/SSE-visible measurement state.
+The public book repository contains completed GitHub Actions workflows for reproducible package and companion-example verification. The `book-package.yml` workflow builds the compact proposal PDF, the proposal-with-sample-chapters PDF, the full manuscript PDF, and the publisher/reviewer archive from source, then uploads the generated artifacts. The `companion-examples.yml` workflow checks out the pinned SNode.C `v1.0.2` release, compiles the companion examples against that installed framework baseline on GCC and Clang, and runs selected behavioral smoke tests. Those smoke tests exercise the SSE event-stream path and the MiniGateway Extended Unix-domain input path, then verify the resulting HTTP/SSE-visible measurement state. For the current package, build verification and selected behavioral smoke-test verification are complete.
 
 This CI evidence strengthens the package beyond author-confirmed local verification. It is still not presented as third-party adoption, commercial deployment, or independent market validation.
 
@@ -137,7 +137,7 @@ A broader professional-trade acquisition case would be stronger with:
 - dependent repositories or downstream projects;
 - course-use statement or syllabus reference;
 - independent reviewer quotes;
-- external reviewer confirmation of the CI results and the selected smoke-tested companion-example behavior;
+- independent external reviewer confirmation of the CI results and the selected smoke-tested companion-example behavior;
 - public package/deployment evidence for Linux or OpenWrt if available;
 - a concise statement of why readers who do not yet use SNode.C should care.
 

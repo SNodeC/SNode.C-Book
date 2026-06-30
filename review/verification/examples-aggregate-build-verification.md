@@ -14,7 +14,7 @@ Verification date: 2026-06-28
 Verification type: author-confirmed local configure/build/run and runtime smoke check
 ```
 
-This verification is author-confirmed local verification. It is not presented as independent continuous-integration evidence. The pinned public release tag and commit make the check reproducible by a later CI job or reviewer-run build.
+This verification is author-confirmed local verification. It is separate from the public CI evidence recorded in `review/verification/ci-behavior-smoke-tests.md`. The pinned public release tag and commit make the check reproducible by CI or by a reviewer-run build.
 
 ## Scope
 
@@ -85,7 +85,7 @@ MiniGateway-specific details are retained in `review/verification/minigateway-st
 
 ## Reproducibility note
 
-A later CI job or independent reviewer check should use the same public baseline:
+The public CI workflow and any independent reviewer check should use the same public baseline:
 
 ```bash
 git clone https://github.com/SNodeC/snode.c.git
