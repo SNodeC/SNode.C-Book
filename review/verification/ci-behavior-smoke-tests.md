@@ -28,6 +28,26 @@ The smoke tests cover selected showcase behavior only:
 - verify that `/status` exposes the accepted measurement with sequence `1`;
 - verify that `/events` exposes the same accepted measurement as an SSE event.
 
+
+## Runtime command lines
+
+The smoke tests use explicit SNode.C command lines instead of guessing missing
+subcommands from CLI errors. The selected command lines are:
+
+```text
+sse-server legacy local --port 8080
+minigateway-extended mqtt-uplink remote --host 127.0.0.1 --port 1883
+```
+
+`SSE-Server` uses a parameterless `listen(...)`, so the smoke test supplies the
+required `legacy local --port` configuration explicitly. The default port is `8080`,
+matching `SSE-EventSource-Client`, which connects to `127.0.0.1:8080`. MiniGateway Extended
+sets the HTTP listener port and Unix-domain socket path in the source, but its
+MQTT client role still needs a configured remote endpoint for the parameterless
+`connect(...)` path. The smoke test does not require a live MQTT broker; it
+exercises the HTTP/SSE and Unix-domain input paths while the MQTT role remains
+configured for retry/reconnect behavior.
+
 ## Deliberate limits
 
 These checks are smoke tests, not a full integration-test suite. They do not run

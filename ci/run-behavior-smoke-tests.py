@@ -2,14 +2,14 @@
 """Runtime smoke tests for selected SNode.C book companion examples.
 
 The companion CI already proves that every example compiles against the pinned
-SNode.C release.  This script adds a deliberately small behavior check for the
+SNode.C release. This script adds a deliberately small behavior check for the
 showcase paths that matter to the manuscript package:
 
 * SSE-Server emits a well-formed measurement event stream.
 * MiniGateway Extended accepts a measurement through its Unix-domain input role
   and exposes the resulting model state through HTTP/SSE.
 
-These are smoke tests, not broad integration tests.  They avoid external MQTT
+These are smoke tests, not broad integration tests. They avoid external MQTT
 brokers, OpenWrt packaging, long-running services, and timing-sensitive load
 checks.
 """
@@ -25,15 +25,18 @@ import subprocess
 import sys
 import time
 from dataclasses import dataclass
-from typing import Dict, Iterable, Tuple
+from typing import Dict, Sequence, Tuple
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 BUILD_DIR = pathlib.Path(os.environ.get("BOOK_EXAMPLES_BUILD_DIR", REPO_ROOT / "build" / "ci-book-examples"))
 SNODEC_PREFIX = pathlib.Path(os.environ.get("SNODEC_PREFIX", REPO_ROOT / "install" / "snodec"))
 LOG_DIR = pathlib.Path(os.environ.get("SNODEC_BOOK_SMOKE_LOG_DIR", REPO_ROOT / "build" / "behavior-smoke-logs"))
-HOST = "127.0.0.1"
-PORT = 8080
-MEASUREMENT_SOCKET = pathlib.Path("/tmp/minigateway-measurements.sock")
+HOST = os.environ.get("SNODEC_BOOK_SMOKE_HOST", "127.0.0.1")
+SSE_PORT = int(os.environ.get("SNODEC_BOOK_SMOKE_SSE_PORT", "8080"))
+MINIGATEWAY_HTTP_PORT = int(os.environ.get("SNODEC_BOOK_SMOKE_MINIGATEWAY_HTTP_PORT", "8080"))
+MQTT_BROKER_HOST = os.environ.get("SNODEC_BOOK_SMOKE_MQTT_HOST", HOST)
+MQTT_BROKER_PORT = int(os.environ.get("SNODEC_BOOK_SMOKE_MQTT_PORT", "1883"))
+MEASUREMENT_SOCKET = pathlib.Path(os.environ.get("SNODEC_BOOK_SMOKE_UNIX_SOCKET", "/tmp/minigateway-measurements.sock"))
 
 
 class SmokeError(RuntimeError):
@@ -45,6 +48,7 @@ class ManagedProcess:
     label: str
     process: subprocess.Popen
     log_path: pathlib.Path
+    command: Sequence[str]
 
     def stop(self) -> None:
         if self.process.poll() is not None:
@@ -65,7 +69,8 @@ class ManagedProcess:
     def assert_alive(self) -> None:
         rc = self.process.poll()
         if rc is not None:
-            raise SmokeError(f"{self.label} exited unexpectedly with status {rc}\n{tail(self.log_path)}")
+            command = " ".join(self.command)
+            raise SmokeError(f"{self.label} exited unexpectedly with status {rc}\ncommand: {command}\n{tail(self.log_path)}")
 
 
 def tail(path: pathlib.Path, lines: int = 80) -> str:
@@ -102,12 +107,28 @@ def find_executable(name: str) -> pathlib.Path:
     return candidates[0]
 
 
-def start_process(executable: pathlib.Path, label: str) -> ManagedProcess:
+def start_process(executable: pathlib.Path, label: str, args: Sequence[str]) -> ManagedProcess:
+    """Start an example with an explicit SNode.C command line.
+
+    The smoke tests intentionally do not guess missing SNode.C subcommands from
+    RequiresError output. The command lines below mirror the examples' configured
+    runtime roles:
+
+    * ``sse-server legacy local --port PORT`` for the parameterless SSE server listener.
+      The example EventSource client is hard-coded to 127.0.0.1:8080, so the default
+      smoke-test port is 8080 unless SNODEC_BOOK_SMOKE_SSE_PORT overrides it.
+    * ``minigateway-extended mqtt-uplink remote --host HOST --port PORT`` so the
+      MQTT role has a configured remote endpoint while the smoke test exercises
+      the HTTP and Unix-domain paths without requiring a live MQTT broker.
+    """
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     log_path = LOG_DIR / f"{label}.log"
+    cmd = [str(executable), *args]
+    print(f"Starting {label}: {' '.join(cmd)}")
+
     log_file = log_path.open("w")
     process = subprocess.Popen(
-        [str(executable)],
+        cmd,
         cwd=str(executable.parent),
         env=smoke_env(),
         stdout=log_file,
@@ -115,9 +136,9 @@ def start_process(executable: pathlib.Path, label: str) -> ManagedProcess:
         text=True,
         start_new_session=True,
     )
-    # The child owns the file descriptor now; closing our handle avoids leaks.
     log_file.close()
-    managed = ManagedProcess(label=label, process=process, log_path=log_path)
+
+    managed = ManagedProcess(label=label, process=process, log_path=log_path, command=cmd)
     time.sleep(0.2)
     managed.assert_alive()
     return managed
@@ -155,16 +176,16 @@ def wait_for_unix_socket(path: pathlib.Path, process: ManagedProcess, timeout: f
     raise SmokeError(f"timed out waiting for Unix-domain socket: {path}\n{tail(process.log_path)}")
 
 
-def raw_http(path: str, *, accept: str = "*/*", timeout: float = 5.0, read_stream: bool = False) -> Tuple[str, Dict[str, str], bytes]:
+def raw_http(port: int, path: str, *, accept: str = "*/*", timeout: float = 5.0, read_stream: bool = False) -> Tuple[str, Dict[str, str], bytes]:
     request = (
         f"GET {path} HTTP/1.1\r\n"
-        f"Host: {HOST}:{PORT}\r\n"
+        f"Host: {HOST}:{port}\r\n"
         f"Accept: {accept}\r\n"
         "Connection: close\r\n"
         "\r\n"
     ).encode("ascii")
 
-    with socket.create_connection((HOST, PORT), timeout=timeout) as sock:
+    with socket.create_connection((HOST, port), timeout=timeout) as sock:
         sock.settimeout(0.4)
         sock.sendall(request)
         deadline = time.time() + timeout
@@ -232,14 +253,15 @@ def raw_http(path: str, *, accept: str = "*/*", timeout: float = 5.0, read_strea
 
         return status_line, headers, body
 
+
 def assert_status(status_line: str, expected: int, path: str) -> None:
     needle = f" {expected} "
     if needle not in status_line:
         raise SmokeError(f"unexpected HTTP status for {path}: {status_line!r}")
 
 
-def json_get(path: str) -> Dict[str, object]:
-    status_line, headers, body = raw_http(path, accept="application/json")
+def json_get(port: int, path: str) -> Dict[str, object]:
+    status_line, headers, body = raw_http(port, path, accept="application/json")
     assert_status(status_line, 200, path)
     if "application/json" not in headers.get("content-type", ""):
         raise SmokeError(f"unexpected content type for {path}: {headers.get('content-type')!r}")
@@ -271,10 +293,11 @@ def assert_sse_measurement(body: bytes, *, expected_sequence: int | None = None)
 
 def test_sse_server() -> None:
     executable = find_executable("sse-server")
-    server = start_process(executable, "sse-server")
+    args = ["legacy", "local", "--port", str(SSE_PORT)]
+    server = start_process(executable, "sse-server", args)
     try:
-        wait_for_tcp(HOST, PORT, server)
-        status_line, headers, body = raw_http("/events", accept="text/event-stream", read_stream=True)
+        wait_for_tcp(HOST, SSE_PORT, server)
+        status_line, headers, body = raw_http(SSE_PORT, "/events", accept="text/event-stream", read_stream=True)
         assert_status(status_line, 200, "/events")
         if "text/event-stream" not in headers.get("content-type", ""):
             raise SmokeError(f"unexpected SSE content type: {headers.get('content-type')!r}")
@@ -303,7 +326,7 @@ def wait_for_status_sequence(expected_sequence: int, process: ManagedProcess, ti
     while time.time() < deadline:
         process.assert_alive()
         try:
-            payload = json_get("/status")
+            payload = json_get(MINIGATEWAY_HTTP_PORT, "/status")
             last_payload = payload
             if payload.get("sequence") == expected_sequence:
                 return payload
@@ -320,12 +343,18 @@ def test_minigateway_extended_unix_input() -> None:
         pass
 
     executable = find_executable("minigateway-extended")
-    gateway = start_process(executable, "minigateway-extended")
+    # MiniGateway Extended sets the HTTP port and Unix-domain socket path in
+    # code. The MQTT client role still needs a configured remote host for the
+    # parameterless connect() path; no external MQTT broker is required because
+    # the role is configured for reconnect/retry and the smoke test exercises the
+    # web and Unix-domain paths.
+    args = ["mqtt-uplink", "remote", "--host", MQTT_BROKER_HOST, "--port", str(MQTT_BROKER_PORT)]
+    gateway = start_process(executable, "minigateway-extended", args)
     try:
-        wait_for_tcp(HOST, PORT, gateway)
+        wait_for_tcp(HOST, MINIGATEWAY_HTTP_PORT, gateway)
         wait_for_unix_socket(MEASUREMENT_SOCKET, gateway)
 
-        health = json_get("/health")
+        health = json_get(MINIGATEWAY_HTTP_PORT, "/health")
         if health.get("ok") is not True:
             raise SmokeError(f"unexpected /health payload: {health!r}")
 
@@ -336,7 +365,7 @@ def test_minigateway_extended_unix_input() -> None:
             if status.get(key) != value:
                 raise SmokeError(f"unexpected /status payload after Unix input: {status!r}")
 
-        status_line, headers, body = raw_http("/events", accept="text/event-stream", read_stream=True)
+        status_line, headers, body = raw_http(MINIGATEWAY_HTTP_PORT, "/events", accept="text/event-stream", read_stream=True)
         assert_status(status_line, 200, "/events")
         if "text/event-stream" not in headers.get("content-type", ""):
             raise SmokeError(f"unexpected MiniGateway SSE content type: {headers.get('content-type')!r}")
@@ -357,6 +386,9 @@ def test_minigateway_extended_unix_input() -> None:
 def main() -> int:
     print(f"Using example build directory: {BUILD_DIR}")
     print(f"Using SNode.C install prefix: {SNODEC_PREFIX}")
+    print(f"SSE-Server smoke endpoint: http://{HOST}:{SSE_PORT}/events")
+    print(f"MiniGateway Extended smoke endpoint: http://{HOST}:{MINIGATEWAY_HTTP_PORT}")
+    print(f"MiniGateway Extended Unix socket: {MEASUREMENT_SOCKET}")
     test_sse_server()
     test_minigateway_extended_unix_input()
     print("Behavioral smoke tests passed.")
