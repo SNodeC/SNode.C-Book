@@ -151,7 +151,7 @@ The manuscript is aligned with the source baseline recorded in `source-baseline/
 
 ## Verification status
 
-The package records author-confirmed local verification for the companion examples and MiniGateway source trees against the public SNode.C `v1.0.2` tag and exact pinned commit. In addition, the repository contains GitHub Actions workflows that build the proposal package and compile the companion examples against the pinned SNode.C release. The CI output is reproducible package evidence, not a claim of third-party adoption or commercial deployment.
+The package records author-confirmed local verification for the companion examples and MiniGateway source trees against the public SNode.C `v1.0.2` tag and exact pinned commit. In addition, the repository contains GitHub Actions workflows that build the proposal package, compile the companion examples against the pinned SNode.C release, and run selected behavioral smoke tests for the SSE and MiniGateway Extended showcase paths. The CI output is reproducible package evidence, not a claim of third-party adoption or commercial deployment.
 
 ## SSE contract note
 
@@ -190,7 +190,7 @@ This is not a generic C++ networking book. It is a deep, first-party, architectu
 | Capped market | SNode.C is not a widely known mainstream C++ networking library. | Position as specialist/project-authoritative/course material; avoid exaggerated trade claims. |
 | Manuscript length | The manuscript is substantial for a niche framework guide. | Current structure is complete; a trade publisher may still request compression. |
 | First-party perspective | The author is also the framework creator. | Explicit author/framework disclosure; no claim of independent comparative neutrality. |
-| Verification status | Verification now includes author-confirmed local notes plus public CI workflows for package generation and companion-example compilation. | Source baseline, exact commit pin, verification notes, GitHub Actions badges, and downloadable workflow artifacts. |
+| Verification status | Verification now includes author-confirmed local notes plus public CI workflows for package generation, companion-example compilation, and selected behavioral smoke tests. | Source baseline, exact commit pin, verification notes, GitHub Actions badges, downloadable workflow artifacts, and smoke-test scripts. |
 | Adoption evidence | Current external adoption evidence is modest. | Evidence sheet states limits plainly; gather independent users, course evidence, or deployment evidence separately if available. |
 | Version drift | SNode.C is active, and public branches may move. | Package pins a public release tag and full commit SHA; maintain an errata/update page for post-publication changes. |
 

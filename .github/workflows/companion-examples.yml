@@ -53,4 +53,11 @@ jobs:
           CXX: ${{ matrix.cxx }}
           SNODEC_SOURCE_DIR: ${{ github.workspace }}/external/snode.c
           SNODEC_PREFIX: ${{ github.workspace }}/install/snodec
+          BOOK_EXAMPLES_BUILD_DIR: ${{ github.workspace }}/build/ci-book-examples
         run: bash ci/build-companion-examples.sh
+
+      - name: Run selected behavioral smoke tests
+        env:
+          SNODEC_PREFIX: ${{ github.workspace }}/install/snodec
+          BOOK_EXAMPLES_BUILD_DIR: ${{ github.workspace }}/build/ci-book-examples
+        run: bash ci/run-behavior-smoke-tests.sh

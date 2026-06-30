@@ -40,6 +40,8 @@ set(REQUIRED_SOURCE_FILES
     "ci/check-source-hygiene.sh"
     "ci/build-book-package.sh"
     "ci/build-companion-examples.sh"
+    "ci/run-behavior-smoke-tests.sh"
+    "ci/run-behavior-smoke-tests.py"
     "production/CMakeLists.txt"
     "production/cmake/SNodeCBookPaths.cmake"
     "production/cmake/SNodeCBookTools.cmake"
