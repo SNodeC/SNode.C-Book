@@ -28,7 +28,7 @@ The promise of this book is therefore practical and architectural at the same ti
 
 > By the end of the book, you should be able to build servers and clients with SNode.C, understand why its architecture has the shape it has, and extend that architecture without breaking its conceptual boundaries.
 
-The goal is not simple copying. The goal is that you can explain why the example has its shape.
+The example is meant to be explained, not merely copied: the reader should understand why it has its shape.
 
 ### The problem SNode.C addresses
 

@@ -246,7 +246,7 @@ Moving from IPv4 to IPv6 does not collapse those callback layers. The lower-fami
 
 The stable structure does not mean IPv4 and IPv6 are identical. They are not.
 
-The goal is not to turn this into a full IPv6 chapter, but to show where SNode.C keeps the architecture stable and where the lower family still matters.
+The IPv6 discussion stays focused on where SNode.C keeps the architecture stable and where the lower family still matters.
 
 #### Namespace and address family
 

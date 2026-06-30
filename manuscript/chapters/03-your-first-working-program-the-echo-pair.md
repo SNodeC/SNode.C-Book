@@ -9,7 +9,7 @@
 
 With the build environment in place, the first complete program can stay small enough to read and real enough to run.
 
-The goal is not to build a useful echo service. The goal is to make the recurring shape of SNode.C visible in real code. A good first example should be small enough that the reader can hold the whole program in mind, but complete enough that it is not pseudocode.
+The echo service is only a small vehicle for the real purpose: making the recurring shape of SNode.C visible in real code. A good first example should be small enough that the reader can hold the whole program in mind, but complete enough that it is not pseudocode.
 
 An echo pair is ideal for that purpose: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong.
 
@@ -29,7 +29,7 @@ The rest of the book will add other network families, TLS, HTTP, WebSocket, MQTT
 
 The SNode.C repository contains a full echo application under `src/apps/echo`. That repository example is more general than the first teaching version in this chapter: it uses a shared echo model and builds several variants by combining network-family and stream-mode choices. The echo context is implemented in `src/apps/echo/model/EchoSocketContext.h` and `EchoSocketContext.cpp`; the server and client entry points are `src/apps/echo/echoserver.cpp` and `echoclient.cpp`. The design demonstrates that the echo application is not tied to one hard-coded socket kind, because the same application model can be combined with different lower layers.
 
-For a first chapter, however, that full matrix would hide the essential pattern. We therefore use a reduced version:
+For a first chapter, however, that full matrix would hide the essential pattern. This chapter therefore uses a reduced version:
 
 ```text
 network family: IPv4 / in
@@ -122,7 +122,7 @@ This is the first place where the event-driven nature of SNode.C becomes visible
 \index{SocketContext@\texttt{SocketContext}}
 
 
-We first define the context and the two factories.
+The context and the two factories come first.
 
 #### `EchoSocketContext.h`
 

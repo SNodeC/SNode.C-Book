@@ -463,6 +463,8 @@ This order prevents implementation details from hiding the architecture.
 \index{server type}
 \index{client type}
 
+The following three short checklists are meant as reading aids, not as separate mini-reference manuals. Use them when a file is technically readable but architecturally unclear.
+
 
 When you encounter a server or client type, use this checklist:
 
@@ -484,6 +486,8 @@ These questions turn a complex type into a structured reading exercise. They als
 
 \index{context class}
 \index{SocketContext@\texttt{SocketContext}}
+
+After the server or client type has identified the communication role, the context class usually reveals the application protocol behavior.
 
 
 When you encounter a `SocketContext`-derived class, use a different checklist:
@@ -507,6 +511,8 @@ A context class is often the best place to understand application behavior, beca
 
 \index{factory class}
 \index{SocketContextFactory@\texttt{SocketContextFactory}}
+
+The factory completes the same reading path by showing how framework-managed connection lifetime reaches application-defined behavior.
 
 
 A `SocketContextFactory` looks small, but it marks an important boundary.

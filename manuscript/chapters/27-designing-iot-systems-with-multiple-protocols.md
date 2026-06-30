@@ -302,7 +302,7 @@ For example:
 | web-facing process | serves dashboard and admin endpoints |
 | bridge process | maps between protocol families |
 
-The right choice depends on deployment, failure isolation, configuration, resource limits, and operational clarity. The goal is not to maximize consolidation. The goal is to choose process boundaries that preserve system clarity.
+The right choice depends on deployment, failure isolation, configuration, resource limits, and operational clarity. Process boundaries should preserve system clarity rather than maximize consolidation.
 
 SNode.C supports both styles because the same architectural ideas apply at both levels:
 
@@ -431,7 +431,7 @@ many protocols without clear boundaries
 
 The first mistake hides real differences. The second mistake creates accidental complexity. The better path is to let different protocols serve clear roles at explicit boundaries so the resulting system remains coherent.
 
-The goal is not to minimize the number of protocols at all costs. The goal is to make every protocol choice explainable.
+The number of protocols is less important than whether every protocol choice remains explainable.
 
 ### Protocol diversity is not architectural chaos
 

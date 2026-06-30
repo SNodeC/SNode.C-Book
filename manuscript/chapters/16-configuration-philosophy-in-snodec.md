@@ -20,12 +20,12 @@ Part IV separated protocol behavior, context construction, lower-family selectio
 The central idea is:
 
 ::: {.snodec-rule title="Configuration rule"}
-In SNode.C, configuration is one of the main ways a communication role becomes concrete.
+In SNode.C, configuration makes a communication role concrete: it gives the role endpoint values, operational switches, instance identity, and activation-time shape.
 :::
 
 The `SocketServer`/`SocketClient` handle is the handle. Through that handle, the application configures a server-side or client-side communication role. When `listen(...)` or `connect(...)` registers that role, the configured instance enters the runtime.
 
-Configuration is therefore one of the places where the role receives its operational shape, not decoration around an otherwise complete object.
+Configuration therefore gives the role its operational shape instead of decorating an otherwise complete object.
 
 ### Configuration as part of the architecture
 
@@ -49,7 +49,7 @@ The context implements the protocol behavior. The factory creates the context. T
 
 Configuration gives the role its concrete endpoint values, operational switches, and persistent identity.
 
-That is why this chapter belongs immediately after Chapter 15. Lower-family transfer is practical only when the changing parts have somewhere clear to live. In SNode.C, configuration is one of those places.
+That is why this chapter belongs immediately after Chapter 15. Lower-family transfer is practical only when the changing parts have somewhere clear to live; in SNode.C, configuration provides that place.
 
 #### A configured communication role
 
@@ -77,7 +77,7 @@ this is how it participates
 this is how it can be operated
 ```
 
-The previous chapters established the runtime and protocol roles. It explains how those roles become concrete enough to run in an application.
+The previous chapters established the runtime and protocol roles. This chapter explains how those roles become concrete enough to run in an application.
 
 #### One model, several entry paths
 
@@ -580,9 +580,9 @@ Because configuration can shape a role without rewriting protocol code, the same
 
 A protocol may remain in the context. The factory may keep creating the same kind of endpoint. The lower-family handle type, registered instance, endpoint identity, TLS/legacy selection, and deployment values may change.
 
-Configuration is one of the places where that variation becomes explicit. This connects directly back to Chapter 15. Lower-family transfer is practical only if the changing parts have somewhere clear to live.
+Configuration makes that variation explicit. This connects directly back to Chapter 15: lower-family transfer is practical only if the changing parts have somewhere clear to live.
 
-In SNode.C, configuration is one of those places.
+In SNode.C, the configuration hierarchy gives those changing parts a visible place.
 
 ::: {.snodec-remember title="What to remember"}
 - Configuration is part of the SNode.C architecture, not an afterthought beside it.

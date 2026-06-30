@@ -38,7 +38,7 @@ For this chapter, we will not discuss every target in the directory. Instead, we
 | `testpipe` | core runtime utility showing pipe-based event handling |
 | `database/testmariadb` | MariaDB persistence demonstration after the persistence chapter |
 
-The selection is broad enough to show different application shapes and narrow enough to keep the chapter readable. The goal is not to catalogue a directory. The goal is to learn how SNode.C applications are assembled.
+The selection is broad enough to show different application shapes and narrow enough to keep the chapter readable. The chapter uses the directory to show how SNode.C applications are assembled.
 
 The top-level app build also contains other targets, such as `configtest`, `warema-jalousien`, and a conditional `testregex`. Those are useful in their own contexts, but they are not needed for the main teaching path here.
 

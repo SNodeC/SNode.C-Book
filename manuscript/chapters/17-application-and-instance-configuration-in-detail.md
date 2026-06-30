@@ -17,7 +17,7 @@ The application is the executable-level operational shell. A named instance is t
 
 An option is one concrete value inside such a scope.
 
-This chapter follows that hierarchy from the outside inward. The goal is not to memorize every possible option. The goal is to understand where a value belongs, why it belongs there, and how the same structure appears in C++ code, on the command line, and in configuration files.
+This chapter follows that hierarchy from the outside inward. The important skill is not memorizing every possible option, but understanding where a value belongs, why it belongs there, and how the same structure appears in C++ code, on the command line, and in configuration files.
 
 ### The anatomy of the configuration hierarchy
 

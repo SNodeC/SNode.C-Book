@@ -566,7 +566,7 @@ Useful logging often includes:
 - concise summaries of received or sent messages,
 - diagnostics around closure or timeout decisions.
 
-Less useful logging repeats every low-level detail until the protocol shape disappears. The goal is not maximum output. The goal is useful visibility.
+Less useful logging repeats every low-level detail until the protocol shape disappears. Good context logging aims for useful visibility rather than maximum output.
 
 A good test is whether the log line helps answer a protocol question:
 

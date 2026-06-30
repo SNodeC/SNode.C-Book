@@ -242,7 +242,7 @@ WebSocket parsing and frame handling require their own invalid cases: invalid op
 
 MQTT parsing requires another set: malformed remaining-length encodings, invalid control-packet combinations, invalid topic names, incomplete packets, unexpected packets for the current session state, and illegal QoS-related packet sequences where those paths are supported.
 
-The goal is not to list every possible protocol conformance case in this book. The goal is to name the testing responsibility correctly. When SNode.C raises stream bytes into protocol meaning, tests must check both the accepted and rejected forms of that meaning.
+The book cannot list every possible protocol conformance case, but it can name the testing responsibility correctly. When SNode.C raises stream bytes into protocol meaning, tests must check both the accepted and rejected forms of that meaning.
 
 #### Serializer tests should check exact bytes
 
@@ -299,7 +299,7 @@ SNode.C Express-like application
 
 and compare structured observations: final response body, status and headers, which route matched, which middleware ran, what parameters were visible, what mounted path remained, and what happened after leaving a nested router.
 
-This is a very SNode.C-specific testing story. It protects the public semantic promise of the Express-like layer. The goal is not imitation for its own sake. The goal is to avoid surprising users at the boundary where the book deliberately says “Express-like”.
+This is a very SNode.C-specific testing story. It protects the public semantic promise of the Express-like layer. Express comparison matters here because users should not be surprised at the boundary where the book deliberately says “Express-like”.
 
 #### WebSocket tests have two phases
 
@@ -434,7 +434,7 @@ A configuration test should therefore check the effective configuration after de
 
 Useful checks include whether a configured role is enabled or disabled as expected, whether a server binds to the expected address, whether a client connects to the expected remote endpoint, whether TLS settings are applied to the correct role, whether retry and timeout settings have the expected effective values, whether generated configuration can be reused, and whether invalid combinations fail clearly.
 
-Configuration is one of the main ways SNode.C systems become multi-role systems. A generated configuration file can be a map of the deployed role constellation. Testing that map protects the operational shape of the application.
+Configuration helps SNode.C systems become multi-role systems by making their roles explicit and repeatable. A generated configuration file can be a map of the deployed role constellation. Testing that map protects the operational shape of the application.
 
 ### Deployment confidence
 
@@ -567,7 +567,7 @@ A bug report is most useful when it can be reproduced at the right boundary. For
 
 A routing bug should ideally be reproducible with a small route tree. A parser bug should ideally be reproducible with a small byte sequence. A deployment bug should ideally be reproducible from package installation and service startup. A reconnect bug should ideally describe the timing of peer availability, failure, retry, and recovery.
 
-The goal is not bureaucracy. The goal is to put the bug at the smallest explicit boundary.
+The purpose is not bureaucracy; it is to put the bug at the smallest explicit boundary.
 
 #### Memory tools verify lifetime assumptions
 

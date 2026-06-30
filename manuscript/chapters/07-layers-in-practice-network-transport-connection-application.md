@@ -24,7 +24,7 @@ This is not a decorative diagram. It explains why long SNode.C names are readabl
 
 This chapter explains how the communication choices behind registered instances are named, built, and composed.
 
-The goal is not to repeat a textbook theory of layering. The goal is more practical: after this chapter, a reader should be able to look at a SNode.C type name, component name, or source-tree path and understand what it says about the communication stack.
+This chapter treats layering practically: after it, a reader should be able to look at a SNode.C type name, component name, or source-tree path and understand what it says about the communication stack.
 
 ### The communication stack in four layers
 
