@@ -16,7 +16,7 @@ namespace minigateway {
 
     } // namespace
 
-    MiniGatewayMqttClient startMqttClient(MeasurementModel& measurementModel) {
+    MiniGatewayMqttClient startMqttIntegrationRole(MeasurementModel& measurementModel) {
         MiniGatewayMqttClient socketClient("mqtt-uplink", std::ref(measurementModel));
 
         auto* config = socketClient.getConfig();

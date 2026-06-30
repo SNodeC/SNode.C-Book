@@ -677,7 +677,7 @@ namespace minigateway {
 
     using MiniGatewayWebApp = express::legacy::in::WebApp;
 
-    MiniGatewayWebApp startWebInstance(MeasurementModel& measurementModel);
+    MiniGatewayWebApp startWebRole(MeasurementModel& measurementModel);
 
 } // namespace minigateway
 
@@ -772,7 +772,7 @@ namespace minigateway {
 
     } // namespace
 
-    MiniGatewayWebApp startWebInstance(MeasurementModel& measurementModel) {
+    MiniGatewayWebApp startWebRole(MeasurementModel& measurementModel) {
         MiniGatewayWebApp app;
 
         registerWebRoutes(app, measurementModel);
@@ -1074,7 +1074,7 @@ namespace minigateway {
     using MiniGatewayMqttClient =
         net::in::stream::legacy::SocketClient<MiniGatewayMqttSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
 
-    MiniGatewayMqttClient startMqttClient(MeasurementModel& measurementModel);
+    MiniGatewayMqttClient startMqttIntegrationRole(MeasurementModel& measurementModel);
 
 } // namespace minigateway
 
@@ -1102,7 +1102,7 @@ namespace minigateway {
 
     } // namespace
 
-    MiniGatewayMqttClient startMqttClient(MeasurementModel& measurementModel) {
+    MiniGatewayMqttClient startMqttIntegrationRole(MeasurementModel& measurementModel) {
         MiniGatewayMqttClient socketClient("mqtt-uplink", std::ref(measurementModel));
 
         auto* config = socketClient.getConfig();
@@ -1159,8 +1159,10 @@ int main(int argc, char* argv[]) {
 
     minigateway::MeasurementModel measurementModel;
 
-    const auto webApp = minigateway::startWebInstance(measurementModel);
-    const auto mqttClient = minigateway::startMqttClient(measurementModel);
+    const auto webRole =
+        minigateway::startWebRole(measurementModel);
+    const auto mqttIntegrationRole =
+        minigateway::startMqttIntegrationRole(measurementModel);
 
     return core::SNodeC::start();
 }

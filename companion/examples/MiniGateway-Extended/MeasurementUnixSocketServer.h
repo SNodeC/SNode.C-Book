@@ -11,6 +11,6 @@ namespace minigateway {
     using MeasurementSocketServer =
         net::un::stream::legacy::SocketServer<MeasurementUnixSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
 
-    MeasurementSocketServer startMeasurementSocketServer(MeasurementModel& measurementModel);
+    MeasurementSocketServer startMeasurementInputRole(MeasurementModel& measurementModel);
 
 } // namespace minigateway

@@ -9,7 +9,7 @@ namespace minigateway {
 
     using MiniGatewayWebApp = express::legacy::in::WebApp;
 
-    MiniGatewayWebApp startWebInstance(MeasurementModel& measurementModel);
+    MiniGatewayWebApp startWebRole(MeasurementModel& measurementModel);
 
 } // namespace minigateway
 

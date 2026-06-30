@@ -4,7 +4,7 @@
 
 namespace minigateway {
 
-    MeasurementSocketServer startMeasurementSocketServer(MeasurementModel& measurementModel) {
+    MeasurementSocketServer startMeasurementInputRole(MeasurementModel& measurementModel) {
         MeasurementSocketServer socketServer("measurement-input", std::ref(measurementModel));
 
         socketServer.listen("/tmp/minigateway-measurements.sock",

@@ -50,7 +50,7 @@ Do not hide a new input path inside an unrelated callback merely because that ca
 
 The new concern is local measurement injection through a Unix-domain stream socket. That concern belongs to a new socket-server role. It does not belong in the HTTP route code, the SSE response path, or the MQTT client context.
 
-The network-role architecture in @fig:minigateway-extended-network-role-architecture shows the resulting structure. The extension does not add a second application core. It adds another input role around the same shared-model area: HTTP simulation, MQTT subscription, and Unix-domain socket input all accept measurements into that area, while HTTP status, SSE events, and MQTT publication expose selected state outward through separate roles. Within the shared-model area, `MeasurementModel` is the central shared state object and API. `MeasurementJsonCodec` and `Measurement` are grouped alongside it as application-level support types; they are not additional network roles and they do not couple the model to any particular protocol endpoint.
+The network-role architecture in Figure \ref{fig:minigateway-extended-network-role-architecture} shows the resulting structure. The extension does not add a second application core. It adds another input role around the same shared-model area: HTTP simulation, MQTT subscription, and Unix-domain socket input all accept measurements into that area, while HTTP status, SSE events, and MQTT publication expose selected state outward through separate roles. Within the shared-model area, `MeasurementModel` is the central shared state object and API. `MeasurementJsonCodec` and `Measurement` are grouped alongside it as application-level support types; they are not additional network roles and they do not couple the model to any particular protocol endpoint.
 
 ![MiniGateway Extended as a network-role architecture: protocol-specific input, observation, and integration roles stay separate while sharing the same application-owned measurement model.](assets/figures/pdf/fig-12-minigateway-extended-network-role-architecture.pdf){#fig:minigateway-extended-network-role-architecture width=100% latex-placement="tbp"}
 
@@ -172,8 +172,8 @@ The target is longer than the MiniGateway target, but the difference is localize
 The whole architectural change is visible in `main.cpp`. MiniGateway Extended creates the same model and starts one additional preconfigured network role:
 
 ```cpp
-const auto measurementSocketServer =
-    minigateway::startMeasurementSocketServer(measurementModel);
+const auto measurementInputRole =
+    minigateway::startMeasurementInputRole(measurementModel);
 ```
 
 The web role and MQTT role do not learn anything about Unix-domain sockets.
@@ -195,9 +195,12 @@ int main(int argc, char* argv[]) {
 
     minigateway::MeasurementModel measurementModel;
 
-    const auto webApp = minigateway::startWebInstance(measurementModel);
-    const auto measurementSocketServer = minigateway::startMeasurementSocketServer(measurementModel);
-    const auto mqttClient = minigateway::startMqttClient(measurementModel);
+    const auto webRole =
+        minigateway::startWebRole(measurementModel);
+    const auto measurementInputRole =
+        minigateway::startMeasurementInputRole(measurementModel);
+    const auto mqttIntegrationRole =
+        minigateway::startMqttIntegrationRole(measurementModel);
 
     return core::SNodeC::start();
 }
@@ -211,7 +214,7 @@ The server startup files play the same role for Unix-domain input that `MiniGate
 
 #### `MeasurementUnixSocketServer.h`
 
-The header defines the concrete server alias and exposes `startMeasurementSocketServer(...)`. The model again travels into the role through a reference wrapper.
+The header defines the concrete server alias and exposes `startMeasurementInputRole(...)`. The model again travels into the role through a reference wrapper.
 
 ```cpp
 #pragma once
@@ -227,7 +230,7 @@ namespace minigateway {
     using MeasurementSocketServer =
         net::un::stream::legacy::SocketServer<MeasurementUnixSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
 
-    MeasurementSocketServer startMeasurementSocketServer(MeasurementModel& measurementModel);
+    MeasurementSocketServer startMeasurementInputRole(MeasurementModel& measurementModel);
 
 } // namespace minigateway
 ```
@@ -243,7 +246,7 @@ The startup function creates the Unix-domain server, configures the default sock
 
 namespace minigateway {
 
-    MeasurementSocketServer startMeasurementSocketServer(MeasurementModel& measurementModel) {
+    MeasurementSocketServer startMeasurementInputRole(MeasurementModel& measurementModel) {
         MeasurementSocketServer socketServer("measurement-input", std::ref(measurementModel));
 
         socketServer.listen("/tmp/minigateway-measurements.sock",

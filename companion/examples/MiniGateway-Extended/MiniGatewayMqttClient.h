@@ -11,6 +11,6 @@ namespace minigateway {
     using MiniGatewayMqttClient =
         net::in::stream::legacy::SocketClient<MiniGatewayMqttSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
 
-    MiniGatewayMqttClient startMqttClient(MeasurementModel& measurementModel);
+    MiniGatewayMqttClient startMqttIntegrationRole(MeasurementModel& measurementModel);
 
 } // namespace minigateway

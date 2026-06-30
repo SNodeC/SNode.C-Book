@@ -83,7 +83,7 @@ namespace minigateway {
 
     } // namespace
 
-    MiniGatewayWebApp startWebInstance(MeasurementModel& measurementModel) {
+    MiniGatewayWebApp startWebRole(MeasurementModel& measurementModel) {
         MiniGatewayWebApp app;
 
         registerWebRoutes(app, measurementModel);
