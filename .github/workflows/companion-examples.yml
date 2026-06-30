@@ -12,6 +12,21 @@ jobs:
   build-companion-examples:
     runs-on: ubuntu-24.04
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - compiler: gcc
+            cc: gcc
+            cxx: g++
+            packages: g++
+          - compiler: clang
+            cc: clang
+            cxx: clang++
+            packages: clang
+
+    name: Companion examples (${{ matrix.compiler }})
+
     steps:
       - name: Check out book repository
         uses: actions/checkout@v4
@@ -26,8 +41,16 @@ jobs:
       - name: Install C++ build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y             cmake ninja-build g++ pkg-config python3             libssl-dev zlib1g-dev libbluetooth-dev libmariadb-dev             nlohmann-json3-dev
+          sudo apt-get install -y \
+            cmake ninja-build pkg-config python3 \
+            libssl-dev zlib1g-dev libbluetooth-dev libmariadb-dev \
+            nlohmann-json3-dev \
+            ${{ matrix.packages }}
 
       - name: Build SNode.C and companion examples
-        run: |
-          SNODEC_SOURCE_DIR="$PWD/external/snode.c"           SNODEC_PREFIX="$PWD/install/snodec"           bash ci/build-companion-examples.sh
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+          SNODEC_SOURCE_DIR: ${{ github.workspace }}/external/snode.c
+          SNODEC_PREFIX: ${{ github.workspace }}/install/snodec
+        run: bash ci/build-companion-examples.sh

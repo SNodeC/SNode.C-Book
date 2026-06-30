@@ -35,6 +35,7 @@ Included:
 - ci/
 - .github/workflows/book-package.yml
 - .github/workflows/companion-examples.yml
+- REVIEW-V40C-CI-EVIDENCE-ARTIFACTS.md — note for the CI evidence/artifact publication pass.
 
 Included when present:
 - README.md

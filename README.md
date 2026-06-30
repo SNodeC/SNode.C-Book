@@ -1,5 +1,8 @@
 # Layered Network Programming with SNode.C
 
+[![Book package](https://github.com/SNodeC/SNode.C-Book/actions/workflows/book-package.yml/badge.svg)](https://github.com/SNodeC/SNode.C-Book/actions/workflows/book-package.yml)
+[![Companion examples](https://github.com/SNodeC/SNode.C-Book/actions/workflows/companion-examples.yml/badge.svg)](https://github.com/SNodeC/SNode.C-Book/actions/workflows/companion-examples.yml)
+
 **Building Multi-Protocol Applications in Modern C++**
 
 This repository contains the structured Markdown source for an architecture-first book about SNode.C. The book is positioned as a SNode.C book, not as a general survey of C++ networking libraries. It teaches layered, event-driven, multi-protocol network programming through the concrete structure of SNode.C.
@@ -56,7 +59,7 @@ The compact source trees in `companion/examples/` are intended to be complete bu
 
 MiniGateway and MiniGateway Extended are intended to be buildable external SNode.C consumer examples. Before publication, they should be built and checked against the SNode.C source snapshot recorded in `source-baseline/SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
 
-The current package records author-confirmed local verification history for the companion-example set in `review/verification/examples-aggregate-build-verification.md`. MiniGateway-specific details are retained in `review/verification/minigateway-step8-author-verification.md`. The verification notes target the SNode.C `v1.0.2` release tag and its exact pinned commit. These files are package evidence, not manuscript prose, and they are not presented as independent continuous-integration evidence.
+The current package records author-confirmed local verification history for the companion-example set in `review/verification/examples-aggregate-build-verification.md`. MiniGateway-specific details are retained in `review/verification/minigateway-step8-author-verification.md`. The verification notes target the SNode.C `v1.0.2` release tag and its exact pinned commit. These files remain package evidence, not manuscript prose. In addition, the repository now contains GitHub Actions workflows that build the book package and compile the companion examples against the pinned SNode.C release.
 
 ## Heading convention
 
@@ -112,6 +115,27 @@ cmake --build build --target proposal-sample-pdf
 ```
 
 The CMake build reads `manuscript/book-files.txt` during configuration. If the manuscript file list changes, reconfigure the build directory. The root `CMakeLists.txt` is intentionally small; manuscript, proposal, figure, package, and baseline targets are defined in the corresponding subdirectory `CMakeLists.txt` files.
+
+## Continuous integration
+
+Two GitHub Actions workflows verify the publication package and companion examples:
+
+```text
+.github/workflows/book-package.yml
+.github/workflows/companion-examples.yml
+```
+
+The **Book package** workflow builds the compact proposal PDF, proposal-with-sample-chapters PDF, full manuscript PDF, and publisher/reviewer archive from source. It uploads the generated PDFs and package archive as workflow artifacts.
+
+The **Companion examples** workflow checks out the pinned SNode.C release and builds the companion examples with a small compiler matrix. The workflow is intentionally compile-focused; it does not run network integration tests, MQTT broker tests, or OpenWrt package builds.
+
+The underlying checks are also available as local scripts:
+
+```bash
+bash ci/check-source-hygiene.sh
+bash ci/build-book-package.sh
+bash ci/build-companion-examples.sh
+```
 
 ## Source package and publisher/reviewer package
 

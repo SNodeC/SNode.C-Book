@@ -19,14 +19,21 @@ jobs:
       - name: Install publication dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y             cmake ninja-build python3 curl ca-certificates             texlive-xetex texlive-latex-extra texlive-fonts-recommended             texlive-fonts-extra texlive-pictures fonts-lmodern
+          sudo apt-get install -y \
+            cmake ninja-build python3 curl ca-certificates \
+            texlive-xetex texlive-latex-extra texlive-fonts-recommended \
+            texlive-fonts-extra texlive-pictures fonts-lmodern
 
           # Install pandoc 3.9.0.2 from GitHub releases.
-          curl -fsSL https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb             -o /tmp/pandoc.deb
+          curl -fsSL \
+            https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb \
+            -o /tmp/pandoc.deb
           sudo dpkg -i /tmp/pandoc.deb
 
           # Install matching pandoc-crossref v0.3.24a.
-          curl -fsSL https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.24a/pandoc-crossref-Linux-X64.tar.xz             | sudo tar -xJ -C /usr/local/bin pandoc-crossref
+          curl -fsSL \
+            https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.24a/pandoc-crossref-Linux-X64.tar.xz \
+            | sudo tar -xJ -C /usr/local/bin pandoc-crossref
 
           pandoc --version
           pandoc-crossref --version
@@ -51,4 +58,4 @@ jobs:
         with:
           name: snodec-book-proposal-package
           path: dist/packages/*.tar.gz
-          if-no-files-found: warn
+          if-no-files-found: error
