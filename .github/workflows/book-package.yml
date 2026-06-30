@@ -21,9 +21,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             cmake ninja-build python3 \
-            pandoc pandoc-crossref \
             texlive-xetex texlive-latex-extra texlive-fonts-recommended \
             texlive-fonts-extra texlive-pictures fonts-lmodern
+
+          # Install pandoc 3.9.0.2 from GitHub releases (matches pandoc-crossref v0.3.24a)
+          curl -fsSL https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb \
+            -o /tmp/pandoc.deb
+          sudo dpkg -i /tmp/pandoc.deb
+
+          # Install pandoc-crossref v0.3.24a from GitHub releases
+          curl -fsSL https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.24a/pandoc-crossref-Linux-X64.tar.xz \
+            | sudo tar -xJ -C /usr/local/bin pandoc-crossref
 
       - name: Check source hygiene
         run: bash ci/check-source-hygiene.sh
