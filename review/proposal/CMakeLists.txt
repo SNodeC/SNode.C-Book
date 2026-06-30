@@ -7,8 +7,8 @@ set(PROPOSAL_SAMPLE_CHAPTERS
     "${MANUSCRIPT_DIR}/chapters/01-why-snodec-exists.md"
     "${MANUSCRIPT_DIR}/chapters/03-your-first-working-program-the-echo-pair.md"
     "${MANUSCRIPT_DIR}/chapters/23-server-sent-events-and-real-time-http.md"
-    "${MANUSCRIPT_DIR}/chapters/35-architectural-judgment-choosing-the-right-layer-and-boundary.md"
-    "${MANUSCRIPT_DIR}/chapters/37-building-minigateway.md")
+    "${MANUSCRIPT_DIR}/chapters/35-building-minigateway.md"
+    "${MANUSCRIPT_DIR}/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md")
 
 snodec_add_pandoc_pdf_target_with_division(
   proposal

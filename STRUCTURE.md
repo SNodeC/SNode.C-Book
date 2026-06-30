@@ -81,15 +81,15 @@ The publisher-facing proposal material now uses an article-style proposal struct
 - 33. Deployment on Linux and OpenWrt — **present**
 - 34. Testing, Debugging, and Benchmarking — **present**
 
-## Part XI — Designing with SNode.C
+## Part XI — Building a MiniGateway Application
 
-- 35. Architectural Judgment: Choosing the Right Layer and Boundary — **present**
-- 36. Extending the Framework Safely — **present**
+- 35. Building MiniGateway — **present**
+- 36. Extending MiniGateway with a New Network Role — **present**
 
-## Part XII — Building a MiniGateway Application
+## Part XII — Designing with SNode.C
 
-- 37. Building MiniGateway — **present**
-- 38. Extending MiniGateway with a New Network Role — **present**
+- 37. Architectural Judgment: Choosing the Right Layer and Boundary — **present**
+- 38. Extending the Framework Safely — **present**
 
 ## Epilogue
 
@@ -119,14 +119,14 @@ companion/examples/MariaDB-Minimal
 
 The directory `companion/examples/` also has an aggregate `CMakeLists.txt` for configuring, building, and installing/deploying all companion examples together. The aggregate verification note is recorded in `review/verification/examples-aggregate-build-verification.md`.
 
-The final technical part uses two larger source trees as source-of-truth examples:
+Part XI uses two larger source trees as source-of-truth examples:
 
 ```text
 companion/examples/MiniGateway
 companion/examples/MiniGateway-Extended
 ```
 
-Chapter 37 builds MiniGateway. Chapter 38 extends it as MiniGateway Extended to show how a SNode.C application can be extended without disturbing existing protocol surfaces.
+Chapter 35 builds MiniGateway. Chapter 36 extends it as MiniGateway Extended to show how a SNode.C application can be extended without disturbing existing protocol surfaces.
 
 
 ## Build-system structure
@@ -159,4 +159,4 @@ The proposal source is now structured as a compact acquisition dossier rather th
 6. Author, Evidence, and Project Context
 7. Acquisition Case and Risk Handling
 
-The `proposal` / `proposal-pdf` target uses `production/metadata/proposal-metadata.yaml`, `documentclass: article`, and `--top-level-division=section`. The `proposal-sample-pdf` target appends Chapter 1, Chapter 3, Chapter 23, Chapter 35, and Chapter 37 after the proposal and evidence sheet. The main manuscript continues to use the book metadata and `--top-level-division=part`.
+The `proposal` / `proposal-pdf` target uses `production/metadata/proposal-metadata.yaml`, `documentclass: article`, and `--top-level-division=section`. The `proposal-sample-pdf` target appends Chapter 1, Chapter 3, Chapter 23, Chapter 35, and Chapter 37 after the proposal and evidence sheet. After the Part XI/XII swap, those samples show the conceptual pitch, first runnable example, real protocol chapter, MiniGateway construction capstone, and final architectural synthesis. The main manuscript continues to use the book metadata and `--top-level-division=part`.

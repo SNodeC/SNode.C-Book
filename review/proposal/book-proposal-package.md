@@ -19,7 +19,7 @@ The book should be evaluated as a first-party framework guide and a concrete arc
 
 This is a complete, architecture-first technical book about SNode.C, a layered, event-driven C++ framework for network applications. The author is the creator and maintainer of the framework and explains the design from inside the system. The manuscript teaches SNode.C as a coherent model for building multi-protocol applications: endpoint identity, transport form, connection lifetime, protocol meaning, configuration, diagnostics, deployment, persistence, and application roles are kept visible instead of being hidden behind a black-box API.
 
-The book starts with small working examples and builds toward HTTP, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, database-backed application state, Linux/OpenWrt deployment, testing, and system-level design. The final part develops MiniGateway, a guided application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an optional Unix-domain input role in MiniGateway Extended.
+The book starts with small working examples and builds toward HTTP, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, database-backed application state, Linux/OpenWrt deployment, testing, and system-level design. The closing movement first develops MiniGateway, a guided application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an optional Unix-domain input role in MiniGateway Extended, and then steps back into architectural judgment and safe extension.
 
 ## Why this book exists
 
@@ -85,8 +85,8 @@ The strongest realistic channels are an official SNode.C guide, a specialist pro
 | VIII. IoT and Message-Oriented Systems | 25-27 | Covers MQTT, MQTT over WebSocket, and multi-protocol IoT system design. |
 | IX. Persistence and Full Systems | 28-31 | Covers MariaDB-backed state, application examples in `src/apps`, system composition, and MQTTSuite. |
 | X. Building, Porting, and Maintaining | 32-34 | Covers CMake components, Linux/OpenWrt deployment, testing, debugging, and benchmarking. |
-| XI. Designing with SNode.C | 35-36 | Synthesizes architectural judgment and safe extension. |
-| XII. Building a MiniGateway Application | 37-38 | Builds MiniGateway and MiniGateway Extended as the guided capstone. |
+| XI. Building a MiniGateway Application | 35-36 | Builds MiniGateway and MiniGateway Extended as the guided construction capstone. |
+| XII. Designing with SNode.C | 37-38 | Synthesizes architectural judgment and safe extension after the capstone system has been built. |
 
 ## Chapter plan
 
@@ -126,14 +126,14 @@ The strongest realistic channels are an official SNode.C guide, a specialist pro
 | 32 | CMake Components and Linking Strategy |
 | 33 | Deployment on Linux and OpenWrt |
 | 34 | Testing, Debugging, and Benchmarking |
-| 35 | Architectural Judgment: Choosing the Right Layer and Boundary |
-| 36 | Extending the Framework Safely |
-| 37 | Building MiniGateway |
-| 38 | Extending MiniGateway with a New Network Role |
+| 35 | Building MiniGateway |
+| 36 | Extending MiniGateway with a New Network Role |
+| 37 | Architectural Judgment: Choosing the Right Layer and Boundary |
+| 38 | Extending the Framework Safely |
 
 ## Suggested sample chapters
 
-For first technical review, the strongest sample set is Chapter 1, Chapter 3, Chapter 23, Chapter 35, and Chapter 37. Together they show the conceptual pitch, the first runnable example, a real protocol chapter with source-level SSE correctness, the architectural-judgment synthesis, and the capstone application. A separate `proposal-sample-pdf` target appends these sample chapters after the proposal and evidence sheet.
+For first technical review, the strongest sample set is Chapter 1, Chapter 3, Chapter 23, Chapter 35, and Chapter 37. Together they show the conceptual pitch, the first runnable example, a real protocol chapter with source-level SSE correctness, the MiniGateway construction capstone, and the final architectural-judgment synthesis. A separate `proposal-sample-pdf` target appends these sample chapters after the proposal and evidence sheet.
 
 # Companion Material and Technical Verification
 
@@ -143,7 +143,7 @@ The package contains compact source trees named `HttpUpgrade-Server`, `HttpUpgra
 
 ## MiniGateway capstone
 
-The final project source trees are `companion/examples/MiniGateway` and `companion/examples/MiniGateway-Extended`. Chapter 37 builds MiniGateway. Chapter 38 extends it as MiniGateway Extended to show how a SNode.C application can add another input role without disturbing the existing web, SSE, MQTT, and model roles.
+The MiniGateway project source trees are `companion/examples/MiniGateway` and `companion/examples/MiniGateway-Extended`. Chapter 35 builds MiniGateway. Chapter 36 extends it as MiniGateway Extended to show how a SNode.C application can add another input role without disturbing the existing web, SSE, MQTT, and model roles.
 
 ## Source-version baseline
 

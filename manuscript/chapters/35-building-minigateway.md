@@ -63,7 +63,7 @@ MiniGateway does not poll measurements. SNode.C runs the application in its even
 - runtime startup
 :::
 
-MiniGateway creates local teaching input through `/simulate`. That route is not the final device interface; it is a controlled input boundary. Chapter 38 adds a small Unix-domain socket input to demonstrate how the application can grow without changing the HTTP, SSE, MQTT, or model structure.
+MiniGateway creates local teaching input through `/simulate`. That route is not the final device interface; it is a controlled input boundary. Chapter 36 adds a small Unix-domain socket input to demonstrate how the application can grow without changing the HTTP, SSE, MQTT, or model structure.
 
 The rest of this chapter is intentionally procedural. Each command and file is introduced only to show how one architectural role becomes executable code.
 
@@ -198,7 +198,7 @@ composition root
   -> main.cpp
 ```
 
-A one-file example would be shorter, but it would teach the wrong reflex. This chapter wants the reader to see how a small SNode.C application is assembled from visible roles around a shared model. Chapter 38 keeps the same split visible when it adds the Unix-domain measurement input. That extension is introduced as another SNode.C communication role, not as behavior hidden inside the HTTP routes, the SSE response path, or the MQTT client object.
+A one-file example would be shorter, but it would teach the wrong reflex. This chapter wants the reader to see how a small SNode.C application is assembled from visible roles around a shared model. Chapter 36 keeps the same split visible when it adds the Unix-domain measurement input. That extension is introduced as another SNode.C communication role, not as behavior hidden inside the HTTP routes, the SSE response path, or the MQTT client object.
 
 ### Stage 1: the build target
 
@@ -1181,7 +1181,7 @@ The source package that accompanies this chapter contains a short build note. It
 ````markdown
 # MiniGateway
 
-Guided-project application used by Chapter 37.
+Guided-project application used by Chapter 35.
 
 This example composes one small SNode.C application from several roles:
 
@@ -1207,7 +1207,7 @@ Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
 deployment prefix.
 
 Running the example requires an MQTT broker reachable through the configured MQTT
-client settings. Chapter 37 shows the HTTP/SSE/MQTT smoke checks used to observe
+client settings. Chapter 35 shows the HTTP/SSE/MQTT smoke checks used to observe
 the application.
 ````
 

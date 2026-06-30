@@ -12,7 +12,7 @@ Parts VII and VIII apply the lower model to web and messaging protocols: HTTP, t
 
 Parts IX and X widen the view to persistence, larger applications, MQTTSuite, components, linking, deployment, and testing. Chapter 32 is the central place for component, public-header, and linking information; protocol chapters only keep the local details that matter for understanding the chapter itself.
 
-Parts XI and XII bring the material together. The design chapters discuss judgment and extension boundaries. The MiniGateway chapters then use the earlier concepts in a guided application that is larger than the introductory examples.
+Parts XI and XII bring the material together. The MiniGateway chapters first combine the earlier concepts in a guided application that is larger than the introductory examples. The final design chapters then step back from that application and discuss judgment and extension boundaries explicitly.
 
 The book can be read linearly, but it is also useful with the source tree open. When a chapter names a component, public header, example, or source-derived excerpt, treat the source tree as part of the reading experience. The text explains the architecture; the source tree shows where that architecture becomes code.
 

@@ -114,7 +114,7 @@ A system that is clear only in the source tree is not yet fully clear.
 \index{guided project}
 
 
-MiniGateway was small. It did not try to become a product. It showed how the pieces can be assembled while preserving the vocabulary of the book.
+MiniGateway was small. It did not try to become a product. It showed how the pieces can be assembled while preserving the vocabulary of the book. The final design chapters then named the judgment behind that assembly: choose the boundary that honestly owns the concern, and extend the system where that responsibility remains visible.
 
 That is the transferable lesson.
 

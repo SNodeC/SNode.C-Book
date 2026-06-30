@@ -16,7 +16,7 @@ After the right boundary has been chosen,
 how can the framework or application be extended without damaging that boundary?
 ```
 
-That question matters because SNode.C is not static in practice. New applications need new protocol behavior, middleware, configuration sections, carriers, build targets, diagnostics, and sometimes reusable framework components. The danger is not extension itself, but extension that makes the architecture less clear.
+That question matters because SNode.C is not static in practice. New applications need new protocol behavior, middleware, configuration sections, carriers, build targets, diagnostics, and sometimes reusable framework components. The danger is extension that makes the architecture less clear.
 
 ```text
 unsafe extension:
@@ -30,7 +30,7 @@ safe extension:
   keep configuration, diagnostics, build targets, and tests aligned
 ```
 
-This chapter does not introduce a new API. It teaches how to grow a SNode.C codebase without turning it into an accidental framework fork.
+This chapter teaches how to grow a SNode.C codebase without turning it into an accidental framework fork.
 
 ### What safe extension means
 
@@ -38,26 +38,14 @@ This chapter does not introduce a new API. It teaches how to grow a SNode.C code
 \index{boundary preservation}
 
 
-An extension is safe when it preserves four kinds of clarity.
+An extension is safe when it preserves four kinds of clarity:
 
-First, it preserves **layer clarity**. Lower communication families, stream transport, connection handling, protocol parsing, application semantics, configuration, and deployment should not collapse into one large callback.
+- **Layer clarity.** Communication families, transport, protocol parsing, application semantics, configuration, and deployment should not collapse into one callback.
+- **Ownership clarity.** Connection-local concerns should not become global state; domain rules should not hide in socket handlers.
+- **Operational clarity.** Behavior that operators or maintainers must reason about should remain visible in configuration, logs, build targets, package dependencies, or tests.
+- **Evolution clarity.** The next reasonable change should still have a place to go.
 
-Second, it preserves **ownership clarity**. A connection-local concern should not become global state. A domain rule should not be hidden in a socket handler. A persistence decision should not be smuggled into a parser. A retry policy should not accidentally become part of a protocol grammar.
-
-Third, it preserves **operational clarity**. A new behavior should remain visible in configuration, logs, diagnostics, build targets, package dependencies, or tests if operators and maintainers need to reason about it.
-
-Fourth, it preserves **evolution clarity**. The next reasonable change should still have a place to go.
-
-```text
-safe extension:
-  the new behavior has a clear owner
-  the owner is at the right layer
-  the layer remains testable
-  the build target still describes the architecture
-  diagnostics still name the relevant role or boundary
-```
-
-This is stricter than compilation.
+Together, these forms of clarity are stricter than compilation. An extension can compile and still hide ownership, confuse operations, or leave the next change with no clear place to go.
 
 ### Start application-local unless the boundary is reusable
 
@@ -65,7 +53,7 @@ This is stricter than compilation.
 \index{reusable boundary}
 
 
-A common mistake is moving behavior into the framework too early. A concern appears in one application, and the developer immediately creates a generic abstraction. SNode.C encourages reusable layers, but not every application concern belongs in SNode.C itself.
+A common mistake is moving behavior into the framework too early. SNode.C encourages reusable layers, but not every application concern belongs in SNode.C itself.
 
 A useful rule is:
 
@@ -80,9 +68,7 @@ stable repeated boundary:
   consider a reusable component
 ```
 
-Application-local code is often the right place for domain behavior, project-specific policy, business rules, device assumptions, and deployment orchestration.
-
-Framework code should represent behavior reusable at the same architectural level: a new network family, reusable protocol layer, generic middleware, or shared configuration mechanism. A greenhouse threshold rule, warehouse device policy, or project-specific MQTT topic convention usually does not.
+Application-local code is often the right place for domain behavior, project-specific policy, business rules, device assumptions, and deployment orchestration. Framework code should represent reusable architectural behavior: a new network family, reusable protocol layer, generic middleware, or shared configuration mechanism.
 
 ```text
 application-local:
@@ -120,15 +106,52 @@ framework extension:
   new SNode.C component, layer, or public surface
 ```
 
-The safest path is to start application-local, extract to a reusable application library when repetition becomes real, and move into the framework only when the abstraction is stable and general enough.
+The safest path is to start application-local, extract to a reusable application library when repetition becomes real, and move into the framework only when the abstraction is stable and general enough. That avoids both **framework pollution** (domain-specific code becomes a framework assumption) and **application sprawl** (the same layer-shaped behavior is copied without a shared boundary).
 
-That path avoids two opposite mistakes.
+### Worked extension: the MiniGateway Unix-domain input role
 
-The first mistake is **framework pollution**: domain-specific code becomes part of the framework and forces future users to carry assumptions they did not choose.
+\index{MiniGateway Extended!safe extension}
+\index{Unix domain sockets!safe extension}
+\index{SocketContextFactory@\texttt{SocketContextFactory}!MiniGateway Extended}
 
-The second mistake is **application sprawl**: the same layer-shaped behavior is copied into several applications without a shared boundary.
+MiniGateway Extended is an application-level extension, not a framework-level extension. It adds a new local input boundary while keeping the framework and the existing application roles unchanged.
 
-Reuse is good when the reused boundary fits the concern.
+The first boundary is construction. The factory receives the model reference and constructs the connection-local context. It does not parse measurements, register HTTP routes, publish MQTT messages, or decide deployment policy.
+
+```cpp
+core::socket::stream::SocketContext*
+MeasurementUnixSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
+    return new MeasurementUnixSocketContext(socketConnection, measurementModel);
+}
+```
+
+The second boundary is protocol endpoint behavior. The Unix-domain context owns the local line protocol and delegates accepted measurements to the model.
+
+```cpp
+void MeasurementUnixSocketContext::processLine(const std::string& line) const {
+    if (!line.empty()) {
+        try {
+            measurementModel.accept(parseMeasurementLine(line));
+        } catch (const std::exception& ex) {
+            LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+        }
+    }
+}
+```
+
+This small excerpt shows the extension rule in code. The factory constructs. The context parses and reports invalid local input. The model accepts and sequences measurements. The web role, SSE observer path, and MQTT integration role do not learn anything about Unix-domain sockets.
+
+| Boundary question | Answer in the extension |
+|---|---|
+| What changed? | a new local input path was added |
+| What did not change? | model contract, web role, SSE observation, MQTT integration |
+| Where is the new protocol behavior? | `MeasurementUnixSocketContext` |
+| Where is construction policy? | `MeasurementUnixSocketContextFactory` and the server startup function |
+| Where is application ordering? | still `MeasurementModel::accept(...)` |
+| What would be pollution? | putting local IPC parsing into HTTP, SSE, MQTT, or the model |
+
+The example is deliberately small. It does not justify a reusable framework component, because the line protocol and measurement shape are project-specific. It does justify a separate application role, because the input boundary has a different peer identity, communication family, diagnostic surface, and future-change path from the web and MQTT roles.
+
 
 ### Extending with a new `SocketContext`
 
@@ -139,8 +162,6 @@ Reuse is good when the reused boundary fits the concern.
 A new `SocketContext` is appropriate when the extension is connection-local protocol endpoint behavior.
 
 That means the concern belongs to one concrete connection: reading and writing protocol data, owning connection-local parsing or state, and reacting to lifecycle.
-
-A `SocketContext` is not the right place for every concern that happens after a connection exists.
 
 ```text
 belongs near SocketContext:
@@ -178,9 +199,7 @@ If that sentence feels false, the extension probably belongs somewhere else.
 
 A `SocketContextFactory` is appropriate when the extension is about constructing the correct context.
 
-The factory associates a connection with the correct protocol endpoint object; it is not an allocation hook alone.
-
-In MQTTSuite, the MQTT CLI factory retrieves configuration sections and creates an `iot::mqtt::SocketContext` with a client-side MQTT protocol object. That keeps construction policy separate from both the MQTT protocol object and the socket client role.
+The factory associates a connection with the correct protocol endpoint object; it is not an allocation hook alone. In MQTTSuite, the MQTT CLI factory retrieves configuration sections and creates an `iot::mqtt::SocketContext` with a client-side MQTT protocol object, keeping construction policy separate from both the MQTT protocol object and the socket client role.
 
 A safe factory extension answers questions such as:
 
@@ -233,7 +252,7 @@ not automatically middleware:
   cross-process supervision
 ```
 
-Middleware is attractive, especially when the application already has a web surface. SNode.C's Express-like layer is powerful because it keeps web flow explicit, not because it should swallow the system.
+SNode.C's Express-like layer is powerful because it keeps web flow explicit, not because it should swallow the system.
 
 ### Extending with a WebSocket subprotocol
 
@@ -258,16 +277,7 @@ subprotocol:
 
 A safe subprotocol extension should not reimplement HTTP, pretend WebSocket frames are raw TCP bytes, or hide application semantics so deeply that diagnostics cannot identify the subprotocol.
 
-A good subprotocol extension keeps these questions visible:
-
-```text
-Which WebSocket messages are valid?
-Which state belongs to the subprotocol?
-Which close/error behavior belongs to the subprotocol?
-Which diagnostics identify the selected subprotocol?
-```
-
-If the extension is merely an HTTP route, use an HTTP route. If it is bidirectional live interaction with its own message rules, a WebSocket subprotocol may be right.
+A good subprotocol extension keeps message validity, state, close/error behavior, and selected-subprotocol diagnostics visible. If the extension is merely an HTTP route, use an HTTP route. If it is bidirectional live interaction with its own message rules, a WebSocket subprotocol may be right.
 
 ### Extending MQTT behavior
 
@@ -328,7 +338,7 @@ Is this option an application/domain choice?
 Is this option safe to make configurable at all?
 ```
 
-Not every value should be configurable. Protocol invariants should remain code; deployment variation usually belongs in configuration; operator-adjustable domain policy may be configuration; security-sensitive choices need care around secrets, logging, and generated files.
+Not every value should be configurable. Protocol invariants should remain code; deployment variation usually belongs in configuration; operator-adjustable domain policy may be configuration.
 
 ```text
 code:
@@ -387,7 +397,7 @@ If these considerations are ignored, the extension may compile in-tree but fail 
 \index{diagnostics!extension}
 
 
-A new feature should be diagnosable at the boundary it introduces. That means preserving the right vocabulary, not flooding logs.
+A new feature should be diagnosable at the boundary it introduces: preserve the right vocabulary, do not flood logs.
 
 A useful diagnostic message should usually make at least some of these visible:
 
@@ -402,19 +412,7 @@ reason for failure
 retry/degraded/shutdown decision
 ```
 
-A poor diagnostic message says only:
-
-```text
-error
-```
-
-or:
-
-```text
-failed
-```
-
-A better diagnostic message says which boundary failed.
+A poor diagnostic message says only `error` or `failed`. A better diagnostic message says which boundary failed.
 
 ```text
 mqtt-uplink: broker connection failed: reconnect scheduled
@@ -430,7 +428,7 @@ Diagnostics are part of extension safety because they let maintainers reason abo
 \index{failure policy!extension}
 
 
-Failure policy should be deliberate. A low-level socket may detect an error, but the role that owns the boundary usually owns the policy response: retry, reconnect, disablement, shutdown, or degraded behavior.
+Failure policy should be deliberate. A low-level socket may detect an error, but the role that owns the boundary usually owns retry, reconnect, disablement, shutdown, or degraded behavior.
 
 ```text
 socket detects:
@@ -445,8 +443,6 @@ role decides:
   report degraded state
   shut down
 ```
-
-A safe extension should describe failure policy together with the happy path.
 
 If the extension introduces an output buffer, it needs a bounded policy. If it introduces a retry loop, it needs a limit, backoff, or operator-visible state. If it introduces persistence, it needs a degraded mode when durable state is unavailable. If it introduces live observers, it needs a policy for slow observers.
 
@@ -463,13 +459,11 @@ new behavior with visible failure policy:
 \index{testing!extension}
 
 
-Chapter 34 used one question:
+Chapter 34 used one question that should follow every extension:
 
 ```text
 Which SNode.C boundary does this test protect?
 ```
-
-That question should follow every extension.
 
 A new `SocketContext` needs tests for protocol endpoint behavior; middleware needs request/response tests; a WebSocket subprotocol needs upgrade, frame/message, close, and invalid-input tests; MQTT application behavior needs session, topic, publish, and reconnect tests; a build component needs an installed-consumer test, including a test that includes its public front-door header. The extension is complete only when its boundary can be tested, debugged, and explained.
 
@@ -492,37 +486,14 @@ A new `SocketContext` needs tests for protocol endpoint behavior; middleware nee
 Framework pollution happens when project-specific behavior enters the framework merely because the framework was the easiest place to modify.
 
 ::: {.snodec-warning title="Framework-pollution warning"}
-Do not extend the framework by smuggling application policy into lower layers. Keep project-specific behavior at the application boundary unless the reusable boundary is real.
+Keep project-specific behavior at the application boundary unless the reusable boundary is real.
 :::
 
-Typical symptoms include:
-
-```text
-framework class knows one product's topic names
-transport layer knows a domain rule
-socket context opens a project-specific database table
-generic middleware knows one deployment's user model
-core build target depends on an application library
-```
-
-Framework pollution makes the next application inherit assumptions from the previous one. The cure is not to avoid reuse, but to reuse only the right boundary.
-
-A project-specific rule may be shared by several executables in that project. That suggests a project library, not a framework component. A generic MQTT mapping mechanism may be shared by many applications. That may justify reusable support. A new lower family belongs in the framework only if it really fits the lower-family abstraction and can carry several upper layers without becoming application-specific.
+Typical symptoms are a framework class that knows one product's topic names, a transport layer that knows a domain rule, a socket context that opens a project-specific table, or a core build target that depends on an application library. The cure is not to avoid reuse, but to reuse only the right boundary: a project rule may become a project library; a generic mapping mechanism may become reusable support; a new lower family belongs in the framework only if it really fits the lower-family abstraction.
 
 ### Avoiding abstraction too early
 
-The opposite danger is abstraction too early. Two similar fragments become a generic layer; later the uses diverge, and the layer fills with flags, callbacks, special cases, and conditional behavior.
-
-A useful warning sign is one abstraction with too many unrelated reasons for change.
-
-In SNode.C terms, this may appear as:
-
-```text
-one context that supports several unrelated protocols
-one middleware that performs routing, authentication, persistence, and MQTT publication
-one build target that hides several incompatible carrier assumptions
-one configuration section that mixes deployment, protocol, and domain policy
-```
+The opposite danger is abstraction too early: two similar fragments become a generic layer; later the uses diverge, and the layer fills with flags, callbacks, special cases, and conditional behavior. In SNode.C terms, the warning sign is one context, middleware, build target, or configuration section with too many unrelated reasons for change.
 
 A safe extension preserves meaning first. Generality can emerge when the repeated boundary is real.
 
@@ -532,7 +503,7 @@ Extend at the boundary whose responsibility actually changes.
 
 ### Review questions for a proposed extension
 
-Before adding a reusable extension to a SNode.C application or to the framework itself, ask these questions.
+Before adding a reusable extension to a SNode.C application or to the framework itself, ask:
 
 ```text
 1. What concern is being extended?
@@ -540,7 +511,7 @@ Before adding a reusable extension to a SNode.C application or to the framework 
 3. Is the concern connection-local, role-local, application-local, or framework-wide?
 4. Does it belong in a context, factory, middleware, router, subprotocol, MQTT object, configuration section, or separate service?
 5. What existing layer must not be polluted by it?
-6. What name will make the boundary visible in code and build targets?
+6. What name makes the boundary visible in code and build targets?
 7. What configuration makes it reproducible?
 8. What diagnostics make it observable?
 9. What failure policy makes it operable?
@@ -549,17 +520,17 @@ Before adding a reusable extension to a SNode.C application or to the framework 
 12. What future change would this design make easier or harder?
 ```
 
-The questions prevent an extension from becoming accidental architecture.
+These questions prevent an extension from becoming accidental architecture.
 
 ::: {.snodec-remember title="What to remember"}
 - Safe extension starts with the boundary, not with the easiest file to edit.
-- Application-local code is not inferior; it is often the right home for domain behavior.
+- Application-local code is often the right home for domain behavior.
 - Framework-level extensions should represent reusable framework boundaries, not one project's policy.
-- A new `SocketContext` is appropriate for connection-local protocol endpoint behavior.
-- A new `SocketContextFactory` should construct the right context, not become a service locator.
-- Middleware and routers are for web-application flow, not every cross-cutting concern.
+- Contexts, factories, middleware, routers, subprotocols, MQTT objects, configuration, and tests should each protect their own boundary.
 :::
 
-### From safe extension to a guided project
+### Closing perspective
 
-The next part applies these rules to MiniGateway, a small application with HTTP administration, SSE observation, MQTT integration, configuration, failure policy, optional persistence, and deployment shape. It shows how to extend an application without losing the framework's layered vocabulary.
+MiniGateway and MiniGateway Extended have already shown this discipline in application form: the Unix-domain input role was added as a new boundary around the same model instead of being hidden inside HTTP, SSE, or MQTT code. The worked extension near the beginning of this chapter is the concrete proof: construction stayed in the factory, endpoint behavior stayed in the context, and application ordering stayed in the model.
+
+Safe extension is the final design test. A system is well built when the next capability still has an honest place to go.

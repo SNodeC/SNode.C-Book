@@ -1,6 +1,6 @@
 # MiniGateway
 
-Guided-project application used by Chapter 37.
+Guided-project application used by Chapter 35.
 
 This example composes one small SNode.C application from several roles:
 
@@ -26,5 +26,5 @@ Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
 deployment prefix.
 
 Running the example requires an MQTT broker reachable through the configured MQTT
-client settings. Chapter 37 shows the HTTP/SSE/MQTT smoke checks used to observe
+client settings. Chapter 35 shows the HTTP/SSE/MQTT smoke checks used to observe
 the application.

@@ -62,7 +62,7 @@ companion/examples/MiniGateway
 companion/examples/MiniGateway-Extended
 ```
 
-They support Chapters 37 and 38 and demonstrate a small SNode.C application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an added Unix-domain input boundary in MiniGateway Extended.
+They support Chapters 35 and 36 and demonstrate a small SNode.C application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an added Unix-domain input boundary in MiniGateway Extended.
 
 MiniGateway is evidence of pedagogical completeness and architectural applicability inside the manuscript package. It is not presented as external market adoption.
 

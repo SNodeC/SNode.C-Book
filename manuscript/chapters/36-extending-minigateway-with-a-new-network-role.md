@@ -38,7 +38,7 @@ The extension is easier to read as a before/after change:
 | MQTT role | unchanged | unchanged |
 | Unix-domain input role | absent | added |
 
-The extension demonstrates the design rule developed in the previous chapter:
+The extension demonstrates a design rule that MiniGateway now makes concrete:
 
 ::: {.snodec-rule title="MiniGateway extension rule"}
 Add the boundary that owns the new concern.
@@ -206,7 +206,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-This small diff is the architectural payoff of the previous chapter. The composition root grows by one line of role construction. The new role receives the same `MeasurementModel`, so its accepted measurements automatically reach the existing SSE and MQTT output paths through the model's subscriber mechanism.
+This small diff is the architectural payoff of the MiniGateway structure. The composition root grows by one line of role construction. The new role receives the same `MeasurementModel`, so its accepted measurements automatically reach the existing SSE and MQTT output paths through the model's subscriber mechanism.
 
 ### Stage 3: the Unix-domain socket server role
 

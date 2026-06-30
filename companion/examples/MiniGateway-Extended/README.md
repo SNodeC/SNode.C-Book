@@ -1,6 +1,6 @@
 # MiniGateway-Extended
 
-Extended guided-project application used by Chapter 38.
+Extended guided-project application used by Chapter 36.
 
 MiniGateway Extended keeps the web and MQTT roles from MiniGateway and adds a
 Unix-domain socket measurement input role. The shared `MeasurementModel` remains
@@ -24,5 +24,5 @@ Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
 deployment prefix.
 
 Running the example requires an MQTT broker and the Unix-domain socket input path
-configured in the source tree. Chapter 38 shows the additional socket-based smoke
+configured in the source tree. Chapter 36 shows the additional socket-based smoke
 check for the extended variant.
