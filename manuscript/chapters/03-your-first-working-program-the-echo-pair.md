@@ -11,9 +11,7 @@ With the build environment in place, the first complete program can stay small e
 
 The goal is not to build a useful echo service. The goal is to make the recurring shape of SNode.C visible in real code. A good first example should be small enough that the reader can hold the whole program in mind, but complete enough that it is not pseudocode.
 
-An echo pair is ideal for that purpose.
-
-It contains one server and one client. The client sends the first message. The server reflects the received bytes. The client receives the reflected bytes and sends them again. The visible behavior is a ping-pong.
+An echo pair is ideal for that purpose: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong.
 
 That behavior is simple, but the structure is already the structure of many later SNode.C programs:
 
@@ -29,11 +27,7 @@ The rest of the book will add other network families, TLS, HTTP, WebSocket, MQTT
 
 ### What the SNode.C repository contains
 
-The SNode.C repository contains a full echo application under `src/apps/echo`.
-
-The repository example is more general than the first teaching version in this chapter. It uses a shared echo model and builds several variants by combining network-family and stream-mode choices. The echo context is implemented in `src/apps/echo/model/EchoSocketContext.h` and `EchoSocketContext.cpp`; the server and client entry points are `src/apps/echo/echoserver.cpp` and `echoclient.cpp`.
-
-The repository design is important because it demonstrates that the echo application is not tied to one hard-coded socket kind. The same application model can be combined with different lower layers.
+The SNode.C repository contains a full echo application under `src/apps/echo`. That repository example is more general than the first teaching version in this chapter: it uses a shared echo model and builds several variants by combining network-family and stream-mode choices. The echo context is implemented in `src/apps/echo/model/EchoSocketContext.h` and `EchoSocketContext.cpp`; the server and client entry points are `src/apps/echo/echoserver.cpp` and `echoclient.cpp`. The design demonstrates that the echo application is not tied to one hard-coded socket kind, because the same application model can be combined with different lower layers.
 
 For a first chapter, however, that full matrix would hide the essential pattern. We therefore use a reduced version:
 
@@ -59,11 +53,7 @@ echoserver.cpp
 echoclient.cpp
 ```
 
-The first two files define the application behavior. The last two files define the server and client entry points.
-
-That separation is already meaningful.
-
-The echo protocol itself should not be mixed into `main()`. The server and client applications should create handles, configure roles, and register those roles with the framework. The per-connection protocol behavior belongs in a `SocketContext`.
+The first two files define the application behavior, and the last two files define the server and client entry points. That separation is already meaningful: the echo protocol itself should not be mixed into `main()`. The server and client applications should create handles, configure roles, and register those roles with the framework, while the per-connection protocol behavior belongs in a `SocketContext`.
 
 ### The three roles in the first example
 
@@ -100,9 +90,7 @@ The server-side role listens. The client-side role connects. Neither one contain
 \index{SocketContextFactory@\texttt{SocketContextFactory}}
 
 
-A `SocketContextFactory` creates a new context object for each established connection.
-
-That is an important design choice. Connection-specific protocol state should not be stored globally and should not be constructed manually in `main()` whenever a peer appears. The framework asks the factory for a context when a connection needs one.
+A `SocketContextFactory` creates a new context object for each established connection. This is an important design choice: connection-specific protocol state should not be stored globally and should not be constructed manually in `main()` whenever a peer appears. The framework asks the factory for a context when a connection needs one.
 
 #### The context
 

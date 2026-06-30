@@ -15,11 +15,7 @@ That is the central idea of this chapter:
 The Express-like layer does not replace HTTP; it organizes HTTP handling into application structure.
 :::
 
-The lower stack remains visible: the Express-like application layer sits above HTTP request/response, which still sits above the selected stream and connection handling.
-
-The Express-like layer is therefore not a different universe. It is the application-organization layer above HTTP. HTTP gives message meaning; the Express-like layer gives application structure.
-
-Routed application flow is the next web-protocol step: HTTP messages become organized handler chains rather than isolated callbacks.
+The lower stack remains visible: the Express-like application layer sits above HTTP request/response, which still sits above the selected stream and connection handling. HTTP gives message meaning; the Express-like layer gives application structure. Routed application flow is therefore the next web-protocol step: HTTP messages become organized handler chains rather than isolated callbacks.
 
 ### The Express-like layer in the layered SNode.C model
 

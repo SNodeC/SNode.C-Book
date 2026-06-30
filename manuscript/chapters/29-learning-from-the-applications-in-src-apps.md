@@ -9,19 +9,7 @@
 
 Executable applications are the point where runtime setup, selected components, application-side objects, configured roles, callbacks, routes, persistence objects, and installable targets meet in concrete programs.
 
-The question changes from:
-
-```text
-What does this layer mean?
-```
-
-to:
-
-```text
-How do the layers become executable programs?
-```
-
-That is an important shift. Up to this point, the book has introduced many framework pieces separately: runtime initialization, communication roles, contexts and factories, lower families, configuration, diagnostics, TLS, timeouts and failure behavior, HTTP, the Express-like layer, SSE, WebSocket, MQTT, MQTT over WebSocket, and database support. The applications in `src/apps` show how those pieces are assembled.
+The question changes from what a layer means to how the layers become executable programs. That is an important shift. Up to this point, the book has introduced many framework pieces separately: runtime initialization, communication roles, contexts and factories, lower families, configuration, diagnostics, TLS, timeouts and failure behavior, HTTP, the Express-like layer, SSE, WebSocket, MQTT, MQTT over WebSocket, and database support. The applications in `src/apps` show how those pieces are assembled.
 
 The central sentence for this chapter is:
 
@@ -29,7 +17,7 @@ The central sentence for this chapter is:
 In SNode.C, the build target often reveals the application architecture before the entry point is opened.
 :::
 
-That is the main reason `src/apps` is useful as study material. It shows not only C++ entry points, but also public include choices, executable targets, linked libraries, optional dependencies, and installable application shapes. Applications are assembly points.
+That is the main reason `src/apps` is useful as study material: it shows not only C++ entry points, but also public include choices, executable targets, linked libraries, optional dependencies, and installable application shapes. Applications are assembly points.
 
 ### `src/apps` as study material
 
@@ -61,9 +49,7 @@ The top-level app build also contains other targets, such as `configtest`, `ware
 \index{linked components}
 
 
-Before opening the C++ entry point, the build target already tells part of the application story.
-
-A SNode.C application target tells the reader three things before C++ is opened:
+Before opening the C++ entry point, the build target already tells part of the application story. A SNode.C application target tells the reader three things before C++ is opened:
 
 ```text
 which executable is produced
@@ -333,7 +319,7 @@ MariaDB support unavailable
   -> database demonstration target is absent
 ```
 
-Optional dependencies therefore influence the set of applications that exist in the build.
+Optional dependencies therefore influence not only implementation details, but the set of applications that exist in the build.
 
 ### Read include blocks beside link lines
 

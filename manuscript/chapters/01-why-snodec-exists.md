@@ -12,11 +12,9 @@
 \index{network frameworks}
 
 
-Many networking frameworks are optimized for speed of first use. That is not a criticism. In practice, speed matters. A developer often wants to start a web server, connect a client to a broker, or move data from one endpoint to another without first studying the whole internal architecture.
+Many networking frameworks are optimized for speed of first use. That is not a criticism: in practice, speed matters, and a developer often wants to start a web server, connect a client to a broker, or move data from one endpoint to another without first studying the whole internal architecture.
 
-But convenience has a cost when it hides too much.
-
-If the framework hides the deeper structure of the system, the reader may learn how to *call* it without learning how the communication model is organized. That can be enough for a small example, but it becomes fragile when the application grows: one endpoint becomes several, one protocol becomes many, TLS is added, configuration becomes operationally important, and deployment suddenly matters.
+But convenience has a cost when it hides too much. If the framework hides the deeper structure of the system, the reader may learn how to *call* it without learning how the communication model is organized. That can be enough for a small example, but it becomes fragile when the application grows: one endpoint becomes several, one protocol becomes many, TLS is added, configuration becomes operationally important, and deployment suddenly matters.
 
 SNode.C is interesting because it takes a different path. It is a layered, event-driven C++ framework that keeps the structure of networked applications visible without reducing networking to socket helpers, HTTP handlers, or MQTT utilities.
 
@@ -49,13 +47,9 @@ A third problem is **lack of transfer**. A developer learns how to build one TCP
 
 A fourth problem is **framework opacity**. Some frameworks are pleasant as long as the application stays close to the examples. The moment the developer wants to combine several protocols, reason about connection lifetime, control configuration, or diagnose a failure after deployment, the internal model becomes difficult to see.
 
-SNode.C addresses these problems by making structure explicit.
+SNode.C addresses these problems by making structure explicit. It distinguishes among lower communication family, transport form, connection handling, and application protocol; repeatedly uses roles and boundaries such as application-side handles, configured communication roles, registered runtime-visible instances, connections, contexts, factories, configuration, and runtime; supports several lower communication families within one conceptual scheme; and builds TLS, HTTP, an Express-like web layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, and database-facing applications on top of the same layered discipline.
 
-It distinguishes among lower communication family, transport form, connection handling, and application protocol. It repeatedly uses roles and boundaries such as application-side handles, configured communication roles, registered runtime-visible instances, connections, contexts, factories, configuration, and runtime. It supports several lower communication families within one conceptual scheme. It can add TLS without forcing the application model to be reinvented. It then builds HTTP, an Express-like web layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, and database-facing applications on top of the same layered discipline.
-
-This gives the reader transfer.
-
-A concept learned in one place can be recognized again in another. A server over IPv4, a server over IPv6, a local service over Unix domain sockets, and a Bluetooth-oriented endpoint are not unrelated worlds. They have different endpoint identities and deployment assumptions, but the architectural questions remain comparable.
+This gives the reader transfer: a concept learned in one place can be recognized again in another. A server over IPv4, a server over IPv6, a local service over Unix domain sockets, and a Bluetooth-oriented endpoint are not unrelated worlds. They have different endpoint identities and deployment assumptions, but the architectural questions remain comparable.
 
 That is the first reason this book exists. It teaches SNode.C, but it also uses SNode.C to teach how networked systems can be organized.
 
@@ -69,13 +63,7 @@ This book therefore treats SNode.C abstractions in four linked ways. It explains
 
 The book will touch many technologies, but it will not become a specialist book about all of them. It is not a complete TLS book, Bluetooth book, HTTP book, MQTT book, database book, or OpenWrt deployment manual.
 
-Instead, it uses these technologies to explain how SNode.C organizes networked software. That distinction is important.
-
-When Bluetooth RFCOMM and Bluetooth L2CAP appear, they are not treated as strange appendices. They are lower communication families that exercise the same architectural model in a device-near setting.
-
-When HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, and MQTT over WebSocket appear, they are not presented as isolated feature islands. They are higher protocol structures built on the lower communication model.
-
-When persistence and MQTTSuite appear, they show how SNode.C concepts become larger systems.
+Instead, it uses these technologies to explain how SNode.C organizes networked software. Bluetooth RFCOMM and Bluetooth L2CAP are lower communication families that exercise the same architectural model in a device-near setting. HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, and MQTT over WebSocket are higher protocol structures built on the lower communication model. Persistence and MQTTSuite then show how SNode.C concepts become larger systems.
 
 The focus remains the same throughout the book:
 

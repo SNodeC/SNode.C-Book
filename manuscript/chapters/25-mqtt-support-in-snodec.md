@@ -17,17 +17,7 @@ That is the central idea of this chapter:
 MQTT is not part of the web stack, but it fits the same SNode.C layering discipline.
 :::
 
-The shift is therefore twofold:
-
-```text
-Part VII
-  -> web protocols and upgrade
-
-next part
-  -> message-oriented protocol families
-```
-
-The application-layer protocol meaning changes, while the familiar SNode.C model remains: runtime, configured roles, registered instances, lower families, stream transport, legacy or TLS connection handling, per-connection contexts, configuration, diagnostics, timing, and failure behavior.
+The application-layer protocol meaning changes from web requests, event streams, and upgrades to brokered packet semantics, while the familiar SNode.C model remains: runtime, configured roles, registered instances, lower families, stream transport, legacy or TLS connection handling, per-connection contexts, configuration, diagnostics, timing, and failure behavior.
 
 SNode.C supports MQTT in two important forms:
 
@@ -60,11 +50,7 @@ HTTP upgrade
           -> MQTT protocol semantics
 ```
 
-Therefore, Chapter 25 belongs after Chapter 24, which explained WebSocket as the upgraded bidirectional carrier.
-
-Chapter 25 adds MQTT as packet-structured, message-oriented protocol semantics that can use that carrier.
-
-MQTT-over-WebSocket is not a new transport trick. It is MQTT semantics carried as a WebSocket subprotocol over an upgraded HTTP connection. The carrier changes. The MQTT protocol identity remains recognizable.
+MQTT then adds packet-structured, message-oriented protocol semantics that can use either the native stream path or, in the WebSocket-carried form, the upgraded bidirectional carrier from the previous chapter. MQTT-over-WebSocket is not a new transport trick: it is MQTT semantics carried as a WebSocket subprotocol over an upgraded HTTP connection. The carrier changes; the MQTT protocol identity remains recognizable.
 
 ### Native MQTT and MQTT over WebSocket side by side
 

@@ -9,29 +9,17 @@
 
 IoT systems contain communication boundaries; application state adds a different kind of boundary: persistence. Communication boundaries decide how information moves between active participants; persistence boundaries decide what information should remain after the immediate conversation is over.
 
-A protocol boundary asks:
-
-```text
-How does information move between active participants?
-```
-
-A persistence boundary asks:
-
-```text
-What information should remain after the immediate conversation is over?
-```
-
-That second question changes the architecture of an application. The application now has to decide what belongs in memory, what belongs in durable storage, when database work should be started, how database results flow back into the event-driven application, what happens when the database is unavailable, and how persistence interacts with protocol roles such as HTTP, MQTT, WebSocket, SSE, and local-control interfaces.
+A protocol boundary asks how information moves between active participants. A persistence boundary asks what information should remain after the immediate conversation is over. That second question changes the architecture of an application. The application now has to decide what belongs in memory, what belongs in durable storage, when database work should be started, how database results flow back into the event-driven application, what happens when the database is unavailable, and how persistence interacts with protocol roles such as HTTP, MQTT, WebSocket, SSE, and local-control interfaces.
 
 A useful model is that a protocol event first receives application interpretation, then may update runtime state, and only then crosses an optional persistence boundary into durable application state.
 
-Persistence is not automatically part of every request or every message. It is an application-state boundary that should be chosen deliberately.
+Persistence is not automatically part of every request or every message. It is an application-state boundary that should be chosen deliberately. In SNode.C, the concrete implementation discussed here is the MariaDB integration layer: a client object, connection details, event-integrated connection handling, command objects, command sequences, and result or error callbacks.
 
 Figure \ref{fig:persistence-boundary} shows the boundary that should stay visible when database support enters an SNode.C application. The upper lane stays on the transient communication side: peer connections, protocol contexts, and application interpretation live in the runtime and give incoming events their application meaning. The lower lane stays on the durable-state side: once the application has decided that something should survive process lifetime, the work crosses the persistence boundary and becomes explicit persistence work. The diagram keeps database integration behind that boundary instead of presenting persistence as part of transport or protocol mechanics.
 
 ![Persistence boundary in an SNode.C application: protocol contexts translate peer events into application meaning, application state decides what is worth keeping, and the database client belongs behind an explicit persistence boundary rather than inside transport or protocol mechanics.](assets/figures/pdf/fig-17-persistence-boundary.pdf){#fig:persistence-boundary width=90% latex-placement="tbp"}
 
-Figure \ref{fig:persistence-boundary} therefore makes two decisions visible at the same time. First, protocol and transport activity do not automatically imply durable storage. Second, persistence begins with an application-state decision: what changed, what matters, and what is worth keeping. Only after that decision does the database client, its command API, and the durable store become part of the flow.
+Figure \ref{fig:persistence-boundary} therefore makes two decisions visible at the same time. Protocol and transport activity do not automatically imply durable storage, and persistence begins with an application-state decision: what changed, what matters, and what is worth keeping. Only after that decision do the database client, its command API, and the durable store become part of the flow.
 
 ::: {.snodec-rule title="Persistence rule"}
 Persist application facts, not raw transport accidents.

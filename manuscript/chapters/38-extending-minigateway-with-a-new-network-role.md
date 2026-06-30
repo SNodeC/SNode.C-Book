@@ -28,6 +28,16 @@ MiniGateway Extended:
     -> MQTT measurement output
 ```
 
+The extension is easier to read as a before/after change:
+
+| Area | MiniGateway | MiniGateway Extended |
+|---|---|---|
+| shared model | unchanged | unchanged |
+| web role | unchanged | unchanged |
+| SSE observation path | unchanged | unchanged |
+| MQTT role | unchanged | unchanged |
+| Unix-domain input role | absent | added |
+
 The extension demonstrates the design rule developed in the previous chapter:
 
 ::: {.snodec-rule title="MiniGateway extension rule"}
@@ -73,7 +83,7 @@ SocketStateReporter.h/.cpp
 ConfigSections.h/.cpp
 ```
 
-This chapter therefore shows the integration and extension code needed to move from MiniGateway to MiniGateway Extended. MiniGateway remains the reference point. The unchanged files are not repeated in full because their stability is the point: the extension proves that the clean center and the existing roles do not need to be reopened.
+The rest of this chapter therefore shows only the integration and extension code needed to move from MiniGateway to MiniGateway Extended. MiniGateway remains the reference point, and the unchanged files are not repeated in full because their stability is the point: the extension proves that the clean center and the existing roles do not need to be reopened.
 
 ### Stage 1: the build target after extension
 

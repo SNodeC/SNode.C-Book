@@ -63,7 +63,9 @@ MiniGateway does not poll measurements. SNode.C runs the application in its even
 - runtime startup
 :::
 
-MiniGateway creates local teaching input through `/simulate`. That route is not the final device interface. It is a controlled input boundary. Chapter 38 adds a small Unix-domain socket input to demonstrate how the application can grow without changing the HTTP, SSE, MQTT, or model structure.
+MiniGateway creates local teaching input through `/simulate`. That route is not the final device interface; it is a controlled input boundary. Chapter 38 adds a small Unix-domain socket input to demonstrate how the application can grow without changing the HTTP, SSE, MQTT, or model structure.
+
+The rest of this chapter is intentionally procedural. Each command and file is introduced only to show how one architectural role becomes executable code.
 
 ### How to use MiniGateway
 
@@ -166,7 +168,7 @@ MiniGateway/
   README.md
 ```
 
-That split is part of the lesson. The domain object is not an HTTP route. The model is not an MQTT protocol object. The JSON codec is not a socket context. The web role and MQTT role are assembled around one shared model that `main.cpp` creates.
+That split is part of the lesson: the domain object is not an HTTP route, the model is not an MQTT protocol object, and the JSON codec is not a socket context. The web role and MQTT role are assembled around one shared model that `main.cpp` creates.
 
 ```text
 domain fact

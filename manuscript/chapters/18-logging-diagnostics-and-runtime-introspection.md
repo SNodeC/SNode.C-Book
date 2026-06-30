@@ -26,11 +26,7 @@ That is the subject of this chapter.
 
 Configuration, generated command lines, logging, connection identity, counters, and protocol-level decisions belong to one diagnostic surface.
 
-SNode.C is event-driven. Connections are accepted or established later. Callbacks fire later.
-
-Timers expire later. Retries may happen later. Contexts react to peer data later.
-
-That makes runtime visibility essential.
+Because SNode.C is event-driven, connections are accepted or established later, callbacks fire later, timers expire later, retries may happen later, and contexts react to peer data later. That makes runtime visibility essential.
 
 The source code may explain what can happen, but diagnostics show what did happen in one concrete run. They show which configured roles entered the runtime, which endpoints were used, which connection episodes existed, which system boundaries failed, which retries were scheduled, and which protocol decisions were made by a context.
 

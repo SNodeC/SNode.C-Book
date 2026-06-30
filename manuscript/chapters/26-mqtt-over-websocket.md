@@ -23,21 +23,13 @@ MQTT over WebSocket
 
 The second form follows the complete stack: HTTP upgrade, WebSocket, selected subprotocol role, `MqttContext`, and MQTT protocol semantics.
 
-The central sentence is:
-
 ::: {.snodec-note title="MQTT-over-WebSocket note"}
 MQTT over WebSocket in SNode.C is MQTT expressed as a WebSocket subprotocol on top of the HTTP upgrade stack.
 :::
 
-This sentence defines the composition precisely. MQTT-over-WebSocket is not ordinary native MQTT with a few additional HTTP headers. The HTTP headers belong to the upgrade negotiation. After a successful upgrade, MQTT packet data is carried as WebSocket message payload and interpreted by the MQTT layer.
+That sentence defines the composition precisely. MQTT-over-WebSocket is not native MQTT with a few additional HTTP headers, ordinary HTTP, or plain WebSocket without higher protocol meaning. The HTTP headers belong to upgrade negotiation; after a successful upgrade, MQTT packet data is carried as WebSocket message payload and interpreted by the MQTT layer.
 
-It is also not ordinary HTTP, and it is not plain WebSocket without higher protocol meaning. The compact composition is HTTP upgrade, WebSocket, selected WebSocket subprotocol, and MQTT semantics.
-
-This chapter depends on two earlier steps. Chapter 24 supplied the HTTP-upgrade and WebSocket-subprotocol path.
-
-Chapter 25 supplied `MqttContext` and the packet, session, topic, keep-alive, and publish-flow semantics.
-
-Chapter 26 combines them:
+This chapter combines the HTTP-upgrade and WebSocket-subprotocol path from Chapter 24 with the `MqttContext`, packet, session, topic, keep-alive, and publish-flow semantics from Chapter 25:
 
 ```text
 WebSocket subprotocol role
@@ -45,11 +37,7 @@ WebSocket subprotocol role
       -> MQTT-over-WebSocket endpoint
 ```
 
-Each layer still has a responsibility. HTTP negotiates the upgrade. WebSocket provides the upgraded bidirectional message carrier. The WebSocket subprotocol role gives that carrier a selected protocol surface. `MqttContext` bridges the carrier to the MQTT protocol object. MQTT provides packet, session, topic, keep-alive, and publish-flow semantics.
-
-No layer disappears.
-
-That is the main point of the chapter.
+Each layer still has a responsibility: HTTP negotiates the upgrade, WebSocket provides the upgraded bidirectional message carrier, the WebSocket subprotocol role gives that carrier a selected protocol surface, `MqttContext` bridges the carrier to the MQTT protocol object, and MQTT provides packet, session, topic, keep-alive, and publish-flow semantics. No layer disappears; that is the main point of the chapter.
 
 ### The composition in one model
 

@@ -370,50 +370,18 @@ Build files reveal boundaries that may be less obvious from implementation files
 \index{installable components}
 
 
-The source tree is organized as directories. The installed framework is exposed through public headers and CMake package components. These views are related, but they are not identical.
+The source tree is organized as directories, while the installed framework is exposed through public headers and CMake package components. These views are related, but they are not identical. A source path such as `src/net/in/stream/legacy` helps a reader navigate the implementation; a component name such as `net-in-stream-legacy` helps an external project request and link the required installed framework part.
 
-A source path such as:
+The same architectural position therefore appears in several related forms:
 
-```text
-src/net/in/stream/legacy
-```
+| View | Example |
+|---|---|
+| source path | `src/net/in/stream/legacy` |
+| C++ namespace / type path | `net::in::stream::legacy` |
+| public include path | `<net/in/stream/legacy/SocketServer.h>`, `<net/in/stream/legacy/SocketClient.h>` |
+| CMake component name | `net-in-stream-legacy` |
 
-helps a reader navigate the implementation.
-
-A component name such as:
-
-```text
-net-in-stream-legacy
-```
-
-helps an external project request and link the required installed framework part.
-
-The same architectural position can therefore appear in several forms:
-
-```text
-source path:
-src/net/in/stream/legacy
-
-C++ namespace / type path:
-net::in::stream::legacy
-
-public include path:
-<net/in/stream/legacy/SocketServer.h>
-<net/in/stream/legacy/SocketClient.h>
-
-CMake component name:
-net-in-stream-legacy
-```
-
-Read these as related views of the same decision stack:
-
-```text
-network family: IPv4 / in
-transport form: stream
-connection mode: legacy / non-TLS
-```
-
-This relationship is not accidental. It is one of the ways SNode.C makes layer choices visible across source layout, C++ names, and build consumption.
+Read these as related views of the same decision stack: network family `IPv4 / in`, transport form `stream`, and connection mode `legacy / non-TLS`. This relationship is one of the ways SNode.C makes layer choices visible across source layout, C++ names, and build consumption.
 
 ### Use search, but search for roles
 
@@ -562,17 +530,13 @@ A factory marks the handoff point between the framework and the application.
 
 ### Avoid common reading mistakes
 
-Several mistakes are easy to make when first reading SNode.C.
+Several mistakes are easy to make when first reading SNode.C:
 
-One mistake is to start in the deepest runtime file and try to understand everything before seeing a working application. That makes the framework look more abstract than it is.
-
-A second mistake is to treat long names as accidental verbosity. In SNode.C, long names often encode layer position.
-
-A third mistake is to confuse source-tree directories with public include paths or installable package components. They are related views, not the same object. The source path shows where the framework implementation lives. The public include path shows which C++ front door an application should include. The component name shows which installed binary/link surface an application should select.
-
-A fourth mistake is to treat lower communication families as unrelated worlds. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP differ in addressing and deployment assumptions, but the SNode.C reading strategy remains comparable.
-
-A fifth mistake is to read an example as if every application must copy its exact shape. Examples teach patterns; they do not eliminate design judgment.
+- starting in the deepest runtime file and trying to understand everything before seeing a working application, which makes the framework look more abstract than it is;
+- treating long names as accidental verbosity, although they often encode layer position;
+- confusing source-tree directories with public include paths or installable package components, even though the source path, public include path, and component name are related views rather than the same object;
+- treating lower communication families as unrelated worlds, even though IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP differ in addressing and deployment assumptions while keeping a comparable reading strategy;
+- reading an example as if every application must copy its exact shape, instead of treating examples as patterns that still require design judgment.
 
 The remedy is always the same: return to layer, role, boundary, and ownership.
 

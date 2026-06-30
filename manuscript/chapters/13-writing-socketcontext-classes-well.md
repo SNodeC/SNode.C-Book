@@ -51,7 +51,7 @@ The context is therefore neither the whole application nor the transport object 
 
 This distinction is easy to underestimate. A context is close enough to the connection that it can send, read, close, set timeouts, and observe metrics. At the same time, it should not become the connection. It should express what the protocol does over that connection.
 
-That makes the context the place where the book moves upward again. The previous part asked which lower family carries the connection. This part asks what the application protocol does once a connection exists.
+The context is therefore where byte movement becomes protocol behavior. The lower family carries the connection; the context defines what the application protocol does once that connection exists.
 
 #### Context, connection, and factory
 
@@ -68,9 +68,7 @@ The three objects should be kept separate:
 | `SocketContext` | per-connection protocol behavior |
 | `SocketContextFactory` | creates contexts for connections |
 
-This distinction continues Chapter 9.
-
-The connection represents communication with a peer. It owns the connection-facing runtime surface: data movement, shutdown, timeout, naming, counters, and endpoint views. The context implements what the application protocol does over that communication relationship. The factory creates the context when a new connection needs one.
+The connection represents communication with a peer and owns the connection-facing runtime surface: data movement, shutdown, timeout, naming, counters, and endpoint views. The context implements what the application protocol does over that communication relationship. The factory creates the context when a new connection needs one.
 
 If these responsibilities remain separate, SNode.C applications stay easier to read as they grow. The reader can ask three different questions and expect three different answers:
 
@@ -89,13 +87,7 @@ A good SNode.C application keeps those questions visible.
 
 #### Acting through the connection
 
-A `SocketContext` acts through a `SocketConnection`.
-
-That means it may send, stream, read, close, inspect metrics, set timeouts, or request shutdown through the surface provided to it. These are real operations, not descriptive helper functions.
-
-But the context should not become the connection.
-
-A good context uses connection-facing operations to express protocol behavior. It does not reinvent send queues, transport buffers, descriptor ownership, or connection lifecycle machinery.
+A `SocketContext` acts through a `SocketConnection`: it may send, stream, read, close, inspect metrics, set timeouts, or request shutdown through the surface provided to it. These are real operations, not descriptive helper functions. A good context uses connection-facing operations to express protocol behavior; it does not reinvent send queues, transport buffers, descriptor ownership, or connection lifecycle machinery.
 
 The boundary is:
 
@@ -117,13 +109,7 @@ This boundary is one of the most important design habits in SNode.C application 
 
 The stream `SocketContext` surface is focused. It gives derived protocol classes enough operations to implement real stream protocols while still keeping transport machinery outside the protocol class.
 
-There are two layers worth keeping apart.
-
-The generic `core::socket::SocketContext` defines the protocol-context contract shared at the socket-context level: timeout, sending, reading, closing, metrics, received-data processing, signal handling, and read/write error handling.
-
-The stream-specific `core::socket::stream::SocketContext` adds the stream-oriented surface: stream-to-peer support, stream EOF, read and write shutdown, access to the stream `SocketConnection`, and the connection lifecycle hooks used by stream contexts.
-
-The chapter does not need to turn this into an inheritance lesson. The useful point is simpler: the context API is deliberately shaped around protocol behavior, while the concrete stream specialization provides the operations needed by stream protocols.
+Two layers are worth keeping apart. The generic `core::socket::SocketContext` defines the protocol-context contract shared at the socket-context level: timeout, sending, reading, closing, metrics, received-data processing, signal handling, and read/write error handling. The stream-specific `core::socket::stream::SocketContext` then adds the stream-oriented surface: stream-to-peer support, stream EOF, read and write shutdown, access to the stream `SocketConnection`, and the connection lifecycle hooks used by stream contexts. The useful point is not inheritance mechanics, but shape: the context API is deliberately organized around protocol behavior, while the concrete stream specialization provides the operations needed by stream protocols.
 
 A useful overview is:
 

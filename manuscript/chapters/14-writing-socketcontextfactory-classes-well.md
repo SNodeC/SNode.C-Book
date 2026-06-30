@@ -32,11 +32,7 @@ A compact definition is:
 
 > A `SocketContextFactory` creates the right per-connection protocol endpoint for a concrete `SocketConnection`.
 
-This definition is narrow. The factory does not implement the protocol conversation. It does not replace the registered server-side or client-side instance.
-
-It does not own the runtime.
-
-It answers one construction question:
+This definition is deliberately narrow. The factory does not implement the protocol conversation, replace the registered server-side or client-side instance, or own the runtime. It answers one construction question:
 
 > Given this connection, which context object should be attached to it?
 
@@ -54,17 +50,11 @@ The three roles should remain distinct:
 | `SocketContext` | protocol behavior for one connection |
 | `SocketContextFactory` | context creation for a concrete connection |
 
-This table continues the distinction from Chapter 13. The connection is the managed peer relationship. The context is the protocol endpoint attached to that relationship.
-
-The factory creates that endpoint.
-
-When these responsibilities stay separate, application code remains easier to reason about. A reader can ask one question at a time: Which connection exists? Which context was created for it? What protocol behavior does that context implement?
+The connection is the managed peer relationship, the context is the protocol endpoint attached to that relationship, and the factory creates that endpoint. When these responsibilities stay separate, application code remains easier to reason about. A reader can ask one question at a time: Which connection exists? Which context was created for it? What protocol behavior does that context implement?
 
 #### The factory interface
 
-The stream factory interface is narrow.
-
-Its essential method is:
+The stream factory interface is narrow. Its essential method is:
 
 ```cpp
 virtual core::socket::stream::SocketContext*
@@ -569,19 +559,13 @@ This can be used for simple role distinctions, such as server-side versus client
 - gateway endpoints,
 - adapter endpoints.
 
-The important point in this chapter is still the mechanism, not the full pattern catalogue.
-
-A factory does not implement a higher-level application pattern by itself. It creates the correctly preconfigured context objects that participate in such patterns.
+The important point is still the mechanism, not a full pattern catalogue: a factory does not implement a higher-level application pattern by itself, but creates the correctly preconfigured context objects that participate in such patterns.
 
 #### Context-type-selecting factories
 
 Some applications may need a factory that chooses among a small number of context classes. That can be acceptable when the selection is explicit and construction-time. For example, a configuration value might decide whether to create a diagnostic context or a normal protocol context.
 
-But the selection should remain simple.
-
-If the factory begins reading from the peer, interpreting protocol frames, or managing state transitions, it has crossed into protocol behavior.
-
-That belongs in the context.
+The selection should remain simple. If the factory begins reading from the peer, interpreting protocol frames, or managing state transitions, it has crossed into protocol behavior, and that belongs in the context.
 
 ### The strongest factory tests
 

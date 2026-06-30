@@ -146,7 +146,7 @@ It is important to distinguish the two sides carefully.
 | client side | built-in `EventSource` abstraction on top of an HTTP client |
 | server side | HTTP/Express endpoint that keeps a response open and writes event-stream records |
 
-The inspected source strongly exposes the client-side `EventSource` facility. Server-side SSE is not a different server instance type and not a symmetric server-side `EventSource` abstraction. It is a route or HTTP handler that keeps the response open and writes data in event-stream format.
+SNode.C exposes the client-side `EventSource` facility explicitly. Server-side SSE is not a different server instance type and not a symmetric server-side `EventSource` abstraction. It is a route or HTTP handler that keeps the response open and writes data in event-stream format.
 
 Conceptually, the server route emits a `text/event-stream` response. The client-side `EventSource` requests that response, parses the event stream, and dispatches `MessageEvent` objects.
 

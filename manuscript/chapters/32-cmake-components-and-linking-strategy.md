@@ -80,7 +80,7 @@ The real structural center of the build is `src/CMakeLists.txt`. That file does 
 
 This is where the build becomes an inventory of what the framework believes its component surface is. The install rules in the module directories also define the matching public include surface: selected headers are installed below the SNode.C include root so external applications can include the same public front doors that the examples use in-tree.
 
-The supported component list is especially important. It includes core runtime pieces, stream legacy/TLS pieces, network-family variants, HTTP, Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and more. the CMake component list is also an architectural table of contents.
+The supported component list is especially important. It includes core runtime pieces, stream legacy/TLS pieces, network-family variants, HTTP, Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and more. The CMake component list is also an architectural table of contents.
 
 #### Compiler policy
 

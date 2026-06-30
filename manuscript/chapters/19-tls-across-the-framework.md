@@ -7,13 +7,7 @@
 
 ### From runtime visibility to secure connection handling
 
-Operational visibility turns configuration, generated command lines, logging, connection identity, counters, durations, and protocol decisions into diagnostic evidence.
-
-Secure connection handling belongs in the same architecture.
-
-Security and robustness do not remove the SNode.C model. They add stricter connection-layer responsibilities, more timing-sensitive transitions, and more failure states.
-
-TLS does not introduce a second application model. It changes the connection layer.
+Operational visibility turns configuration, generated command lines, logging, connection identity, counters, durations, and protocol decisions into diagnostic evidence. Secure connection handling belongs in the same architecture: it does not remove the SNode.C model, but adds stricter connection-layer responsibilities, more timing-sensitive transitions, and more failure states. TLS does not introduce a second application model; it changes the connection layer.
 
 That is the central idea of this chapter:
 
@@ -57,11 +51,7 @@ IPv4 stream
       -> protocol context
 ```
 
-The lower family still exists. The registered server/client instance still exists. The context still implements the protocol conversation.
-
-TLS adds secure connection handling between those parts.
-
-More generally, a `SocketContext` still sits above the lower family, stream transport, and the selected legacy-or-TLS connection layer.
+The lower family still exists, the registered server/client instance still exists, and the context still implements the protocol conversation. TLS adds secure connection handling between those parts; more generally, a `SocketContext` still sits above the lower family, stream transport, and the selected legacy-or-TLS connection layer.
 
 Where a TLS wrapper exists for a lower family, this pattern applies. The chapter uses IPv4 examples because they are familiar, not because the architectural idea is IPv4-specific. The same connection-layer specialization can be expressed for other lower families where the corresponding TLS stream components are available.
 
@@ -93,7 +83,7 @@ A compact comparison makes the teaching point visible.
 | context behavior | protocol endpoint | often unchanged after secure readiness |
 | diagnostics | lifecycle, counters, errors | lifecycle, counters, errors plus TLS-specific handshake, trust, and shutdown diagnostics |
 
-This table is the chapter in miniature. TLS adds real work. It does not erase the surrounding framework structure.
+This table is the chapter in miniature: TLS adds real work without erasing the surrounding framework structure.
 
 That is why TLS is easiest to understand after the legacy stream shape is already clear. The legacy stream shows the connection model without secure transport. The TLS stream then shows which parts are added by secure connection handling.
 
@@ -139,9 +129,7 @@ The important parts are:
 
 The application still selects a concrete server/client handle type. That type registers a server-side or client-side instance as before. The TLS specialization changes the acceptor or connector, the reader/writer behavior, and the configuration type used beneath that handle.
 
-This is the architectural payoff. The handle/instance model remains recognizable. The connection machinery changes.
-
-The protocol endpoint can often remain stable.
+This is the architectural payoff: the handle/instance model remains recognizable, the connection machinery changes, and the protocol endpoint can often remain stable.
 
 ### What TLS adds to the connection layer
 

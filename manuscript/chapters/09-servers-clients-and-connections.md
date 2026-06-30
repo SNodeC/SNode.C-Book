@@ -585,11 +585,7 @@ They observe the lifecycle of a concrete peer relationship under the server-side
 
 They are useful for connection inspection, address logging, operational diagnostics, and role-level setup.
 
-They are not the same as status callbacks.
-
-They are also not the same as context callbacks.
-
-The distinction is practical. If the question is “what happened to the outer listen/connect attempt?”, the status callback is involved. If the question is “what can we observe about this concrete peer relationship?”, the connection lifecycle callback is involved. If the question is “how does the application protocol react?”, the context callback is involved.
+They are neither status callbacks nor context callbacks. The distinction is practical: if the question is “what happened to the outer listen/connect attempt?”, the status callback is involved; if the question is “what can we observe about this concrete peer relationship?”, the connection lifecycle callback is involved; and if the question is “how does the application protocol react?”, the context callback is involved.
 
 #### `onConnect` versus `onConnected`
 
@@ -699,19 +695,7 @@ application creates a SocketServer / SocketClient handle
                           -> SocketContext implements protocol behavior
 ```
 
-Every line in this picture matters.
-
-The handle is not the whole instance.
-
-The instance is not the connection.
-
-The connection is not the context.
-
-The context is not the factory.
-
-The factory is not protocol behavior.
-
-These distinctions may feel careful, but they are what make the framework scalable as a mental model.
+Every line in this picture matters because each line marks a different responsibility. The handle, registered instance, connection, factory, and context are not interchangeable names for the same object; they describe different lifetimes and different decisions. These distinctions may feel careful in a small echo example, but they are what make the framework scalable as a mental model.
 
 A single echo pair can hide the need for this structure because it has only one small behavior. A real system cannot. Once there are retries, reconnects, TLS setup, diagnostics, metrics, multiple accepted peers, protocol upgrades, or different lower-layer families, the boundaries become essential.
 

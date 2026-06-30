@@ -11,9 +11,7 @@ Deployment makes architecture visible as an installed system. Trustworthiness co
 
 SNode.C is delivered as libraries, component packages, exported CMake targets, runtime-loaded modules, configuration directories, service definitions, TLS and database dependencies, and, on OpenWrt, cross-compiled packages. Testing, debugging, and benchmarking check whether the boundaries taught throughout the book still hold under pressure. The chapter follows the path from build structure to installed structure, runtime behavior, diagnosed behavior, and measured behavior.
 
-A network framework is not finished when it compiles or installs. Compilation accepts the build graph; installation produces the filesystem shape. Trustworthiness requires reproducible, diagnosable, measurable behavior.
-
-In a layered framework, failures can occur at many boundaries: undeclared component dependencies, accidental transitive includes, exported CMake packages that differ from the in-tree graph, invalid protocol parsing, wrong route dispatch, missing runtime modules, incorrect MQTT session behavior, partial database updates, leaked connection state, or benchmarks that miss the real bottleneck.
+A network framework is not finished when it compiles or installs. Compilation accepts the build graph; installation produces the filesystem shape. Trustworthiness requires reproducible, diagnosable, measurable behavior. In a layered framework, failures can occur at many boundaries: undeclared component dependencies, accidental transitive includes, exported CMake packages that differ from the in-tree graph, invalid protocol parsing, wrong route dispatch, missing runtime modules, incorrect MQTT session behavior, partial database updates, leaked connection state, or benchmarks that miss the real bottleneck.
 
 The useful question is therefore not only:
 
@@ -120,7 +118,7 @@ This is how strictness remains maintainable.
 
 #### Include discipline protects component truth
 
-Include discipline is a component test and a formatting preference. Every public header should include what it uses. Every source file should avoid relying on accidental transitive includes.
+Include discipline is a component test, not merely a formatting preference. Every public header should include what it uses. Every source file should avoid relying on accidental transitive includes.
 
 SNode.C is consumed through components, not only as one monolithic source tree. A header that compiles only because another unrelated header came first is not a stable public interface.
 
@@ -329,7 +327,7 @@ runtime surface
   -> long-lived connection and cleanup
 ```
 
-Both matter.
+Both surfaces matter.
 
 #### MQTT tests must model sessions
 
@@ -351,13 +349,11 @@ A test strategy that checks only packets may miss MQTT behavior. Broker-oriented
 
 #### Database-backed protocol tests must control state
 
-Database-backed components introduce persistent state. Persistent state makes tests powerful. It also makes them dangerous if uncontrolled.
-
-A test that depends on a developer's local database contents is not reproducible. A database-backed test should create or use controlled state: a temporary test database, a generated schema, known fixtures, transaction rollback, explicit cleanup, isolated credentials, and isolated database names for test runs.
+Database-backed components introduce persistent state, which makes tests powerful but dangerous when uncontrolled. A test that depends on a developer's local database contents is not reproducible. A database-backed test should create or use controlled state: a temporary test database, a generated schema, known fixtures, transaction rollback, explicit cleanup, isolated credentials, and isolated database names for test runs.
 
 This matters for MQTT storage, IoT history, monitoring, or any persistence-facing application. A test should be repeatable. Running it twice should not depend on hidden leftovers from the first run.
 
-State is useful. Uncontrolled state is a source of false confidence.
+State is useful; uncontrolled state is a source of false confidence.
 
 ### Runtime confidence
 

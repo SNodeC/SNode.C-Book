@@ -131,13 +131,7 @@ A name such as `echoserver` or `echoclient` already carries architectural weight
 \index{peer relationship}
 
 
-A connection is the concrete communication relationship to a peer.
-
-In the stream-oriented parts of SNode.C, that role is represented by `SocketConnection` and its specializations. A connection exposes peer-oriented operations and observable state: local and remote addresses, send and read operations, shutdown and close operations, timeout handling, byte counters, and online timing.
-
-That tells us something important about the framework.
-
-SNode.C treats a connection as a visible runtime object with lifecycle and measurable behavior, not as an implementation detail hidden behind the protocol code.
+A connection is the concrete communication relationship to a peer. In the stream-oriented parts of SNode.C, that role is represented by `SocketConnection` and its specializations. A connection exposes peer-oriented operations and observable state: local and remote addresses, send and read operations, shutdown and close operations, timeout handling, byte counters, and online timing. That tells us something important about the framework: SNode.C treats a connection as a visible runtime object with lifecycle and measurable behavior, not as an implementation detail hidden behind the protocol code.
 
 This is also why connection-level callbacks and context-level callbacks must not be confused. Connection callbacks observe or adapt connection-level events. Context methods implement application protocol behavior for the connection.
 
@@ -167,13 +161,7 @@ The echo pair used that rule in a very small form: the server and client handles
 \index{context construction}
 
 
-The factory creates contexts.
-
-A `SocketContextFactory` exists because a context belongs to a connection, and connections appear dynamically. A server may accept many peers over time. Each peer needs its own protocol endpoint object. The framework therefore asks the factory to create a context when a connection needs one.
-
-This is not accidental indirection.
-
-It is the mechanism that connects a longer-lived communication role to shorter-lived per-connection protocol state.
+A `SocketContextFactory` creates contexts because a context belongs to a connection, and connections appear dynamically. A server may accept many peers over time; each peer needs its own protocol endpoint object. The indirection is deliberate: it connects a longer-lived communication role to shorter-lived per-connection protocol state.
 
 Read the factory as the boundary between these two lifetimes:
 
@@ -192,9 +180,7 @@ Once this boundary is understood, the factory becomes one of the most natural pa
 \index{protocol flow}
 
 
-A SNode.C stream application can be read as a sequence of phases.
-
-The exact classes vary by network family and connection mode, but the shape remains stable.
+A SNode.C stream application can be read as a sequence of phases. The exact classes vary by network family and connection mode, but the shape remains stable.
 
 #### Phase 1: initialize the framework
 
@@ -216,13 +202,7 @@ Each instance represents a configured communication role; the handle configures 
 
 #### Phase 3: register communication intent
 
-A server calls `listen(...)`.
-
-A client calls `connect(...)`.
-
-These calls should be read as registration of intent. They set addresses, callbacks, backlog or peer information where appropriate, and enter the flow-controller path. The actual progress of the communication role belongs to the runtime and event system.
-
-This distinction is central to SNode.C.
+A server calls `listen(...)`; a client calls `connect(...)`. These calls should be read as registration of intent. They set addresses, callbacks, backlog or peer information where appropriate, and enter the flow-controller path. The actual progress of the communication role belongs to the runtime and event system, and that distinction is central to SNode.C.
 
 The application does not say:
 
@@ -244,25 +224,17 @@ From this point, registered roles can be advanced, event receivers can react to 
 
 #### Phase 5: connections appear
 
-For a server, a connection appears when a peer is accepted.
-
-For a client, a connection appears when the connection attempt succeeds.
-
-This is where the abstract communication role becomes a concrete relationship to a peer.
+For a server, a connection appears when a peer is accepted; for a client, a connection appears when the connection attempt succeeds. This is where the abstract communication role becomes a concrete relationship to a peer.
 
 #### Phase 6: the factory creates a context
 
-The connection needs an application protocol endpoint.
-
-The framework uses the configured factory to create the corresponding context. The context is then attached to the connection.
+The connection needs an application protocol endpoint, so the framework uses the configured factory to create the corresponding context and attach it to the connection.
 
 #### Phase 7: protocol behavior reacts to events
 
 The context receives lifecycle calls and data-related callbacks. It can read from the peer, send to the peer, close the connection, stream data, set timeouts, or inspect metrics.
 
-At this stage, the application protocol is alive.
-
-The full flow can be summarized as:
+At this stage, the application protocol is alive. The full flow can be summarized as:
 
 ```text
 init runtime
@@ -285,9 +257,7 @@ That flow is one of the best compact mental models for SNode.C.
 \index{context}
 
 
-A large part of SNode.C becomes clearer when lifetimes are separated carefully.
-
-There are at least four different things that beginners may accidentally merge into one idea.
+A large part of SNode.C becomes clearer when lifetimes are separated carefully. Beginners may accidentally merge at least four different things into one idea.
 
 #### The local C++ handle
 

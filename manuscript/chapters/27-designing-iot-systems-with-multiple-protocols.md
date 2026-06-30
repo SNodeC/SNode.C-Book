@@ -7,15 +7,13 @@
 
 ### From protocol composition to system boundaries
 
-MQTT-over-WebSocket is one composed stack: HTTP upgrade, WebSocket, WebSocket subprotocol, and MQTT.
-
-A whole IoT system widens the lens from one composed stack to several cooperating boundaries. In such a system, several protocol stacks may coexist because they serve different communication boundaries. The central sentence is:
+MQTT-over-WebSocket is one composed stack: HTTP upgrade, WebSocket, WebSocket subprotocol, and MQTT. A whole IoT system widens the lens from one composed stack to several cooperating boundaries, where several protocol stacks may coexist because they serve different communication boundaries. The central sentence is:
 
 ::: {.snodec-rule title="Multi-protocol boundary rule"}
 A multi-protocol IoT system is clear when each protocol is assigned to an explicit boundary.
 :::
 
-This chapter is not about using every protocol everywhere. It is about deciding where each protocol belongs. Multi-protocol IoT systems are boundary design.
+This chapter is therefore not about using every protocol everywhere; it is about deciding where each protocol belongs. Multi-protocol IoT systems are boundary design.
 
 The pieces are now available: lower families, Unix domain sockets, Bluetooth RFCOMM and L2CAP, HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, TLS, configuration, diagnostics, timeouts, and failure behavior. The question is no longer only:
 
@@ -49,9 +47,7 @@ Figure \ref{fig:iot-boundary-constellation} shows an IoT system as a constellati
 
 ![An IoT system as a constellation of protocol and state boundaries around an application or gateway process.](assets/figures/pdf/fig-08-iot-boundary-constellation.pdf){#fig:iot-boundary-constellation width=90% latex-placement="tbp"}
 
-Each connector in Figure \ref{fig:iot-boundary-constellation} is a boundary. Each boundary may need a different protocol family. Multi-protocol design is therefore normal in IoT systems. It is not automatically a sign of complexity gone wrong. The design becomes unclear only when protocol choices are placed dishonestly: when a protocol is used because it is fashionable, convenient, or already present, rather than because it serves the boundary well.
-
-A clear IoT design starts by naming the boundaries. Only then should it choose protocols.
+Each connector in Figure \ref{fig:iot-boundary-constellation} is a boundary, and each boundary may need a different protocol family. Multi-protocol design is therefore normal in IoT systems, not automatically a sign of complexity gone wrong. The design becomes unclear only when protocol choices are placed dishonestly: when a protocol is used because it is fashionable, convenient, or already present rather than because it serves the boundary well. A clear IoT design starts by naming the boundaries; only then should it choose protocols.
 
 ### Recurring boundary roles in IoT systems
 
@@ -406,9 +402,7 @@ The same domain state may be exposed through different surfaces. That is not dup
 
 For example, the same sensor state may be published to MQTT, shown through an HTTP status endpoint, streamed through SSE, used in a WebSocket control session, written to a database, exposed through a local Unix-domain command, and reflected into a Bluetooth-facing commissioning role.
 
-The meaning is shared. The surfaces are different.
-
-The useful distinction is between shared domain meaning and the several honest protocol surfaces that expose it. This is better than forcing one protocol surface to serve every consumer. It also helps keep protocol-specific behavior out of the domain model. The domain model should not become an MQTT model, an HTTP model, or a WebSocket model merely because the same state is visible through those surfaces.
+The meaning is shared, but the surfaces are different. The useful distinction is between shared domain meaning and the several honest protocol surfaces that expose it. This is better than forcing one protocol surface to serve every consumer, and it also helps keep protocol-specific behavior out of the domain model. The domain model should not become an MQTT model, an HTTP model, or a WebSocket model merely because the same state is visible through those surfaces.
 
 ### Practical design recipe
 

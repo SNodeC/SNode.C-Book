@@ -21,21 +21,14 @@ This is not a general Linux installation guide. It does not try to cover every d
 
 ### Working areas, different purposes
 
-During the book it helps to keep several locations mentally separate. The first is the **SNode.C source tree**.
+During the book it helps to keep four locations mentally separate:
 
-That is where the framework implementation lives. It contains the C++ source code, the CMake build system, the core runtime, network layers, protocol layers, database support, and example applications.
-
-The second is the **build tree**.
-
-That is where CMake writes generated build files, intermediate object files, and compiled binaries. It should not be mixed into the source tree.
-
-The third is the **install prefix**.
-
-That is where an installed SNode.C package places headers, libraries, CMake package files, and possibly installed executables. A local install prefix is especially useful for learning because it keeps the experiment self-contained.
-
-The fourth is a small **playground project**.
-
-That is where you can later write small external applications that consume an installed SNode.C package without modifying the framework source tree itself.
+| Area | Purpose |
+|---|---|
+| **SNode.C source tree** | framework implementation, C++ source, CMake build system, core runtime, network layers, protocol layers, database support, and example applications |
+| **build tree** | generated build files, intermediate object files, and compiled binaries; disposable and kept outside the source tree |
+| **install prefix** | installed headers, libraries, CMake package files, and possibly installed executables; useful for self-contained learning |
+| **playground project** | small external applications that consume an installed SNode.C package without modifying the framework source tree |
 
 A useful layout is:
 
@@ -58,9 +51,7 @@ The framework source tree remains the source of truth for the implementation. Th
 
 ### What the environment must support
 
-For the first part of the book, the environment must support five activities. First, it must allow us to **clone and build SNode.C**. Second, it must allow us to **run small server and client examples**.
-
-Third, it must allow us to **inspect the framework source tree and build tree separately**. Fourth, it must allow us to **install the framework into a known prefix**. Fifth, it must allow us to **compile small external programs against installed SNode.C public headers and installed SNode.C components**.
+For the first part of the book, the environment must support five activities: **clone and build SNode.C**, **run small server and client examples**, **inspect the framework source tree and build tree separately**, **install the framework into a known prefix**, and **compile small external programs against installed SNode.C public headers and installed SNode.C components**.
 
 Optional technologies should also be visible when available. Bluetooth RFCOMM and Bluetooth L2CAP require the appropriate BlueZ development files. MariaDB support requires MariaDB development files. These optional areas do not have to be used immediately, but the environment should not hide them accidentally.
 
