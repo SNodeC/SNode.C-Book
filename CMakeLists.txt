@@ -10,19 +10,22 @@ option(SNODEC_BOOK_BUILD_COMPANION_EXAMPLES
        "Configure companion C++ examples as part of the book build" OFF)
 
 add_subdirectory(production)
-add_subdirectory(assets)
-add_subdirectory(manuscript)
-add_subdirectory(review)
-add_subdirectory(packaging)
-add_subdirectory(source-baseline)
+
+if(NOT SNODEC_BOOK_BUILD_COMPANION_EXAMPLES)
+  add_subdirectory(assets)
+  add_subdirectory(manuscript)
+  add_subdirectory(review)
+  add_subdirectory(packaging)
+  add_subdirectory(source-baseline)
+
+  add_custom_target(all-books DEPENDS pdf tex proposal proposal-sample-pdf)
+
+  add_custom_target(
+    book-clean
+    COMMAND "${CMAKE_COMMAND}" -E rm -rf "${BOOK_BUILD_DIR}"
+    VERBATIM)
+endif()
 
 if(SNODEC_BOOK_BUILD_COMPANION_EXAMPLES)
   add_subdirectory(companion)
 endif()
-
-add_custom_target(all-books DEPENDS pdf tex proposal proposal-sample-pdf)
-
-add_custom_target(
-  book-clean
-  COMMAND "${CMAKE_COMMAND}" -E rm -rf "${BOOK_BUILD_DIR}"
-  VERBATIM)
