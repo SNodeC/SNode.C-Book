@@ -362,35 +362,25 @@ class SensorClient final : public iot::mqtt::client::Mqtt {
 public:
     SensorClient()
         : iot::mqtt::client::Mqtt(
-              "sensor-mqtt",
-              "sensor-client-1",
-              60,
-              "sensor-client.session") {
+              "sensor-mqtt", "sensor-client-1", 60, "sensor-client.session") {
     }
 
 private:
     void onConnected() override {
-        sendConnect(
-            true,        // clean session
-            "",          // will topic
-            "",          // will message
-            0,           // will QoS
-            false,       // will retain
-            "",          // username
-            "",          // password
-            false);      // loop prevention
+        sendConnect(true,   // clean session
+                    "",     // will topic
+                    "",     // will message
+                    0,      // will QoS
+                    false,  // will retain
+                    "",     // username
+                    "",     // password
+                    false); // loop prevention
     }
 
     void onConnack(const iot::mqtt::packets::Connack&) override {
-        sendSubscribe({
-            iot::mqtt::Topic("sensors/+/command", 0)
-        });
+        sendSubscribe({iot::mqtt::Topic("sensors/+/command", 0)});
 
-        sendPublish(
-            "sensors/temperature/value",
-            "23.5",
-            0,
-            false);
+        sendPublish("sensors/temperature/value", "23.5", 0, false);
     }
 
     void onPublish(const iot::mqtt::packets::Publish& publish) override {

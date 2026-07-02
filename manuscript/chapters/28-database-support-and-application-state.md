@@ -272,16 +272,17 @@ int main(int argc, char* argv[]) {
         .flags = 0,
     };
 
-    database::mariadb::MariaDBClient db(details, [](const database::mariadb::MariaDBState& state) {
-        if (state.error != 0) {
-            LOG(ERROR) << "MariaDB state error " << state.error << ": "
-                       << state.errorMessage;
-        } else if (state.connected) {
-            VLOG(1) << "MariaDB connected";
-        } else {
-            VLOG(1) << "MariaDB disconnected";
-        }
-    });
+    database::mariadb::MariaDBClient db(
+        details, [](const database::mariadb::MariaDBState& state) {
+            if (state.error != 0) {
+                LOG(ERROR) << "MariaDB state error " << state.error << ": "
+                           << state.errorMessage;
+            } else if (state.connected) {
+                VLOG(1) << "MariaDB connected";
+            } else {
+                VLOG(1) << "MariaDB disconnected";
+            }
+        });
 
     db.exec(
           "INSERT INTO measurements(sensor, value) VALUES ('temperature', 23.5)",
@@ -291,25 +292,24 @@ int main(int argc, char* argv[]) {
                       VLOG(1) << "insert affected rows: " << rows;
                   },
                   [](const std::string& error, unsigned int number) {
-                      LOG(ERROR) << "affectedRows error " << number << ": "
-                                 << error;
+                      LOG(ERROR) << "affectedRows error " << number << ": " << error;
                   });
           },
           [](const std::string& error, unsigned int number) {
               LOG(ERROR) << "insert error " << number << ": " << error;
           })
-      .query(
-          "SELECT sensor, value FROM measurements",
-          [](const MYSQL_ROW row) {
-              if (row != nullptr) {
-                  VLOG(1) << "measurement: " << row[0] << " = " << row[1];
-              } else {
-                  VLOG(1) << "measurement query complete";
-              }
-          },
-          [](const std::string& error, unsigned int number) {
-              LOG(ERROR) << "query error " << number << ": " << error;
-          });
+        .query(
+            "SELECT sensor, value FROM measurements",
+            [](const MYSQL_ROW row) {
+                if (row != nullptr) {
+                    VLOG(1) << "measurement: " << row[0] << " = " << row[1];
+                } else {
+                    VLOG(1) << "measurement query complete";
+                }
+            },
+            [](const std::string& error, unsigned int number) {
+                LOG(ERROR) << "query error " << number << ": " << error;
+            });
 
     return core::SNodeC::start();
 }
@@ -462,9 +462,12 @@ Here the `query(...)` belongs to the same sequence as the preceding `exec(...)`.
 Starting async work from inside a callback has different meaning:
 
 ```cpp
-db.exec(..., [&db]() {
-    db.exec(...);
-}, ...);
+db.exec(
+    ...,
+    [&db]() {
+        db.exec(...);
+    },
+    ...);
 ```
 
 The inner `exec(...)` creates a new command sequence and queues it on the same connection. It does not splice itself into the current sequence, and it does not jump ahead of commands already chained onto that sequence.
@@ -507,28 +510,28 @@ db.startTransactions(
       [](const std::string& error, unsigned int number) {
           // Report transaction-start error.
       })
-  .exec(
-      "INSERT INTO measurements(sensor, value) VALUES ('humidity', 61.0)",
-      []() {
-          // Insert command accepted.
-      },
-      [](const std::string& error, unsigned int number) {
-          // Report insert error.
-      })
-  .commit(
-      []() {
-          // Transaction committed.
-      },
-      [](const std::string& error, unsigned int number) {
-          // Report commit error.
-      })
-  .endTransactions(
-      []() {
-          // Transaction mode disabled.
-      },
-      [](const std::string& error, unsigned int number) {
-          // Report transaction-end error.
-      });
+    .exec(
+        "INSERT INTO measurements(sensor, value) VALUES ('humidity', 61.0)",
+        []() {
+            // Insert command accepted.
+        },
+        [](const std::string& error, unsigned int number) {
+            // Report insert error.
+        })
+    .commit(
+        []() {
+            // Transaction committed.
+        },
+        [](const std::string& error, unsigned int number) {
+            // Report commit error.
+        })
+    .endTransactions(
+        []() {
+            // Transaction mode disabled.
+        },
+        [](const std::string& error, unsigned int number) {
+            // Report transaction-end error.
+        });
 ```
 
 The source uses the plural method names `startTransactions(...)` and `endTransactions(...)`; the listing keeps those exact names. A rollback path would use the same command-sequence shape with `rollback(...)` instead of, or before, a later `commit(...)`, depending on the application policy. The important architectural point is that transaction boundaries remain explicit and ordered.

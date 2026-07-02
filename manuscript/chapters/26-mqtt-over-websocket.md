@@ -238,15 +238,13 @@ The generic MQTT WebSocket subprotocol type is specialized through simple role a
 On the server side:
 
 ```cpp
-using SubProtocol =
-    iot::mqtt::SubProtocol<web::websocket::server::SubProtocol>;
+using SubProtocol = iot::mqtt::SubProtocol<web::websocket::server::SubProtocol>;
 ```
 
 On the client side:
 
 ```cpp
-using SubProtocol =
-    iot::mqtt::SubProtocol<web::websocket::client::SubProtocol>;
+using SubProtocol = iot::mqtt::SubProtocol<web::websocket::client::SubProtocol>;
 ```
 
 The aliases do not duplicate the MQTT-over-WebSocket adapter. They bind the same generic adapter to either the server-side or client-side WebSocket subprotocol role.
