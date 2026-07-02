@@ -119,8 +119,8 @@ MiniGateway Extended is an application-level extension, not a framework-level ex
 The first boundary is construction. The factory receives the model reference and constructs the connection-local context. It does not parse measurements, register HTTP routes, publish MQTT messages, or decide deployment policy.
 
 ```cpp
-core::socket::stream::SocketContext*
-MeasurementUnixSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
+core::socket::stream::SocketContext* MeasurementUnixSocketContextFactory::create(
+    core::socket::stream::SocketConnection* socketConnection) {
     return new MeasurementUnixSocketContext(socketConnection, measurementModel);
 }
 ```

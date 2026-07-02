@@ -172,8 +172,7 @@ The target is longer than the MiniGateway target, but the difference is localize
 The whole architectural change is visible in `main.cpp`. MiniGateway Extended creates the same model and starts one additional preconfigured network role:
 
 ```cpp
-const auto measurementInputRole =
-    minigateway::startMeasurementInputRole(measurementModel);
+const auto measurementInputRole = minigateway::startMeasurementInputRole(measurementModel);
 ```
 
 The web role and MQTT role do not learn anything about Unix-domain sockets.
@@ -195,12 +194,9 @@ int main(int argc, char* argv[]) {
 
     minigateway::MeasurementModel measurementModel;
 
-    const auto webRole =
-        minigateway::startWebRole(measurementModel);
-    const auto measurementInputRole =
-        minigateway::startMeasurementInputRole(measurementModel);
-    const auto mqttIntegrationRole =
-        minigateway::startMqttIntegrationRole(measurementModel);
+    const auto webRole = minigateway::startWebRole(measurementModel);
+    const auto measurementInputRole = minigateway::startMeasurementInputRole(measurementModel);
+    const auto mqttIntegrationRole = minigateway::startMqttIntegrationRole(measurementModel);
 
     return core::SNodeC::start();
 }
@@ -228,7 +224,8 @@ The header defines the concrete server alias and exposes `startMeasurementInputR
 namespace minigateway {
 
     using MeasurementSocketServer =
-        net::un::stream::legacy::SocketServer<MeasurementUnixSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
+        net::un::stream::legacy::SocketServer<MeasurementUnixSocketContextFactory,
+                                              std::reference_wrapper<MeasurementModel>>;
 
     MeasurementSocketServer startMeasurementInputRole(MeasurementModel& measurementModel);
 
@@ -250,7 +247,8 @@ namespace minigateway {
         MeasurementSocketServer socketServer("measurement-input", std::ref(measurementModel));
 
         socketServer.listen("/tmp/minigateway-measurements.sock",
-                            [](const MeasurementSocketServer::SocketAddress& socketAddress, const core::socket::State& state) {
+                            [](const MeasurementSocketServer::SocketAddress& socketAddress,
+                               const core::socket::State& state) {
                                 reportState("measurement-input", socketAddress, state);
                             });
 
@@ -280,12 +278,15 @@ The factory declaration names the context type and stores the model reference us
 
 namespace minigateway {
 
-    class MeasurementUnixSocketContextFactory : public core::socket::stream::SocketContextFactory {
+    class MeasurementUnixSocketContextFactory
+        : public core::socket::stream::SocketContextFactory {
     public:
-        explicit MeasurementUnixSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel);
+        explicit MeasurementUnixSocketContextFactory(
+            std::reference_wrapper<MeasurementModel> measurementModel);
 
     private:
-        core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* socketConnection) final;
+        core::socket::stream::SocketContext*
+        create(core::socket::stream::SocketConnection* socketConnection) final;
 
         MeasurementModel& measurementModel;
     };
@@ -304,12 +305,13 @@ The factory implementation constructs `MeasurementUnixSocketContext` and forward
 
 namespace minigateway {
 
-    MeasurementUnixSocketContextFactory::MeasurementUnixSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel)
+    MeasurementUnixSocketContextFactory::MeasurementUnixSocketContextFactory(
+        std::reference_wrapper<MeasurementModel> measurementModel)
         : measurementModel(measurementModel.get()) {
     }
 
-    core::socket::stream::SocketContext*
-    MeasurementUnixSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
+    core::socket::stream::SocketContext* MeasurementUnixSocketContextFactory::create(
+        core::socket::stream::SocketConnection* socketConnection) {
         return new MeasurementUnixSocketContext(socketConnection, measurementModel);
     }
 
@@ -348,7 +350,8 @@ namespace minigateway {
 
     class MeasurementUnixSocketContext : public core::socket::stream::SocketContext {
     public:
-        MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection, MeasurementModel& measurementModel);
+        MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection,
+                                     MeasurementModel& measurementModel);
 
     private:
         void onConnected() final;
@@ -389,7 +392,8 @@ namespace minigateway {
     namespace {
 
         std::string trim(std::string value) {
-            value.erase(value.begin(), std::find_if(value.begin(), value.end(), [](unsigned char ch) {
+            value.erase(value.begin(),
+                        std::find_if(value.begin(), value.end(), [](unsigned char ch) {
                             return !std::isspace(ch);
                         }));
             value.erase(std::find_if(value.rbegin(),
@@ -458,18 +462,21 @@ namespace minigateway {
 
     } // namespace
 
-    MeasurementUnixSocketContext::MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection,
-                                                               MeasurementModel& measurementModel)
+    MeasurementUnixSocketContext::MeasurementUnixSocketContext(
+        core::socket::stream::SocketConnection* socketConnection,
+        MeasurementModel& measurementModel)
         : core::socket::stream::SocketContext(socketConnection)
         , measurementModel(measurementModel) {
     }
 
     void MeasurementUnixSocketContext::onConnected() {
-        VLOG(1) << "Measurement socket connected from " << getSocketConnection()->getRemoteAddress().toString();
+        VLOG(1) << "Measurement socket connected from "
+                << getSocketConnection()->getRemoteAddress().toString();
     }
 
     void MeasurementUnixSocketContext::onDisconnected() {
-        VLOG(1) << "Measurement socket disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+        VLOG(1) << "Measurement socket disconnected from "
+                << getSocketConnection()->getRemoteAddress().toString();
     }
 
     bool MeasurementUnixSocketContext::onSignal(int signum) {
@@ -498,7 +505,8 @@ namespace minigateway {
             }
 
             if (receiveBuffer.length() > 4096) {
-                LOG(WARNING) << "Measurement socket line exceeds 4096 bytes; dropping buffered input";
+                LOG(WARNING)
+                    << "Measurement socket line exceeds 4096 bytes; dropping buffered input";
                 receiveBuffer.clear();
             }
         }
@@ -511,7 +519,8 @@ namespace minigateway {
             try {
                 measurementModel.accept(parseMeasurementLine(line));
             } catch (const std::exception& ex) {
-                LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+                LOG(WARNING) << "Ignoring invalid measurement line '" << line
+                             << "': " << ex.what();
             }
         }
     }
