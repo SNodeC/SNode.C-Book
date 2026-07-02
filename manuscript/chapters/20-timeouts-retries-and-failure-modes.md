@@ -304,12 +304,10 @@ Retry belongs to failed connection attempts. Reconnect belongs to established co
 The client-side stream source in `src/core/socket/stream/SocketClient.h` keeps the two decisions in different branches of the same role-level flow. After a disconnect, reconnect policy can arm a reconnect timer and then re-enter the connect path for the ongoing client role:
 
 ```cpp
-if (config->getReconnect() &&
-    sharedContext->flowController.isReconnectEnabled() &&
+if (config->getReconnect() && sharedContext->flowController.isReconnectEnabled() &&
     core::eventLoopState() == core::State::RUNNING) {
     sharedContext->flowController.armReconnectTimer(
-        relativeReconnectTimeout,
-        [config, sharedContext, onStatus]() {
+        relativeReconnectTimeout, [config, sharedContext, onStatus]() {
             sharedContext->flowController.reportFlowReconnect();
             SocketClient(config, sharedContext)
                 .realConnect(onStatus, 0, config->getRetryBase());
@@ -320,18 +318,14 @@ if (config->getReconnect() &&
 A failed connect attempt follows the retry branch instead. The status is classified, retry policy is checked, and a retry timer can schedule another activation attempt with updated retry state:
 
 ```cpp
-if (retryFlag && config->getRetry() &&
-    sharedContext->flowController.isRetryEnabled() &&
+if (retryFlag && config->getRetry() && sharedContext->flowController.isRetryEnabled() &&
     (state == core::socket::State::ERROR ||
-     (state == core::socket::State::FATAL &&
-      config->getRetryOnFatal()))) {
+     (state == core::socket::State::FATAL && config->getRetryOnFatal()))) {
     sharedContext->flowController.armRetryTimer(
-        relativeRetryTimeout,
-        [config, sharedContext, onStatus, tries, retryTimeoutScale]() {
+        relativeRetryTimeout, [config, sharedContext, onStatus, tries, retryTimeoutScale]() {
             sharedContext->flowController.reportFlowRetry();
             SocketClient(config, sharedContext)
-                .realConnect(onStatus, tries + 1,
-                             retryTimeoutScale * config->getRetryBase());
+                .realConnect(onStatus, tries + 1, retryTimeoutScale * config->getRetryBase());
         });
 }
 ```

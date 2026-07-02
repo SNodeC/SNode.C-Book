@@ -188,9 +188,9 @@ static void sendMeasurement(const std::shared_ptr<Response>& res,
 app.get("/events", [&measurements] APPLICATION(req, res) {
     if (acceptsEventStream(req)) {
         res->set("Content-Type", "text/event-stream")
-           .set("Cache-Control", "no-cache")
-           .set("Connection", "keep-alive")
-           .sendHeader();
+            .set("Cache-Control", "no-cache")
+            .set("Connection", "keep-alive")
+            .sendHeader();
 
         if (const Measurement current = measurements.current(); current.sequence > 0) {
             sendMeasurement(res, current);
@@ -212,8 +212,7 @@ app.get("/events", [&measurements] APPLICATION(req, res) {
 app.get("/simulate", [&measurements] APPLICATION(req, res) {
     const Measurement measurement = measurements.publish("temperature", 24.0);
 
-    res->set("Content-Type", "application/json")
-       .send(measurement.toJson().dump());
+    res->set("Content-Type", "application/json").send(measurement.toJson().dump());
 });
 ```
 
@@ -236,10 +235,7 @@ int main(int argc, char* argv[]) {
 
     const net::in::SocketAddress address{"127.0.0.1", 8080};
 
-    auto events = web::http::legacy::in::EventSource(
-        "http",
-        address,
-        "/events");
+    auto events = web::http::legacy::in::EventSource("http", address, "/events");
 
     events->onOpen([] {
         VLOG(1) << "SSE stream opened";
@@ -250,8 +246,7 @@ int main(int argc, char* argv[]) {
     });
 
     events->addEventListener(
-        "measurement",
-        [](const web::http::client::tools::EventSource::MessageEvent& event) {
+        "measurement", [](const web::http::client::tools::EventSource::MessageEvent& event) {
             VLOG(1) << "measurement: " << event.data;
         });
 

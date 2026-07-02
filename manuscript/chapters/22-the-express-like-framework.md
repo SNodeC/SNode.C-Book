@@ -136,8 +136,7 @@ This keeps the web-application layer connected to the same event-driven runtime 
 The concrete alias is not the main point; it is an example of the general pattern. An IPv4 legacy Express-like web application can be shaped as:
 
 ```cpp
-using WebApp =
-    WebAppT<web::http::legacy::in::Server>;
+using WebApp = WebAppT<web::http::legacy::in::Server>;
 ```
 
 The SNode.C source also provides the corresponding convenience alias:

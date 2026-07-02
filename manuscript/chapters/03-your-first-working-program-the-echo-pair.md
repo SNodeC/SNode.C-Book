@@ -141,12 +141,9 @@ namespace core::socket::stream {
 
 class EchoSocketContext : public core::socket::stream::SocketContext {
 public:
-    enum class Role {
-        SERVER,
-        CLIENT
-    };
+    enum class Role { SERVER, CLIENT };
 
-explicit EchoSocketContext(core::socket::stream::SocketConnection* socketConnection,
+    explicit EchoSocketContext(core::socket::stream::SocketConnection* socketConnection,
                                Role role);
 
 private:
@@ -155,18 +152,16 @@ private:
     bool onSignal(int signum) override;
     std::size_t onReceivedFromPeer() override;
 
-Role role;
+    Role role;
 };
 
-class EchoServerSocketContextFactory
-    : public core::socket::stream::SocketContextFactory {
+class EchoServerSocketContextFactory : public core::socket::stream::SocketContextFactory {
 private:
     core::socket::stream::SocketContext*
     create(core::socket::stream::SocketConnection* socketConnection) override;
 };
 
-class EchoClientSocketContextFactory
-    : public core::socket::stream::SocketContextFactory {
+class EchoClientSocketContextFactory : public core::socket::stream::SocketContextFactory {
 private:
     core::socket::stream::SocketContext*
     create(core::socket::stream::SocketConnection* socketConnection) override;
@@ -200,9 +195,8 @@ The implementation is short.
 
 #include <string>
 
-EchoSocketContext::EchoSocketContext(
-    core::socket::stream::SocketConnection* socketConnection,
-    Role role)
+EchoSocketContext::EchoSocketContext(core::socket::stream::SocketConnection* socketConnection,
+                                     Role role)
     : core::socket::stream::SocketContext(socketConnection)
     , role(role) {
 }
@@ -236,18 +230,14 @@ std::size_t EchoSocketContext::onReceivedFromPeer() {
     return chunkLen;
 }
 
-core::socket::stream::SocketContext*
-EchoServerSocketContextFactory::create(
+core::socket::stream::SocketContext* EchoServerSocketContextFactory::create(
     core::socket::stream::SocketConnection* socketConnection) {
-    return new EchoSocketContext(socketConnection,
-                                 EchoSocketContext::Role::SERVER);
+    return new EchoSocketContext(socketConnection, EchoSocketContext::Role::SERVER);
 }
 
-core::socket::stream::SocketContext*
-EchoClientSocketContextFactory::create(
+core::socket::stream::SocketContext* EchoClientSocketContextFactory::create(
     core::socket::stream::SocketConnection* socketConnection) {
-    return new EchoSocketContext(socketConnection,
-                                 EchoSocketContext::Role::CLIENT);
+    return new EchoSocketContext(socketConnection, EchoSocketContext::Role::CLIENT);
 }
 ```
 
@@ -292,37 +282,33 @@ The server entry point is small because the protocol behavior already lives in t
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
 
-    using EchoServer =
-        net::in::stream::legacy::SocketServer<EchoServerSocketContextFactory>;
+    using EchoServer = net::in::stream::legacy::SocketServer<EchoServerSocketContextFactory>;
 
     EchoServer server("echoserver");
 
     server.listen(
         8080,
         5,
-        [instanceName = server.getConfig()->getInstanceName()]
-        (const EchoServer::SocketAddress& socketAddress, const core::socket::State& state) {
+        [instanceName = server.getConfig()->getInstanceName()](
+            const EchoServer::SocketAddress& socketAddress, const core::socket::State& state) {
             switch (state) {
                 case core::socket::State::OK:
-                    VLOG(1) << instanceName << ": listening on '"
-                            << socketAddress.toString() << "'";
+                    VLOG(1) << instanceName << ": listening on '" << socketAddress.toString()
+                            << "'";
                     break;
                 case core::socket::State::DISABLED:
                     VLOG(1) << instanceName << ": disabled";
                     break;
                 case core::socket::State::ERROR:
-                    LOG(ERROR) << instanceName << ": "
-                               << socketAddress.toString()
-                               << ": " << state.what();
+                    LOG(ERROR) << instanceName << ": " << socketAddress.toString() << ": "
+                               << state.what();
                     break;
                 case core::socket::State::FATAL:
-                    LOG(FATAL) << instanceName << ": "
-                               << socketAddress.toString()
-                               << ": " << state.what();
+                    LOG(FATAL) << instanceName << ": " << socketAddress.toString() << ": "
+                               << state.what();
                     break;
             }
-        }
-    );
+        });
 
     return core::SNodeC::start();
 }
@@ -341,8 +327,7 @@ This initializes the SNode.C runtime environment before the server handle is use
 The next important line is the type alias:
 
 ```cpp
-using EchoServer =
-    net::in::stream::legacy::SocketServer<EchoServerSocketContextFactory>;
+using EchoServer = net::in::stream::legacy::SocketServer<EchoServerSocketContextFactory>;
 ```
 
 This is the complete lower-layer choice for this server. It says:
@@ -399,37 +384,33 @@ The client mirrors the server.
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
 
-    using EchoClient =
-        net::in::stream::legacy::SocketClient<EchoClientSocketContextFactory>;
+    using EchoClient = net::in::stream::legacy::SocketClient<EchoClientSocketContextFactory>;
 
     EchoClient client("echoclient");
 
     client.connect(
         "localhost",
         8080,
-        [instanceName = client.getConfig()->getInstanceName()]
-        (const EchoClient::SocketAddress& socketAddress, const core::socket::State& state) {
+        [instanceName = client.getConfig()->getInstanceName()](
+            const EchoClient::SocketAddress& socketAddress, const core::socket::State& state) {
             switch (state) {
                 case core::socket::State::OK:
-                    VLOG(1) << instanceName << ": connected to '"
-                            << socketAddress.toString() << "'";
+                    VLOG(1) << instanceName << ": connected to '" << socketAddress.toString()
+                            << "'";
                     break;
                 case core::socket::State::DISABLED:
                     VLOG(1) << instanceName << ": disabled";
                     break;
                 case core::socket::State::ERROR:
-                    LOG(ERROR) << instanceName << ": "
-                               << socketAddress.toString()
-                               << ": " << state.what();
+                    LOG(ERROR) << instanceName << ": " << socketAddress.toString() << ": "
+                               << state.what();
                     break;
                 case core::socket::State::FATAL:
-                    LOG(FATAL) << instanceName << ": "
-                               << socketAddress.toString()
-                               << ": " << state.what();
+                    LOG(FATAL) << instanceName << ": " << socketAddress.toString() << ": "
+                               << state.what();
                     break;
             }
-        }
-    );
+        });
 
     return core::SNodeC::start();
 }
@@ -440,8 +421,7 @@ The client uses the matching public front-door header for the client role. Serve
 The type alias is the client-side counterpart to the server type:
 
 ```cpp
-using EchoClient =
-    net::in::stream::legacy::SocketClient<EchoClientSocketContextFactory>;
+using EchoClient = net::in::stream::legacy::SocketClient<EchoClientSocketContextFactory>;
 ```
 
 The client handle also has a name:

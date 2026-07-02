@@ -123,10 +123,8 @@ The lower server template supplies the handle shape and the registered server-in
 In simplified form:
 
 ```cpp
-SocketServerT<
-    web::http::server::SocketContextFactory,
-    std::function<void(std::shared_ptr<Request>,
-                       std::shared_ptr<Response>)>>
+SocketServerT<web::http::server::SocketContextFactory,
+              std::function<void(std::shared_ptr<Request>, std::shared_ptr<Response>)>>
 ```
 
 This means:
@@ -142,9 +140,7 @@ This means:
 A concrete IPv4 legacy HTTP server is then one specialization of this idea:
 
 ```cpp
-using Server =
-    web::http::server::Server<
-        net::in::stream::legacy::SocketServer>;
+using Server = web::http::server::Server<net::in::stream::legacy::SocketServer>;
 ```
 
 The lower layer is still present. The HTTP layer plugs into it.
@@ -384,8 +380,7 @@ using Response = WebApp::Response;
 
 WebApp app("legacy");
 
-app.get("/ws", [](const std::shared_ptr<Request>& req,
-                   const std::shared_ptr<Response>& res) {
+app.get("/ws", [](const std::shared_ptr<Request>& req, const std::shared_ptr<Response>& res) {
     res->upgrade(req, [res](const std::string& selected) {
         if (!selected.empty()) {
             res->end();
@@ -405,17 +400,12 @@ req->upgrade(
     "/ws",
     "websocket",
     [](bool success) {
-        VLOG(1) << "upgrade request initiation: "
-                << (success ? "accepted" : "rejected");
+        VLOG(1) << "upgrade request initiation: " << (success ? "accepted" : "rejected");
     },
-    [](const std::shared_ptr<Request>&,
-       const std::shared_ptr<Response>&,
-       bool success) {
-        VLOG(1) << "upgrade response: "
-                << (success ? "accepted" : "rejected");
+    [](const std::shared_ptr<Request>&, const std::shared_ptr<Response>&, bool success) {
+        VLOG(1) << "upgrade response: " << (success ? "accepted" : "rejected");
     },
-    [](const std::shared_ptr<Request>&,
-       const std::string& message) {
+    [](const std::shared_ptr<Request>&, const std::string& message) {
         LOG(ERROR) << "upgrade response parse error: " << message;
     });
 ```

@@ -81,7 +81,7 @@ SNode.C is not trying to replace every C++ networking approach. It is most usefu
 A rough comparison is useful at the beginning:
 
 ```text
-POSIX sockets        system API baseline; explicit but low-level
+POSIX sockets       system API baseline; explicit but low-level
 Boost.Asio/Asio     general asynchronous I/O model and portable C++ abstraction
 libuv               event-loop and asynchronous system-services layer
 web frameworks      focused HTTP/service frameworks

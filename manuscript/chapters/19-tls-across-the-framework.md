@@ -99,22 +99,20 @@ In simplified form, the shape is:
 
 ```cpp
 using SocketServer =
-    net::in::stream::SocketServer<
-        core::socket::stream::tls::SocketAcceptor,
-        net::in::stream::tls::config::ConfigSocketServer,
-        SocketContextFactoryT,
-        Args...>;
+    net::in::stream::SocketServer<core::socket::stream::tls::SocketAcceptor,
+                                  net::in::stream::tls::config::ConfigSocketServer,
+                                  SocketContextFactoryT,
+                                  Args...>;
 ```
 
 The client has the same idea:
 
 ```cpp
 using SocketClient =
-    net::in::stream::SocketClient<
-        core::socket::stream::tls::SocketConnector,
-        net::in::stream::tls::config::ConfigSocketClient,
-        SocketContextFactoryT,
-        Args...>;
+    net::in::stream::SocketClient<core::socket::stream::tls::SocketConnector,
+                                  net::in::stream::tls::config::ConfigSocketClient,
+                                  SocketContextFactoryT,
+                                  Args...>;
 ```
 
 The important parts are:

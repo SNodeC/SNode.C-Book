@@ -253,10 +253,7 @@ A factory is often a good place to make role-specific construction decisions.
 For example, a protocol may use the same context class on both sides but pass a role value:
 
 ```cpp
-enum class Role {
-    Server,
-    Client
-};
+enum class Role { Server, Client };
 ```
 
 Then the factory can make the role explicit. In schematic form:
@@ -436,9 +433,7 @@ Those arguments are forwarded to the concrete `SocketContextFactory` constructor
 In schematic form, the pattern is:
 
 ```cpp
-std::make_shared<SocketContextFactory>(
-    std::forward<Args>(args)...
-)
+std::make_shared<SocketContextFactory>(std::forward<Args>(args)...)
 ```
 
 the argument pack allows the factory to be preconfigured at the point where the server or client handle is created. The resulting factory object is then part of the shared state used by the registered instance when connections appear.
@@ -530,7 +525,7 @@ public:
         : role(role) {
     }
 
-SocketContext* create(SocketConnection* connection) override {
+    SocketContext* create(SocketConnection* connection) override {
         return new EchoSocketContext(connection, role);
     }
 
