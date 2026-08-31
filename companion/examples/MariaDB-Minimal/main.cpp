@@ -1,6 +1,6 @@
 #include <core/SNodeC.h>
 #include <database/mariadb/MariaDBClient.h>
-#include <log/Logger.h>
+#include <SemanticLog.h>
 
 #include <mysql.h>
 #include <string>
@@ -21,12 +21,12 @@ int main(int argc, char* argv[]) {
 
     database::mariadb::MariaDBClient db(details, [](const database::mariadb::MariaDBState& state) {
         if (state.error != 0) {
-            LOG(ERROR) << "MariaDB state error " << state.error << ": "
+            snode::semantic::appLog().error() << "MariaDB state error " << state.error << ": "
                        << state.errorMessage;
         } else if (state.connected) {
-            VLOG(1) << "MariaDB connected";
+            snode::semantic::appLog().trace() << "MariaDB connected";
         } else {
-            VLOG(1) << "MariaDB disconnected";
+            snode::semantic::appLog().trace() << "MariaDB disconnected";
         }
     });
 
@@ -35,27 +35,27 @@ int main(int argc, char* argv[]) {
           [&db]() {
               db.affectedRows(
                   [](my_ulonglong rows) {
-                      VLOG(1) << "insert affected rows: " << rows;
+                      snode::semantic::appLog().trace() << "insert affected rows: " << rows;
                   },
                   [](const std::string& error, unsigned int number) {
-                      LOG(ERROR) << "affectedRows error " << number << ": "
+                      snode::semantic::appLog().error() << "affectedRows error " << number << ": "
                                  << error;
                   });
           },
           [](const std::string& error, unsigned int number) {
-              LOG(ERROR) << "insert error " << number << ": " << error;
+              snode::semantic::appLog().error() << "insert error " << number << ": " << error;
           })
       .query(
           "SELECT sensor, value FROM measurements",
           [](const MYSQL_ROW row) {
               if (row != nullptr) {
-                  VLOG(1) << "measurement: " << row[0] << " = " << row[1];
+                  snode::semantic::appLog().trace() << "measurement: " << row[0] << " = " << row[1];
               } else {
-                  VLOG(1) << "measurement query complete";
+                  snode::semantic::appLog().trace() << "measurement query complete";
               }
           },
           [](const std::string& error, unsigned int number) {
-              LOG(ERROR) << "query error " << number << ": " << error;
+              snode::semantic::appLog().error() << "query error " << number << ": " << error;
           });
 
     return core::SNodeC::start();

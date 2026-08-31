@@ -7,7 +7,7 @@
 #include <core/socket/SocketAddress.h>
 #include <core/socket/stream/SocketConnection.h>
 #include <exception>
-#include <log/Logger.h>
+#include <SemanticLog.h>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -93,15 +93,15 @@ namespace minigateway {
     }
 
     void MeasurementUnixSocketContext::onConnected() {
-        VLOG(1) << "Measurement socket connected from " << getSocketConnection()->getRemoteAddress().toString();
+        snode::semantic::appLog().trace() << "Measurement socket connected from " << getSocketConnection()->getRemoteAddress().toString();
     }
 
     void MeasurementUnixSocketContext::onDisconnected() {
-        VLOG(1) << "Measurement socket disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+        snode::semantic::appLog().trace() << "Measurement socket disconnected from " << getSocketConnection()->getRemoteAddress().toString();
     }
 
     bool MeasurementUnixSocketContext::onSignal(int signum) {
-        VLOG(1) << "Measurement socket disconnected due to signal " << signum;
+        snode::semantic::appLog().trace() << "Measurement socket disconnected due to signal " << signum;
 
         return true;
     }
@@ -126,7 +126,7 @@ namespace minigateway {
             }
 
             if (receiveBuffer.length() > 4096) {
-                LOG(WARNING) << "Measurement socket line exceeds 4096 bytes; dropping buffered input";
+                snode::semantic::appLog().warn() << "Measurement socket line exceeds 4096 bytes; dropping buffered input";
                 receiveBuffer.clear();
             }
         }
@@ -139,7 +139,7 @@ namespace minigateway {
             try {
                 measurementModel.accept(parseMeasurementLine(line));
             } catch (const std::exception& ex) {
-                LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+                snode::semantic::appLog().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
             }
         }
     }
