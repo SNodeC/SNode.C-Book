@@ -6,7 +6,7 @@
 #include <exception>
 #include <iot/mqtt/Topic.h>
 #include <list>
-#include <SemanticLog.h>
+#include <Log.h>
 #include <utility>
 #include <utils/system/signal.h>
 
@@ -36,7 +36,7 @@ namespace minigateway {
     }
 
     void MiniGatewayMqtt::onConnected() {
-        snode::semantic::appLog().trace() << "MQTT: initiating session";
+        snode::log::application().trace() << "MQTT: initiating session";
 
         sendConnect(true, "", "", 0, false, "", "", true);
     }
@@ -48,7 +48,7 @@ namespace minigateway {
     }
 
     bool MiniGatewayMqtt::onSignal(int signum) {
-        snode::semantic::appLog().trace() << "MQTT: exit due to signal " << signum << " (SIG" << utils::system::sigabbrev_np(signum) << ")";
+        snode::log::application().trace() << "MQTT: exit due to signal " << signum << " (SIG" << utils::system::sigabbrev_np(signum) << ")";
 
         sendDisconnect();
 
@@ -68,16 +68,16 @@ namespace minigateway {
 
     void MiniGatewayMqtt::onPublish(const iot::mqtt::packets::Publish& publish) {
         if (publish.getTopic() != measurementInputTopic) {
-            snode::semantic::appLog().trace() << "Ignoring MQTT publish on unsubscribed topic " << publish.getTopic();
+            snode::log::application().trace() << "Ignoring MQTT publish on unsubscribed topic " << publish.getTopic();
             return;
         }
 
-        snode::semantic::appLog().trace() << "MQTT measurement input on " << publish.getTopic() << ": " << publish.getMessage();
+        snode::log::application().trace() << "MQTT measurement input on " << publish.getTopic() << ": " << publish.getMessage();
 
         try {
             measurementModel.accept(fromJsonPayload(publish.getMessage()));
         } catch (const std::exception& ex) {
-            snode::semantic::appLog().warn() << "Ignoring invalid MQTT measurement payload on " << publish.getTopic() << ": " << ex.what();
+            snode::log::application().warn() << "Ignoring invalid MQTT measurement payload on " << publish.getTopic() << ": " << ex.what();
         }
     }
 

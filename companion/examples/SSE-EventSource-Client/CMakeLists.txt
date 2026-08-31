@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(GNUInstallDirs)
 
-find_package(snodec 1.0.0 REQUIRED COMPONENTS http-client net-in-stream-legacy)
+find_package(snodec 2.0.0 REQUIRED COMPONENTS http-client net-in-stream-legacy)
 
 add_executable(sse-eventsource-client main.cpp)
 

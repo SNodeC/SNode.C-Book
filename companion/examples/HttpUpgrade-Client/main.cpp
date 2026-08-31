@@ -2,7 +2,7 @@
 #include <core/socket/State.h>
 #include <web/http/legacy/in/Client.h>
 #include <web/websocket/client/SocketContextUpgradeFactory.h>
-#include <SemanticLog.h>
+#include <Log.h>
 
 #include <memory>
 #include <string>
@@ -27,27 +27,27 @@ int main(int argc, char* argv[]) {
                 "/ws",
                 "websocket",
                 [](bool success) {
-                    snode::semantic::appLog().trace() << "upgrade request initiation: "
+                    snode::log::application().trace() << "upgrade request initiation: "
                             << (success ? "accepted" : "rejected");
                 },
                 [](const std::shared_ptr<Request>&,
                    const std::shared_ptr<Response>&,
                    bool success) {
-                    snode::semantic::appLog().trace() << "upgrade response: "
+                    snode::log::application().trace() << "upgrade response: "
                             << (success ? "accepted" : "rejected");
                 },
                 [](const std::shared_ptr<Request>&,
                    const std::string& message) {
-                    snode::semantic::appLog().error() << "upgrade response parse error: " << message;
+                    snode::log::application().error() << "upgrade response parse error: " << message;
                 });
         },
         [](const std::shared_ptr<MasterRequest>&) {
-            snode::semantic::appLog().trace() << "HTTP request completed or disconnected";
+            snode::log::application().trace() << "HTTP request completed or disconnected";
         });
 
     client.connect([](const SocketAddress& socketAddress,
                       const core::socket::State&) {
-        snode::semantic::appLog().trace() << "HTTP client connection status for " << socketAddress.toString();
+        snode::log::application().trace() << "HTTP client connection status for " << socketAddress.toString();
     });
 
     return core::SNodeC::start();

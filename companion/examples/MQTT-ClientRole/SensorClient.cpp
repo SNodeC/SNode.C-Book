@@ -1,6 +1,6 @@
 #include "SensorClient.h"
 
-#include <SemanticLog.h>
+#include <Log.h>
 
 SensorClient::SensorClient()
     : iot::mqtt::client::Mqtt(
@@ -34,7 +34,7 @@ void SensorClient::onPublish(const iot::mqtt::packets::Publish& publish) {
     const std::string topic = publish.getTopic();
     const std::string message = publish.getMessage();
 
-    snode::semantic::appLog().trace() << "MQTT command on " << topic << ": " << message;
+    snode::log::application().trace() << "MQTT command on " << topic << ": " << message;
 }
 
 bool SensorClient::onSignal(int) {

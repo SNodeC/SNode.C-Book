@@ -7,7 +7,7 @@
 #include <core/socket/SocketAddress.h>
 #include <core/socket/stream/SocketConnection.h>
 #include <exception>
-#include <SemanticLog.h>
+#include <Log.h>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -93,15 +93,15 @@ namespace minigateway {
     }
 
     void MeasurementUnixSocketContext::onConnected() {
-        snode::semantic::appLog().trace() << "Measurement socket connected from " << getSocketConnection()->getRemoteAddress().toString();
+        snode::log::application().trace() << "Measurement socket connected from " << getSocketConnection()->getRemoteAddress().toString();
     }
 
     void MeasurementUnixSocketContext::onDisconnected() {
-        snode::semantic::appLog().trace() << "Measurement socket disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+        snode::log::application().trace() << "Measurement socket disconnected from " << getSocketConnection()->getRemoteAddress().toString();
     }
 
     bool MeasurementUnixSocketContext::onSignal(int signum) {
-        snode::semantic::appLog().trace() << "Measurement socket disconnected due to signal " << signum;
+        snode::log::application().trace() << "Measurement socket disconnected due to signal " << signum;
 
         return true;
     }
@@ -126,7 +126,7 @@ namespace minigateway {
             }
 
             if (receiveBuffer.length() > 4096) {
-                snode::semantic::appLog().warn() << "Measurement socket line exceeds 4096 bytes; dropping buffered input";
+                snode::log::application().warn() << "Measurement socket line exceeds 4096 bytes; dropping buffered input";
                 receiveBuffer.clear();
             }
         }
@@ -139,7 +139,7 @@ namespace minigateway {
             try {
                 measurementModel.accept(parseMeasurementLine(line));
             } catch (const std::exception& ex) {
-                snode::semantic::appLog().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+                snode::log::application().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
             }
         }
     }

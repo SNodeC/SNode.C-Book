@@ -1,7 +1,7 @@
 #include <core/socket/State.h>
 #include <express/legacy/in/WebApp.h>
 #include <nlohmann/json.hpp>
-#include <SemanticLog.h>
+#include <Log.h>
 #include <web/http/http_utils.h>
 
 #include <algorithm>
@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
 
     app.listen([](const SocketAddress& socketAddress,
                   const core::socket::State&) {
-        snode::semantic::appLog().trace() << "SSE server listening on " << socketAddress.toString();
+        snode::log::application().trace() << "SSE server listening on " << socketAddress.toString();
     });
 
     return express::WebApp::start();

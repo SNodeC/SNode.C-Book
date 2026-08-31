@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(GNUInstallDirs)
 
-find_package(snodec 1.0.0 REQUIRED COMPONENTS db-mariadb)
+find_package(snodec 2.0.0 REQUIRED COMPONENTS db-mariadb)
 
 add_executable(mariadb-minimal main.cpp)
 
