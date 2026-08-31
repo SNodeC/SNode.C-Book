@@ -2,7 +2,7 @@
 
 #include <core/SNodeC.h>
 #include <core/socket/State.h>
-#include <SemanticLog.h>
+#include <Log.h>
 #include <net/in/stream/legacy/SocketServer.h>
 
 int main(int argc, char* argv[]) {
@@ -19,16 +19,16 @@ int main(int argc, char* argv[]) {
                                                                const core::socket::State& state) {
             switch (state) {
                 case core::socket::State::OK:
-                    snode::semantic::appLog().trace() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                    snode::log::application().trace() << instanceName << ": listening on '" << socketAddress.toString() << "'";
                     break;
                 case core::socket::State::DISABLED:
-                    snode::semantic::appLog().trace() << instanceName << ": disabled";
+                    snode::log::application().trace() << instanceName << ": disabled";
                     break;
                 case core::socket::State::ERROR:
-                    snode::semantic::appLog().error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                    snode::log::application().error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
                     break;
                 case core::socket::State::FATAL:
-                    snode::semantic::appLog().critical() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                    snode::log::application().critical() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
                     break;
             }
         });

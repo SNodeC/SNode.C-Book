@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(GNUInstallDirs)
 
-find_package(snodec 1.0.0 REQUIRED COMPONENTS mqtt-client)
+find_package(snodec 2.0.0 REQUIRED COMPONENTS mqtt-client)
 
 add_library(mqtt-client-role SensorClient.cpp SensorClient.h)
 

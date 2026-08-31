@@ -2,7 +2,7 @@
 
 #include <core/socket/SocketAddress.h>
 #include <core/socket/stream/SocketConnection.h>
-#include <SemanticLog.h>
+#include <Log.h>
 
 #include <string>
 
@@ -11,17 +11,17 @@ LineCommandServerContext::LineCommandServerContext(core::socket::stream::SocketC
 }
 
 void LineCommandServerContext::onConnected() {
-    snode::semantic::appLog().trace() << "Line command server connected to " << getSocketConnection()->getRemoteAddress().toString();
+    snode::log::application().trace() << "Line command server connected to " << getSocketConnection()->getRemoteAddress().toString();
     sendToPeer("READY\n");
 }
 
 void LineCommandServerContext::onDisconnected() {
-    snode::semantic::appLog().trace() << "Line command server disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+    snode::log::application().trace() << "Line command server disconnected from " << getSocketConnection()->getRemoteAddress().toString();
     receiveBuffer.clear();
 }
 
 bool LineCommandServerContext::onSignal(int signum) {
-    snode::semantic::appLog().trace() << "Line command server closing due to signal " << signum;
+    snode::log::application().trace() << "Line command server closing due to signal " << signum;
     close();
 
     return true;
@@ -47,7 +47,7 @@ std::size_t LineCommandServerContext::onReceivedFromPeer() {
         }
 
         if (receiveBuffer.length() > maxLineLength) {
-            snode::semantic::appLog().warn() << "Line command server closing after overlong pending line";
+            snode::log::application().warn() << "Line command server closing after overlong pending line";
             sendToPeer("ERR line too long\n");
             receiveBuffer.clear();
             close();
@@ -59,7 +59,7 @@ std::size_t LineCommandServerContext::onReceivedFromPeer() {
 
 void LineCommandServerContext::processLine(const std::string& line) {
     if (!line.empty()) {
-        snode::semantic::appLog().trace() << "Line command server received '" << line << "'";
+        snode::log::application().trace() << "Line command server received '" << line << "'";
 
         if (line == "PING") {
             sendToPeer("PONG\n");

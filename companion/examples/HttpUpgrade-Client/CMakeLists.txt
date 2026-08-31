@@ -9,7 +9,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include(GNUInstallDirs)
 
 find_package(
-    snodec 1.0.0 REQUIRED COMPONENTS http-client net-in-stream-legacy
+    snodec 2.0.0 REQUIRED COMPONENTS http-client net-in-stream-legacy
                                      websocket-client
 )
 

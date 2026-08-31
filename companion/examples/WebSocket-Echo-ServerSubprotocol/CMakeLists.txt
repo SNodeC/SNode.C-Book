@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(GNUInstallDirs)
 
-find_package(snodec 1.0.0 REQUIRED COMPONENTS websocket-server)
+find_package(snodec 2.0.0 REQUIRED COMPONENTS websocket-server)
 
 add_library(websocket-echo-server-subprotocol SHARED EchoServer.cpp EchoServerFactory.cpp)
 

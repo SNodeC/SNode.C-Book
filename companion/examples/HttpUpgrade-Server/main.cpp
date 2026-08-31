@@ -1,7 +1,7 @@
 #include <core/socket/State.h>
 #include <express/legacy/in/WebApp.h>
 #include <web/websocket/server/SocketContextUpgradeFactory.h>
-#include <SemanticLog.h>
+#include <Log.h>
 
 #include <memory>
 #include <string>
@@ -22,10 +22,10 @@ int main(int argc, char* argv[]) {
                        const std::shared_ptr<Response>& res) {
         res->upgrade(req, [res](const std::string& selected) {
             if (!selected.empty()) {
-                snode::semantic::appLog().trace() << "HTTP upgrade selected: " << selected;
+                snode::log::application().trace() << "HTTP upgrade selected: " << selected;
                 res->end();
             } else {
-                snode::semantic::appLog().warn() << "HTTP upgrade rejected";
+                snode::log::application().warn() << "HTTP upgrade rejected";
                 res->sendStatus(404);
             }
         });
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 
     app.listen([](const SocketAddress& socketAddress,
                   const core::socket::State&) {
-        snode::semantic::appLog().trace() << "HTTP upgrade server listening on " << socketAddress.toString();
+        snode::log::application().trace() << "HTTP upgrade server listening on " << socketAddress.toString();
     });
 
     return express::WebApp::start();
