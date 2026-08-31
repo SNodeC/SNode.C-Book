@@ -1,7 +1,7 @@
 #include <core/SNodeC.h>
 #include <net/in/SocketAddress.h>
 #include <web/http/legacy/in/EventSource.h>
-#include <log/Logger.h>
+#include <SemanticLog.h>
 
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
@@ -11,21 +11,21 @@ int main(int argc, char* argv[]) {
     auto events = web::http::legacy::in::EventSource("http", address, "/events");
 
     events->onOpen([] {
-        VLOG(1) << "SSE stream opened";
+        snode::semantic::appLog().trace() << "SSE stream opened";
     });
 
     events->onMessage([](const web::http::client::tools::EventSource::MessageEvent& event) {
-        VLOG(1) << "message: " << event.data;
+        snode::semantic::appLog().trace() << "message: " << event.data;
     });
 
     events->addEventListener(
         "measurement",
         [](const web::http::client::tools::EventSource::MessageEvent& event) {
-            VLOG(1) << "measurement: " << event.data;
+            snode::semantic::appLog().trace() << "measurement: " << event.data;
         });
 
     events->onError([] {
-        LOG(ERROR) << "SSE stream error";
+        snode::semantic::appLog().error() << "SSE stream error";
     });
 
     return core::SNodeC::start();

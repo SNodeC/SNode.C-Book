@@ -2,7 +2,7 @@
 
 #include <core/socket/SocketAddress.h>
 #include <core/socket/stream/SocketConnection.h>
-#include <log/Logger.h>
+#include <SemanticLog.h>
 
 #include <string>
 
@@ -11,17 +11,17 @@ LineCommandServerContext::LineCommandServerContext(core::socket::stream::SocketC
 }
 
 void LineCommandServerContext::onConnected() {
-    VLOG(1) << "Line command server connected to " << getSocketConnection()->getRemoteAddress().toString();
+    snode::semantic::appLog().trace() << "Line command server connected to " << getSocketConnection()->getRemoteAddress().toString();
     sendToPeer("READY\n");
 }
 
 void LineCommandServerContext::onDisconnected() {
-    VLOG(1) << "Line command server disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+    snode::semantic::appLog().trace() << "Line command server disconnected from " << getSocketConnection()->getRemoteAddress().toString();
     receiveBuffer.clear();
 }
 
 bool LineCommandServerContext::onSignal(int signum) {
-    VLOG(1) << "Line command server closing due to signal " << signum;
+    snode::semantic::appLog().trace() << "Line command server closing due to signal " << signum;
     close();
 
     return true;
@@ -47,7 +47,7 @@ std::size_t LineCommandServerContext::onReceivedFromPeer() {
         }
 
         if (receiveBuffer.length() > maxLineLength) {
-            LOG(WARNING) << "Line command server closing after overlong pending line";
+            snode::semantic::appLog().warn() << "Line command server closing after overlong pending line";
             sendToPeer("ERR line too long\n");
             receiveBuffer.clear();
             close();
@@ -59,7 +59,7 @@ std::size_t LineCommandServerContext::onReceivedFromPeer() {
 
 void LineCommandServerContext::processLine(const std::string& line) {
     if (!line.empty()) {
-        VLOG(1) << "Line command server received '" << line << "'";
+        snode::semantic::appLog().trace() << "Line command server received '" << line << "'";
 
         if (line == "PING") {
             sendToPeer("PONG\n");
