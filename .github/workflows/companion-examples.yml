@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: SNodeC/snode.c
-          ref: v1.0.2
+          ref: 86992e7ead06c5790bf03a3d5280adaf14b5acb6
           path: external/snode.c
 
       - name: Install C++ build dependencies
