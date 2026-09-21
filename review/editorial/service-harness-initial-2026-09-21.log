@@ -1,0 +1,25 @@
+Printed unit syntax verified with temporary executable/configuration paths
+Installed foreground exchange passed
+samples=200 bytes=256 connections=1
+median_us=15.82
+p95_us=215.77
+Running as unit: snodec-book-editorial-echo-3674595.service; invocation ID: f4d6790f02cd49f5ab2402f6b8e8c789
+3674604
+3674609
+Supervised start/restart exchange passed; process identity changed
+Invalid port rejected without a listener
+Failed to reset failed state of unit snodec-book-editorial-echo-3674595.service: Unit snodec-book-editorial-echo-3674595.service not loaded.
+Failed to start snodec-book-editorial-echo-3674595.service: Unit snodec-book-editorial-echo-3674595.service not found.
+Failed to stop snodec-book-editorial-echo-3674595.service: Unit snodec-book-editorial-echo-3674595.service not loaded.
+Failed to reset failed state of unit snodec-book-editorial-echo-3674595.service: Unit snodec-book-editorial-echo-3674595.service not loaded.
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/review/editorial/probes/verify-service.py", line 104, in <module>
+    command('systemctl', '--user', 'start', unit)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/review/editorial/probes/verify-service.py", line 42, in command
+    result.check_returncode()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/subprocess.py", line 509, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+                             self.stderr)
+subprocess.CalledProcessError: Command '('systemctl', '--user', 'start', 'snodec-book-editorial-echo-3674595.service')' returned non-zero exit status 5.

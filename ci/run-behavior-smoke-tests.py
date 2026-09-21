@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Runtime smoke tests for selected SNode.C book companion examples.
 
-The companion CI already proves that every example compiles against the pinned
-SNode.C release. This script adds a deliberately small behavior check for the
+The companion CI already proves that every example compiles against the recorded
+SNode.C working tree. This script adds a deliberately small behavior check for the
 showcase paths that matter to the manuscript package:
 
 * SSE-Server emits a well-formed measurement event stream.
@@ -24,6 +24,7 @@ import socket
 import subprocess
 import sys
 import time
+import tempfile
 from dataclasses import dataclass
 from typing import Dict, Sequence, Tuple
 
@@ -32,11 +33,11 @@ BUILD_DIR = pathlib.Path(os.environ.get("BOOK_EXAMPLES_BUILD_DIR", REPO_ROOT / "
 SNODEC_PREFIX = pathlib.Path(os.environ.get("SNODEC_PREFIX", REPO_ROOT / "install" / "snodec"))
 LOG_DIR = pathlib.Path(os.environ.get("SNODEC_BOOK_SMOKE_LOG_DIR", REPO_ROOT / "build" / "behavior-smoke-logs"))
 HOST = os.environ.get("SNODEC_BOOK_SMOKE_HOST", "127.0.0.1")
-SSE_PORT = int(os.environ.get("SNODEC_BOOK_SMOKE_SSE_PORT", "8080"))
-MINIGATEWAY_HTTP_PORT = int(os.environ.get("SNODEC_BOOK_SMOKE_MINIGATEWAY_HTTP_PORT", "8080"))
+SSE_PORT = int(os.environ.get("SNODEC_BOOK_SMOKE_SSE_PORT", "0"))
+MINIGATEWAY_HTTP_PORT = int(os.environ.get("SNODEC_BOOK_SMOKE_MINIGATEWAY_HTTP_PORT", "0"))
 MQTT_BROKER_HOST = os.environ.get("SNODEC_BOOK_SMOKE_MQTT_HOST", HOST)
 MQTT_BROKER_PORT = int(os.environ.get("SNODEC_BOOK_SMOKE_MQTT_PORT", "1883"))
-MEASUREMENT_SOCKET = pathlib.Path(os.environ.get("SNODEC_BOOK_SMOKE_UNIX_SOCKET", "/tmp/minigateway-measurements.sock"))
+MEASUREMENT_SOCKET = pathlib.Path(os.environ.get("SNODEC_BOOK_SMOKE_UNIX_SOCKET", f"/tmp/snodec-book-smoke-{os.getpid()}.sock"))
 
 
 class SmokeError(RuntimeError):
@@ -114,9 +115,8 @@ def start_process(executable: pathlib.Path, label: str, args: Sequence[str]) -> 
     RequiresError output. The command lines below mirror the examples' configured
     runtime roles:
 
-    * ``sse-server legacy local --port PORT`` for the parameterless SSE server listener.
-      The example EventSource client is hard-coded to 127.0.0.1:8080, so the default
-      smoke-test port is 8080 unless SNODEC_BOOK_SMOKE_SSE_PORT overrides it.
+    * ``sse-server legacy local --port PORT`` selects an available local endpoint.
+      The independent peer in this test uses the same selected port.
     * ``minigateway-extended mqtt-uplink remote --host HOST --port PORT`` so the
       MQTT role has a configured remote endpoint while the smoke test exercises
       the HTTP and Unix-domain paths without requiring a live MQTT broker.
@@ -176,12 +176,13 @@ def wait_for_unix_socket(path: pathlib.Path, process: ManagedProcess, timeout: f
     raise SmokeError(f"timed out waiting for Unix-domain socket: {path}\n{tail(process.log_path)}")
 
 
-def raw_http(port: int, path: str, *, accept: str = "*/*", timeout: float = 5.0, read_stream: bool = False) -> Tuple[str, Dict[str, str], bytes]:
+def raw_http(port: int, path: str, *, accept: str = "*/*", method: str = "GET", timeout: float = 5.0, read_stream: bool = False) -> Tuple[str, Dict[str, str], bytes]:
     request = (
-        f"GET {path} HTTP/1.1\r\n"
+        f"{method} {path} HTTP/1.1\r\n"
         f"Host: {HOST}:{port}\r\n"
         f"Accept: {accept}\r\n"
         "Connection: close\r\n"
+        "Content-Length: 0\r\n"
         "\r\n"
     ).encode("ascii")
 
@@ -304,10 +305,26 @@ def test_sse_server() -> None:
         payload = assert_sse_measurement(body, expected_sequence=1)
         if payload.get("sensor") != "temperature" or payload.get("value") != 23.5:
             raise SmokeError(f"unexpected initial SSE payload: {payload!r}")
+        assert_event_contract(SSE_PORT)
+        status_line, _, body = raw_http(SSE_PORT, "/simulate", method="POST")
+        assert_status(status_line, 200, "/simulate")
+        if json.loads(body)["sequence"] != 2:
+            raise SmokeError("POST /simulate did not advance the SSE model once")
+        status_line, _, _ = raw_http(SSE_PORT, "/simulate")
+        assert_status(status_line, 404, "GET /simulate")
     finally:
         server.stop()
         time.sleep(0.3)
     print("SSE-Server runtime smoke test passed.")
+
+
+def assert_event_contract(port: int) -> None:
+    for accept in ("*/*", "text/event-stream;q=0", "application/json, text/event-stream"):
+        status, _, _ = raw_http(port, "/events", accept=accept)
+        assert_status(status, 406, f"/events Accept: {accept}")
+    status, _, body = raw_http(port, "/events", accept="Text/Event-Stream", read_stream=True)
+    assert_status(status, 200, "/events case-insensitive explicit media type")
+    assert_sse_measurement(body)
 
 
 def send_measurement_line(line: str) -> None:
@@ -343,12 +360,14 @@ def test_minigateway_extended_unix_input() -> None:
         pass
 
     executable = find_executable("minigateway-extended")
-    # MiniGateway Extended sets the HTTP port and Unix-domain socket path in
-    # code. The MQTT client role still needs a configured remote host for the
+    # Override the default HTTP port and Unix pathname through named roles.
+    # The MQTT client role still needs a configured remote host for the
     # parameterless connect() path; no external MQTT broker is required because
     # the role is configured for reconnect/retry and the smoke test exercises the
     # web and Unix-domain paths.
-    args = ["mqtt-uplink", "remote", "--host", MQTT_BROKER_HOST, "--port", str(MQTT_BROKER_PORT)]
+    args = ["web", "local", "--host", HOST, "--port", str(MINIGATEWAY_HTTP_PORT),
+            "measurement-input", "local", "--sun-path", str(MEASUREMENT_SOCKET),
+            "mqtt-uplink", "remote", "--host", MQTT_BROKER_HOST, "--port", str(MQTT_BROKER_PORT)]
     gateway = start_process(executable, "minigateway-extended", args)
     try:
         wait_for_tcp(HOST, MINIGATEWAY_HTTP_PORT, gateway)
@@ -373,6 +392,35 @@ def test_minigateway_extended_unix_input() -> None:
         for key, value in expected.items():
             if sse_payload.get(key) != value:
                 raise SmokeError(f"unexpected MiniGateway SSE payload after Unix input: {sse_payload!r}")
+        assert_event_contract(MINIGATEWAY_HTTP_PORT)
+        for chunks in ([b"x" * 4097 + b"21.5,45.0,3.8\n"],
+                       [b"x" * 4096, b"x", b"21.5,45.0,3.8\n"]):
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
+                client.settimeout(2)
+                client.connect(str(MEASUREMENT_SOCKET))
+                for chunk in chunks:
+                    try:
+                        client.sendall(chunk)
+                    except (BrokenPipeError, ConnectionResetError):
+                        break
+                    time.sleep(0.05)
+                try:
+                    if client.recv(1) != b"":
+                        raise SmokeError("overlong Unix input was not closed")
+                except ConnectionResetError:
+                    pass
+            if json_get(MINIGATEWAY_HTTP_PORT, "/status")["sequence"] != 1:
+                raise SmokeError("overlong Unix record or suffix changed the model")
+        send_measurement_line("22.0,46.0,3.9,999\n")
+        wait_for_status_sequence(2, gateway)
+        status, _, body = raw_http(MINIGATEWAY_HTTP_PORT, "/simulate", method="POST")
+        assert_status(status, 200, "POST /simulate")
+        if json.loads(body)["sequence"] != 3:
+            raise SmokeError("POST /simulate did not advance the gateway model once")
+        status, _, _ = raw_http(MINIGATEWAY_HTTP_PORT, "/simulate")
+        assert_status(status, 404, "GET /simulate")
+        if json_get(MINIGATEWAY_HTTP_PORT, "/status")["sequence"] != 3:
+            raise SmokeError("GET /simulate changed the model")
     finally:
         gateway.stop()
         try:
@@ -383,21 +431,118 @@ def test_minigateway_extended_unix_input() -> None:
     print("MiniGateway Extended Unix-input runtime smoke test passed.")
 
 
+def test_line_length_boundary() -> None:
+    with socket.socket() as probe:
+        probe.bind((HOST, 0))
+        port = probe.getsockname()[1]
+    server = start_process(find_executable("line-protocol-server"), "line-length",
+                           ["lineprotocolserver", "local", "--host", HOST, "--port", str(port)])
+    try:
+        wait_for_tcp(HOST, port, server)
+        for length, split in ((4096, False), (4097, False), (4097, True)):
+            with socket.create_connection((HOST, port), timeout=3) as peer:
+                peer.settimeout(3)
+                if peer.recv(256) != b"READY\n":
+                    raise SmokeError("line server greeting differs")
+                if split:
+                    peer.sendall(b"x" * 4096)
+                    time.sleep(0.05)
+                    peer.sendall(b"x\nPING\n")
+                else:
+                    peer.sendall(b"x" * length + b"\nPING\n")
+                data = bytearray()
+                while b"PONG\n" not in data:
+                    try:
+                        chunk = peer.recv(8192)
+                    except ConnectionResetError:
+                        break
+                    if not chunk:
+                        break
+                    data.extend(chunk)
+                if length == 4096:
+                    if bytes(data) != b"ERR unknown command\nPONG\n":
+                        raise SmokeError(f"maximum allowed line response differs: {data!r}")
+                elif b"unknown command" in data or b"PONG" in data:
+                    raise SmokeError(f"overlong record or following command was interpreted: {data!r}")
+    finally:
+        server.stop()
+    print("Line length: exact boundary accepted; overlong whole/split records rejected.")
+
+
+def test_mqtt_connect_wire_level() -> None:
+    # A controlled packet peer, not an interoperability claim about a full broker.
+    for executable in ("minigateway", "minigateway-extended"):
+        with socket.socket() as broker:
+            broker.bind((HOST, 0))
+            broker.listen(1)
+            broker.settimeout(5)
+            args = ["web", "--disabled", "mqtt-uplink", "remote", "--host", HOST,
+                    "--port", str(broker.getsockname()[1])]
+            if executable.endswith("extended"):
+                args += ["measurement-input", "--disabled"]
+            gateway = start_process(find_executable(executable), executable + "-mqtt-wire", args)
+            try:
+                with broker.accept()[0] as peer:
+                    peer.settimeout(3)
+                    def exact(size: int) -> bytes:
+                        data = bytearray()
+                        while len(data) < size:
+                            part = peer.recv(size - len(data))
+                            if not part:
+                                raise SmokeError("MQTT peer closed inside CONNECT")
+                            data.extend(part)
+                        return bytes(data)
+                    if exact(1) != b"\x10":
+                        raise SmokeError("first MQTT packet is not CONNECT")
+                    remaining, multiplier = 0, 1
+                    for _ in range(4):
+                        digit = exact(1)[0]
+                        remaining += (digit & 127) * multiplier
+                        if digit < 128:
+                            break
+                        multiplier *= 128
+                    else:
+                        raise SmokeError("malformed MQTT remaining length")
+                    payload = exact(remaining)
+                    if payload[:7] != b"\x00\x04MQTT\x04":
+                        raise SmokeError(f"CONNECT does not select standard MQTT 3.1.1: {payload[:7]!r}")
+            finally:
+                gateway.stop()
+    print("Both gateways send CONNECT with MQTT protocol level 4; no private bit.")
+
+
 def main() -> int:
+    global SSE_PORT, MINIGATEWAY_HTTP_PORT
+    def available_port() -> int:
+        with socket.socket() as probe:
+            probe.bind((HOST, 0))
+            return probe.getsockname()[1]
+    SSE_PORT = SSE_PORT or available_port()
+    MINIGATEWAY_HTTP_PORT = MINIGATEWAY_HTTP_PORT or available_port()
     print(f"Using example build directory: {BUILD_DIR}")
     print(f"Using SNode.C install prefix: {SNODEC_PREFIX}")
     print(f"SSE-Server smoke endpoint: http://{HOST}:{SSE_PORT}/events")
     print(f"MiniGateway Extended smoke endpoint: http://{HOST}:{MINIGATEWAY_HTTP_PORT}")
     print(f"MiniGateway Extended Unix socket: {MEASUREMENT_SOCKET}")
-    test_sse_server()
-    test_minigateway_extended_unix_input()
+    failures = []
+    for test in (test_sse_server, test_minigateway_extended_unix_input,
+                 test_line_length_boundary, test_mqtt_connect_wire_level):
+        try:
+            test()
+        except Exception as exc:
+            failures.append(f"{test.__name__}: {exc}")
+            print(f"ERROR: {failures[-1]}", file=sys.stderr)
+    if failures:
+        return 1
     print("Behavioral smoke tests passed.")
     return 0
 
 
 if __name__ == "__main__":
     try:
-        raise SystemExit(main())
+        with tempfile.TemporaryDirectory(prefix="snodec-book-smoke-config-") as config_home:
+            os.environ["XDG_CONFIG_HOME"] = config_home
+            raise SystemExit(main())
     except SmokeError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         raise SystemExit(1)

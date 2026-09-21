@@ -19,15 +19,7 @@ IPv4 and IPv6 form the first concrete comparison pair in this book because they 
 
 Most readers already have some intuition for hosts, addresses, ports, listening servers, and remote peers. That makes IPv4 and IPv6 a good place to begin the concrete family discussion. At the same time, IPv4 and IPv6 are not the same family. Their namespaces, address classes, textual address forms, wildcard forms, and deployment questions differ. SNode.C makes that difference explicit instead of hiding it behind one overloaded network type.
 
-IPv4 and IPv6 are therefore not chosen because Unix domain sockets or Bluetooth are secondary. They are chosen because they provide a controlled first variation:
-
-```text
-same handle / instance / connection model
-same factory / context / runtime model
-different lower-family semantics
-```
-
-That controlled variation is the main teaching value of this chapter. The reader can see what changes when the lower family changes, and just as importantly, what does not change.
+Use the comparison to hold protocol behavior fixed while changing the endpoint family. A successful exchange on each loopback address will test that claim more directly than two similar type names. A failure on one family will then be a reason to inspect that family's binding and reachability, before changing the shared protocol.
 
 ### What stays shared across IPv4 and IPv6
 
@@ -41,7 +33,7 @@ For both IPv4 and IPv6, the outer application shape remains recognizable.
 A typical stream application still involves:
 
 - an application-side `SocketServer` or `SocketClient` handle,
-- a registered server-side or client-side instance after `listen(...)` or `connect(...)`,
+- a configured instance and a separate activation flow from each `listen(...)` or `connect(...)` call,
 - a `SocketContextFactory`,
 - a per-connection `SocketContext`,
 - a status callback for `listen(...)` or `connect(...)`,
@@ -60,29 +52,7 @@ IPv4 and IPv6 show this without changing endpoint identity as radically as Unix 
 
 #### Same server/client/context shape
 
-The server/client distinction from Chapter 9 remains stable.
-
-An IPv4 server handle and an IPv6 server handle are both handles used to configure and register server-side instances.
-
-An IPv4 client handle and an IPv6 client handle are both handles used to configure and register client-side instances.
-
-After registration, the instance remains the runtime-visible role. The connection remains the concrete peer relationship. The context remains the application protocol endpoint attached to that connection.
-
-So the first teaching comparison is not:
-
-```text
-IPv4 code versus completely different IPv6 code
-```
-
-It is:
-
-```text
-one SNode.C communication model
-  -> specialized through IPv4
-  -> specialized through IPv6
-```
-
-That is the model to keep in mind while reading the examples. The lower namespace changes, the address family changes, and deployment assumptions may change. The server/client/connection/context pattern remains structurally the same.
+Keep the factory and context files unchanged for the first comparison. The entry points select the family and endpoint; the context still receives bytes through the connection surface. If the change requires editing command parsing or byte reflection, inspect why the protocol acquired an address-family dependency before proceeding.
 
 #### Parallel type names
 
@@ -185,20 +155,7 @@ This matters for understanding SNode.C code. A short `listen(8080, ...)` call is
 
 ### What remains stable
 
-Moving from IPv4 to IPv6 should not feel like changing the application architecture. The stable core remains the same.
-
-| Aspect | IPv4 | IPv6 | Architectural point |
-|---|---|---|---|
-| Application-side handle | `SocketServer` / `SocketClient` | `SocketServer` / `SocketClient` | handle shape stays |
-| Registered instance | server-side or client-side role | server-side or client-side role | role model stays |
-| Connection object | `SocketConnection` | `SocketConnection` | concrete peer relationship stays |
-| Context factory | same pattern | same pattern | context creation transfers |
-| Protocol context | same class often possible | same class often possible | protocol logic can transfer |
-| Runtime | same event-driven model | same event-driven model | runtime understanding transfers |
-| Status callback | `SocketAddress`, `State` | `SocketAddress`, `State` | outer role status model stays |
-| Lifecycle callbacks | connection callbacks | connection callbacks | connection lifecycle model stays |
-
-This is the main transfer point.
+The final comparison table collects the stable and changing surfaces. While reading the code, use a narrower test: does the same protocol produce the same bytes and preserve separate state for each peer? Similar declarations establish where reuse is possible; those observations establish whether the selected composition actually behaves as intended.
 
 If the application protocol is written in a `SocketContext`, it does not automatically become an “IPv4 protocol” or an “IPv6 protocol.” It is application behavior carried over a lower family. The same context class can often be reused when the protocol behavior does not inspect or depend on family-specific address details.
 
@@ -208,13 +165,7 @@ What often remains stable is the protocol class, the factory structure, the conn
 
 #### Runtime and instance model
 
-The runtime is not replaced when the network family changes.
-
-An IPv4 server and an IPv6 server still participate in the same kind of event-driven runtime. They still register communication intent through `listen(...)`. They still produce connection objects. They still attach contexts through factories.
-
-The same applies on the client side. An IPv4 client and an IPv6 client both register connection intent through `connect(...)`, enter the runtime machinery, and produce concrete connection episodes when the connection succeeds.
-
-IPv4 and IPv6 therefore show that the runtime and instance model are not tied to one address family. The event loop does not become an “IPv4 event loop” or an “IPv6 event loop.” The lower family affects the physical and address layer. The runtime architecture remains the same.
+IPv4 and IPv6 roles can participate in the same event runtime. Giving them separate instance names makes their configuration and diagnostics distinguishable even when they use one factory/context design. That is useful for a service that deliberately exposes two family-specific listeners: shared protocol behavior does not require one shared listening policy or one ambiguous operational name.
 
 #### Factory, context, and protocol logic
 
@@ -237,6 +188,8 @@ Connection lifecycle callbacks observe connections. They receive a `SocketConnec
 Context callbacks implement protocol behavior.
 
 Moving from IPv4 to IPv6 does not collapse those callback layers. The lower-family namespace changes, but the callback model remains the same.
+
+The first useful comparison is an observed exchange. Run the same context once over an IPv4 loopback endpoint and once over an IPv6 loopback endpoint. The payload and context callbacks should remain the same; the address type, formatted endpoint, and operating-system family differ. A successful IPv4 run does not establish IPv6 availability, and an IPv6 wildcard listener should not be assumed to replace a separately configured IPv4 role on every platform. The family-specific component tests keep those exchanges separate for exactly this reason.
 
 ### What changes
 
@@ -354,9 +307,7 @@ Chapter 8 explained what endpoint identity means. Chapter 9 explained how server
 
 IPv6 introduces one additional technical point: deployment can involve IPv6-only behavior, IPv4-mapped IPv6 addresses, or platform-specific dual-stack behavior.
 
-This topic should not overwhelm the first example. It should also not be hidden.
-
-At this stage, do not try to master every platform switch. Notice instead that IPv6 is a separate endpoint family with deployment semantics of its own.
+There are two reasonable service designs. Separate IPv4 and IPv6 listeners make exposure and per-family failures explicit, at the cost of maintaining two endpoint configurations. A deliberately configured dual-stack listener can reduce that duplication, but the application must establish the platform's mapping and bind behavior and interpret mapped peer addresses consistently. Merely choosing an IPv6 wildcard value does not document that policy.
 
 An IPv6 endpoint is not only a different address string. It may also raise configuration and platform questions about whether IPv4 traffic is included, excluded, or represented through IPv4-mapped IPv6 addresses.
 

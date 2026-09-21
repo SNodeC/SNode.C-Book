@@ -7,16 +7,7 @@
 
 ### From lower-family choice to protocol behavior
 
-The lower-family tour has shown that SNode.C can express several different endpoint identities:
-
-- host plus port,
-- Unix-domain path,
-- Bluetooth address plus RFCOMM channel,
-- Bluetooth address plus L2CAP PSM.
-
-Those endpoint identities differ strongly. They belong to different lower families, have different address classes, and lead to different operational questions. Yet the application-side shape remained recognizable across all of them.
-
-The reason is that protocol behavior does not live in the address class, the transport family, or the connection wrapper. It lives in the per-connection context.
+The next task is to turn incoming bytes into a conversation. An address can select a peer, but it cannot say whether `PING` is a complete command, whether more input is needed, or which response should follow. Those decisions belong in the per-connection context.
 
 For application code, the most important object in this part of the design is therefore:
 
@@ -194,14 +185,14 @@ In both cases:
 
 It should not blindly drain input and postpone all meaning indefinitely.
 
-The return value matters. `onReceivedFromPeer()` returns the amount of data actually processed. That return value connects protocol processing to the framework's accounting of processed input. If a context reads more than it can understand, or reports progress that did not really happen, diagnostics become less trustworthy.
+The return value matters. It contributes to the framework's accounting of input processed by the context. In the line example below, bytes copied into the context's receive buffer count as consumed from the connection even when they do not yet form a complete command. This counter therefore does not count successfully interpreted messages. A protocol that needs a completed-command count must define that observation separately.
 
 A good context keeps the relationship honest:
 
 ```text
 read data
-  -> process data
-      -> report what was processed
+  -> consume it into protocol state or complete-message processing
+      -> report the bytes consumed by this invocation
 ```
 
 #### Signal and error hooks
@@ -234,8 +225,11 @@ STATUS
 QUIT
   -> close the connection
 
-anything else
+other nonempty command
   -> ERR unknown command
+
+empty line
+  -> no response
 ```
 
 The protocol is not the issue; responsibility placement is. Input accumulation, command interpretation, response writing, and protocol-driven closure all stay inside the context. Listening, connecting, retrying, reconnecting, and choosing the lower family stay outside it.
@@ -283,7 +277,7 @@ private:
             receiveBuffer.append(chunk, chunkLen);
 
             std::size_t lineEnd = receiveBuffer.find('\n');
-            while (lineEnd != std::string::npos) {
+            while (lineEnd != std::string::npos && lineEnd <= maxLineLength) {
                 std::string line = receiveBuffer.substr(0, lineEnd);
                 if (!line.empty() && line.back() == '\r') {
                     line.pop_back();
@@ -320,15 +314,27 @@ private:
 
 The example has one piece of connection-local state: `receiveBuffer`. It exists because stream input is byte-oriented, while the protocol is line-oriented. The context accumulates bytes only until it can process a complete line.
 
-The input path stays honest. `onReceivedFromPeer()` reads a chunk, appends it to the connection-local buffer, processes each complete line, and returns the number of bytes read from the peer. It does not claim to have interpreted bytes that were never read, and it does not hide incomplete input in unrelated global state.
+The input path stays honest. `onReceivedFromPeer()` reads a chunk, appends it to the connection-local buffer, processes each complete line, and returns the number of bytes read from the peer. An incomplete suffix remains in that buffer for a later invocation. Returning `chunkLen` accounts for bytes consumed into protocol state, not a claim that every byte already belongs to a completed command.
 
 The output path is equally narrow. The context sends protocol responses through `sendToPeer(...)`. It decides that `PING` means `PONG`, that `STATUS` means `OK`, and that an unknown command produces an error line. It does not build a second output queue or bypass the connection surface.
 
-Closure also has protocol meaning. `QUIT` closes because the peer requested the end of the conversation. A signal closes because the runtime environment asks the endpoint to stop. An overlong pending line closes because the input no longer fits the protocol's safety rule. Those are different reasons, and good context code makes such reasons visible.
+Closure also has protocol meaning. `QUIT` closes because the peer requested the end of the conversation. A signal closes because the runtime environment asks the endpoint to stop. An overlong line closes because the input no longer fits the protocol's safety rule. The loop checks the delimiter position before interpreting a complete line, and the following check rejects an overlong incomplete line. The 4096-byte limit counts bytes before the newline, including an optional carriage return. Splitting the same input across different receive callbacks must not change that decision. Those are different reasons, and good context code makes such reasons visible.
 
 This is still not a full application. It is a compact worked context whose only job is to show how lifecycle handling, input handling, output behavior, state, and closure discipline fit inside one per-connection endpoint.
 
 The complete runnable server and client version of this line protocol is included in `companion/examples/LineProtocol-Server` and `companion/examples/LineProtocol-Client`. Those source trees use the same public IPv4 legacy stream front-door roles as the Chapter 3 echo pair, but they replace byte reflection with command parsing, response writing, and protocol-driven closure.
+
+Use that runnable server to test the framing rule from a separate peer. First read the `READY` line, then compare these inputs on fresh connections:
+
+| Input | Expected protocol result |
+|---|---|
+| `PING\n` | `PONG\n` |
+| `PI`, followed by `NG\n` | no complete command before the delimiter; then `PONG\n` |
+| `PING\nSTATUS\n` in one write | `PONG\n` followed by `OK\n` |
+| 4096 non-delimiter bytes followed by `\n` | an accepted-length unknown command |
+| 4097 non-delimiter bytes, with or without a later `\n` | connection closure before that overlong line is interpreted |
+
+Separate writes do not guarantee separate receive callbacks; the stream can combine them. The invariant is that every possible segmentation of the same byte sequence has the same framing result. Also open two peers and leave a partial line on only one: the other peer's `PING` must not complete or corrupt that line. This checks why the receive buffer belongs to the context rather than to the shared factory.
 
 ### Design habits for good context code
 
@@ -454,7 +460,7 @@ Timeouts should express protocol intent, such as:
 - timeout-driven closure,
 - or protection against stalled conversations.
 
-Timeouts should not compensate for unclear state handling. A good context uses them because the protocol needs them.
+Choose the timer by the observation it must bound. A connection inactivity timeout can be refreshed by received bytes even when those bytes never complete a command. A deadline for completing a protocol message needs protocol progress and its own deadline policy, as Chapter 20 explains. Timeouts should not compensate for unclear state handling.
 
 #### Close or shut down with protocol intent
 
@@ -633,26 +639,13 @@ The ordinary `sendToPeer(...)` surface remains useful when connection failure is
 
 ### The factory as the next bridge
 
-The factory should be mentioned here only as a bridge.
-
-Its role is simple:
-
-```text
-SocketContextFactory
-  -> creates SocketContext objects for SocketConnection objects
-```
-
-The factory is not where protocol behavior belongs. The protocol behavior belongs in the context.
-
-The factory is important because it creates the right context for a connection. It is the natural place where construction-time dependencies become visible. If a context needs access to a shared service, configuration object, registry, or application state, the factory boundary is where that relationship can be made explicit rather than hidden.
-
-If the context is the protocol endpoint, the factory is the construction boundary. Chapter 14 will look at that boundary more closely.
+The line context needs its own receive buffer, but a later measurement context may also need a reference to a shared application model. Who supplies that reference, and how long must the model remain alive? Chapter 14 follows those questions through factory construction. The context's parsing behavior stays here; the next chapter explains how each newly arriving connection receives the dependencies that behavior needs.
 
 ::: {.snodec-remember title="What to remember"}
 - A `SocketContext` is the per-connection application protocol endpoint attached to a `SocketConnection`.
 - The context implements protocol behavior; it does not own the server/client role or reimplement the connection.
 - Context code should be event-oriented: lifecycle, input, signals, read errors, and write errors are separate responsibilities.
-- `onReceivedFromPeer()` should process input intentionally and return the amount of data actually processed.
+- `onReceivedFromPeer()` should consume input intentionally and report its byte progress; buffered partial input is not the same as a completed protocol message.
 - Protocol state should be explicit, connection-local when possible, and named in protocol terms.
 - Sending, streaming, timeout, shutdown, close, and metrics operations act through the connection-facing surface.
 :::

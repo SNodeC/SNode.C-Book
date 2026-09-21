@@ -45,9 +45,9 @@ Scientific and environmental data-collection systems are typical examples of thi
 
 Figure \ref{fig:iot-boundary-constellation} shows an IoT system as a constellation of boundaries rather than as a single protocol chain. Field devices, browser/operator surfaces, persistent state, and external services all meet at the application or gateway process. The diagram frames boundary placement, not executable topology: one process may own several boundaries, and one boundary may be realized by more than one deployable part. The important design question is where each boundary belongs and which protocol surface is appropriate for that boundary.
 
-![An IoT system as a constellation of protocol and state boundaries around an application or gateway process.](assets/figures/pdf/fig-08-iot-boundary-constellation.pdf){#fig:iot-boundary-constellation width=90% latex-placement="tbp"}
+![An IoT system with protocol and state boundaries around an application or gateway process. Bidirectional arrows denote possible exchanges across each boundary; they are not one sequential data path.](assets/figures/pdf/fig-08-iot-boundary-constellation.pdf){#fig:iot-boundary-constellation width=90% latex-placement="tbp"}
 
-Each connector in Figure \ref{fig:iot-boundary-constellation} is a boundary, and each boundary may need a different protocol family. Multi-protocol design is therefore normal in IoT systems, not automatically a sign of complexity gone wrong. The design becomes unclear only when protocol choices are placed dishonestly: when a protocol is used because it is fashionable, convenient, or already present rather than because it serves the boundary well. A clear IoT design starts by naming the boundaries; only then should it choose protocols.
+Each connector in Figure \ref{fig:iot-boundary-constellation} is a boundary, and each boundary may need a different protocol family. Multi-protocol design is therefore normal in IoT systems, not automatically a sign of complexity gone wrong. Reusing an existing protocol can reduce operating cost, while introducing another can fit a boundary more precisely. Make the tradeoff explicit: what does the new protocol simplify for its consumers, and what does it add to deployment, diagnosis, and maintenance?
 
 ### Recurring boundary roles in IoT systems
 
@@ -189,13 +189,13 @@ For example:
 ```text
 sensor reading
   -> device-facing exchange
-      -> internal state update
-          -> MQTT telemetry publish
-              -> SSE dashboard update
-                  -> database persistence
+      -> accepted application state
+          -> MQTT telemetry publication
+          -> SSE dashboard update
+          -> selected persistence work
 ```
 
-This is one piece of information moving through several roles. Each role can have a different protocol surface. That is not necessarily duplication. It may be the clearest design.
+This is one accepted fact projected through several roles. The indentation shows fan-out, not a requirement that the database wait for an SSE browser or that SSE wait for broker delivery. If the domain requires durable acceptance before publication, make that different ordering explicit.
 
 The compact principle is that the same domain fact may legitimately appear in different conversations and on different protocol surfaces. This helps keep protocol-specific behavior out of the domain model. The domain meaning is shared; the surfaces are boundary-specific.
 
@@ -304,13 +304,7 @@ For example:
 
 The right choice depends on deployment, failure isolation, configuration, resource limits, and operational clarity. Process boundaries should preserve system clarity rather than maximize consolidation.
 
-SNode.C supports both styles because the same architectural ideas apply at both levels:
-
-```text
-one process with several roles
-  or
-several cooperating processes
-```
+Within one process, adapters can use the same model and one event-loop lifetime. That avoids serialization and cross-process coordination, but a blocking callback or process failure affects every role. Separate processes can restart or run under different permissions; they must then agree on message identity, ordering, and what to do when the other process is unavailable.
 
 A multi-protocol system may be a single executable when the roles are tightly related and share lifecycle. It may be clearer as several smaller processes when the boundaries, failure behavior, or operational ownership differ.
 
@@ -433,15 +427,15 @@ The first mistake hides real differences. The second mistake creates accidental 
 
 The number of protocols is less important than whether every protocol choice remains explainable.
 
-### Protocol diversity is not architectural chaos
+### Test the boundary map with one unavailable output
 
-Protocol diversity becomes chaotic only when boundaries are unclear. A multi-protocol system is not chaotic because many protocols appear. It becomes chaotic when the reader cannot tell which boundary each protocol serves.
+Draw the measurement path above for a concrete deployment. Mark the authoritative state, the point of acceptance, and each output’s queue or delivery boundary. Then make the broker unavailable while the dashboard remains reachable. State what the dashboard may truthfully show and what the application may truthfully claim about MQTT delivery.
 
-An IoT system may use Bluetooth near the device edge, Unix domain sockets for local control, MQTT for integration, HTTP/Express for administration, SSE for live observation, WebSocket for bidirectional interaction, MQTT-over-WebSocket for bridge boundaries, and database support for persistence. That is a diverse system. It is not automatically a messy system.
+Repeat the question with persistence unavailable. If accepting a measurement means only updating memory, the application can expose that fact while reporting storage failure. If acceptance promises durability, it must not report the same success before the persistence boundary has completed. The protocol list has not changed; the application contract has.
 
-The difference is whether each protocol has a reason to be there.
+This exercise is the reading milestone for the chapter. A useful boundary map explains partial failure and ownership as well as the successful path. Chapter 28 develops the persistence decision, and the capstone later makes the shared measurement model concrete.
 
-SNode.C helps because many different protocol families still share the same architectural language: configured roles, registered instances, contexts, factories, configuration, diagnostics, runtime lifecycle, and failure behavior. Protocol diversity is manageable when those shared concepts remain visible.
+For the gateway developed later, follow one measurement through those boundaries before adding another protocol. The input adapter validates its representation, the model accepts a new local state, and each output adapter projects that accepted state into its own protocol. The MQTT input topic must remain distinct from the output topic unless the application has an explicit origin rule. The SSE event identifier describes the model's accepted sequence; it does not prove durable storage or broker acknowledgement. Those distinctions become operationally important as soon as one output is unavailable while another remains healthy.
 
 ::: {.snodec-remember title="What to remember"}
 - IoT architecture is defined by communication boundaries, not only by devices.

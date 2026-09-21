@@ -12,7 +12,7 @@ Reliable communication includes more than establishing a connection; it also mea
 
 Timeouts, retries, and failure modes widen that view to the whole framework.
 
-Communication is not a single action. It unfolds over time. A configured role may be activated. The role may be registered as a runtime-visible server or client instance. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client instance may reconnect. A failed activation attempt may be retried. A role-level flow may be stopped.
+Communication is not a single action. It unfolds over time. Constructing a named endpoint registers its configuration instance. An explicit call may then activate a flow for that role. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client instance may reconnect. A failed activation attempt may be retried. A role-level flow may be stopped.
 
 These are not side cases. They are part of the normal shape of networked software.
 
@@ -207,7 +207,7 @@ That separation keeps the timing model readable.
 
 #### Role-level retry timing
 
-Retry timing belongs to the registered server or client instance.
+Retry timing policy comes from the registered server or client instance. Each activation flow owns the timer and attempt state that apply that policy.
 
 It answers:
 
@@ -215,7 +215,7 @@ It answers:
 When should this instance try again after a failed activation attempt?
 ```
 
-For a server, that may mean retrying listen activation. For a client, that may mean retrying connect activation. This is role-level behavior because it concerns the configured role as a whole. It should not be hidden inside one protocol context.
+For a server, that may mean retrying listen activation. For a client, that may mean retrying connect activation. This is role-level behavior, but two explicit activations of the same configured role retain separate controllers. Stopping one flow must not cancel the other. Neither timer belongs inside a peer's protocol context.
 
 #### Client reconnect timing
 
@@ -286,7 +286,7 @@ This distinction keeps the application model clear.
 
 Figure \ref{fig:retry-reconnect-flow} separates the two loops visually. Retry belongs to a failed connection attempt before a stable connection exists. Reconnect belongs to a previously established connection that later disconnects. Both paths eventually initiate another connection attempt, but they are triggered by different events and controlled by different configuration decisions. The diagram sketches the controlling decisions; it does not enumerate every socket or protocol error state.
 
-![Retry and reconnect flow for a client-side stream role: failed connection attempts enter the retry path, established connections enter the reconnect path after disconnect, and both paths return through the same controlled connect initiation.](assets/figures/pdf/fig-16-retry-reconnect-flow.pdf){#fig:retry-reconnect-flow width=90% latex-placement="tbp"}
+![Recovery within one client activation flow. Retry follows failed attempts; reconnect follows a connection’s disconnection. The sketch abbreviates guards and does not expand TLS readiness. A later explicit connect call creates another flow.](assets/figures/pdf/fig-16-retry-reconnect-flow.pdf){#fig:retry-reconnect-flow width=90% latex-placement="tbp"}
 
 Retry and reconnect are not synonyms. Retry reacts to classified connection-attempt failure. Reconnect reacts to connection loss after success. This distinction keeps failure handling predictable: an application can reason separately about failed startup attempts, address iteration, retry backoff, and later connection recovery.
 
@@ -301,36 +301,40 @@ Retry belongs to failed connection attempts. Reconnect belongs to established co
 \index{SocketClient@\texttt{SocketClient}!retry and reconnect}
 
 
-The client-side stream source in `src/core/socket/stream/SocketClient.h` keeps the two decisions in different branches of the same role-level flow. After a disconnect, reconnect policy can arm a reconnect timer and then re-enter the connect path for the ongoing client role:
+The client-side stream source in `src/core/socket/stream/SocketClient.h` keeps both decisions inside the particular flow passed to `realConnect(...)`. The following excerpts are abridged: they omit logging and surrounding state checks while retaining the important ownership and dispatch calls.
+
+After a disconnect, the reconnect timer retains that same flow:
 
 ```cpp
-if (config->getReconnect() && sharedContext->flowController.isReconnectEnabled() &&
-    core::eventLoopState() == core::State::RUNNING) {
-    sharedContext->flowController.armReconnectTimer(
-        relativeReconnectTimeout, [config, sharedContext, onStatus]() {
-            sharedContext->flowController.reportFlowReconnect();
-            SocketClient(config, sharedContext)
-                .realConnect(onStatus, 0, config->getRetryBase());
-        });
+flow->armReconnectTimer(relativeReconnectTimeout,
+    [config, sharedContext, log, onStatus, flow]() {
+        if (!flow->isReconnectEnabled()) {
+            flow->cancelReconnectTimer();
+            return;
+        }
+        if (config->getReconnect()) {
+            if (flow->dispatchReconnect()) {
+                SocketClient(config, sharedContext)
+                    .realConnect(flow, onStatus, 0, config->getRetryBase());
+            }
+        } else {
+            flow->cancelReconnectTimer();
+            log.trace("Reconnect disabled during wait");
+        }
+    });
+```
+
+A failed connect attempt uses `armRetryTimer(...)` instead. The outer branch checks the retry flag, configured enablement and attempt limit, controller enablement, and the classified error. When the timer fires, it rechecks enablement before dispatching:
+
+```cpp
+if (flow->dispatchRetry()) {
+    SocketClient(config, sharedContext)
+        .realConnect(flow, onStatus, tries + 1,
+                     retryTimeoutScale * config->getRetryBase());
 }
 ```
 
-A failed connect attempt follows the retry branch instead. The status is classified, retry policy is checked, and a retry timer can schedule another activation attempt with updated retry state:
-
-```cpp
-if (retryFlag && config->getRetry() && sharedContext->flowController.isRetryEnabled() &&
-    (state == core::socket::State::ERROR ||
-     (state == core::socket::State::FATAL && config->getRetryOnFatal()))) {
-    sharedContext->flowController.armRetryTimer(
-        relativeRetryTimeout, [config, sharedContext, onStatus, tries, retryTimeoutScale]() {
-            sharedContext->flowController.reportFlowRetry();
-            SocketClient(config, sharedContext)
-                .realConnect(onStatus, tries + 1, retryTimeoutScale * config->getRetryBase());
-        });
-}
-```
-
-The shared call back into `realConnect(...)` is not evidence that retry and reconnect are the same concept. It shows the opposite: different lifecycle decisions can return to the same connect machinery after their own policy checks have been made.
+The same `flow` reaches both calls back into `realConnect(...)`. Automatic recovery therefore continues one activation; another explicit `connect(...)` starts a different activation with a different controller. Terminating one controller suppresses its pending attempt or recovery timer without terminating a sibling flow or closing an already established connection. A retained user handle can outlive termination, so the destructor-time `setOnFlowCompleted(...)` notification is not a substitute for `setOnFlowTerminated(...)`.
 
 A failed initial connect attempt is not the same situation as a client that was connected for an hour and then lost its peer. A server that cannot bind its listening endpoint is not in the same situation as a protocol context that decides to close a connection.
 
@@ -411,7 +415,7 @@ A retry policy may need to answer several questions:
 | retry-base | How does the wait grow between attempts? |
 | retry-limit | What is the maximum wait? |
 | retry-jitter | How much random variation is added? |
-| retry-tries | How many attempts are allowed? |
+| retry-tries | How many automatic retries may follow the initial attempt? |
 
 Together, these settings prevent retry behavior from becoming an uncontrolled loop. They also let retry behavior adapt to deployment needs.
 
@@ -423,7 +427,7 @@ Automatic retry can hide real failure if it is unbounded, invisible, or enabled 
 
 Retry scaling lets repeated attempts be spaced out over time.
 
-A retry limit can cap the maximum delay. That gives the role a bounded retry rhythm:
+A retry limit caps delay growth before jitter is applied. That gives the role a controlled retry rhythm:
 
 try, wait, try again, wait longer, and try again.
 
@@ -439,9 +443,9 @@ Jitter is part of retry timing policy, not a separate mechanism.
 
 #### Retry tries
 
-Retry tries bound the number of attempts.
+The client starts the initial attempt with a retry counter of zero. A positive `retry-tries` value bounds the subsequent automatic retries; zero removes that count bound. With `retry-tries=1`, the failed initial attempt may therefore be followed by one retry, subject to the other enablement and state checks.
 
-This answers a different question from retry limit. A retry limit bounds delay growth. Retry tries bound attempt count. Both can matter.
+This answers a different question from `retry-limit`, which caps delay growth before jitter is applied. A background uplink may need indefinite recovery with a bounded rhythm and visible status. A one-shot command may need a finite count so that its caller receives a final outcome. Neither policy follows merely from using a client type.
 
 #### Retry on fatal
 
@@ -615,36 +619,21 @@ The framework supplies the mechanical limit and result. The role still supplies 
 \index{timeouts!protocol level}
 
 
-Timeout controls are useful only when they express meaningful waiting.
+A connection inactivity timeout and a deadline for a complete protocol message answer different questions. Read activity can keep the connection active while a peer sends an unfinished command one byte at a time. The line parser from Chapter 13 can therefore remain below its 4096-byte bound without ever receiving a newline.
 
-A protocol endpoint should use timeouts for protocol reasons, such as:
+Separate three observations:
 
-- waiting for a response phase,
-- guarding against peer silence,
-- bounding an upload or download phase,
-- limiting an application-level handshake,
-- closing an idle session.
+| Observation | What it bounds |
+|---|---|
+| connection inactivity | a period without the activity observed by the connection receiver |
+| maximum pending input | memory retained while the protocol awaits a delimiter or remaining bytes |
+| protocol-phase deadline | elapsed time allowed to finish the expected exchange |
 
-A timeout should answer a real protocol question.
+The framework’s descriptor receiver tracks activity time; it does not know that the buffered bytes are an incomplete `PING` command. If the application requires a complete command within a fixed interval, that requirement belongs to its protocol state and must be ended or renewed at the correct protocol transition. Repeated partial input must not accidentally renew an absolute deadline.
 
-For example:
+A useful diagnostic experiment is to compare silence, steady complete commands, and steady incomplete input. Predict which limit should act in each case before changing timeout values. The teaching line server demonstrates the byte bound; it does not implement an additional absolute command deadline. Adding one requires an explicit protocol requirement and lifecycle design.
 
-```text
-If no complete frame arrives within this time,
-the peer is no longer following the expected conversation.
-```
-
-That is meaningful.
-
-By contrast:
-
-```text
-Add some timeout because the network is unreliable.
-```
-
-is not precise enough.
-
-The protocol timeout should encode an expectation of the protocol conversation. It should not become a substitute for understanding the protocol state machine.
+Reconnect has a similar boundary. Restoring the stream does not prove whether the last command reached the old peer. Replaying an unacknowledged command may duplicate a state change. Application acknowledgments, operation identifiers, or idempotent commands address that uncertainty; a reconnect timer alone does not.
 
 ### Failure visibility
 
@@ -712,4 +701,3 @@ When the answer is clear, the system is easier to operate and easier to debug.
 ### Closing perspective
 
 Robust communication over time requires timeouts, retries, reconnects, shutdown, and failure visibility. Those mechanisms are not only transport details; they shape how higher protocol layers report progress, interruption, and recovery.
-

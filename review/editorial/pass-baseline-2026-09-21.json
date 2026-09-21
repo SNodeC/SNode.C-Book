@@ -1,0 +1,413 @@
+{
+  "book_head": "473b87a7361e05692661c0dd4ab73fdfd691b8ac",
+  "source_manifest": "source-baseline/framework-working-tree.json",
+  "snapshot_time": "2026-09-21",
+  "scope": "Baseline before the coordinated six-dimension editorial pass; earlier technical changes are included.",
+  "inputs": [
+    {
+      "path": "manuscript/frontmatter/frontmatter.md",
+      "sha256": "ee93ac64dc40b724d6eb44f3f5fb514d23d3afc81144f0a9264d0969c4e5a2ef",
+      "words": 3
+    },
+    {
+      "path": "manuscript/frontmatter/preface.md",
+      "sha256": "c8baeb2243275b82dcc83b13fb3f061f95b36e3c83e44e5c0c5663821bdfe057",
+      "words": 822
+    },
+    {
+      "path": "manuscript/frontmatter/how-to-read-this-book.md",
+      "sha256": "cb0118ba61459e4511ed037d7623f157f76018ede94962b3c72a489d7a3faa37",
+      "words": 595
+    },
+    {
+      "path": "manuscript/frontmatter/conventions.md",
+      "sha256": "607da46ad2e6a1eba5e6eb5761340ea8fb7cd28953f5440cb5068ee90697a3eb",
+      "words": 360
+    },
+    {
+      "path": "manuscript/frontmatter/author-note.md",
+      "sha256": "81c985228103786a4404f097dc7c833d93438f059ec506faf1a1c29956cad137",
+      "words": 174
+    },
+    {
+      "path": "manuscript/frontmatter/acknowledgements.md",
+      "sha256": "3f8cf8bcdda956c90e74ebd46d4677c6b44fe04fa45ef106febb7dc762dc950a",
+      "words": 101
+    },
+    {
+      "path": "manuscript/frontmatter/mainmatter.md",
+      "sha256": "aed94e3963307d4ccd313b5faa29cb4948522a7e2ae59fc5f270f5c8961ff37c",
+      "words": 3
+    },
+    {
+      "path": "manuscript/parts/part-01-getting-oriented.md",
+      "sha256": "f6e97caeab43e19885310ff8c722ef9a6f5886a5bda982891658c603a9c99e04",
+      "words": 95
+    },
+    {
+      "path": "manuscript/chapters/01-why-snodec-exists.md",
+      "sha256": "4fce9c3b8d70898ec8ada59eb44c2c3ce4e452d27f5e07242794a002a6477125",
+      "words": 2612
+    },
+    {
+      "path": "manuscript/chapters/02-preparing-your-environment.md",
+      "sha256": "e38dda47f1e99d893078b1cea49877267066e1f730d2b859e436ee54503624ec",
+      "words": 2908
+    },
+    {
+      "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "sha256": "e1d8824308a358b0c602b5570559423e5976fb39a1ca3986e9af35ad247f25d1",
+      "words": 3127
+    },
+    {
+      "path": "manuscript/chapters/04-reading-the-codebase-with-confidence.md",
+      "sha256": "c29cecbed8e62c8ab205d21e589da4d24acffd08704134ffc6ecac8be19f1197",
+      "words": 3782
+    },
+    {
+      "path": "manuscript/parts/part-02-the-snodec-architecture.md",
+      "sha256": "029d85a0ee40410f7c0daeb3f7e8844b264a0fe99c02fa9bc05a0b3f56e140b2",
+      "words": 76
+    },
+    {
+      "path": "manuscript/chapters/05-the-mental-model-of-snodec.md",
+      "sha256": "7c3d6fcbcf2219daa8c4161305702fb2b15d662c8eae35a5205858e0ded2e9ff",
+      "words": 4006
+    },
+    {
+      "path": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+      "sha256": "978f95f411c2d1cf73ac2b7b11a44001b3781930ec4bb985e8d3dd8f5d666bfe",
+      "words": 5111
+    },
+    {
+      "path": "manuscript/chapters/07-layers-in-practice-network-transport-connection-application.md",
+      "sha256": "2285b91e47142af8d2fad6d2e2282131ebc99e6d5214a1d4efa6b53cc7d9a2a2",
+      "words": 3865
+    },
+    {
+      "path": "manuscript/parts/part-03-networking-foundations-in-snodec.md",
+      "sha256": "419c733262048fe26aba925f781fd1673b6d34be7d0f01f4b36f8481afa2066f",
+      "words": 74
+    },
+    {
+      "path": "manuscript/chapters/08-socket-addresses-and-address-semantics.md",
+      "sha256": "eeff170404192e43a1dfa2202190db77711498a538681a73682b6de8ef7ede98",
+      "words": 2504
+    },
+    {
+      "path": "manuscript/chapters/09-servers-clients-and-connections.md",
+      "sha256": "713c0c43668209e1ee2306291e2c89d365a40ab72d0933b300333f5d1e00bb91",
+      "words": 4851
+    },
+    {
+      "path": "manuscript/chapters/10-ipv4-and-ipv6-as-the-first-concrete-network-families.md",
+      "sha256": "76f8592ed8ea8a1b0f23a3ca151b66bdd7a2578e4ea6db74987a24d5810266f8",
+      "words": 3143
+    },
+    {
+      "path": "manuscript/chapters/11-unix-domain-sockets.md",
+      "sha256": "093a049804db18ce7436802ca26935a0e884959dc46a8c2bbfeae10cd7603a8c",
+      "words": 3061
+    },
+    {
+      "path": "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "sha256": "44f03ac4af5888bba6049b99b5589ad6b26998a84a206544f9c0bc8934f6032d",
+      "words": 2389
+    },
+    {
+      "path": "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md",
+      "sha256": "459e98d4e843f784765daed77f1855e529bf9e047715e2441136f1e84eb25312",
+      "words": 88
+    },
+    {
+      "path": "manuscript/chapters/13-writing-socketcontext-classes-well.md",
+      "sha256": "4227ae9a49da43106a7376dea9358b9fb20736f0d1b7f4c1f6e80ccfc2cff27a",
+      "words": 4147
+    },
+    {
+      "path": "manuscript/chapters/14-writing-socketcontextfactory-classes-well.md",
+      "sha256": "e1aae0a873b5fc6e9a8131a7a5160bdee1f02ed98a31980b799bfe66e19467a5",
+      "words": 3820
+    },
+    {
+      "path": "manuscript/chapters/15-building-the-same-protocol-over-different-lower-layers.md",
+      "sha256": "22e001768d904d19efba7d60a7f8b849ac6adc0a4f8bf48ec087b41264c0f29e",
+      "words": 3189
+    },
+    {
+      "path": "manuscript/parts/part-05-configuration-and-operational-behavior.md",
+      "sha256": "f3187362752d29c90914ea7061308c80b93a2270a3155c52039ec34bd5d6007e",
+      "words": 72
+    },
+    {
+      "path": "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
+      "sha256": "16cff2db4ca69844275f055bc5c31d286790881de92dfdbbe996021980c0a51a",
+      "words": 3466
+    },
+    {
+      "path": "manuscript/chapters/17-application-and-instance-configuration-in-detail.md",
+      "sha256": "bb8da43a59cee075803f0a499b060a56203c28d7c03b838c1310ff34525f8c1a",
+      "words": 4567
+    },
+    {
+      "path": "manuscript/chapters/18-logging-diagnostics-and-runtime-introspection.md",
+      "sha256": "47684523a3ee45c26a1443679dcb97e9567428b723faa5b4a888b122216ec1e8",
+      "words": 3497
+    },
+    {
+      "path": "manuscript/parts/part-06-secure-and-robust-communication.md",
+      "sha256": "e0366e48d7ed80535e55f76c7b78b71ae332825652cc12a8162dd5ddf6e69cea",
+      "words": 72
+    },
+    {
+      "path": "manuscript/chapters/19-tls-across-the-framework.md",
+      "sha256": "a94b835564838b892c3800e2969f9354c3f266603542536b20850e6211a171c5",
+      "words": 3818
+    },
+    {
+      "path": "manuscript/chapters/20-timeouts-retries-and-failure-modes.md",
+      "sha256": "2fdad4c4eb7de768e3718cd1b63c1b75e3177fe016a3e92ce80965723c8606bd",
+      "words": 4320
+    },
+    {
+      "path": "manuscript/parts/part-07-web-protocols-and-web-applications.md",
+      "sha256": "4cb2feaeb0c91d2badd7493b9124bf7184288ead1ff50812c1cb2425541daee8",
+      "words": 68
+    },
+    {
+      "path": "manuscript/chapters/21-the-http-layer.md",
+      "sha256": "295f42890e1bd351d2409ff38ef35c0f7432ebc44e2617f955e92b9315576be5",
+      "words": 3556
+    },
+    {
+      "path": "manuscript/chapters/22-the-express-like-framework.md",
+      "sha256": "95b0c2bcc41a75015297ffaae2b33e3af01aff2cb60d9447439d5c1805177191",
+      "words": 2820
+    },
+    {
+      "path": "manuscript/chapters/23-server-sent-events-and-real-time-http.md",
+      "sha256": "b4a6b46e5a57051e863a8a4c27f59143c461f1efbc426f029838b7e1a0650d3d",
+      "words": 3873
+    },
+    {
+      "path": "manuscript/chapters/24-websocket-and-protocol-upgrade.md",
+      "sha256": "d5400610ab5e73832091317a289293ab52c458b71a1d42b686dd0c1043b6fcd6",
+      "words": 3743
+    },
+    {
+      "path": "manuscript/parts/part-08-iot-and-message-oriented-systems.md",
+      "sha256": "c30813ffe5add3511f4bb1eb295e493e35f8d94a2036a30bf1cc8f49b9abcaf1",
+      "words": 75
+    },
+    {
+      "path": "manuscript/chapters/25-mqtt-support-in-snodec.md",
+      "sha256": "17e86788df0c0b981076f24154291d47779dafc1189019f2f1b8bcce0b3989cb",
+      "words": 2776
+    },
+    {
+      "path": "manuscript/chapters/26-mqtt-over-websocket.md",
+      "sha256": "cdc835ba19b625ace062f6eba47a70d68888448f10468026edb8217cce9527e8",
+      "words": 2603
+    },
+    {
+      "path": "manuscript/chapters/27-designing-iot-systems-with-multiple-protocols.md",
+      "sha256": "60461eab2ce0a9fa59bd81a000797d82f5343a6f1348e42a891b4e90d53506fe",
+      "words": 3977
+    },
+    {
+      "path": "manuscript/parts/part-09-persistence-and-full-systems.md",
+      "sha256": "98af5902d860e2164a2d1e877003c3ea79c2ea343cfd915120f73854f74dc3db",
+      "words": 70
+    },
+    {
+      "path": "manuscript/chapters/28-database-support-and-application-state.md",
+      "sha256": "0a45863c5fd9b17c7f789649301c3f8940e60956c65915b07bc878e97658f8cd",
+      "words": 5018
+    },
+    {
+      "path": "manuscript/chapters/29-learning-from-the-applications-in-src-apps.md",
+      "sha256": "71faff0f4b606d7485941949a4f37b1e5086283065b479686fba347c2830c45c",
+      "words": 4463
+    },
+    {
+      "path": "manuscript/chapters/30-from-applications-to-systems.md",
+      "sha256": "1c19f64aafec6bfdfe7e67e907b94208241be94a03b3a14fa26f3c9fe90249f8",
+      "words": 3013
+    },
+    {
+      "path": "manuscript/chapters/31-mqttsuite-as-a-reference-ecosystem.md",
+      "sha256": "d128b01c9675c93710f4e4a99228b6aeb572aff713426c796bb722dab7f66d64",
+      "words": 3274
+    },
+    {
+      "path": "manuscript/parts/part-10-building-porting-and-maintaining.md",
+      "sha256": "b88bbf50b000af85adeda70577a0395b83d5f8e0e04635222ff4df9248cd6a58",
+      "words": 64
+    },
+    {
+      "path": "manuscript/chapters/32-cmake-components-and-linking-strategy.md",
+      "sha256": "51eaecb537a8e318a84afa501ddb63930dd71352f85380a2a77191cefb6c2d1b",
+      "words": 6155
+    },
+    {
+      "path": "manuscript/chapters/33-deployment-on-linux-and-openwrt.md",
+      "sha256": "ed545afa1b6aa264883a48d4e2ef1cb3b372a477c37446bfb7a4d17213dc9e8d",
+      "words": 4112
+    },
+    {
+      "path": "manuscript/chapters/34-testing-debugging-and-benchmarking.md",
+      "sha256": "fad028244178facf986c211c0916ee99cb1218a7d0945d32471bde0981a018a6",
+      "words": 5302
+    },
+    {
+      "path": "manuscript/parts/part-11-building-a-minigateway-application.md",
+      "sha256": "37cbabccc8d3bc1819bb25691eb71cbe54a5bfcf78297e68da12ef368676ed14",
+      "words": 110
+    },
+    {
+      "path": "manuscript/chapters/35-building-minigateway.md",
+      "sha256": "4e01f4ab8f0fee25cb60180c8ac8a349d883c426a4df164eaf581d1204bd8271",
+      "words": 4015
+    },
+    {
+      "path": "manuscript/chapters/36-extending-minigateway-with-a-new-network-role.md",
+      "sha256": "9d02bcf40053340fc3397196ed000733f1ead32619cf0eabcac4c07e8b243a6d",
+      "words": 2864
+    },
+    {
+      "path": "manuscript/parts/part-12-designing-with-snodec.md",
+      "sha256": "62ba913e0b630c86816541e11ac66d03891af552ffb019dc94df6dd39fc8d764",
+      "words": 86
+    },
+    {
+      "path": "manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "sha256": "ee7842a6e9ce60fde5aeef804b2ce315dc6a2d4f22298674ad48fb8a3bc3ea4d",
+      "words": 2452
+    },
+    {
+      "path": "manuscript/chapters/38-extending-the-framework-safely.md",
+      "sha256": "f9069b5b0efbf710f0eb3b8f05909341259a17f1327e0e5d298e2e40638390f9",
+      "words": 3213
+    },
+    {
+      "path": "manuscript/parts/part-13-epilogue.md",
+      "sha256": "0e7604f67e83632f3a00304d3ea31103b53e6eea5cbd6d569ed50b9e3fcb0d3d",
+      "words": 98
+    },
+    {
+      "path": "manuscript/chapters/epilogue.md",
+      "sha256": "9c481c561ddaeb9021040273fb4654231aaf26334cc4d568957ff380ee1312f5",
+      "words": 1557
+    },
+    {
+      "path": "manuscript/backmatter/backmatter.md",
+      "sha256": "997725a666802cc3870bc40c793a7ca9151dc17f5dcf0127279fdb85f9ee00bd",
+      "words": 7
+    },
+    {
+      "path": "manuscript/backmatter/further-reading.md",
+      "sha256": "a88347a59d25e68c2873e21fc24f72d8ed418900d12c6b16cd75e7004ba85bfe",
+      "words": 568
+    },
+    {
+      "path": "manuscript/backmatter/index.md",
+      "sha256": "2bc2be55a23e5e176144dd11771aff490f6588f15198dd145bd7238e3940db92",
+      "words": 12
+    },
+    {
+      "path": "assets/figures/src/fig-01-layer-stack.tex",
+      "sha256": "772a6bea25c61392e596b6bcfe209f4092253fc955f7fcd17b784d0a48495ea8",
+      "words": 184
+    },
+    {
+      "path": "assets/figures/src/fig-02-runtime-instance-connection-context.tex",
+      "sha256": "dfff5e98baf46d946f217f1c94f1521cdfca42bb21f3b4ebaa08ff08e4fe0bcb",
+      "words": 193
+    },
+    {
+      "path": "assets/figures/src/fig-03-event-runtime-picture.tex",
+      "sha256": "e35b2695a32d27e5ca597934ee80fc56118fa8e09cd961b9af478139b64fa0e0",
+      "words": 340
+    },
+    {
+      "path": "assets/figures/src/fig-04-lower-family-transfer-model.tex",
+      "sha256": "4e45262450464dc398603047050f81e1b40217a7478ecced60c1c40c5eaf58da",
+      "words": 247
+    },
+    {
+      "path": "assets/figures/src/fig-05-server-client-connection-context-path.tex",
+      "sha256": "7860efcfd34b95d124b5f803c052c44c59a025db2b91419f8c2980ff20b69147",
+      "words": 347
+    },
+    {
+      "path": "assets/figures/src/fig-06-web-protocol-layer-structure.tex",
+      "sha256": "2716f53cd88ffb85a11c74c1873b5ce1451daa846649bad7d92ff1a9761600e8",
+      "words": 364
+    },
+    {
+      "path": "assets/figures/src/fig-07-native-mqtt-vs-mqtt-over-websocket.tex",
+      "sha256": "5208eca650507f1abbaa350351e785daacd241b5c19b6b6a013540bfc7a93c31",
+      "words": 313
+    },
+    {
+      "path": "assets/figures/src/fig-08-iot-boundary-constellation.tex",
+      "sha256": "a709132e30348854acab692e231810729c6638f96160c388f1c01e146f3bd035",
+      "words": 241
+    },
+    {
+      "path": "assets/figures/src/fig-09-application-system-role-constellation.tex",
+      "sha256": "4e4d53fda07177d41f8fa68b136a48c535d038a33aa283e7e3c5c14bdfe37e26",
+      "words": 209
+    },
+    {
+      "path": "assets/figures/src/fig-10-mqttsuite-ecosystem-map.tex",
+      "sha256": "32e885d867f08f60b3c463a60d67ee9c55cbad3a49794d67b6ed9f96d91e7c32",
+      "words": 281
+    },
+    {
+      "path": "assets/figures/src/fig-11-build-install-package-deployment-surface.tex",
+      "sha256": "250011c63126a8350777d4609b13f0831dfa984a976b960cbd75e51f30824ec7",
+      "words": 299
+    },
+    {
+      "path": "assets/figures/src/fig-12-minigateway-extended-network-role-architecture.tex",
+      "sha256": "56c351d3c1487e83761126ca0dbe1eed24e5bc2849aa04ce58aa3152f3a82a06",
+      "words": 480
+    },
+    {
+      "path": "assets/figures/src/fig-13-configuration-hierarchy.tex",
+      "sha256": "262d764e61fc561ba112611ea8e29ef80c81ca9786256c5e80bfd6b5fcc4e980",
+      "words": 334
+    },
+    {
+      "path": "assets/figures/src/fig-14-logging-diagnostic-visibility-map.tex",
+      "sha256": "339faa38cf1df034e180a0904730f7f1326c3de090981d8d7294542747e6a556",
+      "words": 199
+    },
+    {
+      "path": "assets/figures/src/fig-15-tls-connection-layer-specialization.tex",
+      "sha256": "adaacc624bb56b405e678842ce51935bf29d90375eeb4648561fcc1ad65ab8dd",
+      "words": 317
+    },
+    {
+      "path": "assets/figures/src/fig-16-retry-reconnect-flow.tex",
+      "sha256": "9b94a0b726eaac9e44049ac36862504779a3942cc022161e3c8d680871b30d17",
+      "words": 865
+    },
+    {
+      "path": "assets/figures/src/fig-17-persistence-boundary.tex",
+      "sha256": "f32eb76fb03ac9fd061c13b31b62c4901ea772752000b350a532eed0d5005be9",
+      "words": 372
+    },
+    {
+      "path": "assets/figures/src/fig-18-testing-confidence-surfaces.tex",
+      "sha256": "758ae10ca913d00dd4709e84d0af3657edb3c23728ff54998718f1921be14098",
+      "words": 173
+    },
+    {
+      "path": "assets/figures/src/snodec-figure-style.tex",
+      "sha256": "499a465b0d4000ef5b5e4ae0cbd4fa5d5d9bdfead28b3fc9212583deb7dab769",
+      "words": 438
+    }
+  ]
+}

@@ -306,6 +306,99 @@ Logs and pid files are runtime state. They are not source files, and they are no
 
 A pid file and a log file are not architectural features, but unmanaged pid and log locations can break an otherwise correct deployment. A network framework can be technically correct and still fail operationally if runtime state is unmanaged.
 
+#### A worked Linux service: the installed echo server
+
+Use the Chapter 3 echo server for a small service rehearsal. It needs no broker, database, web assets, or protocol module, so the exercise isolates installation, configuration, supervision, and shutdown. The example uses a systemd user manager and a private loopback port. The user manager must be available in the login session; this does not configure a system-wide service or boot-time user lingering.
+
+Assume `SNODEC_BOOK_SOURCE` names the book checkout and that the selected framework has been installed at `$HOME/.local/snodec`, with libraries in `lib`. If your installation uses another library directory, substitute that actual directory in the RPATH below. Build and install the book's consumer into its own prefix:
+
+```sh
+cmake -S "$SNODEC_BOOK_SOURCE/companion/examples/EchoPair" \
+  -B "$HOME/projects/snodec-service-echo-build" \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_PREFIX_PATH="$HOME/.local/snodec" \
+  -DCMAKE_INSTALL_PREFIX="$HOME/.local/snodec-book" \
+  -DCMAKE_INSTALL_RPATH="$HOME/.local/snodec/lib"
+cmake --build "$HOME/projects/snodec-service-echo-build" --parallel 4
+cmake --install "$HOME/projects/snodec-service-echo-build"
+mkdir -p "$HOME/.config/snodec-book" "$HOME/.config/systemd/user"
+```
+
+Save this as `$HOME/.config/snodec-book/echo.conf`:
+
+```ini
+daemonize=false
+log-level=4
+log-format=json
+echoserver.local.host=127.0.0.1
+echoserver.local.port=18093
+```
+
+First run the installed executable in the foreground:
+
+```sh
+"$HOME/.local/snodec-book/bin/echoserver" \
+  --config-file "$HOME/.config/snodec-book/echo.conf"
+```
+
+From another terminal, use an independent peer. It sends one payload and accumulates the reflected bytes without assuming one receive call returns the whole payload:
+
+```sh
+python3 - <<'PY'
+import socket
+payload = b"service rehearsal\n"
+with socket.create_connection(("127.0.0.1", 18093), timeout=2) as peer:
+    peer.sendall(payload)
+    received = bytearray()
+    while len(received) < len(payload):
+        chunk = peer.recv(len(payload) - len(received))
+        if not chunk:
+            raise RuntimeError("connection ended before the echo was complete")
+        received.extend(chunk)
+    assert received == payload
+print("installed echo exchange passed")
+PY
+```
+
+Stop the foreground server with Ctrl-C before starting the managed instance. Save the following user unit as `$HOME/.config/systemd/user/snodec-book-echo.service`:
+
+```ini
+[Unit]
+Description=SNode.C book echo rehearsal
+
+[Service]
+Type=exec
+ExecStart=%h/.local/snodec-book/bin/echoserver --config-file=%h/.config/snodec-book/echo.conf
+WorkingDirectory=%h
+UnsetEnvironment=XDG_CONFIG_HOME
+Restart=on-failure
+RestartSec=2s
+TimeoutStopSec=10s
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
+```
+
+`Type=exec` supervises the foreground process; the application must not daemonize underneath it. `%h` resolves to the user’s home directory. Clearing `XDG_CONFIG_HOME` here makes the framework’s current non-root base-directory calculation use `HOME`, as described earlier. The explicit configuration-file path remains unchanged. The unit uses the journal rather than requiring a separate application log file. Consult the installed `systemd.service(5)` and `systemd.exec(5)` manuals for the host’s supported settings; the upstream [service-unit documentation](https://github.com/systemd/systemd/blob/main/man/systemd.service.xml) describes the process and restart model.
+
+Validate, start, and inspect it:
+
+```sh
+systemd-analyze --user verify "$HOME/.config/systemd/user/snodec-book-echo.service"
+systemctl --user daemon-reload
+systemctl --user start snodec-book-echo.service
+systemctl --user status snodec-book-echo.service --no-pager
+journalctl --user -u snodec-book-echo.service -n 30 --no-pager
+```
+
+Repeat the Python peer check. Then use `systemctl --user restart snodec-book-echo.service` and repeat it again. Finally stop it with `systemctl --user stop snodec-book-echo.service`; a new peer connection should fail. Inspect the journal for normal shutdown and confirm that the service is inactive. A process reported as active and a completed echo are separate observations.
+
+For a controlled failure case, stop this rehearsal service and temporarily put a nonnumeric value in its port assignment. Starting it should expose a configuration error; `Restart=on-failure` may make repeated attempts subject to the manager’s start limits. Stop it, restore the valid port, run `systemctl --user reset-failed snodec-book-echo.service`, and repeat the successful check. This tests operational recovery from a configuration mistake without changing the protocol implementation.
+
+Remove the rehearsal unit and its dedicated configuration when finished, then run `systemctl --user daemon-reload`. A production system service would additionally select a service account and managed writable directories. The user-unit exercise establishes the supervision sequence without claiming that those production choices have been made.
+
 ### Deployment-specific resources
 
 \index{TLS certificates}
@@ -501,6 +594,86 @@ That service definition is where deployment expresses:
 
 The application may still support daemonization, but on OpenWrt the deployed role should fit the platform service model.
 
+#### A worked OpenWrt path: verify the package before the device
+
+The first practical step is to identify the recipe's source, not to start cross-compiling. The separately maintained [SNode.C OpenWrt feed](https://github.com/SNodeC/OpenWRT) is useful packaging source, but its `net/snode.c/Makefile` at commit `c9378fe95f7c015752c748fc4ab012b585d294d1` still declares `PKG_VERSION:=1.0.1` and downloads the framework's `OpenWRT` branch. It does not select this book's current 2.0 source. Its module list also contains the old `net-un-phy` component. Installing that recipe unchanged would answer a different compatibility question.
+
+This gives the walkthrough a real prerequisite: a recipe port for the selected 2.0 contents and the exact target SDK. The steps below explain the build and deployment rehearsal once that prerequisite is satisfied. They are not evidence that the old feed already builds 2.0. No OpenWrt SDK build or device run is claimed for this edition's editorial verification.
+
+On a disposable target or test image, record the release, target and available space before choosing its matching SDK:
+
+```sh
+cat /etc/openwrt_release
+uname -m
+df -h /overlay
+```
+
+Select the SDK for that release and target, including its C library and toolchain. In the extracted SDK, inspect `feeds.conf.default`, update the configured feeds, and install their recipe links:
+
+```sh
+./scripts/feeds update -a
+./scripts/feeds install -a
+```
+
+Add the SNode.C recipe through a local feed under your control. Review the following points before selecting it in `make menuconfig`:
+
+| Recipe surface | Required evidence for the current source |
+|---|---|
+| Source selection | The archive or checkout matches the book's framework manifest, including any author changes beyond the reconstruction base |
+| Version and library names | Package version, SONAME major and installed filenames match the 2.0 build |
+| Component graph | Selected module recipes follow current targets; obsolete targets are removed rather than satisfied by old libraries |
+| Logger dependency | The current spdlog build dependency is supplied reproducibly by the SDK recipe; an undeclared configure-time download is not a package dependency policy |
+| Optional features | TLS, Bluetooth, database support and applications are selected deliberately rather than through the feed's broad `full` or `apps` package |
+| Consumer application | The book echo consumer is cross-compiled against the staged target installation and installed as `/usr/bin/echoserver` |
+| Runtime ownership | The configured management group and configuration directories exist on the target |
+
+Keep the source check literal. `git archive HEAD` captures committed files only; it is insufficient if the author tree has uncommitted changes. The book's manifest and reconstruction patch identify the reviewed contents. Compare the SDK's prepared source files against that manifest before accepting the build. Likewise, do not point the consumer's `snodec_DIR` at the desktop installation: that would mix host and target artifacts.
+
+After the ported recipe and echo package are selected, expand the SDK configuration and build the framework recipe with verbose output:
+
+```sh
+make defconfig
+make package/snode.c/compile V=s
+```
+
+The second command assumes the recipe retains the `snode.c` directory name used by the inspected feed. Build the echo application through its own registered recipe target. Record the SDK archive identity, feed revision, recipe changes, `.config`, prepared source identity and build log together. Before copying packages to the test device, inspect their file lists and dependency metadata with the selected release's package tools. Check the target executable's architecture and its required shared-library names with the SDK's inspection tools. Those observations should identify target artifacts, not host binaries or build-directory paths.
+
+Install the resulting framework components and echo package using that release's package manager, then run `/usr/bin/echoserver --help` on the device. A loader failure belongs to packaging; do not work around it by copying arbitrary desktop libraries. For the first rehearsal, keep the listener on device loopback. Save `/etc/snode.c/book-echo.conf` with the same five settings used in the Linux exercise above, including port `18093` and `daemonize=false`.
+
+A minimal foreground-service definition in `/etc/init.d/book-echo` is:
+
+```sh
+#!/bin/sh /etc/rc.common
+START=95
+STOP=10
+USE_PROCD=1
+
+start_service() {
+    procd_open_instance
+    procd_set_param command /usr/bin/echoserver --config-file /etc/snode.c/book-echo.conf
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_set_param respawn 3600 5 5
+    procd_close_instance
+}
+```
+
+This is a rehearsal service using the device's existing account and group setup, not a complete privilege-isolation policy. Package the script and configuration through install rules when turning the rehearsal into a maintained package. The command keeps the application in the foreground so `procd` owns process supervision. The respawn parameters bound repeated short-lived failures; inspect the selected release's `procd` behavior when choosing production values.
+
+On the test device, make the script executable and exercise its lifecycle:
+
+```sh
+chmod 0755 /etc/init.d/book-echo
+/etc/init.d/book-echo start
+logread -e book-echo
+/etc/init.d/book-echo restart
+/etc/init.d/book-echo stop
+```
+
+Between start, restart and stop, test the listener from the development host through an SSH loopback tunnel, for example `ssh -N -L 18094:127.0.0.1:18093 root@TEST_DEVICE`, substituting the test device's actual address. Run the Linux exercise's independent Python peer against local port `18094`. Expect the exact echo after start and restart, then a failed exchange after stop. This avoids making a teaching listener reachable from the router's external interfaces. The SSH client and server must permit forwarding; if they do not, use an available target-side peer and record that substitution.
+
+Finally, repeat the invalid-port experiment from the Linux exercise, inspect the service failure, restore the configuration, and verify a fresh successful exchange. Enable boot startup only after these checks on the disposable target, then test one reboot. Installation, successful start, restart, controlled failure, recovery and boot behavior are separate observations. Until the matching SDK, ported recipe and target are available, these remain pending deployment evidence rather than desktop test results.
+
 ### Rebuild and inspect the installed system
 
 \index{deployment!ABI compatibility}
@@ -556,6 +729,10 @@ A deployment should not hide:
 - or platform-specific differences between general-purpose Linux and OpenWrt.
 
 When these details are hidden, failures appear later as unrelated runtime problems. When they are explicit, deployment becomes another readable part of the system.
+
+A deployment rehearsal should preserve the application's actual operating conditions. Run the installed executable under the intended service account, with its real configuration path and working directory, before putting a supervisor around it. Verify that named endpoint sections resolve as intended, the Unix-domain directory is writable where required, TLS material is readable where required, and the installed protocol modules can be found. Then stop the process normally and observe its cleanup before testing restart. A build-tree run under the developer's account leaves all of those deployment boundaries untested.
+
+For MiniGateway, keep liveness and readiness distinct. `/health` demonstrates a responsive HTTP role. It does not query broker acceptance, database durability, or the freshness of measurements. A supervisor can use a liveness observation without pretending it establishes those wider application guarantees.
 
 ::: {.snodec-remember title="What to remember"}
 - Deployment is architecture entering the filesystem.

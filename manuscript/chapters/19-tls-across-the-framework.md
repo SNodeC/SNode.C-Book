@@ -294,6 +294,43 @@ server side
 
 SNI is therefore part of TLS identity selection during handshake, not just another string option.
 
+#### Trust, expected identity, and SNI are separate decisions
+
+The current source requires care at this point. `ssl_utils.cpp` enables peer verification when trust material or default trust paths are selected and accepting unknown certificates is disabled. With no selected trust source, its verification mode is zero. Merely selecting a TLS wrapper therefore does not prove that the remote peer has been authenticated.
+
+SNI is a second decision. `ssl_set_sni(...)` sets the name sent to the server; it does not configure the expected certificate identity. The example hostname-checking statements in `src/apps/echo/model/clients.h` are commented out. Reading those statements as active behavior would give the example a security property it does not currently have.
+
+For a TLS client, choose the trust source and expected peer identity before the handshake. The existing `setOnConnect(...)` callback runs after the TLS configuration has created its `SSL_CTX`, but before the connector calls `startSSL(...)` for this connection. At this boundary, `getSSL()` is still null. Configure the shared client context's verification parameters before the new `SSL` object copies them. This is endpoint policy: clients that need different expected identities should use separate endpoint configurations. The following is an application-policy sketch for a DNS identity, to be attached to an already declared TLS client:
+
+```cpp
+client.getConfig()->setCaCert("local-ca.pem");
+client.getConfig()->setCaCertAcceptUnknown(false);
+client.setOnConnect([](auto* connection) {
+    SSL_CTX* context = connection->getConfig()->getSslCtx();
+    X509_VERIFY_PARAM* parameters = SSL_CTX_get0_param(context);
+    X509_VERIFY_PARAM_set_hostflags(parameters, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
+    if (X509_VERIFY_PARAM_set1_host(parameters, "sensor.example", 0) != 1) {
+        connection->close();
+    }
+});
+```
+
+The sketch requires `<openssl/ssl.h>` and `<openssl/x509v3.h>`, a real trust file in place of `local-ca.pem`, and rejection of unknown certificates. `sensor.example` stands for the application's expected DNS identity; it is not a runnable public service. A literal IP identity needs the corresponding IP verification parameter, not a DNS-name substitution. This policy belongs before secure readiness, not in a protocol callback that runs after application data has already become possible.
+
+Check the policy through three outcomes: the intended identity under the intended trust source succeeds, an untrusted issuer fails, and a trusted certificate for the wrong identity also fails. Those outcomes distinguish trust, identity, and encryption. They must be established for the deployment; compiling this callback alone does not establish them.
+
+The edition includes a small verification fixture for this policy in `review/verification/refinement-probes`. From the book directory, with the Chapter 2 installation available, the local exercise is:
+
+```sh
+cmake -S review/verification/refinement-probes -B build/refinement-probes \
+  -DCMAKE_PREFIX_PATH="$HOME/.local/snodec"
+cmake --build build/refinement-probes
+ctest --test-dir build/refinement-probes -R TlsTrustAndIdentity \
+  --output-on-failure --no-tests=error
+```
+
+The fixture creates temporary self-signed test identities and uses an independent local TLS peer. It observes readiness for a trusted matching name, rejection of a trusted wrong name, and rejection of an untrusted matching name. It also checks that the early callback sees no connection `SSL*` yet. The identities are local test material and are removed afterward. This establishes the callback and verification behavior of the recorded source; production certificate provisioning and application authorization remain deployment decisions.
+
 ### TLS adds work between connection creation and readiness
 
 TLS changes the connection timeline.
@@ -384,20 +421,9 @@ These are concrete regression surfaces in the current test suite, including TLS 
 
 A TLS connection is still carried over a lower family. The lower family does not disappear just because the connection is encrypted.
 
-The application may still need to know whether the carrier beneath TLS is:
+For a Unix-domain carrier, pathname permissions still determine who can reach the socket, while TLS peer verification answers a separate identity question. For a Bluetooth carrier, discovery, service endpoint selection, and any pairing required by the platform’s security policy still precede the secure conversation. An encrypted stream cannot repair a wrong PSM, an inaccessible pathname, or a missing route.
 
-- IPv4,
-- IPv6,
-- Unix domain sockets,
-- Bluetooth RFCOMM,
-- Bluetooth L2CAP,
-- or another supported lower family with a TLS wrapper.
-
-This affects endpoint configuration, address semantics, deployment shape, permissions, pairing/trust setup for Bluetooth carriers, local path behavior for Unix-domain sockets, and diagnostics.
-
-TLS specializes connection handling above the lower transport. It does not replace the lower transport. That is why the earlier lower-family chapters still matter.
-
-The chapter uses IPv4 code shapes because they are compact and familiar. The architectural idea is broader: lower family first, stream transport next, legacy or TLS connection handling above that, and protocol behavior in the context.
+The IPv4 examples make the TLS boundary visible without adding those setup requirements. Transferring the protocol to another supported carrier preserves the trust and identity decisions while adding that carrier’s own reachability and operating-system checks.
 
 ### Protocol contexts should stay TLS-independent when possible
 
@@ -467,25 +493,15 @@ Use configuration display to inspect TLS settings. Use semantic lifecycle record
 
 Use scoped debug or trace policy for detailed handshake and shutdown investigation. Connection identity connects those records to a concrete peer episode. Certificate and trust diagnostics should remain useful without exposing private key material or unnecessary sensitive values. TLS uses the same semantic diagnostic model as the rest of the framework.
 
-It makes the existing one more important.
+Correlate the failed TLS episode with its connection identity before interpreting later retry records as a second failure of the same handshake.
 
 ### A useful teaching path: legacy first, TLS second
 
 The clearest way to understand TLS in SNode.C is still to read the legacy stream first, then the TLS stream.
 
-First understand the legacy application:
+Take the Chapter 15 transfer exercise and first establish its greeting, framing, and shutdown behavior over the legacy connection. When introducing TLS, retain those observations and add separate checks for trusted identity, mismatched identity, and handshake failure. A successful encrypted exchange alone does not distinguish those cases.
 
-- server/client handle,
-- registered instance,
-- instance configuration,
-- factory,
-- context,
-- lower-family endpoint,
-- connection lifecycle.
-
-Then introduce TLS as a connection-layer upgrade. This lets the reader see what changed and what remained stable. It also avoids presenting TLS as a completely new application architecture.
-
-TLS is easier to understand when the non-TLS shape is already clear because the architecture itself shows where the additional secure-connection work is inserted.
+There is also a deployment choice. In-process TLS keeps the peer’s TLS connection and its policy at the application boundary, but makes that process responsible for certificate and key configuration. A terminating proxy can centralize that operation; the application then receives a different connection and needs an explicit trust policy for any forwarded identity. The protocol parser may remain reusable in both arrangements, while the authorization boundary changes.
 
 ### A rule of thumb for TLS-capable applications
 

@@ -48,7 +48,7 @@ That question is useful before writing code, while debugging code, while designi
 \index{precise language}
 
 
-The book deliberately distinguishes system-design roles, server/client handles, configured roles, registered instances, connections, contexts, factories, middleware, subprotocols, and application services.
+The book deliberately distinguishes system-design roles, server/client handles, configured roles, registered instances, activation flows, connections, contexts, factories, middleware, subprotocols, and application services.
 
 That precision may feel demanding at first. It is worth the effort.
 
@@ -63,6 +63,8 @@ configured role name
 ```
 
 This terminology is how a running system becomes understandable.
+
+One distinction becomes especially useful when an application grows: the endpoint owns shared configuration, while each explicit activation has its own flow controller. Stopping a flow, closing a connection, detaching a context, and releasing an instance are different events. The architecture becomes easier to operate when the code and its diagnostics preserve those differences.
 
 ### Protocols carry meaning, not only bytes {.unnumbered}
 
@@ -135,9 +137,9 @@ When those questions remain answerable, the application can grow without becomin
 
 This book has used SNode.C as a concrete framework, but its deeper subject is the question of how network software can remain intelligible when it grows. That question is older than any particular library. Every serious network application eventually meets the same forces: different carriers, different protocols, changing deployment targets, operational failures, partial knowledge, and the temptation to hide complexity behind one convenient abstraction.
 
-The position taken by this book is deliberately not that complexity can be made to disappear. A framework that pretends to remove all complexity usually only moves it somewhere less visible. SNode.C takes a different path. It gives names and places to concerns that are often blurred: lower family, transport form, connection handling, protocol meaning, context, configured role, runtime-visible instance, application state, package component, deployed service, diagnostic boundary. The philosophical value of such a framework is not that it makes design automatic. It makes design discussable.
+The position taken by this book is deliberately not that complexity can be made to disappear. Abstraction can remove repeated work and make a simple application easier to write. It also has a cost when it conceals distinctions that the application must later control. SNode.C makes many of those distinctions explicit. It gives names and places to concerns that are often blurred: lower family, transport form, connection handling, protocol meaning, context, configured role, runtime-visible instance, application state, package component, deployed service, diagnostic boundary. The philosophical value of such a framework is not that it makes design automatic. It makes design discussable.
 
-That is why the book has returned so often to boundaries. A boundary claims that a certain concern has a natural owner; it is not a wall erected for its own sake. When the claim is right, the program becomes easier to reason about. When the claim is wrong, the program may still compile, but it becomes conceptually misleading. The HTTP route begins to own domain state. The MQTT callback begins to decide deployment policy. A socket context becomes a dumping ground for orchestration. A configuration option becomes a disguised invariant. These failures are technical, but they are also failures of thought.
+That is why the book has returned so often to boundaries. A boundary claims that a certain concern has a natural owner; it is not a wall erected for its own sake. When the claim is right, the program becomes easier to reason about. When the claim is wrong, the program may still compile, but it becomes conceptually misleading. The HTTP route begins to own domain state. The MQTT callback begins to decide deployment policy. A socket context becomes a dumping ground for orchestration. A configuration option becomes a disguised invariant. These failures become easier to repair when the disputed responsibility can be named.
 
 The recurring discipline of the book can therefore be read as a kind of engineering humility. Do not pretend that a byte stream already is a protocol. Do not pretend that a protocol already is an application. Do not pretend that an application already is a deployed system. Do not pretend that a running process is understood merely because it is running. Each step adds meaning, and each step deserves a place where that meaning can be named, tested, logged, configured, and maintained.
 

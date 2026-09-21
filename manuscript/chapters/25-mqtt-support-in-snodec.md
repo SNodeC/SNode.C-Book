@@ -197,7 +197,7 @@ MQTT has explicit packet vocabulary. For example, the core object exposes helper
 | `sendPubrel` / `onPubrel` | QoS 2 release step |
 | `sendPubcomp` / `onPubcomp` | QoS 2 completion step |
 
-It uses the packet names to show structure, not to teach MQTT QoS in detail. The architectural point is smaller and more important for this part of the book:
+These packet names show where acknowledgement state belongs; the chapter does not attempt a complete MQTT QoS reference. The architectural point is smaller and more important for this part of the book:
 
 ```text
 MQTT is packet-structured,
@@ -297,7 +297,7 @@ A useful module view is:
 
 This mirrors earlier patterns in the book. There is a shared protocol core. Server and client roles specialize that core. WebSocket-carried forms then connect the same protocol family to the upgrade/subprotocol architecture from Chapter 24.
 
-In the refined instance vocabulary, this means that an server/client handle configures a communication role, which becomes a registered instance. The per-connection MQTT-aware context and the MQTT protocol object then carry protocol behavior inside that established framework shape.
+A named endpoint supplies configuration for its activation flows. Each resulting connection receives an MQTT-aware context and protocol object. Broker or session state may deliberately outlive that one connection; do not place it in a short-lived receive buffer merely because both are called state.
 
 #### Server as broker-oriented role
 
@@ -406,6 +406,26 @@ target_link_libraries(my_mqtt_client PRIVATE snodec::mqtt-client)
 ```
 
 The shared `mqtt` component is the protocol core. The `mqtt-client` component adds the client role on top of that core. The component exists only when the MQTT build prerequisites are available.
+
+The current implementation is an MQTT 3.1.1 path. Read the `sendConnect(...)` arguments with that version in mind: the optional loop-prevention argument changes the protocol-level byte using a private extension. It is not a portable subscription setting. The compact client leaves it disabled. Also distinguish socket readiness from MQTT acceptance. The client implementation handles CONNACK before delivering the successful application callback, so a connected socket alone is not evidence that the broker accepted the MQTT session or a later subscription.
+
+### Separate connection, session, subscription, and delivery
+
+The compact client sends its subscription and first publication from the accepted-CONNACK callback. That establishes ordering after session acceptance; it does not wait for a subscription acknowledgement before publishing. Its command subscription and telemetry publication also use different topic paths. A successful call to `sendPublish(...)` is not proof that a command subscriber received anything.
+
+Use an independently observable peer when integrating the role with a broker. Record these milestones separately:
+
+| Milestone | Evidence to retain |
+|---|---|
+| carrier established | connection identity and endpoint |
+| MQTT session accepted | successful CONNACK handling |
+| subscription accepted | SUBACK and its granted result |
+| publication delivered | the independent subscriber’s topic and payload |
+| reconnect completed | a new connection plus the intended session/subscription behavior |
+
+For a bounded experiment, use a unique topic prefix, one publisher, one subscriber, and a fixed sequence of ten messages. Stop the publisher afterward. Repeat once with the subscriber absent and compare what the publisher can actually know. QoS 0 in this example supplies no publication acknowledgement; it cannot establish delivery to an absent or disconnected observer.
+
+The framework packet tests and the book’s CONNECT-byte check support narrower claims than this broker experiment. Full broker interoperability and restart behavior require that independent service run and its observations. Chapter 31 introduces a concrete broker ecosystem in which to carry out the broader exercise.
 
 ### MQTT as a WebSocket subprotocol
 

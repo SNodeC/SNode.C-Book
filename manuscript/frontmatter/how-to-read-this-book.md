@@ -18,10 +18,12 @@ The book can be read linearly, but it is also useful with the source tree open. 
 
 The opening chapters use a more direct tutorial voice because they prepare the reader to build and read the first complete programs. Later chapters become more architectural and reference-oriented: they assume the vocabulary is available and use it to classify protocols, roles, configuration surfaces, deployment choices, and extension points.
 
-The audience groups named in the Preface can therefore take different routes through the same material:
+Alternative routes are most useful when they have a concrete destination:
 
-- C++ developers and technical system builders can read linearly, or first concentrate on Chapters 3--20 to understand the core model before moving into the web, MQTT, persistence, deployment, and MiniGateway chapters.
-- Teachers and lecturers can use the sequence as a course spine: introductory examples, architecture chapters, protocol chapters, system-design chapters, and MiniGateway as an integrating project.
-- Advanced students benefit from the full progression: echo pair, architecture, network families, contexts and factories, configuration, protocols, systems, and MiniGateway.
-- Makers and prototypers may prefer a practical route through Chapters 1, 3, 5, 7, 16--20, 23--28, 31, 33, and the MiniGateway chapters.
-- Scientists, domain researchers, and interdisciplinary technical teams may first read the architectural and system-design chapters to understand how sensing, transport, storage, observation, control, and management surfaces fit together, then return to implementation details as needed.
+- To build an external application, begin with Chapters 1--7 and the echo pair. Follow Chapters 8--20 as the application acquires addressing, protocol state, configuration, and recovery policy. The checkpoint is a program whose build dependencies and connection lifetimes you can explain, not merely one that connects successfully.
+- To build a web-and-MQTT gateway, keep the same foundation, then read Chapters 21--28 before MiniGateway in Chapters 35--36. Chapters 30, 32--34, and 37 supply the process, build, operational, testing, and design decisions needed to take that example further. This route suits a practical prototype, but it still depends on the earlier ownership and configuration model.
+- To maintain or extend the framework, use Chapter 4's source-reading workflow, read Chapters 5--20 closely, and follow the protocol chapters relevant to the change. Chapters 29, 32, 34, and 38 connect the source tree, public components, tests, and extension boundary. The checkpoint is an explanation of who else consumes the behavior you plan to change.
+
+For a course, the linear sequence supplies the common vocabulary and MiniGateway supplies the integrating project. A researcher or technical collaborator interested first in system shape can begin with Chapters 27, 30, and 37, then return to the implementation chapters for each chosen role. Those chapters support design discussion; they do not replace the practical prerequisites for implementing the result.
+
+For a first practical milestone, complete the echo pair and explain which object owns its protocol behavior. For the web milestone, build the SSE companions and observe an event with a separate client. For the integration milestone, follow a measurement from MiniGateway input through the model to HTTP and SSE observation. The intervening architectural chapters give names to the decisions those exercises expose. Reading a table of roles is useful; being able to locate those roles in a running example is the stronger check of understanding.

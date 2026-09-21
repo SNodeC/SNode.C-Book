@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import pathlib
 import re
 import subprocess
@@ -26,16 +28,25 @@ def baseline() -> dict[str, str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--framework", type=pathlib.Path,
-                        help="Also verify this framework checkout's HEAD and project version")
+                        help="Also verify this framework working tree against the recorded source contents")
     args = parser.parse_args()
     errors: list[str] = []
     values = baseline()
     sha = values.get("SNODEC_COMMIT", "")
     version = values.get("SNODEC_VERSION", "")
+    manifest = json.loads((ROOT / values["SNODEC_WORKTREE_MANIFEST"]).read_text())
+    patch = ROOT / values["SNODEC_WORKTREE_PATCH"]
+    if manifest["base_commit"] != sha or manifest["project_version"] != version:
+        errors.append("Working-tree manifest differs from the baseline declaration")
+    if hashlib.sha256(patch.read_bytes()).hexdigest() != manifest["patch_sha256"]:
+        errors.append("Captured framework patch differs from its recorded digest")
+    recorded_tree = "".join(f"{digest}  {name}\n" for name, digest in sorted(manifest["files"].items()))
+    if hashlib.sha256(recorded_tree.encode()).hexdigest() != manifest["tree_sha256"]:
+        errors.append("Framework file manifest differs from its recorded tree digest")
     if not re.fullmatch(r"[0-9a-f]{40}", sha):
-        errors.append("Framework pin is not a full immutable commit SHA")
+        errors.append("Framework reconstruction base is not a full commit SHA")
     if values.get("SNODEC_REF") != sha:
-        errors.append("Checkout ref differs from the authoritative commit")
+        errors.append("Checkout ref differs from the reconstruction base commit")
     if version != "2.0.0":
         errors.append("This migration's declared project version must be 2.0.0")
     for name in ["README.md", "source-baseline/SOURCE-VERSION.md",
@@ -47,6 +58,27 @@ def main() -> int:
     chapters = sorted((ROOT / "manuscript/chapters").glob("[0-9][0-9]-*.md"))
     if len(chapters) != 38:
         errors.append(f"Expected 38 numbered chapters, found {len(chapters)}")
+    claims = json.loads((ROOT / "review/verification/source-claims.json").read_text())
+    if claims["framework_manifest"] != values["SNODEC_WORKTREE_MANIFEST"]:
+        errors.append("Chapter evidence does not reference the authoritative source manifest")
+    records = claims["chapters"]
+    if sorted(record["chapter"] for record in records) != list(range(1, 39)):
+        errors.append("Chapter evidence must cover each numbered chapter exactly once")
+    for record in records:
+        manuscript = ROOT / record["manuscript"]
+        if manuscript not in chapters or not manuscript.name.startswith(f"{record['chapter']:02}-"):
+            errors.append(f"Invalid chapter evidence target: {record['manuscript']}")
+        for anchor in record["framework_sources"]:
+            if anchor["path"] not in manifest["files"]:
+                errors.append(f"Source anchor is outside the recorded tree: {anchor['path']}")
+            elif args.framework:
+                lines = (args.framework / anchor["path"]).read_text().splitlines()
+                line = anchor["line"]
+                if not 1 <= line <= len(lines) or anchor["needle"] not in lines[line - 1]:
+                    errors.append(f"Source anchor differs: {anchor['path']}:{line}")
+        for companion in record["companion_sources"]:
+            if not (ROOT / companion).is_file():
+                errors.append(f"Missing companion evidence: {companion}")
     sources = list((ROOT / "manuscript").rglob("*.md"))
     sources += list((ROOT / "review/proposal").glob("*.md"))
     sources += list((ROOT / "assets/figures/src").glob("*.tex"))
@@ -77,16 +109,22 @@ def main() -> int:
     if re.search(r"ref:\s*[0-9a-f]{40}", workflow):
         errors.append("Companion workflow duplicates a literal framework SHA")
     if args.framework:
-        head = subprocess.check_output(["git", "-C", str(args.framework), "rev-parse", "HEAD"], text=True).strip()
-        if head != sha:
-            errors.append(f"Framework checkout is {head}, expected {sha}")
         cmake = (args.framework / "CMakeLists.txt").read_text()
         if not re.search(r"\bVERSION\s+" + re.escape(version) + r"\b", cmake):
             errors.append("Framework CMake project version differs from the declared version")
+        names = subprocess.check_output(
+            ["git", "-C", str(args.framework), "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+            text=True).split("\0")
+        actual = {name: hashlib.sha256((args.framework / name).read_bytes()).hexdigest()
+                  for name in sorted(set(filter(None, names))) if (args.framework / name).is_file()}
+        for name in sorted(set(actual) | set(manifest["files"])):
+            if actual.get(name) != manifest["files"].get(name):
+                errors.append(f"Framework source content differs: {name}")
     if errors:
         print("\n".join("ERROR: " + error for error in errors), file=sys.stderr)
         return 1
-    print(f"Source alignment passed: 38 chapters, {count} exact complete listings; SNode.C {version} at {sha}")
+    print(f"Source alignment passed: 38 chapter evidence records, {count} exact complete listings; "
+          f"SNode.C {version}, base {sha}, working-tree digest {manifest['tree_sha256']}")
     return 0
 
 

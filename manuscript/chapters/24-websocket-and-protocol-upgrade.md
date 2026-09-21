@@ -38,7 +38,7 @@ WebSocket closes the main web-protocol climb before the book moves to MQTT.
 
 The WebSocket stack keeps the lower family, stream transport, and legacy-or-TLS connection handling, then uses HTTP request/response for upgrade negotiation before WebSocket frames and subprotocol semantics take over.
 
-This is still the same structure. WebSocket does not erase the lower family. It does not erase TLS. It does not erase HTTP. It uses HTTP as the negotiation layer for moving the same connection episode into a different protocol context.
+The practical consequence is continuity of connection identity. Correlate the HTTP negotiation and subsequent WebSocket records as phases of one peer episode; do not count the upgrade as a second accepted socket.
 
 After a successful upgrade, ordinary request/response handling no longer owns that connection episode. The upgraded WebSocket context does.
 
@@ -54,25 +54,19 @@ HTTP request
 
 With TLS, the WebSocket upgrade happens above the secure stream connection. The secure connection remains the carrier underneath the HTTP negotiation and the WebSocket frames.
 
-In short, the same lower connection performs HTTP negotiation before the connection episode is handed to a new protocol context.
+That handover is also an ownership boundary: ordinary route dispatch no longer receives the bytes as subsequent HTTP requests.
 
 ### HTTP, SSE, and WebSocket side by side
 
-The position of WebSocket becomes clearer when it is placed next to ordinary HTTP and SSE.
+Chapter 23 compared the three interaction shapes. For implementation, the decisive observation is what happens after the first response:
 
-| Concern | Ordinary HTTP | SSE | WebSocket |
+| Boundary | Ordinary HTTP | SSE | WebSocket |
 |---|---|---|---|
-| start | HTTP request | HTTP request | HTTP request with upgrade |
-| after start | response completes | response remains open | protocol changes after upgrade |
-| direction | request / response | server to client | bidirectional |
-| unit | response | event | frame / message |
-| connection shape | HTTP connection | long-lived HTTP response | upgraded connection |
-| typical use | APIs, pages, files | feeds, dashboards, notifications | interactive bidirectional protocols |
-| next semantic layer | application response | event handling | subprotocol |
+| subsequent data | another HTTP exchange where permitted | more fields in the open response | WebSocket frames after the accepted upgrade |
+| owner of message interpretation | HTTP request/response layer | EventSource parser on the client | WebSocket receiver and selected subprotocol |
+| evidence of application readiness | ready request or response | validated event stream, then dispatched event | upgrade accepted, then subprotocol lifecycle and messages |
 
-SSE remains inside HTTP. WebSocket begins in HTTP and then moves to WebSocket frame handling. That distinction is the main reason WebSocket deserves its own chapter.
-
-This is not a question of one protocol being “better” than the other. The table shows different fits: short request/response, one-way event streaming, or an upgraded bidirectional message channel.
+This distinction prevents a misleading test result. A successful HTTP exchange proves neither that SSE delivered an event nor that a requested WebSocket subprotocol was selected.
 
 ### WebSocket after the HTTP upgrade boundary
 
@@ -361,7 +355,7 @@ WebSocket subprotocol
   -> application/message semantics carried over WebSocket
 ```
 
-This distinction is important. Without the subprotocol layer, all WebSocket application logic would collapse into one undifferentiated callback. SNode.C keeps the levels separate by making the subprotocol part of the WebSocket upgrade structure.
+This distinction is important. A small application can implement its message meaning in one dedicated handler. A selectable subprotocol adds a useful boundary when a carrier serves several named protocols or loads their factories independently. Its cost is another negotiated name and deployment artifact that must agree on both sides.
 
 #### `SubProtocol` and `SubProtocolContext`
 
@@ -451,7 +445,7 @@ The exact target names are application choices; the contract is the name-to-fact
 
 A WebSocket application is usually not written as a raw byte loop. The application supplies a subprotocol object. The WebSocket layer handles the upgraded carrier, frames, messages, and control behavior; the subprotocol object receives lifecycle and message callbacks.
 
-A minimal echo pair needs one subprotocol on each side. The server-side object receives a complete WebSocket message and sends the same message back on the same upgraded connection:
+A minimal echo pair needs one subprotocol on each side. The server-side object collects the text message sent by the teaching client and sends that text back on the same upgraded connection:
 
 ```cpp
 #include <web/websocket/server/SubProtocol.h>
@@ -590,6 +584,8 @@ target_link_libraries(echo-client PRIVATE snodec::websocket-client)
 
 The factory symbols in the example are not only code conveniences. They are the names that dynamically loaded subprotocol modules must export, and they are also the factory entry points that a linked deployment makes available to the selector. The companion source trees are `WebSocket-Echo-ServerSubprotocol` and `WebSocket-Echo-ClientSubprotocol`; together with `HttpUpgrade-Server` and `HttpUpgrade-Client`, they form the complete runnable WebSocket echo example.
 
+The compact echo pair has a deliberately narrow message contract. Its `sendMessage(std::string)` call selects a text message, and its `onMessageStart(int)` ignores the incoming opcode. It is consequently a text teaching example, not an opcode-preserving binary echo service. A binary-capable subprotocol must keep message type visible through its processing and select the binary sending overload where appropriate. Frame reassembly by the carrier does not make that application choice disappear. The framework's binary WebSocket component tests exercise the carrier separately from this example.
+
 ### Receiver limits belong to the selected connection
 
 \index{WebSocket!receiver limits}
@@ -608,7 +604,15 @@ The defaults are zero, meaning unlimited for these configurable resource limits.
 
 A receiver resource-limit violation uses close code `1009`, Message Too Big. The limit is enforced at the carrier boundary before the application can treat the rejected message as accepted subprotocol data. It does not replace application validation of message contents, authorization, or command semantics.
 
-These settings belong to startup configuration, not to an undocumented runtime setter in the subprotocol. Nor do they introduce a corresponding sender-fragmentation policy: the current limits govern receiving. Chapter 20 covers the separate bounded-output contract below WebSocket, while Chapter 34 shows the receiver-validation and real-connection tests that protect these boundaries.
+These settings are snapshotted when the upgrade creates its receiver. Changing configuration later does not revise that existing receiver’s limits. Nor do they introduce a corresponding sender-fragmentation policy: the current limits govern receiving. Chapter 20 covers the separate bounded-output contract below WebSocket, while Chapter 34 shows the receiver-validation and real-connection tests that protect these boundaries.
+
+### Check negotiation before interpreting an echo
+
+Run the companion `HttpUpgrade-Server` and `HttpUpgrade-Client` with the matching echo subprotocol modules installed as described in their READMEs. Enable trace output with the global `--log-level=6` option so the examples' application messages are visible. Record three separate observations: the HTTP upgrade was accepted, `echo` was selected, and the client received its `hello` text before closure.
+
+Then use a scratch client copy to request an unsupported subprotocol name. The success criterion is no echo subprotocol attachment and no ordinary `hello` exchange; inspect the returned HTTP status and selection diagnostics rather than assuming every rejection uses one status code. Restore `echo` before testing message behavior.
+
+Keep the binary case separate. The printed echo server ignores the opcode and sends a text reply, so it does not reject unsupported binary input or preserve binary message type. That limitation remains work to do in the teaching example. The carrier’s binary and receiver-limit tests establish different facts and must not be reported as a fix to this subprotocol.
 
 ### Lower layers and diagnostics still matter
 

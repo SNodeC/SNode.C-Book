@@ -20,19 +20,7 @@ That is the next controlled variation in Part III.
 
 With IPv4 and IPv6, an endpoint is described by an address and a port. With Unix domain sockets, an endpoint is described primarily by a local path. The endpoint no longer looks like an internet endpoint at all. It is a local interprocess-communication identity.
 
-The larger SNode.C model remains recognizable:
-
-- an application-side `SocketServer` or `SocketClient` handle,
-- a registered server-side or client-side instance,
-- a concrete `SocketConnection`,
-- a socket-context factory,
-- a per-connection socket context,
-- runtime integration,
-- status callbacks,
-- connection lifecycle callbacks,
-- and the same broad stream-based server/client/connection model.
-
-This shows that SNode.C's role model is not tied to host-plus-port addressing. The chapter therefore introduces another address class while testing whether the mental model from the previous chapters survives when the most familiar shape of a socket endpoint disappears.
+The factory and context still describe a stream protocol. The new responsibility is the local rendezvous point: the process must bind a usable path, clients must reach that same namespace, and the service must respect ownership and cleanup of the path. A working context does not resolve any of those deployment questions by itself.
 
 ### Same SNode.C model, different endpoint identity
 
@@ -125,19 +113,9 @@ That is why Unix domain sockets belong in this part of the book. They are not a 
 
 Default construction is meaningful in the Unix-domain address model.
 
-In the SNode.C address vocabulary used here, an empty Unix-domain path acts as the wildcard or deferred endpoint indicator for this family. It gives SNode.C a way to represent an address object whose concrete path has not yet been made specific.
+The default address has not yet been given a concrete service path. Do not infer from the word *wildcard* that an empty Unix-domain path listens on every pathname in the way an IP wildcard covers local interfaces. The pathname examples in this chapter require an explicit rendezvous name.
 
-This is not a long operating-system detour. The key is consistency across families:
-
-| Family | Default / wildcard shape |
-|---|---|
-| IPv4 | `0.0.0.0`, port `0` |
-| IPv6 | `::`, port `0` |
-| Unix domain sockets | empty path |
-
-The wildcard idea transfers.
-
-The concrete representation changes. This is the useful reading habit for all lower families in SNode.C: the abstract role of a default address may be comparable, but the actual meaning is always expressed in the vocabulary of the selected family.
+There is also a distinction between a pathname and a socket address whose first path byte is zero. The source's `toString()` renders that second form with a leading `@`, a notation associated with the Linux abstract namespace. That rendering is not an input conversion rule: `setSunPath()` stores the supplied string, and `init()` copies its bytes. Do not turn a diagnostic `@name` into a pathname configuration without checking the address representation. The worked applications here use ordinary pathname sockets, whose directory access and cleanup can be inspected directly.
 
 #### Locality as the defining idea
 
@@ -192,7 +170,7 @@ LocalServer server("local-service");
 server.listen("/tmp/my-service.sock", 5, onStatus);
 ```
 
-The visible `LocalServer` object is the handle. The `listen(...)` call configures the server-side path and registers the server-side instance through the usual runtime path.
+The visible `LocalServer` object is the handle. The `listen(...)` call configures the server-side path and starts a listening flow for that endpoint through the usual runtime path.
 
 The server is still a server role.
 
@@ -230,7 +208,7 @@ LocalClient client("local-client");
 client.connect("/tmp/my-service.sock", onStatus);
 ```
 
-Here the visible `LocalClient` object is again the handle. The `connect(...)` call configures the remote Unix-domain service path and registers the client-side instance through the usual runtime path.
+Here the visible `LocalClient` object is again the handle. The `connect(...)` call configures the remote Unix-domain service path and creates its connecting flow through the usual runtime path.
 
 If the client also needs an explicit local bind path, the call can express that too:
 
@@ -274,6 +252,8 @@ This continues Chapter 9's connection model.
 
 A connection can still have bind, local, and remote address views. The address family has changed, but directional endpoint thinking remains useful. This is one of the main reasons to keep the address family visible in the type system: it prevents the local/remote distinction from being flattened into an unhelpful generic string.
 
+A pathname socket also has a filesystem lifecycle. The current physical Unix-domain implementation checks the path before binding and keeps cleanup tied to the endpoint it owns. A regular file at the requested pathname is not disposable socket state. When a local service fails to start, distinguish an occupied live socket, a stale socket pathname, a non-socket file, and insufficient directory permissions before deciding what to remove. The source test `UnixPhysicalSocketPathSafetyTest` exercises this boundary; unconditional deletion in application startup would bypass it.
+
 ### What remains stable
 
 \index{Unix domain sockets!stable model}
@@ -309,17 +289,7 @@ A `SocketContext` implementing a small request/response or streaming protocol do
 net::un::stream::legacy
 ```
 
-The carrier changes.
-
-What often remains stable is:
-
-- how the protocol reacts to connection establishment,
-- how it reads data,
-- how it sends data,
-- how it handles disconnection,
-- how it thinks in terms of one connection and one context.
-
-The same context class can often be reused when the protocol behavior does not depend on family-specific address details.
+The line parser, command responses, and per-peer receive buffer can remain unchanged. Authorization deserves a separate review, however: a rule based on an IP peer address cannot automatically become a rule based on local user identity. The credential query later in this chapter supplies facts for such a policy; it does not choose the policy.
 
 The protocol context may inspect the address if it wants to log or display endpoint information. But the protocol logic itself can often remain the same. This is the separation the book is building toward: lower layers decide how peers are reached, while the context concentrates on what the application protocol does once a connection exists.
 
@@ -394,23 +364,7 @@ It means the family expresses locality through path identity, and application de
 
 #### Unix domain sockets are not a replacement for IP
 
-Unix domain sockets are not better or worse IP sockets. They answer a different design question.
-
-They are excellent when communication is local to one machine. They are not suitable when a process must communicate with a peer on another machine over a network.
-
-The right question is therefore not:
-
-```text
-Are Unix domain sockets better than IP?
-```
-
-The better question is:
-
-```text
-Is this communication local enough that path-based IPC is the right lower family?
-```
-
-This keeps the comparison architectural rather than emotional. The lower family should match the communication boundary.
+Loopback IP is also a credible choice for communication on one machine. It may fit existing HTTP tools or a service expected to move onto another host later. A pathname socket makes a local service boundary and filesystem placement explicit and can support peer-credential policy, but processes in different filesystem namespaces must be given access to the same endpoint. Choose from those requirements rather than assuming that locality alone decides the family.
 
 ### Peer credentials are facts, not authorization
 
@@ -450,7 +404,7 @@ A same-user rule, a service-account rule, and a command-specific authorization r
 \index{stream sockets}
 
 
-It focuses on stream Unix domain sockets. That is intentional for architectural continuity. Stream Unix-domain sockets preserve the server/client/connection/context model used throughout this part of the book.
+This chapter focuses on stream Unix domain sockets. That keeps the connection and protocol model established in the preceding chapters available while endpoint identity changes.
 
 The SNode.C build also contains a `net-un-dgram` component, but datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 8--12.
 
@@ -477,7 +431,7 @@ The server/client/connection/context model remains available, while the lower-fa
 - The path-based endpoint changes configuration and deployment concerns while preserving the server/client construction path.
 - `listen(sunPath, ...)` configures the server's local Unix-domain path; `connect(sunPath, ...)` configures the client's remote Unix-domain service path.
 - `connect(sunPath, bindSunPath, ...)` keeps the local/remote distinction visible even though both endpoints are path-based.
-- The empty Unix-domain path is the family's wildcard or deferred endpoint representation in the SNode.C address model.
+- An empty Unix-domain path is a deferred value, not a general promise of wildcard listening; pathname services need an explicit path and lifecycle policy.
 :::
 
 ### Public surface of Unix-domain stream roles

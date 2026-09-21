@@ -35,7 +35,7 @@ std::size_t LineCommandServerContext::onReceivedFromPeer() {
         receiveBuffer.append(chunk, chunkLen);
 
         std::size_t lineEnd = receiveBuffer.find('\n');
-        while (lineEnd != std::string::npos) {
+        while (lineEnd != std::string::npos && lineEnd <= maxLineLength) {
             std::string line = receiveBuffer.substr(0, lineEnd);
             if (!line.empty() && line.back() == '\r') {
                 line.pop_back();

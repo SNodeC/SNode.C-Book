@@ -1,0 +1,24 @@
+Test project /tmp/snodec-book-current-external-echo
+    Start 1: echo.config-surface
+1/4 Test #1: echo.config-surface ..............   Passed    0.07 sec
+    Start 2: echo.server-external-peer
+2/4 Test #2: echo.server-external-peer ........   Passed    0.11 sec
+    Start 3: echo.client-external-peer
+3/4 Test #3: echo.client-external-peer ........   Passed    0.07 sec
+    Start 4: echo.pair-smoke
+4/4 Test #4: echo.pair-smoke ..................   Passed    0.36 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+client           =   0.07 sec*proc (1 test)
+configuration    =   0.07 sec*proc (1 test)
+echo             =   0.62 sec*proc (4 tests)
+example          =   0.62 sec*proc (4 tests)
+external         =   0.62 sec*proc (4 tests)
+pair             =   0.36 sec*proc (1 test)
+payload          =   0.18 sec*proc (2 tests)
+server           =   0.11 sec*proc (1 test)
+smoke            =   0.36 sec*proc (1 test)
+
+Total Test time (real) =   0.62 sec

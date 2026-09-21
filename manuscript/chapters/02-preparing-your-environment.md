@@ -11,7 +11,7 @@ Before the architecture can become interesting, the toolchain must be boring. Th
 
 This is more than tidiness. SNode.C is a real C++ framework with a core runtime, network-family components, stream transports, legacy and TLS connection variants, higher protocol layers, example applications, generated CMake targets, installable package components, and optional support for technologies such as Bluetooth and MariaDB.
 
-If the source tree, build tree, install prefix, and external playground are mixed together, the architecture becomes harder to see. If they are kept separate, the structure of the framework becomes much easier to inspect.
+For example, successfully rebuilding a framework library does not refresh a different copy already installed in a local prefix. An external application can still compile against that older installation. Keeping the locations explicit makes that failure understandable.
 
 The goal of this chapter is therefore simple:
 
@@ -44,8 +44,6 @@ A local install prefix can live outside these source and build directories:
 ```text
 ~/.local/snodec/
 ```
-
-This separation is not just tidiness. It protects the reader from confusing source files with generated files, framework examples with local experiments, and build artifacts with installed package files.
 
 The framework source tree remains the source of truth for the implementation. The build tree is disposable. The install prefix is what external projects consume. The playground is where you can test your understanding.
 
@@ -127,6 +125,14 @@ These tools are not required for the first echo example. They are mentioned here
 \index{git checkout@\texttt{git checkout}}
 
 
+First obtain this edition's electronic source package from the [SNode.C Book repository](https://github.com/SNodeC/SNode.C-Book) or its edition download. The commands below assume that the package is available at `~/projects/SNode.C-Book`. Point the shell variable at the actual location if yours differs:
+
+```sh
+export SNODEC_BOOK_SOURCE="$HOME/projects/SNode.C-Book"
+```
+
+This directory contains the manuscript, companion examples, and source-baseline record. It is separate from the framework source. The recorded framework tree includes current changes beyond its base commit, so checking out that commit is the first step, not the complete reconstruction.
+
 Choose a directory where you keep source repositories:
 
 ```sh
@@ -135,6 +141,8 @@ cd ~/projects
 git clone https://github.com/SNodeC/snode.c.git
 cd snode.c
 git checkout --detach 1f0f728fc9b3b45174f2cd790d83b2f493e58af1
+git apply "$SNODEC_BOOK_SOURCE/source-baseline/framework-working-tree.patch"
+python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
 
 The checked-out framework source now lives in:
@@ -143,17 +151,19 @@ The checked-out framework source now lives in:
 ~/projects/snode.c/
 ```
 
-The book baseline is SNode.C\textsubscript{\texttt{2.0.0}}. The full commit is the checkout target; `2.0.0` is the project version recorded by that source. For exact reproducibility, compare `git rev-parse HEAD` with the pin in the Preface.
+The book baseline is SNode.C\textsubscript{\texttt{2.0.0}}. The full commit is the base checkout target; `2.0.0` is the project version recorded by the source. The patch captures the current source-tree changes, and the checker compares the reconstructed file contents with the edition's manifest. Comparing `git rev-parse HEAD` alone would miss those changes.
 
-The SNode.C repository uses `master` as its moving development line. Do not build the examples against an arbitrary newer `master` checkout unless you deliberately want to check the book against a newer framework state. If you already have a clone, fetch the source and select the book snapshot explicitly:
+The SNode.C repository uses `master` as its moving development line. Do not build the examples against an arbitrary newer checkout unless you deliberately want to check the book against a newer framework state. If you already have a clean clone, fetch the source and select the base explicitly, then apply the edition patch once:
 
 ```sh
 cd ~/projects/snode.c
 git fetch origin
 git checkout --detach 1f0f728fc9b3b45174f2cd790d83b2f493e58af1
+git apply "$SNODEC_BOOK_SOURCE/source-baseline/framework-working-tree.patch"
+python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
 
-For normal reading, do not edit the framework repository immediately. First learn where examples are located, how the build is organized, and which parts of the framework are source code, generated build output, or installation artifacts.
+Use a separate clone if the existing checkout contains your own work. An already reconstructed checkout only needs verification; applying the same patch twice is not an update procedure. For normal reading, first learn where examples are located, how the build is organized, and which parts are source code, generated build output, or installation artifacts.
 
 ### Use an out-of-tree build
 
@@ -186,11 +196,11 @@ cmake --build snode.c-build -j$(nproc)
 
 Using `cmake --build` keeps the generator choice out of the foreground; the reader does not need to care immediately whether the generator is Make, Ninja, or something else.
 
-If you prefer Ninja explicitly, configure with:
+If you prefer Ninja explicitly, select it in a separate build directory:
 
 ```sh
-cmake -S snode.c -B snode.c-build -G Ninja
-cmake --build snode.c-build -j$(nproc)
+cmake -S snode.c -B snode.c-ninja -G Ninja
+cmake --build snode.c-ninja -j$(nproc)
 ```
 
 The build can take some time. That is normal. The framework uses many templates and builds many components and examples.
@@ -221,10 +231,12 @@ When using a custom prefix, later projects may need to know where to find the in
 export CMAKE_PREFIX_PATH="$HOME/.local/snodec:$CMAKE_PREFIX_PATH"
 ```
 
-A system-wide installation is also possible:
+A system-wide installation is also possible. Configure that destination explicitly in its own build directory; running an install command with `sudo` does not change a previously selected local prefix:
 
 ```sh
-sudo cmake --install snode.c-build
+cmake -S snode.c -B snode.c-system -DCMAKE_INSTALL_PREFIX=/usr/local
+cmake --build snode.c-system -j$(nproc)
+sudo cmake --install snode.c-system
 sudo ldconfig
 ```
 
@@ -240,7 +252,7 @@ For the book, a local prefix is often the safer teaching setup. It makes it clea
 
 The first chapters do not require many CMake options.
 
-Build selection and runtime diagnostic policy are different choices. The build selects applications, tests, and optional instrumentation. A normal SNode.C application selects its semantic logging policy through the root configuration, for example with `--log-level=debug`.
+Build selection and runtime diagnostic policy are different choices. The build selects applications, tests, and optional instrumentation. A normal SNode.C application selects its semantic logging policy through the root configuration, for example with `--log-level=5`.
 
 Keep useful lifecycle output enabled while working through the first examples. Chapter 18 explains the semantic logging API and its scoped thresholds; raising diagnostic detail does not require rebuilding the framework with an old macro-logging switch.
 
@@ -338,13 +350,9 @@ The first time you run such an example, pay attention to the output. You are not
 
 ### Do not hide runtime output too early
 
-At the beginning, visible runtime output is your friend.
+Use the first run to distinguish three observations: the listener reports readiness, the client establishes a connection, and the contexts exchange bytes. A build success proves none of those runtime facts. If only the first observation appears, inspect the client's destination and diagnostics before changing the echo context.
 
-If an example logs that it is listening, connecting, connected, reading, writing, or disconnecting, that output is part of the learning process.
-
-Later, logging can be configured more carefully. In the first chapters, however, do not silence the framework too aggressively.
-
-A quiet program is not automatically a clean program. Sometimes it is only a program that has hidden the evidence you need for understanding.
+Keep `--log-level=5` for the short teaching run so payload diagnostics are visible, then stop the pair. Later, Chapter 18 separates framework and application scopes so diagnostic volume can be reduced deliberately. The useful habit is to retain evidence of the boundary under investigation, rather than treating either silence or maximum verbosity as a permanent policy.
 
 ### Preparing a separate playground project
 
@@ -431,35 +439,16 @@ Later chapters will introduce additional component names for IPv6, Unix domain s
 
 Do not try to memorize all names at this stage. Learn the shape instead. SNode.C component names and public include paths are compact forms of architectural information. The dashes in a component name and the slashes in an include path often describe the same stack from different technical viewpoints.
 
-### Source tree, build tree, install tree
+### Check which installation the playground consumes
 
 \index{source tree}
 \index{build tree}
 \index{install tree}
 
 
-Before moving on, keep three locations distinct:
+After configuring the playground in Chapter 3, inspect its `CMakeCache.txt` for `snodec_DIR`. That entry identifies the package configuration CMake actually found. Compare its prefix with the installation you intended to use. The expected result is the package under `~/.local/snodec`, if you followed the local installation above.
 
-```text
-source tree
-  the files you read and edit
-
-build tree
-  generated files and compiled binaries
-
-install tree
-  headers, libraries, CMake package files, and installed executables
-```
-
-For example:
-
-```text
-~/projects/snode.c/
-~/projects/snode.c-build/
-~/.local/snodec/
-```
-
-This distinction will appear again throughout the book. It matters for CMake, for debugging, for deployment, and for understanding why an external playground project is different from an in-tree example.
+This check becomes useful when a source change appears to have no effect. First rebuild and reinstall the framework into the selected prefix, then rebuild the consumer. If you intend to switch installations, use a fresh consumer build directory or explicitly correct its cached package location. Changing the source checkout alone does not change an already selected installed package.
 
 ::: {.snodec-checklist title="Environment checklist"}
 Before moving on, you should be able to answer these questions.

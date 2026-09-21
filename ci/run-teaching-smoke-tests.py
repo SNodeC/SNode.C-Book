@@ -87,7 +87,7 @@ def server_check(env: dict[str, str]) -> None:
     with socket.socket() as reserved:
         reserved.bind(("127.0.0.1", 0))
         port = reserved.getsockname()[1]
-    args = ["--monochrom=true", "echoserver", "local", "--host", "127.0.0.1", "--port", str(port)]
+    args = ["--monochrom=true", "--log-level=5", "echoserver", "local", "--host", "127.0.0.1", "--port", str(port)]
     with running("echoserver", args, env) as process:
         deadline = time.monotonic() + 10
         peer = None
@@ -115,7 +115,7 @@ def client_check(env: dict[str, str]) -> None:
         listener.bind(("127.0.0.1", 0))
         listener.listen(1)
         listener.settimeout(10)
-        args = ["--monochrom=true", "echoclient", "remote", "--host", "127.0.0.1",
+        args = ["--monochrom=true", "--log-level=5", "echoclient", "remote", "--host", "127.0.0.1",
                 "--port", str(listener.getsockname()[1])]
         with running("echoclient", args, env):
             peer, _ = listener.accept()

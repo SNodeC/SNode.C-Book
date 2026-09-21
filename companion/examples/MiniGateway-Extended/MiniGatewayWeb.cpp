@@ -28,7 +28,7 @@ namespace minigateway {
         }
 
         static bool acceptsEventStream(const std::shared_ptr<Request>& req) {
-            return web::http::ciContains(req->get("Accept"), "text/event-stream");
+            return web::http::ciEquals(req->get("Accept"), "text/event-stream");
         }
 
         static void sendMeasurement(const std::shared_ptr<Response>& res,
@@ -73,7 +73,7 @@ namespace minigateway {
                 }
             });
 
-            app.get("/simulate", [&measurementModel] APPLICATION(req, res) {
+            app.post("/simulate", [&measurementModel] APPLICATION(req, res) {
                 const Measurement measurement = makeSimulatedMeasurement(measurementModel.current().sequence + 1);
                 const Measurement acceptedMeasurement = measurementModel.accept(measurement);
 
@@ -84,7 +84,7 @@ namespace minigateway {
     } // namespace
 
     MiniGatewayWebApp startWebRole(MeasurementModel& measurementModel) {
-        MiniGatewayWebApp app;
+        MiniGatewayWebApp app("web");
 
         registerWebRoutes(app, measurementModel);
 

@@ -7,8 +7,8 @@ host/port setup printed in the chapter. Both are installed consumers.
 ```sh
 cmake -S . -B build -DCMAKE_PREFIX_PATH=/path/to/snodec-prefix
 cmake --build build --parallel 8
-./build/echoserver --log-level=debug
-./build/echoclient --log-level=debug
+./build/echoserver --log-level=5
+./build/echoclient --log-level=5
 ```
 
 The pair reflects bytes repeatedly. Stop both processes after observing it.

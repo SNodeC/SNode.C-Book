@@ -41,15 +41,19 @@
 };
 
 \node[runtime block, below=\snodecGapLarge of handle] (instance) {\textbf{\textcolor{snodecTitleBlue}{Instance}}\\[-0.5mm]
-  {\footnotesize Registered runtime communication role.}
+  {\footnotesize Shared endpoint configuration and role state.}
 };
 
-\node[runtime block, below=\snodecGapSmall of instance] (connection) {\textbf{\textcolor{snodecTitleBlue}{Connection}}\\[-0.5mm]
+\node[runtime block, below=\snodecGapSmall of instance] (activation) {\textbf{\textcolor{snodecTitleBlue}{Activation flow}}\\[-0.5mm]
+  {\footnotesize One explicit \texttt{listen(...)} or \texttt{connect(...)} call.}
+};
+
+\node[runtime block, below=\snodecGapSmall of activation] (connection) {\textbf{\textcolor{snodecTitleBlue}{Connection}}\\[-0.5mm]
   {\footnotesize Concrete peer relationship.}
 };
 
 \node[runtime block, below=\snodecGapSmall of connection] (factory) {\textbf{\textcolor{snodecTitleBlue}{Context factory}}\\[-0.5mm]
-  {\footnotesize Creates contexts for connections.}
+  {\footnotesize Shared factory creates a context for each connection.}
 };
 
 \node[runtime block, below=\snodecGapSmall of factory] (context) {\textbf{\textcolor{snodecTitleBlue}{Context}}\\[-0.5mm]
@@ -58,7 +62,8 @@
 
 \draw[register flow] (appcode.south) -- (handle.north);
 \draw[register flow] (handle.south) -- (instance.north);
-\draw[flow] (instance.south) -- (connection.north);
+\draw[flow] (instance.south) -- (activation.north);
+\draw[flow] (activation.south) -- (connection.north);
 \draw[flow] (connection.south) -- (factory.north);
 \draw[flow] (factory.south) -- (context.north);
 

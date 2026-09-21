@@ -108,12 +108,15 @@ Its public surface is small:
 
 - `init(int argc, char* argv[])`
 - `start(const utils::Timeval& timeOut = {LONG_MAX, 0})`
+- `reconfigure()`
 - `stop()`
 - `tick(const utils::Timeval& timeOut = 0)`
 - `free()`
 - `state()`
 
 This compact interface already teaches several important things.
+
+The current source also makes configuration reapplication an explicit runtime operation. `reconfigure()` is called on the event-loop thread while the state is `RUNNING`; it returns whether reapplication succeeded. It does not repeat process startup or restart sockets, and failed parsing does not promise to roll back settings already changed. Chapters 16 and 17 distinguish this operation from initial configuration and from an application's separate decision to reactivate an endpoint.
 
 #### The runtime has explicit phases
 
@@ -137,23 +140,21 @@ That means sockets, timers, retries, reconnects, and protocol contexts participa
 
 For most applications, `core::SNodeC::start()` is the normal mode. It means:
 
-> Let the SNode.C runtime run the event loop until it is stopped or until the configured timeout condition ends the run.
+> Let the SNode.C runtime run the event loop until it is stopped, has no remaining observed work, or encounters a terminating tick result.
 
 That is the style already used in the echo pair. It is the natural mode when SNode.C is the central network runtime of the process.
 
-#### `tick()` is the controlled stepping mode
+The `timeOut` argument limits a multiplexer wait within an iteration. It is not a total running-time budget for the application. The multiplexer takes the earlier of that bound and its next scheduled timeout, then the loop can continue with another iteration. A service deadline therefore needs its own application or timer policy; passing a short wait bound does not make the service stop after that interval.
+
+#### `tick()` and the current stepping contract
 
 \index{tick()@\texttt{tick()}}
 \index{controlled stepping}
 
 
-The presence of `tick(...)` shows that SNode.C is not limited to one usage pattern. It can run in the classical “start the event loop and let it own the thread” mode, but it also exposes a per-iteration stepping model.
+The public surface also declares `tick(...)`. Its name suggests controlled stepping, which is useful when reasoning about individual event-loop iterations, testing, or embedding a reactor in another outer loop. The source contract must be checked before treating that declaration as a working alternative to `start()`.
 
-A framework that offers `tick()` is telling you:
-
-> The event loop is real, structured, and externally stepable.
-
-That matters for testing, embedding, integration with another outer loop, or simply understanding what the runtime does one iteration at a time.
+In the source tree recorded for this edition, the public `EventLoop::tick(...)` path calls `_tick(...)` while the state is `INITIALIZED`, whereas `_tick(...)` dispatches the multiplexer only in `RUNNING` or `STOPPING`. That means an ordinary `init()` followed by public `tick()` must not be presented as an equivalent way to advance the examples. The working startup path used throughout this book is `start()`, which bootstraps configuration and enters `RUNNING`. Internal tick structure explains how the runtime progresses; it does not by itself establish a supported external-loop recipe.
 
 ### The orchestrator behind the facade: `core::EventLoop`
 
@@ -181,7 +182,9 @@ The singleton event loop is a tradeoff.
 
 On the positive side, it gives the framework one primary event domain per process. That simplifies ownership, coordination, and runtime reasoning. For the applications emphasized in this book, that is helpful: the reader does not need to imagine several unrelated event loops competing inside the same process. There is one central runtime story.
 
-The tradeoff is equally important. The framework centers on one runtime domain rather than multiple independent reactor domains inside one process. Understanding that architectural choice early helps the rest of the model make sense. For the kind of layered network applications SNode.C is built to express, one central event domain is a clarifying design.
+The tradeoff is shared scheduling pressure. A slow callback delays other roles in the same process, even if their protocols are otherwise independent. Separate processes provide independent event domains and failure containment, at the cost of communication, deployment, and state coordination between them. Several roles in one loop are attractive when their callbacks stay short and they benefit from a shared model; process separation becomes more attractive when they need different resource or recovery policies. Chapter 30 returns to that system-level choice.
+
+The examples keep endpoint operations, flow control, and model updates on that event-loop thread. A shared pointer extends an object's lifetime; it does not make concurrent access to that object safe. Expensive computation and blocking external APIs need a deliberate handoff if they are moved elsewhere. Do not call connection or controller methods from a worker merely because that worker can hold a pointer. The current flow controllers retain the event-loop-thread usage contract, and a separate-thread integration needs an explicitly supported way to return work to that thread.
 
 ### Runtime state is coarse on purpose
 
@@ -229,7 +232,7 @@ If `State` describes coarse lifecycle phases, `TickStatus` describes the result 
 
 This enum is more informative than it may first appear.
 
-`SUCCESS` means the iteration completed normally. In a tick-driven or embedded integration scenario, that allows the caller to distinguish ordinary progress from exceptional control outcomes.
+`SUCCESS` is the normal iteration result. It does not, by itself, prove that a callback ran or a descriptor was dispatched. In particular, the public stepping limitation described above means that an initialized loop can return this result without advancing the multiplexer.
 
 `INTERRUPTED` matters because an event loop can be interrupted by signals or other control conditions. Exposing this as a separate status keeps interruption explicit instead of silently collapsing it into generic success or failure.
 
@@ -245,7 +248,7 @@ That is a useful rule for reading the core runtime:
 
 Chapter 5 separated the application-side handle from the runtime-visible instance.
 
-That distinction becomes concrete in the stream server and client code. The local `SocketServer` or `SocketClient` object used in application code is the handle through which the application names, configures, and registers a communication role. After `listen(...)` or `connect(...)`, the runtime-visible instance is carried by shared configuration, shared context, and flow-controller state.
+That distinction becomes concrete in the stream server and client code. The local `SocketServer` or `SocketClient` object used in application code names and configures a communication role. Each explicit `listen(...)` or `connect(...)` creates a controller for that call. Scheduled callbacks retain the controller together with the shared endpoint configuration and context. The current source therefore has one configured endpoint that can participate in several independent activation flows, rather than one endpoint-wide controller reused for every explicit call.
 
 The application begins with local expressions such as:
 
@@ -265,18 +268,7 @@ listen(...) / connect(...)
           -> EventReceiver::atNextTick(...)
 ```
 
-This source-level path is the runtime version of the mental model introduced earlier:
-
-```text
-application-side handle
-  -> register instance
-      -> runtime and flow-controller machinery advance the instance
-          -> concrete connections appear later
-```
-
-That distinction is not cosmetic. The server and client templates keep the runtime-relevant state in shared context objects, and the scheduled flow captures that shared state. The event loop therefore does not depend on the caller's stack frame to advance the registered instance. The visible local object is the registration handle; the framework advances the instance through shared state, flow-controller machinery, descriptor receivers, timers, the multiplexer, and queued event work.
-
-This prevents the wrong intuition that SNode.C is a blocking socket wrapper tied to one caller stack.
+The scheduling boundary has a lifetime consequence. The server and client templates capture shared endpoint state in the work that will run later, so returning from the public call does not discard the configuration and factory needed by that flow. An application callback that captures a separate local object by reference needs its own lifetime argument; the framework's retained state does not make every capture safe.
 
 ### From runtime intent to event delivery
 
@@ -350,11 +342,11 @@ The cleanest way to think about this pair is:
 
 That is a useful split. It means SNode.C can talk about *who handles work* and *what gets published into the loop* as related but distinct concepts.
 
-#### What `span()` and `relax()` suggest
+#### What `span()` and `relax()` do
 
-Both `EventReceiver` and `Event` expose `span()` and `relax()`-style operations. The names may feel unusual at first, but conceptually they fit the framework.
+`EventReceiver` delegates these operations to its event. In `Event::span()`, a published flag prevents the same event from being inserted repeatedly while it is already queued. `relax()` removes a published event; dispatch clears that flag before calling the receiver. This is more precise than treating an event as an unbounded count of callback requests. Repeated publication of one already-published event is not a request for several independent invocations.
 
-At the level of the runtime vocabulary, these names suggest a lifecycle-oriented model. Runtime work can be published into, withdrawn from, and dispatched by the event system. The reader does not need to memorize every internal method here. The runtime shape is what matters: work is represented, published, dispatched, and eventually released.
+Read that rule beside `atNextTick(...)`: each call to that helper constructs a separate temporary receiver. Two helper calls therefore create two event objects, whereas calling `span()` twice on one already-published receiver addresses the same event. The distinction matters when reasoning about deferred work and cancellation.
 
 ### The multiplexer is the coordination backbone
 
@@ -540,13 +532,11 @@ This is the architectural reason why retry, reconnect, and timeout behavior feel
 
 With the main pieces now placed, we can describe one conceptual event-loop iteration. This is not a line-by-line implementation trace. It is the teaching model that best fits the implementation structure.
 
-The central sentence is:
-
-> One tick is the multiplexer coordinating descriptor readiness, timers, queued events, timeout processing, signals, and cleanup.
+Read the following sequence against `EventMultiplexer::tick()`. Its successful path publishes active work, executes the queue, checks descriptor timeouts, and releases expired resources. This order explains why a long callback can delay more than the next read: timeout processing and cleanup also wait for control to return.
 
 #### The loop begins a tick
 
-The event loop begins one iteration and has a timeout budget. If the application called `start()`, this happens as part of the continuous runtime loop. If the application called `tick()`, this happens as one explicit step controlled by the caller.
+The event loop begins one internal iteration with a bound on its wait. In the examples, `start()` supplies the running state and repeats these iterations. This description concerns that internal cycle; the public `tick()` declaration does not remove the state restriction described earlier.
 
 #### The multiplexer determines what to wait for
 
@@ -574,7 +564,7 @@ The loop checks for timed-out observed entities and releases expired or disabled
 
 The loop iteration returns a `TickStatus`.
 
-For normal `start()` usage, this status is usually part of the runtime's internal loop control. For explicit `tick()` usage, it becomes visible to the caller and can guide embedding, testing, or controlled integration.
+For normal `start()` usage, this status is part of the runtime's internal loop control. Tests must observe the intended callback or data exchange as well as the return value; a status alone is not evidence that application work progressed.
 
 ### Coordinated shutdown is part of the runtime model
 
@@ -628,7 +618,7 @@ A manual sleep inside a callback is almost always the wrong instinct. It stops t
 
 #### Remember that `listen(...)` and `connect(...)` register intent
 
-The public call configures and registers an instance. The flow-controller/shared-context path and the event loop advance the actual work.
+The endpoint configuration exists before the public call creates its activation flow. The flow-controller/shared-context path and the event loop advance the actual work.
 
 This wording marks the difference between reading SNode.C as a blocking socket wrapper and reading it as an event-driven runtime.
 
@@ -638,11 +628,11 @@ Descriptor readiness, timer expiration, and next-tick scheduling are different s
 
 The `EventMultiplexer` is the central place where they are coordinated. That is the core runtime picture to carry forward.
 
-#### Use `tick()` deliberately
+#### Distinguish internal ticks from public stepping
 
 Most applications should simply call `core::SNodeC::start()`.
 
-Use `tick()` when you deliberately want controlled stepping: for embedding, testing, integration, or inspection. The existence of `tick()` is valuable, but it is not a reason to overcomplicate a normal application.
+Use `start()` for the application recipes in this edition. An embedding design needs a separately established stepping contract and a test that observes actual event delivery. The current public `tick()` path does not supply that contract merely by returning a named status.
 
 ### Stable concepts versus implementation details
 
@@ -679,19 +669,4 @@ Those are the ideas the reader should carry forward.
 
 ### Closing perspective
 
-The runtime core is the reason the higher layers of SNode.C can remain regular. Listening roles, connecting roles, connection contexts, timers, descriptor readiness, retry behavior, and cleanup all become runtime-managed work instead of scattered blocking calls.
-
-The durable picture is still compact:
-
-```text
-SNodeC facade
-  -> EventLoop
-      -> EventMultiplexer
-          -> descriptor readiness
-          -> timer progression
-          -> queued runtime work
-          -> timeout handling
-          -> cleanup
-```
-
-That machinery turns the framework's architecture into motion.
+As a source-reading exercise, start at the echo server's `listen(...)` call and follow the scheduled callback to the first acceptor work. Mark the point where the caller's stack stops advancing the operation. Then inspect `EventMultiplexer::tick()` and locate the work that would be delayed by a blocking receive callback. The expected result is a control-flow explanation, not just another list of classes: deferred activation reaches a shared dispatcher, and application work must return before that dispatcher can continue its other responsibilities.

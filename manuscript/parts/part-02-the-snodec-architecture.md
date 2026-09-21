@@ -2,4 +2,4 @@
 
 The first part made SNode.C observable through a working program and a readable source tree. This part turns those observations into the framework's core model.
 
-The chapters that follow explain the runtime, event processing, and layered organization that later protocol chapters will reuse. The goal is a precise distinction between lower communication family, transport form, connection handling, protocol context, and application role. Part III then applies that model to concrete endpoint families.
+The chapters that follow separate two questions: what keeps an operation alive, and what advances it? The answers distinguish endpoint configuration, activation flows, connections, contexts, and the shared event runtime. Layer choices then show which of those responsibilities changes when a carrier or connection variant changes. Part III applies that distinction to concrete endpoint families.

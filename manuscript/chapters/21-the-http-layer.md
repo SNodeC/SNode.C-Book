@@ -7,9 +7,7 @@
 
 ### From robust streams to HTTP messages
 
-HTTP is the first layer in the book where byte streams become request/response semantics.
-
-HTTP is the first step upward from the stream layer.
+The line protocol already gave bytes command meaning. HTTP now gives the application a standard request/response vocabulary, with parsing and message boundaries handled by the framework’s HTTP layer.
 
 At the stream level, application code often works close to received data and protocol-specific byte interpretation. At the HTTP level, the application-facing unit changes:
 
@@ -24,21 +22,7 @@ That is the central idea of this chapter:
 HTTP raises the application-facing meaning from stream data to request and response objects without replacing the lower SNode.C architecture.
 :::
 
-An HTTP server or client still depends on:
-
-- the runtime,
-- server/client handles,
-- registered runtime-visible server/client instances,
-- lower families,
-- stream transport,
-- legacy or TLS connection handling,
-- contexts,
-- factories,
-- configuration,
-- diagnostics,
-- timeouts and failure behavior.
-
-HTTP does not erase those parts. It builds on them. The application sees richer message-level objects, but the lower framework model remains visible underneath.
+A request callback runs only after the lower connection and HTTP parser have made the request available. This ordering gives the chapter a practical question: when an application handler never runs, did the peer fail to connect, did HTTP reject its input, or did the application fail after receiving a valid request? The layer boundaries distinguish those observations.
 
 ### HTTP in the layered SNode.C model
 
@@ -48,7 +32,7 @@ HTTP does not erase those parts. It builds on them. The application sees richer 
 
 The layer model now adds HTTP request/response meaning above the familiar lower family, stream transport, and legacy-or-TLS connection handling.
 
-The earlier chapters taught the lower part of this structure. They showed how a configured role becomes a registered instance, how that instance produces connections, how factories create per-connection contexts, and how configuration and diagnostics make the runtime shape visible.
+The earlier chapters taught the lower part of this structure. They established named endpoint configuration, explicit activation flows, factory-created contexts, and the diagnostics used to distinguish those lifetimes.
 
 Chapter 21 introduces the first major web-facing protocol layer above that foundation. The transfer question therefore changes direction. Earlier chapters often asked:
 
@@ -79,7 +63,7 @@ A compact comparison shows the transition.
 | diagnostics | connection lifecycle, counters, timing, and failure behavior | same plus HTTP parsing and request/response meaning |
 | extension point | protocol code in the context | routing, SSE, WebSocket upgrade, higher web layers |
 
-This is the same architectural pattern at a higher semantic level. The pattern is the same because the framework still uses lower-family selection, connection handling, context creation, and runtime progress. The semantic level is higher because the application receives HTTP message objects instead of stream fragments.
+The important shift in this table is responsibility for message completeness. A handler receives the HTTP object after the protocol layer has recognized its structure; it should not introduce a second HTTP framing parser.
 
 The application is no longer forced to decide where an HTTP request begins and ends. More precisely, the HTTP layer takes responsibility for message boundary recognition, start-line and header parsing, content and trailer handling, request/response object construction, and HTTP-specific connection behavior.
 
@@ -238,7 +222,7 @@ That is why the HTTP client vocabulary contains:
 | `Request` | concrete HTTP request |
 | `Response` | concrete HTTP response |
 
-For this chapter, `MasterRequest` can be read as the client-side coordination object associated with the HTTP connection. It owns the sending path for concrete requests and delivers responses or parse errors through callbacks. The exact internal mechanics belong to the implementation and reference documentation; the important point here is the semantic level. The client is now expressed in HTTP terms.
+`MasterRequest` owns the sending path for concrete requests and delivers responses or parse errors through callbacks. The exact internal mechanics belong to the implementation and reference documentation; the important point here is the semantic level. The client is now expressed in HTTP terms.
 
 #### HTTP-specific configuration
 
@@ -493,6 +477,8 @@ These checks belong before or within protocol processing. Valid admitted request
 
 The C++ configuration surfaces are `ConfigHttpParser`, server `ConfigHttpServer`, and client `ConfigHTTP` (`ConfigHttpClient`). Values become per-connection snapshots rather than mutable policy lookups during parsing. Chapter 17 explains their place in the configuration tree, and Chapter 20 explains the corresponding write-queue boundary.
 
+The scope of those policies matters as much as their defaults. Limiting a connection's write queue does not limit the number of application subscribers or the amount of state a route retains. Select the limits that match the service, then test rejection at the public HTTP boundary rather than inferring it from the presence of a policy type.
+
 ### Descriptor-based response streaming
 
 \index{FileReader@\texttt{FileReader}}
@@ -508,13 +494,13 @@ Successful `adopt(fd)` transfers ownership of the descriptor to the file source.
 
 The distinction is the same as elsewhere in the framework: transport and streaming mechanisms carry data; the application establishes which resource may be exposed.
 
-### What remains from the lower architecture
+### Trace a request that the application never receives
 
-An HTTP server still has the same lower architectural skeleton as the stream examples: configured roles, registered instances, lower-family stream connections, context factories, runtime lifecycle, configuration, diagnostics, timing, and failure behavior. The semantic level of the application handler changes. The echo-style context interprets stream data directly; the HTTP handler receives request and response objects.
+Use three requests to separate connection success from application admission: one ordinary request, one malformed request line, and one request that exceeds a deliberately small HTTP parser limit. Observe the response or closure and whether the application handler ran. A successful TCP connection is compatible with HTTP rejection before that handler.
 
-The same transfer applies to clients. An HTTP client still depends on endpoint configuration, connection establishment, lifecycle callbacks, and runtime integration, but the application now works in HTTP terms.
+The current framework provides executable counterparts in `InetHttpServerMalformedRequestBehaviorTest`, `InetHttpServerRequestPolicyTest`, and `InetExpressHttpParserLimitTest`. Read the chosen fixture’s request bytes and configured limit before running it; the test name alone does not define its boundary cases. Chapter 34 explains how to select these component tests from a configured framework build.
 
-Diagnostics also become layered rather than replaced. Lower diagnostics explain connection lifecycle, counters, timeouts, retry, reconnect, and shutdown. HTTP adds parse errors, request boundaries, response completion, upgrade decisions, and streaming state.
+This is also a design choice. A byte or field limit belongs in parser policy because rejected input must not reach ordinary application handling. A rule about which authenticated user may request a resource belongs in application handling, after a valid request exists. Increasing a parser limit cannot repair an authorization decision, and adding middleware cannot bound memory already consumed before middleware is called.
 
 ### From HTTP support to web application structure
 
@@ -522,7 +508,7 @@ Chapter 21 is a bridge between two parts of the book. HTTP relies on the earlier
 
 This chapter raises that structure to HTTP. The later web chapters build on HTTP through Express-like routing and middleware, Server-Sent Events, and WebSocket upgrade.
 
-Chapter 21 should not become a complete HTTP reference; its job is to show where HTTP sits in SNode.C and to teach the architectural transition from streams to HTTP messages.
+Use the protocol references in the back matter for HTTP’s wire rules. Here the reading milestone is to trace a parsed request into one handler and place a failure before or after that boundary.
 
 Chapter 21 explains how HTTP becomes request/response semantics. Chapter 22 asks how larger HTTP applications organize those request/response handlers into routing, middleware, and application structure.
 

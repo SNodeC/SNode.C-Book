@@ -8,19 +8,7 @@
 
 The echo pair works; the next task is to read the framework structure it exercised.
 
-That example used one lower communication family, one transport form, one connection mode, one server, one client, one context class, and two factories. Its purpose was to make the recurring SNode.C application shape visible:
-
-```text
-runtime
-  -> server or client instance
-      -> socket context factory
-          -> per-connection socket context
-              -> application protocol behavior
-```
-
-Here, read *instance* in the refined sense used throughout the book: the configured server-side or client-side communication role, not an already established peer connection.
-
-After that first program, the next difficulty is orientation.
+The first question is concrete: where did the server's public type obtain the machinery that accepted a connection and asked the echo factory for a context? Answering it means following one working path inward. The named instance, its activation flow, and the later peer connection must remain distinguishable as that path crosses files.
 
 The SNode.C source tree is much larger than the first echo pair. It contains runtime code, logging support, utilities, lower communication families, transport specializations, HTTP and web-protocol layers, an Express-like framework, database support, IoT-oriented pieces, examples, applications, build logic, and packaging support.
 
@@ -43,8 +31,6 @@ This chapter does not try to explain every file. It teaches a reading strategy. 
 The first useful map is the build structure, not a class diagram.
 
 The top-level `CMakeLists.txt` defines the project, prepares project-level helper modules, delegates into `src`, adds `tests` when `SNODEC_BUILD_TESTS` is enabled, and then includes packaging support. The top-level file is mostly a gateway into the framework source tree rather than the place where the framework structure itself is expressed.
-
-`CMakeLists.txt`, then `src/`, then packaging support.
 
 The `src/CMakeLists.txt` file is more informative for architectural orientation. It defines compiler requirements and options, configures compiler diagnostics and optional instrumentation, and adds the major source subdirectories:
 
@@ -198,17 +184,7 @@ l2        Bluetooth L2CAP
 tls       TLS-secured stream connection variant
 ```
 
-The term `legacy` is especially important. In SNode.C naming, it denotes the non-TLS stream connection variant. It should not be read as “obsolete” merely because the word normally has that association.
-
-When reading a long SNode.C name, do not treat the length as noise. Treat it as information. A name often tells you:
-
-- which architectural region the type belongs to,
-- which lower communication family it targets,
-- whether it is stream-oriented,
-- whether the connection mode is non-TLS or TLS,
-- and whether the role is server-side or client-side.
-
-This is one of the main reasons the source tree is readable once the naming scheme is understood.
+Use the name to make a prediction before opening the file. Replacing `in` with `in6` should take you toward IPv6 addressing; replacing `legacy` with `tls` should take you toward secured connection handling. Neither change, by itself, tells you where echo parsing lives. That question still leads to the application-supplied factory and context. The name narrows the search; it does not describe every behavior of the selected type.
 
 ### Learn to read type aliases
 
@@ -293,7 +269,7 @@ They form the bridge between framework-managed connection machinery and user-def
 
 The flow-controller path explains why `listen(...)` and `connect(...)` should not be read as blocking calls that perform all communication immediately on the caller's stack.
 
-They register communication intent. The runtime-visible flow is then carried by configuration, connection, and flow-controller state. This distinction matters later for retries, timeouts, configuration, diagnostics, and shutdown behavior.
+They register communication intent. To follow that intent in the current source, start at the concrete family header, follow its call into `core/socket/stream/SocketServer.h` or `SocketClient.h`, and then inspect the returned controller's `startFlow(...)` path. Each explicit call creates a flow; configuration and endpoint callbacks remain shared. The scheduled work, descriptor receivers, and recovery timers show which objects keep that flow alive. This trace connects the public call to runtime behavior without requiring a tour of every template first.
 
 ### Reading `net`
 
@@ -597,14 +573,4 @@ This workflow is not only useful for beginners. It also matters when extending t
 
 Part I began with motivation, prepared the build environment, built the first echo pair, and established a way to read the source tree. The next part can therefore become more architectural: Chapter 5 names the mental model formally and connects the recurring roles introduced here.
 
-The important result of this chapter is not a memorized directory list. The important result is confidence:
-
-```text
-when you open a file,
-ask which layer it belongs to,
-ask which role it plays,
-ask which boundary it expresses,
-and only then read the implementation details.
-```
-
-That habit is the difference between browsing the repository and understanding it.
+Before moving on, trace one path yourself. Open `src/net/in/stream/legacy/SocketServer.h`, identify the alias and the choices it fixes, then follow `listen(...)` through the family wrapper to `src/core/socket/stream/SocketServer.h`. Locate the flow creation and return to the echo factory's `create(...)` implementation. You should be able to name the files that select the lower machinery, activate the listener, and construct protocol behavior without attributing all three jobs to one class.

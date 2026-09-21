@@ -7,11 +7,7 @@
 
 ### From source-tree orientation to architectural thinking
 
-Source-tree orientation becomes useful when it turns into architectural thinking.
-
-The source tree is best read as a set of layers, roles, and recurring boundaries. That rule is useful when navigating the codebase; it is also the starting point for understanding the framework itself.
-
-This chapter turns that reading strategy into a compact mental model.
+Chapter 4 followed the echo program inward through its public type, activation path, factory, and context. This chapter asks how those pieces relate when the program has several peers, several operations, and lifetimes that no longer match the local variables in `main()`.
 
 A framework like SNode.C can be approached in two ways. One way is to memorize names: `SocketServer`, `SocketClient`, `SocketContext`, `SocketContextFactory`, `listen(...)`, `connect(...)`, `core::SNodeC::start()`, `net::in`, `net::in6`, `net::un`, `legacy`, `tls`, HTTP, WebSocket, MQTT, Express-like routing, and so on.
 
@@ -71,11 +67,11 @@ The runtime model answers the question:
 
 > How does a SNode.C application come alive?
 
-The answer has four recurring roles and one coordinating runtime. As shown in Figure \ref{fig:snodec-runtime-model}, application code uses a visible handle to register a communication role; the runtime advances the registered instance; a concrete connection appears; the factory creates a context; and the context expresses protocol behavior for that peer.
+As shown in Figure \ref{fig:snodec-runtime-model}, application code uses a visible handle to configure an instance and start an activation flow. The runtime advances that flow; a concrete connection can appear; the factory creates a context; and the context expresses protocol behavior for that peer.
 
-![The runtime view of application-side handles, registered instances, connections, factories, and contexts.](assets/figures/pdf/fig-02-runtime-instance-connection-context.pdf){#fig:snodec-runtime-model width=82% latex-placement="tbp"}
+![From endpoint configuration through activation to per-connection behavior. Arrows show the creation and use path, not a chain of exclusive ownership or nested lifetimes.](assets/figures/pdf/fig-02-runtime-instance-connection-context.pdf){#fig:snodec-runtime-model width=82% latex-placement="tbp"}
 
-The figure is deliberately small. Its purpose is to keep the handle, instance, connection, factory, and context roles distinct when moving from the echo pair to larger applications: a handle is visible in application code, an instance is registered in the runtime, connections appear under that role, and contexts carry per-connection protocol behavior.
+The figure keeps the configured endpoint separate from each explicit activation. One endpoint can have several flows, and a listening flow can end while a connection it accepted continues. The factory is shared by the role and used when a connection needs a context; its position in the drawing does not make it a child owned by each connection.
 
 #### The runtime
 
@@ -109,9 +105,11 @@ For that reason, `core::SNodeC::start()` is the point where registered communica
 \index{configured communication role}
 
 
-An instance is a configured communication role managed by the framework after registration. It participates in the SNode.C runtime and is advanced through the flow-controller machinery.
+An instance is a configured communication role. Its activation flows participate in the runtime and use that shared configuration while listening or connecting.
 
-In everyday discussion, the `SocketServer`/`SocketClient` handle in user code may also be called an instance. That is natural and often harmless. In the stricter architectural vocabulary used here, however, the visible C++ object is the application-side handle. Through `listen(...)` or `connect(...)`, that handle registers a configured communication role with the framework. That registered role is the instance. It is carried by framework-owned runtime and flow-controller state, and it must not be confused with the peer connection that may appear later.
+In everyday discussion, the `SocketServer`/`SocketClient` handle in user code may also be called an instance. That is natural and often harmless. In the stricter vocabulary used here, the visible C++ object is the application-side endpoint handle. Its shared configuration represents the configured instance; a named configuration joins the configuration tree when it is constructed. Through `listen(...)` or `connect(...)`, the handle registers activation intent for that role. The configured role, the activation flow, and the peer connection that may appear later are related, but they are not the same object.
+
+Each explicit activation call returns its own flow handle: a `std::shared_ptr<ServerFlowController>` or `std::shared_ptr<ClientFlowController>`. Automatic retries and reconnects continue that flow. Another explicit call creates another flow, while the endpoint configuration and callbacks remain shared. This distinction lets an application stop one activation sequence without treating the entire configured role as one indivisible operation.
 
 For example, an IPv4 stream legacy server object in `main()` is the handle through which the application names the role, adjusts configuration, attaches callbacks, and finally registers the listening role. The exact type name encodes lower-layer choices, but the architectural sequence is stable: handle, registered instance, runtime flow, connection, context.
 
@@ -198,7 +196,7 @@ The application creates server or client handles.
 
 For a simple program, that may be one server and one client. For a real system, there may be several configured instances: perhaps an HTTP server, an MQTT client, a WebSocket bridge, or several independent communication endpoints.
 
-Each instance represents a configured communication role; the handle configures and registers that role.
+Each instance represents a configured communication role; the handle exposes its configuration and registers the operations that should activate it.
 
 #### Phase 3: register communication intent
 
@@ -267,11 +265,13 @@ It is the object the application uses to configure and register the role. Keepin
 
 #### The instance as configured communication role
 
-This section fixes the strict meaning of the term. An instance is the role registered with the framework: listen here, connect there, use this configuration, use this factory, use these callbacks. After registration, it is no longer just an intention expressed by a local object; it is runtime-visible framework state.
+The configuration and shared endpoint context can outlive the local handle because active framework work retains the state it needs. They supply the role's name, policy, factory, and callbacks across connection episodes. This is the lifetime meant when the book calls the instance long-lived; it is not a claim that the local wrapper must remain on the stack throughout every callback.
 
-From this point on, the book can usually say simply *instance*. The longer phrase remains useful when the definition itself is being emphasized, but repeating it everywhere would make the prose heavier without adding precision.
+That distinction matters when passing dependencies to a factory. Keeping endpoint state alive does not extend the lifetime of an arbitrary object captured by reference. If every connection uses an application model, arrange for that model to remain valid until the last such use. Chapter 14 develops that construction boundary in detail.
 
-The instance is the long-lived entity in the framework model. The local server or client handle is the object through which the application configures and registers it, but the registered instance is what the runtime and flow-controller machinery keep advancing. Connections are shorter-lived concrete peer relationships produced by the instance; contexts are shorter-lived protocol endpoints attached to those connections.
+#### The activation flow
+
+The flow returned by one `listen(...)` or `connect(...)` call has its own control lifetime. Runtime callbacks retain it while its work is active, so discarding the returned handle is not a cancellation operation. Retaining it gives application code a way to terminate that flow or observe its progress. A server connection already accepted by a listener can remain alive after the listening flow ends. Do not insert the flow into a simple lifetime inequality that would require it to outlive every connection.
 
 #### The connection
 
@@ -299,7 +299,7 @@ The lifetime rule is:
 `instance lifetime` >= `connection lifetime` >= `context lifetime`
 :::
 
-That rule is conceptual rather than a claim about exact ownership mechanics in every implementation detail. It is the mental ordering that matters. An instance can outlive one connection. A connection carries one context at a time. The context is meaningful only in relation to the connection it serves.
+That rule describes the configured role, connection, and attached context; it does not describe the lifetime of a local wrapper variable or a flow handle. An instance can outlive one connection. A connection carries one current protocol context, and an upgrade can replace that context during the same peer relationship. The context is meaningful in relation to the connection it serves. The listening flow may already have ended while an accepted connection continues.
 
 ### The layer model
 
@@ -485,7 +485,7 @@ A flow can be started, observed, retried, terminated, and associated with runtim
 For the reader, the important mental rule is:
 
 ::: {.snodec-rule title="Runtime-flow rule"}
-`listen(...)` and `connect(...)` register instances; the runtime and flow-controller machinery advance them.
+`listen(...)` and `connect(...)` register activation flows for configured instances; the runtime advances those flows and the connections they produce.
 :::
 
 That rule is more precise than saying that these calls “start the server” or “open the connection,” although those informal phrases may be acceptable in casual discussion.
@@ -521,29 +521,7 @@ A framework that exposes these quantities is inviting the application writer to 
 
 ### What stays stable across later chapters
 
-The rest of the book will introduce many additional topics:
-
-```text
-runtime internals
-network families
-socket addresses
-server and client variants
-contexts and factories in detail
-configuration
-logging
-TLS
-HTTP
-Express-like routing
-Server-Sent Events
-WebSocket
-MQTT
-MQTTSuite
-database support
-deployment
-testing
-```
-
-The details will change, but the mental model should remain recognizable.
+Later chapters add protocol and operational detail to this model. Use that detail to test the boundaries, rather than treating a familiar class name as evidence that every lifetime stayed the same. A reconnect creates another peer episode; an HTTP upgrade can change protocol context within an existing connection.
 
 When you meet a new subsystem, ask the same questions:
 
@@ -568,8 +546,8 @@ The mental model can be summarized in one diagram:
 
 ```text
 core::SNodeC runtime
-  -> application-side handle registers a server/client instance
-      -> flow controller owns and advances listen/connect flow
+  -> application-side handle configures a server/client instance
+      -> each activation call creates a flow controller
           -> concrete peer connection
               -> SocketContextFactory
                   -> per-connection SocketContext
@@ -604,8 +582,8 @@ Together they form the working mental model of SNode.C.
 
 ::: {.snodec-remember title="What to remember"}
 - SNode.C is best understood as an event-driven, layer-based framework built from recurring roles.
-- `core::SNodeC` owns the visible runtime lifecycle; `listen(...)` and `connect(...)` register instances that the runtime and flow-controller machinery advance.
-- A server or client instance is the long-lived runtime-managed role; the `SocketServer`/`SocketClient` handle is the application-side handle used to configure and register it.
+- `core::SNodeC` owns the visible runtime lifecycle; each explicit `listen(...)` or `connect(...)` registers a flow for a configured instance.
+- A server or client instance supplies shared configuration and endpoint state; the local handle, an activation flow, and an established connection have distinct lifetimes.
 - A connection is a concrete peer relationship, not the same thing as an instance.
 - A `SocketContextFactory` creates per-connection contexts, and a `SocketContext` is where protocol behavior belongs.
 - The practical layer stack is network family, transport form, connection handling, and application protocol.

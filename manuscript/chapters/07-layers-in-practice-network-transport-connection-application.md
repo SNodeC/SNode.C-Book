@@ -22,9 +22,7 @@ network family, transport form, connection handling, and application protocol.
 
 This is not a decorative diagram. It explains why long SNode.C names are readable and why components can be selected systematically. It also explains why the same application shape can move from IPv4 to IPv6, from a Unix domain socket to Bluetooth RFCOMM or L2CAP, or from the non-TLS stream variant to TLS without becoming unrelated code. Higher protocols such as HTTP, WebSocket, MQTT, and MQTT over WebSocket add their own structure, but they do not make the lower stack disappear.
 
-This chapter explains how the communication choices behind registered instances are named, built, and composed.
-
-This chapter treats layering practically: after it, a reader should be able to look at a SNode.C type name, component name, or source-tree path and understand what it says about the communication stack.
+The practical task is to assign a change to its owning layer, then check the consequences in the others. Names and components help locate that owner; they do not settle the whole design decision.
 
 ### The communication stack in four layers
 
@@ -193,11 +191,7 @@ The network layer becomes concrete through address types and address semantics.
 
 An IPv4 endpoint is not the same thing as an IPv6 endpoint. A Unix domain socket path is not the same thing as a Bluetooth device address plus channel or PSM. SNode.C does not erase those differences behind one vague endpoint abstraction.
 
-That is good design.
-
-A framework that hides all endpoint identity behind a single general address type may look simpler at first, but the simplification can become misleading. Real systems need to know whether they are binding a TCP port, opening a local socket path, or addressing a Bluetooth service.
-
-SNode.C keeps the family-specific meaning visible while still preserving the higher-level pattern.
+A common address interface can be useful when an application chooses endpoint families dynamically and stores them in one collection. Family-specific types make different operations and fields visible to the compiler, but require explicit selection or dispatch when the family itself is a runtime choice. SNode.C's concrete address types favor that visibility. The application must still decide how to represent a user-selected endpoint before it reaches the concrete family API.
 
 Once the endpoint family is chosen, the next question is what kind of communication relationship that family will carry. Before going there, however, the family-specific address meaning deserves its own treatment. Therefore, Chapter 8 follows naturally from this chapter. Once the reader understands that the network layer chooses an endpoint family, the next question is unavoidable:
 
@@ -302,7 +296,7 @@ Often, the application keeps:
 
 The connection machinery below the application protocol changes.
 
-That is exactly what a good layer model should achieve. It isolates the change without pretending that TLS is trivial. TLS has operational and security consequences, but architecturally it belongs in the connection layer.
+The unchanged context is a reuse benefit, not proof that the secured service is ready to operate. A successful transport connection, a completed handshake, and an accepted peer identity are distinct observations. Chapter 19 examines those obligations and their callback timing.
 
 #### Practical connection-layer combinations
 
@@ -427,28 +421,11 @@ The corresponding include hierarchy is equally important. A source file that nam
 
 That public header represents an Express WebApp over an HTTP server over the selected lower carrier. If a different source file directly names a lower socket client, that source file includes the matching lower public header as well.
 
-#### The application layer is still connected to sockets
+#### Follow a failure across layers
 
-A common beginner mistake is to imagine a sharp psychological break:
+A missing HTTP response can begin at several boundaries. The client may address the wrong listener; TLS may reject the peer; the HTTP parser may reject the request; or the selected route may never finish its response. The route handler is only one candidate. Trace the observations in that order before changing application logic.
 
-```text
-below: network code
-above: web code or MQTT code
-```
-
-SNode.C helps the reader avoid that mistake.
-
-HTTP, WebSocket, Express-like APIs, and MQTT are application-layer behaviors carried by lower layers. They may introduce their own vocabulary, abstractions, and configuration surfaces, but they do not float above the network stack as independent magic.
-
-A reader who understands the lower layers can ask better questions:
-
-- Which lower family is this web server using?
-- Is this MQTT application native over a stream connection or carried through WebSocket?
-- Where does TLS sit relative to HTTP, WebSocket, or MQTT?
-- What changes if a service moves from IPv4 to a Unix domain socket locally?
-- What changes if a device-near endpoint uses Bluetooth RFCOMM instead of IPv4?
-
-Those questions are exactly the kind of thinking SNode.C is meant to support.
+The same habit applies to MQTT over WebSocket. Establishing the lower connection does not prove that the HTTP upgrade selected the intended WebSocket subprotocol, and a successful upgrade does not prove that the MQTT session was accepted. Each layer has its own success condition. Later protocol chapters make those conditions concrete.
 
 ### The build system as confirmation
 
@@ -460,47 +437,16 @@ A useful way to test an architectural description is to ask whether the build sy
 
 The `src` build adds major framework regions such as `core`, `net`, `web`, `express`, `database`, `iot`, and `apps`. The supported components include core stream components, concrete network stream components, HTTP, Express, WebSocket, MQTT, and MQTT-over-WebSocket components.
 
-A small example makes the relationship visible:
+Use the first echo pair to check a proposed layer change. Keep the context and factory fixed, then compare the public role header, type alias, and component for these two selections:
 
-```text
-public include path:
-<net/in/stream/legacy/SocketServer.h>
-<net/in/stream/legacy/SocketClient.h>
+| Selection | Public server header | Component |
+|---|---|---|
+| IPv4, non-TLS stream | `<net/in/stream/legacy/SocketServer.h>` | `net-in-stream-legacy` |
+| IPv4, TLS stream | `<net/in/stream/tls/SocketServer.h>` | `net-in-stream-tls` |
 
-C++ namespace / type path:
-net::in::stream::legacy
+The matching namespace follows the header directories. Changing only the component would not change the type named in the application. Changing only the type could leave the required link dependency absent. Both surfaces must describe the intended selection, and the runtime configuration must then supply the TLS policy that the secured variant needs.
 
-CMake component name:
-net-in-stream-legacy
-
-Meaning:
-network family: IPv4 / in
-transport form: stream
-connection handling: non-TLS stream connection variant
-```
-
-The same pattern appears in the TLS variant:
-
-```text
-public include path:
-<net/in/stream/tls/SocketServer.h>
-<net/in/stream/tls/SocketClient.h>
-
-C++ namespace / type path:
-net::in::stream::tls
-
-CMake component name:
-net-in-stream-tls
-
-Meaning:
-network family: IPv4 / in
-transport form: stream
-connection handling: TLS
-```
-
-The layer model affects code organization, component builds, and external linking.
-
-A reader who learns the layer names is also learning how to navigate the build.
+This comparison is a design exercise, not a complete TLS conversion recipe. Its expected result is a list of three different obligations: select the C++ type, consume its installed component, and configure its operational behavior. Chapter 19 supplies the security details; Chapter 32 explains the component dependency rules. The echo protocol's byte reflection remains a separate responsibility throughout.
 
 ### One protocol, many lower carriers
 
@@ -584,6 +530,8 @@ The layer model should therefore not be used as an excuse to ignore operational 
 This is how the model becomes practical instead of merely tidy.
 
 ### What belongs where?
+
+These layer names describe SNode.C's decomposition of a program. They are not a renaming of the OSI layers or a claim that Bluetooth L2CAP and IP occupy identical positions in their respective protocol stacks. The practical comparison is the endpoint-facing surface offered to the selected SNode.C stream composition. Keep the underlying protocol's own semantics when reasoning about reliability, packet boundaries, security, or deployment.
 
 The following table is a compact orientation aid. It is simple: its job is not to solve every design decision, but to help the reader ask the right first question.
 

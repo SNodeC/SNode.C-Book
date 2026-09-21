@@ -1,0 +1,2482 @@
+diff --git a/docs/migration-2.0.md b/docs/migration-2.0.md
+index e2048d48b..aa860813f 100644
+--- a/docs/migration-2.0.md
++++ b/docs/migration-2.0.md
+@@ -12,9 +12,58 @@ Default resource limits and transport behavior remain compatible after rebuildin
+ - HTTP server and client connections snapshot the new shared parser configuration. The affected parser and connection class layouts changed.
+ - WebSocket upgrades snapshot receiver frame, message, and fragment limits. The receiver and upgrade layouts changed.
+ - Connection configuration classes contain the new write-queue options, changing their installed layouts.
++- Explicit stream `connect()` and `listen()` calls return independent flow handles;
++  endpoint-wide `getFlowController()` and controller `restartFlow()` are removed.
+ 
+ Recompile all application objects, shared plugins, dynamically loaded HTTP/WebSocket extensions, and libraries that include or derive from these public C++ types.
+ 
++## Per-call stream flow handles
++
++Each explicit call creates a `std::shared_ptr<ClientFlowController>` or
++`std::shared_ptr<ServerFlowController>`. Existing retry/reconnect callbacks keep
++that controller alive and reuse it for automatic attempts. A new explicit call
++creates a new flow, even if an earlier flow terminated:
++
++```cpp
++auto first = client.connect(onStatus);
++auto second = client.connect(onStatus);
++first->terminateFlow(); // Only first's attempts/retry/reconnect stop.
++client.connect(onStatus); // Ignoring the handle does not cancel the operation.
++
++auto listener = server.listen(onListenStatus);
++server.listen(onListenStatus); // Independent listener; configure port reuse as needed.
++listener->terminateFlow(); // Stops this listener, not its sibling.
++```
++
++Store the returned handle instead of calling `endpoint.getFlowController()`.
++Chaining endpoint methods after `connect()`/`listen()` must be split into separate
++statements. Register flow callbacks on the returned handle before entering the
++event loop. `setOnFlowTerminated()` reports this flow's termination;
++`setOnFlowCompleted()` now reports final controller release, not destruction of
++the shared endpoint configuration. Retaining a handle therefore delays completion
++notification; releasing a handle does not terminate active runtime work. Avoid
++capturing a strong reference to the same controller in its own observer callback.
++
++The existing event loop, connector/acceptor ownership, timer receivers and
++per-connection `SocketContext` factories are unchanged. Runtime callbacks retain
++the flow; there is no endpoint registry. Termination cancels pending attempts and
++recovery, not already established connections: close those through the existing
++connection API. Accepted server connections do not retain the listening flow.
++
++Configuration and endpoint callbacks remain shared, as do connection-ID counters.
++This change isolates flow control, not configuration: address overloads still
++update the endpoint configuration and do not capture independent configuration
++snapshots. Use separate endpoints for independently configured destinations.
++Controllers retain the existing event-loop-thread usage contract.
++
++Use `client.setOnDestroy(callback)` or `server.setOnDestroy(callback)` when work
++must wait for the shared instance name to be unregistered. This facade forwards
++to the existing configuration destruction callback; it does not fire when a
++wrapper copy or an individual flow is destroyed. The callback takes no arguments
++and may outlive the wrapper, so capture required identifiers by value, not `this`.
++Multiple registrations are invoked in registration order. Do not retain the
++endpoint or its configuration inside its own destruction callback.
++
+ ## `FileReader::open()` failure migration
+ 
+ Previously, callers commonly relied only on the callback-based open result and then used the returned pointer:
+diff --git a/src/apps/websocket/echoserver.cpp b/src/apps/websocket/echoserver.cpp
+index f2c5ebad9..f830db575 100644
+--- a/src/apps/websocket/echoserver.cpp
++++ b/src/apps/websocket/echoserver.cpp
+@@ -120,8 +120,7 @@ int main(int argc, char* argv[]) {
+                     snode::log::application().critical() << instanceName << " " << socketAddress.toString() << ": " << state.what();
+                     break;
+             }
+-        })
+-        .getFlowController();
++        });
+ 
+     auto log = snode::log::application();
+     if (log.enabled(snode::log::Level::Trace)) {
+@@ -194,8 +193,7 @@ int main(int argc, char* argv[]) {
+                         snode::log::application().critical() << instanceName << " " << socketAddress.toString() << ": " << state.what();
+                         break;
+                 }
+-            })
+-            .getFlowController();
++            });
+ 
+         auto log = snode::log::application();
+         if (log.enabled(snode::log::Level::Trace)) {
+diff --git a/src/core/socket/Socket.h b/src/core/socket/Socket.h
+index ec3343a61..eeb49d09a 100644
+--- a/src/core/socket/Socket.h
++++ b/src/core/socket/Socket.h
+@@ -44,6 +44,7 @@
+ 
+ #ifndef DOXYGEN_SHOULD_SKIP_THIS
+ 
++#include <functional>
+ #include <memory> // IWYU pragma: export
+ #include <string>
+ 
+@@ -71,6 +72,10 @@ namespace core::socket {
+ 
+         Config* getConfig() const;
+ 
++        // Called after the shared instance is unregistered, not when a wrapper
++        // or an individual connection flow ends. Do not capture this wrapper.
++        void setOnDestroy(const std::function<void()>& onDestroy) const;
++
+     protected:
+         const std::shared_ptr<Config> config;
+     };
+diff --git a/src/core/socket/Socket.hpp b/src/core/socket/Socket.hpp
+index 10aa9b6df..cfce6788c 100644
+--- a/src/core/socket/Socket.hpp
++++ b/src/core/socket/Socket.hpp
+@@ -66,4 +66,11 @@ namespace core::socket {
+         return config.get();
+     }
+ 
++    template <typename Config>
++    void Socket<Config>::setOnDestroy(const std::function<void()>& onDestroy) const {
++        config->setOnDestroy([onDestroy](auto*) {
++            onDestroy();
++        });
++    }
++
+ } // namespace core::socket
+diff --git a/src/core/socket/stream/ClientFlowController.cpp b/src/core/socket/stream/ClientFlowController.cpp
+index fa22b7537..d6cf81599 100644
+--- a/src/core/socket/stream/ClientFlowController.cpp
++++ b/src/core/socket/stream/ClientFlowController.cpp
+@@ -9,6 +9,7 @@
+ #include "core/eventreceiver/ConnectEventReceiver.h"
+ #include "core/socket/stream/FlowController.hpp"
+ #include "core/timer/Timer.h"
++#include "log/SemanticLogger.h"
+ 
+ #ifndef DOXYGEN_SHOULD_SKIP_THIS
+ 
+@@ -16,27 +17,12 @@
+ 
+ namespace core::socket::stream {
+ 
+-    ClientFlowController::ClientFlowController(const std::string& instanceName,
+-                                               const OnDestroyRegistrar& onDestroyRegistrar)
+-        : FlowController(instanceName, onDestroyRegistrar)
++    ClientFlowController::ClientFlowController(const std::string& instanceName)
++        : FlowController(instanceName, logger::LogRole::Client)
+         , onFlowReconnectCallback([](ClientFlowController*) {
+         }) {
+     }
+ 
+-    bool ClientFlowController::restartFlow() {
+-        if (!Super::restartFlow()) {
+-            return false;
+-        }
+-
+-        // The previous terminateFlow() call has already cancelled the timer
+-        // and stopped every observed connect receiver. A new explicit connect
+-        // therefore starts with the normal reconnect policy enabled again.
+-        reconnectEnabled = true;
+-        cancelReconnectTimer();
+-
+-        return true;
+-    }
+-
+     void ClientFlowController::stopReconnect() {
+         reconnectEnabled = false;
+         cancelReconnectTimer();
+@@ -60,15 +46,25 @@ namespace core::socket::stream {
+         return this;
+     }
+ 
+-    void ClientFlowController::reportFlowReconnect() {
++    bool ClientFlowController::dispatchReconnect() {
++        if (!reconnectTimer) {
++            return false;
++        }
++        reconnectTimer.reset();
++        log().debug("reconnect dispatched");
+         ++reconnectCount;
+         onFlowReconnectCallback(this);
++        return !isTerminated() && reconnectEnabled;
+     }
+ 
+     void ClientFlowController::observeConnectEventReceiver(core::eventreceiver::ConnectEventReceiver* connectEventReceiver) {
+         if (connectEventReceiver != nullptr) {
+             if (connectEventReceiver->isEnabled()) {
+-                connectEventReceivers.insert(connectEventReceiver);
++                if (isTerminated()) {
++                    connectEventReceiver->stopConnect();
++                } else {
++                    connectEventReceivers.insert(connectEventReceiver);
++                }
+             } else {
+                 connectEventReceivers.erase(connectEventReceiver);
+             }
+@@ -77,6 +73,7 @@ namespace core::socket::stream {
+ 
+     void ClientFlowController::armReconnectTimer(double timeoutSeconds, const std::function<void()>& dispatcher) {
+         if (reconnectEnabled) {
++            log().debug("reconnect scheduled");
+             reconnectTimer = std::make_unique<core::timer::Timer>(core::timer::Timer::singleshotTimer(dispatcher, timeoutSeconds));
+         }
+     }
+@@ -96,6 +93,7 @@ namespace core::socket::stream {
+ 
+     void ClientFlowController::cancelReconnectTimer() {
+         if (reconnectTimer) {
++            log().debug("reconnect cancelled");
+             reconnectTimer->cancel();
+             reconnectTimer.reset();
+         }
+diff --git a/src/core/socket/stream/ClientFlowController.h b/src/core/socket/stream/ClientFlowController.h
+index 072f820c7..ec55ba62f 100644
+--- a/src/core/socket/stream/ClientFlowController.h
++++ b/src/core/socket/stream/ClientFlowController.h
+@@ -72,9 +72,7 @@ namespace core::socket::stream {
+     class ClientFlowController : public FlowController<ClientFlowController> {
+     public:
+         using Super = FlowController<ClientFlowController>;
+-        using OnDestroyRegistrar = Super::OnDestroyRegistrar;
+-
+-        ClientFlowController(const std::string& instanceName, const OnDestroyRegistrar& onDestroyRegistrar);
++        explicit ClientFlowController(const std::string& instanceName);
+ 
+         void stopReconnect();
+         bool isReconnectEnabled() const;
+@@ -83,10 +81,7 @@ namespace core::socket::stream {
+         ClientFlowController* setOnFlowReconnect(const std::function<void(ClientFlowController*)>& callback);
+ 
+     private:
+-        // Re-arm retry and reconnect policy for a later explicit connect().
+-        bool restartFlow();
+-
+-        void reportFlowReconnect();
++        bool dispatchReconnect();
+ 
+         void observeConnectEventReceiver(core::eventreceiver::ConnectEventReceiver* connectEventReceiver);
+ 
+diff --git a/src/core/socket/stream/FlowController.h b/src/core/socket/stream/FlowController.h
+index 4a343ac65..69075736c 100644
+--- a/src/core/socket/stream/FlowController.h
++++ b/src/core/socket/stream/FlowController.h
+@@ -42,6 +42,8 @@
+ #ifndef CORE_SOCKET_STREAM_FLOWCONTROLLER_H
+ #define CORE_SOCKET_STREAM_FLOWCONTROLLER_H
+ 
++#include "log/LogScopeOwner.h"
++
+ namespace core::timer {
+     class Timer;
+ }
+@@ -60,10 +62,7 @@ namespace core::socket::stream {
+     template <typename ConcreteFlowController>
+     class FlowController {
+     public:
+-        using OnDestroyRegistrar = std::function<void(const std::function<void()>&)>;
+-
+-        FlowController(const std::string& instanceName,
+-                       const OnDestroyRegistrar& onDestroyRegistrar);
++        FlowController(const std::string& instanceName, logger::LogRole role);
+ 
+         FlowController(const FlowController&) = delete;
+         FlowController& operator=(const FlowController&) = delete;
+@@ -91,19 +90,17 @@ namespace core::socket::stream {
+         void startFlow(const std::function<void()>& callback);
+ 
+     protected:
+-        // Re-arm a flow only after terminateFlow() completed.
+-        bool restartFlow();
+-
+-        void reportFlowRetry();
+-
++        bool dispatchRetry();
+         void armRetryTimer(double timeoutSeconds, const std::function<void()>& dispatcher);
++        void cancelRetryTimer();
++
++        logger::BoundaryLogger log() const;
+ 
+         virtual void terminateAsyncSubFlow() = 0;
+ 
+     private:
+         uint64_t id{idCounter++};
+         static uint64_t idCounter;
+-        void cancelRetryTimer();
+         void notifyFlowTerminated();
+ 
+         std::uint64_t retryCount{0};
+@@ -112,12 +109,13 @@ namespace core::socket::stream {
+         bool terminated{false};
+ 
+         std::string observedInstanceName;
+-        OnDestroyRegistrar onDestroyRegistrar;
++        logger::LogScopeOwner logScope;
+ 
+         std::unique_ptr<core::timer::Timer> retryTimer;
+ 
+         std::function<void(ConcreteFlowController*)> onFlowRetryCallback;
+         std::function<void(ConcreteFlowController*)> onFlowTerminatedCallback;
++        std::function<void(uint64_t, const std::string&)> onFlowCompletedCallback;
+     };
+ 
+ } // namespace core::socket::stream
+diff --git a/src/core/socket/stream/FlowController.hpp b/src/core/socket/stream/FlowController.hpp
+index d32a63722..88f4a628f 100644
+--- a/src/core/socket/stream/FlowController.hpp
++++ b/src/core/socket/stream/FlowController.hpp
+@@ -42,9 +42,12 @@
+ #include "core/EventReceiver.h"
+ #include "core/socket/stream/FlowController.h"
+ #include "core/timer/Timer.h"
++#include "log/Logger.h"
+ 
+ #ifndef DOXYGEN_SHOULD_SKIP_THIS
+ 
++#include <optional>
++
+ #endif // DOXYGEN_SHOULD_SKIP_THIS
+ 
+ namespace core::socket::stream {
+@@ -53,11 +56,13 @@ namespace core::socket::stream {
+     uint64_t FlowController<ConcreteFlowController>::idCounter = 0;
+ 
+     template <typename ConcreteFlowController>
+-    FlowController<ConcreteFlowController>::FlowController(const std::string& instanceName,
+-                                                           const OnDestroyRegistrar& onDestroyRegistrar)
++    FlowController<ConcreteFlowController>::FlowController(const std::string& instanceName, logger::LogRole role)
+         : observedInstanceName(instanceName)
+-        , onDestroyRegistrar(onDestroyRegistrar ? onDestroyRegistrar
+-                                                : [](const std::function<void()>&) {})
++        , logScope(logger::LogOrigin::Framework,
++                   logger::LogBoundary::Instance,
++                   "core.socket.stream",
++                   instanceName.empty() ? std::nullopt : std::optional<std::string>(instanceName),
++                   role)
+         , onFlowRetryCallback([](FlowController*) {
+         })
+         , onFlowTerminatedCallback([](FlowController*) {
+@@ -65,7 +70,16 @@ namespace core::socket::stream {
+     }
+ 
+     template <typename ConcreteFlowController>
+-    FlowController<ConcreteFlowController>::~FlowController() = default;
++    FlowController<ConcreteFlowController>::~FlowController() {
++        if (onFlowCompletedCallback) {
++            onFlowCompletedCallback(id, observedInstanceName);
++        }
++    }
++
++    template <typename ConcreteFlowController>
++    logger::BoundaryLogger FlowController<ConcreteFlowController>::log() const {
++        return logScope.logger(logger::Logger::semanticSink());
++    }
+ 
+     template <typename ConcreteFlowController>
+     std::string FlowController<ConcreteFlowController>::getInstanceName() const {
+@@ -100,21 +114,6 @@ namespace core::socket::stream {
+         return terminated;
+     }
+ 
+-    template <typename ConcreteFlowController>
+-    bool FlowController<ConcreteFlowController>::restartFlow() {
+-        if (!terminated) {
+-            return false;
+-        }
+-
+-        // terminateFlow() synchronously cancels all asynchronous sub-flows
+-        // before setting this controller aside. A later explicit endpoint
+-        // operation may therefore reuse the same controller safely.
+-        terminated = false;
+-        retryEnabled = true;
+-
+-        return true;
+-    }
+-
+     template <typename ConcreteFlowController>
+     void FlowController<ConcreteFlowController>::stopRetry() {
+         retryEnabled = false;
+@@ -146,9 +145,13 @@ namespace core::socket::stream {
+     template <typename ConcreteFlowController>
+     ConcreteFlowController*
+     FlowController<ConcreteFlowController>::setOnFlowCompleted(const std::function<void(uint64_t, const std::string&)>& callback) {
+-        onDestroyRegistrar([callback, id = getId(), instanceName = observedInstanceName]() {
++        const auto previous = onFlowCompletedCallback;
++        onFlowCompletedCallback = [previous, callback](uint64_t id, const std::string& instanceName) {
++            if (previous) {
++                previous(id, instanceName);
++            }
+             callback(id, instanceName);
+-        });
++        };
+ 
+         return dynamic_cast<ConcreteFlowController*>(this);
+     }
+@@ -175,14 +178,21 @@ namespace core::socket::stream {
+     }
+ 
+     template <typename ConcreteFlowController>
+-    void FlowController<ConcreteFlowController>::reportFlowRetry() {
++    bool FlowController<ConcreteFlowController>::dispatchRetry() {
++        if (!retryTimer) {
++            return false;
++        }
++        retryTimer.reset();
++        log().debug("retry dispatched");
+         ++retryCount;
+         onFlowRetryCallback(dynamic_cast<ConcreteFlowController*>(this));
++        return !terminated && retryEnabled;
+     }
+ 
+     template <typename ConcreteFlowController>
+     void FlowController<ConcreteFlowController>::armRetryTimer(double timeoutSeconds, const std::function<void()>& dispatcher) {
+         if (retryEnabled) {
++            log().debug("retry scheduled");
+             retryTimer = std::make_unique<core::timer::Timer>(core::timer::Timer::singleshotTimer(dispatcher, timeoutSeconds));
+         }
+     }
+@@ -190,6 +200,7 @@ namespace core::socket::stream {
+     template <typename ConcreteFlowController>
+     void FlowController<ConcreteFlowController>::cancelRetryTimer() {
+         if (retryTimer) {
++            log().debug("retry cancelled");
+             retryTimer->cancel();
+             retryTimer.reset();
+         }
+diff --git a/src/core/socket/stream/ServerFlowController.cpp b/src/core/socket/stream/ServerFlowController.cpp
+index 0a10a5a1e..a800354ab 100644
+--- a/src/core/socket/stream/ServerFlowController.cpp
++++ b/src/core/socket/stream/ServerFlowController.cpp
+@@ -43,6 +43,7 @@
+ 
+ #include "core/eventreceiver/AcceptEventReceiver.h"
+ #include "core/socket/stream/FlowController.hpp"
++#include "log/SemanticLogger.h"
+ 
+ #ifndef DOXYGEN_SHOULD_SKIP_THIS
+ 
+@@ -50,15 +51,18 @@
+ 
+ namespace core::socket::stream {
+ 
+-    ServerFlowController::ServerFlowController(const std::string& instanceName,
+-                                               const OnDestroyRegistrar& onDestroyRegistrar)
+-        : FlowController(instanceName, onDestroyRegistrar) {
++    ServerFlowController::ServerFlowController(const std::string& instanceName)
++        : FlowController(instanceName, logger::LogRole::Server) {
+     }
+ 
+     void ServerFlowController::observeAcceptEventReceiver(core::eventreceiver::AcceptEventReceiver* acceptEventReceiver) {
+         if (acceptEventReceiver != nullptr) {
+             if (acceptEventReceiver->isEnabled()) {
+-                acceptEventReceivers.insert(acceptEventReceiver);
++                if (isTerminated()) {
++                    acceptEventReceiver->stopListen();
++                } else {
++                    acceptEventReceivers.insert(acceptEventReceiver);
++                }
+             } else {
+                 acceptEventReceivers.erase(acceptEventReceiver);
+             }
+diff --git a/src/core/socket/stream/ServerFlowController.h b/src/core/socket/stream/ServerFlowController.h
+index 004e79b7b..716c27660 100644
+--- a/src/core/socket/stream/ServerFlowController.h
++++ b/src/core/socket/stream/ServerFlowController.h
+@@ -73,9 +73,7 @@ namespace core::socket::stream {
+     class ServerFlowController : public FlowController<ServerFlowController> {
+     public:
+         using Super = FlowController<ServerFlowController>;
+-        using OnDestroyRegistrar = Super::OnDestroyRegistrar;
+-
+-        ServerFlowController(const std::string& instanceName, const OnDestroyRegistrar& onDestroyRegistrar);
++        explicit ServerFlowController(const std::string& instanceName);
+ 
+     private:
+         void observeAcceptEventReceiver(core::eventreceiver::AcceptEventReceiver* acceptEventReceiver);
+diff --git a/src/core/socket/stream/SocketClient.h b/src/core/socket/stream/SocketClient.h
+index b895ed0dc..a782aebc4 100644
+--- a/src/core/socket/stream/SocketClient.h
++++ b/src/core/socket/stream/SocketClient.h
+@@ -87,111 +87,26 @@ namespace core::socket::stream {
+         using SocketConnection = typename SocketConnector::SocketConnection;
+         using SocketAddress = typename SocketConnector::SocketAddress;
+         using Config = typename SocketConnector::Config;
++        using FlowHandle = std::shared_ptr<ClientFlowController>;
+ 
+     private:
+         struct Context {
+-            Context(const std::shared_ptr<Config>& config,
+-                    const std::shared_ptr<SocketContextFactory>& socketContextFactory,
++            Context(const std::shared_ptr<SocketContextFactory>& socketContextFactory,
+                     const std::function<void(SocketConnection*)>& onConnect,
+                     const std::function<void(SocketConnection*)>& onConnected,
+                     const std::function<void(SocketConnection*)>& onDisconnect)
+-                : flowController(config->getInstanceName(),
+-                                 [config](const std::function<void()>& callback) {
+-                                     config->setOnDestroy([callback](auto*) {
+-                                         callback();
+-                                     });
+-                                 })
+-                , logScope(makeLogScope(config->getInstanceName()))
+-                , socketContextFactory(socketContextFactory)
++                : socketContextFactory(socketContextFactory)
+                 , onConnect(onConnect)
+                 , onConnected(onConnected)
+                 , onDisconnect(onDisconnect) {
+-                flowController.setOnFlowTerminated([this](ClientFlowController*) {
+-                    ++connectionCycle;
+-                    cancelRetry();
+-                    cancelReconnect();
+-                });
+-            }
+-
+-            ~Context() {
+-                cancelRetry();
+-                cancelReconnect();
+             }
+ 
+-            ClientFlowController flowController;
+-            logger::LogScopeOwner logScope;
+-            std::uint64_t connectionsCreated{0};
+-
+             std::uint64_t allocateConnectionId() noexcept {
+                 return ++connectionsCreated;
+             }
+ 
+-            void scheduleRetry() {
+-                retryScheduled = true;
+-                logScope.logger(logger::Logger::semanticSink()).debug("retry scheduled");
+-            }
+-
+-            bool dispatchRetry() {
+-                if (!retryScheduled) {
+-                    return false;
+-                }
+-                retryScheduled = false;
+-                logScope.logger(logger::Logger::semanticSink()).debug("retry dispatched");
+-                flowController.reportFlowRetry();
+-                return true;
+-            }
+-
+-            void cancelRetry() {
+-                if (retryScheduled) {
+-                    retryScheduled = false;
+-                    logScope.logger(logger::Logger::semanticSink()).debug("retry cancelled");
+-                }
+-            }
+-
+-            void scheduleReconnect() {
+-                reconnectScheduled = true;
+-                logScope.logger(logger::Logger::semanticSink()).debug("reconnect scheduled");
+-            }
+-
+-            bool dispatchReconnect() {
+-                if (!reconnectScheduled) {
+-                    return false;
+-                }
+-                reconnectScheduled = false;
+-                logScope.logger(logger::Logger::semanticSink()).debug("reconnect dispatched");
+-                flowController.reportFlowReconnect();
+-                return true;
+-            }
+-
+-            void cancelReconnect() {
+-                if (reconnectScheduled) {
+-                    reconnectScheduled = false;
+-                    logScope.logger(logger::Logger::semanticSink()).debug("reconnect cancelled");
+-                }
+-            }
+-
+-            void emitTerminationSummary() const {
+-                logScope.logger(logger::Logger::semanticSink())
+-                    .info("Instance terminated: connections={} retries={} reconnects={}",
+-                          connectionsCreated,
+-                          flowController.getRetryCount(),
+-                          flowController.getReconnectCount());
+-            }
+-
+-            void emitTerminationSummaryOnce(std::uint64_t cycle) {
+-                if (!terminationSummaryCycle || *terminationSummaryCycle != cycle) {
+-                    terminationSummaryCycle = cycle;
+-                    emitTerminationSummary();
+-                }
+-            }
+-
+-            std::uint64_t connectionCycle{0};
+-            std::optional<std::uint64_t> terminationSummaryCycle;
+-            bool retryScheduled{false};
+-            bool reconnectScheduled{false};
+-
++            std::uint64_t connectionsCreated{0};
+             std::shared_ptr<SocketContextFactory> socketContextFactory;
+-
+             std::function<void(SocketConnection*)> onConnect;
+             std::function<void(SocketConnection*)> onConnected;
+             std::function<void(SocketConnection*)> onDisconnect;
+@@ -212,7 +127,6 @@ namespace core::socket::stream {
+             : Super(name)
+             , logScope(makeLogScope(name))
+             , sharedContext(std::make_shared<Context>(
+-                  this->config,
+                   std::make_shared<SocketContextFactory>(std::forward<Args>(args)...),
+                   [onConnect, log = this->log()](SocketConnection* socketConnection) { // onConnect
+                       log.debug("Connection {} connecting", socketConnection->getConnectionId());
+@@ -272,21 +186,12 @@ namespace core::socket::stream {
+         }
+ 
+     private:
+-        const SocketClient& realConnect(const std::function<void(const SocketAddress&, core::socket::State)>& onStatus,
+-                                        unsigned int tries,
+-                                        double retryTimeoutScale) const {
+-            const std::uint64_t connectionCycle = sharedContext->connectionCycle;
+-            sharedContext->flowController.startFlow(
+-                [config = this->config,
+-                 sharedContext = this->sharedContext,
+-                 log = this->log(),
+-                 onStatus,
+-                 tries,
+-                 retryTimeoutScale,
+-                 connectionCycle] {
+-                    if (connectionCycle != sharedContext->connectionCycle) {
+-                        return;
+-                    }
++        void realConnect(const FlowHandle& flow,
++                         const std::function<void(const SocketAddress&, core::socket::State)>& onStatus,
++                         unsigned int tries,
++                         double retryTimeoutScale) const {
++            flow->startFlow(
++                [config = this->config, sharedContext = this->sharedContext, log = this->log(), onStatus, tries, retryTimeoutScale, flow] {
+                     if (config->Instance::getParent() != nullptr || !config->Instance::getRequired()) {
+                         log.debug("Initiating connect");
+ 
+@@ -295,60 +200,51 @@ namespace core::socket::stream {
+                                 sharedContext->socketContextFactory,
+                                 sharedContext->onConnect,
+                                 sharedContext->onConnected,
+-                                [config, sharedContext, log, onStatus, connectionCycle](SocketConnection* socketConnection) {
++                                [config, sharedContext, log, onStatus, flow](SocketConnection* socketConnection) {
+                                     sharedContext->onDisconnect(socketConnection);
+ 
+-                                    if (connectionCycle != sharedContext->connectionCycle) {
++                                    if (flow->isTerminated()) {
+                                         return;
+                                     }
+-                                    if (config->getReconnect() && sharedContext->flowController.isReconnectEnabled() &&
++                                    if (config->getReconnect() && flow->isReconnectEnabled() &&
+                                         core::eventLoopState() == core::State::RUNNING) {
+                                         double relativeReconnectTimeout = config->getReconnectTime();
+ 
+-                                        sharedContext->scheduleReconnect();
+                                         log.trace("Reconnect in {} seconds", relativeReconnectTimeout);
+ 
+-                                        sharedContext->flowController.armReconnectTimer(
+-                                            relativeReconnectTimeout,
+-                                            [config, sharedContext, log, onStatus, connectionCycle]() {
+-                                                if (connectionCycle != sharedContext->connectionCycle) {
+-                                                    return;
+-                                                }
+-                                                if (!sharedContext->flowController.isReconnectEnabled()) {
+-                                                    sharedContext->cancelReconnect();
+-                                                    return;
+-                                                }
+-                                                if (config->getReconnect()) {
+-                                                    if (sharedContext->dispatchReconnect()) {
+-                                                        SocketClient(config, sharedContext)
+-                                                            .realConnect(onStatus, 0, config->getRetryBase());
+-                                                    }
+-                                                } else {
+-                                                    sharedContext->cancelReconnect();
+-                                                    log.trace("Reconnect disabled during wait");
++                                        flow->armReconnectTimer(relativeReconnectTimeout, [config, sharedContext, log, onStatus, flow]() {
++                                            if (!flow->isReconnectEnabled()) {
++                                                flow->cancelReconnectTimer();
++                                                return;
++                                            }
++                                            if (config->getReconnect()) {
++                                                if (flow->dispatchReconnect()) {
++                                                    SocketClient(config, sharedContext)
++                                                        .realConnect(flow, onStatus, 0, config->getRetryBase());
+                                                 }
+-                                            });
+-                                    } else if (core::eventLoopState() == core::State::RUNNING &&
+-                                               sharedContext->flowController.terminateFlow()) {
+-                                        sharedContext->emitTerminationSummaryOnce(connectionCycle);
++                                            } else {
++                                                flow->cancelReconnectTimer();
++                                                log.trace("Reconnect disabled during wait");
++                                            }
++                                        });
++                                    } else if (core::eventLoopState() == core::State::RUNNING) {
++                                        flow->terminateFlow();
+                                     }
+                                 },
+-                                [sharedContext, connectionCycle](core::eventreceiver::ConnectEventReceiver* connectEventReceiver) {
+-                                    if (connectionCycle == sharedContext->connectionCycle) {
+-                                        sharedContext->flowController.observeConnectEventReceiver(connectEventReceiver);
+-                                    }
++                                [flow](core::eventreceiver::ConnectEventReceiver* connectEventReceiver) {
++                                    flow->observeConnectEventReceiver(connectEventReceiver);
+                                 },
+-                                [config, sharedContext, log, onStatus, tries, retryTimeoutScale, connectionCycle](
+-                                    const SocketAddress& socketAddress, core::socket::State state) {
++                                [config, sharedContext, log, onStatus, tries, retryTimeoutScale, flow](const SocketAddress& socketAddress,
++                                                                                                       core::socket::State state) {
+                                     const bool retryFlag = (state & core::socket::State::NO_RETRY) == 0;
+                                     state &= ~core::socket::State::NO_RETRY;
+                                     onStatus(socketAddress, state);
+ 
+-                                    if (connectionCycle != sharedContext->connectionCycle) {
++                                    if (flow->isTerminated()) {
+                                         return;
+                                     }
+                                     if (retryFlag && config->getRetry() // Shall we potentially retry? In case are the ...
+-                                        && sharedContext->flowController.isRetryEnabled() &&
++                                        && flow->isRetryEnabled() &&
+                                         (config->getRetryTries() == 0 ||
+                                          tries < config->getRetryTries()) // ... limits not reached and has an ...
+                                         && (state == core::socket::State::ERROR ||
+@@ -361,39 +257,28 @@ namespace core::socket::stream {
+                                             utils::Random::getInRange(-config->getRetryJitter(), config->getRetryJitter()) *
+                                             relativeRetryTimeout / 100.;
+ 
+-                                        sharedContext->scheduleRetry();
+                                         log.trace("Retry connect in {} seconds", relativeRetryTimeout);
+ 
+-                                        sharedContext->flowController.armRetryTimer(
+-                                            relativeRetryTimeout,
+-                                            [config,
+-                                             sharedContext,
+-                                             log,
+-                                             onStatus,
+-                                             tries,
+-                                             retryTimeoutScale,
+-                                             connectionCycle]() {
+-                                                if (connectionCycle != sharedContext->connectionCycle) {
+-                                                    return;
+-                                                }
+-                                                if (!sharedContext->flowController.isRetryEnabled()) {
+-                                                    sharedContext->cancelRetry();
++                                        flow->armRetryTimer(
++                                            relativeRetryTimeout, [config, sharedContext, log, onStatus, tries, retryTimeoutScale, flow]() {
++                                                if (!flow->isRetryEnabled()) {
++                                                    flow->cancelRetryTimer();
+                                                     return;
+                                                 }
+                                                 if (config->getRetry()) {
+-                                                    if (sharedContext->dispatchRetry()) {
++                                                    if (flow->dispatchRetry()) {
+                                                         SocketClient(config, sharedContext)
+-                                                            .realConnect(onStatus, tries + 1, retryTimeoutScale * config->getRetryBase());
++                                                            .realConnect(
++                                                                flow, onStatus, tries + 1, retryTimeoutScale * config->getRetryBase());
+                                                     }
+                                                 } else {
+-                                                    sharedContext->cancelRetry();
++                                                    flow->cancelRetryTimer();
+                                                     log.trace("Retry connect disabled during wait");
+                                                 }
+                                             });
+                                     } else if (retryFlag && (state == core::socket::State::ERROR || state == core::socket::State::FATAL) &&
+-                                               core::SNodeC::state() == core::State::RUNNING &&
+-                                               sharedContext->flowController.terminateFlow()) {
+-                                        sharedContext->emitTerminationSummaryOnce(connectionCycle);
++                                               core::SNodeC::state() == core::State::RUNNING) {
++                                        flow->terminateFlow();
+                                     }
+                                 },
+                                 [sharedContext]() {
+@@ -405,30 +290,34 @@ namespace core::socket::stream {
+                         log.critical("required");
+                     }
+                 });
+-
+-            return *this;
+         }
+ 
+     public:
+-        const SocketClient& connect(const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+-            // A SocketClient is only a handle to the shared Context. Its
+-            // destruction never stops active flows. An explicit connect may
+-            // restart a previously terminated cycle on that same Context.
+-            sharedContext->flowController.restartFlow();
+-
+-            return realConnect(onStatus, 0, 1);
++        // Every explicit call starts an independent flow. Runtime callbacks retain
++        // it even when the caller discards this optional control handle.
++        FlowHandle connect(const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++            auto flow = std::make_shared<ClientFlowController>(this->config->getInstanceName());
++            flow->setOnFlowTerminated([context = sharedContext, log = this->log()](ClientFlowController* finished) {
++                log.info("Flow terminated: endpoint-connections={} retries={} reconnects={} flow={}",
++                         context->connectionsCreated,
++                         finished->getRetryCount(),
++                         finished->getReconnectCount(),
++                         finished->getId());
++            });
++            realConnect(flow, onStatus, 0, 1);
++            return flow;
+         }
+ 
+-        const SocketClient& connect(const SocketAddress& remoteAddress,
+-                                    const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        FlowHandle connect(const SocketAddress& remoteAddress,
++                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::config->Remote::setSocketAddress(remoteAddress);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const SocketClient& connect(const SocketAddress& remoteAddress,
+-                                    const SocketAddress& localAddress,
+-                                    const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        FlowHandle connect(const SocketAddress& remoteAddress,
++                           const SocketAddress& localAddress,
++                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::config->Local::setSocketAddress(localAddress);
+ 
+             return connect(remoteAddress, onStatus);
+@@ -490,10 +379,6 @@ namespace core::socket::stream {
+             return *this;
+         }
+ 
+-        ClientFlowController* getFlowController() const {
+-            return &sharedContext->flowController;
+-        }
+-
+         std::shared_ptr<SocketContextFactory> getSocketContextFactory() const {
+             return sharedContext->socketContextFactory;
+         }
+diff --git a/src/core/socket/stream/SocketServer.h b/src/core/socket/stream/SocketServer.h
+index f91b5ca66..ab985182f 100644
+--- a/src/core/socket/stream/SocketServer.h
++++ b/src/core/socket/stream/SocketServer.h
+@@ -82,81 +82,26 @@ namespace core::socket::stream {
+         using SocketConnection = typename SocketAcceptor::SocketConnection;
+         using SocketAddress = typename SocketAcceptor::SocketAddress;
+         using Config = typename SocketAcceptor::Config;
++        using FlowHandle = std::shared_ptr<ServerFlowController>;
+ 
+     private:
+         struct Context {
+-            Context(const std::shared_ptr<Config>& config,
+-                    const std::shared_ptr<SocketContextFactory>& socketContextFactory,
++            Context(const std::shared_ptr<SocketContextFactory>& socketContextFactory,
+                     const std::function<void(SocketConnection*)>& onConnect,
+                     const std::function<void(SocketConnection*)>& onConnected,
+                     const std::function<void(SocketConnection*)>& onDisconnect)
+-                : flowController(config->getInstanceName(),
+-                                 [config](const std::function<void()>& callback) {
+-                                     config->setOnDestroy([callback](auto*) {
+-                                         callback();
+-                                     });
+-                                 })
+-                , logScope(makeLogScope(config->getInstanceName()))
+-                , socketContextFactory(socketContextFactory)
++                : socketContextFactory(socketContextFactory)
+                 , onConnect(onConnect)
+                 , onConnected(onConnected)
+                 , onDisconnect(onDisconnect) {
+-                flowController.setOnFlowTerminated([this](ServerFlowController*) {
+-                    cancelRetry();
+-                });
+-            }
+-
+-            ~Context() {
+-                cancelRetry();
+             }
+ 
+-            ServerFlowController flowController;
+-            logger::LogScopeOwner logScope;
+-            std::uint64_t connectionsCreated{0};
+-
+             std::uint64_t allocateConnectionId() noexcept {
+                 return ++connectionsCreated;
+             }
+ 
+-            void scheduleRetry() {
+-                retryScheduled = true;
+-                logScope.logger(logger::Logger::semanticSink()).debug("retry scheduled");
+-            }
+-
+-            bool dispatchRetry() {
+-                if (!retryScheduled) {
+-                    return false;
+-                }
+-                retryScheduled = false;
+-                logScope.logger(logger::Logger::semanticSink()).debug("retry dispatched");
+-                flowController.reportFlowRetry();
+-                return true;
+-            }
+-
+-            void cancelRetry() {
+-                if (retryScheduled) {
+-                    retryScheduled = false;
+-                    logScope.logger(logger::Logger::semanticSink()).debug("retry cancelled");
+-                }
+-            }
+-
+-            void emitTerminationSummary() const {
+-                logScope.logger(logger::Logger::semanticSink())
+-                    .info("Instance terminated: connections={} retries={}", connectionsCreated, flowController.getRetryCount());
+-            }
+-
+-            void emitTerminationSummaryOnce() {
+-                if (!terminationSummaryEmitted) {
+-                    terminationSummaryEmitted = true;
+-                    emitTerminationSummary();
+-                }
+-            }
+-
+-            bool terminationSummaryEmitted{false};
+-            bool retryScheduled{false};
+-
++            std::uint64_t connectionsCreated{0};
+             std::shared_ptr<SocketContextFactory> socketContextFactory;
+-
+             std::function<void(SocketConnection*)> onConnect;
+             std::function<void(SocketConnection*)> onConnected;
+             std::function<void(SocketConnection*)> onDisconnect;
+@@ -177,7 +122,6 @@ namespace core::socket::stream {
+             : Super(name)
+             , logScope(makeLogScope(name))
+             , sharedContext(std::make_shared<Context>(
+-                  this->config,
+                   std::make_shared<SocketContextFactory>(std::forward<Args>(args)...),
+                   [onConnect, log = this->log()](SocketConnection* socketConnection) { // onConnect
+                       log.debug("Connection {} connecting", socketConnection->getConnectionId());
+@@ -237,11 +181,12 @@ namespace core::socket::stream {
+         }
+ 
+     private:
+-        const SocketServer& realListen(const std::function<void(const SocketAddress&, core::socket::State)>& onStatus,
+-                                       unsigned int tries,
+-                                       double retryTimeoutScale) const {
+-            sharedContext->flowController.startFlow(
+-                [config = this->config, sharedContext = this->sharedContext, log = this->log(), onStatus, tries, retryTimeoutScale] {
++        void realListen(const FlowHandle& flow,
++                        const std::function<void(const SocketAddress&, core::socket::State)>& onStatus,
++                        unsigned int tries,
++                        double retryTimeoutScale) const {
++            flow->startFlow(
++                [config = this->config, sharedContext = this->sharedContext, log = this->log(), flow, onStatus, tries, retryTimeoutScale] {
+                     if (config->Instance::getParent() != nullptr || !config->Instance::getRequired()) {
+                         log.debug("Initiating listen");
+ 
+@@ -251,17 +196,20 @@ namespace core::socket::stream {
+                                 sharedContext->onConnect,
+                                 sharedContext->onConnected,
+                                 sharedContext->onDisconnect,
+-                                [sharedContext](core::eventreceiver::AcceptEventReceiver* acceptEventReceiver) {
+-                                    sharedContext->flowController.observeAcceptEventReceiver(acceptEventReceiver);
++                                [flow](core::eventreceiver::AcceptEventReceiver* acceptEventReceiver) {
++                                    flow->observeAcceptEventReceiver(acceptEventReceiver);
+                                 },
+-                                [config, sharedContext, log, onStatus, tries, retryTimeoutScale](const SocketAddress& socketAddress,
+-                                                                                                 core::socket::State state) {
++                                [config, sharedContext, log, flow, onStatus, tries, retryTimeoutScale](const SocketAddress& socketAddress,
++                                                                                                       core::socket::State state) {
+                                     const bool retryFlag = (state & core::socket::State::NO_RETRY) == 0;
+                                     state &= ~core::socket::State::NO_RETRY;
+                                     onStatus(socketAddress, state);
++                                    if (flow->isTerminated()) {
++                                        return;
++                                    }
+ 
+                                     if (retryFlag && config->getRetry() // Shall we potentially retry? In case are the ...
+-                                        && sharedContext->flowController.isRetryEnabled() &&
++                                        && flow->isRetryEnabled() &&
+                                         (config->getRetryTries() == 0 ||
+                                          tries < config->getRetryTries()) // ... limits not reached and has an ...
+                                         && (state == core::socket::State::ERROR ||
+@@ -274,30 +222,28 @@ namespace core::socket::stream {
+                                             utils::Random::getInRange(-config->getRetryJitter(), config->getRetryJitter()) *
+                                             relativeRetryTimeout / 100.;
+ 
+-                                        sharedContext->scheduleRetry();
+                                         log.trace("Retry listen in {} seconds", relativeRetryTimeout);
+ 
+-                                        sharedContext->flowController.armRetryTimer(
+-                                            relativeRetryTimeout,
+-                                            [config, sharedContext, log, /*generation,*/ onStatus, tries, retryTimeoutScale]() {
+-                                                if (!sharedContext->flowController.isRetryEnabled()) {
+-                                                    sharedContext->cancelRetry();
++                                        flow->armRetryTimer(
++                                            relativeRetryTimeout, [config, sharedContext, log, flow, onStatus, tries, retryTimeoutScale]() {
++                                                if (!flow->isRetryEnabled()) {
++                                                    flow->cancelRetryTimer();
+                                                     return;
+                                                 }
+                                                 if (config->getRetry()) {
+-                                                    if (sharedContext->dispatchRetry()) {
++                                                    if (flow->dispatchRetry()) {
+                                                         SocketServer(config, sharedContext)
+-                                                            .realListen(onStatus, tries + 1, retryTimeoutScale * config->getRetryBase());
++                                                            .realListen(
++                                                                flow, onStatus, tries + 1, retryTimeoutScale * config->getRetryBase());
+                                                     }
+                                                 } else {
+-                                                    sharedContext->cancelRetry();
++                                                    flow->cancelRetryTimer();
+                                                     log.trace("Retry listen disabled during wait");
+                                                 }
+                                             });
+-                                    } else if (retryFlag &&
+-                                               (state == core::socket::State::ERROR || state == core::socket::State::FATAL) &&
+-                                               core::SNodeC::state() == core::State::RUNNING && sharedContext->flowController.terminateFlow()) {
+-                                        sharedContext->emitTerminationSummaryOnce();
++                                    } else if (retryFlag && (state == core::socket::State::ERROR || state == core::socket::State::FATAL) &&
++                                               core::SNodeC::state() == core::State::RUNNING) {
++                                        flow->terminateFlow();
+                                     }
+                                 },
+                                 [sharedContext]() {
+@@ -309,25 +255,33 @@ namespace core::socket::stream {
+                         log.critical("required");
+                     }
+                 });
+-
+-            return *this;
+         }
+ 
+     public:
+-        const SocketServer& listen(const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+-            return realListen(onStatus, 0, 1);
++        // Every explicit call starts an independent flow. Runtime callbacks retain
++        // it even when the caller discards this optional control handle.
++        FlowHandle listen(const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++            auto flow = std::make_shared<ServerFlowController>(this->config->getInstanceName());
++            flow->setOnFlowTerminated([context = sharedContext, log = this->log()](ServerFlowController* finished) {
++                log.info("Flow terminated: endpoint-connections={} retries={} flow={}",
++                         context->connectionsCreated,
++                         finished->getRetryCount(),
++                         finished->getId());
++            });
++            realListen(flow, onStatus, 0, 1);
++            return flow;
+         }
+ 
+-        const SocketServer& listen(const SocketAddress& localAddress,
+-                                   const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        FlowHandle listen(const SocketAddress& localAddress,
++                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::config->Local::setSocketAddress(localAddress);
+ 
+             return listen(onStatus);
+         }
+ 
+-        const SocketServer& listen(const SocketAddress& localAddress,
+-                                   int backlog,
+-                                   const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        FlowHandle listen(const SocketAddress& localAddress,
++                          int backlog,
++                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::config->Local::setBacklog(backlog);
+ 
+             return listen(localAddress, onStatus);
+@@ -389,10 +343,6 @@ namespace core::socket::stream {
+             return *this;
+         }
+ 
+-        ServerFlowController* getFlowController() const {
+-            return &sharedContext->flowController;
+-        }
+-
+         std::shared_ptr<SocketContextFactory> getSocketContextFactory() const {
+             return sharedContext->socketContextFactory;
+         }
+diff --git a/src/net/in/stream/SocketClient.h b/src/net/in/stream/SocketClient.h
+index 184f1598d..993a99ee7 100644
+--- a/src/net/in/stream/SocketClient.h
++++ b/src/net/in/stream/SocketClient.h
+@@ -72,39 +72,39 @@ namespace net::in::stream {
+ 
+         using Super::connect;
+ 
+-        const Super& connect(const std::string& ipOrHostname,
+-                             uint16_t port,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& ipOrHostname,
++                                           uint16_t port,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setHost(ipOrHostname)->setPort(port);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& ipOrHostname,
+-                             uint16_t port,
+-                             const std::string& bindHost,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& ipOrHostname,
++                                           uint16_t port,
++                                           const std::string& bindHost,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setHost(ipOrHostname)->setPort(port);
+             Super::getConfig()->Local::setHost(bindHost);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& ipOrHostname,
+-                             uint16_t port,
+-                             uint16_t bindPort,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& ipOrHostname,
++                                           uint16_t port,
++                                           uint16_t bindPort,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setHost(ipOrHostname)->setPort(port);
+             Super::getConfig()->Local::setPort(bindPort);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& ipOrHostname,
+-                             uint16_t port,
+-                             const std::string& bindHost,
+-                             uint16_t bindPort,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& ipOrHostname,
++                                           uint16_t port,
++                                           const std::string& bindHost,
++                                           uint16_t bindPort,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setHost(ipOrHostname)->setPort(port);
+             Super::getConfig()->Local::setHost(bindHost)->setPort(bindPort);
+ 
+diff --git a/src/net/in/stream/SocketServer.h b/src/net/in/stream/SocketServer.h
+index 84d562ffe..2b903aaeb 100644
+--- a/src/net/in/stream/SocketServer.h
++++ b/src/net/in/stream/SocketServer.h
+@@ -72,13 +72,14 @@ namespace net::in::stream {
+ 
+         using Super::listen;
+ 
+-        const Super& listen(uint16_t port, const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(uint16_t port,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setPort(port);
+ 
+             return listen(onStatus);
+         }
+ 
+-        const Super&
++        typename Super::FlowHandle
+         listen(uint16_t port, int backlog, const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setPort(port);
+             Super::getConfig()->setBacklog(backlog);
+@@ -86,18 +87,18 @@ namespace net::in::stream {
+             return listen(onStatus);
+         }
+ 
+-        const Super& listen(const std::string& ipOrHostname,
+-                            uint16_t port,
+-                            const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(const std::string& ipOrHostname,
++                                          uint16_t port,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setHost(ipOrHostname)->setPort(port);
+ 
+             return listen(onStatus);
+         }
+ 
+-        const Super& listen(const std::string& ipOrHostname,
+-                            uint16_t port,
+-                            int backlog,
+-                            const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(const std::string& ipOrHostname,
++                                          uint16_t port,
++                                          int backlog,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setHost(ipOrHostname)->setPort(port);
+             Super::getConfig()->setBacklog(backlog);
+ 
+diff --git a/src/net/in6/stream/SocketClient.h b/src/net/in6/stream/SocketClient.h
+index f5a5d9aa5..62e040b9c 100644
+--- a/src/net/in6/stream/SocketClient.h
++++ b/src/net/in6/stream/SocketClient.h
+@@ -73,39 +73,39 @@ namespace net::in6::stream {
+ 
+         using Super::connect;
+ 
+-        const Super& connect(const std::string& ipOrHostname,
+-                             uint16_t port,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& ipOrHostname,
++                                           uint16_t port,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setHost(ipOrHostname)->setPort(port);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& ipOrHostname,
+-                             uint16_t port,
+-                             const std::string& bindHost,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& ipOrHostname,
++                                           uint16_t port,
++                                           const std::string& bindHost,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setHost(ipOrHostname)->setPort(port);
+             Super::getConfig()->Local::setHost(bindHost);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& ipOrHostname,
+-                             uint16_t port,
+-                             uint16_t bindPort,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& ipOrHostname,
++                                           uint16_t port,
++                                           uint16_t bindPort,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setHost(ipOrHostname)->setPort(port);
+             Super::getConfig()->Local::setPort(bindPort);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& ipOrHostname,
+-                             uint16_t port,
+-                             const std::string& bindHost,
+-                             uint16_t bindPort,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& ipOrHostname,
++                                           uint16_t port,
++                                           const std::string& bindHost,
++                                           uint16_t bindPort,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setHost(ipOrHostname)->setPort(port);
+             Super::getConfig()->Local::setHost(bindHost)->setPort(bindPort);
+ 
+diff --git a/src/net/in6/stream/SocketServer.h b/src/net/in6/stream/SocketServer.h
+index b757e2cab..8f502465b 100644
+--- a/src/net/in6/stream/SocketServer.h
++++ b/src/net/in6/stream/SocketServer.h
+@@ -72,12 +72,13 @@ namespace net::in6::stream {
+ 
+         using Super::listen;
+ 
+-        const Super& listen(uint16_t port, const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(uint16_t port,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setPort(port);
+ 
+             return listen(onStatus);
+         }
+-        const Super&
++        typename Super::FlowHandle
+         listen(uint16_t port, int backlog, const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setPort(port);
+             Super::getConfig()->setBacklog(backlog);
+@@ -85,18 +86,18 @@ namespace net::in6::stream {
+             return listen(onStatus);
+         }
+ 
+-        const Super& listen(const std::string& ipOrHostname,
+-                            uint16_t port,
+-                            const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(const std::string& ipOrHostname,
++                                          uint16_t port,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setHost(ipOrHostname)->setPort(port);
+ 
+             return listen(onStatus);
+         }
+ 
+-        const Super& listen(const std::string& ipOrHostname,
+-                            uint16_t port,
+-                            int backlog,
+-                            const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(const std::string& ipOrHostname,
++                                          uint16_t port,
++                                          int backlog,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setHost(ipOrHostname)->setPort(port);
+             Super::getConfig()->setBacklog(backlog);
+ 
+diff --git a/src/net/l2/stream/SocketClient.h b/src/net/l2/stream/SocketClient.h
+index 51066e483..f25e1a71f 100644
+--- a/src/net/l2/stream/SocketClient.h
++++ b/src/net/l2/stream/SocketClient.h
+@@ -72,39 +72,39 @@ namespace net::l2::stream {
+ 
+         using Super::connect;
+ 
+-        const Super& connect(const std::string& btAddress,
+-                             uint16_t psm,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& btAddress,
++                                           uint16_t psm,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setBtAddress(btAddress)->setPsm(psm);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& btAddress,
+-                             uint16_t psm,
+-                             const std::string& bindBtAddress,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& btAddress,
++                                           uint16_t psm,
++                                           const std::string& bindBtAddress,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setBtAddress(btAddress)->setPsm(psm);
+             Super::getConfig()->Local::setBtAddress(bindBtAddress);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& btAddress,
+-                             uint16_t psm,
+-                             uint16_t bindPsm,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& btAddress,
++                                           uint16_t psm,
++                                           uint16_t bindPsm,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setBtAddress(btAddress)->setPsm(psm);
+             Super::getConfig()->Local::setPsm(bindPsm);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& btAddress,
+-                             uint16_t psm,
+-                             const std::string& bindBtAddress,
+-                             uint16_t bindPsm,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& btAddress,
++                                           uint16_t psm,
++                                           const std::string& bindBtAddress,
++                                           uint16_t bindPsm,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setBtAddress(btAddress)->setPsm(psm);
+             Super::getConfig()->Local::setBtAddress(bindBtAddress)->setPsm(bindPsm);
+ 
+diff --git a/src/net/l2/stream/SocketServer.h b/src/net/l2/stream/SocketServer.h
+index faba34928..b92be4269 100644
+--- a/src/net/l2/stream/SocketServer.h
++++ b/src/net/l2/stream/SocketServer.h
+@@ -72,13 +72,14 @@ namespace net::l2::stream {
+ 
+         using Super::listen;
+ 
+-        const Super& listen(uint16_t psm, const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(uint16_t psm,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setPsm(psm);
+ 
+             return listen(onStatus);
+         }
+ 
+-        const Super&
++        typename Super::FlowHandle
+         listen(uint16_t psm, int backlog, const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setPsm(psm);
+             Super::getConfig()->setBacklog(backlog);
+@@ -86,18 +87,19 @@ namespace net::l2::stream {
+             return listen(onStatus);
+         }
+ 
+-        const Super& listen(const std::string& btAddress,
+-                            uint16_t psm,
+-                            const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(const std::string& btAddress,
++                                          uint16_t psm,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setBtAddress(btAddress)->setPsm(psm);
+ 
+             return listen(onStatus);
+         }
+ 
+-        const Super& listen(const std::string& btAddress,
+-                            uint16_t psm,
+-                            int backlog,
+-                            const std::function<void(const SocketAddress& SocketAddress, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle
++        listen(const std::string& btAddress,
++               uint16_t psm,
++               int backlog,
++               const std::function<void(const SocketAddress& SocketAddress, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setBtAddress(btAddress)->setPsm(psm);
+             Super::getConfig()->setBacklog(backlog);
+ 
+diff --git a/src/net/rc/stream/SocketClient.h b/src/net/rc/stream/SocketClient.h
+index 83691c00e..ffed55ae4 100644
+--- a/src/net/rc/stream/SocketClient.h
++++ b/src/net/rc/stream/SocketClient.h
+@@ -72,39 +72,39 @@ namespace net::rc::stream {
+ 
+         using Super::connect;
+ 
+-        const Super& connect(const std::string& btAddress,
+-                             uint8_t channel,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& btAddress,
++                                           uint8_t channel,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setBtAddress(btAddress)->setChannel(channel);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& btAddress,
+-                             uint8_t channel,
+-                             const std::string& bindBtAddress,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& btAddress,
++                                           uint8_t channel,
++                                           const std::string& bindBtAddress,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setBtAddress(btAddress)->setChannel(channel);
+             Super::getConfig()->Local::setBtAddress(bindBtAddress);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& btAddress,
+-                             uint8_t channel,
+-                             uint8_t bindChannel,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& btAddress,
++                                           uint8_t channel,
++                                           uint8_t bindChannel,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setBtAddress(btAddress)->setChannel(channel);
+             Super::getConfig()->Local::setChannel(bindChannel);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& btAddress,
+-                             uint8_t channel,
+-                             const std::string& bindBtAddress,
+-                             uint8_t bindChannel,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& btAddress,
++                                           uint8_t channel,
++                                           const std::string& bindBtAddress,
++                                           uint8_t bindChannel,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setBtAddress(btAddress)->setChannel(channel);
+             Super::getConfig()->Local::setBtAddress(bindBtAddress)->setChannel(bindChannel);
+ 
+diff --git a/src/net/rc/stream/SocketServer.h b/src/net/rc/stream/SocketServer.h
+index 615164455..239c56975 100644
+--- a/src/net/rc/stream/SocketServer.h
++++ b/src/net/rc/stream/SocketServer.h
+@@ -72,13 +72,14 @@ namespace net::rc::stream {
+ 
+         using Super::listen;
+ 
+-        const Super& listen(uint8_t channel, const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(uint8_t channel,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setChannel(channel);
+ 
+             return listen(onStatus);
+         }
+ 
+-        const Super&
++        typename Super::FlowHandle
+         listen(uint8_t channel, int backlog, const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setChannel(channel);
+             Super::getConfig()->setBacklog(backlog);
+@@ -86,18 +87,18 @@ namespace net::rc::stream {
+             return listen(onStatus);
+         }
+ 
+-        const Super& listen(const std::string& btAddress,
+-                            uint8_t channel,
+-                            const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(const std::string& btAddress,
++                                          uint8_t channel,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setBtAddress(btAddress)->setChannel(channel);
+ 
+             return listen(onStatus);
+         }
+ 
+-        const Super& listen(const std::string& btAddress,
+-                            uint8_t channel,
+-                            int backlog,
+-                            const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(const std::string& btAddress,
++                                          uint8_t channel,
++                                          int backlog,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setBtAddress(btAddress)->setChannel(channel);
+             Super::getConfig()->setBacklog(backlog);
+ 
+diff --git a/src/net/un/stream/SocketClient.h b/src/net/un/stream/SocketClient.h
+index e66aeb842..e48350276 100644
+--- a/src/net/un/stream/SocketClient.h
++++ b/src/net/un/stream/SocketClient.h
+@@ -71,16 +71,16 @@ namespace net::un::stream {
+ 
+         using Super::connect;
+ 
+-        const Super& connect(const std::string& sunPath,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& sunPath,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setSunPath(sunPath);
+ 
+             return connect(onStatus);
+         }
+ 
+-        const Super& connect(const std::string& sunPath,
+-                             const std::string& bindSunPath,
+-                             const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle connect(const std::string& sunPath,
++                                           const std::string& bindSunPath,
++                                           const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Remote::setSunPath(sunPath);
+             Super::getConfig()->Local::setSunPath(bindSunPath);
+ 
+diff --git a/src/net/un/stream/SocketServer.h b/src/net/un/stream/SocketServer.h
+index f079ec141..26e1fc894 100644
+--- a/src/net/un/stream/SocketServer.h
++++ b/src/net/un/stream/SocketServer.h
+@@ -72,16 +72,16 @@ namespace net::un::stream {
+ 
+         using Super::listen;
+ 
+-        const Super& listen(const std::string& sunPath,
+-                            const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(const std::string& sunPath,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setSunPath(sunPath);
+ 
+             return listen(onStatus);
+         }
+ 
+-        const Super& listen(const std::string& sunPath,
+-                            int backlog,
+-                            const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
++        typename Super::FlowHandle listen(const std::string& sunPath,
++                                          int backlog,
++                                          const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+             Super::getConfig()->Local::setSunPath(sunPath);
+             Super::getConfig()->setBacklog(backlog);
+ 
+diff --git a/tests/component/net/CMakeLists.txt b/tests/component/net/CMakeLists.txt
+index 01d618f65..e200e49d8 100644
+--- a/tests/component/net/CMakeLists.txt
++++ b/tests/component/net/CMakeLists.txt
+@@ -344,3 +344,9 @@ set_tests_properties(UnixLegacyServerMultipleClientsDisconnectLifecycleTest PROP
+                      LABELS "component;net;stream;legacy;unix;multi-client;disconnect"
+                      SKIP_RETURN_CODE 77
+                      TIMEOUT 5)
++snodec_add_test(InetPerCallFlowTest InetPerCallFlowTest.cpp)
++target_link_libraries(InetPerCallFlowTest PRIVATE snodec-test-support snodec::net-in-stream-legacy)
++target_compile_features(InetPerCallFlowTest PRIVATE cxx_std_20)
++set_tests_properties(InetPerCallFlowTest PROPERTIES
++                    LABELS "component;net;stream;legacy;ipv4;flow"
++                    SKIP_RETURN_CODE 77 TIMEOUT 5)
+diff --git a/tests/unit/core/ConnectionAttemptLifecycleTest.cpp b/tests/unit/core/ConnectionAttemptLifecycleTest.cpp
+index 06b9bea85..68f3cee26 100644
+--- a/tests/unit/core/ConnectionAttemptLifecycleTest.cpp
++++ b/tests/unit/core/ConnectionAttemptLifecycleTest.cpp
+@@ -209,10 +209,7 @@ namespace {
+     public:
+         using Self = TestConnectorSocketConnection<PhysicalSocket, Config>;
+ 
+-        TestConnectorSocketConnection(PhysicalSocket&&,
+-                                      const std::function<void(Self*)>&,
+-                                      std::uint64_t,
+-                                      const std::shared_ptr<Config>&) {
++        TestConnectorSocketConnection(PhysicalSocket&&, const std::function<void(Self*)>&, std::uint64_t, const std::shared_ptr<Config>&) {
+         }
+ 
+         logger::BoundaryLogger log() const {
+@@ -354,8 +351,7 @@ namespace {
+             }
+ 
+             onStatus(address, core::socket::State(core::socket::State::OK, __FILE__, __LINE__));
+-            connections.push_back(
+-                std::make_unique<SocketConnection>(11, allocateConnectionId(), config->getInstanceName()));
++            connections.push_back(std::make_unique<SocketConnection>(11, allocateConnectionId(), config->getInstanceName()));
+             SocketConnection* connection = connections.back().get();
+             if (onConnect) {
+                 onConnect(connection);
+@@ -450,8 +446,7 @@ namespace {
+             const std::string message = record.value("message", "");
+             if (message == "connection attempt started" || message == "connection attempt timed out") {
+                 result.expectTrue(record.value("level", "") == "debug" && record.value("origin", "") == "framework" &&
+-                                      record.value("boundary", "") == "instance" &&
+-                                      record.value("component", "") == "core.socket.stream" &&
++                                      record.value("boundary", "") == "instance" && record.value("component", "") == "core.socket.stream" &&
+                                       record.value("instance", "") == "timeout-client" && record.value("role", "") == "client" &&
+                                       !record.contains("connection"),
+                                   message + " carries client endpoint identity at Debug");
+@@ -481,28 +476,32 @@ namespace {
+             connectionIds.push_back(connection->getConnectionId());
+         });
+ 
++        TestSocketClient::FlowHandle secondFlow;
+         int failedStatuses = 0;
+         std::function<void(const TestSocketAddress&, core::socket::State)> onStatus;
+         onStatus = [&](const TestSocketAddress&, core::socket::State state) {
+             if (state == core::socket::State::ERROR && failedStatuses++ == 0) {
+-                core::EventReceiver::atNextTick([&client, &onStatus]() {
+-                    client.connect(onStatus);
++                core::EventReceiver::atNextTick([&client, &onStatus, &secondFlow]() {
++                    secondFlow = client.connect(onStatus);
+                 });
+             }
+         };
+ 
+-        client.connect(onStatus);
++        auto firstFlow = client.connect(onStatus);
+         runLoopOnce();
++        result.expectTrue(firstFlow->isTerminated(), "the old flow remains terminated");
++        result.expectTrue(secondFlow && secondFlow != firstFlow, "the explicit later call has its own flow");
+ 
+-        result.expectEqual(2, static_cast<int>(TestLifecycleConnector::attempts()),
++        result.expectEqual(2,
++                           static_cast<int>(TestLifecycleConnector::attempts()),
+                            "the same SocketClient starts a second explicit attempt after terminal failure");
+         result.expectEqual(1, failedStatuses, "the first explicit attempt reports one terminal error");
+         result.expectTrue(connectionIds.size() == 1 && connectionIds.front() == 1,
+                           "the second explicit attempt establishes the first connection on the shared context");
+-        result.expectEqual(0, static_cast<int>(client.getFlowController()->getRetryCount()),
+-                           "an explicit later connect is not reported as an automatic retry");
+-        result.expectEqual(0, static_cast<int>(client.getFlowController()->getReconnectCount()),
+-                           "an explicit later connect is not reported as an automatic reconnect");
++        result.expectEqual(
++            0, static_cast<int>(secondFlow->getRetryCount()), "an explicit later connect is not reported as an automatic retry");
++        result.expectEqual(
++            0, static_cast<int>(secondFlow->getReconnectCount()), "an explicit later connect is not reported as an automatic reconnect");
+ 
+         TestLifecycleConnector::cleanup();
+         return result.processResult();
+@@ -521,66 +520,67 @@ namespace {
+             connectionIds.push_back(connection->getConnectionId());
+         });
+ 
+-        const std::function<void(const TestSocketAddress&, core::socket::State)> onStatus =
+-            [](const TestSocketAddress&, core::socket::State) {};
++        const std::function<void(const TestSocketAddress&, core::socket::State)> onStatus = [](const TestSocketAddress&,
++                                                                                               core::socket::State) {
++        };
++        TestSocketClient::FlowHandle secondFlow;
+         int disconnects = 0;
+         client.setOnDisconnect([&](TestEndpointSocketConnection*) {
+             if (disconnects++ == 0) {
+-                core::EventReceiver::atNextTick([&client, &onStatus]() {
+-                    client.connect(onStatus);
++                core::EventReceiver::atNextTick([&client, &onStatus, &secondFlow]() {
++                    secondFlow = client.connect(onStatus);
+                 });
+             }
+         });
+ 
+-        client.connect(onStatus);
++        auto firstFlow = client.connect(onStatus);
+         runLoopOnce();
++        result.expectTrue(firstFlow->isTerminated(), "the old flow remains terminated");
++        result.expectTrue(secondFlow && secondFlow != firstFlow, "the explicit later call has its own flow");
+ 
+-        result.expectEqual(2, static_cast<int>(TestLifecycleConnector::attempts()),
++        result.expectEqual(2,
++                           static_cast<int>(TestLifecycleConnector::attempts()),
+                            "the same SocketClient starts a second explicit attempt after disconnect");
+         result.expectEqual(1, disconnects, "the first established connection disconnects exactly once");
+         result.expectTrue(connectionIds.size() == 2 && connectionIds[0] == 1 && connectionIds[1] == 2,
+                           "explicit reconnect preserves the shared monotonically increasing connection sequence");
+-        result.expectEqual(0, static_cast<int>(client.getFlowController()->getReconnectCount()),
++        result.expectEqual(0,
++                           static_cast<int>(secondFlow->getReconnectCount()),
+                            "manual reuse of connect is distinct from configured automatic reconnect");
+ 
+         TestLifecycleConnector::cleanup();
+         return result.processResult();
+     }
+ 
+-    int runStaleConnectCallbackTest() {
++    int runCancelledConnectCallbackTest() {
+         tests::support::TestResult result;
+         SNodeCGuard snodeGuard;
+         TestLifecycleConnector::reset({ClientAction::TerminalError, ClientAction::ConnectedStop});
+ 
+-        TestSocketClient client("stale-connect-callback");
++        TestSocketClient client("cancelled-connect-callback");
+         client.getConfig()->setRetry(false)->setReconnect(false);
+-
+-        int staleSuccesses = 0;
+-        int restartedSuccesses = 0;
+-        int terminations = 0;
+-        const std::function<void(const TestSocketAddress&, core::socket::State)> staleStatus =
+-            [&](const TestSocketAddress&, core::socket::State state) {
+-                staleSuccesses += state == core::socket::State::OK ? 1 : 0;
+-            };
+-        const std::function<void(const TestSocketAddress&, core::socket::State)> restartedStatus =
+-            [&](const TestSocketAddress&, core::socket::State state) {
+-                restartedSuccesses += state == core::socket::State::OK ? 1 : 0;
+-            };
+-
+-        client.getFlowController()->setOnFlowTerminated([&](core::socket::stream::ClientFlowController*) {
+-            if (terminations++ == 0) {
+-                client.connect(restartedStatus);
+-            }
++        int cancelledCallbacks = 0;
++        int siblingErrors = 0;
++        int freshSuccesses = 0;
++        auto cancelled = client.connect([&](const TestSocketAddress&, core::socket::State) {
++            ++cancelledCallbacks;
++        });
++        auto sibling = client.connect([&](const TestSocketAddress&, core::socket::State state) {
++            siblingErrors += state == core::socket::State::ERROR ? 1 : 0;
++        });
++        cancelled->terminateFlow();
++        auto fresh = client.connect([&](const TestSocketAddress&, core::socket::State state) {
++            freshSuccesses += state == core::socket::State::OK ? 1 : 0;
+         });
+-
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
+-        client.connect(staleStatus);
+         runLoopOnce();
+ 
+-        result.expectEqual(2, static_cast<int>(TestLifecycleConnector::attempts()),
+-                           "an explicit restart invalidates an older queued connect callback");
+-        result.expectEqual(0, staleSuccesses, "the stale callback cannot claim the restarted flow");
+-        result.expectEqual(1, restartedSuccesses, "the explicitly restarted callback establishes the connection");
++        result.expectEqual(
++            2, static_cast<int>(TestLifecycleConnector::attempts()), "only the individually cancelled queued attempt is suppressed");
++        result.expectEqual(0, cancelledCallbacks, "cancelled queued flow cannot report a later status");
++        result.expectEqual(1, siblingErrors, "the sibling call still executes independently");
++        result.expectEqual(1, freshSuccesses, "a fresh call works after cancellation and sibling failure");
++        result.expectTrue(cancelled->isTerminated() && sibling->isTerminated() && !fresh->isTerminated(),
++                          "a fresh call never resurrects either old flow");
+ 
+         TestLifecycleConnector::cleanup();
+         return result.processResult();
+@@ -598,12 +598,14 @@ namespace {
+             client.setOnConnected([&](TestEndpointSocketConnection* connection) {
+                 connectionIds.push_back(connection->getConnectionId());
+             });
+-            client.connect([](const TestSocketAddress&, core::socket::State) {});
++            client.connect([](const TestSocketAddress&, core::socket::State) {
++            });
+         }
+ 
+         runLoopOnce();
+ 
+-        result.expectEqual(2, static_cast<int>(TestLifecycleConnector::attempts()),
++        result.expectEqual(2,
++                           static_cast<int>(TestLifecycleConnector::attempts()),
+                            "the shared client flow remains alive after the SocketClient handle leaves scope");
+         result.expectTrue(connectionIds.size() == 2 && connectionIds[0] == 1 && connectionIds[1] == 2,
+                           "configured reconnect completes after the original SocketClient handle is destroyed");
+@@ -619,7 +621,7 @@ int main(int argc, char** argv) {
+             "connector-terminal",
+             "explicit-after-failure",
+             "explicit-after-disconnect",
+-            "stale-connect-callback",
++            "cancelled-connect-callback",
+             "out-of-scope-reconnect",
+         };
+ 
+@@ -641,8 +643,8 @@ int main(int argc, char** argv) {
+     if (scenario == "explicit-after-disconnect") {
+         return runExplicitConnectAfterDisconnectTest();
+     }
+-    if (scenario == "stale-connect-callback") {
+-        return runStaleConnectCallbackTest();
++    if (scenario == "cancelled-connect-callback") {
++        return runCancelledConnectCallbackTest();
+     }
+     if (scenario == "out-of-scope-reconnect") {
+         return runOutOfScopeReconnectTest();
+diff --git a/tests/unit/core/EndpointLifetimeCountersTest.cpp b/tests/unit/core/EndpointLifetimeCountersTest.cpp
+index 64339df94..63c06923b 100644
+--- a/tests/unit/core/EndpointLifetimeCountersTest.cpp
++++ b/tests/unit/core/EndpointLifetimeCountersTest.cpp
+@@ -25,6 +25,7 @@
+ #include <memory>
+ #include <string>
+ #include <system_error>
++#include <type_traits>
+ #include <utility>
+ #include <vector>
+ 
+@@ -266,14 +267,7 @@ namespace {
+         double reconnectTime{1};
+     };
+ 
+-    enum class ServerAction {
+-        TerminalError,
+-        ErrorThenStopBeforePolicy,
+-        NoRetryError,
+-        RetryableError,
+-        OkStop,
+-        TwoAcceptedConnectionsStop
+-    };
++    enum class ServerAction { TerminalError, ErrorThenStopBeforePolicy, NoRetryError, RetryableError, OkStop, TwoAcceptedConnectionsStop };
+ 
+     enum class ClientAction {
+         TerminalError,
+@@ -314,7 +308,9 @@ namespace {
+                 core::SNodeC::stop();
+             }
+ 
+-            core::socket::State status = action == ServerAction::OkStop ? core::socket::State(core::socket::State::OK, __FILE__, __LINE__) : core::socket::State(core::socket::State::ERROR, __FILE__, __LINE__);
++            core::socket::State status = action == ServerAction::OkStop
++                                             ? core::socket::State(core::socket::State::OK, __FILE__, __LINE__)
++                                             : core::socket::State(core::socket::State::ERROR, __FILE__, __LINE__);
+             if (action == ServerAction::NoRetryError) {
+                 status |= core::socket::State::NO_RETRY;
+             }
+@@ -408,7 +404,9 @@ namespace {
+                 core::SNodeC::stop();
+             }
+ 
+-            core::socket::State status = action == ClientAction::OkStop ? core::socket::State(core::socket::State::OK, __FILE__, __LINE__) : core::socket::State(core::socket::State::ERROR, __FILE__, __LINE__);
++            core::socket::State status = action == ClientAction::OkStop
++                                             ? core::socket::State(core::socket::State::OK, __FILE__, __LINE__)
++                                             : core::socket::State(core::socket::State::ERROR, __FILE__, __LINE__);
+             if (action == ClientAction::NoRetryError) {
+                 status |= core::socket::State::NO_RETRY;
+             }
+@@ -492,10 +490,11 @@ namespace {
+     }
+ 
+     bool summaryAppearsBeforeShutdown(const std::string& log) {
+-        const auto summary = log.find("Instance terminated:");
++        const auto summary = log.find("Flow terminated:");
+         const auto config = log.find("Core: Shutdown config system");
+         const auto bye = log.find("SNode.C: Ended ... BYE");
+-        return summary != std::string::npos && (config == std::string::npos || summary < config) && (bye == std::string::npos || summary < bye);
++        return summary != std::string::npos && (config == std::string::npos || summary < config) &&
++               (bye == std::string::npos || summary < bye);
+     }
+ } // namespace
+ 
+@@ -513,6 +512,9 @@ int main(int argc, char** argv) {
+         "server-sequence",
+         "client-sequence",
+         "expired-weak-context",
++        "independent-server-retries",
++        "independent-client-retries",
++        "independent-client-reconnects",
+     };
+ 
+     if (argc == 1) {
+@@ -527,24 +529,91 @@ int main(int argc, char** argv) {
+     const std::string scenario = argv[1];
+     tests::support::TestResult result;
+ 
++    if (scenario == "independent-server-retries" || scenario == "independent-client-retries") {
++        SNodeCGuard snodeGuard;
++        auto check = [&]<typename Endpoint>(Endpoint& endpoint) {
++            endpoint.getConfig()->setRetry(true)->setRetryTimeout(0)->setRetryTries(1);
++            int cancelledStatuses = 0;
++            int siblingSuccesses = 0;
++            auto start = [&](const auto& status) {
++                if constexpr (std::is_same_v<Endpoint, TestSocketServer>)
++                    return endpoint.listen(status);
++                else
++                    return endpoint.connect(status);
++            };
++            auto cancelled = start([&](const TestSocketAddress&, core::socket::State) {
++                ++cancelledStatuses;
++            });
++            auto sibling = start([&](const TestSocketAddress&, core::socket::State status) {
++                siblingSuccesses += status == core::socket::State::OK ? 1 : 0;
++            });
++            cancelled->setOnFlowRetry([](auto* flow) {
++                flow->terminateFlow();
++            });
++            runLoopOnce();
++            result.expectEqual(1, cancelledStatuses, "cancelling from retry observer suppresses only its own next attempt");
++            result.expectEqual(1, siblingSuccesses, "the sibling timer still dispatches and succeeds");
++            result.expectEqual(1, static_cast<int>(cancelled->getRetryCount()), "cancelled flow owns its dispatched retry count");
++            result.expectEqual(1, static_cast<int>(sibling->getRetryCount()), "sibling owns a separate dispatched retry count");
++            result.expectTrue(cancelled->isTerminated() && !sibling->isTerminated(), "retry cancellation is per flow");
++        };
++        if (scenario == "independent-server-retries") {
++            TestAcceptEventReceiver::reset({ServerAction::RetryableError, ServerAction::RetryableError, ServerAction::OkStop});
++            TestSocketServer server("independent-server-retries");
++            check(server);
++        } else {
++            TestConnectEventReceiver::reset({ClientAction::RetryableError, ClientAction::RetryableError, ClientAction::OkStop});
++            TestSocketClient client("independent-client-retries");
++            check(client);
++        }
++    }
++
++    if (scenario == "independent-client-reconnects") {
++        SNodeCGuard snodeGuard;
++        TestConnectEventReceiver::reset(
++            {ClientAction::ConnectedThenDisconnect, ClientAction::ConnectedThenDisconnect, ClientAction::ConnectedStop});
++        TestSocketClient client("independent-client-reconnects");
++        client.getConfig()->setReconnect(true)->setReconnectTime(0);
++        int connected = 0;
++        client.setOnConnected([&](TestSocketConnection*) {
++            ++connected;
++        });
++        auto cancelled = client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
++        auto sibling = client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
++        cancelled->setOnFlowReconnect([](auto* flow) {
++            flow->terminateFlow();
++        });
++        runLoopOnce();
++        result.expectEqual(3, connected, "two initial connections but only the uncancelled flow reconnects");
++        result.expectEqual(1, static_cast<int>(cancelled->getReconnectCount()), "cancelled flow counts its reconnect dispatch");
++        result.expectEqual(1, static_cast<int>(sibling->getReconnectCount()), "sibling reconnect is counted independently");
++        result.expectTrue(cancelled->isTerminated() && !sibling->isTerminated(), "reconnect observers cannot resurrect terminated flows");
++    }
++
+     if (scenario == "server-terminal") {
+         const auto logPath = tempLogPath("snodec-endpoint-server-terminal.log");
+         LoggerStateGuard loggerGuard(logPath.string());
+         SNodeCGuard snodeGuard;
+-        TestAcceptEventReceiver::reset({ServerAction::TerminalError, ServerAction::TerminalError});
++        TestAcceptEventReceiver::reset({ServerAction::RetryableError, ServerAction::RetryableError});
+         TestSocketServer server("endpoint-server-terminal");
+         server.getConfig()->setRetry(false);
+-        server.listen([](const TestSocketAddress&, core::socket::State) {});
+-        server.listen([](const TestSocketAddress&, core::socket::State) {});
++        server.listen([](const TestSocketAddress&, core::socket::State) {
++        });
++        server.listen([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(countOccurrences(log, "Instance terminated: connections=0 retries=0")),
+-                           "real server terminal listen ERROR emits exactly one summary");
++        result.expectEqual(2,
++                           static_cast<int>(countOccurrences(log, "Flow terminated: endpoint-connections=0 retries=0")),
++                           "real server terminal listen ERROR emits one summary per explicit call");
+         result.expectTrue(hasSummaryScope(log, "server", "endpoint-server-terminal"),
+                           "server summary is Info framework/instance core.socket.stream with server role and instance");
+         result.expectTrue(log.find("conn=") == std::string::npos, "server instance summary has no connection field");
+-        result.expectTrue(summaryAppearsBeforeShutdown(log), "server terminal summary remains before shutdown logs and is not repeated by free");
++        result.expectTrue(summaryAppearsBeforeShutdown(log),
++                          "server terminal summary remains before shutdown logs and is not repeated by free");
+     }
+ 
+     if (scenario == "server-retry") {
+@@ -555,15 +624,15 @@ int main(int argc, char** argv) {
+         TestSocketServer server("endpoint-server-retry");
+         server.getConfig()->setRetry(true)->setRetryTimeout(0)->setRetryTries(1);
+         std::uint64_t retrySeenByObserver = 0;
+-        server.getFlowController()->setOnFlowRetry([&](core::socket::stream::ServerFlowController* flow) {
++        auto flow = server.listen([](const TestSocketAddress&, core::socket::State) {
++        });
++        flow->setOnFlowRetry([&](core::socket::stream::ServerFlowController* flow) {
+             retrySeenByObserver = flow->getRetryCount();
+         });
+-        server.listen([](const TestSocketAddress&, core::socket::State) {});
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(server.getFlowController()->getRetryCount()),
+-                           "real server retry dispatch increments retryCount once");
++        result.expectEqual(1, static_cast<int>(flow->getRetryCount()), "real server retry dispatch increments retryCount once");
+         result.expectEqual(1, static_cast<int>(retrySeenByObserver), "server retry observer sees incremented retryCount");
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "retry scheduled")), "server retry is scheduled once");
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "retry dispatched")), "server retry is dispatched once");
+@@ -577,11 +646,13 @@ int main(int argc, char** argv) {
+         TestAcceptEventReceiver::reset({ServerAction::NoRetryError});
+         TestSocketServer server("endpoint-server-no-retry");
+         server.getConfig()->setRetry(false);
+-        server.listen([](const TestSocketAddress&, core::socket::State) {});
++        server.listen([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(countOccurrences(log, "Instance terminated: connections=0 retries=0")),
++        result.expectEqual(1,
++                           static_cast<int>(countOccurrences(log, "Flow terminated: endpoint-connections=0 retries=0")),
+                            "server NO_RETRY address fallback emits graceful shutdown summary");
+     }
+ 
+@@ -592,17 +663,16 @@ int main(int argc, char** argv) {
+         TestAcceptEventReceiver::reset({ServerAction::ErrorThenStopBeforePolicy});
+         TestSocketServer server("endpoint-server-retry-cancelled");
+         server.getConfig()->setRetry(true)->setRetryTimeout(30)->setRetryTries(1);
+-        server.listen([](const TestSocketAddress&, core::socket::State) {
++        auto flow = server.listen([](const TestSocketAddress&, core::socket::State) {
+         });
+         runLoopOnce();
+-        server.getFlowController()->terminateFlow();
++        flow->terminateFlow();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "retry scheduled")), "server retry cancellation starts scheduled");
+         result.expectEqual(0, static_cast<int>(countOccurrences(log, "retry dispatched")), "cancelled server retry is never dispatched");
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "retry cancelled")), "scheduled server retry is cancelled once");
+-        result.expectEqual(
+-            0, static_cast<int>(server.getFlowController()->getRetryCount()), "cancelled server retry does not increment counter");
++        result.expectEqual(0, static_cast<int>(flow->getRetryCount()), "cancelled server retry does not increment counter");
+     }
+ 
+     if (scenario == "server-shutdown") {
+@@ -612,11 +682,13 @@ int main(int argc, char** argv) {
+         TestAcceptEventReceiver::reset({ServerAction::ErrorThenStopBeforePolicy});
+         TestSocketServer server("endpoint-server-shutdown");
+         server.getConfig()->setRetry(false);
+-        server.listen([](const TestSocketAddress&, core::socket::State) {});
++        server.listen([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(countOccurrences(log, "Instance terminated: connections=0 retries=0")),
++        result.expectEqual(1,
++                           static_cast<int>(countOccurrences(log, "Flow terminated: endpoint-connections=0 retries=0")),
+                            "server graceful shutdown emits exactly one summary");
+         result.expectTrue(summaryAppearsBeforeShutdown(log), "server graceful summary appears before config shutdown and BYE");
+     }
+@@ -625,20 +697,24 @@ int main(int argc, char** argv) {
+         const auto logPath = tempLogPath("snodec-endpoint-client-terminal.log");
+         LoggerStateGuard loggerGuard(logPath.string());
+         SNodeCGuard snodeGuard;
+-        TestConnectEventReceiver::reset({ClientAction::TerminalError, ClientAction::TerminalError});
++        TestConnectEventReceiver::reset({ClientAction::RetryableError, ClientAction::RetryableError});
+         TestSocketClient client("endpoint-client-terminal");
+         client.getConfig()->setRetry(false);
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
++        client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
++        client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(countOccurrences(log, "Instance terminated: connections=0 retries=0 reconnects=0")),
+-                           "real client terminal connect ERROR emits exactly one summary");
++        result.expectEqual(2,
++                           static_cast<int>(countOccurrences(log, "Flow terminated: endpoint-connections=0 retries=0 reconnects=0")),
++                           "real client terminal connect ERROR emits one summary per explicit call");
+         result.expectTrue(hasSummaryScope(log, "client", "endpoint-client-terminal"),
+                           "client connect summary is Info framework/instance core.socket.stream with client role and instance");
+         result.expectTrue(log.find("conn=") == std::string::npos, "client connect instance summary has no connection field");
+-        result.expectTrue(summaryAppearsBeforeShutdown(log), "client terminal summary remains before shutdown logs and is not repeated by free");
++        result.expectTrue(summaryAppearsBeforeShutdown(log),
++                          "client terminal summary remains before shutdown logs and is not repeated by free");
+     }
+ 
+     if (scenario == "client-retry") {
+@@ -649,15 +725,15 @@ int main(int argc, char** argv) {
+         TestSocketClient client("endpoint-client-retry");
+         client.getConfig()->setRetry(true)->setRetryTimeout(0)->setRetryTries(1);
+         std::uint64_t retrySeenByObserver = 0;
+-        client.getFlowController()->setOnFlowRetry([&](core::socket::stream::ClientFlowController* flow) {
++        auto flow = client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
++        flow->setOnFlowRetry([&](core::socket::stream::ClientFlowController* flow) {
+             retrySeenByObserver = flow->getRetryCount();
+         });
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(client.getFlowController()->getRetryCount()),
+-                           "real client retry dispatch increments retryCount once");
++        result.expectEqual(1, static_cast<int>(flow->getRetryCount()), "real client retry dispatch increments retryCount once");
+         result.expectEqual(1, static_cast<int>(retrySeenByObserver), "client retry observer sees incremented retryCount");
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "retry scheduled")), "client retry is scheduled once");
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "retry dispatched")), "client retry is dispatched once");
+@@ -671,11 +747,13 @@ int main(int argc, char** argv) {
+         TestConnectEventReceiver::reset({ClientAction::NoRetryError});
+         TestSocketClient client("endpoint-client-no-retry");
+         client.getConfig()->setRetry(false);
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
++        client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(countOccurrences(log, "Instance terminated: connections=0 retries=0 reconnects=0")),
++        result.expectEqual(1,
++                           static_cast<int>(countOccurrences(log, "Flow terminated: endpoint-connections=0 retries=0 reconnects=0")),
+                            "client NO_RETRY address fallback emits graceful shutdown summary");
+     }
+ 
+@@ -686,17 +764,16 @@ int main(int argc, char** argv) {
+         TestConnectEventReceiver::reset({ClientAction::ErrorThenStopBeforePolicy});
+         TestSocketClient client("endpoint-client-retry-cancelled");
+         client.getConfig()->setRetry(true)->setRetryTimeout(30)->setRetryTries(1);
+-        client.connect([](const TestSocketAddress&, core::socket::State) {
++        auto flow = client.connect([](const TestSocketAddress&, core::socket::State) {
+         });
+         runLoopOnce();
+-        client.getFlowController()->terminateFlow();
++        flow->terminateFlow();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "retry scheduled")), "client retry cancellation starts scheduled");
+         result.expectEqual(0, static_cast<int>(countOccurrences(log, "retry dispatched")), "cancelled client retry is never dispatched");
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "retry cancelled")), "scheduled client retry is cancelled once");
+-        result.expectEqual(
+-            0, static_cast<int>(client.getFlowController()->getRetryCount()), "cancelled client retry does not increment counter");
++        result.expectEqual(0, static_cast<int>(flow->getRetryCount()), "cancelled client retry does not increment counter");
+     }
+ 
+     if (scenario == "client-shutdown") {
+@@ -706,11 +783,13 @@ int main(int argc, char** argv) {
+         TestConnectEventReceiver::reset({ClientAction::ErrorThenStopBeforePolicy});
+         TestSocketClient client("endpoint-client-shutdown");
+         client.getConfig()->setRetry(false);
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
++        client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(countOccurrences(log, "Instance terminated: connections=0 retries=0 reconnects=0")),
++        result.expectEqual(1,
++                           static_cast<int>(countOccurrences(log, "Flow terminated: endpoint-connections=0 retries=0 reconnects=0")),
+                            "client graceful shutdown emits exactly one summary");
+         result.expectTrue(summaryAppearsBeforeShutdown(log), "client graceful summary appears before config shutdown and BYE");
+     }
+@@ -722,12 +801,15 @@ int main(int argc, char** argv) {
+         TestConnectEventReceiver::reset({ClientAction::ConnectedThenDisconnect, ClientAction::ConnectedThenDisconnect});
+         TestSocketClient client("endpoint-client-disconnect-terminal");
+         client.getConfig()->setReconnect(false);
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
++        client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
++        client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(countOccurrences(log, "Instance terminated: connections=1 retries=0 reconnects=0")),
++        result.expectEqual(1,
++                           static_cast<int>(countOccurrences(log, "Flow terminated: endpoint-connections=1 retries=0 reconnects=0")),
+                            "real client reconnect rejection during RUNNING emits exactly one summary");
+         result.expectTrue(hasSummaryScope(log, "client", "endpoint-client-disconnect-terminal"),
+                           "client reconnect summary is Info framework/instance core.socket.stream with client role and instance");
+@@ -742,19 +824,19 @@ int main(int argc, char** argv) {
+         TestSocketClient client("endpoint-client-reconnect-accepted");
+         client.getConfig()->setReconnect(true)->setReconnectTime(0);
+         std::uint64_t reconnectSeenByObserver = 0;
+-        client.getFlowController()->setOnFlowReconnect([&](core::socket::stream::ClientFlowController* flow) {
++        auto flow = client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
++        flow->setOnFlowReconnect([&](core::socket::stream::ClientFlowController* flow) {
+             reconnectSeenByObserver = flow->getReconnectCount();
+         });
+         std::vector<std::uint64_t> connectionIds;
+         client.setOnConnected([&](TestSocketConnection* connection) {
+             connectionIds.push_back(connection->getConnectionId());
+         });
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(client.getFlowController()->getReconnectCount()),
+-                           "real client reconnect dispatch increments reconnectCount once");
++        result.expectEqual(1, static_cast<int>(flow->getReconnectCount()), "real client reconnect dispatch increments reconnectCount once");
+         result.expectEqual(1, static_cast<int>(reconnectSeenByObserver), "reconnect observer sees incremented reconnectCount");
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "reconnect scheduled")), "reconnect is scheduled once");
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "reconnect dispatched")), "reconnect is dispatched once");
+@@ -770,11 +852,13 @@ int main(int argc, char** argv) {
+         TestConnectEventReceiver::reset({ClientAction::ConnectedThenDisconnectStopping});
+         TestSocketClient client("endpoint-client-disconnect-stopping");
+         client.getConfig()->setReconnect(false);
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
++        client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+-        result.expectEqual(1, static_cast<int>(countOccurrences(log, "Instance terminated: connections=1 retries=0 reconnects=0")),
++        result.expectEqual(1,
++                           static_cast<int>(countOccurrences(log, "Flow terminated: endpoint-connections=1 retries=0 reconnects=0")),
+                            "client disconnect while STOPPING emits graceful shutdown summary");
+     }
+ 
+@@ -785,20 +869,19 @@ int main(int argc, char** argv) {
+         TestConnectEventReceiver::reset({ClientAction::ConnectedThenDisconnect});
+         TestSocketClient client("endpoint-client-reconnect-cancelled");
+         client.getConfig()->setReconnect(true)->setReconnectTime(30);
+-        client.connect([](const TestSocketAddress&, core::socket::State) {
++        auto flow = client.connect([](const TestSocketAddress&, core::socket::State) {
+         });
+         core::EventReceiver::atNextTick([]() {
+             core::SNodeC::stop();
+         });
+         runLoopOnce();
+-        client.getFlowController()->terminateFlow();
++        flow->terminateFlow();
+         logger::Logger::disableLogToFile();
+         const auto log = readFile(logPath);
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "reconnect scheduled")), "reconnect cancellation starts scheduled");
+         result.expectEqual(0, static_cast<int>(countOccurrences(log, "reconnect dispatched")), "cancelled reconnect is never dispatched");
+         result.expectEqual(1, static_cast<int>(countOccurrences(log, "reconnect cancelled")), "scheduled reconnect is cancelled once");
+-        result.expectEqual(
+-            0, static_cast<int>(client.getFlowController()->getReconnectCount()), "cancelled reconnect does not increment counter");
++        result.expectEqual(0, static_cast<int>(flow->getReconnectCount()), "cancelled reconnect does not increment counter");
+     }
+ 
+     if (scenario == "server-sequence") {
+@@ -809,7 +892,8 @@ int main(int argc, char** argv) {
+         server.setOnConnected([&](TestSocketConnection* connection) {
+             serverConnectionIds.push_back(connection->getConnectionId());
+         });
+-        server.listen([](const TestSocketAddress&, core::socket::State) {});
++        server.listen([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         result.expectTrue(serverConnectionIds.size() == 2 && serverConnectionIds[0] == 1 && serverConnectionIds[1] == 2,
+                           "real server acceptor allocator gives conn=1 then conn=2 despite descriptor reuse");
+@@ -823,7 +907,8 @@ int main(int argc, char** argv) {
+         client.setOnConnected([&](TestSocketConnection* connection) {
+             clientConnectionIds.push_back(connection->getConnectionId());
+         });
+-        client.connect([](const TestSocketAddress&, core::socket::State) {});
++        client.connect([](const TestSocketAddress&, core::socket::State) {
++        });
+         runLoopOnce();
+         result.expectTrue(clientConnectionIds.size() == 1 && clientConnectionIds[0] == 1,
+                           "real client connector allocator starts its independent sequence at conn=1");
+@@ -839,11 +924,10 @@ int main(int argc, char** argv) {
+         }
+         runLoopOnce();
+         logger::Logger::disableLogToFile();
+-        result.expectTrue(readFile(logPath).find("Instance terminated:") == std::string::npos,
++        result.expectTrue(readFile(logPath).find("Flow terminated:") == std::string::npos,
+                           "expired weak endpoint contexts are ignored safely");
+     }
+ 
+-
+     TestAcceptEventReceiver::cleanup();
+     TestConnectEventReceiver::cleanup();
+ 
+diff --git a/tests/component/net/InetPerCallFlowTest.cpp b/tests/component/net/InetPerCallFlowTest.cpp
+new file mode 100644
+index 000000000..81eef64d4
+--- /dev/null
++++ b/tests/component/net/InetPerCallFlowTest.cpp
+@@ -0,0 +1,237 @@
++/*
++ * SNode.C - A Slim Toolkit for Network Communication
++ * Copyright (C) Volker Christian <me@vchrist.at>
++ *               2020, 2021, 2022, 2023, 2024, 2025, 2026
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU Lesser General Public License as published
++ * by the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public License
++ * along with this program. If not, see <http://www.gnu.org/licenses/>.
++ */
++
++/*
++ * MIT License
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++#include "core/SNodeC.h"
++#include "core/socket/State.h"
++#include "core/socket/stream/SocketConnection.h"
++#include "core/socket/stream/SocketContext.h"
++#include "core/socket/stream/SocketContextFactory.h"
++#include "net/in/SocketAddress.h"
++#include "net/in/stream/legacy/SocketClient.h"
++#include "net/in/stream/legacy/SocketServer.h"
++#include "support/TestResult.h"
++#include "utils/Timeval.h"
++
++#include <memory>
++
++namespace {
++    struct State {
++        int created = 0;
++        int received = 0;
++        int disconnected = 0;
++        int clientsDisconnected = 0;
++        int completed = 0;
++    };
++
++    class Context : public core::socket::stream::SocketContext {
++    public:
++        Context(core::socket::stream::SocketConnection* connection, State& state, bool client)
++            : SocketContext(connection)
++            , state(state)
++            , client(client) {
++            ++state.created;
++        }
++
++    private:
++        void onConnected() override {
++            if (client)
++                sendToPeer("x", 1);
++        }
++        void onDisconnected() override {
++            if (client)
++                ++state.clientsDisconnected;
++            if (++state.disconnected == 4)
++                core::SNodeC::stop();
++        }
++        std::size_t onReceivedFromPeer() override {
++            char data;
++            const auto size = readFromPeer(&data, 1);
++            if (size) {
++                ++state.received;
++                if (client)
++                    close();
++                else
++                    sendToPeer(&data, size);
++            }
++            return size;
++        }
++        bool onSignal(int) override {
++            return true;
++        }
++        State& state;
++        bool client;
++    };
++
++    class Factory : public core::socket::stream::SocketContextFactory {
++    public:
++        Factory(State& state, bool client)
++            : state(state)
++            , client(client) {
++        }
++        core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* connection) override {
++            return new Context(connection, state, client);
++        }
++
++    private:
++        State& state;
++        bool client;
++    };
++} // namespace
++
++int main(int argc, char* argv[]) {
++    if (tests::support::shouldSkipRootWithoutSNodeCGroup()) {
++        tests::support::printRootWithoutSNodeCGroupSkipMessage("InetPerCallFlowTest");
++        return tests::support::cTestSkipReturnCode;
++    }
++    tests::support::TestResult result;
++    State state;
++    core::SNodeC::init(argc, argv);
++    using Server = net::in::stream::legacy::SocketServer<Factory, State&, bool>;
++    using Client = net::in::stream::legacy::SocketClient<Factory, State&, bool>;
++    int serverDestroyed = 0;
++    {
++        const Server owner("destroy-facade-server", state, false);
++        owner.getConfig()->setPort(0);
++        owner.setOnDestroy([&] {
++            ++serverDestroyed;
++            const Server replacement("destroy-facade-server", state, false);
++            replacement.getConfig()->setPort(0);
++        });
++        {
++            const auto copy = owner;
++            copy.setOnDestroy([&] {
++                ++serverDestroyed;
++            });
++        }
++        result.expectEqual(0, serverDestroyed, "destroying a wrapper copy does not destroy the shared server instance");
++    }
++    result.expectEqual(2, serverDestroyed, "both facade callbacks run after the shared server name is released");
++    int clientDestroyed = 0;
++    Server server("per-call-server", state, false);
++    server.getConfig()->Instance::forceUnrequired();
++    server.getConfig()->setReusePort();
++    server.getConfig()->setRetry(false);
++    int listens = 0;
++    int connects = 0;
++    int failures = 0;
++    Server::FlowHandle first, second, third;
++    std::weak_ptr<core::socket::stream::ClientFlowController> ignoredClient;
++    std::weak_ptr<core::socket::stream::ClientFlowController> cancelledClient;
++    auto onComplete = [&](std::uint64_t, const std::string&) {
++        ++state.completed;
++    };
++    first = server.listen(net::in::SocketAddress("127.0.0.1", 0), [&](const net::in::SocketAddress& address, core::socket::State status) {
++        if (status != core::socket::State::OK) {
++            ++failures;
++            core::SNodeC::stop();
++            return;
++        }
++        ++listens;
++        // Bind a second socket to exactly the same effective address.
++        second = server.listen(address, [&](const net::in::SocketAddress& address2, core::socket::State status2) {
++            if (status2 != core::socket::State::OK) {
++                ++failures;
++                core::SNodeC::stop();
++                return;
++            }
++            ++listens;
++            first->terminateFlow();
++            second->terminateFlow(); // Also exercise termination inside onStatus, before onInitState.
++            third = server.listen(address2, [&](const net::in::SocketAddress& address3, core::socket::State status3) {
++                if (status3 != core::socket::State::OK) {
++                    ++failures;
++                    core::SNodeC::stop();
++                    return;
++                }
++                ++listens;
++                Client client("per-call-client", state, true);
++                client.setOnDestroy([&] {
++                    ++clientDestroyed;
++                    result.expectEqual(
++                        2, state.clientsDisconnected, "client instance destruction follows both client connection lifecycles");
++                    const Client replacement("per-call-client", state, true);
++                    replacement.getConfig()->Remote::setHost("127.0.0.1")->setPort(0);
++                });
++                client.getConfig()->Instance::forceUnrequired();
++                client.getConfig()->setRetry(false);
++                client.getConfig()->setReconnect(false);
++                auto onStatus = [&](const net::in::SocketAddress&, core::socket::State connectStatus) {
++                    if (connectStatus == core::socket::State::OK)
++                        ++connects;
++                    else {
++                        ++failures;
++                        core::SNodeC::stop();
++                    }
++                };
++                auto cancelled = client.connect(address3, onStatus);
++                cancelledClient = cancelled;
++                cancelled->setOnFlowCompleted(onComplete);
++                cancelled->terminateFlow();
++                auto active = client.connect(address3, onStatus);
++                ignoredClient = active;
++                active->setOnFlowCompleted(onComplete);
++                client.connect(address3, onStatus);
++                // Both the endpoint and returned handles leave scope before the attempts start.
++            });
++        });
++    });
++    result.expectEqual(0, core::SNodeC::start(utils::Timeval({1, 0})), "event loop stops successfully");
++    result.expectEqual(0, failures, "same-endpoint repeated bind/connect has no errors");
++    result.expectEqual(3, listens, "reused-port listeners and a fresh listen after termination succeed");
++    result.expectTrue(first != second && second != third && first != third, "each listen has a distinct flow");
++    result.expectTrue(first->isTerminated() && second->isTerminated() && !third->isTerminated(),
++                      "termination never restarts old flows or terminates a sibling");
++    result.expectEqual(2, connects, "only the cancelled connect is suppressed");
++    result.expectEqual(4, state.created, "each accepted/connected socket gets its own SocketContext");
++    result.expectEqual(4, state.received, "both connections exchange payloads");
++    result.expectEqual(4, state.disconnected, "both connections finish their own lifecycle");
++    std::weak_ptr<core::socket::stream::ServerFlowController> stoppedFirst = first;
++    std::weak_ptr<core::socket::stream::ServerFlowController> stoppedSecond = second;
++    first.reset();
++    second.reset();
++    result.expectTrue(stoppedFirst.expired() && stoppedSecond.expired(),
++                      "terminated listeners release their flows before framework shutdown, including late registration");
++    core::SNodeC::free();
++    result.expectTrue(ignoredClient.expired() && cancelledClient.expired(), "callbacks release flows after runtime cleanup");
++    result.expectEqual(2, state.completed, "completion notifications belong to individual flows");
++    result.expectEqual(1, clientDestroyed, "runtime retains the shared client instance until its connections end");
++    return result.processResult();
++}

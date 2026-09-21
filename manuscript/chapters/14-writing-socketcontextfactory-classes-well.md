@@ -18,9 +18,7 @@ SocketConnection
           -> protocol behavior
 ```
 
-If the context is the protocol endpoint, the factory is the construction boundary. It receives a concrete connection and creates the context that will contain the protocol behavior.
-
-That distinction keeps the application architecture readable. The server or client role does not implement the protocol conversation. The connection does not decide which application endpoint class should exist. The context implements the behavior. The factory makes the construction decision.
+For the line protocol, creating a new context also creates a new receive buffer. For an application with a shared measurement model, creation must additionally supply access to that model without sharing the receive buffer. The same small interface serves both cases, but the dependency and lifetime decisions need to be explicit.
 
 ### What a `SocketContextFactory` is
 
@@ -436,7 +434,7 @@ In schematic form, the pattern is:
 std::make_shared<SocketContextFactory>(std::forward<Args>(args)...)
 ```
 
-the argument pack allows the factory to be preconfigured at the point where the server or client handle is created. The resulting factory object is then part of the shared state used by the registered instance when connections appear.
+The argument pack allows the factory to be preconfigured at the point where the server or client handle is created. The resulting factory object is then part of the shared state used by the registered instance when connections appear.
 
 This means the server or client constructor can provide the stable information the factory needs. That information may then be stored in the factory and used later when `create(connection)` is called.
 
@@ -477,6 +475,16 @@ The context can reach everything through the factory.
 ```
 
 The first is a design choice. The second erodes the boundary.
+
+The form of the dependency also records a lifetime decision:
+
+| Form passed into the context | Useful when | Obligation |
+|---|---|---|
+| immutable value copied into each context | each conversation needs stable settings | later changes to the original value do not update existing copies |
+| reference to an application-owned model | one clearly scoped application object outlives all users | construction and shutdown order must preserve that lifetime |
+| shared ownership of a service | users must retain the service independently | avoid cycles and remember that shared ownership does not make mutation thread-safe |
+
+None of these forms is universally best. MiniGateway's model reference is readable because `main()` owns the model across runtime execution. A helper-local model would make the same reference unsafe. Copying an immutable parser limit can be simpler than making every connection observe live configuration. Shared ownership is useful when independent retention is required, but adds a lifetime relationship that must still be explained.
 
 ### Factory design shapes
 
@@ -568,44 +576,17 @@ The selection should remain simple. If the factory begins reading from the peer,
 \index{construction tests}
 
 
-A useful practical test is:
+A readable factory should reveal its context type, constructor arguments, and ownership assumptions quickly. That is a useful review question, but behavior gives a stronger test.
 
-> If the protocol behavior were removed from the context class, would the factory still appear to contain too much of the application?
+Create two peers through the same server and leave a partial command pending on one. The other should complete its own command independently. Then disconnect the first and open a replacement peer. Its new context should begin with fresh protocol state, while an intentionally shared application model should retain the state owned by the application. This distinguishes fresh contexts from shared services without testing the spelling of `new` or the number of constructor arguments.
 
-If the answer is yes, the factory is probably overgrown. A good factory should feel incomplete without the context. That is exactly right.
-
-Its job is to create the protocol endpoint, not to replace it.
-
-Another useful test is:
-
-> Can a developer understand the factory in one glance?
-
-A factory that is hard to skim is often mixing construction with other responsibilities.
-
-One glance does not mean the factory must be trivial. It means the construction decision should be visible. A reader should be able to see which context is created, which stable dependencies are passed, and why that choice belongs at construction time.
+The failure path also has a contract: returning `nullptr` from `create(...)` causes the connection to close, as the source anchor shows. A test factory that deliberately refuses one connection can exercise that outcome. It should observe closure at the peer boundary and no protocol-ready context callback for the refused context; it should not manually delete a connection supplied by the framework.
 
 ### The factory as the Chapter 15 bridge
 
 Chapter 15 will show how the same protocol can be carried over different lower families.
 
-The separation is:
-
-```text
-SocketContext
-  -> protocol behavior
-
-SocketContextFactory
-  -> context creation
-
-SocketServer / SocketClient handle
-  -> lower-family-specific communication role registration
-```
-
-Once protocol behavior is in the context and construction policy is in the factory, lower-family variation becomes easier to manage.
-
-Different server/client types can choose different endpoint families while the factory/context pair preserves the application protocol boundary.
-
-The factory supports that portability story because it keeps context creation separate from the lower-layer role. It does not perform the protocol itself.
+Keep the context's input buffer and the factory's dependencies fixed while changing only the outer endpoint selection. The next chapter performs that comparison with a runnable line server, so reuse is checked through returned bytes as well as through similar declarations.
 
 ::: {.snodec-remember title="What to remember"}
 - A `SocketContextFactory` is the construction boundary between a concrete `SocketConnection` and the per-connection `SocketContext`.

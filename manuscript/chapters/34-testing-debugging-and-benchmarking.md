@@ -67,6 +67,10 @@ A focused run shortens the feedback loop; it does not replace a broader run befo
 
 The exact number of registered tests depends on the selected tree and configuration. Some executables are registered once, while others are registered repeatedly with different scenario arguments. Count CTest registrations when describing an executable test run, not C++ filenames or individual assertions.
 
+For this edition, source identity includes the recorded working-tree changes as well as the base commit. Run `ci/check-source-alignment.py --framework /path/to/snode.c` from the book directory before associating a result with the edition. The checker compares file contents against the manifest and checks complete marked listings against their companion files. It does not prove the meaning of every sentence or execute the programs.
+
+Execution evidence needs its environment too. A test that receives `Operation not permitted` while creating a local socket has not measured the intended network exchange. Preserve that failed run, identify the denied operation, and repeat the affected checks in an environment that permits the required local transport. Report the later result separately; neither deleting the failure nor calling it an application defect explains what was observed.
+
 ### The repository test map
 
 \index{unit tests}
@@ -130,9 +134,9 @@ The value of this test is its narrowness. A failure says something about address
 
 #### Parser and formatter contracts
 
-The HTTP unit tests distinguish parsing from formatting and presentation. `HttpMessageParserTest` checks message parsing; the raw-wire request and response formatter tests check serialized protocol output; separate tests cover header casing, target/query edge cases, and human-readable presentation.
+The HTTP unit tests distinguish parsing from formatting and presentation. `HttpMessageParserTest` checks message parsing. Despite their `RawWire` names, `HttpRequestFormatterRawWireTest` and `HttpResponseFormatterRawWireTest` inspect the diagnostic strings returned by `httputils::toString(...)`: labeled metadata and a hexadecimal body view. They do not capture the HTTP bytes sent to a peer. Separate tests cover header casing, target/query edge cases, and plain versus terminal presentation.
 
-Those are different outputs. A correctly colored diagnostic is not proof of a correctly serialized HTTP message. A formatter that produces readable text can still emit incorrect framing. Keeping the wire path separate from the diagnostic presentation protects the distinction made in Chapters 18 and 21.
+Those are different observations. A correctly colored diagnostic is not proof of correctly serialized HTTP. Use the actual exchange assertions in the HTTP component tests to inspect what the peer receives. Keeping that boundary separate from diagnostic presentation protects the distinction made in Chapters 18 and 21; a test's name alone is not enough to establish its scope.
 
 Malformed and boundary-sized inputs are important here. A parser test should establish what is accepted, rejected, or left pending when input arrives in fragments. It should not assume that one input call contains one complete request merely because a small demonstration happens to do so.
 
@@ -151,6 +155,8 @@ Logging is no longer only something a developer reads while another test runs. T
 That gives Chapter 18 an important implementation consequence. A record can be checked for its application/framework origin, boundary, component, identity, event, and error data. Tests can also verify that text and JSON remain distinct presentations of the intended record rather than accidentally wrapping a structured record inside a second legacy presentation.
 
 A scope-lifetime test asks whether identity remains valid after temporary source strings disappear. A filtering test asks which override wins. A disabled-path test asks whether diagnostic construction is suppressed at the intended point. These are architectural contracts, not merely assertions that a line contains the word `error`.
+
+The binary-diagnostic path has corresponding checks. `SemanticTerminalColorRoutingTest` exercises both public `hexDump(...)` overloads, embedded NUL and control bytes, empty input, scope preservation, and plain versus colored output. `HexDumpPresentationTest` checks row boundaries and byte representation, while `HttpMessagePresentationTest` checks the HTTP diagnostic view. These presentation contracts complement the HTTP component exchanges; they do not replace them.
 
 ### Component tests: exercise the composed boundary
 
@@ -192,6 +198,10 @@ WebSocket component tests cover selected text and binary exchanges, multiple mes
 The EventSource group covers basic and multiple events, multiline data, comments, default message events, retry fields, client closure, reconnection, and destruction lifecycle. These tests are useful because SSE correctness is temporal: a stream can open successfully and still mishandle the next event or retain state incorrectly after closure.
 
 Neither group should be described as exhaustive protocol certification. The exact assertion determines what the test proves. A successful echo exchange does not establish every possible fragmentation sequence, and one reconnect test does not establish every browser or proxy deployment.
+
+#### Checked reconfiguration has a lifecycle contract
+
+`SNodeCReconfigureTest` exercises the public reconfiguration boundary from Chapter 17. It checks calls outside the running phase, successive file changes while the loop is running, command-line precedence, repeated final validation, a recreated named configuration instance, and parse failure followed by recovery. It also checks that runtime reparsing does not repeat bootstrap logging and daemonization effects. Read this test beside `SNodeC::reconfigure()` and `Config::reconfigure()`; a successful parse and a complete rollback after a failed parse are different promises. The current implementation makes the first available and does not promise the second.
 
 #### Core components include non-socket data flow
 
@@ -378,7 +388,7 @@ A service is a process under supervision. General-purpose Linux may use systemd 
 
 A protocol test asks whether HTTP, WebSocket, MQTT, or another protocol behavior works. A service-level test asks whether the deployed role can be operated. It checks whether the service starts as the intended user, has access to configuration files, can create log and pid files, handles restart behavior, shuts down cleanly, exposes useful logs, and fails clearly when required resources are missing.
 
-This is not the same as a protocol test. A protocol test may show that HTTP or MQTT works. A service-level test shows that the deployed role can be operated.
+Use the Chapter 33 echo rehearsal to keep the distinction observable: the byte-for-byte exchange is the protocol assertion; a changed process identity after restart, successful exchange afterward, and a refused connection after stop are service assertions. A green service status alone does not prove that the intended listener owns the port.
 
 #### OpenWrt tests should respect embedded constraints
 
@@ -513,6 +523,45 @@ operational shape:
 ```
 
 Changing one dimension may change the bottleneck. One fast client, thousands of slow clients, one MQTT subscriber, many fan-out subscribers, HTTP without TLS, TLS, database-backed state, and in-memory protocol handling all tell different stories. The result should never be separated from workload shape.
+
+#### A bounded echo measurement
+
+Start with an experiment whose result can be checked before it is timed. Run the installed Chapter 33 echo server on `127.0.0.1:18093`, with a recorded build type and logging configuration. Keep its output destination unchanged between runs. The following Python program opens one connection, warms it with twenty exchanges, and measures two hundred sequential 256-byte round trips:
+
+```python
+import math
+import socket
+import statistics
+import time
+
+payload = bytes(range(256))
+samples = []
+with socket.create_connection(("127.0.0.1", 18093), timeout=3) as peer:
+    peer.settimeout(3)
+    for index in range(220):
+        started = time.perf_counter_ns()
+        peer.sendall(payload)
+        received = bytearray()
+        while len(received) < len(payload):
+            chunk = peer.recv(len(payload) - len(received))
+            if not chunk:
+                raise RuntimeError("echo closed before the complete reply")
+            received.extend(chunk)
+        elapsed_us = (time.perf_counter_ns() - started) / 1000
+        assert bytes(received) == payload
+        if index >= 20:
+            samples.append(elapsed_us)
+ordered = sorted(samples)
+print(f"samples={len(samples)} bytes={len(payload)} connections=1")
+print(f"median_us={statistics.median(samples):.2f}")
+print(f"p95_us={ordered[math.ceil(0.95 * len(ordered)) - 1]:.2f}")
+```
+
+The receive loop is part of the experiment's correctness: one send need not produce one receive. The timeout makes a broken exchange fail instead of producing a plausible latency number. The nearest-rank 95th percentile here is the 190th ordered sample; with only two hundred samples it is a small diagnostic sample, not a stable tail-latency characterization.
+
+Record the framework contents, compiler, build type, operating system, CPU, selected multiplexer, server command, logging level and destination, and the three output lines. Repeat the same run several times before changing one condition. For example, compare two logging levels while preserving the binary, peer, payload, and output sink. A difference suggests a cost to investigate; it does not identify that cost by itself.
+
+This measures one client's elapsed loopback request/reply time, including client execution and scheduling. It excludes connection establishment and TLS, and it offers no concurrency or slow-peer pressure. Do not call its reciprocal server capacity. To ask a throughput question, define a separate workload with concurrent or pipelined operations and an explicit completion count. To investigate a regression in this experiment, use the same workload while profiling the server, then inspect whether time is spent in logging, copying, event dispatch, or elsewhere.
 
 #### Avoid misleading comparisons
 

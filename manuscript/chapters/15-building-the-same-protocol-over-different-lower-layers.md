@@ -7,7 +7,7 @@
 
 ### From context and factory separation to lower-family transfer
 
-Protocol behavior belongs in the `SocketContext`; context construction belongs in the `SocketContextFactory`. Lower-family transfer uses both separations together.
+The line protocol now gives us something concrete to transfer: a receive buffer, three commands, response rules, and a factory that creates one parser per connection. This chapter keeps those files fixed while changing the endpoint that carries their bytes.
 
 The central question is:
 
@@ -58,7 +58,7 @@ This separation is the reason the same protocol core can often move across lower
 
 Figure \ref{fig:snodec-lower-family-transfer} shows the same idea as a transfer model: the protocol-side boundary remains stable, while the lower-family side changes endpoint identity, concrete server/client type, configuration, and deployment assumptions. It is a portability map for deciding what may stay stable and what must be reselected.
 
-![The lower-family transfer model. The protocol-side boundary remains stable while endpoint families change address types, concrete server/client types, configuration, and deployment assumptions.](assets/figures/pdf/fig-04-lower-family-transfer-model.pdf){#fig:snodec-lower-family-transfer width=95% latex-placement="tbp"}
+![The lower-family transfer model. Branches show possible carrier selections for the same context abstraction, subject to protocol assumptions and platform support; they do not imply identical deployment behavior.](assets/figures/pdf/fig-04-lower-family-transfer-model.pdf){#fig:snodec-lower-family-transfer width=95% latex-placement="tbp"}
 
 The visible server/client type changes because the application selects a different lower-family specialization. The registered instance then carries that configured lower-family role into the runtime. The concrete `SocketConnection` represents one peer relationship under that role. The factory creates the per-connection context for that connection. The context implements the protocol endpoint.
 
@@ -209,7 +209,7 @@ Deployment also changes.
 | RFCOMM | Bluetooth stack availability, pairing/trust setup, channel semantics |
 | L2CAP | Bluetooth stack availability, pairing/trust setup, PSM semantics |
 
-These differences are real. The protocol may transfer, but deployment does not become identical. Bluetooth still depends on stack support, permissions, adapter state, and pairing/trust setup. Unix-domain sockets still depend on path placement and cleanup. IP families still raise routing, exposure, firewall, and address-selection questions. The lower family matters; it simply does not always have to rewrite the protocol endpoint.
+These differences are real. The protocol may transfer, but deployment does not become identical. Bluetooth still depends on stack support, permissions, adapter state, and any pairing or trust setup required by the selected service. Unix-domain sockets still depend on path placement and cleanup. IP families still raise routing, exposure, firewall, and address-selection questions. The lower family matters; it simply does not always have to rewrite the protocol endpoint.
 
 ### Echo as the smallest transfer microscope
 
@@ -291,6 +291,84 @@ This is the useful transfer question:
 ::: {.snodec-rule title="Lower-family transfer test"}
 Can the protocol conversation stay honest when the carrier changes, or has carrier identity become part of the protocol meaning?
 :::
+
+### A worked transfer: the line server over IPv4 and Unix sockets
+
+Use the complete `LineProtocol-Server` companion from Chapter 13. This exercise needs the installed IPv4 and Unix-domain legacy stream components and Python 3 for an independent client. It does not require Bluetooth hardware. Create two copies in a new private working directory, using the book-package variable from Chapter 2:
+
+```sh
+export SNODEC_TRANSFER=$(mktemp -d)
+cp -R "$SNODEC_BOOK_SOURCE/companion/examples/LineProtocol-Server" "$SNODEC_TRANSFER/ipv4"
+cp -R "$SNODEC_BOOK_SOURCE/companion/examples/LineProtocol-Server" "$SNODEC_TRANSFER/unix"
+printf '%s\n' "$SNODEC_TRANSFER"
+```
+
+Keep that directory path available in each terminal used below. In the `unix` copy, make four carrier-facing edits:
+
+| Location | IPv4 selection | Unix-domain selection |
+|---|---|---|
+| `main.cpp` public include | `<net/in/stream/legacy/SocketServer.h>` | `<net/un/stream/legacy/SocketServer.h>` |
+| `LineProtocolServer` alias | `net::in::stream::legacy` | `net::un::stream::legacy` |
+| first `server.listen(...)` argument | `8090` | `"/tmp/line-transfer.sock"` |
+| both component references in `CMakeLists.txt` | `net-in-stream-legacy` | `net-un-stream-legacy` |
+
+Leave `LineCommandServerContext.cpp`, its header, and `LineCommandServerContextFactory.h` unchanged. The status callback already names `LineProtocolServer::SocketAddress`, so its address type follows the selected server alias. The instance name stays `lineprotocolserver`; these are separate processes, and keeping that name makes their configuration paths directly comparable.
+
+Build both consumers against the installation prepared earlier:
+
+```sh
+for family in ipv4 unix; do
+    cmake -S "$SNODEC_TRANSFER/$family" -B "$SNODEC_TRANSFER/$family-build" \
+      -DCMAKE_PREFIX_PATH="$HOME/.local/snodec"
+    cmake --build "$SNODEC_TRANSFER/$family-build" --parallel 4
+done
+```
+
+In one terminal, run the IPv4 server with an explicit loopback bind:
+
+```sh
+"$SNODEC_TRANSFER/ipv4-build/line-protocol-server" --log-level=6 \
+  lineprotocolserver local --host=127.0.0.1 --port=18090
+```
+
+In another, run the Unix-domain server with its socket inside the private exercise directory:
+
+```sh
+"$SNODEC_TRANSFER/unix-build/line-protocol-server" --log-level=6 \
+  lineprotocolserver local --sun-path="$SNODEC_TRANSFER/line.sock"
+```
+
+The command-line values override the source defaults. Chapter 17 explains the instance and section syntax in detail; here it lets the exercise keep deployment values outside the parser. If port `18090` is already occupied, choose another unused port and change the client below to match. A listening failure is not a failed protocol-transfer test.
+
+With both listeners ready, run this independent peer from a terminal with the same `SNODEC_TRANSFER` value:
+
+```python
+import os
+import socket
+
+endpoints = [
+    ("IPv4", socket.AF_INET, ("127.0.0.1", 18090)),
+    ("Unix", socket.AF_UNIX, os.path.join(os.environ["SNODEC_TRANSFER"], "line.sock")),
+]
+
+for name, family, endpoint in endpoints:
+    with socket.socket(family, socket.SOCK_STREAM) as peer:
+        peer.settimeout(2)
+        peer.connect(endpoint)
+        with peer.makefile("rb") as replies:
+            assert replies.readline() == b"READY\n"
+            peer.sendall(b"PI")
+            peer.sendall(b"NG\nSTATUS\n")
+            assert replies.readline() == b"PONG\n"
+            assert replies.readline() == b"OK\n"
+            peer.sendall(b"QUIT\n")
+            assert replies.read(1) == b""
+    print(name, "READY, PONG, OK, then closure")
+```
+
+The expected output reports the same conversation for both families. The two writes deliberately avoid making a complete-command-per-write assumption, although the operating system can still combine them into one receive. Repeat the framing and length-limit cases from Chapter 13 if the context itself changes.
+
+For a carrier-specific failure, change only the Unix client's target to a nonexistent name inside the exercise directory. Connection establishment should fail before `READY`; the parser has not received an invalid command. Restore the target, repeat the successful exchange, then stop both servers with `Ctrl-C` and inspect the socket-path cleanup. This gives three distinct pieces of evidence: the unchanged protocol files, the same observed conversation, and different endpoint failure conditions.
 
 ### Designing for lower-family transfer
 
@@ -434,9 +512,9 @@ Later chapters, especially the MiniGateway part, return to publisher/subscriber,
 
 This distinction is essential. The same protocol shape may run over several lower families, but the resulting systems are not operationally identical. An IPv4 service may be reachable over a LAN or wider network.
 
-An IPv6 service raises IPv6 addressing and deployment questions. A Unix-domain service is local to one host and depends on path placement and local access. An RFCOMM service depends on Bluetooth stack support, pairing/trust setup, adapter state, and RFCOMM channel semantics.
+An IPv6 service raises IPv6 addressing and deployment questions. A Unix-domain service is local to one host and depends on path placement and local access. An RFCOMM service depends on Bluetooth stack support, any required pairing/trust setup, adapter state, and RFCOMM channel semantics.
 
-An L2CAP service depends on Bluetooth stack support, pairing/trust setup, adapter state, and PSM semantics. TLS adds certificate, trust, and connection-layer deployment questions. So lower-family transfer must be understood as an architectural separation, not as a promise that deployment disappears.
+An L2CAP service depends on Bluetooth stack support, any required pairing/trust setup, adapter state, and PSM semantics. TLS adds certificate, trust, and connection-layer deployment questions. So lower-family transfer must be understood as an architectural separation, not as a promise that deployment disappears.
 
 A good design lets the stable protocol core remain visible while keeping the family-specific deployment surface explicit.
 

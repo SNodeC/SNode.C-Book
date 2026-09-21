@@ -94,7 +94,7 @@
 
 \node[websocket block, below=\splitGap of semantics, xshift=\carrierHalfSep] (wsCarrier) {%
   \textbf{\textcolor{snodecTitleOrange}{MQTT over WebSocket}}\\[-0.4mm]
-  {\footnotesize MQTT packets inside WebSocket frames}
+  {\footnotesize MQTT bytes in binary WebSocket messages}
 };
 
 \coordinate (carrierBranch) at ([yshift=\branchGap]$(nativeCarrier.north)!0.5!(wsCarrier.north)$);

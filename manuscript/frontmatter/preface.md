@@ -8,7 +8,7 @@ SNode.C is the worked system throughout the book by design. A general survey can
 
 ### Who this book is for {.unnumbered}
 
-The book is centered on technically engaged readers who need to understand how C++ components, protocols, configuration, diagnostics, deployment, and long-running data flows become maintainable systems. Many readers will arrive from professional C++ development; others will arrive because a course, a prototype, an installation, or a measurement system has grown large enough that its communication boundaries can no longer remain implicit.
+The primary reader is a C++ developer or advanced student who can already build a small Linux program and now needs to organize several communication roles. The book follows that reader from a working echo pair to a system whose protocols, configuration, diagnostics, and long-running data flows remain understandable together. A course, prototype, installation, or measurement system can provide the same reason to follow that path.
 
 Experienced C++ developers and technical system builders are the closest readers. They already understand classes, templates, ownership, build systems, and long-lived software, and they want more than a recipe. They want to see where the boundaries are, which pieces can be reused, which pieces should remain separate, and how new behavior can be added without turning an application into an accidental collection of callbacks.
 
@@ -24,9 +24,11 @@ The book remains a technical book. It does not hide C++, protocols, build system
 
 ### What this book assumes {.unnumbered}
 
-The book assumes that you can read C++ source code, build CMake projects, work in a POSIX-like shell, and recognize common networking terms such as socket, address, connection, TLS, HTTP, WebSocket, and MQTT. It does not assume prior knowledge of SNode.C.
+The book assumes that you can read C++ classes and templates, follow virtual callbacks and lambda captures, and reason about references, pointers, RAII, and shared ownership. You should be able to build a small CMake project and work in a POSIX-like shell. Chapter 2 prepares the framework environment; it does not teach those language and tool fundamentals from the beginning.
 
-The examples are written for the SNode.C 2.0.0 source snapshot. The exact source commit used for this edition is shown below; the version names a source snapshot, not a newly asserted release tag. Later versions of the framework may remain compatible, but the book's examples and source-derived explanations are tied to that baseline unless the manuscript is deliberately updated.
+For networking, you should recognize sockets, addresses, connections, and the broad purpose of TLS, HTTP, WebSocket, and MQTT. The chapters explain the protocol behavior needed by their examples, so familiarity with every protocol's wire format is not a prerequisite. No prior knowledge of SNode.C is assumed. The implementation uses C++20, but the teaching path follows SNode.C's callbacks, contexts, and factories; it is not a course in every contemporary C++ concurrency model.
+
+The examples are written for the current SNode.C 2.0.0 source tree captured with this edition. Its base commit is shown below; the version names a source snapshot, not a newly asserted release tag. The edition also includes `source-baseline/framework-working-tree.patch` and a file manifest for the changes present in that source tree. The commit and those captured changes together identify the source used here. Chapter 2 shows how to reconstruct and check it. Later versions may remain compatible, but source-derived explanations should be read against the recorded contents.
 
 `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`
 

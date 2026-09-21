@@ -7,7 +7,7 @@
 
 ### From configuration philosophy to configuration anatomy
 
-Configuration shapes a communication role before it becomes a registered runtime instance.
+Constructing a named endpoint registers its configuration instance. The values in that hierarchy then shape each activation of the communication role.
 
 This chapter looks at the practical anatomy of that model.
 
@@ -29,7 +29,7 @@ This chapter follows that hierarchy from the outside inward. The important skill
 
 The configuration model is easiest to read from the outside inward. Figure \ref{fig:configuration-hierarchy} shows that hierarchy as one structural model. The named-instance level is where a configured server/client role receives an externally addressable identity and can be enabled or disabled without removing the role from the application shape.
 
-![The SNode.C configuration hierarchy: application scope contains named communication-role instances; each instance contains responsibility sections; each section owns concrete options.](assets/figures/pdf/fig-13-configuration-hierarchy.pdf){#fig:configuration-hierarchy width=90% latex-placement="tbp"}
+![A representative named-endpoint hierarchy: application, instance, section, and option. Options can also belong directly to application or instance scope; discovery can describe deeper or anonymous nodes.](assets/figures/pdf/fig-13-configuration-hierarchy.pdf){#fig:configuration-hierarchy width=90% latex-placement="tbp"}
 
 The figure is a placement model. It shows where configuration meaning belongs: executable-wide concerns at application scope, externally addressable communication roles at instance scope, responsibility groups at section scope, and individual values at option scope. The concrete sections and options in real applications are narrower and more numerous than the diagram needs to show.
 
@@ -83,30 +83,9 @@ That distinction matters. The configuration system gives a communication role an
 
 Section scope belongs to one aspect of one instance.
 
-Common sections include:
+To locate an option, ask what it controls. A bind port belongs under `local`; a peer port under `remote`; an established connection’s timeout under `connection`. The detailed section descriptions below turn this placement rule into a map of the available responsibilities.
 
-- `local`,
-- `remote`,
-- `connection`,
-- `socket`,
-- `server`,
-- `tls`.
-
-A section groups options by responsibility.
-
-The `local` section describes the local side.
-
-The `remote` section describes the peer side.
-
-The `connection` section describes established connection behavior.
-
-The `socket` section describes socket-level behavior.
-
-The `server` section describes server-role behavior.
-
-The `tls` section describes TLS-related connection-layer behavior.
-
-Sections are the boundaries between different kinds of responsibility inside one configured communication role. Help output reflects that boundary.
+This is also a useful discovery exercise: start with a named instance’s help, choose the section that should own the value, and check its help before inventing an application-wide flag.
 
 #### Same hierarchy in code, CLI, and files
 
@@ -190,17 +169,9 @@ EchoServer echoServer("echo");
 
 creates a communication role that can become addressable by the configuration system.
 
-The name can appear:
+The string `"echo"` is an operational key. Renaming the C++ variable `echoServer` does not rename that key. Changing the string does: deployment files, overrides, and diagnostic procedures that address `echo` must then change together.
 
-- in command-line help,
-- in command-line overrides,
-- in generated command lines,
-- in shown configuration,
-- and in configuration-file keys.
-
-Named instances matter for that reason.
-
-They connect the handle to the operational surface of the application. The name is the address by which operators, scripts, configuration files, and diagnostic output can talk about that role.
+Treat such a rename as an application-interface change, even when the C++ program still compiles. Chapter 16’s naming choice becomes a compatibility decision once another person or script depends on it.
 
 #### Role identity: server or client
 
@@ -319,7 +290,7 @@ Where should this client connect?
 
 For example, an IPv4 client may need a remote host and port. A Unix-domain client may need a remote path. A Bluetooth client may need a Bluetooth address plus channel or PSM.
 
-For a server, remote-side information may be less prominent in simple listen scenarios.
+An accepted server connection also has a remote peer address. That observation does not give the listening server a configurable `remote` section: the listener configures its local endpoint, while each accepted connection supplies the peer information.
 
 The durable distinction is:
 
@@ -504,15 +475,23 @@ The successful path now uses the semantic logging surface explained in Chapter 1
 
 A named client instance follows the same idea, but the required section is usually `remote` rather than `local`. The CLI therefore teaches the structure while it reports the missing values.
 
-##### Startup guidance, not arbitrary live reconfiguration
+##### Startup discovery and explicit runtime reconfiguration
 
-This command-line guidance belongs to startup and run configuration. It should not be confused with arbitrary post-start interactive reconfiguration of instances created later at runtime.
+Help and the command line describe the executable’s configuration surface. They do not open an interactive management channel into a running process. The current source provides a separate application decision: call `core::SNodeC::reconfigure()` from the event-loop thread while the runtime is `RUNNING`. `express::WebApp::reconfigure()` forwards the same operation.
 
-As Chapter 16 explained, command-line and file configuration apply to startup-known instances. Runtime-created roles must be shaped through the C++ API.
+The operation reparses the existing root hierarchy using the original arguments and the configuration file as it now exists. Original command-line values keep their precedence. Registered endpoint final validators run again, including for a replacement named configuration created after an earlier instance was destroyed and unregistered.
 
-That boundary keeps the model clear: startup-known roles are guided by code, command-line arguments, and configuration files, while runtime-created roles must be configured by code.
+| Observation | Meaning |
+|---|---|
+| `true` | this runtime parse and validation succeeded |
+| `false` before `RUNNING` or during shutdown | the lifecycle does not permit the operation |
+| `false` from a file, value, or validation error | the parse failed; previously changed values are not automatically rolled back |
+| changed endpoint values | future code can consume them; existing sockets are not restarted |
+| changed logging or daemonization options | parsed values do not replace bootstrap side effects or frozen logging policy |
 
-The command line traverses the startup configuration model. It does not become a live management protocol for roles created later by application logic.
+A successful reparse is therefore only one step in a live configuration change. The application still decides whether to end a flow, let a connection drain, construct a replacement role, or defer the new setting until a later activation. A deployment file alone cannot specify the correct lifetime transition.
+
+The framework’s `SNodeCReconfigureTest` exercises repeated parses, file changes, retained command-line precedence, recreated named configuration, final validators, failure and recovery, and frozen bootstrap behavior. It provides a source-level counterpart to these boundaries; it does not imply that every application implements a live administration interface.
 
 #### Configuration-file view
 
@@ -520,15 +499,36 @@ In a configuration file, the same hierarchy becomes a dotted key:
 
 ```ini
 echo.local.port = 8080
-echo.remote.host = "localhost"
-echo.remote.port = 8080
+uplink.remote.host = "localhost"
+uplink.remote.port = 8080
 ```
 
-The dotted key represents the same model: instance, section, option.
+Here `echo` names a server and `uplink` a separate client. Each dotted key must name a role and section that this executable actually creates.
 
 The syntax is different from the command line. The model is the same.
 
 The file is therefore the persistent expression of the same hierarchy that the command line traverses and the C++ API configures directly, not a separate configuration universe.
+
+### Observe precedence with the echo server
+
+Use the Chapter 3 executable for a controlled experiment. Its instance is named `echoserver`, rather than the schematic `echo` used above, and its C++ listen call supplies port 8080. These inspection commands do not start a listening service:
+
+```sh
+cd ~/projects/snodec-playground-build
+export SNODEC_CONFIG_EXERCISE=$(mktemp -d)
+printf 'echoserver.local.port = 18091\n' > "$SNODEC_CONFIG_EXERCISE/echo.conf"
+
+./echoserver --show-config
+./echoserver --config-file "$SNODEC_CONFIG_EXERCISE/echo.conf" --show-config
+./echoserver --config-file "$SNODEC_CONFIG_EXERCISE/echo.conf" --show-config \
+  echoserver local --port=18092
+```
+
+Find the assignments for `echoserver.local.port` in each output. Commented assignments beginning with `#` show defaults; an uncommented assignment supplies the selected override. The effective values are 8080, 18091, and 18092. In this source version the display action exits with status 2 after printing; that inspection exit is not a failed bind. The last invocation leaves the file at 18091: overriding a value for a run does not save it. `--write-config` is a separate action with a filesystem effect.
+
+Now inspect `./echoserver echoserver local --help`. The option belongs to the local endpoint even though three input paths can supply its value. If an unexpected value appears, inspect the selected configuration file and the full command line before changing the protocol context. That context does not choose the listening port.
+
+The experiment observes startup parsing. To study a runtime reparse, use an application that deliberately calls `reconfigure()` while running, and separately observe the parsed value and the existing listener. The two need not change together.
 
 ### Required values and progressive disclosure
 
@@ -684,7 +684,7 @@ application
       -> websocket receiver policy
 ```
 
-Runtime connections consume policy snapshots established from the configured tree. They do not reread a mutable deployment file for each received byte. Chapters 18, 20, 21, and 24 explain the meaning of the respective options; this chapter establishes where they belong and how they remain inspectable.
+Logging policy is established and frozen at bootstrap. A runtime reparse can change values visible in the configuration tree without replacing that effective policy. Runtime connections consume policy snapshots established from the configured tree. They do not reread a mutable deployment file for each received byte. Chapters 18, 20, 21, and 24 explain the meaning of the respective options; this chapter establishes where they belong and how they remain inspectable.
 
 ### Configuration files as operational artifacts
 
@@ -777,6 +777,8 @@ But deployment-facing choices often deserve external visibility. Ports, paths, c
 
 A good application can use both: source-level defaults for clarity and external configuration for deployment.
 
+One final distinction prevents a subtle configuration mistake. A named endpoint is the address in the configuration tree; a returned `FlowHandle` is control over one activation. Starting the endpoint twice does not create two separately configurable instance names. Likewise, `terminateFlow()` ends that activation's pending work and recovery decisions, while `setOnDestroy(...)` observes the eventual release and unregistration of the shared configuration instance. Configuration identity, flow termination, and connection closure are three different observations.
+
 ### What remains stable
 
 Across all these details, the application/instance/section/option hierarchy remains the stable spine of configuration.
@@ -786,7 +788,7 @@ The application gives the operational envelope. The instance gives the configure
 The option gives one value. The same structure appears in C++ API calls, command-line traversal, and configuration-file keys. Therefore, the configuration model scales from a small echo example to applications with several communication roles.
 
 ::: {.snodec-remember title="What to remember"}
-- The configuration hierarchy is `application -> instance -> section -> option`.
+- The usual named-endpoint hierarchy is `application -> instance -> section -> option`; root and instance options, and nested discovery nodes, also exist.
 - Application configuration describes the operational envelope of the executable.
 - A named instance is an externally addressable configured communication role; an anonymous instance remains internal to application code.
 - Sections such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` group options by responsibility.

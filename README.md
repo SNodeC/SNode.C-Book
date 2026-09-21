@@ -47,7 +47,9 @@ companion/examples/MiniGateway-Extended
 
 ## Target SNode.C source version
 
-This package is aligned with the SNode.C source baseline recorded in `source-baseline/SOURCE-VERSION.md`. The target is the SNode.C **2.0.0 source snapshot** at `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`. This is a project version and immutable source pin, not an assertion that a matching release tag exists. CI reads `source-baseline/book-source-baseline.env` and checks the resulting checkout before building.
+This package is aligned with the SNode.C source baseline recorded in `source-baseline/SOURCE-VERSION.md`. The target is the current SNode.C **2.0.0 working tree**, including the uncommitted changes captured in `source-baseline/framework-working-tree.patch`. Commit `1f0f728fc9b3b45174f2cd790d83b2f493e58af1` is its reconstruction base, not the complete authority by itself. The file manifest records the exact source contents. CI reads `source-baseline/book-source-baseline.env`, reconstructs those contents, and verifies them before building. This is not a claim about a release tag or the current state of a remote branch.
+
+The current refinement and its executed checks are documented in [the refinement report](review/verification/manuscript-refinement-2026-09-21.md), with a chapter-level source map and retained test evidence.
 
 The manuscript is not intended to describe arbitrary future states of the SNode.C repository. If a newer checkout changes component names, public headers, examples, or package layout, those changes must be reviewed before the manuscript is updated.
 

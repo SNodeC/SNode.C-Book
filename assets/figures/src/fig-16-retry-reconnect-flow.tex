@@ -119,7 +119,7 @@
 % Initial connect request and attempt.
 % ----------------------------------------------------------------------
 \node[action block] (connectRequest) {%
-  \textbf{\textcolor{snodecBlue}{Connect requested}}\\[-0.4mm]
+  \textbf{\textcolor{snodecBlue}{One explicit call}}\\[-0.4mm]
   \texttt{SocketClient::connect()}
 };
 
@@ -174,8 +174,8 @@
 % ----------------------------------------------------------------------
 \node[ok block, below=\straightArrowL of okOutcome] (established) {%
   \textbf{\textcolor{snodecGreen}{Established}}\\[-0.4mm]
-  stream active\\[-0.2mm]
-  protocol context
+  connection episode\\[-0.2mm]
+  readiness follows
 };
 
 \node[fail block, below=\straightArrowL of established] (disconnectEvent) {%
@@ -211,7 +211,7 @@
 % The branch bus and the straight arrows to the result row keep the previous vertical height.
 % ----------------------------------------------------------------------
 \node[result stop block, below=\resultArrowL of reconnectAllowed, xshift=-\decisionSplit] (stopClient) {%
-  \textbf{\textcolor{snodecRule}{Stop client}}
+  \textbf{\textcolor{snodecRule}{End this flow}}
 };
 
 \node[result timer block, below=\resultArrowL of reconnectAllowed, xshift=\decisionSplit] (reconnectTimer) {%

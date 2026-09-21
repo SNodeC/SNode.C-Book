@@ -115,7 +115,7 @@
 \draw[flow] (protocolContext.east) -- (applicationState.west);
 
 % ----------------------------------------------------------------------
-% Durable state side.
+% Persistence work and durable store.
 % ----------------------------------------------------------------------
 \node[persist block, below=\rowGap of peerConnection] (persistenceAdapter) {%
   \textbf{\textcolor{snodecTitleOrange}{persistence adapter}}\\[-0.4mm]
@@ -161,7 +161,7 @@
 
 \node[panel label]
   at (durablePanel.north)
-  {Durable state side};
+  {Persistence work and durable store};
 
 % ----------------------------------------------------------------------
 % Persistence boundary carried by the bent arrow itself.

@@ -1,0 +1,4 @@
+Source alignment passed: 38 chapter evidence records, 35 exact complete listings; SNode.C 2.0.0, base 1f0f728fc9b3b45174f2cd790d83b2f493e58af1, working-tree digest 03d44f881f28d5d44554dbbe37e0e7284eb3dc8d7e64841b662e57868b0423d0
+
+Expected negative check:
+ERROR: Framework source content differs: src/core/socket/stream/SocketClient.h

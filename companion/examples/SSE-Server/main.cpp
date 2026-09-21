@@ -64,7 +64,7 @@ private:
 };
 
 static bool acceptsEventStream(const std::shared_ptr<Request>& req) {
-    return web::http::ciContains(req->get("Accept"), "text/event-stream");
+    return web::http::ciEquals(req->get("Accept"), "text/event-stream");
 }
 
 static void sendMeasurement(const std::shared_ptr<Response>& res,
@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
         }
     });
 
-    app.get("/simulate", [&measurements](const std::shared_ptr<Request>&,
+    app.post("/simulate", [&measurements](const std::shared_ptr<Request>&,
                                           const std::shared_ptr<Response>& res) {
         const Measurement measurement = measurements.publish("temperature", 24.0);
 

@@ -38,7 +38,7 @@ namespace minigateway {
     void MiniGatewayMqtt::onConnected() {
         snode::log::application().trace() << "MQTT: initiating session";
 
-        sendConnect(true, "", "", 0, false, "", "", true);
+        sendConnect(true, "", "", 0, false, "", "", false);
     }
 
     void MiniGatewayMqtt::onDisconnected() {

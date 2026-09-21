@@ -1,0 +1,101 @@
+--- echo client ---
+2026-09-21T19:25:16.353Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-21T19:25:16.355Z DBG framework/instance core.socket.stream role=client inst=legacy — Initiating connect
+2026-09-21T19:25:16.355Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt started
+2026-09-21T19:25:16.355Z DBG framework/connection core.socket — legacy Connect: starting
+2026-09-21T19:25:16.355Z DBG framework/connection core.socket — legacy enable 127.0.0.1:37235: success
+2026-09-21T19:25:16.356Z DBG framework/connection core.socket — legacy connect 127.0.0.1:37235 (127.0.0.1): success
+2026-09-21T19:25:16.356Z DBG framework/connection core.socket —   localhost:45873 -> localhost:37235
+2026-09-21T19:25:16.356Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt succeeded
+2026-09-21T19:25:16.356Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport connected
+2026-09-21T19:25:16.356Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connecting
+2026-09-21T19:25:16.356Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:45873
+2026-09-21T19:25:16.356Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:37235
+2026-09-21T19:25:16.356Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connected
+2026-09-21T19:25:16.356Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:45873
+2026-09-21T19:25:16.356Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:37235
+2026-09-21T19:25:16.356Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketContext created successful
+2026-09-21T19:25:16.356Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+2026-09-21T19:25:16.356Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context attached
+2026-09-21T19:25:16.356Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) accepted: GET /ws HTTP/1.1
+2026-09-21T19:25:16.356Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) queued: GET /ws HTTP/1.1 - QueueSize = 1 - Flags: 0 - 0
+2026-09-21T19:25:16.356Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request started: id=0
+2026-09-21T19:25:16.356Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-21T19:25:16.356Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgradeFactory create success: websocket
+2026-09-21T19:25:16.356Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Initiating upgrade: GET /ws HTTP/1.1
+2026-09-21T19:25:16.356Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Upgrade request:
+│   Request:                 Method : GET
+│          :                    Url : /ws
+│          :                Version : HTTP/1.1
+│    Header:             Connection : Upgrade
+│          :                   Host : 127.0.0.1:37235
+│          :      Sec-WebSocket-Key : ZkX5azqx8/T1cm+13rZD5w==
+│          : Sec-WebSocket-Protocol : subprotocol, echo
+│          :  Sec-WebSocket-Version : 13
+│          :                Upgrade : websocket
+│          :           X-Powered-By : SNode.C
+2026-09-21T19:25:16.356Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) delivered: GET /ws HTTP/1.1 0
+2026-09-21T19:25:16.358Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Response received for request (0): GET /ws HTTP/1.1
+2026-09-21T19:25:16.358Z DBG framework/context core.socket.context inst=legacy conn=1 —   HTTP/1.1 101 Switching Protocols
+2026-09-21T19:25:16.358Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Response to upgrade request: GET /ws HTTP/1.1
+│  Response:                Version : HTTP/1.1
+│          :                 Status : 101
+│          :                 Reason : Switching Protocols
+│    Header:             Connection : Upgrade
+│          :         Content-Length : 0
+│          :                   Date : Mon, 21 Sep 2026 19:25:16 GMT
+│          :   Sec-WebSocket-Accept : m7SCXnj7b55LKOY+lBw6Id13nhQ=
+│          : Sec-WebSocket-Protocol : echo
+│          :                Upgrade : websocket
+│          :           X-Powered-By : SNode.C
+2026-09-21T19:25:16.358Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-21T19:25:16.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgradeFactory create success for: websocket
+2026-09-21T19:25:16.359Z DBG framework/connection web.websocket.factory — SubProtocolFactory create success: echo
+2026-09-21T19:25:16.359Z DBG framework/connection web.websocket.factory — subprotocol plugin 'echo' loaded and added to dynamic cache
+2026-09-21T19:25:16.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgrade create success for: websocket
+2026-09-21T19:25:16.359Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketContext: switch
+2026-09-21T19:25:16.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — upgrade bootstrap success
+2026-09-21T19:25:16.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —       Protocol selected: websocket
+2026-09-21T19:25:16.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —               requested: websocket
+2026-09-21T19:25:16.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —   Subprotocol  selected: echo
+2026-09-21T19:25:16.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —               requested: subprotocol, echo
+2026-09-21T19:25:16.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request completed: id=0
+2026-09-21T19:25:16.359Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Connection = Keep-Alive
+2026-09-21T19:25:16.359Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context detached for context switch
+2026-09-21T19:25:16.359Z DBG framework/context core.socket.context inst=legacy conn=1 — Context detached for context switch
+2026-09-21T19:25:16.359Z DBG framework/context core.socket.context inst=legacy conn=1 —   Context Online Since: 2026-09-21 19:25:16 UTC
+2026-09-21T19:25:16.359Z DBG framework/context core.socket.context inst=legacy conn=1 —   Context Online Duration: 00:00:00
+2026-09-21T19:25:16.359Z DBG framework/context core.socket.context inst=legacy conn=1 —   Context Total Queued: 252
+2026-09-21T19:25:16.359Z DBG framework/context core.socket.context inst=legacy conn=1 —   Context Total Processed: 238
+2026-09-21T19:25:16.359Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+2026-09-21T19:25:16.359Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=1 — WebSocket: context attached with subprotocol 'echo'
+2026-09-21T19:25:16.359Z INF framework/connection web.websocket.subprotocol inst=legacy conn=1 — websocket established: subprotocol=echo
+2026-09-21T19:25:16.359Z INF framework/connection web.websocket.subprotocol inst=legacy conn=1 — subprotocol started: echo
+2026-09-21T19:25:16.359Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketConnection: switch completed
+2026-09-21T19:25:16.360Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — Shutdown (WR): success
+2026-09-21T19:25:16.360Z DBG framework/context core.socket.context inst=legacy conn=1 — SocketContext: EOF received
+2026-09-21T19:25:16.360Z INF framework/connection web.websocket.subprotocol inst=legacy conn=1 — subprotocol stopped: echo
+2026-09-21T19:25:16.360Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=1 —        Total Payload sent: 7
+2026-09-21T19:25:16.360Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=1 —   Total Payload processed: 7
+2026-09-21T19:25:16.360Z INF framework/connection web.websocket.subprotocol inst=legacy conn=1 — websocket ended: subprotocol=echo
+2026-09-21T19:25:16.360Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=1 — WebSocket: context detached with subprotocol 'echo' for connection close
+2026-09-21T19:25:16.360Z DBG framework/context core.socket.context inst=legacy conn=1 — Context detached for connection close
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 disconnected
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:45873
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:37235
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Online Since: 2026-09-21 19:25:16 UTC
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Online Duration: 00:00:00
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Queued: 271
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Sent: 271
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Write Delta: 0
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Read: 249
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Processed: 249
+2026-09-21T19:25:16.360Z DBG framework/instance core.socket.stream role=client inst=legacy — Read Delta: 0
+2026-09-21T19:25:16.360Z INF framework/instance core.socket.stream role=client inst=legacy — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-21T19:25:16.360Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport disconnected
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/review/editorial/probes/verify-websocket-negotiation.py", line 68, in <module>
+    assert f'upgrade response: {expected}' in result
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

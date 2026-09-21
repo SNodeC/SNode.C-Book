@@ -48,7 +48,7 @@ Chapter 24: HTTP upgrade to bidirectional WebSocket communication
 
 SSE keeps the same lower stack and HTTP request/response foundation, but the response becomes a long-lived event stream that produces `MessageEvent` objects.
 
-SSE still uses the lower stack. It still depends on the runtime, a lower family, stream transport, legacy or TLS connection handling, HTTP client/server behavior, connection lifecycle, retry and reconnect policy, and diagnostics.
+The new lifetime matters operationally: a request that remains open keeps a response and its connection resources alive. Retry can establish a replacement stream, but it cannot by itself replay the events missed during the interruption.
 
 The application-facing unit changes again. Earlier chapters showed a sequence of semantic lifts:
 
@@ -76,7 +76,7 @@ A compact comparison helps place SSE without turning this chapter into a protoco
 | protocol world | HTTP | HTTP | starts with HTTP upgrade, then WebSocket |
 | application unit | response | event | message / frame |
 | typical use | documents, APIs, files | notifications, dashboards, feeds | bidirectional interaction |
-| complexity | lowest | moderate | higher |
+| application obligation | complete each response | bound observer state and decide replay | define message semantics and both directions of flow |
 
 SSE is a different fit from WebSocket, not a weaker version of it. It fits cases where the server should push events and the client does not need to send messages back over the same long-lived channel. If both sides need to send independent messages over one long-lived channel, WebSocket becomes the more natural fit. Chapter 24 treats that case.
 
@@ -166,7 +166,7 @@ The blank line ends the accumulated event record. In SNode.C response streaming,
 
 ### A compact server-side SSE endpoint
 
-A server-side SSE endpoint is still an ordinary HTTP route. The route must first verify that the request actually asks for an event stream. In practice, that means checking the request's `Accept` header for `text/event-stream` before the route switches into long-lived streaming behavior.
+A server-side SSE endpoint is still an ordinary HTTP route. The teaching route chooses a narrow request contract: it checks for an exact `Accept: text/event-stream` value before switching into long-lived streaming behavior. A general endpoint may use a broader content-negotiation policy; the restriction here belongs to this example.
 
 The following sketch uses an application-owned measurement source. The important framework-facing points are the request validation, the response headers, the explicit header send, and the use of response fragments while the connection remains open:
 
@@ -174,7 +174,7 @@ The following sketch uses an application-owned measurement source. The important
 #include <web/http/http_utils.h>
 
 static bool acceptsEventStream(const std::shared_ptr<Request>& req) {
-    return web::http::ciContains(req->get("Accept"), "text/event-stream");
+    return web::http::ciEquals(req->get("Accept"), "text/event-stream");
 }
 
 static void sendMeasurement(const std::shared_ptr<Response>& res,
@@ -209,14 +209,14 @@ app.get("/events", [&measurements] APPLICATION(req, res) {
     }
 });
 
-app.get("/simulate", [&measurements] APPLICATION(req, res) {
+app.post("/simulate", [&measurements] APPLICATION(req, res) {
     const Measurement measurement = measurements.publish("temperature", 24.0);
 
     res->set("Content-Type", "application/json").send(measurement.toJson().dump());
 });
 ```
 
-The `Measurement` type and the `measurements` publisher are application code, not special SSE machinery. The SNode.C-specific shape is the HTTP route and response handling. The small `acceptsEventStream(...)` helper keeps request validation visible, and `sendMeasurement(...)` centralizes the event-stream record shape. The route rejects non-SSE requests with an ordinary HTTP response; only a request that accepts `text/event-stream` receives the streaming response. Notice that the SSE field strings themselves do not contain line endings; the empty fragment marks the blank line between events.
+The `Measurement` type and the `measurements` publisher are application code, not special SSE machinery. The SNode.C-specific shape is the HTTP route and response handling. The small `acceptsEventStream(...)` helper keeps request validation visible, and `sendMeasurement(...)` centralizes the event-stream record shape. The teaching route deliberately accepts only an `Accept` field whose entire value equals `text/event-stream`, ignoring case. It rejects other values with an ordinary HTTP response. This is a restricted example contract, not a general media-range negotiation algorithm: wildcard values, lists, and parameters such as `q=0` do not enter the streaming path. Notice that the SSE field strings themselves do not contain line endings; the empty fragment marks the blank line between events.
 
 After `sendHeader()`, the response body is written as SSE records. Each record is plain text. A blank line terminates the current event. The response is intentionally not ended after the first record. It remains open until the application decides to close it or until the peer disconnects.
 
@@ -383,7 +383,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 ```
 
-The exact path depends on the application. the client does not start with a new non-HTTP protocol. It asks HTTP for an event stream.
+The exact path depends on the application. The client does not start with a new non-HTTP protocol. It asks HTTP for an event stream.
 
 #### Event-stream request setup
 
@@ -545,13 +545,9 @@ This is where Chapter 20’s retry/reconnect distinction becomes visible at the 
 \index{streaming endpoints}
 
 
-Express-like applications are a natural place to expose SSE endpoints. They already organize routes, middleware, authentication, static assets, application APIs, and response behavior.
+An SSE endpoint shares the application’s routing and authorization boundary with its other HTTP endpoints. Decide access before sending the event-stream header. Once the stream has begun, the route cannot answer a later application error by starting an unrelated ordinary JSON response on that same response object.
 
-An SSE endpoint can be one route in that application. Server-side code can keep the HTTP response open and write event-stream records over time. The built-in `EventSource` facility discussed in this chapter is the client-side counterpart.
-
-The two sides meet at the HTTP/SSE boundary: the server route emits a `text/event-stream` response, while the client-side `EventSource` requests that response, parses the event stream, and dispatches `MessageEvent` objects.
-
-This pairing is useful, but it is not the same abstraction on both sides. The server route produces event-stream syntax; the client `EventSource` interprets it as events.
+For a dashboard, SSE plus ordinary POST requests can be a clearer division than a bidirectional channel: one path observes accepted state, another requests a change. WebSocket becomes useful when both directions need an ongoing message conversation. The decision depends on interaction and recovery requirements, not on a ranking of protocol sophistication.
 
 ### Lower layers and diagnostics still matter
 
@@ -561,20 +557,13 @@ That connects directly to the diagnostic model from Chapter 18 and the configura
 
 ### Real-time-style HTTP
 
-The chapter title says “real-time HTTP.” The word “real-time” here means live-update behavior over HTTP. It does not mean deterministic latency or hard real-time scheduling.
+A live dashboard should distinguish a quiet source from a broken observation channel. The absence of measurements does not prove a transport failure, and a newly opened stream does not prove that missed measurements were replayed. Expose the last accepted measurement and stream state separately when that distinction matters to the reader of the dashboard.
 
-SSE is a practical web mechanism for delivering events over a long-lived HTTP response. That makes it useful for user interfaces and monitoring systems where updates should arrive as the server produces them.
+For this example, reconnect observes the current measurement when one exists. It does not replay an event history from `Last-Event-ID`. To add replay, the application would need a bounded history and a policy for an ID older than that history; sending IDs alone does not provide either.
 
-Use cases include:
+The subscriber lifetime in this compact publisher deserves an explicit boundary. Each callback captures its response, checks `isConnected()` when a measurement is published, and removes itself by returning `false` after disconnection. Cleanup is therefore publication-driven. If clients repeatedly connect and disconnect while measurements stop, callbacks and their captured responses remain in the list until another publication or publisher destruction. The example demonstrates event delivery, not bounded idle-subscriber management. A service with quiet periods and client churn needs disconnection-driven subscription removal as part of its application ownership design.
 
-- sensor dashboards,
-- status pages,
-- notification feeds,
-- build or deployment logs,
-- monitoring views,
-- application activity streams.
-
-The timing behavior still depends on the network, server, client, buffering, and reconnect policy.
+The simulation route uses `POST /simulate` because it changes the model. `GET /events` opens observation; it does not itself create a measurement. A useful local check keeps an event stream open with `curl -N -H 'Accept: text/event-stream' http://localhost:8080/events`, then sends `curl -X POST http://localhost:8080/simulate` from another terminal. The new JSON state and the next event should describe the same accepted measurement. Repeat with `Accept: text/event-stream;q=0` and expect 406 under this example’s exact-value contract. Then disconnect the observer during a quiet period and read the ownership path above: a transport disconnect and subscription removal are distinct observations.
 
 ::: {.snodec-remember title="What to remember"}
 - Server-Sent Events keep the application inside HTTP while turning one response into a long-lived event stream.

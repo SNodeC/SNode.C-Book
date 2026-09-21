@@ -114,7 +114,7 @@ namespace minigateway {
             receiveBuffer.append(chunk, chunkLen);
 
             std::size_t lineEnd = receiveBuffer.find('\n');
-            while (lineEnd != std::string::npos) {
+            while (lineEnd != std::string::npos && lineEnd <= 4096) {
                 std::string line = receiveBuffer.substr(0, lineEnd);
                 if (!line.empty() && line.back() == '\r') {
                     line.pop_back();
@@ -126,8 +126,8 @@ namespace minigateway {
             }
 
             if (receiveBuffer.length() > 4096) {
-                snode::log::application().warn() << "Measurement socket line exceeds 4096 bytes; dropping buffered input";
-                receiveBuffer.clear();
+                snode::log::application().warn() << "Measurement socket line exceeds 4096 bytes; closing connection";
+                close();
             }
         }
 

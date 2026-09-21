@@ -21,19 +21,7 @@ Bluetooth address + PSM
 
 After IPv4, IPv6, and Unix domain sockets, Bluetooth is the final lower-family variation before the focus moves upward to application protocol contexts.
 
-The larger SNode.C model remains recognizable:
-
-- an application-side `SocketServer` or `SocketClient` handle,
-- a registered server-side or client-side instance,
-- a concrete `SocketConnection`,
-- a socket-context factory,
-- a per-connection socket context,
-- runtime integration,
-- status callbacks,
-- connection lifecycle callbacks,
-- and the same broad stream-based server/client/connection model.
-
-The lower family changes. The endpoint identity changes. The application architecture is preserved.
+The first task is to identify which service the peer actually offers. A device address alone is not enough, and changing `rc` to `l2` in a type name does not translate an RFCOMM service into an L2CAP service. Once the matching endpoint is available, the existing factory/context model supplies protocol behavior over it.
 
 ### Two Bluetooth families, two service selectors
 
@@ -328,13 +316,13 @@ local PSM
 
 depending on the overload and family. This continues Chapter 9's connection model. There is still a local side, a remote side, a bound identity, and a peer identity.
 
-### Pairing before SNode.C communication
+### Establish the Bluetooth service before connecting
 
 \index{Bluetooth!pairing}
 \index{adapter state}
 
 
-Bluetooth endpoint identity is not the whole operational story. Before two devices can communicate through SNode.C over RFCOMM or L2CAP, the devices must already be paired using the operating-system Bluetooth tools or user interface. SNode.C uses the Bluetooth stack as a lower family; it does not replace Bluetooth discovery, pairing, trust management, or adapter setup.
+Bluetooth endpoint identity is not the whole operational story. When the selected Bluetooth service or local security policy requires pairing, establish that pairing using the operating-system Bluetooth tools or user interface before running the SNode.C application. Pairing is a platform and service requirement, not an unconditional requirement imposed by these SNode.C socket wrappers. SNode.C uses the Bluetooth stack as a lower family; it does not replace Bluetooth discovery, pairing, trust management, or adapter setup.
 
 That separation is important:
 
@@ -346,7 +334,7 @@ SNode.C communication:
 configured endpoint identity, listen/connect registration, connection handling, context behavior
 ```
 
-If pairing is missing, a SNode.C client may use the correct Bluetooth address and service selector and still fail at the platform Bluetooth layer. That is not a different SNode.C architecture problem; it is an operational precondition of Bluetooth communication between devices.
+If required pairing is missing, a SNode.C client may use the correct Bluetooth address and service selector and still fail at the platform Bluetooth layer. That is not a different SNode.C architecture problem; it is an operational precondition of Bluetooth communication between devices.
 
 ### What remains stable
 
@@ -380,15 +368,7 @@ or:
 net::l2::stream::legacy
 ```
 
-The lower family changes, while the protocol habits often remain stable:
-
-- how the protocol reacts to connection establishment,
-- how it reads data,
-- how it sends data,
-- how it handles disconnection,
-- how it thinks in terms of one connection and one context.
-
-The context may inspect Bluetooth addresses for logging or diagnostics, but the application protocol logic can remain separated from the lower-family details.
+Byte parsing and response selection may remain unchanged. Timing and trust assumptions still need review: a protocol tested on a local IP loopback connection has not established that its deadlines or peer-selection policy suit the chosen Bluetooth service. Keep the parser reusable where possible, while making those deployment policies explicit through the endpoint and application configuration.
 
 #### Legacy and TLS
 
@@ -408,7 +388,7 @@ Bluetooth support depends on platform Bluetooth support. On Linux, that usually 
 
 #### Pairing, permissions, and adapter state
 
-Bluetooth also has operational state outside the application process. Before SNode.C can establish a Bluetooth connection between two devices, the devices must be paired by hand or by the surrounding system administration process; depending on the platform setup, they may also need to be trusted, visible to the relevant adapter, and permitted by the local Bluetooth service policy.
+Bluetooth also has operational state outside the application process. Depending on the selected service and security policy, the devices may need pairing by hand or through the surrounding system administration process. Adapter availability, trust, and permissions remain platform concerns even when the endpoint address and service selector are correct.
 
 Bluetooth failures therefore should not be diagnosed only as SNode.C configuration failures: the application may have selected the right family, address, and service selector while the platform still refuses the connection because pairing, adapter state, permissions, or service availability are not in the expected state.
 
@@ -420,6 +400,10 @@ Then let SNode.C use that endpoint identity through its normal listen/connect mo
 ```
 
 This keeps framework concerns and Bluetooth administration concerns separate.
+
+For a controlled hardware exercise, use two endpoints whose service configuration you control. Record the server adapter address and the chosen channel or PSM, establish any pairing required by that service, and run the matching legacy server/client variant with a short, known payload. Keep separate observations for listener setup, connection establishment, and returned application bytes. Then deliberately select a service value where no matching listener exists and compare the connection result; do not change the parser to repair a service-selection failure.
+
+This exercise requires working adapters, a compatible peer service, and suitable platform permissions. Compilation of the Bluetooth components verifies none of those facilities. If they are unavailable, record the hardware exercise as unexecuted and continue the protocol-transfer exercise with IPv4 and Unix-domain sockets in Chapter 15.
 
 #### Device-near and IoT systems
 

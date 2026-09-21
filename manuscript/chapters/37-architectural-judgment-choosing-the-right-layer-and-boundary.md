@@ -11,7 +11,7 @@
 
 Architectural judgment begins before code is written: it is the decision about where a concern should live.
 
-By this point, the reader has seen lower families, connections, contexts, factories, configuration, diagnostics, TLS, HTTP, Express-like routing, SSE, WebSocket, MQTT, MQTT over WebSocket, applications, systems, builds, deployment, testing, and the MiniGateway construction capstone. That is enough knowledge to build many things. The harder task is choosing a shape that remains understandable when the system grows.
+The reader has now built and extended MiniGateway after studying its underlying runtime and protocols. The harder task is deciding which of those choices should survive when requirements change: whether state must outlive the process, whether a peer needs a different trust boundary, or whether two roles need independent operation.
 
 MiniGateway made that problem concrete: one measurement model had to remain independent while several input, observation, and integration roles shared it. This chapter steps back from that application and turns the decision pattern into an explicit design model.
 
@@ -54,7 +54,7 @@ SNode.C makes these mistakes visible because it separates handles, registered in
 Choose the layer by the kind of concern, not by where the code first feels convenient.
 :::
 
-Code placed this way may work locally while still sitting in the wrong architectural place.
+Code placed in a convenient but unrelated callback may work locally while still giving that callback responsibility it cannot properly own.
 
 ### A compact decision model
 
@@ -192,14 +192,14 @@ Roles may live in one process or several processes. Split them when lifetimes, p
 
 MiniGateway Extended adds local measurement input through a Unix-domain socket. That could have been implemented several ways:
 
-| Shape | Advantage | Why it was not chosen |
+| Shape | When it fits | Cost or constraint |
 |---|---|---|
-| add an HTTP `POST` route | reuses the existing web role | changes a local IPC concern into a web-facing API concern |
-| hide input inside the MQTT client | reuses existing integration code | makes MQTT own a non-MQTT input path |
-| let the SSE path accept input | close to live browser observation | turns observation into command/input handling |
-| create a separate Unix-domain input role | names the new boundary directly | adds one small server role and one lower-family dependency |
+| add an HTTP `POST` route | producers already use HTTP and share its authentication policy | requires request parsing and web access policy for the input |
+| publish measurements through MQTT | producers already participate in the brokered system | local input depends on broker availability and topic permissions |
+| create a Unix-domain input role | local processes need a direct stream interface controlled by filesystem access | adds a socket path, framing rules, and a lower-family dependency |
+| use a separate collector service | device access needs different privileges or restart behavior | introduces another deployment unit and an interprocess recovery contract |
 
-The selected design is the last one. The cost is real: MiniGateway Extended has one more source-file group, one more configured role name, one more socket path, and one more component dependency. The payoff is that every existing role remains honest.
+Chapter 36 selects the Unix-domain role because its exercise requires direct local input. The cost is real: MiniGateway Extended has one more source-file group, one more configured role name, one more socket path, and one more component dependency. The payoff is that every existing role remains honest.
 
 ```text
 web role:
@@ -215,7 +215,7 @@ MeasurementModel:
   remains the shared acceptance boundary
 ```
 
-This is a useful example because the obvious shortcut would have compiled. Adding a quick HTTP route or an extra MQTT callback would have been easy. The design question is not what compiles fastest, but which shape leaves the next change easiest to place. A future change to local IPC parsing should affect the Unix-domain input role. A future change to web observation should affect the web role. A future change to broker topics should affect the MQTT role. That separation is exactly what the split test is meant to preserve.
+An HTTP input would be a valid choice under different requirements; MiniGateway already uses one for simulation. The decision here is whether local producers should share that web contract, join the brokered system, or obtain a separate local interface. Once selected, the shape should leave the next change easy to place. A future change to local IPC parsing should affect the Unix-domain input role. A future change to web observation should affect the web role. A future change to broker topics should affect the MQTT role. That separation is exactly what the split test is meant to preserve.
 
 
 ### Choosing implementation layer
@@ -303,6 +303,8 @@ Keep meaning visible until the layer, role, or operational surface that owns it 
 :::
 
 Do not push meaning downward merely because a lower callback sees an event first. Do not push it upward merely because a global object can reach everything. Place the concern where its lifetime, audience, failure consequence, and diagnostic needs are all visible.
+
+The current flow API provides another concrete boundary test. Two explicit connections can have independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate endpoint roles. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.
 
 ::: {.snodec-remember title="What to remember"}
 - Choose family and protocol surface by peer identity, deployment reality, and the conversation the role needs to have.

@@ -11,7 +11,7 @@ With the build environment in place, the first complete program can stay small e
 
 The echo service is only a small vehicle for the real purpose: making the recurring shape of SNode.C visible in real code. A good first example should be small enough that the reader can hold the whole program in mind, but complete enough that it is not pseudocode.
 
-An echo pair is ideal for that purpose: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong. Use `--log-level=debug` to include the reflected payload diagnostics; the example is deliberately bounded by the reader stopping it, not by a protocol message count.
+An echo pair is ideal for that purpose: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong. Use `--log-level=5` to include the reflected payload diagnostics; the example is deliberately bounded by the reader stopping it, not by a protocol message count.
 
 That behavior is simple, but the structure is already the structure of many later SNode.C programs:
 
@@ -77,7 +77,7 @@ Before writing code, it helps to name the three roles.
 \index{SocketClient@\texttt{SocketClient}}
 
 
-In everyday discussion, it is natural to call the `SocketServer`/`SocketClient` handle an instance. That is acceptable as long as the basic idea is clear. In SNode.C's stricter architectural vocabulary, however, the visible C++ object is the application-side handle. Through that handle, the application configures and registers a server-side or client-side communication role. After `listen(...)` or `connect(...)`, that configured role is the instance the framework can advance through the runtime machinery. It is not yet a peer connection; connections appear later.
+In everyday discussion, it is natural to call the `SocketServer`/`SocketClient` handle an instance. In SNode.C's stricter architectural vocabulary, the visible C++ object is the application-side handle for a configured server-side or client-side role. Constructing a named handle makes its configuration available as an instance. Calling `listen(...)` or `connect(...)` then creates an activation flow for that endpoint. Neither the named configuration nor the flow is an established peer connection; connections appear later.
 
 For this chapter, the visible handle types are:
 
@@ -332,7 +332,7 @@ The first important line is:
 core::SNodeC::init(argc, argv);
 ```
 
-This initializes the SNode.C runtime environment before the server handle is used to configure and register the server-side instance.
+This initializes the SNode.C runtime environment before the named server handle creates its configuration and registers a listening flow.
 
 The next important line is the type alias:
 
@@ -368,10 +368,12 @@ For a first reading, it is tempting to say that this line â€œstarts the server.â
 A better mental model is:
 
 ::: {.snodec-rule title="Runtime registration rule"}
-`listen(...)` configures and registers the server-side communication role. The runtime machinery advances the actual event-driven flow after `core::SNodeC::start()` is called.
+The named server configuration already exists. `listen(...)` sets the shown defaults and registers a listening flow; the runtime machinery advances that flow after `core::SNodeC::start()` is called.
 :::
 
 This distinction will matter later for configuration, retries, and runtime behavior.
+
+The current `listen(...)` call also returns a flow handle. The echo server deliberately does not retain it: the runtime callbacks keep the listening operation alive. Ignoring that return value does not stop the server. A program that needs to stop one listening flow later can retain the handle; Chapters 9 and 20 explain that control without making the first example manage a lifecycle it does not need.
 
 ### The client application
 
@@ -554,7 +556,7 @@ SNode.C component
       -> echoclient
 ```
 
-The example is smaller than the repository build. The repository echo application uses generated variants and shared model headers. It uses one explicit IPv4 legacy variant so that the first build remains readable.
+The example is smaller than the repository build. The repository echo application uses generated variants and shared model headers. This chapter uses one explicit IPv4 legacy variant so that the first build remains readable.
 
 ### Configuring and building the playground
 
@@ -587,14 +589,14 @@ In the first terminal, start the server:
 
 ```sh
 cd ~/projects/snodec-playground-build
-./echoserver --log-level=debug
+./echoserver --log-level=5
 ```
 
 In the second terminal, start the client:
 
 ```sh
 cd ~/projects/snodec-playground-build
-./echoclient --log-level=debug
+./echoclient --log-level=5
 ```
 
 The client connects to `localhost` on port `8080` and sends the first message. The server receives it and reflects it. The client receives the reflection and reflects it again.
@@ -622,7 +624,15 @@ Do not treat the output as noise.
 
 The first example is meant to connect source code to runtime behavior. When you see a log line from `onConnected()`, it corresponds to the lifecycle callback. When you see the reflected message, it corresponds to `onReceivedFromPeer()`. When the callback passed to `listen(...)` or `connect(...)` logs a state, it reports the listen or connect result for the configured communication role.
 
-Chapter 2 warned against silencing runtime output too early because the output is part of the teaching instrument.
+Keep these observations separate. A listen result establishes that the server reached its listening state; it does not establish that a peer sent data. A context's payload diagnostic establishes that bytes reached application behavior; it does not establish a message boundary for a protocol built on that stream.
+
+### A first controlled experiment
+
+After observing the ping-pong, stop both programs. In the playground copy, change only the client's initial greeting in `onConnected()`, rebuild, and run the pair again. The new bytes should return unchanged, while the server's context and the two entry points keep their existing responsibilities. Restore the greeting after the experiment so the supplied companion remains your comparison point.
+
+For a failure case, stop the client and leave the first server listening. Start a second copy of the server on the same default address and port. Read the reported bind/listen result, then stop that second process. On the normal exclusive listener setup, it cannot establish another listener at that address. The first server's existing role has not become an echo-protocol failure merely because the second role could not bind.
+
+Finally, explain which function you would inspect in each case: changed reflected bytes, an unavailable listening address, and a client that never sends its initial greeting. The answers should lead respectively to `onReceivedFromPeer()`, the listening result and endpoint configuration, and the client's `onConnected()`. This is a first exercise in locating a failure before editing code.
 
 ### Comparing the chapter version with the repository version
 
@@ -643,16 +653,7 @@ The repository version often uses parameterless `listen(callback)` and `connect(
 
 Again, that is a teaching choice.
 
-The important common structure is the same:
-
-```text
-application-side handle
-  -> registered server/client instance
-      -> context factory
-          -> per-connection context
-              -> event-driven protocol behavior
-                  -> runtime start
-```
+To compare the versions, first locate the factory supplied to the concrete endpoint type, then find the context it creates. The variant machinery changes how that type is selected. It does not move byte reflection into the build system or into `main()`.
 
 ### What changed compared with ordinary socket programming
 
@@ -674,15 +675,15 @@ the context behavior
 
 That is the central tradeoff.
 
-You give up the illusion that `main()` controls every socket operation directly. In return, you get a structure that can be transferred across lower layers and reused by higher protocol systems.
+A direct blocking loop gives a short request/reply exchange an easy-to-follow sequential form. Here, the operation is split across callbacks whose state must survive between invocations. That costs some local simplicity, but lets one event runtime advance several connections and reuse the context above different lower layers. The context and factory boundaries make the resulting state placement explicit.
 
 This does not make the low-level details disappear. It organizes where they belong.
 
 ::: {.snodec-remember title="What to remember"}
 - The first working example is small, but it already contains the core SNode.C application pattern.
-- The server/client object is the application-side handle; the instance is the configured communication role registered through `listen(...)` or `connect(...)`.
+- The server/client object is the application-side handle; the named instance provides configuration, and each `listen(...)` or `connect(...)` call creates an activation flow.
 - A `SocketContextFactory` creates one context for each established connection and hands it to the framework-owned connection lifecycle.
 - A `SocketContext` contains the application protocol behavior for that connection.
-- `listen(...)` and `connect(...)` register communication roles; the runtime machinery advances the actual event-driven work.
+- `listen(...)` and `connect(...)` register activation work; the runtime machinery advances the event-driven flow.
 - The same structure used for IPv4 legacy streams can later be recognized again when the lower family, stream mode, or application protocol changes.
 :::

@@ -57,6 +57,13 @@ jobs:
             nlohmann-json3-dev \
             ${{ matrix.packages }}
 
+      - name: Reconstruct the current source tree recorded by the book
+        shell: bash
+        run: |
+          source source-baseline/book-source-baseline.env
+          git -C external/snode.c apply "$GITHUB_WORKSPACE/$SNODEC_WORKTREE_PATCH"
+          python3 ci/check-source-alignment.py --framework external/snode.c
+
       - name: Build SNode.C and companion examples
         env:
           CC: ${{ matrix.cc }}

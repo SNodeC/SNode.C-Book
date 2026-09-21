@@ -65,10 +65,10 @@
 % --- stable protocol box ------------------------------------------------
 \node[topbox, toptext] (protocol) {%
   \begin{tabular}{@{}c@{}}
-  \textbf{\textcolor{snodecTitleOrange}{Application protocol behavior}}\\[0.5mm]
-  SocketContext\\
-  SocketContextFactory\\
-  callbacks / send / receive / lifecycle
+  \textbf{\textcolor{snodecTitleOrange}{Protocol and construction boundary}}\\[0.5mm]
+  SocketContext: per-connection behavior\\
+  SocketContextFactory: context creation\\
+  shared abstraction, family-specific deployment
   \end{tabular}
 };
 

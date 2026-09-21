@@ -22,3 +22,8 @@ cmake --build build --target deploy-sse-server
 
 Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
 deployment prefix.
+
+The simulation endpoint uses `POST /simulate`. The teaching SSE route accepts the
+explicit `Accept: text/event-stream` value (case-insensitively), rather than general
+media-range negotiation. Disconnected subscribers are removed on a later
+publication; immediate idle-subscriber cleanup is outside this compact example.

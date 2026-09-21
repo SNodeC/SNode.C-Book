@@ -24,7 +24,7 @@ The lower stack remains visible: the Express-like application layer sits above H
 
 Read the layer from runtime registration through the selected lower family and HTTP request/response handling to Express-like routing and middleware.
 
-The visible `WebAppT<ServerT>` object in application code is the handle. Through that handle, the application configures a server-side communication role and registers a runtime-visible server instance. The Express-like layer does not change that model; it changes what happens when a ready HTTP request reaches application code.
+The visible `WebAppT<ServerT>` object in application code is the handle. Through that handle, the application configures a server-side communication role and registers a runtime-visible server instance. Constructing the named handle registers its configuration; `listen(...)` initiates a flow. Express routing begins later, when HTTP makes a request ready.
 
 With HTTP request and response semantics in place, the question becomes what happens when HTTP handling becomes application structure. The answer is:
 
@@ -125,7 +125,8 @@ This web-application surface is joined to a concrete HTTP server rather than act
 - `stop()`,
 - `tick(...)`,
 - `free()`,
-- `state()`.
+- `state()`,
+- `reconfigure()` while the runtime is running, with the configuration boundaries from Chapter 17.
 
 This keeps the web-application layer connected to the same event-driven runtime story introduced earlier in the book. A web application is a route structure that still runs inside the SNode.C runtime, not a loose set of route functions.
 
@@ -161,14 +162,7 @@ This matches the design pattern from Chapter 21. The HTTP layer remains undernea
 
 The key bridge is the moment when HTTP request readiness enters the Express-like routing structure.
 
-Conceptually:
-
-```text
-HTTP request ready
-  -> Controller(req, res)
-      -> root route dispatch
-          -> application callback / middleware / mounted router
-```
+Follow the ready-request callback in `WebAppT` into its controller construction, then into root-route dispatch. This is the concrete source trace behind the opening diagram. It separates the lifetime of one request’s dispatch from the longer lifetime of the application’s route tree.
 
 The HTTP layer has parsed the request and prepared a response object. The Express-like layer now decides which application structure should handle that request. That decision belongs above HTTP because it depends on route paths, mounted routers, middleware, and routing policy.
 
@@ -338,7 +332,7 @@ A compact view is:
 
 The dispatchers encode the fact that application callbacks, middleware callbacks, and mounted routers have different control-flow meanings.
 
-This internal structure mirrors the application model. The framework does not pretend that all web actions are the same. The dispatcher structure reflects those differences.
+When a request stops advancing, inspect which dispatcher owns its continuation. A middleware return and a call to `next()` are different actions; neither is an instruction to move work to another thread.
 
 ### Request and Response as web-application facades
 
@@ -473,6 +467,32 @@ common request-processing behavior
 The Express-like layer changes application organization. It does not remove the lower stack. A route handler may look high-level, but bind/listen activation, TLS setup, HTTP parsing, response streaming, upgrade behavior, timeout boundaries, diagnostics, and shutdown still belong to the same layered runtime model.
 
 That is the useful distinction: Express organizes web application logic; it does not hide the architecture beneath it.
+
+### Observe continuation and a completed response
+
+The source tree contains two small, complete exercises for the dispatch boundary. They use real loopback HTTP connections and assert both the response seen by the client and the handlers that ran:
+
+```sh
+ctest --test-dir "$SNODEC_BUILD" --output-on-failure \
+  -R '^InetExpressMiddleware(MountOrder|ShortCircuit)Test$'
+```
+
+Here `SNODEC_BUILD` is a configured and built framework test tree, as established in Chapter 34. These tests require local socket access. Their source files live in `tests/component/express`.
+
+Read `InetExpressMiddlewareMountOrderTest.cpp` first. Application middleware records `app-before` and calls `next()`. Router middleware appends `router-before` and calls `next()`. The router’s `/status` handler appends `handler`; the router is mounted at `/api`.
+
+| Request | Expected observation |
+|---|---|
+| `GET /api/status` | status 200; response header and body contain `app-before,router-before,handler` |
+| `GET /outside` | status 404; application middleware runs, but the mounted router and its handler do not |
+
+The test counts those visits. A 200 response alone would not prove that middleware ran in the intended order.
+
+Now read `InetExpressMiddlewareShortCircuitTest.cpp`. Its first callback sends status 403, a diagnostic header, and `middleware stopped request`. It does not call `next()`. The following application handler would send 200, but its invocation count must remain zero. This is a deliberate response that ends dispatch, not an HTTP parsing error or a failed connection.
+
+For a local experiment, work in a scratch copy of the test. Change the middleware to call `next()` without sending its 403 response, and predict the new response and counts before changing the assertions. Then restore the original. Do not leave both `send(...)` and unconditional continuation in place: that expresses two competing decisions about who answers the same request.
+
+A flat request callback remains reasonable for one small endpoint. Mounted routers become useful when several endpoints share policy or path context. Their cost is less visible control flow: route order, mount paths, and explicit continuation become part of correctness. The paired response and invocation observations keep that cost visible.
 
 ### From Express-like routing to Server-Sent Events
 

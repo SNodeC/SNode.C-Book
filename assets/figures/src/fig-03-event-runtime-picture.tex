@@ -47,7 +47,7 @@
 
 \node[core block, draw=snodecGreen!78, fill=snodecGreenSoft] (app) {%
   \makebox[\linewidth][c]{\textbf{\textcolor{snodecTitleGreen}{Application code}}}\\[-0.5mm]
-  {\footnotesize Calls \texttt{init(...)}, registers roles, then starts or ticks the runtime.}
+  {\footnotesize Calls \texttt{init(...)}, registers work, then calls \texttt{start()}.}
 };
 
 % Intentionally 11mm so the dashed runtime border sits visually halfway

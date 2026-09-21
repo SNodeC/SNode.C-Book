@@ -223,25 +223,25 @@ The public component graph can also be read from lower shared targets upward. Th
 
 This is a selected public component dependency view, read bottom-up from lower shared targets toward targets that publicly depend on them. It is not a complete list of source files and not a literal source-directory tree. System libraries, generated helper targets, private implementation details, and some optional platform-specific components are either omitted or shown only as short leaf notes.
 
-Bluetooth RFCOMM (`net-rc`) and L2CAP (`net-l2`) branches, if available, are shown as optional branches. Some targets have more than one relevant public path. The ASCII drawing is tree-shaped for readability, but the real dependency structure is a graph, not a tree. Shared nodes are repeated or summarized because the purpose here is to show selected public paths.
+Bluetooth RFCOMM (`net-rc`) and L2CAP (`net-l2`) branches, if available, are shown as optional branches. Some targets have more than one relevant public path. The ASCII drawing is tree-shaped for readability, but the real dependency structure is a graph, not a tree. Shared nodes are repeated or summarized because the purpose here is to show selected public paths. Bracketed “also depends on” notes describe an additional dependency of the parent, not another upward edge. For example, `websocket-server` depends on both `websocket` and `http-server`; the drawing does not claim that HTTP depends on WebSocket.
 
 ```text
 logger
 `-- utils
     |-- websocket
     |   |-- websocket-server
-    |   |   |-- http-server, shared path
+    |   |   |-- [also depends on http-server]
     |   |   `-- mqtt-server-websocket
-    |   |       `-- mqtt-server, shared path
+    |   |       `-- [also depends on mqtt-server]
     |   |
     |   `-- websocket-client
-    |       |-- http-client, shared path
+    |       |-- [also depends on http-client]
     |       `-- mqtt-client-websocket
-    |           `-- mqtt-client, shared path
+    |           `-- [also depends on mqtt-client]
     |
     `-- core
         |-- db-mariadb
-        |   `-- libmariadb, if available
+        |   `-- [also depends on libmariadb, if available]
         |
         |-- core-socket
         |   |-- core-socket-stream
@@ -444,7 +444,7 @@ That is clearer than linking every application against one vague monolithic targ
 
 CMake's visibility keywords are architectural words in a framework. They decide which dependencies become part of a component's public surface and which remain implementation details.
 
-A dependency linked as `PUBLIC` becomes part of what consumers of the target also need. A dependency linked as `PRIVATE` remains internal to the target. An `INTERFACE` usage requirement shapes consumers without necessarily being a compiled object in the same way.
+A dependency linked as `PUBLIC` supplies usage requirements to the target and its consumers. `PRIVATE` supplies them to the target without making them public compile requirements; `INTERFACE` supplies them to consumers. Do not interpret `PRIVATE` as a promise that no downstream link dependency can remain. In particular, a static library does not perform the final link, so its implementation dependencies can still be needed when a consumer links the resulting executable.
 
 This is dependency hygiene, not CMake trivia. A framework that gets this wrong can make downstream applications difficult to build, difficult to package, or accidentally dependent on internals.
 
@@ -731,7 +731,7 @@ For a systems framework, that can be valuable. It gives builders and packagers a
 
 Build-time defaults and runtime configuration should not be confused.
 
-A build-time default defines the library's compiled baseline. Runtime configuration describes what a particular configured instance chooses when the application starts.
+A build-time default defines the library's compiled baseline. Runtime configuration supplies values for a configured instance at startup and, where the application explicitly reparses configuration, during operation. Chapter 17 distinguishes those reparsed values from policy already captured by active flows or connections; changing the configuration tree does not reconstruct the running system.
 
 Both are useful, but they operate at different times:
 
@@ -920,7 +920,9 @@ A SNode.C CMake target can be read systematically. A practical recipe is:
 10. For external use, translate local target names to `snodec::...`.
 11. Only then inspect implementation files if the public header and build shape are not enough.
 
-This method follows the same pattern used in Chapter 29. The build target often reveals the architecture before the implementation file is opened.
+Apply the method to a scratch copy of `companion/examples/EchoPair`. Its source names an IPv4 legacy stream server and client, and its package request selects `net-in-stream-legacy`. Configure and build it against the installation used in Chapter 2. Then change only the requested component to a deliberately nonexistent name such as `book-missing-component` and configure a fresh build directory. Configuration must fail before compilation. Restore the component and rebuild. This separates package discovery from C++ compilation: an installed header on disk does not make an unsupported component request valid.
+
+Next inspect the link interface of `snodec::net-in-stream-legacy` in the installed target files. Follow its dependencies to the stream and network-family targets without copying that whole chain into the application. The dependency graph above is useful precisely because the component maintains this chain for its consumers.
 
 ::: {.snodec-remember title="What to remember"}
 - CMake is an architectural surface in SNode.C, not only a build-script language.

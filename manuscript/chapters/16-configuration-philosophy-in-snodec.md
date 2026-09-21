@@ -23,7 +23,7 @@ The central idea is:
 In SNode.C, configuration makes a communication role concrete: it gives the role endpoint values, operational switches, instance identity, and activation-time shape.
 :::
 
-The `SocketServer`/`SocketClient` handle is the handle. Through that handle, the application configures a server-side or client-side communication role. When `listen(...)` or `connect(...)` registers that role, the configured instance enters the runtime.
+Through a `SocketServer` or `SocketClient` handle, the application configures a server-side or client-side communication role. Constructing a named endpoint registers its configuration instance. Each `listen(...)` or `connect(...)` call then starts an activation flow for that configured role.
 
 Configuration therefore gives the role its operational shape instead of decorating an otherwise complete object.
 
@@ -39,10 +39,10 @@ A communication role has several aspects:
 
 ```text
 application-side handle
-  -> configuration surface
-      -> registered server/client instance
-          -> concrete connections
-              -> factories and contexts
+  -> shared endpoint configuration
+      -> named instance registered in the configuration hierarchy
+          -> explicit activation flow
+              -> connections with factory-created contexts
 ```
 
 The context implements the protocol behavior. The factory creates the context. The lower-family server or client type selects the communication family.
@@ -198,11 +198,11 @@ For example:
 
 ```ini
 echo.local.port = 8080
-echo.remote.host = "localhost"
-echo.remote.port = 8080
+uplink.remote.host = "localhost"
+uplink.remote.port = 8080
 ```
 
-This is the file form of the same application/instance/section/option structure exposed by the command line.
+Here `echo` is a named server and `uplink` is a separate named client in an application that creates both. A server does not acquire a client’s `remote` section merely because that key is written in a file. The file can configure the roles the executable actually exposes.
 
 The configuration file is therefore both:
 
@@ -245,21 +245,15 @@ The order is important because it lets an application be useful out of the box, 
 
 There is also an important timing boundary.
 
-External configuration can only address roles that are present in the configuration hierarchy when the application parses its startup configuration. A role created later by application logic must be configured by application logic.
+External configuration can address the named roles present in the hierarchy when parsing occurs. Startup parsing therefore sees the roles constructed before startup. A role created later begins with the values supplied by application logic.
 
-This separates two cases:
+The current framework also supports a deliberate runtime reparse through `core::SNodeC::reconfigure()`. While the event loop is `RUNNING`, application code on the event-loop thread can ask the existing parser to read the current configuration file again, with the original command-line arguments still taking precedence. A named role that is now registered can participate in that parse. Merely editing the file or constructing a role does not trigger this operation.
 
-```text
-startup-known configured roles
-  -> C++ API, configuration file, and command line can participate
+The distinction is between changing configuration values and changing live activity. Reconfiguration does not restart listeners, reconnect peers, or replace the policy already captured by an established connection. It also leaves bootstrap logging and daemonization in place. The application must decide which subsequent activation should use the new values and how existing activity should finish.
 
-runtime-created roles
-  -> C++ API configuration is the available path
-```
+A failed reparse returns `false`; it is not a transaction that rolls back every value already changed. Chapter 17 develops the operational consequences. For a service whose configuration must change atomically, validating a replacement before a controlled process restart may be a clearer policy than editing the live tree.
 
-That boundary between startup configuration and runtime object creation is natural, not a weakness.
-
-The command line and configuration file are external startup inputs. They can shape what has been made addressable before startup parsing completes. They cannot retroactively reach into a role that did not yet exist in that hierarchy.
+The current per-call flow model makes the configuration boundary particularly important. An endpoint exposes one shared configuration object. Each explicit activation receives its own controller, but that controller does not freeze a private copy of the endpoint settings. An address-taking `connect(...)` overload updates the endpoint's remote configuration before starting its flow. Use separate named endpoints for destinations that need independent configuration; retaining two flow handles is not a substitute for that separation.
 
 ### Named instances as configuration addresses
 
@@ -351,7 +345,7 @@ configured role exists
 
 Disablement belongs to the configured role. It lets the role remain part of the application shape while configuration decides whether it participates in a run.
 
-This is cleaner than scattering ad hoc application flags across the program.
+At activation, disablement lets the framework report an intentionally inactive role. Setting that value later is not a command to close established peers or cancel every flow. Those actions have their own lifecycle controls; a runtime reparse does not merge them into one operation.
 
 ### Sections as structural scopes
 
@@ -379,19 +373,19 @@ A section groups options that belong to a particular part of the role.
 
 The same application/instance/section/option hierarchy applies here; only the concrete section and option change.
 
-For a named instance `echo`, examples include:
+For the named server `echo` and the separate client `uplink`, examples include:
 
 ```text
 echo local --port 8080
-echo remote --host localhost --port 8080
+uplink remote --host localhost --port 8080
 ```
 
 or in configuration-file form:
 
 ```ini
 echo.local.port = 8080
-echo.remote.host = "localhost"
-echo.remote.port = 8080
+uplink.remote.host = "localhost"
+uplink.remote.port = 8080
 ```
 
 The command-line hierarchy and the configuration-file hierarchy express the same structure.
@@ -580,17 +574,13 @@ That is the model the application author and operator see.
 
 The implementation foundation matters because it makes help output, configuration files, option grouping, command-line generation, and persistent/nonpersistent classification possible. But the conceptual model remains the SNode.C configuration hierarchy.
 
-### Configuration as architectural leverage
+### Choosing what operators can change
 
-Configuration gives the architecture operational leverage.
+An external option is a promise to operators. Naming a role makes its endpoint and policy visible, but also makes those names part of configuration files, service definitions, and diagnostic procedures. Expose choices that deployments need to own; keep an internal helper’s construction detail in code when changing it independently would violate the application’s assumptions.
 
-Because configuration can shape a role without rewriting protocol code, the same application structure can often be reused across deployments.
+Startup-only configuration has a useful cost model: one validated process begins with one intended deployment shape. Runtime reconfiguration can avoid a full restart, but requires a policy for partial failure, existing connections, and future activation. The framework supplies the parsing operation. It cannot decide those application consequences from an option name.
 
-A protocol may remain in the context. The factory may keep creating the same kind of endpoint. The lower-family handle type, registered instance, endpoint identity, TLS/legacy selection, and deployment values may change.
-
-Configuration makes that variation explicit. This connects directly back to Chapter 15: lower-family transfer is practical only if the changing parts have somewhere clear to live.
-
-In SNode.C, the configuration hierarchy gives those changing parts a visible place.
+The next chapter makes the distinction observable. We will inspect the same port supplied in code, overridden by a file, and overridden again for one invocation before discussing what a runtime reparse does with that hierarchy.
 
 ::: {.snodec-remember title="What to remember"}
 - Configuration is part of the SNode.C architecture, not an afterthought beside it.

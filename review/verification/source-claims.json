@@ -1,0 +1,829 @@
+{
+  "scope": "Manual chapter-level source audit of the listed technical contracts. Anchors establish traceability; mechanical existence checks do not prove prose semantics or exhaustive runtime coverage.",
+  "framework_manifest": "source-baseline/framework-working-tree.json",
+  "chapters": [
+    {
+      "chapter": 1,
+      "manuscript": "manuscript/chapters/01-why-snodec-exists.md",
+      "reviewed_contract": "Layered components and application-oriented architecture",
+      "framework_sources": [
+        {
+          "path": "src/CMakeLists.txt",
+          "needle": "add_subdirectory",
+          "line": 125
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 2,
+      "manuscript": "manuscript/chapters/02-preparing-your-environment.md",
+      "reviewed_contract": "Current-tree build options, installation and startup logging",
+      "framework_sources": [
+        {
+          "path": "CMakeLists.txt",
+          "needle": "SNODEC_BUILD_TESTS",
+          "line": 58
+        },
+        {
+          "path": "src/utils/Config.cpp",
+          "needle": "logLevelValidator",
+          "line": 222
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 3,
+      "manuscript": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "reviewed_contract": "Complete echo pair and per-call activation",
+      "framework_sources": [
+        {
+          "path": "src/net/in/stream/legacy/SocketServer.h",
+          "needle": "SocketServer",
+          "line": 49
+        },
+        {
+          "path": "src/core/socket/stream/SocketClient.h",
+          "needle": "FlowHandle connect",
+          "line": 298
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/EchoPair/echoserver.cpp",
+        "companion/examples/EchoPair/echoclient.cpp"
+      ]
+    },
+    {
+      "chapter": 4,
+      "manuscript": "manuscript/chapters/04-reading-the-codebase-with-confidence.md",
+      "reviewed_contract": "Source navigation follows public family wrappers into shared machinery",
+      "framework_sources": [
+        {
+          "path": "src/net/in/stream/SocketServer.h",
+          "needle": "FlowHandle",
+          "line": 75
+        },
+        {
+          "path": "src/core/socket/stream/SocketServer.h",
+          "needle": "realListen",
+          "line": 184
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 5,
+      "manuscript": "manuscript/chapters/05-the-mental-model-of-snodec.md",
+      "reviewed_contract": "Configuration registration, per-call flows and connection/context ownership",
+      "framework_sources": [
+        {
+          "path": "src/net/config/ConfigInstance.cpp",
+          "needle": "utils::Config::configRoot",
+          "line": 68
+        },
+        {
+          "path": "src/core/socket/stream/SocketServer.h",
+          "needle": "FlowHandle listen",
+          "line": 263
+        },
+        {
+          "path": "src/core/socket/stream/SocketClient.h",
+          "needle": "FlowHandle connect",
+          "line": 298
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 6,
+      "manuscript": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+      "reviewed_contract": "Public tick state restriction and start-driven event dispatch",
+      "framework_sources": [
+        {
+          "path": "src/core/EventLoop.cpp",
+          "needle": "TickStatus EventLoop::tick",
+          "line": 224
+        },
+        {
+          "path": "src/core/EventLoop.cpp",
+          "needle": "eventLoopState == State::RUNNING || eventLoopState == State::STOPPING",
+          "line": 215
+        },
+        {
+          "path": "src/core/EventLoop.cpp",
+          "needle": "bool EventLoop::reconfigure()",
+          "line": 321
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 7,
+      "manuscript": "manuscript/chapters/07-layers-in-practice-network-transport-connection-application.md",
+      "reviewed_contract": "Framework layers describe implementation responsibilities",
+      "framework_sources": [
+        {
+          "path": "src/net/in/stream/tls/SocketClient.h",
+          "needle": "SocketClient",
+          "line": 49
+        },
+        {
+          "path": "src/core/socket/stream/SocketConnection.h",
+          "needle": "SocketConnection",
+          "line": 88
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 8,
+      "manuscript": "manuscript/chapters/08-socket-addresses-and-address-semantics.md",
+      "reviewed_contract": "Family-specific endpoint identity and local versus remote configuration",
+      "framework_sources": [
+        {
+          "path": "src/net/in/SocketAddress.cpp",
+          "needle": "SocketAddress",
+          "line": 42
+        },
+        {
+          "path": "src/net/un/SocketAddress.cpp",
+          "needle": "SocketAddress",
+          "line": 42
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 9,
+      "manuscript": "manuscript/chapters/09-servers-clients-and-connections.md",
+      "reviewed_contract": "Separate flows share endpoint policy; termination is not connection closure",
+      "framework_sources": [
+        {
+          "path": "src/core/socket/stream/SocketClient.h",
+          "needle": "auto flow = std::make_shared",
+          "line": 299
+        },
+        {
+          "path": "src/core/socket/stream/FlowController.hpp",
+          "needle": "terminateFlow",
+          "line": 95
+        },
+        {
+          "path": "src/core/socket/Socket.hpp",
+          "needle": "setOnDestroy",
+          "line": 70
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 10,
+      "manuscript": "manuscript/chapters/10-ipv4-and-ipv6-as-the-first-concrete-network-families.md",
+      "reviewed_contract": "IPv4 and IPv6 wrapper symmetry requires separate runtime checks",
+      "framework_sources": [
+        {
+          "path": "src/net/in/stream/SocketClient.h",
+          "needle": "SocketClient",
+          "line": 45
+        },
+        {
+          "path": "src/net/in6/stream/SocketClient.h",
+          "needle": "SocketClient",
+          "line": 45
+        },
+        {
+          "path": "tests/component/net/Inet6LegacyServerClientPayloadExchangeTest.cpp",
+          "needle": "main",
+          "line": 203
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 11,
+      "manuscript": "manuscript/chapters/11-unix-domain-sockets.md",
+      "reviewed_contract": "Unix pathname safety and local peer identity",
+      "framework_sources": [
+        {
+          "path": "tests/component/net/UnixPhysicalSocketPathSafetyTest.cpp",
+          "needle": "main",
+          "line": 115
+        },
+        {
+          "path": "src/net/un/phy/PhysicalSocket.hpp",
+          "needle": "unlink",
+          "line": 197
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 12,
+      "manuscript": "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "reviewed_contract": "RFCOMM channel and L2CAP PSM belong to distinct lower families",
+      "framework_sources": [
+        {
+          "path": "src/net/rc/SocketAddress.h",
+          "needle": "SocketAddress",
+          "line": 45
+        },
+        {
+          "path": "src/net/l2/SocketAddress.h",
+          "needle": "SocketAddress",
+          "line": 45
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 13,
+      "manuscript": "manuscript/chapters/13-writing-socketcontext-classes-well.md",
+      "reviewed_contract": "Connection-local input consumption and queue admission",
+      "framework_sources": [
+        {
+          "path": "src/core/socket/stream/SocketContext.h",
+          "needle": "trySendToPeer",
+          "line": 84
+        },
+        {
+          "path": "src/core/socket/stream/SocketContext.cpp",
+          "needle": "readFromPeer",
+          "line": 145
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/LineProtocol-Server/LineCommandServerContext.cpp"
+      ]
+    },
+    {
+      "chapter": 14,
+      "manuscript": "manuscript/chapters/14-writing-socketcontextfactory-classes-well.md",
+      "reviewed_contract": "Factory creation and injected dependency lifetimes",
+      "framework_sources": [
+        {
+          "path": "src/core/socket/stream/SocketContextFactory.h",
+          "needle": "virtual core::socket::stream::SocketContext* create",
+          "line": 69
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/MiniGateway-Extended/MeasurementUnixSocketContextFactory.cpp",
+        "companion/examples/MiniGateway-Extended/main.cpp"
+      ]
+    },
+    {
+      "chapter": 15,
+      "manuscript": "manuscript/chapters/15-building-the-same-protocol-over-different-lower-layers.md",
+      "reviewed_contract": "Reusing context/factory above different carrier wrappers",
+      "framework_sources": [
+        {
+          "path": "src/net/un/stream/legacy/SocketServer.h",
+          "needle": "SocketContextFactory",
+          "line": 67
+        },
+        {
+          "path": "src/net/in/stream/legacy/SocketServer.h",
+          "needle": "SocketContextFactory",
+          "line": 67
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 16,
+      "manuscript": "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
+      "reviewed_contract": "Endpoint configuration is shared across independently controlled flows",
+      "framework_sources": [
+        {
+          "path": "src/utils/Config.cpp",
+          "needle": "bootstrap",
+          "line": 424
+        },
+        {
+          "path": "src/core/socket/stream/SocketClient.h",
+          "needle": "Super::config->Remote::setSocketAddress",
+          "line": 313
+        },
+        {
+          "path": "src/utils/Config.cpp",
+          "needle": "bool Config::reconfigure()",
+          "line": 1070
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 17,
+      "manuscript": "manuscript/chapters/17-application-and-instance-configuration-in-detail.md",
+      "reviewed_contract": "Configuration hierarchy and configuration destruction differ from flow lifetime",
+      "framework_sources": [
+        {
+          "path": "src/net/config/ConfigInstance.h",
+          "needle": "ConfigInstance",
+          "line": 65
+        },
+        {
+          "path": "src/core/socket/Socket.hpp",
+          "needle": "setOnDestroy",
+          "line": 70
+        },
+        {
+          "path": "tests/component/core/SNodeCReconfigureTest.cpp",
+          "needle": "int main(",
+          "line": 41
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 18,
+      "manuscript": "manuscript/chapters/18-logging-diagnostics-and-runtime-introspection.md",
+      "reviewed_contract": "Public logging facade, scoped policy and numeric global CLI startup",
+      "framework_sources": [
+        {
+          "path": "src/Log.h",
+          "needle": "configure",
+          "line": 73
+        },
+        {
+          "path": "src/utils/Config.cpp",
+          "needle": "logLevelOpt->as<int>()",
+          "line": 536
+        },
+        {
+          "path": "src/utils/Config.cpp",
+          "needle": "parseKeyValueLevel",
+          "line": 180
+        },
+        {
+          "path": "src/utils/Config.cpp",
+          "needle": "phase == ParsePhase::Bootstrap",
+          "line": 818
+        },
+        {
+          "path": "src/Log.h",
+          "needle": "void hexDump(",
+          "line": 173
+        },
+        {
+          "path": "src/log/SemanticLogger.cpp",
+          "needle": "void BoundaryLogger::hexDump(",
+          "line": 697
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/SemanticLogging/main.cpp"
+      ]
+    },
+    {
+      "chapter": 19,
+      "manuscript": "manuscript/chapters/19-tls-across-the-framework.md",
+      "reviewed_contract": "TLS trust selection and SSL_CTX policy before SSL construction",
+      "framework_sources": [
+        {
+          "path": "src/core/socket/stream/tls/ssl_utils.cpp",
+          "needle": "SSL_CTX_set_verify(ctx",
+          "line": 203
+        },
+        {
+          "path": "src/core/socket/stream/tls/SocketConnector.hpp",
+          "needle": "onConnect(socketConnection)",
+          "line": 71
+        },
+        {
+          "path": "src/net/config/stream/tls/ConfigSocketClient.hpp",
+          "needle": "getSslCtx",
+          "line": 65
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 20,
+      "manuscript": "manuscript/chapters/20-timeouts-retries-and-failure-modes.md",
+      "reviewed_contract": "Retry/reconnect retain the same per-call flow; queue limits remain connection policy",
+      "framework_sources": [
+        {
+          "path": "src/core/socket/stream/SocketClient.h",
+          "needle": "flow->dispatchRetry()",
+          "line": 269
+        },
+        {
+          "path": "src/core/socket/stream/SocketClient.h",
+          "needle": "flow->dispatchReconnect()",
+          "line": 221
+        },
+        {
+          "path": "src/core/socket/stream/FlowController.hpp",
+          "needle": "onFlowCompletedCallback",
+          "line": 74
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 21,
+      "manuscript": "manuscript/chapters/21-the-http-layer.md",
+      "reviewed_contract": "HTTP parser defaults and request/response policy boundaries",
+      "framework_sources": [
+        {
+          "path": "src/web/http/ParserLimits.h",
+          "needle": "DEFAULT_MAXIMUM_HEADER_LINE_BYTES = 8192",
+          "line": 21
+        },
+        {
+          "path": "src/web/http/server/ConfigHttpServer.cpp",
+          "needle": "maximum-pending-requests",
+          "line": 23
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 22,
+      "manuscript": "manuscript/chapters/22-the-express-like-framework.md",
+      "reviewed_contract": "Express route dispatch and middleware continuation",
+      "framework_sources": [
+        {
+          "path": "src/express/dispatcher/RouterDispatcher.cpp",
+          "needle": "dispatch",
+          "line": 42
+        },
+        {
+          "path": "src/express/dispatcher/MiddlewareDispatcher.cpp",
+          "needle": "dispatch",
+          "line": 42
+        },
+        {
+          "path": "src/express/WebApp.cpp",
+          "needle": "bool WebApp::reconfigure()",
+          "line": 64
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 23,
+      "manuscript": "manuscript/chapters/23-server-sent-events-and-real-time-http.md",
+      "reviewed_contract": "SSE fragment framing versus application subscriber ownership",
+      "framework_sources": [
+        {
+          "path": "src/web/http/server/Response.cpp",
+          "needle": "Response& Response::sendFragment",
+          "line": 440
+        },
+        {
+          "path": "src/web/http/CiStringMap.h",
+          "needle": "ciEquals",
+          "line": 54
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/SSE-Server/main.cpp"
+      ]
+    },
+    {
+      "chapter": 24,
+      "manuscript": "manuscript/chapters/24-websocket-and-protocol-upgrade.md",
+      "reviewed_contract": "WebSocket text/binary selection and upgraded protocol contexts",
+      "framework_sources": [
+        {
+          "path": "src/web/websocket/SubProtocol.hpp",
+          "needle": "sendMessage(const std::string&",
+          "line": 97
+        },
+        {
+          "path": "src/web/websocket/SubProtocol.hpp",
+          "needle": "sendMessage(const char*",
+          "line": 92
+        },
+        {
+          "path": "src/web/websocket/SocketContextUpgrade.h",
+          "needle": "SocketContextUpgrade",
+          "line": 45
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/WebSocket-Echo-ServerSubprotocol/EchoServer.cpp"
+      ]
+    },
+    {
+      "chapter": 25,
+      "manuscript": "manuscript/chapters/25-mqtt-support-in-snodec.md",
+      "reviewed_contract": "MQTT 3.1.1 and the optional private CONNECT protocol-level bit",
+      "framework_sources": [
+        {
+          "path": "src/iot/mqtt/packets/Connect.cpp",
+          "needle": "MQTT_VERSION_3_1_1 | (loopPrevention ? 0x80",
+          "line": 69
+        },
+        {
+          "path": "src/iot/mqtt/client/Mqtt.cpp",
+          "needle": "onConnack",
+          "line": 211
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/MQTT-ClientRole/SensorClient.cpp"
+      ]
+    },
+    {
+      "chapter": 26,
+      "manuscript": "manuscript/chapters/26-mqtt-over-websocket.md",
+      "reviewed_contract": "MQTT over WebSocket uses the binary adapter after HTTP upgrade",
+      "framework_sources": [
+        {
+          "path": "src/iot/mqtt/SubProtocol.hpp",
+          "needle": "onMessageStart(int opCode)",
+          "line": 114
+        },
+        {
+          "path": "src/iot/mqtt/client/SubProtocol.cpp",
+          "needle": "SubProtocol",
+          "line": 42
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 27,
+      "manuscript": "manuscript/chapters/27-designing-iot-systems-with-multiple-protocols.md",
+      "reviewed_contract": "Adapters and application state retain separate responsibilities",
+      "framework_sources": [
+        {
+          "path": "src/iot/mqtt/client/Mqtt.h",
+          "needle": "Mqtt",
+          "line": 45
+        },
+        {
+          "path": "src/express/Response.h",
+          "needle": "Response",
+          "line": 47
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/MiniGateway/MeasurementModel.cpp",
+        "companion/examples/MiniGateway/MiniGatewayMqtt.cpp"
+      ]
+    },
+    {
+      "chapter": 28,
+      "manuscript": "manuscript/chapters/28-database-support-and-application-state.md",
+      "reviewed_contract": "MariaDB command sequences and transactions are distinct",
+      "framework_sources": [
+        {
+          "path": "src/database/mariadb/MariaDBCommandSequence.cpp",
+          "needle": "MariaDBCommandSequence",
+          "line": 43
+        },
+        {
+          "path": "src/database/mariadb/MariaDBConnection.cpp",
+          "needle": "MariaDBConnection",
+          "line": 43
+        },
+        {
+          "path": "src/database/mariadb/MariaDBConnection.cpp",
+          "needle": "commandCompleted",
+          "line": 174
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/MariaDB-Minimal/main.cpp"
+      ]
+    },
+    {
+      "chapter": 29,
+      "manuscript": "manuscript/chapters/29-learning-from-the-applications-in-src-apps.md",
+      "reviewed_contract": "Applications illustrate API shape and chosen policy, not universal guarantees",
+      "framework_sources": [
+        {
+          "path": "src/apps/CMakeLists.txt",
+          "needle": "add_subdirectory",
+          "line": 165
+        },
+        {
+          "path": "src/apps/echo/model/clients.h",
+          "needle": "X509_VERIFY_PARAM_set1_host",
+          "line": 102
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 30,
+      "manuscript": "manuscript/chapters/30-from-applications-to-systems.md",
+      "reviewed_contract": "Independent endpoint roles within one runtime do not imply dependency readiness",
+      "framework_sources": [
+        {
+          "path": "src/core/socket/stream/SocketClient.h",
+          "needle": "flow->armReconnectTimer",
+          "line": 215
+        },
+        {
+          "path": "src/express/WebApp.h",
+          "needle": "WebApp",
+          "line": 59
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/MiniGateway/main.cpp",
+        "companion/examples/MiniGateway/MiniGatewayWeb.cpp"
+      ]
+    },
+    {
+      "chapter": 31,
+      "manuscript": "manuscript/chapters/31-mqttsuite-as-a-reference-ecosystem.md",
+      "reviewed_contract": "MQTTSuite is an external architectural case study; framework primitives remain shared",
+      "framework_sources": [
+        {
+          "path": "src/iot/mqtt/server/Mqtt.h",
+          "needle": "Mqtt",
+          "line": 45
+        },
+        {
+          "path": "src/iot/mqtt/client/Mqtt.h",
+          "needle": "Mqtt",
+          "line": 45
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 32,
+      "manuscript": "manuscript/chapters/32-cmake-components-and-linking-strategy.md",
+      "reviewed_contract": "Exported components and direction of public dependencies",
+      "framework_sources": [
+        {
+          "path": "src/web/websocket/server/CMakeLists.txt",
+          "needle": "target_link_libraries(websocket-server PUBLIC websocket http-server)",
+          "line": 89
+        },
+        {
+          "path": "src/database/mariadb/CMakeLists.txt",
+          "needle": "target_link_libraries(db-mariadb PUBLIC core",
+          "line": 97
+        },
+        {
+          "path": "src/CMakeLists.txt",
+          "needle": "SNODEC_BUILD_APPS",
+          "line": 134
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 33,
+      "manuscript": "manuscript/chapters/33-deployment-on-linux-and-openwrt.md",
+      "reviewed_contract": "Installed deployment, configuration and process lifecycle",
+      "framework_sources": [
+        {
+          "path": "src/utils/Daemon.cpp",
+          "needle": "Daemon",
+          "line": 42
+        },
+        {
+          "path": "src/utils/Config.cpp",
+          "needle": "--write-config",
+          "line": 475
+        },
+        {
+          "path": "src/utils/Config.cpp",
+          "needle": "bool Config::reconfigure()",
+          "line": 1070
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 34,
+      "manuscript": "manuscript/chapters/34-testing-debugging-and-benchmarking.md",
+      "reviewed_contract": "Actual test registration and separate evidence categories",
+      "framework_sources": [
+        {
+          "path": "tests/CMakeLists.txt",
+          "needle": "add_subdirectory",
+          "line": 46
+        },
+        {
+          "path": "tests/cmake/AddSNodeCTest.cmake",
+          "needle": "add_test",
+          "line": 41
+        },
+        {
+          "path": "tests/component/core/SNodeCReconfigureTest.cpp",
+          "needle": "int main(",
+          "line": 41
+        },
+        {
+          "path": "tests/unit/log/SemanticTerminalColorRoutingTest.cpp",
+          "needle": "both public overloads",
+          "line": 260
+        },
+        {
+          "path": "tests/unit/utils/HexDumpPresentationTest.cpp",
+          "needle": "no payload bytes are truncated",
+          "line": 86
+        },
+        {
+          "path": "tests/unit/http/HttpRequestFormatterRawWireTest.cpp",
+          "needle": "httputils::toString(",
+          "line": 31
+        },
+        {
+          "path": "tests/unit/http/HttpResponseFormatterRawWireTest.cpp",
+          "needle": "httputils::toString(",
+          "line": 31
+        }
+      ],
+      "companion_sources": []
+    },
+    {
+      "chapter": 35,
+      "manuscript": "manuscript/chapters/35-building-minigateway.md",
+      "reviewed_contract": "Gateway model sequencing, explicit web role, SSE ownership and standard MQTT CONNECT",
+      "framework_sources": [
+        {
+          "path": "src/express/Router.h",
+          "needle": "post",
+          "line": 113
+        },
+        {
+          "path": "src/iot/mqtt/packets/Connect.cpp",
+          "needle": "loopPrevention",
+          "line": 65
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/MiniGateway/MeasurementModel.cpp",
+        "companion/examples/MiniGateway/MiniGatewayWeb.cpp",
+        "companion/examples/MiniGateway/MiniGatewayMqtt.cpp"
+      ]
+    },
+    {
+      "chapter": 36,
+      "manuscript": "manuscript/chapters/36-extending-minigateway-with-a-new-network-role.md",
+      "reviewed_contract": "A new Unix role preserves the model boundary and record framing invariant",
+      "framework_sources": [
+        {
+          "path": "src/net/un/stream/SocketServer.h",
+          "needle": "FlowHandle",
+          "line": 75
+        },
+        {
+          "path": "src/core/socket/stream/SocketContext.cpp",
+          "needle": "readFromPeer",
+          "line": 145
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.cpp",
+        "companion/examples/MiniGateway-Extended/MeasurementModel.cpp"
+      ]
+    },
+    {
+      "chapter": 37,
+      "manuscript": "manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "reviewed_contract": "Configuration identity is a different design decision from flow control",
+      "framework_sources": [
+        {
+          "path": "src/core/socket/stream/SocketClient.h",
+          "needle": "FlowHandle connect",
+          "line": 298
+        },
+        {
+          "path": "src/core/socket/stream/SocketServer.h",
+          "needle": "FlowHandle listen",
+          "line": 263
+        }
+      ],
+      "companion_sources": [
+        "companion/examples/MiniGateway-Extended/main.cpp"
+      ]
+    },
+    {
+      "chapter": 38,
+      "manuscript": "manuscript/chapters/38-extending-the-framework-safely.md",
+      "reviewed_contract": "Extensions preserve per-call cancellation and sibling-flow independence",
+      "framework_sources": [
+        {
+          "path": "tests/component/net/InetPerCallFlowTest.cpp",
+          "needle": "main",
+          "line": 119
+        },
+        {
+          "path": "src/core/socket/stream/FlowController.hpp",
+          "needle": "terminateFlow",
+          "line": 95
+        },
+        {
+          "path": "tests/component/core/SNodeCReconfigureTest.cpp",
+          "needle": "int main(",
+          "line": 41
+        }
+      ],
+      "companion_sources": []
+    }
+  ],
+  "reviewed_tree_sha256": "df2fbdbe844f3368f5ed142973d82c0008a057c13d87dda6b7670e45cc3eacb8"
+}

@@ -7,7 +7,7 @@
 
 ### Why these three belong in one chapter
 
-A server or client in SNode.C is more than an address wrapped in convenience code. It is an application-side handle for a role that will later appear as a registered runtime instance and produce concrete connections.
+A server or client handle gives application code access to a configured role. Its activation flows use the addresses from Chapter 8 to listen or connect; a successful peer episode then has its own connection lifetime.
 
 This chapter asks the next question:
 
@@ -17,9 +17,9 @@ The answer brings together three concepts that should not be learned as unrelate
 
 A server-side instance uses a local endpoint identity to listen and accept peers. A client-side instance uses a remote endpoint identity, and optionally a local one, to initiate a connection. A connection is the concrete peer relationship that appears when the listen or connect flow succeeds.
 
-Figure \ref{fig:server-client-path} turns that sequence into a single path. It starts with the handle, passes through the registration call and the runtime-visible server or client role, and then follows the accept/connect machinery to the concrete connection, factory, context, and protocol behavior.
+Figure \ref{fig:server-client-path} follows that activation path. It starts with the configured handle, separates server-side and client-side flows, and then follows the accept/connect machinery to the concrete connection, factory, context, and protocol behavior.
 
-![The server/client role path from handle to protocol behavior.](assets/figures/pdf/fig-05-server-client-connection-context-path.pdf){#fig:server-client-path width=88% latex-placement="tbp"}
+![The server/client activation path. Each explicit call creates a flow using shared endpoint policy; the arrows describe progress toward protocol behavior, not ownership or a guarantee of success.](assets/figures/pdf/fig-05-server-client-connection-context-path.pdf){#fig:server-client-path width=88% latex-placement="tbp"}
 
 Read Figure \ref{fig:server-client-path} as a bridge among the book's early concepts, not as a full implementation diagram. It brings together the echo pair, the handle/instance/connection/context vocabulary, the runtime machinery, the communication layer stack, and endpoint identity.
 
@@ -43,38 +43,20 @@ Start with a responsibility map rather than a class hierarchy.
 |---|---|---|
 | Application-side handle | `SocketServer` / `SocketClient` object visible in user code | configure and register the role |
 | Registered instance | server-side or client-side runtime-visible role | participate in runtime and flow-controller progress |
+| Activation flow | returned `ClientFlowController` / `ServerFlowController` shared handle | control one explicit connect/listen call and its automatic recovery |
 | Connection | `SocketConnection` | represent one concrete peer relationship |
 | Factory | `SocketContextFactory` | create a per-connection context |
 | Context | `SocketContext` | implement protocol behavior for one connection |
 
 The table is deliberately phrased in concepts first and class names second.
 
-The `SocketServer`/`SocketClient` handle is the handle through which application code configures and registers a role. After `listen(...)` or `connect(...)`, the registered instance is represented by framework-owned shared state and flow-controller machinery. That instance may then create or accept one or more connections over time.
+The `SocketServer`/`SocketClient` handle exposes the shared configuration and callbacks of a role. Each explicit `listen(...)` or `connect(...)` starts a separate flow and returns its controller. A flow can make several automatic attempts over time; the configured role can also have several explicit flows. Neither count is the same as the number of established connections.
 
 The connection is the peer relationship. It has addresses, a descriptor, data flow, shutdown behavior, timeouts, timing information, counters, and names.
 
 The context is the application protocol endpoint attached to that connection. It is where protocol code reacts to lifecycle and input events.
 
-These boundaries matter because they prevent a common collapse:
-
-```text
-server object = connection = protocol
-```
-
-That collapse is wrong for SNode.C.
-
-The better picture is:
-
-```text
-handle
-  -> registered instance
-      -> connection
-          -> context
-```
-
-The handle registers the role. The instance is advanced by the runtime. The connection is a concrete peer relationship. The context implements protocol behavior over that relationship.
-
-The distinction has direct consequences for how an application is structured.
+Test the distinction with a server that accepts two clients. It still has one configured role, but each client needs its own connection and protocol state. Stop accepting new peers and those two existing connections need not end. A single object count cannot describe all three facts.
 
 Configuration belongs naturally to the instance, because configuration describes how the communication role should behave over time. Addresses appear at registration and later on connections, because they describe endpoint identity. Retry and reconnect behavior belongs to the instance and its flow-controller machinery, because it concerns how the role should keep trying or resume later. Protocol behavior belongs to the context, because it is relative to one concrete peer relationship.
 
@@ -110,7 +92,7 @@ The protocol endpoint lives in the context.
 
 The concrete peer relationship lives in the connection.
 
-The runtime-visible instance is the durable role that ties the two together over time.
+The configured instance supplies the shared policy and identity under which those connections appear.
 
 #### Local handle and runtime-visible instance
 
@@ -120,13 +102,25 @@ A local `SocketServer` or `SocketClient` object is the handle used to configure 
 
 That distinction explains why the outer object should not be mentally reduced to one connection.
 
-The instance is the durable role.
-
-The connection is the concrete peer relationship.
-
-The local handle is the application-side entry point through which the role is configured and registered.
+The local handle is the application-side entry point into that shared state. A reference to it and a reference to one peer therefore answer different lifetime questions.
 
 This is especially important for examples. A small example may keep the handle visible in `main()` until `core::SNodeC::start()` returns. That is a clear and readable style. But the architectural model is not “the local variable is the whole runtime entity.” The registered instance is carried by framework-owned state and advanced by the runtime.
+
+#### Retaining one activation flow
+
+The returned handle lets application code name a particular operation:
+
+```cpp
+auto first = client.connect(onStatus);
+auto second = client.connect(onStatus);
+first->terminateFlow();
+```
+
+This is an API sketch using an existing client and status callback. The first call's pending attempts and recovery are terminated; the second call has its own controller. An established connection is a separate object and must be closed through the connection API when that is the application's intention. Dropping `first` without calling `terminateFlow()` would release only the application's reference.
+
+The configuration remains shared. Address-taking overloads update that endpoint configuration; they do not create immutable per-call destination snapshots. Use separately configured endpoints when two destinations need independent configuration. Flow independence is a control boundary, not a second configuration system.
+
+There are also two different end observations. `setOnFlowTerminated(...)` reports termination of one flow. `setOnFlowCompleted(...)` runs when that controller is finally released, which can be delayed by a retained handle. The endpoint's `setOnDestroy(...)` callback instead follows destruction and unregistration of the shared configuration. Capture identifiers by value in these callbacks; capturing the object that owns the callback can create a lifetime cycle.
 
 ### Server instances
 
@@ -156,7 +150,7 @@ The application says, in effect:
 This server-side role should listen here.
 ```
 
-The runtime machinery then move that intention forward.
+The runtime machinery then moves that intention forward.
 
 That is different from a small blocking wrapper around `bind(...)`, `listen(...)`, and `accept(...)`. SNode.C uses the same operating-system concepts underneath, but the framework-level design is event-driven and role-based.
 
@@ -238,7 +232,7 @@ The application says, in effect:
 This client-side role should connect there.
 ```
 
-The runtime machinery then move that intention forward.
+The runtime machinery then moves that intention forward.
 
 A client-side instance may produce one connection, no connection, or several connection episodes over time if retry or reconnect behavior is configured. That is why the instance must not be confused with a single successful connection.
 
@@ -347,8 +341,6 @@ The connection object carries several groups of responsibility:
 | Naming | `getInstanceName()`, `getConnectionName()` |
 
 This table is not meant to replace API documentation. Its job is to show why the connection is a runtime object with identity, data flow, time, diagnostics, and protocol attachment.
-
-The connection is therefore a visible runtime object with identity, timing, addresses, data flow, protocol attachment, and operational metrics rather than a hidden pipe.
 
 #### Connection versus context
 
@@ -589,25 +581,19 @@ They are neither status callbacks nor context callbacks. The distinction is prac
 
 #### `onConnect` versus `onConnected`
 
-The framework exposes both `onConnect` and `onConnected` as separate lifecycle hooks.
+These hooks describe different stages. In the TLS client path, `onConnect` runs before the per-connection TLS object is started. `onConnected` runs after a successful handshake, followed by context creation and attachment. Code that needs protocol-ready transport therefore belongs at a different point from code that prepares connection policy. Chapter 19 traces that sequence against the TLS connector and shows how it affects identity verification.
 
-This means the reader should not collapse them into one undifferentiated event.
-
-The names mark distinct lifecycle hooks in the framework. Later TLS and setup paths make the distinction more visible; for now, the important rule is not to treat them as interchangeable just because they may appear close together in simple examples.
-
-A simple legacy echo example may not make the distinction feel dramatic. A more complex connection path can. That is why the names should be respected from the beginning.
+For the non-TLS client, the ready callback and context attachment follow without that handshake stage. Similar-looking logs from the echo pair must not erase the distinction when the connection variant changes.
 
 #### `onDisconnect`
 
-`onDisconnect` is not a destructor-like cleanup moment.
-
-It is often the place where a completed connection lifecycle becomes interpretable.
+`onDisconnect` is a final opportunity to interpret the connection while its data is still available. The framework continues teardown after the callback; the received pointer is borrowed, not an ownership transfer.
 
 At disconnect time, useful information such as addresses, online duration, queued bytes, sent bytes, read bytes, and processed bytes can be logged or inspected.
 
 That makes disconnect a meaningful lifecycle point, not just the end of an object.
 
-This also explains why disconnect callbacks receive a `SocketConnection*`: the connection still carries the information needed to understand what happened.
+Copy the addresses, counters, or identifiers needed for later reporting during the callback. Retaining the pointer for later use would not keep the connection alive. In the current stream cleanup path, attached contexts have already been detached and deleted before this outer disconnect notification, so this is not a place to call back into the former protocol context.
 
 #### Context callbacks
 
@@ -668,27 +654,9 @@ registered instance
           -> SocketContext
 ```
 
-The factory therefore belongs conceptually between instance and context.
+The factory keeps a construction decision close to the role while applying it to each new connection. An alternative framework could accept a construction callback or a fixed context type directly. Those forms can express the same separation; SNode.C makes the factory an explicit object, which can also carry dependencies needed by newly created contexts. Chapter 14 examines what that object should retain and what must remain per connection.
 
-Without the factory, a server accepting multiple peers would have no clean general mechanism for producing a fresh protocol endpoint for each connection. The application entry point would have to know too much about connection creation timing. The role would begin to absorb protocol construction. The structure would become less reusable.
-
-With the factory, the division is clean:
-
-```text
-instance
-  -> long-lived configured communication role
-
-connection
-  -> concrete peer relationship
-
-factory
-  -> creates a protocol endpoint for that relationship
-
-context
-  -> protocol endpoint attached to the relationship
-```
-
-That is the same model from Chapter 5, now placed directly into the server/client/connection flow.
+The important test is state isolation. Two peers must not share an unfinished input buffer merely because the factory is shared. Conversely, two contexts may deliberately refer to one application model when that model represents a fact shared by the whole service. Factory lifetime and protocol-state lifetime answer different questions.
 
 ### Putting the pieces together
 
@@ -697,7 +665,7 @@ The full stream communication path can now be read without collapsing responsibi
 ```text
 application creates a SocketServer / SocketClient handle
   -> application configures the handle
-      -> listen(...) / connect(...) registers the instance
+      -> listen(...) / connect(...) starts an activation flow
           -> runtime and flow-controller machinery advance the role
               -> accept/connect machinery creates or establishes a peer relationship
                   -> SocketConnection represents that relationship
@@ -747,12 +715,4 @@ That question usually prevents the most common misunderstandings.
 
 ### Closing perspective
 
-Endpoint identity, runtime role, and concrete connection are separate questions:
-
-```text
-Which endpoint identity is being used?
-Which instance is registering listen or connect intent?
-Which concrete connection exists after success?
-```
-
-Keeping those questions separate makes the familiar IPv4/IPv6 examples precise rather than merely familiar.
+Before the family-specific chapters, classify three events: an address cannot be bound, a TLS handshake fails, and a protocol context is replaced during upgrade. The first may produce no peer connection; the second can involve connection machinery without reaching protocol readiness; the third can detach a context while the peer connection continues. Choose diagnostics at the boundary that can distinguish those outcomes. That exercise is more useful than counting every callback as another “connection event.”

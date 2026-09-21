@@ -49,7 +49,7 @@ The top-level app build also contains other targets, such as `configtest`, `ware
 \index{linked components}
 
 
-Before opening the C++ entry point, the build target already tells part of the application story. A SNode.C application target tells the reader three things before C++ is opened:
+Before opening the C++ entry point, read three facts from the build target:
 
 ```text
 which executable is produced
@@ -80,23 +80,7 @@ http-client
 db-mariadb
 ```
 
-An application outside the SNode.C source tree should use the installed package interface instead:
-
-```cmake
-find_package(snodec REQUIRED
-    COMPONENTS
-        http-server-express
-        net-in-stream-legacy
-)
-
-target_link_libraries(my-ipv4-legacy-webapp
-    PRIVATE
-        snodec::http-server-express
-        snodec::net-in-stream-legacy
-)
-```
-
-The namespace is not cosmetic. It tells CMake that the application is using exported SNode.C component targets, not internal targets from the SNode.C build tree. The direct component choices are the same as in the in-tree example; the external form uses the installed `snodec::...` namespace.
+Outside the source tree, those selections use the installed package’s `snodec::...` imported targets. The full paired example below shows both contexts. Keeping them side by side prevents an in-tree convenience from becoming an undocumented dependency in an external application.
 
 A simplified view of the selected application targets is:
 
@@ -419,7 +403,7 @@ http-server-express
 net-in-stream-legacy
 ```
 
-Its role in the manuscript should be secondary, but it shows that the Express-like layer can also support behavior comparison, compatibility checking, and focused route/middleware experiments.
+Use it for focused behavior comparison after following one route through `snode.c`; the same broad link composition can produce a very different set of application policies.
 
 In this reading, `snode.c` is the application-shell example, while `express-compat-server` is a compatibility and behavior-comparison example.
 
@@ -443,7 +427,7 @@ Chapter 3 introduced `EchoSocketContext` through the deliberately simplified `ec
 
 The repository echo family generalizes the same idea. The full echo application structure uses a shared echo protocol model, generated server executables, generated client executables, several network families, legacy and TLS stream modes, and compile definitions for the selected combination.
 
-The repository echo family keeps a stable protocol model while generating client/server targets for selected network families and legacy/TLS stream modes.
+Compare one generated target’s compile definitions with the common source. The selection should change the concrete carrier aliases without introducing another echo parser.
 
 This is one of the most useful application patterns in the repository. It shows how SNode.C can keep the protocol core stable while changing the outer communication boundary.
 
@@ -457,7 +441,7 @@ The server side, `jsonserver`, combines an Express legacy `WebApp`, `JsonMiddlew
 
 The client side, `jsonclient`, combines the HTTP legacy client, `MasterRequest`, a `POST /index.html` request, an `application/json` body, and response or parse-error callbacks.
 
-This pair is good manuscript material because it shows both sides of an HTTP interaction. It also shows optional feature availability: the server target depends on JSON support being present, while the client demonstrates an outgoing HTTP request shape.
+Read the pair together to compare the client’s method, path, content type, and body with the server’s route and JSON middleware. It also shows optional feature availability: the server target depends on JSON support being present, while the client demonstrates an outgoing HTTP request shape.
 
 #### `testpost` as focused HTTP POST example
 
@@ -469,7 +453,7 @@ The source structure is useful because it shows two related application roles in
 
 The TLS app reuses the legacy app behavior. That makes `testpost` useful for Chapter 29 because it shows the same application behavior exposed over both the legacy carrier and the TLS carrier.
 
-This example should remain compact in the manuscript. The point is the application shape, not the details of the HTML upload form or the example certificate configuration.
+When borrowing this shape, separate the reused route behavior from the TLS deployment policy. The fact that both variants register the same handlers says nothing about which peer identities the TLS endpoint verifies.
 
 #### `testpipe` as a small core utility
 
@@ -562,19 +546,7 @@ The examples lead to a practical reading method for unfamiliar SNode.C applicati
 
 #### Application categories in `src/apps`
 
-The selected examples can be grouped by what they teach:
-
-| Category | Examples | What to learn |
-|---|---|---|
-| web application shell | `snode.c` | runtime + Express-style application assembly |
-| compatibility / behavior comparison | `express-compat-server` | another application using the same broad web stack |
-| generated application family | echo family | one protocol model across executable variants |
-| HTTP client/server examples | `jsonserver`, `jsonclient` | server/client split and optional JSON support |
-| HTTP POST / TLS-capable example | `testpost` | legacy/TLS application composition |
-| core runtime utility | `testpipe` | core-only runtime object and callbacks |
-| database demonstration | `database/testmariadb` | MariaDB API and event-integrated persistence |
-
-This grouping is more useful than a flat directory list. It tells the reader what to study and why.
+Use the opening table to choose the next application by the question you need answered. For callback progress without a network protocol, read `testpipe`. For request/response agreement, read `jsonclient` beside `jsonserver`. For carrier reuse, compare generated echo targets. This choice keeps the reading focused on a behavior rather than turning the directory into a checklist to memorize.
 
 #### Small applications and larger applications differ by composition depth
 
@@ -620,7 +592,7 @@ When reading a SNode.C application, use a repeatable method:
 10. Look for diagnostics, state callbacks, and operational reporting.
 11. Ask whether the build target and the entry point agree.
 
-This recipe works well because SNode.C applications are often explicit about their layers. The build target and the entry point usually agree.
+As a concrete exercise, apply the recipe to `jsonclient` without running it first. Write down the selected carrier, HTTP method and path, body content type, success callback, and parse-error callback. Then inspect `jsonserver` for the matching route. Any disagreement is a testable application-contract question, even when both binaries compile.
 
 The same principle can be read from common link patterns:
 
@@ -658,13 +630,15 @@ may be clearer than:
 one universal executable with every carrier hidden behind runtime branching
 ```
 
-The echo family demonstrates this. A separate generated target can make each variant easier to test, install, run, and explain. That does not mean one executable per variant is always the right design. It means the build structure can express operational clarity when the variants are meaningful.
+The echo family demonstrates the first choice: separate generated targets expose variants clearly but increase the set of binaries to package and test. A combined executable can activate several carriers together and share application state, at the cost of a larger option surface and shared process lifecycle. Choose according to whether deployments need independent variants or simultaneous roles.
 
 The JSON examples demonstrate a different form of clarity: separate targets keep server-side behavior and client-side behavior visible.
 
 The database example demonstrates feature-dependent clarity: when MariaDB is available the database target exists, and when it is unavailable the target is absent.
 
 These are application-design decisions. The build system records them.
+
+When borrowing from an in-tree application, separate three things in the reading notes: a public API shape, the example's selected policy, and an outcome actually tested. The TLS echo source is a useful case: it exposes the pre-handshake callback, but its commented hostname-checking statements do not execute. The same distinction applies to disabled roles, optional modules, and configured retry policy. A source example is strongest when it gives the reader a path to verify behavior, rather than when every nearby comment is treated as a runtime guarantee.
 
 ::: {.snodec-remember title="What to remember"}
 - `src/apps` shows how framework layers become executable targets.

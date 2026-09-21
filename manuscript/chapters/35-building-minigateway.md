@@ -11,7 +11,7 @@ MiniGateway is the point where the book's vocabulary becomes one deliberately sm
 
 MiniGateway is modest. It is neither a second MQTTSuite nor a broker, dashboard product, or hardware driver. It is a compact SNode.C application that owns one piece of domain state and exposes that state through several communication boundaries.
 
-The application keeps the latest environmental measurement in memory. A measurement contains temperature, humidity, voltage, a sequence number, and a timestamp. Whenever a new measurement enters the application, MiniGateway performs one internal state transition and then lets the outward-facing roles observe the accepted state.
+The application keeps the latest environmental measurement in memory. A measurement contains temperature, humidity, voltage, a sequence number, and an internal timestamp. The printed JSON codec exposes the first four values; it does not serialize the timestamp. Whenever a new measurement enters the application, MiniGateway performs one internal state transition and then lets the outward-facing roles observe the accepted state.
 
 ```text
 new measurement
@@ -45,7 +45,7 @@ GET /status
 GET /events
   -> keep an SSE connection open and push measurements as they arrive
 
-GET /simulate
+POST /simulate
   -> create one synthetic measurement and inject it into the normal application path
 ```
 
@@ -85,14 +85,14 @@ curl http://localhost:8080/status
 At startup, `/status` returns the default measurement because no measurement has entered the application yet. Create one measurement:
 
 ```sh
-curl http://localhost:8080/simulate
+curl -X POST http://localhost:8080/simulate
 curl http://localhost:8080/status
 ```
 
-A representative confirmed smoke-test run produces normal JSON measurement output. The exact timestamp depends on the local run, but the important observable behavior is that `/simulate` accepts a measurement and `/status` reports the same accepted state:
+A representative confirmed smoke-test run produces normal JSON measurement output. The internal timestamp is not part of this JSON representation; the observable behavior is that `/simulate` accepts a measurement and `/status` reports the same accepted state:
 
 ```text
-$ curl http://localhost:8080/simulate
+$ curl -X POST http://localhost:8080/simulate
 {"temperature":20.1,"humidity":41.0,"voltage":3.71,"sequence":1}
 
 $ curl http://localhost:8080/status
@@ -108,7 +108,7 @@ curl -N -H 'Accept: text/event-stream' http://localhost:8080/events
 Then trigger another measurement from a second terminal:
 
 ```sh
-curl http://localhost:8080/simulate
+curl -X POST http://localhost:8080/simulate
 ```
 
 The SSE terminal should receive an event. A representative confirmed SSE smoke run shows a measurement event on the open stream:
@@ -198,7 +198,7 @@ composition root
   -> main.cpp
 ```
 
-A one-file example would be shorter, but it would teach the wrong reflex. This chapter wants the reader to see how a small SNode.C application is assembled from visible roles around a shared model. Chapter 36 keeps the same split visible when it adds the Unix-domain measurement input. That extension is introduced as another SNode.C communication role, not as behavior hidden inside the HTTP routes, the SSE response path, or the MQTT client object.
+A one-file version could be useful for a first experiment. Here the separate files make the next exercise possible: the Unix-domain input can be added while the web and MQTT roles retain their existing responsibilities. The extra file navigation buys a visible place for each independently changing concern. Chapter 36 keeps the same split visible when it adds the Unix-domain measurement input. That extension is introduced as another SNode.C communication role, not as behavior hidden inside the HTTP routes, the SSE response path, or the MQTT client object.
 
 ### Stage 1: the build target
 
@@ -420,7 +420,7 @@ MeasurementModel::accept(measurement)
   -> return accepted measurement
 ```
 
-The listener return value is a small but important design choice. A listener that returns `false` is removed. The SSE route uses this to remove observers whose HTTP response is no longer connected.
+The listener return value is a small but important design choice. A listener that returns `false` is removed. The SSE route uses this to remove observers whose HTTP response is no longer connected when another measurement is published. With no subsequent publication, a disconnected observer remains retained; this small model has no immediate unsubscribe path.
 
 #### `MeasurementModel.h`
 
@@ -729,7 +729,7 @@ namespace minigateway {
         }
 
         static bool acceptsEventStream(const std::shared_ptr<Request>& req) {
-            return web::http::ciContains(req->get("Accept"), "text/event-stream");
+            return web::http::ciEquals(req->get("Accept"), "text/event-stream");
         }
 
         static void sendMeasurement(const std::shared_ptr<Response>& res,
@@ -774,7 +774,7 @@ namespace minigateway {
                 }
             });
 
-            app.get("/simulate", [&measurementModel] APPLICATION(req, res) {
+            app.post("/simulate", [&measurementModel] APPLICATION(req, res) {
                 const Measurement measurement = makeSimulatedMeasurement(measurementModel.current().sequence + 1);
                 const Measurement acceptedMeasurement = measurementModel.accept(measurement);
 
@@ -785,7 +785,7 @@ namespace minigateway {
     } // namespace
 
     MiniGatewayWebApp startWebRole(MeasurementModel& measurementModel) {
-        MiniGatewayWebApp app;
+        MiniGatewayWebApp app("web");
 
         registerWebRoutes(app, measurementModel);
 
@@ -809,9 +809,11 @@ namespace minigateway {
 
 `MiniGatewayMqtt` is the MQTT client-side protocol object for this application. It owns MQTT session behavior, not HTTP behavior and not application startup. On connection, it sends `CONNECT`. After a successful `CONNACK`, it subscribes to the measurement input topic. Incoming payloads on that topic are decoded and passed to the model.
 
-The static client list is a small guided-project convenience. It gives the application a simple way to publish accepted measurements to the currently connected MQTT protocol objects without making `MeasurementModel` know anything about MQTT. A production system might wrap this in a more explicit integration service. In this chapter, the static list keeps the source small while preserving the important boundary: the model publishes accepted measurements, and the MQTT object owns MQTT publication.
+The static client list gives the application a simple way to publish accepted measurements through the active MQTT protocol objects without making `MeasurementModel` know MQTT. Its scope is the entire process: two gateway models in one process would still publish through the same list. An application-owned integration object would cost additional lifetime management but could isolate those models. The static list is appropriate to this single-model exercise; it should not be mistaken for a per-model registry.
 
-The call to `sendConnect(...)` enables MQTT loop prevention. That matters for a gateway-like example because it prevents the client from receiving its own publications back through the broker as if they were fresh input.
+The `connected` flag becomes true after an accepted `CONNACK`. It is not evidence that the subscription has received a successful `SUBACK`, nor that a later publication has reached another peer. The incoming-topic check is a literal string comparison, so this example expects a concrete input topic, not a wildcard subscription filter.
+
+The final argument to `sendConnect(...)` is `false`. In the current source, the loop-prevention option sets a private bit in the MQTT protocol-level byte; it is not the MQTT 5 No Local subscription option and must not be enabled when ordinary MQTT 3.1.1 interoperability is intended. MiniGateway instead uses separate input and output topics. Keep those topic sets disjoint when configuring the example: a subscription that also matches its publication topic can feed an accepted measurement back into the model. A deployment that deliberately overlaps the topics needs an explicit application-level origin policy.
 
 #### `MiniGatewayMqtt.h`
 
@@ -918,7 +920,7 @@ namespace minigateway {
     void MiniGatewayMqtt::onConnected() {
         snode::log::application().trace() << "MQTT: initiating session";
 
-        sendConnect(true, "", "", 0, false, "", "", true);
+        sendConnect(true, "", "", 0, false, "", "", false);
     }
 
     void MiniGatewayMqtt::onDisconnected() {
@@ -1070,6 +1072,8 @@ namespace minigateway {
 
 
 `MiniGatewayMqttClient` gives the native IPv4 stream client a MiniGateway-specific name and factory parameter. The startup function configures the default remote MQTT port, installs the MiniGateway MQTT configuration section, enables retry/reconnect behavior, subscribes MQTT output to the model, and starts the connection attempt.
+
+The web role is named `web`, so its endpoint can be operated through the same configuration tree: `web local --host 127.0.0.1 --port 8081` selects a local test endpoint without editing the application. Naming the existing role keeps deployment policy outside route code.
 
 The role name `mqtt-uplink` appears in configuration, diagnostics, and state reporting. It is the runtime name of this application role, not a separate application object.
 
@@ -1225,10 +1229,24 @@ cmake --build build --target deploy-minigateway
 Use `-DCMAKE_INSTALL_PREFIX=/path/to/prefix` at configure time to choose the
 deployment prefix.
 
-Running the example requires an MQTT broker reachable through the configured MQTT
-client settings. Chapter 35 shows the HTTP/SSE/MQTT smoke checks used to observe
-the application.
+Exercising MQTT input and output requires a broker reachable through the configured
+client settings. The HTTP and SSE checks can run while that broker is unavailable.
+Chapter 35 distinguishes those local checks from the broker-dependent scenario.
 ````
+
+Before extending the project, make its observations explicit:
+
+| Experiment | Expected observation | What it does not establish |
+|---|---|---|
+| Start without a reachable MQTT broker, then call `/health` and `POST /simulate` | The web role can answer and the local sequence advances | Broker readiness or delivery |
+| Open `/events`, then simulate twice | Two accepted states with increasing local ids | Durable replay after reconnect |
+| Disconnect the observer while input is idle | The network peer is gone | Immediate removal of the model callback |
+| Restart the process and read `/status` | The local sequence starts again at zero | Persistence across process lifetime |
+| Publish malformed measurement JSON through a broker | A warning and no accepted-state change | Full broker interoperability without running the broker scenario |
+
+Use a separate observer to check MQTT output when a broker is available. In its absence, finish the HTTP and SSE checks and record the broker scenario as unexecuted.
+
+The example's guarantees stop at explicit boundaries. The model assigns a local sequence to each accepted measurement; it is not durable storage. The SSE callback list is pruned when a later publication discovers a disconnected response; it is not immediate disconnection-driven cleanup. Distinct MQTT input and output topics avoid the example feeding its own output back as fresh input; changing those topic sets changes that assumption. `/health` observes the web role, while `POST /simulate` mutates the model. Each of these facts can be checked independently, and none should be silently promoted into a stronger production guarantee.
 
 ::: {.snodec-remember title="What to remember"}
 - MiniGateway is a guided application, not a framework subsystem.

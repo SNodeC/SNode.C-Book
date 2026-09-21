@@ -1,0 +1,6 @@
+IPv4 READY, PONG, OK, then closure
+Unix READY, PONG, OK, then closure
+Unix missing target: failed before protocol readiness
+AF_INET: per-peer partial input remains isolated
+AF_UNIX: per-peer partial input remains isolated
+Both listeners stopped; owned Unix socket pathname cleaned up

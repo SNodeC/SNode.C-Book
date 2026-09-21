@@ -81,8 +81,8 @@
 
 \node[store block, above=\majorVGap of broker, xshift=\sideShift] (store) {%
   \textbf{\textcolor{snodecTitleGray}{\texttt{MQTTStore}}}\\[-0.4mm]
-  {\footnotesize persistent topic/state view,}\\[-0.2mm]
-  {\footnotesize retained/state history,}\\[-0.2mm]
+  {\footnotesize raw envelopes, projections,}\\[-0.2mm]
+  {\footnotesize MariaDB persistence,}\\[-0.2mm]
   {\footnotesize storage-facing role}
 };
 
@@ -97,8 +97,8 @@
 
 \node[support block, below=\majorVGap of broker, xshift=\sideShift] (integrator) {%
   \textbf{\textcolor{snodecTitleOrange}{\texttt{MQTTIntegrator}}}\\[-0.4mm]
-  {\footnotesize external services, databases,}\\[-0.2mm]
-  {\footnotesize application-specific systems}
+  {\footnotesize topic and payload mapping,}\\[-0.2mm]
+  {\footnotesize transform and republish}
 };
 
 % ----------------------------------------------------------------------
@@ -111,7 +111,7 @@
 
 \draw[interaction flow]
   (store.south)
-  -- node[arrow label, right=1.3mm] {store / retrieve}
+  -- node[arrow label, right=1.3mm] {subscribe / store}
   (broker.north -| store.center);
 
 \draw[interaction flow]

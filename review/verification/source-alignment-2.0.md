@@ -1,5 +1,7 @@
 # SNode.C 2.0 source-alignment scope
 
+This note records the earlier migration scope. The later combined editorial pass and refreshed source evidence are recorded under `review/editorial/`; the historical figure and chapter descriptions below describe that earlier migration only. The subsequent manuscript refinement uses the current framework working tree, including its uncommitted changes; see `manuscript-refinement-2026-09-21.md` for that source identity and actual verification results. The base commit below does not identify those additional changes on its own.
+
 Framework source: `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`, project version
 `2.0.0`. Book starting point: `ccbe53b35dc0013c252e31335aa2aae69cf2659e`.
 

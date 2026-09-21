@@ -50,13 +50,13 @@
 % --- application side ----------------------------------------------------
 \node[app box] (handle) {%
   \textbf{\textcolor{snodecTitleGreen}{Application-side handle}}\\[-0.4mm]
-  {\footnotesize \texttt{SocketServer} / \texttt{SocketClient} visible in user code}
+  {\footnotesize \texttt{SocketServer} / \texttt{SocketClient} with shared endpoint configuration}
 };
 
 \node[app box, below=7mm of handle] (registration) {%
-  \textbf{\textcolor{snodecTitleGreen}{Registration call}}\\[-0.4mm]
-  {\footnotesize \texttt{listen(...)} registers a server role}\\[-0.2mm]
-  {\footnotesize \texttt{connect(...)} registers a client role}
+  \textbf{\textcolor{snodecTitleGreen}{Activation call}}\\[-0.4mm]
+  {\footnotesize Each \texttt{listen(...)} creates a listening flow}\\[-0.2mm]
+  {\footnotesize Each \texttt{connect(...)} creates a connecting flow}
 };
 
 \draw[register flow] (handle.south) -- (registration.north);
@@ -65,13 +65,13 @@
 \node[coordinate, below=18mm of registration] (splitCenter) {};
 
 \node[split box, left=7mm of splitCenter] (server) {%
-  \textbf{\textcolor{snodecTitleBlue}{Server-side instance}}\\[-0.4mm]
-  {\footnotesize listens and accepts peers}
+  \textbf{\textcolor{snodecTitleBlue}{Server-side flow}}\\[-0.4mm]
+  {\footnotesize uses the server instance's policy}
 };
 
 \node[split box, right=7mm of splitCenter] (client) {%
-  \textbf{\textcolor{snodecTitleBlue}{Client-side instance}}\\[-0.4mm]
-  {\footnotesize initiates a peer relationship}
+  \textbf{\textcolor{snodecTitleBlue}{Client-side flow}}\\[-0.4mm]
+  {\footnotesize uses the client instance's policy}
 };
 
 \coordinate (splitTop)       at ($(server.north)!0.5!(client.north)$);
@@ -89,7 +89,7 @@
 
 \node[runtime box, below=12mm of splitBottom] (machinery) {%
   \textbf{\textcolor{snodecTitleBlue}{Accept/connect machinery}}\\[-0.4mm]
-  {\footnotesize runtime and flow controller progress the role}
+  {\footnotesize runtime advances acceptance or connection attempts}
 };
 
 \coordinate (mergeBottom)    at ($(server.south)!0.5!(client.south)$);

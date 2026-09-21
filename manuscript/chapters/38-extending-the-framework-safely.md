@@ -356,6 +356,8 @@ configuration:
 
 A configurable invariant often signals an unprotected design error rather than flexibility.
 
+For a new option, also state when its value takes effect. The current `SNodeC::reconfigure()` facade can reparse registered configuration while the loop is running, but it does not replace policy already captured by an active connection, restart listeners, or repeat logging bootstrap. An extension that promises live changes must identify its consumer of the new value and its failure policy; merely adding an option to the tree does not implement that promise. `SNodeCReconfigureTest` provides the existing regression boundary for parsing and lifecycle behavior.
+
 ### Extending the build and component surface
 
 \index{component surface!extension}
@@ -542,7 +544,9 @@ Before adding a reusable extension to a SNode.C application or to the framework 
 12. What future change would this design make easier or harder?
 ```
 
-These questions prevent an extension from becoming accidental architecture.
+Use the questions as an exercise on the Chapter 36 parser: suppose the local producer needs its own sample number retained alongside the gateway sequence. Identify the domain field, CSV and JSON representation changes, accepted-state behavior, and observer assertions before editing. Then compare this with adding a second input carrier. The first changes the shared application contract; the second can preserve it. A useful answer names both the files that must change and the existing behavior that the tests must continue to protect.
+
+For a flow-related extension, preserve the current invariant explicitly: one public activation call creates one controller, automatic recovery stays within that controller, and termination does not restart it. The shared endpoint configuration and connection identity allocation remain shared across its flows. Test cancellation of one flow beside a surviving sibling, and distinguish termination from final controller destruction. The current `InetPerCallFlowTest` is the relevant composed regression boundary; an old singleton-controller sketch would be the wrong foundation for this extension.
 
 ::: {.snodec-remember title="What to remember"}
 - Safe extension starts with the boundary, not with the easiest file to edit.

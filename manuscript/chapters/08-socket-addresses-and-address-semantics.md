@@ -11,7 +11,7 @@ Every connection begins with an address, but an address is not merely a string t
 
 The first concrete choice is the network family. An application may use IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP. That choice changes what an endpoint *is*; the namespace or build component is only the visible consequence.
 
-It therefore asks a narrower but important question:
+This chapter therefore asks a narrower question:
 
 > What does endpoint identity mean for each supported family?
 
@@ -147,7 +147,7 @@ with port:
 0
 ```
 
-For a server, `0.0.0.0` naturally means that the server is not restricted to one specific local IPv4 interface. Port `0` means that the concrete service selector has not yet been fixed and may be selected later by the operating system if used in that way.
+For a server bind, `0.0.0.0` means that the server is not restricted to one specific local IPv4 interface. Port `0` asks the operating system to select an available local port. That is useful in an isolated test, but a client still needs the actual selected port. The same values should not be copied mechanically into a remote destination: a default-constructed address is an initial value, not evidence that a useful peer has been selected.
 
 The IPv4 class also contains the resolution-oriented pieces that belong to IP-style addressing: `Hints`, canonical-name access, and `useNext()`. That is not accidental API growth. A host name may resolve to more than one candidate endpoint. The address abstraction therefore needs room for resolution and iteration.
 
@@ -216,7 +216,7 @@ Default construction uses the empty string:
 ""
 ```
 
-In the SNode.C address model, that is the wildcard or not-yet-specific Unix-domain endpoint identity.
+This is the not-yet-specific Unix-domain value in the address model. It is not the equivalent of a server listening on every IP interface. Before using a pathname listener, give it a concrete path and consider the containing directory's permissions and cleanup policy. Chapter 11 distinguishes pathname and abstract-namespace behavior.
 
 Unix domain sockets are pedagogically useful because they break a common habit. They remind the reader that not every endpoint is internet-shaped. The same server/client/context architecture can still appear, but the network-layer identity is different.
 
@@ -322,9 +322,9 @@ The point of this section is not to list every constructor or every member funct
 
 Default construction is meaningful. It is not uninitialized data.
 
-Across the supported families, the default address expresses a wildcard-like, broad, or deferred endpoint identity:
+Across the supported families, default construction supplies the following initial values. Only some have wildcard bind semantics:
 
-| Family | Default / wildcard shape |
+| Family | Default value |
 |---|---|
 | IPv4 | `0.0.0.0`, port `0` |
 | IPv6 | `::`, port `0` |
@@ -364,7 +364,7 @@ These examples are not application programs. They are anchors for the address mo
 
 Each address class names its fields in the language of its family. That is an important design choice.
 
-The framework does not force all address data through vague names such as `value1` and `value2`, or through a single generic key-value map. It uses names such as:
+The fields remain available through family-specific operations such as:
 
 ```cpp
 setHost(...)
@@ -377,9 +377,7 @@ setPsm(...)
 
 The names teach the endpoint model.
 
-A host is not a Unix path. A Unix path is not a Bluetooth address. An RFCOMM channel is not an L2CAP PSM.
-
-The API vocabulary preserves those differences.
+This helps when changing carriers: a port assignment cannot simply become a Unix path assignment, and a channel choice does not establish a valid PSM. Revisit the endpoint's meaning as well as the setter's spelling.
 
 #### String rendering is part of runtime literacy
 
@@ -400,21 +398,9 @@ A good address string is often the first evidence a reader sees that a server ha
 
 ### Address semantics and the layer model
 
-This chapter is the first concrete network-layer chapter after the general layer model.
+Try classifying three values before using them: `0.0.0.0:0` for a local IPv4 bind, `127.0.0.1:8080` for a remote IPv4 peer, and `/tmp/snodec.sock` for a local pathname service. The first asks the operating system to select a port; the second names a destination in the current host's loopback network; the third depends on the local filesystem namespace. None of those meanings comes from the text alone without its family and local/remote role.
 
-The runtime may still advance registered instances in the same broad way. The application may still use a factory and a context. The connection layer may still distinguish non-TLS stream handling from TLS stream handling.
-
-But the network layer changes the meaning of the endpoint being bound or connected, which makes `SocketAddress` a useful bridge between architecture and code.
-
-It shows:
-
-- what counts as endpoint identity in each family,
-- how wildcarding is expressed in that family,
-- which values naturally belong together,
-- how local and remote endpoint roles are described,
-- and how higher layers can stay similar while lower identity rules differ.
-
-This is the practical value of separating layers. The application writer does not have to relearn the whole framework for every family, but neither does the framework pretend that every family has the same endpoint semantics.
+Chapter 9 adds a useful observation: compare the requested bind address with the actual local address on an established connection. A broad configuration can produce a concrete endpoint. That is why logging only the configured value can leave a connection problem unexplained.
 
 ### Why IP families have richer resolution behavior
 
@@ -457,7 +443,8 @@ The following table summarizes the address-level meaning of common terms.
 | Bluetooth address | Bluetooth device identity |
 | RFCOMM channel | RFCOMM service selector |
 | L2CAP PSM | L2CAP service selector |
-| Wildcard/default address | Broad or deferred endpoint identity |
+| Wildcard address | Family-specific broad bind identity |
+| Default address | Initial value; not necessarily a usable bind or peer identity |
 | `toString(...)` | Runtime-readable endpoint representation |
 
 The table is compact. Its job is not to replace the API reference. Its job is to keep the central question visible:
@@ -472,5 +459,5 @@ Once that question becomes natural, the address classes become much easier to re
 - IPv4 and IPv6 use host-plus-port identity and add resolution-oriented behavior such as hints, canonical names, and candidate iteration.
 - Unix domain sockets use local socket path identity.
 - RFCOMM and L2CAP use Bluetooth device identity with different service selectors: channel for RFCOMM, PSM for L2CAP.
-- Default construction is meaningful and wildcard-oriented in family-specific ways.
+- Default construction supplies a defined initial value; its suitability for binding or connecting depends on the family and endpoint role.
 :::

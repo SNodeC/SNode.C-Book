@@ -1,0 +1,2879 @@
+C++ default: exit=2, values=[], expected=8080: FAIL
+2026-09-21T19:27:34.941Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-21T19:27:34.941Z TRC framework/system core.event-loop — SNode.C: Starting ... HELLO
+[RequiresError] /tmp/snodec-book-current-external-echo/echoserver requires echoserver
+
+#@ snodec.meta begin document
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "document",
+#@   "application": {
+#@     "name": "/tmp/snodec-book-current-external-echo/echoserver",
+#@     "description": "Configuration for Application 'echoserver'"
+#@   },
+#@   "scope": "configurable-options-only",
+#@   "syntax": "ini-with-comment-metadata"
+#@ }
+#@ snodec.meta end document
+#@ snodec.meta begin node
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "node",
+#@   "kind": "application",
+#@   "kindSource": "root",
+#@   "name": "/tmp/snodec-book-current-external-echo/echoserver",
+#@   "displayName": "/tmp/snodec-book-current-external-echo/echoserver",
+#@   "path": [],
+#@   "configPrefix": "",
+#@   "group": "",
+#@   "description": "Configuration for Application 'echoserver'",
+#@   "configurable": false,
+#@   "required": {
+#@     "effective": true,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "disabled": false
+#@ }
+#@ snodec.meta end node
+### Configuration for Application 'echoserver'
+#@ snodec.meta begin group
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "group",
+#@   "name": "Options (persistent)",
+#@   "kind": "persistent",
+#@   "kindSource": "heuristic-group-name",
+#@   "nodePath": []
+#@ }
+#@ snodec.meta end group
+
+## Options (persistent)
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "log-level",
+#@   "key": "log-level",
+#@   "localName": "log-level",
+#@   "displayName": "log-level",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Log level (0/off, 1/critical, 2/error, 3/warn, 4/info, 5/debug, 6/trace)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--log-level",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "log-level",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "level:LOG_LEVEL",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "4",
+#@     "configured": null,
+#@     "effective": "4",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "4",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "4"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Log level (0/off, 1/critical, 2/error, 3/warn, 4/info, 5/debug, 6/trace)
+#log-level=4
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "verbose-level",
+#@   "key": "verbose-level",
+#@   "localName": "verbose-level",
+#@   "displayName": "verbose-level",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Legacy verbose level (0..10; no semantic-log effect)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--verbose-level",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "verbose-level",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "level:INT in [0 - 10]",
+#@     "kind": "integer",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "2",
+#@     "configured": null,
+#@     "effective": "2",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "2",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "2"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Legacy verbose level (0..10; no semantic-log effect)
+#verbose-level=2
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "log-format",
+#@   "key": "log-format",
+#@   "localName": "log-format",
+#@   "displayName": "log-format",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Semantic log format",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--log-format",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "log-format",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "text|json:FORMAT",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "text",
+#@     "configured": null,
+#@     "effective": "text",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "\"text\"",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "\"text\""
+#@   }
+#@ }
+#@ snodec.meta end option
+# Semantic log format
+#log-format="text"
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "log-origin-level",
+#@   "key": "log-origin-level",
+#@   "localName": "log-origin-level",
+#@   "displayName": "log-origin-level",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Semantic origin log level override (framework|application=level)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--log-origin-level",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": true
+#@   },
+#@   "configFile": {
+#@     "key": "log-origin-level",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "origin=level:(TEXT) AND (ORIGIN_LEVEL)",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "list"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Semantic origin log level override (framework|application=level)
+#log-origin-level=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "log-boundary-level",
+#@   "key": "log-boundary-level",
+#@   "localName": "log-boundary-level",
+#@   "displayName": "log-boundary-level",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Semantic boundary log level override (application|configuration|instance|connection|context|system=level)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--log-boundary-level",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": true
+#@   },
+#@   "configFile": {
+#@     "key": "log-boundary-level",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "boundary=level:(TEXT) AND (BOUNDARY_LEVEL)",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "list"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Semantic boundary log level override (application|configuration|instance|connection|context|system=level)
+#log-boundary-level=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "log-component-level",
+#@   "key": "log-component-level",
+#@   "localName": "log-component-level",
+#@   "displayName": "log-component-level",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Semantic component log level override (component=level)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--log-component-level",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": true
+#@   },
+#@   "configFile": {
+#@     "key": "log-component-level",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "component=level:(TEXT) AND (COMPONENT_LEVEL)",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "list"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Semantic component log level override (component=level)
+#log-component-level=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "log-instance-level",
+#@   "key": "log-instance-level",
+#@   "localName": "log-instance-level",
+#@   "displayName": "log-instance-level",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Semantic instance log level override (instance=level)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--log-instance-level",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": true
+#@   },
+#@   "configFile": {
+#@     "key": "log-instance-level",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "instance=level:(TEXT) AND (INSTANCE_LEVEL)",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "list"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Semantic instance log level override (instance=level)
+#log-instance-level=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "log-file",
+#@   "key": "log-file",
+#@   "localName": "log-file",
+#@   "displayName": "log-file",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Log file",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--log-file",
+#@     "short": "-l",
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "log-file",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "logFile:NOT DIR",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "/tmp/snodec-editorial-config-tifefqav/config-base/.local/log/snode.c/echoserver.log",
+#@     "configured": null,
+#@     "effective": "/tmp/snodec-editorial-config-tifefqav/config-base/.local/log/snode.c/echoserver.log",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "\"/tmp/snodec-editorial-config-tifefqav/config-base/.local/log/snode.c/echoserver.log\"",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "\"/tmp/snodec-editorial-config-tifefqav/config-base/.local/log/snode.c/echoserver.log\""
+#@   }
+#@ }
+#@ snodec.meta end option
+# Log file
+#log-file="/tmp/snodec-editorial-config-tifefqav/config-base/.local/log/snode.c/echoserver.log"
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "monochrom",
+#@   "key": "monochrom",
+#@   "localName": "monochrom",
+#@   "displayName": "monochrom",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Monochrom log output",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--monochrom",
+#@     "short": "-m",
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "monochrom",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "true",
+#@     "configured": null,
+#@     "effective": "true",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "true",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "true"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Monochrom log output
+#monochrom=true
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "quiet",
+#@   "key": "quiet",
+#@   "localName": "quiet",
+#@   "displayName": "quiet",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Quiet mode",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--quiet",
+#@     "short": "-q",
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "quiet",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Quiet mode
+#quiet=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "enforce-log-file",
+#@   "key": "enforce-log-file",
+#@   "localName": "enforce-log-file",
+#@   "displayName": "enforce-log-file",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Enforce writing of logs to file for foreground applications",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--enforce-log-file",
+#@     "short": "-e",
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "enforce-log-file",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Enforce writing of logs to file for foreground applications
+#enforce-log-file=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "daemonize",
+#@   "key": "daemonize",
+#@   "localName": "daemonize",
+#@   "displayName": "daemonize",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Start application as daemon",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--daemonize",
+#@     "short": "-d",
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "daemonize",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Start application as daemon
+#daemonize=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "user-name",
+#@   "key": "user-name",
+#@   "localName": "user-name",
+#@   "displayName": "user-name",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Run daemon under specific user permissions",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--user-name",
+#@     "short": "-u",
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "user-name",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "username:TEXT",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "voc",
+#@     "configured": null,
+#@     "effective": "voc",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "\"voc\"",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "\"voc\""
+#@   }
+#@ }
+#@ snodec.meta end option
+# Run daemon under specific user permissions
+#user-name="voc"
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "group-name",
+#@   "key": "group-name",
+#@   "localName": "group-name",
+#@   "displayName": "group-name",
+#@   "nodePath": [],
+#@   "group": "Options (persistent)",
+#@   "description": "Run daemon under specific group permissions",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--group-name",
+#@     "short": "-g",
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "group-name",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "groupname:TEXT",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "voc",
+#@     "configured": null,
+#@     "effective": "voc",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "\"voc\"",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "\"voc\""
+#@   }
+#@ }
+#@ snodec.meta end option
+# Run daemon under specific group permissions
+#group-name="voc"
+
+#@ snodec.meta begin node
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "node",
+#@   "kind": "instance",
+#@   "kindSource": "cli11-group",
+#@   "name": "echoserver",
+#@   "displayName": "echoserver",
+#@   "path": ["echoserver"],
+#@   "configPrefix": "echoserver.",
+#@   "group": "Instances",
+#@   "description": "Configuration for server instance 'echoserver'",
+#@   "configurable": false,
+#@   "required": {
+#@     "effective": true,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "disabled": false
+#@ }
+#@ snodec.meta end node
+### Configuration for server instance 'echoserver'
+#@ snodec.meta begin group
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "group",
+#@   "name": "Options (persistent)",
+#@   "kind": "persistent",
+#@   "kindSource": "heuristic-group-name",
+#@   "nodePath": ["echoserver"]
+#@ }
+#@ snodec.meta end group
+
+## Options (persistent)
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.disabled",
+#@   "key": "echoserver.disabled",
+#@   "localName": "disabled",
+#@   "displayName": "disabled",
+#@   "nodePath": ["echoserver"],
+#@   "group": "Options (persistent)",
+#@   "description": "Disable this instance",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--disabled",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.disabled",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Disable this instance
+#echoserver.disabled=false
+
+#@ snodec.meta begin node
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "node",
+#@   "kind": "section",
+#@   "kindSource": "cli11-group",
+#@   "name": "local",
+#@   "displayName": "local",
+#@   "path": ["echoserver", "local"],
+#@   "configPrefix": "echoserver.local.",
+#@   "group": "Sections",
+#@   "description": "Local side of connection for instance 'echoserver'",
+#@   "configurable": false,
+#@   "required": {
+#@     "effective": true,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "disabled": false
+#@ }
+#@ snodec.meta end node
+### Local side of connection for instance 'echoserver'
+#@ snodec.meta begin group
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "group",
+#@   "name": "Options (persistent)",
+#@   "kind": "persistent",
+#@   "kindSource": "heuristic-group-name",
+#@   "nodePath": ["echoserver", "local"]
+#@ }
+#@ snodec.meta end group
+
+## Options (persistent)
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.local.host",
+#@   "key": "echoserver.local.host",
+#@   "localName": "host",
+#@   "displayName": "host",
+#@   "nodePath": ["echoserver", "local"],
+#@   "group": "Options (persistent)",
+#@   "description": "Host name or IPv4 address",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--host",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.local.host",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "hostname|IPv4:TEXT",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "0.0.0.0",
+#@     "configured": null,
+#@     "effective": "0.0.0.0",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "\"0.0.0.0\"",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "\"0.0.0.0\""
+#@   }
+#@ }
+#@ snodec.meta end option
+# Host name or IPv4 address
+#echoserver.local.host="0.0.0.0"
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.local.port",
+#@   "key": "echoserver.local.port",
+#@   "localName": "port",
+#@   "displayName": "port",
+#@   "nodePath": ["echoserver", "local"],
+#@   "group": "Options (persistent)",
+#@   "description": "Port number",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": true,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--port",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.local.port",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "port:UINT in [0 - 65535]",
+#@     "kind": "integer",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "<REQUIRED>",
+#@     "configured": null,
+#@     "effective": "<REQUIRED>",
+#@     "source": "required-placeholder",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": true,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "\"<REQUIRED>\"",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "\"<REQUIRED>\""
+#@   }
+#@ }
+#@ snodec.meta end option
+# Port number
+#echoserver.local.port="<REQUIRED>"
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.local.numeric",
+#@   "key": "echoserver.local.numeric",
+#@   "localName": "numeric",
+#@   "displayName": "numeric",
+#@   "nodePath": ["echoserver", "local"],
+#@   "group": "Options (persistent)",
+#@   "description": "Suppress host name lookup",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--numeric",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.local.numeric",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Suppress host name lookup
+#echoserver.local.numeric=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.local.numeric-reverse",
+#@   "key": "echoserver.local.numeric-reverse",
+#@   "localName": "numeric-reverse",
+#@   "displayName": "numeric-reverse",
+#@   "nodePath": ["echoserver", "local"],
+#@   "group": "Options (persistent)",
+#@   "description": "Suppress reverse host name lookup",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--numeric-reverse",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.local.numeric-reverse",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Suppress reverse host name lookup
+#echoserver.local.numeric-reverse=false
+
+#@ snodec.meta begin node
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "node",
+#@   "kind": "section",
+#@   "kindSource": "cli11-group",
+#@   "name": "remote",
+#@   "displayName": "remote",
+#@   "path": ["echoserver", "remote"],
+#@   "configPrefix": "echoserver.remote.",
+#@   "group": "Sections",
+#@   "description": "Remote side of connection for instance 'echoserver'",
+#@   "configurable": false,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "disabled": false
+#@ }
+#@ snodec.meta end node
+### Remote side of connection for instance 'echoserver'
+#@ snodec.meta begin group
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "group",
+#@   "name": "Options (persistent)",
+#@   "kind": "persistent",
+#@   "kindSource": "heuristic-group-name",
+#@   "nodePath": ["echoserver", "remote"]
+#@ }
+#@ snodec.meta end group
+
+## Options (persistent)
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.remote.numeric-reverse",
+#@   "key": "echoserver.remote.numeric-reverse",
+#@   "localName": "numeric-reverse",
+#@   "displayName": "numeric-reverse",
+#@   "nodePath": ["echoserver", "remote"],
+#@   "group": "Options (persistent)",
+#@   "description": "Suppress reverse host name lookup",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--numeric-reverse",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.remote.numeric-reverse",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Suppress reverse host name lookup
+#echoserver.remote.numeric-reverse=false
+
+#@ snodec.meta begin node
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "node",
+#@   "kind": "section",
+#@   "kindSource": "cli11-group",
+#@   "name": "connection",
+#@   "displayName": "connection",
+#@   "path": ["echoserver", "connection"],
+#@   "configPrefix": "echoserver.connection.",
+#@   "group": "Sections",
+#@   "description": "Configuration of established connections for instance 'echoserver'",
+#@   "configurable": false,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "disabled": false
+#@ }
+#@ snodec.meta end node
+### Configuration of established connections for instance 'echoserver'
+#@ snodec.meta begin group
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "group",
+#@   "name": "Options (persistent)",
+#@   "kind": "persistent",
+#@   "kindSource": "heuristic-group-name",
+#@   "nodePath": ["echoserver", "connection"]
+#@ }
+#@ snodec.meta end group
+
+## Options (persistent)
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.connection.read-timeout",
+#@   "key": "echoserver.connection.read-timeout",
+#@   "localName": "read-timeout",
+#@   "displayName": "read-timeout",
+#@   "nodePath": ["echoserver", "connection"],
+#@   "group": "Options (persistent)",
+#@   "description": "Read timeout in seconds (0 means unlimited)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--read-timeout",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.connection.read-timeout",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "timeout:NONNEGATIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "60",
+#@     "configured": null,
+#@     "effective": "60",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "60",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "60"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Read timeout in seconds (0 means unlimited)
+#echoserver.connection.read-timeout=60
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.connection.write-timeout",
+#@   "key": "echoserver.connection.write-timeout",
+#@   "localName": "write-timeout",
+#@   "displayName": "write-timeout",
+#@   "nodePath": ["echoserver", "connection"],
+#@   "group": "Options (persistent)",
+#@   "description": "Write timeout in seconds (0 means unlimited)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--write-timeout",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.connection.write-timeout",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "timeout:NONNEGATIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "60",
+#@     "configured": null,
+#@     "effective": "60",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "60",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "60"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Write timeout in seconds (0 means unlimited)
+#echoserver.connection.write-timeout=60
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.connection.read-block-size",
+#@   "key": "echoserver.connection.read-block-size",
+#@   "localName": "read-block-size",
+#@   "displayName": "read-block-size",
+#@   "nodePath": ["echoserver", "connection"],
+#@   "group": "Options (persistent)",
+#@   "description": "Read block size",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--read-block-size",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.connection.read-block-size",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "size:POSITIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "16384",
+#@     "configured": null,
+#@     "effective": "16384",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "16384",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "16384"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Read block size
+#echoserver.connection.read-block-size=16384
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.connection.write-block-size",
+#@   "key": "echoserver.connection.write-block-size",
+#@   "localName": "write-block-size",
+#@   "displayName": "write-block-size",
+#@   "nodePath": ["echoserver", "connection"],
+#@   "group": "Options (persistent)",
+#@   "description": "Write block size",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--write-block-size",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.connection.write-block-size",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "size:POSITIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "16384",
+#@     "configured": null,
+#@     "effective": "16384",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "16384",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "16384"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Write block size
+#echoserver.connection.write-block-size=16384
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.connection.maximum-write-queue-bytes",
+#@   "key": "echoserver.connection.maximum-write-queue-bytes",
+#@   "localName": "maximum-write-queue-bytes",
+#@   "displayName": "maximum-write-queue-bytes",
+#@   "nodePath": ["echoserver", "connection"],
+#@   "group": "Options (persistent)",
+#@   "description": "Maximum bytes queued for writing (0 means unlimited)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--maximum-write-queue-bytes",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.connection.maximum-write-queue-bytes",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "bytes:NONNEGATIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "0",
+#@     "configured": null,
+#@     "effective": "0",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "0",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "0"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Maximum bytes queued for writing (0 means unlimited)
+#echoserver.connection.maximum-write-queue-bytes=0
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.connection.write-queue-high-watermark",
+#@   "key": "echoserver.connection.write-queue-high-watermark",
+#@   "localName": "write-queue-high-watermark",
+#@   "displayName": "write-queue-high-watermark",
+#@   "nodePath": ["echoserver", "connection"],
+#@   "group": "Options (persistent)",
+#@   "description": "Suspend a pipe source at this queue size (0 selects the legacy automatic threshold)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--write-queue-high-watermark",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.connection.write-queue-high-watermark",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "bytes:NONNEGATIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "0",
+#@     "configured": null,
+#@     "effective": "0",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "0",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "0"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Suspend a pipe source at this queue size (0 selects the legacy automatic threshold)
+#echoserver.connection.write-queue-high-watermark=0
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.connection.write-queue-low-watermark",
+#@   "key": "echoserver.connection.write-queue-low-watermark",
+#@   "localName": "write-queue-low-watermark",
+#@   "displayName": "write-queue-low-watermark",
+#@   "nodePath": ["echoserver", "connection"],
+#@   "group": "Options (persistent)",
+#@   "description": "Resume a suspended pipe source at this queue size",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--write-queue-low-watermark",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.connection.write-queue-low-watermark",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "bytes:NONNEGATIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "0",
+#@     "configured": null,
+#@     "effective": "0",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "0",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "0"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Resume a suspended pipe source at this queue size
+#echoserver.connection.write-queue-low-watermark=0
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.connection.terminate-timeout",
+#@   "key": "echoserver.connection.terminate-timeout",
+#@   "localName": "terminate-timeout",
+#@   "displayName": "terminate-timeout",
+#@   "nodePath": ["echoserver", "connection"],
+#@   "group": "Options (persistent)",
+#@   "description": "Terminate timeout",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--terminate-timeout",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.connection.terminate-timeout",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "timeout:POSITIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "1",
+#@     "configured": null,
+#@     "effective": "1",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "1",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "1"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Terminate timeout
+#echoserver.connection.terminate-timeout=1
+
+#@ snodec.meta begin node
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "node",
+#@   "kind": "section",
+#@   "kindSource": "cli11-group",
+#@   "name": "socket",
+#@   "displayName": "socket",
+#@   "path": ["echoserver", "socket"],
+#@   "configPrefix": "echoserver.socket.",
+#@   "group": "Sections",
+#@   "description": "Configuration of socket behavior for instance 'echoserver'",
+#@   "configurable": false,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "disabled": false
+#@ }
+#@ snodec.meta end node
+### Configuration of socket behavior for instance 'echoserver'
+#@ snodec.meta begin group
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "group",
+#@   "name": "Options (persistent)",
+#@   "kind": "persistent",
+#@   "kindSource": "heuristic-group-name",
+#@   "nodePath": ["echoserver", "socket"]
+#@ }
+#@ snodec.meta end group
+
+## Options (persistent)
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.retry",
+#@   "key": "echoserver.socket.retry",
+#@   "localName": "retry",
+#@   "displayName": "retry",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Automatically retry listen|connect",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--retry",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.retry",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Automatically retry listen|connect
+#echoserver.socket.retry=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.retry-on-fatal",
+#@   "key": "echoserver.socket.retry-on-fatal",
+#@   "localName": "retry-on-fatal",
+#@   "displayName": "retry-on-fatal",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Retry also on fatal errors",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--retry-on-fatal",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.retry-on-fatal",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@       "retry"
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Retry also on fatal errors
+#echoserver.socket.retry-on-fatal=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.retry-timeout",
+#@   "key": "echoserver.socket.retry-timeout",
+#@   "localName": "retry-timeout",
+#@   "displayName": "retry-timeout",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Timeout of the retry timer",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--retry-timeout",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.retry-timeout",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "sec:NONNEGATIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@       "retry"
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "1.000000",
+#@     "configured": null,
+#@     "effective": "1.000000",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "1.000000",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "1.000000"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Timeout of the retry timer
+#echoserver.socket.retry-timeout=1.000000
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.retry-tries",
+#@   "key": "echoserver.socket.retry-tries",
+#@   "localName": "retry-tries",
+#@   "displayName": "retry-tries",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Number of retry attempts before giving up (0 = unlimited)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--retry-tries",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.retry-tries",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "tries:UINT",
+#@     "kind": "integer",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@       "retry"
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "0",
+#@     "configured": null,
+#@     "effective": "0",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "0",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "0"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Number of retry attempts before giving up (0 = unlimited)
+#echoserver.socket.retry-tries=0
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.retry-base",
+#@   "key": "echoserver.socket.retry-base",
+#@   "localName": "retry-base",
+#@   "displayName": "retry-base",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Base of exponential backoff",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--retry-base",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.retry-base",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "base:POSITIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@       "retry"
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "1.800000",
+#@     "configured": null,
+#@     "effective": "1.800000",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "1.800000",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "1.800000"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Base of exponential backoff
+#echoserver.socket.retry-base=1.800000
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.retry-jitter",
+#@   "key": "echoserver.socket.retry-jitter",
+#@   "localName": "retry-jitter",
+#@   "displayName": "retry-jitter",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Maximum jitter in percent to apply randomly to calculated retry timeout (0 to disable)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--retry-jitter",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.retry-jitter",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "jitter:FLOAT in [0 - 100]",
+#@     "kind": "number",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@       "retry"
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "0.000000",
+#@     "configured": null,
+#@     "effective": "0.000000",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "0.000000",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "0.000000"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Maximum jitter in percent to apply randomly to calculated retry timeout (0 to disable)
+#echoserver.socket.retry-jitter=0.000000
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.retry-limit",
+#@   "key": "echoserver.socket.retry-limit",
+#@   "localName": "retry-limit",
+#@   "displayName": "retry-limit",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Upper limit in seconds of retry timeout (0 for infinite)",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--retry-limit",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.retry-limit",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "sec:NONNEGATIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@       "retry"
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "0.000000",
+#@     "configured": null,
+#@     "effective": "0.000000",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "0.000000",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "0.000000"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Upper limit in seconds of retry timeout (0 for infinite)
+#echoserver.socket.retry-limit=0.000000
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.backlog",
+#@   "key": "echoserver.socket.backlog",
+#@   "localName": "backlog",
+#@   "displayName": "backlog",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Listen backlog",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--backlog",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.backlog",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "backlog:INT",
+#@     "kind": "integer",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "5",
+#@     "configured": null,
+#@     "effective": "5",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "5",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "5"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Listen backlog
+#echoserver.socket.backlog=5
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.accepts-per-tick",
+#@   "key": "echoserver.socket.accepts-per-tick",
+#@   "localName": "accepts-per-tick",
+#@   "displayName": "accepts-per-tick",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Accepts per tick",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--accepts-per-tick",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.accepts-per-tick",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "number:INT",
+#@     "kind": "integer",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "1",
+#@     "configured": null,
+#@     "effective": "1",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "1",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "1"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Accepts per tick
+#echoserver.socket.accepts-per-tick=1
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.accept-timeout",
+#@   "key": "echoserver.socket.accept-timeout",
+#@   "localName": "accept-timeout",
+#@   "displayName": "accept-timeout",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Accept timeout",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--accept-timeout",
+#@     "short": null,
+#@     "takesValue": true,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.accept-timeout",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "timeout:NONNEGATIVE",
+#@     "kind": "string",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "0",
+#@     "configured": null,
+#@     "effective": "0",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "0",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "0"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Accept timeout
+#echoserver.socket.accept-timeout=0
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.reuse-address",
+#@   "key": "echoserver.socket.reuse-address",
+#@   "localName": "reuse-address",
+#@   "displayName": "reuse-address",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Reuse socket address",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--reuse-address",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.reuse-address",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Reuse socket address
+#echoserver.socket.reuse-address=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.reuse-port",
+#@   "key": "echoserver.socket.reuse-port",
+#@   "localName": "reuse-port",
+#@   "displayName": "reuse-port",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Reuse port number",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--reuse-port",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.reuse-port",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "BOOL:{true,false}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "false",
+#@     "configured": null,
+#@     "effective": "false",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "false",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "false"
+#@   }
+#@ }
+#@ snodec.meta end option
+# Reuse port number
+#echoserver.socket.reuse-port=false
+
+#@ snodec.meta begin option
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "option",
+#@   "id": "echoserver.socket.disable-nagle-algorithm",
+#@   "key": "echoserver.socket.disable-nagle-algorithm",
+#@   "localName": "disable-nagle-algorithm",
+#@   "displayName": "disable-nagle-algorithm",
+#@   "nodePath": ["echoserver", "socket"],
+#@   "group": "Options (persistent)",
+#@   "description": "Turn of Nagle algorithm",
+#@   "configurable": true,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "persistent": true,
+#@   "commandLine": {
+#@     "long": "--disable-nagle-algorithm",
+#@     "short": null,
+#@     "takesValue": false,
+#@     "repeatable": false
+#@   },
+#@   "configFile": {
+#@     "key": "echoserver.socket.disable-nagle-algorithm",
+#@     "section": null,
+#@     "writable": true
+#@   },
+#@   "type": {
+#@     "name": "TRISTAT:{true,false,default}",
+#@     "kind": "boolean",
+#@     "kindSource": "heuristic-name",
+#@     "items": "single"
+#@   },
+#@   "constraints": [],
+#@   "relations": {
+#@     "needs": [
+#@     ],
+#@     "excludes": [
+#@     ]
+#@   },
+#@   "value": {
+#@     "registrationDefault": null,
+#@     "registrationDefaultSource": "not-tracked",
+#@     "cppDefault": "default",
+#@     "configured": null,
+#@     "effective": "default",
+#@     "source": "cpp-default",
+#@     "isCppDefault": true,
+#@     "isExplicitlyConfigured": false,
+#@     "isMissingRequired": false,
+#@     "registrationDefaultLiteral": null,
+#@     "cppDefaultLiteral": "\"default\"",
+#@     "configuredLiteral": null,
+#@     "effectiveLiteral": "\"default\""
+#@   }
+#@ }
+#@ snodec.meta end option
+# Turn of Nagle algorithm
+#echoserver.socket.disable-nagle-algorithm="default"
+
+#@ snodec.meta begin node
+#@ {
+#@   "schema": "snodec.config.comment-meta",
+#@   "version": 1,
+#@   "entity": "node",
+#@   "kind": "section",
+#@   "kindSource": "cli11-group",
+#@   "name": "legacy",
+#@   "displayName": "legacy",
+#@   "path": ["echoserver", "legacy"],
+#@   "configPrefix": "echoserver.legacy.",
+#@   "group": "Sections",
+#@   "description": "Configuration of legacy behavior for instance 'echoserver'",
+#@   "configurable": false,
+#@   "required": {
+#@     "effective": false,
+#@     "source": "cli11-current-state"
+#@   },
+#@   "disabled": false
+#@ }
+#@ snodec.meta end node
+### Configuration of legacy behavior for instance 'echoserver'
+2026-09-21T19:27:34.945Z TRC framework/system core.event-loop — Core: Graceful shutdown
+2026-09-21T19:27:34.945Z DBG framework/instance core.socket.stream role=server inst=echoserver — Initiating listen
+2026-09-21T19:27:34.945Z TRC framework/system core.event-loop — Core: Terminate remaining DescriptorEventReceivers and timers
+2026-09-21T19:27:34.945Z TRC framework/system core.event-loop — Core: Shutdown config system
+2026-09-21T19:27:34.945Z TRC framework/system core.event-loop — Core: All resources released
+2026-09-21T19:27:34.945Z TRC framework/system core.event-loop — SNode.C: Ended ... BYE
+ 
+file override: exit=2, values=['18091'], expected=18091: PASS
+command-line override: exit=2, values=['18092'], expected=18092: PASS
+Command-line inspection leaves the file unchanged: PASS
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring incomplete, errors occurred!
+CMake Error at CMakeLists.txt:9 (find_package):
+  Found package configuration file:
+
+    /tmp/snodec-book-current-install/lib/cmake/snodec/snodecConfig.cmake
+
+  but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+  NOT FOUND.  Reason given by package:
+
+  Unsupported SNode.C component requested: book-missing-component
+
+
+
+
+Unsupported required component fails during configuration: PASS
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/snodec-editorial-config-tifefqav/restored
+ net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+
+[ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[ 33%] Linking CXX static library libechosocketcontext.a
+[ 33%] Built target echosocketcontext
+[ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[ 83%] Linking CXX executable echoserver
+[100%] Linking CXX executable echoclient
+[100%] Built target echoserver
+[100%] Built target echoclient
+ 
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/review/editorial/probes/verify-configuration-and-components.py", line 72, in <module>
+    assert not failures, failures
+           ^^^^^^^^^^^^
+AssertionError: ['C++ default']

@@ -8,6 +8,10 @@ C++ listings are teaching excerpts. Some are complete files from the companion e
 
 The companion example trees under `companion/examples/` are the checked source of truth for the larger examples. Printed excerpts are selected to explain the relevant boundary; when a complete file matters, read the companion source tree beside the chapter.
 
+The book's electronic source package is maintained in the [SNode.C Book repository](https://github.com/SNodeC/SNode.C-Book). Use the package for this edition: a newer repository checkout may contain a different manuscript and different examples. Chapter 2 establishes the package location used by later commands. The source-baseline manifest records framework file contents, while the listing check compares complete marked examples with their companion files. These are different checks: agreement between a printed listing and a file does not by itself prove the behavior of that program.
+
 The word role is used deliberately. It usually means the part an object or configured instance plays in the communication architecture: server role, client role, protocol role, context role, or deployment role. It does not imply a separate operating-system process unless the text says so.
 
 The word layer is also used deliberately. A layer is not decoration in the diagrams. It marks a boundary where one kind of responsibility should not silently collapse into another.
+
+An endpoint handle and a flow handle are different objects. The endpoint handle configures a named server or client. A flow handle is the shared controller returned by one explicit `listen(...)` or `connect(...)` call. Several flows can use the same endpoint configuration. Chapters 5, 9, and 20 develop the distinction where it affects lifetime, activation, and recovery.

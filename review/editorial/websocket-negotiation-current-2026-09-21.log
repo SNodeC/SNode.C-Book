@@ -1,0 +1,622 @@
+--- echo client ---
+2026-09-21T19:25:36.315Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-21T19:25:36.315Z TRC framework/system core.event-loop — SNode.C: Starting ... HELLO
+2026-09-21T19:25:36.317Z TRC framework/system core.event-loop — Core::EventLoop: started
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=client inst=legacy — Initiating connect
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt started
+2026-09-21T19:25:36.317Z DBG framework/connection core.socket — legacy Connect: starting
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket — legacy open 0.0.0.0:0 (0.0.0.0): success
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket — legacy bind 0.0.0.0:0 (0.0.0.0) (effective: 0.0.0.0:49649): success
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket — legacy connect 127.0.0.1:46187 (127.0.0.1): success
+2026-09-21T19:25:36.317Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor enabled
+2026-09-21T19:25:36.317Z DBG framework/connection core.socket — legacy enable 127.0.0.1:46187: success
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (local): localhost:49649
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (remote): localhost:46187
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor enabled
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — WRITE descriptor enabled
+2026-09-21T19:25:36.317Z DBG framework/connection core.socket — legacy connect 127.0.0.1:46187 (127.0.0.1): success
+2026-09-21T19:25:36.317Z DBG framework/connection core.socket —   localhost:49649 -> localhost:46187
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt succeeded
+2026-09-21T19:25:36.317Z TRC application/application app — HTTP client connection status for 127.0.0.1:46187 (127.0.0.1)
+2026-09-21T19:25:36.317Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport connected
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connecting
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:49649
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:46187
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connected
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:49649
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:46187
+2026-09-21T19:25:36.318Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketContext created successful
+2026-09-21T19:25:36.318Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+2026-09-21T19:25:36.318Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context attached
+2026-09-21T19:25:36.318Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) accepted: GET /ws HTTP/1.1
+2026-09-21T19:25:36.318Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) queued: GET /ws HTTP/1.1 - QueueSize = 1 - Flags: 0 - 0
+2026-09-21T19:25:36.318Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request started: id=0
+2026-09-21T19:25:36.318Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-21T19:25:36.318Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgradeFactory create success: websocket
+2026-09-21T19:25:36.318Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Initiating upgrade: GET /ws HTTP/1.1
+2026-09-21T19:25:36.318Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Upgrade request:
+│   Request:                 Method : GET
+│          :                    Url : /ws
+│          :                Version : HTTP/1.1
+│    Header:             Connection : Upgrade
+│          :                   Host : 127.0.0.1:46187
+│          :      Sec-WebSocket-Key : PcxHxEACzb9MOentE66dtQ==
+│          : Sec-WebSocket-Protocol : subprotocol, echo
+│          :  Sec-WebSocket-Version : 13
+│          :                Upgrade : websocket
+│          :           X-Powered-By : SNode.C
+2026-09-21T19:25:36.318Z TRC application/application app — upgrade request initiation: accepted
+2026-09-21T19:25:36.318Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) delivered: GET /ws HTTP/1.1 0
+2026-09-21T19:25:36.318Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor disabled
+2026-09-21T19:25:36.321Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Response received for request (0): GET /ws HTTP/1.1
+2026-09-21T19:25:36.321Z DBG framework/context core.socket.context inst=legacy conn=1 —   HTTP/1.1 101 Switching Protocols
+2026-09-21T19:25:36.321Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Response to upgrade request: GET /ws HTTP/1.1
+│  Response:                Version : HTTP/1.1
+│          :                 Status : 101
+│          :                 Reason : Switching Protocols
+│    Header:             Connection : Upgrade
+│          :         Content-Length : 0
+│          :                   Date : Mon, 21 Sep 2026 19:25:36 GMT
+│          :   Sec-WebSocket-Accept : OvI6T8AqZf8zHBA77G52Ojqp3UU=
+│          : Sec-WebSocket-Protocol : echo
+│          :                Upgrade : websocket
+│          :           X-Powered-By : SNode.C
+2026-09-21T19:25:36.321Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-21T19:25:36.321Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgradeFactory create success for: websocket
+2026-09-21T19:25:36.321Z TRC framework/system core.system — DynLoader dlOpen: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2: success
+2026-09-21T19:25:36.321Z DBG framework/connection web.websocket.factory — SubProtocolFactory create success: echo
+2026-09-21T19:25:36.322Z DBG framework/connection web.websocket.factory — subprotocol plugin 'echo' loaded and added to dynamic cache
+2026-09-21T19:25:36.322Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgrade create success for: websocket
+2026-09-21T19:25:36.322Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketContext: switch
+2026-09-21T19:25:36.322Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — upgrade bootstrap success
+2026-09-21T19:25:36.322Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —       Protocol selected: websocket
+2026-09-21T19:25:36.322Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —               requested: websocket
+2026-09-21T19:25:36.322Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —   Subprotocol  selected: echo
+2026-09-21T19:25:36.322Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —               requested: subprotocol, echo
+2026-09-21T19:25:36.322Z TRC application/application app — upgrade response: accepted
+2026-09-21T19:25:36.322Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request completed: id=0
+2026-09-21T19:25:36.322Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Connection = Keep-Alive
+2026-09-21T19:25:36.322Z TRC application/application app — HTTP request completed or disconnected
+2026-09-21T19:25:36.322Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context detached for context switch
+2026-09-21T19:25:36.322Z DBG framework/context core.socket.context inst=legacy conn=1 — Context detached for context switch
+2026-09-21T19:25:36.322Z DBG framework/context core.socket.context inst=legacy conn=1 —   Context Online Since: 2026-09-21 19:25:36 UTC
+2026-09-21T19:25:36.322Z DBG framework/context core.socket.context inst=legacy conn=1 —   Context Online Duration: 00:00:00
+2026-09-21T19:25:36.322Z DBG framework/context core.socket.context inst=legacy conn=1 —   Context Total Queued: 252
+2026-09-21T19:25:36.322Z DBG framework/context core.socket.context inst=legacy conn=1 —   Context Total Processed: 238
+2026-09-21T19:25:36.322Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+2026-09-21T19:25:36.322Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=1 — WebSocket: context attached with subprotocol 'echo'
+2026-09-21T19:25:36.322Z INF framework/connection web.websocket.subprotocol inst=legacy conn=1 — websocket established: subprotocol=echo
+2026-09-21T19:25:36.322Z INF framework/connection web.websocket.subprotocol inst=legacy conn=1 — subprotocol started: echo
+2026-09-21T19:25:36.322Z TRC application/application app — WebSocket echo client connected
+2026-09-21T19:25:36.322Z TRC framework/connection web.websocket.frame — send: Frame data (5 bytes)
+│ 00000000  68 65 6c 6c 6f                                    |hello           |
+2026-09-21T19:25:36.322Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketConnection: switch completed
+2026-09-21T19:25:36.323Z TRC framework/connection web.websocket.frame — receive: Frame data (5 bytes)
+│ 00000000  68 65 6c 6c 6f                                    |hello           |
+2026-09-21T19:25:36.323Z TRC application/application app — WebSocket echo client received: hello
+2026-09-21T19:25:36.323Z TRC framework/connection web.websocket.subprotocol inst=legacy conn=1 — subprotocol='echo' sending close to peer
+2026-09-21T19:25:36.323Z TRC framework/connection web.websocket.frame — send: Frame data (2 bytes)
+│ 00000000  03 e8                                             |..              |
+2026-09-21T19:25:36.323Z TRC framework/connection web.websocket.frame — receive: Frame data (2 bytes)
+│ 00000000  03 e8                                             |..              |
+2026-09-21T19:25:36.323Z TRC framework/connection web.websocket.subprotocol inst=legacy conn=1 — subprotocol='echo' close confirmed from peer
+2026-09-21T19:25:36.323Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — Stop writing
+2026-09-21T19:25:36.323Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — Write shutdown started
+2026-09-21T19:25:36.323Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — Shutdown (WR)
+2026-09-21T19:25:36.323Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — Shutdown (WR): success
+2026-09-21T19:25:36.323Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — WRITE descriptor disabled
+2026-09-21T19:25:36.324Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — OnReadError: EOF received
+2026-09-21T19:25:36.324Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor disabled
+2026-09-21T19:25:36.324Z DBG framework/context core.socket.context inst=legacy conn=1 — SocketContext: EOF received
+2026-09-21T19:25:36.324Z TRC application/application app — WebSocket echo client disconnected
+2026-09-21T19:25:36.324Z INF framework/connection web.websocket.subprotocol inst=legacy conn=1 — subprotocol stopped: echo
+2026-09-21T19:25:36.324Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=1 —        Total Payload sent: 7
+2026-09-21T19:25:36.324Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=1 —   Total Payload processed: 7
+2026-09-21T19:25:36.324Z INF framework/connection web.websocket.subprotocol inst=legacy conn=1 — websocket ended: subprotocol=echo
+2026-09-21T19:25:36.324Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=1 — WebSocket: context detached with subprotocol 'echo' for connection close
+2026-09-21T19:25:36.324Z DBG framework/context core.socket.context inst=legacy conn=1 — Context detached for connection close
+2026-09-21T19:25:36.324Z TRC framework/system core.system — DynLoader dlCloseDelayed: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 disconnected
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:49649
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:46187
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Online Since: 2026-09-21 19:25:36 UTC
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Online Duration: 00:00:00
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Queued: 271
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Sent: 271
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Write Delta: 0
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Read: 249
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Processed: 249
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=client inst=legacy — Read Delta: 0
+2026-09-21T19:25:36.324Z INF framework/instance core.socket.stream role=client inst=legacy — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-21T19:25:36.324Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport disconnected
+2026-09-21T19:25:36.324Z TRC framework/system core.system — DynLoader dlClose: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2: success
+2026-09-21T19:25:36.325Z TRC framework/system core.event-loop — Core::EventLoop: No Observer
+2026-09-21T19:25:36.325Z TRC framework/system core.event-loop — Core: Graceful shutdown
+2026-09-21T19:25:36.325Z TRC framework/system core.event-loop — Core: Terminate remaining DescriptorEventReceivers and timers
+2026-09-21T19:25:36.325Z TRC framework/system core.event-loop — Core: Shutdown config system
+2026-09-21T19:25:36.325Z TRC framework/system core.event-loop — Core: All resources released
+2026-09-21T19:25:36.325Z TRC framework/system core.event-loop — SNode.C: Ended ... BYE
+
+--- unsupported client ---
+2026-09-21T19:25:36.356Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-21T19:25:36.356Z TRC framework/system core.event-loop — SNode.C: Starting ... HELLO
+2026-09-21T19:25:36.358Z TRC framework/system core.event-loop — Core::EventLoop: started
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=client inst=legacy — Initiating connect
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt started
+2026-09-21T19:25:36.358Z DBG framework/connection core.socket — legacy Connect: starting
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket — legacy open 0.0.0.0:0 (0.0.0.0): success
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket — legacy bind 0.0.0.0:0 (0.0.0.0) (effective: 0.0.0.0:46401): success
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket — legacy connect 127.0.0.1:46187 (127.0.0.1): success
+2026-09-21T19:25:36.358Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor enabled
+2026-09-21T19:25:36.358Z DBG framework/connection core.socket — legacy enable 127.0.0.1:46187: success
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (local): localhost:46401
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (remote): localhost:46187
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor enabled
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — WRITE descriptor enabled
+2026-09-21T19:25:36.358Z DBG framework/connection core.socket — legacy connect 127.0.0.1:46187 (127.0.0.1): success
+2026-09-21T19:25:36.358Z DBG framework/connection core.socket —   localhost:46401 -> localhost:46187
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt succeeded
+2026-09-21T19:25:36.358Z TRC application/application app — HTTP client connection status for 127.0.0.1:46187 (127.0.0.1)
+2026-09-21T19:25:36.358Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport connected
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connecting
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:46401
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:46187
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connected
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:46401
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:46187
+2026-09-21T19:25:36.359Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketContext created successful
+2026-09-21T19:25:36.359Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+2026-09-21T19:25:36.359Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context attached
+2026-09-21T19:25:36.359Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) accepted: GET /ws HTTP/1.1
+2026-09-21T19:25:36.359Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) queued: GET /ws HTTP/1.1 - QueueSize = 1 - Flags: 0 - 0
+2026-09-21T19:25:36.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request started: id=0
+2026-09-21T19:25:36.359Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-21T19:25:36.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgradeFactory create success: websocket
+2026-09-21T19:25:36.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Initiating upgrade: GET /ws HTTP/1.1
+2026-09-21T19:25:36.359Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Upgrade request:
+│   Request:                 Method : GET
+│          :                    Url : /ws
+│          :                Version : HTTP/1.1
+│    Header:             Connection : Upgrade
+│          :                   Host : 127.0.0.1:46187
+│          :      Sec-WebSocket-Key : PJajfUZNmmxfNZNYm82TXQ==
+│          : Sec-WebSocket-Protocol : editorial-unsupported
+│          :  Sec-WebSocket-Version : 13
+│          :                Upgrade : websocket
+│          :           X-Powered-By : SNode.C
+2026-09-21T19:25:36.359Z TRC application/application app — upgrade request initiation: accepted
+2026-09-21T19:25:36.359Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) delivered: GET /ws HTTP/1.1 0
+2026-09-21T19:25:36.359Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor disabled
+2026-09-21T19:25:36.360Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Response received for request (0): GET /ws HTTP/1.1
+2026-09-21T19:25:36.360Z DBG framework/context core.socket.context inst=legacy conn=1 —   HTTP/1.1 404 Not Found
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Response to upgrade request: GET /ws HTTP/1.1
+│  Response:                Version : HTTP/1.1
+│          :                 Status : 404
+│          :                 Reason : Not Found
+│    Header:             Connection : close
+│          :         Content-Length : 0
+│          :                   Date : Mon, 21 Sep 2026 19:25:36 GMT
+│          : Sec-WebSocket-Protocol : 
+│          :           X-Powered-By : SNode.C
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — No upgrade requested
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — WRITE descriptor disabled
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor disabled
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — upgrade bootstrap failed
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —       Protocol selected: 
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —               requested: websocket
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —   Subprotocol  selected: 
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.client role=client inst=legacy conn=1 —               requested: editorial-unsupported
+2026-09-21T19:25:36.360Z TRC application/application app — upgrade response: rejected
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request completed: id=0
+2026-09-21T19:25:36.360Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Connection = Close
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — Stop writing
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — Write shutdown started
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — Shutdown (WR)
+2026-09-21T19:25:36.360Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — Shutdown (WR): success
+2026-09-21T19:25:36.361Z TRC application/application app — HTTP request completed or disconnected
+2026-09-21T19:25:36.361Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context detached for connection close
+2026-09-21T19:25:36.361Z DBG framework/context core.socket.context inst=legacy conn=1 — Context detached for connection close
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 disconnected
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:46401
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:46187
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Online Since: 2026-09-21 19:25:36 UTC
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Online Duration: 00:00:00
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Queued: 256
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Sent: 256
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Write Delta: 0
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Read: 150
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Total Processed: 150
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=client inst=legacy — Read Delta: 0
+2026-09-21T19:25:36.361Z INF framework/instance core.socket.stream role=client inst=legacy — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-21T19:25:36.361Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport disconnected
+2026-09-21T19:25:36.361Z TRC framework/system core.event-loop — Core::EventLoop: No Observer
+2026-09-21T19:25:36.361Z TRC framework/system core.event-loop — Core: Graceful shutdown
+2026-09-21T19:25:36.361Z TRC framework/system core.event-loop — Core: Terminate remaining DescriptorEventReceivers and timers
+2026-09-21T19:25:36.361Z TRC framework/system core.event-loop — Core: Shutdown config system
+2026-09-21T19:25:36.361Z TRC framework/system core.event-loop — Core: All resources released
+2026-09-21T19:25:36.361Z TRC framework/system core.event-loop — SNode.C: Ended ... BYE
+
+Unsupported independent request: HTTP/1.1 404 Not Found
+Date: Mon, 21 Sep 2026 19:25:36 GMT
+Connection: close
+Content-Length: 0
+Sec-WebSocket-Protocol: 
+X-Powered-By: SNode.C
+--- server ---
+2026-09-21T19:25:36.290Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-21T19:25:36.290Z TRC framework/system core.event-loop — SNode.C: Starting ... HELLO
+2026-09-21T19:25:36.292Z TRC framework/system core.event-loop — Core::EventLoop: started
+2026-09-21T19:25:36.292Z DBG framework/instance core.socket.stream role=server inst=legacy — Initiating listen
+2026-09-21T19:25:36.292Z DBG framework/connection core.socket — legacy Listen: starting
+2026-09-21T19:25:36.292Z DBG framework/connection core.socket — legacy open 127.0.0.1:46187 (127.0.0.1): success
+2026-09-21T19:25:36.292Z DBG framework/connection core.socket — legacy bind 127.0.0.1:46187 (127.0.0.1) (effective: 127.0.0.1:46187): success
+2026-09-21T19:25:36.292Z DBG framework/connection core.socket — legacy listen 127.0.0.1:46187: success
+2026-09-21T19:25:36.292Z TRC framework/system core.eventreceiver inst="legacy SocketAcceptor accept" — READ descriptor enabled
+2026-09-21T19:25:36.292Z DBG framework/connection core.socket — legacy enable 127.0.0.1:46187: success
+2026-09-21T19:25:36.292Z INF framework/instance core.socket.stream role=server inst=legacy — listener started
+2026-09-21T19:25:36.292Z TRC application/application app — HTTP upgrade server listening on 127.0.0.1:46187
+2026-09-21T19:25:36.305Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — PeerAddress (local): localhost:46187
+2026-09-21T19:25:36.305Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — PeerAddress (remote): localhost:50464
+2026-09-21T19:25:36.305Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — READ descriptor enabled
+2026-09-21T19:25:36.305Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — WRITE descriptor enabled
+2026-09-21T19:25:36.305Z INF framework/connection core.socket.stream role=server inst=legacy conn=1 — transport connected
+2026-09-21T19:25:36.305Z DBG framework/connection core.socket — legacy accept 127.0.0.1:46187: success
+2026-09-21T19:25:36.305Z DBG framework/connection core.socket —   localhost:50464 -> localhost:46187
+2026-09-21T19:25:36.305Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 1 connecting
+2026-09-21T19:25:36.305Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.305Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:50464
+2026-09-21T19:25:36.305Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 1 connected
+2026-09-21T19:25:36.305Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.305Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:50464
+2026-09-21T19:25:36.305Z DBG framework/connection core.socket.stream role=server inst=legacy conn=1 — SocketContext created successful
+2026-09-21T19:25:36.305Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+2026-09-21T19:25:36.305Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context attached
+2026-09-21T19:25:36.306Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — OnReadError: EOF received
+2026-09-21T19:25:36.306Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — READ descriptor disabled
+2026-09-21T19:25:36.306Z DBG framework/context core.socket.context inst=legacy conn=1 — SocketContext: EOF received
+2026-09-21T19:25:36.306Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — Stop writing
+2026-09-21T19:25:36.306Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — Write shutdown started
+2026-09-21T19:25:36.306Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — Shutdown (WR)
+2026-09-21T19:25:36.306Z DBG framework/connection core.socket.stream role=server inst=legacy conn=1 — Shutdown (WR): success
+2026-09-21T19:25:36.306Z TRC framework/connection core.socket.stream role=server inst=legacy conn=1 — WRITE descriptor disabled
+2026-09-21T19:25:36.306Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context detached for connection close
+2026-09-21T19:25:36.306Z DBG framework/context core.socket.context inst=legacy conn=1 — Context detached for connection close
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 1 disconnected
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:50464
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Online Since: 2026-09-21 19:25:36 UTC
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Online Duration: 00:00:00
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Queued: 0
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Sent: 0
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Write Delta: 0
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Read: 0
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Processed: 0
+2026-09-21T19:25:36.306Z DBG framework/instance core.socket.stream role=server inst=legacy — Read Delta: 0
+2026-09-21T19:25:36.306Z INF framework/connection core.socket.stream role=server inst=legacy conn=1 — transport disconnected
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — PeerAddress (local): localhost:46187
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — PeerAddress (remote): localhost:49649
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — READ descriptor enabled
+2026-09-21T19:25:36.317Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — WRITE descriptor enabled
+2026-09-21T19:25:36.317Z INF framework/connection core.socket.stream role=server inst=legacy conn=2 — transport connected
+2026-09-21T19:25:36.317Z DBG framework/connection core.socket — legacy accept 127.0.0.1:46187: success
+2026-09-21T19:25:36.317Z DBG framework/connection core.socket —   localhost:49649 -> localhost:46187
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 2 connecting
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:49649
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 2 connected
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.317Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:49649
+2026-09-21T19:25:36.317Z DBG framework/connection core.socket.stream role=server inst=legacy conn=2 — SocketContext created successful
+2026-09-21T19:25:36.317Z DBG framework/context core.socket.context inst=legacy conn=2 — Context attached
+2026-09-21T19:25:36.317Z DBG framework/context core.socket.context inst=legacy conn=2 — HTTP: context attached
+2026-09-21T19:25:36.318Z DBG framework/connection web.http.server role=server inst=legacy conn=2 — request started: id=1
+2026-09-21T19:25:36.318Z DBG framework/context core.socket.context inst=legacy conn=2 — HTTP: Request parse success: GET /ws HTTP/1.1
+2026-09-21T19:25:36.318Z DBG framework/context core.socket.context inst=legacy conn=2 — HTTP: Request deliver: GET /ws HTTP/1.1
+2026-09-21T19:25:36.318Z TRC framework/application express — ======================= ROUTER      DISPATCH =======================
+2026-09-21T19:25:36.319Z TRC framework/application express inst=legacy conn=2 — Router dispatch
+2026-09-21T19:25:36.319Z TRC framework/application express —           Request Method: GET
+2026-09-21T19:25:36.319Z TRC framework/application express —              Request Url: /ws
+2026-09-21T19:25:36.319Z TRC framework/application express —             Request Path: /ws
+2026-09-21T19:25:36.319Z TRC framework/application express —        Mountpoint Method: use
+2026-09-21T19:25:36.319Z TRC framework/application express —          Mountpoint Path: 
+2026-09-21T19:25:36.319Z TRC framework/application express —            StrictRouting: 0
+2026-09-21T19:25:36.319Z TRC framework/application express —   CaseInsensitiveRouting: 1
+2026-09-21T19:25:36.319Z TRC framework/application express —              MergeParams: 0
+2026-09-21T19:25:36.319Z TRC framework/application express — ----------------------- ROUTER         MATCH -----------------------
+2026-09-21T19:25:36.319Z TRC framework/application express — ======================= APPLICATION DISPATCH =======================
+2026-09-21T19:25:36.319Z TRC framework/application express inst=legacy conn=2 — Application dispatch
+2026-09-21T19:25:36.319Z TRC framework/application express —           Request Method: GET
+2026-09-21T19:25:36.319Z TRC framework/application express —              Request Url: /ws
+2026-09-21T19:25:36.319Z TRC framework/application express —             Request Path: /ws
+2026-09-21T19:25:36.319Z TRC framework/application express —        Mountpoint Method: GET
+2026-09-21T19:25:36.319Z TRC framework/application express —          Mountpoint Path: /ws
+2026-09-21T19:25:36.319Z TRC framework/application express —            StrictRouting: 0
+2026-09-21T19:25:36.319Z TRC framework/application express —   CaseInsensitiveRouting: 1
+2026-09-21T19:25:36.319Z TRC framework/application express —              MergeParams: 0
+2026-09-21T19:25:36.319Z TRC framework/application express — ----------------------- APPLICATION    MATCH -----------------------
+2026-09-21T19:25:36.319Z DBG framework/connection web.http.server role=server inst=legacy conn=2 — Initiating upgrade: GET /ws HTTP/1.1
+│   Request:                 Method : GET
+│          :                    Url : /ws
+│          :                Version : HTTP/1.1
+│    Header:             Connection : Upgrade
+│          :                   Date : Mon, 21 Sep 2026 19:25:36 GMT
+│          :                   Host : 127.0.0.1:46187
+│          :      Sec-WebSocket-Key : PcxHxEACzb9MOentE66dtQ==
+│          : Sec-WebSocket-Protocol : subprotocol, echo
+│          :  Sec-WebSocket-Version : 13
+│          :                Upgrade : websocket
+│          :           X-Powered-By : SNode.C
+2026-09-21T19:25:36.319Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-21T19:25:36.319Z DBG framework/connection web.http.server role=server inst=legacy conn=2 — SocketContextUpgradeFactory create success for: websocket
+2026-09-21T19:25:36.319Z TRC framework/system core.system — DynLoader dlOpen: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-subprotocol-server.so.2: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-subprotocol-server.so.2: cannot open shared object file: No such file or directory
+2026-09-21T19:25:36.319Z DBG framework/connection web.websocket.factory — subprotocol plugin 'subprotocol' loaded and added to dynamic cache
+2026-09-21T19:25:36.319Z TRC framework/system core.system — DynLoader dlOpen: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2: success
+2026-09-21T19:25:36.319Z DBG framework/connection web.websocket.factory — SubProtocolFactory create success: echo
+2026-09-21T19:25:36.319Z DBG framework/connection web.websocket.factory — subprotocol plugin 'echo' loaded and added to dynamic cache
+2026-09-21T19:25:36.319Z DBG framework/connection web.http.server role=server inst=legacy conn=2 — SocketContextUpgrade create success for: websocket
+2026-09-21T19:25:36.320Z DBG framework/connection web.http.server role=server inst=legacy conn=2 — Response to upgrade request: GET /ws HTTP/1.1
+│  Response:                Version : HTTP/1.1
+│          :                 Status : 101
+│          :                 Reason : Switching Protocols
+│    Header:             Connection : Upgrade
+│          :   Sec-WebSocket-Accept : OvI6T8AqZf8zHBA77G52Ojqp3UU=
+│          : Sec-WebSocket-Protocol : echo
+│          :                Upgrade : websocket
+2026-09-21T19:25:36.320Z DBG framework/connection core.socket.stream role=server inst=legacy conn=2 — SocketContext: switch
+2026-09-21T19:25:36.320Z DBG framework/connection web.http.server role=server inst=legacy conn=2 — Upgrade bootstrap success
+2026-09-21T19:25:36.320Z DBG framework/connection web.http.server role=server inst=legacy conn=2 —       Protocol selected: websocket
+2026-09-21T19:25:36.320Z DBG framework/connection web.http.server role=server inst=legacy conn=2 —               requested: websocket
+2026-09-21T19:25:36.320Z DBG framework/connection web.http.server role=server inst=legacy conn=2 —   Subprotocol  selected: echo
+2026-09-21T19:25:36.320Z DBG framework/connection web.http.server role=server inst=legacy conn=2 —               requested: subprotocol, echo
+2026-09-21T19:25:36.320Z TRC application/application app — HTTP upgrade selected: websocket
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 — HTTP: Response start for request: GET /ws HTTP/1.1
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 —   HTTP/1.1 101 Switching Protocols
+2026-09-21T19:25:36.320Z DBG framework/connection web.http.server role=server inst=legacy conn=2 — request completed: id=1
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 —   HTTP/1.1 101 Switching Protocols
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 — HTTP: Connection = Keep-Alive
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 — HTTP: context detached for context switch
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 — Context detached for context switch
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 —   Context Online Since: 2026-09-21 19:25:36 UTC
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 —   Context Online Duration: 00:00:00
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 —   Context Total Queued: 238
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 —   Context Total Processed: 252
+2026-09-21T19:25:36.320Z DBG framework/context core.socket.context inst=legacy conn=2 — Context attached
+2026-09-21T19:25:36.320Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=2 — WebSocket: context attached with subprotocol 'echo'
+2026-09-21T19:25:36.320Z INF framework/connection web.websocket.subprotocol inst=legacy conn=2 — websocket established: subprotocol=echo
+2026-09-21T19:25:36.320Z INF framework/connection web.websocket.subprotocol inst=legacy conn=2 — subprotocol started: echo
+2026-09-21T19:25:36.320Z TRC application/application app — WebSocket echo server connected
+2026-09-21T19:25:36.320Z DBG framework/connection core.socket.stream role=server inst=legacy conn=2 — SocketConnection: switch completed
+2026-09-21T19:25:36.322Z TRC framework/connection web.websocket.frame — receive: Frame data (5 bytes)
+│ 00000000  68 65 6c 6c 6f                                    |hello           |
+2026-09-21T19:25:36.322Z TRC application/application app — WebSocket echo server received: hello
+2026-09-21T19:25:36.322Z TRC framework/connection web.websocket.frame — send: Frame data (5 bytes)
+│ 00000000  68 65 6c 6c 6f                                    |hello           |
+2026-09-21T19:25:36.323Z TRC framework/connection web.websocket.frame — receive: Frame data (2 bytes)
+│ 00000000  03 e8                                             |..              |
+2026-09-21T19:25:36.323Z TRC framework/connection web.websocket.subprotocol inst=legacy conn=2 — subprotocol='echo' close request received - replying with close
+2026-09-21T19:25:36.323Z TRC framework/connection web.websocket.subprotocol inst=legacy conn=2 — subprotocol='echo' sending close to peer
+2026-09-21T19:25:36.323Z TRC framework/connection web.websocket.frame — send: Frame data (2 bytes)
+│ 00000000  03 e8                                             |..              |
+2026-09-21T19:25:36.323Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — OnReadError: EOF received
+2026-09-21T19:25:36.324Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — READ descriptor disabled
+2026-09-21T19:25:36.324Z DBG framework/context core.socket.context inst=legacy conn=2 — SocketContext: EOF received
+2026-09-21T19:25:36.324Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — Stop writing
+2026-09-21T19:25:36.324Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — Write shutdown started
+2026-09-21T19:25:36.324Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — Shutdown (WR)
+2026-09-21T19:25:36.324Z DBG framework/connection core.socket.stream role=server inst=legacy conn=2 — Shutdown (WR): success
+2026-09-21T19:25:36.324Z TRC framework/connection core.socket.stream role=server inst=legacy conn=2 — WRITE descriptor disabled
+2026-09-21T19:25:36.324Z TRC application/application app — WebSocket echo server disconnected
+2026-09-21T19:25:36.324Z INF framework/connection web.websocket.subprotocol inst=legacy conn=2 — subprotocol stopped: echo
+2026-09-21T19:25:36.324Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=2 —        Total Payload sent: 7
+2026-09-21T19:25:36.324Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=2 —   Total Payload processed: 7
+2026-09-21T19:25:36.324Z INF framework/connection web.websocket.subprotocol inst=legacy conn=2 — websocket ended: subprotocol=echo
+2026-09-21T19:25:36.324Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=2 — WebSocket: context detached with subprotocol 'echo' for connection close
+2026-09-21T19:25:36.324Z DBG framework/context core.socket.context inst=legacy conn=2 — Context detached for connection close
+2026-09-21T19:25:36.324Z TRC framework/system core.system — DynLoader dlCloseDelayed: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 2 disconnected
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:49649
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Online Since: 2026-09-21 19:25:36 UTC
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Online Duration: 00:00:00
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Queued: 249
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Sent: 249
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Write Delta: 0
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Read: 271
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Processed: 271
+2026-09-21T19:25:36.324Z DBG framework/instance core.socket.stream role=server inst=legacy — Read Delta: 0
+2026-09-21T19:25:36.324Z INF framework/connection core.socket.stream role=server inst=legacy conn=2 — transport disconnected
+2026-09-21T19:25:36.324Z TRC framework/system core.system — DynLoader dlClose: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2: success
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — PeerAddress (local): localhost:46187
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — PeerAddress (remote): localhost:46401
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — READ descriptor enabled
+2026-09-21T19:25:36.358Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — WRITE descriptor enabled
+2026-09-21T19:25:36.358Z INF framework/connection core.socket.stream role=server inst=legacy conn=3 — transport connected
+2026-09-21T19:25:36.358Z DBG framework/connection core.socket — legacy accept 127.0.0.1:46187: success
+2026-09-21T19:25:36.358Z DBG framework/connection core.socket —   localhost:46401 -> localhost:46187
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 3 connecting
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:46401
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 3 connected
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.358Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:46401
+2026-09-21T19:25:36.358Z DBG framework/connection core.socket.stream role=server inst=legacy conn=3 — SocketContext created successful
+2026-09-21T19:25:36.358Z DBG framework/context core.socket.context inst=legacy conn=3 — Context attached
+2026-09-21T19:25:36.358Z DBG framework/context core.socket.context inst=legacy conn=3 — HTTP: context attached
+2026-09-21T19:25:36.359Z DBG framework/connection web.http.server role=server inst=legacy conn=3 — request started: id=1
+2026-09-21T19:25:36.359Z DBG framework/context core.socket.context inst=legacy conn=3 — HTTP: Request parse success: GET /ws HTTP/1.1
+2026-09-21T19:25:36.359Z DBG framework/context core.socket.context inst=legacy conn=3 — HTTP: Request deliver: GET /ws HTTP/1.1
+2026-09-21T19:25:36.359Z TRC framework/application express — ======================= ROUTER      DISPATCH =======================
+2026-09-21T19:25:36.359Z TRC framework/application express inst=legacy conn=3 — Router dispatch
+2026-09-21T19:25:36.359Z TRC framework/application express —           Request Method: GET
+2026-09-21T19:25:36.359Z TRC framework/application express —              Request Url: /ws
+2026-09-21T19:25:36.359Z TRC framework/application express —             Request Path: /ws
+2026-09-21T19:25:36.359Z TRC framework/application express —        Mountpoint Method: use
+2026-09-21T19:25:36.359Z TRC framework/application express —          Mountpoint Path: 
+2026-09-21T19:25:36.359Z TRC framework/application express —            StrictRouting: 0
+2026-09-21T19:25:36.359Z TRC framework/application express —   CaseInsensitiveRouting: 1
+2026-09-21T19:25:36.359Z TRC framework/application express —              MergeParams: 0
+2026-09-21T19:25:36.359Z TRC framework/application express — ----------------------- ROUTER         MATCH -----------------------
+2026-09-21T19:25:36.359Z TRC framework/application express — ======================= APPLICATION DISPATCH =======================
+2026-09-21T19:25:36.359Z TRC framework/application express inst=legacy conn=3 — Application dispatch
+2026-09-21T19:25:36.359Z TRC framework/application express —           Request Method: GET
+2026-09-21T19:25:36.359Z TRC framework/application express —              Request Url: /ws
+2026-09-21T19:25:36.359Z TRC framework/application express —             Request Path: /ws
+2026-09-21T19:25:36.359Z TRC framework/application express —        Mountpoint Method: GET
+2026-09-21T19:25:36.359Z TRC framework/application express —          Mountpoint Path: /ws
+2026-09-21T19:25:36.359Z TRC framework/application express —            StrictRouting: 0
+2026-09-21T19:25:36.359Z TRC framework/application express —   CaseInsensitiveRouting: 1
+2026-09-21T19:25:36.359Z TRC framework/application express —              MergeParams: 0
+2026-09-21T19:25:36.359Z TRC framework/application express — ----------------------- APPLICATION    MATCH -----------------------
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.server role=server inst=legacy conn=3 — Initiating upgrade: GET /ws HTTP/1.1
+│   Request:                 Method : GET
+│          :                    Url : /ws
+│          :                Version : HTTP/1.1
+│    Header:             Connection : Upgrade
+│          :                   Date : Mon, 21 Sep 2026 19:25:36 GMT
+│          :                   Host : 127.0.0.1:46187
+│          :      Sec-WebSocket-Key : PJajfUZNmmxfNZNYm82TXQ==
+│          : Sec-WebSocket-Protocol : editorial-unsupported
+│          :  Sec-WebSocket-Version : 13
+│          :                Upgrade : websocket
+│          :           X-Powered-By : SNode.C
+2026-09-21T19:25:36.360Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.server role=server inst=legacy conn=3 — SocketContextUpgradeFactory create success for: websocket
+2026-09-21T19:25:36.360Z TRC framework/system core.system — DynLoader dlOpen: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-editorial-unsupported-server.so.2: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-editorial-unsupported-server.so.2: cannot open shared object file: No such file or directory
+2026-09-21T19:25:36.360Z DBG framework/connection web.websocket.factory — subprotocol plugin 'editorial-unsupported' loaded and added to dynamic cache
+2026-09-21T19:25:36.360Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=3 — websocket failed
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.server role=server inst=legacy conn=3 — SocketContextUpgrade create failed for: websocket
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.server role=server inst=legacy conn=3 — Upgrade bootstrap success
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.server role=server inst=legacy conn=3 —       Protocol selected: websocket
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.server role=server inst=legacy conn=3 —               requested: websocket
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.server role=server inst=legacy conn=3 —   Subprotocol  selected: 
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.server role=server inst=legacy conn=3 —               requested: editorial-unsupported
+2026-09-21T19:25:36.360Z TRC application/application app — HTTP upgrade selected: websocket
+2026-09-21T19:25:36.360Z DBG framework/context core.socket.context inst=legacy conn=3 — HTTP: Response start for request: GET /ws HTTP/1.1
+2026-09-21T19:25:36.360Z DBG framework/context core.socket.context inst=legacy conn=3 —   HTTP/1.1 404 Not Found
+2026-09-21T19:25:36.360Z DBG framework/connection web.http.server role=server inst=legacy conn=3 — request completed: id=1
+2026-09-21T19:25:36.360Z DBG framework/context core.socket.context inst=legacy conn=3 —   HTTP/1.1 404 Not Found
+2026-09-21T19:25:36.360Z DBG framework/context core.socket.context inst=legacy conn=3 — HTTP: Connection = Close
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — Stop writing
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — Write shutdown delayed due to queued data
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — Write shutdown restarted
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — Shutdown (WR)
+2026-09-21T19:25:36.360Z DBG framework/connection core.socket.stream role=server inst=legacy conn=3 — Shutdown (WR): success
+2026-09-21T19:25:36.360Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — WRITE descriptor disabled
+2026-09-21T19:25:36.361Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — OnReadError: EOF received
+2026-09-21T19:25:36.361Z TRC framework/connection core.socket.stream role=server inst=legacy conn=3 — READ descriptor disabled
+2026-09-21T19:25:36.361Z DBG framework/context core.socket.context inst=legacy conn=3 — SocketContext: EOF received
+2026-09-21T19:25:36.361Z DBG framework/context core.socket.context inst=legacy conn=3 — HTTP: context detached for connection close
+2026-09-21T19:25:36.361Z DBG framework/context core.socket.context inst=legacy conn=3 — Context detached for connection close
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 3 disconnected
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:46401
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Online Since: 2026-09-21 19:25:36 UTC
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Online Duration: 00:00:00
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Queued: 150
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Sent: 150
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Write Delta: 0
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Read: 256
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Processed: 256
+2026-09-21T19:25:36.361Z DBG framework/instance core.socket.stream role=server inst=legacy — Read Delta: 0
+2026-09-21T19:25:36.361Z INF framework/connection core.socket.stream role=server inst=legacy conn=3 — transport disconnected
+2026-09-21T19:25:36.368Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — PeerAddress (local): localhost:46187
+2026-09-21T19:25:36.368Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — PeerAddress (remote): localhost:50478
+2026-09-21T19:25:36.368Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — READ descriptor enabled
+2026-09-21T19:25:36.368Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — WRITE descriptor enabled
+2026-09-21T19:25:36.368Z INF framework/connection core.socket.stream role=server inst=legacy conn=4 — transport connected
+2026-09-21T19:25:36.368Z DBG framework/connection core.socket — legacy accept 127.0.0.1:46187: success
+2026-09-21T19:25:36.368Z DBG framework/connection core.socket —   localhost:50478 -> localhost:46187
+2026-09-21T19:25:36.368Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 4 connecting
+2026-09-21T19:25:36.368Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.368Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:50478
+2026-09-21T19:25:36.368Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 4 connected
+2026-09-21T19:25:36.368Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.368Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:50478
+2026-09-21T19:25:36.368Z DBG framework/connection core.socket.stream role=server inst=legacy conn=4 — SocketContext created successful
+2026-09-21T19:25:36.368Z DBG framework/context core.socket.context inst=legacy conn=4 — Context attached
+2026-09-21T19:25:36.368Z DBG framework/context core.socket.context inst=legacy conn=4 — HTTP: context attached
+2026-09-21T19:25:36.368Z DBG framework/connection web.http.server role=server inst=legacy conn=4 — request started: id=1
+2026-09-21T19:25:36.369Z DBG framework/context core.socket.context inst=legacy conn=4 — HTTP: Request parse success: GET /ws HTTP/1.1
+2026-09-21T19:25:36.369Z DBG framework/context core.socket.context inst=legacy conn=4 — HTTP: Request deliver: GET /ws HTTP/1.1
+2026-09-21T19:25:36.369Z TRC framework/application express — ======================= ROUTER      DISPATCH =======================
+2026-09-21T19:25:36.369Z TRC framework/application express inst=legacy conn=4 — Router dispatch
+2026-09-21T19:25:36.369Z TRC framework/application express —           Request Method: GET
+2026-09-21T19:25:36.369Z TRC framework/application express —              Request Url: /ws
+2026-09-21T19:25:36.369Z TRC framework/application express —             Request Path: /ws
+2026-09-21T19:25:36.369Z TRC framework/application express —        Mountpoint Method: use
+2026-09-21T19:25:36.369Z TRC framework/application express —          Mountpoint Path: 
+2026-09-21T19:25:36.369Z TRC framework/application express —            StrictRouting: 0
+2026-09-21T19:25:36.369Z TRC framework/application express —   CaseInsensitiveRouting: 1
+2026-09-21T19:25:36.369Z TRC framework/application express —              MergeParams: 0
+2026-09-21T19:25:36.369Z TRC framework/application express — ----------------------- ROUTER         MATCH -----------------------
+2026-09-21T19:25:36.369Z TRC framework/application express — ======================= APPLICATION DISPATCH =======================
+2026-09-21T19:25:36.369Z TRC framework/application express inst=legacy conn=4 — Application dispatch
+2026-09-21T19:25:36.369Z TRC framework/application express —           Request Method: GET
+2026-09-21T19:25:36.369Z TRC framework/application express —              Request Url: /ws
+2026-09-21T19:25:36.369Z TRC framework/application express —             Request Path: /ws
+2026-09-21T19:25:36.369Z TRC framework/application express —        Mountpoint Method: GET
+2026-09-21T19:25:36.369Z TRC framework/application express —          Mountpoint Path: /ws
+2026-09-21T19:25:36.369Z TRC framework/application express —            StrictRouting: 0
+2026-09-21T19:25:36.369Z TRC framework/application express —   CaseInsensitiveRouting: 1
+2026-09-21T19:25:36.369Z TRC framework/application express —              MergeParams: 0
+2026-09-21T19:25:36.369Z TRC framework/application express — ----------------------- APPLICATION    MATCH -----------------------
+2026-09-21T19:25:36.369Z DBG framework/connection web.http.server role=server inst=legacy conn=4 — Initiating upgrade: GET /ws HTTP/1.1
+│   Request:                 Method : GET
+│          :                    Url : /ws
+│          :                Version : HTTP/1.1
+│    Header:             Connection : Upgrade
+│          :                   Host : 127.0.0.1:46187
+│          :      Sec-WebSocket-Key : dGhlIHNhbXBsZSBub25jZQ==
+│          : Sec-WebSocket-Protocol : editorial-unsupported
+│          :  Sec-WebSocket-Version : 13
+│          :                Upgrade : websocket
+2026-09-21T19:25:36.369Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-21T19:25:36.369Z DBG framework/connection web.http.server role=server inst=legacy conn=4 — SocketContextUpgradeFactory create success for: websocket
+2026-09-21T19:25:36.369Z DBG framework/connection web.websocket.factory — subprotocol plugin 'editorial-unsupported' selected from dynamic cache
+2026-09-21T19:25:36.369Z DBG framework/connection web.websocket.subprotocol inst=legacy conn=4 — websocket failed
+2026-09-21T19:25:36.369Z DBG framework/connection web.http.server role=server inst=legacy conn=4 — SocketContextUpgrade create failed for: websocket
+2026-09-21T19:25:36.369Z DBG framework/connection web.http.server role=server inst=legacy conn=4 — Upgrade bootstrap success
+2026-09-21T19:25:36.369Z DBG framework/connection web.http.server role=server inst=legacy conn=4 —       Protocol selected: websocket
+2026-09-21T19:25:36.369Z DBG framework/connection web.http.server role=server inst=legacy conn=4 —               requested: websocket
+2026-09-21T19:25:36.369Z DBG framework/connection web.http.server role=server inst=legacy conn=4 —   Subprotocol  selected: 
+2026-09-21T19:25:36.369Z DBG framework/connection web.http.server role=server inst=legacy conn=4 —               requested: editorial-unsupported
+2026-09-21T19:25:36.369Z TRC application/application app — HTTP upgrade selected: websocket
+2026-09-21T19:25:36.369Z DBG framework/context core.socket.context inst=legacy conn=4 — HTTP: Response start for request: GET /ws HTTP/1.1
+2026-09-21T19:25:36.370Z DBG framework/context core.socket.context inst=legacy conn=4 —   HTTP/1.1 404 Not Found
+2026-09-21T19:25:36.370Z DBG framework/connection web.http.server role=server inst=legacy conn=4 — request completed: id=1
+2026-09-21T19:25:36.370Z DBG framework/context core.socket.context inst=legacy conn=4 —   HTTP/1.1 404 Not Found
+2026-09-21T19:25:36.370Z DBG framework/context core.socket.context inst=legacy conn=4 — HTTP: Connection = Close
+2026-09-21T19:25:36.370Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — Stop writing
+2026-09-21T19:25:36.370Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — Write shutdown delayed due to queued data
+2026-09-21T19:25:36.370Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — Write shutdown restarted
+2026-09-21T19:25:36.370Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — Shutdown (WR)
+2026-09-21T19:25:36.370Z DBG framework/connection core.socket.stream role=server inst=legacy conn=4 — Shutdown (WR): success
+2026-09-21T19:25:36.370Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — WRITE descriptor disabled
+2026-09-21T19:25:36.370Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — OnReadError: EOF received
+2026-09-21T19:25:36.370Z TRC framework/connection core.socket.stream role=server inst=legacy conn=4 — READ descriptor disabled
+2026-09-21T19:25:36.370Z DBG framework/context core.socket.context inst=legacy conn=4 — SocketContext: EOF received
+2026-09-21T19:25:36.370Z DBG framework/context core.socket.context inst=legacy conn=4 — HTTP: context detached for connection close
+2026-09-21T19:25:36.370Z DBG framework/context core.socket.context inst=legacy conn=4 — Context detached for connection close
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Connection 4 disconnected
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Local: localhost:46187
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Peer: localhost:50478
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Online Since: 2026-09-21 19:25:36 UTC
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Online Duration: 00:00:00
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Queued: 150
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Sent: 150
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Write Delta: 0
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Read: 203
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Total Processed: 203
+2026-09-21T19:25:36.370Z DBG framework/instance core.socket.stream role=server inst=legacy — Read Delta: 0
+2026-09-21T19:25:36.370Z INF framework/connection core.socket.stream role=server inst=legacy conn=4 — transport disconnected
+2026-09-21T19:25:36.371Z TRC framework/system core.event-loop — Core: Received signal 'Interrupt' (SIGINT = 2)
+2026-09-21T19:25:36.371Z TRC framework/system core.event-loop — Core::EventLoop: Stopped
+2026-09-21T19:25:36.371Z TRC framework/system core.event-loop — Core: Graceful shutdown after signal SIGINT
+2026-09-21T19:25:36.371Z TRC framework/system core.eventreceiver inst="legacy SocketAcceptor accept" — READ descriptor disabled
+2026-09-21T19:25:36.371Z INF framework/instance core.socket.stream role=server inst=legacy — listener stopped
+2026-09-21T19:25:36.371Z TRC framework/system core.event-loop — Core: Terminate remaining DescriptorEventReceivers and timers
+2026-09-21T19:25:36.371Z TRC framework/system core.event-loop — Core: Shutdown config system
+2026-09-21T19:25:36.371Z TRC framework/system core.event-loop — Core: All resources released
+2026-09-21T19:25:36.371Z TRC framework/system core.event-loop — SNode.C: Ended ... BYE
+
+PASS: echo negotiation, hello exchange and closure; unsupported selection has no echo attachment

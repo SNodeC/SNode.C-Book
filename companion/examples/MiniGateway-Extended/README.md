@@ -26,3 +26,11 @@ deployment prefix.
 Running the example requires an MQTT broker and the Unix-domain socket input path
 configured in the source tree. Chapter 36 shows the additional socket-based smoke
 check for the extended variant.
+
+The simulation endpoint uses `POST /simulate`. The teaching SSE route accepts the
+explicit `Accept: text/event-stream` value (case-insensitively), rather than general
+media-range negotiation. Disconnected subscribers are removed on a later
+publication; immediate idle-subscriber cleanup is outside this compact example.
+The HTTP role is named `web`; use `web local --host 127.0.0.1 --port 8081` to
+override its endpoint. MQTT uses protocol level 4 without the private loop-prevention
+extension. Keep input and output topics distinct.

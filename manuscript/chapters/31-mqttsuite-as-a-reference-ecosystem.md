@@ -7,19 +7,21 @@
 
 ### From system vocabulary to a concrete ecosystem
 
-MQTTSuite is useful here because it is not a toy example. It is a set of SNode.C-based programs whose roles, protocols, configuration, observability, persistence, and failure behavior have to work as an ecosystem.
+MQTTSuite is useful here because its applications give the preceding boundary vocabulary concrete entry points, configuration names, and source paths. It is a set of SNode.C-based programs whose roles, protocols, configuration, observability, persistence, and failure behavior have to work as an ecosystem.
 
 MQTTSuite is the concrete reference ecosystem for the system vocabulary developed in Chapter 30. A reference ecosystem is not the only possible way to build systems with SNode.C. It is a source-backed example that shows how the design vocabulary can be used in a real family of cooperating applications.
 
 It shows how SNode.C concepts become a family of MQTT-centered tools: broker, integrator, bridge, command-line client, persistence service, and shared support libraries. In compact form, framework ideas become MQTT and web infrastructure, then focused applications, and finally an operational ecosystem.
 
-MQTTSuite is therefore architectural evidence: SNode.C concepts can be combined into a coherent communication ecosystem without turning every concern into one monolithic executable.
+The source shows both forms of composition: separate tools for distinct operational jobs, and several related network roles inside one tool. Studying that choice is more useful than treating the repository’s existence as a deployment guarantee.
 
 Figure \ref{fig:mqttsuite-ecosystem-map} shows the suite as a role ecosystem around the MQTT broker role and topic space. MQTT clients and operational tools, MQTTStore, MQTTBridge, and MQTTIntegrator all touch the same MQTT-oriented center from different system boundaries.
 
 ![MQTTSuite as an ecosystem around the MQTTBroker role and topic space.](assets/figures/pdf/fig-10-mqttsuite-ecosystem-map.pdf){#fig:mqttsuite-ecosystem-map width=90% latex-placement="tbp"}
 
 The figure is intentionally not a pipeline. A deployment may use only the broker, one bridge, one store, one integrator, or several cooperating processes. Each tool occupies a distinct system role around topic flow, client state, persistence, bridging, and integration.
+
+MQTTSuite is a separate repository from SNode.C. The framework source manifest for this edition does not freeze a MQTTSuite checkout or certify a deployed suite. The chapter uses the suite as a source-oriented architectural case study. When reproducing its applications, record the suite revision and its own build and configuration requirements alongside the framework baseline; the five role names alone are not a compatibility or deployment test.
 
 ### Ecosystem shape
 
@@ -52,7 +54,7 @@ mqttstore
 
 That layout is already a system lesson: shared infrastructure belongs in libraries, operational roles become executables, and application boundaries remain visible. A system does not always mean one executable. Sometimes several focused tools sharing the same architectural vocabulary make the system clearer.
 
-MQTTSuite demonstrates that clearly.
+The tradeoff is operational: separate tools can restart independently, while their configuration and topic contracts must agree across processes.
 
 #### A first role map
 
@@ -194,7 +196,7 @@ The exact available instances depend on the build configuration and enabled role
 
 The names encode three dimensions: address family (`IPv4`, `IPv6`, or Unix-domain), protocol role (`MQTT` or `HTTP`), and security mode (`legacy`/plain or TLS).
 
-Where such a name belongs to a configured role, it can also become a registered instance. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
+Constructing a named endpoint registers that name in the configuration hierarchy; activating it creates a separate flow. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
 
 ### Integration and topology: MQTTIntegrator and MQTTBridge
 
@@ -208,7 +210,7 @@ MQTTIntegrator and MQTTBridge both connect MQTT worlds, but they do not solve th
 
 One is mainly about transformation. The other is mainly about topology.
 
-Keeping this distinction visible prevents the ecosystem from becoming a vague collection of MQTT clients: `MQTTIntegrator` is mainly about transformation and mapping semantics, while `MQTTBridge` is mainly about topology and selected traffic movement.
+Follow the received publication to see the distinction in code: does the next operation evaluate a mapping, or select another broker connection and its forwarding policy?
 
 #### MQTTIntegrator
 
@@ -281,7 +283,7 @@ MQTTStore brings the persistence boundary into the ecosystem. It is the persiste
 
 At the MQTT edge, it behaves as an MQTT client. At the persistence edge, it uses MariaDB-oriented storage. That makes it a direct continuation of Chapter 28's persistence-boundary model.
 
-Its safe default is to store received MQTT publishes as raw MQTT envelopes. That means the database can preserve important MQTT-level information such as:
+Its default storage model preserves received MQTT publishes as raw MQTT envelopes. That means the database can preserve important MQTT-level information such as:
 
 ```text
 connection name
@@ -299,9 +301,9 @@ This preserves the original message shape.
 
 But MQTTStore can also go further. It can project selected JSON payload fields into typed database tables. That makes it not only a subscriber with a database connection, but a persistence boundary where MQTT traffic can become queryable application state.
 
-A useful model is that an MQTT publish is first preserved as a raw envelope, may then receive optional JSON interpretation, and may finally be projected into typed tables.
+A useful model distinguishes raw-envelope storage from optional typed projection. In the current `MariaDbStorage::store(...)`, raw insertion is submitted and `storeProjections(...)` is then called; the projection does not wait for the raw insert’s success callback. These are separately queued writes, not one demonstrated atomic transaction.
 
-The first level preserves what arrived. The projection level gives the application a more queryable database shape. Both belong to the persistence boundary.
+Successful raw storage preserves what arrived. Successful projection gives selected content a queryable database shape. Their independent errors matter: a successful MQTT receive or one successful insert does not prove that both views were stored.
 
 #### Projection as state design
 
@@ -389,6 +391,16 @@ MQTTSuite points toward resource-constrained systems such as embedded Linux, rou
 The suite is built from focused applications rather than one giant server platform. It uses an event-driven framework. It exposes explicit roles. It can persist selected configuration. It can be deployed as a set of compact tools.
 
 This does not mean that every deployment must use OpenWrt, and it does not turn this chapter into package documentation. It means the architecture is compatible with constrained operational environments. That is an important part of the deployment story.
+
+### Trace one publication through two tools
+
+Use the suite checkout, separately recorded from the framework checkout, to follow one selected publication. Start at `mqttbridge/lib/Mqtt.cpp`: the received publish is handed to the configured bridge’s publication path. Compare that with `mqttstore/lib/Mqtt.cpp` and `mqttstore/lib/MariaDbStorage.cpp`, where the same protocol event becomes a storage decision.
+
+For the bridge, identify source selection, destination selection, topic-prefix behavior, and loop policy before attempting a two-broker experiment. Its configured loop-prevention value is passed to MQTT CONNECT; Chapter 25 explains why the private protocol-level extension must not be assumed interoperable with every broker.
+
+For the store, identify the raw insert and each matching projection insert, then locate their success and error callbacks. Write down what observation would establish each outcome. A database row, a projection row, and broker delivery are three separate facts.
+
+A bounded deployment exercise can use a unique topic prefix and a fixed sequence of ten publications, with an independent subscriber and database query as observers. Stop one destination and predict which other observations should continue. Running that exercise requires configured broker and database services; the architectural source trace does not claim that those services have been exercised.
 
 ### Reading MQTTSuite architecturally
 

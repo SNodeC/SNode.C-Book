@@ -1,0 +1,30 @@
+Printed unit syntax verified with temporary executable/configuration paths
+Installed foreground exchange passed
+samples=200 bytes=256 connections=1
+median_us=14.63
+p95_us=18.73
+Running as unit: snodec-book-editorial-echo-3674769.service; invocation ID: ff172549b5cc4afaa52d3575b5219cfa
+3674778
+3674799
+Supervised start/restart exchange passed; process identity changed
+Invalid port rejected without a listener
+Restored configuration recovers the service
+Sep 21 20:48:54 jupiter systemd[2211]: snodec-book-editorial-echo-3674769.service: Main process exited, code=exited, status=241/CONFIGURATION_DIRECTORY
+Sep 21 20:48:54 jupiter systemd[2211]: snodec-book-editorial-echo-3674769.service: Failed with result 'exit-code'.
+Sep 21 20:48:54 jupiter systemd[2211]: Stopped snodec-book-editorial-echo-3674769.service - [systemd-run] /usr/bin/env XDG_CONFIG_HOME=/tmp/snodec-editorial-pass-2026-09-21/service-user-base /tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoserver --config-file /tmp/snodec-editorial-pass-2026-09-21/service-echo.conf.
+Sep 21 20:48:54 jupiter systemd[2211]: Starting snodec-book-editorial-echo-3674769.service - [systemd-run] /usr/bin/env XDG_CONFIG_HOME=/tmp/snodec-editorial-pass-2026-09-21/service-user-base /tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoserver --config-file /tmp/snodec-editorial-pass-2026-09-21/service-echo.conf...
+Sep 21 20:48:54 jupiter systemd[2211]: Started snodec-book-editorial-echo-3674769.service - [systemd-run] /usr/bin/env XDG_CONFIG_HOME=/tmp/snodec-editorial-pass-2026-09-21/service-user-base /tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoserver --config-file /tmp/snodec-editorial-pass-2026-09-21/service-echo.conf.
+Sep 21 20:48:54 jupiter env[3674805]: [ValidationError] --port: Value invalid not in range [0 - 65535]
+Sep 21 20:48:54 jupiter env[3674805]: Append -h or --help to your command line for more information.
+Sep 21 20:48:54 jupiter systemd[2211]: snodec-book-editorial-echo-3674769.service: Main process exited, code=exited, status=2/INVALIDARGUMENT
+Sep 21 20:48:54 jupiter systemd[2211]: snodec-book-editorial-echo-3674769.service: Failed with result 'exit-code'.
+Sep 21 20:48:54 jupiter systemd[2211]: Stopped snodec-book-editorial-echo-3674769.service - [systemd-run] /usr/bin/env XDG_CONFIG_HOME=/tmp/snodec-editorial-pass-2026-09-21/service-user-base /tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoserver --config-file /tmp/snodec-editorial-pass-2026-09-21/service-echo.conf.
+Sep 21 20:48:54 jupiter systemd[2211]: Starting snodec-book-editorial-echo-3674769.service - [systemd-run] /usr/bin/env XDG_CONFIG_HOME=/tmp/snodec-editorial-pass-2026-09-21/service-user-base /tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoserver --config-file /tmp/snodec-editorial-pass-2026-09-21/service-echo.conf...
+Sep 21 20:48:54 jupiter systemd[2211]: Started snodec-book-editorial-echo-3674769.service - [systemd-run] /usr/bin/env XDG_CONFIG_HOME=/tmp/snodec-editorial-pass-2026-09-21/service-user-base /tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoserver --config-file /tmp/snodec-editorial-pass-2026-09-21/service-echo.conf.
+Sep 21 20:48:55 jupiter env[3674824]: {"v":1,"ts":"2026-09-21T18:48:55.004Z","level":"info","origin":"framework","boundary":"instance","component":"core.socket.stream","instance":"echoserver","role":"server","message":"listener started"}
+Sep 21 20:48:55 jupiter env[3674824]: {"v":1,"ts":"2026-09-21T18:48:55.004Z","level":"info","origin":"application","boundary":"application","component":"echo","message":"echoserver: listening on '127.0.0.1:18093'"}
+Sep 21 20:48:55 jupiter env[3674824]: {"v":1,"ts":"2026-09-21T18:48:55.014Z","level":"info","origin":"framework","boundary":"connection","component":"core.socket.stream","instance":"echoserver","role":"server","connection":"1","message":"transport connected"}
+Sep 21 20:48:55 jupiter env[3674824]: {"v":1,"ts":"2026-09-21T18:48:55.015Z","level":"info","origin":"application","boundary":"context","component":"core.socket.context","instance":"echoserver","connection":"1","message":"Echo context attached"}
+Sep 21 20:48:55 jupiter env[3674824]: {"v":1,"ts":"2026-09-21T18:48:55.015Z","level":"info","origin":"application","boundary":"context","component":"core.socket.context","instance":"echoserver","connection":"1","message":"Echo context detached: connection close"}
+Sep 21 20:48:55 jupiter env[3674824]: {"v":1,"ts":"2026-09-21T18:48:55.015Z","level":"info","origin":"framework","boundary":"connection","component":"core.socket.stream","instance":"echoserver","role":"server","connection":"1","message":"transport disconnected"}
+Service stopped; listener absent; no boot enablement or persistent unit installed

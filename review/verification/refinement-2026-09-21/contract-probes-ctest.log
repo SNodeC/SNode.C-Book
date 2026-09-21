@@ -1,0 +1,40 @@
+UpdateCTestConfiguration  from :/tmp/snodec-book-recorded-probes/DartConfiguration.tcl
+Test project /tmp/snodec-book-recorded-probes
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: RecordedPublicTickContract
+
+1: Test command: /tmp/snodec-book-recorded-probes/runtime-contract
+1: Working Directory: /tmp/snodec-book-recorded-probes
+1: Test timeout computed to be: 60
+1: PASS: public tick returns SUCCESS without dispatch from INITIALIZED
+1: PASS: start dispatches the queued callback
+1/3 Test #1: RecordedPublicTickContract .............   Passed    0.01 sec
+test 2
+    Start 2: TlsTrustAndIdentity
+
+2: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/review/verification/refinement-probes/run-tls.py" "--client" "/tmp/snodec-book-recorded-probes/tls-runtime" "--openssl" "/usr/bin/openssl"
+2: Working Directory: /tmp/snodec-book-recorded-probes
+2: Test timeout computed to be: 60
+2: PASS: trusted matching name; early SSL is null; ready=1
+2: PASS: trusted wrong name; early SSL is null; ready=0
+2: PASS: untrusted matching name; early SSL is null; ready=0
+2/3 Test #2: TlsTrustAndIdentity ....................   Passed    0.21 sec
+test 3
+    Start 3: NumericGlobalAndNamedScopedLogLevels
+
+3: Test command: /tmp/snodec-book-recorded-probes/runtime-contract "--log-level=4" "--log-format=json" "--log-origin-level=application=debug" "--log-instance-level=mqtt-uplink=trace"
+3: Working Directory: /tmp/snodec-book-recorded-probes
+3: Test timeout computed to be: 60
+3: PASS: public tick returns SUCCESS without dispatch from INITIALIZED
+3: PASS: start dispatches the queued callback
+3/3 Test #3: NumericGlobalAndNamedScopedLogLevels ...   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   0.22 sec

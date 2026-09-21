@@ -21,7 +21,7 @@ It is deliberately conservative. The proposal should not invent users, downloads
 - Public repository: [SNodeC/snode.c](https://github.com/SNodeC/snode.c)
 - Repository visibility: public
 - Default branch: `master`
-- Manuscript baseline: project version `2.0.0`, commit `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`
+- Manuscript baseline: project version `2.0.0`, current working-tree contents recorded by the edition manifest; reconstruction base `1f0f728fc9b3b45174f2cd790d83b2f493e58af1` plus the captured patch
 - The repository README describes SNode.C as a lightweight, highly extensible, event-driven, layer-based C++ framework for network applications.
 - The README states that development began during the first Corona lockdown in Austria in summer semester 2020 as part of the course *Network and Distributed Systems* in the master's program *Interactive Media* at FH Upper Austria, Campus Hagenberg.
 - The README names MQTTSuite as the SNode.C reference project.
@@ -109,7 +109,7 @@ The current notes define the migrated edition's verification scope and point to 
 
 ## Continuous-integration evidence
 
-The public book repository contains workflows for publication builds and companion verification. The publication workflow generates the proposal, sample-chapter, and full-book PDFs and the reviewer archive. The companion workflow reads the authoritative source pin, builds the framework with its CTest suite enabled, checks the installed external echo project, builds the book companions, and exercises selected teaching, SSE, and MiniGateway Extended behavior on GCC and Clang. Results must be attributed to the exact workflow run, not inferred from the presence of the workflow. A skipped test is not a passed behavioral check; a selected smoke test is not a complete protocol or deployment certification.
+The public book repository contains workflows for publication builds and companion verification. The publication workflow generates the proposal, sample-chapter, and full-book PDFs and the reviewer archive. The companion workflow reads the source baseline, reconstructs and checks the recorded working-tree contents, builds the framework with its CTest suite enabled, checks the installed external echo project, builds the book companions, and exercises selected teaching, SSE, and MiniGateway Extended behavior on GCC and Clang. Results must be attributed to the exact workflow run, not inferred from the presence of the workflow. A skipped test is not a passed behavioral check; a selected smoke test is not a complete protocol or deployment certification.
 
 This CI evidence strengthens the package beyond author-confirmed local verification. It is still not presented as third-party adoption, commercial deployment, or independent market validation.
 

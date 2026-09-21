@@ -285,7 +285,7 @@ The first applicable override selects the threshold. These are not five successi
 A normal SNode.C application exposes this policy through its existing root configuration:
 
 ```sh
-./minigateway --log-level=info --log-format=json \
+./minigateway --log-level=4 --log-format=json \
   --log-origin-level=application=debug \
   --log-instance-level=mqtt-uplink=trace \
   mqtt-uplink remote --host 127.0.0.1 --port 1883
@@ -293,7 +293,7 @@ A normal SNode.C application exposes this policy through its existing root confi
 
 The MQTT endpoint is explicit because the role still needs its ordinary connection configuration. Logging options do not satisfy unrelated required endpoint values.
 
-The corresponding override options are `--log-origin-level`, `--log-boundary-level`, `--log-component-level`, and `--log-instance-level`. Their values use `name=level` pairs; lists can contain comma-separated pairs. Named levels are clearer than numeric compatibility spellings when writing a new command line.
+The corresponding override options are `--log-origin-level`, `--log-boundary-level`, `--log-component-level`, and `--log-instance-level`. Their values use `name=level` pairs; lists can contain comma-separated pairs. Named levels are suitable for these scoped pairs. The global `--log-level` option is a separate case in the recorded startup path: use its numeric form (`0` off, `1` critical, `2` error, `3` warn, `4` info, `5` debug, `6` trace). Although the validator recognizes names, the current initialization path can attempt integer conversion before that normalization has taken effect. The examples use the numeric spelling so the demonstrated commands reach runtime bootstrap.
 
 A focused debugging run should normally change the narrowest useful scope. Raising every framework component to trace can obscure the one connection being investigated and can change timing substantially.
 
@@ -302,6 +302,8 @@ A focused debugging run should normally change the narrowest useful scope. Raisi
 The public facade also provides `configure(Settings)`. A standalone program that uses the logger directly can select levels, text or JSON output, color policy, quiet mode, a log file, and semantic overrides through that value.
 
 A normal SNode.C application already has a startup configuration path: `core::SNodeC::init(...)` and runtime bootstrap establish the application configuration and apply its semantic logging policy. Do not layer an unrelated `configure(Settings)` call over that path and assume that both configurations will merge. The public configuration function initializes and freezes its own policy; it is not a per-record adjustment or a documented live-reconfiguration interface for a running SNode.C service.
+
+The runtime `reconfigure()` operation from Chapter 17 preserves that bootstrap policy too. A changed `log-level` or `log-format` value in the parsed tree is not evidence that existing logging has adopted it. Compare emitted records with the established policy, and use a controlled restart when deployment logging must change.
 
 Create long-lived logger values after the intended startup policy has been established. The facade constructs a logger with an effective threshold, while framework-owned scopes have their own lifecycle and generation-aware caching. Those details are reasons to respect the startup boundary, not reasons for application code to manage internal cache generations.
 
@@ -358,6 +360,21 @@ Text output keeps those facts readable at a terminal. JSON output keeps them ava
 `emit(...)` can accept a `Message` with separate plain and terminal presentations. That is useful for an intentionally formatted diagnostic, but it is not permission to place different facts in the two versions. File and JSON output should remain usable without terminal escape sequences. The framework validates the relationship between plain text and allowed terminal presentation rather than trusting arbitrary escape sequences.
 
 Quiet mode controls console output; a configured file sink is a separate destination. File logging, daemonization, service supervision, and terminal color should be configured at the application boundary. A context should not open its own competing log file merely because it needs one additional message.
+
+#### Binary data through the same diagnostic scope
+
+The public logger also provides `hexDump(...)` for binary observations. It accepts a `std::string_view` or `std::span<const std::byte>` and borrows the bytes only for that synchronous call. An explicit length keeps embedded NUL bytes visible:
+
+```cpp
+const std::string_view payload("A\0B", 3);
+log.hexDump(snode::log::Level::Trace, "Received payload", payload);
+```
+
+This fragment uses `<string_view>` beside the public logging header and an already constructed logger. The resulting record retains that logger's scope. Its message contains the label, total byte count, and sixteen-byte rows with offsets, hexadecimal bytes, and a printable-ASCII column. Empty input produces a zero-byte heading without a data row. The operation does not truncate a large payload or adapt it to the terminal width.
+
+Text files and JSON use the plain presentation. Terminal color follows the existing output policy; it does not change the observed bytes. MQTT and WebSocket diagnostics use the same operation through their existing internal scopes. The shared renderer is compiled into the logging library, while the utility library retains its dependency on that library. Application code need not assemble a second colored dump before emitting a record.
+
+A disabled level returns before dump formatting. Preparing the argument is still ordinary C++ evaluation: if obtaining the bytes requires serializing a packet, guard that work with `enabled(...)`. An enabled large dump has synchronous formatting and output cost, and its contents need the same confidentiality decision as any other diagnostic.
 
 ### Cost, confidentiality, and diagnostic restraint
 

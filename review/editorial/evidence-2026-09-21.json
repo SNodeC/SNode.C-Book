@@ -1,0 +1,586 @@
+{
+  "recorded_at_utc": "2026-09-21T19:30:20.895887+00:00",
+  "scope": "Combined six-dimension editorial pass; five dimensions completed, practical-depth acceptance qualified. Whole persistent plan remains active.",
+  "book": {
+    "path": "/home/voc/projects/snodec/publications/book",
+    "head": "473b87a7361e05692661c0dd4ab73fdfd691b8ac",
+    "existing_changes_preserved": true,
+    "baseline": {
+      "path": "review/editorial/pass-baseline-2026-09-21.json",
+      "sha256": "7fb38a332d9a96c8bd54aedf9c4b856963c76efa107fa2854522261e9fe00b76"
+    },
+    "accounting": {
+      "path": "review/editorial/change-accounting-2026-09-21.json",
+      "sha256": "0945410dfb8e1373ace48045d848afdaea670b4f09313fc7ec4c38f341fd010b"
+    }
+  },
+  "framework": {
+    "source_path": "/home/voc/projects/snodec/snode.c",
+    "project_version": "2.0.0",
+    "head": "2e52b6b7337f21812932eb1e097fb3c27c8228a9",
+    "working_tree_status": [
+      " M docs/logging/public-log-api.md",
+      " M docs/logging/semantic-text-output-format.md",
+      " M src/Log.h",
+      " M src/iot/mqtt/Mqtt.cpp",
+      " M src/iot/mqtt/SubProtocol.hpp",
+      " M src/iot/mqtt/server/broker/RetainTree.cpp",
+      " M src/iot/mqtt/server/broker/Session.cpp",
+      " M src/iot/mqtt/server/broker/SubscriptionTree.cpp",
+      " M src/log/CMakeLists.txt",
+      " M src/log/Log.cpp",
+      " M src/log/Logger.cpp",
+      " M src/log/Logger.h",
+      " M src/log/SemanticLogger.cpp",
+      " M src/log/SemanticLogger.h",
+      " M src/log/detail/SpdlogBackend.cpp",
+      " M src/log/detail/SpdlogBackend.h",
+      " M src/utils/CMakeLists.txt",
+      " M src/utils/hexdump.cpp",
+      " M src/web/http/http_utils.cpp",
+      " M src/web/websocket/Receiver.cpp",
+      " M src/web/websocket/Transmitter.cpp",
+      " M tests/unit/http/HttpMessagePresentationTest.cpp",
+      " M tests/unit/http/HttpResponseFormatterRawWireTest.cpp",
+      " M tests/unit/log/SemanticTerminalColorRoutingTest.cpp",
+      " M tests/unit/utils/HexDumpPresentationTest.cpp"
+    ],
+    "tree_sha256": "df2fbdbe844f3368f5ed142973d82c0008a057c13d87dda6b7670e45cc3eacb8",
+    "file_count": 1447,
+    "manifest": {
+      "path": "source-baseline/framework-working-tree.json",
+      "sha256": "76a454e66e7b3e0ed9b6c4fa50b442b77c179bdf270a1c160a9e6162877603b4"
+    },
+    "patch": {
+      "path": "source-baseline/framework-working-tree.patch",
+      "sha256": "69f49bc49ba510aefc970c876d37e945a30a5e29977b0c5bca6444a968a63d92"
+    },
+    "reconstruction_base": "1f0f728fc9b3b45174f2cd790d83b2f493e58af1",
+    "authority": "Current local author working tree including uncommitted contents; remote master and base alone were not substituted.",
+    "modified_by_this_editorial_pass": false
+  },
+  "environment": {
+    "platform": "Linux-7.1.8+deb14-amd64-x86_64-with-glibc2.43",
+    "machine": "x86_64",
+    "compiler": "GNU C++ 16.2.0",
+    "cmake": "4.3.4",
+    "openssl": "3.6.3",
+    "multiplexer": "epoll",
+    "framework_options": {
+      "BUILD_DOCUMENTATION": "OFF",
+      "CMAKE_BUILD_TYPE": "Debug",
+      "CMAKE_CXX_COMPILER": "/usr/bin/c++",
+      "CMAKE_INSTALL_PREFIX": "/tmp/snodec-book-current-install",
+      "SNODEC_BUILD_APPS": "ON",
+      "SNODEC_BUILD_TESTS": "ON",
+      "SNODEC_CONTROL_BUILD_TUI": "OFF"
+    },
+    "service_consumer_build_type": "Release",
+    "service_framework_build_type": "Debug",
+    "build_logs": [
+      {
+        "path": "review/editorial/build-logs/examples-final-rebuild.log",
+        "sha256": "6a8d1607af1d157bd922042b7971c78811134e4ced754034ea43fa6f7280dda4"
+      },
+      {
+        "path": "review/editorial/build-logs/external-final-rebuild.log",
+        "sha256": "ef03d7a8cf071776e92e046d25fcbbb87c4a726144df48d3293dfbb9f842afe6"
+      },
+      {
+        "path": "review/editorial/build-logs/framework-final-install.log",
+        "sha256": "ebaa881c8c9855438ccdf9458e600c28f9ec7594941e99d64d3903a8af4f4e56"
+      },
+      {
+        "path": "review/editorial/build-logs/framework-final-rebuild-3.log",
+        "sha256": "f30efcfa780558cce880e73055dad33a05a47e0753565071b504043ad47839e1"
+      },
+      {
+        "path": "review/editorial/build-logs/probes-final-rebuild.log",
+        "sha256": "e3742c72539e216382c029546435106addacaf2a70baaa5369950b21bbfb054b"
+      },
+      {
+        "path": "review/editorial/build-logs/service-final-install.log",
+        "sha256": "7c4f6114ef548ba2e5298aa8157ede9c5023a61d91c8e961cc5d5bc1a266fbf8"
+      },
+      {
+        "path": "review/editorial/build-logs/service-final-rebuild.log",
+        "sha256": "e95157f1028e4bf0202beeb681bb13a7bb4dd511b776f1e156c24ce8ee65f484"
+      },
+      {
+        "path": "review/editorial/build-logs/transfer-ipv4-final-rebuild.log",
+        "sha256": "faa0437c62efe4e7528e64f30c69c68af17158667df9455565814986e96884b6"
+      },
+      {
+        "path": "review/editorial/build-logs/transfer-unix-final-rebuild.log",
+        "sha256": "85609a1e8a91f1515c1bd17f67e612bb6776592f35b94833153373ed03e2c16c"
+      }
+    ]
+  },
+  "editorial_reading": {
+    "manuscript_inputs": 62,
+    "numbered_chapters": 38,
+    "editable_figures_reviewed": 18,
+    "initial_reading": "Full inputs in manuscript/book-files.txt order, coherent group refinement.",
+    "integrated_reread": "All prose, tables, exercises and unmarked code in manuscript order; index directives omitted and exact marked listings replaced by file pointers after prior full reading and independent byte comparison. Final local edits reread in context.",
+    "complete_listings_checked": 35,
+    "pdf_read": false,
+    "pdf_regenerated": false,
+    "visual_production_qa": false
+  },
+  "checks": [
+    {
+      "name": "Framework CTest",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/framework-tests-current-2026-09-21.log",
+        "sha256": "81b680fb097b4c5870d18e04d026ed4b1bac96da2f85bebb7ff9d57b97de428e"
+      },
+      "scope": "Framework test set enabled in the recorded configuration; no claim for unavailable services/hardware.",
+      "passed": 183,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "name": "Installed external echo",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/external-tests-current-2026-09-21.log",
+        "sha256": "e4cc076f7168c9c0348791deead636c32ea3db16382d484fefcc641ee4261218"
+      },
+      "scope": "Package discovery, independent peers and bounded pair.",
+      "passed": 4,
+      "failed": 0
+    },
+    {
+      "name": "Contract probes",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/probe-tests-current-2026-09-21.log",
+        "sha256": "5a8f0a2f9a5de169f7c64ef7307f9f1aa9a8cb8965f81db0ab3a28f6822f2e4d"
+      },
+      "scope": "Tick, TLS trust and expected identity, global numeric and named scoped logging.",
+      "passed": 3,
+      "failed": 0
+    },
+    {
+      "name": "Teaching smoke",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/teaching-tests-current-2026-09-21.log",
+        "sha256": "316045ffd44aaabe913afbe073839958c76bd1bc938805b432328244c008a529"
+      },
+      "scope": "Three groups: logging fields/event/override/error and controlled server/client byte exchanges.",
+      "groups": 3
+    },
+    {
+      "name": "Companion behavior",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/behavior-tests-current-2026-09-21.log",
+        "sha256": "959faaeb3d2cd802e72b958a9c9d4d4d85487554d9d01f7f395a0fcbb114e84d"
+      },
+      "scope": "SSE, Unix input, whole/split line boundary, and MQTT CONNECT bytes for both gateways; not full broker interoperability.",
+      "scenarios": 4
+    },
+    {
+      "name": "Chapter 15 carrier transfer",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/transfer-current-2026-09-21.log",
+        "sha256": "0644c5d8cc073a50ef696dbe9fdb1c0e3b36885f2d33597ec5b2b7f192feaeba"
+      },
+      "scope": "Printed protocol peer, IPv4/Unix, fragmented records, independent connection state, missing Unix target and cleanup."
+    },
+    {
+      "name": "Chapters 17 and 32",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/configuration-and-components-current-2026-09-21.log",
+        "sha256": "559cd52d6b07b5ded3d0200095a38c43b0bbe8b71cbd13f5c415f13dad553288"
+      },
+      "scope": "Chapter 3 companion echo defaults, file/CLI precedence and exit status 2; unsupported installed component rejected; restored component built."
+    },
+    {
+      "name": "Chapter 24 negotiation",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/websocket-negotiation-current-2026-09-21.log",
+        "sha256": "1bd034682cc539ce5d738012d20d97f6fbac7b239030810604124dd943919117"
+      },
+      "scope": "Dynamically deployed companion echo modules, normal client plus scratch unsupported-name client, independent rejected HTTP request. Binary input remains untested here."
+    },
+    {
+      "name": "Chapters 33 and 34",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/service-and-measurement-2026-09-21.log",
+        "sha256": "4c655a463b01da01a50b3f0faf2be6196d657357d942f53e163277843e8bc82d"
+      },
+      "scope": "Temporary executable/config paths and config base, transient systemd user unit. Persistent unit syntax only; no installation/enabling. Printed bounded 200-sample exchange, not sustained load."
+    },
+    {
+      "name": "Current source/listings",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/source-check-current-2026-09-21.log",
+        "sha256": "228af203a01ea0e607a4a500bcde8415918b198014c788cab548511662af12be"
+      },
+      "scope": "Exact complete listings, selected source anchors and complete captured framework contents; semantic alignment additionally relies on manual source reading."
+    },
+    {
+      "name": "Source/reference hygiene",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/hygiene-current-2026-09-21.log",
+        "sha256": "3469e20a6f44960154e8494bd3716d9b65d4a41096f5d66419b501b7fd84dbe0"
+      },
+      "scope": "Authoring markers, naming, figure label/reference consistency and source/listing checks; no rendered layout check."
+    },
+    {
+      "name": "Base-plus-patch reconstruction",
+      "result": "passed",
+      "log": {
+        "path": "review/editorial/reconstruction-check-2026-09-21.log",
+        "sha256": "228af203a01ea0e607a4a500bcde8415918b198014c788cab548511662af12be"
+      },
+      "scope": "Reconstructed framework matched the complete 1,447-file manifest."
+    }
+  ],
+  "source_claims": {
+    "record": {
+      "path": "review/verification/source-claims.json",
+      "sha256": "71b1d1cfbf19428ebb99a666d9d6e03ceedd1c0551bebad554ca700ed4a98c98"
+    },
+    "chapters": 38,
+    "framework_anchors": 97,
+    "limit": "Anchors and file hashes establish identity and traceability; manual review and scoped runtime checks supply semantic evidence, not a proof of every possible behavior."
+  },
+  "inputs": {
+    "manuscript/frontmatter/frontmatter.md": "ee93ac64dc40b724d6eb44f3f5fb514d23d3afc81144f0a9264d0969c4e5a2ef",
+    "manuscript/frontmatter/preface.md": "3acf296cc363f5b460caa0032832a4b3825e30e2e4bf0d333c0d75bdc5c31ec2",
+    "manuscript/frontmatter/how-to-read-this-book.md": "f60aab032e3ee787481b39b3efd10af0349137905241d3da3eb2fddd14e453d3",
+    "manuscript/frontmatter/conventions.md": "607da46ad2e6a1eba5e6eb5761340ea8fb7cd28953f5440cb5068ee90697a3eb",
+    "manuscript/frontmatter/author-note.md": "81c985228103786a4404f097dc7c833d93438f059ec506faf1a1c29956cad137",
+    "manuscript/frontmatter/acknowledgements.md": "3f8cf8bcdda956c90e74ebd46d4677c6b44fe04fa45ef106febb7dc762dc950a",
+    "manuscript/frontmatter/mainmatter.md": "aed94e3963307d4ccd313b5faa29cb4948522a7e2ae59fc5f270f5c8961ff37c",
+    "manuscript/parts/part-01-getting-oriented.md": "d76882db70ae9126b7ec33a29c8a31bd4ff1531bb7ff32816271f43a4280ee9f",
+    "manuscript/chapters/01-why-snodec-exists.md": "358537b96346a3d29d0bd66b4e920c2476863f12c3004c22cd0fb40b44874561",
+    "manuscript/chapters/02-preparing-your-environment.md": "c51e7416d5342f860d3acd8a0d6920873fa220e2870e9147314f00e27c73fd9a",
+    "manuscript/chapters/03-your-first-working-program-the-echo-pair.md": "bcc48d88825b4d64cd4fc11f9abbf0c47e55a6b12f0f4cea9d14a13909e551eb",
+    "manuscript/chapters/04-reading-the-codebase-with-confidence.md": "12c87aad9f64083c61da40cb67b042e25ac07b2840a42700312d24f152d66b7d",
+    "manuscript/parts/part-02-the-snodec-architecture.md": "2fb90cf7d8a4adf5518d73fa4473caeab263c6664312a9d4dd12952da07aa037",
+    "manuscript/chapters/05-the-mental-model-of-snodec.md": "8fa6376c14a46ab05ea823e273777aa86ae3009dbfeac635689fc2ebd1259231",
+    "manuscript/chapters/06-core-runtime-and-event-processing.md": "8e0d5a90ddc01751464c953a7a9edd101521e13de09ee23aa470284cbf61cf34",
+    "manuscript/chapters/07-layers-in-practice-network-transport-connection-application.md": "077ab63b241ea714b7842cce2fd30f590abf25f027fa3d9d32d6cfc1759fef93",
+    "manuscript/parts/part-03-networking-foundations-in-snodec.md": "419c733262048fe26aba925f781fd1673b6d34be7d0f01f4b36f8481afa2066f",
+    "manuscript/chapters/08-socket-addresses-and-address-semantics.md": "6ae3f89e8fa70e8725d33b2a4687933ec3d17ffb8e5a3b6f1d5ae48b5edfe5e5",
+    "manuscript/chapters/09-servers-clients-and-connections.md": "6e95412ae7b43c952b9ba199b7a4ee5e96510ac9efbd012a20076b86899ddfaa",
+    "manuscript/chapters/10-ipv4-and-ipv6-as-the-first-concrete-network-families.md": "db9f744612525c87d3f3afbf386a7d38ecf274116deba089498a32dbcfd26d44",
+    "manuscript/chapters/11-unix-domain-sockets.md": "bd264d3f42af39709e8b8a7327e3abbfc976e59139346bafc781c4c86df00daa",
+    "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md": "ed00bb4d4fb5a567d5f8e974841b94b1b65af9df11e42633b899c12bd60e8bb3",
+    "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md": "459e98d4e843f784765daed77f1855e529bf9e047715e2441136f1e84eb25312",
+    "manuscript/chapters/13-writing-socketcontext-classes-well.md": "aad799d485c832ce44dcedb264a3de90c908b66633158c930158872433182d15",
+    "manuscript/chapters/14-writing-socketcontextfactory-classes-well.md": "cc5712a0bdd30906c97c5d32f3698dd835980e77527eac2dc4c806a0768b12af",
+    "manuscript/chapters/15-building-the-same-protocol-over-different-lower-layers.md": "d44c4d33047e798badf0d2b8287d9bf1f302853aadd1dd74af6a5a4eb341d264",
+    "manuscript/parts/part-05-configuration-and-operational-behavior.md": "f3187362752d29c90914ea7061308c80b93a2270a3155c52039ec34bd5d6007e",
+    "manuscript/chapters/16-configuration-philosophy-in-snodec.md": "7f0339c0d30dd0cbb49afd93b82d444931b74d265847f7fb54b971339375a46e",
+    "manuscript/chapters/17-application-and-instance-configuration-in-detail.md": "8250355d1b41c835bec7cc912629513361422a3a36e60e8fdd1eb52e0791c039",
+    "manuscript/chapters/18-logging-diagnostics-and-runtime-introspection.md": "a55e8a6f7853c9ddf0d8296f04baba8099aa15dc2a5394e683b490e5e8c48b34",
+    "manuscript/parts/part-06-secure-and-robust-communication.md": "e0366e48d7ed80535e55f76c7b78b71ae332825652cc12a8162dd5ddf6e69cea",
+    "manuscript/chapters/19-tls-across-the-framework.md": "3b72052988baa58ecd4eb342a195468d1ff00a4c5210b482d5c4f8902c82218f",
+    "manuscript/chapters/20-timeouts-retries-and-failure-modes.md": "86d0798c3d544323f055fc33cca35691168ca34a391c100f69dc78163ccd0a68",
+    "manuscript/parts/part-07-web-protocols-and-web-applications.md": "4cb2feaeb0c91d2badd7493b9124bf7184288ead1ff50812c1cb2425541daee8",
+    "manuscript/chapters/21-the-http-layer.md": "934114245cd5f757c6faec851b5c778da115cf5b2a542323b04e74d62a7f42bb",
+    "manuscript/chapters/22-the-express-like-framework.md": "a30251e00b285d9c632104df2b27dec58907d33241a95ad45d442e9631e1fd9d",
+    "manuscript/chapters/23-server-sent-events-and-real-time-http.md": "10abd8329329daa3069b33b645d0971d73482c6c6b0eabdf69992086df68af2e",
+    "manuscript/chapters/24-websocket-and-protocol-upgrade.md": "419f088ab41fb5947dc4ed617f845ac474008c1cc049b2228c8e07173475a07d",
+    "manuscript/parts/part-08-iot-and-message-oriented-systems.md": "c30813ffe5add3511f4bb1eb295e493e35f8d94a2036a30bf1cc8f49b9abcaf1",
+    "manuscript/chapters/25-mqtt-support-in-snodec.md": "6b4a24ea703403c5798af16404e80aae8075004758aedcd095aff87265fd13cd",
+    "manuscript/chapters/26-mqtt-over-websocket.md": "453c5c5a3e1ffb879e3238e2142d9fd2d473b0d7734caaa81ec80c82eac1182f",
+    "manuscript/chapters/27-designing-iot-systems-with-multiple-protocols.md": "1542f7afd092bada292a56a4273ff0a7a6be0c7f39427759ca2a351bf6ccc190",
+    "manuscript/parts/part-09-persistence-and-full-systems.md": "98af5902d860e2164a2d1e877003c3ea79c2ea343cfd915120f73854f74dc3db",
+    "manuscript/chapters/28-database-support-and-application-state.md": "719b9d77f28fdfffcc5120bc6d9cd5df74b630234180bf6394d7acd950e0901a",
+    "manuscript/chapters/29-learning-from-the-applications-in-src-apps.md": "f4181ecc03de3697eed8475fd30d59b8f14ee7de16039c9eea51296405e7bdfa",
+    "manuscript/chapters/30-from-applications-to-systems.md": "ffb4034eeb0b4fc46005ca1355ce23fcc804679ae5a45a6f620a0836a1ea37d3",
+    "manuscript/chapters/31-mqttsuite-as-a-reference-ecosystem.md": "78d96ebfa5a21633447e3c038cb81345731ac913ba8985d9087b619c0537fe4e",
+    "manuscript/parts/part-10-building-porting-and-maintaining.md": "b88bbf50b000af85adeda70577a0395b83d5f8e0e04635222ff4df9248cd6a58",
+    "manuscript/chapters/32-cmake-components-and-linking-strategy.md": "7ddc08a54f716b34a518a72896bb0b5f366e2b4346686135bb1b0c8b7dc4f1a5",
+    "manuscript/chapters/33-deployment-on-linux-and-openwrt.md": "dfcc28e47e9d75824df828c1affaefed414e5b3831b43a06ca78f88ace8f273a",
+    "manuscript/chapters/34-testing-debugging-and-benchmarking.md": "98206d6211a31779938b6d0bdabb2057862747a02286a904b973fd9c9df27021",
+    "manuscript/parts/part-11-building-a-minigateway-application.md": "37cbabccc8d3bc1819bb25691eb71cbe54a5bfcf78297e68da12ef368676ed14",
+    "manuscript/chapters/35-building-minigateway.md": "65bd50b8357178f3d0c939df4b99ce442217bc2076970a98fe24edf65c9efd81",
+    "manuscript/chapters/36-extending-minigateway-with-a-new-network-role.md": "37dc78116b7776dc895f2338b6b5f5e575d9f38fbd1d6873c5377a2fa0519b48",
+    "manuscript/parts/part-12-designing-with-snodec.md": "62ba913e0b630c86816541e11ac66d03891af552ffb019dc94df6dd39fc8d764",
+    "manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md": "c96403fa4058756f39fa6c2b911a41f8012307565714f638719c4f4ed9aa4f2b",
+    "manuscript/chapters/38-extending-the-framework-safely.md": "32d6e130081e45a47a8170abdd7f409ff97a2bea9000d157e49d15f487812646",
+    "manuscript/parts/part-13-epilogue.md": "0e7604f67e83632f3a00304d3ea31103b53e6eea5cbd6d569ed50b9e3fcb0d3d",
+    "manuscript/chapters/epilogue.md": "a18678edfb869d136cdf1ff51a6ed883a087d809fd09bf06489a6722a38a2bda",
+    "manuscript/backmatter/backmatter.md": "997725a666802cc3870bc40c793a7ca9151dc17f5dcf0127279fdb85f9ee00bd",
+    "manuscript/backmatter/further-reading.md": "e9df2ca41cf89900e76c99043168703753a15c47aa7f89a1cca759003aec1e1b",
+    "manuscript/backmatter/index.md": "2bc2be55a23e5e176144dd11771aff490f6588f15198dd145bd7238e3940db92",
+    "assets/figures/src/fig-01-layer-stack.tex": "772a6bea25c61392e596b6bcfe209f4092253fc955f7fcd17b784d0a48495ea8",
+    "assets/figures/src/fig-02-runtime-instance-connection-context.tex": "42a9ad4c758e91c6c5437ca348f38dbf550088dc00359eb532ffdd7bbf2bae1e",
+    "assets/figures/src/fig-03-event-runtime-picture.tex": "cffacb678e4d3b7269f47b77b2299cb02f67493fd316939b1d7b14d59b652b8d",
+    "assets/figures/src/fig-04-lower-family-transfer-model.tex": "43616eab1d5b39472e9a390c97dabc98b4dddbaab3f640fdb54ae0ce0a6dc7c8",
+    "assets/figures/src/fig-05-server-client-connection-context-path.tex": "e490c2f8907bc0b4445e62df34c809f1929fd65813036d3bd2f7684b223f55dc",
+    "assets/figures/src/fig-06-web-protocol-layer-structure.tex": "2716f53cd88ffb85a11c74c1873b5ce1451daa846649bad7d92ff1a9761600e8",
+    "assets/figures/src/fig-07-native-mqtt-vs-mqtt-over-websocket.tex": "6ce2acf02d96f8e22cb40b7f8427b5921bf02f14a64ec74b79287445303f6679",
+    "assets/figures/src/fig-08-iot-boundary-constellation.tex": "63ca21ad5de4762b44795d80719393cf7ca83145c4772812c7f81546513369d6",
+    "assets/figures/src/fig-09-application-system-role-constellation.tex": "147eb56901399e9b8a2f505bee537d4c8d1dca4ed7a999a925614285bd3b5f80",
+    "assets/figures/src/fig-10-mqttsuite-ecosystem-map.tex": "3b627fb51b469b567eddd6c1d30c6b69be57000b4b78d59a515b0505b731fb02",
+    "assets/figures/src/fig-11-build-install-package-deployment-surface.tex": "250011c63126a8350777d4609b13f0831dfa984a976b960cbd75e51f30824ec7",
+    "assets/figures/src/fig-12-minigateway-extended-network-role-architecture.tex": "56c351d3c1487e83761126ca0dbe1eed24e5bc2849aa04ce58aa3152f3a82a06",
+    "assets/figures/src/fig-13-configuration-hierarchy.tex": "262d764e61fc561ba112611ea8e29ef80c81ca9786256c5e80bfd6b5fcc4e980",
+    "assets/figures/src/fig-14-logging-diagnostic-visibility-map.tex": "339faa38cf1df034e180a0904730f7f1326c3de090981d8d7294542747e6a556",
+    "assets/figures/src/fig-15-tls-connection-layer-specialization.tex": "8808ab0da718ff6b06395141ef248a7ed10ba1b1f5d4de08de8d5c6fa40c208f",
+    "assets/figures/src/fig-16-retry-reconnect-flow.tex": "e197289b96ffcd3711c232f540615230f2cc84d1faf17a3f5414a07c48e6a7bb",
+    "assets/figures/src/fig-17-persistence-boundary.tex": "1f3dbb836caf3946fbd1eb8171712dc196c787f65b620452c02807ca13e8ca43",
+    "assets/figures/src/fig-18-testing-confidence-surfaces.tex": "758ae10ca913d00dd4709e84d0af3657edb3c23728ff54998718f1921be14098",
+    "assets/figures/src/snodec-figure-style.tex": "499a465b0d4000ef5b5e4ae0cbd4fa5d5d9bdfead28b3fc9212583deb7dab769"
+  },
+  "companion_production": {
+    "unchanged_from_preceding_technical_evidence": true,
+    "file_count": 70,
+    "inputs": {
+      "companion/examples/EchoPair/EchoSocketContext.cpp": "1349af5eab196923a0e78f3a9854f700435cf523319de029984992a7058fdcdf",
+      "companion/examples/EchoPair/EchoSocketContext.h": "a40fe6e1b9caf3c19166a8a227cf5aae86c548dc407b5a21de5d02c765ab0d6e",
+      "companion/examples/EchoPair/echoclient.cpp": "6447e8dabbd8b1d3b7c0317cffc8b0b0715f34710ff9cee279273a8ecbb6a836",
+      "companion/examples/EchoPair/echoserver.cpp": "728da29054419041d55eafc2f182ac9ec6924c3fe2d3547d72e4a3e14f2c54a2",
+      "companion/examples/HttpUpgrade-Client/main.cpp": "e20aa26953100d3738d2fa90bd3a5177aaf723bedaf9f6035d4d029b5d9b0470",
+      "companion/examples/HttpUpgrade-Server/main.cpp": "9ed62bf04c1f1a601ff5a720f5a75189f02f3bead616338ad22017c9fae4aa74",
+      "companion/examples/LineProtocol-Client/LineCommandClientContext.cpp": "553511dd05313946d2722b3cc3e5946de3296546197a07194f5274c235035537",
+      "companion/examples/LineProtocol-Client/LineCommandClientContext.h": "e15e2a28ed6451783b07d8e6b312e9a425b8606f552722b8dd58000d5137d6d8",
+      "companion/examples/LineProtocol-Client/LineCommandClientContextFactory.h": "7517f1e2793b12745a26a12b65b4771722772fddb42dc955f7c3af6add4ab994",
+      "companion/examples/LineProtocol-Client/main.cpp": "5b9275434760c3deaed5a2f67d56b9b2cd3781ca65b7557b14df71b3bb801d04",
+      "companion/examples/LineProtocol-Server/LineCommandServerContext.cpp": "51df606f1e80f3027091381164e45b2896931499f4ac4051aa5cf7bcbd627ef1",
+      "companion/examples/LineProtocol-Server/LineCommandServerContext.h": "876c3c11415e56e8b96136bd21da78b6078f967a1bad0f31a3e0fdcc1ecddbbb",
+      "companion/examples/LineProtocol-Server/LineCommandServerContextFactory.h": "88394e92d8a59dc43369eaa714b7f7d346f66d414220bbc597ce92cbf80283f3",
+      "companion/examples/LineProtocol-Server/main.cpp": "f6b082264f1b7ccedefbdcc5425f3cbf2fc3a63f8d2587f10149705b4d5c058a",
+      "companion/examples/MQTT-ClientRole/SensorClient.cpp": "fc324262ac7842344961cd9d2af7abce3fdd4fb51fb753c7de33b72eee504bd6",
+      "companion/examples/MQTT-ClientRole/SensorClient.h": "1356cb9e7112bf7d0ee58bd51acc39a7815e70098439602e6661834de51c89b0",
+      "companion/examples/MariaDB-Minimal/main.cpp": "971257a989df1fa1c38015afe359c872b84e250dec7f8a956be763fd081a05af",
+      "companion/examples/MiniGateway/ConfigSections.cpp": "f4c888ce75f4e138a7ab8a6d8aa5ec17fc1748089dc19601ea6f7d29ab767686",
+      "companion/examples/MiniGateway/ConfigSections.h": "12f973c2fd02ca30bc08ef88eef0a4718c4113dfaffaa58eea046828d931c217",
+      "companion/examples/MiniGateway/Measurement.h": "e1d21057d9b78b0bd586fa80e7283c05c80dda129f7be8833e7a22daf7212103",
+      "companion/examples/MiniGateway/MeasurementJsonCodec.cpp": "bc6015283fca627f18f924c0d34e81e1180d33ef1b8db6c3b8cd8523d3e6784f",
+      "companion/examples/MiniGateway/MeasurementJsonCodec.h": "8f08698dcb058559597d871a95d66e84815510c34a78178ac8a81384cc805301",
+      "companion/examples/MiniGateway/MeasurementModel.cpp": "858e29ecc154d3bdb0259a58d750ccb51d1040d23d3064f780e90b50179cbe8a",
+      "companion/examples/MiniGateway/MeasurementModel.h": "39a86e6489a6c11d47b64cb8ad2c2a6e3cdb587087a5e633326117e4d6478a1a",
+      "companion/examples/MiniGateway/MiniGatewayMqtt.cpp": "efc453326996b5c6d2d7a06a5ddb3379be22538803db1f2567733719c42f06fc",
+      "companion/examples/MiniGateway/MiniGatewayMqtt.h": "937dd5b22997141bdc0c8418e519285c1d0569a80e45edee20ea26e73fb53a7b",
+      "companion/examples/MiniGateway/MiniGatewayMqttClient.cpp": "7673ee402f4ab9db440f43378db64e6d3b5f789b61529796f28ab9ab7b5b5c61",
+      "companion/examples/MiniGateway/MiniGatewayMqttClient.h": "7e20c7a5287174e7b934c70f8bdc6efb19ae5e0c5e38cdc2c2be7f6699985767",
+      "companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.cpp": "15d6fef6687a6aa878036942036e340c393c1357cb8e1cddc8e103b161a83ee6",
+      "companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.h": "e2bb303d65137d1cda1c7d53d9a43383cbd58ccba4b12b47ce2c4db49f4700f1",
+      "companion/examples/MiniGateway/MiniGatewayWeb.cpp": "49f1645a18bc070f6378c7e9328559cc3d3ede7e165a7a7d7d3423ecf96343ce",
+      "companion/examples/MiniGateway/MiniGatewayWeb.h": "496b4b99ad048e820612a4c328dca2f3acdcea74c51aa8d7f120ef4f15ff8361",
+      "companion/examples/MiniGateway/SocketStateReporter.cpp": "feb0c0cb00a17eec25c7664ba0855bedeb29d99d7744d8130cd6df77d222bed9",
+      "companion/examples/MiniGateway/SocketStateReporter.h": "c103a3b91760b84ad67b0e0f8a76106a7d64ba105395a2efe2259eed14dcace7",
+      "companion/examples/MiniGateway/main.cpp": "c48ed11024b496b4eb60387e833fc01a39eee3f354774f0a99dfa9e243b5a9f4",
+      "companion/examples/MiniGateway-Extended/ConfigSections.cpp": "f4c888ce75f4e138a7ab8a6d8aa5ec17fc1748089dc19601ea6f7d29ab767686",
+      "companion/examples/MiniGateway-Extended/ConfigSections.h": "6a28eb5d654b8136e7f49f56bd6c2f3eec3a1b51fb1ec5aac25cc084e339db6e",
+      "companion/examples/MiniGateway-Extended/Measurement.h": "7349b2bc8941e60c5d6c657158e75419c5710539d017c29aab6f43aa76838b10",
+      "companion/examples/MiniGateway-Extended/MeasurementJsonCodec.cpp": "bc6015283fca627f18f924c0d34e81e1180d33ef1b8db6c3b8cd8523d3e6784f",
+      "companion/examples/MiniGateway-Extended/MeasurementJsonCodec.h": "e09dd4fc7df7cce29a2a2573337958402d2f700362c664790c7e97aef312773e",
+      "companion/examples/MiniGateway-Extended/MeasurementModel.cpp": "858e29ecc154d3bdb0259a58d750ccb51d1040d23d3064f780e90b50179cbe8a",
+      "companion/examples/MiniGateway-Extended/MeasurementModel.h": "a85565537de484a313abd61b87c524a7f05bc5f2d1481e91b17efab0aa25ee65",
+      "companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.cpp": "14e8e9f3b795b470f3795f9239c60f9add5b6905940be20788dab1c2a98babb3",
+      "companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.h": "71cc45767d6345f29967f10e48b26ebe7428e3f3b738b4032212c80080a47156",
+      "companion/examples/MiniGateway-Extended/MeasurementUnixSocketContextFactory.cpp": "ef96d46028507b14af7bc905a7c9f673fc4794d355ccfe7041afc19d06c85539",
+      "companion/examples/MiniGateway-Extended/MeasurementUnixSocketContextFactory.h": "d3b7ed2627cd4058b4ea48b73457ea66e7bb8478b29d362a669348b4ca981643",
+      "companion/examples/MiniGateway-Extended/MeasurementUnixSocketServer.cpp": "b4ebc21f1e4eba8c865abfb8e0a32e088ce37e3f2c4fb20db7f8c0cbd55d6c97",
+      "companion/examples/MiniGateway-Extended/MeasurementUnixSocketServer.h": "cce268aa1ff3fc5542deb067b150531e870f431a120b12d85328308465edc4ae",
+      "companion/examples/MiniGateway-Extended/MiniGatewayMqtt.cpp": "efc453326996b5c6d2d7a06a5ddb3379be22538803db1f2567733719c42f06fc",
+      "companion/examples/MiniGateway-Extended/MiniGatewayMqtt.h": "ca061b58268211126589be8828db12abe14a92f7d54f7c501e2dab1fe9cb070e",
+      "companion/examples/MiniGateway-Extended/MiniGatewayMqttClient.cpp": "7673ee402f4ab9db440f43378db64e6d3b5f789b61529796f28ab9ab7b5b5c61",
+      "companion/examples/MiniGateway-Extended/MiniGatewayMqttClient.h": "1a449c745ffb6e232d7498ba6aa3ca84d23b86890df6afdc0754a04bba9a57ed",
+      "companion/examples/MiniGateway-Extended/MiniGatewayMqttSocketContextFactory.cpp": "15d6fef6687a6aa878036942036e340c393c1357cb8e1cddc8e103b161a83ee6",
+      "companion/examples/MiniGateway-Extended/MiniGatewayMqttSocketContextFactory.h": "f70aea232e8ca062b9a52c6e4bef371ffc80c4e40c25602e9334ad4128c6c3d8",
+      "companion/examples/MiniGateway-Extended/MiniGatewayWeb.cpp": "49f1645a18bc070f6378c7e9328559cc3d3ede7e165a7a7d7d3423ecf96343ce",
+      "companion/examples/MiniGateway-Extended/MiniGatewayWeb.h": "c8fbb3d7887ffec9de3db9bb6fe52ad6d9c664c4bc4677d096dabdd030721f74",
+      "companion/examples/MiniGateway-Extended/SocketStateReporter.cpp": "feb0c0cb00a17eec25c7664ba0855bedeb29d99d7744d8130cd6df77d222bed9",
+      "companion/examples/MiniGateway-Extended/SocketStateReporter.h": "b0c2a2872dad324b25546f3db8e961f59f02adf35917a6d4470507e41496e9f8",
+      "companion/examples/MiniGateway-Extended/main.cpp": "63758b35c71134603340a2b8fca8e26c29cc20e1569db939981a03d4f67cfa81",
+      "companion/examples/SSE-EventSource-Client/main.cpp": "e562df69b9ded70e93d57a8d6251e5d72291c6aa329925207f626782611c5938",
+      "companion/examples/SSE-Server/main.cpp": "5432fe1f5b8151e11ecb1efd5bc0bcd03ed0375b4e9b929d3b654d0de1c38974",
+      "companion/examples/SemanticLogging/main.cpp": "36e49d7ecc2fffc7ebcf748a76d2605f1c830541a82ce205c48276b25f8dd2ee",
+      "companion/examples/WebSocket-Echo-ClientSubprotocol/EchoClient.cpp": "8b42805b97ed163d357fd9f59aa49b400f20da4cf916e8f653f86d2e46fb2ce4",
+      "companion/examples/WebSocket-Echo-ClientSubprotocol/EchoClient.h": "98d89c6fa7f10bc6b6344c8bb27a48b62b82dc4a0fe5bab8668925c58e56afe1",
+      "companion/examples/WebSocket-Echo-ClientSubprotocol/EchoClientFactory.cpp": "b77ec95f65a664167dc443410a1c6c6a7fa2d0f54a728906bd8b67288e8a4b76",
+      "companion/examples/WebSocket-Echo-ClientSubprotocol/EchoClientFactory.h": "545d5353c155da9c81703916b68ee4d19b8f05ca9aaa4c1431259e42bda9eceb",
+      "companion/examples/WebSocket-Echo-ServerSubprotocol/EchoServer.cpp": "4140ea5867998b2f86c425cb5441026b2e41e96a27b4bea3bc51d82f6b7d5be7",
+      "companion/examples/WebSocket-Echo-ServerSubprotocol/EchoServer.h": "b4424cd837d6dd081f2abab9b97924285f2997abe54b5405824873e996743f86",
+      "companion/examples/WebSocket-Echo-ServerSubprotocol/EchoServerFactory.cpp": "c682c882662a149623ab1424c3bf57ebc217010f8ecee93a17c95b490115a456",
+      "companion/examples/WebSocket-Echo-ServerSubprotocol/EchoServerFactory.h": "f1812e36c78d55d5dfe108dddcc819b5bdf1c130537b3cd07621b8f9cf922320"
+    }
+  },
+  "verification_support": [
+    {
+      "path": "review/editorial/probes/verify-configuration-and-components.py",
+      "sha256": "59b04bef9478b42f3959f63e08c75261e8ad387d2cbc2e3594220d9fa1835d1e"
+    },
+    {
+      "path": "review/editorial/probes/verify-service.py",
+      "sha256": "15539355c925be89bb63756a6dfd5bc83768e4d39ba90fd723f0535bbec50b26"
+    },
+    {
+      "path": "review/editorial/probes/verify-transfer.py",
+      "sha256": "ed486d4fa59d54dea7c4d38a31dddf64cd3b93724b230e9fce2880e222dfdf7a"
+    },
+    {
+      "path": "review/editorial/probes/verify-websocket-negotiation.py",
+      "sha256": "0be27883dda8d9947f1d6c2b66a56e8cf0b23498c46d8c9579c768d4092e1af5"
+    },
+    {
+      "path": "ci/check-source-alignment.py",
+      "sha256": "82964dfbf98feee2f286d73b2d39563018b7f73f67a83718cf33305d9519384d"
+    },
+    {
+      "path": "ci/check-source-hygiene.sh",
+      "sha256": "6386ae636eb418dc430d13688c645a7ff2414515b8c9a7e3bb1dcc2b275b9827"
+    },
+    {
+      "path": "ci/run-teaching-smoke-tests.py",
+      "sha256": "5562b102b53cd56353569e698be2b394603d040ccde388111ffaf3279d80ae53"
+    },
+    {
+      "path": "ci/run-behavior-smoke-tests.py",
+      "sha256": "ba0141fd33b9998a509e220ee090e9edae4ebc3ada05f5f32cccedc047446b0a"
+    },
+    {
+      "path": "review/verification/refinement-probes/CMakeLists.txt",
+      "sha256": "5898e1389f4e2808e85075c3f5603d2085b5eb75c090e0c2f666480f22f562ac"
+    },
+    {
+      "path": "review/verification/refinement-probes/run-tls.py",
+      "sha256": "c1aa704ff985305d6bd8a8bd318fe5f8e822004d7da551b13ff0018080b07a62"
+    },
+    {
+      "path": "review/verification/refinement-probes/runtime-contract.cpp",
+      "sha256": "4ccee1f367dfae3e08ab43be26eba2dbc255729e3a23d48cd3e8fdac8e5f0e64"
+    },
+    {
+      "path": "review/verification/refinement-probes/tls-runtime.cpp",
+      "sha256": "fbb147779fab03988866bb6ed542ceecc683cc1593bf237a71303f124dc425e3"
+    }
+  ],
+  "mqttsuite": {
+    "path": "/home/voc/projects/mqttsuite/mqttsuite",
+    "head": "f96daffdbae8f95531a73fb52c9d22d410044211",
+    "clean": true,
+    "selected_source_sha256": {
+      "CMakeLists.txt": "faa0b9580aac81a97dd540af1870538ce32d2f82364fb55b8f8767850c60df21",
+      "mqttcli/CMakeLists.txt": "2253c433d89ecd279e5b431fb39c919e618b13b8025b7818ea683dda6936b3ca",
+      "mqttbroker/CMakeLists.txt": "46ca8b3431498e5c51ed433a86983b0645eeaa30952d4799f871374ece34cdb5",
+      "mqttbridge/CMakeLists.txt": "de7f56e2fbf57a2982d623f999d422c1ff9e80bea1fd0c79228b31224ae81eac",
+      "mqttstore/CMakeLists.txt": "bada81282a7c95b7bf84c32983d323a6cc2ed7b7b63482bd332e881c8496fe41",
+      "mqttintegrator/CMakeLists.txt": "e2c1d86115d0a5f94850bb8469ae145e50c344aa9def06af3450fa1322116ca5",
+      "mqttbridge/lib/Mqtt.cpp": "09127c44b82a6f6b1751e1cfb09457b6917cbb6857aa9333ba53d9f7aa70ce21",
+      "mqttstore/lib/Mqtt.cpp": "933826f54e0750be4a39b4640e4b1bc50ada1fc8e4372d8f0d6bf5782d8bd2af",
+      "mqttstore/lib/MariaDbStorage.cpp": "c424ba9b10fb7b541f8caeb364a69b1574d88f19379be82f2ee9ef8e510d6337",
+      "mqttintegrator/lib/Mqtt.cpp": "f9ad6980eb6faf6ce3349339c32e266e7ce3fc0fdbe6afb41355d6a496e3a684",
+      "mqttcli/SocketContextFactory.cpp": "6add030c467c86310a56486d90532032df25ea44c87d729ac5f21b04e2a25902"
+    },
+    "scope": "Source inspection only; no build/deployment claim."
+  },
+  "openwrt_feed": {
+    "path_at_review": "/tmp/snodec-editorial-pass-2026-09-21/openwrt-feed",
+    "head": "c9378fe95f7c015752c748fc4ab012b585d294d1",
+    "selected_source_sha256": {
+      "net/snode.c/Makefile": "7444074cc61a476b04bc4132fba8d6bb1343c22f59ef71fa092ffb3eb3d1028d",
+      "net/snode.c/Config.in": "1632ddbfb8cda16813bfb2dc267e6557361eff6c23c1c6f32396130c3288fa77",
+      "net/mqttsuite/Makefile": "7f312567b31038a7472996611b2e0a093407dc7f64e3061d6f99d23367d9b4a3",
+      "net/mqttsuite/Config.in": "cd84f0bf79a013d678bb21404bba3d672b64964873df128b7bcb4d8c1a699619",
+      "net/mqttsuite/files/mqttbroker.init": "b81fb0cdfc2d07abb946d540c7474e679255d640c22bdfedb26211940a688631",
+      "net/mqttsuite/files/mqttbridge.init": "d8e808d4d2fb147c968de540ead4ce49b4ac3f0ce176c37d0f769b37936d0624",
+      "net/mqttsuite/files/mqttintegrator.init": "2ddd72a0bfb70ad6edba609fa3b0b9fb1144f431a82ce706e0c1c4885f4b6ebc"
+    },
+    "finding": "Current inspected recipe selects SNode.C 1.0.1/OpenWRT branch; cannot substitute for the author current 2.0 source.",
+    "execution": "No matching SDK, ported 2.0 framework/application recipe and disposable target; deployment remains pending."
+  },
+  "historical_evidence": [
+    "review/verification/refinement-2026-09-21",
+    "review/editorial/verified-clean-2e52b6b",
+    "review/editorial/verified-binary-logging-initial",
+    "review/editorial/verified-binary-logging"
+  ],
+  "harness_failures": {
+    "index": {
+      "path": "review/editorial/README.md",
+      "sha256": "5f2a8a92545c3e60ca84176c795111dd723e7579cd47f99963ea304432ea5cf2"
+    },
+    "logs": [
+      {
+        "path": "review/editorial/configuration-harness-initial-2026-09-21.log",
+        "sha256": "1f393ef19a451331f8b7e74a56c01ce96f3691caa6e1d5693730b11310b0dde1"
+      },
+      {
+        "path": "review/editorial/configuration-wrong-binary-harness-2026-09-21.log",
+        "sha256": "8d4e1662244d88b29a736789af6be01a0e424b18d46f2df9d18b20fac02499c4"
+      },
+      {
+        "path": "review/editorial/service-harness-initial-2026-09-21.log",
+        "sha256": "72d3f3150564eb5439ba6064c4da18635a0f1e94ce0da811a28f9e2b99e02e37"
+      },
+      {
+        "path": "review/editorial/websocket-negotiation-initial-harness-2026-09-21.log",
+        "sha256": "3e046440b03c94aef6c3b54e93b72227582e07e70fe28b5d2f9a8b3e8c68fdb2"
+      }
+    ],
+    "scope": "Harness invocation/observation mistakes are preserved separately; final current logs record corrected successful rehearsals."
+  },
+  "remaining": [
+    "Practical-depth platform/service acceptance: matching OpenWrt SDK, 2.0 recipe port, disposable device and service/reboot checks.",
+    "Bluetooth hardware/policy, controlled MariaDB integration/failure, full MQTT broker/subscription/delivery and MQTT-over-WebSocket exercises.",
+    "MQTTSuite deployment and sustained-load/long-duration validation.",
+    "Separate implementation work: idle disconnected SSE subscriber removal and explicit WebSocket binary-input handling.",
+    "PDF production and rendered figure/page QA; not performed under Markdown-only scope.",
+    "OpenWrt SDK reference returned anti-bot content; full page text and all external links not independently validated."
+  ],
+  "accounting": {
+    "manuscript": {
+      "words_before": 144662,
+      "words_after": 151071,
+      "added_lines": 828,
+      "removed_lines": 1026,
+      "changed": 44,
+      "files": 62
+    },
+    "figures": {
+      "words_before": 6196,
+      "words_after": 6234,
+      "added_lines": 39,
+      "removed_lines": 33,
+      "changed": 11,
+      "files": 19
+    },
+    "companion_production": {
+      "added_lines": 0,
+      "removed_lines": 0,
+      "files_compared": 70,
+      "baseline": "review/verification/refinement-2026-09-21/evidence.json"
+    },
+    "new_editorial_probe_support": {
+      "added_lines": 382,
+      "removed_lines": 0,
+      "files": 4
+    },
+    "existing_checker_support": {
+      "added_lines": 0,
+      "removed_lines": 3,
+      "file": "ci/check-source-alignment.py"
+    }
+  },
+  "report": {
+    "path": "review/editorial/refinement-2026-09-21.md",
+    "sha256": "824d4ce533a3e1f662104d98ddb0bc365480f496ffd8fb9028189f4e4a837ce6"
+  },
+  "persistent_plan": {
+    "path": "review/EDITORIAL-WORK-PLAN.md",
+    "sha256": "930c6bd9dc19da34bb235dce0a8f524890b0c58ea2d8c0cef6088308492613aa"
+  },
+  "repetition_map": {
+    "path": "review/editorial/repetition-map.md",
+    "sha256": "22816d6a8b4f3ee2aab59b3f8d90611922da5f7190c8e9e7558df6f761064875"
+  }
+}

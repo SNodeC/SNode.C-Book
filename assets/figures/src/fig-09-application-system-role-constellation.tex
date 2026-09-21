@@ -91,9 +91,9 @@
   (process.north -| configuration.center);
 
 \draw[boundary flow]
-  (visibility.north)
+  (process.south -| visibility.center)
   --
-  (process.south -| visibility.center);
+  (visibility.north);
 
 \draw[boundary flow]
   (deployment.north)

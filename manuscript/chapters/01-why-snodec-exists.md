@@ -28,7 +28,7 @@ The promise of this book is therefore practical and architectural at the same ti
 
 > By the end of the book, you should be able to build servers and clients with SNode.C, understand why its architecture has the shape it has, and extend that architecture without breaking its conceptual boundaries.
 
-The example is meant to be explained, not merely copied: the reader should understand why it has its shape.
+Consider a measurement that first arrives through a local socket and is later also accepted from MQTT. If each input callback assigns the sequence number, the application has two places that decide its ordering. If both callbacks hand a parsed value to one model, that decision has one owner. MiniGateway will make this example concrete. The point of the early layer vocabulary is to prepare the reader to recognize such a decision in code, including the cost of keeping several roles around one shared model.
 
 ### The problem SNode.C addresses
 
@@ -92,23 +92,6 @@ SNode.C             layered application framework with explicit roles,
 
 If an application only needs a small one-off TCP client, direct POSIX sockets, Boost.Asio, standalone Asio, or another focused library may be simpler. If the application wants a narrowly optimized HTTP service, a specialized web framework may be more direct. This book positions SNode.C for the case where the communication architecture itself matters and several protocol surfaces must remain understandable together.
 
-### What this book is, and what it is not
-
-```text
-This book is:
-  an architecture-first guide to SNode.C
-  a layered network-programming book
-  a framework book for mature C++ readers
-  a practical design guide for multi-protocol applications
-
-This book is not:
-  a general C++ networking survey
-  a Boost.Asio replacement tutorial
-  a beginner C++ book
-  a pure IoT recipe book
-  a complete TLS, HTTP, MQTT, Bluetooth, or database reference
-```
-
 ### Source version used by this book
 
 \index{SNode.C!source baseline}
@@ -129,7 +112,7 @@ In technical writing, the word *layered* is sometimes used lazily. It can mean a
 
 Figure \ref{fig:snodec-layer-stack} is the first compact view of that structure: each row names a design question that becomes more concrete in later chapters, from endpoint family up to application role.
 
-![The basic SNode.C layer model used throughout the book.](assets/figures/pdf/fig-01-layer-stack.pdf){#fig:snodec-layer-stack width=90% latex-placement="tbp"}
+![The SNode.C design layers. Upward arrows indicate increasing application specificity, not callback order or exclusive ownership.](assets/figures/pdf/fig-01-layer-stack.pdf){#fig:snodec-layer-stack width=90% latex-placement="tbp"}
 
 At the bottom is the lower communication family. It answers:
 
@@ -198,11 +181,7 @@ But SNode.C is not node.js in C++.
 
 It is a C++ framework with a C++ way of expressing structure. Types matter. Namespaces matter. Public include paths matter. Construction matters. Ownership matters. Build components matter. Configuration and deployment surfaces matter. The architecture is not hidden behind a dynamic runtime; it is expressed through classes, templates, specializations, modules, and explicit roles. The include tree and the component tree are two public views of the same layered design: one is the C++ source-facing view, the other is the build/link-facing view.
 
-That gives SNode.C its particular teaching value.
-
-In a dynamic environment, a developer can sometimes get surprisingly far without understanding the whole internal shape. In modern C++, that approach is less satisfying. Long-term confidence usually comes from understanding the structure properly.
-
-SNode.C rewards that effort.
+This makes some choices visible before the program runs: a concrete type fixes a lower family and connection variant, and a build target fixes the components the application consumes. Other choices remain operational, such as an instance's address or timeout policy. The reader must learn both surfaces. Static structure helps expose a mismatch early, but it also brings longer type names and more explicit build decisions; it does not remove the need to understand runtime behavior.
 
 ### Why this matters for multi-protocol application development
 
@@ -264,8 +243,4 @@ Here it is enough to understand why the book starts small: the small example giv
 
 ### Closing perspective
 
-A good framework should provide features and help its users think clearly.
-
-SNode.C is worth studying here because it gives networked C++ applications visible boundaries: lower communication families, protocol layers, configuration, TLS, deployment, diagnostics, and persistence do not collapse into one undifferentiated program.
-
-The book's larger goal is not simply that you can write code *with* SNode.C. It is that you begin to see networked systems *through* the architectural lens that SNode.C makes available.
+Keep the measurement example from the opening in mind. Adding another input should force a decision about addressing and parsing; it should not quietly create a second authority for measurement ordering. That is the kind of judgment the later chapters will make concrete. First, the framework must be built and its smallest communication path made observable.
