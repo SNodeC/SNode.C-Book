@@ -1,0 +1,106 @@
+{
+  "architecture": "amd64",
+  "config": {
+    "Env": [
+      "PATH=/opt/texlive/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ],
+    "Cmd": [
+      "/bin/bash"
+    ],
+    "Labels": {
+      "org.opencontainers.image.authors": "Cheng Xu <copyright@xuc.me>",
+      "org.opencontainers.image.description": "Docker Image of TeXLive",
+      "org.opencontainers.image.licenses": "MIT",
+      "org.opencontainers.image.source": "https://github.com/xu-cheng/latex-docker",
+      "org.opencontainers.image.title": "TeXLive"
+    },
+    "ArgsEscaped": true
+  },
+  "created": "2026-07-01T19:32:53.308668563Z",
+  "history": [
+    {
+      "created": "2026-06-23T00:00:00Z",
+      "created_by": "# debian.sh --arch 'amd64' out/ 'trixie' '@1782172800'",
+      "comment": "debuerreotype 0.17"
+    },
+    {
+      "created": "2026-07-01T18:49:06.957390748Z",
+      "created_by": "ARG scheme=full",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2026-07-01T18:49:06.957390748Z",
+      "created_by": "ARG version=latest",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2026-07-01T18:49:06.957390748Z",
+      "created_by": "LABEL org.opencontainers.image.title=TeXLive",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2026-07-01T18:49:06.957390748Z",
+      "created_by": "LABEL org.opencontainers.image.description=Docker Image of TeXLive",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2026-07-01T18:49:06.957390748Z",
+      "created_by": "LABEL org.opencontainers.image.authors=Cheng Xu <copyright@xuc.me>",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2026-07-01T18:49:06.957390748Z",
+      "created_by": "LABEL org.opencontainers.image.source=https://github.com/xu-cheng/latex-docker",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2026-07-01T18:49:06.957390748Z",
+      "created_by": "LABEL org.opencontainers.image.licenses=MIT",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2026-07-01T18:49:06.957390748Z",
+      "created_by": "ENV PATH=/opt/texlive/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    },
+    {
+      "created": "2026-07-01T18:49:06.957390748Z",
+      "created_by": "COPY LICENSE README.md / # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2026-07-01T18:49:06.96581358Z",
+      "created_by": "COPY . /setup # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2026-07-01T19:32:53.308668563Z",
+      "created_by": "RUN |2 scheme=full version=latest /bin/sh -c /setup/setup.sh --texlive-scheme \"${scheme}\" --texlive-version \"${version}\" # buildkit",
+      "comment": "buildkit.dockerfile.v0"
+    },
+    {
+      "created": "2026-07-01T19:32:53.308668563Z",
+      "created_by": "CMD [\"/bin/bash\"]",
+      "comment": "buildkit.dockerfile.v0",
+      "empty_layer": true
+    }
+  ],
+  "os": "linux",
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": [
+      "sha256:3edb2192497af6e965b9b7e57dc6dbdce1f3ea721d14a98110419d4ded523298",
+      "sha256:a59a7e55e48da6e4cf069d73e9f7f8f6f98c621f7fc0a2e9ba65ca720ba66148",
+      "sha256:b2f04a8ef4a51a8e9de95c83472f48369e3be43f30879ac8a23b9c6ab0f73dae",
+      "sha256:4f6b9c55d9eeda47575f4994d7a53818c8343203cf1b0da04bcddf8f29738c96"
+    ]
+  }
+}

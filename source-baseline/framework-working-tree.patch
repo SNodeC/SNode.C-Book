@@ -1,3 +1,18 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 909d114b9..69229164c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -46,6 +46,10 @@ project(
+ )
+ set(SNODEC_SOVERSION ${SNode.C_VERSION_MAJOR})
+ 
++set(CMAKE_CXX_STANDARD 20)
++set(CMAKE_CXX_STANDARD_REQUIRED ON)
++set(CMAKE_CXX_EXTENSIONS OFF)
++
+ set(ignoreMe ${CMAKE_VERBOSE_MAKEFILE})
+ 
+ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 diff --git a/docs/logging/public-log-api.md b/docs/logging/public-log-api.md
 index 96801e308..7d9a6627c 100644
 --- a/docs/logging/public-log-api.md
@@ -143,6 +158,21 @@ index e2048d48b..44ec4058c 100644
  The new options live in the existing SNode.C CLI11/subcommand and configuration-file hierarchy. Applications should configure them through `ConfigConnection`, `ConfigHttpParser`, `ConfigHttpServer`, `ConfigHTTP`/`ConfigHttpClient`, and `ConfigWebSocket`; there is no runtime setter or parallel configuration mechanism. Runtime connections consume immutable snapshots.
  
  See [Framework resource policies and descriptor streaming](resource-policy-and-streaming.md) for option names, configuration-file keys, defaults, and validation rules.
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index c6e4ee78e..0e2bb6aef 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -79,10 +79,6 @@ if("${SNODEC_INTREE_BUILD}" STREQUAL "YES")
+     add_compile_definitions(SNODEC_INTREE_BUILD)
+ endif("${SNODEC_INTREE_BUILD}" STREQUAL "YES")
+ 
+-set(CMAKE_CXX_STANDARD 20)
+-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+-set(CMAKE_CXX_EXTENSIONS OFF)
+-
+ add_compile_options(
+     -Werror
+     -Wall
 diff --git a/src/Log.h b/src/Log.h
 index ebad673aa..d1dbbe6ef 100644
 --- a/src/Log.h

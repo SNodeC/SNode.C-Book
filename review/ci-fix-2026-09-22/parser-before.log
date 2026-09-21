@@ -1,0 +1,39 @@
+In file included from /home/voc/projects/snodec/snode.c/tests/unit/http/HttpMessageParserTest.cpp:8:
+In file included from /home/voc/projects/snodec/snode.c/src/core/socket/stream/SocketConnection.h:46:
+In file included from /home/voc/projects/snodec/snode.c/src/log/LogScopeOwner.h:45:
+/home/voc/projects/snodec/snode.c/src/log/SemanticLogger.h:200:67: error: no template named 'span' in namespace 'std'
+  200 |         void hexDump(LogLevel level, std::string_view label, std::span<const std::byte> bytes) const;
+      |                                                              ~~~~~^
+In file included from /home/voc/projects/snodec/snode.c/tests/unit/http/HttpMessageParserTest.cpp:8:
+In file included from /home/voc/projects/snodec/snode.c/src/core/socket/stream/SocketConnection.h:46:
+In file included from /home/voc/projects/snodec/snode.c/src/log/LogScopeOwner.h:45:
+In file included from /home/voc/projects/snodec/snode.c/src/log/SemanticLogger.h:48:
+/usr/lib/gcc/x86_64-linux-gnu/16/../../../../include/c++/16/optional:297:4: error: the parameter for this explicitly-defaulted copy constructor is const, but a member or base requires it to be non-const
+  297 |           _Storage(const _Storage&) = default;
+      |           ^
+/usr/lib/gcc/x86_64-linux-gnu/16/../../../../include/c++/16/optional:307:30: note: in instantiation of template class 'std::_Optional_payload_base<web::http::server::Request>::_Storage<web::http::server::Request>' requested here
+  307 |       _Storage<_Stored_type> _M_payload;
+      |                              ^
+/usr/lib/gcc/x86_64-linux-gnu/16/../../../../include/c++/16/optional:440:7: note: in instantiation of template class 'std::_Optional_payload_base<web::http::server::Request>' requested here
+  440 |     : _Optional_payload_base<_Tp>
+      |       ^
+/usr/lib/gcc/x86_64-linux-gnu/16/../../../../include/c++/16/optional:473:7: note: in instantiation of template class 'std::_Optional_payload<web::http::server::Request, true, false, false>' requested here
+  473 |     : _Optional_payload<_Tp, true, false, false>
+      |       ^
+/usr/lib/gcc/x86_64-linux-gnu/16/../../../../include/c++/16/optional:560:30: note: in instantiation of template class 'std::_Optional_payload<web::http::server::Request>' requested here
+  560 |       _Optional_payload<_Tp> _M_payload;
+      |                              ^
+/usr/lib/gcc/x86_64-linux-gnu/16/../../../../include/c++/16/optional:813:15: note: in instantiation of template class 'std::_Optional_base<web::http::server::Request>' requested here
+  813 |     : private _Optional_base<_Tp>,
+      |               ^
+/home/voc/projects/snodec/snode.c/tests/unit/http/HttpMessageParserTest.cpp:157:51: note: in instantiation of template class 'std::optional<web::http::server::Request>' requested here
+  157 |         std::optional<web::http::server::Request> request;
+      |                                                   ^
+In file included from /home/voc/projects/snodec/snode.c/tests/unit/http/HttpMessageParserTest.cpp:8:
+In file included from /home/voc/projects/snodec/snode.c/src/core/socket/stream/SocketConnection.h:46:
+In file included from /home/voc/projects/snodec/snode.c/src/log/LogScopeOwner.h:45:
+In file included from /home/voc/projects/snodec/snode.c/src/log/SemanticLogger.h:48:
+/usr/lib/gcc/x86_64-linux-gnu/16/../../../../include/c++/16/optional:299:14: error: the parameter for this explicitly-defaulted copy assignment operator is const, but a member or base requires it to be non-const
+  299 |           _Storage& operator=(const _Storage&) = default;
+      |                     ^
+3 errors generated.

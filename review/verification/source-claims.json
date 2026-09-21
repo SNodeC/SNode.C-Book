@@ -23,7 +23,7 @@
         {
           "path": "CMakeLists.txt",
           "needle": "SNODEC_BUILD_TESTS",
-          "line": 58
+          "line": 62
         },
         {
           "path": "src/utils/Config.cpp",
@@ -712,7 +712,7 @@
         {
           "path": "src/CMakeLists.txt",
           "needle": "SNODEC_BUILD_APPS",
-          "line": 134
+          "line": 130
         }
       ],
       "companion_sources": []
@@ -875,5 +875,5 @@
       "companion_sources": []
     }
   ],
-  "reviewed_tree_sha256": "df2fbdbe844f3368f5ed142973d82c0008a057c13d87dda6b7670e45cc3eacb8"
+  "reviewed_tree_sha256": "f676e6cbeabbd8a14a0e2c64a254f688790c6a2e59a6b37daea28ea4f69a4df6"
 }

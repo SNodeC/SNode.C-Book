@@ -1,0 +1,91 @@
+{
+  "book_start_commit": "6376b74cf40292df198a4b73bb8f83398d18cfb9",
+  "source_tree_sha256": "f676e6cbeabbd8a14a0e2c64a254f688790c6a2e59a6b37daea28ea4f69a4df6",
+  "texlive_image": "ghcr.io/xu-cheng/texlive-debian@sha256:3bdf292b53c04ffa3ca694a5114397859bcd39b6b417c212414e1505e7fe8ec5",
+  "pandoc": "3.10.1",
+  "pandoc_crossref_release": "v0.3.24a",
+  "compiler_results": {
+    "gcc": {
+      "compiler_version": "g++ (Debian 16.2.0-1) 16.2.0",
+      "framework_tests_passed": 183,
+      "installed_echo_tests_passed": 4,
+      "test_translation_units_explicit_cxx20": 167,
+      "companion_build": true,
+      "teaching_groups_passed": 3,
+      "behavior_suite": true,
+      "sse_websocket_suite": true
+    },
+    "clang": {
+      "compiler_version": "Debian clang version 19.1.7 (22+b1)",
+      "framework_tests_passed": 183,
+      "installed_echo_tests_passed": 4,
+      "test_translation_units_explicit_cxx20": 167,
+      "companion_build": true,
+      "teaching_groups_passed": 3,
+      "behavior_suite": true,
+      "sse_websocket_suite": true
+    }
+  },
+  "book_pdf": {
+    "pdfs": [
+      {
+        "file": "snodec-book.pdf",
+        "pages": 490,
+        "sha256": "2e77cd99c80360d4460a0c6411bdb31654c5202bcb3f5ea1dec52f662890dd0c",
+        "warnings": []
+      },
+      {
+        "file": "book-proposal-package.pdf",
+        "pages": 11,
+        "sha256": "c6d7051004797878d9b371e261aa7c1d46028140c1b7d3502734bed6a642c6b9",
+        "warnings": [
+          "Package caption Warning: Unused \\captionsetup[table] on input line 47."
+        ]
+      },
+      {
+        "file": "book-proposal-sample-package.pdf",
+        "pages": 65,
+        "sha256": "335a79664c5158441cdd9e34170806320f240f33818ad804a995f3bc3f4ac207",
+        "warnings": [
+          "LaTeX Font Warning: Font shape `TU/LatinModernMono(0)/b/n' undefined",
+          "Package caption Warning: Unused \\captionsetup[table] on input line 47.",
+          "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+        ]
+      }
+    ],
+    "book_page_labels_unchanged": true,
+    "contents_unchanged": true,
+    "index_unchanged": true,
+    "contents_destinations_verified": 1092,
+    "changed_book_page_streams": [],
+    "manuscript_and_typography_unchanged": true
+  },
+  "local_log_sha256": {
+    "build/ci-fix-2026-09-22/behavior-clang.log": "70cb4f7976a4344cbefbb670346080b84c2ddb5e38492f6bd49eaec6eef7985c",
+    "build/ci-fix-2026-09-22/behavior-gcc.log": "5907ecf99071420034b6fe0e69efccc4e3ad0eb2efa79aa75b13f91cc610a259",
+    "build/ci-fix-2026-09-22/book-package-pandoc-3.9-failure.log": "0ff09961bb0f4bfcdf7c30056bba3ac06df836282ddf49d8604417d5dd7e8d1d",
+    "build/ci-fix-2026-09-22/book-package.log": "d07e02062dd30e3e188538a8255c946e86cc362c35f02f79bd3fa5145e397dfe",
+    "build/ci-fix-2026-09-22/build-clang.log": "769a1cffef81d2be63535640a2dba861b68ed8dff003447f55496122dbf8951a",
+    "build/ci-fix-2026-09-22/build-gcc.log": "3286d8c2b9470ed344dea471f69c8737abf48ea743c8e978448562d209d79108",
+    "build/ci-fix-2026-09-22/companion-clang.log": "a4068e655e02e5228a39705878476ab116444de64fc378c7ce88b741a76eef26",
+    "build/ci-fix-2026-09-22/companion-gcc.log": "54f15f2c635648b6d7cc87256ef7dfbba0821a1e32ffb293aa4f7bb3258a7d8a",
+    "build/ci-fix-2026-09-22/configure-clang.log": "279e3105668a87fb2a9e69b071bf8e0a02d57bbc2154d9a842669f03597af000",
+    "build/ci-fix-2026-09-22/configure-gcc.log": "580bc08fbfc4c4c658775620ba1a9fa4f488d2449d7b2803a72061beccb5a57f",
+    "build/ci-fix-2026-09-22/container-install.log": "8f8915273464f36a483c0bc8882e10a6b39533bff211e53cbd0ea463f3fd212c",
+    "build/ci-fix-2026-09-22/ctest-clang.log": "090052f29ac2bc6f6e8ff4ba80645c8b9dc3f160064bbbc751d460c51b5f6739",
+    "build/ci-fix-2026-09-22/ctest-gcc.log": "7a227e0d51b45e8b0ed0c8e8a693144b76d5828bedd3286edd2a635b35143827",
+    "build/ci-fix-2026-09-22/echo-clang-build.log": "91523c6d31c7b3f7bfb3b1c26c4713a14687e47fa329e5fdbf4a6fc8238700f2",
+    "build/ci-fix-2026-09-22/echo-clang.log": "8e0ae1d527b73934aa9a9be1384d9f0bd4910d6c1b3eb1d20b3a0bf832de191e",
+    "build/ci-fix-2026-09-22/echo-gcc.log": "5046c961241b49de399bd92a397988e035e0d55662e294eaf4d4cc36f7c3d729",
+    "build/ci-fix-2026-09-22/image-fetch.log": "eb85311e9eefcd57a162f578e3a6212a339e292c1f388a85f3186121e25dca0e",
+    "build/ci-fix-2026-09-22/install-clang.log": "9b0a223b93e7cffd7375956e73c1e62333e018f4ad401c351dc5104e8af29502",
+    "build/ci-fix-2026-09-22/lifetime-clang.log": "167cd3b8fb4a02a9f8800ccddcf15163634dfc9457472f9b3323db8d8595af28",
+    "build/ci-fix-2026-09-22/lifetime-gcc.log": "48c6a420ccf7efaacb7260144c33157073c74f9bcba17c277b708751becfe51c",
+    "build/ci-fix-2026-09-22/parser-after.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/ci-fix-2026-09-22/parser-before.log": "d1a8fa5b7f8b677c2f0979a7fe43b0aeebd1a2326d4a1f3daeed742a10b52c40",
+    "build/ci-fix-2026-09-22/pdf-verification.log": "0b13f775c258b165152ef56d35ee2613084f58152ed0cdc4c7b919ca1c73e871",
+    "build/ci-fix-2026-09-22/teaching-clang.log": "316045ffd44aaabe913afbe073839958c76bd1bc938805b432328244c008a529",
+    "build/ci-fix-2026-09-22/teaching-gcc.log": "316045ffd44aaabe913afbe073839958c76bd1bc938805b432328244c008a529"
+  },
+  "hosted_ci_status": "Pending push and fresh hosted runs"
+}

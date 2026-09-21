@@ -15,8 +15,10 @@ book revision and this framework working-tree digest. The base commit alone is
 insufficient to identify the refined edition. Historical author confirmations remain
 historical and are not relabeled as new automated or independent verification.
 
-The combined editorial pass refreshed this snapshot after the author committed
-per-call flow controllers and checked runtime reconfiguration, then included the
-author's subsequent uncommitted binary-logging changes. The final local HEAD
-is `2e52b6b7337f21812932eb1e097fb3c27c8228a9`; the reconstruction base remains unchanged.
-Current test results and their limits are recorded in `review/editorial/`.
+The current local HEAD is `bb63e8a87aeda88123e8c0d72cb6d298908a9fe6`, including the author's
+committed binary-logging changes. The 22 September CI repair moves the existing
+C++20 build policy to the project root so tests inherit it. Those two uncommitted
+CMake file changes are included in the captured patch; the reconstruction base
+remains unchanged. The manuscript and application sources are unchanged by this
+repair. Current CI-repair evidence is recorded in `review/ci-fix-2026-09-22/`;
+earlier editorial results retain their original source identities.

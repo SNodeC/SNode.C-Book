@@ -657,3 +657,19 @@ See `review/pdf-epilogue-chapter-2026-09-22/REPORT.md` and `evidence.json`.
 Accounting: one manuscript heading line added and one removed; no prose,
 application production code, or test/CI implementation changes. No commit was
 requested or made. The established deferred and omitted scopes remain unchanged.
+
+### 22 September 2026 — CI toolchain repair locally verified
+
+The author authorized fixing both red workflows and using TeX Live 2026. The
+publication job now pins a TeX Live 2026 container and Pandoc 3.10.1, matching the
+locally verified generator. In the current SNode.C working tree, the existing
+C++20 policy moves to the common project root so tests inherit it. The book's
+source patch, manifest, provenance and affected anchor lines capture that exact
+change; no manuscript or application/test C++ is changed. Focused compiler
+regression, reconstruction and source checks pass. Full image/build/runtime
+verification now passes: all three PDFs, the package rebuild/archive checks,
+183 framework tests and four installed-echo tests per compiler, both companion
+builds and all existing teaching/behavior/SSE/WebSocket checks. The book remains
+490 pages with identical page content streams and zero warnings/bad boxes.
+Independent proposal-profile warnings are recorded separately. Fresh hosted CI
+runs remain pending; see `review/ci-fix-2026-09-22/REPORT.md`.
