@@ -1,0 +1,358 @@
+[
+  {
+    "case": "B02 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 1215) in paragraph at lines 362--364"
+    ],
+    "page": 1
+  },
+  {
+    "case": "B02 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1215) in paragraph at lines 367--369"
+    ],
+    "page": 2
+  },
+  {
+    "case": "B02 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1215) in paragraph at lines 372--374",
+      "Underfull \\hbox (badness 1072) in paragraph at lines 372--374"
+    ],
+    "page": 3
+  },
+  {
+    "case": "B02 ragged",
+    "warnings": [],
+    "page": 4
+  },
+  {
+    "case": "B04 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 1005) in paragraph at lines 382--384"
+    ],
+    "page": 5
+  },
+  {
+    "case": "B04 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1005) in paragraph at lines 387--389"
+    ],
+    "page": 6
+  },
+  {
+    "case": "B04 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1005) in paragraph at lines 392--394"
+    ],
+    "page": 7
+  },
+  {
+    "case": "B04 ragged",
+    "warnings": [],
+    "page": 8
+  },
+  {
+    "case": "B04 slash-breaks",
+    "warnings": [],
+    "page": 9
+  },
+  {
+    "case": "B05 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 2875) in paragraph at lines 407--409"
+    ],
+    "page": 10
+  },
+  {
+    "case": "B05 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 2875) in paragraph at lines 412--414"
+    ],
+    "page": 11
+  },
+  {
+    "case": "B05 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 2875) in paragraph at lines 417--419"
+    ],
+    "page": 12
+  },
+  {
+    "case": "B05 ragged",
+    "warnings": [],
+    "page": 13
+  },
+  {
+    "case": "B06 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 1960) in paragraph at lines 427--432",
+      "Underfull \\hbox (badness 3907) in paragraph at lines 427--432",
+      "Underfull \\hbox (badness 1142) in paragraph at lines 427--432"
+    ],
+    "page": 14
+  },
+  {
+    "case": "B06 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1960) in paragraph at lines 435--440",
+      "Underfull \\hbox (badness 3907) in paragraph at lines 435--440",
+      "Underfull \\hbox (badness 1142) in paragraph at lines 435--440"
+    ],
+    "page": 15
+  },
+  {
+    "case": "B06 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1960) in paragraph at lines 443--448",
+      "Underfull \\hbox (badness 3907) in paragraph at lines 443--448",
+      "Underfull \\hbox (badness 1142) in paragraph at lines 443--448",
+      "Underfull \\hbox (badness 3701) in paragraph at lines 443--448"
+    ],
+    "page": 16
+  },
+  {
+    "case": "B06 ragged",
+    "warnings": [],
+    "page": 17
+  },
+  {
+    "case": "B09 baseline",
+    "warnings": [
+      "Overfull \\hbox (28.43593pt too wide) in paragraph at lines 459--461"
+    ],
+    "page": 18
+  },
+  {
+    "case": "B09 looseness-minus1",
+    "warnings": [
+      "Overfull \\hbox (28.43593pt too wide) in paragraph at lines 464--466"
+    ],
+    "page": 19
+  },
+  {
+    "case": "B09 looseness-plus1",
+    "warnings": [
+      "Overfull \\hbox (28.43593pt too wide) in paragraph at lines 469--471"
+    ],
+    "page": 20
+  },
+  {
+    "case": "B09 ragged",
+    "warnings": [],
+    "page": 21
+  },
+  {
+    "case": "B09 slash-breaks",
+    "warnings": [],
+    "page": 22
+  },
+  {
+    "case": "B10 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 2884) in paragraph at lines 484--487"
+    ],
+    "page": 23
+  },
+  {
+    "case": "B10 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 2884) in paragraph at lines 490--493"
+    ],
+    "page": 24
+  },
+  {
+    "case": "B10 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 2884) in paragraph at lines 496--499"
+    ],
+    "page": 25
+  },
+  {
+    "case": "B10 ragged",
+    "warnings": [],
+    "page": 26
+  },
+  {
+    "case": "B10 paragraph-break",
+    "warnings": [],
+    "page": 27
+  },
+  {
+    "case": "B11 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 1406) in paragraph at lines 516--519"
+    ],
+    "page": 28
+  },
+  {
+    "case": "B11 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1406) in paragraph at lines 522--525"
+    ],
+    "page": 29
+  },
+  {
+    "case": "B11 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1406) in paragraph at lines 528--531"
+    ],
+    "page": 30
+  },
+  {
+    "case": "B11 ragged",
+    "warnings": [],
+    "page": 31
+  },
+  {
+    "case": "B11 slash-breaks",
+    "warnings": [],
+    "page": 32
+  },
+  {
+    "case": "B14 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 1237) in paragraph at lines 546--549"
+    ],
+    "page": 33
+  },
+  {
+    "case": "B14 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1237) in paragraph at lines 552--555"
+    ],
+    "page": 34
+  },
+  {
+    "case": "B14 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1237) in paragraph at lines 558--561"
+    ],
+    "page": 35
+  },
+  {
+    "case": "B14 ragged",
+    "warnings": [],
+    "page": 36
+  },
+  {
+    "case": "B14 slash-breaks",
+    "warnings": [],
+    "page": 37
+  },
+  {
+    "case": "B15 baseline",
+    "warnings": [
+      "Overfull \\hbox (7.64592pt too wide) in paragraph at lines 576--583"
+    ],
+    "page": 38
+  },
+  {
+    "case": "B15 looseness-minus1",
+    "warnings": [
+      "Overfull \\hbox (7.64592pt too wide) in paragraph at lines 586--593"
+    ],
+    "page": 39
+  },
+  {
+    "case": "B15 looseness-plus1",
+    "warnings": [
+      "Overfull \\hbox (7.64592pt too wide) in paragraph at lines 596--603"
+    ],
+    "page": 40
+  },
+  {
+    "case": "B15 ragged",
+    "warnings": [],
+    "page": 41
+  },
+  {
+    "case": "B15 paragraph-break",
+    "warnings": [],
+    "page": 42
+  },
+  {
+    "case": "B19 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 1675) in paragraph at lines 628--637"
+    ],
+    "page": 43
+  },
+  {
+    "case": "B19 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1675) in paragraph at lines 640--649"
+    ],
+    "page": 44
+  },
+  {
+    "case": "B19 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1675) in paragraph at lines 652--661",
+      "Underfull \\hbox (badness 1024) in paragraph at lines 652--661"
+    ],
+    "page": 45
+  },
+  {
+    "case": "B19 ragged",
+    "warnings": [],
+    "page": 46
+  },
+  {
+    "case": "B19 paragraph-break",
+    "warnings": [],
+    "page": 47
+  },
+  {
+    "case": "B20 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 1888) in paragraph at lines 690--694"
+    ],
+    "page": 48
+  },
+  {
+    "case": "B20 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1888) in paragraph at lines 697--701"
+    ],
+    "page": 49
+  },
+  {
+    "case": "B20 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 1888) in paragraph at lines 704--708"
+    ],
+    "page": 50
+  },
+  {
+    "case": "B20 ragged",
+    "warnings": [],
+    "page": 51
+  },
+  {
+    "case": "B25 baseline",
+    "warnings": [
+      "Underfull \\hbox (badness 3919) in paragraph at lines 718--719"
+    ],
+    "page": 52
+  },
+  {
+    "case": "B25 looseness-minus1",
+    "warnings": [
+      "Underfull \\hbox (badness 3919) in paragraph at lines 722--723"
+    ],
+    "page": 53
+  },
+  {
+    "case": "B25 looseness-plus1",
+    "warnings": [
+      "Underfull \\hbox (badness 3919) in paragraph at lines 726--727"
+    ],
+    "page": 54
+  },
+  {
+    "case": "B25 ragged",
+    "warnings": [],
+    "page": 55
+  }
+]

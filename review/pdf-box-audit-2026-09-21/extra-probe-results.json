@@ -1,0 +1,33 @@
+[
+  {
+    "case": "B20 same-sentences-new-paragraph",
+    "warnings": [],
+    "page": 1
+  },
+  {
+    "case": "B20 includes",
+    "warnings": [
+      "Underfull \\hbox (badness 1983) in paragraph at lines 372--377"
+    ],
+    "page": 2
+  },
+  {
+    "case": "B20 word-order",
+    "warnings": [
+      "Underfull \\hbox (badness 1484) in paragraph at lines 379--384"
+    ],
+    "page": 3
+  },
+  {
+    "case": "B20 penalty-zero",
+    "warnings": [
+      "Underfull \\hbox (badness 1888) in paragraph at lines 386--390"
+    ],
+    "page": 4
+  },
+  {
+    "case": "B06 inset-ragged",
+    "warnings": [],
+    "page": 5
+  }
+]

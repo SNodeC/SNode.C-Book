@@ -576,7 +576,7 @@ Therefore, parameterless activation is such a strong proof point for the configu
 
 Progressive disclosure is useful for operators, but it is also useful for readers.
 
-It teaches the model in the order in which the model is structured. The same application/instance/section/option structure is therefore both an operator model and a reading model.
+It teaches the model in the order in which the model is structured. The same application/\allowbreak{}instance/\allowbreak{}section/\allowbreak{}option structure is therefore both an operator model and a reading model.
 
 This is especially valuable in multi-instance programs. Instead of forcing every option into one flat help page, the hierarchy lets the user ask increasingly specific questions.
 

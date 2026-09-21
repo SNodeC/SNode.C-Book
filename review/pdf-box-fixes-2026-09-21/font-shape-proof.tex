@@ -1,0 +1,14 @@
+\documentclass{article}
+\usepackage{fontspec}
+\setmonofont{Latin Modern Mono}[BoldFont=lmmonolt10-bold.otf,BoldItalicFont=lmmonolt10-boldoblique.otf]
+\newsavebox{\normalmono}
+\newsavebox{\boldmono}
+\begin{document}
+\sbox{\normalmono}{\ttfamily SocketContextFactory 0123456789}
+\sbox{\boldmono}{\ttfamily\bfseries SocketContextFactory 0123456789}
+\typeout{NORMAL-MONO-WIDTH=\the\wd\normalmono}
+\typeout{BOLD-MONO-WIDTH=\the\wd\boldmono}
+{\ttfamily Regular: SocketContextFactory 0123456789\par
+\bfseries Bold: SocketContextFactory 0123456789\par
+\itshape Bold italic: SocketContextFactory 0123456789}
+\end{document}

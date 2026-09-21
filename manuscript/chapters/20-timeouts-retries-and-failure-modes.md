@@ -671,7 +671,7 @@ Failure handling without visibility is difficult to operate. Retry without visib
 
 ### The architectural boundary for failure behavior
 
-A compact rule keeps the chapter together: role-level configuration and flow controllers own retry/reconnect policy; the connection/context layer owns peer relationships and protocol-meaningful timeout use; status and logging surfaces provide failure visibility.
+A compact rule keeps the chapter together: role-level configuration and flow controllers own retry/\allowbreak{}reconnect policy; the connection/\allowbreak{}context layer owns peer relationships and protocol-meaningful timeout use; status and logging surfaces provide failure visibility.
 
 This boundary keeps the architecture balanced.
 

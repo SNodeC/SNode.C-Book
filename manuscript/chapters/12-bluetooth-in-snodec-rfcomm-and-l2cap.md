@@ -155,7 +155,7 @@ The service selector starts at zero:
 | RFCOMM | `00:00:00:00:00:00`, channel `0` |
 | L2CAP | `00:00:00:00:00:00`, PSM `0` |
 
-This does not make RFCOMM and L2CAP the same family; it only means that the broad default/wildcard idea exists in both Bluetooth address models while the service selector remains family-specific.
+This does not make RFCOMM and L2CAP the same family; it only means that the broad default/\allowbreak{}wildcard idea exists in both Bluetooth address models while the service selector remains family-specific.
 
 ### Server and client use with Bluetooth endpoints
 

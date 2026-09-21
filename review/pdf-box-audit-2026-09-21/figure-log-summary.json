@@ -1,0 +1,97 @@
+[
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/contact-sheet/figures-contact-sheet.log",
+    "sha256": "e2e5ea30f50974093409d2c4237823f4087ef8b24f74359b13cd1df28b617e97",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-01-layer-stack/fig-01-layer-stack.log",
+    "sha256": "7b0c41e0373e1b9823e2f0d4626b27e58ebdcf456e0fd1fc808e79373742f293",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-02-runtime-instance-connection-context/fig-02-runtime-instance-connection-context.log",
+    "sha256": "608cf1d93fa22cc21983e62d0f3220ac32e5c4f668e0612e1d8f08ac9040787c",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-03-event-runtime-picture/fig-03-event-runtime-picture.log",
+    "sha256": "d472a6f387179badbbfa6468402774d568d9775fa433bb0033e4400c5ee8e87f",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-04-lower-family-transfer-model/fig-04-lower-family-transfer-model.log",
+    "sha256": "1851a72e2e45c5ef9c3a59c77e3d4dd281c743903c9a8a9aba550070e72a9f15",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-05-server-client-connection-context-path/fig-05-server-client-connection-context-path.log",
+    "sha256": "cdec48a63e3482135dca4f55dc3abc666ef50b1e165bcc6c8aede5434f44b1fc",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-06-web-protocol-layer-structure/fig-06-web-protocol-layer-structure.log",
+    "sha256": "d89b058191b093b2018ad0b75b47834f79037c7fae185d6dd311ceb515534546",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-07-native-mqtt-vs-mqtt-over-websocket/fig-07-native-mqtt-vs-mqtt-over-websocket.log",
+    "sha256": "733249bcdbfbee7d8d7ace0ccfb22da155995fe66f54796b1119ca584ccd3b01",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-08-iot-boundary-constellation/fig-08-iot-boundary-constellation.log",
+    "sha256": "f95e812dbaef81cf9ace9ddf5d255d89b88747316cfd1ad08184ee67b8a1a21b",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-09-application-system-role-constellation/fig-09-application-system-role-constellation.log",
+    "sha256": "debfeccf521ea932d683476f591c797d9ad2ff348143f93895d94a186dee3ce4",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-10-mqttsuite-ecosystem-map/fig-10-mqttsuite-ecosystem-map.log",
+    "sha256": "d7c069905a58830e42a5f4acbf7c51d4532097e8fb03b77c9cd431f1e0a2dc81",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-11-build-install-package-deployment-surface/fig-11-build-install-package-deployment-surface.log",
+    "sha256": "a9b291dba9e3a703a44c06ae07a772575fd86467570caac1e319d727ef5b18a2",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-12-minigateway-extended-network-role-architecture/fig-12-minigateway-extended-network-role-architecture.log",
+    "sha256": "9bec03e5308b7f7f1c42be974b2a7f45b4ebfc05d17684160c6840bdaf4d0fe0",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-13-configuration-hierarchy/fig-13-configuration-hierarchy.log",
+    "sha256": "8ead393863d0b2a44fb66249843040890dabf151ae67e5a214ad458ffd4855f1",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-14-logging-diagnostic-visibility-map/fig-14-logging-diagnostic-visibility-map.log",
+    "sha256": "fc0c7aeade48f3b1fb36540308f91e93f2aff016bfd8eae45ef814463d19ecc5",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-15-tls-connection-layer-specialization/fig-15-tls-connection-layer-specialization.log",
+    "sha256": "648a278c72c7d1f91c884aca70c230d778698dcc468d3d7af5d0c14d8825c8d6",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-16-retry-reconnect-flow/fig-16-retry-reconnect-flow.log",
+    "sha256": "92138bc4b960d9dc7ca20492ef79b2be22adbf6701e8eb2576858625abeec154",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-17-persistence-boundary/fig-17-persistence-boundary.log",
+    "sha256": "380764fe8ef9c13b7fdf3e051c903e4a0a5beae20f1c3a30e9d7d0cf411164c0",
+    "box_warnings": []
+  },
+  {
+    "log": "build/pdf-box-audit-2026-09-21/figures/fig-18-testing-confidence-surfaces/fig-18-testing-confidence-surfaces.log",
+    "sha256": "64628a1d1fd4ee1b8b72b75c8dabcccc2778370cdbf56bee01e3d4f8959872e0",
+    "box_warnings": []
+  }
+]

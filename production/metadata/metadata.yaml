@@ -12,6 +12,9 @@ numbersections: true
 mainfont: "Latin Modern Roman"
 sansfont: "Latin Modern Sans"
 monofont: "Latin Modern Mono"
+monofontoptions:
+  - BoldFont=lmmonolt10-bold.otf
+  - BoldItalicFont=lmmonolt10-boldoblique.otf
 mathfont: "Latin Modern Math"
 
 geometry: margin=25mm
@@ -29,6 +32,8 @@ header-includes:
   - |
     ```{=latex}
     \providecommand{\passthrough}[1]{#1}
+    % Tables are uncaptioned; remove Pandoc's unused caption-spacing override.
+    \clearcaptionsetup[skip]{table}
     \usepackage{tocloft}
     \usepackage{makeidx}
     \makeindex
@@ -97,7 +102,7 @@ header-includes:
         \setlength{\parindent}{0pt}%
         \setlength{\parskip}{0.6\baselineskip}%
         \setlength{\leftskip}{0.13\textwidth}%
-        \setlength{\rightskip}{0.13\textwidth}%
+        \setlength{\rightskip}{0.13\textwidth plus 1fil}%
         \@afterindentfalse
         \@afterheading
     }

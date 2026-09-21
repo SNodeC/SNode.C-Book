@@ -1,0 +1,417 @@
+{
+  "recorded_at_utc": "2026-09-21T22:28:29.555827+00:00",
+  "scope": "Apply approved book monospace bold/bold-oblique mapping and remove unused table-caption spacing; preserve completed bad-box fixes.",
+  "book_head": "fcbe51a82d974725dc1ca24f667ab0f9618f483d",
+  "metadata": "production/metadata/metadata.yaml",
+  "build_command": [
+    "cmake",
+    "--build",
+    "build/pdf-font-fix-2026-09-22",
+    "--target",
+    "pdf"
+  ],
+  "pdf": {
+    "path": "dist/pdf/snodec-book.pdf",
+    "pages": 490,
+    "sha256": "cd3e48c2b1ca1db7660fa6abb79caa2643aacf6d0a9f8600e25909a43ec0f97f"
+  },
+  "verified_build_pdf": {
+    "path": "build/pdf-font-fix-2026-09-22/snodec-book.pdf",
+    "sha256": "ac054d10e2b75880826246bce5095b0b64df3e72f88cff5a8e0322d502ae07c7"
+  },
+  "final_log_counts": {
+    "font_shape_warnings": 0,
+    "unused_table_caption_warnings": 0,
+    "overfull_hbox": 0,
+    "underfull_hbox": 0,
+    "overfull_vbox": 0,
+    "underfull_vbox": 0,
+    "tocloft_warnings": 1
+  },
+  "final_three_pass_console_counts": {
+    "font_shape_warnings": 0,
+    "unused_table_caption_warnings": 0,
+    "overfull_hbox": 0,
+    "underfull_hbox": 0,
+    "overfull_vbox": 0,
+    "underfull_vbox": 0,
+    "tocloft_warnings": 3
+  },
+  "all_38_chapter_starts_unchanged": true,
+  "manuscript_files_byte_identical": 62,
+  "source_alignment": {
+    "framework_path": "/home/voc/projects/snodec/snode.c",
+    "head": "bb63e8a87aeda88123e8c0d72cb6d298908a9fe6",
+    "status_porcelain": "",
+    "tree_digest": "df2fbdbe844f3368f5ed142973d82c0008a057c13d87dda6b7670e45cc3eacb8",
+    "chapter_evidence_records": 38,
+    "complete_listings": 36,
+    "passed": true
+  },
+  "contents_destinations_checked": 1092,
+  "final_index_regeneration_identical": true,
+  "index_entries_accepted": 1033,
+  "font_shapes_proof": {
+    "sizes_pt": [
+      8,
+      9,
+      10,
+      12
+    ],
+    "shapes": [
+      "regular",
+      "italic",
+      "bold",
+      "bold-oblique"
+    ],
+    "font_shape_warnings": 0
+  },
+  "caption_cleanup": {
+    "uncaptioned_tables": 165,
+    "all_490_page_content_streams_unchanged": true,
+    "all_12_reviewed_final_page_renders_identical": true,
+    "figure_caption_count": 18
+  },
+  "line_accounting": {
+    "book_configuration": {
+      "added": 5,
+      "removed": 0
+    },
+    "manuscript": {
+      "added": 0,
+      "removed": 0
+    },
+    "application_production_code": {
+      "added": 0,
+      "removed": 0
+    },
+    "test_ci_implementation": {
+      "added": 0,
+      "removed": 0
+    }
+  },
+  "source_files": [
+    {
+      "path": "manuscript/backmatter/backmatter.md",
+      "sha256": "caeb883edac94c5e11a847040813a0664d40fe42d5ae5ca9d23548182052bb12"
+    },
+    {
+      "path": "manuscript/backmatter/further-reading.md",
+      "sha256": "a75098048771502d07435bbe5ff5afac7e2c2c2ad01c0b37b3821c3da50d1aec"
+    },
+    {
+      "path": "manuscript/backmatter/index.md",
+      "sha256": "2bc2be55a23e5e176144dd11771aff490f6588f15198dd145bd7238e3940db92"
+    },
+    {
+      "path": "manuscript/book-files.txt",
+      "sha256": "2e125b7893833e2db751d779e96df768ab3fd6696c004486b9485640f66ddeba"
+    },
+    {
+      "path": "manuscript/chapters/01-why-snodec-exists.md",
+      "sha256": "358537b96346a3d29d0bd66b4e920c2476863f12c3004c22cd0fb40b44874561"
+    },
+    {
+      "path": "manuscript/chapters/02-preparing-your-environment.md",
+      "sha256": "c51e7416d5342f860d3acd8a0d6920873fa220e2870e9147314f00e27c73fd9a"
+    },
+    {
+      "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "sha256": "bcc48d88825b4d64cd4fc11f9abbf0c47e55a6b12f0f4cea9d14a13909e551eb"
+    },
+    {
+      "path": "manuscript/chapters/04-reading-the-codebase-with-confidence.md",
+      "sha256": "12c87aad9f64083c61da40cb67b042e25ac07b2840a42700312d24f152d66b7d"
+    },
+    {
+      "path": "manuscript/chapters/05-the-mental-model-of-snodec.md",
+      "sha256": "8fa6376c14a46ab05ea823e273777aa86ae3009dbfeac635689fc2ebd1259231"
+    },
+    {
+      "path": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+      "sha256": "8e0d5a90ddc01751464c953a7a9edd101521e13de09ee23aa470284cbf61cf34"
+    },
+    {
+      "path": "manuscript/chapters/07-layers-in-practice-network-transport-connection-application.md",
+      "sha256": "077ab63b241ea714b7842cce2fd30f590abf25f027fa3d9d32d6cfc1759fef93"
+    },
+    {
+      "path": "manuscript/chapters/08-socket-addresses-and-address-semantics.md",
+      "sha256": "6ae3f89e8fa70e8725d33b2a4687933ec3d17ffb8e5a3b6f1d5ae48b5edfe5e5"
+    },
+    {
+      "path": "manuscript/chapters/09-servers-clients-and-connections.md",
+      "sha256": "6e95412ae7b43c952b9ba199b7a4ee5e96510ac9efbd012a20076b86899ddfaa"
+    },
+    {
+      "path": "manuscript/chapters/10-ipv4-and-ipv6-as-the-first-concrete-network-families.md",
+      "sha256": "db9f744612525c87d3f3afbf386a7d38ecf274116deba089498a32dbcfd26d44"
+    },
+    {
+      "path": "manuscript/chapters/11-unix-domain-sockets.md",
+      "sha256": "bd264d3f42af39709e8b8a7327e3abbfc976e59139346bafc781c4c86df00daa"
+    },
+    {
+      "path": "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "sha256": "c0eb92d8e895bafc917c9f555a79da3d1a14c276c5d9c44518f3e7eff6f629ac"
+    },
+    {
+      "path": "manuscript/chapters/13-writing-socketcontext-classes-well.md",
+      "sha256": "aad799d485c832ce44dcedb264a3de90c908b66633158c930158872433182d15"
+    },
+    {
+      "path": "manuscript/chapters/14-writing-socketcontextfactory-classes-well.md",
+      "sha256": "cc5712a0bdd30906c97c5d32f3698dd835980e77527eac2dc4c806a0768b12af"
+    },
+    {
+      "path": "manuscript/chapters/15-building-the-same-protocol-over-different-lower-layers.md",
+      "sha256": "d44c4d33047e798badf0d2b8287d9bf1f302853aadd1dd74af6a5a4eb341d264"
+    },
+    {
+      "path": "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
+      "sha256": "7f0339c0d30dd0cbb49afd93b82d444931b74d265847f7fb54b971339375a46e"
+    },
+    {
+      "path": "manuscript/chapters/17-application-and-instance-configuration-in-detail.md",
+      "sha256": "9776cafd48944a1d12f4bc866dc3965610c43d105debac11d9ee02659da140b5"
+    },
+    {
+      "path": "manuscript/chapters/18-logging-diagnostics-and-runtime-introspection.md",
+      "sha256": "e63453593efc0e6c83c454ea5039f875a8c6b7edc27e0c732ac3f1592557696f"
+    },
+    {
+      "path": "manuscript/chapters/19-tls-across-the-framework.md",
+      "sha256": "3b72052988baa58ecd4eb342a195468d1ff00a4c5210b482d5c4f8902c82218f"
+    },
+    {
+      "path": "manuscript/chapters/20-timeouts-retries-and-failure-modes.md",
+      "sha256": "8b7e88e669ba152f5d9c96ec25b13c719c5f064b29c687ec147d62ff23f0c7ad"
+    },
+    {
+      "path": "manuscript/chapters/21-the-http-layer.md",
+      "sha256": "934114245cd5f757c6faec851b5c778da115cf5b2a542323b04e74d62a7f42bb"
+    },
+    {
+      "path": "manuscript/chapters/22-the-express-like-framework.md",
+      "sha256": "a30251e00b285d9c632104df2b27dec58907d33241a95ad45d442e9631e1fd9d"
+    },
+    {
+      "path": "manuscript/chapters/23-server-sent-events-and-real-time-http.md",
+      "sha256": "0b296c4a8c854ae0ccf6193369ffad7d33d65f879354085ba906c456fa13c2b3"
+    },
+    {
+      "path": "manuscript/chapters/24-websocket-and-protocol-upgrade.md",
+      "sha256": "e5645ed9a1632536712630928608daec6ecbb1f8ac53d95b27eedcd284c7acb7"
+    },
+    {
+      "path": "manuscript/chapters/25-mqtt-support-in-snodec.md",
+      "sha256": "6b4a24ea703403c5798af16404e80aae8075004758aedcd095aff87265fd13cd"
+    },
+    {
+      "path": "manuscript/chapters/26-mqtt-over-websocket.md",
+      "sha256": "453c5c5a3e1ffb879e3238e2142d9fd2d473b0d7734caaa81ec80c82eac1182f"
+    },
+    {
+      "path": "manuscript/chapters/27-designing-iot-systems-with-multiple-protocols.md",
+      "sha256": "fa7bbd48d9cecd1f926d4b5947fdedefaaf2bf4557945049a752e7ab6781dd48"
+    },
+    {
+      "path": "manuscript/chapters/28-database-support-and-application-state.md",
+      "sha256": "719b9d77f28fdfffcc5120bc6d9cd5df74b630234180bf6394d7acd950e0901a"
+    },
+    {
+      "path": "manuscript/chapters/29-learning-from-the-applications-in-src-apps.md",
+      "sha256": "f4181ecc03de3697eed8475fd30d59b8f14ee7de16039c9eea51296405e7bdfa"
+    },
+    {
+      "path": "manuscript/chapters/30-from-applications-to-systems.md",
+      "sha256": "ffb4034eeb0b4fc46005ca1355ce23fcc804679ae5a45a6f620a0836a1ea37d3"
+    },
+    {
+      "path": "manuscript/chapters/31-mqttsuite-as-a-reference-ecosystem.md",
+      "sha256": "78d96ebfa5a21633447e3c038cb81345731ac913ba8985d9087b619c0537fe4e"
+    },
+    {
+      "path": "manuscript/chapters/32-cmake-components-and-linking-strategy.md",
+      "sha256": "6defb26918bb45afd1f38b563396cf6d5c44c8e320e729e42b20d1e5d3b79ed9"
+    },
+    {
+      "path": "manuscript/chapters/33-deployment-on-linux-and-openwrt.md",
+      "sha256": "dfcc28e47e9d75824df828c1affaefed414e5b3831b43a06ca78f88ace8f273a"
+    },
+    {
+      "path": "manuscript/chapters/34-testing-debugging-and-benchmarking.md",
+      "sha256": "aa88d17f58e445744aa8ff0673bb5d59c9cf96f07f1dd193ee068934c098e2ae"
+    },
+    {
+      "path": "manuscript/chapters/35-building-minigateway.md",
+      "sha256": "d028c38b743d29ff82ef7f470ee34bd78a0d5b351565bbe580ab71d40745fecf"
+    },
+    {
+      "path": "manuscript/chapters/36-extending-minigateway-with-a-new-network-role.md",
+      "sha256": "37dc78116b7776dc895f2338b6b5f5e575d9f38fbd1d6873c5377a2fa0519b48"
+    },
+    {
+      "path": "manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "sha256": "c96403fa4058756f39fa6c2b911a41f8012307565714f638719c4f4ed9aa4f2b"
+    },
+    {
+      "path": "manuscript/chapters/38-extending-the-framework-safely.md",
+      "sha256": "32d6e130081e45a47a8170abdd7f409ff97a2bea9000d157e49d15f487812646"
+    },
+    {
+      "path": "manuscript/chapters/epilogue.md",
+      "sha256": "a18678edfb869d136cdf1ff51a6ed883a087d809fd09bf06489a6722a38a2bda"
+    },
+    {
+      "path": "manuscript/frontmatter/acknowledgements.md",
+      "sha256": "3f8cf8bcdda956c90e74ebd46d4677c6b44fe04fa45ef106febb7dc762dc950a"
+    },
+    {
+      "path": "manuscript/frontmatter/author-note.md",
+      "sha256": "81c985228103786a4404f097dc7c833d93438f059ec506faf1a1c29956cad137"
+    },
+    {
+      "path": "manuscript/frontmatter/conventions.md",
+      "sha256": "607da46ad2e6a1eba5e6eb5761340ea8fb7cd28953f5440cb5068ee90697a3eb"
+    },
+    {
+      "path": "manuscript/frontmatter/frontmatter.md",
+      "sha256": "ee93ac64dc40b724d6eb44f3f5fb514d23d3afc81144f0a9264d0969c4e5a2ef"
+    },
+    {
+      "path": "manuscript/frontmatter/how-to-read-this-book.md",
+      "sha256": "f60aab032e3ee787481b39b3efd10af0349137905241d3da3eb2fddd14e453d3"
+    },
+    {
+      "path": "manuscript/frontmatter/mainmatter.md",
+      "sha256": "4adadd8f9bac2e672534d2889813d44a60855cfa7617b3f5def44cd5ae3e4e9a"
+    },
+    {
+      "path": "manuscript/frontmatter/preface.md",
+      "sha256": "3acf296cc363f5b460caa0032832a4b3825e30e2e4bf0d333c0d75bdc5c31ec2"
+    },
+    {
+      "path": "manuscript/parts/part-01-getting-oriented.md",
+      "sha256": "d76882db70ae9126b7ec33a29c8a31bd4ff1531bb7ff32816271f43a4280ee9f"
+    },
+    {
+      "path": "manuscript/parts/part-02-the-snodec-architecture.md",
+      "sha256": "2fb90cf7d8a4adf5518d73fa4473caeab263c6664312a9d4dd12952da07aa037"
+    },
+    {
+      "path": "manuscript/parts/part-03-networking-foundations-in-snodec.md",
+      "sha256": "419c733262048fe26aba925f781fd1673b6d34be7d0f01f4b36f8481afa2066f"
+    },
+    {
+      "path": "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md",
+      "sha256": "459e98d4e843f784765daed77f1855e529bf9e047715e2441136f1e84eb25312"
+    },
+    {
+      "path": "manuscript/parts/part-05-configuration-and-operational-behavior.md",
+      "sha256": "f3187362752d29c90914ea7061308c80b93a2270a3155c52039ec34bd5d6007e"
+    },
+    {
+      "path": "manuscript/parts/part-06-secure-and-robust-communication.md",
+      "sha256": "e0366e48d7ed80535e55f76c7b78b71ae332825652cc12a8162dd5ddf6e69cea"
+    },
+    {
+      "path": "manuscript/parts/part-07-web-protocols-and-web-applications.md",
+      "sha256": "4cb2feaeb0c91d2badd7493b9124bf7184288ead1ff50812c1cb2425541daee8"
+    },
+    {
+      "path": "manuscript/parts/part-08-iot-and-message-oriented-systems.md",
+      "sha256": "c30813ffe5add3511f4bb1eb295e493e35f8d94a2036a30bf1cc8f49b9abcaf1"
+    },
+    {
+      "path": "manuscript/parts/part-09-persistence-and-full-systems.md",
+      "sha256": "98af5902d860e2164a2d1e877003c3ea79c2ea343cfd915120f73854f74dc3db"
+    },
+    {
+      "path": "manuscript/parts/part-10-building-porting-and-maintaining.md",
+      "sha256": "b88bbf50b000af85adeda70577a0395b83d5f8e0e04635222ff4df9248cd6a58"
+    },
+    {
+      "path": "manuscript/parts/part-11-building-a-minigateway-application.md",
+      "sha256": "37cbabccc8d3bc1819bb25691eb71cbe54a5bfcf78297e68da12ef368676ed14"
+    },
+    {
+      "path": "manuscript/parts/part-12-designing-with-snodec.md",
+      "sha256": "62ba913e0b630c86816541e11ac66d03891af552ffb019dc94df6dd39fc8d764"
+    },
+    {
+      "path": "manuscript/parts/part-13-epilogue.md",
+      "sha256": "0e7604f67e83632f3a00304d3ea31103b53e6eea5cbd6d569ed50b9e3fcb0d3d"
+    },
+    {
+      "path": "production/latex/snodec-callouts.tex",
+      "sha256": "c07d1c688253b640fa3814a607ff43148cd3b233a6ea9319f71c7cd6a3310fcb"
+    },
+    {
+      "path": "production/metadata/metadata.yaml",
+      "sha256": "acd0cb225b07f5e9619d8b6a72b077d518bdfae1c47230deef8bd4a2a4b60af1"
+    },
+    {
+      "path": "production/metadata/proposal-metadata.yaml",
+      "sha256": "eb6a2ac66b63d92698f5a0ce91a75860cf98eb4eeaac18c1207b37dbbfd0fef0"
+    }
+  ],
+  "verification_files": [
+    {
+      "path": "review/pdf-font-fix-2026-09-22/REPORT.md",
+      "sha256": "41098ce8afd202dd1beff6384396a8726d4bb9abf5c6d5f923bcd93331692334"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/bold-usage.json",
+      "sha256": "2206d8f4e47de8c8968a231f93c5211815ef708b224a0bcae282d7a92d3f022d"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/build-console.txt",
+      "sha256": "be80aaf714436588081e5eabbb549a20e40bb7ba74e247e3259f397394046d86"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/font-measurements.json",
+      "sha256": "966886a59239c2373d358a4234891a7411ffd795758fb72fe7fffdbd30c25c0a"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/font-shapes-proof.log",
+      "sha256": "3469c254d945fdc87473bcb6f9f315b401f9c2d3bc9a92ff0c2bf86537f0259a"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/font-shapes-proof.tex",
+      "sha256": "f0ba206fde4ed0f21183a3729695a2462926eb6e7e53b49e73d478a7c3f059ed"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/index-verification.txt",
+      "sha256": "afb6e84af8e5b861e38b09acd3863dca90f06fe80e027e1f2d24954a062573dd"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/pdf-equivalence.json",
+      "sha256": "72448f93b2344aeab7fadce78efd4e9f14c0e8dd583fab700cb88394e5211857"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/reference-verification.json",
+      "sha256": "91787166bf98fbf59db593359b246f3c2ee7ea682dc914c39b3f9b89a636c950"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/snodec-book.log",
+      "sha256": "1dacacf40845bd68b8f7aaad9ec9da0388b750904ddd42461cf2885b181d7ca0"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/source-preservation.json",
+      "sha256": "a36f962169701119f3b1394717d3a063f7f76883801d6b738218f35be21ad2e6"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/source-verification.txt",
+      "sha256": "1e989ce9ae898293af59d666576821eef7c5865f459f22a0a36931a3343369ed"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/verified-index.ilg",
+      "sha256": "afb6e84af8e5b861e38b09acd3863dca90f06fe80e027e1f2d24954a062573dd"
+    },
+    {
+      "path": "review/pdf-font-fix-2026-09-22/visual-review.json",
+      "sha256": "c33dd110cc4e56d4b81daad0a1a04e370495929f9dd55e73308121455aa554a5"
+    }
+  ]
+}

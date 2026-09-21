@@ -204,7 +204,7 @@ The compact principle is that the same domain fact may legitimately appear in di
 \index{MQTT!integration spine}
 
 
-MQTT is often a good integration spine. It is strong when the system needs asynchronous publish/subscribe flow, decoupled producers and consumers, brokered message routing, topic-based integration, and machine-to-machine message exchange.
+MQTT is often a good integration spine. It is strong when the system needs asynchronous publish/\allowbreak{}subscribe flow, decoupled producers and consumers, brokered message routing, topic-based integration, and machine-to-machine message exchange.
 
 That makes MQTT a natural fit for telemetry and integration boundaries. It does not make MQTT the whole system. A browser-facing dashboard may prefer HTTP, SSE, or WebSocket. A local management plane may prefer Unix domain sockets. A device-near boundary may prefer Bluetooth or a custom stream service. A persistence boundary may involve a database or external service client.
 

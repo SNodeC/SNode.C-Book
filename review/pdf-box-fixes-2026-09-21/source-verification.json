@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "python3",
+      "ci/check-source-alignment.py",
+      "--framework",
+      "/home/voc/projects/snodec/snode.c"
+    ],
+    "exit_code": 0,
+    "stdout": "Source alignment passed: 38 chapter evidence records, 36 exact complete listings; SNode.C 2.0.0, base 1f0f728fc9b3b45174f2cd790d83b2f493e58af1, working-tree digest df2fbdbe844f3368f5ed142973d82c0008a057c13d87dda6b7670e45cc3eacb8\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bash",
+      "ci/check-source-hygiene.sh"
+    ],
+    "exit_code": 0,
+    "stdout": "Source alignment passed: 38 chapter evidence records, 36 exact complete listings; SNode.C 2.0.0, base 1f0f728fc9b3b45174f2cd790d83b2f493e58af1, working-tree digest df2fbdbe844f3368f5ed142973d82c0008a057c13d87dda6b7670e45cc3eacb8\nSource hygiene checks passed.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "size_pt": 8.0,
+    "shape": "regular",
+    "sample_width_pt": 131.688
+  },
+  {
+    "size_pt": 8.0,
+    "shape": "italic",
+    "sample_width_pt": 130.2
+  },
+  {
+    "size_pt": 8.0,
+    "shape": "bold",
+    "sample_width_pt": 130.2
+  },
+  {
+    "size_pt": 8.0,
+    "shape": "bold-oblique",
+    "sample_width_pt": 130.2
+  },
+  {
+    "size_pt": 9.0,
+    "shape": "regular",
+    "sample_width_pt": 146.475
+  },
+  {
+    "size_pt": 9.0,
+    "shape": "italic",
+    "sample_width_pt": 146.475
+  },
+  {
+    "size_pt": 9.0,
+    "shape": "bold",
+    "sample_width_pt": 146.475
+  },
+  {
+    "size_pt": 9.0,
+    "shape": "bold-oblique",
+    "sample_width_pt": 146.475
+  },
+  {
+    "size_pt": 10.0,
+    "shape": "regular",
+    "sample_width_pt": 162.75
+  },
+  {
+    "size_pt": 10.0,
+    "shape": "italic",
+    "sample_width_pt": 162.75
+  },
+  {
+    "size_pt": 10.0,
+    "shape": "bold",
+    "sample_width_pt": 162.75
+  },
+  {
+    "size_pt": 10.0,
+    "shape": "bold-oblique",
+    "sample_width_pt": 162.75
+  },
+  {
+    "size_pt": 12.0,
+    "shape": "regular",
+    "sample_width_pt": 191.556
+  },
+  {
+    "size_pt": 12.0,
+    "shape": "italic",
+    "sample_width_pt": 195.3
+  },
+  {
+    "size_pt": 12.0,
+    "shape": "bold",
+    "sample_width_pt": 195.3
+  },
+  {
+    "size_pt": 12.0,
+    "shape": "bold-oblique",
+    "sample_width_pt": 195.3
+  }
+]

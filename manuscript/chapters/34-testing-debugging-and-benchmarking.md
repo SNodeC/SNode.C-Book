@@ -102,7 +102,7 @@ The main categories have deliberately different responsibilities:
 
 Figure \ref{fig:testing-confidence-surfaces} shows these layers alongside the orchestration that builds and runs them. CI schedules checks and records results; it is not an additional protocol contract that makes the other layers interchangeable.
 
-![The SNode.C test architecture: unit, component, and policy tests protect different contracts; installed-consumer and external-application checks protect the public use path; CI orchestrates the selected checks without replacing their boundaries.](assets/figures/pdf/fig-18-testing-confidence-surfaces.pdf){#fig:testing-confidence-surfaces width=90% latex-placement="tbp"}
+![The SNode.C test architecture: unit, component, and policy tests protect different contracts; installed-consumer and external-application checks protect the public use path; CI orchestrates the selected checks without replacing their boundaries.](assets/figures/pdf/fig-18-testing-confidence-surfaces.pdf){#fig:testing-confidence-surfaces width=90% latex-placement="hbp"}
 
 The supporting CMake helper `snodec_add_test(...)` creates an executable, registers it with CTest, and supplies a default timeout. Individual test groups add their link dependencies, labels, timeout adjustments, and skip behavior. This keeps a new test attached to the component it exercises instead of hiding all dependencies in one universal test executable.
 
@@ -134,7 +134,9 @@ The value of this test is its narrowness. A failure says something about address
 
 #### Parser and formatter contracts
 
-The HTTP unit tests distinguish parsing from formatting and presentation. `HttpMessageParserTest` checks message parsing. Despite their `RawWire` names, `HttpRequestFormatterRawWireTest` and `HttpResponseFormatterRawWireTest` inspect the diagnostic strings returned by `httputils::toString(...)`: labeled metadata and a hexadecimal body view. They do not capture the HTTP bytes sent to a peer. Separate tests cover header casing, target/query edge cases, and plain versus terminal presentation.
+The HTTP unit tests distinguish parsing from formatting and presentation. `HttpMessageParserTest` checks message parsing.
+
+Despite their `RawWire` names, `HttpRequestFormatterRawWireTest` and `HttpResponseFormatterRawWireTest` inspect the diagnostic strings returned by `httputils::toString(...)`: labeled metadata and a hexadecimal body view. They do not capture the HTTP bytes sent to a peer. Separate tests cover header casing, target/query edge cases, and plain versus terminal presentation.
 
 Those are different observations. A correctly colored diagnostic is not proof of correctly serialized HTTP. Use the actual exchange assertions in the HTTP component tests to inspect what the peer receives. Keeping that boundary separate from diagnostic presentation protects the distinction made in Chapters 18 and 21; a test's name alone is not enough to establish its scope.
 
@@ -253,7 +255,9 @@ an installed consumer must rely on the exported public contract
 
 #### The external echo test layer
 
-The framework also contains `examples/echo`, a standalone project that consumes an installed SNode.C package. It has its own CTest setup using `BUILD_TESTING`, separate from the framework's `SNODEC_BUILD_TESTS` switch.
+The framework also contains `examples/echo`, a standalone project that consumes an installed SNode.C package.
+
+It has its own CTest setup using `BUILD_TESTING`, separate from the framework's `SNODEC_BUILD_TESTS` switch.
 
 After installing the framework into a local prefix, the external project can be built and tested like this:
 

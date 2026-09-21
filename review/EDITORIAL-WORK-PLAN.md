@@ -4,11 +4,17 @@ Established: 21 September 2026.
 Status: the authorized four-item follow-up pass is complete. Checkpoint `884dbfe`
 records the preceding combined refinement. SSE lifetime, WebSocket echo,
 Bluetooth preparation in principle, and closure evidence are complete below.
-OpenWrt and publication production remain deferred. Broader runtime validation
+OpenWrt and publication completion remain deferred. Broader runtime validation
 is intentionally omitted by the author's decision; the book is not declared finished.
-Next action: follow the author's next refinement request, or resume OpenWrt only
-when its integration is updated. Do not restart omitted validation or PDF work
-without a new scope instruction.
+The subsequent authorized PDF box-fix pass is complete: all 25 audited warnings
+are resolved in the ordinary 490-page build, with every word and code listing
+preserved. See `review/pdf-box-fixes-2026-09-21/REPORT.md` for verification.
+The subsequent font and caption cleanup is also complete: the approved companion
+bold/bold-oblique mapping is applied to the book's Latin Modern Mono selection,
+and the unused table-caption spacing option is removed. The verified build still
+has 490 pages and zero bad boxes, with no font-shape or unused-table-caption
+warnings. See `review/pdf-font-fix-2026-09-22/REPORT.md`. The tocloft warning remains
+outside this request. Publication completion remains deferred.
 
 This plan records the author's accepted remaining work. It persists across
 conversations through the repository's `AGENTS.md`. It is self-contained; the
@@ -470,3 +476,99 @@ The four requested items are closed. See `review/followup-2026-09-21/REPORT.md`,
 OpenWrt and PDF production remain deferred. Broader runtime validation is omitted
 by the author's explicit decision, not represented as successful verification.
 This closes the authorized pass, not the book. No background work is scheduled.
+
+### 21 September 2026 — local PDF build and box-warning audit completed
+
+The author explicitly authorized a local PDF build, an exhaustive report of
+overfull/underfull boxes, and proposed fixes. This supersedes the prior PDF-work
+deferral for this audit only. The ordinary clean build from checkpoint `fcbe51a`
+succeeded: 490 PDF pages, all 18 figures rebuilt, and the figure contact sheet
+regenerated. No manuscript or production configuration was edited.
+
+The final book log contains 2 overfull horizontal boxes, 12 underfull horizontal
+boxes and 11 underfull vertical boxes, with no overfull vertical boxes. The same
+25 warnings repeat in all three book passes; the console's 75 emissions are not
+75 distinct defects. The 19 figure/contact-sheet logs contain no box warnings.
+All 23 actual affected pages were rendered and inspected; one callout's location
+was corrected from the next logged shipout to its actual rendered page.
+
+Separate native-width paragraph proofs support fixes for all horizontal warnings
+without changing words or code: discretionary slash breaks, four paragraph breaks
+at existing sentence boundaries, ragged-right recap bullets, and inset-preserving
+ragged-right part-introduction text. A separate full-book diagnostic proof using
+ragged-bottom setting eliminated all 11 vertical warnings and retained 490 pages.
+Those proofs did not replace the ordinary rebuilt PDF in `dist`.
+
+The detailed inventory, source anchors, exact measurements, proposed fixes,
+diagnostic logs and hashes are in `review/pdf-box-audit-2026-09-21/REPORT.md`,
+`warnings.json` and `evidence.json`. Combining and implementing the proposals,
+resolving Figure 34.1's table interruption, and any broader production cleanup
+remain proposals, not completed work. A complete integrated rebuild and index/
+reference/visual review are required after implementation. OpenWrt remains deferred;
+broader runtime validation remains omitted. The book is not declared finished.
+
+### 21 September 2026 — integrated PDF box fixes completed
+
+The author authorized fixing all bad boxes, then requested reporting the font
+shape warning while continuing those fixes. Later questions asked how to handle
+the font shape and what the unused table-caption warning means; those questions
+were treated as analysis requests, not permission to alter either setting.
+
+All 25 audited box warnings are now resolved: zero overfull/underfull horizontal
+or vertical boxes in the final book log and all three book passes. The 18 figure
+logs and contact-sheet log also have zero box warnings. Warning thresholds were
+not weakened. The PDF remains 490 pages, and all chapter starting pages remain
+unchanged. The historical audit directory was preserved.
+
+The shared recap style now uses hyphenation-aware ragged-right text; part
+introductions retain their insets with natural right edges. Main-matter pages
+use natural bottom spacing, with the original back-matter setting restored.
+Targeted slash breaks and four paragraph divisions preserve the exact wording.
+Figure 34.1 now follows the completed table and introduction on the same page.
+Every one of the 62 manuscript inputs is unchanged after normalizing only those
+formatting edits and whitespace: 151,914 source words before and after. All 779
+non-LaTeX fenced blocks and all 36 marked complete listings are unchanged.
+
+The ordinary integrated build, final index regeneration comparison, all 1,092
+generated contents destinations, source hygiene, and alignment with the current
+clean SNode.C tree at `bb63e8a87aeda88123e8c0d72cb6d298908a9fe6` passed.
+Visual checks cover every affected page, every recap and continuation, all part
+introductions, Chapter 4's closure, the Chapter 34 table/figure sequence, contents,
+and index. See `review/pdf-box-fixes-2026-09-21/REPORT.md` and `evidence.json` for
+the exact verification scope and durable evidence.
+
+The missing Latin Modern Mono bold shape still falls back to regular weight;
+an isolated proof supports an explicit companion-font mapping as a subsequent
+candidate fix. The unused table-caption setup is harmless because all 165 tables
+are uncaptioned. Both remain unchanged in the delivered PDF. The pre-existing
+tocloft warning also remains outside this scope. No application or test code was
+changed and no layout-change commit was made. OpenWrt and publication completion
+remain deferred; broader runtime validation remains omitted by author decision.
+
+### 22 September 2026 — font and unused-caption cleanup completed
+
+After reviewing the companion font shapes, the author authorized applying the
+font scheme. During verification, the author also requested eliminating the
+unused table-caption setup warning. These explicit requests supersede the prior
+report-only scope for those two warnings.
+
+The book's existing metadata now registers Latin Modern Mono's companion bold and
+bold-oblique files through standard Pandoc font options. Regular and ordinary
+italic selection remain unchanged. The unused table-caption spacing option from
+Pandoc's default template is removed through the caption package's existing
+interface; all 165 current tables are uncaptioned. No warning filters or copied
+templates were added.
+
+The ordinary integrated build has zero font-shape warnings, zero unused-table-
+caption warnings, and zero overfull/underfull boxes, with 490 pages and unchanged
+chapter starting pages. All 62 manuscript files are byte-identical to the pass's
+starting snapshot. Four-shape font proofs, representative page renders, final
+contents destinations, index regeneration, source alignment, and source hygiene
+were verified. See `review/pdf-font-fix-2026-09-22/REPORT.md` and `evidence.json` for
+the exact scope, optical-size measurements, hashes, and logs.
+
+Only the book metadata and review records changed in this pass: five configuration
+lines added, no application or test implementation changes, and no manuscript
+changes. The separate proposal profile and pre-existing tocloft warning were not
+changed. No commit was made. The established OpenWrt, runtime-validation, and
+publication-completion scope decisions remain in force.

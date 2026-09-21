@@ -1,0 +1,22 @@
+{
+  "pdf_pages_inspected": [
+    5,
+    36,
+    41,
+    55,
+    75,
+    150,
+    162,
+    273,
+    410,
+    435,
+    445,
+    489
+  ],
+  "font_proof_pages_inspected": [
+    1
+  ],
+  "scope": "Targeted visual checks across every bold text size used in the book, including contents, headings, C++/CMake listings, recap/figure context, and index.",
+  "final_caption_cleanup_render_identical": true,
+  "all_490_page_content_streams_identical_after_caption_cleanup": true
+}

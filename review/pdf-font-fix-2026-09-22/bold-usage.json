@@ -1,0 +1,102 @@
+{
+  "9.963": [
+    {
+      "pdf_page": 5,
+      "text": "SocketContext"
+    },
+    {
+      "pdf_page": 5,
+      "text": "SocketContextFactory"
+    },
+    {
+      "pdf_page": 10,
+      "text": "src/apps"
+    }
+  ],
+  "8.966": [
+    {
+      "pdf_page": 36,
+      "text": "find_package"
+    },
+    {
+      "pdf_page": 36,
+      "text": "target_link_libraries"
+    },
+    {
+      "pdf_page": 36,
+      "text": "PRIVATE"
+    },
+    {
+      "pdf_page": 36,
+      "text": "#"
+    },
+    {
+      "pdf_page": 36,
+      "text": "include"
+    }
+  ],
+  "11.955": [
+    {
+      "pdf_page": 41,
+      "text": "EchoSocketContext.h"
+    },
+    {
+      "pdf_page": 42,
+      "text": "EchoSocketContext.cpp"
+    },
+    {
+      "pdf_page": 43,
+      "text": "echoserver.cpp"
+    },
+    {
+      "pdf_page": 45,
+      "text": "echoclient.cpp"
+    },
+    {
+      "pdf_page": 76,
+      "text": "start()"
+    }
+  ],
+  "14.346": [
+    {
+      "pdf_page": 55,
+      "text": "core"
+    },
+    {
+      "pdf_page": 55,
+      "text": "net"
+    },
+    {
+      "pdf_page": 75,
+      "text": "core::SNodeC"
+    },
+    {
+      "pdf_page": 77,
+      "text": "core::EventLoop"
+    },
+    {
+      "pdf_page": 78,
+      "text": "TickStatus"
+    }
+  ],
+  "24.787": [
+    {
+      "pdf_page": 150,
+      "text": "SocketContext"
+    },
+    {
+      "pdf_page": 162,
+      "text": "SocketContextFactory"
+    },
+    {
+      "pdf_page": 342,
+      "text": "src/apps"
+    }
+  ],
+  "6.974": [
+    {
+      "pdf_page": 445,
+      "text": "MeasurementModel"
+    }
+  ]
+}

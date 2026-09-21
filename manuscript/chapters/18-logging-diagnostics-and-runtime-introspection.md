@@ -150,7 +150,9 @@ This is a scope-construction example, not a fabricated connection event. When a 
 \index{SocketContext!logging}
 \index{frameworkLog()@\texttt{frameworkLog()}}
 
-`forConnection(...)` takes a connection object by reference. It uses `getInstanceName()` and `getConnectionId()` to populate the scope; the connection identifier is represented as a string in the public identity.
+`forConnection(...)` takes a connection object by reference.
+
+It uses `getInstanceName()` and `getConnectionId()` to populate the scope; the connection identifier is represented as a string in the public identity.
 
 Inside code that already has a valid stream connection, an application-facing logger can be constructed as follows:
 
