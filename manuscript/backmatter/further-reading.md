@@ -59,3 +59,10 @@ The book is intentionally focused on SNode.C. The references below give stable b
 - The companion source trees under `companion/examples/` are the authoritative sources for the book's compact examples, MiniGateway, and MiniGateway Extended.
 
 The online tool manuals follow their current releases. Compare their option descriptions with the versions installed for an exercise. Chapter 33 records the inspected OpenWrt feed revision separately because a feed recipe, an SDK and the framework source have independent version histories.
+
+For the Bluetooth preparation in Chapter 12, consult the BlueZ project's
+[`bluetoothctl` manual](https://github.com/bluez/bluez/blob/master/doc/bluetoothctl.rst),
+[Adapter API](https://github.com/bluez/bluez/blob/master/doc/org.bluez.Adapter.rst), and
+[Device API](https://github.com/bluez/bluez/blob/master/doc/org.bluez.Device.rst). These
+cover controller state, discovery, pairing and trust; they do not define the
+application protocol implemented by a SNode.C context.

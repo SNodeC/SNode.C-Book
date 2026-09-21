@@ -445,10 +445,11 @@ The exact target names are application choices; the contract is the name-to-fact
 
 A WebSocket application is usually not written as a raw byte loop. The application supplies a subprotocol object. The WebSocket layer handles the upgraded carrier, frames, messages, and control behavior; the subprotocol object receives lifecycle and message callbacks.
 
-A minimal echo pair needs one subprotocol on each side. The server-side object collects the text message sent by the teaching client and sends that text back on the same upgraded connection:
+A minimal echo pair needs one subprotocol on each side. The server-side object collects one message and sends its bytes back with the same message type. The teaching client sends text, while an independent client may also send binary data:
 
 ```cpp
 #include <web/websocket/server/SubProtocol.h>
+#include <web/websocket/SubProtocolContext.h>
 #include <Log.h>
 
 #include <cstddef>
@@ -466,7 +467,8 @@ private:
         snode::log::application().trace() << "WebSocket echo server connected";
     }
 
-    void onMessageStart(int) override {
+    void onMessageStart(int opCode) override {
+        currentMessageType = static_cast<std::uint8_t>(opCode);
         currentMessage.clear();
     }
 
@@ -475,19 +477,16 @@ private:
     }
 
     void onMessageEnd() override {
-        snode::log::application().trace() << "WebSocket echo server received: " << currentMessage;
-        sendMessage(currentMessage);
-        currentMessage.clear();
+        snode::log::application().trace() << "WebSocket echo server received bytes: " << currentMessage.size();
+        subProtocolContext->sendMessage(currentMessageType, currentMessage.data(), currentMessage.size());
     }
 
     void onMessageError(uint16_t errnum) override {
         snode::log::application().warn() << "WebSocket echo server message error: " << errnum;
-        currentMessage.clear();
     }
 
     void onDisconnected() override {
         snode::log::application().trace() << "WebSocket echo server disconnected";
-        currentMessage.clear();
     }
 
     bool onSignal(int) override {
@@ -495,6 +494,7 @@ private:
         return false;
     }
 
+    std::uint8_t currentMessageType = 0;
     std::string currentMessage;
 };
 ```
@@ -584,7 +584,11 @@ target_link_libraries(echo-client PRIVATE snodec::websocket-client)
 
 The factory symbols in the example are not only code conveniences. They are the names that dynamically loaded subprotocol modules must export, and they are also the factory entry points that a linked deployment makes available to the selector. The companion source trees are `WebSocket-Echo-ServerSubprotocol` and `WebSocket-Echo-ClientSubprotocol`; together with `HttpUpgrade-Server` and `HttpUpgrade-Client`, they form the complete runnable WebSocket echo example.
 
-The compact echo pair has a deliberately narrow message contract. Its `sendMessage(std::string)` call selects a text message, and its `onMessageStart(int)` ignores the incoming opcode. It is consequently a text teaching example, not an opcode-preserving binary echo service. A binary-capable subprotocol must keep message type visible through its processing and select the binary sending overload where appropriate. Frame reassembly by the carrier does not make that application choice disappear. The framework's binary WebSocket component tests exercise the carrier separately from this example.
+The echo contract has two parts: return the payload unchanged and keep its text or binary type. `onMessageStart(...)` records that type and clears the previous payload. `onMessageData(...)` appends a counted byte range, which preserves embedded zero bytes. `onMessageEnd()` sends through the existing `SubProtocolContext` overload that accepts the type explicitly. Sending only the `std::string` would select text, even when the bytes originally arrived in a binary message.
+
+The message buffer is reset at the next message start and destroyed with the subprotocol. Separate resets after completion, error, and disconnection are unnecessary for this flow. Logging reports the byte count instead of treating arbitrary binary data as printable text. The framework still owns frame validation, control frames, and the close handshake; this object only accumulates and echoes application messages. It preserves a message's type and payload, not the original division into frames.
+
+A whole-message buffer makes the example easy to follow, but it also gives the reader a concrete resource decision. Set a finite receive message limit when admitting untrusted peers, as described below. A streaming echo could use less application buffering, at the cost of bringing outgoing fragments and incomplete-message handling into this introductory example.
 
 ### Receiver limits belong to the selected connection
 
@@ -612,7 +616,7 @@ Run the companion `HttpUpgrade-Server` and `HttpUpgrade-Client` with the matchin
 
 Then use a scratch client copy to request an unsupported subprotocol name. The success criterion is no echo subprotocol attachment and no ordinary `hello` exchange; inspect the returned HTTP status and selection diagnostics rather than assuming every rejection uses one status code. Restore `echo` before testing message behavior.
 
-Keep the binary case separate. The printed echo server ignores the opcode and sends a text reply, so it does not reject unsupported binary input or preserve binary message type. That limitation remains work to do in the teaching example. The carrier’s binary and receiver-limit tests establish different facts and must not be reported as a fix to this subprotocol.
+Next, send both a text message and a binary message containing a zero byte. The reply must keep the original WebSocket message type and exactly the same payload bytes. Repeat with an empty message, two successive messages on one connection, and a message split into continuation frames. These observations test the companion's echo contract; successful upgrade alone does not establish them. A malformed frame should still be rejected by the carrier's validation path, which has a separate responsibility.
 
 ### Lower layers and diagnostics still matter
 

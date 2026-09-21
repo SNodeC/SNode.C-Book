@@ -3,14 +3,14 @@
 #include <nlohmann/json.hpp>
 #include <Log.h>
 #include <web/http/http_utils.h>
+#include <web/http/server/SocketContext.h>
 
-#include <algorithm>
 #include <cstdint>
 #include <functional>
+#include <list>
 #include <memory>
 #include <string>
 #include <utility>
-#include <vector>
 
 using WebApp = express::legacy::in::WebApp;
 using Request = WebApp::Request;
@@ -33,34 +33,31 @@ struct Measurement {
 
 class MeasurementPublisher {
 public:
+    using Listener = std::function<void(const Measurement&)>;
+    using Subscription = std::list<Listener>::iterator;
     Measurement current() const {
         return last;
     }
 
-    void subscribe(std::function<bool(const Measurement&)> listener) {
-        listeners.push_back(std::move(listener));
+    Subscription subscribe(Listener listener) {
+        return listeners.insert(listeners.end(), std::move(listener));
+    }
+
+    void unsubscribe(Subscription subscription) {
+        listeners.erase(subscription);
     }
 
     Measurement publish(std::string sensor, double value) {
-        publish(Measurement{last.sequence + 1, std::move(sensor), value});
+        last = Measurement{last.sequence + 1, std::move(sensor), value};
+        for (const auto& listener : listeners) {
+            listener(last);
+        }
         return last;
-    }
-
-    void publish(Measurement measurement) {
-        last = std::move(measurement);
-        listeners.erase(
-            std::remove_if(
-                listeners.begin(),
-                listeners.end(),
-                [this](const auto& listener) {
-                    return !listener(last);
-                }),
-            listeners.end());
     }
 
 private:
     Measurement last{1, "temperature", 23.5};
-    std::vector<std::function<bool(const Measurement&)>> listeners;
+    std::list<Listener> listeners;
 };
 
 static bool acceptsEventStream(const std::shared_ptr<Request>& req) {
@@ -93,13 +90,11 @@ int main(int argc, char* argv[]) {
                 sendMeasurement(res, current);
             }
 
-            measurements.subscribe([res](const Measurement& measurement) {
-                const bool keepSubscriber = res->isConnected();
-                if (keepSubscriber) {
-                    sendMeasurement(res, measurement);
-                }
-
-                return keepSubscriber;
+            const auto subscription = measurements.subscribe([res](const Measurement& measurement) {
+                sendMeasurement(res, measurement);
+            });
+            res->getSocketContext()->setOnDisconnected([&measurements, subscription] {
+                measurements.unsubscribe(subscription);
             });
         } else {
             res->status(406).send("SSE requires Accept: text/event-stream");

@@ -17,17 +17,17 @@ namespace minigateway {
         return currentMeasurement;
     }
 
-    void MeasurementModel::subscribe(Listener listener) {
-        listeners.push_back(std::move(listener));
+    MeasurementModel::Subscription MeasurementModel::subscribe(Listener listener) {
+        return listeners.insert(listeners.end(), std::move(listener));
+    }
+
+    void MeasurementModel::unsubscribe(Subscription subscription) {
+        listeners.erase(subscription);
     }
 
     void MeasurementModel::publish(const Measurement& measurement) {
-        for (auto listenerIt = listeners.begin(); listenerIt != listeners.end();) {
-            if ((*listenerIt)(measurement)) {
-                ++listenerIt;
-            } else {
-                listenerIt = listeners.erase(listenerIt);
-            }
+        for (const auto& listener : listeners) {
+            listener(measurement);
         }
     }
 

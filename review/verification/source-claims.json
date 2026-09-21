@@ -221,7 +221,7 @@
     {
       "chapter": 12,
       "manuscript": "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md",
-      "reviewed_contract": "RFCOMM channel and L2CAP PSM belong to distinct lower families",
+      "reviewed_contract": "Distinct Bluetooth families, BlueZ build prerequisites, and platform-owned pairing/service preparation",
       "framework_sources": [
         {
           "path": "src/net/rc/SocketAddress.h",
@@ -232,6 +232,16 @@
           "path": "src/net/l2/SocketAddress.h",
           "needle": "SocketAddress",
           "line": 45
+        },
+        {
+          "path": "src/net/rc/CMakeLists.txt",
+          "needle": "pkg_check_modules(BLUEZ bluez)",
+          "line": 44
+        },
+        {
+          "path": "src/net/l2/CMakeLists.txt",
+          "needle": "pkg_check_modules(BLUEZ bluez)",
+          "line": 44
         }
       ],
       "companion_sources": []
@@ -466,7 +476,7 @@
     {
       "chapter": 23,
       "manuscript": "manuscript/chapters/23-server-sent-events-and-real-time-http.md",
-      "reviewed_contract": "SSE fragment framing versus application subscriber ownership",
+      "reviewed_contract": "SSE fragment framing and subscription removal at HTTP-context disconnection",
       "framework_sources": [
         {
           "path": "src/web/http/server/Response.cpp",
@@ -477,6 +487,21 @@
           "path": "src/web/http/CiStringMap.h",
           "needle": "ciEquals",
           "line": 54
+        },
+        {
+          "path": "src/express/Response.cpp",
+          "needle": "Response::getSocketContext()",
+          "line": 68
+        },
+        {
+          "path": "src/web/http/server/SocketContext.cpp",
+          "needle": "SocketContext* SocketContext::setOnDisconnected",
+          "line": 143
+        },
+        {
+          "path": "src/web/http/server/SocketContext.cpp",
+          "needle": "void SocketContext::onDisconnected()",
+          "line": 285
         }
       ],
       "companion_sources": [
@@ -486,7 +511,7 @@
     {
       "chapter": 24,
       "manuscript": "manuscript/chapters/24-websocket-and-protocol-upgrade.md",
-      "reviewed_contract": "WebSocket text/binary selection and upgraded protocol contexts",
+      "reviewed_contract": "Echo preserves text/binary type and counted payload; carrier supplies complete-message callbacks",
       "framework_sources": [
         {
           "path": "src/web/websocket/SubProtocol.hpp",
@@ -502,6 +527,26 @@
           "path": "src/web/websocket/SocketContextUpgrade.h",
           "needle": "SocketContextUpgrade",
           "line": 45
+        },
+        {
+          "path": "src/web/websocket/SubProtocolContext.h",
+          "needle": "virtual void sendMessage(uint8_t opCode",
+          "line": 74
+        },
+        {
+          "path": "src/web/websocket/SocketContextUpgrade.hpp",
+          "needle": "subProtocol->onMessageStart(opCode)",
+          "line": 173
+        },
+        {
+          "path": "src/web/websocket/SocketContextUpgrade.hpp",
+          "needle": "subProtocol->onMessageData(chunk + chunkOffset",
+          "line": 193
+        },
+        {
+          "path": "src/web/websocket/SocketContextUpgrade.hpp",
+          "needle": "subProtocol->onMessageEnd()",
+          "line": 234
         }
       ],
       "companion_sources": [
@@ -752,6 +797,11 @@
           "path": "src/iot/mqtt/packets/Connect.cpp",
           "needle": "loopPrevention",
           "line": 65
+        },
+        {
+          "path": "src/web/http/server/SocketContext.cpp",
+          "needle": "void SocketContext::onDisconnected()",
+          "line": 285
         }
       ],
       "companion_sources": [

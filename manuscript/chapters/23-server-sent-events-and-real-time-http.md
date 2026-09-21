@@ -168,10 +168,71 @@ The blank line ends the accumulated event record. In SNode.C response streaming,
 
 A server-side SSE endpoint is still an ordinary HTTP route. The teaching route chooses a narrow request contract: it checks for an exact `Accept: text/event-stream` value before switching into long-lived streaming behavior. A general endpoint may use a broader content-negotiation policy; the restriction here belongs to this example.
 
-The following sketch uses an application-owned measurement source. The important framework-facing points are the request validation, the response headers, the explicit header send, and the use of response fragments while the connection remains open:
+The following complete companion example uses an application-owned measurement source. The publisher keeps the current value and a list of listeners. Subscribing returns the position of one listener; unsubscribing removes that listener. The route connects those two operations to the lifetime of its HTTP response:
 
+<!-- snodec-source: companion/examples/SSE-Server/main.cpp -->
 ```cpp
+#include <core/socket/State.h>
+#include <express/legacy/in/WebApp.h>
+#include <nlohmann/json.hpp>
+#include <Log.h>
 #include <web/http/http_utils.h>
+#include <web/http/server/SocketContext.h>
+
+#include <cstdint>
+#include <functional>
+#include <list>
+#include <memory>
+#include <string>
+#include <utility>
+
+using WebApp = express::legacy::in::WebApp;
+using Request = WebApp::Request;
+using Response = WebApp::Response;
+using SocketAddress = WebApp::SocketAddress;
+
+struct Measurement {
+    std::uint64_t sequence = 0;
+    std::string sensor;
+    double value = 0.0;
+
+    nlohmann::json toJson() const {
+        return {
+            {"sequence", sequence},
+            {"sensor", sensor},
+            {"value", value},
+        };
+    }
+};
+
+class MeasurementPublisher {
+public:
+    using Listener = std::function<void(const Measurement&)>;
+    using Subscription = std::list<Listener>::iterator;
+    Measurement current() const {
+        return last;
+    }
+
+    Subscription subscribe(Listener listener) {
+        return listeners.insert(listeners.end(), std::move(listener));
+    }
+
+    void unsubscribe(Subscription subscription) {
+        listeners.erase(subscription);
+    }
+
+    Measurement publish(std::string sensor, double value) {
+        last = Measurement{last.sequence + 1, std::move(sensor), value};
+        for (const auto& listener : listeners) {
+            listener(last);
+        }
+        return last;
+    }
+
+private:
+    Measurement last{1, "temperature", 23.5};
+    std::list<Listener> listeners;
+};
 
 static bool acceptsEventStream(const std::shared_ptr<Request>& req) {
     return web::http::ciEquals(req->get("Accept"), "text/event-stream");
@@ -185,40 +246,61 @@ static void sendMeasurement(const std::shared_ptr<Response>& res,
     res->sendFragment("");
 }
 
-app.get("/events", [&measurements] APPLICATION(req, res) {
-    if (acceptsEventStream(req)) {
-        res->set("Content-Type", "text/event-stream")
-            .set("Cache-Control", "no-cache")
-            .set("Connection", "keep-alive")
-            .sendHeader();
+int main(int argc, char* argv[]) {
+    express::WebApp::init(argc, argv);
 
-        if (const Measurement current = measurements.current(); current.sequence > 0) {
-            sendMeasurement(res, current);
-        }
+    MeasurementPublisher measurements;
+    const WebApp app("legacy");
 
-        measurements.subscribe([res](const Measurement& measurement) {
-            const bool keepSubscriber = res->isConnected();
-            if (keepSubscriber) {
-                sendMeasurement(res, measurement);
+    app.get("/events", [&measurements](const std::shared_ptr<Request>& req,
+                                        const std::shared_ptr<Response>& res) {
+        if (acceptsEventStream(req)) {
+            res->set("Content-Type", "text/event-stream")
+               .set("Cache-Control", "no-cache")
+               .set("Connection", "keep-alive")
+               .sendHeader();
+
+            if (const Measurement current = measurements.current(); current.sequence > 0) {
+                sendMeasurement(res, current);
             }
 
-            return keepSubscriber;
-        });
-    } else {
-        res->status(406).send("SSE requires Accept: text/event-stream");
-    }
-});
+            const auto subscription = measurements.subscribe([res](const Measurement& measurement) {
+                sendMeasurement(res, measurement);
+            });
+            res->getSocketContext()->setOnDisconnected([&measurements, subscription] {
+                measurements.unsubscribe(subscription);
+            });
+        } else {
+            res->status(406).send("SSE requires Accept: text/event-stream");
+        }
+    });
 
-app.post("/simulate", [&measurements] APPLICATION(req, res) {
-    const Measurement measurement = measurements.publish("temperature", 24.0);
+    app.post("/simulate", [&measurements](const std::shared_ptr<Request>&,
+                                          const std::shared_ptr<Response>& res) {
+        const Measurement measurement = measurements.publish("temperature", 24.0);
 
-    res->set("Content-Type", "application/json").send(measurement.toJson().dump());
-});
+        res->set("Content-Type", "application/json")
+           .send(measurement.toJson().dump());
+    });
+
+    app.listen([](const SocketAddress& socketAddress,
+                  const core::socket::State&) {
+        snode::log::application().trace() << "SSE server listening on " << socketAddress.toString();
+    });
+
+    return express::WebApp::start();
+}
 ```
 
 The `Measurement` type and the `measurements` publisher are application code, not special SSE machinery. The SNode.C-specific shape is the HTTP route and response handling. The small `acceptsEventStream(...)` helper keeps request validation visible, and `sendMeasurement(...)` centralizes the event-stream record shape. The teaching route deliberately accepts only an `Accept` field whose entire value equals `text/event-stream`, ignoring case. It rejects other values with an ordinary HTTP response. This is a restricted example contract, not a general media-range negotiation algorithm: wildcard values, lists, and parameters such as `q=0` do not enter the streaming path. Notice that the SSE field strings themselves do not contain line endings; the empty fragment marks the blank line between events.
 
 After `sendHeader()`, the response body is written as SSE records. Each record is plain text. A blank line terminates the current event. The response is intentionally not ended after the first record. It remains open until the application decides to close it or until the peer disconnects.
+
+The subscription is a `std::list` iterator, a handle to exactly one stored callback. Inserting or removing another listener does not invalidate it. The publisher and the connection callbacks run on the event-loop thread, and the publisher in `main()` lives until that loop has stopped. These are the lifetime assumptions of this small example; it is not a thread-safe observer library.
+
+The ownership path is short. The publisher holds the listener, and the listener's shared pointer keeps the response facade alive while events may be sent. The existing HTTP socket context receives a disconnect callback through `setOnDisconnected(...)`. That callback removes the subscription exactly once and releases the listener's response reference. It captures the subscription handle and the publisher, not another owning response pointer. No new measurement is needed to make cleanup happen.
+
+The framework disconnects the underlying response before invoking these registered context callbacks. Removal therefore belongs to connection teardown, including a locally detected connection error. It does not mean that the server instantly knows about a peer that disappears without a detectable transport event. The ordinary connection timeout policy still matters. The example's listeners only send a measurement; they do not mutate the listener list during publication.
 
 ### A compact EventSource client
 
@@ -561,9 +643,9 @@ A live dashboard should distinguish a quiet source from a broken observation cha
 
 For this example, reconnect observes the current measurement when one exists. It does not replay an event history from `Last-Event-ID`. To add replay, the application would need a bounded history and a policy for an ID older than that history; sending IDs alone does not provide either.
 
-The subscriber lifetime in this compact publisher deserves an explicit boundary. Each callback captures its response, checks `isConnected()` when a measurement is published, and removes itself by returning `false` after disconnection. Cleanup is therefore publication-driven. If clients repeatedly connect and disconnect while measurements stop, callbacks and their captured responses remain in the list until another publication or publisher destruction. The example demonstrates event delivery, not bounded idle-subscriber management. A service with quiet periods and client churn needs disconnection-driven subscription removal as part of its application ownership design.
+Subscriber lifetime is tied to the HTTP connection through the explicit unsubscribe path shown above. During a quiet period, closing an observer still removes its callback when the runtime handles the disconnect. Repeated connections therefore do not accumulate obsolete response owners until a later measurement. The remaining application choices concern live observers: how many to admit, how to deal with a slow peer, and whether to retain event history.
 
-The simulation route uses `POST /simulate` because it changes the model. `GET /events` opens observation; it does not itself create a measurement. A useful local check keeps an event stream open with `curl -N -H 'Accept: text/event-stream' http://localhost:8080/events`, then sends `curl -X POST http://localhost:8080/simulate` from another terminal. The new JSON state and the next event should describe the same accepted measurement. Repeat with `Accept: text/event-stream;q=0` and expect 406 under this example’s exact-value contract. Then disconnect the observer during a quiet period and read the ownership path above: a transport disconnect and subscription removal are distinct observations.
+Build the companion as described in its README and start it with `./sse-server legacy local --host=127.0.0.1 --port=8080`. The simulation route uses `POST /simulate` because it changes the model. `GET /events` opens observation; it does not itself create a measurement. A useful local check keeps an event stream open with `curl -N -H 'Accept: text/event-stream' http://localhost:8080/events`, then sends `curl -X POST http://localhost:8080/simulate` from another terminal. The new JSON state and the next event should describe the same accepted measurement. Repeat with `Accept: text/event-stream;q=0` and expect 406 under this example’s exact-value contract. Then disconnect the observer during a quiet period, without calling `/simulate` again. Trace the disconnect callback to `unsubscribe(...)`: cleanup follows that event, while a later subscriber receives the same current measurement because observation did not change the model.
 
 ::: {.snodec-remember title="What to remember"}
 - Server-Sent Events keep the application inside HTTP while turning one response into a long-lived event stream.

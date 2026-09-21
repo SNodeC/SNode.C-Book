@@ -322,19 +322,40 @@ depending on the overload and family. This continues Chapter 9's connection mode
 \index{adapter state}
 
 
-Bluetooth endpoint identity is not the whole operational story. When the selected Bluetooth service or local security policy requires pairing, establish that pairing using the operating-system Bluetooth tools or user interface before running the SNode.C application. Pairing is a platform and service requirement, not an unconditional requirement imposed by these SNode.C socket wrappers. SNode.C uses the Bluetooth stack as a lower family; it does not replace Bluetooth discovery, pairing, trust management, or adapter setup.
+Before running a Bluetooth example, prepare two compatible endpoints. Each needs working Bluetooth hardware: an integrated controller or a supported USB adapter, its driver and firmware, and an enabled radio. For the classic RFCOMM and L2CAP stream examples here, choose peers and adapters that support the required Bluetooth Classic service. A device advertised only as a Bluetooth Low Energy sensor does not thereby provide one of these stream endpoints.
 
-That separation is important:
+On Linux, the operating system must expose the controller and the required Bluetooth socket support. BlueZ supplies the usual administration tools and daemon; its development files allow the corresponding SNode.C components to be built. Successful compilation establishes that build dependency, not that an adapter is present or that a remote application is listening.
+
+The preparation order is practical:
+
+1. Check that the intended controller is visible, powered, and not disabled by the system's radio-blocking policy. If several controllers are present, select the one the application will use.
+2. Put the peer into its discovery and pairing mode when setting up a new relationship. Both devices must be within working radio range, and the peer must actually support the intended service.
+3. When the service or local security policy requires pairing, complete it with the operating-system tools or Bluetooth settings interface. Respond to the authentication request on the participating devices and inspect the resulting paired state.
+4. Check the service's authorization and trust policy, then start the matching peer application. Pairing establishes a device relationship; it does not start the SNode.C server or create its application service.
+
+A short Linux administration session can make these stages visible. Start `bluetoothctl`, then inspect the controller and discover the peer:
 
 ```text
-Bluetooth setup:
-pairing, trust, adapter state, permissions
-
-SNode.C communication:
-configured endpoint identity, listen/connect registration, connection handling, context behavior
+list
+show
+power on
+agent on
+default-agent
+scan on
 ```
 
-If required pairing is missing, a SNode.C client may use the correct Bluetooth address and service selector and still fail at the platform Bluetooth layer. That is not a different SNode.C architecture problem; it is an operational precondition of Bluetooth communication between devices.
+Use the peer identifier reported by the tool in place of `PEER` below. Inspect it first; when pairing is required and it is not already paired, issue the pairing command and follow the prompts:
+
+```text
+info PEER
+pair PEER
+info PEER
+scan off
+```
+
+These are interactive `bluetoothctl` commands, not SNode.C options. An existing valid pairing need not be recreated. BlueZ versions may also establish trust or connect available profiles as part of `pair`; inspect the resulting state and the local policy instead of treating a generic “connected” indication as proof that the book's application service is ready. The BlueZ `bluetoothctl` manual and Device API documentation describe those platform operations.
+
+Pairing is therefore a platform and service requirement, not an unconditional requirement imposed by these SNode.C socket wrappers. SNode.C uses the prepared Bluetooth stack as a lower family; it does not replace controller setup, discovery, pairing, or authorization. Once those prerequisites are satisfied and the peer service is running, the ordinary listen/connect path can establish the application connection. The addressing choices are the ones already explained above.
 
 ### What remains stable
 
@@ -384,26 +405,15 @@ Bluetooth is device-near, radio-based communication, so it changes the operation
 
 #### Platform and build reality
 
-Bluetooth support depends on platform Bluetooth support. On Linux, that usually means BlueZ and the corresponding development files must be available when building the Bluetooth-enabled components. The framework can model RFCOMM and L2CAP as lower families, but the build can only provide those components where the platform Bluetooth stack and development files are available. That is normal for system-level Bluetooth support: SNode.C exposes RFCOMM and L2CAP as lower families while still respecting the platform dependency.
+Build availability and operating hardware are separate observations. If the installed SNode.C package does not contain the requested Bluetooth component, attaching an adapter will not supply the missing library. Conversely, a successfully built Bluetooth example can still run on a host with no usable controller. Check component discovery when building the consumer and controller state when preparing to run it; pairing does not repair a missing build dependency.
 
-#### Pairing, permissions, and adapter state
+#### Diagnose preparation before protocol behavior
 
-Bluetooth also has operational state outside the application process. Depending on the selected service and security policy, the devices may need pairing by hand or through the surrounding system administration process. Adapter availability, trust, and permissions remain platform concerns even when the endpoint address and service selector are correct.
+A Bluetooth connection can fail before the application context receives a byte. Use the preparation sequence above to distinguish an unavailable controller, an unprepared device relationship, denied service access, and a peer service that has not been started. Rewriting the parser does not repair any of those conditions.
 
-Bluetooth failures therefore should not be diagnosed only as SNode.C configuration failures: the application may have selected the right family, address, and service selector while the platform still refuses the connection because pairing, adapter state, permissions, or service availability are not in the expected state.
+Conversely, successful pairing alone says nothing about the application's messages. Once the connection is ready, the context is responsible for the same framing and protocol behavior taught in the neighboring chapters. The distinction lets a reader inspect a sample program in two stages: what the platform must provide before activation, and what the context does after activation.
 
-For SNode.C code, the practical rule is:
-
-```text
-First make Bluetooth communication possible at the operating-system level.
-Then let SNode.C use that endpoint identity through its normal listen/connect model.
-```
-
-This keeps framework concerns and Bluetooth administration concerns separate.
-
-For a controlled hardware exercise, use two endpoints whose service configuration you control. Record the server adapter address and the chosen channel or PSM, establish any pairing required by that service, and run the matching legacy server/client variant with a short, known payload. Keep separate observations for listener setup, connection establishment, and returned application bytes. Then deliberately select a service value where no matching listener exists and compare the connection result; do not change the parser to repair a service-selection failure.
-
-This exercise requires working adapters, a compatible peer service, and suitable platform permissions. Compilation of the Bluetooth components verifies none of those facilities. If they are unavailable, record the hardware exercise as unexecuted and continue the protocol-transfer exercise with IPv4 and Unix-domain sockets in Chapter 15.
+The preparation guide establishes what must be ready before a Bluetooth example can run. The selected adapter, peer service, and operating-system policy determine the actual connection outcome. Chapter 15 develops protocol transfer with IPv4 and Unix-domain sockets, where the reader can observe that behavior without Bluetooth hardware.
 
 #### Device-near and IoT systems
 
@@ -421,7 +431,7 @@ SNode.C's value is that these worlds can be understood through one layered model
 - Bluetooth support in this part is represented by two lower families: RFCOMM in `net::rc` and L2CAP in `net::l2`.
 - RFCOMM endpoint identity is Bluetooth address plus channel; L2CAP endpoint identity is Bluetooth address plus PSM.
 - Channel and PSM are not interchangeable service selectors.
-- Bluetooth changes addressing, pairing assumptions, and service selection while preserving the server/client construction path.
+- Prepare compatible hardware, an enabled controller, the peer service, and any required pairing/authorization before diagnosing application protocol behavior.
 - Bluetooth convenience calls configure the handle and then enter the usual registration path.
 - The Bluetooth wildcard or deferred endpoint shape is the wildcard Bluetooth address plus service selector `0`.
 :::

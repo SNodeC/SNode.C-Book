@@ -25,5 +25,6 @@ deployment prefix.
 
 The simulation endpoint uses `POST /simulate`. The teaching SSE route accepts the
 explicit `Accept: text/event-stream` value (case-insensitively), rather than general
-media-range negotiation. Disconnected subscribers are removed on a later
-publication; immediate idle-subscriber cleanup is outside this compact example.
+media-range negotiation. The HTTP context's disconnect callback removes the corresponding subscription,
+even when no further measurement is published. The publisher/model outlives the
+event loop, and listener changes happen on that loop's thread.

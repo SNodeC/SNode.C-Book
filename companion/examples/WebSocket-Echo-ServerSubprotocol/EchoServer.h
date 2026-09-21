@@ -20,6 +20,7 @@ private:
     void onDisconnected() override;
     bool onSignal(int sig) override;
 
+    std::uint8_t currentMessageType = 0;
     std::string currentMessage;
 };
 

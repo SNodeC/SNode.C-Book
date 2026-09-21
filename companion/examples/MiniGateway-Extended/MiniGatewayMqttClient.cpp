@@ -30,7 +30,6 @@ namespace minigateway {
 
         measurementModel.subscribe([](const Measurement& measurement) {
             MiniGatewayMqtt::publishMeasurementToConnected(measurement);
-            return true;
         });
 
         socketClient.connect([](const MiniGatewayMqttClient::SocketAddress& socketAddress, const core::socket::State& state) {

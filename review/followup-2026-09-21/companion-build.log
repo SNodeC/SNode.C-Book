@@ -1,0 +1,34 @@
+[1/34] Linking CXX shared library companion/examples/WebSocket-Echo-ClientSubprotocol/libsnodec-websocket-echo-client.so.2
+[2/34] Building CXX object companion/examples/WebSocket-Echo-ServerSubprotocol/CMakeFiles/websocket-echo-server-subprotocol.dir/EchoServerFactory.cpp.o
+[3/34] Building CXX object companion/examples/WebSocket-Echo-ServerSubprotocol/CMakeFiles/websocket-echo-server-subprotocol.dir/EchoServer.cpp.o
+[4/34] Linking CXX shared library companion/examples/WebSocket-Echo-ServerSubprotocol/libsnodec-websocket-echo-server.so.2
+[5/34] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MeasurementModel.cpp.o
+[6/34] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/main.cpp.o
+[7/34] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqttClient.cpp.o
+[8/34] Building CXX object companion/examples/SSE-Server/CMakeFiles/sse-server.dir/main.cpp.o
+[9/34] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqtt.cpp.o
+[10/34] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayWeb.cpp.o
+[11/34] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementModel.cpp.o
+[12/34] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqttSocketContextFactory.cpp.o
+[13/34] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/main.cpp.o
+[14/34] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketContext.cpp.o
+[15/34] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketContextFactory.cpp.o
+[16/34] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketServer.cpp.o
+[17/34] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayWeb.cpp.o
+[18/34] Linking CXX executable companion/examples/EchoPair/echoserver
+[19/34] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqtt.cpp.o
+[20/34] Linking CXX executable companion/examples/EchoPair/echoclient
+[21/34] Linking CXX executable companion/examples/SemanticLogging/semantic-logging
+[22/34] Linking CXX executable companion/examples/HttpUpgrade-Server/http-upgrade-server
+[23/34] Linking CXX executable companion/examples/HttpUpgrade-Client/http-upgrade-client
+[24/34] Linking CXX executable companion/examples/SSE-Server/sse-server
+[25/34] Creating library symlink companion/examples/WebSocket-Echo-ServerSubprotocol/libsnodec-websocket-echo-server.so
+[26/34] Linking CXX executable companion/examples/SSE-EventSource-Client/sse-eventsource-client
+[27/34] Creating library symlink companion/examples/WebSocket-Echo-ClientSubprotocol/libsnodec-websocket-echo-client.so
+[28/34] Linking CXX executable companion/examples/LineProtocol-Server/line-protocol-server
+[29/34] Linking CXX executable companion/examples/LineProtocol-Client/line-protocol-client
+[30/34] Linking CXX executable companion/examples/MariaDB-Minimal/mariadb-minimal
+[31/34] Linking CXX executable companion/examples/MiniGateway/minigateway
+[32/34] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqttSocketContextFactory.cpp.o
+[33/34] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqttClient.cpp.o
+[34/34] Linking CXX executable companion/examples/MiniGateway-Extended/minigateway-extended

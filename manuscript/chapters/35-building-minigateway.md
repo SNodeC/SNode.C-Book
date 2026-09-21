@@ -420,7 +420,7 @@ MeasurementModel::accept(measurement)
   -> return accepted measurement
 ```
 
-The listener return value is a small but important design choice. A listener that returns `false` is removed. The SSE route uses this to remove observers whose HTTP response is no longer connected when another measurement is published. With no subsequent publication, a disconnected observer remains retained; this small model has no immediate unsubscribe path.
+The subscription handle makes ownership explicit. `subscribe(...)` returns the stored listener's list iterator; `unsubscribe(...)` removes that listener when its owner is finished. The SSE route connects this operation to the HTTP context's disconnect callback, as developed in Chapter 23. MQTT output keeps its subscription for the model's lifetime. Listeners only observe the accepted measurement; they do not remove entries while publication is iterating the list. The model and its network callbacks run on the event-loop thread, and the model outlives the active roles.
 
 #### `MeasurementModel.h`
 
@@ -438,11 +438,14 @@ namespace minigateway {
 
     class MeasurementModel {
     public:
-        using Listener = std::function<bool(const Measurement&)>;
+        using Listener = std::function<void(const Measurement&)>;
+
+        using Subscription = std::list<Listener>::iterator;
 
         Measurement current() const;
         Measurement accept(Measurement measurement);
-        void subscribe(Listener listener);
+        Subscription subscribe(Listener listener);
+        void unsubscribe(Subscription subscription);
 
     private:
         void publish(const Measurement& measurement);
@@ -479,17 +482,17 @@ namespace minigateway {
         return currentMeasurement;
     }
 
-    void MeasurementModel::subscribe(Listener listener) {
-        listeners.push_back(std::move(listener));
+    MeasurementModel::Subscription MeasurementModel::subscribe(Listener listener) {
+        return listeners.insert(listeners.end(), std::move(listener));
+    }
+
+    void MeasurementModel::unsubscribe(Subscription subscription) {
+        listeners.erase(subscription);
     }
 
     void MeasurementModel::publish(const Measurement& measurement) {
-        for (auto listenerIt = listeners.begin(); listenerIt != listeners.end();) {
-            if ((*listenerIt)(measurement)) {
-                ++listenerIt;
-            } else {
-                listenerIt = listeners.erase(listenerIt);
-            }
+        for (const auto& listener : listeners) {
+            listener(measurement);
         }
     }
 
@@ -710,6 +713,7 @@ namespace minigateway {
 #include <memory>
 #include <string>
 #include <web/http/http_utils.h>
+#include <web/http/server/SocketContext.h>
 
 namespace minigateway {
 
@@ -761,13 +765,11 @@ namespace minigateway {
                         sendMeasurement(res, current);
                     }
 
-                    measurementModel.subscribe([res](const Measurement& measurement) {
-                        const bool keepSubscriber = res->isConnected();
-                        if (keepSubscriber) {
-                            sendMeasurement(res, measurement);
-                        }
-
-                        return keepSubscriber;
+                    const auto subscription = measurementModel.subscribe([res](const Measurement& measurement) {
+                        sendMeasurement(res, measurement);
+                    });
+                    res->getSocketContext()->setOnDisconnected([&measurementModel, subscription] {
+                        measurementModel.unsubscribe(subscription);
                     });
                 } else {
                     res->status(406).send("SSE requires Accept: text/event-stream");
@@ -1138,7 +1140,6 @@ namespace minigateway {
 
         measurementModel.subscribe([](const Measurement& measurement) {
             MiniGatewayMqtt::publishMeasurementToConnected(measurement);
-            return true;
         });
 
         socketClient.connect([](const MiniGatewayMqttClient::SocketAddress& socketAddress, const core::socket::State& state) {
@@ -1240,13 +1241,13 @@ Before extending the project, make its observations explicit:
 |---|---|---|
 | Start without a reachable MQTT broker, then call `/health` and `POST /simulate` | The web role can answer and the local sequence advances | Broker readiness or delivery |
 | Open `/events`, then simulate twice | Two accepted states with increasing local ids | Durable replay after reconnect |
-| Disconnect the observer while input is idle | The network peer is gone | Immediate removal of the model callback |
+| Disconnect the observer while input is idle | The disconnect callback removes its model subscription | Detection of a silent network failure before a transport event or timeout |
 | Restart the process and read `/status` | The local sequence starts again at zero | Persistence across process lifetime |
 | Publish malformed measurement JSON through a broker | A warning and no accepted-state change | Full broker interoperability without running the broker scenario |
 
 Use a separate observer to check MQTT output when a broker is available. In its absence, finish the HTTP and SSE checks and record the broker scenario as unexecuted.
 
-The example's guarantees stop at explicit boundaries. The model assigns a local sequence to each accepted measurement; it is not durable storage. The SSE callback list is pruned when a later publication discovers a disconnected response; it is not immediate disconnection-driven cleanup. Distinct MQTT input and output topics avoid the example feeding its own output back as fresh input; changing those topic sets changes that assumption. `/health` observes the web role, while `POST /simulate` mutates the model. Each of these facts can be checked independently, and none should be silently promoted into a stronger production guarantee.
+The example's guarantees stop at explicit boundaries. The model assigns a local sequence to each accepted measurement; it is not durable storage. An SSE subscription is removed when its HTTP context reports disconnection, even if no later measurement arrives. This releases that observer's response reference; it does not establish that earlier events reached the peer. Distinct MQTT input and output topics avoid the example feeding its own output back as fresh input; changing those topic sets changes that assumption. `/health` observes the web role, while `POST /simulate` mutates the model. Each of these facts can be checked independently, and none should be silently promoted into a stronger production guarantee.
 
 ::: {.snodec-remember title="What to remember"}
 - MiniGateway is a guided application, not a framework subsystem.

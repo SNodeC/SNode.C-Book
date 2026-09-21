@@ -1,0 +1,5 @@
+-- Install configuration: "Release"
+-- Installing: /tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoserver
+-- Set non-toolchain portion of runtime path of "/tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoserver" to "/tmp/snodec-editorial-pass-2026-09-21/service-install/:/tmp/snodec-book-current-install/lib"
+-- Installing: /tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoclient
+-- Set non-toolchain portion of runtime path of "/tmp/snodec-editorial-pass-2026-09-21/service-install/bin/echoclient" to "/tmp/snodec-editorial-pass-2026-09-21/service-install/:/tmp/snodec-book-current-install/lib"

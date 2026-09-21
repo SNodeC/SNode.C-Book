@@ -1,0 +1,675 @@
+{
+  "recorded_at_utc": "2026-09-21T21:05:20.274109+00:00",
+  "scope": "Four authorized items: simple SSE, simple WebSocket echo, Bluetooth prerequisites/preparation in principle, final closure of this pass.",
+  "checkpoint_commit": "884dbfe1ce38e97413d336262e83f72f1e98dcc5",
+  "framework": {
+    "path": "/home/voc/projects/snodec/snode.c",
+    "head": "bb63e8a87aeda88123e8c0d72cb6d298908a9fe6",
+    "clean": true,
+    "tree_sha256": "df2fbdbe844f3368f5ed142973d82c0008a057c13d87dda6b7670e45cc3eacb8",
+    "file_count": 1447,
+    "manifest": {
+      "path": "source-baseline/framework-working-tree.json",
+      "sha256": "76a454e66e7b3e0ed9b6c4fa50b442b77c179bdf270a1c160a9e6162877603b4"
+    },
+    "same_file_contents_as_preceding_verified_installation": true,
+    "modified_by_this_pass": false,
+    "historical_framework_tests": "183/183 passed in the preceding recorded run on these same file contents; not rerun or relabeled as fresh here."
+  },
+  "fresh_checks": [
+    {
+      "name": "Companion build",
+      "result": "passed",
+      "log": "companion-build.log",
+      "command": "cmake --build /tmp/snodec-book-current-examples --parallel 4"
+    },
+    {
+      "name": "SSE lifetime and WebSocket echo",
+      "result": "passed",
+      "log": "lifetime-and-echo.log",
+      "command": "python3 ci/run-example-lifetime-tests.py --prefix /tmp/snodec-book-current-install --build /tmp/snodec-book-current-examples --work /tmp/snodec-four-item-pass/current",
+      "relative_directory_check": "Final run invoked the absolute script from /tmp/snodec-four-item-pass with --work current.",
+      "sse_programs": 3,
+      "idle_disconnects_per_program": 24,
+      "scope": "Three waves per program, eight peers/wave mixing FIN and RST with one surviving observer; no publication during the cleanup assertion; then survivor delivery and final response release. WebSocket teaching client plus independent type/payload, empty/sequential/fragmented, interleaved ping and close checks.",
+      "instrumentation": "Temporary source copies add only weak response observations and a /test/retained route. The production subscription path is unchanged; no owning test reference, counter or probe endpoint in production."
+    },
+    {
+      "name": "Checkpoint negative control",
+      "result": "old defect detected in all three SSE programs",
+      "log": "baseline-retention.log",
+      "command": "python3 ci/run-example-lifetime-tests.py --prefix /tmp/snodec-book-current-install --build /tmp/snodec-book-current-examples --work /tmp/snodec-four-item-pass/baseline --baseline-ref 884dbfe",
+      "expected_retained_disconnected_responses_per_program": 8
+    },
+    {
+      "name": "Existing companion behavior",
+      "result": "four scenarios passed",
+      "log": "behavior-smoke.log",
+      "command": "BOOK_EXAMPLES_BUILD_DIR=/tmp/snodec-book-current-examples SNODEC_PREFIX=/tmp/snodec-book-current-install python3 ci/run-behavior-smoke-tests.py",
+      "scope": "SSE, Extended Unix input, whole/split line limit, MQTT CONNECT bytes for both gateways; no external broker."
+    },
+    {
+      "name": "Printed WebSocket classes",
+      "result": "both compiled; seven callback bodies per class match companions",
+      "log": "printed-websocket.log",
+      "method": "Extract the cpp fence containing class EchoServer final and the one containing class EchoClient final from Chapter 24; build as C++20 object targets with installed websocket-server/client components. Compare callback bodies after whitespace tokenization with EchoServer.cpp/EchoClient.cpp.",
+      "command": "cmake --build /tmp/snodec-four-item-pass/printed-websocket/build --parallel 2"
+    },
+    {
+      "name": "Current source alignment",
+      "result": "passed",
+      "log": "source-alignment.log",
+      "chapter_records": 38,
+      "framework_anchors": 107,
+      "complete_listings": 36,
+      "command": "python3 ci/check-source-alignment.py --framework /home/voc/projects/snodec/snode.c"
+    },
+    {
+      "name": "Hygiene/reference checks",
+      "result": "passed",
+      "log": "hygiene.log",
+      "command": "bash ci/check-source-hygiene.sh"
+    },
+    {
+      "name": "Workflow",
+      "result": "YAML parses; focused step present; independently conditioned test steps reviewed",
+      "remote_ci_executed": false
+    },
+    {
+      "name": "Diff review",
+      "result": "git diff --check passed; lifetime authority and all subscription consumers reviewed",
+      "production_lines": {
+        "added": 64,
+        "removed": 67
+      }
+    }
+  ],
+  "logs": [
+    {
+      "path": "review/followup-2026-09-21/baseline-retention.log",
+      "sha256": "0470fb7fe974de3e421fbba810a09839b5b8be4411c918266b19d94f501975fe"
+    },
+    {
+      "path": "review/followup-2026-09-21/behavior-smoke.log",
+      "sha256": "a8bb2a750def70cd20d7e00719e0992010cb13a2e86ea61ce62ec51a9678541c"
+    },
+    {
+      "path": "review/followup-2026-09-21/companion-build.log",
+      "sha256": "75399371bf47c8b183cf1cc95d4fb7cca6942a091883e1bc93f567b92754145f"
+    },
+    {
+      "path": "review/followup-2026-09-21/hygiene.log",
+      "sha256": "f77a1a6ff2c4cc8975b7198527aefa25665d72ec8930185d90d41b733e088280"
+    },
+    {
+      "path": "review/followup-2026-09-21/lifetime-and-echo.log",
+      "sha256": "c0c9c048449680b37fdb53208a684794121cf45e62e233af27a9bceb0351d08d"
+    },
+    {
+      "path": "review/followup-2026-09-21/printed-websocket.log",
+      "sha256": "1ed64129e1bc2e3397543f593645e5c829d1343237c31bb8cba37b109518d8c7"
+    },
+    {
+      "path": "review/followup-2026-09-21/source-alignment.log",
+      "sha256": "80ad8e07c68c09dbe51285801a44af914b4bb88d0a2c2989a3e8ca2498db4970"
+    },
+    {
+      "path": "review/followup-2026-09-21/websocket-deploy.log",
+      "sha256": "4ded9233822f3ad765425fcbaa35d2150ea7440e071fb08bcd0b5e8873aa6a60"
+    }
+  ],
+  "changed_inputs": [
+    {
+      "path": ".github/workflows/companion-examples.yml",
+      "sha256": "fd0ccc9137eac8b2dd4dd1ce55c586d662af25a4b99614c1817bcf3c82658134"
+    },
+    {
+      "path": "companion/examples/MiniGateway-Extended/MeasurementModel.cpp",
+      "sha256": "86d04f202664c90a6a44f5c2f07ef1130d2e51eb8910ff18b99931aff33e8fed"
+    },
+    {
+      "path": "companion/examples/MiniGateway-Extended/MeasurementModel.h",
+      "sha256": "865b01b97186da61572b7e1e3675c82026f234bb8a5ff5d2d9f9947d83ec2e98"
+    },
+    {
+      "path": "companion/examples/MiniGateway-Extended/MiniGatewayMqttClient.cpp",
+      "sha256": "fb1b899177e85596c2473067ef13ee35593906d05ea770eae3fe38e90787e458"
+    },
+    {
+      "path": "companion/examples/MiniGateway-Extended/MiniGatewayWeb.cpp",
+      "sha256": "f36248cc617902391aa32fb7987e78c8ebf2ca7f673cbcb7a041aa72d2030515"
+    },
+    {
+      "path": "companion/examples/MiniGateway-Extended/README.md",
+      "sha256": "ecb3fe1a7ad4456e85cbdd9b63dee34428ec6470f01216e020b9c4e3627d87f0"
+    },
+    {
+      "path": "companion/examples/MiniGateway/MeasurementModel.cpp",
+      "sha256": "86d04f202664c90a6a44f5c2f07ef1130d2e51eb8910ff18b99931aff33e8fed"
+    },
+    {
+      "path": "companion/examples/MiniGateway/MeasurementModel.h",
+      "sha256": "c7f570d0b750bd38cb7f445fb0687e98db235b4a54464b5f0935d296f67a1107"
+    },
+    {
+      "path": "companion/examples/MiniGateway/MiniGatewayMqttClient.cpp",
+      "sha256": "fb1b899177e85596c2473067ef13ee35593906d05ea770eae3fe38e90787e458"
+    },
+    {
+      "path": "companion/examples/MiniGateway/MiniGatewayWeb.cpp",
+      "sha256": "f36248cc617902391aa32fb7987e78c8ebf2ca7f673cbcb7a041aa72d2030515"
+    },
+    {
+      "path": "companion/examples/MiniGateway/README.md",
+      "sha256": "e5fb7e5301475e240c89f2be800fb00c96bcb14269a77475c6650f05b064f5d1"
+    },
+    {
+      "path": "companion/examples/SSE-Server/README.md",
+      "sha256": "2df520f797114a027e6dd7dada671512df33be96c322cfb2532bee3abf5ac87a"
+    },
+    {
+      "path": "companion/examples/SSE-Server/main.cpp",
+      "sha256": "4adc7c014c33bbeedc536748bf5aeaff2961af4e3c61d311df8c6b89bfbdb8e1"
+    },
+    {
+      "path": "companion/examples/WebSocket-Echo-ServerSubprotocol/EchoServer.cpp",
+      "sha256": "4f0a074bb0c166c56636b214784fe4c9beabb14a6d23cea8082aadabace8fd99"
+    },
+    {
+      "path": "companion/examples/WebSocket-Echo-ServerSubprotocol/EchoServer.h",
+      "sha256": "ba4c5f6303303a52e14b6d3e7da0756f2f3cf0ad7691959d2cff9d724b12efc1"
+    },
+    {
+      "path": "companion/examples/WebSocket-Echo-ServerSubprotocol/README.md",
+      "sha256": "2e717599e702473824249f934338e9a07d9b122ec5066a0377073536f08f9b1f"
+    },
+    {
+      "path": "manuscript/backmatter/further-reading.md",
+      "sha256": "a75098048771502d07435bbe5ff5afac7e2c2c2ad01c0b37b3821c3da50d1aec"
+    },
+    {
+      "path": "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "sha256": "84e84f5e2e885757cece89d7f4f1a60e667997bd02283739c18aa30674ac6a22"
+    },
+    {
+      "path": "manuscript/chapters/23-server-sent-events-and-real-time-http.md",
+      "sha256": "0b296c4a8c854ae0ccf6193369ffad7d33d65f879354085ba906c456fa13c2b3"
+    },
+    {
+      "path": "manuscript/chapters/24-websocket-and-protocol-upgrade.md",
+      "sha256": "e5645ed9a1632536712630928608daec6ecbb1f8ac53d95b27eedcd284c7acb7"
+    },
+    {
+      "path": "manuscript/chapters/35-building-minigateway.md",
+      "sha256": "d028c38b743d29ff82ef7f470ee34bd78a0d5b351565bbe580ab71d40745fecf"
+    },
+    {
+      "path": "review/EDITORIAL-WORK-PLAN.md",
+      "sha256": "9a1a71e8f001d4c657bd723b75a86793e8f54bf78cf821b4222c82faddf2f55c"
+    },
+    {
+      "path": "review/verification/source-claims.json",
+      "sha256": "e7c20c164b6c6d423d18df7fc70835db7391ca312501b1dcb4504189a1f2c41f"
+    },
+    {
+      "path": "ci/run-example-lifetime-tests.py",
+      "sha256": "c268e5e95da717b9f2c87485a6c218d6cb2a2089d4641917a9da6cb96e880a02"
+    }
+  ],
+  "manuscript_inputs": [
+    {
+      "path": "manuscript/frontmatter/frontmatter.md",
+      "words_before": 3,
+      "words_after": 3,
+      "sha256": "ee93ac64dc40b724d6eb44f3f5fb514d23d3afc81144f0a9264d0969c4e5a2ef"
+    },
+    {
+      "path": "manuscript/frontmatter/preface.md",
+      "words_before": 917,
+      "words_after": 917,
+      "sha256": "3acf296cc363f5b460caa0032832a4b3825e30e2e4bf0d333c0d75bdc5c31ec2"
+    },
+    {
+      "path": "manuscript/frontmatter/how-to-read-this-book.md",
+      "words_before": 652,
+      "words_after": 652,
+      "sha256": "f60aab032e3ee787481b39b3efd10af0349137905241d3da3eb2fddd14e453d3"
+    },
+    {
+      "path": "manuscript/frontmatter/conventions.md",
+      "words_before": 360,
+      "words_after": 360,
+      "sha256": "607da46ad2e6a1eba5e6eb5761340ea8fb7cd28953f5440cb5068ee90697a3eb"
+    },
+    {
+      "path": "manuscript/frontmatter/author-note.md",
+      "words_before": 174,
+      "words_after": 174,
+      "sha256": "81c985228103786a4404f097dc7c833d93438f059ec506faf1a1c29956cad137"
+    },
+    {
+      "path": "manuscript/frontmatter/acknowledgements.md",
+      "words_before": 101,
+      "words_after": 101,
+      "sha256": "3f8cf8bcdda956c90e74ebd46d4677c6b44fe04fa45ef106febb7dc762dc950a"
+    },
+    {
+      "path": "manuscript/frontmatter/mainmatter.md",
+      "words_before": 3,
+      "words_after": 3,
+      "sha256": "aed94e3963307d4ccd313b5faa29cb4948522a7e2ae59fc5f270f5c8961ff37c"
+    },
+    {
+      "path": "manuscript/parts/part-01-getting-oriented.md",
+      "words_before": 105,
+      "words_after": 105,
+      "sha256": "d76882db70ae9126b7ec33a29c8a31bd4ff1531bb7ff32816271f43a4280ee9f"
+    },
+    {
+      "path": "manuscript/chapters/01-why-snodec-exists.md",
+      "words_before": 2544,
+      "words_after": 2544,
+      "sha256": "358537b96346a3d29d0bd66b4e920c2476863f12c3004c22cd0fb40b44874561"
+    },
+    {
+      "path": "manuscript/chapters/02-preparing-your-environment.md",
+      "words_before": 2944,
+      "words_after": 2944,
+      "sha256": "c51e7416d5342f860d3acd8a0d6920873fa220e2870e9147314f00e27c73fd9a"
+    },
+    {
+      "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "words_before": 3386,
+      "words_after": 3386,
+      "sha256": "bcc48d88825b4d64cd4fc11f9abbf0c47e55a6b12f0f4cea9d14a13909e551eb"
+    },
+    {
+      "path": "manuscript/chapters/04-reading-the-codebase-with-confidence.md",
+      "words_before": 3707,
+      "words_after": 3707,
+      "sha256": "12c87aad9f64083c61da40cb67b042e25ac07b2840a42700312d24f152d66b7d"
+    },
+    {
+      "path": "manuscript/parts/part-02-the-snodec-architecture.md",
+      "words_before": 84,
+      "words_after": 84,
+      "sha256": "2fb90cf7d8a4adf5518d73fa4473caeab263c6664312a9d4dd12952da07aa037"
+    },
+    {
+      "path": "manuscript/chapters/05-the-mental-model-of-snodec.md",
+      "words_before": 3968,
+      "words_after": 3968,
+      "sha256": "8fa6376c14a46ab05ea823e273777aa86ae3009dbfeac635689fc2ebd1259231"
+    },
+    {
+      "path": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+      "words_before": 5230,
+      "words_after": 5230,
+      "sha256": "8e0d5a90ddc01751464c953a7a9edd101521e13de09ee23aa470284cbf61cf34"
+    },
+    {
+      "path": "manuscript/chapters/07-layers-in-practice-network-transport-connection-application.md",
+      "words_before": 3886,
+      "words_after": 3886,
+      "sha256": "077ab63b241ea714b7842cce2fd30f590abf25f027fa3d9d32d6cfc1759fef93"
+    },
+    {
+      "path": "manuscript/parts/part-03-networking-foundations-in-snodec.md",
+      "words_before": 74,
+      "words_after": 74,
+      "sha256": "419c733262048fe26aba925f781fd1673b6d34be7d0f01f4b36f8481afa2066f"
+    },
+    {
+      "path": "manuscript/chapters/08-socket-addresses-and-address-semantics.md",
+      "words_before": 2507,
+      "words_after": 2507,
+      "sha256": "6ae3f89e8fa70e8725d33b2a4687933ec3d17ffb8e5a3b6f1d5ae48b5edfe5e5"
+    },
+    {
+      "path": "manuscript/chapters/09-servers-clients-and-connections.md",
+      "words_before": 4895,
+      "words_after": 4895,
+      "sha256": "6e95412ae7b43c952b9ba199b7a4ee5e96510ac9efbd012a20076b86899ddfaa"
+    },
+    {
+      "path": "manuscript/chapters/10-ipv4-and-ipv6-as-the-first-concrete-network-families.md",
+      "words_before": 2880,
+      "words_after": 2880,
+      "sha256": "db9f744612525c87d3f3afbf386a7d38ecf274116deba089498a32dbcfd26d44"
+    },
+    {
+      "path": "manuscript/chapters/11-unix-domain-sockets.md",
+      "words_before": 3006,
+      "words_after": 3006,
+      "sha256": "bd264d3f42af39709e8b8a7327e3abbfc976e59139346bafc781c4c86df00daa"
+    },
+    {
+      "path": "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "words_before": 2495,
+      "words_after": 2706,
+      "sha256": "84e84f5e2e885757cece89d7f4f1a60e667997bd02283739c18aa30674ac6a22"
+    },
+    {
+      "path": "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md",
+      "words_before": 88,
+      "words_after": 88,
+      "sha256": "459e98d4e843f784765daed77f1855e529bf9e047715e2441136f1e84eb25312"
+    },
+    {
+      "path": "manuscript/chapters/13-writing-socketcontext-classes-well.md",
+      "words_before": 4307,
+      "words_after": 4307,
+      "sha256": "aad799d485c832ce44dcedb264a3de90c908b66633158c930158872433182d15"
+    },
+    {
+      "path": "manuscript/chapters/14-writing-socketcontextfactory-classes-well.md",
+      "words_before": 3866,
+      "words_after": 3866,
+      "sha256": "cc5712a0bdd30906c97c5d32f3698dd835980e77527eac2dc4c806a0768b12af"
+    },
+    {
+      "path": "manuscript/chapters/15-building-the-same-protocol-over-different-lower-layers.md",
+      "words_before": 3651,
+      "words_after": 3651,
+      "sha256": "d44c4d33047e798badf0d2b8287d9bf1f302853aadd1dd74af6a5a4eb341d264"
+    },
+    {
+      "path": "manuscript/parts/part-05-configuration-and-operational-behavior.md",
+      "words_before": 72,
+      "words_after": 72,
+      "sha256": "f3187362752d29c90914ea7061308c80b93a2270a3155c52039ec34bd5d6007e"
+    },
+    {
+      "path": "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
+      "words_before": 3680,
+      "words_after": 3680,
+      "sha256": "7f0339c0d30dd0cbb49afd93b82d444931b74d265847f7fb54b971339375a46e"
+    },
+    {
+      "path": "manuscript/chapters/17-application-and-instance-configuration-in-detail.md",
+      "words_before": 5063,
+      "words_after": 5063,
+      "sha256": "8250355d1b41c835bec7cc912629513361422a3a36e60e8fdd1eb52e0791c039"
+    },
+    {
+      "path": "manuscript/chapters/18-logging-diagnostics-and-runtime-introspection.md",
+      "words_before": 3778,
+      "words_after": 3778,
+      "sha256": "a55e8a6f7853c9ddf0d8296f04baba8099aa15dc2a5394e683b490e5e8c48b34"
+    },
+    {
+      "path": "manuscript/parts/part-06-secure-and-robust-communication.md",
+      "words_before": 72,
+      "words_after": 72,
+      "sha256": "e0366e48d7ed80535e55f76c7b78b71ae332825652cc12a8162dd5ddf6e69cea"
+    },
+    {
+      "path": "manuscript/chapters/19-tls-across-the-framework.md",
+      "words_before": 3846,
+      "words_after": 3846,
+      "sha256": "3b72052988baa58ecd4eb342a195468d1ff00a4c5210b482d5c4f8902c82218f"
+    },
+    {
+      "path": "manuscript/chapters/20-timeouts-retries-and-failure-modes.md",
+      "words_before": 4567,
+      "words_after": 4567,
+      "sha256": "86d0798c3d544323f055fc33cca35691168ca34a391c100f69dc78163ccd0a68"
+    },
+    {
+      "path": "manuscript/parts/part-07-web-protocols-and-web-applications.md",
+      "words_before": 68,
+      "words_after": 68,
+      "sha256": "4cb2feaeb0c91d2badd7493b9124bf7184288ead1ff50812c1cb2425541daee8"
+    },
+    {
+      "path": "manuscript/chapters/21-the-http-layer.md",
+      "words_before": 3563,
+      "words_after": 3563,
+      "sha256": "934114245cd5f757c6faec851b5c778da115cf5b2a542323b04e74d62a7f42bb"
+    },
+    {
+      "path": "manuscript/chapters/22-the-express-like-framework.md",
+      "words_before": 3085,
+      "words_after": 3085,
+      "sha256": "a30251e00b285d9c632104df2b27dec58907d33241a95ad45d442e9631e1fd9d"
+    },
+    {
+      "path": "manuscript/chapters/23-server-sent-events-and-real-time-http.md",
+      "words_before": 3920,
+      "words_after": 4315,
+      "sha256": "0b296c4a8c854ae0ccf6193369ffad7d33d65f879354085ba906c456fa13c2b3"
+    },
+    {
+      "path": "manuscript/chapters/24-websocket-and-protocol-upgrade.md",
+      "words_before": 3873,
+      "words_after": 4022,
+      "sha256": "e5645ed9a1632536712630928608daec6ecbb1f8ac53d95b27eedcd284c7acb7"
+    },
+    {
+      "path": "manuscript/parts/part-08-iot-and-message-oriented-systems.md",
+      "words_before": 75,
+      "words_after": 75,
+      "sha256": "c30813ffe5add3511f4bb1eb295e493e35f8d94a2036a30bf1cc8f49b9abcaf1"
+    },
+    {
+      "path": "manuscript/chapters/25-mqtt-support-in-snodec.md",
+      "words_before": 3024,
+      "words_after": 3024,
+      "sha256": "6b4a24ea703403c5798af16404e80aae8075004758aedcd095aff87265fd13cd"
+    },
+    {
+      "path": "manuscript/chapters/26-mqtt-over-websocket.md",
+      "words_before": 2779,
+      "words_after": 2779,
+      "sha256": "453c5c5a3e1ffb879e3238e2142d9fd2d473b0d7734caaa81ec80c82eac1182f"
+    },
+    {
+      "path": "manuscript/chapters/27-designing-iot-systems-with-multiple-protocols.md",
+      "words_before": 4043,
+      "words_after": 4043,
+      "sha256": "1542f7afd092bada292a56a4273ff0a7a6be0c7f39427759ca2a351bf6ccc190"
+    },
+    {
+      "path": "manuscript/parts/part-09-persistence-and-full-systems.md",
+      "words_before": 70,
+      "words_after": 70,
+      "sha256": "98af5902d860e2164a2d1e877003c3ea79c2ea343cfd915120f73854f74dc3db"
+    },
+    {
+      "path": "manuscript/chapters/28-database-support-and-application-state.md",
+      "words_before": 5317,
+      "words_after": 5317,
+      "sha256": "719b9d77f28fdfffcc5120bc6d9cd5df74b630234180bf6394d7acd950e0901a"
+    },
+    {
+      "path": "manuscript/chapters/29-learning-from-the-applications-in-src-apps.md",
+      "words_before": 4386,
+      "words_after": 4386,
+      "sha256": "f4181ecc03de3697eed8475fd30d59b8f14ee7de16039c9eea51296405e7bdfa"
+    },
+    {
+      "path": "manuscript/chapters/30-from-applications-to-systems.md",
+      "words_before": 2913,
+      "words_after": 2913,
+      "sha256": "ffb4034eeb0b4fc46005ca1355ce23fcc804679ae5a45a6f620a0836a1ea37d3"
+    },
+    {
+      "path": "manuscript/chapters/31-mqttsuite-as-a-reference-ecosystem.md",
+      "words_before": 3523,
+      "words_after": 3523,
+      "sha256": "78d96ebfa5a21633447e3c038cb81345731ac913ba8985d9087b619c0537fe4e"
+    },
+    {
+      "path": "manuscript/parts/part-10-building-porting-and-maintaining.md",
+      "words_before": 64,
+      "words_after": 64,
+      "sha256": "b88bbf50b000af85adeda70577a0395b83d5f8e0e04635222ff4df9248cd6a58"
+    },
+    {
+      "path": "manuscript/chapters/32-cmake-components-and-linking-strategy.md",
+      "words_before": 6324,
+      "words_after": 6324,
+      "sha256": "7ddc08a54f716b34a518a72896bb0b5f366e2b4346686135bb1b0c8b7dc4f1a5"
+    },
+    {
+      "path": "manuscript/chapters/33-deployment-on-linux-and-openwrt.md",
+      "words_before": 5577,
+      "words_after": 5577,
+      "sha256": "dfcc28e47e9d75824df828c1affaefed414e5b3831b43a06ca78f88ace8f273a"
+    },
+    {
+      "path": "manuscript/chapters/34-testing-debugging-and-benchmarking.md",
+      "words_before": 5850,
+      "words_after": 5850,
+      "sha256": "98206d6211a31779938b6d0bdabb2057862747a02286a904b973fd9c9df27021"
+    },
+    {
+      "path": "manuscript/parts/part-11-building-a-minigateway-application.md",
+      "words_before": 110,
+      "words_after": 110,
+      "sha256": "37cbabccc8d3bc1819bb25691eb71cbe54a5bfcf78297e68da12ef368676ed14"
+    },
+    {
+      "path": "manuscript/chapters/35-building-minigateway.md",
+      "words_before": 4299,
+      "words_after": 4349,
+      "sha256": "d028c38b743d29ff82ef7f470ee34bd78a0d5b351565bbe580ab71d40745fecf"
+    },
+    {
+      "path": "manuscript/chapters/36-extending-minigateway-with-a-new-network-role.md",
+      "words_before": 2988,
+      "words_after": 2988,
+      "sha256": "37dc78116b7776dc895f2338b6b5f5e575d9f38fbd1d6873c5377a2fa0519b48"
+    },
+    {
+      "path": "manuscript/parts/part-12-designing-with-snodec.md",
+      "words_before": 86,
+      "words_after": 86,
+      "sha256": "62ba913e0b630c86816541e11ac66d03891af552ffb019dc94df6dd39fc8d764"
+    },
+    {
+      "path": "manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "words_before": 2484,
+      "words_after": 2484,
+      "sha256": "c96403fa4058756f39fa6c2b911a41f8012307565714f638719c4f4ed9aa4f2b"
+    },
+    {
+      "path": "manuscript/chapters/38-extending-the-framework-safely.md",
+      "words_before": 3370,
+      "words_after": 3370,
+      "sha256": "32d6e130081e45a47a8170abdd7f409ff97a2bea9000d157e49d15f487812646"
+    },
+    {
+      "path": "manuscript/parts/part-13-epilogue.md",
+      "words_before": 98,
+      "words_after": 98,
+      "sha256": "0e7604f67e83632f3a00304d3ea31103b53e6eea5cbd6d569ed50b9e3fcb0d3d"
+    },
+    {
+      "path": "manuscript/chapters/epilogue.md",
+      "words_before": 1574,
+      "words_after": 1574,
+      "sha256": "a18678edfb869d136cdf1ff51a6ed883a087d809fd09bf06489a6722a38a2bda"
+    },
+    {
+      "path": "manuscript/backmatter/backmatter.md",
+      "words_before": 7,
+      "words_after": 7,
+      "sha256": "997725a666802cc3870bc40c793a7ca9151dc17f5dcf0127279fdb85f9ee00bd"
+    },
+    {
+      "path": "manuscript/backmatter/further-reading.md",
+      "words_before": 678,
+      "words_after": 716,
+      "sha256": "a75098048771502d07435bbe5ff5afac7e2c2c2ad01c0b37b3821c3da50d1aec"
+    },
+    {
+      "path": "manuscript/backmatter/index.md",
+      "words_before": 12,
+      "words_after": 12,
+      "sha256": "2bc2be55a23e5e176144dd11771aff490f6588f15198dd145bd7238e3940db92"
+    }
+  ],
+  "accounting": {
+    "path": "review/followup-2026-09-21/change-accounting.json",
+    "sha256": "f77ab6d123779cdc34ee5e49ae3401496e6993f2790fae6562586c24c7b576ac"
+  },
+  "report": {
+    "path": "review/followup-2026-09-21/REPORT.md",
+    "sha256": "5641ed23677f3efbe5e2b551a6c61281245b740331f592249f8c5ce55a783b99"
+  },
+  "source_anchors": {
+    "path": "review/verification/source-claims.json",
+    "sha256": "e7c20c164b6c6d423d18df7fc70835db7391ca312501b1dcb4504189a1f2c41f"
+  },
+  "preserved_preceding_build_logs": [
+    {
+      "path": "review/editorial/build-logs/examples-final-rebuild.log",
+      "sha256": "6a8d1607af1d157bd922042b7971c78811134e4ced754034ea43fa6f7280dda4"
+    },
+    {
+      "path": "review/editorial/build-logs/external-final-rebuild.log",
+      "sha256": "ef03d7a8cf071776e92e046d25fcbbb87c4a726144df48d3293dfbb9f842afe6"
+    },
+    {
+      "path": "review/editorial/build-logs/framework-final-install.log",
+      "sha256": "ebaa881c8c9855438ccdf9458e600c28f9ec7594941e99d64d3903a8af4f4e56"
+    },
+    {
+      "path": "review/editorial/build-logs/framework-final-rebuild-3.log",
+      "sha256": "f30efcfa780558cce880e73055dad33a05a47e0753565071b504043ad47839e1"
+    },
+    {
+      "path": "review/editorial/build-logs/probes-final-rebuild.log",
+      "sha256": "e3742c72539e216382c029546435106addacaf2a70baaa5369950b21bbfb054b"
+    },
+    {
+      "path": "review/editorial/build-logs/service-final-install.log",
+      "sha256": "7c4f6114ef548ba2e5298aa8157ede9c5023a61d91c8e961cc5d5bc1a266fbf8"
+    },
+    {
+      "path": "review/editorial/build-logs/service-final-rebuild.log",
+      "sha256": "e95157f1028e4bf0202beeb681bb13a7bb4dd511b776f1e156c24ce8ee65f484"
+    },
+    {
+      "path": "review/editorial/build-logs/transfer-ipv4-final-rebuild.log",
+      "sha256": "faa0437c62efe4e7528e64f30c69c68af17158667df9455565814986e96884b6"
+    },
+    {
+      "path": "review/editorial/build-logs/transfer-unix-final-rebuild.log",
+      "sha256": "85609a1e8a91f1515c1bd17f67e612bb6776592f35b94833153373ed03e2c16c"
+    }
+  ],
+  "primary_bluetooth_references": [
+    "https://github.com/bluez/bluez/blob/master/doc/bluetoothctl.rst",
+    "https://bluez.readthedocs.io/en/latest/adapter-api/",
+    "https://bluez.readthedocs.io/en/latest/device-api/"
+  ],
+  "scope_decisions": {
+    "completed": [
+      "SSE example and affected capstone lifetime contract",
+      "WebSocket echo example preserving message type and bytes",
+      "Bluetooth hardware prerequisites and preparation in principle in Chapter 12",
+      "Source-aligned affected verification, manuscript consistency and persistent-plan closure"
+    ],
+    "deferred": [
+      "OpenWrt integration/build/install/deployment",
+      "PDF regeneration, rendered figures and production review"
+    ],
+    "intentionally_omitted": [
+      "Broader Bluetooth hardware exchanges",
+      "Live database integration/failure tests",
+      "Full broker and MQTT-over-WebSocket interoperability",
+      "MQTTSuite deployment",
+      "Sustained-load and long-duration validation"
+    ],
+    "book_declared_finished": false
+  },
+  "limits": [
+    "Focused finite tests do not establish general leak freedom, load capacity or all deployment behavior.",
+    "Bluetooth pairing/device exchange not performed.",
+    "No framework modification, external service setup or persistent service deployment.",
+    "No PDF read or regenerated.",
+    "Historical evidence remains bound to its recorded checkpoint; changed manuscript and source-claim files are identified here."
+  ]
+}

@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 #include <web/http/http_utils.h>
+#include <web/http/server/SocketContext.h>
 
 namespace minigateway {
 
@@ -60,13 +61,11 @@ namespace minigateway {
                         sendMeasurement(res, current);
                     }
 
-                    measurementModel.subscribe([res](const Measurement& measurement) {
-                        const bool keepSubscriber = res->isConnected();
-                        if (keepSubscriber) {
-                            sendMeasurement(res, measurement);
-                        }
-
-                        return keepSubscriber;
+                    const auto subscription = measurementModel.subscribe([res](const Measurement& measurement) {
+                        sendMeasurement(res, measurement);
+                    });
+                    res->getSocketContext()->setOnDisconnected([&measurementModel, subscription] {
+                        measurementModel.unsubscribe(subscription);
                     });
                 } else {
                     res->status(406).send("SSE requires Accept: text/event-stream");

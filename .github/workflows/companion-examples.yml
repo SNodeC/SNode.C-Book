@@ -65,6 +65,7 @@ jobs:
           python3 ci/check-source-alignment.py --framework external/snode.c
 
       - name: Build SNode.C and companion examples
+        id: build
         env:
           CC: ${{ matrix.cc }}
           CXX: ${{ matrix.cxx }}
@@ -74,16 +75,31 @@ jobs:
         run: bash ci/build-companion-examples.sh
 
       - name: Run teaching-example smoke tests
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         env:
           SNODEC_PREFIX: ${{ github.workspace }}/install/snodec
           BOOK_EXAMPLES_BUILD_DIR: ${{ github.workspace }}/build/ci-book-examples
         run: python3 ci/run-teaching-smoke-tests.py
 
       - name: Run selected behavioral smoke tests
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         env:
           SNODEC_PREFIX: ${{ github.workspace }}/install/snodec
           BOOK_EXAMPLES_BUILD_DIR: ${{ github.workspace }}/build/ci-book-examples
         run: bash ci/run-behavior-smoke-tests.sh
+
+      - name: Check SSE lifetime and WebSocket echo
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+          SNODEC_PREFIX: ${{ github.workspace }}/install/snodec
+          BOOK_EXAMPLES_BUILD_DIR: ${{ github.workspace }}/build/ci-book-examples
+        run: |
+          python3 ci/run-example-lifetime-tests.py \
+            --prefix "$SNODEC_PREFIX" --build "$BOOK_EXAMPLES_BUILD_DIR" \
+            --work build/example-lifetime-checks \
+            | tee build/verification-logs/example-lifetime-checks.txt
 
       - name: Upload verification logs
         if: always()
@@ -94,5 +110,6 @@ jobs:
             build/verification-logs/
             build/teaching-smoke-logs/
             build/behavior-smoke-logs/
+            build/example-lifetime-checks/runtime-logs/
             build/snodec/Testing/Temporary/
           if-no-files-found: warn

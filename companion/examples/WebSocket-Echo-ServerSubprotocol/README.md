@@ -31,3 +31,9 @@ looks for dynamically loadable subprotocol modules.
 For a complete runtime check, deploy this module together with
 `WebSocket-Echo-ClientSubprotocol`, start `HttpUpgrade-Server`, and then run
 `HttpUpgrade-Client`.
+
+The server preserves text/binary message type and the exact payload bytes, including
+embedded zero bytes. It collects one complete message before replying; configure a
+finite receiver message limit for untrusted peers. The supplied teaching client
+sends `hello` as text. Independent peers can check binary, empty and fragmented
+messages without changing the server.

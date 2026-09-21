@@ -9,11 +9,14 @@ namespace minigateway {
 
     class MeasurementModel {
     public:
-        using Listener = std::function<bool(const Measurement&)>;
+        using Listener = std::function<void(const Measurement&)>;
+
+        using Subscription = std::list<Listener>::iterator;
 
         Measurement current() const;
         Measurement accept(Measurement measurement);
-        void subscribe(Listener listener);
+        Subscription subscribe(Listener listener);
+        void unsubscribe(Subscription subscription);
 
     private:
         void publish(const Measurement& measurement);

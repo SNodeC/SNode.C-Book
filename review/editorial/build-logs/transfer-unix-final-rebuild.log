@@ -1,0 +1,5 @@
+gmake: jobserver mkfifo: /tmp/GMfifo4: File exists
+[ 33%] Building CXX object CMakeFiles/line-protocol-server.dir/LineCommandServerContext.cpp.o
+[ 66%] Building CXX object CMakeFiles/line-protocol-server.dir/main.cpp.o
+[100%] Linking CXX executable line-protocol-server
+[100%] Built target line-protocol-server

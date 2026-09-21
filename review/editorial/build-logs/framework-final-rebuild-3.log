@@ -1,0 +1,13 @@
+[1/13] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/Mqtt.cpp.o
+[2/13] Linking CXX shared library src/iot/mqtt/libsnodec-mqtt.so.2.0.0
+[3/13] Creating library symlink src/iot/mqtt/libsnodec-mqtt.so.2 src/iot/mqtt/libsnodec-mqtt.so
+[4/13] Linking CXX shared library src/iot/mqtt/client/libsnodec-mqtt-client.so.2.0.0
+[5/13] Creating library symlink src/iot/mqtt/client/libsnodec-mqtt-client.so.2 src/iot/mqtt/client/libsnodec-mqtt-client.so
+[6/13] Linking CXX shared library src/iot/mqtt/server/libsnodec-mqtt-server.so.2.0.0
+[7/13] Creating library symlink src/iot/mqtt/server/libsnodec-mqtt-server.so.2 src/iot/mqtt/server/libsnodec-mqtt-server.so
+[8/13] Linking CXX shared library src/iot/mqtt/client/libsnodec-mqtt-client-websocket.so.2.0.0
+[9/13] Creating library symlink src/iot/mqtt/client/libsnodec-mqtt-client-websocket.so.2 src/iot/mqtt/client/libsnodec-mqtt-client-websocket.so
+[10/13] Linking CXX shared library src/iot/mqtt/server/libsnodec-mqtt-server-websocket.so.2.0.0
+[11/13] Linking CXX executable tests/unit/mqtt/Mqtt311PacketValidationTest
+[12/13] Creating library symlink src/iot/mqtt/server/libsnodec-mqtt-server-websocket.so.2 src/iot/mqtt/server/libsnodec-mqtt-server-websocket.so
+[13/13] Linking CXX executable tests/unit/mqtt/MqttLifecycleTest

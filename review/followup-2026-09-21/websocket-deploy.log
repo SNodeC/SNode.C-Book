@@ -1,0 +1,6 @@
+-- Install configuration: ""
+-- Installing: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2
+-- Set non-toolchain portion of runtime path of "/tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2" to "/usr/local/lib:/tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade:/tmp/snodec-book-current-install/lib/snode.c/web/http:/tmp/snodec-book-current-install/lib"
+-- Up-to-date: /tmp/snodec-book-current-install/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so
+-- Installing: /tmp/snodec-book-current-install/include/snodec-book/examples/WebSocket-Echo-ServerSubprotocol/EchoServer.h
+-- Up-to-date: /tmp/snodec-book-current-install/include/snodec-book/examples/WebSocket-Echo-ServerSubprotocol/EchoServerFactory.h
