@@ -1,0 +1,45 @@
+{
+  "pages": 490,
+  "changed_pdf_content_pages": [
+    474
+  ],
+  "unchanged_page_labels": true,
+  "unchanged_chapter_start_pages": 38,
+  "verified_contents_destinations": 1092,
+  "index_unchanged_and_regenerated": true,
+  "warnings_in_complete_build_console": 0,
+  "warnings_in_final_log": 0,
+  "bad_boxes": 0,
+  "package_order_retained": true,
+  "manuscript_inputs_unchanged": 61,
+  "manuscript_inputs_with_only_heading_changed": [
+    "manuscript/parts/part-13-epilogue.md"
+  ],
+  "epilogue_title_extracted": [
+    "Epilogue",
+    "What to Take Away from SNode.C"
+  ],
+  "book_pdf_sha256": "60d2246f40d2e3191232b2191bc4760865f1bf25291f63277382e1a34f2ebb12",
+  "date": "2026-09-22",
+  "checkpoint_commit": "cb7fce2000e3674f16efa54b1fee7bb6e7bdc271",
+  "framework_file_content_digest": "df2fbdbe844f3368f5ed142973d82c0008a057c13d87dda6b7670e45cc3eacb8",
+  "output": "dist/pdf/snodec-book.pdf",
+  "output_equivalent_to_verified_build": true,
+  "manuscript_markup_lines_added": 6,
+  "manuscript_markup_lines_removed": 1,
+  "prose_unchanged": true,
+  "application_production_lines_changed": 0,
+  "test_ci_implementation_lines_changed": 0,
+  "evidence_sha256": {
+    "verification.json": "e433ca8265f6e3a00a14dbd5bb7029586aaa1c5d49db085d9c1344f260175401",
+    "visual-review.json": "c756837681d68f8ee490858e0743d1a709c81d5166b501b9412507650badb26b",
+    "heading-measurements.json": "26aa4a9bc8ef3e734a232e0b147e5949d7e3f1f7c980caac45795c879dc251ff",
+    "distribution-equivalence.json": "19e42bf276b31fb054ba3d5042fbe7c7c2901d7c4c6b41ca9e0261cf2a7b1f42",
+    "snodec-book.log": "c2baa562ce667b4e786ef2d2bb04eb769456c05cbd2d537e8bafb522d9468311",
+    "build-console.txt": "1136c20d0ee9533615c77bef022ff28157f12cbc7c0d738b0522608c09b78405",
+    "title-change-build-console.txt": "3a2c0b80260ed21d6f29d32be671c4916053d54c75865efb9b39c5b5d0d22a8c",
+    "verified-index.ilg": "bcaca61c3f1db01eba5294edb43958e338923b4989b512131c91422183b51cd5",
+    "index-verification.txt": "bcaca61c3f1db01eba5294edb43958e338923b4989b512131c91422183b51cd5",
+    "source-hygiene.txt": "f77a1a6ff2c4cc8975b7198527aefa25665d72ec8930185d90d41b733e088280"
+  }
+}

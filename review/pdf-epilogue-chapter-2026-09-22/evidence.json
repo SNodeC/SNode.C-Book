@@ -1,0 +1,47 @@
+{
+  "pages": 490,
+  "changed_pdf_content_pages": [
+    12,
+    475
+  ],
+  "page_labels_unchanged": true,
+  "chapter_start_pages_unchanged": 38,
+  "contents_destinations_verified": 1092,
+  "contents_and_bookmark_title_updated": true,
+  "index_unchanged": true,
+  "epilogue_part_page_unchanged": true,
+  "prose_after_heading_unchanged": true,
+  "unchanged_manuscript_inputs": 61,
+  "changed_manuscript_inputs": [
+    "manuscript/chapters/epilogue.md"
+  ],
+  "final_latex_warnings": 0,
+  "bad_boxes": 0,
+  "console_warning_lines": [
+    "LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right."
+  ],
+  "pdf_sha256": "42f6f9965f4e86392ff177f8920973136bef57aff2ec603445fa1c0b212186c5",
+  "date": "2026-09-22",
+  "pdf_pages_visually_inspected": [
+    12,
+    474,
+    475
+  ],
+  "visual_result": "Heading fits on one line; contents and part/chapter sequence are clean. No clipping or overlap.",
+  "source_framework_head": "bb63e8a87aeda88123e8c0d72cb6d298908a9fe6",
+  "source_framework_digest": "df2fbdbe844f3368f5ed142973d82c0008a057c13d87dda6b7670e45cc3eacb8",
+  "accounting": {
+    "manuscript_heading_lines_added": 1,
+    "manuscript_heading_lines_removed": 1,
+    "prose_lines_changed": 0,
+    "application_production_lines_changed": 0,
+    "test_ci_implementation_lines_changed": 0
+  },
+  "evidence_sha256": {
+    "verification.json": "159b2566cec0f6d3d6d1947ef305e4713b6368e4987f9eacd939dc5a61b6c080",
+    "distribution-equivalence.json": "b6b90378e28215207587b75ca133872426e890e55b112d0e45ea2228509111ec",
+    "snodec-book.log": "7bf6927aa38d9e05876999adb55a4e2486460f929cd18525ada82d2c0a9727c3",
+    "build-console.txt": "78e554815f1d337e54f6ea28268b705fe305bf5483101064763e18619ec5c7e2",
+    "source-hygiene.txt": "f77a1a6ff2c4cc8975b7198527aefa25665d72ec8930185d90d41b733e088280"
+  }
+}

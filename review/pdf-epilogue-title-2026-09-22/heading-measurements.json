@@ -1,0 +1,70 @@
+{
+  "Part XII": {
+    "pdf_page": 456,
+    "lines": [
+      {
+        "text": "Part XII",
+        "xMin": 253.451,
+        "yMin": 207.087025,
+        "xMax": 341.824512,
+        "yMax": 227.749525
+      },
+      {
+        "text": "Designing with SNode.C",
+        "xMin": 147.391,
+        "yMin": 259.553597,
+        "xMax": 447.885013,
+        "yMax": 284.340697
+      }
+    ],
+    "fonts": [
+      {
+        "text": "Part XII",
+        "font": "/PAGLHP+LMRoman12-Bold-Identity-H",
+        "size": 20.6625
+      },
+      {
+        "text": "Designing with SNode.C",
+        "font": "/PAGLHP+LMRoman12-Bold-Identity-H",
+        "size": 24.7871
+      }
+    ],
+    "label_center_error_pt": -0.002243999999961943,
+    "title_center_error_pt": -0.001993499999969117,
+    "gap_between_ink_bounds_pt": 31.80407200000002
+  },
+  "Epilogue": {
+    "pdf_page": 474,
+    "lines": [
+      {
+        "text": "Epilogue",
+        "xMin": 253.699,
+        "yMin": 207.087025,
+        "xMax": 341.576612,
+        "yMax": 227.749525
+      },
+      {
+        "text": "What to Take Away from SNode.C",
+        "xMin": 83.54,
+        "yMin": 259.553597,
+        "xMax": 511.712365,
+        "yMax": 284.340697
+      }
+    ],
+    "fonts": [
+      {
+        "text": "Epilogue",
+        "font": "/PAGLHP+LMRoman12-Bold-Identity-H",
+        "size": 20.6625
+      },
+      {
+        "text": "What to Take Away from SNode.C",
+        "font": "/PAGLHP+LMRoman12-Bold-Identity-H",
+        "size": 24.7871
+      }
+    ],
+    "label_center_error_pt": -0.002193999999974494,
+    "title_center_error_pt": -0.013817500000016025,
+    "gap_between_ink_bounds_pt": 31.80407200000002
+  }
+}

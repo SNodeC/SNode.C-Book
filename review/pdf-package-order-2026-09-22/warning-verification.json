@@ -1,0 +1,20 @@
+{
+  "clean-build-console.txt": {
+    "warnings": 73,
+    "bad_boxes": 0,
+    "failed_patches": 0,
+    "tocloft_warnings": 0
+  },
+  "build-console.txt": {
+    "warnings": 0,
+    "bad_boxes": 0,
+    "failed_patches": 0,
+    "tocloft_warnings": 0
+  },
+  "snodec-book.log": {
+    "warnings": 0,
+    "bad_boxes": 0,
+    "failed_patches": 0,
+    "tocloft_warnings": 0
+  }
+}

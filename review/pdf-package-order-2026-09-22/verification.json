@@ -1,0 +1,17 @@
+{
+  "pages": 490,
+  "all_page_content_streams_identical": true,
+  "generated_document_body_identical": true,
+  "manuscript_inputs_byte_identical": 62,
+  "page_labels_identical": true,
+  "toc_file_identical": true,
+  "index_file_identical": true,
+  "independent_makeindex_matches": true,
+  "toc_entries_checked": 1092,
+  "chapter_start_pages_identical": 38,
+  "final_latex_warnings": 0,
+  "final_bad_boxes": 0,
+  "final_failed_patches": 0,
+  "tocloft_loads_before_parskip": true,
+  "pdf_sha256": "12e8313072698284605fa9452c2eda1c63ddaabb18568479e9c65af5bc8fce79"
+}

@@ -1,0 +1,23 @@
+{
+  "pages": 490,
+  "changed_pdf_content_pages": [
+    474
+  ],
+  "unchanged_page_labels": true,
+  "unchanged_chapter_start_pages": 38,
+  "verified_contents_destinations": 1092,
+  "index_unchanged_and_regenerated": true,
+  "warnings_in_complete_build_console": 0,
+  "warnings_in_final_log": 0,
+  "bad_boxes": 0,
+  "package_order_retained": true,
+  "manuscript_inputs_unchanged": 61,
+  "manuscript_inputs_with_only_heading_changed": [
+    "manuscript/parts/part-13-epilogue.md"
+  ],
+  "epilogue_title_extracted": [
+    "Epilogue",
+    "What to Take Away from SNode.C"
+  ],
+  "book_pdf_sha256": "60d2246f40d2e3191232b2191bc4760865f1bf25291f63277382e1a34f2ebb12"
+}

@@ -1,4 +1,9 @@
-# Epilogue — What to Take Away from SNode.C {.unnumbered}
+```{=latex}
+\part*{{\huge Epilogue\endgraf}\vskip20pt
+What to Take Away from SNode.C}
+\label{epilogue-what-to-take-away-from-snode.c}
+\addcontentsline{toc}{part}{Epilogue — What to Take Away from SNode.C}
+```
 
 The MiniGateway chapters close the construction arc: the same vocabulary used for small examples can describe an application that combines web observation, MQTT integration, local state, configuration, diagnostics, and extension.
 

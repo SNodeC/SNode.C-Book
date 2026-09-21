@@ -1,4 +1,4 @@
-## What to Take Away from SNode.C {.unnumbered}
+## The Principles Behind the Programs {.unnumbered}
 
 ### Layers are not decoration {.unnumbered}
 

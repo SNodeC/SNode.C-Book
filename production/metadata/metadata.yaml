@@ -8,6 +8,9 @@ classoption:
   - openany
 
 numbersections: true
+# Defer Pandoc's automatic parskip load; the header loads it after tocloft.
+# parskip still supplies the book's unindented, spaced paragraphs.
+indent: true
 
 mainfont: "Latin Modern Roman"
 sansfont: "Latin Modern Sans"
@@ -34,7 +37,7 @@ header-includes:
     \providecommand{\passthrough}[1]{#1}
     % Tables are uncaptioned; remove Pandoc's unused caption-spacing override.
     \clearcaptionsetup[skip]{table}
-    \usepackage{tocloft}
+    \usepackage{tocloft,parskip}
     \usepackage{makeidx}
     \makeindex
     \setlength{\cftchapnumwidth}{1.5em}

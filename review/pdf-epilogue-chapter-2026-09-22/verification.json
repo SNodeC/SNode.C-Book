@@ -1,0 +1,24 @@
+{
+  "pages": 490,
+  "changed_pdf_content_pages": [
+    12,
+    475
+  ],
+  "page_labels_unchanged": true,
+  "chapter_start_pages_unchanged": 38,
+  "contents_destinations_verified": 1092,
+  "contents_and_bookmark_title_updated": true,
+  "index_unchanged": true,
+  "epilogue_part_page_unchanged": true,
+  "prose_after_heading_unchanged": true,
+  "unchanged_manuscript_inputs": 61,
+  "changed_manuscript_inputs": [
+    "manuscript/chapters/epilogue.md"
+  ],
+  "final_latex_warnings": 0,
+  "bad_boxes": 0,
+  "console_warning_lines": [
+    "LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right."
+  ],
+  "pdf_sha256": "42f6f9965f4e86392ff177f8920973136bef57aff2ec603445fa1c0b212186c5"
+}

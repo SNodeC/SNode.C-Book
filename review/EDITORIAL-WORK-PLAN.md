@@ -13,8 +13,16 @@ The subsequent font and caption cleanup is also complete: the approved companion
 bold/bold-oblique mapping is applied to the book's Latin Modern Mono selection,
 and the unused table-caption spacing option is removed. The verified build still
 has 490 pages and zero bad boxes, with no font-shape or unused-table-caption
-warnings. See `review/pdf-font-fix-2026-09-22/REPORT.md`. The tocloft warning remains
-outside this request. Publication completion remains deferred.
+warnings. See `review/pdf-font-fix-2026-09-22/REPORT.md`. Checkpoint `cb7fce2`
+records these refinements. The subsequently authorized package-order fix is also
+complete: the ordinary rebuild has zero LaTeX warnings and zero bad boxes, with
+all 490 pages unchanged. See `review/pdf-package-order-2026-09-22/REPORT.md`.
+The author's subsequent epilogue-title refinement uses the numbered part pages'
+centered label size, title size, and vertical separation. This changes only the
+epilogue opening page; see `review/pdf-epilogue-title-2026-09-22/REPORT.md`.
+The following chapter is now titled "The Principles Behind the Programs", as
+selected by the author; see `review/pdf-epilogue-chapter-2026-09-22/REPORT.md`.
+Publication completion remains deferred.
 
 This plan records the author's accepted remaining work. It persists across
 conversations through the repository's `AGENTS.md`. It is self-contained; the
@@ -572,3 +580,80 @@ lines added, no application or test implementation changes, and no manuscript
 changes. The separate proposal profile and pre-existing tocloft warning were not
 changed. No commit was made. The established OpenWrt, runtime-validation, and
 publication-completion scope decisions remain in force.
+
+### 22 September 2026 — checkpoint and package loading order completed
+
+The author requested committing the current modifications before correcting the
+package loading order. Commit `cb7fce2` records the preceding layout, font, and
+caption refinements with their evidence. The subsequent change is separate and
+uncommitted.
+
+Pandoc previously loaded `parskip` before the book header loaded `tocloft`, so
+`tocloft` could not install its contents hooks. The existing book metadata now
+disables Pandoc's automatic paragraph-package loading through its standard
+`indent` option and loads `tocloft,parskip` in that order. Explicit `parskip`
+retains the existing unindented, spaced paragraphs. No copied template, warning
+filter, or replacement of package internals was introduced. The independent
+proposal profile does not load `tocloft` and is unaffected.
+
+The clean three-pass build finishes without warnings; its initial reference and
+table-width convergence messages are preserved in the evidence. A subsequent
+ordinary three-pass build has zero warnings in its complete console output and
+final log, zero bad boxes, and zero failed package patches. The PDF retains 490
+pages. All page content streams, all page labels, the contents file, and the
+index are unchanged. All 1,092 contents destinations and all 38 chapter starting
+pages were checked, and independent MakeIndex regeneration matches. All 21
+rendered comparison pages are pixel-identical; eight representative pages were
+visually inspected. All 62 manuscript inputs are byte-identical, and current-tree
+source alignment and hygiene checks pass.
+
+See `review/pdf-package-order-2026-09-22/REPORT.md` and `evidence.json` for precise
+checks and hashes. Configuration accounting: four lines added, one replaced;
+application production code, test/CI implementation, and manuscript text have no
+changes. OpenWrt and publication completion remain deferred; broader runtime
+validation remains intentionally omitted.
+
+### 22 September 2026 — epilogue opening aligned with part pages
+
+The author requested a separate "Epilogue" label above "What to Take Away from
+SNode.C", then clarified that both must be centered and that the label's font
+size and the vertical gap must match the numbered part pages. The canonical
+framework spelling is retained.
+
+The epilogue opening now uses the existing unnumbered LaTeX part command with
+the book class's `\huge` label and 20 pt vertical separation, followed by its
+existing `\Huge` title. The shared part-page start and introduction formatting
+remain in effect. The existing contents entry, bookmark, and label are retained;
+the prose and following chapter are unchanged. This replaces the superseded
+inline-break attempt without adding a new formatter or changing shared styles.
+
+The final heading was visually compared with Part XII. PDF measurements confirm
+identical label/title fonts and sizes, identical vertical positions and gap, and
+centering of both lines. Only PDF page 474 (printed 452) changes. The book remains
+490 pages with unchanged contents destinations, page labels, chapter starting
+pages, and index. Source hygiene and alignment checks pass. The final ordinary
+three-pass rebuild remains free of warnings and bad boxes.
+
+See `review/pdf-epilogue-title-2026-09-22/REPORT.md` for measurements and build
+evidence. The package-order and epilogue changes remain uncommitted after
+checkpoint `cb7fce2`. All previously deferred or omitted work retains its status.
+
+### 22 September 2026 — concluding chapter heading selected by the author
+
+The author selected "The Principles Behind the Programs" for the chapter after
+the epilogue part page. Only the heading in `manuscript/chapters/epilogue.md`
+changes. The approved part-page title and formatting, all prose, and all other
+manuscript inputs remain unchanged.
+
+The ordinary three-pass rebuild retains 490 pages. Its final log has zero warnings
+and zero bad boxes; the first pass has one expected label-convergence message.
+The contents entry and bookmark use the new title. All 1,092 contents destinations,
+page labels, chapter starting pages, and the unchanged index were checked. Only
+PDF pages 12 and 475 have changed content streams. The contents, epilogue part
+page, and following chapter page were rendered and visually inspected. Source
+alignment against the current framework tree and source hygiene pass.
+
+See `review/pdf-epilogue-chapter-2026-09-22/REPORT.md` and `evidence.json`.
+Accounting: one manuscript heading line added and one removed; no prose,
+application production code, or test/CI implementation changes. No commit was
+requested or made. The established deferred and omitted scopes remain unchanged.
