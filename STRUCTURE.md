@@ -160,3 +160,15 @@ The proposal source is now structured as a compact acquisition dossier rather th
 7. Acquisition Case and Risk Handling
 
 The `proposal` / `proposal-pdf` target uses `production/metadata/proposal-metadata.yaml`, `documentclass: article`, and `--top-level-division=section`. The `proposal-sample-pdf` target appends Chapter 1, Chapter 3, Chapter 23, Chapter 35, and Chapter 37 after the proposal and evidence sheet. After the Part XI/XII swap, those samples show the conceptual pitch, first runnable example, real protocol chapter, MiniGateway construction capstone, and final architectural synthesis. The main manuscript continues to use the book metadata and `--top-level-division=part`.
+
+## SNode.C 2.0 source alignment
+
+The declared baseline is the immutable 2.0.0 snapshot in `source-baseline/`.
+Chapter 18 explains semantic logging; Chapter 34 explains the registered framework
+test architecture. The chapter sequence is unchanged. Shutdown, resource limits,
+configuration discovery/tooling, Unix credentials, streaming, and build guidance
+are integrated into their existing chapters. `EchoPair` and `SemanticLogging`
+are additional complete companions for Chapters 3 and 18.
+
+Marked complete listings are checked against companion files. Historical author
+verification is retained separately from results for the migrated source.

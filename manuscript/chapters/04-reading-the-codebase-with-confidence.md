@@ -42,11 +42,11 @@ This chapter does not try to explain every file. It teaches a reading strategy. 
 
 The first useful map is the build structure, not a class diagram.
 
-The top-level `CMakeLists.txt` defines the project, prepares project-level helper modules, delegates into `src`, and then includes packaging support. The top-level file is mostly a gateway into the framework source tree rather than the place where the framework structure itself is expressed.
+The top-level `CMakeLists.txt` defines the project, prepares project-level helper modules, delegates into `src`, adds `tests` when `SNODEC_BUILD_TESTS` is enabled, and then includes packaging support. The top-level file is mostly a gateway into the framework source tree rather than the place where the framework structure itself is expressed.
 
 `CMakeLists.txt`, then `src/`, then packaging support.
 
-The `src/CMakeLists.txt` file is more informative for architectural orientation. It defines compiler requirements and options, configures logging switches, and adds the major source subdirectories:
+The `src/CMakeLists.txt` file is more informative for architectural orientation. It defines compiler requirements and options, configures compiler diagnostics and optional instrumentation, and adds the major source subdirectories:
 
 ```text
 log/
@@ -57,7 +57,8 @@ web/
 express/
 database/
 iot/
-apps/
+apps/    when SNODEC_BUILD_APPS is enabled
+tools/
 ```
 
 That list is the first practical source-tree map.
@@ -77,6 +78,7 @@ src/
   database/   database-facing framework support
   iot/        IoT-oriented protocol and integration pieces
   apps/       example and reference applications
+  tools/      operational tools built beside the framework
 ```
 
 This map serves as orientation, not as an exhaustive inventory. It answers the first question a reader should ask about any file:
@@ -84,6 +86,24 @@ This map serves as orientation, not as an exhaustive inventory. It answers the f
 > Which architectural region am I reading?
 
 That question is more useful than immediately searching for every occurrence of a type name.
+
+### Read examples, tests, and operational tools as separate surfaces
+
+The source tree now contains more than the implementation and its in-tree demonstrations:
+
+```text
+src/apps/   variant-oriented demonstrations and application assembly
+examples/   standalone projects consuming an installed framework
+tests/      unit, component, policy, and installed-consumer checks
+docs/       focused design, behavior, and migration explanations
+src/tools/  operational tooling, including snodec-control
+```
+
+Each directory answers a different reading question. An application shows how pieces are assembled. A test shows which observable behavior a maintainer intends to protect. An installed-consumer example shows which public headers and targets are sufficient outside the source tree. An operational tool shows how the configuration surface can be used without entering the application's implementation.
+
+Read a behavior in that order when necessary: public interface, focused implementation, relevant test, and a complete consumer. A source-policy test can also explain why a tempting private dependency or diagnostic shortcut is deliberately prohibited.
+
+The `docs/` directory includes historical migration reports as well as current behavior documents. Read those reports as records of their stated stage, not as automatic authority over a later header or test. The pinned implementation remains the final source for the edition's concrete API claims.
 
 ### Start from applications, then follow inward
 
@@ -361,7 +381,7 @@ When you do not know where an executable, library, or component comes from, read
 
 Build files reveal boundaries that may be less obvious from implementation files alone.
 
-\SNodeCNextSectionMark{4.12. SOURCE PATHS, PUBLIC INCLUDES, COMPONENTS}
+\SNodeCNextSectionMark{4.13. SOURCE PATHS, PUBLIC INCLUDES, COMPONENTS}
 
 ### Do not confuse source paths, public includes, and installable components {#do-not-confuse-source-paths-public-includes-and-installable-components}
 

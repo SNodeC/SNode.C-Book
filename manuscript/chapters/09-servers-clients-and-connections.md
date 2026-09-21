@@ -633,6 +633,16 @@ This is the same distinction introduced earlier, but Chapter 9 is where it becom
 
 In the echo example, the context decides what to do when data arrives. It reads from the peer and sends data back. That is protocol behavior. It belongs in the context, not in the server-side or client-side instance callback.
 
+### Keep attempt, connection, and context lifetimes distinct
+
+A client can make several connection attempts while remaining one configured role. A successful attempt creates a peer episode; an unsuccessful attempt may never reach that point. A later HTTP upgrade can replace the context while preserving the established connection.
+
+This distinction now appears explicitly in lifecycle diagnostics and regression tests. Listener activity, connection attempts, established connections, and attached contexts should not be counted as interchangeable objects. An increasing attempt count does not prove that several peers were connected, and a context detach does not by itself prove that the transport closed.
+
+When a derived context needs to distinguish an upgrade-style replacement from final closure, the stream context exposes a protected detach reason. It distinguishes `ContextSwitch` from `ConnectionClose`. That is protocol-lifecycle information, not a reason to transfer transport ownership into the context.
+
+The same separation explains coordinated shutdown: reader and writer notifications belong to one complete connection cleanup, even though they arrive through different receiver subobjects. Chapter 18 uses these identities to interpret log records; Chapter 34 uses them to interpret lifecycle tests.
+
 ### Where the context factory fits
 
 \index{SocketContextFactory@\texttt{SocketContextFactory}}

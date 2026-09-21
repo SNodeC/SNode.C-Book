@@ -113,10 +113,10 @@ This book is not:
 
 \index{SNode.C!source baseline}
 \index{source baseline}
-\index{v1.0.2@\texttt{v1.0.2}}
+\index{SNode.C 2.0.0}
 
 
-SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the SNode.C\textsubscript{\texttt{v1.0.2}} baseline used for this edition. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
+SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the SNode.C\textsubscript{\texttt{2.0.0}} baseline used for this edition. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
 
 ### Why “layered” matters here
 

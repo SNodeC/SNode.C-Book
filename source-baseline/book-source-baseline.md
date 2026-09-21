@@ -1,14 +1,13 @@
 # Book Source Baseline
 
-This note records the SNode.C source baseline used by this manuscript package and by later verification scripts. It is package evidence, not printed-book prose.
+Current source: SNode.C 2.0.0, commit `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`.
 
-- Repository: `https://github.com/SNodeC/snode.c.git`
-- Repository identifier: `SNodeC/snode.c`
-- Source line: `master`
-- Book release tag: `v1.0.2`
-- Authoritative commit: `6e475262084ae2dab2daef8781ab9e4adb82d18e`
-- Baseline recorded on: `2026-06-26`
+The machine-readable authority is `book-source-baseline.env`; the reader checkout
+and scope are documented in `SOURCE-VERSION.md`. This is a pinned source snapshot,
+not a newly created release tag.
 
-The tag is the reader-facing checkout target. The commit SHA is the authoritative verification pin. Later CI scripts should read `source-baseline/book-source-baseline.env` instead of repeating these values manually.
-
-The former manuscript-facing tag name `Book` is superseded by the public release tag `v1.0.2` for book verification and reader setup instructions.
+The migration updates semantic logging, the test architecture, resource policy,
+shutdown, configuration discovery, installed-consumer guidance, and affected
+companion listings. Compilation and behavioral evidence must identify both the
+book commit and this framework commit. Historical author confirmations remain
+historical and are not relabeled as new automated or independent verification.

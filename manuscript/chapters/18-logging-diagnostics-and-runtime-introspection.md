@@ -1,706 +1,418 @@
 ## Logging, Diagnostics, and Runtime Introspection
 
 \index{logging}
+\index{semantic logging}
 \index{diagnostics}
 \index{runtime introspection}
 
-
 ### From configured roles to visible runtime behavior
 
-Diagnostics begin where static configuration stops: at runtime, the system must explain what its configured roles are actually doing.
+Configuration describes the system that should run. Diagnostics explain the system that did run: which roles became active, which connections existed, which protocol decisions were made, and where progress stopped.
 
-The structure was:
+That distinction matters in an event-driven application. A client handle can exist before a connection attempt succeeds. A connection can exist before a TLS handshake completes. A context can be replaced during an HTTP upgrade without the underlying peer relationship ending. A message such as `connected` is therefore useful only when the reader knows which boundary it describes.
+
+SNode.C makes that boundary part of its logging model. A semantic log record carries an origin, a boundary, a component, and optional runtime identity alongside its severity and message. The application does not have to compress every diagnostic fact into a sentence and then recover those facts by searching the sentence later.
+
+The model is:
 
 ```text
-application
-  -> instance
-      -> section
-          -> option
+where the event belongs
+  -> origin and boundary
+
+which part of the system is involved
+  -> component and runtime identity
+
+what happened
+  -> severity, optional event name, message, optional error
 ```
 
-Once those configured roles are activated and registered as runtime-visible instances, the next question is:
+This chapter connects that model to the configuration hierarchy from Chapter 17 and to the connection and context lifetimes introduced earlier. The purpose is not to produce more output. It is to make output attributable.
 
-> How can we see what the application is doing?
+### A diagnostic map before an API
 
-That is the subject of this chapter.
+Runtime visibility is broader than logging. A useful investigation combines several kinds of evidence:
 
-Configuration, generated command lines, logging, connection identity, counters, and protocol-level decisions belong to one diagnostic surface.
-
-Because SNode.C is event-driven, connections are accepted or established later, callbacks fire later, timers expire later, retries may happen later, and contexts react to peer data later. That makes runtime visibility essential.
-
-The source code may explain what can happen, but diagnostics show what did happen in one concrete run. They show which configured roles entered the runtime, which endpoints were used, which connection episodes existed, which system boundaries failed, which retries were scheduled, and which protocol decisions were made by a context.
-
-### Runtime visibility as a diagnostic map
-
-\index{runtime visibility}
-\index{diagnostic map}
-\index{observability}
-
-
-Runtime visibility in SNode.C is broader than printing log lines.
-
-A useful diagnostic map has four parts:
-
-| Visibility source | What it answers |
+| Evidence | Question it answers |
 |---|---|
-| configuration visibility | What shape did the application start with? |
-| log visibility | Which lifecycle events, decisions, and failures occurred? |
-| connection visibility | Which peer, address, counters, and durations are involved? |
-| protocol visibility | What did the protocol endpoint decide? |
+| effective configuration | Which instances, endpoints, limits, and output policies were selected? |
+| lifecycle records | Which attempts, connections, contexts, and sessions existed? |
+| protocol records | What did the protocol endpoint accept, reject, or decide? |
+| counters and timing | How much work passed through a boundary, and over what interval? |
+| an external observation | What did the peer, operating system, or service supervisor actually observe? |
 
-These sources belong together. A surprising runtime behavior may come from protocol code.
+A failed request may originate in routing, but it may also originate in a disabled instance, a wrong endpoint, a parser limit, a TLS error, or a connection that was already shutting down. The diagnostic method should identify the failing boundary before assuming that the application handler is wrong.
 
-It may also come from configuration, disabled instances, address selection, retry behavior, TLS setup, platform state, or peer lifecycle.
+Semantic logging gives these observations a common vocabulary. It does not replace packet inspection, effective-configuration output, or a small reproducing test. It makes those other observations easier to correlate with the framework's own activity.
 
-A good diagnostic style therefore does not start with random print statements. It asks where the relevant responsibility lives.
+Figure \ref{fig:logging-diagnostic-visibility-map} shows the relationship between a semantic scope, an event, filtering policy, and output. Origin and boundary are independent dimensions. A context can emit application-origin protocol meaning while the framework emits its own context-lifecycle records.
 
-#### Configuration visibility
+![Semantic logging in SNode.C: origin, boundary, component, and optional identity describe a scope; severity and event data describe an occurrence; startup policy selects records for text or JSON output.](assets/figures/pdf/fig-14-logging-diagnostic-visibility-map.pdf){#fig:logging-diagnostic-visibility-map width=90% latex-placement="tbp"}
 
-Configuration visibility answers questions such as:
+### The application-facing logging surface
 
-- Which named instances exist?
-- Which instances are enabled?
-- Which local or remote endpoint values are active?
-- Which retry or timeout values are in effect?
-- Which TLS settings are configured?
-- Which log destination and output mode are selected?
-- Which command line would reproduce this run?
+\index{Log.h@\texttt{Log.h}}
+\index{snode::log@\texttt{snode::log}}
+\index{application logger}
+\index{framework logger}
 
-Chapter 17 explained the configuration hierarchy. In this chapter, the same mechanisms are treated as diagnostic artifacts. A runtime surprise is often a configuration surprise first.
+New application code enters through one public header:
 
-If a server listens on an unexpected endpoint, if a client connects to the wrong peer, if retry behaves differently from what the operator expected, or if TLS setup fails because a path is missing, the first useful diagnostic question is not always about protocol code. It is often about the effective configured shape.
+```cpp
+#include <Log.h>
+```
 
-#### Log visibility
+The application-facing namespace is `snode::log`. It provides a copyable logger value rather than asking application code to know the backend or construct the framework's internal record machinery.
 
-Log visibility answers questions such as:
+The main construction functions serve different purposes:
 
-- Which important lifecycle events occurred?
-- Which warnings or errors happened?
-- Which system call or system boundary failed?
-- Which retry was scheduled?
-- Which instance started listening or connecting?
-- Which connection was created, became ready, or disconnected?
-- Which protocol event was significant enough to record?
-
-The logger gives those events a controlled output path.
-
-The value is not that messages are printed, but that they are placed at the layer that understands their meaning.
-
-#### Connection visibility
-
-Connection visibility answers questions such as:
-
-- Which instance owns this connection?
-- What is the connection name?
-- What are the bind, local, and remote addresses?
-- How much data was queued?
-- How much data was sent?
-- How much data was read?
-- How much data was processed?
-- When did the connection become active?
-- How long did the connection live?
-
-This information belongs to the connection model, not to arbitrary application-side bookkeeping.
-
-A connection episode should be diagnosable as a concrete peer relationship. Generic messages such as `connection closed` are rarely enough for that.
-
-#### Protocol visibility
-
-Protocol visibility answers questions such as:
-
-- Which protocol state was entered?
-- Was the first message sent?
-- Was a frame accepted or rejected?
-- Why did the protocol close the connection?
-- Which application-level event was produced?
-- Which input was intentionally left unprocessed?
-
-This belongs in the `SocketContext`, because the context is where protocol behavior lives. The connection layer can say that bytes arrived. The context can say what those bytes meant.
-
-\SNodeCNextSectionMark{18.3. THE LOGGING SURFACE}
-
-### The logging surface: ordinary logs, system-error logs, and verbose depth
-
-\index{LOG()@\texttt{LOG()}}
-\index{PLOG()@\texttt{PLOG()}}
-\index{VLOG()@\texttt{VLOG()}}
-\index{logging surface}
-
-
-SNode.C exposes three main logging forms:
-
-| Form | Purpose |
+| Function | Appropriate use |
 |---|---|
-| `LOG(level)` | ordinary runtime reporting through the normal log-level ladder |
-| `PLOG(level)` | ordinary runtime reporting plus captured system-error context |
-| `VLOG(level)` | optional diagnostic depth controlled by the verbose level |
+| `application(component, identity)` | application-owned process or component diagnostics |
+| `framework(component, boundary, identity)` | framework-owned diagnostics with an explicit boundary |
+| `forConnection(connection, ...)` | a scope derived from a live connection's instance name and connection identifier |
+| `makeLogger(scope)` | a deliberately constructed origin, boundary, component, and identity |
 
-These forms express different kinds of visibility and should not be used interchangeably. The distinction is architectural, not only syntactic.
+The defaults are convenient for a small program. An application logger defaults to component `app`, application origin, and application boundary. A framework logger defaults to component `framework` and system boundary. Those defaults are not a substitute for choosing a useful component name in a larger system.
 
-#### `LOG(level)`
+For example, an application can distinguish its measurement processing from its MQTT integration without inventing two logging backends:
 
-`LOG(level)` is for ordinary runtime reporting.
+```cpp
+auto measurementLog = snode::log::application("gateway.measurements");
+auto mqttLog = snode::log::application("gateway.mqtt");
 
-The level describes the operational importance or severity of the message.
-
-A useful interpretation is:
-
-| Level | Typical use |
-|---|---|
-| `FATAL` | unrecoverable framework or application condition |
-| `ERROR` | failed operation or serious runtime problem |
-| `WARNING` | unexpected but recoverable condition |
-| `INFO` | important normal lifecycle or operational fact |
-| `DEBUG` | developer-facing state change or decision |
-| `TRACE` | very low-level ordinary lifecycle or state reporting |
-
-`TRACE` is still part of the ordinary log-level ladder. It is not the same thing as `VLOG`.
-
-A `TRACE` message is a low-level normal log event. A `VLOG` message is diagnostic detail selected by verbose depth.
-
-That distinction keeps the ordinary log level focused on severity and lifecycle, while verbose depth can be raised only when a run needs deeper inspection.
-
-#### `PLOG(level)`
-
-`PLOG(level)` follows the ordinary log-level filtering path, but it also records captured system-error context when `errno` or comparable system-boundary context is part of the diagnosis.
-
-Typical cases include:
-
-- bind failures,
-- connect failures,
-- accept failures,
-- read or write errors,
-- descriptor failures,
-- filesystem or path problems,
-- permission problems,
-- other system-boundary failures where the platform error text explains the failure.
-
-`PLOG` should not be used merely because a message is an error. It should be used when the system error context is part of the diagnosis.
-
-A useful rule is:
-
-```text
-Use PLOG when captured system-error context helps explain the failure.
+measurementLog.info("Measurement service initialized");
+mqttLog.debug("Preparing the MQTT application role");
 ```
 
-This is narrower and more precise than “use `PLOG` for all errors.” Some errors are protocol errors, configuration errors, or application decisions. Those may deserve `LOG(ERROR)` or a protocol-specific log message, but not necessarily `PLOG`.
+The component names in this example are application-defined diagnostic names. They are not CMake components, protocol names enforced by the framework, or claims that those two operations have completed a network handshake.
 
-#### `VLOG(level)`
+SNode.C also retains lower-level logging headers and `SemanticLog.h` for existing consumers and internal integration. They should not become the starting point of a new application chapter. The public facade keeps ordinary application code independent of the backend, while existing object-scoped helpers remain useful where the framework already owns the scope.
 
-`VLOG(level)` is for optional diagnostic depth.
+### Origin, boundary, component, and identity
 
-It is controlled by the verbose level, not by the ordinary log-level ladder.
+\index{logging!origin}
+\index{logging!boundary}
+\index{logging!component}
+\index{logging!identity}
 
-A useful project convention is:
+A severity says how important a record is. It does not say who owns its meaning. The semantic scope answers that second question.
 
-| Verbose level | Typical use |
-|---|---|
-| `VLOG(1)` | common flow tracing during debugging |
-| `VLOG(2)` | detailed lifecycle, address, and configuration diagnostics |
-| `VLOG(3)` | counters, deltas, buffer sizes, parser details, repeated flow internals |
-| `VLOG(4+)` | very high-volume or highly specialized internal traces |
+#### Origin identifies the speaker
 
-The framework enforces the numeric verbose-level threshold. The meaning assigned to each depth is a convention that makes the codebase readable.
+`Origin::Framework` means that the record describes framework-owned behavior. `Origin::Application` means that the record describes application-owned behavior.
 
-The distinction is:
+This is not the same division as low-level versus high-level code. An application protocol context can be close to a connection and still speak for the application. An HTTP parser can operate above the raw stream and still speak for the framework.
 
-```text
-LOG level
-  -> how important or severe is this message?
+Origin lets an operator ask for detailed application diagnostics without necessarily requesting every framework detail, or inspect framework behavior while reducing application chatter. It is an ownership distinction that also becomes an operational filter.
 
-VLOG level
-  -> how deep into the flow do we want to look?
+#### Boundary identifies the responsibility
+
+The public boundary vocabulary is `Application`, `Configuration`, `Instance`, `Connection`, `Context`, and `System`.
+
+A configured client role and one successful peer connection are different boundaries. Retry belongs to the role and its connection attempts. A peer's lifetime belongs to the connection. The interpretation of received protocol data belongs to the context or other protocol-owning object. Configuration discovery and validation have their own boundary, even though they happen within the same executable.
+
+A boundary is not a declaration that every event at that boundary has the same severity. A connection may produce a normal informational transition, a debugging detail, or an error. Boundary and severity answer different questions.
+
+#### Component identifies the diagnostic subsystem
+
+A component name groups related records within the semantic model. Framework components name areas such as runtime, sockets, and protocols. An application should choose names that remain useful as its implementation grows.
+
+A name such as `gateway.measurements` is usually more stable than the name of one temporary callback. The component should describe the diagnostic responsibility rather than the incidental function that currently implements it.
+
+Component names are exact policy keys. They should not be treated as an undocumented wildcard language or as an inheritance tree inferred from dots in the name.
+
+#### Identity distinguishes concrete runtime work
+
+`Identity` can carry an instance name, a server/client role, and a connection identifier. These fields are optional because not every event has all three identities.
+
+Startup has no peer connection. A named client can fail before a connected peer episode exists. A context can have instance and connection identity without having an independently assigned server/client role. Omitting a fact that is not available is better than inventing one.
+
+Both `Scope` and `Identity` own their string data. A logger therefore need not retain borrowed views into a temporary name. That is important when a callback or a logger value outlives the local expression that assembled its scope.
+
+A deliberately constructed context scope can look like this:
+
+```cpp
+snode::log::Scope scope;
+scope.origin = snode::log::Origin::Application;
+scope.boundary = snode::log::Boundary::Context;
+scope.component = "gateway.measurements";
+scope.identity.instance = "measurement-input";
+
+auto log = snode::log::makeLogger(std::move(scope));
+log.debug("Measurement context configured");
 ```
 
-This keeps ordinary logs readable while still allowing deep inspection when needed.
+This is a scope-construction example, not a fabricated connection event. When a live connection is available, derive its actual identity instead of assigning an arbitrary connection string.
 
-### Severity and diagnostic depth
+### Connection and context scopes
 
-\index{severity}
-\index{diagnostic depth}
+\index{forConnection()@\texttt{forConnection()}}
+\index{SocketContext!logging}
+\index{frameworkLog()@\texttt{frameworkLog()}}
 
+`forConnection(...)` takes a connection object by reference. It uses `getInstanceName()` and `getConnectionId()` to populate the scope; the connection identifier is represented as a string in the public identity.
 
-SNode.C uses two related visibility controls.
+Inside code that already has a valid stream connection, an application-facing logger can be constructed as follows:
 
-The ordinary log level controls operational class:
+```cpp
+auto log = snode::log::forConnection(
+    *getSocketConnection(),
+    "gateway.measurements",
+    snode::log::Origin::Application,
+    snode::log::Boundary::Context);
 
-```text
-TRACE
-DEBUG
-INFO
-WARNING
-ERROR
-FATAL
+log.info("Measurement input ready");
 ```
 
-The verbose level controls diagnostic depth:
+The example assumes a live connection obtained from a stream context. It does not extend the connection's ownership. Constructing a scope from identity is not the same thing as retaining the connection object itself.
 
-```text
-VLOG(1)
-VLOG(2)
-VLOG(3)
-...
+SNode.C stream contexts also expose inherited `log()` and `frameworkLog()` helpers. These are already associated with the context's owned diagnostic scope. A derived application context can use the application-origin helper directly:
+
+```cpp
+void MeasurementContext::onConnected() {
+    log().info("Measurement protocol context attached");
+}
 ```
 
-Internally, verbose messages are emitted through the logger's verbose path. For the reader and application author, the important distinction is simpler:
+The method body is illustrative; `MeasurementContext` stands for the application's derived context. The important distinction is that `log()` contributes application-origin meaning and `frameworkLog()` is the framework-origin context surface. Their existing return type belongs to the lower-level logging model; it is not the `snode::log::Logger` facade type. Ordinary severity calls look similar, but code should not mix the two namespaces' level enums or error-method names accidentally.
 
-```text
-ordinary lifecycle and severity
-  -> LOG / PLOG
-
-optional diagnostic depth
-  -> VLOG
-```
-
-This separation avoids a common logging failure mode: forcing all diagnostic detail into `DEBUG` or `TRACE` until ordinary logs become unreadable.
-
-A low ordinary log level should be able to show the shape of a run. A higher verbose level should be able to explain the fine structure of that run. Those are different jobs.
-
-### Output modes in real deployments
-
-\index{logging!output modes}
-\index{deployment logging}
-
-
-Logging also has operational modes.
-
-A network application may run in the foreground, as a daemon, with file logging, in quiet mode, with colored terminal output, or in monochrome output for files and pipes.
-
-These are not cosmetic details. They decide whether diagnostics are usable in the environment where the program actually runs.
-
-| Mode | Purpose |
-|---|---|
-| foreground logging | immediate human feedback |
-| file logging | later inspection and deployment diagnostics |
-| quiet mode | suppress nonessential console output |
-| color output | improve terminal readability |
-| monochrome output | improve logs in files, pipes, and plain consoles |
-
-output mode belongs to the application shell. It is not the responsibility of every server, client, connection, or context to invent its own logging destination.
-
-SNode.C uses a centralized logging surface so that application-level settings can control where and how messages appear. That is especially important for daemonized applications, OpenWrt deployments, services started from init systems, and long-running systems where the interesting event may happen long after startup.
-
-The architecture matters here too:
-
-```text
-application shell
-  -> logging destination and output mode
-
-communication role
-  -> lifecycle facts
-
-connection
-  -> peer episode facts
-
-context
-  -> protocol meaning
-```
-
-### Logging should follow responsibility boundaries
-
-\index{logging!responsibility boundaries}
-\index{application-level logging}
-\index{connection-level logging}
-\index{context-level logging}
-
-
-The central rule is:
+An application that needs the public facade's `event(...)`, `systemError(...)`, or `Level` type can use a `snode::log` logger. A derived context that only needs its existing application-scoped severity methods can use the inherited helper without rebuilding the scope. A framework maintainer should preserve the origin already owned by the framework boundary.
 
 ::: {.snodec-rule title="Diagnostic responsibility rule"}
-Log from the layer that has the right responsibility.
+Log from the boundary that owns the meaning, and preserve the identity that the boundary already knows.
 :::
 
-SNode.C already has clear architectural boundaries. Logging should follow them.
+This rule does not imply that every protocol object exposes a public `log()` method. Some protocol-specific logging helpers are deliberately private. A consumer should use the public facade or a documented inherited surface, not reach into a private helper because its name looks convenient.
 
-| Boundary | Good log content |
+### Severity, events, and errors
+
+\index{logging!severity}
+\index{structured events}
+\index{systemError()@\texttt{systemError()}}
+
+The public severity enum is:
+
+```text
+Trace  Debug  Info  Warning  Error  Critical  Off
+```
+
+The six emitting methods are `trace`, `debug`, `info`, `warn`, `error`, and `critical`. Notice the spelling distinction: the enum value is `Level::Warning`, while the method is `warn(...)`. `Off` disables output; it is not another kind of emitted diagnostic.
+
+A useful severity policy is:
+
+| Severity | Typical meaning |
 |---|---|
-| application | startup, shutdown, config file, log file, daemonization |
-| instance | listen/connect activation, disabled state, retry scheduling |
-| connection | addresses, lifecycle events, counters, duration |
-| context | protocol-specific state and decisions |
+| `Info` | an operationally useful normal transition |
+| `Debug` | a decision or lifecycle detail needed during investigation |
+| `Trace` | fine-grained or repeated diagnostic detail |
+| `Warning` | an unexpected condition from which the role can recover |
+| `Error` | a failed operation that needs attention |
+| `Critical` | a severe condition with broad operational consequences |
 
-This avoids a common failure mode: placing all messages wherever they are convenient to print. A log line is most useful when its location matches the meaning of the message.
+Logging severity does not perform the recovery action. In particular, a `critical(...)` call does not replace a decision to stop the runtime, close a connection, reject a request, or return an error. The control path and the explanation of that control path remain separate.
 
-Figure \ref{fig:logging-diagnostic-visibility-map} summarizes that responsibility map. The figure should not be read as a logging pipeline. It shows where different kinds of runtime evidence belong: the application shell explains operational setup, the instance scope explains role activation, the connection scope explains one peer episode, and the context scope explains protocol meaning.
+#### Stream and formatted messages
 
-![Logging and diagnostic visibility in SNode.C: application shell, instance, connection, and context each expose different runtime evidence and should log from the layer that owns the meaning.](assets/figures/pdf/fig-14-logging-diagnostic-visibility-map.pdf){#fig:logging-diagnostic-visibility-map width=90% latex-placement="tbp"}
+The severity methods support both stream construction and positional `{}` formatting:
 
-The lower row of the figure separates logging form from architectural responsibility. `LOG(level)`, `PLOG(level)`, and `VLOG(n)` decide how a message is emitted and filtered. The application shell, instance scope, connection scope, and context scope decide what the message means.
-
-#### Application-level logging
-
-Application-level logs should describe the operational shell.
-
-Examples include:
-
-- configuration file selected,
-- configuration display or command-line generation requested,
-- logging initialized,
-- daemonization started,
-- process user or group applied,
-- shutdown requested,
-- application terminated.
-
-These messages belong above the communication roles. They are about the executable as an operating program.
-
-#### Instance-level logging
-
-Instance-level logs should describe server/client role activity.
-
-Examples include:
-
-- server starts listening,
-- client starts connecting,
-- retry is scheduled,
-- reconnect is scheduled,
-- instance is disabled,
-- listen/connect fails or succeeds.
-
-These messages belong to the configured role that has entered the runtime as an instance.
-
-They should not be hidden inside protocol code, because protocol code should not have to explain why a role was activated, disabled, or retried.
-
-#### Connection-level logging
-
-Connection-level logs should describe one peer relationship.
-
-Examples include:
-
-- connection object created,
-- connection became ready,
-- peer disconnected,
-- local and remote addresses,
-- online duration,
-- queued, sent, read, and processed totals.
-
-These messages belong to the connection episode.
-
-They are not application-wide facts, and they are not necessarily protocol facts. They describe the concrete relationship between this process and one peer.
-
-#### Context-level logging
-
-Context-level logs should describe protocol meaning.
-
-Examples include:
-
-- protocol conversation begins,
-- first application message is sent,
-- protocol frame accepted,
-- protocol frame rejected,
-- protocol state changes,
-- protocol closes the session intentionally.
-
-The context should not duplicate generic socket facts that the connection layer already knows. It should add protocol meaning.
-
-That keeps the logs aligned with the architecture:
-
-```text
-connection layer
-  -> connection facts
-
-context layer
-  -> protocol meaning
+```cpp
+auto log = snode::log::application("gateway.measurements");
+log.info() << "Accepted measurement sequence " << sequence;
+log.info("Accepted measurement sequence {}", sequence);
 ```
 
-### Visibility at lifecycle boundaries
+The public formatting surface is deliberately small. It supports positional `{}` placeholders and escaped `{{` and `}}` braces. It should not be described as the complete `std::format` or fmt formatting language. Malformed braces and argument-count mismatches throw `std::invalid_argument` when formatting is performed.
 
-\index{lifecycle logging}
-\index{onConnect@\texttt{onConnect}}
-\index{onConnected@\texttt{onConnected}}
-\index{onDisconnect@\texttt{onDisconnect}}
+The two lines above are alternatives, not a reason to emit the same event twice. Choose the form that keeps the local code readable.
 
+#### Stable event names
 
-Lifecycle boundaries are natural diagnostic points. They correspond to meaningful transitions in the framework.
+A named event separates a machine-facing classification from a human-facing explanation:
 
-#### Listen and connect activation
-
-The first useful visibility point is activation. For a server, this means listen activation. For a client, this means connect activation.
-
-A good instance-level log can answer:
-
-- Which instance is activating?
-- Which endpoint is involved?
-- Was activation successful?
-- Will a retry be scheduled?
-- Is the failure recoverable or fatal?
-
-This belongs to instance-level visibility.
-
-Activation is where configuration becomes runtime behavior. It is therefore a good place to report the configured endpoint and the resulting status, without forcing the reader to infer that from later connection events.
-
-#### `onConnect` and `onConnected`
-
-For stream connections, there is a useful distinction between early connection creation and full readiness.
-
-A diagnostic style can reflect that distinction:
-
-| Boundary | Meaning |
-|---|---|
-| `onConnect` | connection object exists |
-| `onConnected` | connection is fully ready |
-| `onDisconnect` | connection episode can be summarized |
-
-`onConnect` and `onConnected` are good places for lifecycle visibility. They can show instance name, connection name, local address, and remote address. The amount of detail should depend on the output channel.
-
-The lifecycle event itself can be an ordinary log message. Detailed address and state dumps can be verbose diagnostics.
-
-This distinction is especially useful when a connection object can exist before the full protocol or connection-layer readiness is reached. A diagnostic message that preserves that difference is more valuable than a vague message that says only `connected`.
-
-#### `onDisconnect` summaries
-
-Disconnect is a natural summary boundary. At that point, the whole connection episode is known.
-
-A good disconnect summary may include:
-
-- connection name,
-- local address,
-- remote address,
-- online since,
-- online duration,
-- total queued,
-- total sent,
-- total read,
-- total processed.
-
-The event itself is a lifecycle fact. The detailed counters and timing are diagnostic depth.
-
-That makes `onDisconnect` a good example of the `LOG` / `VLOG` split:
-
-```text
-LOG(DEBUG)
-  -> connection disconnected
-
-VLOG(2)
-  -> addresses and duration
-
-VLOG(3)
-  -> counters and deltas
+```cpp
+log.event(snode::log::Level::Info,
+          "measurement.accepted",
+          "Accepted measurement sequence {}",
+          sequence);
 ```
 
-This keeps normal debug output readable while preserving deeper information when needed.
+`measurement.accepted` is an application-defined event name in this example. Its value is that a downstream consumer can recognize the event without depending on the exact English wording of the message. Changing punctuation should not require changing an operational query.
 
-The exact numeric verbose level is project-specific; the durable distinction is between ordinary lifecycle facts and optional deeper evidence.
+A stable event name should describe a completed or observed fact. It should not say that publication succeeded when the code has only queued a publication request.
 
-#### Context-level protocol events
+#### Explicit system errors
 
-The context is the right place for protocol-aware diagnostics. For example, an echo protocol may log when it sends the first client-side message. A WebSocket context may log when a frame is accepted or rejected.
+A system error should carry the error from the failing operation, not whichever `errno` happens to be visible later.
 
-An MQTT context may log when protocol state changes. These messages should use the vocabulary of the protocol, not the vocabulary of the socket layer.
-
-A context log should help the reader answer:
-
-```text
-What did the protocol endpoint decide?
+```cpp
+const int errorNumber = errno;
+log.systemError(snode::log::Level::Error,
+                errorNumber,
+                "Unable to open measurement input");
 ```
 
-not merely:
+Capture the value immediately after the relevant failure. When a callback already supplies an error number, use that argument instead of consulting the process's current `errno`. The overload taking `std::error_code` also preserves an explicit category, which matters when the error is not a generic POSIX error number.
 
-```text
-What did the socket do?
+The stream form is available as well:
+
+```cpp
+log.systemError(snode::log::Level::Error, errorNumber)
+    << "Unable to open " << path;
 ```
 
-### Configuration as a diagnostic source
+Protocol rejection, configuration validation, and application policy are not automatically system errors. A malformed measurement can deserve a warning without having any meaningful operating-system error attached to it.
 
-\index{configuration!diagnostics}
-\index{effective configuration}
+### Startup policy and filter precedence
 
+\index{logging!filter precedence}
+\index{logging!configuration}
+\index{log-format@\texttt{log-format}}
 
-Many runtime surprises are configuration surprises. Before assuming that protocol code is wrong, inspect the effective configuration.
+Logging policy belongs to startup and deployment, not to every protocol callback.
 
-::: {.snodec-checklist title="Configuration diagnostic checklist"}
-- Is the expected instance enabled?
-- Is it listening on the expected local endpoint?
-- Is the client connecting to the expected remote endpoint?
-- Are retry, timeout, TLS, quiet-mode, and log-destination settings what the operator expects?
-- Is the generated command line consistent with the intended deployment?
-- Did a command-line override change a value supplied in the configuration file or in code?
-:::
-
-Configuration display belongs in a diagnostics chapter because it shows the shape that the runtime is actually using.
-
-The hierarchy from Chapter 17 becomes a diagnostic map:
+The effective threshold is selected in this order:
 
 ```text
-application
-  -> instance
-      -> section
-          -> option
+matching instance override
+  -> matching component override
+      -> boundary override
+          -> origin override
+              -> global threshold
 ```
 
-A wrong port, a missing TLS path, a disabled instance, a changed retry timeout, or an unexpected log file path can be understood as a value in that map.
+The first applicable override selects the threshold. These are not five successive minimum filters. A component override can therefore enable debugging for one component even when the global threshold is `Error`; an instance override can be more specific still.
 
-#### Showing effective configuration
+A normal SNode.C application exposes this policy through its existing root configuration:
 
-Showing the effective configuration answers:
+```sh
+./minigateway --log-level=info --log-format=json \
+  --log-origin-level=application=debug \
+  --log-instance-level=mqtt-uplink=trace \
+  mqtt-uplink remote --host 127.0.0.1 --port 1883
+```
+
+The MQTT endpoint is explicit because the role still needs its ordinary connection configuration. Logging options do not satisfy unrelated required endpoint values.
+
+The corresponding override options are `--log-origin-level`, `--log-boundary-level`, `--log-component-level`, and `--log-instance-level`. Their values use `name=level` pairs; lists can contain comma-separated pairs. Named levels are clearer than numeric compatibility spellings when writing a new command line.
+
+A focused debugging run should normally change the narrowest useful scope. Raising every framework component to trace can obscure the one connection being investigated and can change timing substantially.
+
+#### Public settings and the runtime configuration path
+
+The public facade also provides `configure(Settings)`. A standalone program that uses the logger directly can select levels, text or JSON output, color policy, quiet mode, a log file, and semantic overrides through that value.
+
+A normal SNode.C application already has a startup configuration path: `core::SNodeC::init(...)` and runtime bootstrap establish the application configuration and apply its semantic logging policy. Do not layer an unrelated `configure(Settings)` call over that path and assume that both configurations will merge. The public configuration function initializes and freezes its own policy; it is not a per-record adjustment or a documented live-reconfiguration interface for a running SNode.C service.
+
+Create long-lived logger values after the intended startup policy has been established. The facade constructs a logger with an effective threshold, while framework-owned scopes have their own lifecycle and generation-aware caching. Those details are reasons to respect the startup boundary, not reasons for application code to manage internal cache generations.
+
+### A complete public-API example
+
+The electronic companion `SemanticLogging` is deliberately a logging-only program. It does not start an event loop or pretend that a network connection has been established. That makes the public settings path visible without mixing it with runtime bootstrap.
+
+<!-- snodec-source: companion/examples/SemanticLogging/main.cpp -->
+```cpp
+#include <Log.h>
+
+#include <system_error>
+
+int main() {
+    snode::log::Settings settings;
+    settings.level = snode::log::Level::Info;
+    settings.format = snode::log::Format::Json;
+    settings.color = snode::log::ColorMode::Never;
+    settings.componentLevels.push_back({"gateway.measurements", snode::log::Level::Debug});
+    snode::log::configure(settings);
+
+    snode::log::Identity identity;
+    identity.instance = "measurement-input";
+    auto log = snode::log::application("gateway.measurements", identity);
+
+    log.info("Measurement example initialized");
+    log.event(snode::log::Level::Info,
+              "measurement.accepted",
+              "Accepted measurement sequence {}",
+              1);
+    log.debug() << "Diagnostic sequence " << 1;
+    log.systemError(snode::log::Level::Warning,
+                    std::make_error_code(std::errc::permission_denied),
+                    "Demonstration error; no file operation was attempted");
+}
+```
+
+The error in the last record is deliberately constructed. It demonstrates typed error reporting; it is not a transcript of a failed file operation. The JSON output can be checked for origin, boundary, component, instance, severity, event name, and error data without fixing a timestamp or relying on terminal color.
+
+The example links the installed logger target through the normal SNode.C package dependency graph. The companion source tree contains the complete CMake project. It is useful to compare this small program with the network-oriented examples, where startup policy comes from the SNode.C application configuration instead.
+
+### Text, JSON, and presentation
+
+\index{JSON logging}
+\index{logging!output modes}
+\index{logging!presentation}
+
+Human-readable text and machine-readable JSON are presentations of the same semantic event, not separate logging systems.
+
+The structured output has a versioned record shape. It includes timestamp, level, origin, boundary, component, and message, with identity, event, and error fields where those facts are present. An absent identity should not be interpreted as an empty but verified identity. Downstream processing should distinguish missing information from a known value.
+
+Text output keeps those facts readable at a terminal. JSON output keeps them available to a collector without requiring the collector to reverse-engineer the English message. Both forms should retain the same meaning.
+
+`emit(...)` can accept a `Message` with separate plain and terminal presentations. That is useful for an intentionally formatted diagnostic, but it is not permission to place different facts in the two versions. File and JSON output should remain usable without terminal escape sequences. The framework validates the relationship between plain text and allowed terminal presentation rather than trusting arbitrary escape sequences.
+
+Quiet mode controls console output; a configured file sink is a separate destination. File logging, daemonization, service supervision, and terminal color should be configured at the application boundary. A context should not open its own competing log file merely because it needs one additional message.
+
+### Cost, confidentiality, and diagnostic restraint
+
+\index{logging!disabled paths}
+\index{logging!sensitive data}
+
+A disabled formatted log call skips the logger's formatting work. It does not undo the normal C++ evaluation of arguments before the call. The same issue applies to an expensive expression supplied to a stream operator.
+
+Guard work that exists only to prepare a diagnostic:
+
+```cpp
+if (log.enabled(snode::log::Level::Trace)) {
+    log.trace("Payload summary: {}", buildDiagnosticSummary(payload));
+}
+```
+
+Here `buildDiagnosticSummary` represents application work. It is not a SNode.C API. The point is where the work is placed: inside the enabled check, so it need not run when the record is disabled.
+
+Do not put necessary application side effects in such an expression. Enabling logging must not decide whether a measurement is accepted or a protocol state advances. Conversely, disabling logging should not silently skip required work.
+
+Caching a suitable logger can avoid repeatedly constructing the same application scope, but no general zero-allocation or zero-cost promise follows from the existence of a disabled path. The code and tests distinguish suppression, formatting, scope lifetime, and backend output. Chapter 34 explains how those contracts are protected.
+
+Payloads, authorization headers, cookies, credentials, and configuration values can also contain sensitive data. A useful diagnostic often records the operation, size, identity, and reason without recording the entire content. Semantic fields improve attribution; they do not automatically redact an application-defined message. The application still owns that decision.
+
+### Reading lifecycle evidence correctly
+
+\index{connection!diagnostics}
+\index{context!lifecycle}
+
+A connection attempt, an established transport, an attached context, and a protocol session are related events, but they are not synonyms.
+
+When a client retries, the named role can remain the same while the attempt changes. When HTTP upgrades to WebSocket, the context changes while the peer connection continues. When MQTT resumes or establishes a session, protocol meaning is added above the transport. Diagnostic wording should preserve these distinctions rather than report each transition as another undifferentiated connection.
+
+A useful reading sequence is:
 
 ```text
-What did this application actually start with?
+configured role
+  -> activation or connection attempt
+      -> established transport
+          -> context attachment
+              -> protocol activity
+                  -> context detach and transport shutdown
 ```
 
-It can reveal changed endpoint values, disabled instances, non-default retry settings, missing TLS values, or changed logging behavior.
+Not every run traverses every stage. An endpoint can fail before a connection exists, and an intentional context switch is not necessarily a network failure.
 
-This is diagnostic evidence, not only configuration output. It tells the reader whether the application that actually started is the application the operator thought they started.
+Counters need the same care. Cumulative queued bytes are not the current pending queue length. Read bytes and processed bytes describe different boundaries. A context's counters describe its own period of protocol responsibility, while connection counters describe the broader peer episode. Raising trace output does not remove the need to interpret the counter at the boundary that owns it.
 
-#### Generated command lines
-
-Generated command lines answer:
-
-```text
-How can this configuration be reproduced?
-```
-
-They are useful for bug reports, deployment notes, comparing expected and effective configuration, sharing a minimal reproduction, or moving a working setup to another machine.
-
-The generated command line is a textual representation of the effective configuration.
-
-A generated command line can also expose accidental complexity. If reproducing a run requires many overrides, that may be a sign that the configuration file should be made more explicit or that defaults should be revisited.
-
-### Connection metrics and identity
-
-\index{connection metrics}
-\index{connection identity}
-
-
-The connection model carries important diagnostic information.
-
-A useful table is:
-
-| Connection information | Diagnostic value |
-|---|---|
-| instance name | which configured role owns this connection |
-| connection name | which concrete connection episode is being described |
-| bind address | which bind-side endpoint was used |
-| local address | which local endpoint is visible |
-| remote address | which peer endpoint is visible |
-| total queued | how much output was queued |
-| total sent | how much output reached the writer |
-| total read | how much input was read |
-| total processed | how much input was consumed by the context |
-| online since | when the connection became active |
-| online duration | how long the connection lived |
-
-These values make diagnostics concrete. They also reduce guesswork.
-
-A log line that includes the right identity and counters can explain a runtime episode much better than a generic message such as:
-
-```text
-connection closed
-```
-
-A better diagnostic shape is:
-
-```text
-connection closed
-  -> which instance?
-  -> which peer?
-  -> how long?
-  -> how much data?
-  -> was anything left queued or unprocessed?
-```
-
-The counters are not decorative. They are evidence.
-
-If total read grows but total processed does not, the protocol endpoint may not be consuming input as expected. If data is queued but not sent, the problem may lie in write-side progress, backpressure, shutdown, or peer behavior. If a connection lives only briefly, the diagnostic question differs from a connection that stays online for hours and then fails.
-
-The exact interpretation depends on the layer, but the values give the reader a starting point.
-
-### Runtime introspection is broader than logging
-
-\index{runtime introspection}
-\index{metrics}
-
-
-In this chapter, runtime introspection means practical runtime visibility.
-
-It is the combined ability to inspect effective configuration, generated command lines, ordinary logs, verbose logs, system-error logs, connection identity, counters, durations, and protocol-level context decisions.
-
-Different problems require different visibility sources. A wrong port is a configuration problem. A failed bind is a system-boundary problem.
-
-A repeated retry is an instance-level flow problem. A peer closing unexpectedly is a connection-lifecycle problem. A rejected frame is a protocol problem.
-
-A good diagnostic style uses the right visibility source for the problem.
-
-Therefore, runtime introspection is broader than logging. Logs are one form of runtime evidence. Effective configuration, generated command lines, connection metrics, and context decisions are evidence too.
-
-### Too much logging is a failure mode
-
-More logging is not automatically better diagnostics. Too much logging can make a system harder to understand. Too much logging creates another kind of opacity rather than visibility.
-
-This happens when:
-
-- high-frequency events flood the output,
-- detailed flow internals appear at ordinary log levels,
-- protocol meaning is hidden under repetitive counters,
-- errors and normal flow are mixed without structure,
-- every layer logs the same fact,
-- verbose diagnostics are always enabled by default.
-
-The solution is not to remove diagnostics. The solution is to place them at the right level. Use ordinary logs for important lifecycle and severity.
-
-Use verbose logs for optional depth. Use system-error logs when captured system context matters. Use context logs for protocol meaning.
-
-A quiet log is not necessarily a good log. A noisy log is not necessarily an informative log. The useful goal is a log stream whose messages answer real runtime questions at the layer that understands them.
-
-### A good log line answers a question
-
-Before adding a log line, ask what runtime question it answers.
-
-Examples:
-
-- Which instance is active?
-- Which endpoint is being used?
-- Which peer connected?
-- Did the connection become fully ready?
-- Why is a retry scheduled?
-- Which system boundary failed?
-- How much data moved?
-- Which protocol transition occurred?
-- Which configuration state caused this behavior?
-- Which layer is responsible for the decision?
-
-If the message does not answer a useful question, it probably adds noise. This rule is simple, but it keeps logs readable.
-
-It also helps decide where the log belongs. A message about a selected configuration file belongs at application level. A message about retry scheduling belongs at instance level. A message about queued bytes belongs at connection level. A message about an invalid MQTT packet belongs at context level.
-
-### A practical diagnostic workflow
-
-\index{diagnostic workflow}
-\index{debugging}
-
-
-A useful SNode.C diagnostic workflow is:
-
-1. Inspect the effective configuration.
-2. Confirm which instances exist and which are enabled.
-3. Check ordinary lifecycle logs.
-4. Check warnings and errors.
-5. Use `PLOG` output when captured system-error context helps explain a boundary failure.
-6. Increase verbose level only when more detail is needed.
-7. Inspect connection identity, addresses, counters, and duration.
-8. Use context-level logs for protocol meaning.
-
-Treat this as a useful rhythm, not a rigid law.
-
-In compact form:
-
-```text
-configured shape
-  -> ordinary lifecycle
-      -> warnings, errors, and system-boundary context
-          -> verbose depth
-              -> connection evidence
-                  -> protocol meaning
-```
-
-It starts with the configured shape, then follows the runtime behavior, and only then increases diagnostic depth.
-
-That order matters. If the endpoint is wrong, deeper protocol logs may only produce more noise. If the ordinary lifecycle already shows a bind failure, protocol tracing will not explain it. If the connection counters show unread or unprocessed data, the relevant question may be in the context. The diagnostic workflow should follow the architecture rather than fight it.
+The effective configuration is the companion artifact for this reading. Record the selected endpoint, limits, retry policy, and log policy along with the observed sequence. A short event history plus the exact configuration is usually a better bug report than an unbounded payload dump.
 
 ::: {.snodec-remember title="What to remember"}
-- Runtime visibility is essential because SNode.C applications progress through events, callbacks, timers, retries, and context reactions.
-- Diagnostics should start with the configured shape: application, instance, section, and option values.
-- `LOG(level)` is for ordinary runtime reporting through the log-level ladder.
-- `PLOG(level)` is for ordinary runtime reporting where captured system-error context helps explain the failure.
-- `VLOG(n)` is for optional diagnostic depth controlled by the verbose level.
-- Good log placement follows responsibility boundaries: application, instance, connection, and context.
+- Semantic logging records origin, boundary, component, and optional runtime identity separately from the message.
+- New application code uses `<Log.h>` and `snode::log`; existing context helpers retain their own object-scoped API.
+- Severity, event identity, and typed system errors answer different diagnostic questions.
+- Instance, component, boundary, origin, and global thresholds form an ordered override policy established at startup.
+- Disabled logging does not prevent ordinary C++ argument evaluation; guard expensive diagnostic-only work explicitly.
+- A useful record explains the boundary that owns the event without inventing lifecycle facts or exposing unnecessary sensitive content.
 :::

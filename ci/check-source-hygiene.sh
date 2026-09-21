@@ -116,4 +116,6 @@ if [[ "$fail" -ne 0 ]]; then
   exit "$fail"
 fi
 
+python3 ci/check-source-alignment.py
+
 echo "Source hygiene checks passed."

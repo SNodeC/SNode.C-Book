@@ -59,4 +59,15 @@ if [[ -n "$historic_packages" ]]; then
   exit 1
 fi
 
+python3 - <<'PYARCHIVE'
+import tarfile
+from collections import Counter
+with tarfile.open("dist/packages/snodec-book-proposal-package.tar.gz", "r:gz") as archive:
+    names = [member.name for member in archive.getmembers()]
+    duplicates = [name for name, count in Counter(names).items() if count > 1]
+    if duplicates:
+        raise SystemExit(f"Duplicate archive paths: {duplicates}")
+print(f"Archive path check passed: {len(names)} unique entries")
+PYARCHIVE
+
 echo "Book package build passed."

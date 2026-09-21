@@ -412,6 +412,38 @@ Is this communication local enough that path-based IPC is the right lower family
 
 This keeps the comparison architectural rather than emotional. The lower family should match the communication boundary.
 
+### Peer credentials are facts, not authorization
+
+\index{Unix-domain sockets!peer credentials}
+\index{PeerCredentials@\texttt{PeerCredentials}}
+
+A pathname selects a local endpoint, but it does not by itself express an application's trust decision. SNode.C provides a separate credential query for a connected Unix-domain socket:
+
+```cpp
+#include <net/un/PeerCredentials.h>
+
+const net::un::PeerCredentials peer = net::un::peerCredentials(fd);
+if (peer.status == net::un::PeerCredentialsStatus::Success) {
+    // Apply the application's policy to peer.uid and peer.gid.
+}
+```
+
+Here `fd` is an already available connected Unix-domain socket descriptor. The function does not open a connection or authenticate an application protocol. A successful result provides peer user and group facts; the optional process identifier is available on Linux and is not supplied by the `getpeereid()` path used on supported BSD/macOS targets.
+
+Check the status before using the fields. `Unsupported` means that the platform query is unavailable. `Error` means that the query failed and the result carries an error number. Neither case should be read as a successful credential check with default-valued identifiers.
+
+The architectural boundary is deliberate:
+
+```text
+transport query
+  -> reports peer facts
+
+application policy
+  -> decides whether those facts authorize an operation
+```
+
+A same-user rule, a service-account rule, and a command-specific authorization rule are different application policies. The framework does not choose one merely because the peer is local. Tests for the credential query and socket-path handling protect transport facts; the application's trust policy needs its own tests.
+
 ### Stream focus and a datagram note
 
 \index{datagram sockets}

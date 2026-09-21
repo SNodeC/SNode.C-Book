@@ -1,5 +1,8 @@
+find_package(Python3 3.9 REQUIRED COMPONENTS Interpreter)
+
 add_custom_target(
   source-baseline-check
-  COMMAND "${CMAKE_COMMAND}" -E echo
-          "SNode.C source baseline is recorded in ${BASELINE_DIR}/SOURCE-VERSION.md"
+  COMMAND "${Python3_EXECUTABLE}" "${SNODEC_BOOK_ROOT}/ci/check-source-alignment.py"
+  WORKING_DIRECTORY "${SNODEC_BOOK_ROOT}"
+  COMMENT "Checking the source pin and marked complete companion listings"
   VERBATIM)

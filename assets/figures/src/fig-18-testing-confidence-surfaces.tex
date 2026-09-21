@@ -1,113 +1,36 @@
 \documentclass[tikz,border=0pt]{standalone}
 \input{snodec-figure-style.tex}
-\usetikzlibrary{positioning,calc,fit,backgrounds}
-
+\usetikzlibrary{positioning,calc}
 \begin{document}
-
-\def\topY{33mm}
-\def\upperX{50mm}
-\def\upperY{23mm}
-\def\sideX{56.7mm}
-\def\lowerX{40mm}
-\def\lowerY{28mm}
-
 \begin{tikzpicture}[
   snodec diagram,
-  system block/.style={
-    draw=snodecBlue!78,
-    fill=snodecBlueSoft,
-    rounded corners=\snodecBoxCorner,
-    line width=\snodecBoxLineWidth,
-    align=center,
-    text width=48mm,
-    inner xsep=3.5mm,
-    inner ysep=2.6mm,
-    font=\sffamily\small
-  },
-  surface block/.style={
-    draw=snodecRule!85,
-    fill=snodecGraySoft,
-    rounded corners=\snodecBoxCorner,
-    line width=\snodecBoxLineWidth,
-    align=center,
-    text width=35mm,
-    inner xsep=3mm,
-    inner ysep=2.4mm,
-    font=\sffamily\footnotesize
-  },
-  connector/.style={snodec bus line}
+  evidence box/.style={snodec neutral box,text width=66mm,minimum height=26mm},
+  wide box/.style={snodec runtime box,text width=142mm}
 ]
-
-% ----------------------------------------------------------------------
-% Central tested system.
-% ----------------------------------------------------------------------
-\node[system block] (system) {%
-  \textbf{\textcolor{snodecTitleBlue}{tested SNode.C system}}\\[-0.4mm]
-  {\footnotesize one built, configured, running system}
-};
-
-% ----------------------------------------------------------------------
-% Surrounding confidence surfaces on a virtual ellipse.
-% ----------------------------------------------------------------------
-\node[surface block] at ($(system.center)+(0,\topY)$) (package) {%
-  \textbf{\textcolor{snodecTitleGray}{package surface}}\\[-0.4mm]
-  build / install / export\\[-0.2mm]
-  exported surface is correct
-};
-
-\node[surface block] at ($(system.center)+(-\upperX,\upperY)$) (component) {%
-  \textbf{\textcolor{snodecTitleGray}{component surface}}\\[-0.4mm]
-  local contract\\[-0.2mm]
-  remains correct
-};
-
-\node[surface block] at ($(system.center)+(\upperX,\upperY)$) (deployment) {%
-  \textbf{\textcolor{snodecTitleGray}{deployment surface}}\\[-0.4mm]
-  target environment\\[-0.2mm]
-  is handled correctly
-};
-
-\node[surface block] at ($(system.center)+(-\sideX,0)$) (protocol) {%
-  \textbf{\textcolor{snodecTitleGray}{protocol surface}}\\[-0.4mm]
-  wire behavior\\[-0.2mm]
-  matches expectation
-};
-
-\node[surface block] at ($(system.center)+(\sideX,0)$) (runtime) {%
-  \textbf{\textcolor{snodecTitleGray}{runtime surface}}\\[-0.4mm]
-  events, timers, retries\\[-0.2mm]
-  behave correctly
-};
-
-\node[surface block] at ($(system.center)+(-\lowerX,-\lowerY)$) (diagnostic) {%
-  \textbf{\textcolor{snodecTitleGray}{diagnostic surface}}\\[-0.4mm]
-  failures are visible\\[-0.2mm]
-  and attributable
-};
-
-\node[surface block] at ($(system.center)+(\lowerX,-\lowerY)$) (performance) {%
-  \textbf{\textcolor{snodecTitleGray}{performance surface}}\\[-0.4mm]
-  latency / throughput\\[-0.2mm]
-  stay acceptable
-};
-
-% ----------------------------------------------------------------------
-% Straight radial connector lines.
-% Geometrically center-to-center, visually clipped by the boxes because
-% they are drawn on the background layer.
-% ----------------------------------------------------------------------
-\begin{scope}[on background layer]
-  \draw[connector] (package.center) -- (system.center);
-  \draw[connector] (component.center) -- (system.center);
-  \draw[connector] (deployment.center) -- (system.center);
-  \draw[connector] (protocol.center) -- (system.center);
-  \draw[connector] (runtime.center) -- (system.center);
-  \draw[connector] (diagnostic.center) -- (system.center);
-  \draw[connector] (performance.center) -- (system.center);
-\end{scope}
-
-
+\node[wide box] (source) {\textbf{One explicit framework source snapshot}\\[1mm]
+  Build configuration, toolchain, dependencies, and test environment are part of the evidence.};
+\node[evidence box,below=8mm of source.south west,anchor=north west] (unit) {
+  \textbf{Unit tests}\\[1mm]
+  parsers, scopes, state machines,\\local ownership and policy results};
+\node[evidence box,right=4mm of unit] (component) {
+  \textbf{Component tests}\\[1mm]
+  real sockets and runtime sequences,\\protocol and transport composition};
+\node[evidence box,below=6mm of unit] (policy) {
+  \textbf{Source-policy tests}\\[1mm]
+  explicit API, logging, syscall,\\and architectural restrictions};
+\node[evidence box,right=4mm of policy] (installed) {
+  \textbf{Installed-consumer tests}\\[1mm]
+  selected public headers, exports,\\and an isolated consumer build};
+\node[evidence box,below=6mm of policy] (application) {
+  \textbf{External application checks}\\[1mm]
+  installed echo project and separate\\book-companion smoke tests};
+\node[evidence box,right=4mm of application] (limits) {
+  \textbf{Explicit limits}\\[1mm]
+  skipped tests are not passes;\\selected checks are not certification};
+\node[wide box,below=8mm of application.south west,anchor=north west] (ci) {
+  \textbf{CI executes and records selected checks}\\[1mm]
+  Framework CTest results, companion builds, and publication builds remain distinct.\\
+  Load, hardware, services, and target deployment need their own evidence.};
 \snodecApplyFixedCanvas
-
 \end{tikzpicture}
 \end{document}

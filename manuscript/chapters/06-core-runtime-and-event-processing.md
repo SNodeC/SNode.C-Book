@@ -50,7 +50,7 @@ That is the backbone of the chapter.
 \index{SNode.C!source reading}
 
 
-The implementation follows the same structure. The excerpts below are abridged from the pinned SNode.C `v1.0.2` source in `src/core/SNodeC.cpp`, `src/core/EventLoop.cpp`, and `src/core/EventMultiplexer.cpp`. They are not a second model of the runtime; they are source anchors for the model used in this chapter.
+The implementation follows the same structure. The excerpts below are abridged from the pinned SNode.C `2.0.0` source in `src/core/SNodeC.cpp`, `src/core/EventLoop.cpp`, and `src/core/EventMultiplexer.cpp`. They are not a second model of the runtime; they are source anchors for the model used in this chapter.
 
 First, the public facade really is a facade. `core::SNodeC` forwards runtime control to `core::EventLoop`:
 
@@ -466,6 +466,8 @@ Even without walking through every implementation detail, the distinction betwee
 
 That distinction becomes important in real systems where backpressure, staged activity, retry delays, or temporary quiescence must be represented cleanly. A receiver may still exist as part of the runtime model even when it is not meant to produce events for a while.
 
+\SNodeCNextSectionMark{6.14. DESCRIPTOR EVENT RECEIVERS}
+
 ### Descriptor event receivers: behavior attached to observed descriptors
 
 \index{descriptor receivers}
@@ -573,6 +575,34 @@ The loop checks for timed-out observed entities and releases expired or disabled
 The loop iteration returns a `TickStatus`.
 
 For normal `start()` usage, this status is usually part of the runtime's internal loop control. For explicit `tick()` usage, it becomes visible to the caller and can guide embedding, testing, or controlled integration.
+
+### Coordinated shutdown is part of the runtime model
+
+\index{shutdown}
+\index{ShutdownContext@\texttt{ShutdownContext}}
+\index{ShutdownReason@\texttt{ShutdownReason}}
+
+Stopping the main run loop and destroying every descriptor immediately are not the same operation. Established streams can have queued output or a TLS shutdown exchange still in progress.
+
+The current runtime carries a `ShutdownContext` through its existing ownership graph:
+
+```text
+EventLoop
+  -> EventMultiplexer
+      -> DescriptorEventPublisher
+          -> DescriptorEventReceiver
+              -> SocketConnectionT
+```
+
+`ShutdownReason::Requested`, `ShutdownReason::Signal`, and `ShutdownReason::NoObserver` retain the reason shutdown began. For an established stream, these reasons join the same bounded write-shutdown path rather than selecting unrelated cleanup mechanisms.
+
+A stream connection has reader and writer receiver subobjects. Both can encounter the framework notification, but the complete connection coordinates the operation once. Repeated delivery must join the existing shutdown rather than duplicate a signal callback, start a second transport shutdown, or destroy a helper that is still needed to finish.
+
+`STOPPING` therefore still contains controlled work. Read observation can remain necessary for peer EOF or TLS `close_notify`, and timeout/termination behavior bounds a peer that does not cooperate. This is continuation of cleanup, not permission for an application to start unrelated new communication.
+
+Signal-triggered shutdown still invokes the context's `onSignal(int)` callback. Its `bool` signature remains, but during coordinated framework shutdown the result cannot veto transport cleanup. A context should perform its protocol-specific response without assuming that returning `false` can keep the framework running.
+
+The public application control surface remains `core::SNodeC`. The graph above explains internal coordination; it does not ask an installed consumer to include private `EventLoop` or multiplexer implementation headers. Chapters 19 and 20 connect the same shutdown model to TLS, timeouts, and output pressure.
 
 ### What application authors should learn from this
 

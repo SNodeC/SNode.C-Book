@@ -55,5 +55,5 @@ The book is intentionally focused on SNode.C. The references below give stable b
 
 ### SNode.C project material {.unnumbered}
 
-- The SNode.C repository is the authoritative source for framework development beyond the version discussed in this book. This edition covers the SNode.C\textsubscript{\texttt{v1.0.2}} baseline.
+- The SNode.C repository is the authoritative source for framework development beyond the version discussed in this book. This edition covers the SNode.C\textsubscript{\texttt{2.0.0}} baseline.
 - The companion source trees under `companion/examples/` are the authoritative sources for the book's compact examples, MiniGateway, and MiniGateway Extended.

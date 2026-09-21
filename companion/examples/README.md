@@ -2,6 +2,15 @@
 
 This directory contains complete source trees that accompany the manuscript.
 
+## Edition and new teaching examples
+
+Use the exact 2.0.0 source snapshot in `source-baseline/SOURCE-VERSION.md`.
+The historical 1.x author-verification notes are not current-snapshot test results.
+
+`EchoPair` supplies the complete Chapter 3 files. `SemanticLogging` supplies the
+complete Chapter 18 public-API example. The selected book smoke tests check both
+with deterministic observations; inspect the specific CI run for actual results.
+
 ## Compact examples
 
 The compact examples are standalone SNode.C consumer projects for the short code
@@ -32,8 +41,8 @@ cmake --build <example-dir>/build --target <example-target>
 The `companion/examples/` directory also contains an aggregate `CMakeLists.txt` that
 configures, builds, and installs/deploys all examples together. The aggregate
 build-status note is recorded in `../../review/verification/examples-aggregate-build-verification.md`;
-it records the author-confirmed local configure/build/deploy verification status
-for the companion example set:
+it separates historical author confirmation from the current automated build
+and selected behavioral verification paths:
 
 ```bash
 cmake -S companion/examples -B build/examples \
@@ -66,7 +75,7 @@ companion/examples/MiniGateway
 companion/examples/MiniGateway-Extended
 ```
 
-These are the source-of-truth examples for Chapters 37 and 38. They are included
+These are the source-of-truth examples for Chapters 35 and 36. They are included
 in the aggregate build as `minigateway` and `minigateway-extended`; their
 individual deployment targets are `deploy-minigateway` and
 `deploy-minigateway-extended`.

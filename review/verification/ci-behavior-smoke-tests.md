@@ -1,61 +1,35 @@
 # CI Behavioral Smoke Tests
 
-This package includes a deliberately small runtime smoke-test layer in addition
-to the companion-example compile checks. For the current package, this CI layer
-is complete and has been confirmed in the public GitHub Actions workflow.
+The book uses two deliberately separate runtime check groups. Results belong to
+the exact book commit and pinned framework commit in each workflow run.
 
-The smoke tests live in:
+## Teaching examples
 
-```text
-ci/run-behavior-smoke-tests.sh
-ci/run-behavior-smoke-tests.py
-```
+`ci/run-teaching-smoke-tests.py` checks the Chapter 18 public logging example by
+parsing its actual JSON records. It also checks the Chapter 3 echo server and
+client against controlled Python socket peers. Received data is accumulated;
+tests do not equate a TCP read with an application message.
 
-They are executed by `.github/workflows/companion-examples.yml` after the pinned
-SNode.C release and the companion examples have been built. The workflow runs the
-checks in the existing GCC/Clang compiler matrix. The checked status for this
-package is: companion-example build verification complete; selected behavioral
-smoke-test verification complete.
+## Integrated showcase
 
-## Covered paths
-
-The smoke tests cover selected showcase behavior only:
-
-- start `sse-server`;
-- request `/events` with `Accept: text/event-stream`;
-- verify that the response is an SSE measurement event with `event:`, `id:`, and
-  JSON `data:` fields;
-- start `minigateway-extended`;
-- verify `/health`;
-- inject one measurement through `/tmp/minigateway-measurements.sock`;
-- verify that `/status` exposes the accepted measurement with sequence `1`;
-- verify that `/events` exposes the same accepted measurement as an SSE event.
-
-
-## Runtime command lines
-
-The smoke tests use explicit SNode.C command lines instead of guessing missing
-subcommands from CLI errors. The selected command lines are:
+`ci/run-behavior-smoke-tests.py` and its shell entry point retain the selected SSE
+and MiniGateway Extended checks: health, one Unix-domain measurement, resulting
+HTTP state, and the same measurement in an SSE event. The source commands remain:
 
 ```text
 sse-server legacy local --port 8080
 minigateway-extended mqtt-uplink remote --host 127.0.0.1 --port 1883
 ```
 
-`SSE-Server` uses a parameterless `listen(...)`, so the smoke test supplies the
-required `legacy local --port` configuration explicitly. The default port is `8080`,
-matching `SSE-EventSource-Client`, which connects to `127.0.0.1:8080`. MiniGateway Extended
-sets the HTTP listener port and Unix-domain socket path in the source, but its
-MQTT client role still needs a configured remote endpoint for the parameterless
-`connect(...)` path. The smoke test does not require a live MQTT broker; it
-exercises the HTTP/SSE and Unix-domain input paths while the MQTT role remains
-configured for retry/reconnect behavior.
+The MQTT role is configured for its normal retry behavior; no live broker is
+required by this test. Passing does not prove MQTT delivery.
 
-## Deliberate limits
+## Framework tests and limits
 
-These checks are smoke tests, not a full integration-test suite. They do not run
-an external MQTT broker, exercise OpenWrt packaging, perform load tests, run
-long-lived service supervision checks, or claim broad third-party validation.
-Their purpose is to close the most important gap between “the examples compile”
-and “the showcase event-stream and Unix-domain input paths behave as described.”
-For this package, that selected smoke-test layer is no longer an open item.
+The build script separately enables the framework's registered CTest suite.
+That suite is distinct from these book application checks. Test discovery,
+results, and skip conditions are retained in the workflow output and uploaded
+logs. Bluetooth hardware, full MQTT topologies, MariaDB service integration,
+OpenWrt packages, load tests, and long-running supervision are not certified by
+these selected checks. The historical pre-migration status record is retained
+under `history/ci-behavior-smoke-tests.md`.

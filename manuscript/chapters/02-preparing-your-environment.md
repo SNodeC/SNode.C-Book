@@ -134,23 +134,23 @@ mkdir -p ~/projects
 cd ~/projects
 git clone https://github.com/SNodeC/snode.c.git
 cd snode.c
-git checkout v1.0.2
+git checkout --detach 1f0f728fc9b3b45174f2cd790d83b2f493e58af1
 ```
 
-This creates and selects the public SNode.C release tag used by this book:
+The checked-out framework source now lives in:
 
 ```text
 ~/projects/snode.c/
 ```
 
-The book baseline is SNode.C\textsubscript{\texttt{v1.0.2}}. The tag `v1.0.2` is the reader-facing checkout target. For exact reproducibility, compare your checkout with the source pin stated once in the Preface.
+The book baseline is SNode.C\textsubscript{\texttt{2.0.0}}. The full commit is the checkout target; `2.0.0` is the project version recorded by that source. For exact reproducibility, compare `git rev-parse HEAD` with the pin in the Preface.
 
-The SNode.C repository uses `master` as its moving development line. Do not build the examples against an arbitrary newer `master` checkout unless you deliberately want to check the book against a newer framework state. If you already have a clone, update the tag information and select the book release explicitly:
+The SNode.C repository uses `master` as its moving development line. Do not build the examples against an arbitrary newer `master` checkout unless you deliberately want to check the book against a newer framework state. If you already have a clone, fetch the source and select the book snapshot explicitly:
 
 ```sh
 cd ~/projects/snode.c
-git fetch --tags
-git checkout v1.0.2
+git fetch origin
+git checkout --detach 1f0f728fc9b3b45174f2cd790d83b2f493e58af1
 ```
 
 For normal reading, do not edit the framework repository immediately. First learn where examples are located, how the build is organized, and which parts of the framework are source code, generated build output, or installation artifacts.
@@ -240,22 +240,44 @@ For the book, a local prefix is often the safer teaching setup. It makes it clea
 
 The first chapters do not require many CMake options.
 
-Still, two logging-related options are useful to recognize early:
+Build selection and runtime diagnostic policy are different choices. The build selects applications, tests, and optional instrumentation. A normal SNode.C application selects its semantic logging policy through the root configuration, for example with `--log-level=debug`.
 
-```text
-SNODEC_DISABLE_LOGLEVEL_LOGGING
-SNODEC_DISABLE_VERBOSE_LOGGING
-```
-
-These options can disable logging categories at compile time.
-
-Do not disable logging while working through the first examples unless you have a specific reason. Early in the book, visible runtime output is useful. It helps connect the code you write with the runtime behavior you observe.
-
-Later chapters will treat logging and configuration more carefully. At this stage, the important rule is simple:
+Keep useful lifecycle output enabled while working through the first examples. Chapter 18 explains the semantic logging API and its scoped thresholds; raising diagnostic detail does not require rebuilding the framework with an old macro-logging switch.
 
 ::: {.snodec-warning title="Early diagnostic warning"}
 Do not make the first examples silent before you understand what they are doing.
 :::
+
+### Selecting application, test, and diagnostic builds
+
+\index{SNODEC_BUILD_APPS@\texttt{SNODEC\_BUILD\_APPS}}
+\index{SNODEC_BUILD_TESTS@\texttt{SNODEC\_BUILD\_TESTS}}
+\index{SNODEC_ENABLE_ASAN@\texttt{SNODEC\_ENABLE\_ASAN}}
+
+The framework distinguishes three build choices that should not be confused with protocol configuration:
+
+| Option | Default | Purpose |
+|---|---|---|
+| `SNODEC_BUILD_APPS` | `ON` | build the in-tree application and demonstration targets |
+| `SNODEC_BUILD_TESTS` | `OFF` | register and build the framework's CTest suite |
+| `SNODEC_ENABLE_ASAN` | `OFF` | instrument a GCC/Clang build with AddressSanitizer |
+
+A first development build can include the tests explicitly:
+
+```sh
+cmake -S snode.c -B snode.c-tests \
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DSNODEC_BUILD_APPS=ON \
+  -DSNODEC_BUILD_TESTS=ON
+cmake --build snode.c-tests --parallel 8
+ctest --test-dir snode.c-tests --output-on-failure
+```
+
+Keep an instrumented build in a separate directory. Turning on AddressSanitizer is a compiler/linker choice, not a runtime logging level. Chapter 34 explains the test categories and how to interpret passes, failures, and skipped tests.
+
+The logger backend is fetched as an implementation dependency during configuration. An offline build therefore needs the relevant dependency sources or CMake fetch cache already available. Application code still includes `<Log.h>` rather than depending directly on the backend's headers.
+
+The source snapshot used by this edition declares version `2.0.0`. It starts a new C++ API/ABI epoch: rebuild applications and dynamically loaded extensions against the same headers and libraries. Keeping an older binary beside a newer installation is not the same as rebuilding that application successfully.
 
 ### Finding built executables
 
@@ -451,7 +473,7 @@ Before moving on, you should be able to answer these questions.
 - Do I know whether optional Bluetooth development files are installed?
 - Do I know whether optional MariaDB development files are installed?
 - Do I know whether I am using a local install prefix or a system-wide install?
-- Do I have a separate playground directory for later external experiments?
+- Do I have a separate playground project for later external experiments?
 
 If the answer to these questions is yes, the environment is ready for the first program.
 :::

@@ -400,13 +400,13 @@ req->upgrade(
     "/ws",
     "websocket",
     [](bool success) {
-        VLOG(1) << "upgrade request initiation: " << (success ? "accepted" : "rejected");
+        snode::log::application().trace() << "upgrade request initiation: " << (success ? "accepted" : "rejected");
     },
     [](const std::shared_ptr<Request>&, const std::shared_ptr<Response>&, bool success) {
-        VLOG(1) << "upgrade response: " << (success ? "accepted" : "rejected");
+        snode::log::application().trace() << "upgrade response: " << (success ? "accepted" : "rejected");
     },
     [](const std::shared_ptr<Request>&, const std::string& message) {
-        LOG(ERROR) << "upgrade response parse error: " << message;
+        snode::log::application().error() << "upgrade response parse error: " << message;
     });
 ```
 
@@ -474,6 +474,39 @@ HTTP response stream
 ```
 
 Chapter 23 treats Server-Sent Events in detail. Here, the important point is placement: EventSource belongs naturally near HTTP because it uses HTTP semantics for streaming-style behavior.
+
+### Parser and server policy are connection contracts
+
+\index{HTTP!parser limits}
+\index{ParserLimits@\texttt{ParserLimits}}
+\index{HttpServerPolicy@\texttt{HttpServerPolicy}}
+
+HTTP parsing now receives a shared `ParserLimits` snapshot from configuration. Both server request parsing and ordinary client response parsing use the nested `http.parser` policy.
+
+The options bound start-line bytes, header-line bytes, the complete header section, header-field count, and decoded body bytes. The default header-line limit remains `8192`; the other maximums default to `0`, meaning unlimited. These compatibility defaults should not be confused with a deployment-specific resource budget.
+
+Start-line and header-line limits include their wire terminators. The total header-byte limit includes the terminating empty line and is applied separately to a chunked trailer section. Field-count limits also apply separately to headers and trailers. Body limits count decoded entity bytes, not chunk framing.
+
+HTTP server instances additionally snapshot `HttpServerPolicy`: `maximum-pending-requests`, `allow-chunked-transfer`, and `allow-pipelining`. Pending requests include the request currently delivered to application middleware until its response completes. A zero pending-request maximum is unlimited; chunked transfer and pipelining are allowed by default.
+
+These checks belong before or within protocol processing. Valid admitted requests still use the normal Express middleware path; the limits do not create a second application-admission callback. With pipelining disabled, an additional buffered request is not delivered while the first is outstanding, and the connection closes after the current response according to that policy.
+
+The C++ configuration surfaces are `ConfigHttpParser`, server `ConfigHttpServer`, and client `ConfigHTTP` (`ConfigHttpClient`). Values become per-connection snapshots rather than mutable policy lookups during parsing. Chapter 17 explains their place in the configuration tree, and Chapter 20 explains the corresponding write-queue boundary.
+
+### Descriptor-based response streaming
+
+\index{FileReader@\texttt{FileReader}}
+\index{HTTP!streaming}
+
+HTTP and Express responses can pipe an existing `core::pipe::Source` through their normal streaming lifecycle. `core::file::FileReader` can open a pathname, perform `openat()`-style lookup relative to a directory descriptor, or adopt an already authorized descriptor.
+
+An opening failure can return `nullptr`. Check that return before calling `pipe(...)` or otherwise using the source. The legacy callback-based open overload still reports its result, but the callback does not make an unchecked returned pointer safe.
+
+For a valid source, a rejected `response->pipe(source)` attachment needs source cleanup, such as `source->stop()`. Later read errors, EOF, backpressure, and disconnection continue through the existing source/sink lifecycle. They are not additional synchronous opening results.
+
+Successful `adopt(fd)` transfers ownership of the descriptor to the file source. Do not close or reuse it from the caller afterward. Conversely, `open(directoryFd, path, flags)` supplies normal `openat()` lookup semantics, not a directory-confinement guarantee. Symlink, `..`, mount, and rename behavior still require a separate application security policy when confinement matters.
+
+The distinction is the same as elsewhere in the framework: transport and streaming mechanisms carry data; the application establishes which resource may be exposed.
 
 ### What remains from the lower architecture
 

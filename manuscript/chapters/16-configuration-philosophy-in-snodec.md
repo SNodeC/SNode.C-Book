@@ -549,6 +549,14 @@ For a server-side role, the hierarchy commonly narrows to the `local` section an
 
 A missing client host or port likewise belongs to the remote section of a particular client instance. Therefore, parameterless activation is a strong proof point. It works only because the role has a structured configuration identity.
 
+### Configuration can describe itself to another program
+
+The configuration model now has a machine-readable description carried inside its ordinary INI-compatible output. Structured `#@` comment records describe the document, nodes, groups, and options while leaving the real configuration assignments as INI text.
+
+That is an extension of the existing configuration surface, not a parallel JSON configuration system. Existing files without metadata remain valid. The metadata is available when description/comment output is enabled, as with `--show-config`.
+
+The distinction is useful operationally. A tool can discover the application/instance/section tree without guessing structure from a flat list of dotted keys, while the target application remains responsible for validation and canonical configuration output. Chapter 17 shows how `snodec-control` uses that separation.
+
 ### CLI11 as implementation foundation
 
 \index{CLI11@\texttt{CLI11}}
@@ -598,4 +606,3 @@ In SNode.C, the configuration hierarchy gives those changing parts a visible pla
 Configuration makes protocol behavior, context creation, lower-family choice, and endpoint identity visible to applications and operators.
 
 The practical structure is application configuration, instance configuration, sections, and the concrete options that expose the model.
-

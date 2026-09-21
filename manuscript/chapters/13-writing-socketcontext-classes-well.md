@@ -115,7 +115,7 @@ A useful overview is:
 
 | Interface area | Methods / hooks |
 |---|---|
-| sending | `sendToPeer(...)`, `streamToPeer(...)`, `streamEof()` |
+| sending | `sendToPeer(...)`, `trySendToPeer(...)`, `streamToPeer(...)`, `streamEof()` |
 | reading | `readFromPeer(...)`, `onReceivedFromPeer()` |
 | lifecycle | `onConnected()`, `onDisconnected()` |
 | shutdown | `shutdownRead()`, `shutdownWrite()`, `close()` |
@@ -169,11 +169,11 @@ For example, a client-side echo context may send the first message from `onConne
 
 `onDisconnected()` should answer a different question:
 
-> What protocol-local cleanup or final observation belongs to this endpoint when the connection ends?
+> What protocol-local cleanup or final observation belongs to this endpoint when its context is detached?
 
 It is often a good place for lightweight bookkeeping, understandable logging, or releasing protocol-specific transient state. It should not become a large recovery dump site for responsibilities that were unclear earlier.
 
-For application authors, the important rule is not to manage the context as if it owned the connection. The framework attaches the context to the connection, calls the lifecycle hooks at the appropriate points, and detaches the context when the connection ends. The context should use those hooks to express protocol-relevant behavior, not to take over framework lifetime management.
+For application authors, the important rule is not to manage the context as if it owned the connection. The framework attaches the context to the connection, calls the lifecycle hooks at the appropriate points, and detaches the context when the connection closes or another context takes over. The context should use those hooks to express protocol-relevant behavior, not to take over framework lifetime management.
 
 #### Input processing hook
 
@@ -395,7 +395,7 @@ onReceivedFromPeer()
   -> input is available
 
 onDisconnected()
-  -> connection ended
+  -> this context was detached
 
 onSignal(...) / onReadError(...) / onWriteError(...)
   -> exceptional event occurred
@@ -555,29 +555,21 @@ A good context can be understood locally. It should be possible to read the clas
 
 \index{logging!context level}
 
+A context owns protocol meaning, and its diagnostics should add that meaning rather than repeat every lower socket event. SNode.C stream contexts provide an inherited application-origin `log()` helper and a separate framework-origin `frameworkLog()` helper. The context's owned scope preserves instance and connection identity where available.
 
-Logging in context code should illuminate protocol behavior.
+A derived context can therefore write a local diagnostic without constructing a new backend:
 
-Useful logging often includes:
-
-- meaningful lifecycle transitions,
-- important protocol state changes,
-- invalid or unexpected input,
-- concise summaries of received or sent messages,
-- diagnostics around closure or timeout decisions.
-
-Less useful logging repeats every low-level detail until the protocol shape disappears. Good context logging aims for useful visibility rather than maximum output.
-
-A good test is whether the log line helps answer a protocol question:
-
-```text
-Why did this endpoint send that response?
-Why did this context close the connection?
-Why did this peer stop making progress?
-What state was reached before disconnect?
+```cpp
+log().debug("Line command accepted: {}", line);
 ```
 
-Per-byte noise may be useful during a narrow diagnostic session. It should not be the default shape of a readable protocol implementation.
+This is an illustrative statement inside the worked context, where `line` is the parsed command. It should not be expanded into indiscriminate payload logging in a real service. A command name, validation result, or selected state transition is often more useful than the whole input.
+
+New application-wide logging uses the public `<Log.h>` facade. The inherited context helper remains an existing object-scoped surface with a lower-level return type; do not assume that every private protocol object exposes the same public API. Chapter 18 explains that distinction and the startup filtering policy in detail.
+
+A good context diagnostic answers a protocol question: why a response was selected, why input was rejected, or why the context ended. During detachment, `getDetachReason()` distinguishes a context switch from connection closure. That distinction matters during protocol upgrade: a context can finish its responsibility without the peer connection ending.
+
+Logging does not own recovery. The context still chooses its protocol action, and coordinated framework shutdown still proceeds even if the existing `onSignal(int)` callback returns `false`. Diagnostics explain those decisions; they do not replace them.
 
 ### The echo context as a minimal pattern
 
@@ -594,7 +586,7 @@ The minimal pattern is:
 | Method / area | Role in the example |
 |---|---|
 | `onConnected()` | starts or observes the protocol exchange |
-| `onDisconnected()` | handles the end of the connection lightly |
+| `onDisconnected()` | handles context detachment lightly |
 | `onSignal(...)` | makes signal handling explicit |
 | `onReceivedFromPeer()` | performs the actual protocol action |
 
@@ -630,6 +622,14 @@ If those questions are hard to answer, the context may be too implicit, too stat
 A good context makes the protocol conversation visible.
 
 That is a stronger standard than merely compiling. A context can compile and still be hard to reason about. A well-written context lets the reader reconstruct the conversation from the hooks, state variables, and connection-facing operations.
+
+### Explicit queue admission without a second transport
+
+The stream context now exposes `trySendToPeer(...)` in addition to the existing void send surface. Its `QueueResult` reports whether the whole input was queued, would exceed the configured connection limit, encountered a closed writer, or arrived during write shutdown.
+
+This adds a decision point for protocol code without transferring queue mechanics into the protocol. A context can choose to defer or reject an application operation when admission fails. It should not report success for bytes that were not accepted, nor build an unbounded shadow queue that defeats the connection's limit.
+
+The ordinary `sendToPeer(...)` surface remains useful when connection failure is the intended response to a bounded-queue overflow. Chapter 20 explains that difference, the watermarks, and the lifetime of the immutable connection policy.
 
 ### The factory as the next bridge
 

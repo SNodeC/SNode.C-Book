@@ -555,30 +555,59 @@ The flow controller keeps the role coherent. The context keeps the protocol cohe
 ### Output pressure and bounded write-buffer policy
 
 \index{backpressure}
-\index{write buffer}
-\index{output pressure}
+\index{write queue}
+\index{QueueResult@\texttt{QueueResult}}
+\index{trySendToPeer()@\texttt{trySendToPeer()}}
 
+Timeouts bound waiting in time. Queue policy bounds how much pending output one connection can retain while the peer is slower than the producer.
 
-Timeouts, retries, and reconnects describe what happens when communication does not progress in time. Event-driven systems also need a policy for what happens when communication cannot progress in space.
+SNode.C now exposes that policy in the instance's existing `connection` section:
 
-The clearest example is the outgoing write buffer. A fast producer can generate data faster than a peer can receive it. A MQTT broker may fan one publication out to many subscribers. A WebSocket dashboard may have one slow browser among many fast ones. An SSE stream may remain open while the client reads slowly or stops reading altogether.
+| Option | Meaning |
+|---|---|
+| `maximum-write-queue-bytes` | maximum pending output; `0` keeps an unlimited maximum |
+| `write-queue-high-watermark` | the threshold used to suspend an attached source |
+| `write-queue-low-watermark` | the threshold used to resume it after draining |
 
-The issue is not performance alone; it is failure policy. An unbounded output queue is not robustness; it is delayed failure.
+A zero high watermark selects the established threshold based on five write blocks, capped by a finite maximum when one is configured. A zero low watermark means resuming when the queue is empty. An explicit low watermark must not exceed the effective high watermark, and an explicit high watermark must not exceed a finite maximum.
 
-A useful SNode.C application should therefore decide which boundary owns output-pressure policy: the producer creates data, the connection write buffer stores pending output for one peer, and the role or application policy decides what happens when the buffer limit is reached.
+The Chapter 3 server can select a bounded policy through its named instance:
 
-Possible policies include:
+```sh
+./echoserver echoserver connection \
+  --maximum-write-queue-bytes 1048576 \
+  --write-queue-high-watermark 786432 \
+  --write-queue-low-watermark 262144
+```
 
-- stop accepting more data for that peer,
-- drop non-essential updates,
-- disconnect the slow peer,
-- report a degraded state,
-- apply backpressure to the upstream producer where the application design allows it,
-- or persist/defer work through a deliberate bounded queue.
+The server retains the endpoint defaults established in Chapter 3. The numbers are an example deployment budget, not a universal recommendation for every peer or workload.
 
-The important word is *deliberate*. A bounded buffer with a visible failure policy is architecture. An unbounded buffer that grows until the process becomes unstable is not.
+Connections take immutable policy snapshots. The producer does not change another connection's limit by writing more quickly, and an application should not create an unbounded side queue to evade admission.
 
-This topic connects Chapter 20 with later chapters on diagnostics, deployment, testing, benchmarking, and architectural judgment. A benchmark that ignores slow receivers may measure throughput but miss the real limiting boundary. A diagnostic system that cannot identify which peer is backpressured may hide the failure. A role that owns fan-out should also own the policy for what happens when fan-out cannot complete at the produced rate.
+#### Admission is explicit and atomic
+
+`SocketConnection::trySendToPeer(...)` and the stream context overloads return `core::socket::stream::QueueResult`:
+
+| Result | What the caller may conclude |
+|---|---|
+| `Queued` | the complete supplied input was appended |
+| `WouldExceedLimit` | none of the supplied input was appended |
+| `Closed` | the writer is unavailable |
+| `ShutdownInProgress` | write shutdown has begun |
+
+A successful admission is not confirmation that the peer has received or processed the data. It is confirmation at the queue boundary.
+
+The existing void `sendToPeer(...)` API remains available. With a finite maximum, overflow on that path becomes a write error and fails the connection rather than silently omitting bytes from a still-live protocol stream. Use the result-returning API when application semantics require a decision before that failure policy is taken.
+
+This distinction matters for framed protocols. Arbitrarily dropping one part of a byte stream can corrupt everything that follows. A higher-level policy may drop a complete nonessential update before serialization, defer work within a deliberate bound, or disconnect a slow observer. It must not report a partly omitted protocol message as sent successfully.
+
+#### Pipe backpressure and shutdown
+
+Attached `core::pipe::Source` objects can be suspended and resumed by the connection queue's watermarks. That connects a file or other source to the actual downstream capacity instead of requiring a second application copy loop. A source is not resumed during write shutdown.
+
+Streamed HTTP output also has to admit headers, chunk framing, and payload fragments without emitting half of a logical fragment on rejection. A queue failure therefore terminates the affected stream/connection rather than pretending that the remaining framing can still be delivered correctly.
+
+The framework supplies the mechanical limit and result. The role still supplies the application consequence: whether to defer a measurement, reject a command, reduce an observation stream, or expose degraded status. Chapter 34 distinguishes local queue-policy tests from broader slow-peer and fan-out workloads.
 
 ### Protocol-level timeout use
 
@@ -644,8 +673,8 @@ A useful diagnostic map keeps several surfaces visible:
 - configuration visibility for intended retry, reconnect, and timeout behavior,
 - status callbacks for activation outcomes and reported state,
 - ordinary logs for lifecycle events,
-- `PLOG` / system / TLS diagnostics for boundary failures with system or secure-transport context,
-- `VLOG` for deeper timing and retry decisions,
+- typed system errors and TLS-specific error evidence for the failing semantic boundary,
+- scoped debug/trace records for timing and retry decisions,
 - connection counters and durations as evidence from one peer episode,
 - and context-level protocol logs for protocol meaning.
 

@@ -481,7 +481,7 @@ The same guided behavior appears when required configuration is missing.
 
 A parameterless `listen()` or `connect()` can fail in a way that points the user back into the hierarchy: application, instance, section, and the required option inside that section.
 
-A compact server-side session shows the idea. Here the executable is `echoserver` and the named server instance is `echo`:
+A schematic server-side session shows the idea. Here the executable is `echoserver` and the named server instance is `echo`; the exact diagnostic wording depends on the target application:
 
 ```shell
 $ echoserver
@@ -497,10 +497,10 @@ $ echoserver echo local --port
 [ArgumentMismatch] --port: 1 required port:UINT in [0 - 65535] missing
 
 $ echoserver echo local --port 8080
-2026-06-06 18:04:05 0000000000001 echo: listening on '0.0.0.0:8080 (0.0.0.0)'
+# The configured role can now enter its listening path.
 ```
 
-The exact timestamp and tick counter are run-specific. The direction matters: application, instance, section, option.
+The successful path now uses the semantic logging surface explained in Chapter 18. The direction matters here: application, instance, section, option.
 
 A named client instance follows the same idea, but the required section is usually `remote` rather than `local`. The CLI therefore teaches the structure while it reports the missing values.
 
@@ -640,6 +640,51 @@ What command-line form would reproduce the relevant option values?
 These views are diagnostic tools. They make configuration visible instead of implicit.
 
 That matters because configuration errors are often not bugs in protocol code. They are mismatches between intended deployment shape and actual configured values.
+
+### Structured discovery and snodec-control
+
+\index{snodec-control@\texttt{snodec-control}}
+\index{configuration!comment metadata}
+
+`--show-config` can include structured comment metadata under the `#@` prefix. The schema describes a document, tree nodes, option groups, and individual options. Node paths represent the actual hierarchy, including anonymous or nested subcommands; they are not limited to one fixed application/instance/section depth.
+
+The underlying file is still INI-compatible text. JSON-shaped metadata appears only inside comments, and changing an active option still means changing its ordinary configuration assignment. Metadata is omitted when description/comment output is disabled.
+
+The values also require careful reading. Current effective values, configured values, and C++ defaults are different observations. The metadata does not claim a complete historical registration-default record or a complete decomposition of every validator. A tool must respect those limits instead of interpreting every missing constraint as permission.
+
+The `snodec-control` tool lives under `src/tools/snodec-control`. It discovers a target's configuration, can inspect or edit the discovered model, and can delegate saving and execution back to the target:
+
+```sh
+snodec-control --target ./minigateway --print-summary
+snodec-control --target ./minigateway --list-options
+snodec-control --target ./minigateway \
+  --set mqtt-uplink.remote.host=127.0.0.1 \
+  --set mqtt-uplink.remote.port=1883 \
+  --check-required --print-run-command
+```
+
+The last command is a preview, not a connection attempt. Use the discovered option names for the actual application. A bare name is convenient only when it is unambiguous; full keys preserve the named role and section.
+
+`--materialize` writes a tool-produced editable configuration. `--save-config` asks the target to write its canonical configuration. `--check-required` is a local preflight check, not a replacement for the target's final validation. `--run` starts the target with the selected configuration; it does not turn the tool into an in-process runtime control API.
+
+An optional Curses interface is available with `--ui` when built with that support. The noninteractive operations remain useful without it. The tool's own build/test choices are separate from the framework test switch; its README documents `SNODEC_CONTROL_BUILD_TUI` and `SNODEC_CONTROL_BUILD_TESTS`.
+
+### Logging policy and resource policy in the same tree
+
+The root configuration now exposes semantic logging format and overrides by origin, boundary, component, and instance. A named communication instance also carries its connection resource policy, and HTTP/WebSocket instances add their protocol-specific limits.
+
+These options extend the existing tree rather than creating a second setter system:
+
+```text
+application
+  -> logging policy
+  -> named instance
+      -> connection queue policy
+      -> http/parser policy
+      -> websocket receiver policy
+```
+
+Runtime connections consume policy snapshots established from the configured tree. They do not reread a mutable deployment file for each received byte. Chapters 18, 20, 21, and 24 explain the meaning of the respective options; this chapter establishes where they belong and how they remain inspectable.
 
 ### Configuration files as operational artifacts
 

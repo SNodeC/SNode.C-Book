@@ -11,7 +11,7 @@ With the build environment in place, the first complete program can stay small e
 
 The echo service is only a small vehicle for the real purpose: making the recurring shape of SNode.C visible in real code. A good first example should be small enough that the reader can hold the whole program in mind, but complete enough that it is not pseudocode.
 
-An echo pair is ideal for that purpose: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong.
+An echo pair is ideal for that purpose: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong. Use `--log-level=debug` to include the reflected payload diagnostics; the example is deliberately bounded by the reader stopping it, not by a protocol message count.
 
 That behavior is simple, but the structure is already the structure of many later SNode.C programs:
 
@@ -41,6 +41,12 @@ role:           one server, one client
 Here `legacy` has the same meaning introduced in Chapter 2: it denotes the non-TLS stream connection variant. It does not mean that the component is obsolete.
 
 The reduced chapter example does not replace the repository version; it gives the smallest readable form of the same architectural pattern.
+
+### The standalone and chapter source trees
+
+The framework also provides `examples/echo`, a standalone installed-consumer project with its own application-level CTests. It complements the variant-oriented applications under `src/apps/echo` rather than replacing them.
+
+This chapter keeps its direct host/port teaching form. Its complete four-file version is supplied as the `EchoPair` electronic companion, including the CMake file shown below. The framework's standalone project is the next useful comparison: it uses the same context/factory idea while exercising configuration discovery and deterministic external peers through tests. Chapter 34 returns to those tests after the runtime and protocol vocabulary has been established.
 
 ### The four files
 
@@ -111,7 +117,7 @@ onReceivedFromPeer()
   send the same bytes back
 
 onDisconnected()
-  log that the connection closed
+  log why the context detached
 ```
 
 This is the first place where the event-driven nature of SNode.C becomes visible. The program does not write its own blocking read loop. It implements callback methods that the framework calls when the connection lifecycle or input state changes.
@@ -126,6 +132,7 @@ The context and the two factories come first.
 
 #### `EchoSocketContext.h`
 
+<!-- snodec-source: companion/examples/EchoPair/EchoSocketContext.h -->
 ```cpp
 #ifndef ECHO_SOCKET_CONTEXT_H
 #define ECHO_SOCKET_CONTEXT_H
@@ -188,10 +195,9 @@ The implementation is short.
 
 #### `EchoSocketContext.cpp`
 
+<!-- snodec-source: companion/examples/EchoPair/EchoSocketContext.cpp -->
 ```cpp
 #include "EchoSocketContext.h"
-
-#include <log/Logger.h>
 
 #include <string>
 
@@ -202,7 +208,7 @@ EchoSocketContext::EchoSocketContext(core::socket::stream::SocketConnection* soc
 }
 
 void EchoSocketContext::onConnected() {
-    VLOG(1) << "Echo connected";
+    log().info() << "Echo context attached";
 
     if (role == Role::CLIENT) {
         sendToPeer("Hello peer! Nice to see you!!!");
@@ -210,7 +216,9 @@ void EchoSocketContext::onConnected() {
 }
 
 void EchoSocketContext::onDisconnected() {
-    VLOG(1) << "Echo disconnected";
+    log().info("Echo context detached: {}",
+               getDetachReason() == DetachReason::ContextSwitch
+                   ? "context switch" : "connection close");
 }
 
 bool EchoSocketContext::onSignal([[maybe_unused]] int signum) {
@@ -223,7 +231,7 @@ std::size_t EchoSocketContext::onReceivedFromPeer() {
     const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
 
     if (chunkLen > 0) {
-        VLOG(1) << "Data to reflect: " << std::string(chunk, chunkLen);
+        log().debug() << "Data to reflect: " << std::string(chunk, chunkLen);
         sendToPeer(chunk, chunkLen);
     }
 
@@ -243,9 +251,9 @@ core::socket::stream::SocketContext* EchoClientSocketContextFactory::create(
 
 This file contains the whole protocol behavior.
 
-`onConnected()` is called when the connection has reached the connected state. Only the client sends an initial message. If the server also sent immediately, the example would no longer show the client-initiated communication pattern clearly.
+`onConnected()` marks attachment of this protocol context to the ready connection. Only the client sends an initial message. If the server also sent immediately, the example would no longer show the client-initiated communication pattern clearly.
 
-`onReceivedFromPeer()` reads available bytes into a local buffer. If bytes were read, the context logs them and sends the same bytes back. The return value tells the framework how many bytes were consumed.
+`onReceivedFromPeer()` reads available bytes into a local buffer. If bytes were read, the context can log them at debug level and sends the same bytes back. The semantic log scope belongs to the context; Chapter 18 explains its identity and filtering. The return value tells the framework how many bytes were consumed.
 
 The factories allocate the concrete context. The framework owns the surrounding connection machinery; the user supplies the protocol object that belongs to a connection.
 
@@ -272,11 +280,13 @@ The server entry point is small because the protocol behavior already lives in t
 
 #### `echoserver.cpp`
 
+<!-- snodec-source: companion/examples/EchoPair/echoserver.cpp -->
 ```cpp
 #include "EchoSocketContext.h"
 
 #include <core/SNodeC.h>
-#include <log/Logger.h>
+#include <core/socket/State.h>
+#include <Log.h>
 #include <net/in/stream/legacy/SocketServer.h>
 
 int main(int argc, char* argv[]) {
@@ -293,18 +303,18 @@ int main(int argc, char* argv[]) {
             const EchoServer::SocketAddress& socketAddress, const core::socket::State& state) {
             switch (state) {
                 case core::socket::State::OK:
-                    VLOG(1) << instanceName << ": listening on '" << socketAddress.toString()
+                    snode::log::application("echo").info() << instanceName << ": listening on '" << socketAddress.toString()
                             << "'";
                     break;
                 case core::socket::State::DISABLED:
-                    VLOG(1) << instanceName << ": disabled";
+                    snode::log::application("echo").info() << instanceName << ": disabled";
                     break;
                 case core::socket::State::ERROR:
-                    LOG(ERROR) << instanceName << ": " << socketAddress.toString() << ": "
+                    snode::log::application("echo").error() << instanceName << ": " << socketAddress.toString() << ": "
                                << state.what();
                     break;
                 case core::socket::State::FATAL:
-                    LOG(FATAL) << instanceName << ": " << socketAddress.toString() << ": "
+                    snode::log::application("echo").critical() << instanceName << ": " << socketAddress.toString() << ": "
                                << state.what();
                     break;
             }
@@ -374,11 +384,13 @@ The client mirrors the server.
 
 #### `echoclient.cpp`
 
+<!-- snodec-source: companion/examples/EchoPair/echoclient.cpp -->
 ```cpp
 #include "EchoSocketContext.h"
 
 #include <core/SNodeC.h>
-#include <log/Logger.h>
+#include <core/socket/State.h>
+#include <Log.h>
 #include <net/in/stream/legacy/SocketClient.h>
 
 int main(int argc, char* argv[]) {
@@ -395,18 +407,18 @@ int main(int argc, char* argv[]) {
             const EchoClient::SocketAddress& socketAddress, const core::socket::State& state) {
             switch (state) {
                 case core::socket::State::OK:
-                    VLOG(1) << instanceName << ": connected to '" << socketAddress.toString()
+                    snode::log::application("echo").info() << instanceName << ": connected to '" << socketAddress.toString()
                             << "'";
                     break;
                 case core::socket::State::DISABLED:
-                    VLOG(1) << instanceName << ": disabled";
+                    snode::log::application("echo").info() << instanceName << ": disabled";
                     break;
                 case core::socket::State::ERROR:
-                    LOG(ERROR) << instanceName << ": " << socketAddress.toString() << ": "
+                    snode::log::application("echo").error() << instanceName << ": " << socketAddress.toString() << ": "
                                << state.what();
                     break;
                 case core::socket::State::FATAL:
-                    LOG(FATAL) << instanceName << ": " << socketAddress.toString() << ": "
+                    snode::log::application("echo").critical() << instanceName << ": " << socketAddress.toString() << ": "
                                << state.what();
                     break;
             }
@@ -476,6 +488,7 @@ snodec-playground/
 
 A minimal `CMakeLists.txt` for this example is:
 
+<!-- snodec-source: companion/examples/EchoPair/CMakeLists.txt -->
 ```cmake
 cmake_minimum_required(VERSION 3.18)
 
@@ -483,8 +496,9 @@ project(echo-pair LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy)
+find_package(snodec 2.0.0 REQUIRED COMPONENTS net-in-stream-legacy)
 
 add_library(echosocketcontext STATIC
     EchoSocketContext.cpp
@@ -518,12 +532,15 @@ target_link_libraries(echoclient
     PRIVATE
         echosocketcontext
 )
+
+include(GNUInstallDirs)
+install(TARGETS echoserver echoclient RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 ```
 
 This build file imports the installed SNode.C package and requests the component introduced in Chapter 2:
 
 ```cmake
-find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy)
+find_package(snodec 2.0.0 REQUIRED COMPONENTS net-in-stream-legacy)
 ```
 
 The context library links publicly to `snodec::net-in-stream-legacy` because its public header derives from SNode.C stream-context types. The two executables then link to the context library. The source-side and build-side selections now agree: the application includes `<net/in/stream/legacy/SocketServer.h>` or `<net/in/stream/legacy/SocketClient.h>` for the concrete C++ role, and the CMake target links `snodec::net-in-stream-legacy` for the corresponding binary surface.
@@ -570,14 +587,14 @@ In the first terminal, start the server:
 
 ```sh
 cd ~/projects/snodec-playground-build
-./echoserver
+./echoserver --log-level=debug
 ```
 
 In the second terminal, start the client:
 
 ```sh
 cd ~/projects/snodec-playground-build
-./echoclient
+./echoclient --log-level=debug
 ```
 
 The client connects to `localhost` on port `8080` and sends the first message. The server receives it and reflects it. The client receives the reflection and reflects it again.
@@ -603,7 +620,7 @@ Stop the example with `Ctrl-C`.
 
 Do not treat the output as noise.
 
-The first example is meant to connect source code to runtime behavior. When you see a log line from `onConnected()`, it corresponds to the lifecycle callback. When you see the reflected message, it corresponds to `onReceivedFromPeer()`. When the callback passed to `listen(...)` or `connect(...)` logs a state, it tells you whether the configured communication role was registered successfully.
+The first example is meant to connect source code to runtime behavior. When you see a log line from `onConnected()`, it corresponds to the lifecycle callback. When you see the reflected message, it corresponds to `onReceivedFromPeer()`. When the callback passed to `listen(...)` or `connect(...)` logs a state, it reports the listen or connect result for the configured communication role.
 
 Chapter 2 warned against silencing runtime output too early because the output is part of the teaching instrument.
 

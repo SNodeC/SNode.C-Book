@@ -9,6 +9,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include(GNUInstallDirs)
 
 set(SNODEC_BOOK_EXAMPLE_DIRS
+    EchoPair
+    SemanticLogging
     HttpUpgrade-Server
     HttpUpgrade-Client
     SSE-Server
@@ -27,6 +29,9 @@ foreach(EXAMPLE_DIR IN LISTS SNODEC_BOOK_EXAMPLE_DIRS)
 endforeach()
 
 set(SNODEC_BOOK_EXAMPLE_TARGETS
+    echoserver
+    echoclient
+    semantic-logging
     http-upgrade-server
     http-upgrade-client
     sse-server

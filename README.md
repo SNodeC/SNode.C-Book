@@ -47,7 +47,7 @@ companion/examples/MiniGateway-Extended
 
 ## Target SNode.C source version
 
-This package is aligned with the SNode.C source baseline recorded in `source-baseline/SOURCE-VERSION.md`. The reader-facing release tag is `v1.0.2`; the authoritative source pin is the full commit SHA `6e475262084ae2dab2daef8781ab9e4adb82d18e`. Later verification scripts should read `source-baseline/book-source-baseline.env` so this baseline is not duplicated in multiple places.
+This package is aligned with the SNode.C source baseline recorded in `source-baseline/SOURCE-VERSION.md`. The target is the SNode.C **2.0.0 source snapshot** at `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`. This is a project version and immutable source pin, not an assertion that a matching release tag exists. CI reads `source-baseline/book-source-baseline.env` and checks the resulting checkout before building.
 
 The manuscript is not intended to describe arbitrary future states of the SNode.C repository. If a newer checkout changes component names, public headers, examples, or package layout, those changes must be reviewed before the manuscript is updated.
 
@@ -59,7 +59,10 @@ The compact source trees in `companion/examples/` are intended to be complete bu
 
 MiniGateway and MiniGateway Extended are buildable external SNode.C consumer examples checked against the SNode.C source snapshot recorded in `source-baseline/SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
 
-The current package records author-confirmed local verification history for the companion-example set in `review/verification/examples-aggregate-build-verification.md`. MiniGateway-specific details are retained in `review/verification/minigateway-step8-author-verification.md`. CI behavioral smoke-test status is documented in `review/verification/ci-behavior-smoke-tests.md`. The verification notes target the SNode.C `v1.0.2` release tag and its exact pinned commit. These files remain package evidence, not manuscript prose. The public GitHub Actions workflows are complete for the current package: they build the book package, compile the companion examples against the pinned SNode.C release on GCC and Clang, and run selected behavioral smoke tests for the SSE and MiniGateway Extended showcase paths.
+The package preserves author-confirmed local verification as historical evidence in `review/verification/history/`. It does not relabel old results as current 2.0 verification. The current verification notes describe the source/listing checks, framework CTest run, GCC/Clang companion builds, and selected application smoke tests. Actual results belong to the specific GitHub Actions run, including any failures or skips. No full MQTT/MariaDB/OpenWrt integration claim follows from a selected HTTP/SSE smoke test.
+
+The migration adds `EchoPair` (Chapter 3) and `SemanticLogging` (Chapter 18). Complete printed code blocks carrying a `snodec-source` marker are checked against their companion source files by `ci/check-source-alignment.py`. Unmarked illustrative or abridged excerpts remain explanatory material, not separately certified executables.
+
 
 ## Heading convention
 
@@ -81,7 +84,7 @@ Manual chapter numbers are not part of chapter headings. LaTeX/Pandoc numbers pa
 
 ## Build
 
-Install Pandoc, `pandoc-crossref`, and a XeLaTeX-capable TeX distribution. The manuscript is built through CMake:
+Install Python 3.9 or newer, Pandoc, `pandoc-crossref`, and a XeLaTeX-capable TeX distribution. The manuscript is built through CMake:
 
 ```bash
 cmake -S . -B build
@@ -127,12 +130,13 @@ Two GitHub Actions workflows verify the publication package and companion exampl
 
 The **Book package** workflow builds the compact proposal PDF, proposal-with-sample-chapters PDF, full manuscript PDF, and publisher/reviewer archive from source. It uploads the generated PDFs and package archive as workflow artifacts.
 
-The **Companion examples** workflow checks out the pinned SNode.C release, builds the companion examples with a small compiler matrix, and runs selected behavioral smoke tests. The current package treats this CI layer as complete: the smoke tests start the SSE server, read a measurement event stream, start MiniGateway Extended, inject one measurement through the Unix-domain input role, and verify the resulting HTTP/SSE state. The workflow intentionally avoids broad network integration tests, external MQTT broker orchestration, OpenWrt package builds, and long-running service tests.
+The **Companion examples** workflow checks out the immutable SNode.C snapshot, runs the configured framework tests, builds the companion examples with a GCC/Clang matrix, and runs selected behavioral smoke tests. Inspect the actual run for execution status: the smoke tests start the SSE server, read a measurement event stream, start MiniGateway Extended, inject one measurement through the Unix-domain input role, and verify the resulting HTTP/SSE state. The workflow intentionally avoids broad network integration tests, external MQTT broker orchestration, OpenWrt package builds, and long-running service tests.
 
 The underlying checks are also available as local scripts:
 
 ```bash
 bash ci/check-source-hygiene.sh
+python3 ci/check-source-alignment.py
 bash ci/build-book-package.sh
 bash ci/build-companion-examples.sh
 bash ci/run-behavior-smoke-tests.sh

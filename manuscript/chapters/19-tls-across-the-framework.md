@@ -365,6 +365,21 @@ Close-notify belongs to correct TLS connection shutdown rather than to the appli
 
 This is one reason TLS diagnostics belong together with connection lifecycle visibility.
 
+### Graceful shutdown includes the TLS peer
+
+\index{TLS!shutdown}
+\index{close\_notify@\texttt{close\_notify}}
+
+A TLS stream does not finish its lifecycle merely because the application stops producing plaintext. The TLS shutdown path has to preserve the protocol's `close_notify` exchange, readiness progress, and failure/timeout behavior.
+
+During framework shutdown, the connection joins its existing bounded write-shutdown path. If a TLS shutdown helper is already active, the notification joins that operation rather than creating another helper or restarting it. Reader and writer subobjects may both encounter the notification, but the operation must remain idempotent.
+
+Read observation can remain necessary while the connection waits for peer shutdown progress. Disabling it solely because the runtime entered `STOPPING` would prevent the cleanup from completing. A forced termination path still bounds a peer that never cooperates.
+
+Handshake failure, established-stream shutdown, and an already active shutdown helper are different lifecycle situations. The TLS implementation coordinates their ownership; application contexts should not duplicate that state machine. The existing signal callback is still notified for signal-triggered shutdown, but returning `false` cannot veto framework transport cleanup.
+
+These are concrete regression surfaces in the current test suite, including TLS result classification, helper ownership, state-machine behavior, and framework shutdown scenarios. They do not replace deployment checks for certificates, trust, names, or application authorization.
+
 ### TLS does not erase the lower family
 
 A TLS connection is still carried over a lower family. The lower family does not disappear just because the connection is encrypted.
@@ -448,9 +463,9 @@ Chapter 18’s diagnostic map applies directly.
 | connection visibility | Which concrete connection, peer, address, duration, and counters were involved? |
 | protocol visibility | Did TLS meaning affect protocol authorization or behavior? |
 
-Use configuration display to inspect TLS settings. Use ordinary logs for lifecycle events. Use `PLOG` or TLS-specific error reporting where system, OpenSSL, or library context matters.
+Use configuration display to inspect TLS settings. Use semantic lifecycle records to distinguish attempts, transport readiness, and protocol attachment. Preserve the explicit system or TLS error from the failing boundary rather than substituting an unrelated later `errno`.
 
-Use `VLOG` for handshake, shutdown, certificate, and trust diagnostics that are too detailed for normal output. Use connection identity and counters to connect TLS events to a concrete peer relationship. TLS does not require a new diagnostic philosophy.
+Use scoped debug or trace policy for detailed handshake and shutdown investigation. Connection identity connects those records to a concrete peer episode. Certificate and trust diagnostics should remain useful without exposing private key material or unnecessary sensitive values. TLS uses the same semantic diagnostic model as the rest of the framework.
 
 It makes the existing one more important.
 
