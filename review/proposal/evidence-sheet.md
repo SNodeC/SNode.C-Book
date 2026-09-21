@@ -21,7 +21,7 @@ It is deliberately conservative. The proposal should not invent users, downloads
 - Public repository: [SNodeC/snode.c](https://github.com/SNodeC/snode.c)
 - Repository visibility: public
 - Default branch: `master`
-- Manuscript baseline: public release tag `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`
+- Manuscript baseline: project version `2.0.0`, commit `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`
 - The repository README describes SNode.C as a lightweight, highly extensible, event-driven, layer-based C++ framework for network applications.
 - The README states that development began during the first Corona lockdown in Austria in summer semester 2020 as part of the course *Network and Distributed Systems* in the master's program *Interactive Media* at FH Upper Austria, Campus Hagenberg.
 - The README names MQTTSuite as the SNode.C reference project.
@@ -105,11 +105,11 @@ source-baseline/book-source-baseline.md
 source-baseline/book-source-baseline.env
 ```
 
-The first two documents record author-confirmed local verification against the public SNode.C source baseline. The CI smoke-test note records the completed public workflow checks for the selected runtime paths. These files are package evidence, not adoption evidence.
+The current notes define the migrated edition's verification scope and point to run-specific evidence. Earlier author-local confirmations are retained under `review/verification/history/` with their original baseline and dates. They are historical evidence, not new confirmations of changed source. None of these files is adoption evidence.
 
 ## Continuous-integration evidence
 
-The public book repository contains completed GitHub Actions workflows for reproducible package and companion-example verification. The `book-package.yml` workflow builds the compact proposal PDF, the proposal-with-sample-chapters PDF, the full manuscript PDF, and the publisher/reviewer archive from source, then uploads the generated artifacts. The `companion-examples.yml` workflow checks out the pinned SNode.C `v1.0.2` release, compiles the companion examples against that installed framework baseline on GCC and Clang, and runs selected behavioral smoke tests. Those smoke tests exercise the SSE event-stream path and the MiniGateway Extended Unix-domain input path, then verify the resulting HTTP/SSE-visible measurement state. For the current package, build verification and selected behavioral smoke-test verification are complete.
+The public book repository contains workflows for publication builds and companion verification. The publication workflow generates the proposal, sample-chapter, and full-book PDFs and the reviewer archive. The companion workflow reads the authoritative source pin, builds the framework with its CTest suite enabled, checks the installed external echo project, builds the book companions, and exercises selected teaching, SSE, and MiniGateway Extended behavior on GCC and Clang. Results must be attributed to the exact workflow run, not inferred from the presence of the workflow. A skipped test is not a passed behavioral check; a selected smoke test is not a complete protocol or deployment certification.
 
 This CI evidence strengthens the package beyond author-confirmed local verification. It is still not presented as third-party adoption, commercial deployment, or independent market validation.
 

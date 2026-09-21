@@ -273,7 +273,7 @@ SNode.C gives applications an operational shell. Deployment integrates that shel
 
 During development and debugging, foreground execution is usually the clearest mode. It keeps process output, configuration experiments, and failure behavior visible before the role is hidden behind a service manager.
 
-A typical development rhythm is to run in the foreground, inspect help and effective configuration, increase verbose level if needed, write a configuration file, and move the role into a managed service.
+A typical development rhythm is to run in the foreground, inspect help and effective configuration, enable a narrow semantic logging override if needed, write a configuration file, and move the role into a managed service.
 
 Deployment begins with understanding the effective configuration, not with hiding the process in the background.
 
@@ -500,6 +500,19 @@ That service definition is where deployment expresses:
 - and which dependencies must be available before startup.
 
 The application may still support daemonization, but on OpenWrt the deployed role should fit the platform service model.
+
+### Rebuild and inspect the installed system
+
+\index{deployment!ABI compatibility}
+\index{snodec-control@\texttt{snodec-control}}
+
+A deployment of SNode.C 2.0 must use a coherent set of rebuilt C++ artifacts. Applications and runtime-loaded extensions compiled against 1.x must not be mixed with the new shared libraries. The source-level continuity of a role name or include path is not an ABI guarantee. Rebuild the application, its protocol modules, and the libraries that derive from affected public classes as one installation set.
+
+Inspect that installed set in the environment in which it will run. The staged installed-consumer and external echo checks from Chapter 34 provide useful package evidence, but they do not exercise a particular service account, router image, certificate directory, or database installation. Those remain deployment checks.
+
+`snodec-control` adds an operational view of a target application's configuration. It discovers the target's configuration output, can show or edit the resulting model, and can ask the target to write its canonical configuration. Its optional Curses interface changes the presentation, not the ownership of configuration. The target application still performs final validation.
+
+This is also why configuration metadata and semantic logs serve different purposes. Metadata describes configurable structure and values; a log record describes an occurrence at runtime. Keep both with a reproducible service setup, but do not treat a configuration preview as proof that a listener started or that a request completed.
 
 ### Reading a deployment
 

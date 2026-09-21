@@ -250,10 +250,11 @@ CREATE TABLE measurements (
 
 This setup note is only there to make the example concrete. Chapter 28 is not a MariaDB administration chapter. A real deployment also needs a deliberate policy for database users, privileges, credentials, schema migration, backup, and secret handling.
 
+<!-- snodec-source: companion/examples/MariaDB-Minimal/main.cpp -->
 ```cpp
 #include <core/SNodeC.h>
 #include <database/mariadb/MariaDBClient.h>
-#include <log/Logger.h>
+#include <Log.h>
 
 #include <mysql.h>
 #include <string>
@@ -272,44 +273,44 @@ int main(int argc, char* argv[]) {
         .flags = 0,
     };
 
-    database::mariadb::MariaDBClient db(
-        details, [](const database::mariadb::MariaDBState& state) {
-            if (state.error != 0) {
-                LOG(ERROR) << "MariaDB state error " << state.error << ": "
-                           << state.errorMessage;
-            } else if (state.connected) {
-                VLOG(1) << "MariaDB connected";
-            } else {
-                VLOG(1) << "MariaDB disconnected";
-            }
-        });
+    database::mariadb::MariaDBClient db(details, [](const database::mariadb::MariaDBState& state) {
+        if (state.error != 0) {
+            snode::log::application().error() << "MariaDB state error " << state.error << ": "
+                       << state.errorMessage;
+        } else if (state.connected) {
+            snode::log::application().trace() << "MariaDB connected";
+        } else {
+            snode::log::application().trace() << "MariaDB disconnected";
+        }
+    });
 
     db.exec(
           "INSERT INTO measurements(sensor, value) VALUES ('temperature', 23.5)",
           [&db]() {
               db.affectedRows(
                   [](my_ulonglong rows) {
-                      VLOG(1) << "insert affected rows: " << rows;
+                      snode::log::application().trace() << "insert affected rows: " << rows;
                   },
                   [](const std::string& error, unsigned int number) {
-                      LOG(ERROR) << "affectedRows error " << number << ": " << error;
+                      snode::log::application().error() << "affectedRows error " << number << ": "
+                                 << error;
                   });
           },
           [](const std::string& error, unsigned int number) {
-              LOG(ERROR) << "insert error " << number << ": " << error;
+              snode::log::application().error() << "insert error " << number << ": " << error;
           })
-        .query(
-            "SELECT sensor, value FROM measurements",
-            [](const MYSQL_ROW row) {
-                if (row != nullptr) {
-                    VLOG(1) << "measurement: " << row[0] << " = " << row[1];
-                } else {
-                    VLOG(1) << "measurement query complete";
-                }
-            },
-            [](const std::string& error, unsigned int number) {
-                LOG(ERROR) << "query error " << number << ": " << error;
-            });
+      .query(
+          "SELECT sensor, value FROM measurements",
+          [](const MYSQL_ROW row) {
+              if (row != nullptr) {
+                  snode::log::application().trace() << "measurement: " << row[0] << " = " << row[1];
+              } else {
+                  snode::log::application().trace() << "measurement query complete";
+              }
+          },
+          [](const std::string& error, unsigned int number) {
+              snode::log::application().error() << "query error " << number << ": " << error;
+          });
 
     return core::SNodeC::start();
 }
@@ -670,6 +671,16 @@ That coordination is application architecture. The database module provides the 
 - `MariaDBClient` is the application-facing database object.
 - `MariaDBConnectionDetails` describes the database endpoint and credentials.
 :::
+
+### Diagnostic identity and controlled persistence checks
+
+\index{MariaDBClient@\texttt{MariaDBClient}!diagnostic identity}
+
+The database boundary can now participate in semantic diagnostics as well as in the event loop. `MariaDBClient` accepts an optional instance-name argument after its connection details and state callback. That name gives the database connection a useful diagnostic identity; it does not create a socket server, an MQTT role, or a separate configuration hierarchy.
+
+The compact program uses the public application logger for its own observations. Framework-owned database records and application decisions remain different evidence. A successful connection is not a successful transaction, and a queued command is not proof that durable state has changed. Preserve those distinctions when correlating database records with HTTP, SSE, or MQTT activity.
+
+A persistence test also needs an explicitly controlled service environment. The framework's general CTest suite and an installed-consumer build do not establish that a particular database, schema, credential set, or transaction sequence works. Use isolated state, known input, and explicit cleanup for that check. The companion program is a small integration example, not a claim that every database deployment is covered by the framework test suite.
 
 ### Closing perspective
 

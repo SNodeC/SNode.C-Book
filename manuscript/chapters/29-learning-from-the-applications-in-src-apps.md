@@ -490,13 +490,13 @@ const core::pipe::Pipe pipe(
         });
 
         sink.setOnEof([]() {
-            VLOG(1) << "Pipe EOF";
+            snode::log::application().trace() << "Pipe EOF";
         });
 
         source.send("Hello World!");
     },
     [](int errnum) {
-        PLOG(ERROR) << "Pipe not created";
+        snode::log::application().systemError(snode::log::Level::Error, errnum) << "Pipe not created";
     });
 
 return core::SNodeC::start();
@@ -541,6 +541,16 @@ This is a good continuation from Chapter 28. The target does not need HTTP, MQTT
 The MariaDB example combines configuration, `MariaDBConnectionDetails`, `MariaDBClient`, command sequences, result/error callbacks, and timer-driven repeated queries.
 
 `testmariadb` is a focused demonstration target. It is not a recommended production persistence architecture. Its value is that it makes the Chapter 28 API concrete.
+
+### Read applications beside consumer examples and tests
+
+The current source tree gives an application reader three complementary views. `src/apps` shows how framework developers assemble applications inside the repository. `examples/echo` shows a standalone CMake consumer of an installed SNode.C package. `tests/` records selected behaviors and architectural restrictions as executable checks.
+
+These views should not be collapsed. An in-tree application can use the repository's build context; an installed consumer must depend on exported targets and installed headers. A component test can use controlled peers or test-only access that does not belong in application code. Reading all three makes the distinction visible rather than relying on an example's directory name as proof of public API status.
+
+A useful route is to read an application's entry point, inspect its include and link surfaces, and then locate the test boundary that would catch a regression in the behavior being studied. For a stream application, that may be a payload-reconstruction or disconnect-lifecycle test. For an HTTP application, it may be a parser, middleware, or installed-module check. Chapter 34 develops that test taxonomy in detail.
+
+The repository also contains design notes under `docs/` and operational tooling under `src/tools/`. Those are useful companions to source reading, but a historical migration report should not override the current header or implementation. The current public logging entry point is `<Log.h>`; the source excerpts in this chapter use that surface rather than a removed macro interface.
 
 ### Reading applications in `src/apps`
 

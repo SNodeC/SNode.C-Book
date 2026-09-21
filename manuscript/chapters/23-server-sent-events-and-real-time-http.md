@@ -224,11 +224,12 @@ After `sendHeader()`, the response body is written as SSE records. Each record i
 
 The corresponding client side enters through the concrete EventSource wrapper for the selected HTTP client stack. A compact IPv4 legacy client looks like this:
 
+<!-- snodec-source: companion/examples/SSE-EventSource-Client/main.cpp -->
 ```cpp
 #include <core/SNodeC.h>
 #include <net/in/SocketAddress.h>
 #include <web/http/legacy/in/EventSource.h>
-#include <log/Logger.h>
+#include <Log.h>
 
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
@@ -238,20 +239,21 @@ int main(int argc, char* argv[]) {
     auto events = web::http::legacy::in::EventSource("http", address, "/events");
 
     events->onOpen([] {
-        VLOG(1) << "SSE stream opened";
+        snode::log::application().trace() << "SSE stream opened";
     });
 
     events->onMessage([](const web::http::client::tools::EventSource::MessageEvent& event) {
-        VLOG(1) << "message: " << event.data;
+        snode::log::application().trace() << "message: " << event.data;
     });
 
     events->addEventListener(
-        "measurement", [](const web::http::client::tools::EventSource::MessageEvent& event) {
-            VLOG(1) << "measurement: " << event.data;
+        "measurement",
+        [](const web::http::client::tools::EventSource::MessageEvent& event) {
+            snode::log::application().trace() << "measurement: " << event.data;
         });
 
     events->onError([] {
-        LOG(ERROR) << "SSE stream error";
+        snode::log::application().error() << "SSE stream error";
     });
 
     return core::SNodeC::start();
@@ -466,6 +468,21 @@ Before dispatch, the trailing newline added by `data:` accumulation is removed. 
 A long-lived stream must not allow unbounded pending data. The implementation applies finite limits to pending lines and accumulated data, so a malformed or hostile long-lived stream cannot grow parser state without bound. If parsing fails, the stream can be closed.
 
 That is part of making SSE operationally usable. Long-lived inputs need limits.
+
+### Resource policy for an open event stream
+
+\index{SSE!resource limits}
+\index{SSE!backpressure}
+
+An event stream passes through more than one resource boundary. The HTTP client validates the response headers under the shared parser policy from Chapter 21. Once a valid EventSource response switches to the raw event receiver, the HTTP body parser no longer accumulates that stream. Its `maximum-body-bytes` setting is therefore not a lifetime byte budget for SSE. Header limits still apply.
+
+This exception is intentional. A successful event stream can remain open while it delivers an unbounded number of individually bounded events. The EventSource receiver's line and accumulated-event guards protect local parsing; they do not define how many events the application may retain, how much history it should replay, or how long an observer may remain attached.
+
+The server has a different pressure boundary. Its response fragments pass through the connection's write queue. A finite `maximum-write-queue-bytes` and the queue watermarks belong to the connection configuration described in Chapter 20. They do not turn a callback-driven measurement publisher into a source that automatically pauses whenever a browser is slow. Automatic source suspension applies to attached `core::pipe::Source` objects; a publisher that invokes response methods directly still needs its own slow-observer policy.
+
+For the compact example, the important distinction is between the accepted measurement and its delivery to one observer. A stalled observer must not become the owner of application state. A deployment can deliberately disconnect a slow observer, retain a bounded replay history, or reduce the update rate. Those are application choices around the framework's queue contract, not new SSE syntax.
+
+A disconnect or queue-admission failure also does not prove that an event reached the peer. Event IDs provide a continuity mechanism when the application supplies a corresponding replay policy. They are not delivery acknowledgements. Tests should observe the emitted stream and the reconnect behavior separately from the model's decision to accept a measurement.
 
 ### Retry and continuity
 

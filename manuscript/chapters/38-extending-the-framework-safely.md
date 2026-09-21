@@ -133,7 +133,7 @@ void MeasurementUnixSocketContext::processLine(const std::string& line) const {
         try {
             measurementModel.accept(parseMeasurementLine(line));
         } catch (const std::exception& ex) {
-            LOG(WARNING) << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+            snode::log::application().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
         }
     }
 }
@@ -423,6 +423,12 @@ measurement-store: database unavailable: entering degraded mode
 
 Diagnostics are part of extension safety because they let maintainers reason about the system after deployment.
 
+#### Preserve semantic identity when adding diagnostics
+
+The semantic logger now carries the origin, boundary, component, and optional runtime identity explicitly. A new application feature should use the public `<Log.h>` facade or an appropriate inherited context helper instead of rebuilding that identity inside every English message. Framework-owned helpers may be private; their names do not make them extension APIs.
+
+Keep the event claim as precise as the control path. Queue admission is not delivery, a connection attempt is not an established session, and a context switch is not necessarily a peer disconnect. Chapter 18 explains how those distinctions survive text and JSON output. An extension should preserve them when it adds its own diagnostics.
+
 ### Extending failure policy
 
 \index{failure policy!extension}
@@ -476,6 +482,22 @@ A new `SocketContext` needs tests for protocol endpoint behavior; middleware nee
 - How is it built and installed?
 - What test protects it?
 :::
+
+#### Choose the existing regression layer
+
+SNode.C now gives the extension author concrete places to protect that contract:
+
+| Change | First regression surface to consider |
+|---|---|
+| local parser, value, or state transition | `tests/unit/` |
+| composed connection, routing, or protocol behavior | `tests/component/` |
+| an architectural restriction on source structure | `tests/policy/` |
+| public headers, exports, or package assumptions | staged installed-consumer checks |
+| a standalone application assembled from the installation | external-application checks |
+
+The table selects a starting point, not a claim that one test layer is sufficient. A queue-policy change may need both a local admission-result test and a real slow-peer scenario. A new public header needs an installed-consumer check even when its in-tree unit test passes. A source-policy test can prevent a forbidden dependency or logging shortcut without proving the associated runtime behavior.
+
+For output-producing extensions, use the result-returning queue API when the application needs to choose a recovery policy. `WouldExceedLimit` must not be interpreted as a partially accepted message, and `Queued` must not be interpreted as acknowledged delivery. The bounded-output and shutdown contracts from Chapter 20 should remain intact as the application grows.
 
 ### Avoiding framework pollution
 

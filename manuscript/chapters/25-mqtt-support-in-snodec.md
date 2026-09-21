@@ -354,7 +354,7 @@ A compact MQTT client example should show the protocol role, not an entire trans
 #include <iot/mqtt/packets/Connack.h>
 #include <iot/mqtt/packets/Publish.h>
 #include <iot/mqtt/Topic.h>
-#include <log/Logger.h>
+#include <Log.h>
 
 #include <string>
 
@@ -387,7 +387,7 @@ private:
         const std::string topic = publish.getTopic();
         const std::string message = publish.getMessage();
 
-        VLOG(1) << "MQTT command on " << topic << ": " << message;
+        snode::log::application().trace() << "MQTT command on " << topic << ": " << message;
     }
 
     bool onSignal(int) override {

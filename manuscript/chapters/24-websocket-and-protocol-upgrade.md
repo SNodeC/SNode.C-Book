@@ -455,7 +455,7 @@ A minimal echo pair needs one subprotocol on each side. The server-side object r
 
 ```cpp
 #include <web/websocket/server/SubProtocol.h>
-#include <log/Logger.h>
+#include <Log.h>
 
 #include <cstddef>
 #include <cstdint>
@@ -469,7 +469,7 @@ public:
 
 private:
     void onConnected() override {
-        VLOG(1) << "WebSocket echo server connected";
+        snode::log::application().trace() << "WebSocket echo server connected";
     }
 
     void onMessageStart(int) override {
@@ -481,18 +481,18 @@ private:
     }
 
     void onMessageEnd() override {
-        VLOG(1) << "WebSocket echo server received: " << currentMessage;
+        snode::log::application().trace() << "WebSocket echo server received: " << currentMessage;
         sendMessage(currentMessage);
         currentMessage.clear();
     }
 
     void onMessageError(uint16_t errnum) override {
-        LOG(WARNING) << "WebSocket echo server message error: " << errnum;
+        snode::log::application().warn() << "WebSocket echo server message error: " << errnum;
         currentMessage.clear();
     }
 
     void onDisconnected() override {
-        VLOG(1) << "WebSocket echo server disconnected";
+        snode::log::application().trace() << "WebSocket echo server disconnected";
         currentMessage.clear();
     }
 
@@ -509,7 +509,7 @@ The matching client-side object sends one message after the upgrade is complete,
 
 ```cpp
 #include <web/websocket/client/SubProtocol.h>
-#include <log/Logger.h>
+#include <Log.h>
 
 #include <cstddef>
 #include <cstdint>
@@ -523,7 +523,7 @@ public:
 
 private:
     void onConnected() override {
-        VLOG(1) << "WebSocket echo client connected";
+        snode::log::application().trace() << "WebSocket echo client connected";
         sendMessage("hello");
     }
 
@@ -536,18 +536,18 @@ private:
     }
 
     void onMessageEnd() override {
-        VLOG(1) << "WebSocket echo client received: " << currentMessage;
+        snode::log::application().trace() << "WebSocket echo client received: " << currentMessage;
         currentMessage.clear();
         sendClose();
     }
 
     void onMessageError(uint16_t errnum) override {
-        LOG(WARNING) << "WebSocket echo client message error: " << errnum;
+        snode::log::application().warn() << "WebSocket echo client message error: " << errnum;
         currentMessage.clear();
     }
 
     void onDisconnected() override {
-        VLOG(1) << "WebSocket echo client disconnected";
+        snode::log::application().trace() << "WebSocket echo client disconnected";
         currentMessage.clear();
     }
 
@@ -589,6 +589,26 @@ target_link_libraries(echo-client PRIVATE snodec::websocket-client)
 ```
 
 The factory symbols in the example are not only code conveniences. They are the names that dynamically loaded subprotocol modules must export, and they are also the factory entry points that a linked deployment makes available to the selector. The companion source trees are `WebSocket-Echo-ServerSubprotocol` and `WebSocket-Echo-ClientSubprotocol`; together with `HttpUpgrade-Server` and `HttpUpgrade-Client`, they form the complete runnable WebSocket echo example.
+
+### Receiver limits belong to the selected connection
+
+\index{WebSocket!receiver limits}
+\index{WebSocket!close code 1009}
+\index{ConfigWebSocket@\texttt{ConfigWebSocket}}
+
+WebSocket preserves message boundaries above a stream, but preserving a boundary is not the same thing as allowing an unlimited message. SNode.C exposes receiver resource policy through the HTTP instance's `websocket` configuration section. The upgrade takes a snapshot of that policy for the receiver it creates.
+
+| Option | Boundary it limits |
+|---|---|
+| `maximum-frame-bytes` | payload bytes in one frame, including control frames |
+| `maximum-message-bytes` | accumulated data bytes across a fragmented message |
+| `maximum-fragments` | data-frame count within one message |
+
+The defaults are zero, meaning unlimited for these configurable resource limits. Protocol validity rules still apply; an unlimited resource setting does not make an invalid WebSocket frame valid. A finite frame bound alone is also insufficient to bound a message assembled from many smaller frames. The three settings protect different dimensions of the same receiver.
+
+A receiver resource-limit violation uses close code `1009`, Message Too Big. The limit is enforced at the carrier boundary before the application can treat the rejected message as accepted subprotocol data. It does not replace application validation of message contents, authorization, or command semantics.
+
+These settings belong to startup configuration, not to an undocumented runtime setter in the subprotocol. Nor do they introduce a corresponding sender-fragmentation policy: the current limits govern receiving. Chapter 20 covers the separate bounded-output contract below WebSocket, while Chapter 34 shows the receiver-validation and real-connection tests that protect these boundaries.
 
 ### Lower layers and diagnostics still matter
 

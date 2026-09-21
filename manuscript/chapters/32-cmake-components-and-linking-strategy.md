@@ -58,7 +58,7 @@ The answer is: a great deal. The build structure shows which parts are lower run
 
 #### Top-level project shell
 
-The top-level `CMakeLists.txt` stays small. It declares the project metadata, sets the version, extends the module path, includes helper modules such as formatting, Doxygen, uninstall, and graph visualization support, descends into `src`, and then includes packaging.
+The top-level `CMakeLists.txt` stays small. It declares the project metadata, sets the version, extends the module path, includes helper modules such as formatting, Doxygen, uninstall, and graph visualization support, descends into `src`, conditionally registers the framework tests, and then includes packaging.
 
 That is the right division of responsibility: the top level provides the project shell, `src` expresses the framework shape, and packaging turns the result into distributable components.
 
@@ -72,7 +72,7 @@ The real structural center of the build is `src/CMakeLists.txt`. That file does 
 - sets the C++ standard,
 - applies warning and linker policy,
 - defines the in-tree build context,
-- applies logging-related compile definitions,
+- controls sanitizer instrumentation and application selection,
 - descends into the major framework modules,
 - computes target dependencies,
 - declares supported installable components,
@@ -140,7 +140,7 @@ add_link_options(LINKER:--as-needed LINKER:--no-undefined)
 
 This belongs to the same dependency-hygiene story.
 
-`--as-needed` discourages unnecessary linkage. `--no-undefined` requires shared libraries to declare the dependencies they need instead of relying on a final application link step to accidentally complete missing symbols.
+`--as-needed` discourages unnecessary linkage. In the ordinary, non-ASan build, `--no-undefined` requires shared libraries to declare the dependencies they need instead of relying on a final application link step to accidentally complete missing symbols. The ASan branch adds sanitizer instrumentation and omits that ordinary `--no-undefined` linker option; it is a separate build configuration, not the same binary with an extra runtime switch.
 
 For SNode.C's component model, a target should not just compile; it should have a truthful link face. Dependencies belong to the component that needs them.
 
@@ -365,7 +365,7 @@ Headers expose declarations, aliases, templates, inline helpers, and source-faci
 \index{public surface}
 
 
-The following matrix reflects the SNode.C\textsubscript{\texttt{v1.0.2}} source snapshot used to prepare this edition of the book. It is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a role, and the component target or targets it would normally link when it needs the corresponding compiled surface.
+The following matrix reflects the SNode.C\textsubscript{\texttt{2.0.0}} source snapshot used to prepare this edition of the book. It is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a role, and the component target or targets it would normally link when it needs the corresponding compiled surface.
 
 In the source tree, examples and framework code include headers relative to the SNode.C source include root, for example `<express/legacy/in/WebApp.h>`. Installed consumers use the same public header shape below the installed `include/snode.c` prefix.
 
@@ -740,6 +740,37 @@ a CMake-time default compiled into the library or component, and runtime configu
 Keeping those two levels separate avoids confusion.
 
 A distributor may want different compiled defaults for an embedded package. An operator may still want runtime configuration for a particular deployment. Those are not the same decision.
+
+### Tests, tools, and installed-header discipline
+
+\index{SNODEC_BUILD_TESTS@\texttt{SNODEC\_BUILD\_TESTS}}
+\index{SNODEC_BUILD_APPS@\texttt{SNODEC\_BUILD\_APPS}}
+\index{SNODEC_ENABLE_ASAN@\texttt{SNODEC\_ENABLE\_ASAN}}
+\index{installed-consumer tests}
+
+The top-level build now distinguishes framework tests from demonstration applications. `SNODEC_BUILD_TESTS` defaults to `OFF`; enabling it registers the CTest suite below `tests/`. `SNODEC_BUILD_APPS` defaults to `ON` and controls `src/apps`. Neither switch should be inferred from the presence of an executable left in an old build directory.
+
+A framework verification build can make its intent explicit:
+
+```sh
+cmake -S snode.c -B snode.c-build-tests \
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DSNODEC_BUILD_TESTS=ON -DSNODEC_BUILD_APPS=ON
+cmake --build snode.c-build-tests --parallel 8
+ctest --test-dir snode.c-build-tests --output-on-failure
+```
+
+The external `examples/echo` project has its own `BUILD_TESTING` switch. It is configured separately against an installation; it is not enabled merely by enabling the framework's tests. Likewise, `snodec-control` has its own test and optional Curses-interface settings. Build switches belong to the project that interprets them.
+
+`SNODEC_ENABLE_ASAN` selects AddressSanitizer instrumentation for supported GCC and Clang builds. Use a separate build directory for that configuration and rebuild its libraries and consumers consistently. Chapter 34 explains the resulting evidence and its limits; a sanitizer build is not a substitute for testing the behavior the application promises.
+
+Public-header discipline is also tested after installation. The staged installed-consumer check verifies selected consumer includes and checks that internal orchestration headers such as `core/EventLoop.h`, `core/EventMultiplexer.h`, `core/DescriptorEventPublisher.h`, and `core/TimerEventPublisher.h` have not become installed application dependencies. An application uses the public runtime entry point; a source-level explanation of the event loop does not make every implementation header a public API.
+
+The logging surface illustrates another useful distinction. `<Log.h>` is the application-facing header, and `snodec::logger` is an exported target reached through the component graph. The list of supported `find_package(... COMPONENTS ...)` requests is not identical to the list of every exported dependency target. The logging-only companion requests the supported `core` component and links its loaded `snodec::logger` target; it does not invent a supported `logger` request.
+
+The backend is private to that library. Its spdlog dependency does not require application chapters to include backend headers or configure an unrelated logger. Include-What-You-Use and installed-consumer checks support the same rule from different directions: include what the public abstraction actually promises, and do not depend on incidental transitive implementation includes.
+
+Finally, source compatibility and binary compatibility are different contracts. SNode.C 2.0 changes installed class layouts and virtual interfaces. Rebuild applications, shared libraries, and dynamically loaded protocol modules against the selected 2.0 headers and libraries together. A successfully rebuilt application does not make an old 1.x plugin ABI-compatible.
 
 ### Exported package targets and external consumers
 

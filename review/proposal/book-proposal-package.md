@@ -6,7 +6,7 @@
 | **Subtitle** | **Building Multi-Protocol Applications in Modern C++** |
 | **Author** | Volker Christian |
 | **Manuscript status** | Complete manuscript; 38 chapters; epilogue; further reading; technical index; figures; companion source trees; MiniGateway and MiniGateway Extended capstone examples. |
-| **Source baseline** | SNode.C release tag `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. |
+| **Source baseline** | SNode.C project version `2.0.0`, commit `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`. |
 | **Positioning** | A specialist, architecture-first guide to building layered, event-driven, multi-protocol network applications in modern C++ with SNode.C. |
 
 Alternative titles include **SNode.C: Layered Network Programming in Modern C++**, **The SNode.C Guide: Building Multi-Protocol Applications in Modern C++**, and **Designing Network Applications with SNode.C**.
@@ -147,11 +147,11 @@ The MiniGateway project source trees are `companion/examples/MiniGateway` and `c
 
 ## Source-version baseline
 
-The manuscript is aligned with the source baseline recorded in `source-baseline/SOURCE-VERSION.md`: repository `SNodeC/snode.c`, public release tag `v1.0.2`, commit `6e475262084ae2dab2daef8781ab9e4adb82d18e`. The reader-facing workflow is to check out the public tag. The full commit SHA remains the authoritative pin for reproducibility and review.
+The manuscript is aligned with the source baseline recorded in `source-baseline/SOURCE-VERSION.md`: repository `SNodeC/snode.c`, project version `2.0.0`, commit `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`. Readers check out that exact commit. The project version identifies this source snapshot; the proposal does not assert that a matching release tag exists.
 
 ## Verification status
 
-The package records author-confirmed local verification for the companion examples and MiniGateway source trees against the public SNode.C `v1.0.2` tag and exact pinned commit. In addition, the repository contains completed GitHub Actions workflows that build the proposal package, compile the companion examples against the pinned SNode.C release on GCC and Clang, and run selected behavioral smoke tests for the SSE and MiniGateway Extended showcase paths. For the current package, build verification and selected behavioral smoke-test verification are complete. The CI output is reproducible package evidence, not a claim of third-party adoption or commercial deployment.
+Verification for the migrated edition is tied to its exact book commit and the pinned framework source. The workflows build publication artifacts, compile the framework and companions with GCC and Clang, execute registered framework CTests and the external echo tests, and run selected book teaching and SSE/MiniGateway smoke checks. Run-specific outcomes belong in the accompanying verification report and workflow logs. Historical author-local confirmations are preserved with their original dates and source baseline; they are not silently transferred to the migrated sources. None of these checks is presented as independent adoption evidence or exhaustive deployment validation.
 
 ## SSE contract note
 
@@ -190,9 +190,9 @@ This is not a generic C++ networking book. It is a deep, first-party, architectu
 | Capped market | SNode.C is not a widely known mainstream C++ networking library. | Position as specialist/project-authoritative/course material; avoid exaggerated trade claims. |
 | Manuscript length | The manuscript is substantial for a niche framework guide. | Current structure is complete; a trade publisher may still request compression. |
 | First-party perspective | The author is also the framework creator. | Explicit author/framework disclosure; no claim of independent comparative neutrality. |
-| Verification status | Verification includes author-confirmed local notes plus completed public CI workflows for package generation, companion-example compilation on GCC and Clang, and selected behavioral smoke tests. | Source baseline, exact commit pin, verification notes, GitHub Actions badges, downloadable workflow artifacts, and smoke-test scripts. |
+| Verification status | Current evidence must identify the checked book commit, framework pin, compiler, and test scope; historical author-local confirmations remain separate. | Source baseline, exact commit pin, verification notes, GitHub Actions badges, downloadable workflow artifacts, and smoke-test scripts. |
 | Adoption evidence | Current external adoption evidence is modest. | Evidence sheet states limits plainly; gather independent users, course evidence, or deployment evidence separately if available. |
-| Version drift | SNode.C is active, and public branches may move. | Package pins a public release tag and full commit SHA; maintain an errata/update page for post-publication changes. |
+| Version drift | SNode.C is active, and public branches may move. | Package pins a project version and full commit SHA; maintain an errata/update page for post-publication changes. |
 
 ## Recommended publisher handling
 
@@ -200,4 +200,4 @@ If submitted to a standard broad professional publisher, the proposal should be 
 
 ## Version-drift and errata policy
 
-The book should state that printed examples are aligned with SNode.C `v1.0.2` and the recorded commit. Later repository changes should be handled through an errata/update page and, where useful, a maintained branch of companion examples for newer framework versions. This protects readers from silently mixing a fixed book with a moving `master` branch.
+The book should state that printed examples are aligned with SNode.C `2.0.0` and the recorded commit. Later repository changes should be handled through an errata/update page and, where useful, a maintained branch of companion examples for newer framework versions. This protects readers from silently mixing a fixed book with a moving `master` branch.
