@@ -1,0 +1,106 @@
+{
+  "front_matter_pages": 20,
+  "body_pages": 450,
+  "total_pdf_pages": 470,
+  "parts": [
+    {
+      "title": "I. Getting Oriented",
+      "printed_start": 1,
+      "printed_end": 33,
+      "pages": 33,
+      "physical_start": 21
+    },
+    {
+      "title": "II. The SNode.C Architecture",
+      "printed_start": 34,
+      "printed_end": 70,
+      "pages": 37,
+      "physical_start": 54
+    },
+    {
+      "title": "III. Networking Foundations in SNode.C",
+      "printed_start": 71,
+      "printed_end": 118,
+      "pages": 48,
+      "physical_start": 91
+    },
+    {
+      "title": "IV. From Raw Connections to Application Protocols",
+      "printed_start": 119,
+      "printed_end": 154,
+      "pages": 36,
+      "physical_start": 139
+    },
+    {
+      "title": "V. Configuration and Operational Behavior",
+      "printed_start": 155,
+      "printed_end": 191,
+      "pages": 37,
+      "physical_start": 175
+    },
+    {
+      "title": "VI. Secure and Robust Communication",
+      "printed_start": 192,
+      "printed_end": 217,
+      "pages": 26,
+      "physical_start": 212
+    },
+    {
+      "title": "VII. Web Protocols and Web Applications",
+      "printed_start": 218,
+      "printed_end": 260,
+      "pages": 43,
+      "physical_start": 238
+    },
+    {
+      "title": "VIII. IoT and Message-Oriented Systems",
+      "printed_start": 261,
+      "printed_end": 290,
+      "pages": 30,
+      "physical_start": 281
+    },
+    {
+      "title": "IX. Persistence and Full Systems",
+      "printed_start": 291,
+      "printed_end": 337,
+      "pages": 47,
+      "physical_start": 311
+    },
+    {
+      "title": "X. Building, Porting, and Maintaining",
+      "printed_start": 338,
+      "printed_end": 385,
+      "pages": 48,
+      "physical_start": 358
+    },
+    {
+      "title": "XI. Building a MiniGateway Application",
+      "printed_start": 386,
+      "printed_end": 418,
+      "pages": 33,
+      "physical_start": 406
+    },
+    {
+      "title": "XII. Designing with SNode.C",
+      "printed_start": 419,
+      "printed_end": 434,
+      "pages": 16,
+      "physical_start": 439
+    },
+    {
+      "title": "Epilogue \u2014 What to Take Away from SNode.C",
+      "printed_start": 435,
+      "printed_end": 439,
+      "pages": 5,
+      "physical_start": 455
+    },
+    {
+      "title": "Reference Material",
+      "printed_start": 440,
+      "printed_end": 450,
+      "pages": 11,
+      "physical_start": 460
+    }
+  ],
+  "source": "build/proposal-readiness-phase-2/snodec-book.toc"
+}

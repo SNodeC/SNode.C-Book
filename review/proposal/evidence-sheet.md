@@ -2,145 +2,34 @@
 \clearpage
 ```
 
-# Evidence Sheet: SNode.C Book Proposal
+# Evidence sheet
 
-## Purpose of this sheet
+Evidence checked 22 September 2026. Public project descriptions are first-party evidence. Build and lab observations concern the supplied material; none establishes independent adoption or sales.
 
-This sheet separates three kinds of evidence:
+## Documented project facts
 
-1. public evidence that can be checked from repositories or public documentation;
-2. author-confirmed professional context;
-3. adoption or market evidence that is not yet claimed.
+- **Framework and teaching origin.** The [SNode.C project introduction](https://github.com/SNodeC/snode.c#simple-node-in-c-snodec) describes the public C++ framework and its origin in *Network and Distributed Systems*, Interactive Media, FH Upper Austria, Hagenberg. This establishes teaching context, not adoption of the book.
+- **Author relationship.** The [project copyright notice](https://github.com/SNodeC/snode.c#copyright) names Volker Christian. The creator/maintainer description is disclosed in the manuscript's author note.
+- **Applied project.** The [MQTTSuite README](https://github.com/SNodeC/mqttsuite) documents broker, integration, bridge, command-line, and storage roles built around SNode.C. These are first-party applications, not external adoption evidence.
 
-It is deliberately conservative. The proposal should not invent users, downloads, commercial deployments, course adoptions, or independent validation that has not been documented.
+## Evidence in the supplied book package
 
-## Public project evidence
-
-### SNode.C repository
-
-- Public repository: [SNodeC/snode.c](https://github.com/SNodeC/snode.c)
-- Repository visibility: public
-- Default branch: `master`
+- **Manuscript:** 38 chapters plus epilogue and reference material; 146,950 whitespace tokens; 470 PDF pages. The proposal's Part extents sum to the actual build, including 20 preliminary pages.
+- **Samples:** Chapters 1, 3, 23, 35, and 37 each contain three objectives and five exercises: two review, two labs, one design. All 25 exercise/objective mappings have public solutions in the corresponding `companion/exercises/chNN/README.md` and lab sources.
+- **Companion code:** complete printed listings match companion sources. The Asio comparison and all sample lab dependencies compile against the supplied installed environment.
+- **Executed labs:** ten local lab cases passed on 22 September 2026. They observe echo behavior, endpoint failure, SSE continuity, input validation, and model ownership; the public solutions give each procedure and expected result.
+- **Limits:** no broker-delivery, hardware, independent deployment, hosted-build, or commercial-adoption result is inferred from these local labs. Reproduction commands accompany the public solutions.
 - Manuscript baseline: project version `2.0.0`, current working-tree contents recorded by the edition manifest; reconstruction base `1f0f728fc9b3b45174f2cd790d83b2f493e58af1` plus the captured patch
-- The repository README describes SNode.C as a lightweight, highly extensible, event-driven, layer-based C++ framework for network applications.
-- The README states that development began during the first Corona lockdown in Austria in summer semester 2020 as part of the course *Network and Distributed Systems* in the master's program *Interactive Media* at FH Upper Austria, Campus Hagenberg.
-- The README names MQTTSuite as the SNode.C reference project.
 
-### MQTTSuite repository
+## Author evidence still required
 
-- Public repository: [SNodeC/mqttsuite](https://github.com/SNodeC/mqttsuite)
-- Repository visibility: public
-- Default branch: `master`
-- The README describes MQTTSuite as a lightweight MQTT 3.1.1 integration system composed of focused applications.
-- The listed application roles include MQTTBroker, MQTTIntegrator, MQTTBridge, MQTTCli, and MQTTStore.
-- The README states that MQTTSuite is powered by SNode.C.
+Additional biographical and audience evidence remains to be supplied.
 
-### Related public repositories
+- **[AUTHOR TO SUPPLY]** Approved short biography and supporting links for credentials and appointments.
+- **[AUTHOR TO SUPPLY]** Dated talks, publications, workshops, and attributable audience figures.
+- **[AUTHOR TO SUPPLY]** Named independent users or deployments with permission and supporting evidence.
+- **[AUTHOR TO SUPPLY]** Dated repository/download statistics, measurement method, and limits.
+- **[AUTHOR TO SUPPLY]** Any course-use letters, syllabus references, or reviewer quotations cleared for use.
+- **[AUTHOR TO SUPPLY]** Delivery date and revision availability.
 
-The SNodeC GitHub organization also contains related public repositories that support the ecosystem and book context, including:
-
-- `SNodeC/SNode.C-Book`
-- `SNodeC/MiniGateway`
-- `SNodeC/IOTApplicationDesigner`
-- `SNodeC/INJA-Templatebuilder`
-- `SNodeC/CLI11`
-
-These repositories demonstrate an ecosystem around the framework and book, but they should not be presented as external adoption evidence unless independent use is documented.
-
-## Applied-system evidence
-
-### MQTTSuite as reference ecosystem
-
-MQTTSuite gives the book a concrete applied context beyond the framework itself. It shows SNode.C used for MQTT-facing applications, including broker, integration, bridge, CLI, and persistence roles. This supports the book's claim that SNode.C is not only a small teaching abstraction but also a basis for multi-application protocol systems.
-
-### MiniGateway as guided capstone
-
-The book package contains two MiniGateway source trees:
-
-```text
-companion/examples/MiniGateway
-companion/examples/MiniGateway-Extended
-```
-
-They support Chapters 35 and 36 and demonstrate a small SNode.C application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an added Unix-domain input boundary in MiniGateway Extended.
-
-MiniGateway is evidence of pedagogical completeness and architectural applicability inside the manuscript package. It is not presented as external market adoption.
-
-### Companion examples
-
-The package also contains companion source trees named `HttpUpgrade-Server`, `HttpUpgrade-Client`, `SSE-Server`, `SSE-EventSource-Client`, `WebSocket-Echo-ServerSubprotocol`, `WebSocket-Echo-ClientSubprotocol`, `LineProtocol-Server`, `LineProtocol-Client`, `MQTT-ClientRole`, and `MariaDB-Minimal`. These examples support the reader promise and reduce the risk that the manuscript is only prose without buildable companion material.
-
-## Teaching-context evidence
-
-The SNode.C README publicly ties the framework's origin to a teaching context: the *Network and Distributed Systems* course in the master's program *Interactive Media* at FH Upper Austria, Campus Hagenberg.
-
-This supports the book's educational positioning, but it should not be overstated as independent course adoption of the finished book unless such adoption is documented separately.
-
-## Educational and interdisciplinary technical use cases
-
-The manuscript explicitly supports educational and interdisciplinary technical use cases, including networked measurement, environmental monitoring, field sensing, lab instrumentation, gateway-style integration systems, and technical data-collection projects. These are presented as architectural use cases for readers who need to understand, build, teach, specify, adapt, or supervise such systems, not as claims of external adoption.
-
-## Author-confirmed professional context
-
-The following background items are author-confirmed and relevant to credibility, but should be treated as author-supplied CV context unless independent public sources are attached later:
-
-- studies in theoretical physics in Graz;
-- work at Ars Electronica Futurelab;
-- four years as university assistant at Johannes Kepler University Linz in the Pervasive Computing group;
-- work with ORF Kunstradio;
-- participation around documenta X in Kassel;
-- many projects connected to Ars Electronica Futurelab and media technology.
-
-This background supports the author's technical and media-technology authority, but the proposal should distinguish it from repository-based evidence.
-
-## Verification evidence inside the package
-
-The package includes verification notes for the examples and MiniGateway source trees:
-
-```text
-review/verification/examples-aggregate-build-verification.md
-review/verification/minigateway-step8-author-verification.md
-review/verification/ci-behavior-smoke-tests.md
-source-baseline/book-source-baseline.md
-source-baseline/book-source-baseline.env
-```
-
-The current notes define the migrated edition's verification scope and point to run-specific evidence. Earlier author-local confirmations are retained under `review/verification/history/` with their original baseline and dates. They are historical evidence, not new confirmations of changed source. None of these files is adoption evidence.
-
-## Continuous-integration evidence
-
-The public book repository contains workflows for publication builds and companion verification. The publication workflow generates the proposal, sample-chapter, and full-book PDFs and the reviewer archive. The companion workflow reads the source baseline, reconstructs and checks the recorded working-tree contents, builds the framework with its CTest suite enabled, checks the installed external echo project, builds the book companions, and exercises selected teaching, SSE, and MiniGateway Extended behavior on GCC and Clang. Results must be attributed to the exact workflow run, not inferred from the presence of the workflow. A skipped test is not a passed behavioral check; a selected smoke test is not a complete protocol or deployment certification.
-
-This CI evidence strengthens the package beyond author-confirmed local verification. It is still not presented as third-party adoption, commercial deployment, or independent market validation.
-
-## What is not yet claimed
-
-The current proposal does not claim:
-
-- commercial deployments;
-- external customers;
-- download statistics;
-- package-manager install counts;
-- GitHub stars/forks as market proof;
-- third-party dependent projects;
-- independent course adoption of the finished book;
-- independent third-party technical review of all companion examples beyond the public CI workflow.
-
-This restraint is intentional. Unsupported adoption claims would weaken the proposal.
-
-## Evidence gaps to close for a stronger acquisition case
-
-A broader professional-trade acquisition case would be stronger with:
-
-- documented public release/download statistics;
-- list of known users or organizations, if any can be named;
-- dependent repositories or downstream projects;
-- course-use statement or syllabus reference;
-- independent reviewer quotes;
-- independent external reviewer confirmation of the CI results and the selected smoke-tested companion-example behavior;
-- public package/deployment evidence for Linux or OpenWrt if available;
-- a concise statement of why readers who do not yet use SNode.C should care.
-
-## Current evidence verdict
-
-The evidence currently supports a specialist, project-authoritative, course-friendly, or community technical-book case. It does not yet support an exaggerated mass-market claim. The proposal should therefore sell the book on depth, completeness, architecture, source alignment, examples, transparency, and the applied MQTTSuite ecosystem.
+These open items limit the strength of the market case. The evidence currently supports assessment of the teaching method, technical content, and inspectable examples; it does not support an estimate of market size or sales.

@@ -1,0 +1,10 @@
+ERROR: manuscript/chapters/10-fixture.md:1: forbidden authoring phrase: in the manuscript
+ERROR: manuscript/chapters/10-fixture.md:4: forbidden authoring phrase: manuscript material
+ERROR: manuscript/chapters/10-fixture.md:7: forbidden authoring phrase: the chapter should
+ERROR: manuscript/chapters/10-fixture.md:10: forbidden authoring phrase: the book should
+ERROR: manuscript/chapters/10-fixture.md:13: forbidden authoring phrase: this chapter should
+ERROR: manuscript/chapters/10-fixture.md:16: forbidden authoring phrase: published edition
+ERROR: manuscript/chapters/10-fixture.md:19: forbidden authoring phrase: should be presented as
+ERROR: manuscript/chapters/10-fixture.md:22: forbidden authoring phrase: useful for Chapter 29
+ERROR: manuscript/chapters/10-fixture.md:25: forbidden authoring phrase: the benchmarking tone should be
+PASS: actual hygiene entry point rejects all nine case-varied, line-wrapped guards

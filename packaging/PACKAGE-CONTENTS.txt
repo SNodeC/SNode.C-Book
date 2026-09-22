@@ -56,3 +56,5 @@ The proposal-package target writes one stable archive name:
 
 Historic timestamped proposal-package archives are removed from dist/packages before
 that archive is created, so CI/artifact upload never collects stale packages.
+
+Public sample exercise answers and lab solutions: companion/exercises/.

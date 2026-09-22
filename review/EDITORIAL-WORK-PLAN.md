@@ -122,6 +122,41 @@ Commit: `proposal-readiness: phase 2 follow-up — sample chapter strengthening`
 Stop after this commit. Phase 3 remains unstarted; future sessions must recheck
 these current Phase 2 exits before proceeding.
 
+## Phase 3 — teaching-book proposal package, 2026-09-22
+
+Completed after fresh Phase 2 metrics, editorial exits, source checks, companion
+builds, all ten labs, and the full PDF build passed. The author supplied no new
+biographical facts and explicitly requested **“Continue with [AUTHOR TO SUPPLY]”**;
+missing credentials, audience/adoption evidence, statistics, endorsements, and
+delivery date remain visibly marked. Documented public project facts are kept
+separate from independent market evidence.
+
+The proposal now has a one-paragraph pitch, one independent learner as its primary
+reader, a secondary course-use sentence with the framework's Hagenberg teaching
+origin, one cumulative learning path and one optional shortcut, five publisher-
+verified comparable titles, the actual 38-chapter TOC with measured Part extents,
+and a measurable completed-versus-remaining revision plan. The evidence sheet
+and five-chapter guide were rewritten and reread to match.
+
+All three required targets build. Proposal/evidence: 6 pages; combined samples:
+54 pages; full manuscript: 470 pages. Final logs and build console have zero
+LaTeX warnings and bad boxes. Proposal font/caption settings reuse the book's
+existing configuration; sample openings and callouts were visually reviewed.
+The archive now includes the complete companion tree, including public exercises.
+A fresh extraction built all companion targets and passed all ten labs; final
+archive sources are byte-identical to that tested extraction.
+
+Manuscript metrics are unchanged at 146,950 total words and 921 chapter
+subheadings. No manuscript edits or chapter restructuring occurred. Evidence,
+bibliographic source links, PDF counts, archive checks, and the next entry checks
+are in `review/proposal-readiness-2026-09-22/REPORT.md`, Phase 3;
+`metrics-after-phase-3.json` records the unchanged manuscript.
+
+Commit: `proposal-readiness: phase 3 — prepare teaching-book proposal package`.
+Stop after this commit. Phase 4 is next, limited to RESTRUCTURE-PLAN.md and ending
+awaiting author approval. It must evaluate early MiniGateway milestones and
+runnable Part checkpoints; no restructuring approval is recorded.
+
 ## Author amendment — teaching book, 2026-09-22
 
 Accepted during Phase 1; the full amendment is appended to

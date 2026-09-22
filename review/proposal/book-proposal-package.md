@@ -1,92 +1,72 @@
-# Project Snapshot
+# Pitch
+
+A working socket example is only the beginning: a learner must also understand where protocol behavior, connection lifetime, and shared application state belong as a service grows. *Layered Network Programming with SNode.C* teaches an advanced student or C++ developer with no SNode.C knowledge to build, diagnose, and extend layered, event-driven network applications. A cumulative path leads from an echo pair through HTTP, live event streams, WebSocket, and MQTT to MiniGateway, a service whose communication roles share one measurement model. Volker Christian brings the framework's first-party design perspective to complete programs and explicit ownership decisions, giving the reader both executable examples and a way to reason about the next requirement.
+
+# Project snapshot
 
 | Field | Proposal value |
 |---|---|
-| **Working title** | **Layered Network Programming with SNode.C** |
-| **Subtitle** | **Building Multi-Protocol Applications in Modern C++** |
-| **Author** | Volker Christian |
-| **Manuscript status** | Complete manuscript; 38 chapters; epilogue; further reading; technical index; figures; companion source trees; MiniGateway and MiniGateway Extended capstone examples. |
+| Working title | **Layered Network Programming with SNode.C** |
+| Subtitle | Building Multi-Protocol Applications in Modern C++ |
+| Author | Volker Christian |
+| Format | Teaching book for independent study; modern C++, Linux-oriented examples |
+| Available material | 38 chapters, epilogue, further reading, technical index, figures, complete companion sources, and five strengthened sample chapters |
+| Current extent | 146,950 whitespace tokens; 470 pages in the supplied A4 manuscript PDF |
+| Final length target | At most 115,000 words; stretch target 105,000; code listings retained |
 | **Source baseline** | SNode.C project version `2.0.0`, current working tree reconstructed from base `1f0f728fc9b3b45174f2cd790d83b2f493e58af1` plus the recorded patch and file manifest. |
-| **Positioning** | A specialist, architecture-first guide to building layered, event-driven, multi-protocol network applications in modern C++ with SNode.C. |
 
-Alternative titles include **SNode.C: Layered Network Programming in Modern C++**, **The SNode.C Guide: Building Multi-Protocol Applications in Modern C++**, and **Designing Network Applications with SNode.C**.
+# Reader and learning path
 
-The book should be evaluated as a first-party framework guide and a concrete architectural case study, not as a generic survey of C++ networking libraries. Its strongest realistic channels are specialist professional publishing, academic or course use, project-authoritative publication, print-on-demand, and community-supported technical distribution.
+## One primary reader
 
-# Book Concept
+The primary reader is a learner working through the book: an advanced student or C++ developer who can build a small Linux program and understands classes, templates, lambdas, ownership, and basic network layers, but has no SNode.C knowledge. Explanations, complete listings, observable labs, and public answers must let this reader progress without a lecturer. The goal is to learn layered, event-driven network programming in C++ through SNode.C, including the costs of choosing it: a Linux-oriented environment, one event loop per process, and a small ecosystem.
 
-## Summary
+Course use is a secondary benefit, building on SNode.C's origin in the course *Network and Distributed Systems* in the Interactive Media master's program at FH Upper Austria, Hagenberg; that origin does not establish adoption of this book. [Project account](https://github.com/SNodeC/snode.c#simple-node-in-c-snodec).
 
-This is a complete, architecture-first technical book about SNode.C, a layered, event-driven C++ framework for network applications. The author is the creator and maintainer of the framework and explains the design from inside the system. The manuscript teaches SNode.C as a coherent model for building multi-protocol applications: endpoint identity, transport form, connection lifetime, protocol meaning, configuration, diagnostics, deployment, persistence, and application roles are kept visible instead of being hidden behind a black-box API.
+Makers, scientists, and interdisciplinary teams with the same prerequisites may apply the examples to measurement and integration projects.
 
-The book starts with small working examples and builds toward HTTP, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, database-backed application state, Linux/OpenWrt deployment, testing, and system-level design. The closing movement first develops MiniGateway, a guided application that combines HTTP status routes, SSE observation, MQTT publication, application-owned state, and an optional Unix-domain input role in MiniGateway Extended, and then steps back into architectural judgment and safe extension.
+## The learning path
 
-## Why this book exists
+Read the book in order. Parts I–II establish a working echo pair and the runtime model behind it. Parts III–IV vary the communication family while keeping protocol behavior and its lifetime understandable. Parts V–VI make the application configurable, diagnosable, secure, and resilient. Parts VII–IX add web, messaging, and persistent-state concerns to the same architectural vocabulary. Part X supplies build, deployment, and testing practice. Parts XI–XII assemble MiniGateway, extend it with a Unix-domain input, and use the resulting system to judge where future responsibilities belong.
 
-Many networking books focus either on raw sockets or on one application protocol. Many web books abstract away transport and connection structure. Many IoT and data-collection books stay at solution level and never explain the system underneath. SNode.C is useful as a book subject because it connects those layers without hiding them.
+The final edition will develop MiniGateway through earlier milestones and give each Part a runnable checkpoint; the present complete integration is in Chapters 35–36. The sample chapters demonstrate the intended teaching pattern: observable objectives, a short recap, two review questions, two labs with expected outcomes, one design problem, and public solutions mapped to the objectives.
 
-The proposal therefore makes two claims: the book is the official architecture-first guide to SNode.C, and it is also a worked study of layered, event-driven network architecture in modern C++.
+One optional shortcut is **web and MQTT gateway first**: after Chapters 1–7, study Chapters 16–18 and 20–23, then 25, 32, and 35. Use the local HTTP/SSE lab before adding a broker; return to the family, security, deployment, and extension chapters before adapting the gateway for use beyond the lab. The main learning path remains cumulative.
 
-## What makes it different
+# Comparable titles
 
-| Differentiator | Meaning for the reader |
-|---|---|
-| Architecture first, APIs second | The book teaches a coherent design rather than a catalog of calls. |
-| Lower and higher layers in one story | IPv4, IPv6, Unix-domain sockets, Bluetooth RFCOMM/L2CAP, TLS, HTTP, SSE, WebSocket, MQTT, MQTT over WebSocket, MariaDB, Linux/OpenWrt deployment, and MiniGateway are presented as parts of one layered model. |
-| Framework guide plus architectural case study | The reader learns SNode.C and sees how a C++ network framework can organize roles, handles, connections, contexts, factories, configuration, diagnostics, and deployment. |
-| Small examples leading to system thinking | The book begins with an echo pair and gradually reaches multi-protocol system design. |
-| Complete guided application | MiniGateway and MiniGateway Extended give the book a concrete capstone that preserves existing protocol surfaces while adding another input role. |
+These books locate the proposal on the specialist programming shelf. The distinctions describe teaching scope, not comparative sales or a claim that one framework is universally preferable. Publication years below follow the publishers' dated product records.
 
-## Pedagogical approach
+- **W. Richard Stevens, Bill Fenner, and Andrew M. Rudoff, *UNIX Network Programming, Volume 1: The Sockets Networking API*, third edition. Addison-Wesley Professional, 2003** (copyright 2004). Its detailed UNIX sockets treatment is a foundation; this book follows a C++ framework from connection behavior to a shared multi-protocol application model. [Publisher record](https://www.informit.com/store/unix-network-programming-volume-1-the-sockets-networking-9780131411555).
+- **Dmytro Radchuk, *Boost.Asio C++ Network Programming Cookbook*. Packt Publishing, 2016.** Its task-oriented Asio recipes contrast with this book's cumulative progression through one framework, configuration model, and integrated capstone. [Publisher record](https://www.packtpub.com/en-au/product/boostasio-c-network-programming-cookbook-9781783986545).
+- **Lewis Van Winkle, *Hands-On Network Programming with C*. Packt Publishing, 2019.** Its C socket and protocol examples teach network programming directly; this book concentrates on C++ object lifetime, protocol composition, and shared application state within SNode.C. [Publisher record](https://www.packtpub.com/en-gb/product/hands-on-network-programming-with-c-9781789349863).
+- **Luciano Mammino and Mario Casciaro, *Node.js Design Patterns*, fourth edition. Packt Publishing, 2025.** Its JavaScript/Node.js patterns address asynchronous application design; this book teaches related ownership and composition questions through explicit C++ contexts, factories, and lower communication families. [Publisher record](https://www.packtpub.com/en-au/product/nodejs-design-patterns-9781803238944).
+- **Anthony Williams, *C++ Concurrency in Action*, second edition. Manning Publications, 2019.** Its emphasis is multithreaded C++ and synchronization; this book follows event-loop-driven networking and the placement of protocol and application responsibilities. [Publisher record](https://www.manning.com/books/c-plus-plus-concurrency-in-action-second-edition).
 
-The teaching pattern is deliberately cumulative: mental model before API detail, minimal example before larger system, explicit layer mapping, source-level orientation without line-by-line reference style, safe extension framed around preserving architectural roles, chapter takeaways for durable concepts, and a technical index for lookup after first reading.
+# Manuscript overview and estimated extent
 
-# Audience and Market Positioning
+## Part plan
 
-## Primary audience
+The following page estimates are measured from the supplied 470-page A4 manuscript build dated 22 September 2026, including Part opening pages. Printed main-text pagination starts after 20 physical pages of preliminary matter. Counts are for this proposal's current 38-chapter structure; final publisher trim, typesetting, and the planned condensation will require new estimates. Chapter consolidation remains subject to author approval.
 
-The center of the audience is the experienced C++ developer or technical system builder who needs to understand how SNode.C applications are structured, extended, diagnosed, configured, and deployed. This reader is expected to read C++ code, reason about framework roles, and care about long-lived maintainability rather than only about the shortest path to a demo.
-
-## Secondary audiences
-
-The most important adjacent channel is teaching. The book has a course-friendly shape: small examples, visible architecture, protocol layering, operational behavior, deployment, and a MiniGateway capstone. Teachers and lecturers can use it as a spine for advanced courses or laboratories in network programming, IoT systems, embedded Linux, media technology, or systems-oriented software design.
-
-Advanced students are a natural audience when they already know the broad idea of protocol layers but need to see those layers expressed in real C++ code. Makers and prototypers are plausible readers when their device, dashboard, gateway, router, sensor, home-lab, artistic, or experimental systems have grown beyond recipe-level composition. Technically involved scientists, domain researchers, and interdisciplinary teams may also use the book when they work with data-collection and integration systems alongside developers.
-
-## Reader promise
-
-After reading this book, the reader will be able to build clients and servers with SNode.C; understand the framework's layer model and runtime vocabulary; choose among IPv4, IPv6, Unix-domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP; configure applications through code, command line, and configuration files; use TLS within the SNode.C connection model; work productively with HTTP, Express-like routing, SSE, WebSocket, MQTT, and MQTT over WebSocket; reason about timeouts, retries, reconnects, logging, diagnostics, and backpressure; understand CMake components, public headers, linking, Linux/OpenWrt deployment, and testing shape; and extend SNode.C applications without damaging the roles that make the system understandable.
-
-## Not the audience
-
-This book is not primarily for readers looking for a general survey of C++ networking libraries, a Boost.Asio tutorial, a beginner C++ book, a general TLS/HTTP/MQTT reference, an introductory IoT cookbook, or a nontechnical handbook for scientific measurement projects.
-
-## Comparable and adjacent books
-
-The nearest shelves are advanced C++ networking books, Boost.Asio-oriented books, Node.js/Express books that teach an event-driven web mental model, MQTT/IoT application books, and official framework guides. This manuscript differs by keeping lower communication families, protocol layers, application roles, deployment, and a complete C++ capstone in one argument. Its acquisition case should therefore be judged on depth and course/project authority, not on the market size of a mainstream networking library.
-
-## Publishing channels
-
-The strongest realistic channels are an official SNode.C guide, a specialist professional C++ or network-programming title, a project-authoritative reference, an advanced course companion, print-on-demand publication, or a community-supported technical book. A standard broad professional-trade acquisition is harder because the named framework has a capped market unless adoption evidence grows.
-
-# Manuscript Overview
-
-## Part structure
-
-| Part | Chapters | Function |
-|---|---:|---|
-| I. Getting Oriented | 1-4 | Introduces the framework, build environment, first echo pair, and source-reading strategy. |
-| II. The SNode.C Architecture | 5-7 | Establishes the mental model, runtime/event loop, and layer vocabulary. |
-| III. Networking Foundations in SNode.C | 8-12 | Explains address semantics, servers/clients/connections, IPv4/IPv6, Unix-domain sockets, and Bluetooth RFCOMM/L2CAP. |
-| IV. From Raw Connections to Application Protocols | 13-15 | Shows how `SocketContext` and `SocketContextFactory` turn connections into protocol behavior. |
-| V. Configuration and Operational Behavior | 16-18 | Covers configuration, application/instance configuration detail, and logging/diagnostics. |
-| VI. Secure and Robust Communication | 19-20 | Covers TLS, timeouts, retries, and failure modes. |
-| VII. Web Protocols and Web Applications | 21-24 | Covers HTTP, Express-like routing, SSE, WebSocket, and protocol upgrade. |
-| VIII. IoT and Message-Oriented Systems | 25-27 | Covers MQTT, MQTT over WebSocket, and multi-protocol IoT system design. |
-| IX. Persistence and Full Systems | 28-31 | Covers MariaDB-backed state, application examples in `src/apps`, system composition, and MQTTSuite. |
-| X. Building, Porting, and Maintaining | 32-34 | Covers CMake components, Linux/OpenWrt deployment, testing, debugging, and benchmarking. |
-| XI. Building a MiniGateway Application | 35-36 | Builds MiniGateway and MiniGateway Extended as the guided construction capstone. |
-| XII. Designing with SNode.C | 37-38 | Synthesizes architectural judgment and safe extension after the capstone system has been built. |
+| Part | Chapters | Pages |
+|---|---:|---:|
+| Preliminary matter | — | 20 |
+| I. Getting Oriented | 1–4 | 33 |
+| II. The SNode.C Architecture | 5–7 | 37 |
+| III. Networking Foundations in SNode.C | 8–12 | 48 |
+| IV. From Raw Connections to Application Protocols | 13–15 | 36 |
+| V. Configuration and Operational Behavior | 16–18 | 37 |
+| VI. Secure and Robust Communication | 19–20 | 26 |
+| VII. Web Protocols and Web Applications | 21–24 | 43 |
+| VIII. IoT and Message-Oriented Systems | 25–27 | 30 |
+| IX. Persistence and Full Systems | 28–31 | 47 |
+| X. Building, Porting, and Maintaining | 32–34 | 48 |
+| XI. Building a MiniGateway Application | 35–36 | 33 |
+| XII. Designing with SNode.C | 37–38 | 16 |
+| Epilogue — What to Take Away from SNode.C | — | 5 |
+| Reference Material | — | 11 |
+| **Total supplied manuscript** | **38 numbered chapters** | **470** |
 
 ## Chapter plan
 
@@ -131,73 +111,46 @@ The strongest realistic channels are an official SNode.C guide, a specialist pro
 | 37 | Architectural Judgment: Choosing the Right Layer and Boundary |
 | 38 | Extending the Framework Safely |
 
-## Suggested sample chapters
+## Selected samples
 
-For first technical review, the strongest sample set is Chapter 1, Chapter 3, Chapter 23, Chapter 35, and Chapter 37. Together they show the conceptual pitch, the first runnable example, a real protocol chapter with source-level SSE correctness, the MiniGateway construction capstone, and the final architectural-judgment synthesis. A separate `proposal-sample-pdf` target appends these sample chapters after the proposal and evidence sheet.
+Chapters 1, 3, 23, 35, and 37 demonstrate the opening explanation, first complete program, long-lived HTTP behavior, integrated construction, and architectural judgment. Each has three learning objectives and five exercises with public solutions. The accompanying sample guide explains what to assess in each chapter; the full manuscript supplies their context.
 
-# Companion Material and Technical Verification
+# Revision plan
 
-## Companion examples
+The complete manuscript is available for acquisition assessment. Its five samples establish the teaching standard for the final edition; the remaining chapters still need condensation and the same objectives-and-exercises treatment. Technical depth, complete code listings, cumulative explanations, and MiniGateway remain central.
 
-The package contains compact source trees named `HttpUpgrade-Server`, `HttpUpgrade-Client`, `SSE-Server`, `SSE-EventSource-Client`, `WebSocket-Echo-ServerSubprotocol`, `WebSocket-Echo-ClientSubprotocol`, `LineProtocol-Server`, `LineProtocol-Client`, `MQTT-ClientRole`, and `MariaDB-Minimal`. These examples keep the printed chapter fragments focused while giving readers complete CMake-based source directories that can be built against an installed SNode.C package.
+| Requirement | Completed in the supplied material | Remaining for the final edition |
+|---|---|---|
+| Length | 146,950 total whitespace tokens, including 14,450 fenced tokens | At most 115,000, stretch 105,000; remove at least 31,950 words through redundant prose, not code cuts |
+| Section density | Five samples average 291–398 prose words per section; each cuts original prose by at least 20% | At most 550 chapter subheadings, from 921; book-wide section average at least 250, from 132.89 |
+| Teaching pattern | Five samples have objectives, recaps, three exercise tiers, public solutions, and complete objective mappings | Every chapter: 3–5 observable objectives, recap of at most five bullets, 3–5 exercises spanning all three tiers, public solutions and full objective coverage |
+| Applied principles | 20 rule boxes; no closing-perspective sections or flagged authoring notes | Maintain at most 20 applicable rules and zero flagged phrases; one recap per chapter |
+| Explanatory blocks | 434 text fences | At most 250; replace redundant layer-stack sketches with prose or tables |
+| Learning progression | Echo pair leads to the complete MiniGateway integration in Chapters 35–36 | Evaluate earlier MiniGateway milestones and a runnable checkpoint per Part; approve any consolidated TOC before implementation |
+| Companion and production | Companion programs compile; ten sample labs pass locally; full manuscript has zero LaTeX warnings or bad boxes | Build and run every added coding solution; maintain exact complete listings and clean final PDFs; refresh TOC, index, and page estimates |
 
-## MiniGateway capstone
+**[AUTHOR TO SUPPLY]** Final manuscript delivery date and time available for revisions; these must be agreed with the publisher before a delivery schedule is promised.
 
-The MiniGateway project source trees are `companion/examples/MiniGateway` and `companion/examples/MiniGateway-Extended`. Chapter 35 builds MiniGateway. Chapter 36 extends it as MiniGateway Extended to show how a SNode.C application can add another input role without disturbing the existing web, SSE, MQTT, and model roles.
+# Author platform and market evidence
+
+This is a first-party account of SNode.C. The manuscript's author note identifies Volker Christian as its creator and maintainer; the public project credits him in its [copyright notice](https://github.com/SNodeC/snode.c#copyright). The acquisition case rests on access to the design, complete working examples, and an explained path from small programs to a multi-protocol system.
+
+[SNode.C](https://github.com/SNodeC/snode.c) and [MQTTSuite](https://github.com/SNodeC/mqttsuite) provide inspectable project material. MQTTSuite supplies concrete broker, integration, bridge, command-line, and persistence applications around the framework. These are first-party project evidence, not independent adoption. The comparable books demonstrate relevant subject areas; they do not quantify demand for a SNode.C title.
+
+The proposed market is specialist technical readers learning C++ network architecture through a complete framework. No sales forecast, commercial-deployment count, or endorsement is asserted. The companion evidence sheet separates public project facts from outstanding author material:
+
+- **[AUTHOR TO SUPPLY]** A current short biography, with source links for credentials and appointments the author wishes to claim.
+- **[AUTHOR TO SUPPLY]** Talks, workshops, articles, or other audience channels, with dated links and attributable audience figures.
+- **[AUTHOR TO SUPPLY]** Named independent users or deployments, with permission to identify them and a checkable description of use.
+- **[AUTHOR TO SUPPLY]** Dated repository/download statistics and their collection method; interest counts alone are not book buyers.
+- **[AUTHOR TO SUPPLY]** Any independent course-use letters or syllabus references, and any permitted reviewer quotations.
+
+# Companion material and technical verification
+
+The submission includes the full manuscript PDF, this proposal and evidence sheet, the five sample chapters, complete companion source trees, and public sample exercise solutions. EchoPair and the standalone Asio comparison support the first steps. HTTP, SSE, WebSocket, MQTT, and database examples lead toward MiniGateway and MiniGateway Extended. Lab build/run commands and conceptual/design answers are in `companion/exercises/README.md` and each sample chapter's solution directory.
+
+The companion programs compile against an installed SNode.C package. All ten sample labs passed in the local verification run of 22 September 2026. Their observations cover byte reflection, endpoint failure, SSE continuity, measurement validation, and model ownership; these results do not establish broker delivery, hardware coverage, or deployment certification.
 
 ## Source-version baseline
 
 The manuscript is aligned with the source baseline recorded in `source-baseline/SOURCE-VERSION.md`: repository `SNodeC/snode.c`, project version `2.0.0`, commit `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`. Readers reconstruct the current working tree by applying the edition's recorded patch to that base commit and verifying its file manifest. The base commit alone is not the reviewed source. The project version identifies this source snapshot; the proposal does not assert that a matching release tag exists.
-
-## Verification status
-
-Verification for the migrated edition is tied to its exact book commit and the recorded framework working-tree contents. The workflows build publication artifacts, compile the framework and companions with GCC and Clang, execute registered framework CTests and the external echo tests, and run selected book teaching and SSE/MiniGateway smoke checks. Run-specific outcomes belong in the accompanying verification report and workflow logs. Historical author-local confirmations are preserved with their original dates and source baseline; they are not silently transferred to the migrated sources. None of these checks is presented as independent adoption evidence or exhaustive deployment validation.
-
-## SSE contract note
-
-The Server-Sent Events examples rely on SNode.C's `sendFragment(...)` behavior for `text/event-stream` responses in the pinned source version. Each `sendFragment(...)` call emits one response fragment with line termination, so SSE field fragments are passed without embedded `
-` or `
-`, and the blank event boundary is emitted as a separate empty fragment. The examples assume the normal SSE transfer path for this framework version; readers should not override the transfer framing in a way that changes how event-stream fragments are emitted.
-
-# Author, Evidence, and Project Context
-
-## Author and framework relationship
-
-This is a first-party book. The author is the creator and maintainer of SNode.C and writes from inside the design of the framework. That is a strength when the goal is to explain intent, vocabulary, source layout, tradeoffs, and extension roles. It is also a limit: the book is not an independent comparative review of all C++ networking frameworks. The front matter addresses this directly.
-
-## Author background
-
-Volker Christian is a software developer, educator, and systems architect focused on modern C++, event-driven network software, IoT communication, media technology, and layered protocol design. He is the creator and lead developer of SNode.C and the related MQTTSuite applications.
-
-His author-confirmed professional background includes theoretical physics studies in Graz, work at Ars Electronica Futurelab, four years as a university assistant at Johannes Kepler University Linz in the Pervasive Computing group, work with ORF Kunstradio, participation around documenta X in Kassel, and many media-technology projects connected to Ars Electronica Futurelab. The public evidence sheet separates author-supplied CV context from externally verifiable repository evidence.
-
-## Public evidence and current limits
-
-The attached evidence sheet summarizes what is publicly verifiable, what is author-confirmed, and what is not yet claimed. The current evidence supports a specialist, project-authoritative, course-friendly, or community technical-book case rather than a broad mainstream trade claim.
-
-Important facts: SNode.C and MQTTSuite are public GitHub repositories; MQTTSuite is an applied application ecosystem built on SNode.C; the book is tied to a public source baseline; the framework has a teaching origin at FH Upper Austria / Campus Hagenberg; and the current package does not claim download numbers, commercial users, external adoption statistics, or independent course adoptions.
-
-# Acquisition Case and Risk Handling
-
-## Best acquisition argument
-
-This is not a generic C++ networking book. It is a deep, first-party, architecture-first guide to a real layered C++ network framework, with a complete applied MQTT ecosystem and a guided multi-protocol capstone. Its value is strongest where readers need to understand framework design, network-layer roles, protocol composition, and maintainable event-driven application structure.
-
-## Principal risks and mitigations
-
-| Risk | Why it matters | Mitigation already present or recommended |
-|---|---|---|
-| Capped market | SNode.C is not a widely known mainstream C++ networking library. | Position as specialist/project-authoritative/course material; avoid exaggerated trade claims. |
-| Manuscript length | The manuscript is substantial for a niche framework guide. | Current structure is complete; a trade publisher may still request compression. |
-| First-party perspective | The author is also the framework creator. | Explicit author/framework disclosure; no claim of independent comparative neutrality. |
-| Verification status | Current evidence must identify the checked book commit, framework pin, compiler, and test scope; historical author-local confirmations remain separate. | Source baseline, exact commit pin, verification notes, GitHub Actions badges, downloadable workflow artifacts, and smoke-test scripts. |
-| Adoption evidence | Current external adoption evidence is modest. | Evidence sheet states limits plainly; gather independent users, course evidence, or deployment evidence separately if available. |
-| Version drift | SNode.C is active, and public branches may move. | Package records a project version, base commit, working-tree patch, and content manifest; maintain an errata/update page for post-publication changes. |
-
-## Recommended publisher handling
-
-If submitted to a standard broad professional publisher, the proposal should be accompanied by adoption evidence and may require structural length reduction. If submitted to a specialist, academic, course, community, or project-authoritative channel, the current full-length manuscript is much closer to usable because completeness, architecture, examples, index, and source alignment matter more than mass-market reach.
-
-## Version-drift and errata policy
-
-The book should state that printed examples are aligned with SNode.C `2.0.0` and the recorded working-tree contents. Later repository changes should be handled through an errata/update page and, where useful, a maintained branch of companion examples for newer framework versions. This protects readers from silently mixing a fixed book with a moving `master` branch.

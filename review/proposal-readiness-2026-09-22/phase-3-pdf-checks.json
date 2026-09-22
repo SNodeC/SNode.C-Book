@@ -1,0 +1,20 @@
+{
+  "book-proposal-package": {
+    "pages": 6,
+    "sha256": "a1c721ff9ca07631b71a9be4b3d32af1608a145913d3bf2322939845768189a9",
+    "warnings": 0,
+    "bad_boxes": 0
+  },
+  "book-proposal-sample-package": {
+    "pages": 54,
+    "sha256": "a412b21692d589a912afff3d945d7d2dd6b4d8234aae05a6fa4a7b3f5474f4e2",
+    "warnings": 0,
+    "bad_boxes": 0
+  },
+  "snodec-book": {
+    "pages": 470,
+    "sha256": "d74725347c5c2d3f8a2eaba986a8cb122ea2d2d61e0f8102f05647f310e9add6",
+    "warnings": 0,
+    "bad_boxes": 0
+  }
+}

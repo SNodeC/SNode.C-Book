@@ -74,7 +74,7 @@ set(REQUIRED_SOURCE_DIRS
     "production/cmake"
     "assets/figures/src"
     "assets/figures/pdf"
-    "companion/examples"
+    "companion"
     "source-baseline"
     "review/proposal"
     "review/verification"
@@ -138,6 +138,7 @@ function(copy_source_dir RELATIVE_PATH)
        PATTERN ".idea" EXCLUDE
        PATTERN ".vscode" EXCLUDE
        PATTERN "build" EXCLUDE
+       PATTERN "__pycache__" EXCLUDE
        PATTERN "cmake-build-*" EXCLUDE
        PATTERN "CMakeFiles" EXCLUDE
        PATTERN "CMakeCache.txt" EXCLUDE

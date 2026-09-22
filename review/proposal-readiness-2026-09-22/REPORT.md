@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest completed work is the same-phase Phase 2 author follow-up.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest completed work is Phase 3, the teaching-book proposal package.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -11,7 +11,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 0 — scope and measurement | completed | Separate scope revision; Phase 0 completion commit containing this report (subjects below) | 2026-09-22 | AGENTS.md:18; EDITORIAL-WORK-PLAN.md:32; PROMPT.md; metrics-before.json; metrics-after-phase-0.json; measurement-checks.log; metrics-tests.log |
 | 1 — book-wide hygiene | completed | `proposal-readiness: phase 1 — refine manuscript hygiene and preserve teaching principles` (containing this report); separate author-amendment commit | 2026-09-22 | Phase 1 evidence below; metrics-after-phase-1.json; phase-1-source-hygiene.log; phase-1-source-alignment.log; phase-1-companion-build.log; phase-1-pdf-final.log |
 | 2 — five sample chapters and author follow-up | completed | `proposal-readiness: phase 2 follow-up — sample chapter strengthening` (containing this report); initial Phase 2 commit retained | 2026-09-22 | chapter-ledger.md; metrics-after-phase-2.json; phase-2-exit-checks.json; phase-2-follow-up-labs.log; phase-2-follow-up-pdf-final-build.log; phase-2-follow-up-visual-review.md |
-| 3 — proposal package | not started | — | — | No proposal rewrite or package builds executed |
+| 3 — proposal package | completed | `proposal-readiness: phase 3 — prepare teaching-book proposal package` (containing this report) | 2026-09-22 | Phase 3 evidence below; metrics-after-phase-3.json; phase-3-bibliography.json; phase-3-exit-checks.json; phase-3-package-final.log; phase-3-archive-labs.log; phase-3-visual-review.md |
 | 4 — restructure plan | not started | — | — | No plan or author approval recorded |
 | 5a — approved TOC | not started | — | — | Gated on recorded author approval |
 | 5b onward — one Part per session | not started | — | — | Instantiate one row per approved Part before executing it; final sub-phase must meet all global targets |
@@ -583,3 +583,177 @@ CTest must now discover and pass **ten** tests. Compare with the current
 five-exercise/three-tier mappings, exact excerpts, 20% prose reductions, 250-word
 section averages, preserved complete listings, and a PDF free of warnings/bad
 boxes. Stop here: this commit completes only the requested Phase 2 follow-up.
+
+
+## Phase 3 — teaching-book proposal package
+
+### Entry gate and scope
+
+Phase 2 was re-verified before the proposal edits. Fresh metrics exactly match
+`metrics-after-phase-2.json`; see `phase-3-entry-metrics.json`. The current
+`check-phase-2.py` passed all five prose reductions, section averages, objectives,
+25 exercise mappings, public answer paths, paired excerpt comparisons, and
+listing-preservation checks (`phase-3-entry-checks.log`). The ledger and public
+solution descriptions were reread against those requirements. The author's
+restored epilogue remains part of this accepted baseline.
+
+Executed entry checks: hygiene, 36 complete-listing alignments, five metrics
+regression tests, nine authoring-note guard fixtures, companion compilation,
+all ten local labs, and the full PDF build. Evidence is in
+`phase-3-entry-{hygiene,alignment,metrics-tests,guards,companion,labs,pdf,latex}.log`.
+The rebuilt full manuscript has 470 pages and zero warnings/bad boxes.
+
+The session supplied no new author facts: its field was the placeholder
+`<your facts>`. The author explicitly answered **“Continue with [AUTHOR TO
+SUPPLY]”**. Missing biography, platform, adoption, statistics, endorsements, and
+delivery-date evidence therefore remain marked placeholders. Public project
+facts and their limits are identified separately; no quotation is attributed
+to an author-supplied biography.
+
+### Edited and reread: proposal, evidence sheet, and sample guide
+
+All three proposal documents were edited and reread in full. The seven required
+components are evidenced in `review/proposal/book-proposal-package.md`:
+
+| Required component | Evidence and resulting treatment |
+| --- | --- |
+| Single-paragraph pitch | Line 1: problem, independent learner, multi-protocol outcome, first-party design perspective |
+| Teaching-book reader and path | Line 18: stated prerequisites, no SNode.C knowledge, learning without a lecturer; one secondary course-use sentence; one cumulative path and one optional shortcut |
+| Verified comparables | Line 36: five real titles, authors, publishers, dates, and scope-based distinctions; primary records below |
+| TOC and measured extent | Line 46: all 38 current chapter titles; measured pages for each Part, preliminary matter, epilogue, and references; total 470 |
+| Measurable revision plan | Line 118: completed sample work versus remaining prose, headings, boxes, exercises, and progression targets; no unapproved consolidation represented as complete |
+| Author platform and market evidence | Line 134: documented project relationship distinguished from independent adoption, with explicit missing-evidence items |
+| Clear external-facing language | Lines 148–152: short local compilation/lab facts and their limits; no review-pass, agent-workflow, or CI-history narrative |
+
+`review/proposal/evidence-sheet.md:9` separates public project facts from local
+book-package evidence (line 15) and missing author material (line 24).
+`review/proposal/sample-chapters.md:9` explains what each selection demonstrates
+and what the reader can observe. Its introduction explains original chapter
+numbers versus the combined PDF's navigation numbers. Sample membership remains
+1, 3, 23, 35, and 37; the existing CMake sample list remains authoritative.
+
+Public source inspection used the [SNode.C project introduction and copyright](https://github.com/SNodeC/snode.c)
+and [MQTTSuite README](https://github.com/SNodeC/mqttsuite), read on 22 September
+2026. These support the course origin, public framework, named copyright holder,
+and first-party application roles. The creator/maintainer description is explicitly
+attributed to `manuscript/frontmatter/author-note.md`; it is not offered as an
+independently checked CV. No readership, adoption, sales, or deployment figure
+is inferred from these sources.
+
+### Bibliographic verification
+
+Publisher product pages were opened and read on 22 September 2026. Their displayed
+bibliographic details and contents support the proposal's facts and scope
+comparisons. Machine-readable details, ISBNs, and URLs are in
+`phase-3-bibliography.json`.
+
+| Title and authors | Publisher, edition, publication | Primary record |
+| --- | --- | --- |
+| UNIX Network Programming, Volume 1: The Sockets Networking API — W. Richard Stevens, Bill Fenner, Andrew M. Rudoff | Addison-Wesley Professional; 3rd; 2003-11-14 | [Publisher; ISBN 9780131411555](https://www.informit.com/store/unix-network-programming-volume-1-the-sockets-networking-9780131411555) |
+| Boost.Asio C++ Network Programming Cookbook — Dmytro Radchuk | Packt Publishing; 1st; 2016-01-25 | [Publisher; ISBN 9781783986545](https://www.packtpub.com/en-au/product/boostasio-c-network-programming-cookbook-9781783986545) |
+| Hands-On Network Programming with C — Lewis Van Winkle | Packt Publishing; 1st; 2019-05-13 | [Publisher; ISBN 9781789349863](https://www.packtpub.com/en-gb/product/hands-on-network-programming-with-c-9781789349863) |
+| Node.js Design Patterns — Luciano Mammino, Mario Casciaro | Packt Publishing; 4th; 2025-09-25 | [Publisher; ISBN 9781803238944](https://www.packtpub.com/en-au/product/nodejs-design-patterns-9781803238944) |
+| C++ Concurrency in Action — Anthony Williams | Manning Publications; 2nd; 2019-02 | [Publisher; ISBN 9781617294693](https://www.manning.com/books/c-plus-plus-concurrency-in-action-second-edition) |
+
+The Stevens/Fenner/Rudoff record distinguishes publication in November 2003
+from copyright 2004; the proposal prints both. Node.js Design Patterns uses the
+verified fourth edition and its listed Mammino/Casciaro author order. Five
+comparables satisfy the requested range; no unverified candidate is included.
+
+### Built, packaged, and run
+
+The delivery invariant is that the archive contains the same public solutions,
+companion sources, and PDFs that the proposal promises. Inspection found the
+package directory list covered only `companion/examples`, omitting the new
+exercise tree. `packaging/cmake/MakeProposalPackage.cmake` now copies the existing
+canonical `companion` root instead and excludes Python cache directories through
+the existing exclusion list. `packaging/PACKAGE-CONTENTS.txt` identifies the
+public solutions. No separate solution copy or implementation is introduced.
+
+The proposal profile now uses the book's existing bold/bold-italic monospaced
+font mapping and caption-option cleanup. Its redundant document contents page
+is removed; the proposed book TOC remains in the text. The sample guide starts
+each selection on a fresh page, keeps short teaching callouts together, and
+reserves room after subheadings. These changes apply to proposal artifacts.
+
+| Artifact | Entry PDF pages | Final pages | Evidence |
+| --- | ---: | ---: | --- |
+| Proposal plus evidence sheet | 11 | 6 | phase-3-book-proposal-package-pdfinfo.txt |
+| Proposal plus guide and five samples | 65 | 54 | phase-3-book-proposal-sample-package-pdfinfo.txt |
+| Full manuscript | 470 | 470 | phase-3-snodec-book-pdfinfo.txt |
+
+Entry proposal/sample counts refer to the existing PDFs observed before this
+phase's builds; the entry full manuscript was freshly rebuilt. Final Part
+extents come from the generated full-book TOC and actual PDF count;
+`phase-3-pagination.json` records physical and printed boundaries. Preliminary
+matter is 20 pages, the main pagination is 450 pages, and all extents sum to 470.
+These are present A4 estimates, not an invented final publisher page count.
+
+Executed `proposal`, `proposal-sample-pdf`, and `proposal-package`; the final
+package target also rebuilt all three PDF dependencies. `phase-3-package-final.log`
+and the three `phase-3-*-latex.log` files have **zero warnings and zero bad boxes**.
+The initial font/caption diagnostics and intermediate pagination convergence are
+retained in the earlier Phase 3 build logs rather than concealed.
+`phase-3-pdf-checks.json` records final PDF digests and counts.
+
+The archive was extracted to a fresh temporary directory, configured against the
+installed SNode.C prefix, and all companion/example/exercise targets compiled.
+All ten CTest labs then ran and passed. Exact commands and output are in
+`phase-3-archive-companion-build.log` and `phase-3-archive-labs.log`.
+`phase-3-archive-check.json` records the extraction and confirms that every tracked
+companion source in the final archive is byte-identical both to the workspace
+and to that compiled extraction; all three final PDFs match the delivered files.
+The archive has unique entries and contains no Python caches. Later typography
+builds changed only PDF/package bytes, not the compiled companion sources.
+
+Final hygiene and complete-listing alignment pass (`phase-3-hygiene.log`,
+`phase-3-alignment.log`). `check-phase-3.py` rechecks document coverage, recorded
+bibliographic facts, current metrics, Part totals, clean final PDF logs, and
+archive/file identity; execution is recorded in `phase-3-exit-checks.log` and JSON.
+This mechanical check supplements the editorial and source-page reread above.
+Rendered PDF inspection is recorded in `phase-3-visual-review.md`.
+
+### Metrics, accounting, and limits
+
+`metrics-after-phase-3.json` is identical to the Phase 2 exit and the fresh Phase
+3 entry. There are no edits under `manuscript/`; `git diff --name-only -- manuscript`
+is empty for this phase. Total words remain 146,950; prose 132,500; fenced words
+14,450; chapter subheadings 921; average section length 132.89; text fences 434;
+rule boxes 20; closing sections and forbidden hits zero. Every manuscript metric
+delta is zero. Global condensation and all remaining chapter pedagogy await their
+specified phases.
+
+Application production code: **+0/−0**. Companion/test implementation: **+0/−0**.
+Package build support: **+2/−1**; PDF metadata: **+5/−1**. Proposal/sample layout,
+package contents documentation, and editorial/evidence records are documentation;
+the 72-line Phase 3 checker is review-only validation support (+72/−0). No new application
+architecture or second source of companion solutions is added.
+
+Phase 3 is **completed** against its explicit exits. Missing author/platform facts
+are the authorized placeholders, not fabricated evidence; delivery timing and the
+strength of the market case remain unresolved. Hosted CI, broker delivery,
+hardware, deployment certification, and publisher acceptance are not newly
+verified. No Phase 4 plan, chapter consolidation, or approval is implied.
+
+### Recheck before Phase 4
+
+Re-run these commands independently so one failure does not suppress another:
+
+```sh
+python3 ci/manuscript-metrics.py --output /tmp/phase-3-recheck.json
+cmp /tmp/phase-3-recheck.json review/proposal-readiness-2026-09-22/metrics-after-phase-3.json
+python3 review/proposal-readiness-2026-09-22/check-phase-2.py
+bash ci/check-source-hygiene.sh
+python3 ci/check-source-alignment.py
+SNODEC_PREFIX="$PWD/build/ci-fix-2026-09-22/install-gcc" BOOK_EXAMPLES_BUILD_DIR="$PWD/build/proposal-readiness-phase-2-examples" bash ci/build-companion-examples.sh
+SNODEC_PREFIX="$PWD/build/ci-fix-2026-09-22/install-gcc" ctest --test-dir build/proposal-readiness-phase-2-examples --output-on-failure --no-tests=error
+cmake --build build/proposal-readiness-phase-2 --target proposal proposal-sample-pdf proposal-package
+python3 review/proposal-readiness-2026-09-22/check-phase-3.py
+```
+
+Re-read the proposal's seven required components, the publisher records above,
+and the teaching path; inspect any newly changed PDF pages. Check the rebuilt
+console and final LaTeX logs for zero warnings/bad boxes. Stop on a failed exit.
+Phase 4 remains a planning-only session ending **awaiting author approval**;
+no changes under `manuscript/` are authorized by that phase. This session stops
+with the Phase 3 commit.

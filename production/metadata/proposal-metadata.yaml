@@ -9,12 +9,15 @@ numbersections: true
 mainfont: "Latin Modern Roman"
 sansfont: "Latin Modern Sans"
 monofont: "Latin Modern Mono"
+monofontoptions:
+  - BoldFont=lmmonolt10-bold.otf
+  - BoldItalicFont=lmmonolt10-boldoblique.otf
 mathfont: "Latin Modern Math"
 
 geometry: margin=25mm
 papersize: a4
 
-toc: true
+toc: false
 toc-depth: 2
 secnumdepth: 2
 
@@ -26,6 +29,7 @@ header-includes:
   - |
     ```{=latex}
     \providecommand{\passthrough}[1]{#1}
+    \clearcaptionsetup[skip]{table}
     \usepackage{xcolor}
     \usepackage{makeidx}
     \makeindex
