@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5d is completed after the separately committed author-requested Phase 5c follow-up and its fresh exit checks. Parts I–III and the approved front-matter work are complete. Phase 5e has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5e is completed after the separately committed author-requested Phase 5d follow-up and its fresh exit checks. Parts I–IV and the approved front-matter work are complete. Phase 5f has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -17,7 +17,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5b — Part I | completed | `proposal-readiness: phase 5b — refine Part I and establish the measurement checkpoint` (containing this report); separate prerequisite repair retained | 2026-09-22 | metrics-after-phase-5b.json; phase-5b-exit-checks.json; chapter-ledger.md; phase-5b-final-*.log; phase-5b-visual-review.md; completion account below |
 | 5c — Part II | completed | `proposal-readiness: phase 5c follow-up — remove triple name/component explanation`; initial Phase 5c commit retained | 2026-09-22 | metrics-after-phase-5c.json; phase-5c-exit-checks.json; chapter-ledger.md; phase-5c-final-*.log; phase-5c-visual-review.md; completion account below |
 | 5d — Part III | completed | `proposal-readiness: phase 5d follow-up — relocate stranded Unix-socket introduction`; initial Phase 5d commit retained | 2026-09-22 | metrics-after-phase-5d.json; phase-5d-exit-checks.json; chapter-ledger.md; phase-5d-final-*.log; phase-5d-visual-review.md; completion account below |
-| 5e — Part IV | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5e — Part IV | completed | `proposal-readiness: phase 5e — refine Part IV and verify protocol framing` (containing this report) | 2026-09-22 | metrics-after-phase-5e.json; phase-5e-exit-checks.json; chapter-ledger.md; phase-5e-final-*.log; phase-5e-visual-review.md; completion account below |
 | 5f — Part V | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5g — Part VI | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5h — Part VII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -1699,3 +1699,173 @@ Separate commit: `proposal-readiness: phase 5d follow-up — relocate stranded U
 This freshly passed gate is the authorized Phase 5e entry baseline. The author also
 clarifies that budgets are ceilings: remove repetition, preserving explanations,
 examples and technical qualifications instead of cutting merely to undershoot.
+
+
+## Phase 5e — Part IV completed, 2026-09-22
+
+### Entry gate and author scope
+
+First completed and separately committed the author-requested Unix introduction
+relocation as `proposal-readiness: phase 5d follow-up — relocate stranded Unix-socket introduction`.
+Before Part IV editing, freshly reran its Phase 5d assertions, metrics, all 22
+public labs, hygiene/alignment and regressions, companion/runtime checks and
+PDF/package targets. All passed: `phase-5d-follow-up-results.json`,
+`phase-5d-follow-up-exit-checks.json`, and `phase-5d-follow-up-*.log`.
+The authorized baseline is `metrics-after-phase-5d-follow-up.json` (133,993 words;
+full PDF 418 pages). Historical Phase 5d evidence remains unchanged.
+
+The author's current instruction makes budgets explicit ceilings. Removed repeated
+role/responsibility summaries and arrow blocks, while keeping distinct explanation,
+examples and technical qualifications. No further cuts were made merely to use
+less than the available budget. The retained-content audit in `chapter-ledger.md`
+cites the final locations of parser accounting, length limits, queue admission,
+attachment and ownership, dependency lifetimes, carrier qualification and all
+worked examples.
+
+Edited and reread: Chapters 9–11, Part IV opener, common solution guide and public
+answers in `companion/exercises/ch09/README.md`, `ch10/README.md`, `ch11/README.md`.
+The unchanged Part V opener was reread for continuity. `check-phase-5e.py` compares
+against the separate follow-up commit: only those four Part IV manuscript inputs
+change. Every executable/configuration fence (293), index occurrence, figure marker
+and source marker is preserved; each affected chapter's C++ excerpts remain
+byte-identical and in order. No application implementation, proposal text, approved
+chapter order or production styling changes in Phase 5e.
+
+### Metrics and teaching contract
+
+Evidence: `metrics-after-phase-5e.json`, `phase-5e-exit-checks.json` and the Phase 5e
+ledger. Each chapter has three objectives, five exercises in all three tiers,
+complete objective↔exercise mappings and public solutions. Recaps have five bullets
+in Chapters 9–10 and four in Chapter 11, immediately before exercises.
+
+| Chapter | Words before → after / ceiling | Sections / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: |
+| 9 | 4,298 → 3,089 / 3,200 | 8 / 8 | 345.75 |
+| 10 | 3,867 → 2,265 / 2,800 | 6 / 7 | 328.33 |
+| 11 | 3,626 → 2,555 / 2,800 | 7 / 7 | 312.57 |
+
+Part IV: **11,791 → 7,909 / 8,800 words**, with all teaching apparatus included.
+Front matter remains 1,980 / 2,500; all Part/epilogue openers are 1,149 / 1,650.
+Reserve used: **0**; remaining: **2,750**. The five earlier samples retain their
+required reductions/density, as checked in `phase-5e-exit-checks.json`.
+
+| Whole-book metric | Entry → after | Delta |
+| --- | ---: | ---: |
+| Total words | 133,993 → 130,160 | −3,833 |
+| Prose words | 120,574 → 117,152 | −3,422 |
+| Fenced words | 13,419 → 13,008 | −411 (explanatory text only) |
+| Chapter headings ≥3 | 753 → 691 | −62 |
+| Mean chapter-section prose | 147.99 → 156.38 | +8.39 |
+| Text fences | 348 → 323 | −25 |
+| C++ fences | 199 → 199 | 0 |
+| Objectives / exercise callouts | 11 / 11 → 14 / 14 | +3 each |
+| Rule boxes | 20 → 20 | 0 |
+| Forbidden phrases / Closing perspective | 0 / 0 → 0 / 0 | 0 |
+
+The Part's reduction is 3,882 words; its opener adds 49, producing the global
+−3,833. Global ceilings are not required until the final sub-phase: 15,160 words,
+141 headings and 73 text fences remain above them, and mean section prose remains
+below 250. Later Parts and the global audit remain pending.
+
+### Implementation, execution and limits
+
+Invariant: one canonical protocol implementation, one independent parser state per
+context, and equivalent framing results across the selected byte-stream carriers.
+Construction refusal must close before protocol readiness; carrier establishment
+failure must remain distinguishable from command rejection. This Part supplies
+public observations of those existing behaviors rather than adding another parser.
+
+`companion/exercises/ch09/protocol.py` reuses the common bounded process/configuration
+harness and existing line server. It tests framing, length, fresh contexts, refusal,
+transfer and endpoint failure via peers. The 24-line `ch10/refusal.cpp` test driver
+returns `nullptr` once, then delegates to the canonical factory without deleting
+the supplied connection or duplicating protocol behavior. The `ch11` build applies
+the three worked entry-point substitutions to the original `main.cpp` and links the
+Unix component; it compiles the original context source and uses the original
+factory. A configure dependency keeps that generated entry point current.
+Existing applications and earlier lab implementations remain unchanged, asserted
+by the phase checker. These additions are public test/teaching support, with no
+production-code growth or parallel protocol authority.
+
+Six new registrations pass within **28/28** public labs:
+
+- 26 two-piece command segmentations, coalesced input, CRLF/empty/unknown-command
+  handling, bounded partial-prefix silence and QUIT closure;
+- 4096/4097-byte admission boundary including carriage return, with and without a
+  newline, and closure before overlong-command interpretation;
+- independent pending input, fresh replacement context and surviving peer progress;
+- null factory result closes without READY; subsequent valid creation yields PONG;
+- Part IV checkpoint reconstructs identical replies over IPv4 and a private Unix
+  path, with server-owned cleanup before fixture-directory cleanup;
+- nonexistent path fails before readiness; a valid endpoint can reject a command
+  and continue serving the same peer.
+
+Exact commands/output: `phase-5e-final-labs.log`. The lab solutions explain that
+application writes do not dictate kernel callback segmentation. They do not claim
+all schedules, saturation/deadline execution, physical radio behavior, TLS trust
+validation or measurement-model acceptance. The checkpoint teaches input framing;
+CSV validation and domain acceptance remain in the later MiniGateway extension.
+The labs use the existing CMake/CI discovery path and passed locally; no hosted CI
+execution is claimed.
+
+| Required check executed | Result / evidence |
+| --- | --- |
+| Hygiene and chapter references/regressions | Pass; `phase-5e-final-hygiene.log` |
+| Complete-listing alignment | 36 exact listings pass; `phase-5e-final-alignment.log` |
+| Metrics regressions | Pass; `phase-5e-final-metrics-tests.log` |
+| Companion and public lab builds | Pass; `phase-5e-final-companion.log` |
+| Public lab execution | 28/28 pass; `phase-5e-final-labs.log` |
+| Teaching, behavior and lifetime checks | Pass; corresponding `phase-5e-final-*.log` |
+| Proposal, sample PDF and full package targets | Pass; `phase-5e-final-package.log` |
+| Fresh extracted-package hygiene | Pass; `phase-5e-final-extracted-hygiene.log` |
+| Budgets, pedagogy, preservation and artifact consistency | Pass; `phase-5e-final-exit.log`, `phase-5e-exit-checks.json` |
+
+`phase-5e-final-results.json` records zero exits for every command group. The example
+build is `build/proposal-readiness-phase-5e-examples`, using the configured install
+prefix `build/ci-fix-2026-09-22/install-gcc`; PDF target build directory remains
+`build/proposal-readiness-phase-2`.
+
+Initial evidence is retained. `phase-5e-part-labs.log` contains a failed assertion
+that overlong-line closure must deliver the queued diagnostic. The existing server
+calls close immediately, so queueing does not establish delivery. The corrected
+peer requires EOF and permits only the diagnostic's prefix (including no bytes),
+never an interpreted unknown-command reply. This preserves the stated framing
+invariant; no server behavior was changed. The chapter and solution now teach that
+qualification explicitly. All six tests then passed in
+`phase-5e-part-labs-corrected.log` and the final 28-test run. The final exercise uses
+the installed public enum spelling `WouldExceedLimit`. An intermediate artifact
+check caught a stale package during that last wording correction
+(`phase-5e-initial-exit.log`); rebuilding, re-extracting and rerunning the check
+produced the passing final evidence. No PDF diagnostic suppression was needed.
+
+### Reference register, PDF review and accounting
+
+All **39 stable topics** and **374 migration dispositions** remain. Current
+references are **333**, previously 345: fifteen duplicate framing references are
+explicitly retired and three public solution title references are added. Retired
+identities: `R151 R156 R157 R158 R159 R160 R161 R162 R163 R165 R166 R167 R168 R173 R174`.
+Surviving targets/identities are retained, including the deliberate combined
+R275/R276 reference; moved references are reordered with their existing identities
+and line evidence. The reference checker and its five regression tests pass.
+
+Full PDF: **418 → 406 pages**; samples **54 → 54**; proposal **6 → 6**.
+All three final LaTeX logs have **zero warnings and zero bad boxes**.
+The archive contains **314 files**, byte-identical to current source/artifacts.
+Hashes and diagnostic counts are in `phase-5e-exit-checks.json`. Rendered physical
+pages 2–4 and 84–107 were inspected; `phase-5e-visual-review.md` records the 27-page
+targeted visual review and its limits. All affected objectives, exercises, tables,
+listings and the transfer figure fit. Proposal content/page-table refresh remains
+Phase 6; later chapters are not visually or editorially recertified here.
+
+Implementation line changes: application production **+0/−0**; new test C++
+**+24/−0**, test Python **+135/−0**, test CMake **+36/−1**; review checker
+**+132/−0**. Manuscript, public answers and report/log evidence are documentation
+accounted separately. Final diff review found no duplicated parser, old/new
+application overlap, or unused fixture mode; all six new modes execute in the
+public test registrations.
+
+Commit: `proposal-readiness: phase 5e — refine Part IV and verify protocol framing`.
+**Stop after Phase 5e. Phase 5f is not started.** Before Phase 5f, freshly rerun
+metrics and `check-phase-5e.py`, all 28 labs, hygiene/alignment and regressions,
+companion/runtime checks, PDF/package targets and fresh extracted-package hygiene.
+Use new evidence paths so this completed phase's evidence remains historical.

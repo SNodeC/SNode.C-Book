@@ -1,0 +1,6 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 333 current references, 374 old-reference dispositions.
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/review/proposal-readiness-2026-09-22/check-phase-5e.py", line 120, in <module>
+    assert archive.extractfile(member).read()==p.read_bytes(),str(p)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: /home/voc/projects/snodec/publications/book/manuscript/chapters/09-writing-socketcontext-classes-well.md

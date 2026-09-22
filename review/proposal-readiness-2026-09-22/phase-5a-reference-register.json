@@ -1029,7 +1029,7 @@
       "source_ids": [
         "R148"
       ],
-      "line": 210
+      "line": 128
     },
     {
       "file": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
@@ -1040,7 +1040,7 @@
       "source_ids": [
         "R149"
       ],
-      "line": 321
+      "line": 230
     },
     {
       "file": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
@@ -1051,18 +1051,7 @@
       "source_ids": [
         "R150"
       ],
-      "line": 371
-    },
-    {
-      "file": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
-      "text": "Chapter 5",
-      "targets": [
-        "core-runtime-and-event-processing"
-      ],
-      "source_ids": [
-        "R151"
-      ],
-      "line": 377
+      "line": 259
     },
     {
       "file": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
@@ -1073,7 +1062,7 @@
       "source_ids": [
         "R152"
       ],
-      "line": 459
+      "line": 283
     },
     {
       "file": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
@@ -1084,7 +1073,7 @@
       "source_ids": [
         "R153"
       ],
-      "line": 570
+      "line": 344
     },
     {
       "file": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
@@ -1095,7 +1084,7 @@
       "source_ids": [
         "R154"
       ],
-      "line": 634
+      "line": 373
     },
     {
       "file": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
@@ -1106,97 +1095,7 @@
       "source_ids": [
         "R155"
       ],
-      "line": 638
-    },
-    {
-      "file": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
-      "text": "Chapters 7, 9 and 10",
-      "targets": [
-        "servers-clients-and-connections",
-        "writing-socketcontext-classes-well",
-        "writing-socketcontextfactory-classes-well"
-      ],
-      "source_ids": [
-        "R156"
-      ],
-      "line": 130
-    },
-    {
-      "file": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
-      "text": "Chapter 7",
-      "targets": [
-        "servers-clients-and-connections"
-      ],
-      "source_ids": [
-        "R157"
-      ],
-      "line": 130
-    },
-    {
-      "file": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
-      "text": "Chapter 9",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R158"
-      ],
-      "line": 130
-    },
-    {
-      "file": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
-      "text": "Chapter 9",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R159"
-      ],
-      "line": 161
-    },
-    {
-      "file": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
-      "text": "Chapter 9",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R160"
-      ],
-      "line": 226
-    },
-    {
-      "file": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
-      "text": "Chapter 10",
-      "targets": [
-        "writing-socketcontextfactory-classes-well"
-      ],
-      "source_ids": [
-        "R161"
-      ],
-      "line": 226
-    },
-    {
-      "file": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
-      "text": "Chapter 9",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R162"
-      ],
-      "line": 333
-    },
-    {
-      "file": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
-      "text": "Chapter 11",
-      "targets": [
-        "building-the-same-protocol-over-different-lower-layers"
-      ],
-      "source_ids": [
-        "R163"
-      ],
-      "line": 585
+      "line": 375
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
@@ -1207,134 +1106,7 @@
       "source_ids": [
         "R164"
       ],
-      "line": 587
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapters 9 and 10",
-      "targets": [
-        "writing-socketcontext-classes-well",
-        "writing-socketcontextfactory-classes-well"
-      ],
-      "source_ids": [
-        "R165"
-      ],
-      "line": 35
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 9",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R166"
-      ],
-      "line": 111
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapters 9 and 10",
-      "targets": [
-        "writing-socketcontext-classes-well",
-        "writing-socketcontextfactory-classes-well"
-      ],
-      "source_ids": [
-        "R167"
-      ],
-      "line": 143
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapters 6\u20138",
-      "targets": [
-        "socket-addresses-and-address-semantics",
-        "servers-clients-and-connections",
-        "ipv4-and-ipv6-as-the-first-concrete-network-families",
-        "unix-domain-sockets",
-        "bluetooth-in-snodec-rfcomm-and-l2cap"
-      ],
-      "source_ids": [
-        "R168"
-      ],
-      "line": 198
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 9",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R169"
-      ],
-      "line": 297
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
-      "source_ids": [
-        "R170"
-      ],
-      "line": 297
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 12",
-      "targets": [
-        "application-and-instance-configuration-in-detail"
-      ],
-      "source_ids": [
-        "R171"
-      ],
-      "line": 341
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 9",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R172"
-      ],
-      "line": 369
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 9",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R173"
-      ],
-      "line": 421
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 10",
-      "targets": [
-        "writing-socketcontextfactory-classes-well"
-      ],
-      "source_ids": [
-        "R174"
-      ],
-      "line": 480
-    },
-    {
-      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 10",
-      "targets": [
-        "writing-socketcontextfactory-classes-well"
-      ],
-      "source_ids": [
-        "R175"
-      ],
-      "line": 488
+      "line": 282
     },
     {
       "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
@@ -1345,7 +1117,62 @@
       "source_ids": [
         "R176"
       ],
-      "line": 604
+      "line": 203
+    },
+    {
+      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 9",
+      "targets": [
+        "writing-socketcontext-classes-well"
+      ],
+      "source_ids": [
+        "R169"
+      ],
+      "line": 205
+    },
+    {
+      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [
+        "R170"
+      ],
+      "line": 205
+    },
+    {
+      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 12",
+      "targets": [
+        "application-and-instance-configuration-in-detail"
+      ],
+      "source_ids": [
+        "R171"
+      ],
+      "line": 249
+    },
+    {
+      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 9",
+      "targets": [
+        "writing-socketcontext-classes-well"
+      ],
+      "source_ids": [
+        "R172"
+      ],
+      "line": 277
+    },
+    {
+      "file": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 10",
+      "targets": [
+        "writing-socketcontextfactory-classes-well"
+      ],
+      "source_ids": [
+        "R175"
+      ],
+      "line": 334
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
@@ -3834,6 +3661,33 @@
       ],
       "source_ids": [],
       "line": 1
+    },
+    {
+      "file": "companion/exercises/ch09/README.md",
+      "text": "Chapter 9",
+      "targets": [
+        "writing-socketcontext-classes-well"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch10/README.md",
+      "text": "Chapter 10",
+      "targets": [
+        "writing-socketcontextfactory-classes-well"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch11/README.md",
+      "text": "Chapter 11",
+      "targets": [
+        "building-the-same-protocol-over-different-lower-layers"
+      ],
+      "source_ids": [],
+      "line": 1
     }
   ],
   "migration_dispositions": [
@@ -5510,8 +5364,8 @@
       "old_chapters": [
         6
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/09-writing-socketcontext-classes-well.md:377"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R152",
@@ -5567,8 +5421,8 @@
         13,
         14
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md:130"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R157",
@@ -5578,8 +5432,8 @@
       "old_chapters": [
         9
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md:130"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R158",
@@ -5589,8 +5443,8 @@
       "old_chapters": [
         13
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md:130"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R159",
@@ -5600,8 +5454,8 @@
       "old_chapters": [
         13
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md:161"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R160",
@@ -5611,8 +5465,8 @@
       "old_chapters": [
         13
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md:226"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R161",
@@ -5622,8 +5476,8 @@
       "old_chapters": [
         14
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md:226"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R162",
@@ -5633,8 +5487,8 @@
       "old_chapters": [
         13
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md:333"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R163",
@@ -5644,8 +5498,8 @@
       "old_chapters": [
         15
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md:585"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R164",
@@ -5667,8 +5521,8 @@
         13,
         14
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md:35"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R166",
@@ -5678,8 +5532,8 @@
       "old_chapters": [
         13
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md:111"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R167",
@@ -5690,8 +5544,8 @@
         13,
         14
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md:143"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R168",
@@ -5705,8 +5559,8 @@
         11,
         12
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md:198"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R169",
@@ -5760,8 +5614,8 @@
       "old_chapters": [
         13
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md:421"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R174",
@@ -5771,8 +5625,8 @@
       "old_chapters": [
         14
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md:480"
+      "status": "retired",
+      "evidence": "Phase 5e: removed duplicate responsibility/framing reference while retaining the explanation in the Part IV chapter; see chapter-ledger.md content audit and the Phase 5e manuscript diff."
     },
     {
       "id": "R175",

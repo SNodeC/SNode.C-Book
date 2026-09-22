@@ -500,3 +500,136 @@ Separate commit: `proposal-readiness: phase 5d follow-up — relocate stranded U
 This freshly passed gate is the authorized Phase 5e entry baseline. The author also
 clarifies that budgets are ceilings: remove repetition, preserving explanations,
 examples and technical qualifications instead of cutting merely to undershoot.
+
+
+## Phase 5e — Part IV, 2026-09-22
+
+Baseline: `metrics-after-phase-5d-follow-up.json`, after the separate author-requested
+Unix introduction correction and freshly passing gate. After:
+`metrics-after-phase-5e.json`; assertions: `phase-5e-exit-checks.json`.
+Budgets are ceilings. Cuts remove mirrored responsibility statements, repeated
+construction summaries and explanatory arrow blocks; they do not remove distinct
+examples or technical qualifications merely to undershoot a ceiling.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Sections before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 9 | 4,298 → 3,089 / 3,200 | 3,994 → 2,913 | 304 → 176 | 29 → 8 / 8 | 345.75 |
+| 10 | 3,867 → 2,265 / 2,800 | 3,576 → 2,129 | 291 → 136 | 27 → 6 / 7 | 328.33 |
+| 11 | 3,626 → 2,555 / 2,800 | 3,305 → 2,362 | 321 → 193 | 27 → 7 / 7 | 312.57 |
+
+Part IV: **11,791 → 7,909 / 8,800 words**, including objectives, recaps and exercises.
+Reserve used: **0**; remaining: **2,750**. Every original executable excerpt remains
+byte-identical and in order within each chapter. Fenced reductions remove `text`
+blocks; the line command mapping is now a table. Index occurrences, figures,
+source markers and stable topic anchors remain. Edited and reread: all three
+chapters, their public solutions, the Part IV opener and the transition into the
+unchanged Part V opener. Visual review is recorded separately.
+
+### Objective ↔ exercise mapping
+
+Each chapter opens with three objectives and closes with one recap (five bullets
+in Chapters 9–10, four in Chapter 11), then five exercises. Objective callouts
+start at line 3; exercise callouts are at Ch9:385, Ch10:294 and Ch11:396.
+All public answers below live in `companion/exercises/chNN/README.md`, under the
+matching numbered exercise heading.
+
+| Exercise | Tier | Objectives | Public answer / observable lab |
+| --- | --- | --- | --- |
+| 9.1 | Review | O1 | ch09 §1: consumed bytes, complete commands and lifetime |
+| 9.2 | Review | O3 | ch09 §2: inactivity versus progress deadline, queue admission |
+| 9.3 | Lab | O1, O2 | ch09 §3; `exercise-ch09-framing` |
+| 9.4 | Lab | O2 | ch09 §4; `exercise-ch09-limits` |
+| 9.5 | Design | O1, O3 | ch09 §5: parser state versus accepted model and slow-peer policy |
+| 10.1 | Review | O1 | ch10 §1: attachment, ownership handoff and refusal |
+| 10.2 | Review | O3 | ch10 §2: copied value, reference and shared ownership |
+| 10.3 | Lab | O2 | ch10 §3; `exercise-ch10-isolation` |
+| 10.4 | Lab | O1 | ch10 §4; `exercise-ch10-refusal` |
+| 10.5 | Design | O1, O3 | ch10 §5: two input roles, one model, explicit dependencies |
+| 11.1 | Review | O1 | ch11 §1: source/component edits and unchanged protocol files |
+| 11.2 | Review | O3 | ch11 §2: carrier change does not transfer authorization |
+| 11.3 | Lab | O1, O2 | ch11 §3; `exercise-ch11-part-checkpoint` |
+| 11.4 | Lab | O2, O3 | ch11 §4; `exercise-ch11-endpoint-failure` |
+| 11.5 | Design | O1, O3 | ch11 §5: local helper versus TLS input |
+
+| Objective | Exercises |
+| --- | --- |
+| 9.O1 | 9.1, 9.3, 9.5 |
+| 9.O2 | 9.3, 9.4 |
+| 9.O3 | 9.2, 9.5 |
+| 10.O1 | 10.1, 10.4, 10.5 |
+| 10.O2 | 10.3 |
+| 10.O3 | 10.2, 10.5 |
+| 11.O1 | 11.1, 11.3, 11.5 |
+| 11.O2 | 11.3, 11.4 |
+| 11.O3 | 11.2, 11.4, 11.5 |
+
+### Built and run
+
+All six new registrations pass within **28/28** public labs:
+`phase-5e-final-companion.log`, `phase-5e-final-labs.log` and
+`phase-5e-final-results.json`. They are registered through the existing companion
+CMake/CI path; no hosted run is claimed. Public READMEs give exact commands,
+expected observations, setup and limits.
+
+- Framing: 26 two-piece segmentations (including coalesced input) each reconstruct
+  the same PONG/OK/unknown-command/PONG replies. Empty lines, CRLF and QUIT closure
+  are included. A separate incomplete `PI` case remains quiet during a bounded
+  interval before completion. This varies writes, not kernel callback scheduling.
+- Length: 4096 bytes preceding newline are admitted, including a carriage return;
+  4097 close with or without a delimiter before interpretation. Immediate closure
+  may discard the queued error diagnostic. The test requires EOF and permits only
+  a prefix of that diagnostic, never an unknown-command response. The initial
+  stronger delivery assumption failed (`phase-5e-part-labs.log`); the correction
+  aligns with the existing framing contract, without modifying application code.
+- Isolation: a pending prefix on one peer does not affect another; closing it and
+  opening a replacement does not carry partial input into the new context.
+- Refusal: a test-only factory returns `nullptr` once; the first peer sees closure
+  without READY. Later creation delegates to the unchanged canonical factory and
+  yields READY/PONG. No supplied connection is manually deleted.
+- Part IV checkpoint: the same context/factory sources process the framing cases
+  over IPv4 and a private Unix path. Recorded replies are identical; the server
+  removes its path before fixture-directory cleanup. This is input framing, not
+  CSV validation or measurement acceptance.
+- Endpoint failure: a nonexistent Unix path fails before protocol readiness, while
+  a valid peer gets a command error and can continue with PING. This distinguishes
+  endpoint selection from parser behavior.
+
+The canonical line parser and factory remain the only protocol implementation.
+The Unix target derives the three entry-point substitutions at configure time
+and links the fourth change, the selected Unix component. `protocol.py` reuses the common bounded
+process harness; no service, radio, broker or database is needed. The two-piece
+cases do not certify every possible receive schedule; output saturation, deadlines,
+TLS policy and accepted-model integration are not executed by these labs.
+
+### Retained teaching and editorial decisions
+
+| Distinct content retained | Final manuscript evidence |
+| --- | --- |
+| Connection/context/factory distinction and generic versus stream surface | Ch9:15, :47 |
+| Readiness, attachment/detachment, input accounting, signals and errors | Ch9:71 |
+| Entire abridged line context, delimiter/CRLF rules, complete and incomplete overlong input, independent-peer exercise | Ch9:120 |
+| Explicit state/dependencies, receive discipline, inactivity versus deadline, shutdown and metric interpretations | Ch9:244 |
+| Scoped logging, facade distinction, detach reason and shutdown despite signal return | Ch9:330 |
+| Mental reconstruction questions, queue admission and no unbounded shadow queue | Ch9:350, :367 |
+| Raw-pointer ownership handoff, null creation, initial attachment and staged replacement excerpts, fresh-context rule | Ch10:17 |
+| Context/type/role construction examples and stable dependencies | Ch10:79 |
+| Service location versus explicit dependency, parser state versus model ownership | Ch10:148 |
+| Argument forwarding plus value/reference/shared-ownership tradeoff table and MiniGateway lifetime example | Ch10:165 |
+| Separate, parameterized, preconfigured and selecting factory patterns, all existing examples | Ch10:204 |
+| Independent-peer/replacement test and refusal behavior | Ch10:271 |
+| Transfer map/figure, context/factory stability and applied rules | Ch11:17, :38, :135 |
+| All five carrier type examples, address/deployment tables and TLS qualification | Ch11:87 |
+| Echo excerpts and full runnable IPv4/Unix transfer with all commands and peer listing | Ch11:135, :192 |
+| Public header/component matrix beside its applied transfer | Ch11:192 |
+| Role examples, preconfiguration, explicit lower-family setup | Ch11:281 |
+| Specialization, meaningful small duplication, trust differences and configuration transition | Ch11:346 |
+
+The repeated echo-method summary in Chapter 9 is subsumed by its earlier interface
+and worked-context discussion; its index entries now accompany the echo-to-line
+transition. Chapter 10's repeated ownership section is folded into the interface
+and attachment explanation, where its index entries now belong. Chapter 11's
+repeated deployment endorsement is folded into the family comparison; the detailed
+qualification about when reuse should stop remains. No new generic chapter treatment
+replaces the author's explanations, and the unused word allowance is not a reason
+to cut further. None of this Part's approved budgets triggers the >35% stop rule;
+the content audit above still records preservation explicitly.

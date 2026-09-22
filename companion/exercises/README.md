@@ -1,6 +1,6 @@
 # Public exercises and solutions
 
-These are the public solutions for Parts I–III and the later sample chapters. Each chapter has two
+These are the public solutions for Parts I–IV and the later sample chapters. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
@@ -34,6 +34,9 @@ public API. The Part II checkpoint needs no transport or external service.
 Part III compiles thin family drivers around the same EchoPair context and factory,
 checks IP and Unix identities/cleanup, and constructs Bluetooth service selectors
 without opening a radio socket.
+
+Part IV reuses the canonical line protocol to compare framing, fresh parser state,
+construction refusal and IPv4/Unix transfer through bounded independent peers.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.

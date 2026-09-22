@@ -1199,3 +1199,50 @@ Separate commit: `proposal-readiness: phase 5d follow-up — relocate stranded U
 This freshly passed gate is the authorized Phase 5e entry baseline. The author also
 clarifies that budgets are ceilings: remove repetition, preserving explanations,
 examples and technical qualifications instead of cutting merely to undershoot.
+
+
+## Phase 5e — Part IV completed, 2026-09-22
+
+The separately committed author-requested Phase 5d follow-up passed a fresh gate
+before Part IV edits, including all 22 previous labs and full checks/builds. Its
+metrics are the authorized entry baseline. Historical Phase 5d evidence remains.
+The author's clarification governs the editorial pass: budgets are ceilings;
+remove repetition without removing explanations, examples or qualifications merely
+to undershoot. The retained-content audit is in chapter-ledger.md.
+
+Chapters 9–11 meet their ceilings at 3,089 / 3,200; 2,265 / 2,800; 2,555 / 2,800
+words. They have 8, 6 and 7 sections, with mean prose lengths 345.75, 328.33 and
+312.57. Part IV is 7,909 / 8,800 words including all pedagogical apparatus.
+No reserve used; 2,750 remains. All executable excerpts, index entries, figures
+and stable topic anchors survive. Three objectives per chapter map to five
+exercises (two review, two labs, one design), with public solutions and recaps.
+
+The Part IV checkpoint runs the canonical line protocol over IPv4 and a private
+Unix path, comparing reconstructed replies under fragmented/coalesced writes.
+Other labs cover length admission, fresh parser state, construction refusal and
+endpoint-versus-command failure. One test-only refusing factory delegates normal
+creation to the existing factory; the Unix entry point is derived from the worked
+carrier substitutions. No application or parallel parser implementation was added.
+The observed immediate-close behavior is now explicit: a queued error diagnostic
+is not guaranteed to arrive. The initial incorrect delivery assertion remains
+recorded with its correction; no production change was required.
+
+All 28 public labs, companion build, hygiene/alignment, metric/reference regressions,
+teaching/behavior/lifetime checks, PDF/package builds, archive consistency and
+extracted-package hygiene pass locally. Full PDF: 418 → 406 pages; samples 54 and
+proposal 6 unchanged. Final warnings and bad boxes: zero. Text/solutions were
+reread in context, and 27 rendered pages were inspected. No hosted CI or further
+carrier/security behavior is claimed. Proposal refresh remains Phase 6.
+
+Global counts: 130,160 words (−3,833), 691 subheadings (−62), 323 text fences (−25),
+20 rules and zero forbidden phrases/closing sections. Remaining global reductions
+belong to later Parts. Front matter stays within 2,500 words and all Part openers
+within 1,650. Evidence in `review/proposal-readiness-2026-09-22/`: REPORT.md,
+chapter-ledger.md, metrics-after-phase-5e.json, check-phase-5e.py,
+phase-5e-exit-checks.json, phase-5e-final-results.json, phase-5e-final-*.log and
+phase-5e-visual-review.md.
+
+Commit: `proposal-readiness: phase 5e — refine Part IV and verify protocol framing`.
+**Stop after Phase 5e.** Next: Phase 5f, Part V only, after freshly rerunning the
+current Phase 5e gate in REPORT.md. Author preservation rules, reserve accounting,
+5l/5m split and Phase 6 proposal refresh still apply.

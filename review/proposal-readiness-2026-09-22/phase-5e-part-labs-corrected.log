@@ -1,0 +1,74 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 17
+    Start 17: exercise-ch09-framing
+
+17: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch09/protocol.py" "framing" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/examples/LineProtocol-Server/line-protocol-server"
+17: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/exercises/ch09
+17: Test timeout computed to be: 40
+17: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+1/6 Test #17: exercise-ch09-framing ............   Passed    0.20 sec
+test 18
+    Start 18: exercise-ch09-limits
+
+18: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch09/protocol.py" "limits" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/examples/LineProtocol-Server/line-protocol-server"
+18: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/exercises/ch09
+18: Test timeout computed to be: 40
+18: Overlong input: closed; diagnostic bytes delivered=0
+18: Overlong input: closed; diagnostic bytes delivered=0
+18: PASS: 4096 bytes accepted including optional CR; 4097 closes with or without delimiter
+2/6 Test #18: exercise-ch09-limits .............   Passed    0.30 sec
+test 19
+    Start 19: exercise-ch10-isolation
+
+19: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch10/../ch09/protocol.py" "isolation" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/examples/LineProtocol-Server/line-protocol-server"
+19: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/exercises/ch10
+19: Test timeout computed to be: 40
+19: PASS: independent pending buffers; replacement starts fresh; surviving peer progresses
+3/6 Test #19: exercise-ch10-isolation ..........   Passed    0.21 sec
+test 20
+    Start 20: exercise-ch10-refusal
+
+20: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch10/../ch09/protocol.py" "refusal" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/exercises/ch10/line-refusal"
+20: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/exercises/ch10
+20: Test timeout computed to be: 40
+20: PASS: null factory result closes before READY; later valid context replies
+4/6 Test #20: exercise-ch10-refusal ............   Passed    0.09 sec
+test 21
+    Start 21: exercise-ch11-part-checkpoint
+
+21: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch11/../ch09/protocol.py" "transfer" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/examples/LineProtocol-Server/line-protocol-server" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/exercises/ch11/line-unix"
+21: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/exercises/ch11
+21: Test timeout computed to be: 40
+21: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+21: Observed ip: 51357
+21: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+21: Observed unix: /tmp/line-lab-9zoahhmw/line.sock
+21: PASS: Part IV checkpoint: identical reconstructed replies over IPv4 and Unix; owned cleanup
+5/6 Test #21: exercise-ch11-part-checkpoint ....   Passed    0.36 sec
+test 22
+    Start 22: exercise-ch11-endpoint-failure
+
+22: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch11/../ch09/protocol.py" "endpoint-failure" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/exercises/ch11/line-unix"
+22: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5e-examples/companion/exercises/ch11
+22: Test timeout computed to be: 40
+22: PASS: missing path fails before protocol; valid peer reports command error and remains usable
+6/6 Test #22: exercise-ch11-endpoint-failure ...   Passed    0.10 sec
+
+The following tests passed:
+	exercise-ch09-framing
+	exercise-ch09-limits
+	exercise-ch10-isolation
+	exercise-ch10-refusal
+	exercise-ch11-part-checkpoint
+	exercise-ch11-endpoint-failure
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =   1.27 sec
