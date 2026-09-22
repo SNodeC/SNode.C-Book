@@ -1,6 +1,6 @@
 # Public exercises and solutions
 
-These are the public solutions for Parts I–X and the later sample chapters. Each chapter has two
+These are the public solutions for Parts I–XI. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
@@ -69,6 +69,12 @@ installs a fresh Release consumer into a temporary prefix. Runtime checks clear
 loader overrides and use the installation's library paths. They observe process
 restart, invalid-configuration recovery, endpoint refusal and a bounded echo
 measurement. They do not install a service unit or deploy to an OpenWrt device.
+
+Part XI reuses MiniGateway and MiniGateway Extended. Independent peers check CSV
+framing, validation, mixed HTTP/Unix acceptance and live SSE observations with
+MQTT unavailable. The final checkpoint reruns these observations alongside the
+existing JSON/model experiments. Its manual broker extension requires a separate
+subscriber observation and is not part of the local CTests.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.

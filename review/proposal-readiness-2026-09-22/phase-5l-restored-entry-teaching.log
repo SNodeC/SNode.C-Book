@@ -1,0 +1,9 @@
+COMMAND: python3 ci/run-teaching-smoke-tests.py
+TMPDIR=/tmp
+TMP=/tmp
+TEMP=/tmp
+SNODEC_BOOK_SMOKE_UNIX_SOCKET=/tmp/phase-5l-restored-entry-smoke.sock
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket
+PASS: four semantic records; component Debug overrides global Info; event and typed error; no invented peer
+PASS: Chapter 3 server reflects a controlled byte sequence
+PASS: Chapter 3 client initiates and reflects with a controlled peer

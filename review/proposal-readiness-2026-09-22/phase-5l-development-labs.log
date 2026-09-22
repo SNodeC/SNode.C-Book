@@ -1,0 +1,68 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 55
+    Start 55: exercise-ch28
+
+55: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch28/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/examples/MiniGateway/minigateway"
+55: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/exercises/ch28
+55: Test timeout computed to be: 40
+55: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+1/6 Test #55: exercise-ch28 ....................   Passed    0.13 sec
+test 56
+    Start 56: exercise-ch28-validation
+
+56: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/exercises/ch28/measurement-validation
+56: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/exercises/ch28
+56: Test timeout computed to be: 10000000
+56: PASS: three invalid inputs leave state and notifications unchanged; next acceptance is 2
+2/6 Test #56: exercise-ch28-validation .........   Passed    0.00 sec
+test 57
+    Start 57: exercise-ch29-framing
+
+57: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch29/gateway.py" "framing" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/examples/MiniGateway-Extended/minigateway-extended"
+57: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/exercises/ch29
+57: Test timeout computed to be: 40
+57: PASS: whole/fragmented records agree; malformed records do not advance order; producer 9000 becomes local order; 4096-byte CR record accepted; both overlong forms close without suffix acceptance
+3/6 Test #57: exercise-ch29-framing ............   Passed    0.09 sec
+test 58
+    Start 58: exercise-ch29-mixed
+
+58: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch29/gateway.py" "mixed" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/examples/MiniGateway-Extended/minigateway-extended"
+58: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/exercises/ch29
+58: Test timeout computed to be: 40
+58: PASS: MQTT unavailable; HTTP/Unix input share order 1–4; malformed CSV adds no acceptance; surviving observer continues; reconnect gets current 3 then live 4; restart resets to zero
+4/6 Test #58: exercise-ch29-mixed ..............   Passed    0.13 sec
+test 59
+    Start 59: exercise-ch30
+
+59: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/exercises/ch30/model-ownership
+59: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/exercises/ch30
+59: Test timeout computed to be: 10000000
+59: PASS: input 900,2,1 -> accepted 1,2,3; detached observer sees only 1,2
+5/6 Test #59: exercise-ch30 ....................   Passed    0.00 sec
+test 60
+    Start 60: exercise-ch30-model-instances
+
+60: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/exercises/ch30/model-instances
+60: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5l-examples/companion/exercises/ch30
+60: Test timeout computed to be: 10000000
+60: PASS: shared inputs accept 1,2; separate model instances each accept 1
+6/6 Test #60: exercise-ch30-model-instances ....   Passed    0.00 sec
+
+The following tests passed:
+	exercise-ch28
+	exercise-ch28-validation
+	exercise-ch29-framing
+	exercise-ch29-mixed
+	exercise-ch30
+	exercise-ch30-model-instances
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =   0.37 sec

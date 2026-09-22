@@ -15,11 +15,7 @@
 
 ### A decision model for changing requirements
 
-Architectural judgment begins before code is written: it is the decision about where a concern should live.
-
 The reader has now built and extended MiniGateway after studying its underlying runtime and protocols. The harder task is deciding which of those choices should survive when requirements change: whether state must outlive the process, whether a peer needs a different trust boundary, or whether two roles need independent operation.
-
-MiniGateway’s shared model gives us a concrete starting point for these decisions.
 
 Here, *role* is used in the system-design sense unless the text explicitly refers to configured runtime roles and registered instances.
 
@@ -40,8 +36,6 @@ Most design choices in this book reduce to five questions:
 | Role shape | Who produces, observes, commands, adapts, or administers? | explicit application roles and configured instances |
 | Lifetime | How long should this state or policy live? | context, application model, database, service, deployment |
 | Visibility | Who must diagnose or operate this behavior? | logs, counters, configuration, service files, tests |
-
-Use these questions before committing to an abstraction.
 
 ### Worked decision: who owns the measurement sequence?
 
@@ -182,11 +176,7 @@ Diagnostics must preserve enough identity to be useful: role, configured instanc
 \index{modularity}
 
 
-Splitting is useful when it preserves meaning. It is harmful when it only moves confusion into more files.
-
 Split when a concern has a different lifetime, audience, protocol, deployment policy, failure consequence, or ownership model. Do not split merely to satisfy an abstract pattern. Conversely, do not merge unrelated responsibilities merely because they currently fit into one callback or executable.
-
-A practical test is this:
 
 ::: {.snodec-rule title="Split test"}
 If a future change would affect only one responsibility, that responsibility should be visible somewhere in the design.
@@ -216,8 +206,8 @@ Appendix A applies this judgment to framework extension: new features should be 
 1. **Review (O1).** Why can neither an SSE event ID nor a producer-supplied sequence define MiniGateway acceptance order? Explain how to retain a sensor's original sample number.
 2. **Review (O3).** When do two connections need separate endpoint roles rather than two flow handles?
 3. **Lab (O2).** Build and run the model-ownership solution. Submit measurements carrying conflicting sequence numbers; expect accepted order 1, 2, 3. Unsubscribe one observer before the third acceptance and verify only the remaining observer receives it.
-4. **Lab (O2).** Build and run the model-instances lab. Compare two input paths sharing one model with two separate models. Expect shared order 1, 2, but independent order 1 in each separate model.
-5. **Design (O3).** A local sensor reader requires elevated device privileges and independent restarts. Choose a process boundary and an IPC contract. Use the decision tables to justify identity, framing, recovery, and diagnostic ownership.
+4. **Lab (O1, O2).** Build and run the model-instances lab: shared inputs give order 1, 2; separate models each start at 1. Then run the **Part XI checkpoint** in the public solutions: combine HTTP and Unix input with MQTT unavailable, reject malformed CSV, disconnect/reconnect an SSE observer, and restart the gateway. Expect one local acceptance order, a current-state snapshot on reconnect, and sequence zero after restart.
+5. **Design (O3).** A local sensor reader requires elevated device privileges and independent restarts. Choose a process boundary and an IPC contract. Use the checkpoint observations and decision tables to justify identity, framing, recovery, and diagnostic ownership.
 
 Public solutions and lab commands: `companion/exercises/ch30/README.md`.
 :::

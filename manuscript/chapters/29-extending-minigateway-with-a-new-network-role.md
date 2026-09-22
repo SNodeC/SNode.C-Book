@@ -5,30 +5,15 @@
 \index{network roles}
 \index{preconfigured factories}
 
-### Why MiniGateway Extended follows MiniGateway
+::: {.snodec-objectives title="Learning objectives"}
+- **O1.** Trace a shared model reference from startup through a factory to each input context.
+- **O2.** Build the Unix input and diagnose framing, validation, and observation through independent peers.
+- **O3.** Decide when local socket permissions suffice and when input needs a separate process and recovery contract.
+:::
 
-MiniGateway already contains the application structure needed here: one shared `MeasurementModel`, one web role, and one MQTT role. MiniGateway Extended demonstrates the payoff of that structure. It adds a Unix-domain socket input without changing the model, the web role, or the MQTT role.
+### Extending the shared model
 
-```text
-MiniGateway:
-  MeasurementModel
-    <- Web /simulate
-    <- MQTT measurement input
-    -> Web /status
-    -> Web /events
-    -> MQTT measurement output
-
-MiniGateway Extended:
-  MeasurementModel
-    <- Web /simulate
-    <- MQTT measurement input
-    <- Unix-domain socket measurement input
-    -> Web /status
-    -> Web /events
-    -> MQTT measurement output
-```
-
-The extension is easier to read as a before/after change:
+MiniGateway already contains one shared `MeasurementModel`, one web role, and one MQTT role. MiniGateway Extended adds a Unix-domain socket input around that structure:
 
 | Area | MiniGateway | MiniGateway Extended |
 |---|---|---|
@@ -38,19 +23,17 @@ The extension is easier to read as a before/after change:
 | MQTT role | unchanged | unchanged |
 | Unix-domain input role | absent | added |
 
-The repeated model and role names in the table are the comparison points for the source diff.
-
 ::: {.snodec-warning title="Convenience-callback warning"}
 Do not hide a new input path inside an unrelated callback merely because that callback is already available. A convenient callback is not necessarily the right architectural boundary.
 :::
 
 The new concern is local measurement injection through a Unix-domain stream socket. That concern belongs to a new socket-server role. It does not belong in the HTTP route code, the SSE response path, or the MQTT client context.
 
-The network-role architecture in Figure \ref{fig:minigateway-extended-network-role-architecture} shows the resulting structure. The arrows describe accepted measurements and observations, not guaranteed delivery or execution threads. The extension does not add a second application core. It adds another input role around the same shared-model area: HTTP simulation, MQTT subscription, and Unix-domain socket input all accept measurements into that area, while HTTP status, SSE events, and MQTT publication expose selected state outward through separate roles. Within the shared-model area, `MeasurementModel` is the central shared state object and API. `MeasurementJsonCodec` and `Measurement` are grouped alongside it as application-level support types; they are not additional network roles and they do not couple the model to any particular protocol endpoint.
+Figure \ref{fig:minigateway-extended-network-role-architecture} shows HTTP simulation, MQTT subscription, and Unix-domain input converging on `MeasurementModel`. HTTP status, SSE events, and MQTT publication expose accepted state. The arrows describe acceptance and observation, not guaranteed delivery or execution threads. `MeasurementJsonCodec` and `Measurement` are application support types alongside the model, not additional network roles or protocol dependencies of the model.
 
 ![MiniGateway Extended: inputs converge on one in-memory acceptance model; status reads a snapshot, while SSE and MQTT adapt model notifications to their own delivery paths. The JSON codec is a boundary utility, not a prerequisite for the CSV input.](assets/figures/pdf/fig-12-minigateway-extended-network-role-architecture.pdf){#fig:minigateway-extended-network-role-architecture width=100% latex-placement="tbp"}
 
-### What changes
+**Changed and reused files**
 
 Compared with MiniGateway, MiniGateway Extended changes the build target and the composition root, and it adds one Unix-domain socket role. This is the same extension style used throughout the book: change the component set when a new lower family is needed, add the files that own the new boundary, and keep unrelated roles stable.
 
@@ -79,15 +62,15 @@ SocketStateReporter.h/.cpp
 ConfigSections.h/.cpp
 ```
 
-The rest of this chapter therefore shows only the integration and extension code needed to move from MiniGateway to MiniGateway Extended. MiniGateway remains the reference point, and the unchanged files are not repeated in full because their stability is the point: the extension proves that the clean center and the existing roles do not need to be reopened.
+The listings below show the changed integration and new input code. Reuse the unchanged files from MiniGateway when assembling the extended target.
 
-### Stage 1: the build target after extension
+### Build target and composition root
 
-The extended build target adds the Unix-domain stream component and the new source files for the measurement-input server. This is the component-level expression of the new boundary.
+The extended target adds the Unix-domain stream component and measurement-input sources. Its dependency set now declares the new server role alongside HTTP and MQTT.
 
-The additional component is not an incidental dependency. It declares that MiniGateway Extended now owns a Unix-domain stream server role in addition to its HTTP and MQTT roles.
+\Needspace{9\baselineskip}
 
-#### `CMakeLists.txt`
+**`CMakeLists.txt`**
 
 The new SNode.C component is `net-un-stream-legacy`. The rest of the component set remains the same because the HTTP and MQTT roles did not change.
 
@@ -162,9 +145,7 @@ add_custom_target(
 )
 ```
 
-The target is longer than the MiniGateway target, but the difference is localized. There is one new SNode.C component and one new group of source files. The existing model, codec, web role, MQTT role, configuration section, and state reporter remain part of the program unchanged.
-
-### Stage 2: the extended composition root
+**Assembling the roles**
 
 The whole architectural change is visible in `main.cpp`. MiniGateway Extended creates the same model and starts one additional preconfigured network role:
 
@@ -174,7 +155,9 @@ const auto measurementInputRole = minigateway::startMeasurementInputRole(measure
 
 The web role and MQTT role do not learn anything about Unix-domain sockets.
 
-#### `main.cpp`
+\Needspace{9\baselineskip}
+
+**`main.cpp`**
 
 The composition root now names three runtime roles around the same model: web, Unix-domain measurement input, and MQTT.
 
@@ -203,13 +186,15 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-This small diff is the architectural payoff of the MiniGateway structure. The composition root grows by one line of role construction. The new role receives the same `MeasurementModel`, so its accepted measurements automatically reach the existing SSE and MQTT output paths through the model's subscriber mechanism.
+The new role receives the same `MeasurementModel`, so its accepted measurements reach the existing SSE and MQTT output paths through model subscriptions. The model is constructed before the roles and outlives their event-loop use.
 
-### Stage 3: the Unix-domain socket server role
+### The server and its context factory
 
 The server startup files play the same role for Unix-domain input that `MiniGatewayMqttClient.*` plays for the MQTT client role. They hide the concrete SNode.C server-template spelling behind a small book-friendly function.
 
-#### `MeasurementUnixSocketServer.h`
+\Needspace{9\baselineskip}
+
+**`MeasurementUnixSocketServer.h`**
 
 The header defines the concrete server alias and exposes `startMeasurementInputRole(...)`. The model again travels into the role through a reference wrapper.
 
@@ -233,7 +218,9 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-#### `MeasurementUnixSocketServer.cpp`
+\Needspace{9\baselineskip}
+
+**`MeasurementUnixSocketServer.cpp`**
 
 The startup function creates the Unix-domain server, configures the default socket path, and starts listening. It also uses the shared socket-state reporter from MiniGateway.
 
@@ -259,13 +246,15 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-The server listens on a concrete Unix-domain socket path by default. That makes the role easy to test with ordinary command-line tools, but the important part is still the constructor argument: the shared model is passed into the server factory through the SNode.C parameter pack.
+The default path supports ordinary command-line tools. Override it through `measurement-input local --sun-path` for an isolated test or deployment. The constructor passes the shared model into the server factory through the SNode.C parameter pack.
 
-### Stage 4: the Unix-domain socket context factory
+**Constructing each connection context**
 
 The factory receives the same `MeasurementModel` instance that `main()` passed to the server. That is the preconfigured-factory idea in its smallest useful form: SNode.C constructs socket contexts, but the application supplies the object that gives those contexts architectural meaning.
 
-#### `MeasurementUnixSocketContextFactory.h`
+\Needspace{9\baselineskip}
+
+**`MeasurementUnixSocketContextFactory.h`**
 
 The factory declaration names the context type and stores the model reference used by new connections.
 
@@ -293,7 +282,9 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-#### `MeasurementUnixSocketContextFactory.cpp`
+\Needspace{9\baselineskip}
+
+**`MeasurementUnixSocketContextFactory.cpp`**
 
 The factory implementation constructs `MeasurementUnixSocketContext` and forwards the model reference. No global model is needed.
 
@@ -317,22 +308,17 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-The factory remains boring by design. It does not parse measurements and does not publish updates. Its only job is construction with the right dependency.
+The factory constructs contexts with the shared dependency; parsing belongs to each context, while acceptance and publication remain with the model.
 
-### Stage 5: the Unix-domain measurement context
+### Framing and accepting measurements
 
 The context owns the local input protocol. Its protocol is intentionally small: read bytes, collect complete lines, parse a comma-separated measurement, and pass accepted measurements into the model.
 
-```text
-Unix stream bytes
-  -> line buffer
-      -> CSV measurement parser
-          -> MeasurementModel::accept(...)
-```
+Each context owns its receive buffer but shares the model. It hands parsed measurements to that model without calling web, SSE, or MQTT code.
 
-The context does not update the web role. It does not publish MQTT messages. It does not know about SSE clients. It hands the measurement to the same model that already feeds those outputs.
+\Needspace{9\baselineskip}
 
-#### `MeasurementUnixSocketContext.h`
+**`MeasurementUnixSocketContext.h`**
 
 The header shows the stream-context boundary. The context owns receive buffering and a reference to the shared model.
 
@@ -367,7 +353,9 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-#### `MeasurementUnixSocketContext.cpp`
+\Needspace{9\baselineskip}
+
+**`MeasurementUnixSocketContext.cpp`**
 
 The implementation parses one line at a time. The optional sequence field is accepted syntactically, but `MeasurementModel` still assigns the authoritative sequence when the measurement enters the application.
 
@@ -522,11 +510,13 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-The parser accepts an optional sequence field to make testing convenient, but the field is not authoritative. Once the line has become a `Measurement`, `MeasurementModel::accept(...)` assigns the actual application sequence. That keeps MQTT input, HTTP simulation, and Unix-domain input under the same ordering rule.
+The line-length rule is part of the new input contract. A record may contain at most 4096 bytes before its newline, including a trailing carriage return when present. The context checks the delimiter position before parsing and closes an overlong incomplete record as well. It does not discard a prefix and then accept the remaining suffix as a new measurement. Test the same rejected record in one write and in several writes; TCP or Unix-stream read boundaries must not change application acceptance.
+
+Input sequence values also need a clear meaning. The optional fourth field is parsed at the adapter boundary, but `MeasurementModel::accept(...)` assigns the gateway's next local sequence. It is that accepted sequence which `/status` and the SSE identifier expose. Preserving a device's sequence would require a separately named application field and a reason to retain it, not an assumption that the current gateway forwards it unchanged.
 
 The receive loop also shows the reactor style at the application boundary. The context reacts to available bytes, processes complete lines, and returns control to the SNode.C event loop. There is no worker thread and no blocking read loop hidden inside the input role.
 
-### Stage 6: running MiniGateway Extended
+### Running and diagnosing the extension
 
 Build and start the companion example in `companion/examples/MiniGateway-Extended`. It exposes the same HTTP and MQTT behavior as MiniGateway, plus a local Unix-domain socket input.
 
@@ -545,17 +535,6 @@ printf '21.5,43.0,3.72\n' | nc -U /tmp/minigateway-measurements.sock
 
 `nc` implementations differ in EOF handling. If it remains attached after sending the line, interrupt it and verify acceptance through `/status` or SSE. The input protocol sends no acknowledgement; the observer supplies the acceptance evidence.
 
-The accepted measurement then travels through the same model path as `/simulate` and MQTT input:
-
-```text
-Unix-domain socket line
-  -> MeasurementUnixSocketContext
-      -> MeasurementModel::accept(...)
-          -> subscribers
-              -> SSE clients
-              -> MQTT output publication
-```
-
 Keep an SSE terminal open while injecting through the socket:
 
 ```sh
@@ -572,52 +551,35 @@ Then inject again through the Unix-domain socket. The observed payload should be
 
 Now send `21.5,43.0,3.72,9000` followed by a newline. The observed sequence should advance by one from the previous gateway value, not become 9000. Send `not-a-number,43.0,3.72` next: the parser should log rejection and `/status` should remain unchanged. Finally split a valid line across two writes and compare its accepted result with the same line sent in one write. These checks distinguish parsing, application acceptance, and output observation without adding a Unix-specific read API.
 
-### Operating and debugging the extension
+**Diagnosing the observation**
 
-MiniGateway Extended should be tested from more than one edge. A successful Unix-domain injection only proves that the new input role parsed one line. The stronger check is to observe the same accepted measurement through an existing output role.
-
-A practical test sequence is therefore:
-
-```text
-1. start MiniGateway Extended
-2. open /events or subscribe to the MQTT output topic
-3. inject a line through the Unix-domain socket
-4. verify that the observed payload is a normal measurement payload
-5. call /status and verify that the model now holds the same accepted measurement
-```
+An injection needs an independent observation: compare the SSE or MQTT payload with `/status`. A successful write alone gives no acceptance acknowledgement.
 
 When the test fails, diagnose the boundary that owns the failure. If the Unix-domain socket file is missing, inspect the `measurement-input` server role. If the line is rejected, inspect the CSV parser and warning log. If `/status` changes but SSE does not, inspect the live web observer path. If SSE works but MQTT output does not, inspect the MQTT connection and broker state.
 
-This diagnostic order is the same boundary discipline applied operationally. The point is not only that the source is separated. The running system should also be debuggable by role: socket input, model state, web observation, and MQTT output.
-
-### Deployment shape
+### Deployment and independent lifetimes
 
 For a small local gateway, the Unix-domain socket input is a useful deployment boundary. It can be made visible only to local processes that have filesystem permission to write to the socket path, while HTTP and MQTT remain network-facing roles. That makes MiniGateway Extended a more realistic gateway shape than a single public input surface.
 
-The example still stays intentionally small. It does not add authentication, persistence, systemd socket activation, or a production topic namespace. Those are valid next steps, but they would obscure the lesson of this part. The lesson is that the application can grow by adding one network role around the same model, and that the existing roles continue to behave as before.
+The example does not add authentication, persistence, systemd socket activation, or a production topic namespace. Each would need its own policy and tests; adding the local input supplies none of those guarantees.
 
-### What MiniGateway Extended proves
-
-MiniGateway Extended proves that the application can grow by adding a role, not by tangling existing roles. The new Unix-domain server is another preconfigured network factory around the same model.
-
-```text
-new concern
-  -> new role
-      -> same model
-          -> same observers and output adapters
-```
-
-That is the architectural payoff of the MiniGateway part. The SNode.C reactor runtime dispatches events, but the application decides how those events are composed into a clean design. The recurring roles remain visible because the composition stays in application code: input roles, read views, live observers, and output adapters all remain centered on one protocol-independent model.
-
-The extension also reveals the limit of this separation. A role can be independently understandable without being independently restartable: these roles still share one process and one in-memory model. Moving the local input into another service would introduce a communication and recovery contract between that service and the gateway. That cost is justified by different privilege or restart requirements, not by the number of source files.
-
-The line-length rule is part of the new input contract. A record may contain at most 4096 bytes before its newline, including a trailing carriage return when present. The context checks the delimiter position before parsing and closes an overlong incomplete record as well. It does not discard a prefix and then accept the remaining suffix as a new measurement. Test the same rejected record in one write and in several writes; TCP or Unix-stream read boundaries must not change application acceptance.
-
-Input sequence values also need a clear meaning. The optional fourth field is parsed at the adapter boundary, but `MeasurementModel::accept(...)` assigns the gateway's next local sequence. It is that accepted sequence which `/status` and the SSE identifier expose. Preserving a device's sequence would require a separately named application field and a reason to retain it, not an assumption that the current gateway forwards it unchanged.
+A role can be independently understandable without being independently restartable: these roles still share one process and one in-memory model. Moving the local input into another service would introduce a communication and recovery contract between that service and the gateway. That cost is justified by different privilege or restart requirements, not by the number of source files.
 
 ::: {.snodec-remember title="What to remember"}
-- MiniGateway Extended adds one new input role without changing the model, web role, or MQTT role.
-- The Unix-domain socket server is another preconfigured factory around the same `MeasurementModel`.
-- A clean extension adds a boundary for the new concern instead of hiding new behavior inside an unrelated callback.
-- The final application remains debuggable by role: socket input, model state, web observation, and MQTT output.
+- Factories construct contexts with the shared model; each connection owns its input buffer.
+- Complete, valid records enter the model, which assigns acceptance order regardless of the input sequence.
+- A record exceeding 4096 bytes closes the connection without accepting its suffix.
+- Diagnose socket input, model state, web observation, and MQTT output separately.
+- Separate processes require an explicit communication and recovery contract.
+:::
+
+::: {.snodec-exercise title="Exercises"}
+1. **Review (O1).** Trace the model reference from `main()` through the server and factory to two connections. Which state is shared, and which must be private?
+2. **Review (O2).** Why must a 4097-byte record be rejected in one write and in several writes? Explain why accepting its suffix would violate the input contract.
+3. **Lab (O2).** Build and run the framing lab. Compare complete and fragmented CSV, malformed fields, supplied sequence 9000, and records at and above the 4096-byte limit. Expect only complete valid records to advance the gateway sequence; overlong input closes its connection.
+4. **Lab (O1, O2).** Run the mixed-input lab with MQTT unavailable. Compare HTTP and Unix input through two SSE observers and `/status`. Disconnect one observer, reject malformed CSV, then reconnect. Expect one acceptance sequence and a current-state snapshot, not replay of missed events.
+5. **Design (O3).** A local collector needs different privileges and independent restarts. Choose between a role in this process and a separate service; specify path permissions, framing, and recovery ownership.
+
+Public solutions, expected observations, and an equipped MQTT extension:
+`companion/exercises/ch29/README.md`.
 :::

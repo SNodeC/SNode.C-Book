@@ -1682,3 +1682,71 @@ workspace `build/t/book-db-*` is prepared and syntax-checked; installation into
 approval. No host policy change or Part XI edit has yet been made. Keep the
 workspace-only temporary environment in all subsequent checks and rerun the full
 entry gate before beginning Phase 5l implementation.
+
+
+### Author execution constraint revised — `/tmp` authorized again
+
+The author directed: “No, not with apparmor - /tmp now has plenty of space. Use it
+again!” This supersedes the preceding temporary-directory restriction and withdraws
+the pending AppArmor proposal. No host policy was installed or reloaded. Temporary
+fixtures may again use `/tmp`; scripts and review evidence remain in the workspace.
+The fresh `phase-5l-restored-entry-*` run passes all ten groups and 58 labs, then the
+unaltered Phase 5k checker passes against those fresh logs. Phase 5k metrics reproduce
+exactly; the historical blocked attempts remain evidence, not the active handoff.
+Phase 5l Part XI editing may proceed under the approved scope and budgets.
+
+
+## Phase 5l — Part XI completed, 2026-09-23
+
+The latest author instruction restores `/tmp` use and rejects an AppArmor change.
+No host policy was modified. After restoring the temporary fixture path, all ten
+Phase 5k entry groups and 58 labs pass; the unchanged checker confirms the exact
+baseline, preservation, chapter and artifact gates (`phase-5l-restored-entry-*`).
+Earlier blocked attempts remain historical evidence, superseded by this completed
+phase. The runner `run-phase-5l-restored-checks.py` records the active environment.
+
+Edited and reread Chapters 28–30, the Part XI opener and relevant public answers.
+Ch29 consolidates nineteen headings into six connected sections, removes repeated
+arrow chains/endorsements and moves full parsing/sequence qualifications beside
+the source. The comparison table, figure, complete listings, diagnostic walkthrough
+and deployment limitations remain. Ch28 keeps its build order and all source;
+Ch30 keeps every decision table and applied rule while trimming restated framing.
+
+| Chapter | Words / ceiling | Deep headings / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: |
+| 28 | 3,818 / 3,850 | 6 / 6 | 291.50 |
+| 29 | 2,541 / 3,150 | 6 / 6 | 279.50 |
+| 30 | 1,850 / 1,900 | 6 / 6 | 287.00 |
+
+Part XI **8,209 / 8,900 words**. No reserve draw; **2,350 remains**. Each chapter
+has three objectives, one recap and five exercises with all three tiers. The
+ledger records both mapping directions and public solutions. Ch29's two new labs
+use the unchanged extended gateway: valid/invalid/fragmented/bounded CSV, shared
+HTTP/Unix acceptance with MQTT unavailable, SSE disconnect/reconnect and restart.
+Ch30's approved integrated checkpoint reuses six Part XI tests, followed by the
+process-boundary design discussion. No duplicate application implementation.
+
+All **60 public labs** and the nine other check groups pass; the public checkpoint
+target builds. Source/reference/preservation checks retain 293 executable/config
+fences, 37 complete markers, all indices/figures, previous implementations and all
+374 migration dispositions. The new solution heading gives 295 current references
+with 39 stable topics; the author seam identities/targets are unchanged. See
+`phase-5l-final-results.json`, `phase-5l-exit-checks.json` and REPORT.md's cited logs.
+
+Full/sample/proposal PDFs remain **322 / 54 / 6 pages**, zero final warnings or
+bad boxes; all 363 archive files match working sources. Part XI, contents, closing
+transition and affected samples were visually reviewed; listing spacing was
+adjusted locally without changing production styles (`phase-5l-visual-review.md`).
+Production +0/−0; public test/registration support +136/−1. No fixture process remains.
+The manual broker-enabled extension and hosted CI are not newly verified; the
+public answers distinguish those from the local mandatory observations.
+
+Global words **103,934 → 103,461**; deep chapter headings **307 → 294**; mean
+section prose **292.51**; text fences **92**; rules **20**; forbidden/closing hits
+**0**. Front matter **1,980 / 2,500**, all Part openers **1,356 / 1,650**. All five
+sample gates remain valid. These numbers do not replace the final global audit.
+
+Commit: `proposal-readiness: phase 5l — refine Part XI and verify the integrated gateway`.
+**Stop after Phase 5l.** Phase 5m covers Appendix A, epilogue, back matter and the
+final audit; Phase 6 refreshes the proposal. Preserve the remaining reserve and
+all author teaching-content stop rules. The epilogue remains a closing essay.

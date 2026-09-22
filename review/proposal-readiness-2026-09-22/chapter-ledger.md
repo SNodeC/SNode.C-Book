@@ -1385,3 +1385,113 @@ phase review tools are documentation/review support, accounted separately.
 
 Development failures and their retained logs are described in REPORT.md. Final
 process inspection found no private echo or database server left running.
+
+
+## Phase 5l — Part XI, 2026-09-23
+
+**Edited and reread:** Chapters 28–30, the Part XI opener, the new ch29 public
+solutions and the expanded ch30 checkpoint instructions. The ch28 answers were
+reread and retained unchanged. The previously refined samples receive small
+framing edits; the new chapter receives the full teaching apparatus. All complete
+listings, index entries and figure identifiers remain, verified against Phase 5k.
+No explanation or qualification was cut merely to reach a ceiling.
+
+| Chapter | Total words before → after / ceiling | Prose before → after | Fenced before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 28 | 3,835 → 3,818 / 3,850 | 1,864 → 1,847 | 1,971 → 1,971 | 6 → 6 / 6 | 291.50 |
+| 29 | 2,967 → 2,541 / 3,150 | 2,066 → 1,783 | 901 → 758 | 19 → 6 / 6 | 279.50 |
+| 30 | 1,874 → 1,850 / 1,900 | 1,856 → 1,832 | 18 → 18 | 6 → 6 / 6 | 287.00 |
+
+Part XI: **8,676 → 8,209 / 8,900 words**. The opener is reduced by six words.
+No reserve draw; **2,350 remains**. Each chapter has three objectives and five
+exercises: two review, two labs and one design. Recaps have five, five and three
+bullets respectively. No new rule boxes. Existing sample prose-reduction gates
+remain valid: Ch28 **22.33%**, Ch30 **23.51%** versus their Phase 2 starting prose.
+Their six sections each exceed the 250-word mean. Counts and parsing checks:
+`metrics-after-phase-5l.json`, `check-phase-5l.py`, `phase-5l-exit-checks.json`.
+
+### Exercise → objective and public solution
+
+| Exercise | Objective(s) | Public answer or executable observation |
+| --- | --- | --- |
+| 28.1 Review | O1 | ch28/README.md §1: decode, acceptance order and outputs |
+| 28.2 Review | O1 | ch28/README.md §2: validation before acceptance |
+| 28.3 Lab | O2 | `exercise-ch28`: HTTP/SSE without MQTT, restart reset |
+| 28.4 Lab | O1 | `exercise-ch28-validation`: invalid JSON does not change state |
+| 28.5 Design | O3 | ch28/README.md §5: durable order and origin filtering |
+| 29.1 Review | O1 | ch29/README.md §1: one model reference, private per-connection buffers |
+| 29.2 Review | O2 | ch29/README.md §2: framing limit and rejected suffix |
+| 29.3 Lab | O2 | `exercise-ch29-framing`: whole/fragmented CSV, invalid fields, sequence override and length limit |
+| 29.4 Lab | O1, O2 | `exercise-ch29-mixed`: shared acceptance, two observers, reconnect snapshot and restart |
+| 29.5 Design | O3 | ch29/README.md §5: privilege, socket permissions and recovery contract |
+| 30.1 Review | O1 | ch30/README.md §1: producer identity versus acceptance order |
+| 30.2 Review | O3 | ch30/README.md §2: endpoint policy versus flow handles |
+| 30.3 Lab | O2 | `exercise-ch30`: model acceptance and unsubscribe |
+| 30.4 Lab / Part XI checkpoint | O1, O2 | `exercise-ch30-model-instances` plus the six-test Part XI set in ch30/README.md:55 |
+| 30.5 Design | O3 | ch30/README.md §5: justify the privileged collector split using checkpoint observations |
+
+All solution paths above are under `companion/exercises/`. The two new lab modes
+share `ch29/gateway.py` and the unchanged canonical MiniGateway-Extended target.
+`ch29/CMakeLists.txt:1` registers the build dependency and bounded CTests;
+`ch30/CMakeLists.txt:5` defines the existing-target aggregate checkpoint.
+
+### Objective → exercise coverage
+
+| Objective | Exercises |
+| --- | --- |
+| 28.O1 | 28.1, 28.2, 28.4 |
+| 28.O2 | 28.3 |
+| 28.O3 | 28.5 |
+| 29.O1 | 29.1, 29.4 |
+| 29.O2 | 29.2, 29.3, 29.4 |
+| 29.O3 | 29.5 |
+| 30.O1 | 30.1, 30.4 |
+| 30.O2 | 30.3, 30.4 |
+| 30.O3 | 30.2, 30.5 |
+
+### Content-preservation audit
+
+Ch28, Ch29 and Ch30 below identify the matching numbered Markdown files in
+`manuscript/chapters/`.
+
+| Retained explanation, example or qualification | Evidence |
+| --- | --- |
+| Build order and complete MiniGateway source assembly | Ch28:135; all 19 complete source markers in that chapter retained |
+| Model ownership, listener removal, lifetime and event-loop qualification | Ch28:281 and :422; unchanged source and subscription explanation |
+| Static MQTT client registry scope, CONNACK/SUBACK/delivery distinctions, literal topic check, private protocol-bit qualification and disjoint topics | Ch28:821, especially :829–835 |
+| Endpoint configuration, observations, restart and unavailable-broker limits | Ch28:1181 and final observation table |
+| Before/after role table and architecture figure, unchanged dependencies and retained file inventory | Ch29:14–65 |
+| Full extended CMake, main, server, factory and context listings | Ch29:67, :191, :313; 8 exact complete markers retained |
+| Shared reference through construction, per-connection buffering and event-loop return | Ch29:187, :250, :317, :517 |
+| Entire 4096-byte/CR, overlong incomplete record, no-suffix acceptance and input-sequence qualifications moved beside parser | Ch29:513–517 |
+| Original shell commands, nc EOF behavior/no acknowledgement, observable checks and boundary-specific diagnosis | Ch29:519–558 |
+| Socket permissions, absent authentication/persistence/socket activation/topic policy, separate-process recovery cost | Ch29:560–566 |
+| All five decision tables, code excerpt, three applied principles, family/protocol choices, configuration/failure/diagnostic ownership and flow-policy example | Ch30:16–197 |
+
+`check-phase-5l.py` compares all 293 executable/configuration fences, C++ order,
+37 complete markers, indices, figures and prior lab implementations against the
+Phase 5k commit. The public solutions explain that two writes need not produce two
+receive callbacks; the framing assertions address application outcomes. Preserved
+existing behavior tests also cover the overlong input with delayed fragments.
+
+### Built, run, and limits
+
+The public `part-xi-checkpoint` target builds (`phase-5l-checkpoint-build.log`);
+its six tests pass (`phase-5l-development-labs.log`). The full **60-lab suite**
+passes at `phase-5l-final-labs.log:1096`; the two new observations appear at :1069
+and :1077. Hygiene, references, alignment, metric regression, companion build,
+teaching/behavior/lifetime execution, PDFs and package checks all pass in the
+corresponding final logs and `phase-5l-exit-checks.json`.
+
+The integrated lab explicitly reserves a refused MQTT endpoint. It establishes
+local acceptance and web observations, not MQTT delivery, persistence or crash
+recovery. The equipped MQTT extension has independent subscriber instructions in
+ch29/README.md; it was **not run** in this phase. No hosted CI execution is claimed.
+The standard CI companion CTest suite discovers both new registered labs.
+
+Production **+0/−0**. Public test/registration support **+136/−1**, net **+135**:
+128 lines of independent peer observations, six registration lines, one aggregate
+checkpoint target and the existing chapter-registration line extension. Existing
+applications, lab implementations and common harness remain unchanged. Public
+answers and review tooling are accounted separately. This is the authorized new
+exercise support, with no second parser/model or checkpoint application.

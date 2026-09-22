@@ -2,6 +2,7 @@ add_executable(model-ownership model-ownership.cpp ../../examples/MiniGateway/Me
 target_compile_features(model-ownership PRIVATE cxx_std_20)
 target_include_directories(model-ownership PRIVATE ../../examples/MiniGateway)
 add_custom_target(ch30-lab DEPENDS model-ownership model-instances)
+add_custom_target(part-xi-checkpoint DEPENDS ch28-lab ch29-lab ch30-lab)
 add_test(NAME exercise-ch30 COMMAND model-ownership)
 
 add_executable(model-instances model-instances.cpp ../../examples/MiniGateway/MeasurementModel.cpp)

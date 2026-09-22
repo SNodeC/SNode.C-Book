@@ -1,0 +1,2 @@
+PASS: no private book-db MariaDB or Phase 5l gateway/echo/broker fixture processes remain.
+PASS: MariaDB local AppArmor override remains empty; no host-policy rule was applied.

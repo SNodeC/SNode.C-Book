@@ -1,0 +1,16 @@
+COMMAND: python3 ci/test-manuscript-metrics.py
+TMPDIR=/tmp
+TMP=/tmp
+TEMP=/tmp
+SNODEC_BOOK_SMOKE_UNIX_SOCKET=/tmp/phase-5l-final-smoke.sock
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket
+test_callouts_and_closing_headings (__main__.MetricsTests.test_callouts_and_closing_headings) ... ok
+test_fences_hide_fake_structure_and_phrases (__main__.MetricsTests.test_fences_hide_fake_structure_and_phrases) ... ok
+test_manifest_authority_and_duplicates (__main__.MetricsTests.test_manifest_authority_and_duplicates) ... ok
+test_unclosed_fence_fails (__main__.MetricsTests.test_unclosed_fence_fails) ... ok
+test_wrapped_phrases_locations_and_word_boundaries (__main__.MetricsTests.test_wrapped_phrases_locations_and_word_boundaries) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK

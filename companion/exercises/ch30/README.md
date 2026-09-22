@@ -37,7 +37,7 @@ subscription before the captured vectors leave scope.
 This isolates acceptance and observer ownership from transport. It does not test
 HTTP teardown or persistence; those are different boundaries.
 
-## 4. Lab (O2)
+## 4. Lab (O1, O2)
 
 Use the same build target, then run:
 
@@ -51,6 +51,25 @@ instances each receive sequence 1. Expect one PASS line describing both results.
 Sharing a class definition does not share its state: the owner must be the same
 instance if acceptance order is to be common. The lab has no transport dependency
 and makes no claim about interprocess ordering or persistence.
+
+**Part XI checkpoint.** Build the shared targets and run the integrated set:
+
+```sh
+cmake --build build/labs --target part-xi-checkpoint
+ctest --test-dir build/labs -R '^exercise-ch(28|29|30)($|-)' --output-on-failure -V
+```
+
+The six tests reuse the public MiniGateway, extended-input, JSON-validation and
+model experiments. No extra application or checkpoint implementation is needed.
+The [extended-input solution](../ch29/README.md) specifies the observations:
+HTTP and Unix input share one acceptance order while MQTT is unavailable;
+malformed CSV changes neither state nor that order; an observer can disconnect
+while the other continues; reconnect gives the current state, not missed-event
+replay; restart resets the in-memory sequence. Contrast these observations with
+the independent model instances tested above. Record the expected and observed
+results, then use the decision tables for the following design problem. Actual
+MQTT delivery remains a separate equipped subscriber observation described in the
+extended-input solution.
 
 ## 5. Design (O3)
 

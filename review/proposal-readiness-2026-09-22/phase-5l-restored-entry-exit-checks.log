@@ -1,0 +1,187 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 294 current references, 374 old-reference dispositions.
+{
+  "chapters": [
+    {
+      "chapter": 25,
+      "path": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
+      "words_before": 6311,
+      "words_after": 3903,
+      "budget": 4100,
+      "prose_words": 3402,
+      "code_words": 501,
+      "headings": 10,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 328.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 235
+    },
+    {
+      "chapter": 26,
+      "path": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
+      "words_before": 5558,
+      "words_after": 3596,
+      "budget": 3700,
+      "prose_words": 3383,
+      "code_words": 213,
+      "headings": 10,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 327.3,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 245
+    },
+    {
+      "chapter": 27,
+      "path": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
+      "words_before": 5722,
+      "words_after": 4169,
+      "budget": 4200,
+      "prose_words": 3913,
+      "code_words": 256,
+      "headings": 10,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 376.6,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 255
+    }
+  ],
+  "part_x_words": 11668,
+  "part_x_original_budget": 11600,
+  "part_x_budget": 12000,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1362,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "prior_lifetime_tests_preserved": true,
+  "canonical_entry_dependencies_unique": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 322,
+      "sha256": "52f3c69bcc6f9d9da053f3cc2b12ca3eebfe6e5afb2bfd3ee091efe3884d1218",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "ca91aa1a2e978d11710d4aa667c11be2cd6108b97160828ecb47100d883e9baa",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "cdaa3c4157cd0bff6a6455c2458c2abe32c50f990083efa753b9e9842784dc20",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 360,
+  "reserve_used": 400,
+  "reserve_remaining": 2350,
+  "chapter_27_original_budget": 3800,
+  "chapter_27_revised_budget": 4200,
+  "global_words": 103934,
+  "word_delta_from_phase_5j": -5888
+}
+PASS: Part X budgets, pedagogy, mappings, scope, preserved listings, clean final PDFs and package contents.
+Execution and editorial/visual review are recorded in separate Phase 5k logs; future Parts are not certified.

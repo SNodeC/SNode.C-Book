@@ -12,25 +12,25 @@
     "manual_references": "Literal Chapter followed by an integer outside code fences; source line and matched text recorded, including self-references. Ranges/plural Chapters require editorial review."
   },
   "totals": {
-    "total_words": 103934,
-    "prose_words": 94287,
-    "code_words": 9647,
-    "code_content_words": 8843,
-    "fence_marker_words": 804,
+    "total_words": 103461,
+    "prose_words": 93957,
+    "code_words": 9504,
+    "code_content_words": 8710,
+    "fence_marker_words": 794,
     "forbidden_phrase_hit_count": 0,
     "heading_counts_by_level": {
       "1": 12,
       "2": 38,
-      "3": 266,
-      "4": 48,
+      "3": 261,
+      "4": 40,
       "5": 5,
       "6": 0
     },
     "callout_counts_by_class": {
       "snodec-checklist": 4,
-      "snodec-exercise": 29,
+      "snodec-exercise": 30,
       "snodec-note": 5,
-      "snodec-objectives": 29,
+      "snodec-objectives": 30,
       "snodec-remember": 31,
       "snodec-rule": 20,
       "snodec-warning": 10
@@ -44,16 +44,16 @@
       "python": 2,
       "sh": 59,
       "sql": 1,
-      "text": 97
+      "text": 92
     },
-    "chapter_headings_level_3_and_deeper": 307,
-    "chapter_section_prose_words": 86327,
-    "average_chapter_section_prose_words": 281.2,
+    "chapter_headings_level_3_and_deeper": 294,
+    "chapter_section_prose_words": 85998,
+    "average_chapter_section_prose_words": 292.51,
     "closing_perspective_sections": 0,
     "term_occurrence_counts": {
-      "role": 469,
-      "boundary/boundaries": 358,
-      "visible": 105,
+      "role": 449,
+      "boundary/boundaries": 355,
+      "visible": 104,
       "is not a": 50,
       "does not prove": 1,
       "does not by itself": 5
@@ -63,13 +63,13 @@
   "requested_baseline_comparison": {
     "total_words": {
       "expected": 151922,
-      "actual": 103934,
-      "delta": -47988
+      "actual": 103461,
+      "delta": -48461
     },
     "chapter_headings_level_3_and_deeper": {
       "expected": 1020,
-      "actual": 307,
-      "delta": -713
+      "actual": 294,
+      "delta": -726
     },
     "closing_perspective_sections": {
       "expected": 15,
@@ -88,8 +88,8 @@
     },
     "text_fences": {
       "expected": 478,
-      "actual": 97,
-      "delta": -381
+      "actual": 92,
+      "delta": -386
     },
     "cpp_fences": {
       "expected": 205,
@@ -98,8 +98,8 @@
     },
     "snodec-exercise": {
       "expected": 0,
-      "actual": 29,
-      "delta": 29
+      "actual": 30,
+      "delta": 30
     }
   },
   "files": {
@@ -6349,8 +6349,8 @@
       ]
     },
     "manuscript/parts/part-11-building-and-evaluating-minigateway.md": {
-      "total_words": 124,
-      "prose_words": 124,
+      "total_words": 118,
+      "prose_words": 118,
       "code_words": 0,
       "code_content_words": 0,
       "fence_marker_words": 0,
@@ -6430,8 +6430,8 @@
       ]
     },
     "manuscript/chapters/28-building-minigateway.md": {
-      "total_words": 3835,
-      "prose_words": 1864,
+      "total_words": 3818,
+      "prose_words": 1847,
       "code_words": 1971,
       "code_content_words": 1899,
       "fence_marker_words": 72,
@@ -6444,8 +6444,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 1766,
-      "average_section_prose_words": 294.33,
+      "section_prose_words": 1749,
+      "average_section_prose_words": 291.5,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -6534,10 +6534,6 @@
             "match": "role"
           },
           {
-            "line": 623,
-            "match": "role"
-          },
-          {
             "line": 679,
             "match": "role"
           },
@@ -6601,36 +6597,36 @@
       ]
     },
     "manuscript/chapters/29-extending-minigateway-with-a-new-network-role.md": {
-      "total_words": 2967,
-      "prose_words": 2066,
-      "code_words": 901,
-      "code_content_words": 861,
-      "fence_marker_words": 40,
+      "total_words": 2541,
+      "prose_words": 1783,
+      "code_words": 758,
+      "code_content_words": 728,
+      "fence_marker_words": 30,
       "heading_counts_by_level": {
         "1": 0,
         "2": 1,
-        "3": 11,
-        "4": 8,
+        "3": 6,
+        "4": 0,
         "5": 0,
         "6": 0
       },
-      "section_count": 19,
-      "section_prose_words": 1965,
-      "average_section_prose_words": 103.42,
+      "section_count": 6,
+      "section_prose_words": 1677,
+      "average_section_prose_words": 279.5,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
         "snodec-note": 0,
         "snodec-warning": 1,
         "snodec-checklist": 0,
-        "snodec-exercise": 0,
-        "snodec-objectives": 0
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
       },
       "fenced_blocks_by_language": {
         "cmake": 1,
         "cpp": 8,
         "sh": 3,
-        "text": 8
+        "text": 3
       },
       "closing_perspective_sections": [],
       "forbidden_phrase_hits": {
@@ -6656,23 +6652,39 @@
             "match": "role"
           },
           {
-            "line": 10,
+            "line": 16,
             "match": "role"
           },
           {
-            "line": 10,
+            "line": 16,
             "match": "role"
           },
           {
-            "line": 10,
+            "line": 21,
             "match": "role"
           },
           {
-            "line": 10,
+            "line": 23,
             "match": "role"
           },
           {
-            "line": 36,
+            "line": 24,
+            "match": "role"
+          },
+          {
+            "line": 30,
+            "match": "role"
+          },
+          {
+            "line": 32,
+            "match": "role"
+          },
+          {
+            "line": 34,
+            "match": "role"
+          },
+          {
+            "line": 34,
             "match": "role"
           },
           {
@@ -6680,207 +6692,99 @@
             "match": "role"
           },
           {
-            "line": 39,
+            "line": 69,
             "match": "role"
           },
           {
-            "line": 41,
+            "line": 150,
             "match": "role"
           },
           {
-            "line": 47,
+            "line": 156,
             "match": "role"
           },
           {
-            "line": 49,
+            "line": 156,
             "match": "role"
           },
           {
-            "line": 49,
+            "line": 189,
             "match": "role"
           },
           {
-            "line": 49,
+            "line": 193,
             "match": "role"
           },
           {
-            "line": 51,
+            "line": 193,
             "match": "role"
           },
           {
-            "line": 51,
+            "line": 199,
             "match": "role"
           },
           {
-            "line": 55,
+            "line": 517,
             "match": "role"
           },
           {
-            "line": 88,
+            "line": 558,
             "match": "role"
           },
           {
-            "line": 165,
+            "line": 566,
             "match": "role"
           },
           {
-            "line": 165,
-            "match": "role"
-          },
-          {
-            "line": 169,
-            "match": "role"
-          },
-          {
-            "line": 175,
-            "match": "role"
-          },
-          {
-            "line": 175,
-            "match": "role"
-          },
-          {
-            "line": 206,
-            "match": "role"
-          },
-          {
-            "line": 206,
-            "match": "role"
-          },
-          {
-            "line": 208,
-            "match": "role"
-          },
-          {
-            "line": 210,
-            "match": "role"
-          },
-          {
-            "line": 210,
-            "match": "role"
-          },
-          {
-            "line": 214,
-            "match": "role"
-          },
-          {
-            "line": 262,
-            "match": "role"
-          },
-          {
-            "line": 333,
-            "match": "role"
-          },
-          {
-            "line": 527,
-            "match": "role"
-          },
-          {
-            "line": 577,
-            "match": "role"
-          },
-          {
-            "line": 577,
-            "match": "role"
-          },
-          {
-            "line": 589,
-            "match": "role"
-          },
-          {
-            "line": 591,
-            "match": "role"
-          },
-          {
-            "line": 597,
-            "match": "role"
-          },
-          {
-            "line": 601,
-            "match": "role"
-          },
-          {
-            "line": 612,
-            "match": "role"
-          },
-          {
-            "line": 619,
-            "match": "role"
-          },
-          {
-            "line": 619,
-            "match": "role"
-          },
-          {
-            "line": 619,
-            "match": "role"
-          },
-          {
-            "line": 622,
+            "line": 581,
             "match": "role"
           }
         ],
         "boundary/boundaries": [
           {
-            "line": 44,
+            "line": 27,
             "match": "boundary"
           },
           {
-            "line": 51,
+            "line": 34,
             "match": "boundary"
           },
           {
-            "line": 55,
+            "line": 38,
             "match": "boundary"
           },
           {
-            "line": 86,
+            "line": 323,
             "match": "boundary"
           },
           {
-            "line": 337,
-            "match": "boundary"
-          },
-          {
-            "line": 527,
-            "match": "boundary"
-          },
-          {
-            "line": 589,
-            "match": "boundary"
-          },
-          {
-            "line": 591,
-            "match": "boundary"
-          },
-          {
-            "line": 595,
-            "match": "boundary"
-          },
-          {
-            "line": 614,
+            "line": 513,
             "match": "boundaries"
           },
           {
-            "line": 616,
+            "line": 515,
             "match": "boundary"
           },
           {
-            "line": 621,
+            "line": 517,
+            "match": "boundary"
+          },
+          {
+            "line": 558,
+            "match": "boundary"
+          },
+          {
+            "line": 562,
             "match": "boundary"
           }
         ],
         "visible": [
           {
-            "line": 169,
+            "line": 150,
             "match": "visible"
           },
           {
-            "line": 595,
-            "match": "visible"
-          },
-          {
-            "line": 610,
+            "line": 562,
             "match": "visible"
           }
         ],
@@ -6891,8 +6795,8 @@
       "manual_chapter_references": []
     },
     "manuscript/chapters/30-architectural-judgment-choosing-the-right-layer-and-boundary.md": {
-      "total_words": 1874,
-      "prose_words": 1856,
+      "total_words": 1850,
+      "prose_words": 1832,
       "code_words": 18,
       "code_content_words": 16,
       "fence_marker_words": 2,
@@ -6905,8 +6809,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 1746,
-      "average_section_prose_words": 291.0,
+      "section_prose_words": 1722,
+      "average_section_prose_words": 287.0,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 3,
@@ -6935,23 +6839,31 @@
       "term_occurrences": {
         "role": [
           {
-            "line": 24,
+            "line": 20,
             "match": "role"
           },
           {
-            "line": 40,
+            "line": 36,
             "match": "Role"
           },
           {
-            "line": 59,
+            "line": 53,
             "match": "role"
           },
           {
-            "line": 120,
+            "line": 114,
             "match": "role"
           },
           {
-            "line": 122,
+            "line": 116,
+            "match": "role"
+          },
+          {
+            "line": 121,
+            "match": "role"
+          },
+          {
+            "line": 126,
             "match": "role"
           },
           {
@@ -6959,51 +6871,43 @@
             "match": "role"
           },
           {
-            "line": 132,
+            "line": 135,
             "match": "role"
           },
           {
-            "line": 133,
+            "line": 138,
             "match": "role"
           },
           {
-            "line": 141,
+            "line": 138,
             "match": "role"
           },
           {
-            "line": 144,
+            "line": 138,
             "match": "role"
           },
           {
-            "line": 144,
+            "line": 138,
             "match": "role"
           },
           {
-            "line": 144,
+            "line": 151,
             "match": "role"
           },
           {
-            "line": 144,
+            "line": 160,
             "match": "role"
           },
           {
-            "line": 157,
+            "line": 170,
             "match": "role"
           },
           {
-            "line": 166,
+            "line": 172,
             "match": "role"
           },
           {
-            "line": 176,
-            "match": "role"
-          },
-          {
-            "line": 178,
-            "match": "role"
-          },
-          {
-            "line": 200,
+            "line": 190,
             "match": "role"
           }
         ],
@@ -7025,61 +6929,61 @@
             "match": "boundaries"
           },
           {
-            "line": 20,
+            "line": 18,
             "match": "boundary"
           },
           {
-            "line": 120,
+            "line": 114,
             "match": "boundaries"
           },
           {
-            "line": 122,
+            "line": 116,
             "match": "boundary"
           },
           {
-            "line": 123,
+            "line": 117,
             "match": "boundary"
           },
           {
-            "line": 124,
+            "line": 118,
             "match": "boundary"
           },
           {
-            "line": 132,
+            "line": 126,
             "match": "boundary"
           },
           {
-            "line": 133,
+            "line": 127,
             "match": "boundary"
           },
           {
-            "line": 144,
+            "line": 138,
             "match": "boundary"
           },
           {
-            "line": 205,
+            "line": 195,
             "match": "boundary"
           },
           {
-            "line": 220,
+            "line": 210,
             "match": "boundary"
           }
         ],
         "visible": [
           {
-            "line": 59,
+            "line": 53,
             "match": "visible"
           },
           {
-            "line": 192,
+            "line": 182,
             "match": "visible"
           },
           {
-            "line": 200,
+            "line": 190,
             "match": "visible"
           },
           {
-            "line": 203,
+            "line": 193,
             "match": "visible"
           }
         ],
@@ -7089,7 +6993,7 @@
       },
       "manual_chapter_references": [
         {
-          "line": 144,
+          "line": 138,
           "match": "Chapter 29"
         }
       ]

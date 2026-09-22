@@ -139,7 +139,7 @@ Assemble the source in dependency order; the final CMake target compiles it toge
 3. Add configuration and state reporting; wire the shared model in `main.cpp`.
 4. Configure CMake, build `minigateway`, then check HTTP before adding a broker.
 
-MiniGateway has a small source tree, but the files are separated by responsibility:
+The source files separate responsibilities:
 
 ```text
 MiniGateway/
@@ -620,7 +620,7 @@ namespace minigateway {
 \index{socket state reporting}
 
 
-Both runtime roles report socket state in the same way. `SocketStateReporter` keeps that diagnostic policy outside the web role and outside the MQTT role.
+`SocketStateReporter` gives both runtime roles the same diagnostic policy without putting it in either role.
 
 \Needspace{5\baselineskip}
 

@@ -2427,7 +2427,7 @@
       "source_ids": [
         "R344"
       ],
-      "line": 144
+      "line": 138
     },
     {
       "file": "manuscript/chapters/30-architectural-judgment-choosing-the-right-layer-and-boundary.md",
@@ -2437,7 +2437,7 @@
         "extending-the-framework-safely"
       ],
       "source_ids": [],
-      "line": 207
+      "line": 197
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -3221,6 +3221,15 @@
       "text": "Chapter 27",
       "targets": [
         "testing-debugging-and-benchmarking"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch29/README.md",
+      "text": "Chapter 29",
+      "targets": [
+        "extending-minigateway-with-a-new-network-role"
       ],
       "source_ids": [],
       "line": 1
