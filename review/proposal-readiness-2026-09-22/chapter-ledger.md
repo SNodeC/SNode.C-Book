@@ -1495,3 +1495,95 @@ checkpoint target and the existing chapter-registration line extension. Existing
 applications, lab implementations and common harness remain unchanged. Public
 answers and review tooling are accounted separately. This is the authorized new
 exercise support, with no second parser/model or checkpoint application.
+
+
+## Phase 5m — Appendix A and closing material, 2026-09-23
+
+**Edited and reread:** Appendix A, the epilogue essay, the Further Reading
+companion-solution pointer, the appendix's public answers and the common exercise
+guide. The epilogue opener, back-matter divider and index source were reread and
+retained unchanged. The final global audit reread all numbered-chapter objectives,
+recaps and exercise prompts, all twenty rules and the Part checkpoint pointers;
+it does not claim another full prose reread of Chapters 1–30. Their prior editorial
+records remain applicable and their current inputs are unchanged from Phase 5l.
+
+| Material | Total before → after / ceiling | Prose before → after | Fenced before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Appendix A | 6,721 → 3,694 / 4,700 | 5,460 → 3,619 | 1,261 → 75 | 47 → 9 / 10 | 389.00 |
+| Epilogue essay | 1,529 → 1,388 / 1,900 | 1,362 → 1,388 | 167 → 0 | 8 → 4 / 4 | 338.75 |
+| All back matter | 736 → 781 / 1,000 | — | — | Not a chapter budget | — |
+
+The fenced reductions remove/convert text diagrams and repeated lists, not
+executable code. The epilogue's prose partition grows because its useful questions
+and next steps move out of text fences. Appendix A's new apparatus is inside its
+ceiling; there is no reserve draw. Existing reserve use remains 400, remaining
+2,350. No explanation was removed merely to fall below a ceiling.
+
+### Appendix A objective ↔ exercise mapping
+
+| Exercise | Objective(s) | Public solution and observation |
+| --- | --- | --- |
+| A.1 Review | O1 | `companion/exercises/appendix-a/README.md`, answer 1: alias, wrapper, flow, factory and context trace |
+| A.2 Review | O3 | Answer 2: reparse versus an active consumer's policy/lifetime |
+| A.3 Lab | O1, O2 | Answer 3 and `exercise-appendix-a-source-consumer`: inspected source record, fresh installed EchoPair consumer, selected prefix and exact `environment-ready` echo |
+| A.4 Lab | O2, O3 | Answer 4 and `exercise-appendix-a-carrier-extension`: existing carrier substitutions, shared parser/factory, identical reconstructed replies and Unix-path cleanup |
+| A.5 Design | O1, O3 | Answer 5: producer sample identity versus acceptance order, representations, observers and regression obligations |
+
+| Objective | Exercises |
+| --- | --- |
+| A.O1 | A.1, A.3, A.5 |
+| A.O2 | A.3, A.4 |
+| A.O3 | A.2, A.4, A.5 |
+
+The registered target `appendix-a-lab` depends on existing `ch02-lab` and `ch11-lab`.
+Both tests reuse their existing independent peer drivers, canonical sources and
+installed-package components. No second parser, factory, consumer implementation
+or framework extension was added. Source-reading commands were run against the
+current framework source; the public answer distinguishes those inspections from
+what a successful byte exchange can establish (`phase-5m-source-reading.log`).
+
+### Retained teaching content
+
+Appendix line references below name
+`manuscript/chapters/appendix-a-reading-and-extending-the-framework.md`.
+
+| Content | Final evidence |
+| --- | --- |
+| Application-first reading, source regions, examples/tests/tools and historical-document qualification | :13–50; directory table replaces repeated maps |
+| Family/transport/connection aliases, activation ownership and core-runtime trace | :52–94; named source paths retained |
+| Public-header/CMake reading, role-focused searches, context/factory questions and main-path bridge | :96–139; original shell fence preserved |
+| Four extension criteria, local/library/framework progression, pollution and premature abstraction | :141–176; applied Reading and Extension rules retained |
+| MiniGateway construction and parser excerpts, unchanged boundary table and application-local rationale | :178–220; all original C++ bytes retained |
+| Context/factory/middleware/WebSocket/MQTT selection, consequences and concrete MQTTSuite examples | :222–250; one decision table replaces repeated introductions |
+| Reconfiguration timing and consumer/lifetime limitations | :262, unchanged paragraph |
+| Public header/dependency ownership and installed-consumer obligations | :266–268 |
+| Semantic log identity, precise event claims, bounded failure policy and queue-result meaning | :270–294; original queue qualification retained |
+| Regression layers, overlapping tests, producer-number design and per-call flow invariant | :296–320; original flow qualification retained |
+| One five-bullet recap then five exercises | :322–341 |
+
+The epilogue's philosophical section and final passage beginning “Networking does
+not become trivial” remain verbatim. Four broader headings connect the essay;
+there are no objectives, recap or exercises, as the author explicitly approved.
+The integrated checkpoint remains in Chapter 30 and executes in the full suite.
+
+### Execution and global handoff
+
+Built: `appendix-a-lab` (`phase-5m-appendix-target.log`). Run: both appendix CTests
+pass at `phase-5m-final-labs.log:1146` and :1158; **62/62** pass at :1160.
+The source-consumer test checks the chosen installed prefix and exact reflection;
+the carrier test compares 26 segmentations on each carrier, incomplete-prefix
+silence, invalid-command behavior, closure and owned-path cleanup. These do not
+certify TLS/authentication, arbitrary kernel callback segmentation or deployment.
+The separately executed source-reading commands establish the stated file trace.
+
+`phase-5m-global-audit.md` and `phase-5m-exit-checks.json` cover all chapter budgets,
+93 objectives, 155 mapped exercises, all public answer sections, sample retention,
+eleven checkpoints, numeric global targets, preserved listings/index/figures,
+references and final PDFs/package. All 31 teaching units have three objectives,
+two review questions, two labs, one design problem and a recap of at most five
+bullets. The epilogue exception is checked explicitly.
+
+Production **+0/−0**; lab registration **+10/−1**, net **+9**. Existing test drivers
+and application sources are unchanged. Public answers and review scripts are
+separate documentation/review support. No new hosted-CI or device/deployment
+validation is claimed. Phase 5 ends here; Phase 6 remains unstarted.

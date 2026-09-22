@@ -1750,3 +1750,67 @@ Commit: `proposal-readiness: phase 5l — refine Part XI and verify the integrat
 **Stop after Phase 5l.** Phase 5m covers Appendix A, epilogue, back matter and the
 final audit; Phase 6 refreshes the proposal. Preserve the remaining reserve and
 all author teaching-content stop rules. The epilogue remains a closing essay.
+
+
+## Phase 5m — closing material and final manuscript audit completed, 2026-09-23
+
+The fresh Phase 5l entry run passes all ten groups and 60 labs, reproduces its
+metrics exactly and passes the unchanged exit assertions against new entry logs.
+Evidence: `review/proposal-readiness-2026-09-22/phase-5m-entry-*`. The author-approved
+scope remains Appendix A, epilogue, back matter and final global audit only.
+
+Edited and reread the appendix into nine connected sections, merging repeated
+source maps/navigation advice and extension-point introductions. Preserved the
+MiniGateway excerpts, shell searches, index entries, source/topic anchors and
+reconfiguration, failure, queue-admission and flow-lifetime qualifications. Added
+three objectives and five mapped exercises, with public answers under
+`companion/exercises/appendix-a/`. Its two labs reuse the existing installed-consumer
+and line-carrier experiments; no new application or parser implementation.
+
+The epilogue remains a closing essay without teaching callouts. Four sections
+connect its argument; the philosophical section and final author closing stay
+verbatim. Further Reading now points to all public solutions; existing references,
+epilogue opener, reference divider and index source remain. No numbered chapter,
+Part opener, manuscript order or proposal source changes in this phase.
+
+| Material | Words / ceiling | Deep headings / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: |
+| Appendix A | 3,694 / 4,700 | 9 / 10 | 389.00 |
+| Epilogue essay | 1,388 / 1,900 | 4 / 4 | 338.75 |
+| Back matter | 781 / 1,000 | Not a chapter gate | — |
+
+No reserve draw. Chapter 27 retains its earlier 400-word allocation; planned
+allocation 112,650, reserve **2,350**, hard ceiling **115,000**.
+
+All **62 public labs** and the other nine check groups pass. The public appendix
+target builds; the source-reading steps were independently inspected and run.
+The final checker certifies all 30 numbered chapters plus Appendix A: three
+objectives, one recap, five tiered exercises, complete mappings and public answer
+sections, chapter budgets and heading/mean-section targets. The audit reread
+teaching callouts, all twenty rules and eleven checkpoint pointers; previous
+Parts' complete prose and lab implementations remain as previously reviewed.
+The integrated MiniGateway checkpoint stays in Chapter 30.
+
+Global words **103,461 → 100,338**; deep headings **294 → 252**; mean section prose
+**334.87**; text fences **45**; rules **20**; forbidden/closing hits **0**; one shell
+label. Both hard and stretch word ceilings are met. Front matter **1,980 / 2,500**;
+Part openers **1,356 / 1,650**. All five sample reduction gates remain valid.
+
+Preservation checks retain 293 executable/config fences, 37 exact source markers,
+1,033 index entries, 18 figure IDs and all prior reference identities. The register
+passes **298 references / 39 topics / 374 migration dispositions**, including the
+author's combined seam. Production +0/−0; lab registration +10/−1, no new driver.
+
+PDFs: full **322 → 310**, samples **54**, proposal **6**; final warnings/bad boxes
+**zero**. All 365 archive files match working inputs. Closing pages, contents and
+index were visually reviewed; sentence wrapping and exercise-box spacing were
+corrected with existing facilities. No host policy or framework changes. No new
+hosted CI, radio/OpenWrt deployment or capacity claim. Evidence and execution
+limits: REPORT.md, chapter-ledger.md, metrics-after-phase-5m.json,
+phase-5m-global-audit.md, phase-5m-exit-checks.json and phase-5m-visual-review.md.
+
+Commit: `proposal-readiness: phase 5m — refine closing material and complete the manuscript audit`.
+**Phase 5 manuscript work is complete. Stop here.** Phase 6 proposal refresh remains
+not started: update proposal TOC/page extents, revision status, sample guide and
+conservative evidence after a fresh Phase 5m entry check. The whole proposal pass
+is not yet complete, and no subsequent phase is authorized by this completion.

@@ -1,9 +1,8 @@
 ## The Principles Behind the Programs {.unnumbered}
 
-### Layers are not decoration {.unnumbered}
+### Layers, boundaries, and names {.unnumbered}
 
 \index{layered architecture}
-
 
 The word layered can be used lazily. In SNode.C, it is meant operationally.
 
@@ -11,21 +10,10 @@ Lower communication families, stream transport, TLS or legacy connection handlin
 
 The important lesson is not that every layer must be visible to every programmer at every moment. The lesson is that the architecture remains understandable because the layers have not been erased prematurely.
 
-```text
-lower family
-  -> transport and connection handling
-      -> protocol meaning
-          -> application role
-              -> system boundary
-```
-
 A reader who understands this stack can move between IPv4, IPv6, Unix domain sockets, Bluetooth, HTTP, WebSocket, MQTT, persistence, and deployment without treating each subject as a separate world.
-
-### Boundaries are design decisions {.unnumbered}
 
 \index{system boundaries}
 \index{design decisions}
-
 
 Many mistakes in network applications are not caused by the wrong syntax. They are caused by the wrong boundary.
 
@@ -35,62 +23,35 @@ SNode.C gives the programmer many possible places where behavior can live. That 
 
 The central question returns again and again:
 
-```text
-Which boundary honestly owns this concern?
-```
+*Which boundary honestly owns this concern?*
 
 That question is useful before writing code, while debugging code, while designing configuration, while packaging the application, and while deciding whether a system should remain one executable or become several cooperating services.
-
-### Roles and instances need precise language {.unnumbered}
 
 \index{roles}
 \index{instances}
 \index{precise language}
 
-
 The book deliberately distinguishes system-design roles, server/client handles, configured roles, registered instances, activation flows, connections, contexts, factories, middleware, subprotocols, and application services.
-
-That precision may feel demanding at first. It is worth the effort.
 
 When the vocabulary is clear, a system can be discussed by developers, operators, teachers, and students using the same names.
 
-```text
-configured role name
-  -> appears in configuration
-  -> appears in logs
-  -> appears in diagnostics
-  -> appears in operational discussion
-```
-
-This terminology is how a running system becomes understandable.
+A configured role name connects configuration, logs, diagnostics, and operational discussion.
 
 One distinction becomes especially useful when an application grows: the endpoint owns shared configuration, while each explicit activation has its own flow controller. Stopping a flow, closing a connection, detaching a context, and releasing an instance are different events. The architecture becomes easier to operate when the code and its diagnostics preserve those differences.
 
-### Protocols carry meaning, not only bytes {.unnumbered}
-
 \index{protocol meaning}
 \index{bytes versus meaning}
-
 
 The book started with simple communication and gradually moved upward: custom stream protocols, HTTP, Express-like routing, SSE, WebSocket, MQTT, MQTT-over-WebSocket, and multi-protocol IoT systems.
 
 The recurring lesson is that bytes become useful only when a layer gives them meaning.
 
-```text
-raw data
-  -> parsed protocol
-      -> session or request meaning
-          -> application state
-              -> system behavior
-```
-
 Therefore, protocol code is where communication becomes part of an application, not accidental glue.
 
-### Build and deployment are part of architecture {.unnumbered}
+### Architecture on real machines {.unnumbered}
 
 \index{build architecture}
 \index{deployment architecture}
-
 
 A network framework does not end at the source tree.
 
@@ -98,38 +59,16 @@ The public include path says which C++ abstraction the source file selects. The 
 
 For that reason, this book treated CMake, packaging, deployment, testing, and debugging as architectural surfaces rather than as afterthoughts.
 
-```text
-public include path
-  -> source component
-      -> build target
-          -> installed component
-              -> package dependency
-                  -> deployed role
-                      -> observable runtime behavior
-```
-
 A system that is clear only in the source tree is not yet fully clear.
-
-### The guided project is not the end of the idea {.unnumbered}
 
 \index{MiniGateway}
 \index{guided project}
 
-
 MiniGateway was small. It did not try to become a product. It showed how the pieces can be assembled while preserving the vocabulary of the book. The final design chapters then named the judgment behind that assembly: choose the boundary that honestly owns the concern, and extend the system where that responsibility remains visible.
-
-That is the transferable lesson.
 
 A real application may use different lower families, different protocols, more roles, stronger persistence, stronger authentication, different deployment targets, or a larger ecosystem such as MQTTSuite. The architectural questions remain the same.
 
-```text
-What is the domain state?
-Which roles expose it?
-Which protocols serve which boundaries?
-Which configuration makes the deployment reproducible?
-Which diagnostics make failure understandable?
-Which tests protect the real boundaries?
-```
+What is the domain state? Which roles expose it? Which protocols serve which boundaries? Which configuration makes the deployment reproducible, which diagnostics explain failure, and which tests protect those boundaries?
 
 When those questions remain answerable, the application can grow without becoming opaque.
 
@@ -155,14 +94,7 @@ The reader should know how to think with them.
 
 Useful next steps are:
 
-```text
-build a small application with one clear role
-add one second protocol surface deliberately
-make configuration reproduce the role shape
-add diagnostics before the system becomes hard to debug
-test one boundary at a time
-only then generalize or split the system
-```
+Build a small application with one clear role, then add a second protocol surface deliberately. Make configuration reproduce the role shape; add diagnostics before debugging becomes difficult. Test one boundary at a time, then decide whether to generalize or split the system.
 
 SNode.C rewards this discipline because its architecture makes the boundaries explicit. It does not force good design automatically, but it gives good design places to live.
 

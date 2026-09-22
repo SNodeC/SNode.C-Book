@@ -1,7 +1,10 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5l is completed after the author restored use of `/tmp` and the full Phase 5k entry gate passed. Parts I–XI and the approved front-matter work are complete. Earlier blocked attempts are retained below as history; the latest Phase 5l completion account governs the handoff.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological.
+Phase 5m is completed: all numbered Parts, Appendix A, closing material and the
+final manuscript audit meet the approved Phase 5 criteria. Phase 6 proposal refresh
+remains not started. Earlier blocked attempts remain historical evidence.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -25,7 +28,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5j — Part IX | completed | `proposal-readiness: phase 5j — refine Part IX and verify persistence boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5j.json; phase-5j-exit-checks.json; chapter-ledger.md; phase-5j-entry-*.log; phase-5j-final-*.log; phase-5j-visual-review.md; completion account below |
 | 5k — Part X | completed | `proposal-readiness: phase 5k — refine Part X and verify installed consumers` (containing this report) | 2026-09-22 | metrics-after-phase-5k.json; phase-5k-exit-checks.json; chapter-ledger.md; phase-5k-entry-*.log; phase-5k-final-*.log; phase-5k-visual-review.md; completion account below |
 | 5l — Part XI only | completed | `proposal-readiness: phase 5l — refine Part XI and verify the integrated gateway` (containing this report); earlier blocked-gate commits retained | 2026-09-23 | metrics-after-phase-5l.json; phase-5l-restored-entry-exit-checks.json; phase-5l-exit-checks.json; chapter-ledger.md; phase-5l-final-*.log; phase-5l-layout-final.log; phase-5l-visual-review.md; completion account below |
-| 5m — appendix, closing material and global audit | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5m — appendix, closing material and global audit | completed | `proposal-readiness: phase 5m — refine closing material and complete the manuscript audit` (containing this report) | 2026-09-23 | metrics-after-phase-5m.json; phase-5m-entry-exit-checks.json; phase-5m-exit-checks.json; phase-5m-global-audit.md; chapter-ledger.md; phase-5m-final-*.log; phase-5m-layout-complete.log; phase-5m-visual-review.md; completion account below |
 | 6 — proposal refresh | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 
 Commit subjects (resolve with `git log --oneline --grep='^proposal-readiness: phase 0'`):
@@ -3006,3 +3009,157 @@ harness are unchanged; final diff review found no second application or parser.
 Commit: `proposal-readiness: phase 5l — refine Part XI and verify the integrated gateway`
 (containing this report). **Stop after Phase 5l.** Next: Phase 5m only after a fresh
 entry check; Phase 6 remains the proposal refresh. No later phase was started.
+
+
+## Phase 5m — appendix, closing material and final audit completed, 2026-09-23
+
+### Previous-phase entry gate
+
+Before editing, reran all ten check groups through
+`run-phase-5l-restored-checks.py phase-5m-entry proposal-readiness-phase-5l-examples`.
+All pass, including **60/60 labs** (`phase-5m-entry-results.json` and corresponding
+logs). Executed `check-phase-5l.py` with only its final-log lookup names and output
+JSON filename redirected to the new entry evidence. Its metric, scope, teaching,
+reference, preservation and artifact assertions were unchanged and all pass
+(`phase-5m-entry-exit-checks.log`, `phase-5m-entry-exit-checks.json`). Historical
+Phase 5l metrics/evidence were not overwritten. `/tmp` remains author-authorized;
+no host policy changes were required.
+
+### Edited and reread
+
+- **Appendix A:** consolidated forty-seven headings into nine connected sections.
+  One source-region map replaces repeated directory inventories; a linked
+  header/alias/flow reading path replaces repeated navigation advice. A decision
+  table selects context, factory, middleware, WebSocket and MQTT extension points
+  with consequences. Kept the complete original C++ excerpts, shell searches,
+  MiniGateway boundary table, public-header obligations and technical qualifiers.
+  In particular, the reconfiguration paragraph (:262), queue-result limits (:294)
+  and per-call flow invariant (:320) remain in the final appendix. The content
+  audit with final source locations is in `chapter-ledger.md`.
+- Added three objectives and five exercises, retaining the existing five-bullet
+  recap and both applicable rule boxes. Public review/design answers and two
+  executable lab registrations are under `companion/exercises/appendix-a/`.
+- **Epilogue:** consolidated eight headings to four and converted useful fenced
+  questions/next steps to prose. Removed generic stack restatements. Its
+  philosophical section and author-selected final passage remain verbatim;
+  no objectives, recap or exercises were added, as the author required.
+- **Back matter:** added a public-solution pointer to Further Reading
+  (`manuscript/backmatter/further-reading.md:59`). The reference list remains;
+  the back-matter divider and index source were reread without edits. The epilogue
+  opener also remains unchanged. No numbered chapter or Part opener changed.
+
+These are edits to existing treatments, not replacement chapters. Budgets were
+ceilings; no explanation, example or qualification was removed just to reach one.
+The appendix reduction comes from duplicate source maps, repeated extension-point
+introductions, text blocks and framing; the preservation table records what stays.
+
+| Material | Words before → after / ceiling | Prose before → after | Fenced before → after | Headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Appendix A | 6,721 → 3,694 / 4,700 | 5,460 → 3,619 | 1,261 → 75 | 47 → 9 / 10 | 389.00 |
+| Epilogue essay | 1,529 → 1,388 / 1,900 | 1,362 → 1,388 | 167 → 0 | 8 → 4 / 4 | 338.75 |
+| Back matter | 736 → 781 / 1,000 | — | — | Not a chapter gate | — |
+
+No reserve draw. The earlier Chapter 27 allocation stays 400 (ceiling 4,200);
+planned allocation remains 112,650, reserve **2,350**, hard ceiling **115,000**.
+
+### Built and run
+
+The appendix target builds (`phase-5m-appendix-target.log`) through existing
+`ch02-lab` and `ch11-lab`. It reuses existing implementations and independent peer
+observers, with no framework edits or duplicate application/parser:
+
+- `exercise-appendix-a-source-consumer` builds canonical EchoPair in a fresh
+  external directory, verifies the selected installed prefix and observes exact
+  `environment-ready` reflection (`phase-5m-final-labs.log:1144–1146`). The source
+  trace was separately inspected and its public search commands run
+  (`phase-5m-source-reading.log`); the answer correctly distinguishes the factory
+  declaration in `EchoSocketContext.h` from its implementation in the `.cpp`.
+- `exercise-appendix-a-carrier-extension` builds the canonical IPv4 line server
+  and existing Unix entry-point variant. The peer checks 26 input segmentations
+  on each carrier, incomplete-prefix silence, invalid-command replies, QUIT and
+  owned-path cleanup; both reply sequences agree (:1153–1158).
+
+The full suite passes **62/62 labs** (:1160), including the existing equipped local
+database checks. All ten final groups pass (`phase-5m-final-results.json`): hygiene,
+source alignment, metric regressions, companion build, labs, teaching, behavior,
+lifetime, PDFs/package and extracted-package hygiene. The active guards include
+six chapter-reference regression checks. Final source and extracted-archive
+checks are `phase-5m-final-source-recheck.log` and
+`phase-5m-final-extracted-hygiene.log`.
+
+After the runtime run, only a sentence-layout adjustment, exercise-box spacing,
+and a public answer's filename correction changed. Final PDF/package rebuilds
+and exit checks cover those final inputs. No runtime implementation changed.
+An early development checker ran while the archive was being rebuilt and correctly
+rejected a transient archive/PDF mismatch; the final check runs after the completed
+build and verifies all **365** archive files match their working inputs.
+Private fixture process inspection found none left (`phase-5m-cleanup.log`).
+
+**Not newly verified:** hosted CI, device/radio/OpenWrt deployment, service-manager
+operation, the manual broker-enabled MiniGateway extension, sustained load or
+capacity. All new lab registrations use normal CI CTest discovery, but local
+execution is the evidence here. The consumer and carrier observations do not
+establish arbitrary callback segmentation, TLS/authentication or deployment policy.
+
+### Global acceptance and preservation
+
+`check-phase-5m.py` and `phase-5m-global-audit.md` check every numbered chapter and
+Appendix A, including the approved Chapter 27 reserve ceiling. All have three
+objectives, one recap (≤5 non-title-restating bullets), five exercises (two review,
+two lab, one design), complete objective↔exercise mappings and public answers.
+That is **93 objectives, 155 exercises and 62 executed lab registrations**. Every
+chapter and appendix meets its heading ceiling and ≥250-word mean section prose.
+All eleven running-project checkpoints remain runnable; the integrated checkpoint
+stays in Chapter 30. The epilogue's explicit exception is checked separately.
+
+The audit reread all objectives/recaps/prompts, rules and checkpoint pointers.
+It does not claim another full prose reread of Chapters 1–30; their input files
+and previous lab implementations are unchanged. Original sample reduction gates
+continue to pass. Preservation against Phase 5l retains **293 executable/config
+fences**, **37 exact source markers**, **1,033 index entries**, **18 figure IDs**,
+all prior reference identities and every migration disposition. Three new public
+Appendix A references bring the register to **298 references / 39 topics / 374
+dispositions**. The combined R275/R276 seam remains intact.
+
+| Global measure | Phase 5l | Phase 5m | Final acceptance |
+| --- | ---: | ---: | --- |
+| Total words | 103,461 | 100,338 | ≤115,000 and ≤105,000 stretch |
+| Prose words | 93,957 | 92,187 | −1,770 |
+| Fenced words | 9,504 | 8,151 | −1,353, text blocks only |
+| Deep chapter headings | 294 | 252 | ≤550 |
+| Mean section prose | 292.51 | 334.87 | ≥250 |
+| Text fences | 92 | 45 | ≤250 |
+| Rule boxes | 20 | 20 | ≤20 |
+| Forbidden / Closing perspective | 0 / 0 | 0 / 0 | 0 / 0 |
+| Objectives / exercise / recap callouts | 30 / 30 / 31 | 31 / 31 / 31 | Complete teaching units |
+
+Source: `metrics-after-phase-5m.json`. Front matter **1,980 / 2,500**; all Part
+openers **1,356 / 1,650**. Against Phase 0's measured 151,924 words, the total
+reduction is **51,586**. Remaining text arrows depict specific runtime, domain,
+endpoint, component or database paths; their inventory is in the global audit.
+
+### Final artifacts and phase boundary
+
+Full manuscript **322 → 310 pages**, combined samples **54 → 54**, proposal
+**6 → 6**. All final LaTeX logs show **zero warnings and zero bad boxes**. The
+initial appendix introduction produced one underfull paragraph; sentence layout
+removed it. Visual review also kept the final exercises together using existing
+spacing, with no production-style changes. Reviewed contents and all closing
+pages through the complete index; final changed pages were rerendered and reread
+(`phase-5m-visual-review.md`, `phase-5m-layout-complete.log`). The all-chapter
+checker records final hashes and package equality in `phase-5m-exit-checks.json`.
+
+Production **+0/−0**; lab-registration support **+10/−1**, net **+9**. There is no
+new application or test-driver implementation. Public answers and the phase's
+review checker are separate documentation/review support. Final diff review found
+one authority for each reused algorithm and no temporary compatibility mechanism.
+
+**Phase 5m is completed, and the global Phase 5 manuscript targets are met.**
+This does not complete the entire proposal-readiness task: the author explicitly
+assigned proposal-source TOC/page extents, revision status, sample guide and
+evidence-sheet refresh to **Phase 6**. Those sources remain unchanged here.
+
+Commit: `proposal-readiness: phase 5m — refine closing material and complete the manuscript audit`
+(containing this report). **Stop here; Phase 6 has not started.** Before Phase 6,
+rerun all ten groups with fresh log paths and re-execute this phase's checker,
+redirecting only its evidence lookups/output as for the entry gate above.

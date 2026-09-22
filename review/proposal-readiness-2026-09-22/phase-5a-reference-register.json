@@ -2446,7 +2446,7 @@
         "reading-public-types-and-components"
       ],
       "source_ids": [],
-      "line": 372
+      "line": 110
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2455,7 +2455,7 @@
         "the-mental-model-of-snodec"
       ],
       "source_ids": [],
-      "line": 372
+      "line": 110
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2466,7 +2466,7 @@
       "source_ids": [
         "R084"
       ],
-      "line": 494
+      "line": 135
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2477,7 +2477,7 @@
       "source_ids": [
         "R085"
       ],
-      "line": 559
+      "line": 139
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2488,7 +2488,7 @@
       "source_ids": [
         "R345"
       ],
-      "line": 929
+      "line": 264
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2499,18 +2499,7 @@
       "source_ids": [
         "R346"
       ],
-      "line": 994
-    },
-    {
-      "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
-      "text": "Chapter 27",
-      "targets": [
-        "testing-debugging-and-benchmarking"
-      ],
-      "source_ids": [
-        "R347"
-      ],
-      "line": 1032
+      "line": 288
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2521,7 +2510,18 @@
       "source_ids": [
         "R348"
       ],
-      "line": 1064
+      "line": 294
+    },
+    {
+      "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+      "text": "Chapter 27",
+      "targets": [
+        "testing-debugging-and-benchmarking"
+      ],
+      "source_ids": [
+        "R347"
+      ],
+      "line": 300
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2532,7 +2532,7 @@
       "source_ids": [
         "R349"
       ],
-      "line": 1109
+      "line": 318
     },
     {
       "file": "manuscript/backmatter/further-reading.md",
@@ -2823,6 +2823,16 @@
     },
     {
       "file": "companion/exercises/README.md",
+      "text": "Appendix A",
+      "targets": [
+        "reading-the-codebase-with-confidence",
+        "extending-the-framework-safely"
+      ],
+      "source_ids": [],
+      "line": 3
+    },
+    {
+      "file": "companion/exercises/README.md",
       "text": "Chapter 2",
       "targets": [
         "preparing-your-environment"
@@ -2875,17 +2885,6 @@
       ],
       "source_ids": [
         "R048"
-      ],
-      "line": 27
-    },
-    {
-      "file": "companion/exercises/README.md",
-      "text": "Chapter 30",
-      "targets": [
-        "architectural-judgment-choosing-the-right-layer-and-boundary"
-      ],
-      "source_ids": [
-        "R049"
       ],
       "line": 27
     },
@@ -3230,6 +3229,37 @@
       "text": "Chapter 29",
       "targets": [
         "extending-minigateway-with-a-new-network-role"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/README.md",
+      "text": "Chapter 30",
+      "targets": [
+        "architectural-judgment-choosing-the-right-layer-and-boundary"
+      ],
+      "source_ids": [
+        "R049"
+      ],
+      "line": 27
+    },
+    {
+      "file": "companion/exercises/README.md",
+      "text": "Appendix A",
+      "targets": [
+        "reading-the-codebase-with-confidence",
+        "extending-the-framework-safely"
+      ],
+      "source_ids": [],
+      "line": 79
+    },
+    {
+      "file": "companion/exercises/appendix-a/README.md",
+      "text": "Appendix A",
+      "targets": [
+        "reading-the-codebase-with-confidence",
+        "extending-the-framework-safely"
       ],
       "source_ids": [],
       "line": 1

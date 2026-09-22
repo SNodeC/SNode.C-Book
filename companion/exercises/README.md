@@ -1,6 +1,6 @@
 # Public exercises and solutions
 
-These are the public solutions for Parts I–XI. Each chapter has two
+These are the public solutions for Parts I–XI and Appendix A. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
@@ -75,6 +75,11 @@ framing, validation, mixed HTTP/Unix acceptance and live SSE observations with
 MQTT unavailable. The final checkpoint reruns these observations alongside the
 existing JSON/model experiments. Its manual broker extension requires a separate
 subscriber observation and is not part of the local CTests.
+
+Appendix A reuses the external-consumer and line-protocol carrier experiments.
+Its public source-reading record connects installed component selection to flow
+creation, factory construction and protocol behavior; the extension keeps one
+parser while changing IPv4 to a Unix-domain carrier.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.

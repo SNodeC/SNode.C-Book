@@ -1,0 +1,32 @@
+50:#include "net/in/stream/legacy/config/ConfigSocketServer.h" // IWYU pragma: export
+68:    using SocketServer = net::in::stream::SocketServer<core::socket::stream::legacy::SocketAcceptor,
+69:                                                       net::in::stream::legacy::config::ConfigSocketServer,
+76:           const std::function<void(net::in::stream::legacy::config::ConfigSocketServer*)>& configurator,
+94:extern template class core::socket::Socket<net::in::stream::legacy::config::ConfigSocketServer>;
+96:                                                                   net::in::stream::legacy::config::ConfigSocketServer>;
+98:                                                                     net::in::stream::legacy::config::ConfigSocketServer>;
+102:                                                              net::in::stream::legacy::config::ConfigSocketServer>;
+73:        using Super::listen;
+75:        typename Super::FlowHandle listen(uint16_t port,
+79:            return listen(onStatus);
+83:        listen(uint16_t port, int backlog, const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+87:            return listen(onStatus);
+90:        typename Super::FlowHandle listen(const std::string& ipOrHostname,
+95:            return listen(onStatus);
+98:        typename Super::FlowHandle listen(const std::string& ipOrHostname,
+105:            return listen(onStatus);
+124:            , sharedContext(std::make_shared<Context>(
+125:                  std::make_shared<SocketContextFactory>(std::forward<Args>(args)...),
+188:            flow->startFlow(
+263:        FlowHandle listen(const std::function<void(const SocketAddress&, core::socket::State)>& onStatus) const {
+264:            auto flow = std::make_shared<ServerFlowController>(this->config->getInstanceName());
+275:        FlowHandle listen(const SocketAddress& localAddress,
+279:            return listen(onStatus);
+282:        FlowHandle listen(const SocketAddress& localAddress,
+287:            return listen(localAddress, onStatus);
+companion/examples/EchoPair/EchoSocketContext.cpp:29:std::size_t EchoSocketContext::onReceivedFromPeer() {
+companion/examples/EchoPair/EchoSocketContext.cpp:42:core::socket::stream::SocketContext* EchoServerSocketContextFactory::create(
+companion/examples/EchoPair/EchoSocketContext.cpp:44:    return new EchoSocketContext(socketConnection, EchoSocketContext::Role::SERVER);
+companion/examples/EchoPair/EchoSocketContext.cpp:49:    return new EchoSocketContext(socketConnection, EchoSocketContext::Role::CLIENT);
+companion/examples/EchoPair/EchoSocketContext.h:24:    std::size_t onReceivedFromPeer() override;
+companion/examples/EchoPair/EchoSocketContext.h:29:class EchoServerSocketContextFactory : public core::socket::stream::SocketContextFactory {

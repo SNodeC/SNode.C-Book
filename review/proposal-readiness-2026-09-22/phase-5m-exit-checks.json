@@ -1,0 +1,1582 @@
+{
+  "chapters": [
+    {
+      "chapter": "1",
+      "path": "manuscript/chapters/01-why-snodec-exists.md",
+      "words_before": 1821,
+      "words_after": 1821,
+      "budget": 1850,
+      "prose_words": 1724,
+      "code_words": 97,
+      "headings": 5,
+      "heading_ceiling": 5,
+      "average_section_prose_words": 327.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 248
+    },
+    {
+      "chapter": "2",
+      "path": "manuscript/chapters/02-preparing-your-environment.md",
+      "words_before": 3006,
+      "words_after": 3006,
+      "budget": 3350,
+      "prose_words": 2755,
+      "code_words": 251,
+      "headings": 8,
+      "heading_ceiling": 9,
+      "average_section_prose_words": 331.5,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 286
+    },
+    {
+      "chapter": "3",
+      "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "words_before": 2568,
+      "words_after": 2568,
+      "budget": 2650,
+      "prose_words": 2026,
+      "code_words": 542,
+      "headings": 6,
+      "heading_ceiling": 6,
+      "average_section_prose_words": 321.83,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 277
+    },
+    {
+      "chapter": "4",
+      "path": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
+      "words_before": 4075,
+      "words_after": 4075,
+      "budget": 5300,
+      "prose_words": 4027,
+      "code_words": 48,
+      "headings": 13,
+      "heading_ceiling": 15,
+      "average_section_prose_words": 297.38,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 297
+    },
+    {
+      "chapter": "5",
+      "path": "manuscript/chapters/05-core-runtime-and-event-processing.md",
+      "words_before": 2983,
+      "words_after": 2983,
+      "budget": 3700,
+      "prose_words": 2908,
+      "code_words": 75,
+      "headings": 10,
+      "heading_ceiling": 11,
+      "average_section_prose_words": 278.1,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 312
+    },
+    {
+      "chapter": "6",
+      "path": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+      "words_before": 4175,
+      "words_after": 4175,
+      "budget": 5200,
+      "prose_words": 3959,
+      "code_words": 216,
+      "headings": 12,
+      "heading_ceiling": 15,
+      "average_section_prose_words": 319.83,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 295
+    },
+    {
+      "chapter": "7",
+      "path": "manuscript/chapters/07-servers-clients-and-connections.md",
+      "words_before": 3084,
+      "words_after": 3084,
+      "budget": 3650,
+      "prose_words": 3032,
+      "code_words": 52,
+      "headings": 9,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 324.67,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 302
+    },
+    {
+      "chapter": "8",
+      "path": "manuscript/chapters/08-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "words_before": 2170,
+      "words_after": 2170,
+      "budget": 2200,
+      "prose_words": 2059,
+      "code_words": 111,
+      "headings": 5,
+      "heading_ceiling": 5,
+      "average_section_prose_words": 393.4,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O2, O3"
+        ]
+      ],
+      "apparatus_words": 318
+    },
+    {
+      "chapter": "9",
+      "path": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
+      "words_before": 3089,
+      "words_after": 3089,
+      "budget": 3200,
+      "prose_words": 2913,
+      "code_words": 176,
+      "headings": 8,
+      "heading_ceiling": 8,
+      "average_section_prose_words": 345.75,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 292
+    },
+    {
+      "chapter": "10",
+      "path": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
+      "words_before": 2265,
+      "words_after": 2265,
+      "budget": 2800,
+      "prose_words": 2129,
+      "code_words": 136,
+      "headings": 6,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 328.33,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 285
+    },
+    {
+      "chapter": "11",
+      "path": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
+      "words_before": 2555,
+      "words_after": 2555,
+      "budget": 2800,
+      "prose_words": 2362,
+      "code_words": 193,
+      "headings": 7,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 312.57,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 272
+    },
+    {
+      "chapter": "12",
+      "path": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
+      "words_before": 4273,
+      "words_after": 4273,
+      "budget": 5400,
+      "prose_words": 4023,
+      "code_words": 250,
+      "headings": 10,
+      "heading_ceiling": 16,
+      "average_section_prose_words": 391.2,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Design",
+          "O2, O3"
+        ]
+      ],
+      "apparatus_words": 279
+    },
+    {
+      "chapter": "13",
+      "path": "manuscript/chapters/13-logging-diagnostics-and-runtime-introspection.md",
+      "words_before": 2698,
+      "words_after": 2698,
+      "budget": 2750,
+      "prose_words": 2481,
+      "code_words": 217,
+      "headings": 7,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 340.43,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 280
+    },
+    {
+      "chapter": "14",
+      "path": "manuscript/chapters/14-tls-across-the-framework.md",
+      "words_before": 2579,
+      "words_after": 2579,
+      "budget": 2950,
+      "prose_words": 2508,
+      "code_words": 71,
+      "headings": 8,
+      "heading_ceiling": 8,
+      "average_section_prose_words": 292.25,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 248
+    },
+    {
+      "chapter": "15",
+      "path": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
+      "words_before": 2990,
+      "words_after": 2990,
+      "budget": 3400,
+      "prose_words": 2922,
+      "code_words": 68,
+      "headings": 8,
+      "heading_ceiling": 9,
+      "average_section_prose_words": 339.88,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1, O2"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O2, O3"
+        ]
+      ],
+      "apparatus_words": 287
+    },
+    {
+      "chapter": "16",
+      "path": "manuscript/chapters/16-the-http-layer.md",
+      "words_before": 2471,
+      "words_after": 2471,
+      "budget": 2600,
+      "prose_words": 2305,
+      "code_words": 166,
+      "headings": 6,
+      "heading_ceiling": 6,
+      "average_section_prose_words": 368.17,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 223
+    },
+    {
+      "chapter": "17",
+      "path": "manuscript/chapters/17-the-express-like-framework.md",
+      "words_before": 2065,
+      "words_after": 2065,
+      "budget": 2350,
+      "prose_words": 1999,
+      "code_words": 66,
+      "headings": 5,
+      "heading_ceiling": 5,
+      "average_section_prose_words": 382.8,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 223
+    },
+    {
+      "chapter": "18",
+      "path": "manuscript/chapters/18-server-sent-events-and-real-time-http.md",
+      "words_before": 3269,
+      "words_after": 3269,
+      "budget": 3300,
+      "prose_words": 2898,
+      "code_words": 371,
+      "headings": 7,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 398.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 275
+    },
+    {
+      "chapter": "19",
+      "path": "manuscript/chapters/19-websocket-and-protocol-upgrade.md",
+      "words_before": 3000,
+      "words_after": 3000,
+      "budget": 3050,
+      "prose_words": 2638,
+      "code_words": 362,
+      "headings": 7,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 363.14,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 234
+    },
+    {
+      "chapter": "20",
+      "path": "manuscript/chapters/20-mqtt-support-in-snodec.md",
+      "words_before": 2005,
+      "words_after": 2005,
+      "budget": 2350,
+      "prose_words": 1878,
+      "code_words": 127,
+      "headings": 5,
+      "heading_ceiling": 5,
+      "average_section_prose_words": 359.6,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 216
+    },
+    {
+      "chapter": "21",
+      "path": "manuscript/chapters/21-mqtt-over-websocket.md",
+      "words_before": 1782,
+      "words_after": 1782,
+      "budget": 2100,
+      "prose_words": 1716,
+      "code_words": 66,
+      "headings": 4,
+      "heading_ceiling": 4,
+      "average_section_prose_words": 409.25,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 221
+    },
+    {
+      "chapter": "22",
+      "path": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
+      "words_before": 2922,
+      "words_after": 2922,
+      "budget": 2950,
+      "prose_words": 2899,
+      "code_words": 23,
+      "headings": 8,
+      "heading_ceiling": 8,
+      "average_section_prose_words": 348.5,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Review",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 236
+    },
+    {
+      "chapter": "23",
+      "path": "manuscript/chapters/23-database-support-and-application-state.md",
+      "words_before": 3826,
+      "words_after": 3826,
+      "budget": 3900,
+      "prose_words": 3460,
+      "code_words": 366,
+      "headings": 10,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 334.8,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 231
+    },
+    {
+      "chapter": "24",
+      "path": "manuscript/chapters/24-snodec-in-larger-systems.md",
+      "words_before": 5591,
+      "words_after": 5591,
+      "budget": 6200,
+      "prose_words": 5329,
+      "code_words": 262,
+      "headings": 17,
+      "heading_ceiling": 17,
+      "average_section_prose_words": 304.35,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 260
+    },
+    {
+      "chapter": "25",
+      "path": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
+      "words_before": 3903,
+      "words_after": 3903,
+      "budget": 4100,
+      "prose_words": 3402,
+      "code_words": 501,
+      "headings": 10,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 328.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 235
+    },
+    {
+      "chapter": "26",
+      "path": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
+      "words_before": 3596,
+      "words_after": 3596,
+      "budget": 3700,
+      "prose_words": 3383,
+      "code_words": 213,
+      "headings": 10,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 327.3,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 245
+    },
+    {
+      "chapter": "27",
+      "path": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
+      "words_before": 4169,
+      "words_after": 4169,
+      "budget": 4200,
+      "prose_words": 3913,
+      "code_words": 256,
+      "headings": 10,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 376.6,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 255
+    },
+    {
+      "chapter": "28",
+      "path": "manuscript/chapters/28-building-minigateway.md",
+      "words_before": 3818,
+      "words_after": 3818,
+      "budget": 3850,
+      "prose_words": 1847,
+      "code_words": 1971,
+      "headings": 6,
+      "heading_ceiling": 6,
+      "average_section_prose_words": 291.5,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 262
+    },
+    {
+      "chapter": "29",
+      "path": "manuscript/chapters/29-extending-minigateway-with-a-new-network-role.md",
+      "words_before": 2541,
+      "words_after": 2541,
+      "budget": 3150,
+      "prose_words": 1783,
+      "code_words": 758,
+      "headings": 6,
+      "heading_ceiling": 6,
+      "average_section_prose_words": 279.5,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 292
+    },
+    {
+      "chapter": "30",
+      "path": "manuscript/chapters/30-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "words_before": 1850,
+      "words_after": 1850,
+      "budget": 1900,
+      "prose_words": 1832,
+      "code_words": 18,
+      "headings": 6,
+      "heading_ceiling": 6,
+      "average_section_prose_words": 287.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 276
+    },
+    {
+      "chapter": "A",
+      "path": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+      "words_before": 6721,
+      "words_after": 3694,
+      "budget": 4700,
+      "prose_words": 3619,
+      "code_words": 75,
+      "headings": 9,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 389.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 323
+    }
+  ],
+  "parts": [
+    {
+      "part": "I",
+      "words": 7395,
+      "budget": 7850
+    },
+    {
+      "part": "II",
+      "words": 7058,
+      "budget": 9000
+    },
+    {
+      "part": "III",
+      "words": 9429,
+      "budget": 11050
+    },
+    {
+      "part": "IV",
+      "words": 7909,
+      "budget": 8800
+    },
+    {
+      "part": "V",
+      "words": 6971,
+      "budget": 8150
+    },
+    {
+      "part": "VI",
+      "words": 5569,
+      "budget": 6350
+    },
+    {
+      "part": "VII",
+      "words": 10805,
+      "budget": 11300
+    },
+    {
+      "part": "VIII",
+      "words": 6709,
+      "budget": 7400
+    },
+    {
+      "part": "IX",
+      "words": 9417,
+      "budget": 10100
+    },
+    {
+      "part": "X",
+      "words": 11668,
+      "budget": 12000
+    },
+    {
+      "part": "XI",
+      "words": 8209,
+      "budget": 8900
+    }
+  ],
+  "epilogue": {
+    "total_words": 1388,
+    "prose_words": 1388,
+    "code_words": 0,
+    "code_content_words": 0,
+    "fence_marker_words": 0,
+    "heading_counts_by_level": {
+      "1": 0,
+      "2": 1,
+      "3": 4,
+      "4": 0,
+      "5": 0,
+      "6": 0
+    },
+    "section_count": 4,
+    "section_prose_words": 1355,
+    "average_section_prose_words": 338.75,
+    "callout_counts_by_class": {
+      "snodec-remember": 0,
+      "snodec-rule": 0,
+      "snodec-note": 0,
+      "snodec-warning": 0,
+      "snodec-checklist": 0,
+      "snodec-exercise": 0,
+      "snodec-objectives": 0
+    },
+    "fenced_blocks_by_language": {},
+    "closing_perspective_sections": [],
+    "forbidden_phrase_hits": {
+      "in the manuscript": [],
+      "manuscript material": [],
+      "the chapter should": [],
+      "the book should": [],
+      "this chapter should": [],
+      "published edition": [],
+      "should be presented as": [],
+      "useful for Chapter 29": [],
+      "the benchmarking tone should be": []
+    },
+    "forbidden_phrase_hit_count": 0,
+    "term_occurrences": {
+      "role": [
+        {
+          "line": 38,
+          "match": "role"
+        },
+        {
+          "line": 58,
+          "match": "role"
+        },
+        {
+          "line": 79,
+          "match": "role"
+        },
+        {
+          "line": 97,
+          "match": "role"
+        },
+        {
+          "line": 97,
+          "match": "role"
+        }
+      ],
+      "boundary/boundaries": [
+        {
+          "line": 3,
+          "match": "boundaries"
+        },
+        {
+          "line": 15,
+          "match": "boundaries"
+        },
+        {
+          "line": 18,
+          "match": "boundary"
+        },
+        {
+          "line": 26,
+          "match": "boundary"
+        },
+        {
+          "line": 67,
+          "match": "boundary"
+        },
+        {
+          "line": 71,
+          "match": "boundaries"
+        },
+        {
+          "line": 71,
+          "match": "boundaries"
+        },
+        {
+          "line": 79,
+          "match": "boundary"
+        },
+        {
+          "line": 81,
+          "match": "boundaries"
+        },
+        {
+          "line": 81,
+          "match": "boundary"
+        },
+        {
+          "line": 85,
+          "match": "boundaries"
+        },
+        {
+          "line": 87,
+          "match": "boundary"
+        },
+        {
+          "line": 97,
+          "match": "boundary"
+        },
+        {
+          "line": 99,
+          "match": "boundaries"
+        },
+        {
+          "line": 101,
+          "match": "boundaries"
+        },
+        {
+          "line": 101,
+          "match": "boundary"
+        },
+        {
+          "line": 101,
+          "match": "boundary"
+        }
+      ],
+      "visible": [
+        {
+          "line": 11,
+          "match": "visible"
+        },
+        {
+          "line": 67,
+          "match": "visible"
+        },
+        {
+          "line": 79,
+          "match": "visible"
+        },
+        {
+          "line": 85,
+          "match": "Visible"
+        },
+        {
+          "line": 101,
+          "match": "visible"
+        },
+        {
+          "line": 101,
+          "match": "visible"
+        }
+      ],
+      "is not a": [
+        {
+          "line": 81,
+          "match": "is not a"
+        }
+      ],
+      "does not prove": [],
+      "does not by itself": []
+    },
+    "manual_chapter_references": []
+  },
+  "backmatter_words": 781,
+  "backmatter_budget": 1000,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1356,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 22.33
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 23.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "prior_lifetime_tests_preserved": true,
+  "canonical_entry_dependencies_unique": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 310,
+      "sha256": "6c8ae794cc7d7e253563ce000216bb3e51ffc8a5a5fa1bcba70acd5efd1699e5",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "8a1bbc10e060e8fb70c0ccdc679f28c4bcf60ac362ea5f0174a2ea37e0abb212",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "dbcb2f4ad8858fb1be9b2ef11bcaff5ad29aa1ddf21b53194976082d10a38397",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 365,
+  "preserved_complete_markers": 37,
+  "public_labs": 62,
+  "reserve_used_this_phase": 0,
+  "reserve_used_total": 400,
+  "reserve_remaining": 2350,
+  "global_metrics": {
+    "total_words": 100338,
+    "prose_words": 92187,
+    "code_words": 8151,
+    "code_content_words": 7451,
+    "fence_marker_words": 700,
+    "forbidden_phrase_hit_count": 0,
+    "heading_counts_by_level": {
+      "1": 12,
+      "2": 38,
+      "3": 264,
+      "4": 0,
+      "5": 0,
+      "6": 0
+    },
+    "callout_counts_by_class": {
+      "snodec-checklist": 2,
+      "snodec-exercise": 31,
+      "snodec-note": 5,
+      "snodec-objectives": 31,
+      "snodec-remember": 31,
+      "snodec-rule": 20,
+      "snodec-warning": 10
+    },
+    "fenced_blocks_by_language": {
+      "=latex": 10,
+      "cmake": 23,
+      "cpp": 199,
+      "ini": 9,
+      "markdown": 1,
+      "python": 2,
+      "sh": 59,
+      "sql": 1,
+      "text": 45
+    },
+    "chapter_headings_level_3_and_deeper": 252,
+    "chapter_section_prose_words": 84387,
+    "average_chapter_section_prose_words": 334.87,
+    "closing_perspective_sections": 0,
+    "term_occurrence_counts": {
+      "role": 448,
+      "boundary/boundaries": 345,
+      "visible": 99,
+      "is not a": 49,
+      "does not prove": 1,
+      "does not by itself": 5
+    },
+    "manual_chapter_reference_count": 191
+  },
+  "word_delta_from_phase_5l": -3123,
+  "numbered_chapters_and_appendix_pedagogy_pass": true,
+  "epilogue_author_exception_pass": true,
+  "all_global_numeric_targets_pass": true
+}
