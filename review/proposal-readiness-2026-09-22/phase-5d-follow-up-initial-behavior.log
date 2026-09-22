@@ -1,0 +1,15 @@
+COMMAND: bash ci/run-behavior-smoke-tests.sh
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/ci/run-behavior-smoke-tests.py", line 545, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/home/voc/projects/snodec/publications/book/ci/run-behavior-smoke-tests.py", line 520, in main
+    SSE_PORT = SSE_PORT or available_port()
+                           ~~~~~~~~~~~~~~^^
+  File "/home/voc/projects/snodec/publications/book/ci/run-behavior-smoke-tests.py", line 517, in available_port
+    with socket.socket() as probe:
+         ~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/socket.py", line 236, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted

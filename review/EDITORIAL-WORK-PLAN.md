@@ -1162,3 +1162,40 @@ Commit: `proposal-readiness: phase 5d — refine Part III and verify endpoint-fa
 **Stop after Phase 5d.** Next is Phase 5e (Part IV only), after freshly rerunning
 the current Phase 5d gate in REPORT.md. Author-approved preservation stop rules,
 reserve accounting, 5l/5m split and Phase 6 proposal refresh still apply.
+
+
+## Author-requested Phase 5d follow-up — 2026-09-22
+
+Edited and reread `manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:409`:
+the stream/datagram introduction, public headers/component and lab orientation now
+open the Unix-domain section. The credentials section ends with authorization
+policy. The introduction names only context/factory separation and event-loop
+execution from Chapters 3–5, and points ahead to Chapter 7 for connection lifetimes.
+All index occurrences and original registered target/migration identities remain;
+two explicit teaching-path references were added (345 current references).
+No other manuscript input changes in this follow-up.
+
+Fresh Phase 5d exit checks pass. `check-phase-5d-follow-up.py` retains all previous
+assertions, redirects evidence paths, and permits only the author's relocation in
+Chapter 6's excerpt order; an exact expected-text assertion checks that relocation
+and the one sentence correction against the Phase 5d commit. All excerpt bytes
+remain unchanged. Evidence: `metrics-after-phase-5d-follow-up.json`,
+`phase-5d-follow-up-exit-checks.json`, `phase-5d-follow-up-results.json`, and
+`phase-5d-follow-up-*.log`. Historical Phase 5d evidence remains unchanged.
+
+Chapter 6: 4,168 → 4,175 words; twelve sections; mean section prose 319.83.
+Part III: 9,422 → 9,429 / 11,050; book: 133,986 → 133,993. Reserve remains 2,750.
+Hygiene/alignment, metric/reference regressions, companion build, all 22 labs,
+teaching/behavior/lifetime checks, PDF/package targets and extracted-package hygiene
+pass. Full PDF remains 418 pages, samples 54 and proposal 6; warnings/bad boxes are
+zero. Physical pages 64–68 were rendered and inspected: the relocated introduction,
+headers, credentials, recap and exercises fit without clipping or overlap.
+Local images: `build/phase-5d-follow-up-visual/`. No application/test implementation
+changes. Initial logs retain a corrected registered-anchor name and sandbox-denied
+socket execution; the required local network tests subsequently passed with socket
+access. No physical Bluetooth execution is claimed.
+
+Separate commit: `proposal-readiness: phase 5d follow-up — relocate stranded Unix-socket introduction`.
+This freshly passed gate is the authorized Phase 5e entry baseline. The author also
+clarifies that budgets are ceilings: remove repetition, preserving explanations,
+examples and technical qualifications instead of cutting merely to undershoot.

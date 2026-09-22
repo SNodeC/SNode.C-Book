@@ -811,25 +811,23 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+      "text": "Chapters 3\u20135",
+      "targets": [
+        "your-first-working-program-the-echo-pair",
+        "the-mental-model-of-snodec",
+        "core-runtime-and-event-processing"
+      ],
+      "source_ids": [],
+      "line": 414
+    },
+    {
+      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
       "text": "Chapter 7",
       "targets": [
         "servers-clients-and-connections"
       ],
-      "source_ids": [
-        "R137"
-      ],
-      "line": 505
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapter 4",
-      "targets": [
-        "layers-in-practice-network-transport-connection-application"
-      ],
-      "source_ids": [
-        "R138"
-      ],
-      "line": 522
+      "source_ids": [],
+      "line": 414
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -844,7 +842,7 @@
       "source_ids": [
         "R139"
       ],
-      "line": 574
+      "line": 416
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -855,7 +853,29 @@
       "source_ids": [
         "R142"
       ],
-      "line": 590
+      "line": 432
+    },
+    {
+      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+      "text": "Chapter 7",
+      "targets": [
+        "servers-clients-and-connections"
+      ],
+      "source_ids": [
+        "R137"
+      ],
+      "line": 528
+    },
+    {
+      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+      "text": "Chapter 4",
+      "targets": [
+        "layers-in-practice-network-transport-connection-application"
+      ],
+      "source_ids": [
+        "R138"
+      ],
+      "line": 545
     },
     {
       "file": "manuscript/chapters/07-servers-clients-and-connections.md",

@@ -1,0 +1,2 @@
+COMMAND: bash ci/check-source-hygiene.sh
+ERROR: 'the-mental-model-and-layers-in-practice'

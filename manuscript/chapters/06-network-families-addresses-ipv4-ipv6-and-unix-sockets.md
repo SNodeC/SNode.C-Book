@@ -408,6 +408,29 @@ The local point is the family selection. Chapter 25 gives the consolidated inclu
 
 ### Unix domain sockets {#unix-domain-sockets}
 
+\index{datagram sockets}
+\index{stream sockets}
+
+This chapter focuses on stream Unix domain sockets. It builds on the context/factory separation and event-loop execution established in Chapters 3–5 while endpoint identity changes. Chapter 7 develops connection lifetimes in detail.
+
+The SNode.C build also contains a `net-un-dgram` component, but datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 6–8.
+
+\index{net::un::stream::legacy@\texttt{net::un::stream::legacy}}
+\index{public headers}
+
+Unix-domain legacy stream roles use the `un` family fragment on both public surfaces. Source files that directly name those roles include:
+
+```cpp
+#include <net/un/stream/legacy/SocketServer.h>
+#include <net/un/stream/legacy/SocketClient.h>
+```
+
+and link the matching component:
+
+`net-un-stream-legacy`.
+
+Chapter 25 collects the include/component matrix. The public family lab holds EchoPair’s context and factory fixed while comparing IPv4, IPv6 and a temporary Unix path. It checks returned bytes, actual local/remote identities, and cleanup before the Part checkpoint chooses a carrier for a local measurement producer.
+
 \index{Unix domain sockets}
 \index{local IPC}
 \index{path identity}
@@ -565,29 +588,6 @@ Here `fd` is an already available connected Unix-domain socket descriptor. The f
 Check the status before using the fields. `Unsupported` means that the platform query is unavailable. `Error` means that the query failed and the result carries an error number. Neither case should be read as a successful credential check with default-valued identifiers.
 
 A same-user rule, a service-account rule, and a command-specific authorization rule are different application policies. The framework does not choose one merely because the peer is local. Tests for the credential query and socket-path handling protect transport facts; the application's trust policy needs its own tests.
-
-\index{datagram sockets}
-\index{stream sockets}
-
-This chapter focuses on stream Unix domain sockets. That keeps the connection and protocol model established in the preceding chapters available while endpoint identity changes.
-
-The SNode.C build also contains a `net-un-dgram` component, but datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 6–8.
-
-\index{net::un::stream::legacy@\texttt{net::un::stream::legacy}}
-\index{public headers}
-
-Unix-domain legacy stream roles use the `un` family fragment on both public surfaces. Source files that directly name those roles include:
-
-```cpp
-#include <net/un/stream/legacy/SocketServer.h>
-#include <net/un/stream/legacy/SocketClient.h>
-```
-
-and link the matching component:
-
-`net-un-stream-legacy`.
-
-Chapter 25 collects the include/component matrix. The public family lab holds EchoPair’s context and factory fixed while comparing IPv4, IPv6 and a temporary Unix path. It checks returned bytes, actual local/remote identities, and cleanup before the Part checkpoint chooses a carrier for a local measurement producer.
 
 ::: {.snodec-remember title="What to remember"}
 - Socket addresses belong to the network layer: they describe endpoint identity for a selected family.

@@ -1,0 +1,4 @@
+COMMAND: python3 ci/run-teaching-smoke-tests.py
+PASS: Chapter 13 public logging fields, event, override, and typed error
+PASS: Chapter 3 server reflects a controlled byte sequence
+PASS: Chapter 3 client initiates and reflects with a controlled peer
