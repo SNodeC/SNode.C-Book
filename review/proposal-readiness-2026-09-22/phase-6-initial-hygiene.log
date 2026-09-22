@@ -1,0 +1,7 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 298 current references, 374 old-reference dispositions.
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.149s
+
+OK
+ERROR: Old reader-facing baseline remains in review/proposal/book-proposal-package.md

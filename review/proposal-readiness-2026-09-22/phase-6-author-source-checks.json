@@ -1,0 +1,26 @@
+[
+  {
+    "id": "faculty",
+    "url": "https://fh-ooe.at/en/degree-programs/interactive-media-master/team",
+    "collected_at_utc": "2026-09-22T23:00:28.623704+00:00",
+    "method": "Direct HTTPS GET with Python urllib; parsed and read text using BeautifulSoup. TeleZone was accessible here after the browser retrieval failed.",
+    "html_sha256": "34a114e1234fe6c89085814646a63a7e2bd605d7503ff54d2909110d4127aa03",
+    "supported_claim_and_limits": "The faculty page lists Mag. Volker Christian as Professor of MultiMedia-Programing; its affiliation is the School of Informatics, Communications and Media in Hagenberg. This corroborates the supplied professorship, not every course or historical appointment."
+  },
+  {
+    "id": "futurelab",
+    "url": "https://webarchive.ars.electronica.art/en/archives/festival_archive/festival_catalogs/festival_artikel.asp%3FiProjectID=12338.html",
+    "collected_at_utc": "2026-09-22T23:00:28.855907+00:00",
+    "method": "Direct HTTPS GET with Python urllib; parsed and read text using BeautifulSoup. TeleZone was accessible here after the browser retrieval failed.",
+    "html_sha256": "469283f08ee624fbbd35273e4ab8cce8f48c42bed036f2340b4ed2058de3cd22",
+    "supported_claim_and_limits": "The 2001 biography corroborates theoretical-physics study at Graz, the 1997–1999 assistantship and Futurelab deputy role from 1999. Its English rank and department wording are not used to upgrade the author’s supplied university-assistant description. Secondary technical education is deliberately omitted."
+  },
+  {
+    "id": "telezone",
+    "url": "https://webarchive.ars.electronica.art/en/archives/festival_archive/festival_catalogs/festival_artikel.asp%3FiProjectID=8362.html",
+    "collected_at_utc": "2026-09-22T23:00:29.017342+00:00",
+    "method": "Direct HTTPS GET with Python urllib; parsed and read text using BeautifulSoup. TeleZone was accessible here after the browser retrieval failed.",
+    "html_sha256": "1d5f121769fa82049bf7d10f9161ae9016ab0a2839f71c345131ea76e7dfd46e",
+    "supported_claim_and_limits": "The 1999 TeleZone catalogue credits Volker Christian among the programmers. Its system description concerns Internet-controlled physical construction. This supports one concrete earlier distributed-system credit, not a complete employment chronology."
+  }
+]

@@ -1,0 +1,21 @@
+COMMAND: bash ci/run-behavior-smoke-tests.sh
+TMPDIR=/tmp
+TMP=/tmp
+TEMP=/tmp
+SNODEC_BOOK_SMOKE_UNIX_SOCKET=/tmp/phase-6-entry-smoke.sock
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket
+Using example build directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5m-examples
+Using SNode.C install prefix: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc
+SSE-Server smoke endpoint: http://127.0.0.1:58415/events
+MiniGateway Extended smoke endpoint: http://127.0.0.1:39889
+MiniGateway Extended Unix socket: /tmp/phase-6-entry-smoke.sock
+Starting sse-server: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5m-examples/companion/examples/SSE-Server/sse-server legacy local --port 58415
+SSE-Server runtime smoke test passed.
+Starting minigateway-extended: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5m-examples/companion/examples/MiniGateway-Extended/minigateway-extended web local --host 127.0.0.1 --port 39889 measurement-input local --sun-path /tmp/phase-6-entry-smoke.sock mqtt-uplink remote --host 127.0.0.1 --port 1883
+MiniGateway Extended Unix-input runtime smoke test passed.
+Starting line-length: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5m-examples/companion/examples/LineProtocol-Server/line-protocol-server lineprotocolserver local --host 127.0.0.1 --port 47177
+Line length: exact boundary accepted; overlong whole/split records rejected.
+Starting minigateway-mqtt-wire: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5m-examples/companion/examples/MiniGateway/minigateway web --disabled mqtt-uplink remote --host 127.0.0.1 --port 41641
+Starting minigateway-extended-mqtt-wire: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5m-examples/companion/examples/MiniGateway-Extended/minigateway-extended web --disabled mqtt-uplink remote --host 127.0.0.1 --port 53069 measurement-input --disabled
+Both gateways send CONNECT with MQTT protocol level 4; no private bit.
+Behavioral smoke tests passed.

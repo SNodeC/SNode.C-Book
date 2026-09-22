@@ -1,0 +1,143 @@
+{
+  "repositories": [
+    {
+      "repository": "SNodeC/snode.c",
+      "url": "https://github.com/SNodeC/snode.c",
+      "default_branch": "master",
+      "counted_head": "8b8da56e0349191d4658ca8f820a490539eccd4d",
+      "reachable_commits": 6318,
+      "stars": 11,
+      "forks": 27,
+      "watching_subscribers": 0,
+      "oldest_api_commit": {
+        "sha": "40ab1eeee9aa5d51f0131ef2b8f299049750fbc0",
+        "author_date": "2020-04-13T08:19:27Z",
+        "committer_date": "2020-04-13T08:19:27Z",
+        "parent_count": 0,
+        "url": "https://github.com/SNodeC/snode.c/commit/40ab1eeee9aa5d51f0131ef2b8f299049750fbc0"
+      },
+      "releases": [
+        {
+          "tag_name": "v1.0.2",
+          "published_at": "2026-06-28T11:08:26Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/snode.c/releases/tag/v1.0.2"
+        },
+        {
+          "tag_name": "v1.0.1",
+          "published_at": "2025-03-07T15:28:50Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/snode.c/releases/tag/v1.0.1"
+        },
+        {
+          "tag_name": "v1.0",
+          "published_at": "2025-03-03T21:51:43Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/snode.c/releases/tag/v1.0"
+        }
+      ],
+      "tags": [
+        "v1.0.2",
+        "v1.0.1",
+        "v1.0",
+        "OpenWRT",
+        "Book"
+      ],
+      "contributors": [
+        {
+          "login": "VolkerChristian",
+          "type": "User",
+          "contributions": 6221,
+          "html_url": "https://github.com/VolkerChristian"
+        },
+        {
+          "login": "dependabot[bot]",
+          "type": "Bot",
+          "contributions": 47,
+          "html_url": "https://github.com/apps/dependabot"
+        },
+        {
+          "login": "Rathalin",
+          "type": "User",
+          "contributions": 38,
+          "html_url": "https://github.com/Rathalin"
+        },
+        {
+          "login": "MarleneMayr",
+          "type": "User",
+          "contributions": 10,
+          "html_url": "https://github.com/MarleneMayr"
+        },
+        {
+          "login": "moseranna",
+          "type": "User",
+          "contributions": 1,
+          "html_url": "https://github.com/moseranna"
+        }
+      ]
+    },
+    {
+      "repository": "SNodeC/mqttsuite",
+      "url": "https://github.com/SNodeC/mqttsuite",
+      "default_branch": "master",
+      "counted_head": "5fef5c3036928dfa40ad4f124bb237cc9c3202bb",
+      "reachable_commits": 1156,
+      "stars": 2,
+      "forks": 6,
+      "watching_subscribers": 2,
+      "oldest_api_commit": {
+        "sha": "6d32d0a47c8db6beaaf1f901c9babfed6fc1dc41",
+        "author_date": "2022-09-25T14:09:19Z",
+        "committer_date": "2022-09-25T14:09:19Z",
+        "parent_count": 0,
+        "url": "https://github.com/SNodeC/mqttsuite/commit/6d32d0a47c8db6beaaf1f901c9babfed6fc1dc41"
+      },
+      "releases": [
+        {
+          "tag_name": "v1.0.1",
+          "published_at": "2025-03-07T15:29:29Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/mqttsuite/releases/tag/v1.0.1"
+        },
+        {
+          "tag_name": "v1.0",
+          "published_at": "2025-03-04T00:11:08Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/mqttsuite/releases/tag/v1.0"
+        }
+      ],
+      "tags": [
+        "v1.0.1",
+        "v1.0",
+        "OpenWRT"
+      ],
+      "contributors": [
+        {
+          "login": "VolkerChristian",
+          "type": "User",
+          "contributions": 1084,
+          "html_url": "https://github.com/VolkerChristian"
+        },
+        {
+          "login": "MattMeys",
+          "type": "User",
+          "contributions": 62,
+          "html_url": "https://github.com/MattMeys"
+        },
+        {
+          "login": "TobiasPfeil02",
+          "type": "User",
+          "contributions": 10,
+          "html_url": "https://github.com/TobiasPfeil02"
+        }
+      ]
+    }
+  ],
+  "first_collection": "2026-09-23T00:58:33.125033+02:00",
+  "last_collection": "2026-09-23T00:59:22.603128+02:00"
+}

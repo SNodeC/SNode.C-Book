@@ -1,0 +1,45 @@
+{
+  "scope": "Phase 6 only; manuscript, companion, production and CI unchanged",
+  "previous_phase_reverified": true,
+  "entry_check_groups_passed": 10,
+  "local_lab_cases_passed": 62,
+  "required_proposal_sections_passed": true,
+  "chapter_titles_checked": 31,
+  "sample_chapters": [
+    1,
+    3,
+    18,
+    28,
+    30
+  ],
+  "part_page_sum": 310,
+  "unchanged_verified_comparable_titles": 5,
+  "manuscript_metrics_unchanged": true,
+  "repository_collection_date_vienna": "2026-09-23",
+  "repository_figures_match": true,
+  "author_evidence_limits_preserved": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 310,
+      "sha256": "8b1d25dac2859612250139a2590062036d4fc1d89f7b814a659700f592f8214f",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 8,
+      "sha256": "9a9e853fbd9efeda51da2063c7759d7bb8da810b6233671947acb68e3357493b",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 56,
+      "sha256": "798004077c948e6709f5fe8e3c12d2c7c3a39dbe8eda6a8a71a8a5f3a3a6d053",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 365,
+  "production_line_delta": 0,
+  "test_implementation_line_delta": 0
+}
+PASS: Phase 6 dossier, dated evidence, unchanged manuscript metrics, PDF builds and package contents.

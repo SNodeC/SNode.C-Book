@@ -1,0 +1,228 @@
+{
+  "method": "Live GitHub REST API via gh api; no local checkout used. Commit count is the last page number with per_page=1 at a captured default-branch head. The oldest API entry is reported with its parent count; this is not a search over all branches. Contributor, release and tag endpoints are paginated to exhaustion. Contributors omit anonymous identities (GitHub default); account type User is not independent proof of a unique human. Subscriber count is subscribers_count, not watchers_count (which aliases stars). Counts are endpoint snapshots, not simultaneous or measures of users, deployments, downloads or book buyers.",
+  "repositories": [
+    {
+      "repository": "SNodeC/snode.c",
+      "url": "https://github.com/SNodeC/snode.c",
+      "default_branch": "master",
+      "counted_head": "8b8da56e0349191d4658ca8f820a490539eccd4d",
+      "reachable_commits": 6318,
+      "stars": 11,
+      "forks": 27,
+      "watching_subscribers": 0,
+      "oldest_api_commit": {
+        "sha": "40ab1eeee9aa5d51f0131ef2b8f299049750fbc0",
+        "author_date": "2020-04-13T08:19:27Z",
+        "committer_date": "2020-04-13T08:19:27Z",
+        "parent_count": 0,
+        "url": "https://github.com/SNodeC/snode.c/commit/40ab1eeee9aa5d51f0131ef2b8f299049750fbc0"
+      },
+      "releases": [
+        {
+          "tag_name": "v1.0.2",
+          "published_at": "2026-06-28T11:08:26Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/snode.c/releases/tag/v1.0.2"
+        },
+        {
+          "tag_name": "v1.0.1",
+          "published_at": "2025-03-07T15:28:50Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/snode.c/releases/tag/v1.0.1"
+        },
+        {
+          "tag_name": "v1.0",
+          "published_at": "2025-03-03T21:51:43Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/snode.c/releases/tag/v1.0"
+        }
+      ],
+      "tags": [
+        "v1.0.2",
+        "v1.0.1",
+        "v1.0",
+        "OpenWRT",
+        "Book"
+      ],
+      "contributors": [
+        {
+          "login": "VolkerChristian",
+          "type": "User",
+          "contributions": 6221,
+          "html_url": "https://github.com/VolkerChristian"
+        },
+        {
+          "login": "dependabot[bot]",
+          "type": "Bot",
+          "contributions": 47,
+          "html_url": "https://github.com/apps/dependabot"
+        },
+        {
+          "login": "Rathalin",
+          "type": "User",
+          "contributions": 38,
+          "html_url": "https://github.com/Rathalin"
+        },
+        {
+          "login": "MarleneMayr",
+          "type": "User",
+          "contributions": 10,
+          "html_url": "https://github.com/MarleneMayr"
+        },
+        {
+          "login": "moseranna",
+          "type": "User",
+          "contributions": 1,
+          "html_url": "https://github.com/moseranna"
+        }
+      ]
+    },
+    {
+      "repository": "SNodeC/mqttsuite",
+      "url": "https://github.com/SNodeC/mqttsuite",
+      "default_branch": "master",
+      "counted_head": "5fef5c3036928dfa40ad4f124bb237cc9c3202bb",
+      "reachable_commits": 1156,
+      "stars": 2,
+      "forks": 6,
+      "watching_subscribers": 2,
+      "oldest_api_commit": {
+        "sha": "6d32d0a47c8db6beaaf1f901c9babfed6fc1dc41",
+        "author_date": "2022-09-25T14:09:19Z",
+        "committer_date": "2022-09-25T14:09:19Z",
+        "parent_count": 0,
+        "url": "https://github.com/SNodeC/mqttsuite/commit/6d32d0a47c8db6beaaf1f901c9babfed6fc1dc41"
+      },
+      "releases": [
+        {
+          "tag_name": "v1.0.1",
+          "published_at": "2025-03-07T15:29:29Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/mqttsuite/releases/tag/v1.0.1"
+        },
+        {
+          "tag_name": "v1.0",
+          "published_at": "2025-03-04T00:11:08Z",
+          "draft": false,
+          "prerelease": false,
+          "html_url": "https://github.com/SNodeC/mqttsuite/releases/tag/v1.0"
+        }
+      ],
+      "tags": [
+        "v1.0.1",
+        "v1.0",
+        "OpenWRT"
+      ],
+      "contributors": [
+        {
+          "login": "VolkerChristian",
+          "type": "User",
+          "contributions": 1084,
+          "html_url": "https://github.com/VolkerChristian"
+        },
+        {
+          "login": "MattMeys",
+          "type": "User",
+          "contributions": 62,
+          "html_url": "https://github.com/MattMeys"
+        },
+        {
+          "login": "TobiasPfeil02",
+          "type": "User",
+          "contributions": 10,
+          "html_url": "https://github.com/TobiasPfeil02"
+        }
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/snode.c",
+      "collected_at_utc": "2026-09-22T22:58:33.125033+00:00",
+      "collected_at_vienna": "2026-09-23T00:58:33.125033+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:58:36 GMT\nEtag: \"f2952240c9327644debec88f885cecaee2a7ad4c58def33e3ccc6f81ccf0cbc7\"\nLast-Modified: Tue, 22 Sep 2026 19:19:04 GMT\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: E5AA:9EB7B:FF3C0E:FB2F8E:6AB3081C\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 49\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 11\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/snode.c/commits/master",
+      "collected_at_utc": "2026-09-22T22:58:36.617389+00:00",
+      "collected_at_vienna": "2026-09-23T00:58:36.617389+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:58:39 GMT\nEtag: W/\"299cd81d5e8362bf76109f36dbe3120192be79daee26dd415584c8e52653c87f\"\nLast-Modified: Tue, 22 Sep 2026 19:17:58 GMT\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: 93E4:98E95:106E57D:102FD76:6AB3081F\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 48\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 12\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/snode.c/commits?sha=8b8da56e0349191d4658ca8f820a490539eccd4d&per_page=1",
+      "collected_at_utc": "2026-09-22T22:58:40.016777+00:00",
+      "collected_at_vienna": "2026-09-23T00:58:40.016777+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:58:48 GMT\nEtag: W/\"689340484ac59be171fa7b6ae629dd7792c1fdf4f759b4dab489db22f7b5fe6d\"\nLast-Modified: Tue, 22 Sep 2026 19:17:58 GMT\nLink: <https://api.github.com/repositories/255269945/commits?sha=8b8da56e0349191d4658ca8f820a490539eccd4d&per_page=1&page=2>; rel=\"next\", <https://api.github.com/repositories/255269945/commits?sha=8b8da56e0349191d4658ca8f820a490539eccd4d&per_page=1&page=6318>; rel=\"last\"\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: 93F6:128888:1189F15:1149C2F:6AB30828\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 47\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 13\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repositories/255269945/commits?sha=8b8da56e0349191d4658ca8f820a490539eccd4d&per_page=1&page=6318",
+      "collected_at_utc": "2026-09-22T22:58:48.598586+00:00",
+      "collected_at_vienna": "2026-09-23T00:58:48.598586+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:58:51 GMT\nEtag: W/\"a6360c9b08316f302ae1378d10189421a06c68f6a2602a959780820a7d080dd9\"\nLast-Modified: Mon, 13 Apr 2020 08:19:27 GMT\nLink: <https://api.github.com/repositories/255269945/commits?sha=8b8da56e0349191d4658ca8f820a490539eccd4d&per_page=1&page=6319>; rel=\"next\", <https://api.github.com/repositories/255269945/commits?sha=8b8da56e0349191d4658ca8f820a490539eccd4d&per_page=1&page=6318>; rel=\"last\", <https://api.github.com/repositories/255269945/commits?sha=8b8da56e0349191d4658ca8f820a490539eccd4d&per_page=1&page=1>; rel=\"first\", <https://api.github.com/repositories/255269945/commits?sha=8b8da56e0349191d4658ca8f820a490539eccd4d&per_page=1&page=6317>; rel=\"prev\"\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: D84A:203AB6:FD6C08:F960DE:6AB3082B\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 46\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 14\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/snode.c/releases?per_page=100&page=1",
+      "collected_at_utc": "2026-09-22T22:58:51.984273+00:00",
+      "collected_at_vienna": "2026-09-23T00:58:51.984273+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:58:55 GMT\nEtag: W/\"f50d061749b199f5e29990a5cbf60443f839037a06c74bb8915844297465c069\"\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: D852:293E10:1046E70:1008886:6AB3082F\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 45\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 15\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/snode.c/tags?per_page=100&page=1",
+      "collected_at_utc": "2026-09-22T22:58:55.336886+00:00",
+      "collected_at_vienna": "2026-09-23T00:58:55.336886+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:58:58 GMT\nEtag: W/\"79113a0c926c726f267775cdecff6f4132b03f1390d2b5ff56f8a8d819a72a91\"\nLast-Modified: Tue, 22 Sep 2026 19:19:04 GMT\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: C424:203DE:10BBE83:107DE70:6AB30832\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 44\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 16\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/snode.c/contributors?per_page=100&page=1",
+      "collected_at_utc": "2026-09-22T22:58:58.685734+00:00",
+      "collected_at_vienna": "2026-09-23T00:58:58.685734+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:59:02 GMT\nEtag: W/\"f1511be2a14211243743a8c269c64b3f4eac81e29db373be5baa60f6346cf4aa\"\nLast-Modified: Tue, 22 Sep 2026 19:19:04 GMT\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: C426:393AC4:1114354:10D35E4:6AB30835\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 43\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 17\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/mqttsuite",
+      "collected_at_utc": "2026-09-22T22:59:02.162155+00:00",
+      "collected_at_vienna": "2026-09-23T00:59:02.162155+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:59:05 GMT\nEtag: W/\"c2d3e334af1442c0a182031c15e0ca20798b7c81a380b218167fc892d7c077c2\"\nLast-Modified: Tue, 22 Sep 2026 19:19:18 GMT\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: C430:293E10:104BBD6:100D55D:6AB30839\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 42\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 18\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/mqttsuite/commits/master",
+      "collected_at_utc": "2026-09-22T22:59:05.534037+00:00",
+      "collected_at_vienna": "2026-09-23T00:59:05.534037+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:59:08 GMT\nEtag: W/\"86c61dc0bc490fa76a498d0f907dc671b675740ad7353e09a7f6fabdf01a2683\"\nLast-Modified: Tue, 22 Sep 2026 19:18:10 GMT\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: A8C2:392A68:1178043:1134F7A:6AB3083C\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 41\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 19\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/mqttsuite/commits?sha=5fef5c3036928dfa40ad4f124bb237cc9c3202bb&per_page=1",
+      "collected_at_utc": "2026-09-22T22:59:09.077555+00:00",
+      "collected_at_vienna": "2026-09-23T00:59:09.077555+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:59:12 GMT\nEtag: W/\"1d270ef3aeca08046610763a7407ac26508171b56916d27ecc44614732341e10\"\nLast-Modified: Tue, 22 Sep 2026 19:18:10 GMT\nLink: <https://api.github.com/repositories/541193043/commits?sha=5fef5c3036928dfa40ad4f124bb237cc9c3202bb&per_page=1&page=2>; rel=\"next\", <https://api.github.com/repositories/541193043/commits?sha=5fef5c3036928dfa40ad4f124bb237cc9c3202bb&per_page=1&page=1156>; rel=\"last\"\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: A8DE:3FA1D9:1048CAA:1009E37:6AB30840\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 40\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 20\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repositories/541193043/commits?sha=5fef5c3036928dfa40ad4f124bb237cc9c3202bb&per_page=1&page=1156",
+      "collected_at_utc": "2026-09-22T22:59:12.506247+00:00",
+      "collected_at_vienna": "2026-09-23T00:59:12.506247+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:59:15 GMT\nEtag: W/\"8457397bad82aaeb8085e43a789623c29d389e35d2561d6c5e9e0b0400e4170e\"\nLast-Modified: Sun, 25 Sep 2022 14:09:19 GMT\nLink: <https://api.github.com/repositories/541193043/commits?sha=5fef5c3036928dfa40ad4f124bb237cc9c3202bb&per_page=1&page=1157>; rel=\"next\", <https://api.github.com/repositories/541193043/commits?sha=5fef5c3036928dfa40ad4f124bb237cc9c3202bb&per_page=1&page=1156>; rel=\"last\", <https://api.github.com/repositories/541193043/commits?sha=5fef5c3036928dfa40ad4f124bb237cc9c3202bb&per_page=1&page=1>; rel=\"first\", <https://api.github.com/repositories/541193043/commits?sha=5fef5c3036928dfa40ad4f124bb237cc9c3202bb&per_page=1&page=1155>; rel=\"prev\"\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: A8E0:144E54:1082B28:1045565:6AB30843\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 39\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 21\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/mqttsuite/releases?per_page=100&page=1",
+      "collected_at_utc": "2026-09-22T22:59:15.871235+00:00",
+      "collected_at_vienna": "2026-09-23T00:59:15.871235+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:59:19 GMT\nEtag: W/\"c5d372af23b91c959ab5a3f271e7f8c28b4cf8a2c02b1f6f44ec999456cdd9a3\"\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: AABE:3FA1D9:104C296:100D393:6AB30846\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 38\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 22\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/mqttsuite/tags?per_page=100&page=1",
+      "collected_at_utc": "2026-09-22T22:59:19.226103+00:00",
+      "collected_at_vienna": "2026-09-23T00:59:19.226103+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:59:22 GMT\nEtag: W/\"e84e547264d4768f6a7f93a81e5ab735bd1ca7cf197e3d5d7521fd74f53fecdc\"\nLast-Modified: Tue, 22 Sep 2026 19:19:18 GMT\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: AACC:203DE:10C841C:108A256:6AB3084A\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 37\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 23\nX-Xss-Protection: 0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/SNodeC/mqttsuite/contributors?per_page=100&page=1",
+      "collected_at_utc": "2026-09-22T22:59:22.603128+00:00",
+      "collected_at_vienna": "2026-09-23T00:59:22.603128+02:00",
+      "response_headers": "HTTP/2.0 200 OK\nAccept-Ranges: bytes\nAccess-Control-Allow-Origin: *\nAccess-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning\nCache-Control: public, max-age=60, s-maxage=60\nContent-Security-Policy: default-src 'none'\nContent-Type: application/json; charset=utf-8\nDate: Tue, 22 Sep 2026 22:59:25 GMT\nEtag: W/\"b4ef9966cc9b37045488e192bea31515a7f642137f118b22c7b06ecbb25cf632\"\nLast-Modified: Tue, 22 Sep 2026 19:19:18 GMT\nReferrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin\nServer: github.com\nStrict-Transport-Security: max-age=31536000; includeSubdomains; preload\nVary: Accept,Accept-Encoding, Accept, X-Requested-With\nX-Content-Type-Options: nosniff\nX-Frame-Options: deny\nX-Github-Api-Version-Selected: 2022-11-28\nX-Github-Edge-Region: fra\nX-Github-Media-Type: github.v3; format=json\nX-Github-Request-Id: AAD8:203AB6:FE7255:FA6469:6AB3084D\nX-Ratelimit-Limit: 60\nX-Ratelimit-Remaining: 36\nX-Ratelimit-Reset: 1790119885\nX-Ratelimit-Resource: core\nX-Ratelimit-Used: 24\nX-Xss-Protection: 0"
+    }
+  ]
+}

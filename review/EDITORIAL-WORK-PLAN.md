@@ -1814,3 +1814,68 @@ Commit: `proposal-readiness: phase 5m — refine closing material and complete t
 not started: update proposal TOC/page extents, revision status, sample guide and
 conservative evidence after a fresh Phase 5m entry check. The whole proposal pass
 is not yet complete, and no subsequent phase is authorized by this completion.
+
+
+## Phase 6 — final proposal refresh completed, 2026-09-23
+
+Accepted the author's current Phase 6 instructions: collect SNodeC/snode.c and
+SNodeC/mqttsuite figures directly on the session day, record the method/date,
+interpret them conservatively, and use the supplied teaching portfolio as evidence
+of responsibility for the book's prerequisite chain. Use only the supplied author
+facts; unresolved items remain **[AUTHOR TO SUPPLY]**. The supplied course name
+**Networked and Distributed Systems** governs the revised proposal wording.
+No manuscript or companion implementation was authorized or needed in this phase.
+
+The fresh Phase 5m entry run passes all ten groups, all **62 labs**, and the
+unchanged Phase 5m exit assertions, with evidence redirected to `phase-6-entry-*`.
+Historical phase evidence is preserved. Edited and reread the three proposal
+sources: the pitch and teaching case, current 30-chapter/11-Part/Appendix A TOC,
+measured Part pages, completed revision targets, sample guide, author evidence
+and its limits. The five verified comparable-title entries remain unchanged.
+
+The faculty page corroborates the professorship; Ars Electronica's catalogues
+corroborate selected Graz/Futurelab background and the TeleZone programmer credit.
+Teaching responsibilities and the Hartbeespoort application are attributed to the
+author. Research-institution/collaborator names and public citation of the lecture
+deck are withheld pending permission. No secondary technical education was
+misrepresented as a university degree. Missing audience/project counts, public
+links, detailed appointment dates and founding semester, and revision weeks/hours
+remain marked for the author.
+
+Live GitHub REST collection took place **23 September 2026, 00:58–00:59
+Europe/Vienna**, or 22 September 22:58–22:59 UTC. SNode.C / MQTTSuite: **6,318 /
+1,156** reachable master commits; **11 / 2** stars; **27 / 6** forks; **0 / 2**
+watching subscribers; **3 / 2** published releases. Returned contributor accounts
+are **4 User + 1 Bot / 3 User**, excluding anonymous identities by default; this
+is not asserted to be a unique-human or adoption count. Endpoints, timestamps,
+response headers, head-specific counting and pagination are recorded in
+`phase-6-repository-figures.json` and its collection script/log.
+
+Final builds and source/extracted-package hygiene pass. The dossier checker
+validates the current TOC, sample set, figure consistency, unchanged manuscript,
+zero warnings/bad boxes, and all **365** archive files against current artifacts.
+Proposal/evidence PDF **6 → 8 pages**; combined sample package **54 → 56**;
+full manuscript remains **310**. All eight proposal pages plus seven sample-guide,
+opening and closing pages were visually inspected. Full manuscript and sample-body
+extracted text remain unchanged apart from page footers/whitespace.
+
+`metrics-after-phase-6.json` exactly reproduces Phase 5m: **100,338 words**,
+**252 deep chapter headings**, **334.87** average section prose words, **45 text
+fences**, **20 rules**, zero forbidden phrases and closing-perspective sections.
+All manuscript targets remain met. Production code and test implementation each
+have **+0/−0** changes; the new collection/checker scripts are review support only.
+No fresh hosted run, hardware deployment, independent field validation or sales
+estimate is claimed.
+
+Evidence under `review/proposal-readiness-2026-09-22/`: REPORT.md Phase 6 account,
+metrics-after-phase-6.json, phase-6-entry-*, phase-6-author-source-checks.json,
+phase-6-repository-figures.json, phase-6-manuscript-pagination.json,
+phase-6-package-release-links-build.log, phase-6-final-*.log,
+phase-6-exit-checks.json, phase-6-pdf-text-preservation.json and
+phase-6-visual-review.md. The chapter ledger and historical records are unchanged.
+
+Commit: `proposal-readiness: phase 6 — refresh final proposal and dated author evidence`.
+**Phase 6 and the recorded editorial/package work are complete. Stop here.**
+The explicit author-supply items still limit the submission's market evidence and
+prevent a delivery commitment; completing the phase does not assert publisher
+acceptance or fill those items by inference.

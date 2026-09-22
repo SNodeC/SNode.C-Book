@@ -1,0 +1,91 @@
+{
+  "method": "LaTeX TOC printed start pages and pdfinfo physical count; pdftotext confirms Part I at physical page 15. Each extent ends immediately before the next division; final printed page is 296. Includes Part opening pages. A4 working layout, not publisher trim.",
+  "physical_pages": 310,
+  "preliminary_pages": 14,
+  "divisions": [
+    {
+      "toc_line": "\\contentsline {part}{I\\hspace {1em}Getting Oriented}{1}{part.1}%",
+      "printed_start": 1,
+      "destination": "part.1",
+      "pages": 22
+    },
+    {
+      "toc_line": "\\contentsline {part}{II\\hspace {1em}The SNode.C Architecture}{23}{part.2}%",
+      "printed_start": 23,
+      "destination": "part.2",
+      "pages": 18
+    },
+    {
+      "toc_line": "\\contentsline {part}{III\\hspace {1em}Networking Foundations in SNode.C}{41}{part.3}%",
+      "printed_start": 41,
+      "destination": "part.3",
+      "pages": 27
+    },
+    {
+      "toc_line": "\\contentsline {part}{IV\\hspace {1em}From Raw Connections to Application Protocols}{68}{part.4}%",
+      "printed_start": 68,
+      "destination": "part.4",
+      "pages": 23
+    },
+    {
+      "toc_line": "\\contentsline {part}{V\\hspace {1em}Configuration and Operational Behavior}{91}{part.5}%",
+      "printed_start": 91,
+      "destination": "part.5",
+      "pages": 21
+    },
+    {
+      "toc_line": "\\contentsline {part}{VI\\hspace {1em}Secure and Robust Communication}{112}{part.6}%",
+      "printed_start": 112,
+      "destination": "part.6",
+      "pages": 16
+    },
+    {
+      "toc_line": "\\contentsline {part}{VII\\hspace {1em}Web Protocols and Web Applications}{128}{part.7}%",
+      "printed_start": 128,
+      "destination": "part.7",
+      "pages": 32
+    },
+    {
+      "toc_line": "\\contentsline {part}{VIII\\hspace {1em}IoT and Message-Oriented Systems}{160}{part.8}%",
+      "printed_start": 160,
+      "destination": "part.8",
+      "pages": 19
+    },
+    {
+      "toc_line": "\\contentsline {part}{IX\\hspace {1em}Persistence and Full Systems}{179}{part.9}%",
+      "printed_start": 179,
+      "destination": "part.9",
+      "pages": 25
+    },
+    {
+      "toc_line": "\\contentsline {part}{X\\hspace {1em}Building, Porting, and Maintaining}{204}{part.10}%",
+      "printed_start": 204,
+      "destination": "part.10",
+      "pages": 32
+    },
+    {
+      "toc_line": "\\contentsline {part}{XI\\hspace {1em}Building and Evaluating MiniGateway}{236}{part.11}%",
+      "printed_start": 236,
+      "destination": "part.11",
+      "pages": 37
+    },
+    {
+      "toc_line": "\\contentsline {part}{Epilogue \u2014 What to Take Away from SNode.C}{273}{part*.27}%",
+      "printed_start": 273,
+      "destination": "part*.27",
+      "pages": 4
+    },
+    {
+      "toc_line": "\\contentsline {chapter}{\\numberline {A}Reading and Extending the Framework}{277}{appendix.A}%",
+      "printed_start": 277,
+      "destination": "appendix.A",
+      "pages": 9
+    },
+    {
+      "toc_line": "\\contentsline {part}{Reference Material}{286}{part*.33}%",
+      "printed_start": 286,
+      "destination": "part*.33",
+      "pages": 11
+    }
+  ]
+}

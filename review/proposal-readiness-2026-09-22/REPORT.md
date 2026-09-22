@@ -2,9 +2,10 @@
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
 from `SNode.C-2.0` with a clean working tree. The phase records below are chronological.
-Phase 5m is completed: all numbered Parts, Appendix A, closing material and the
-final manuscript audit meet the approved Phase 5 criteria. Phase 6 proposal refresh
-remains not started. Earlier blocked attempts remain historical evidence.
+Phase 6 is completed: the proposal, evidence sheet and sample guide now match
+the completed manuscript, with freshly collected repository figures and attributed
+author facts. Explicit author-supply items remain open; no delivery commitment or
+publisher acceptance is asserted. Earlier blocked attempts remain historical evidence.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -29,7 +30,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5k — Part X | completed | `proposal-readiness: phase 5k — refine Part X and verify installed consumers` (containing this report) | 2026-09-22 | metrics-after-phase-5k.json; phase-5k-exit-checks.json; chapter-ledger.md; phase-5k-entry-*.log; phase-5k-final-*.log; phase-5k-visual-review.md; completion account below |
 | 5l — Part XI only | completed | `proposal-readiness: phase 5l — refine Part XI and verify the integrated gateway` (containing this report); earlier blocked-gate commits retained | 2026-09-23 | metrics-after-phase-5l.json; phase-5l-restored-entry-exit-checks.json; phase-5l-exit-checks.json; chapter-ledger.md; phase-5l-final-*.log; phase-5l-layout-final.log; phase-5l-visual-review.md; completion account below |
 | 5m — appendix, closing material and global audit | completed | `proposal-readiness: phase 5m — refine closing material and complete the manuscript audit` (containing this report) | 2026-09-23 | metrics-after-phase-5m.json; phase-5m-entry-exit-checks.json; phase-5m-exit-checks.json; phase-5m-global-audit.md; chapter-ledger.md; phase-5m-final-*.log; phase-5m-layout-complete.log; phase-5m-visual-review.md; completion account below |
-| 6 — proposal refresh | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 6 — proposal refresh | completed | `proposal-readiness: phase 6 — refresh final proposal and dated author evidence` (containing this report) | 2026-09-23 | metrics-after-phase-6.json; phase-6-entry-exit-checks.json; phase-6-repository-figures.json; phase-6-author-source-checks.json; phase-6-exit-checks.json; phase-6-package-release-links-build.log; phase-6-visual-review.md; completion account below |
 
 Commit subjects (resolve with `git log --oneline --grep='^proposal-readiness: phase 0'`):
 
@@ -3163,3 +3164,185 @@ Commit: `proposal-readiness: phase 5m — refine closing material and complete t
 (containing this report). **Stop here; Phase 6 has not started.** Before Phase 6,
 rerun all ten groups with fresh log paths and re-execute this phase's checker,
 redirecting only its evidence lookups/output as for the entry gate above.
+
+
+## Phase 6 — final proposal and dated author evidence completed, 2026-09-23
+
+### Scope and previous-phase entry gate
+
+This is the proposal refresh reserved for Phase 6 by the author's Phase 4 approval
+in `review/EDITORIAL-WORK-PLAN.md:904`. Apply the Phase 3 dossier requirements to
+the completed manuscript, plus the current instruction to use the supplied author
+facts and collect both repositories' figures directly. The invariant is that the
+proposal describes the actual supplied book and distinguishes author reports,
+public corroboration, local execution, and outstanding evidence.
+
+Before editing the proposal, ran:
+
+```sh
+python3 review/proposal-readiness-2026-09-22/run-phase-5l-restored-checks.py phase-6-entry proposal-readiness-phase-5m-examples
+```
+
+**All ten groups pass**, including **62/62 public lab cases**:
+`phase-6-entry-results.json`, `phase-6-entry-labs.log`, and the other
+`phase-6-entry-*.log` files. Re-executed `check-phase-5m.py` with only its two
+runtime-evidence lookups and output filename redirected to the new entry paths;
+all original metric, budget, teaching, preservation, PDF and package assertions
+pass (`phase-6-entry-exit-checks.json` and `.log`). Earlier phase evidence is
+unchanged. There were no uncommitted author changes at entry.
+
+### Edited and reread
+
+- `review/proposal/book-proposal-package.md:1`: pitch connects the author to the
+  teaching task. Primary reader remains an independent learner with the stated
+  prerequisites and no SNode.C knowledge. Course use stays secondary in one
+  sentence; the author's supplied name **Networked and Distributed Systems** is
+  used. The main learning path and one shortcut use current chapter numbers.
+- `review/proposal/book-proposal-package.md:46`: the implemented 30-chapter,
+  11-Part structure, contributor appendix, epilogue and reference material replace
+  the old proposal TOC. All 31 chapter/appendix titles match their Markdown
+  headings. Actual Part extents sum to **310 pages**, including 14 preliminary
+  pages (`phase-6-manuscript-pagination.json`). These remain A4 working-layout
+  estimates, not a publisher-trim promise.
+- `review/proposal/book-proposal-package.md:111`: revision table separates
+  completed measurable targets from the commitments to maintain them during
+  publisher review and production. No unfinished condensation or teaching
+  apparatus is claimed. Publisher review, copy-editing, permissions and delivery
+  availability remain explicit.
+- `review/proposal/book-proposal-package.md:127`: teaching responsibility is
+  evidence of the prerequisite chain, not a list of appointments or courses.
+  Earlier practice uses one documented TeleZone credit and selected background.
+  The Hartbeespoort application is author-reported; no institution, researcher,
+  endorsement, ecological result, audience total or deployment count is invented.
+- `review/proposal/evidence-sheet.md:9`: separates public corroboration from
+  author-supplied material and bounded local execution. `:24` gives current
+  manuscript, sample, teaching and lab counts. `:33` retains all relevant missing
+  permissions, audience details and delivery commitments as **[AUTHOR TO SUPPLY]**.
+- `review/proposal/sample-chapters.md:5`: current samples remain **1, 3, 18, 28,
+  30**; the guide now includes the final integrated checkpoint and acknowledges
+  teaching apparatus across all chapters and Appendix A. Removed the obsolete
+  pre-consolidation bridge. No sample selection or CMake change was necessary.
+
+The five verified comparable-title entries and their publisher links are retained
+unchanged. Their bibliographic authority is `phase-3-bibliography.json`; the
+Phase 3 report records each source. No new edition, sales claim or unverified
+comparable was added. `check-phase-6.py` checks this preservation.
+
+### Author evidence: checked, attributed, or still unverified
+
+Checked on **23 September 2026 Europe/Vienna** by opening the supplied public
+sources and direct HTTPS retrieval; methods, URLs and content digests are in
+`phase-6-author-source-checks.json`:
+
+1. [FH Upper Austria Interactive Media faculty](https://fh-ooe.at/en/degree-programs/interactive-media-master/team):
+   corroborates the professorship and school affiliation. The proposal uses the
+   author's supplied English wording; preferred printed title/department remains
+   an author confirmation item.
+2. [Ars Electronica 2001 Futurelab biographies](https://webarchive.ars.electronica.art/en/archives/festival_archive/festival_catalogs/festival_artikel.asp%3FiProjectID=12338.html):
+   corroborates Graz theoretical-physics study, the 1997–1999 assistantship and
+   Futurelab deputy role from 1999. The catalogue's translated rank is not used
+   to elevate the author's supplied university-assistant description. Secondary
+   technical education is omitted, as instructed. No university electrical
+   engineering degree is asserted.
+3. [TeleZone 1999 catalogue](https://webarchive.ars.electronica.art/en/archives/festival_archive/festival_catalogs/festival_artikel.asp%3FiProjectID=8362.html):
+   corroborates a programmer credit. The browser retrieval failed; direct Python
+   HTTPS retrieval succeeded and the page was read. Other supplied early-project
+   credits were not independently checked and were not added as public claims.
+
+The prerequisite-chain portfolio, later JKU work, maintenance history, limited-AI
+statement, field application and multi-cohort student work are attributed to the
+**author's current supplied facts**, not to these public pages. The lecture deck
+was not inspected; permission to cite it publicly is pending, so it is not used
+as a public source or quoted. Dates for talks, project/student numbers, the
+founding semester, detailed appointment dates, research-user naming permission,
+and revision weeks/hours remain unverified and marked for the author. No delivery
+schedule or institution endorsement was inferred.
+
+### Repository collection — current public figures, not adoption estimates
+
+Executed `collect-phase-6-repositories.py` using live `gh api` GET requests.
+Results and response headers: `phase-6-repository-figures.json`; execution summary:
+`phase-6-repository-collection.log`. Collection interval:
+**2026-09-23 00:58:33–00:59:22 Europe/Vienna (UTC+02:00)**, equivalently
+**2026-09-22 22:58:33–22:59:22 UTC**. Both time zones are disclosed to avoid a
+misleading collection date.
+
+| Measure | SNodeC/snode.c | SNodeC/mqttsuite |
+| --- | ---: | ---: |
+| Commits reachable from captured `master` head | 6,318 | 1,156 |
+| Oldest returned commit, both roots | 2020-04-13 | 2022-09-25 |
+| Stars | 11 | 2 |
+| Forks | 27 | 6 |
+| Watching subscribers | 0 | 2 |
+| GitHub contributor accounts: User / Bot | 4 / 1 | 3 / 0 |
+| Published releases | 3 | 2 |
+
+The script captures each head before counting one-commit pages, follows contributor,
+release and tag pagination to exhaustion, and uses `subscribers_count` for watching
+rather than the star alias `watchers_count`. Each result records its endpoint and
+collection time. Contributor accounts exclude anonymous identities by default;
+GitHub account type is not independent proof of a unique human. In particular,
+the author's supplied “one principal author plus four other human contributors”
+is **not** repeated as a verified current count: the returned SNode.C accounts
+comprise four User accounts and one bot. This does not adjudicate unattributed or
+other historical contributions. Counts are neither downloads, active users,
+deployments nor book purchasers. The report makes no demand or sales estimate.
+
+An initial hygiene run rejected a release-catalog literal under the existing
+reader-text guard (`phase-6-initial-hygiene.log`). The dossier now gives release
+counts and links to the histories; exact returned names remain in the collected
+JSON. The guard was not relaxed. Final hygiene passes.
+
+### Built, run, and final verification
+
+- **Run before edits:** fresh companion build, all 62 labs, teaching, behavior and
+  lifetime checks, metrics regressions, source alignment, hygiene, package build
+  and extracted-package hygiene. See the ten entry logs above. No executable code,
+  lab registration or test implementation changed after this run.
+- **Built after edits:** `proposal`, `proposal-sample-pdf`, `proposal-package`,
+  including the full manuscript PDF dependency. Final log:
+  `phase-6-package-release-links-build.log`. Earlier two build logs document the
+  layout/copy iterations rather than final artifacts. Trailing horizontal blanks
+  were normalized in the new text logs for clean diffs; result content is retained.
+- **Checked after edits:** final source hygiene/alignment/reference regressions
+  (`phase-6-final-hygiene.log`), hygiene of the newly extracted archive
+  (`phase-6-final-extracted-hygiene.log`), and the dossier checker
+  (`check-phase-6.py`, `phase-6-exit-checks.log`, `phase-6-exit-checks.json`). All
+  **365 packaged files match** their current source or built artifacts byte for
+  byte. Current TOC, sample selections, dated figures, evidence limits and the
+  required proposal sections pass.
+- **Visually reviewed:** all eight proposal/evidence pages, the sample guide,
+  five sample openings and final exercise page; see `phase-6-visual-review.md`.
+  Whole manuscript and sample-body extracted text are unchanged apart from
+  physical-page footers/whitespace (`phase-6-pdf-text-preservation.json`). No new
+  visual review of all 310 manuscript pages is claimed.
+- **Not verified:** new hosted execution, physical Bluetooth/OpenWrt deployment,
+  independent field-operation results, sales or adoption. The public documents
+  preserve these limits and distinguish local broker/database execution from
+  wider deployment claims.
+
+| Artifact | Before Phase 6 | Final Phase 6 | LaTeX warnings / bad boxes |
+| --- | ---: | ---: | ---: |
+| Full manuscript PDF | 310 | 310 | 0 / 0 |
+| Proposal + evidence PDF | 6 | 8 | 0 / 0 |
+| Combined proposal + evidence + samples PDF | 54 | 56 | 0 / 0 |
+
+Fresh `metrics-after-phase-6.json` equals Phase 5m exactly: **100,338 total words,
+92,187 prose, 8,151 fenced; 252 deep chapter headings; mean section prose 334.87;
+45 text fences; 20 rules; zero forbidden phrases and closing-perspective sections**.
+All global targets, including the 105,000 stretch target, remain met. No manuscript
+prose, code or teaching apparatus changed in Phase 6; objective/exercise mappings
+remain the completed `chapter-ledger.md` and entry-check record.
+
+Production code **+0/−0**; test implementation/registration **+0/−0**. Two new
+review-only support scripts total **171 lines**: dated API collection and dossier
+assertions. They do not create a second manuscript metric or lab implementation.
+The changed deliverable sources are the three proposal Markdown files; the other
+changes are this pass's evidence and the work-plan/status update. Final diff
+review found no unrelated changes or pending implementation.
+
+**Phase 6 is completed.** The proposal-readiness editorial/package work is
+complete against the recorded criteria. The explicitly permitted author-supply
+items remain visible; this is not a claim of publisher acceptance or an agreed
+delivery schedule. Commit: `proposal-readiness: phase 6 — refresh final proposal and dated author evidence`
+(containing this report). **Stop here.**

@@ -4,32 +4,38 @@
 
 # Evidence sheet
 
-Evidence checked 22 September 2026. Public project descriptions are first-party evidence. Build and lab observations concern the supplied material; none establishes independent adoption or sales.
+Checked **23 September 2026 (Europe/Vienna)**. This sheet separates public corroboration, author-supplied facts, and observations of the supplied book package. None establishes a sales forecast or institutional endorsement.
 
-## Documented project facts
+## Public corroboration
 
-- **Framework and teaching origin.** The [SNode.C project introduction](https://github.com/SNodeC/snode.c#simple-node-in-c-snodec) describes the public C++ framework and its origin in *Network and Distributed Systems*, Interactive Media, FH Upper Austria, Hagenberg. This establishes teaching context, not adoption of the book.
-- **Author relationship.** The [project copyright notice](https://github.com/SNodeC/snode.c#copyright) names Volker Christian. The creator/maintainer description is disclosed in the manuscript's author note.
-- **Applied project.** The [MQTTSuite README](https://github.com/SNodeC/mqttsuite) documents broker, integration, bridge, command-line, and storage roles built around SNode.C. These are first-party applications, not external adoption evidence.
+- **Current appointment.** The [Interactive Media faculty page](https://fh-ooe.at/en/degree-programs/interactive-media-master/team) lists Volker Christian as a professor of multimedia programming at FH Upper Austria's School of Informatics, Communications and Media in Hagenberg. The author supplies his teaching in the Media Technology and Design and Interactive Media programmes; preferred printed title and department wording remain to be confirmed.
+- **Earlier relevant practice.** The [2001 Futurelab biographies](https://webarchive.ars.electronica.art/en/archives/festival_archive/festival_catalogs/festival_artikel.asp%3FiProjectID=12338.html) corroborate theoretical-physics study at Graz, the 1997–1999 assistantship, and a Futurelab deputy role beginning in 1999. The [1999 TeleZone catalogue](https://webarchive.ars.electronica.art/en/archives/festival_archive/festival_catalogs/festival_artikel.asp%3FiProjectID=8362.html) credits Christian among the programmers. These sources support selected facts, not the full chronology or all projects in his career.
+- **Repositories.** Direct GitHub REST API collection on 23 September 2026, 00:58–00:59 Europe/Vienna (22 September, 22:58–22:59 UTC) returned **6,318 / 1,156** reachable `master` commits, **11 / 2** stars, **27 / 6** forks, and **0 / 2** watching subscribers for [SNode.C](https://github.com/SNodeC/snode.c) / [MQTTSuite](https://github.com/SNodeC/mqttsuite), respectively. Their oldest returned commits have no parents and dates 13 April 2020 / 25 September 2022. The release endpoints list **3 / 2** published releases; the proposal links their release histories.
+- **Counting limits.** Commit pagination used a captured branch head for each repository. Contributor and release endpoints were fully paginated. Contributors returned **4 User + 1 Bot accounts / 3 User accounts**, excluding anonymous identities by default. Account counts are not independently verified human counts. GitHub interest figures do not measure deployments, readers, downloads, or purchasers.
+
+## Author-supplied evidence and its limits
+
+The teaching portfolio establishes responsibility for the book's prerequisite chain: programming and algorithms, applied C++, POSIX I/O and sockets, distributed systems, and sensor-based IoT. Electronics and signal-processing teaching connect the software path to physical measurements. This supports the author's ability to explain intermediate steps; no enrolment total or course adoption of the book is claimed.
+
+The author reports continuous maintenance of SNode.C since its creation in April 2020, its origin in live online teaching during the first COVID lockdown, later MQTT/MQTTSuite development, and student projects over several cohorts. The collected root-commit date corroborates the start of the repository history; it does not independently verify each teaching event. The author also states that the framework and book examples are written by hand, with limited AI assistance since mid-2025.
+
+The reported Hartbeespoort Dam application connects water-quality sensors and GPS through ESP32 devices, LoRaWAN/The Things Network, MQTTSuite/MQTTStore, and a WebSocket/WSS dashboard. This is an author-reported research application beyond his own projects. Permission to identify the research institution and collaborator, and independently checkable operational evidence, remain outstanding; no ecological effectiveness claim is made.
 
 ## Evidence in the supplied book package
 
-- **Manuscript:** 38 chapters plus epilogue and reference material; 146,950 whitespace tokens; 470 PDF pages. The proposal's Part extents sum to the actual build, including 20 preliminary pages.
-- **Samples:** Chapters 1, 3, 23, 35, and 37 each contain three objectives and five exercises: two review, two labs, one design. All 25 exercise/objective mappings have public solutions in the corresponding `companion/exercises/chNN/README.md` and lab sources.
-- **Companion code:** complete printed listings match companion sources. The Asio comparison and all sample lab dependencies compile against the supplied installed environment.
-- **Executed labs:** ten local lab cases passed on 22 September 2026. They observe echo behavior, endpoint failure, SSE continuity, input validation, and model ownership; the public solutions give each procedure and expected result.
-- **Limits:** no broker-delivery, hardware, independent deployment, hosted-build, or commercial-adoption result is inferred from these local labs. Reproduction commands accompany the public solutions.
+- **Manuscript:** 30 numbered chapters in 11 Parts, Appendix A, closing essay and reference material; **100,338 whitespace tokens**, of which 92,187 are prose and 8,151 occur in fences; **310 PDF pages**, including 14 preliminary pages. The Part estimates sum to this actual build.
+- **Teaching apparatus:** 93 objectives and 155 mapped exercises across 30 chapters and Appendix A. Each has two review questions, two labs and one design problem, public solutions, and a recap of at most five bullets. All 11 Parts have runnable checkpoints; the epilogue is a closing essay.
+- **Samples:** Chapters **1, 3, 18, 28 and 30**, using the same teaching pattern. Each retains at least a 20% reduction in prose from its original sample baseline. The sample guide identifies the skill and observable outcome each demonstrates.
+- **Built and run:** the companion examples and lab dependencies compile, including the standalone Asio comparison. **62/62 local lab cases passed on 23 September 2026**; the full manuscript, proposal and sample PDFs build with zero LaTeX warnings and zero bad boxes. Complete printed listings match their companion sources.
+- **Observation limits:** local tests include broker delivery and database persistence across a client restart. They do not certify Bluetooth hardware, OpenWrt deployment, the author's field application, or a new hosted build. Public lab instructions state dependencies, expected outcomes, and the scope of each observation.
 - Manuscript baseline: project version `2.0.0`, current working-tree contents recorded by the edition manifest; reconstruction base `1f0f728fc9b3b45174f2cd790d83b2f493e58af1` plus the captured patch
 
-## Author evidence still required
+## Items still required from the author
 
-Additional biographical and audience evidence remains to be supplied.
+- **[AUTHOR TO SUPPLY]** Preferred printed title and department wording; exact Graz institute name and Futurelab/JKU appointment dates if a fuller biography is needed.
+- **[AUTHOR TO SUPPLY]** Dated public talks, workshops, articles or posts, and supervised SNode.C theses; permission to cite the summer-2026 lecture deck publicly.
+- **[AUTHOR TO SUPPLY]** Permission to name the research institution and collaborator, with checkable application evidence; student-project counts and years, approximate annual student numbers, and confirmation of the founding semester.
+- **[AUTHOR TO SUPPLY]** Any independent readership evidence or reviewer quotations cleared for use.
+- **[AUTHOR TO SUPPLY]** Weeks to final manuscript after acceptance and hours per week available for revision.
 
-- **[AUTHOR TO SUPPLY]** Approved short biography and supporting links for credentials and appointments.
-- **[AUTHOR TO SUPPLY]** Dated talks, publications, workshops, and attributable audience figures.
-- **[AUTHOR TO SUPPLY]** Named independent users or deployments with permission and supporting evidence.
-- **[AUTHOR TO SUPPLY]** Dated repository/download statistics, measurement method, and limits.
-- **[AUTHOR TO SUPPLY]** Any course-use letters, syllabus references, or reviewer quotations cleared for use.
-- **[AUTHOR TO SUPPLY]** Delivery date and revision availability.
-
-These open items limit the strength of the market case. The evidence currently supports assessment of the teaching method, technical content, and inspectable examples; it does not support an estimate of market size or sales.
+The available evidence supports assessment of the teaching method, technical content, author expertise, and inspectable examples. The unresolved items limit the market case and prevent a delivery commitment.
