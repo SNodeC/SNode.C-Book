@@ -890,3 +890,21 @@ unchanged at 490 pages and zero final LaTeX warnings/bad boxes. Evidence is in
 `review/ci-fix-2026-09-22/REPORT.md` and `followup-evidence.json`. Only review
 records change in the closing evidence commit; no previously deferred scope is
 completed or reopened by this CI repair.
+
+## Author approval — restructure plan (Phase 4)
+Approved: RESTRUCTURE-PLAN.md (commit f666e66) — 30 chapters in 11 Parts,
+Appendix A, 112,250-word plan, merge boundaries, and MiniGateway milestones —
+with these changes:
+1. Epilogue stays a closing essay: no objectives, recap, or exercises. Its planned
+   integrated-checkpoint exercise moves to new Ch. 30. Its budget stays 1,900.
+2. The Ch. 24 stop rule applies to every chapter whose budget cuts more than 35%
+   (new 4, 6, 12, 24, 25, 26, 27): qualify the Part rather than remove teaching
+   content. A Part may draw from the 2,750-word reserve with a justification
+   recorded in REPORT.md; the reserve may not go negative, and 115,000 stays hard.
+3. Session 5l covers Part XI only. New session 5m covers Appendix A, the epilogue,
+   back matter, and the final global audit. Proposal refresh remains Phase 6.
+4. Session 5b adds a short "Lab environment" section to Ch. 2 listing optional lab
+   dependencies (MQTT broker, MariaDB, TLS fixture, Bluetooth hardware) and the
+   Parts that need them. Broker-, database-, and hardware-dependent labs are marked
+   as equipped labs, with a local-only alternative observation where possible.
+Phase 5a may start.
