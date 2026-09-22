@@ -191,18 +191,14 @@ A reconnect creates another peer episode; an HTTP upgrade can replace a protocol
 
 ### Reading public types and components {#reading-public-types-and-components}
 
-The source tree is organized as directories, while the installed framework is exposed through public headers and CMake package components. These views are related, but they are not identical. A source path such as `src/net/in/stream/legacy` helps a reader navigate the implementation; a component name such as `net-in-stream-legacy` helps an external project request and link the required installed framework part.
+The source tree, public headers, C++ names, and installed components expose related views of a layer choice. Their purposes differ: navigating implementation, including declarations, selecting a type, and linking an external program.
 
-The same architectural position therefore appears in several related forms:
-
-| View | Example |
+| View | IPv4, stream, non-TLS example |
 |---|---|
 | source path | `src/net/in/stream/legacy` |
-| C++ namespace / type path | `net::in::stream::legacy` |
-| public include path | `<net/in/stream/legacy/SocketServer.h>`, `<net/in/stream/legacy/SocketClient.h>` |
-| CMake component name | `net-in-stream-legacy` |
-
-Read these as related views of the same decision stack: network family `IPv4 / in`, transport form `stream`, and connection mode `legacy / non-TLS`. This relationship is one of the ways SNode.C makes layer choices visible across source layout, C++ names, and build consumption.
+| C++ namespace | `net::in::stream::legacy` |
+| public include | `<net/in/stream/legacy/SocketServer.h>` |
+| CMake component | `net-in-stream-legacy` |
 
 \index{naming convention}
 \index{names as architecture}
@@ -215,7 +211,34 @@ net::in::stream::legacy::SocketServer
 #include <net/in/stream/legacy/SocketServer.h>
 ```
 
-The first spelling selects an IPv4, stream, non-TLS server role; the second names its public include. Components such as `net-in6-stream-tls` and `net-un-stream-legacy` record different choices using the same convention. A source file includes the highest public role it directly names, rather than every lower implementation header.
+The type selects a role; its public header supplies the declaration. Include the highest public role directly named by the source, rather than every lower implementation header.
+
+\index{component names}
+\index{public include paths}
+\index{names as architecture}
+
+```cpp
+net::in::stream::legacy::SocketClient<MyFactory>
+```
+
+Read this as network-facing code, IPv4 family, stream transport, non-TLS connection handling, client-side handle, and factory for per-connection contexts. The handle configures the instance; its name records the stack that runtime work will use.
+
+```cpp
+net::rc::stream::tls::SocketServer<MyFactory>
+```
+
+Here the family is Bluetooth RFCOMM, connection handling is TLS, and the role is a server. The factory still supplies per-connection contexts.
+
+::: {.snodec-rule title="Layer-reading rule"}
+Read a SNode.C communication type as a stack description before reading it as an isolated API name.
+:::
+
+```cpp
+#include <net/in/stream/legacy/SocketServer.h>
+#include <net/in/stream/legacy/SocketClient.h>
+```
+
+These role headers share the `net-in-stream-legacy` component. Selecting IPv6 and TLS instead yields `net-in6-stream-tls`; spelling alone supplies neither endpoint configuration nor security policy.
 
 ::: {.snodec-note title="Reading habit"}
 When a SNode.C name feels long, do not shorten it mentally too early. First ask which decisions it records.
@@ -248,44 +271,6 @@ Layers describe where a responsibility lives, not just directory names. The prac
 The runtime tells us how progress happens: event-loop dispatch, descriptor readiness, timers, queued work, timeouts, signals, and cleanup. The layer stack tells us what kind of communication is progressing. A configured instance might be an IPv4 legacy client, an IPv6 TLS server, or a Unix-domain HTTP endpoint; all participate in the runtime without becoming the same communication structure.
 
 These names describe SNode.C's decomposition of a program. They are not a renaming of the OSI layers or a claim that Bluetooth L2CAP and IP occupy identical positions in their respective protocol stacks. Compare the endpoint-facing surface offered to a SNode.C stream composition, while retaining the underlying protocol's own semantics for reliability, packet boundaries, security, and deployment.
-
-### Names are maps of architecture
-
-\index{component names}
-\index{public include paths}
-\index{names as architecture}
-
-
-Consider this type:
-
-```cpp
-net::in::stream::legacy::SocketClient<MyFactory>
-```
-
-Read it as a sentence:
-
-network-facing code, IPv4 family, stream transport, non-TLS stream connection variant, client-side handle type, and factory for per-connection contexts.
-
-The visible `SocketClient` object in application code is still the handle, in the sense established by the mental model above. It is the object through which the application names, configures, and registers the client-side instance. The name of the type tells us which lower-layer choices that instance will use when the runtime advances it.
-
-A similar server type can be read the same way:
-
-```cpp
-net::rc::stream::tls::SocketServer<MyFactory>
-```
-
-This says: network-facing code, Bluetooth RFCOMM family, stream transport, TLS connection handling, server-side handle type, and factory for per-connection contexts.
-
-::: {.snodec-rule title="Layer-reading rule"}
-Read a SNode.C communication type as a stack description before reading it as an isolated API name.
-:::
-
-```cpp
-#include <net/in/stream/legacy/SocketServer.h>
-#include <net/in/stream/legacy/SocketClient.h>
-```
-
-The role headers use slashes where the matching `net-in-stream-legacy` component uses dashes. Changing the family to IPv6 and selecting TLS yields `net-in6-stream-tls`. The source path, public include, namespace/type, and component serve different technical purposes: implementation navigation, preprocessing, C++ type selection, and build/link selection. They should agree about the chosen stack.
 
 ### The network layer: endpoint identity
 
@@ -386,10 +371,6 @@ The same habit applies to MQTT over WebSocket. Establishing the lower connection
 \index{component architecture}
 
 
-A useful way to test an architectural description is to ask whether the build system reflects it. In SNode.C, it does.
-
-The `src` build adds major framework regions such as `core`, `net`, `web`, `express`, `database`, `iot`, and `apps`. The supported components include core stream components, concrete network stream components, HTTP, Express, WebSocket, MQTT, and MQTT-over-WebSocket components.
-
 Use the first echo pair to check a proposed layer change. Keep the context and factory fixed, then compare the public role header, type alias, and component for these two selections:
 
 | Selection | Public server header | Component |
@@ -397,7 +378,7 @@ Use the first echo pair to check a proposed layer change. Keep the context and f
 | IPv4, non-TLS stream | `<net/in/stream/legacy/SocketServer.h>` | `net-in-stream-legacy` |
 | IPv4, TLS stream | `<net/in/stream/tls/SocketServer.h>` | `net-in-stream-tls` |
 
-The matching namespace follows the header directories. Changing only the component would not change the type named in the application. Changing only the type could leave the required link dependency absent. Both surfaces must describe the intended selection, and the runtime configuration must then supply the TLS policy that the secured variant needs.
+After changing the selection, rebuild the consumer and configure the TLS variant with its certificate and trust policy. A successful link establishes build consumption; test the handshake and peer identity separately before comparing the echoed bytes.
 
 This comparison is a design exercise, not a complete TLS conversion recipe. Its expected result is a list of three different obligations: select the C++ type, consume its installed component, and configure its operational behavior. Chapter 14 supplies the security details; Chapter 25 explains the component dependency rules. The echo protocol's byte reflection remains a separate responsibility throughout.
 

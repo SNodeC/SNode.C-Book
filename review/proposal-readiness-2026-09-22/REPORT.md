@@ -15,7 +15,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 4 — restructure plan | approved with author changes | `proposal-readiness: phase 4 — propose consolidated teaching-book structure` (containing this report) | 2026-09-22 | RESTRUCTURE-PLAN.md; phase-4-reference-map.md; phase-4-plan-checks.json; metrics-after-phase-4.json; Phase 4 evidence below |
 | 5a — approved TOC | completed | `proposal-readiness: phase 5a — apply approved teaching-book structure` (containing this report) | 2026-09-22 | phase-5a-approved-structure.json; phase-5a-reference-register.json; phase-5a-exit-checks.json; metrics-after-phase-5a.json; Phase 5a evidence below |
 | 5b — Part I | completed | `proposal-readiness: phase 5b — refine Part I and establish the measurement checkpoint` (containing this report); separate prerequisite repair retained | 2026-09-22 | metrics-after-phase-5b.json; phase-5b-exit-checks.json; chapter-ledger.md; phase-5b-final-*.log; phase-5b-visual-review.md; completion account below |
-| 5c — Part II | completed | `proposal-readiness: phase 5c — condense Part II and teach shared measurement ownership` (containing this report) | 2026-09-22 | metrics-after-phase-5c.json; phase-5c-exit-checks.json; chapter-ledger.md; phase-5c-final-*.log; phase-5c-visual-review.md; completion account below |
+| 5c — Part II | completed | `proposal-readiness: phase 5c follow-up — remove triple name/component explanation`; initial Phase 5c commit retained | 2026-09-22 | metrics-after-phase-5c.json; phase-5c-exit-checks.json; chapter-ledger.md; phase-5c-final-*.log; phase-5c-visual-review.md; completion account below |
 | 5d — Part III | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5e — Part IV | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5f — Part V | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -1462,3 +1462,39 @@ companion build, sixteen labs, teaching/behavior/lifetime checks, PDF/package
 targets and extracted-package hygiene. Use `check-phase-5c.py` as the current
 exit checker; historical Phase 5b assertions intentionally describe the earlier
 uncondensed Part II state and are not the next entry gate.
+
+
+## Author-requested Phase 5c follow-up — 2026-09-22
+
+The author requested one Part II correction before Phase 5d: merge the duplicated
+public-type/name treatment, retain its stable anchor and registered references,
+and leave the build section as an applied legacy-to-TLS comparison. Implemented
+and reread in `manuscript/chapters/04-the-mental-model-and-layers-in-practice.md:192`.
+The merged treatment is 256 whitespace tokens including its heading and syntax;
+all index occurrences, code excerpts (including order), and the Layer-reading
+rule remain. The build comparison now asks for separate build, handshake/identity,
+and byte-reflection observations. No exercises, applications or other chapters change.
+
+Chapter 4: 4,338 → 4,075 words, 14 → 13 sections; Part II: 7,321 → 7,058.
+Fresh Phase 5c assertions pass, including the original budgets and pedagogy, source
+intro cap, reference targets, all executable fences, index and figure preservation.
+Hygiene/alignment, metric/reference tests, companion build, all sixteen labs,
+teaching/behavior/lifetime checks, PDF/package builds, archive identity and
+extracted-package hygiene pass. See `phase-5c-follow-up-results.json`,
+`phase-5c-follow-up-*.log`, `metrics-after-phase-5c-follow-up.json` and
+`phase-5c-follow-up-exit-checks.json`. The wrapper `check-phase-5c-follow-up.py`
+retains historical assertions and redirects only metrics/log/result paths;
+historical Phase 5c evidence remains unchanged. The reference register updates
+only line evidence; the source-reading anchor's registered targets remain intact.
+
+Rendered physical pages 44–45 and 47–48 were inspected after rebuilding: the merged
+mapping, Layer-reading rule, applied table, recap and exercises fit without clipping
+or overlap. Images are local build outputs in `build/phase-5c-follow-up-visual/`.
+
+PDF pages: full 438 → 436; samples 54 and proposal 6 unchanged.
+All final PDF warnings/bad boxes are zero. Full words: 140,336 → 140,073.
+No reserve used; 2,750 remains. Application/test code growth: zero.
+
+Separate commit: `proposal-readiness: phase 5c follow-up — remove triple name/component explanation`.
+This freshly passed follow-up is the authorized Phase 5d entry baseline; the author
+explicitly requests Phase 5d next in the same session.

@@ -1,0 +1,139 @@
+{
+  "chapters": [
+    {
+      "chapter": 4,
+      "path": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
+      "words_before": 7809,
+      "words_after": 4075,
+      "budget": 5300,
+      "prose_words": 4027,
+      "code_words": 48,
+      "headings": 13,
+      "heading_ceiling": 15,
+      "average_section_prose_words": 297.38,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 297
+    },
+    {
+      "chapter": 5,
+      "path": "manuscript/chapters/05-core-runtime-and-event-processing.md",
+      "words_before": 5188,
+      "words_after": 2983,
+      "budget": 3700,
+      "prose_words": 2908,
+      "code_words": 75,
+      "headings": 10,
+      "heading_ceiling": 11,
+      "average_section_prose_words": 278.1,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 312
+    }
+  ],
+  "part_ii_words": 7058,
+  "part_ii_budget": 9000,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1057,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 436,
+      "sha256": "da49251564f1cb040f0c9eb26b831e2e962ec33ce2b4dad6ffbd2594b936585b",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "c0f613b59cef2cc7c687a943dee4d286461cd4c98157b1968f42c5e0a1312cce",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "6b8d7c357fe1c580ea9a0d8e7eb9e944385ee67016dc579c8eaa8f4128471a43",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 297,
+  "reserve_used": 0,
+  "reserve_remaining": 2750,
+  "global_words": 140073,
+  "word_delta_from_phase_5b": -5900
+}

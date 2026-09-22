@@ -631,7 +631,7 @@
       "source_ids": [
         "R100"
       ],
-      "line": 323
+      "line": 308
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -642,7 +642,7 @@
       "source_ids": [
         "R101"
       ],
-      "line": 347
+      "line": 332
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -653,7 +653,7 @@
       "source_ids": [
         "R102"
       ],
-      "line": 365
+      "line": 350
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -664,7 +664,7 @@
       "source_ids": [
         "R103"
       ],
-      "line": 402
+      "line": 383
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -675,7 +675,7 @@
       "source_ids": [
         "R104"
       ],
-      "line": 402
+      "line": 383
     },
     {
       "file": "manuscript/chapters/05-core-runtime-and-event-processing.md",
