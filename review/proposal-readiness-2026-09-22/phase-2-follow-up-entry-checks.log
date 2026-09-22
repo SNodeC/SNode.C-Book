@@ -3,22 +3,14 @@
     {
       "chapter": 1,
       "prose_before": 2343,
-      "prose_after": 1723,
-      "reduction_percent": 26.46,
-      "average_section_prose_words": 327.0,
+      "prose_after": 1604,
+      "reduction_percent": 31.54,
+      "average_section_prose_words": 303.4,
       "objectives": 3,
       "exercise_tiers": [
         [
           "Review",
           "O1"
-        ],
-        [
-          "Review",
-          "O2"
-        ],
-        [
-          "Lab",
-          "O2"
         ],
         [
           "Lab",
@@ -33,9 +25,9 @@
     {
       "chapter": 3,
       "prose_before": 2674,
-      "prose_after": 1987,
-      "reduction_percent": 25.69,
-      "average_section_prose_words": 315.5,
+      "prose_after": 1934,
+      "reduction_percent": 27.67,
+      "average_section_prose_words": 306.67,
       "objectives": 3,
       "exercise_tiers": [
         [
@@ -43,16 +35,8 @@
           "O1"
         ],
         [
-          "Review",
-          "O1"
-        ],
-        [
           "Lab",
           "O2"
-        ],
-        [
-          "Lab",
-          "O3"
         ],
         [
           "Design",
@@ -63,22 +47,14 @@
     {
       "chapter": 23,
       "prose_before": 3664,
-      "prose_after": 2897,
-      "reduction_percent": 20.93,
-      "average_section_prose_words": 398.0,
+      "prose_after": 2843,
+      "reduction_percent": 22.41,
+      "average_section_prose_words": 390.29,
       "objectives": 3,
       "exercise_tiers": [
         [
           "Review",
           "O1"
-        ],
-        [
-          "Review",
-          "O1"
-        ],
-        [
-          "Lab",
-          "O2"
         ],
         [
           "Lab",
@@ -93,9 +69,9 @@
     {
       "chapter": 35,
       "prose_before": 2378,
-      "prose_after": 1863,
-      "reduction_percent": 21.66,
-      "average_section_prose_words": 294.33,
+      "prose_after": 1752,
+      "reduction_percent": 26.32,
+      "average_section_prose_words": 275.83,
       "objectives": 3,
       "exercise_tiers": [
         [
@@ -103,16 +79,8 @@
           "O1"
         ],
         [
-          "Review",
-          "O1"
-        ],
-        [
           "Lab",
           "O2"
-        ],
-        [
-          "Lab",
-          "O1"
         ],
         [
           "Design",
@@ -123,22 +91,14 @@
     {
       "chapter": 37,
       "prose_before": 2395,
-      "prose_after": 1859,
-      "reduction_percent": 22.38,
-      "average_section_prose_words": 291.0,
+      "prose_after": 1868,
+      "reduction_percent": 22.0,
+      "average_section_prose_words": 292.5,
       "objectives": 3,
       "exercise_tiers": [
         [
           "Review",
           "O1"
-        ],
-        [
-          "Review",
-          "O3"
-        ],
-        [
-          "Lab",
-          "O2"
         ],
         [
           "Lab",
@@ -151,13 +111,10 @@
       ]
     }
   ],
-  "comparison_words": 638,
-  "comparison_excerpt_lines": [
-    12,
-    16
-  ],
-  "excerpts_match_companion_ignoring_whitespace": true,
+  "comparison_words": 514,
   "chapter_35_fences_identical": true,
   "other_manuscript_files_identical": true,
   "sample_source_markers_index_entries_figures_preserved": true
 }
+PASS: editorial thresholds, objectives/exercise coverage, public answer paths, and preservation
+Build, run, visual review, and answer quality need the separate evidence logs and ledger.

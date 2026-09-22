@@ -1,6 +1,6 @@
 # Phase 2 chapter ledger
 
-Date: 2026-09-22. Measurement authority: `ci/manuscript-metrics.py`.
+Date: 2026-09-22; updated for the same-phase author follow-up. Measurement authority: `ci/manuscript-metrics.py`.
 Before: `metrics-before-phase-2.json`; after: `metrics-after-phase-2.json`.
 Prose counts include Markdown, objectives, recaps, and exercises; fenced code is
 excluded. Section averages use non-overlapping level 3–6 section bodies, excluding
@@ -9,43 +9,54 @@ complete listings; they are not separate conceptual sections.
 
 | Chapter | Prose before | Prose after | Reduction | Sections before → after | Average section prose after | Editorial state |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| [1](../../manuscript/chapters/01-why-snodec-exists.md) | 2,343 | 1,604 | 31.54% | 10 → 5 | 303.40 | edited and reread in context |
-| [3](../../manuscript/chapters/03-your-first-working-program-the-echo-pair.md) | 2,674 | 1,934 | 27.67% | 23 → 6 | 306.67 | edited and reread in context |
-| [23](../../manuscript/chapters/23-server-sent-events-and-real-time-http.md) | 3,664 | 2,843 | 22.41% | 31 → 7 | 390.29 | edited and reread in context |
-| [35](../../manuscript/chapters/35-building-minigateway.md) | 2,378 | 1,752 | 26.32% | 35 → 6 | 275.83 | edited and reread in context |
-| [37](../../manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md) | 2,395 | 1,868 | 22.00% | 15 → 6 | 292.50 | edited and reread in context |
+| [1](../../manuscript/chapters/01-why-snodec-exists.md) | 2,343 | 1,723 | 26.46% | 10 → 5 | 327.00 | edited and reread in context |
+| [3](../../manuscript/chapters/03-your-first-working-program-the-echo-pair.md) | 2,674 | 1,987 | 25.69% | 23 → 6 | 315.50 | edited and reread in context |
+| [23](../../manuscript/chapters/23-server-sent-events-and-real-time-http.md) | 3,664 | 2,897 | 20.93% | 31 → 7 | 398.00 | edited and reread in context |
+| [35](../../manuscript/chapters/35-building-minigateway.md) | 2,378 | 1,863 | 21.66% | 35 → 6 | 294.33 | edited and reread in context |
+| [37](../../manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md) | 2,395 | 1,859 | 22.38% | 15 → 6 | 291.00 | edited and reread in context |
 
 ## Objectives and exercises
 
-Each sample has three observable objectives and three exercises: one review,
-one lab, and one design problem. The mappings below cover both directions.
-Objective and exercise wording are in the linked chapter's opening and closing
-callouts; public solution sections use the same numbers and objective IDs.
-`phase-2-exit-checks.json` verifies the IDs and three tiers mechanically.
+Each sample has three observable objectives and five exercises: two review,
+two labs, and one design problem, as required by the author's Phase 2 follow-up.
+The mappings below cover both directions. Public README solution sections use the
+same exercise numbers and objective IDs; `check-phase-2.py` verifies that match.
+Chapter 1 O2 is achievable by reading its comparison; both labs follow Chapter 2.
 
 | Chapter | Objective | Exercise | Public solution and evidence of learning |
 | --- | --- | --- | --- |
-| 1 | O1: distinguish protocol and state ownership | 1 — review | `companion/exercises/ch01/README.md`, §1: shared sequencing authority |
-| 1 | O2: compare two built echo servers | 2 — lab | `ch01/solution.py`: 20,480 binary bytes and a later session on both servers |
-| 1 | O3: select a framework under constraints | 3 — design | `ch01/README.md`, §3: Linux gateway versus native Windows utility |
-| 3 | O1: distinguish handle, factory, context | 1 — review | `ch03/README.md`, §1: creation and ownership handoff |
-| 3 | O2: change greeting and observe reflection | 2 — lab | `ch03/greeting-client.cpp` and `solution.py`: actual EchoPair plus controlled peer |
-| 3 | O3: locate endpoint versus protocol failure | 3 — design | `ch03/README.md`, §3: connection result, receive count, initial greeting |
-| 23 | O1: explain typed events and release | 1 — review | `ch23/README.md`, §1: field dispatch and disconnect-to-unsubscribe lifetime |
-| 23 | O2: compare acceptance and observation | 2 — lab | `ch23/solution.py`: matching POST/event data, restricted Accept, current-state reconnect |
-| 23 | O3: choose bounded recovery policy | 3 — design | `ch23/README.md`, §3: queue/history bounds, expired IDs, disconnected UI |
-| 35 | O1: trace the common acceptance path | 1 — review | `ch35/README.md`, §1: MQTT decode → model → observers |
-| 35 | O2: observe HTTP/SSE without MQTT | 2 — lab | `ch35/solution.py`: matching state and events, process restart resets sequence |
-| 35 | O3: distinguish durable/delivery/origin guarantees | 3 — design | `ch35/README.md`, §3: transactional state and explicit origin contract |
-| 37 | O1: identify authority over ordering | 1 — review | `ch37/README.md`, §1: gateway sequence versus producer sample number |
-| 37 | O2: observe order and unsubscribe | 2 — lab | `ch37/model-ownership.cpp`: inputs 900,2,1; accepted 1,2,3; one observer detached |
-| 37 | O3: choose operational boundaries | 3 — design | `ch37/README.md`, §3: privileged collector, bounded IPC, independent recovery |
+| 1 | O1 | 1 — review | `ch01/README.md §1`: shared sequencing authority |
+| 1 | O2 | 2 — review | `ch01/README.md §2`: buffer lifetime and callback progression |
+| 1 | O2 | 3 — lab | `ch01/solution.py`: identical 20,480-byte stream and a later connection |
+| 1 | O2 | 4 — lab | `ch01/independent-peers.py`: one idle/closed peer does not stop another |
+| 1 | O3 | 5 — design | `ch01/README.md §5`: Linux gateway versus native Windows utility |
+| 3 | O1 | 1 — review | `ch03/README.md §1`: handle, factory, and context ownership |
+| 3 | O1 | 2 — review | `ch03/README.md §2`: initiation versus reflection |
+| 3 | O2 | 3 — lab | `ch03/greeting-client.cpp and solution.py`: changed greeting and binary reflection |
+| 3 | O3 | 4 — lab | `ch03/occupied-port.py`: bind error while original listener keeps working |
+| 3 | O3 | 5 — design | `ch03/README.md §5`: endpoint versus protocol diagnosis |
+| 23 | O1 | 1 — review | `ch23/README.md §1`: disconnect releases the response subscription |
+| 23 | O1 | 2 — review | `ch23/README.md §2`: record boundary and MessageEvent fields |
+| 23 | O2 | 3 — lab | `ch23/solution.py`: matching POST/event data, restricted Accept, reconnect |
+| 23 | O2 | 4 — lab | `ch23/observers.py`: common accepted data and independent disconnection |
+| 23 | O3 | 5 — design | `ch23/README.md §5`: bounded queues/history and visible recovery |
+| 35 | O1 | 1 — review | `ch35/README.md §1`: MQTT decode → shared model → outputs |
+| 35 | O1 | 2 — review | `ch35/README.md §2`: validation precedes acceptance |
+| 35 | O2 | 3 — lab | `ch35/solution.py`: HTTP/SSE agreement without MQTT; restart resets state |
+| 35 | O1 | 4 — lab | `ch35/validation.cpp`: invalid input changes neither state nor notifications |
+| 35 | O3 | 5 — design | `ch35/README.md §5`: durable ordering and origin-filter ownership |
+| 37 | O1 | 1 — review | `ch37/README.md §1`: acceptance order versus producer numbering |
+| 37 | O3 | 2 — review | `ch37/README.md §2`: endpoint policy versus independently cancellable flows |
+| 37 | O2 | 3 — lab | `ch37/model-ownership.cpp`: ordering and explicit unsubscribe |
+| 37 | O2 | 4 — lab | `ch37/model-instances.cpp`: shared order 1,2 versus independent 1 and 1 |
+| 37 | O3 | 5 — design | `ch37/README.md §5`: privileged collector and IPC/recovery ownership |
 
-All abbreviated solution paths above are relative to `companion/exercises/`.
-The lab build commands and observable expected outputs are public in each README;
-all five CTest lab cases were run, not merely registered. See `phase-2-labs.log`.
-The compiler run is `phase-2-companion.log`; the initial harness errors and their
-resolution are explained in REPORT.md rather than omitted.
+All abbreviated solution paths are relative to `companion/exercises/`.
+Each README explains both lab commands and expected outcomes. All ten CTest cases
+were run and passed (`phase-2-follow-up-labs.log`); the existing CI job discovers
+both cases per chapter through CTest. The new validation and model-instance
+executables compile the canonical model/codec; no production implementation is
+copied or altered (`phase-2-follow-up-companion.log`). Hosted CI was not run here.
 
 ## Editorial reread and preservation
 
@@ -80,3 +91,26 @@ All other ordered manuscript inputs are byte-identical to phase entry, including
 the deliberate author epilogue restoration. `check-phase-2.py` verifies those
 preservation claims, all sample figure/index/source markers, and Chapter 35 fences.
 Visual review is recorded separately in `phase-2-visual-review.md`.
+
+## Same-phase follow-up reread
+
+The five chapter endings and their public answers were reread together after
+expansion; the surrounding chapter arguments and preserved listing locations
+were checked in context. The new Chapter 1 excerpts are explicitly labeled,
+12 and 16 lines long, and match the companion functions after whitespace removal.
+The comparison table remains; its whole section is below 1,200 words. The layer
+argument now follows the measurement path through carrier, protocol, and shared
+state; the node.js comparison explains why an event loop alone does not determine
+ownership. The protocol inventory is removed in favor of that connected example.
+
+Chapter 35 introduces source assembly in four dependency steps before its source
+tree. All its original fences remain byte-identical. Chapter 37 trims two framing
+passages and a table instruction to accommodate the extra exercises while keeping
+its decision tables and applied rules. Chapters 3 and 23 change only their exercise
+callouts. The remaining manuscript inputs, including the author's epilogue, are
+unchanged. Current measurements include all added teaching prose; comparison code
+and local layout fences are excluded from prose exactly like other fences.
+
+Initial Phase 2 results remain in REPORT.md and its original logs; the follow-up
+entry snapshot is `metrics-before-phase-2-follow-up.json`. Current rendered-page
+inspection is recorded in `phase-2-follow-up-visual-review.md`.

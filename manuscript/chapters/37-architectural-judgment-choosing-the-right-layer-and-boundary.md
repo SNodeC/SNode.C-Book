@@ -19,7 +19,7 @@ Architectural judgment begins before code is written: it is the decision about w
 
 The reader has now built and extended MiniGateway after studying its underlying runtime and protocols. The harder task is deciding which of those choices should survive when requirements change: whether state must outlive the process, whether a peer needs a different trust boundary, or whether two roles need independent operation.
 
-MiniGateway made that problem concrete: one measurement model had to remain independent while several input, observation, and integration roles shared it. This chapter steps back from that application and turns the decision pattern into an explicit design model.
+MiniGateway’s shared model gives us a concrete starting point for these decisions.
 
 Here, *role* is used in the system-design sense unless the text explicitly refers to configured runtime roles and registered instances.
 
@@ -41,7 +41,7 @@ Most design choices in this book reduce to five questions:
 | Lifetime | How long should this state or policy live? | context, application model, database, service, deployment |
 | Visibility | Who must diagnose or operate this behavior? | logs, counters, configuration, service files, tests |
 
-Use this table to slow down the decision before code hardens around the wrong abstraction; it is not a recipe.
+Use these questions before committing to an abstraction.
 
 ### Worked decision: who owns the measurement sequence?
 
@@ -163,7 +163,7 @@ After the system shape is clear, place the code at the layer that owns the behav
 | durable state | persistence layer |
 | service supervision | deployment/service manager |
 
-This is where many technical debts begin. A value placed in the wrong layer may seem harmless until a second transport, second role, second deployment mode, or second failure policy appears.
+A misplaced value becomes costly when another role needs different behavior.
 
 
 \index{configuration!design judgment}
@@ -214,8 +214,10 @@ The next chapter applies this judgment to extension: new features should be adde
 
 ::: {.snodec-exercise title="Exercises"}
 1. **Review (O1).** Why can neither an SSE event ID nor a producer-supplied sequence define MiniGateway acceptance order? Explain how to retain a sensor's original sample number.
-2. **Lab (O2).** Build and run the model-ownership solution. Submit measurements carrying conflicting sequence numbers; expect accepted order 1, 2, 3. Unsubscribe one observer before the third acceptance and verify only the remaining observer receives it.
-3. **Design (O3).** A local sensor reader requires elevated device privileges and independent restarts. Choose a process boundary and an IPC contract. Use the decision tables to justify identity, framing, recovery, and diagnostic ownership.
+2. **Review (O3).** When do two connections need separate endpoint roles rather than two flow handles?
+3. **Lab (O2).** Build and run the model-ownership solution. Submit measurements carrying conflicting sequence numbers; expect accepted order 1, 2, 3. Unsubscribe one observer before the third acceptance and verify only the remaining observer receives it.
+4. **Lab (O2).** Build and run the model-instances lab. Compare two input paths sharing one model with two separate models. Expect shared order 1, 2, but independent order 1 in each separate model.
+5. **Design (O3).** A local sensor reader requires elevated device privileges and independent restarts. Choose a process boundary and an IPC contract. Use the decision tables to justify identity, framing, recovery, and diagnostic ownership.
 
 Public solutions and lab commands: `companion/exercises/ch37/README.md`.
 :::

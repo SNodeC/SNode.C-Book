@@ -161,3 +161,5 @@
   "other_manuscript_files_identical": true,
   "sample_source_markers_index_entries_figures_preserved": true
 }
+PASS: editorial thresholds, objectives/exercise coverage, public answer paths, and preservation
+Build, run, visual review, and answer quality need the separate evidence logs and ledger.

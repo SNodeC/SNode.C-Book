@@ -7,7 +7,7 @@
 
 ::: {.snodec-objectives title="Learning objectives"}
 - **O1.** Explain why protocol behavior and shared application state need different owners.
-- **O2.** Build two echo servers and observe their common byte-reflection contract.
+- **O2.** Trace buffer ownership and the read/write progression in two echo implementations.
 - **O3.** Decide whether SNode.C fits a service given platform, runtime, and integration constraints.
 :::
 
@@ -68,6 +68,59 @@ Compare the `Comparison-AsioEcho` companion with Chapter 3's `EchoPair`. Both im
 | Advance operations | `core::SNodeC::start()` | `asio::io_context::run()` |
 | Endpoint policy | named configuration and state callbacks | this example parses a port argument and reports errors |
 
+These are **function excerpts**, reflowed from the companion sources; surrounding class declarations are omitted. The left excerpt is `EchoPair/EchoSocketContext.cpp`; the right excerpts are `Comparison-AsioEcho/main.cpp`, both under `companion/examples/`.
+
+```{=latex}
+\begingroup
+\lstdefinestyle{snodec-excerpt}{style=snodec-cpp,basicstyle=\ttfamily\scriptsize}
+\noindent\begin{minipage}[t]{0.48\linewidth}
+\textbf{EchoPair: receive callback}
+```
+
+```{.cpp style="snodec-excerpt"}
+std::size_t
+EchoSocketContext::onReceivedFromPeer() {
+    char chunk[4096];
+    const std::size_t chunkLen =
+        readFromPeer(chunk, sizeof(chunk));
+    if (chunkLen > 0) {
+        log().debug() << "Data to reflect: "
+            << std::string(chunk, chunkLen);
+        sendToPeer(chunk, chunkLen);
+    }
+    return chunkLen;
+}
+```
+
+```{=latex}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
+\textbf{Asio: read, write, read again}
+```
+
+```{.cpp style="snodec-excerpt"}
+void read() {
+    socket.async_read_some(asio::buffer(bytes),
+        [self = shared_from_this()](
+            std::error_code error, std::size_t size) {
+            if (!error) { self->write(size); }
+        });
+}
+
+void write(std::size_t size) {
+    asio::async_write(socket,
+        asio::buffer(bytes.data(), size),
+        [self = shared_from_this()](
+            std::error_code error, std::size_t) {
+            if (!error) { self->read(); }
+        });
+}
+```
+
+```{=latex}
+\end{minipage}\par\medskip\endgroup
+```
+
 The Asio session starts another read only after its write finishes, so the buffer cannot be overwritten while a write still uses it. Each completion handler captures shared ownership of the session. On EOF or an error, it schedules no further operation; releasing the last handler destroys the socket. EchoPair delegates connection lifetime and output buffering to the framework while supplying the context callbacks. Neither approach removes the need to reason about ownership.
 
 The complete Asio source is `companion/examples/Comparison-AsioEcho/main.cpp`; the paired solution in `companion/exercises/ch01` builds both servers and sends the same bytes to each. After the environment setup in Chapter 2, run that lab and return to this table. Chapter 3 prints the complete EchoPair implementation. The Asio example deliberately omits TLS, reconnection, and application configuration; those can be built with Asio, but they are additional design work.
@@ -96,31 +149,16 @@ Figure \ref{fig:snodec-layer-stack} is the first compact view of that structure:
 
 ![The SNode.C design layers. Upward arrows indicate increasing application specificity, not callback order or exclusive ownership.](assets/figures/pdf/fig-01-layer-stack.pdf){#fig:snodec-layer-stack width=90% latex-placement="tbp"}
 
-The rows distinguish endpoint identity, stream transport, connection lifecycle and security, protocol meaning, and application responsibility. Changing one need not replace the others.
+The rows distinguish endpoint identity, stream transport, connection lifecycle and security, protocol meaning, and application responsibility. The measurement example shows why these distinctions matter. Moving a local input from a Unix-domain socket to IPv4 changes how a peer is addressed and admitted. It need not change how a parsed measurement enters the shared model. Adding TLS changes connection establishment and security; it does not decide the measurement's acceptance order.
 
-A context's protocol can remain recognizable when the lower family changes. Addressing, operating-system assumptions, and deployment still differ: reuse of behavior does not erase the consequences of choosing a carrier.
-
+The separation also explains what cannot be reused unchanged. An MQTT input must interpret topics and payloads, while an HTTP route interprets requests. Both can hand a measurement to the same model, and an SSE observer can report its accepted state. A common model does not erase protocol-specific framing, permissions, or failure handling. Each layer owns a different part of the path.
 
 \index{node.js}
 \index{event loop!node.js comparison}
 
+Like node.js, SNode.C advances communication through an event loop, but event-driven execution alone does not assign these responsibilities. SNode.C expresses them through C++ types, public include paths, ownership, and build components. Longer type names and explicit component choices are the cost of seeing the structure before execution; addresses and timeouts remain runtime configuration.
 
-Like node.js, SNode.C puts event-driven communication near the center of programming. Its expression is C++: types, public include paths, ownership, and build components expose structure before execution. Longer type names and explicit component choices are part of that cost. Operational settings such as addresses and timeouts still belong to configuration.
-
-
-A realistic networked system may involve:
-
-- a local control channel over Unix domain sockets,
-- a remote endpoint over IPv4 or IPv6,
-- a Bluetooth endpoint for device-near communication,
-- TLS for secure transport,
-- HTTP for service exposure,
-- Server-Sent Events or WebSocket for live communication,
-- MQTT for message-oriented integration,
-- and MariaDB-backed persistence for selected application state.
-
-
-MQTTSuite makes the larger-system view concrete through broker, integrator, bridge, command-line, and store roles. It appears after the recurring framework model has been established.
+The later MQTTSuite broker, integrator, bridge, command-line, and store roles extend this argument to a larger system. The useful question remains the same: when another communication surface is added, which responsibility changes, and which owner should remain shared?
 
 ### From the first connection to shared state
 
@@ -150,8 +188,10 @@ Keep the measurement example from the opening in mind. Adding another input shou
 
 ::: {.snodec-exercise title="Exercises"}
 1. **Review (O1).** A local socket and MQTT both supply measurements. Explain why assigning sequence numbers in both callbacks creates competing authority.
-2. **Lab (O2).** After Chapter 2, build and run the paired echo solution. Send the same binary payload, larger than either receive buffer, to both servers. Expect exact byte equality; explain why matching bytes say nothing about message boundaries or throughput.
-3. **Design (O3).** Choose between SNode.C and standalone Asio for a Linux multi-protocol gateway and a native Windows TCP utility. Justify each choice using explicit constraints rather than code length.
+2. **Review (O2).** Why must Asio finish writing before it reads again? Explain why EchoPair can return from its callback with a stack buffer.
+3. **Lab (O2).** After Chapter 2, build and run the paired echo solution. Send the same binary payload, larger than either receive buffer, to both servers. Expect exact byte equality; explain why matching bytes say nothing about message boundaries or throughput.
+4. **Lab (O2).** After Chapter 2, build both servers and run the independent-peers lab. Leave one peer idle while another sends bytes; close the idle peer and send again. Expect both replies unchanged.
+5. **Design (O3).** Choose between SNode.C and standalone Asio for a Linux multi-protocol gateway and a native Windows TCP utility. Justify each choice using explicit constraints rather than code length.
 
 Public solutions and lab commands: `companion/exercises/ch01/README.md`.
 :::

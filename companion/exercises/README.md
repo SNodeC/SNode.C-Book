@@ -1,9 +1,9 @@
 # Public exercises and solutions
 
-These are the public solutions for the five sample chapters. Each chapter has a
-review answer, an observable lab, and a design discussion. Try the exercise before
+These are the public solutions for the five sample chapters. Each chapter has two
+review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
-exercise 1 covers O1, exercise 2 covers O2, and exercise 3 covers O3.
+each exercise and solution identifies its objective explicitly.
 
 Use the installed SNode.C environment prepared in Chapter 2. Add standalone Asio
 headers (`libasio-dev` on Debian/Ubuntu) for the Chapter 1 comparison. No broker,
@@ -25,8 +25,8 @@ Each chapter README gives a focused build target and test command. Chapter 1, 23
 and 35 labs build the canonical companion programs, then use Python's standard
 library to make observations at their public socket/HTTP interfaces. Chapter 3
 adds a client with a changed greeting while inheriting the existing reflection
-behavior. Chapter 37 compiles the canonical `MeasurementModel.cpp` into a small
-experiment. There is only one implementation of each reused algorithm.
+behavior. Chapter 35 also isolates JSON validation before acceptance; Chapter 37 compiles
+the canonical `MeasurementModel.cpp` into two ownership experiments. There is only one implementation of each reused algorithm.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.

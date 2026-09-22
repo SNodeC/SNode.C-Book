@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest completed phase is Phase 2.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest completed work is the same-phase Phase 2 author follow-up.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -10,7 +10,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | --- | --- | --- | --- | --- |
 | 0 — scope and measurement | completed | Separate scope revision; Phase 0 completion commit containing this report (subjects below) | 2026-09-22 | AGENTS.md:18; EDITORIAL-WORK-PLAN.md:32; PROMPT.md; metrics-before.json; metrics-after-phase-0.json; measurement-checks.log; metrics-tests.log |
 | 1 — book-wide hygiene | completed | `proposal-readiness: phase 1 — refine manuscript hygiene and preserve teaching principles` (containing this report); separate author-amendment commit | 2026-09-22 | Phase 1 evidence below; metrics-after-phase-1.json; phase-1-source-hygiene.log; phase-1-source-alignment.log; phase-1-companion-build.log; phase-1-pdf-final.log |
-| 2 — five sample chapters | completed | `proposal-readiness: phase 2 — refine teaching samples and publish exercise solutions` (containing this report) | 2026-09-22 | chapter-ledger.md; metrics-after-phase-2.json; phase-2-exit-checks.json; phase-2-labs.log; phase-2-pdf-final.log; phase-2-visual-review.md |
+| 2 — five sample chapters and author follow-up | completed | `proposal-readiness: phase 2 follow-up — sample chapter strengthening` (containing this report); initial Phase 2 commit retained | 2026-09-22 | chapter-ledger.md; metrics-after-phase-2.json; phase-2-exit-checks.json; phase-2-follow-up-labs.log; phase-2-follow-up-pdf-final-build.log; phase-2-follow-up-visual-review.md |
 | 3 — proposal package | not started | — | — | No proposal rewrite or package builds executed |
 | 4 — restructure plan | not started | — | — | No plan or author approval recorded |
 | 5a — approved TOC | not started | — | — | Gated on recorded author approval |
@@ -316,7 +316,12 @@ and recheck the measured 482 pages. Confirm both the separate author-amendment
 commit and the Phase 1 completion commit, and a clean working tree. Phase 1 ends
 here; Phase 2 has not begun.
 
-## Phase 2 — five teaching samples
+## Phase 2 — five teaching samples (initial completion)
+
+The following results are historical to the initial Phase 2 commit. Its final
+metrics are preserved in `metrics-before-phase-2-follow-up.json`; the current
+ledger, `metrics-after-phase-2.json`, and `phase-2-exit-checks.json` include the
+author follow-up recorded at the end of this report. Original logs remain intact.
 
 Completed 2026-09-22, after the Phase 1 prerequisite checks below. This phase
 applies the teaching-book amendment to Chapters 1, 3, 23, 35, and 37 only.
@@ -475,3 +480,106 @@ must remain zero. Read `chapter-ledger.md` to recheck pedagogical coverage and
 public solution quality. The scripted metrics comparison will surface later
 author edits explicitly; reconcile an authorized change without rewriting this
 historical baseline. Stop here: Phase 3 remains unstarted.
+
+
+## Phase 2 follow-up — sample chapter strengthening
+
+Completed 2026-09-22 under the author's same-phase request. Phase 3 remains
+unstarted. The entry working tree was clean. Before editing, reran the current
+Phase 2 checker, hygiene/alignment, companion build, all five existing labs, and
+PDF target: `phase-2-follow-up-entry-{checks,hygiene,build,labs,pdf}.log`.
+`metrics-before-phase-2-follow-up.json` reproduces the previously saved current
+metrics; the intentional epilogue restoration is still preserved.
+
+### Edited and reread
+
+- Chapter 1: `manuscript/chapters/01-why-snodec-exists.md:71` adds clearly labeled,
+  side-by-side function excerpts, 12 and 16 lines. Both are whitespace-only
+  reflows of the companion functions; `check-phase-2.py` now checks that equality.
+  The existing comparison table stays. The revised layer argument starts at
+  line 141: carrier/security changes, protocol-specific interpretation, shared
+  acceptance, then C++ expression and the connected node.js comparison. The
+  protocol inventory is removed. O2 at line 10 is a reading-time trace objective;
+  both Chapter 1 labs explicitly follow Chapter 2.
+- All five exercise callouts now have five exercises: two review, two labs, one
+  design. Chapter 3:542; Chapter 23:441; Chapter 35 and Chapter 37 final callouts.
+  `chapter-ledger.md:18` records all 25 objective↔exercise mappings, including
+  public solutions. Each README has corresponding numbered answers/discussions
+  and two reproducible lab commands. The checker requires matching IDs, counts,
+  tiers, objective coverage, and public answer sections.
+- Chapter 35: `manuscript/chapters/35-building-minigateway.md:135` adds a four-step
+  source assembly order before the source tree. Small `Needspace` directives keep
+  the shared-model introduction and final recap together. Every original fenced
+  block remains byte-identical, as checked in `phase-2-exit-checks.json`.
+- Chapter 37 trims repeated framing to accommodate the new exercises. The
+  decision tables and rule boxes remain. The five revised endings and public
+  answers were reread together, with the surrounding chapter arguments and listing
+  locations checked in context; ledger notes distinguish this from rendering.
+
+### Current measurable exits
+
+Original Phase 2 entry remains the denominator for the prose-reduction target.
+All added objectives, exercises, and prose count toward the result; code does not.
+
+| Chapter | Original prose → current | Reduction | Average section prose | Exercises |
+| --- | ---: | ---: | ---: | ---: |
+| 1 | 2,343 → 1,723 | 26.46% | 327.00 | 5 |
+| 3 | 2,674 → 1,987 | 25.69% | 315.50 | 5 |
+| 23 | 3,664 → 2,897 | 20.93% | 398.00 | 5 |
+| 35 | 2,378 → 1,863 | 21.66% | 294.33 | 5 |
+| 37 | 2,395 → 1,859 | 22.38% | 291.00 | 5 |
+
+The full comparison section is 638 whitespace tokens, including excerpts
+and layout markup, below 1,200. Whole-book words: 146,525 → 146,950
+(+425); prose: 132,172 → 132,500; fenced tokens:
+14,353 → 14,450. Chapter subheadings remain 921; text fences 434;
+rule boxes 20; forbidden phrases and closing-perspective sections 0; shell label
+`sh`. All non-sample manuscript inputs remain unchanged. Global condensation
+remains later-phase work: 31,950 words above 115,000, 371 chapter subheadings
+above 550, and 184 text fences above 250. PDF pages remain **470 → 470**.
+
+### Built and run
+
+| Check | Result | Evidence in this directory |
+| --- | --- | --- |
+| Editorial exits, excerpts, objective/answer mappings, preservation | passed | phase-2-follow-up-exit-checks.log; phase-2-exit-checks.json |
+| Source hygiene and 36 complete marked listings | passed | phase-2-follow-up-hygiene.log; phase-2-follow-up-alignment.log |
+| Authoring-note guards and metrics regression | 9 guard fixtures; 5 counter tests passed | phase-2-follow-up-guards.log; phase-2-follow-up-metrics-tests.log |
+| Companion build including Asio and both new C++ lab executables | passed, supplied installation | phase-2-follow-up-companion.log |
+| All public labs | 10/10 passed, including five new cases | phase-2-follow-up-labs.log |
+| Full PDF target | passed; 470 pages | phase-2-follow-up-pdf-final-build.log; pdfinfo-phase-2-follow-up.txt |
+| Final LaTeX log and three-pass console | zero warnings, overfull boxes, underfull boxes | phase-2-follow-up-latex-final.log; phase-2-follow-up-pdf-final-build.log |
+| Rendered layout | 49 pages inspected, including all five samples and TOC tail | phase-2-follow-up-visual-review.md; phase-2-follow-up-rendered-pages.json |
+
+The added lab evidence is concrete: independent peers on both echo servers;
+second-listener bind failure with continued reflection from the original server;
+matching SSE observations and continued operation after one observer closes;
+rejected invalid input without state/notification changes; and shared versus
+separate model-instance ordering. The C++ labs link the canonical model/codec
+sources, and Python labs use the existing socket/HTTP programs. No application
+implementation was duplicated or changed. Existing CI discovers the ten tests
+through CTest (`.github/workflows/companion-examples.yml`, “Run public exercise
+labs”). **Hosted CI was not executed**; the compilation and runtime claims here
+refer to the local run. Broker delivery, hardware, and deployment are not verified.
+
+The first generated LaTeX exposed Pandoc escaping a code-style attribute.
+The final version uses a locally scoped listings style in Chapter 1 and explicit
+style selection, without changing global production styles. Subsequent visual
+review corrected the two Chapter 35 page-break issues. Early build evidence stays
+in `phase-2-follow-up-pdf-build.log`; the final log above is authoritative. Archived
+logs normalize trailing horizontal whitespace only; diagnostic lines are retained.
+
+Application production code: **+0/−0**. New lab/test support: **+176/−4** lines
+(130 lines of public lab solutions, +28/−2 CMake registration, +18/−2 editorial
+checker). The additions implement the explicitly requested extra exercises and
+reuse existing test helpers and canonical application code. Documentation,
+manuscript layout, metrics, and evidence are counted separately in the diff.
+
+### Re-verify before a later phase
+
+Use the Phase 2 re-verification commands above with the current checker and metrics;
+CTest must now discover and pass **ten** tests. Compare with the current
+`metrics-after-phase-2.json`, retaining fresh logs separately. Require the current
+five-exercise/three-tier mappings, exact excerpts, 20% prose reductions, 250-word
+section averages, preserved complete listings, and a PDF free of warnings/bad
+boxes. Stop here: this commit completes only the requested Phase 2 follow-up.

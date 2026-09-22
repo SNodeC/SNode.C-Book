@@ -132,6 +132,13 @@ ss -ltnp 'sport = :8080'
 \index{SSE observation role}
 
 
+Assemble the source in dependency order; the final CMake target compiles it together:
+
+1. Define `Measurement`, then `MeasurementModel` and `MeasurementJsonCodec`.
+2. Add the web/SSE role and MQTT context, factory, and client.
+3. Add configuration and state reporting; wire the shared model in `main.cpp`.
+4. Configure CMake, build `minigateway`, then check HTTP before adding a broker.
+
 MiniGateway has a small source tree, but the files are separated by responsibility:
 
 ```text
@@ -392,6 +399,8 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
+
+\Needspace{5\baselineskip}
 
 **The shared measurement model**
 
@@ -1259,6 +1268,8 @@ Before extending the project, make its observations explicit:
 
 Use a separate observer to check MQTT output when a broker is available. In its absence, finish the HTTP and SSE checks and record the broker scenario as unexecuted.
 
+\Needspace{10\baselineskip}
+
 ::: {.snodec-remember title="What to remember"}
 - The shared model assigns acceptance order and notifies observers on the event-loop thread.
 - The JSON codec supplies one representation to HTTP, SSE, and MQTT.
@@ -1269,8 +1280,10 @@ Use a separate observer to check MQTT output when a broker is available. In its 
 
 ::: {.snodec-exercise title="Exercises"}
 1. **Review (O1).** Trace an MQTT measurement from JSON decoding to the model, SSE, and outgoing publication. Where does the authoritative sequence come from?
-2. **Lab (O2).** Build and run the MiniGateway solution with an unavailable MQTT endpoint. Compare `/status`, two `/simulate` responses, and the matching SSE events. Restart: expect sequence zero again. Explain why working HTTP does not establish MQTT readiness.
-3. **Design (O3).** A deployment requires history across restarts and permits overlapping MQTT input/output topics. Identify the owners of durable acceptance order and origin filtering; justify which code must change before deployment.
+2. **Review (O1).** Why must invalid JSON be rejected before calling `accept(...)`, and why does the codec not assign acceptance order?
+3. **Lab (O2).** Build and run the MiniGateway solution with an unavailable MQTT endpoint. Compare `/status`, two `/simulate` responses, and the matching SSE events. Restart: expect sequence zero again. Explain why working HTTP does not establish MQTT readiness.
+4. **Lab (O1).** Build and run the validation lab. Accept one valid measurement, then reject malformed, missing-field, and non-finite inputs. Expect unchanged state and no notification; the next valid input gets sequence 2.
+5. **Design (O3).** A deployment requires history across restarts and permits overlapping MQTT input/output topics. Identify the owners of durable acceptance order and origin filtering; justify which code must change before deployment.
 
 Public solutions and lab commands: `companion/exercises/ch35/README.md`.
 :::

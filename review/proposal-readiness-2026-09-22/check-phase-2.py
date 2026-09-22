@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Recheck Phase 2 editorial exits and preservation against its entry snapshot."""
+from collections import Counter
 import json
 from pathlib import Path
 import re
@@ -54,10 +55,13 @@ for name, result in current['files'].items():
     objective_ids = set(re.findall(r'\*\*(O\d+)\.', objectives[1]))
     assert 3 <= len(objective_ids) <= 5
     tiers = re.findall(r'^\d+\. \*\*(Review|Lab|Design) \((O\d+)\)', exercises[1], re.M)
-    assert 3 <= len(tiers) <= 5
+    assert 5 <= len(tiers) <= 6
+    counts = Counter(tier for tier, _ in tiers)
+    assert counts['Review'] == 2 and counts['Lab'] == 2 and 1 <= counts['Design'] <= 2
     assert {tier for tier, _ in tiers} == {'Review', 'Lab', 'Design'}
     assert {objective for _, objective in tiers} == objective_ids
-    assert (root / f'companion/exercises/ch{number}/README.md').is_file()
+    answers = (root / f'companion/exercises/ch{number}/README.md').read_text()
+    assert re.findall(r'^## \d+\. (Review|Lab|Design) \((O\d+)\)', answers, re.M) == tiers
     for pattern in (r'<!-- snodec-source: .*? -->', r'^\\index\{.*$', r'!\[.*?\]\(.*?\)\{.*?\}'):
         assert re.findall(pattern, old, re.M) == re.findall(pattern, text, re.M), name
     if number == '35':
@@ -75,8 +79,20 @@ assert set(current['totals']['fenced_blocks_by_language']) & {'sh', 'bash', 'she
 ch1 = next(root.glob('manuscript/chapters/01-*')).read_text()
 comparison = ch1.split('### Where SNode.C fits: two echo servers\n')[1].split('\n### ')[0]
 assert len(comparison.split()) <= 1200
+# Clearly marked excerpts may change whitespace, never C++ tokens.
+excerpts = re.findall(r'```\{\.cpp[^\n]*\}\n(.*?)\n```', comparison, re.S)
+echo = (root / 'companion/examples/EchoPair/EchoSocketContext.cpp').read_text()
+echo = echo[echo.index('std::size_t EchoSocketContext::onReceivedFromPeer()'):echo.index('core::socket::stream::SocketContext* EchoServer')].strip()
+asio = (root / 'companion/examples/Comparison-AsioEcho/main.cpp').read_text()
+asio = asio[asio.index('    void read()'):asio.index('    tcp::socket socket;')].replace('private:', '').strip()
+assert len(excerpts) == 2
+for excerpt, source in zip(excerpts, (echo, asio)):
+    assert re.sub(r'\s+', '', excerpt) == re.sub(r'\s+', '', source), 'Excerpt differs from companion'
+assert [len(excerpt.splitlines()) for excerpt in excerpts] == [12, 16]
 assert not subprocess.check_output(['git', 'diff', base, '--', 'manuscript/book-files.txt'], cwd=root)
 output = {'sample_chapters': records, 'comparison_words': len(comparison.split()),
+          'comparison_excerpt_lines': [len(excerpt.splitlines()) for excerpt in excerpts],
+          'excerpts_match_companion_ignoring_whitespace': True,
           'chapter_35_fences_identical': True, 'other_manuscript_files_identical': True,
           'sample_source_markers_index_entries_figures_preserved': True}
 (report / 'phase-2-exit-checks.json').write_text(json.dumps(output, indent=2) + '\n')

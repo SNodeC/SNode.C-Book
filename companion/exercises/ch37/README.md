@@ -9,7 +9,15 @@ orders that producer's samples, not all gateway inputs. Keep a distinct
 then assigns its own acceptance sequence after parsing, preserving both facts
 without making them compete. In the supplied model that sequence is process-local.
 
-## 2. Lab (O2)
+## 2. Review (O3)
+
+Two flow handles can represent independent attempts and cancellation under one
+endpoint policy. Use separate endpoint roles when destinations, credentials,
+configuration identity, or operational ownership differ. Counting connections
+alone does not settle this choice: ask which settings and lifetime decisions
+must be independently owned.
+
+## 3. Lab (O2)
 
 After the common configuration in [the exercise guide](../README.md):
 
@@ -29,7 +37,22 @@ subscription before the captured vectors leave scope.
 This isolates acceptance and observer ownership from transport. It does not test
 HTTP teardown or persistence; those are different boundaries.
 
-## 3. Design (O3)
+## 4. Lab (O2)
+
+Use the same build target, then run:
+
+```sh
+ctest --test-dir build/labs -R '^exercise-ch37-model-instances$' --output-on-failure -V
+```
+
+`model-instances.cpp` compiles the canonical model. Two references representing
+input paths share one model and receive sequences 1 and 2. Two separate model
+instances each receive sequence 1. Expect one PASS line describing both results.
+Sharing a class definition does not share its state: the owner must be the same
+instance if acceptance order is to be common. The lab has no transport dependency
+and makes no claim about interprocess ordering or persistence.
+
+## 5. Design (O3)
 
 Use a separate collector process for privileged device access and independent
 restarts. Leave HTTP/MQTT and the shared model in the unprivileged gateway. A

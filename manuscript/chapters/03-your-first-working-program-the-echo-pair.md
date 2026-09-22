@@ -541,8 +541,10 @@ A direct blocking loop gives a short request/reply exchange an easy-to-follow se
 
 ::: {.snodec-exercise title="Exercises"}
 1. **Review (O1).** Trace one connection from the server handle through the factory to the context. Who owns the returned context?
-2. **Lab (O2).** Build and run the supplied greeting-client solution against EchoPair. It changes only the initial greeting to `Learning by echo`. Observe that greeting and a binary reply returned unchanged; explain why reflection needs no change.
-3. **Design (O3).** A client reaches no greeting callback. Choose the first diagnostic to inspect for an unavailable port, and contrast it with the check for corrupted echoed bytes. Justify the order.
+2. **Review (O1).** Why does only the client send the initial greeting, although both contexts use the same receive callback?
+3. **Lab (O2).** Build and run the supplied greeting-client solution against EchoPair. It changes only the initial greeting to `Learning by echo`. Observe that greeting and a binary reply returned unchanged; explain why reflection needs no change.
+4. **Lab (O3).** Build EchoPair and run the occupied-port lab. Start a second server on the first server’s endpoint. Expect a bind error from the second process and unchanged reflection from the first.
+5. **Design (O3).** A client reaches no greeting callback. Choose the first diagnostic to inspect for an unavailable port, and contrast it with the check for corrupted echoed bytes. Justify the order.
 
 Public solutions and lab commands: `companion/exercises/ch03/README.md`.
 :::

@@ -14,7 +14,15 @@ measurement would retain obsolete responses indefinitely. A silent network failu
 still needs detection by the transport or timeout policy. An SSE blank line ends a
 record, and EventSource dispatches its parsed fields as a typed `MessageEvent`.
 
-## 2. Lab (O2)
+## 2. Review (O1)
+
+A blank line terminates an SSE record. The parser accumulates fields before
+emitting a `MessageEvent`: `event` selects its type, `id` supplies its event ID,
+and `data` supplies the payload. An ID can be remembered for reconnect, but it
+neither acknowledges delivery nor makes the server retain history. The example
+uses `measurement` events whose JSON sequence matches the event ID.
+
+## 3. Lab (O2)
 
 After the common configuration in [the exercise guide](../README.md):
 
@@ -36,7 +44,24 @@ These observations check response behavior and reconnect output. They do not
 measure retained allocations or establish acknowledgement of earlier events.
 The explicit disconnect-to-unsubscribe path explains idle cleanup.
 
-## 3. Design (O3)
+## 4. Lab (O2)
+
+Use the same build target, then run:
+
+```sh
+ctest --test-dir build/labs -R '^exercise-ch23-observers$' --output-on-failure -V
+```
+
+`observers.py` opens two streams and consumes each initial snapshot. One simulation
+must produce identical JSON and IDs for both. It closes one stream, simulates
+again, and requires the remaining stream to receive the next accepted sequence.
+Expect one PASS line. For a manual run, use two `curl -N` observers and stop one
+with Ctrl-C before the second POST. Closing an observation path does not own the
+other observer's lifetime or the shared measurement. The wire observations do
+not measure memory reclamation; the disconnect-to-unsubscribe code explains that
+separate ownership fact.
+
+## 5. Design (O3)
 
 One bounded policy is to retain at most 600 accepted events for at most ten minutes,
 whichever limit is reached first. Apply a finite per-observer output queue and

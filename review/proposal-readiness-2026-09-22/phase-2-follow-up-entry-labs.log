@@ -1,0 +1,54 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: exercise-ch01
+
+1: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/examples/EchoPair/echoserver" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/examples/Comparison-AsioEcho/asio-echo"
+1: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/exercises/ch01
+1: Test timeout computed to be: 40
+1: PASS: snodec: 20480 binary bytes unchanged; next connection also works
+1: PASS: asio: 20480 binary bytes unchanged; next connection also works
+1/5 Test #1: exercise-ch01 ....................   Passed    0.21 sec
+test 2
+    Start 2: exercise-ch03
+
+2: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/examples/EchoPair/echoserver" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/exercises/ch03/greeting-client"
+2: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/exercises/ch03
+2: Test timeout computed to be: 40
+2: PASS: EchoPair receives Learning by echo
+2: PASS: changed greeting and unchanged binary reflection with a controlled peer
+2/5 Test #2: exercise-ch03 ....................   Passed    0.12 sec
+test 3
+    Start 3: exercise-ch23
+
+3: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/examples/SSE-Server/sse-server"
+3: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/exercises/ch23
+3: Test timeout computed to be: 40
+3: PASS: 406 on restricted Accept; two matching live events; reconnect starts at current state
+3/5 Test #3: exercise-ch23 ....................   Passed    0.09 sec
+test 4
+    Start 4: exercise-ch35
+
+4: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch35/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/examples/MiniGateway/minigateway"
+4: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/exercises/ch35
+4: Test timeout computed to be: 40
+4: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+4/5 Test #4: exercise-ch35 ....................   Passed    0.13 sec
+test 5
+    Start 5: exercise-ch37
+
+5: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/exercises/ch37/model-ownership
+5: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples/companion/exercises/ch37
+5: Test timeout computed to be: 10000000
+5: PASS: input 900,2,1 -> accepted 1,2,3; detached observer sees only 1,2
+5/5 Test #5: exercise-ch37 ....................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =   0.55 sec

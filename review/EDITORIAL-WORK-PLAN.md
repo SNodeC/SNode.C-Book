@@ -97,6 +97,31 @@ Stop after Phase 2. Phase 3 is next; rerun the Phase 2 checks listed in REPORT.m
 before starting. Proposal positioning and learning-path work remain Phase 3;
 no restructuring approval is recorded.
 
+## Phase 2 follow-up — author scope and completion, 2026-09-22
+
+The author requested strengthening within Phase 2, explicitly excluding Phase 3:
+retain Chapter 1's table and add approximately 15-line paired source excerpts;
+connect its layered-architecture argument; make O2 achievable in Chapter 1 while
+labeling its lab after Chapter 2; give all five samples 5–6 exercises comprising
+two review questions, two labs, and one or two design problems, with objective
+mappings and public solutions; add Chapter 35's source build order. This follow-up
+supersedes the initial three-exercise sample sets, without starting another phase.
+
+Completed: each sample now has five exercises and 25 mappings are recorded in
+`chapter-ledger.md`. Chapter 1's 12/16-line excerpts are checked against companion
+functions; its O2 is a reading-time trace, and both labs follow Chapter 2. Chapter
+35 has a four-step build order and retains all listings. Ten local labs build and
+pass using canonical companion programs/model/codec; hosted CI was not executed.
+Hygiene, alignment, guard fixtures, metrics tests, and updated editorial exits pass.
+Prose reductions remain 20.93–26.46%, with average sections 291–398 words.
+Current whole-book words: 146,950; PDF: 470 pages, zero warnings/bad boxes.
+The 49-page rendered review and all evidence are in REPORT.md's Phase 2 follow-up
+section. Earlier Phase 2 figures above remain historical to its initial commit.
+
+Commit: `proposal-readiness: phase 2 follow-up — sample chapter strengthening`.
+Stop after this commit. Phase 3 remains unstarted; future sessions must recheck
+these current Phase 2 exits before proceeding.
+
 ## Author amendment — teaching book, 2026-09-22
 
 Accepted during Phase 1; the full amendment is appended to

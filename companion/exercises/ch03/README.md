@@ -8,7 +8,15 @@ application context and hands it to the framework-managed connection lifecycle;
 application code must not delete it. Each context holds one peer's behavior. The
 handle is therefore neither the peer connection nor the echo protocol object.
 
-## 2. Lab (O2)
+## 2. Review (O1)
+
+The client initiates the conversation in `onConnected()`. A newly connected
+server waits for input. After that initial send, the same `onReceivedFromPeer()`
+reflects bytes on both sides. If neither side initiated, both could wait forever;
+if both initiated, two streams of reflected data would begin. Endpoint direction
+and the decision to initiate a protocol exchange are related but distinct choices.
+
+## 3. Lab (O2)
 
 After the common configuration in [the exercise guide](../README.md):
 
@@ -36,7 +44,23 @@ and sends a 5,000-byte binary reply, which must return unchanged. Expect two PAS
 lines. This separates the initiation callback from reflection and avoids relying
 only on fast, repetitive ping-pong logs.
 
-## 3. Design (O3)
+## 4. Lab (O3)
+
+Use the same build target, then run:
+
+```sh
+ctest --test-dir build/labs -R '^exercise-ch03-occupied-port$' --output-on-failure -V
+```
+
+`occupied-port.py` first establishes a connection to EchoPair. It starts another
+copy with the same address and port and expects `Address already in use` in that
+process's endpoint diagnostic. The established connection must still reflect
+`original owner` unchanged. Expect one PASS line covering both observations.
+For manual repetition, run the two server commands in separate terminals on the
+same port. The failure occurs before a second server can create a peer context;
+changing greeting or reflection code cannot repair that listener conflict.
+
+## 5. Design (O3)
 
 If no connection is established, inspect the connect/listen state and the selected
 address and port first. The greeting callback cannot run before the context is

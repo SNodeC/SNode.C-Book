@@ -12,11 +12,11 @@
     "manual_references": "Literal Chapter followed by an integer outside code fences; source line and matched text recorded, including self-references. Ranges/plural Chapters require editorial review."
   },
   "totals": {
-    "total_words": 146950,
-    "prose_words": 132500,
-    "code_words": 14450,
-    "code_content_words": 12974,
-    "fence_marker_words": 1476,
+    "total_words": 146525,
+    "prose_words": 132172,
+    "code_words": 14353,
+    "code_content_words": 12889,
+    "fence_marker_words": 1464,
     "forbidden_phrase_hit_count": 0,
     "heading_counts_by_level": {
       "1": 13,
@@ -36,9 +36,9 @@
       "snodec-warning": 10
     },
     "fenced_blocks_by_language": {
-      "=latex": 9,
+      "=latex": 6,
       "cmake": 23,
-      "cpp": 199,
+      "cpp": 197,
       "ini": 9,
       "markdown": 1,
       "python": 2,
@@ -47,24 +47,24 @@
       "text": 434
     },
     "chapter_headings_level_3_and_deeper": 921,
-    "chapter_section_prose_words": 122391,
-    "average_chapter_section_prose_words": 132.89,
+    "chapter_section_prose_words": 122064,
+    "average_chapter_section_prose_words": 132.53,
     "closing_perspective_sections": 0,
     "term_occurrence_counts": {
-      "role": 687,
+      "role": 686,
       "boundary/boundaries": 510,
       "visible": 210,
-      "is not a": 72,
+      "is not a": 73,
       "does not prove": 4,
       "does not by itself": 6
     },
-    "manual_chapter_reference_count": 276
+    "manual_chapter_reference_count": 275
   },
   "requested_baseline_comparison": {
     "total_words": {
       "expected": 151922,
-      "actual": 146950,
-      "delta": -4972
+      "actual": 146525,
+      "delta": -5397
     },
     "chapter_headings_level_3_and_deeper": {
       "expected": 1020,
@@ -93,8 +93,8 @@
     },
     "cpp_fences": {
       "expected": 205,
-      "actual": 199,
-      "delta": -6
+      "actual": 197,
+      "delta": -8
     },
     "snodec-exercise": {
       "expected": 0,
@@ -633,11 +633,11 @@
       "manual_chapter_references": []
     },
     "manuscript/chapters/01-why-snodec-exists.md": {
-      "total_words": 1820,
-      "prose_words": 1723,
-      "code_words": 97,
-      "code_content_words": 85,
-      "fence_marker_words": 12,
+      "total_words": 1604,
+      "prose_words": 1604,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
       "heading_counts_by_level": {
         "1": 0,
         "2": 1,
@@ -647,8 +647,8 @@
         "6": 0
       },
       "section_count": 5,
-      "section_prose_words": 1635,
-      "average_section_prose_words": 327.0,
+      "section_prose_words": 1517,
+      "average_section_prose_words": 303.4,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -658,10 +658,7 @@
         "snodec-exercise": 1,
         "snodec-objectives": 1
       },
-      "fenced_blocks_by_language": {
-        "=latex": 3,
-        "cpp": 2
-      },
+      "fenced_blocks_by_language": {},
       "closing_perspective_sections": [],
       "forbidden_phrase_hits": {
         "in the manuscript": [],
@@ -678,11 +675,11 @@
       "term_occurrences": {
         "role": [
           {
-            "line": 148,
+            "line": 95,
             "match": "role"
           },
           {
-            "line": 172,
+            "line": 134,
             "match": "role"
           }
         ],
@@ -692,19 +689,19 @@
             "match": "boundaries"
           },
           {
-            "line": 144,
+            "line": 91,
             "match": "boundary"
           },
           {
-            "line": 145,
+            "line": 92,
             "match": "boundaries"
           },
           {
-            "line": 177,
+            "line": 139,
             "match": "boundary"
           },
           {
-            "line": 192,
+            "line": 153,
             "match": "boundaries"
           }
         ],
@@ -728,27 +725,23 @@
           "match": "Chapter 3"
         },
         {
-          "line": 126,
+          "line": 73,
           "match": "Chapter 2"
         },
         {
-          "line": 126,
+          "line": 73,
           "match": "Chapter 3"
         },
         {
-          "line": 174,
+          "line": 136,
           "match": "Chapter 3"
         },
         {
-          "line": 174,
+          "line": 136,
           "match": "Chapter 5"
         },
         {
-          "line": 192,
-          "match": "Chapter 2"
-        },
-        {
-          "line": 193,
+          "line": 153,
           "match": "Chapter 2"
         }
       ]
@@ -865,8 +858,8 @@
       ]
     },
     "manuscript/chapters/03-your-first-working-program-the-echo-pair.md": {
-      "total_words": 2565,
-      "prose_words": 1987,
+      "total_words": 2512,
+      "prose_words": 1934,
       "code_words": 578,
       "code_content_words": 544,
       "fence_marker_words": 34,
@@ -879,8 +872,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 1893,
-      "average_section_prose_words": 315.5,
+      "section_prose_words": 1840,
+      "average_section_prose_words": 306.67,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 1,
@@ -5563,8 +5556,8 @@
       ]
     },
     "manuscript/chapters/23-server-sent-events-and-real-time-http.md": {
-      "total_words": 3268,
-      "prose_words": 2897,
+      "total_words": 3214,
+      "prose_words": 2843,
       "code_words": 371,
       "code_content_words": 359,
       "fence_marker_words": 12,
@@ -5577,8 +5570,8 @@
         "6": 0
       },
       "section_count": 7,
-      "section_prose_words": 2786,
-      "average_section_prose_words": 398.0,
+      "section_prose_words": 2732,
+      "average_section_prose_words": 390.29,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -9268,8 +9261,8 @@
       ]
     },
     "manuscript/chapters/35-building-minigateway.md": {
-      "total_words": 3834,
-      "prose_words": 1863,
+      "total_words": 3723,
+      "prose_words": 1752,
       "code_words": 1971,
       "code_content_words": 1899,
       "fence_marker_words": 72,
@@ -9282,8 +9275,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 1766,
-      "average_section_prose_words": 294.33,
+      "section_prose_words": 1655,
+      "average_section_prose_words": 275.83,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -9348,63 +9341,59 @@
             "match": "role"
           },
           {
-            "line": 138,
+            "line": 153,
             "match": "role"
           },
           {
-            "line": 160,
+            "line": 153,
             "match": "role"
           },
           {
-            "line": 160,
+            "line": 496,
             "match": "role"
           },
           {
-            "line": 505,
+            "line": 502,
             "match": "role"
           },
           {
-            "line": 511,
+            "line": 614,
             "match": "role"
           },
           {
-            "line": 623,
+            "line": 614,
             "match": "role"
           },
           {
-            "line": 623,
+            "line": 670,
             "match": "role"
           },
           {
-            "line": 679,
+            "line": 677,
             "match": "role"
           },
           {
-            "line": 686,
+            "line": 1003,
             "match": "role"
           },
           {
-            "line": 1012,
+            "line": 1083,
             "match": "role"
           },
           {
-            "line": 1092,
+            "line": 1091,
             "match": "role"
           },
           {
-            "line": 1100,
+            "line": 1091,
             "match": "role"
           },
           {
-            "line": 1100,
+            "line": 1093,
             "match": "role"
           },
           {
-            "line": 1102,
-            "match": "role"
-          },
-          {
-            "line": 1263,
+            "line": 1254,
             "match": "role"
           }
         ],
@@ -9425,15 +9414,15 @@
           "match": "Chapter 36"
         },
         {
-          "line": 191,
+          "line": 184,
           "match": "Chapter 36"
         },
         {
-          "line": 212,
+          "line": 205,
           "match": "Chapter 32"
         },
         {
-          "line": 422,
+          "line": 413,
           "match": "Chapter 23"
         }
       ]
@@ -9794,8 +9783,8 @@
       ]
     },
     "manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md": {
-      "total_words": 1877,
-      "prose_words": 1859,
+      "total_words": 1886,
+      "prose_words": 1868,
       "code_words": 18,
       "code_content_words": 16,
       "fence_marker_words": 2,
@@ -9808,8 +9797,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 1746,
-      "average_section_prose_words": 291.0,
+      "section_prose_words": 1755,
+      "average_section_prose_words": 292.5,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 3,
@@ -9960,7 +9949,7 @@
             "match": "boundary"
           },
           {
-            "line": 220,
+            "line": 218,
             "match": "boundary"
           }
         ],
@@ -9982,7 +9971,12 @@
             "match": "visible"
           }
         ],
-        "is not a": [],
+        "is not a": [
+          {
+            "line": 44,
+            "match": "is not a"
+          }
+        ],
         "does not prove": [],
         "does not by itself": []
       },

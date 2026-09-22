@@ -9,9 +9,18 @@ Protocol framing belongs to the input, while ordering shared state belongs to th
 application. This distinction remains useful even when all callbacks run on one
 thread: the conflict is competing policy, not merely simultaneous execution.
 
-## 2. Lab (O2)
+## 2. Review (O2)
 
-After the common configuration in [the exercise guide](../README.md):
+Asio's write operation still refers to the session's byte array until completion.
+Starting another read into that array early could overwrite bytes being sent.
+The completion handler holds a shared session owner, keeping both socket and
+buffer alive. EchoPair's `sendToPeer(...)` copies into framework-managed output;
+its stack buffer can disappear when the callback returns. Neither implementation
+requires one read to correspond to one sender write.
+
+## 3. Lab (O2)
+
+After Chapter 2 and the common configuration in [the exercise guide](../README.md):
 
 ```sh
 cmake --build build/labs --target ch01-lab
@@ -33,7 +42,23 @@ The test deliberately has no throughput claim. Read completion starts an Asio
 write; write completion permits buffer reuse. EchoPair instead submits bytes to
 the framework's output queue.
 
-## 3. Design (O3)
+## 4. Lab (O2)
+
+After Chapter 2, use the same build target and run just this second lab:
+
+```sh
+ctest --test-dir build/labs -R '^exercise-ch01-independent-peers$' --output-on-failure -V
+```
+
+`independent-peers.py` keeps two connections open to each compiled server. One
+sends nothing while the other sends `other\x00peer`; that active connection then
+sends `still here` after the idle peer closes. Expect unchanged bytes for both
+exchanges and one PASS line per server. A blocking wait on the idle peer would
+time out the active exchange. Independent session state allows one connection
+to end without ending the listener or the other connection. This checks progress
+and byte equality, not a throughput or resource-exhaustion claim.
+
+## 5. Design (O3)
 
 For the Linux gateway, SNode.C is a reasonable choice when shared HTTP/MQTT roles,
 configuration, and diagnostics justify learning its layered model. Keep callbacks

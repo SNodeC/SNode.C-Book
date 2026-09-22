@@ -440,8 +440,10 @@ Server-side SSE remains an HTTP or Express route that validates the request and 
 
 ::: {.snodec-exercise title="Exercises"}
 1. **Review (O1).** Trace the response reference from subscription to disconnect. Why must cleanup work when no new measurement arrives?
-2. **Lab (O2).** Build and run the SSE solution. Open an observer, call `/simulate` twice, and compare each event ID and JSON payload with its POST response. Reconnect with an older `Last-Event-ID`: expect only the current measurement, not a replay. Also verify the example rejects `text/event-stream;q=0`.
-3. **Design (O3).** Choose a slow-observer and replay policy for a dashboard that may disconnect for ten minutes. State bounds, the response to an expired ID, and what the UI shows while disconnected.
+2. **Review (O1).** What ends an SSE record, and how do its event type, ID, and data reach the client?
+3. **Lab (O2).** Build and run the SSE solution. Open an observer, call `/simulate` twice, and compare each event ID and JSON payload with its POST response. Reconnect with an older `Last-Event-ID`: expect only the current measurement, not a replay. Also verify the example rejects `text/event-stream;q=0`.
+4. **Lab (O2).** Build the server and run the observers lab. Connect two streams, simulate once, then close one and simulate again. Expect identical first events and a second event on the remaining stream.
+5. **Design (O3).** Choose a slow-observer and replay policy for a dashboard that may disconnect for ten minutes. State bounds, the response to an expired ID, and what the UI shows while disconnected.
 
 Public solutions and lab commands: `companion/exercises/ch23/README.md`.
 :::
