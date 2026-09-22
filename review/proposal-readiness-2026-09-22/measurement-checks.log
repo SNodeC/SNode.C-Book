@@ -1,0 +1,29 @@
+test_callouts_and_closing_headings (__main__.MetricsTests.test_callouts_and_closing_headings) ... ok
+test_fences_hide_fake_structure_and_phrases (__main__.MetricsTests.test_fences_hide_fake_structure_and_phrases) ... ok
+test_manifest_authority_and_duplicates (__main__.MetricsTests.test_manifest_authority_and_duplicates) ... ok
+test_unclosed_fence_fails (__main__.MetricsTests.test_unclosed_fence_fails) ... ok
+test_wrapped_phrases_locations_and_word_boundaries (__main__.MetricsTests.test_wrapped_phrases_locations_and_word_boundaries) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK
+PASS: fresh metrics and saved before/after measurements are byte-identical
+PASS: independent whitespace-token count across 62 manifest files: 151924
+PASS: independent chapter heading count: 1020
+PASS: independent text fence count: 478
+PASS: independent cpp fence count: 205
+PASS: independent snodec-remember count: 38
+PASS: independent snodec-rule count: 30
+PASS: independent snodec-exercise count: 0
+PASS: independent closing-section count including attributed headings: 15
+PASS: word partitions balance in all 62 files
+PASS: manuscript diff from SNode.C-2.0 is empty
+GUARD HIT: manuscript/chapters/11-unix-domain-sockets.md:363: the chapter should
+GUARD HIT: manuscript/chapters/21-the-http-layer.md:399: published edition
+GUARD HIT: manuscript/chapters/29-learning-from-the-applications-in-src-apps.md:448: should be presented as
+GUARD HIT: manuscript/chapters/29-learning-from-the-applications-in-src-apps.md:454: useful for Chapter 29
+GUARD HIT: manuscript/chapters/34-testing-debugging-and-benchmarking.md:580: the benchmarking tone should be
+PASS: scope instructions and prompt exist in the separate scope-revision commit
+PASS: scope revision references and phase status table exist
+PASS: git diff --check

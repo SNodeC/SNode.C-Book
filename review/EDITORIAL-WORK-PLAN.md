@@ -52,10 +52,18 @@ record qualified or blocked work accurately. Phase 4 ends awaiting author approv
 Phase 5a and each subsequent Part condensation run in separate sessions. Never
 squash away the separate scope-revision commit.
 
-Current session: Phase 0 only. Scope revision and verbatim prompt are recorded
-first and committed before measurement work. Phase 0 measurement is pending;
-Phase 1 and all subsequent phases have not started. Progress and evidence for this
-pass live in `review/proposal-readiness-2026-09-22/REPORT.md`.
+Phase 0 completed on 22 September 2026. The separate scope-revision commit
+precedes measurement. The new metrics tool measures all 62 ordered inputs:
+151,924 whitespace tokens (two above the supplied baseline), 1,020 chapter
+subheadings, 15 closing sections, 38 remember boxes, 30 rule boxes, 478 text
+fences, 205 cpp fences, and zero exercise callouts. Before/after measurements
+are identical; manuscript content is unchanged. Five counter regression tests
+and independent counts pass. The existing PDF has 490 pages; it was not rebuilt
+in Phase 0. Evidence, exact definitions, exit-check commands, and the phase status
+table are in `review/proposal-readiness-2026-09-22/REPORT.md`.
+
+Stop after Phase 0. Phase 1 is the next unstarted phase; first rerun Phase 0's
+exit checks as listed in REPORT.md. No restructuring approval is recorded.
 
 ## Governing constraints
 

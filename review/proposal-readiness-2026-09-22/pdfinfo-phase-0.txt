@@ -1,0 +1,19 @@
+Title:           Layered Network Programming with SNode.C
+Author:          Volker Christian
+Creator:         LaTeX via pandoc
+Producer:        xdvipdfmx (20260317)
+CreationDate:    Tue Sep 22 02:20:37 2026 CEST
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           490
+Encrypted:       no
+Page size:       595.28 x 841.89 pts (A4)
+Page rot:        0
+File size:       2398084 bytes
+Optimized:       no
+PDF version:     1.7
