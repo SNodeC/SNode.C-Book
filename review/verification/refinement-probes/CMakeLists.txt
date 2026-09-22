@@ -8,11 +8,12 @@ find_program(OPENSSL_EXECUTABLE openssl REQUIRED)
 enable_testing()
 add_executable(runtime-contract runtime-contract.cpp)
 target_link_libraries(runtime-contract PRIVATE snodec::core)
-add_executable(tls-runtime tls-runtime.cpp)
+set(tls_lab "${CMAKE_CURRENT_SOURCE_DIR}/../../../companion/exercises/ch14")
+add_executable(tls-runtime "${tls_lab}/tls-runtime.cpp")
 target_link_libraries(tls-runtime PRIVATE snodec::net-in-stream-tls)
 add_test(NAME RecordedPublicTickContract COMMAND runtime-contract)
 add_test(NAME TlsTrustAndIdentity COMMAND "${Python3_EXECUTABLE}"
-    "${CMAKE_CURRENT_SOURCE_DIR}/run-tls.py"
+    "${tls_lab}/run-tls.py"
     --client "$<TARGET_FILE:tls-runtime>" --openssl "${OPENSSL_EXECUTABLE}")
 set_tests_properties(RecordedPublicTickContract TlsTrustAndIdentity PROPERTIES TIMEOUT 60)
 add_test(NAME NumericGlobalAndNamedScopedLogLevels COMMAND runtime-contract

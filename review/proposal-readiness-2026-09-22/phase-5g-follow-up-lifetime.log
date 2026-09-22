@@ -1,0 +1,198 @@
+COMMAND: python3 ci/run-example-lifetime-tests.py --prefix /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc --build /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples --work /home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-lifetime
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket
+-- Install configuration: ""
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/include/snodec-book/examples/WebSocket-Echo-ServerSubprotocol/EchoServer.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/include/snodec-book/examples/WebSocket-Echo-ServerSubprotocol/EchoServerFactory.h
+-- Install configuration: ""
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/include/snodec-book/examples/WebSocket-Echo-ClientSubprotocol/EchoClient.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/include/snodec-book/examples/WebSocket-Echo-ClientSubprotocol/EchoClientFactory.h
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found nlohmann_json: /usr/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake (found suitable version "3.11.3", minimum required is "3.7.0")
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+net-in-stream-legacy: already loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  mqtt: loaded
+mqtt-client: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+net-in-stream-legacy: already loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  mqtt: loaded
+mqtt-client: loaded
+net-un-stream-legacy: loading dependencies 'net-un-stream, core-socket-stream-legacy'
+  net-un-stream: loading dependencies 'net-un-phy-stream'
+    net-un-phy-stream: loading dependencies 'net-un-phy'
+      net-un-phy: loading dependencies 'net-un'
+        net-un: loading dependencies 'net'
+          net: already loaded
+        net-un: loaded
+      net-un-phy: loaded
+    net-un-phy-stream: loaded
+  net-un-stream: loaded
+  core-socket-stream-legacy: already loaded
+net-un-stream-legacy: loaded
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-lifetime/fixture-build
+[  4%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MeasurementModel.cpp.o
+[  8%] Building CXX object SSE-Server/CMakeFiles/sse-server.dir/main.cpp.o
+[ 12%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/main.cpp.o
+[ 16%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/main.cpp.o
+[ 20%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MeasurementJsonCodec.cpp.o
+[ 24%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayWeb.cpp.o
+[ 28%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqttClient.cpp.o
+[ 32%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementModel.cpp.o
+[ 36%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementJsonCodec.cpp.o
+[ 40%] Linking CXX executable sse-server
+[ 40%] Built target sse-server
+[ 44%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqtt.cpp.o
+[ 48%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayWeb.cpp.o
+[ 52%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqttSocketContextFactory.cpp.o
+[ 56%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/SocketStateReporter.cpp.o
+[ 60%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/ConfigSections.cpp.o
+[ 64%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketServer.cpp.o
+[ 68%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketContext.cpp.o
+[ 72%] Linking CXX executable minigateway
+[ 76%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketContextFactory.cpp.o
+[ 76%] Built target minigateway
+[ 80%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqttClient.cpp.o
+[ 84%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqtt.cpp.o
+[ 88%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqttSocketContextFactory.cpp.o
+[ 92%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/SocketStateReporter.cpp.o
+[ 96%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/ConfigSections.cpp.o
+[100%] Linking CXX executable minigateway-extended
+[100%] Built target minigateway-extended
+Starting SSE-Server: /home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-lifetime/fixture-build/SSE-Server/sse-server --log-level=3 legacy local --host=127.0.0.1 --port=41401
+PASS: SSE-Server idle FIN/RST churn wave 1, only the live observer retained
+PASS: SSE-Server idle FIN/RST churn wave 2, only the live observer retained
+PASS: SSE-Server idle FIN/RST churn wave 3, only the live observer retained
+PASS: SSE-Server surviving observer receives the next measurement; final idle cleanup releases all responses
+Starting MiniGateway: /home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-lifetime/fixture-build/MiniGateway/minigateway --log-level=3 web local --host=127.0.0.1 --port=58329 mqtt-uplink --disabled
+PASS: MiniGateway idle FIN/RST churn wave 1, only the live observer retained
+PASS: MiniGateway idle FIN/RST churn wave 2, only the live observer retained
+PASS: MiniGateway idle FIN/RST churn wave 3, only the live observer retained
+PASS: MiniGateway surviving observer receives the next measurement; final idle cleanup releases all responses
+Starting MiniGateway-Extended: /home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-lifetime/fixture-build/MiniGateway-Extended/minigateway-extended --log-level=3 web local --host=127.0.0.1 --port=56619 mqtt-uplink --disabled measurement-input --disabled
+PASS: MiniGateway-Extended idle FIN/RST churn wave 1, only the live observer retained
+PASS: MiniGateway-Extended idle FIN/RST churn wave 2, only the live observer retained
+PASS: MiniGateway-Extended idle FIN/RST churn wave 3, only the live observer retained
+PASS: MiniGateway-Extended surviving observer receives the next measurement; final idle cleanup releases all responses
+Starting websocket-echo: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/examples/HttpUpgrade-Server/http-upgrade-server --log-level=3 legacy local --host=127.0.0.1 --port=59999
+PASS: unchanged teaching client receives hello and closes
+PASS: WebSocket text/binary type, exact bytes, NUL/non-UTF8 binary, empty/sequential/fragmented messages, interleaved ping and close
+All selected example lifetime/echo checks passed.

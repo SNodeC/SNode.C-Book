@@ -1,7 +1,6 @@
 find_package(snodec REQUIRED COMPONENTS net-in-stream-tls)
 find_program(OPENSSL_EXECUTABLE openssl REQUIRED)
-set(probes "${CMAKE_CURRENT_SOURCE_DIR}/../../../review/verification/refinement-probes")
-add_executable(tls-policy-lab "${probes}/tls-runtime.cpp")
+add_executable(tls-policy-lab tls-runtime.cpp)
 target_link_libraries(tls-policy-lab PRIVATE snodec::net-in-stream-tls)
 # Apply the chapter's wrapper substitution to the canonical EchoPair entry point.
 set(echo_source "${CMAKE_CURRENT_SOURCE_DIR}/../../examples/EchoPair")

@@ -1344,3 +1344,25 @@ Commit: `proposal-readiness: phase 5g — refine Part VI and verify secure recov
 **Stop after Phase 5g.** Next: Phase 5h, Part VII only, after freshly rerunning this
 phase's exit gate using the final logs' selected runtime environment. Preservation
 rules, reserve accounting, the 5l/5m split and Phase 6 proposal refresh remain in force.
+
+
+## Author-requested Phase 5g follow-up — companion TLS fixture, 2026-09-22
+
+The author requires the TLS trust/identity lab to be public companion material.
+Moved both unchanged fixture files into `companion/exercises/ch14/`, updated its
+existing lab registration and runner, and redirected the current review target to
+that single implementation. Chapter 14 now points directly to the companion fixture
+and shows the ordinary lab build/test commands. Its public solution was updated.
+Three trust/name outcomes and the early null-SSL check remain intact.
+
+All Phase 5g exit checks, all 36 labs and the existing review consumer pass; final
+PDFs remain 382/54/6 pages with zero warnings/bad boxes. The changed page was
+rendered and inspected. Chapter 14 is 2,579 words; Part VI 5,569 / 6,350; whole book
+122,052 (+3). No reserve used. No production/test logic growth; the fixture move
+is exact and wiring is line-neutral. REPORT.md and `phase-5g-follow-up-*` record
+fresh evidence; historical Phase 5g evidence is unchanged.
+
+Separate commit: `proposal-readiness: phase 5g follow-up — move TLS fixture into companion material`.
+The authorized Phase 5h entry baseline is `metrics-after-phase-5g-follow-up.json`;
+`check-phase-5g-follow-up.py` supplies the current gate. Continue with Part VII only,
+keeping budgets as ceilings and preserving technical teaching. Stop after Phase 5h.

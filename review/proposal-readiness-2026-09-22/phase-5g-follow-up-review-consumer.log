@@ -1,0 +1,67 @@
+COMMAND: cmake -S review/verification/refinement-probes -B build/phase-5g-follow-up-probes -DCMAKE_PREFIX_PATH=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+core: loading dependencies 'mux-epoll, utils'
+  mux-epoll: loaded
+  utils: loading dependencies 'logger'
+    logger: loaded
+  utils: loaded
+core: loaded
+net-in-stream-tls: loading dependencies 'net-in-stream, core-socket-stream-tls'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: already loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-tls: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-tls: loaded
+net-in-stream-tls: loaded
+-- Found Python3: /usr/bin/python3 (found version "3.14.7") found components: Interpreter
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-probes
+COMMAND: cmake --build build/phase-5g-follow-up-probes --target tls-runtime --parallel 2
+[ 50%] Building CXX object CMakeFiles/tls-runtime.dir/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls-runtime.cpp.o
+[100%] Linking CXX executable tls-runtime
+[100%] Built target tls-runtime
+COMMAND: ctest --test-dir build/phase-5g-follow-up-probes -R ^TlsTrustAndIdentity$ --output-on-failure -V
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-probes/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-probes
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 2
+    Start 2: TlsTrustAndIdentity
+
+2: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/review/verification/refinement-probes/../../../companion/exercises/ch14/run-tls.py" "--client" "/home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-probes/tls-runtime" "--openssl" "/usr/bin/openssl"
+2: Working Directory: /home/voc/projects/snodec/publications/book/build/phase-5g-follow-up-probes
+2: Test timeout computed to be: 60
+2: PASS: trusted matching name; early SSL is null; ready=1
+2: PASS: trusted wrong name; early SSL is null; ready=0
+2: PASS: untrusted matching name; early SSL is null; ready=0
+1/1 Test #2: TlsTrustAndIdentity ..............   Passed    0.22 sec
+
+The following tests passed:
+	TlsTrustAndIdentity
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.22 sec

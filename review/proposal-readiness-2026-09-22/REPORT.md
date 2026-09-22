@@ -19,7 +19,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5d — Part III | completed | `proposal-readiness: phase 5d follow-up — relocate stranded Unix-socket introduction`; initial Phase 5d commit retained | 2026-09-22 | metrics-after-phase-5d.json; phase-5d-exit-checks.json; chapter-ledger.md; phase-5d-final-*.log; phase-5d-visual-review.md; completion account below |
 | 5e — Part IV | completed | `proposal-readiness: phase 5e — refine Part IV and verify protocol framing` (containing this report) | 2026-09-22 | metrics-after-phase-5e.json; phase-5e-exit-checks.json; chapter-ledger.md; phase-5e-final-*.log; phase-5e-visual-review.md; completion account below |
 | 5f — Part V | completed | `proposal-readiness: phase 5f — refine Part V and verify configuration diagnostics` (containing this report) | 2026-09-22 | metrics-after-phase-5f.json; phase-5f-exit-checks.json; chapter-ledger.md; phase-5f-entry-*.log; phase-5f-final-*.log; phase-5f-visual-review.md; completion account below |
-| 5g — Part VI | completed | `proposal-readiness: phase 5g — refine Part VI and verify secure recovery outcomes` (containing this report) | 2026-09-22 | metrics-after-phase-5g.json; phase-5g-exit-checks.json; chapter-ledger.md; phase-5g-entry-*.log; phase-5g-final-*.log; phase-5g-visual-review.md; completion account below |
+| 5g — Part VI | completed | `proposal-readiness: phase 5g follow-up — move TLS fixture into companion material`; initial Phase 5g commit retained | 2026-09-22 | metrics-after-phase-5g.json; phase-5g-exit-checks.json; chapter-ledger.md; phase-5g-entry-*.log; phase-5g-final-*.log; phase-5g-visual-review.md; completion account below |
 | 5h — Part VII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5i — Part VIII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5j — Part IX | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -2135,3 +2135,49 @@ this phase's metrics and listed exit checks. `check-phase-5g.py` supplies the
 preservation/teaching/artifact assertions; final logs record execution commands
 and the required runtime environment. Preserve historical evidence. Proposal
 source refresh remains Phase 6, and the whole-book targets remain unfinished.
+
+
+## Phase 5g author follow-up — companion TLS fixture (2026-09-22)
+
+The author requires the reader-facing trust/identity fixture to live in companion
+material and authorizes changing the printed lab commands. Moved `tls-runtime.cpp`
+and `run-tls.py` byte-for-byte from the current refinement probes to
+`companion/exercises/ch14/`. Its existing CMake registration (included by
+`companion/exercises/CMakeLists.txt`) now compiles that local source; `tls.py`
+uses the local fixture. The existing review CMake target points to the same
+companion files, so there is one implementation. Historical evidence is unchanged.
+
+Edited and reread Chapter 14's fixture paragraph and commands at
+`manuscript/chapters/14-tls-across-the-framework.md`:151 and the public solution at
+`companion/exercises/ch14/README.md`:33. The book-meta sentence is replaced by a
+direct companion reference, with ordinary root-project lab configuration,
+`ch14-lab`, and `exercise-ch14-trust-identity`. Three identity outcomes and the early
+null-SSL observation remain unchanged. Reference positions were refreshed without
+changing intended targets or migration identities.
+
+All ten required execution groups pass (`phase-5g-follow-up-results.json` and
+command-bearing `phase-5g-follow-up-*.log`): 36/36 public labs, companion build,
+hygiene/reference regression, alignment, metrics tests, teaching/behavior/lifetime,
+PDF/proposal/sample/package and extracted-package checks. The existing review
+consumer also builds and runs the relocated fixture (`phase-5g-follow-up-review-consumer.log`).
+`check-phase-5g-follow-up.py` reruns the Phase 5g budget, teaching, preservation and
+artifact assertions, allowing precisely the author-requested shell-block change
+and checking byte-identical fixture relocation. Its output is
+`phase-5g-follow-up-exit-checks.json` and `.log`.
+
+Metrics: Chapter 14 **2,576 → 2,579 / 2,950**, mean section prose **292.25**;
+Part VI **5,569 / 6,350**; whole book **122,049 → 122,052**. The +3 tokens are the
+net effect of the direct reference and runnable commands. Other chapter metrics,
+headings, index entries, figures, all C++ listings and source markers are unchanged.
+No reserve used; 2,750 remains. `metrics-after-phase-5g-follow-up.json` is the
+**authorized Phase 5h entry baseline**; original Phase 5g metrics remain historical.
+
+PDFs remain **382 / 54 / 6 pages**, zero final warnings and bad boxes; 326 package
+files match their inputs. Physical page 132 was rendered and inspected in
+`build/phase-5g-follow-up-visual/page-132.png`: command lines, policy sketch and
+surrounding explanation fit without clipping. The moved test implementation adds
+no production or test logic; excluding exact file moves, CMake/Python wiring is
++5/−5 lines. No broader TLS deployment validation is claimed.
+
+Separate commit: `proposal-readiness: phase 5g follow-up — move TLS fixture into companion material`.
+The freshly passed follow-up gate permits Phase 5h to begin in this session.

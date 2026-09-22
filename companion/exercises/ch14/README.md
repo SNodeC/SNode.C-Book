@@ -30,9 +30,8 @@ cmake --build build/labs --target ch14-lab
 ctest --test-dir build/labs -R '^exercise-ch14-trust-identity$' --output-on-failure -V
 ```
 
-The solution compiles the existing public policy probe in
-`review/verification/refinement-probes/tls-runtime.cpp` and runs its existing
-`run-tls.py` fixture through `tls.py`; the verification policy has one implementation.
+The solution compiles `tls-runtime.cpp` and runs `run-tls.py` through `tls.py`,
+all in this companion directory; the verification policy has one implementation.
 The fixture creates three temporary self-signed certificate identities, supplies
 an explicit trust file and uses an independent Python TLS server. Expect:
 

@@ -858,3 +858,14 @@ installation. Re-execution with that installation's runtime path passes all 36;
 no application or previous lab was changed. Both initial logs are retained.
 No hosted CI, production PKI, authorization deployment, stalled TLS peer,
 concurrent shutdown-path matrix or protocol-deadline implementation is claimed.
+
+### Phase 5g author follow-up: public fixture placement
+
+Chapter 14 now points to `companion/exercises/ch14/` and prints the root-project
+lab build and focused CTest command. `tls-runtime.cpp` and `run-tls.py` moved there
+unchanged; both current consumers use that single implementation. Public solution
+14.3 documents these local files. All objective mappings and observations remain.
+Chapter 14 is 2,579 words (2,508 prose + 71 fenced), mean section prose 292.25;
+Part VI 5,569 / 6,350. All 36 public labs and the review consumer pass; original
+metrics remain historical. See REPORT.md's follow-up and
+`metrics-after-phase-5g-follow-up.json` for the authorized next-phase baseline.

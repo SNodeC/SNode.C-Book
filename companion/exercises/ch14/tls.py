@@ -10,7 +10,7 @@ from lab_support import connect, environment, free_port, receive, running
 
 
 def policy(client, openssl):
-    fixture = Path(__file__).resolve().parents[3] / 'review/verification/refinement-probes/run-tls.py'
+    fixture = Path(__file__).with_name('run-tls.py')
     with tempfile.TemporaryDirectory(prefix='tls-policy-lab-') as temp:
         subprocess.run([sys.executable, str(fixture), '--client', client, '--openssl', openssl],
                        env=environment(temp), check=True, timeout=50)

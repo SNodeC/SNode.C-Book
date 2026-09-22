@@ -148,13 +148,15 @@ The sketch requires `<openssl/ssl.h>` and `<openssl/x509v3.h>`, a real trust fil
 
 Check the policy through three outcomes: the intended identity under the intended trust source succeeds, an untrusted issuer fails, and a trusted certificate for the wrong identity also fails. Those outcomes distinguish trust, identity, and encryption. They must be established for the deployment; compiling this callback alone does not establish them.
 
-The edition includes a small verification fixture for this policy in `review/verification/refinement-probes`. From the book directory, with the Chapter 2 installation available, the local exercise is:
+The companion fixture in `companion/exercises/ch14/` checks this policy. From the book directory, with the Chapter 2 installation available, build and run it with:
 
 ```sh
-cmake -S review/verification/refinement-probes -B build/refinement-probes \
+cmake -S . -B build/labs \
+  -DSNODEC_BOOK_BUILD_PDFS=OFF \
+  -DSNODEC_BOOK_BUILD_COMPANION_EXAMPLES=ON \
   -DCMAKE_PREFIX_PATH="$HOME/.local/snodec"
-cmake --build build/refinement-probes
-ctest --test-dir build/refinement-probes -R TlsTrustAndIdentity \
+cmake --build build/labs --target ch14-lab
+ctest --test-dir build/labs -R '^exercise-ch14-trust-identity$' \
   --output-on-failure --no-tests=error
 ```
 
