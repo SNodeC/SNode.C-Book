@@ -18,7 +18,11 @@ precedence; record accepted scope changes in the plan.
 - Follow **Author scope revision — proposal readiness, 2026-09-22** in
   `review/EDITORIAL-WORK-PLAN.md` and its verbatim prompt at
   `review/proposal-readiness-2026-09-22/PROMPT.md`; it supersedes conflicting
-  earlier constraints for this pass.
+  earlier constraints for this pass. Apply the subsequent **Author amendment —
+  teaching book, 2026-09-22** in the same plan and prompt: teach a learner without
+  a lecturer, retain applicable principles (at most 20 rule boxes), and implement
+  the objectives, tiered exercises, public solutions, and learning-path gates in
+  their specified phases.
 - Preserve the author's voice, teaching approach, technical depth of explanations
   and code, cumulative progression, and MiniGateway capstone.
 - A shortening target now applies: at most 115,000 whitespace tokens (stretch

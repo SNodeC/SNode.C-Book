@@ -65,6 +65,38 @@ table are in `review/proposal-readiness-2026-09-22/REPORT.md`.
 Stop after Phase 0. Phase 1 is the next unstarted phase; first rerun Phase 0's
 exit checks as listed in REPORT.md. No restructuring approval is recorded.
 
+## Author amendment — teaching book, 2026-09-22
+
+Accepted during Phase 1; the full amendment is appended to
+`review/proposal-readiness-2026-09-22/PROMPT.md` and supersedes conflicting earlier
+requirements. The primary reader is an advanced student or C++ developer with
+the stated prerequisites and no SNode.C knowledge, learning from the book without
+a lecturer. Phase 3 must position the book around that learning, with course use
+as one secondary-benefit sentence mentioning the framework's origin in "Network
+and Distributed Systems" at FH Upper Austria, Hagenberg. Course adoption is not
+the proposal's organizing premise.
+
+For the five Phase 2 samples, and all other chapters in Phase 5: open with 3–5
+observable objectives in `.snodec-objectives`; close with at most five remember
+bullets followed by review questions, labs with expected outcomes, and design
+problems. Map every objective to exercises and every exercise to objectives in
+chapter-ledger.md. Public lab solutions belong in `companion/exercises/<chapter>/`
+and must build in CI; public conceptual answers and design discussions belong
+there in README.md or in the back-matter "Solutions and discussion" section.
+
+The rule-box cap and Phase 1 exit criterion are now **20**, retaining principles
+the learner must apply. Phase 3 presents one learning path and at most two
+shortcuts. Phase 4 evaluates early MiniGateway milestones culminating in Chapters
+35–36, and a runnable, verifiable checkpoint at the end of every Part. The final
+Phase 5 sub-phase must meet every pedagogical requirement. These additions do not
+start another phase during this Phase 1 session.
+The author's subsequent execution clarification applies only the rule-box change
+in Phase 1: restore previously removed applicable principles, remove only
+near-tautologies and duplicates, and list every restoration in REPORT.md. The
+verbatim amendment and this scope record receive their own commit, titled
+`proposal-readiness: author amendment — teaching book`. No objectives, exercises,
+solutions, or learning-path implementation belongs in Phase 1.
+
 ## Governing constraints
 
 1. Refine the existing book in its established voice and depth. Do not rewrite
