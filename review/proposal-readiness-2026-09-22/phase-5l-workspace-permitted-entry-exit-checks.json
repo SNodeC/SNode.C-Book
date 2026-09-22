@@ -1,0 +1,65 @@
+{
+  "status": "blocked",
+  "reason": "Previous-phase entry gate: three database labs fail workspace data-file creation with Errcode 13 Permission denied, including the scoped-permission rerun.",
+  "failed_tests": [
+    "exercise-ch23-durable",
+    "exercise-ch23-error",
+    "exercise-ch24-part-checkpoint"
+  ],
+  "tests_passed": 55,
+  "tests_total": 58,
+  "minimum_temporary_free_bytes": 536870912,
+  "temporary_free_bytes_after_checks": 528759394304,
+  "metrics_match_phase_5k": true,
+  "word_delta": 0,
+  "words": 103934,
+  "tracked_manuscript_companion_ci_production_unchanged": true,
+  "phase_5k_checker_passed_before_assertion": [
+    "exact metrics",
+    "reference register",
+    "scope and preservation",
+    "chapter budgets and pedagogy",
+    "retained sample reductions",
+    "front matter and opener ceilings",
+    "prior implementations",
+    "canonical entry dependencies"
+  ],
+  "phase_5k_checker_stopped_at": "all fresh check-group exit codes must equal zero (line 119)",
+  "check_group_exit_codes": {
+    "hygiene": 0,
+    "alignment": 0,
+    "metrics-tests": 0,
+    "companion": 0,
+    "package": 0,
+    "labs": 8,
+    "teaching": 0,
+    "behavior": 0,
+    "lifetime": 0,
+    "extracted-hygiene": 0
+  },
+  "pdfs": {
+    "snodec-book": {
+      "pages": 322,
+      "warnings": 0,
+      "bad_boxes": 0,
+      "sha256": "091b997260b06bfd004dfb302ffa8c4ba4e71a80667caa14f99f504752d029c5"
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "warnings": 0,
+      "bad_boxes": 0,
+      "sha256": "305328a038a43e08ac1ab8879b0d3ba23f1b7989c91743ff8b090d0412d9e121"
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "warnings": 0,
+      "bad_boxes": 0,
+      "sha256": "ada15aba42272127c7af6a5e2b1f091c4ae817b3b56b7c9b2c54fd72d51d56ac"
+    }
+  },
+  "archive_identical_files": 360,
+  "visual_review": "not performed; no editorial or production changes",
+  "temporary_directory": "/home/voc/projects/snodec/publications/book/build/t",
+  "author_constraint": "After the author steering, temporary paths and fixture data are confined to the workspace; no /tmp use.",
+  "temporary_fixture_directory_empty": true
+}

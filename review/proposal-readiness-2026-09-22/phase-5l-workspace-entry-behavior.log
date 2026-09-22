@@ -1,0 +1,20 @@
+COMMAND: bash ci/run-behavior-smoke-tests.sh
+TMPDIR=/home/voc/projects/snodec/publications/book/build/t
+TMP=/home/voc/projects/snodec/publications/book/build/t
+TEMP=/home/voc/projects/snodec/publications/book/build/t
+SNODEC_BOOK_SMOKE_UNIX_SOCKET=/home/voc/projects/snodec/publications/book/build/t/smoke.sock
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/ci/run-behavior-smoke-tests.py", line 545, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/home/voc/projects/snodec/publications/book/ci/run-behavior-smoke-tests.py", line 520, in main
+    SSE_PORT = SSE_PORT or available_port()
+                           ~~~~~~~~~~~~~~^^
+  File "/home/voc/projects/snodec/publications/book/ci/run-behavior-smoke-tests.py", line 517, in available_port
+    with socket.socket() as probe:
+         ~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/socket.py", line 236, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted

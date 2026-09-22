@@ -1606,3 +1606,64 @@ Commit: `proposal-readiness: phase 5k — refine Part X and verify installed con
 this gate with the logged environment. Then 5m covers Appendix A, closing material
 and the global audit; Phase 6 refreshes the proposal. Preserve the remaining
 2,350-word reserve and all author teaching-content stop rules.
+
+
+## Phase 5l — blocked at the previous-phase entry gate, 2026-09-22
+
+Fresh execution of the Phase 5k gate gives **55/58 public labs passing**.
+`exercise-ch23-durable`, `exercise-ch23-error` and
+`exercise-ch24-part-checkpoint` fail the existing minimum **512 MiB free temporary
+space** prerequisite before database initialization. `/tmp` had about 467 MiB
+free in the recorded post-check observation. Evidence:
+`review/proposal-readiness-2026-09-22/phase-5l-entry-labs.log:543`, `:575`, `:615`,
+`phase-5l-entry-results.json` and `phase-5l-entry-exit-checks.json`.
+
+The other nine check groups pass, including companion/PDF/package builds,
+hygiene, alignment and teaching/behavior/lifetime execution. Metrics reproduce
+Phase 5k exactly: **103,934 words**, delta zero. The unchanged Phase 5k checker,
+redirected in memory to fresh entry logs, passes its static and preservation
+checks before rejecting the failed lab group. PDFs remain **322 / 54 / 6 pages**
+with zero final warnings/bad boxes; 360 package files match their source inputs.
+See the detailed blocked account in REPORT.md and `metrics-after-phase-5l.json`.
+
+No manuscript, companion, CI or production files were edited. Part XI editorial
+work, its chapter ledger and the 2,350-word reserve remain unchanged. Historical
+Phase 5k completion evidence is preserved. Per the explicit phase-entry rule,
+**stop here**; do not begin Phase 5l implementation, 5m or 6. Restore sufficient
+temporary capacity (or select a sufficiently sized temporary directory) and
+rerun the entry gate before retrying Phase 5l. No cleanup or weakened check was
+applied in this session.
+
+Commit: `proposal-readiness: phase 5l — record blocked prerequisite gate`.
+
+
+### Author execution constraint and Phase 5l workspace retry, 2026-09-22
+
+Author instruction: “Continue and do not use /tmp for anything - i took back full
+access - just workspace access ...”. From that instruction onward, temporary
+files and test data use workspace `build/t`; `TMPDIR`, `TMP`, `TEMP` and the behavior
+smoke test's Unix-socket override are set accordingly. Keep this constraint for
+future runs. The preceding temporary-space blocker is superseded by the following
+fresh evidence; the earlier attempt remains recorded as history.
+
+The restricted attempt could not create local sockets. A scoped retry with socket
+access, still using workspace-only files, passes **55/58 labs and the other nine
+check groups**. The three database labs pass the space prerequisite but fail to
+create files inside their private workspace data directories (Errcode 13,
+Permission denied). Evidence: `phase-5l-workspace-permitted-entry-labs.log:580–581`,
+`:684–685`, `:796–797`, `phase-5l-workspace-permitted-entry-results.json`, and
+`phase-5l-workspace-permitted-entry-exit-checks.json` in the current review folder.
+The workspace temporary directory is empty after cleanup. The saved
+`run-phase-5l-entry-checks.py` reproduces the workspace-only environment.
+
+The MariaDB host profile is consistent with this restriction, but the exact policy
+decision was not established from kernel logs. No host policy, system service or
+framework was modified. The remaining prerequisite is permission for the database
+server to initialize its private data under the workspace. Do not skip that test,
+move data outside the workspace or weaken confinement to claim completion.
+
+Phase 5l remains **blocked before Part XI edits**. Metrics are unchanged at
+103,934 words; PDFs remain 322 / 54 / 6 pages with zero warnings/bad boxes. The
+historical Phase 5k evidence, ledger and 2,350-word reserve are unchanged. The
+latest REPORT.md retry account supersedes the earlier temporary-space handoff.
+Commit: `proposal-readiness: phase 5l — record blocked prerequisite gate`.

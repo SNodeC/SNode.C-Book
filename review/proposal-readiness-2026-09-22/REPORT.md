@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5k is completed after freshly rerunning the Phase 5j exit gate. Parts I–X and the approved front-matter work are complete. Phase 5l has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5k is completed after freshly rerunning the Phase 5j exit gate. Parts I–X and the approved front-matter work are complete. Phase 5l is blocked at the previous-phase entry gate; Part XI editing has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -24,7 +24,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5i — Part VIII | completed | `proposal-readiness: phase 5i — refine Part VIII and verify MQTT delivery boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5i.json; phase-5i-exit-checks.json; chapter-ledger.md; phase-5i-entry-*.log; phase-5i-final-*.log; phase-5i-visual-review.md; completion account below |
 | 5j — Part IX | completed | `proposal-readiness: phase 5j — refine Part IX and verify persistence boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5j.json; phase-5j-exit-checks.json; chapter-ledger.md; phase-5j-entry-*.log; phase-5j-final-*.log; phase-5j-visual-review.md; completion account below |
 | 5k — Part X | completed | `proposal-readiness: phase 5k — refine Part X and verify installed consumers` (containing this report) | 2026-09-22 | metrics-after-phase-5k.json; phase-5k-exit-checks.json; chapter-ledger.md; phase-5k-entry-*.log; phase-5k-final-*.log; phase-5k-visual-review.md; completion account below |
-| 5l — Part XI only | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5l — Part XI only | blocked | `proposal-readiness: phase 5l — record blocked prerequisite gate` (containing this report) | 2026-09-22 | metrics-after-phase-5l.json; phase-5l-workspace-permitted-entry-results.json; phase-5l-workspace-permitted-entry-exit-checks.json; phase-5l-workspace-permitted-entry-labs.log; blocked entry and author-steered retry accounts below |
 | 5m — appendix, closing material and global audit | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 6 — proposal refresh | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 
@@ -2730,3 +2730,122 @@ Commit: `proposal-readiness: phase 5k — refine Part X and verify installed con
 **Stop after Phase 5k.** Next is Phase 5l, Part XI only, after freshly rerunning
 this exit gate. The preservation rules, remaining 2,350-word reserve, separate
 5m global audit and Phase 6 proposal refresh remain in force.
+
+
+## Phase 5l — blocked at the previous-phase entry gate, 2026-09-22
+
+**Part XI editing has not started.** The fresh Phase 5k recheck fails because
+three equipped database labs cannot meet their existing temporary-space
+prerequisite. Per PROMPT.md's previous-phase gate, stop before manuscript work;
+do not treat the recorded historical completion as a substitute for execution.
+Historical Phase 5k evidence and its completed status remain unchanged.
+
+### Fresh execution and the blocking evidence
+
+The existing ten-group check sequence was rerun with
+`SNODEC_PREFIX=build/ci-fix-2026-09-22/install-gcc`,
+`BOOK_EXAMPLES_BUILD_DIR=build/proposal-readiness-phase-5k-examples`, parallel
+build level 4 and the installation's library directories in `LD_LIBRARY_PATH`.
+Each `phase-5l-entry-*.log` records its executed command and loader path.
+
+- **Run: 55 of 58 public labs pass.** `phase-5l-entry-labs.log:543`, `:575`
+  and `:615` show the same prerequisite failure in `exercise-ch23-durable`,
+  `exercise-ch23-error` and `exercise-ch24-part-checkpoint`. The guard at
+  `companion/exercises/ch23/database.py:24` requires 536,870,912 free bytes
+  before initializing a private database. A post-check observation recorded
+  489,721,856 free bytes in `/tmp` (about 467 MiB); free space varies over time.
+  See `phase-5l-entry-exit-checks.json`. These attempts stopped before creating
+  their database directories or starting their servers.
+- **Run and passed:** hygiene, source alignment, metric regression tests,
+  companion build, teaching smoke, behavior smoke, lifetime tests, and extracted
+  package hygiene. **Built:** proposal, sample PDF and full proposal package.
+  Nine groups return 0; the lab group returns 8
+  (`phase-5l-entry-results.json` and corresponding logs).
+- **Rechecked:** the unmodified Phase 5k checker was executed in memory with
+  `phase-5k-final` log lookups redirected to `phase-5l-entry` and a new output
+  destination. Exact metrics, references, preservation, scope, budgets,
+  pedagogy, sample reductions and canonical consumer dependencies pass before
+  its all-groups-success assertion at line 119 fails
+  (`phase-5l-entry-exit-checks.log`). The traceback displays the original source
+  line; the evaluated lookup uses the fresh entry results. No historical checker
+  or result was overwritten. The new JSON explicitly records **blocked**.
+
+### Unchanged baseline and handoff
+
+`metrics-after-phase-5l.json` reproduces `metrics-after-phase-5k.json` exactly:
+**103,934 total words**, **94,287 prose words**, **9,647 fenced words**,
+**307 deep chapter headings**, **97 text fences**, **20 rule boxes**, zero
+forbidden phrases and zero Closing perspective sections. All metric deltas are
+zero. The reference check still resolves 294 references, 39 stable topics and
+374 migration dispositions (`phase-5l-entry-exit-checks.log:2`).
+
+Fresh PDFs remain **322 full / 54 sample / 6 proposal pages**, with zero final
+LaTeX warnings or bad boxes; all 360 packaged files match their working sources
+(`phase-5l-entry-exit-checks.json`, `phase-5l-entry-package.log`). No new visual
+review is claimed. No files under manuscript, companion, ci or production were
+edited; `git diff HEAD -- manuscript companion ci production` is empty. Production
+and test implementation line changes are both **+0/−0**. No Part XI editorial
+reread or teaching-contract completion is claimed. The chapter ledger and
+2,350-word reserve remain unchanged.
+
+Before retrying Phase 5l, make at least 512 MiB available in the temporary
+filesystem used by the database labs, or select an adequately sized temporary
+directory, then rerun the complete entry gate. No disk cleanup or prerequisite
+weakening was performed. Part XI remains pending; Phases 5m and 6 have not begun.
+
+Commit: `proposal-readiness: phase 5l — record blocked prerequisite gate`
+(containing this report). **Stop at this failed entry gate.**
+
+
+### Phase 5l entry retry — author requires workspace-only temporary files
+
+The author then directed: “Continue and do not use /tmp for anything - i took back
+full access - just workspace access ...”. This supersedes the temporary-directory
+handoff immediately above. Subsequent commands did not use that filesystem for
+fixtures or temporary outputs. The retained first attempt predates this instruction.
+
+**Executed after steering:** set `TMPDIR`, `TMP` and `TEMP` to the absolute workspace
+`build/t` directory and set `SNODEC_BOOK_SMOKE_UNIX_SOCKET` to `build/t/smoke.sock`.
+The latter overrides the behavior harness's fixed default. All test data, private
+configuration, sockets and extraction/build outputs stay inside the workspace.
+The reproducible runner is `run-phase-5l-entry-checks.py`; invoke it from the book
+root with a fresh log prefix and `proposal-readiness-phase-5k-examples` as arguments.
+The logs record these environment settings. No framework or host policy was edited.
+
+1. `phase-5l-workspace-entry-results.json`: the restricted sandbox denies local
+   socket creation (`phase-5l-workspace-entry-labs.log:30`). Database setup passes
+   the space guard but fails file creation. The earlier progress message saying
+   the database tests had passed was premature and was corrected; these logs
+   are the execution authority.
+2. A scoped execution request for the same checks with local socket access was
+   granted. It retained all workspace-only paths. The final retry again passes
+   **55/58 labs**, but the three database tests fail to create their own workspace
+   data files: `phase-5l-workspace-permitted-entry-labs.log:580–581`, `:684–685`,
+   `:796–797` report **Errcode 13, Permission denied**, including
+   `ddl_recovery.log`. The failure occurs during initialization, before starting
+   the fixture server. The workspace temporary directory is empty after cleanup.
+3. The other nine groups pass, including teaching/behavior/lifetime tests and
+   PDF/package builds (`phase-5l-workspace-permitted-entry-results.json`). The
+   Phase 5k checker rerun against these fresh logs again stops at its
+   all-groups-success assertion (`phase-5l-workspace-permitted-entry-exit-checks.log`).
+   Its preceding metrics, references, budgets, pedagogy and preservation checks
+   pass. Fresh artifact checks are in the corresponding `exit-checks.json`:
+   **322 / 54 / 6 pages**, zero warnings/bad boxes, 360 identical package files.
+
+Read-only host inspection found a MariaDB AppArmor profile at
+`/etc/apparmor.d/mariadbd`, with a site-local include at line 312 and no explicit
+workspace allowance. The write failures are consistent with host confinement;
+no kernel denial record was available to establish the precise policy decision.
+No policy exception, service change, copied server binary or confinement bypass
+was attempted. Shell access to the workspace does not establish that the database
+server has the same permissions.
+
+**Current blocker:** MariaDB must be permitted to initialize its private database
+under this workspace, in addition to allowing local test sockets. This requires
+an environment/policy resolution beyond the present workspace edits. Keep the
+workspace-only constraint for any subsequent attempt. No database test was skipped
+or weakened, and no local alternative was substituted for the required durability
+check. Manuscript and implementation remain unchanged; all metrics still exactly
+match Phase 5k. Phase 5l remains **blocked before editing** under the previous-phase
+entry rule. Its budgets, ledger, reserve and historical Phase 5k evidence remain
+unchanged. The phase commit records the failed attempts and this latest constraint.

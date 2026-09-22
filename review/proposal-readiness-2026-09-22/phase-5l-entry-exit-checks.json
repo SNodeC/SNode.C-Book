@@ -1,0 +1,62 @@
+{
+  "status": "blocked",
+  "reason": "Previous-phase entry gate: three equipped database labs fail the existing free-temporary-space prerequisite.",
+  "failed_tests": [
+    "exercise-ch23-durable",
+    "exercise-ch23-error",
+    "exercise-ch24-part-checkpoint"
+  ],
+  "tests_passed": 55,
+  "tests_total": 58,
+  "minimum_temporary_free_bytes": 536870912,
+  "temporary_free_bytes_after_checks": 489721856,
+  "metrics_match_phase_5k": true,
+  "word_delta": 0,
+  "words": 103934,
+  "tracked_manuscript_companion_ci_production_unchanged": true,
+  "phase_5k_checker_passed_before_assertion": [
+    "exact metrics",
+    "reference register",
+    "scope and preservation",
+    "chapter budgets and pedagogy",
+    "retained sample reductions",
+    "front matter and opener ceilings",
+    "prior implementations",
+    "canonical entry dependencies"
+  ],
+  "phase_5k_checker_stopped_at": "all fresh check-group exit codes must equal zero (line 119)",
+  "check_group_exit_codes": {
+    "hygiene": 0,
+    "alignment": 0,
+    "metrics-tests": 0,
+    "companion": 0,
+    "package": 0,
+    "labs": 8,
+    "teaching": 0,
+    "behavior": 0,
+    "lifetime": 0,
+    "extracted-hygiene": 0
+  },
+  "pdfs": {
+    "snodec-book": {
+      "pages": 322,
+      "warnings": 0,
+      "bad_boxes": 0,
+      "sha256": "2fae9d3268c2f26fd3cd5f2bcaf87cd1ab441897e7d981907fcc05f45babe504"
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "warnings": 0,
+      "bad_boxes": 0,
+      "sha256": "39b8c9f97cf59ea930808309f4c7f3cdc81ff76ff81eef1a26a52844cc5c6b5c"
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "warnings": 0,
+      "bad_boxes": 0,
+      "sha256": "b9ec1da7f20d1dd112246f00084b5aa3f3625ccb4b3c537d7c1e46528ed3f2c5"
+    }
+  },
+  "archive_identical_files": 360,
+  "visual_review": "not performed; no editorial or production changes"
+}

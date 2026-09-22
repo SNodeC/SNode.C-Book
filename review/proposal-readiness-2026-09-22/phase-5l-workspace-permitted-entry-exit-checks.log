@@ -1,0 +1,8 @@
+Reexecute Phase 5k checker against workspace-only, scoped-permission entry logs; preserve historical output.
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 294 current references, 374 old-reference dispositions.
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "review/proposal-readiness-2026-09-22/check-phase-5k.py", line 119, in <module>
+    assert all(value == 0 for value in json.loads((REVIEW/'phase-5l-workspace-permitted-entry-results.json').read_text()).values())
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

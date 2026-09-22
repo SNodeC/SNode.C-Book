@@ -1,0 +1,21 @@
+COMMAND: python3 ci/run-teaching-smoke-tests.py
+TMPDIR=/home/voc/projects/snodec/publications/book/build/t
+TMP=/home/voc/projects/snodec/publications/book/build/t
+TEMP=/home/voc/projects/snodec/publications/book/build/t
+SNODEC_BOOK_SMOKE_UNIX_SOCKET=/home/voc/projects/snodec/publications/book/build/t/smoke.sock
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket
+PASS: four semantic records; component Debug overrides global Info; event and typed error; no invented peer
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/ci/run-teaching-smoke-tests.py", line 129, in <module>
+    main()
+    ~~~~^^
+  File "/home/voc/projects/snodec/publications/book/ci/run-teaching-smoke-tests.py", line 124, in main
+    server_check(env)
+    ~~~~~~~~~~~~^^^^^
+  File "/home/voc/projects/snodec/publications/book/ci/run-teaching-smoke-tests.py", line 72, in server_check
+    with socket.socket() as reserved:
+         ~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/socket.py", line 236, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
