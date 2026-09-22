@@ -1,6 +1,7 @@
 # CI toolchain repair — 22 September 2026
 
-Status: implementation and local verification complete; fresh hosted CI runs pending.
+Status: publication CI passes with TeX Live 2026. A second, staged-consumer
+test-environment correction passes isolated local tests; its hosted run is pending.
 
 ## Confirmed failures and governing requirements
 
@@ -91,3 +92,41 @@ fix; the source manifest and chapter anchor line numbers were refreshed.
 OpenWrt, omitted broader runtime validation, and publication completion retain
 the author's established scope decisions. This repair does not declare the book
 finished.
+
+## Hosted follow-up: staged consumer library discovery
+
+At book commit `0e224a4`, the publication run `35669868538` passed on attempt 2.
+Attempt 1 built all outputs but failed while finalizing the artifact upload with
+an HTTP 403; the unchanged retry uploaded successfully. In companion run
+`35669868745`, GCC passed every step. Clang compiled successfully and passed
+182/183 framework tests, exposing a separate staged-install test failure:
+`libsnodec-core-mux-epoll.so.2` could not be loaded.
+
+The test must execute against its own temporary installation. Its executable
+RUNPATH covers direct libraries but does not supply the search path for their
+indirect dependencies. The initial local run silently found those dependencies
+in `/usr/local/lib`; its passing result did not establish isolation from the
+system framework installation.
+
+As requested by the author, `StagedInstalledConsumerTest.cmake` now sets
+`LD_LIBRARY_PATH` to its staged `lib` and `lib/snode.c/web/http` directories.
+Both consumers inherit this test-local environment. No system configuration,
+application loading policy, assertions, or test selection changes.
+
+With `/usr/local/lib` hidden, the original consumer reproduces the missing epoll
+error. After the change, all 183 tests pass with both GCC and Clang under the
+same isolation. The test harness provides normal `/dev`, `/proc`, and loopback
+networking; preliminary restricted-harness failures are not framework failures.
+The committed isolated logs record the successful full runs. Source alignment,
+hygiene, and reconstruction from the base plus updated patch also pass.
+
+The author committed the earlier C++20 relocation as
+`37b3a1e16de436c818eed807ee8a962f7cbbf43b`. That current HEAD plus the two-line
+test-environment change has file-content digest
+`c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf`.
+The earlier source identity and evidence above remain historical.
+
+Additional accounting: application/production code 0 added / 0 removed;
+test-support CMake 2 added / 0 removed, comprising one comment and one environment
+assignment. This supplies the temporary installation's execution environment
+within the existing test; no second library-loading implementation is added.

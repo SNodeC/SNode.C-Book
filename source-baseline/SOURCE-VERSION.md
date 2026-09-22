@@ -8,8 +8,8 @@ release tag exists.
 - Authority: current local source contents, including uncommitted changes
 - Project version: `2.0.0`
 - Base commit: `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`
-- Author-tree HEAD at final capture: `bb63e8a87aeda88123e8c0d72cb6d298908a9fe6` (C++20 build policy moved from `src/` to the project root)
-- Exact tree digest: `f676e6cbeabbd8a14a0e2c64a254f688790c6a2e59a6b37daea28ea4f69a4df6`
+- Author-tree HEAD at final capture: `37b3a1e16de436c818eed807ee8a962f7cbbf43b` plus the staged-consumer library-path correction
+- Exact tree digest: `c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf`
 - Changes from the reconstruction base: `framework-working-tree.patch`
 - Exact file contents: `framework-working-tree.json`
 - Baseline recorded: `2026-09-22`

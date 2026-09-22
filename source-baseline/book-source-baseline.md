@@ -15,10 +15,11 @@ book revision and this framework working-tree digest. The base commit alone is
 insufficient to identify the refined edition. Historical author confirmations remain
 historical and are not relabeled as new automated or independent verification.
 
-The current local HEAD is `bb63e8a87aeda88123e8c0d72cb6d298908a9fe6`, including the author's
-committed binary-logging changes. The 22 September CI repair moves the existing
-C++20 build policy to the project root so tests inherit it. Those two uncommitted
-CMake file changes are included in the captured patch; the reconstruction base
-remains unchanged. The manuscript and application sources are unchanged by this
-repair. Current CI-repair evidence is recorded in `review/ci-fix-2026-09-22/`;
-earlier editorial results retain their original source identities.
+The current local HEAD is `37b3a1e16de436c818eed807ee8a962f7cbbf43b`, including the author's
+committed C++20 build policy at the project root. The staged installed-consumer
+test additionally sets its runtime library path to its temporary installation.
+That two-line test-support change is included in the captured patch; the
+reconstruction base remains unchanged. The manuscript and application sources
+are unchanged by this repair. Current CI-repair evidence is recorded in
+`review/ci-fix-2026-09-22/`; earlier editorial results retain their original
+source identities.

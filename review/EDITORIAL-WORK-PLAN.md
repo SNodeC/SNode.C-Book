@@ -673,3 +673,16 @@ builds and all existing teaching/behavior/SSE/WebSocket checks. The book remains
 490 pages with identical page content streams and zero warnings/bad boxes.
 Independent proposal-profile warnings are recorded separately. Fresh hosted CI
 runs remain pending; see `review/ci-fix-2026-09-22/REPORT.md`.
+
+### 22 September 2026 — staged installation test environment
+
+The first repaired hosted publication run passes with TeX Live 2026; the GCC
+companion job also passes. Clang exposed an additional missing runtime search
+path in the staged installed-consumer test. The author requested `LD_LIBRARY_PATH`;
+the test now points it at its own temporary installation. Both complete local
+framework suites pass all 183 tests with `/usr/local/lib` hidden, correcting the
+initial local validation's accidental dependence on system SNode.C libraries.
+The source capture includes this two-line test-support change against the
+author's current HEAD `37b3a1e16de436c818eed807ee8a962f7cbbf43b`. Fresh hosted
+verification of this follow-up remains pending. Application code, manuscript,
+typography, and all deferred scopes remain unchanged; see the CI repair report.

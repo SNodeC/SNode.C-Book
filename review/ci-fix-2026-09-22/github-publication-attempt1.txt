@@ -1,0 +1,60 @@
+Run https://github.com/SNodeC/SNode.C-Book/actions/runs/35669868538/attempts/1
+Job 106563693733; tested commit 0e224a4eff9965976b81975b087622a2677bd961
+Build succeeded; artifact service finalization failed; failed job retried.
+2026-09-21T23:59:14.1045421Z [36;1mxelatex --version | grep -F 'TeX Live 2026'[0m
+2026-09-21T23:59:29.4552144Z pandoc 3.10.1
+2026-09-21T23:59:29.4602276Z XeTeX 3.141592653-2.6-0.999998 (TeX Live 2026)
+2026-09-21T23:59:39.7176207Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:39.7964285Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:39.8455037Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:39.9843726Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:40.0066296Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:40.0985756Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:41.0340657Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:41.0731758Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:41.1831977Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:41.3721455Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:41.5141842Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:41.9058798Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:42.4046912Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:42.4707315Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:42.5989876Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:42.8914146Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:42.9251111Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:43.0952888Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:43.7157549Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:48.4117348Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:48.4259749Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-21T23:59:48.4262033Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:48.4394603Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:53.2592050Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:53.2682497Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-21T23:59:53.2684889Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-21T23:59:53.2776619Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:00:26.3825171Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:00:26.3978600Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:00:26.3980506Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:00:26.4079202Z (490 pages).
+2026-09-22T00:00:26.4079997Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:00:26.4153978Z (490 pages).
+2026-09-22T00:00:32.9785721Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:00:32.9962758Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:00:32.9965640Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:00:33.0142704Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:00:38.0807440Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:00:38.0898096Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:00:38.0900317Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:00:38.0999398Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:01:10.5289034Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:01:10.5396313Z (490 pages).
+2026-09-22T00:01:10.5397062Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:01:10.5398961Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:01:10.5496935Z (490 pages).
+2026-09-22T00:01:10.5497721Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:01:10.5599458Z (490 pages).
+2026-09-22T00:01:10.8128511Z Archive path check passed: 309 unique entries
+2026-09-22T00:01:10.8155517Z Book package build passed.
+2026-09-22T00:01:11.5701247Z Uploaded bytes 6774671
+2026-09-22T00:01:11.5823054Z Finished uploading artifact content to blob storage!
+2026-09-22T00:01:11.5825909Z Finalizing artifact upload
+2026-09-22T00:01:11.7667182Z ##[error]Failed to FinalizeArtifact: Received non-retryable error: Failed request: (403) Forbidden: Error from intermediary with HTTP status code 403 "Forbidden"

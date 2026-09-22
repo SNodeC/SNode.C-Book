@@ -1,0 +1,481 @@
+Test project /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/framework-gcc
+        Start   1: StagedInstalledConsumerTest
+  1/183 Test   #1: StagedInstalledConsumerTest ................................   Passed    5.25 sec
+        Start   2: SNodeCInitFreeSmokeTest
+  2/183 Test   #2: SNodeCInitFreeSmokeTest ....................................   Passed    0.01 sec
+        Start   3: TLSResultClassificationTest
+  3/183 Test   #3: TLSResultClassificationTest ................................   Passed    0.00 sec
+        Start   4: TLSIoFatalPathTest
+  4/183 Test   #4: TLSIoFatalPathTest .........................................   Passed    0.02 sec
+        Start   5: TLSLifecycleHelperOwnershipTest
+  5/183 Test   #5: TLSLifecycleHelperOwnershipTest ............................   Passed    0.01 sec
+        Start   6: TLSTransportStateMachineTest
+  6/183 Test   #6: TLSTransportStateMachineTest ...............................   Passed    0.11 sec
+        Start   7: TLSLifecycleAbiSourceCompatibilityTest
+  7/183 Test   #7: TLSLifecycleAbiSourceCompatibilityTest .....................   Passed    0.01 sec
+        Start   8: StreamFrameworkShutdown_plain_requested_empty
+  8/183 Test   #8: StreamFrameworkShutdown_plain_requested_empty ..............   Passed    0.01 sec
+        Start   9: StreamFrameworkShutdown_plain_requested_queued
+  9/183 Test   #9: StreamFrameworkShutdown_plain_requested_queued .............   Passed    0.01 sec
+        Start  10: StreamFrameworkShutdown_plain_signal_false_veto
+ 10/183 Test  #10: StreamFrameworkShutdown_plain_signal_false_veto ............   Passed    0.01 sec
+        Start  11: StreamFrameworkShutdown_plain_no_observer
+ 11/183 Test  #11: StreamFrameworkShutdown_plain_no_observer ..................   Passed    0.01 sec
+        Start  12: StreamFrameworkShutdown_plain_noncooperating_timeout
+ 12/183 Test  #12: StreamFrameworkShutdown_plain_noncooperating_timeout .......   Passed    0.06 sec
+        Start  13: StreamFrameworkShutdown_reentrant_context_cleanup
+ 13/183 Test  #13: StreamFrameworkShutdown_reentrant_context_cleanup ..........   Passed    0.01 sec
+        Start  14: StreamFrameworkShutdown_active_detach_context_visibility
+ 14/183 Test  #14: StreamFrameworkShutdown_active_detach_context_visibility ...   Passed    0.01 sec
+        Start  15: StreamFrameworkShutdown_destruction_logging_order
+ 15/183 Test  #15: StreamFrameworkShutdown_destruction_logging_order ..........   Passed    0.01 sec
+        Start  16: SocketContextLifecycleTest
+ 16/183 Test  #16: SocketContextLifecycleTest .................................   Passed    0.01 sec
+        Start  17: SocketWriterResourcePolicyTest
+ 17/183 Test  #17: SocketWriterResourcePolicyTest .............................   Passed    0.01 sec
+        Start  18: ListenerLifecycleTest
+ 18/183 Test  #18: ListenerLifecycleTest ......................................   Passed    0.01 sec
+        Start  19: EndpointLifetimeCountersTest
+ 19/183 Test  #19: EndpointLifetimeCountersTest ...............................   Passed    0.14 sec
+        Start  20: ConnectionAttemptLifecycleTest
+ 20/183 Test  #20: ConnectionAttemptLifecycleTest .............................   Passed    0.03 sec
+        Start  21: TlsOpenSslLoggingTest
+ 21/183 Test  #21: TlsOpenSslLoggingTest ......................................   Passed    0.01 sec
+        Start  22: TLSFrameworkShutdown_active_helper_requested
+ 22/183 Test  #22: TLSFrameworkShutdown_active_helper_requested ...............   Passed    0.01 sec
+        Start  23: TLSFrameworkShutdown_active_helper_no_observer
+ 23/183 Test  #23: TLSFrameworkShutdown_active_helper_no_observer .............   Passed    0.01 sec
+        Start  24: TLSFrameworkShutdown_active_helper_signal
+ 24/183 Test  #24: TLSFrameworkShutdown_active_helper_signal ..................   Passed    0.01 sec
+        Start  25: TLSFrameworkShutdown_active_helper_forced
+ 25/183 Test  #25: TLSFrameworkShutdown_active_helper_forced ..................   Passed    0.01 sec
+        Start  26: TLSFrameworkShutdown_publisher_mutation_same_list
+ 26/183 Test  #26: TLSFrameworkShutdown_publisher_mutation_same_list ..........   Passed    0.01 sec
+        Start  27: TLSFrameworkShutdown_publisher_mutation_cross_publisher
+ 27/183 Test  #27: TLSFrameworkShutdown_publisher_mutation_cross_publisher ....   Passed    0.01 sec
+        Start  28: TLSFrameworkShutdown_signal_false_tls
+ 28/183 Test  #28: TLSFrameworkShutdown_signal_false_tls ......................   Passed    0.01 sec
+        Start  29: TLSFrameworkShutdown_outer_timeout_long
+ 29/183 Test  #29: TLSFrameworkShutdown_outer_timeout_long ....................   Passed    2.01 sec
+        Start  30: TLSFrameworkShutdown_outer_timeout_multiple
+ 30/183 Test  #30: TLSFrameworkShutdown_outer_timeout_multiple ................   Passed    2.01 sec
+        Start  31: InetSocketAddressTest
+ 31/183 Test  #31: InetSocketAddressTest ......................................   Passed    0.01 sec
+        Start  32: InetSocketAddressNativeTest
+ 32/183 Test  #32: InetSocketAddressNativeTest ................................   Passed    0.01 sec
+        Start  33: Inet6SocketAddressTest
+ 33/183 Test  #33: Inet6SocketAddressTest .....................................   Passed    0.01 sec
+        Start  34: Inet6SocketAddressNativeTest
+ 34/183 Test  #34: Inet6SocketAddressNativeTest ...............................   Passed    0.01 sec
+        Start  35: UnixSocketAddressTest
+ 35/183 Test  #35: UnixSocketAddressTest ......................................   Passed    0.00 sec
+        Start  36: UnixSocketAddressInitTest
+ 36/183 Test  #36: UnixSocketAddressInitTest ..................................   Passed    0.01 sec
+        Start  37: InetSocketAddressInvalidInputTest
+ 37/183 Test  #37: InetSocketAddressInvalidInputTest ..........................   Passed    0.01 sec
+        Start  38: Inet6SocketAddressInvalidInputTest
+ 38/183 Test  #38: Inet6SocketAddressInvalidInputTest .........................   Passed    0.00 sec
+        Start  39: UnixSocketAddressPathLengthTest
+ 39/183 Test  #39: UnixSocketAddressPathLengthTest ............................   Passed    0.00 sec
+        Start  40: UnixPeerCredentialsTest
+ 40/183 Test  #40: UnixPeerCredentialsTest ....................................   Passed    0.00 sec
+        Start  41: SocketAddressFormattingTest
+ 41/183 Test  #41: SocketAddressFormattingTest ................................   Passed    0.01 sec
+        Start  42: HttpMessageParserTest
+ 42/183 Test  #42: HttpMessageParserTest ......................................   Passed    0.01 sec
+        Start  43: HttpPolicyConfigTest
+ 43/183 Test  #43: HttpPolicyConfigTest .......................................   Passed    0.01 sec
+        Start  44: HttpRequestFormatterRawWireTest
+ 44/183 Test  #44: HttpRequestFormatterRawWireTest ............................   Passed    0.01 sec
+        Start  45: HttpResponseFormatterRawWireTest
+ 45/183 Test  #45: HttpResponseFormatterRawWireTest ...........................   Passed    0.00 sec
+        Start  46: HttpMessagePresentationTest
+ 46/183 Test  #46: HttpMessagePresentationTest ................................   Passed    0.01 sec
+        Start  47: HttpMessageHeaderCasingTest
+ 47/183 Test  #47: HttpMessageHeaderCasingTest ................................   Passed    0.01 sec
+        Start  48: HttpMessageTargetQueryEdgeTest
+ 48/183 Test  #48: HttpMessageTargetQueryEdgeTest .............................   Passed    0.01 sec
+        Start  49: HttpServerUpgradeMissingRequestTest
+ 49/183 Test  #49: HttpServerUpgradeMissingRequestTest ........................   Passed    0.01 sec
+        Start  50: HttpStreamingSourceFailureTest
+ 50/183 Test  #50: HttpStreamingSourceFailureTest .............................   Passed    0.01 sec
+        Start  51: WebSocketReceiverValidationTest
+ 51/183 Test  #51: WebSocketReceiverValidationTest ............................   Passed    0.00 sec
+        Start  52: WebSocketLimitCloseFrameTest
+ 52/183 Test  #52: WebSocketLimitCloseFrameTest ...............................   Passed    0.01 sec
+        Start  53: PublicLogApiTest
+ 53/183 Test  #53: PublicLogApiTest ...........................................   Passed    0.00 sec
+        Start  54: SemanticLoggerFormattingTest
+ 54/183 Test  #54: SemanticLoggerFormattingTest ...............................   Passed    0.00 sec
+        Start  55: LogScopeOwnerTest
+ 55/183 Test  #55: LogScopeOwnerTest ..........................................   Passed    0.00 sec
+        Start  56: SemanticLoggerScopeTest
+ 56/183 Test  #56: SemanticLoggerScopeTest ....................................   Passed    0.00 sec
+        Start  57: SemanticLoggerBackendTest
+ 57/183 Test  #57: SemanticLoggerBackendTest ..................................   Passed    0.00 sec
+        Start  58: SemanticLoggerFilteringTest
+ 58/183 Test  #58: SemanticLoggerFilteringTest ................................   Passed    0.00 sec
+        Start  59: SemanticLoggerDisabledPathTest
+ 59/183 Test  #59: SemanticLoggerDisabledPathTest .............................   Passed    0.01 sec
+        Start  60: SemanticLoggerCacheTest
+ 60/183 Test  #60: SemanticLoggerCacheTest ....................................   Passed    0.00 sec
+        Start  61: SemanticEndToEndOutputTest
+ 61/183 Test  #61: SemanticEndToEndOutputTest .................................   Passed    0.00 sec
+        Start  62: SemanticTerminalColorRoutingTest
+ 62/183 Test  #62: SemanticTerminalColorRoutingTest ...........................   Passed    0.00 sec
+        Start  63: SemanticCliIntegrationTest
+ 63/183 Test  #63: SemanticCliIntegrationTest .................................   Passed    0.00 sec
+        Start  64: Mqtt311PacketValidationTest
+ 64/183 Test  #64: Mqtt311PacketValidationTest ................................   Passed    0.01 sec
+        Start  65: MqttLifecycleTest
+ 65/183 Test  #65: MqttLifecycleTest ..........................................   Passed    0.01 sec
+        Start  66: ConfigFormatterCommentMetadataTest
+ 66/183 Test  #66: ConfigFormatterCommentMetadataTest .........................   Passed    0.00 sec
+        Start  67: ConfigRequirementStateTest
+ 67/183 Test  #67: ConfigRequirementStateTest .................................   Passed    0.01 sec
+        Start  68: HexDumpPresentationTest
+ 68/183 Test  #68: HexDumpPresentationTest ....................................   Passed    0.01 sec
+        Start  69: SingleshotTimerTest
+ 69/183 Test  #69: SingleshotTimerTest ........................................   Passed    0.01 sec
+        Start  70: IntervalTimerStopableTest
+ 70/183 Test  #70: IntervalTimerStopableTest ..................................   Passed    0.01 sec
+        Start  71: SNodeCStopFromCallbackTest
+ 71/183 Test  #71: SNodeCStopFromCallbackTest .................................   Passed    0.01 sec
+        Start  72: SNodeCReconfigureTest
+ 72/183 Test  #72: SNodeCReconfigureTest ......................................   Passed    0.01 sec
+        Start  73: TimerCancelBeforeFireTest
+ 73/183 Test  #73: TimerCancelBeforeFireTest ..................................   Passed    0.01 sec
+        Start  74: IntervalTimerCancelFromCallbackTest
+ 74/183 Test  #74: IntervalTimerCancelFromCallbackTest ........................   Passed    0.01 sec
+        Start  75: PipeBoundedQueueTest
+ 75/183 Test  #75: PipeBoundedQueueTest .......................................   Passed    0.01 sec
+        Start  76: PipeOwnershipTest
+ 76/183 Test  #76: PipeOwnershipTest ..........................................   Passed    0.00 sec
+        Start  77: PipeImmediateCloseTest
+ 77/183 Test  #77: PipeImmediateCloseTest .....................................   Passed    0.01 sec
+        Start  78: PipeSinkFairnessTest
+ 78/183 Test  #78: PipeSinkFairnessTest .......................................   Passed    0.00 sec
+        Start  79: PipeTimeoutTest
+ 79/183 Test  #79: PipeTimeoutTest ............................................   Passed    0.05 sec
+        Start  80: DescriptorRegistrationFailureTest
+ 80/183 Test  #80: DescriptorRegistrationFailureTest ..........................   Passed    0.01 sec
+        Start  81: FileReaderTest
+ 81/183 Test  #81: FileReaderTest .............................................   Passed    0.00 sec
+        Start  82: ShutdownReceiverNotification_requested
+ 82/183 Test  #82: ShutdownReceiverNotification_requested .....................   Passed    0.01 sec
+        Start  83: ShutdownReceiverNotification_signal
+ 83/183 Test  #83: ShutdownReceiverNotification_signal ........................   Passed    0.01 sec
+        Start  84: InetLegacyServerClientCompositionTest
+ 84/183 Test  #84: InetLegacyServerClientCompositionTest ......................   Passed    0.01 sec
+        Start  85: Inet6LegacyServerClientCompositionTest
+ 85/183 Test  #85: Inet6LegacyServerClientCompositionTest .....................   Passed    0.01 sec
+        Start  86: UnixLegacyServerClientCompositionTest
+ 86/183 Test  #86: UnixLegacyServerClientCompositionTest ......................   Passed    0.01 sec
+        Start  87: InetLegacyServerMultipleClientsCompositionTest
+ 87/183 Test  #87: InetLegacyServerMultipleClientsCompositionTest .............   Passed    0.01 sec
+        Start  88: Inet6LegacyServerMultipleClientsCompositionTest
+ 88/183 Test  #88: Inet6LegacyServerMultipleClientsCompositionTest ............   Passed    0.01 sec
+        Start  89: UnixLegacyServerMultipleClientsCompositionTest
+ 89/183 Test  #89: UnixLegacyServerMultipleClientsCompositionTest .............   Passed    0.01 sec
+        Start  90: InetLegacyServerClientMultiMessagePayloadExchangeTest
+ 90/183 Test  #90: InetLegacyServerClientMultiMessagePayloadExchangeTest ......   Passed    0.01 sec
+        Start  91: Inet6LegacyServerClientMultiMessagePayloadExchangeTest
+ 91/183 Test  #91: Inet6LegacyServerClientMultiMessagePayloadExchangeTest .....   Passed    0.01 sec
+        Start  92: UnixLegacyServerClientMultiMessagePayloadExchangeTest
+ 92/183 Test  #92: UnixLegacyServerClientMultiMessagePayloadExchangeTest ......   Passed    0.01 sec
+        Start  93: InetLegacyServerMultipleClientsPayloadExchangeTest
+ 93/183 Test  #93: InetLegacyServerMultipleClientsPayloadExchangeTest .........   Passed    0.01 sec
+        Start  94: Inet6LegacyServerMultipleClientsPayloadExchangeTest
+ 94/183 Test  #94: Inet6LegacyServerMultipleClientsPayloadExchangeTest ........   Passed    0.01 sec
+        Start  95: UnixLegacyServerMultipleClientsPayloadExchangeTest
+ 95/183 Test  #95: UnixLegacyServerMultipleClientsPayloadExchangeTest .........   Passed    0.01 sec
+        Start  96: UnixLegacyServerClientPayloadExchangeTest
+ 96/183 Test  #96: UnixLegacyServerClientPayloadExchangeTest ..................   Passed    0.01 sec
+        Start  97: UnixLegacyServerClientDisconnectLifecycleTest
+ 97/183 Test  #97: UnixLegacyServerClientDisconnectLifecycleTest ..............   Passed    0.01 sec
+        Start  98: UnixLegacyClientConnectFailureTest
+ 98/183 Test  #98: UnixLegacyClientConnectFailureTest .........................   Passed    0.01 sec
+        Start  99: InetLegacyServerClientPayloadExchangeTest
+ 99/183 Test  #99: InetLegacyServerClientPayloadExchangeTest ..................   Passed    0.01 sec
+        Start 100: InetLegacyServerClientDisconnectLifecycleTest
+100/183 Test #100: InetLegacyServerClientDisconnectLifecycleTest ..............   Passed    0.02 sec
+        Start 101: InetLegacyClientConnectFailureTest
+101/183 Test #101: InetLegacyClientConnectFailureTest .........................   Passed    0.01 sec
+        Start 102: Inet6LegacyServerClientPayloadExchangeTest
+102/183 Test #102: Inet6LegacyServerClientPayloadExchangeTest .................   Passed    0.01 sec
+        Start 103: Inet6LegacyServerClientDisconnectLifecycleTest
+103/183 Test #103: Inet6LegacyServerClientDisconnectLifecycleTest .............   Passed    0.01 sec
+        Start 104: Inet6LegacyClientConnectFailureTest
+104/183 Test #104: Inet6LegacyClientConnectFailureTest ........................   Passed    0.01 sec
+        Start 105: InetLegacyServerEffectiveListenAddressTest
+105/183 Test #105: InetLegacyServerEffectiveListenAddressTest .................   Passed    0.01 sec
+        Start 106: InetPhysicalServerEffectiveBindAddressTest
+106/183 Test #106: InetPhysicalServerEffectiveBindAddressTest .................   Passed    0.01 sec
+        Start 107: UnixPhysicalSocketPathSafetyTest
+107/183 Test #107: UnixPhysicalSocketPathSafetyTest ...........................   Passed    0.00 sec
+        Start 108: InetLegacyServerClientLargePayloadExchangeTest
+108/183 Test #108: InetLegacyServerClientLargePayloadExchangeTest .............   Passed    0.01 sec
+        Start 109: InetLegacyServerClientFramedPayloadExchangeTest
+109/183 Test #109: InetLegacyServerClientFramedPayloadExchangeTest ............   Passed    0.02 sec
+        Start 110: Inet6LegacyServerClientFramedPayloadExchangeTest
+110/183 Test #110: Inet6LegacyServerClientFramedPayloadExchangeTest ...........   Passed    0.02 sec
+        Start 111: UnixLegacyServerClientFramedPayloadExchangeTest
+111/183 Test #111: UnixLegacyServerClientFramedPayloadExchangeTest ............   Passed    0.02 sec
+        Start 112: Inet6LegacyServerClientLargePayloadExchangeTest
+112/183 Test #112: Inet6LegacyServerClientLargePayloadExchangeTest ............   Passed    0.01 sec
+        Start 113: UnixLegacyServerClientLargePayloadExchangeTest
+113/183 Test #113: UnixLegacyServerClientLargePayloadExchangeTest .............   Passed    0.01 sec
+        Start 114: InetLegacyServerControlledCloseLifecycleTest
+114/183 Test #114: InetLegacyServerControlledCloseLifecycleTest ...............   Passed    0.01 sec
+        Start 115: Inet6LegacyServerControlledCloseLifecycleTest
+115/183 Test #115: Inet6LegacyServerControlledCloseLifecycleTest ..............   Passed    0.01 sec
+        Start 116: UnixLegacyServerControlledCloseLifecycleTest
+116/183 Test #116: UnixLegacyServerControlledCloseLifecycleTest ...............   Passed    0.01 sec
+        Start 117: InetLegacyServerMultipleClientsDisconnectLifecycleTest
+117/183 Test #117: InetLegacyServerMultipleClientsDisconnectLifecycleTest .....   Passed    0.02 sec
+        Start 118: Inet6LegacyServerMultipleClientsDisconnectLifecycleTest
+118/183 Test #118: Inet6LegacyServerMultipleClientsDisconnectLifecycleTest ....   Passed    0.01 sec
+        Start 119: UnixLegacyServerMultipleClientsDisconnectLifecycleTest
+119/183 Test #119: UnixLegacyServerMultipleClientsDisconnectLifecycleTest .....   Passed    0.01 sec
+        Start 120: InetPerCallFlowTest
+120/183 Test #120: InetPerCallFlowTest ........................................   Passed    0.01 sec
+        Start 121: InetHttpServerClientGetRoundTripTest
+121/183 Test #121: InetHttpServerClientGetRoundTripTest .......................   Passed    0.02 sec
+        Start 122: InetHttpClientParserLimitTest
+122/183 Test #122: InetHttpClientParserLimitTest ..............................   Passed    0.01 sec
+        Start 123: InetHttpServerRequestPolicyTest
+123/183 Test #123: InetHttpServerRequestPolicyTest ............................   Passed    0.01 sec
+        Start 124: InetHttpServerPipeliningPolicyTest
+124/183 Test #124: InetHttpServerPipeliningPolicyTest .........................   Passed    0.01 sec
+        Start 125: Inet6HttpServerClientGetRoundTripTest
+125/183 Test #125: Inet6HttpServerClientGetRoundTripTest ......................   Passed    0.02 sec
+        Start 126: UnixHttpServerClientGetRoundTripTest
+126/183 Test #126: UnixHttpServerClientGetRoundTripTest .......................   Passed    0.02 sec
+        Start 127: InetHttpServerClientPostBodyRoundTripTest
+127/183 Test #127: InetHttpServerClientPostBodyRoundTripTest ..................   Passed    0.02 sec
+        Start 128: Inet6HttpServerClientPostBodyRoundTripTest
+128/183 Test #128: Inet6HttpServerClientPostBodyRoundTripTest .................   Passed    0.01 sec
+        Start 129: UnixHttpServerClientPostBodyRoundTripTest
+129/183 Test #129: UnixHttpServerClientPostBodyRoundTripTest ..................   Passed    0.01 sec
+        Start 130: InetHttpServerClientStatusVariantTest
+130/183 Test #130: InetHttpServerClientStatusVariantTest ......................   Passed    0.01 sec
+        Start 131: Inet6HttpServerClientStatusVariantTest
+131/183 Test #131: Inet6HttpServerClientStatusVariantTest .....................   Passed    0.02 sec
+        Start 132: UnixHttpServerClientStatusVariantTest
+132/183 Test #132: UnixHttpServerClientStatusVariantTest ......................   Passed    0.01 sec
+        Start 133: InetHttpServerClientRepeatedRequestTest
+133/183 Test #133: InetHttpServerClientRepeatedRequestTest ....................   Passed    0.02 sec
+        Start 134: InetHttpServerClientDisconnectLifecycleTest
+134/183 Test #134: InetHttpServerClientDisconnectLifecycleTest ................   Passed    0.01 sec
+        Start 135: InetHttpClientPrematureServerCloseTest
+135/183 Test #135: InetHttpClientPrematureServerCloseTest .....................   Passed    0.02 sec
+        Start 136: InetHttpServerClientLargeResponseBodyTest
+136/183 Test #136: InetHttpServerClientLargeResponseBodyTest ..................   Passed    0.02 sec
+        Start 137: InetHttpServerClientLargeRequestBodyTest
+137/183 Test #137: InetHttpServerClientLargeRequestBodyTest ...................   Passed    0.02 sec
+        Start 138: InetHttpServerClientHeaderHeavyRequestTest
+138/183 Test #138: InetHttpServerClientHeaderHeavyRequestTest .................   Passed    0.02 sec
+        Start 139: InetHttpServerClientHeaderHeavyResponseTest
+139/183 Test #139: InetHttpServerClientHeaderHeavyResponseTest ................   Passed    0.02 sec
+        Start 140: InetHttpClientConnectFailureTest
+140/183 Test #140: InetHttpClientConnectFailureTest ...........................   Passed    0.01 sec
+        Start 141: InetHttpServerClientChunkedResponseTest
+141/183 Test #141: InetHttpServerClientChunkedResponseTest ....................   Passed    0.01 sec
+        Start 142: InetHttpServerClientPipeliningTest
+142/183 Test #142: InetHttpServerClientPipeliningTest .........................   Passed    0.01 sec
+        Start 143: InetHttpServerMalformedRequestBehaviorTest
+143/183 Test #143: InetHttpServerMalformedRequestBehaviorTest .................   Passed    0.02 sec
+        Start 144: InetHttpClientMalformedResponseBehaviorTest
+144/183 Test #144: InetHttpClientMalformedResponseBehaviorTest ................   Passed    0.01 sec
+        Start 145: InetHttpServerClientChunkedRequestTest
+145/183 Test #145: InetHttpServerClientChunkedRequestTest .....................   Passed    0.01 sec
+        Start 146: InetExpressRoutingMiddlewareTest
+146/183 Test #146: InetExpressRoutingMiddlewareTest ...........................   Passed    0.03 sec
+        Start 147: InetExpressHttpParserLimitTest
+147/183 Test #147: InetExpressHttpParserLimitTest .............................   Passed    0.01 sec
+        Start 148: Inet6ExpressTransportSmokeTest
+148/183 Test #148: Inet6ExpressTransportSmokeTest .............................   Passed    0.01 sec
+        Start 149: UnixExpressTransportSmokeTest
+149/183 Test #149: UnixExpressTransportSmokeTest ..............................   Passed    0.01 sec
+        Start 150: InetExpressMiddlewareShortCircuitTest
+150/183 Test #150: InetExpressMiddlewareShortCircuitTest ......................   Passed    0.01 sec
+        Start 151: InetExpressRoutingEdgeBasicsTest
+151/183 Test #151: InetExpressRoutingEdgeBasicsTest ...........................   Passed    0.02 sec
+        Start 152: InetExpressMountedRouterBasicsTest
+152/183 Test #152: InetExpressMountedRouterBasicsTest .........................   Passed    0.02 sec
+        Start 153: InetExpressNestedRouterBasicsTest
+153/183 Test #153: InetExpressNestedRouterBasicsTest ..........................   Passed    0.02 sec
+        Start 154: InetExpressRouteParameterRegexTest
+154/183 Test #154: InetExpressRouteParameterRegexTest .........................   Passed    0.02 sec
+        Start 155: InetExpressMiddlewareMountOrderTest
+155/183 Test #155: InetExpressMiddlewareMountOrderTest ........................   Passed    0.02 sec
+        Start 156: InetExpressQueryMountInteractionTest
+156/183 Test #156: InetExpressQueryMountInteractionTest .......................   Passed    0.02 sec
+        Start 157: InetExpressFallbackNotFoundTest
+157/183 Test #157: InetExpressFallbackNotFoundTest ............................   Passed    0.02 sec
+        Start 158: InetWebSocketServerClientTextEchoTest
+158/183 Test #158: InetWebSocketServerClientTextEchoTest ......................   Passed    0.01 sec
+        Start 159: Inet6WebSocketServerClientTextEchoTest
+159/183 Test #159: Inet6WebSocketServerClientTextEchoTest .....................   Passed    0.02 sec
+        Start 160: UnixWebSocketServerClientTextEchoTest
+160/183 Test #160: UnixWebSocketServerClientTextEchoTest ......................   Passed    0.02 sec
+        Start 161: InetWebSocketServerClientMultiTextMessageTest
+161/183 Test #161: InetWebSocketServerClientMultiTextMessageTest ..............   Passed    0.02 sec
+        Start 162: InetWebSocketServerClientBinaryEchoTest
+162/183 Test #162: InetWebSocketServerClientBinaryEchoTest ....................   Passed    0.01 sec
+        Start 163: InetWebSocketServerClientCloseHandshakeTest
+163/183 Test #163: InetWebSocketServerClientCloseHandshakeTest ................   Passed    0.03 sec
+        Start 164: InetWebSocketServerClientPingPongTest
+164/183 Test #164: InetWebSocketServerClientPingPongTest ......................   Passed    0.02 sec
+        Start 165: InetWebSocketServerInitiatedCloseTest
+165/183 Test #165: InetWebSocketServerInitiatedCloseTest ......................   Passed    0.02 sec
+        Start 166: InetWebSocketUnexpectedCloseLifecycleTest
+166/183 Test #166: InetWebSocketUnexpectedCloseLifecycleTest ..................   Passed    0.02 sec
+        Start 167: InetWebSocketLargeTextMessageTest
+167/183 Test #167: InetWebSocketLargeTextMessageTest ..........................   Passed    0.02 sec
+        Start 168: InetWebSocketLargeBinaryMessageTest
+168/183 Test #168: InetWebSocketLargeBinaryMessageTest ........................   Passed    0.02 sec
+        Start 169: InetSseEventSourceBasicEventTest
+169/183 Test #169: InetSseEventSourceBasicEventTest ...........................   Passed    0.02 sec
+        Start 170: InetSseEventSourceMultiEventSequenceTest
+170/183 Test #170: InetSseEventSourceMultiEventSequenceTest ...................   Passed    0.01 sec
+        Start 171: InetSseEventSourceMultiLineDataTest
+171/183 Test #171: InetSseEventSourceMultiLineDataTest ........................   Passed    0.01 sec
+        Start 172: InetSseEventSourceCommentIgnoredTest
+172/183 Test #172: InetSseEventSourceCommentIgnoredTest .......................   Passed    0.02 sec
+        Start 173: InetSseEventSourceDefaultMessageEventTest
+173/183 Test #173: InetSseEventSourceDefaultMessageEventTest ..................   Passed    0.02 sec
+        Start 174: InetSseEventSourceClientCloseAfterEventTest
+174/183 Test #174: InetSseEventSourceClientCloseAfterEventTest ................   Passed    0.02 sec
+        Start 175: InetSseEventSourceRetryFieldTest
+175/183 Test #175: InetSseEventSourceRetryFieldTest ...........................   Passed    0.01 sec
+        Start 176: InetSseEventSourceReconnectLifecycleTest
+176/183 Test #176: InetSseEventSourceReconnectLifecycleTest ...................   Passed    3.03 sec
+        Start 177: InetSseEventSourceDestructionLifecycleTest
+177/183 Test #177: InetSseEventSourceDestructionLifecycleTest .................   Passed    0.06 sec
+        Start 178: ParameterlessSemanticLoggerPolicyTest
+178/183 Test #178: ParameterlessSemanticLoggerPolicyTest ......................   Passed    0.15 sec
+        Start 179: LoggingApiSurfacePolicyTest
+179/183 Test #179: LoggingApiSurfacePolicyTest ................................   Passed    0.01 sec
+        Start 180: EpollDescriptorPublisherPolicyTest
+180/183 Test #180: EpollDescriptorPublisherPolicyTest .........................   Passed    0.00 sec
+        Start 181: EventLoopSyscallDisciplinePolicyTest
+181/183 Test #181: EventLoopSyscallDisciplinePolicyTest .......................   Passed    0.00 sec
+        Start 182: SensitiveLoggingPolicyTest
+182/183 Test #182: SensitiveLoggingPolicyTest .................................   Passed    0.23 sec
+        Start 183: CiWorkflowPathsPolicyTest
+183/183 Test #183: CiWorkflowPathsPolicyTest ..................................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 183
+
+Label Time Summary:
+abi                   =   0.01 sec*proc (1 test)
+address               =   0.05 sec*proc (10 tests)
+api                   =   0.01 sec*proc (3 tests)
+architecture          =   0.16 sec*proc (3 tests)
+backend               =   0.00 sec*proc (1 test)
+binary                =   0.02 sec*proc (1 test)
+cache                 =   0.00 sec*proc (1 test)
+chunked               =   0.02 sec*proc (2 tests)
+ci                    =   0.00 sec*proc (1 test)
+classification        =   0.00 sec*proc (1 test)
+cli                   =   0.00 sec*proc (1 test)
+client                =   3.55 sec*proc (31 tests)
+close                 =   0.02 sec*proc (1 test)
+component             =   4.54 sec*proc (109 tests)
+composition           =   0.07 sec*proc (6 tests)
+config                =   0.03 sec*proc (4 tests)
+connect-failure       =   0.04 sec*proc (4 tests)
+connection            =   0.03 sec*proc (1 test)
+consumer              =   5.25 sec*proc (1 test)
+core                  =   4.75 sec*proc (46 tests)
+credentials           =   0.00 sec*proc (1 test)
+descriptor            =   0.01 sec*proc (1 test)
+disconnect            =   0.08 sec*proc (6 tests)
+e2e                   =   0.00 sec*proc (1 test)
+effective-address     =   0.01 sec*proc (2 tests)
+endpoint-counter      =   0.14 sec*proc (1 test)
+epoll                 =   0.00 sec*proc (1 test)
+eventsource           =   3.20 sec*proc (9 tests)
+express               =   0.21 sec*proc (12 tests)
+fatal                 =   0.02 sec*proc (1 test)
+file                  =   0.00 sec*proc (1 test)
+filter                =   0.00 sec*proc (1 test)
+flow                  =   0.01 sec*proc (1 test)
+format                =   0.03 sec*proc (7 tests)
+framed-payload        =   0.05 sec*proc (3 tests)
+headers               =   0.04 sec*proc (3 tests)
+hexdump               =   0.01 sec*proc (1 test)
+http                  =   0.44 sec*proc (35 tests)
+init                  =   0.01 sec*proc (1 test)
+install               =   5.25 sec*proc (1 test)
+integration           =   0.00 sec*proc (1 test)
+invalid               =   0.01 sec*proc (2 tests)
+io                    =   0.02 sec*proc (1 test)
+ipv4                  =   4.00 sec*proc (63 tests)
+ipv6                  =   0.21 sec*proc (18 tests)
+large                 =   0.03 sec*proc (2 tests)
+large-payload         =   0.04 sec*proc (3 tests)
+legacy                =   4.39 sec*proc (93 tests)
+lifecycle             =   7.59 sec*proc (32 tests)
+listen                =   0.01 sec*proc (2 tests)
+listener              =   0.01 sec*proc (1 test)
+log                   =   3.54 sec*proc (20 tests)
+malformed-request     =   0.02 sec*proc (1 test)
+malformed-response    =   0.01 sec*proc (1 test)
+message               =   0.04 sec*proc (6 tests)
+middleware            =   0.07 sec*proc (4 tests)
+mount-order           =   0.02 sec*proc (1 test)
+mounted-router        =   0.02 sec*proc (1 test)
+mqtt                  =   0.01 sec*proc (2 tests)
+mqtt311               =   0.01 sec*proc (1 test)
+multi-client          =   0.11 sec*proc (9 tests)
+multi-message         =   0.03 sec*proc (3 tests)
+native                =   0.01 sec*proc (2 tests)
+nested-router         =   0.02 sec*proc (1 test)
+net                   =   0.48 sec*proc (48 tests)
+not-found             =   0.02 sec*proc (1 test)
+overhead              =   0.01 sec*proc (2 tests)
+ownership             =   0.01 sec*proc (2 tests)
+parameter-regex       =   0.02 sec*proc (1 test)
+parser-limit          =   0.03 sec*proc (2 tests)
+path                  =   0.00 sec*proc (1 test)
+path-safety           =   0.00 sec*proc (1 test)
+payload               =   0.09 sec*proc (9 tests)
+pending               =   0.01 sec*proc (1 test)
+pipe                  =   0.08 sec*proc (5 tests)
+pipelining            =   0.03 sec*proc (2 tests)
+policy                =   0.40 sec*proc (7 tests)
+presentation          =   0.01 sec*proc (1 test)
+protocol              =   0.01 sec*proc (1 test)
+query                 =   0.02 sec*proc (2 tests)
+request               =   0.03 sec*proc (2 tests)
+request-policy        =   0.03 sec*proc (2 tests)
+resource-policy       =   0.02 sec*proc (2 tests)
+response              =   0.03 sec*proc (2 tests)
+routing               =   0.18 sec*proc (11 tests)
+scope                 =   0.00 sec*proc (1 test)
+security              =   0.23 sec*proc (2 tests)
+server                =   3.57 sec*proc (32 tests)
+server-close          =   0.03 sec*proc (3 tests)
+server-initiated      =   0.02 sec*proc (1 test)
+shutdown              =   4.24 sec*proc (19 tests)
+smoke                 =   0.01 sec*proc (1 test)
+sse                   =   3.20 sec*proc (9 tests)
+state-machine         =   0.11 sec*proc (1 test)
+stream                =   4.66 sec*proc (55 tests)
+streaming             =   0.01 sec*proc (2 tests)
+syscall               =   0.00 sec*proc (1 test)
+target                =   0.01 sec*proc (1 test)
+text                  =   0.02 sec*proc (1 test)
+timer                 =   0.03 sec*proc (4 tests)
+tls                   =   4.26 sec*proc (15 tests)
+unexpected-close      =   0.02 sec*proc (1 test)
+unit                  =   4.80 sec*proc (67 tests)
+unix                  =   0.21 sec*proc (20 tests)
+utils                 =   0.02 sec*proc (3 tests)
+validation            =   0.01 sec*proc (2 tests)
+websocket             =   0.20 sec*proc (13 tests)
+writer                =   0.01 sec*proc (1 test)
+
+Total Test time (real) =  15.02 sec

@@ -2,8 +2,8 @@
   "base_commit": "1f0f728fc9b3b45174f2cd790d83b2f493e58af1",
   "source_path": "/home/voc/projects/snodec/snode.c",
   "project_version": "2.0.0",
-  "patch_sha256": "6a151b61d95781b6ded370774d84938d62b4cec564362f79d1e10f2ee166198b",
-  "tree_sha256": "f676e6cbeabbd8a14a0e2c64a254f688790c6a2e59a6b37daea28ea4f69a4df6",
+  "patch_sha256": "f0353a65152d74d1a79e6342a9ec65bfc022a39dc7044e4190c9e3c826522d10",
+  "tree_sha256": "c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf",
   "files": {
     ".clang-format": "633441d2ab5699252d83520f001d61dc2d6dde90f76e3a99f799baf60f08aafa",
     ".clang-format-ignore": "137c5f6c1cc2192c3e29ee0748e6c68853e0e4b34a9697038840b3c865debcb9",
@@ -1253,7 +1253,7 @@
     "supplement/qtcreator/templates/wizards/files/SNodeCSource/file.cpp": "ede93146cfb4701e067d910d9b08fe06a2a7c2811be0fe4e0d5bb0b137bf6f66",
     "supplement/qtcreator/templates/wizards/files/SNodeCSource/wizard.json": "0b7f4e1ea67f5b114a3ac1537d67e4346f34b02998905c76b139d3821c1a134c",
     "tests/CMakeLists.txt": "be8b3071eefc505d3d56b062630ab656eefaab7a496891c62abd4c9019490cbe",
-    "tests/StagedInstalledConsumerTest.cmake": "6e2d1944d6ef0e42e298e58a6b355748f6523596e961a66e86bfb542e709b1de",
+    "tests/StagedInstalledConsumerTest.cmake": "161556cedefa9ca3d6b9832c31a1424a31a2c9f179fe961f52c3a1246daccfcc",
     "tests/cmake/AddSNodeCTest.cmake": "63f3d6f9eb8fbbfb3f9e2917634e04b77088a80358806b820dd096704486cd1e",
     "tests/component/CMakeLists.txt": "5d0f62579f7ed532369e73b6565c9bf2f1aa9ad50af4676568e4a1a228a61688",
     "tests/component/core/CMakeLists.txt": "ed8c0cb3f9c9a52c3223b2b9f4e5536661018f1634b41d0d176a717cf6baa278",
@@ -1453,9 +1453,8 @@
     "tests/unit/websocket/WebSocketLimitCloseFrameTest.cpp": "872dd1e700115ea14aecc59933bd29e48db806db726842aaa283c1b915a0e76e",
     "tests/unit/websocket/WebSocketReceiverValidationTest.cpp": "9971afefd646dab8e252971e428dc99c54e09e79835e17d430873448748b9cb3"
   },
-  "current_head": "bb63e8a87aeda88123e8c0d72cb6d298908a9fe6",
+  "current_head": "37b3a1e16de436c818eed807ee8a962f7cbbf43b",
   "working_tree_status": [
-    " M CMakeLists.txt",
-    " M src/CMakeLists.txt"
+    " M tests/StagedInstalledConsumerTest.cmake"
   ]
 }
