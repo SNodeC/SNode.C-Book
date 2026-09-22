@@ -950,3 +950,31 @@ Phase 3 snapshot and the sample bridge explains the current numbering.
 Commit: `proposal-readiness: phase 5a — apply approved teaching-book structure`.
 Stop here. Next session: Phase 5b only, after rerunning the Phase 5a entry checks
 listed in REPORT.md. No later Part session or Phase 6 begins in this session.
+
+
+## Phase 5b — entry blocked after author seam edits, 2026-09-22
+
+The requested Part I session stopped before editing, as required by PROMPT.md's
+previous-phase re-verification gate. The author commit `author edit: fix two 5a
+seam references` is preserved. Its Chapter 22 sentence now contains one Chapter
+12 reference, while `phase-5a-reference-register.json` still has two occurrences
+(R275 and R276). Their two intended topic anchors need to be retained on the one
+surviving reference. Hygiene and the Phase 5a exit checker fail at this mismatch.
+
+The same two author edits reduce the measured manuscript by five prose words to
+146,205 total / 131,739 prose / 14,466 fenced. A gate repair must record that
+post-Phase-5a baseline explicitly without overwriting the historical Phase 5a
+metrics. Source alignment, measurement tests, companion build, and the already
+started PDF/package targets pass; runtime labs were not run after the gate failed.
+PDF counts remain 6 / 54 / 458 with clean final LaTeX logs.
+
+Evidence: `review/proposal-readiness-2026-09-22/phase-5b-entry-results.json`,
+`phase-5b-entry-hygiene.log`, `phase-5b-entry-exit.log`, and
+`metrics-after-phase-5b.json`; REPORT.md contains the exact gap and command results.
+Only records change; Part I condensation, Lab environment guidance, exercises,
+solutions, and the checkpoint remain pending. Reserve use remains zero.
+
+Status: **blocked at entry**, not completed. Commit:
+`proposal-readiness: phase 5b — record failed prerequisite check`.
+Stop here. Reconcile the reference/metric gate with the author edits, then recheck
+Phase 5a before retrying Phase 5b; do not revert the author's prose.

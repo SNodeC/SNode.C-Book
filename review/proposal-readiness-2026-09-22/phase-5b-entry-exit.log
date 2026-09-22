@@ -1,0 +1,12 @@
+ERROR: manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md: unregistered/removed reference; review its intended topic
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from pathlib import Path; p=Path('review/proposal-readiness-2026-09-22/check-phase-5a.py'); s=p.read_text().replace('phase-5a-exit-checks.json','phase-5b-entry-exit-checks.json'); exec(compile(s,str(p),'exec'), {'__file__':str(p.resolve()),'__name__':'__main__'})
+                                                                                                                                                                                        ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "review/proposal-readiness-2026-09-22/check-phase-5a.py", line 18, in <module>
+    subprocess.run(['python3', 'ci/check-chapter-references.py'], cwd=ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', 'ci/check-chapter-references.py']' returned non-zero exit status 1.

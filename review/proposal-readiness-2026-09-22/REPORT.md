@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest executed phase is Phase 5a. The author approved the restructure with changes in EDITORIAL-WORK-PLAN.md; the approved structure is now applied. Part condensation has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest completed phase is Phase 5a. The Phase 5b entry attempt is blocked by a reference-register mismatch after subsequent author seam edits. Part condensation has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -14,7 +14,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 3 — proposal package | completed | `proposal-readiness: phase 3 — prepare teaching-book proposal package` (containing this report) | 2026-09-22 | Phase 3 evidence below; metrics-after-phase-3.json; phase-3-bibliography.json; phase-3-exit-checks.json; phase-3-package-final.log; phase-3-archive-labs.log; phase-3-visual-review.md |
 | 4 — restructure plan | approved with author changes | `proposal-readiness: phase 4 — propose consolidated teaching-book structure` (containing this report) | 2026-09-22 | RESTRUCTURE-PLAN.md; phase-4-reference-map.md; phase-4-plan-checks.json; metrics-after-phase-4.json; Phase 4 evidence below |
 | 5a — approved TOC | completed | `proposal-readiness: phase 5a — apply approved teaching-book structure` (containing this report) | 2026-09-22 | phase-5a-approved-structure.json; phase-5a-reference-register.json; phase-5a-exit-checks.json; metrics-after-phase-5a.json; Phase 5a evidence below |
-| 5b — Part I | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5b — Part I | blocked at entry | `proposal-readiness: phase 5b — record failed prerequisite check` (containing this report) | 2026-09-22 | phase-5b-entry-hygiene.log; phase-5b-entry-exit.log; phase-5b-entry-results.json; metrics-after-phase-5b.json; entry-gap account below |
 | 5c — Part II | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5d — Part III | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5e — Part IV | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -1103,3 +1103,72 @@ use must be recorded here and never make the 2,750-word reserve negative or the
 checkpoint transferred from the epilogue to current Chapter 30. Phase **5m** owns
 Appendix A, the essay-only epilogue (budget 1,900), back matter, and final global
 audit. Phase **6** owns the proposal refresh. Stop after the Phase 5a commit.
+
+
+## Phase 5b — blocked at the previous-phase entry gate, 2026-09-22
+
+**No Part I editing began.** PROMPT.md, Execution control, requires: “Before
+starting, re-verify that the previous phase meets its exit criteria by re-running
+metrics and the listed checks … If it does not, report the gap and stop.”
+The working tree was clean on entry. The author's subsequent commit
+`author edit: fix two 5a seam references` remains intact.
+
+### Exact gap
+
+At `manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md:313`,
+the author merged two redundant Chapter 12 mentions into one sentence. The
+current reference register still expects two occurrences: R275 targets
+`configuration-philosophy-in-snodec`; R276 targets
+`application-and-instance-configuration-in-detail`. Both subjects now belong to
+the single surviving Chapter 12 reference. The checker therefore reports
+“unregistered/removed reference; review its intended topic”. Evidence:
+`phase-5b-entry-hygiene.log` and the author commit's manuscript diff.
+
+This is stale navigation bookkeeping, not a finding that the author correction
+is wrong. Its repair needs one current occurrence retaining both topic targets
+and both original migration identities. The author's Chapter 4 wording correction
+also remains intact and retains its Chapter 6 destination.
+
+Fresh metrics differ from the recorded Phase 5a exit by **−5 prose/total words**:
+Chapter 4 is 7,809 rather than 7,811 words; Chapter 22 is 3,964 rather than 3,967.
+Current totals are **146,205 words**, **131,739 prose**, **14,466 fenced**. These
+changes come entirely from the two author edits. They should be recorded as an
+authorized post-Phase-5a baseline when repairing the gate, preserving the original
+Phase 5a measurements as historical evidence. Merely merging the register rows
+would leave the historical Phase 5a checker's strict metrics equality unresolved.
+
+### Executed checks and limits
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Fresh metrics, repeated independently | Same current result on both runs; differs from historical Phase 5a | phase-5b-entry-metrics.log; metrics-after-phase-5b.json |
+| Source hygiene | Failed at chapter-reference check | phase-5b-entry-hygiene.log |
+| Source alignment, run separately | Passed | phase-5b-entry-alignment.log |
+| Measurement regression tests | Passed | phase-5b-entry-metrics-tests.log |
+| Companion build command | Passed | phase-5b-entry-companion.log |
+| Proposal, samples, package/full PDF targets | Passed | phase-5b-entry-package.log |
+| Previous Phase 5a exit checker | Failed at the same reference check; its historical output was not overwritten | phase-5b-entry-exit.log |
+| Public runtime labs | Not run after failed entry gate | phase-5b-entry-results.json |
+
+Independent entry commands already dispatched before the failure were allowed to
+finish. Final PDF page counts remain **6 / 54 / 458** (proposal / combined samples /
+manuscript); each current final LaTeX log has zero warnings and bad boxes. These
+build results do not waive the failing semantic reference gate. No new rendered
+visual review or hosted-CI result is claimed. `phase-5b-entry-results.json` records
+the commands' outcomes and observed PDF counts.
+
+Only this entry evidence, REPORT.md, and EDITORIAL-WORK-PLAN.md change in this
+session. `git diff HEAD -- manuscript companion ci review/proposal` is empty.
+No chapters were edited/reread as a completed refinement, no exercises or lab
+solutions were added, and no reserve was used. `metrics-after-phase-5b.json` is
+identical to the fresh entry measurement; it is a blocked-session snapshot, not
+an assertion that Part I meets its exit criteria. Application production code,
+CI implementation, and test implementation all change **+0/−0**.
+
+**Status: blocked at entry.** Record-only commit:
+`proposal-readiness: phase 5b — record failed prerequisite check`.
+The prerequisite reference/metric bookkeeping must be reconciled with the author
+edits and the Phase 5a exit checks rerun before retrying Phase 5b. Do not revert the
+author's prose or overwrite historical Phase 5a evidence. Part I's budgets,
+Chapter 2 Lab environment section, mapped exercises/public solutions, and running
+project checkpoint all remain pending. This session stops at the entry gate.

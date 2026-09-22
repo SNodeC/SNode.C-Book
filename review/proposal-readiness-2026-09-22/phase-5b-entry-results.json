@@ -1,0 +1,26 @@
+{
+  "status": "blocked",
+  "reason": "Author seam edits leave two Chapter 12 register entries for one surviving reference; fresh metrics also differ from the recorded Phase 5a snapshot.",
+  "hygiene_exit": 1,
+  "alignment_exit": 0,
+  "phase_5a_exit_checker_exit": 1,
+  "metrics_tests_exit": 0,
+  "companion_build_exit": 0,
+  "package_build_exit": 0,
+  "labs": "not run: entry gate failed",
+  "manuscript_edited_in_session": false,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 458,
+      "warnings_or_bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "warnings_or_bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "warnings_or_bad_boxes": 0
+    }
+  }
+}
