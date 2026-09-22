@@ -296,8 +296,6 @@ This chapter is meant to cure habits that look efficient at first:
 
 ### The architectural principle
 
-The core principle is:
-
 ::: {.snodec-rule title="Architectural principle"}
 Keep meaning visible until the layer, role, or operational surface that owns it can take responsibility for it.
 :::
@@ -306,12 +304,10 @@ Do not push meaning downward merely because a lower callback sees an event first
 
 The current flow API provides another concrete boundary test. Two explicit connections can have independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate endpoint roles. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.
 
+The next chapter applies this judgment to extension: new features should be added where their responsibility, lifetime, and operational consequences remain clear.
+
 ::: {.snodec-remember title="What to remember"}
 - Choose family and protocol surface by peer identity, deployment reality, and the conversation the role needs to have.
 - Place state, configuration, failure policy, and diagnostics where their lifetime and consequences are visible.
 - Split responsibilities when that exposes meaning; avoid splits that only add ceremony.
 :::
-
-### Closing perspective
-
-The next chapter applies this judgment to extension: new features should be added where their responsibility, lifetime, and operational consequences remain clear.

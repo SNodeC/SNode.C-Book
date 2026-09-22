@@ -9,12 +9,6 @@
 
 TLS is a connection-layer specialization with operational consequences. It does not introduce a second application model; it changes how a secure stream is established, verified, diagnosed, and shut down.
 
-That is the central idea of this chapter:
-
-::: {.snodec-rule title="TLS boundary rule"}
-TLS changes the connection layer; it does not replace the application architecture.
-:::
-
 A TLS-enabled SNode.C application still has:
 
 - server/client handles,
@@ -233,9 +227,7 @@ It should not make every ordinary protocol context TLS-dependent by default. A p
 
 TLS configuration is added to the existing configuration model. It does not create a separate configuration universe.
 
-The IPv4 TLS server configuration is built by layering TLS configuration on top of the normal IPv4 stream server configuration.
-
-The IPv4 TLS client configuration follows the same pattern for clients.
+For both IPv4 server and client roles, TLS configuration is layered onto the corresponding stream configuration.
 
 Conceptually:
 
@@ -296,7 +288,7 @@ SNI is therefore part of TLS identity selection during handshake, not just anoth
 
 #### Trust, expected identity, and SNI are separate decisions
 
-The current source requires care at this point. `ssl_utils.cpp` enables peer verification when trust material or default trust paths are selected and accepting unknown certificates is disabled. With no selected trust source, its verification mode is zero. Merely selecting a TLS wrapper therefore does not prove that the remote peer has been authenticated.
+The current source requires care at this point. `ssl_utils.cpp` enables peer verification when trust material or default trust paths are selected and accepting unknown certificates is disabled. With no selected trust source, its verification mode is zero. Selecting a TLS wrapper without a trust policy leaves peer authentication unresolved.
 
 SNI is a second decision. `ssl_set_sni(...)` sets the name sent to the server; it does not configure the expected certificate identity. The example hostname-checking statements in `src/apps/echo/model/clients.h` are commented out. Reading those statements as active behavior would give the example a security property it does not currently have.
 
@@ -329,7 +321,7 @@ ctest --test-dir build/refinement-probes -R TlsTrustAndIdentity \
   --output-on-failure --no-tests=error
 ```
 
-The fixture creates temporary self-signed test identities and uses an independent local TLS peer. It observes readiness for a trusted matching name, rejection of a trusted wrong name, and rejection of an untrusted matching name. It also checks that the early callback sees no connection `SSL*` yet. The identities are local test material and are removed afterward. This establishes the callback and verification behavior of the recorded source; production certificate provisioning and application authorization remain deployment decisions.
+The fixture creates temporary self-signed test identities and uses an independent local TLS peer. It observes readiness for a trusted matching name, rejection of a trusted wrong name, and rejection of an untrusted matching name. It also checks that the early callback sees no connection `SSL*` yet. The identities are local test material and are removed afterward. Production certificate provisioning and application authorization remain deployment decisions.
 
 ### TLS adds work between connection creation and readiness
 

@@ -425,7 +425,7 @@ Use an independently observable peer when integrating the role with a broker. Re
 
 For a bounded experiment, use a unique topic prefix, one publisher, one subscriber, and a fixed sequence of ten messages. Stop the publisher afterward. Repeat once with the subscriber absent and compare what the publisher can actually know. QoS 0 in this example supplies no publication acknowledgement; it cannot establish delivery to an absent or disconnected observer.
 
-The framework packet tests and the book’s CONNECT-byte check support narrower claims than this broker experiment. Full broker interoperability and restart behavior require that independent service run and its observations. Chapter 31 introduces a concrete broker ecosystem in which to carry out the broader exercise.
+Chapter 31 introduces a concrete broker ecosystem in which to carry out this interoperability and restart exercise.
 
 ### MQTT as a WebSocket subprotocol
 

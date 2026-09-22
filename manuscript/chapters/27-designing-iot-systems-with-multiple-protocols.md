@@ -7,11 +7,7 @@
 
 ### From protocol composition to system boundaries
 
-A whole IoT system rarely has only one conversation. Devices, dashboards, brokers, local tools, databases, and administration surfaces often need different protocol shapes in the same design. The central sentence is:
-
-::: {.snodec-rule title="Multi-protocol boundary rule"}
-A multi-protocol IoT system is clear when each protocol is assigned to an explicit boundary.
-:::
+A whole IoT system rarely has only one conversation. Devices, dashboards, brokers, local tools, databases, and administration surfaces often need different protocol shapes in the same design.
 
 This chapter is therefore not about using every protocol everywhere; it is about deciding where each protocol belongs. Multi-protocol IoT systems are boundary design.
 
@@ -435,7 +431,7 @@ Repeat the question with persistence unavailable. If accepting a measurement mea
 
 This exercise is the reading milestone for the chapter. A useful boundary map explains partial failure and ownership as well as the successful path. Chapter 28 develops the persistence decision, and the capstone later makes the shared measurement model concrete.
 
-For the gateway developed later, follow one measurement through those boundaries before adding another protocol. The input adapter validates its representation, the model accepts a new local state, and each output adapter projects that accepted state into its own protocol. The MQTT input topic must remain distinct from the output topic unless the application has an explicit origin rule. The SSE event identifier describes the model's accepted sequence; it does not prove durable storage or broker acknowledgement. Those distinctions become operationally important as soon as one output is unavailable while another remains healthy.
+For the gateway developed later, follow one measurement through those boundaries before adding another protocol. The input adapter validates its representation, the model accepts a new local state, and each output adapter projects that accepted state into its own protocol. The MQTT input topic must remain distinct from the output topic unless the application has an explicit origin rule. The SSE event identifier describes the model's accepted sequence; storage and broker acknowledgement have separate outcomes. Those distinctions become operationally important as soon as one output is unavailable while another remains healthy.
 
 ::: {.snodec-remember title="What to remember"}
 - IoT architecture is defined by communication boundaries, not only by devices.
@@ -446,7 +442,3 @@ For the gateway developed later, follow one measurement through those boundaries
 - Multi-protocol design can live in one process or in several cooperating applications when roles, configuration, diagnostics, and failure policy stay boundary-specific.
 - Protocol diversity is not chaos when boundaries are clear.
 :::
-
-### Closing perspective
-
-The protocol-facing IoT design path moves from MQTT as a protocol family, through MQTT over WebSocket as protocol composition, to multi-protocol IoT systems as boundary design. The important conclusion is simple: clear boundaries support honest protocol choices, observable roles, and maintainable systems.

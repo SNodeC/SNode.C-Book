@@ -145,13 +145,11 @@ For stream communication, a user context derives from `core::socket::stream::Soc
 
 The derived class supplies protocol behavior through lifecycle methods such as `onConnected()` and `onDisconnected()` and through protocol-specific receive handling.
 
-This gives one of the most important rules in the book:
-
 ::: {.snodec-rule title="Instance/context boundary"}
 The instance is the runtime-facing communication role; the context expresses protocol behavior for a concrete connection.
 :::
 
-The echo pair used that rule in a very small form: the server and client handles registered roles, the framework advanced those roles through runtime flow, and the context performed the echo behavior once a connection existed. Larger applications follow the same boundary even when the protocol is HTTP, WebSocket, MQTT, or a custom stream protocol.
+The echo pair used that boundary in a very small form: the server and client handles registered roles, the framework advanced those roles through runtime flow, and the context performed the echo behavior once a connection existed. Larger applications follow the same boundary even when the protocol is HTTP, WebSocket, MQTT, or a custom stream protocol.
 
 #### The factory
 
@@ -482,13 +480,11 @@ The flow-controller path is what gives `listen(...)` and `connect(...)` their ru
 
 A flow can be started, observed, retried, terminated, and associated with runtime-visible state. This is what allows a server or client role to behave operationally rather than just perform one procedural action.
 
-For the reader, the important mental rule is:
-
 ::: {.snodec-rule title="Runtime-flow rule"}
 `listen(...)` and `connect(...)` register activation flows for configured instances; the runtime advances those flows and the connections they produce.
 :::
 
-That rule is more precise than saying that these calls “start the server” or “open the connection,” although those informal phrases may be acceptable in casual discussion.
+Registration is more precise than saying that these calls “start the server” or “open the connection.”
 
 #### Connection callbacks and context callbacks are different layers
 

@@ -209,12 +209,6 @@ A reader can think in a clean timeline:
 
 That is enough to reason about many important behaviors. Server and client flows are not isolated library calls. They integrate with runtime state. A listen or connect flow can only move forward meaningfully when the runtime is in a phase where such work can be processed.
 
-This sharpens what Chapters 3 and 5 introduced:
-
-::: {.snodec-rule title="Runtime-state rule"}
-Runtime state belongs to the control logic, not to background decoration.
-:::
-
 ### Tick-by-tick execution and `TickStatus`
 
 \index{TickStatus@\texttt{TickStatus}}
@@ -638,7 +632,7 @@ Use `start()` for the application recipes in this edition. An embedding design n
 
 This chapter has intentionally stayed close to the SNode.C headers because SNode.C is a systems framework, and systems frameworks should not be taught as vague abstractions only.
 
-Still, a book should distinguish stable concepts from implementation details. Function bodies may change. Additional event receiver types may appear. Multiplexer backends may vary. But the architectural concepts are durable:
+Function bodies, event receiver types, and multiplexer backends may change. The architectural concepts are more durable:
 
 - public runtime control through `core::SNodeC`,
 - event-loop orchestration through `core::EventLoop`,
@@ -658,6 +652,8 @@ The second is the distinction between an instance and a connection. The instance
 
 Those are the ideas the reader should carry forward.
 
+As a source-reading exercise, start at the echo server's `listen(...)` call and follow the scheduled callback to the first acceptor work. Mark the point where the caller's stack stops advancing the operation. Then inspect `EventMultiplexer::tick()` and locate the work that would be delayed by a blocking receive callback. The expected result is a control-flow explanation, not just another list of classes: deferred activation reaches a shared dispatcher, and application work must return before that dispatcher can continue its other responsibilities.
+
 ::: {.snodec-remember title="What to remember"}
 - `core::SNodeC` is the public runtime facade; `core::EventLoop` is the central event-loop orchestrator behind it.
 - `core::EventMultiplexer` coordinates descriptor readiness, timers, queued work, timeout checks, signals, and cleanup.
@@ -666,7 +662,3 @@ Those are the ideas the reader should carry forward.
 - Descriptor receivers and timer receivers are managed runtime participants with enable/disable, suspend/resume, timeout, and cleanup behavior.
 - Application callbacks should return control to the event loop rather than blocking the runtime.
 :::
-
-### Closing perspective
-
-As a source-reading exercise, start at the echo server's `listen(...)` call and follow the scheduled callback to the first acceptor work. Mark the point where the caller's stack stops advancing the operation. Then inspect `EventMultiplexer::tick()` and locate the work that would be delayed by a blocking receive callback. The expected result is a control-flow explanation, not just another list of classes: deferred activation reaches a shared dispatcher, and application work must return before that dispatcher can continue its other responsibilities.

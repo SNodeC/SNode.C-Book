@@ -11,14 +11,14 @@ This example composes one small SNode.C application from several roles:
 
 Build with an installed SNode.C package:
 
-```bash
+```sh
 cmake -S . -B build -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec
 cmake --build build --target minigateway
 ```
 
 Install/deploy this example into the configured install prefix:
 
-```bash
+```sh
 cmake --build build --target deploy-minigateway
 ```
 

@@ -602,7 +602,3 @@ Changing the lower carrier changes the public role header and the linked compone
 | IPv4 TLS stream server | `<net/in/stream/tls/SocketServer.h>` | `net-in-stream-tls` |
 
 Chapter 32 gives the complete matrix. Here the point is the transfer rule: keep protocol behavior stable where possible, and change the carrier-facing surface deliberately.
-
-### Closing perspective
-
-Lower-family transfer is useful when it preserves clarity: stable protocol behavior stays stable, and family-specific facts stay visible where they belong.

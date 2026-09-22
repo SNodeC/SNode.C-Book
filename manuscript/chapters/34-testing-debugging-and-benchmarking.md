@@ -67,7 +67,7 @@ A focused run shortens the feedback loop; it does not replace a broader run befo
 
 The exact number of registered tests depends on the selected tree and configuration. Some executables are registered once, while others are registered repeatedly with different scenario arguments. Count CTest registrations when describing an executable test run, not C++ filenames or individual assertions.
 
-For this edition, source identity includes the recorded working-tree changes as well as the base commit. Run `ci/check-source-alignment.py --framework /path/to/snode.c` from the book directory before associating a result with the edition. The checker compares file contents against the manifest and checks complete marked listings against their companion files. It does not prove the meaning of every sentence or execute the programs.
+For this edition, source identity includes the recorded working-tree changes as well as the base commit.
 
 Execution evidence needs its environment too. A test that receives `Operation not permitted` while creating a local socket has not measured the intended network exchange. Preserve that failed run, identify the denied operation, and repeat the affected checks in an environment that permits the required local transport. Report the later result separately; neither deleting the failure nor calling it an application defect explains what was observed.
 
@@ -307,9 +307,7 @@ A timeout is also a result. It can reveal a missing shutdown transition or uncon
 \index{AddressSanitizer}
 \index{SNODEC_ENABLE_ASAN@\texttt{SNODEC\_ENABLE\_ASAN}}
 
-The framework's CI workflow configures a GCC Debug build with tests and applications enabled, builds it, runs CTest, installs the framework, and then builds and tests the external echo project. The book repository has its own companion-example and publication workflows. Those jobs answer different questions and should be reported separately.
-
-The framework suite protects framework behavior. Companion builds protect the book's application sources. Selected companion smoke tests protect particular showcase paths, such as SSE output and the MiniGateway Extended Unix-domain input path. The publication build protects the manuscript, figures, index, and package. None of those jobs automatically proves the others.
+The framework's CI workflow configures a GCC Debug build with tests and applications enabled, builds it, runs CTest, installs the framework, and then builds and tests the external echo project.
 
 #### AddressSanitizer as a separate build
 
@@ -576,8 +574,6 @@ The refined rule is simple:
 ```text
 A benchmark is only meaningful together with the boundary and workload it measures.
 ```
-
-The benchmarking tone should be measured behavior tied to architecture, not marketing numbers.
 
 #### Latency and throughput are different questions
 

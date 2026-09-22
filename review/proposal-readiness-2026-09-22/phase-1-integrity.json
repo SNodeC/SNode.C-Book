@@ -1,0 +1,323 @@
+{
+  "ordered_inputs_unchanged": true,
+  "checks": [
+    "executable and raw-LaTeX fence contents",
+    "source markers",
+    "index entries",
+    "figures",
+    "all headings except Closing perspective",
+    "shell labels including nested Markdown example"
+  ],
+  "files": [
+    {
+      "file": "manuscript/frontmatter/frontmatter.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/frontmatter/preface.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/frontmatter/how-to-read-this-book.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/frontmatter/conventions.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/frontmatter/author-note.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/frontmatter/acknowledgements.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/frontmatter/mainmatter.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-01-getting-oriented.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/01-why-snodec-exists.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/02-preparing-your-environment.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/04-reading-the-codebase-with-confidence.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-02-the-snodec-architecture.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/05-the-mental-model-of-snodec.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/07-layers-in-practice-network-transport-connection-application.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-03-networking-foundations-in-snodec.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/08-socket-addresses-and-address-semantics.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/09-servers-clients-and-connections.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/10-ipv4-and-ipv6-as-the-first-concrete-network-families.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/11-unix-domain-sockets.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/13-writing-socketcontext-classes-well.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/14-writing-socketcontextfactory-classes-well.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/15-building-the-same-protocol-over-different-lower-layers.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-05-configuration-and-operational-behavior.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/17-application-and-instance-configuration-in-detail.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/18-logging-diagnostics-and-runtime-introspection.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-06-secure-and-robust-communication.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/19-tls-across-the-framework.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/20-timeouts-retries-and-failure-modes.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-07-web-protocols-and-web-applications.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/21-the-http-layer.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/22-the-express-like-framework.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/23-server-sent-events-and-real-time-http.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/24-websocket-and-protocol-upgrade.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-08-iot-and-message-oriented-systems.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/25-mqtt-support-in-snodec.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/26-mqtt-over-websocket.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/27-designing-iot-systems-with-multiple-protocols.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-09-persistence-and-full-systems.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/28-database-support-and-application-state.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/29-learning-from-the-applications-in-src-apps.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/30-from-applications-to-systems.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/31-mqttsuite-as-a-reference-ecosystem.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-10-building-porting-and-maintaining.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/32-cmake-components-and-linking-strategy.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/33-deployment-on-linux-and-openwrt.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/34-testing-debugging-and-benchmarking.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-11-building-a-minigateway-application.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/35-building-minigateway.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/36-extending-minigateway-with-a-new-network-role.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-12-designing-with-snodec.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/38-extending-the-framework-safely.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/parts/part-13-epilogue.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/chapters/epilogue.md",
+      "changed": true,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/backmatter/backmatter.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/backmatter/further-reading.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    },
+    {
+      "file": "manuscript/backmatter/index.md",
+      "changed": false,
+      "code_and_structure_preserved": true
+    }
+  ]
+}

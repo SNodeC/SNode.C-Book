@@ -1,14 +1,15 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. This session executes Phase 0 only.
-The full author request is preserved in [PROMPT.md](PROMPT.md), including its
-original escaped Markdown and HTML space entities. No preceding phase exists.
+from `SNode.C-2.0` with a clean working tree. The Phase 0 record below is historical; Phase 1 results follow it.
+The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
+subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
+is appended verbatim, including its original escaped markup.
 
 | Phase | Status | Commit | Date | Evidence |
 | --- | --- | --- | --- | --- |
 | 0 — scope and measurement | completed | Separate scope revision; Phase 0 completion commit containing this report (subjects below) | 2026-09-22 | AGENTS.md:18; EDITORIAL-WORK-PLAN.md:32; PROMPT.md; metrics-before.json; metrics-after-phase-0.json; measurement-checks.log; metrics-tests.log |
-| 1 — book-wide hygiene | not started | — | — | No Phase 1 edits or builds executed |
+| 1 — book-wide hygiene | completed | `proposal-readiness: phase 1 — refine manuscript hygiene and preserve teaching principles` (containing this report); separate author-amendment commit | 2026-09-22 | Phase 1 evidence below; metrics-after-phase-1.json; phase-1-source-hygiene.log; phase-1-source-alignment.log; phase-1-companion-build.log; phase-1-pdf-final.log |
 | 2 — five sample chapters | not started | — | — | No sample-chapter edits or exercise solutions executed |
 | 3 — proposal package | not started | — | — | No proposal rewrite or package builds executed |
 | 4 — restructure plan | not started | — | — | No plan or author approval recorded |
@@ -142,3 +143,175 @@ Confirm both separate Phase 0 commits and their recorded scope; the runner is
 intentionally strict about the unchanged Phase 0 inputs. If fresh measurements
 or any exit check disagree, report the gap and stop before Phase 1. Do not treat
 the completed status alone as proof. Phase 0 ends here; Phase 1 has not begun.
+
+## Phase 1 — book-wide hygiene, completed 2026-09-22
+
+**Entry gate:** reran Phase 0 metrics and all listed checks before editing; all
+passed. Evidence: `phase-1-prerequisite.log`. The initial working tree was clean.
+This session executed Phase 1 only.
+
+**Author amendment:** appended verbatim to PROMPT.md and recorded in
+EDITORIAL-WORK-PLAN.md, with the standing AGENTS.md reference updated. These scope
+records were committed separately as
+`proposal-readiness: author amendment — teaching book`. Only the amended rule-box
+criterion is implemented now. Objectives, tiered exercises, solutions, and learning
+path changes remain in their assigned Phases 2–5. No approval to restructure is
+recorded. The amended rule cap is **20**; earlier references to 12 are historical.
+
+### Editorial outcomes and preserved teaching
+
+Edited and reread locally in context: the changed passages and their neighboring
+explanations, examples, and closing transitions. This is not a claim of a new
+end-to-end reading of all 62 inputs. The Phase 1 commit diff and per-file records
+in `phase-1-integrity.json` identify the exact changed scope.
+
+- Removed all five guarded authoring notes in Chapters 11, 21, 29 and 34. Also
+  removed similar author-facing commentary in Chapters 6, 7, 9, 10 and 28.
+  The guard now uses the existing metric implementation as its single phrase
+  authority: `ci/check-source-hygiene.sh:75`. Its actual entry point rejects all
+  nine case-varied, line-wrapped fixture phrases (`phase-1-guard-tests.log`).
+- Removed all 15 closing-section headings. Chapters 1, 6, 9 and 37 retain their
+  measurement reminder, dispatcher-tracing exercise, lifecycle classification
+  exercise, and transition to extension as final prose before the remember box.
+  The epilogue retains its concrete closing advice in the preceding section.
+  The summaries removed from Chapters 12, 15, 16, 20, 24, 26, 27, 28, 31 and 38
+  repeat explanations or recaps already present; their examples remain.
+- Collapsed mirrored explanations in Chapter 10 (IP convenience calls, address
+  forms, local/remote choices), Chapter 12 (L2CAP address surface and local/remote
+  Bluetooth identity), Chapter 19 (server/client TLS configuration), and Chapter
+  29 (JSON client/server comparison). Concrete code examples and differences in
+  endpoint selection remain. See those chapter diffs and the rendered tables in
+  `phase-1-visual-review-3.png` and `phase-1-visual-review-8.png`.
+- Consolidated book-specific verification limits in
+  `manuscript/frontmatter/conventions.md:11`, including compilation versus
+  execution and native MQTT versus WebSocket/broker checks. Chapters 19, 25, 26,
+  28, 31, 33 and 34 retain runnable instructions and service prerequisites while
+  losing repeated process commentary. Protocol cautions about delivery, replay,
+  trust, persistence, and timeout behavior remain where they affect a decision.
+- Normalized four top-level `shell` fences to `sh`, plus two nested `bash` fences
+  in Chapter 35's printed README excerpt. The latter are synchronized with
+  `companion/examples/MiniGateway/README.md`. No command text changed.
+
+### Rule boxes restored after the author clarification
+
+The first editing pass reduced rule boxes to 12. Reassessment under the amended
+criterion restored these eight boxes, with their original principle text. Their
+introductory restatement was not needed. Final rule-box count: **20**.
+
+| Restored box | Final source anchor | Principle the reader applies |
+| --- | --- | --- |
+| Runtime registration rule | manuscript/chapters/03-your-first-working-program-the-echo-pair.md:368 | Separate registering a listening flow from runtime execution. |
+| Reading rule | manuscript/chapters/04-reading-the-codebase-with-confidence.md:17 | Follow layers and responsibilities when navigating the source tree. |
+| Instance/context boundary | manuscript/chapters/05-the-mental-model-of-snodec.md:148 | Keep runtime-facing role policy separate from per-connection protocol behavior. |
+| Runtime-flow rule | manuscript/chapters/05-the-mental-model-of-snodec.md:483 | Treat activation flows and their runtime progress as distinct from the immediate call. |
+| Layer-reading rule | manuscript/chapters/07-layers-in-practice-network-transport-connection-application.md:100 | Read a communication type as a stack description. |
+| Lifecycle responsibility rule | manuscript/chapters/09-servers-clients-and-connections.md:612 | Put lifecycle observation and protocol behavior in their respective callbacks. |
+| Architectural principle | manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md:299 | Keep meaning available until the responsible layer can act on it. |
+| Extension rule | manuscript/chapters/38-extending-the-framework-safely.md:524 | Extend the responsibility that actually changes. |
+
+All eight restored boxes were also visually inspected; see the page inventory in
+`phase-1-pdf-checks.json` and `phase-1-visual-review-1.png` through
+`phase-1-visual-review-8.png`.
+
+The ten remaining box removals are duplicates or near-tautologies:
+
+| Removed box | Reason and retained explanation |
+| --- | --- |
+| Ch. 1 Separation rule | Repeats the preceding protocol/carrier distinction and explicit family consequences. |
+| Ch. 6 Runtime-state rule | “Not background decoration” adds no guidance beyond the preceding runtime-state explanation. |
+| Ch. 10 Family-independent pattern | Repeats the immediately preceding list of shared roles and unchanged application shape. |
+| Ch. 13 Context responsibility rule | The definition remains verbatim as ordinary text, followed by the table unpacking it; the box duplicates that definition's function. |
+| Ch. 16 Configuration rule | The definition remains verbatim in the introduction and is applied by the next paragraph. |
+| Ch. 19 TLS boundary rule | Repeats the opening explanation of connection-layer specialization. |
+| Ch. 22 Express-layer rule | Repeats the opening sentence and immediately following HTTP/application distinction. |
+| Ch. 27 Multi-protocol boundary rule | Repeats the adjacent statement that the design task is deciding where each protocol belongs. |
+| Ch. 32 Build-policy rule | The slogan adds no decision beyond the preceding concrete reasons for strict diagnostics. |
+| Ch. 36 MiniGateway extension rule | Duplicates the adjacent callback warning and the retained extension principle in Chapter 38. |
+
+### Metrics and exit evidence
+
+Evidence: `metrics-after-phase-0.json` versus `metrics-after-phase-1.json`;
+`check-phase-1-integrity.py` regenerates the latter independently and checks
+preservation. Its executed output is `phase-1-integrity.log`.
+
+| Metric | Before | After | Delta / Phase 1 result |
+| --- | ---: | ---: | --- |
+| Total whitespace tokens | 151,924 | 150,566 | −1,358 |
+| Prose tokens | 136,829 | 135,586 | −1,243 |
+| Fenced tokens, including markers | 15,095 | 14,980 | −115; only explanatory text blocks condensed |
+| C++ fences | 205 | 205 | All contents unchanged |
+| Chapter headings, level 3+ | 1,020 | 1,005 | −15 closing-section headings |
+| Average chapter section prose | 124.13 | 124.71 | +0.58 |
+| Closing perspective sections | 15 | 0 | Pass |
+| Forbidden-phrase hits | 5 | 0 | Pass, guards active |
+| snodec-rule boxes | 30 | 20 | Pass under author amendment |
+| snodec-remember boxes | 38 | 38 | Unchanged |
+| Top-level shell labels | sh / shell | sh | Pass; nested bash labels also normalized |
+| text fences | 478 | 465 | −13 |
+| does not prove | 13 | 4 | −9; necessary behavioral cautions retained |
+| does not by itself | 8 | 6 | −2 |
+| PDF pages | 490 | 482 | −8, against recorded Phase 0 baseline |
+
+Global targets remain later-phase requirements: total words are **35,566** above
+115,000 (45,566 above the stretch target), chapter subheadings **455** above 550,
+and text fences **215** above 250. Average section prose remains below 250.
+The existing remember-box bullet counts and exercise/objective requirements are
+not declared complete in Phase 1; those belong to the specified later phases.
+
+| Verification | Result | Executed evidence |
+| --- | --- | --- |
+| Phase 0 prerequisite rerun | Passed before editing | phase-1-prerequisite.log |
+| Source hygiene | Passed on final manuscript | phase-1-source-hygiene.log |
+| Source alignment | Passed; 36 exact marked complete listings | phase-1-source-alignment.log |
+| Nine authoring-note guards | Passed through actual hygiene script | phase-1-guard-tests.log; check-phase-1-guards.py |
+| Five metrics regression tests | Passed | phase-1-metrics-tests.log |
+| Metrics and manuscript integrity | Passed across all 62 inputs | phase-1-integrity.log; phase-1-integrity.json |
+| Companion examples | Built all configured targets, 57 compile/link steps | phase-1-companion-build.log |
+| PDF configure and target | Passed | phase-1-pdf-configure.log; phase-1-pdf-final.log |
+| Final LaTeX warnings / bad boxes | 0 / 0 in final three-pass console and all 20 final LaTeX logs | phase-1-latex-final.log; phase-1-pdf-checks.json |
+| Visual review | 16 representative pages inspected, including all restored boxes and the new tables | phase-1-pdf-checks.json; eight phase-1-visual-review PNGs |
+
+The companion run used an existing installation, configured a fresh companion
+build directory, and compiled every selected example. This was a **local build**;
+no hosted CI execution or runtime/deployment test is claimed. The integrity check
+compares executable and raw-LaTeX fence contents, listing markers, figure
+references, index entries, non-closing headings, and manuscript order. All remain
+unchanged. The README excerpt's shell labels change; its commands do not.
+
+The initial fresh PDF build and the build after restoring rules are retained in
+`phase-1-pdf-initial.log` and `phase-1-pdf-restored-rules.log`. Intermediate
+reference-convergence warnings are historical to those builds. The final ordinary
+build has no warnings or bad boxes across all three passes. Warning settings and
+production styles were not changed. Archived logs normalize trailing horizontal
+whitespace only; no diagnostic lines were removed. Visual inspection is
+representative, not a full 482-page visual audit.
+
+Accounting is in `phase-1-accounting.json`: no application production-code changes;
+CI hygiene support is +12/−0 lines, reusing the existing phrase authority.
+Report-local regression/integrity scripts are **+82/−0** test-support lines.
+Manuscript changes are **+64/−305** lines; companion README documentation is
+**+2/−2**. No Phase 2–5 implementation is included.
+
+### Re-verify before Phase 2
+
+Read PROMPT.md, including the amendment, and the accepted scope in the work plan.
+Run each command below from the repository root, retaining fresh logs separately;
+one failed check must not suppress the other checks. Stop before Phase 2 if any
+Phase 1 criterion fails. The source installation used below must still be available.
+
+```sh
+python3 -B review/proposal-readiness-2026-09-22/check-phase-1-integrity.py
+python3 -B review/proposal-readiness-2026-09-22/check-phase-1-guards.py
+python3 -B ci/test-manuscript-metrics.py
+bash ci/check-source-hygiene.sh
+python3 ci/check-source-alignment.py
+SNODEC_PREFIX="$PWD/build/ci-fix-2026-09-22/install-gcc" BOOK_EXAMPLES_BUILD_DIR="$PWD/build/proposal-readiness-phase-1-examples" bash ci/build-companion-examples.sh
+cmake -S . -B build/proposal-readiness-phase-1 -G Ninja
+cmake --build build/proposal-readiness-phase-1 --target pdf
+pdfinfo dist/pdf/snodec-book.pdf
+```
+
+Require zero warnings/bad boxes in the fresh PDF console and final LaTeX logs,
+and recheck the measured 482 pages. Confirm both the separate author-amendment
+commit and the Phase 1 completion commit, and a clean working tree. Phase 1 ends
+here; Phase 2 has not begun.

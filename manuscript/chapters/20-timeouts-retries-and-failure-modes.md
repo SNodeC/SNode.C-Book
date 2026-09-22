@@ -633,7 +633,7 @@ The framework’s descriptor receiver tracks activity time; it does not know tha
 
 A useful diagnostic experiment is to compare silence, steady complete commands, and steady incomplete input. Predict which limit should act in each case before changing timeout values. The teaching line server demonstrates the byte bound; it does not implement an additional absolute command deadline. Adding one requires an explicit protocol requirement and lifecycle design.
 
-Reconnect has a similar boundary. Restoring the stream does not prove whether the last command reached the old peer. Replaying an unacknowledged command may duplicate a state change. Application acknowledgments, operation identifiers, or idempotent commands address that uncertainty; a reconnect timer alone does not.
+Reconnect has a similar boundary. Restoring the stream leaves the last command’s delivery to the old peer uncertain. Replaying an unacknowledged command may duplicate a state change. Application acknowledgments, operation identifiers, or idempotent commands address that uncertainty; a reconnect timer alone does not.
 
 ### Failure visibility
 
@@ -697,7 +697,3 @@ When the answer is clear, the system is easier to operate and easier to debug.
 - `NO_RETRY` is retry-control information attached to a state; it does not replace `ERROR`, `FATAL`, or another reported outcome.
 - `DISABLED` means intentional non-participation, not failure.
 :::
-
-### Closing perspective
-
-Robust communication over time requires timeouts, retries, reconnects, shutdown, and failure visibility. Those mechanisms are not only transport details; they shape how higher protocol layers report progress, interruption, and recovery.

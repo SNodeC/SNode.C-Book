@@ -14,8 +14,6 @@ The SNode.C source tree is much larger than the first echo pair. It contains run
 
 A reader who opens such a tree without a map can easily get the wrong impression. The project may look like a large collection of unrelated files. It is not. The source tree is best read as an expression of the same layered model introduced by the first example.
 
-The rule for this chapter is therefore simple:
-
 ::: {.snodec-rule title="Reading rule"}
 Do not read SNode.C as a pile of files. Read it as a set of layers, roles, and recurring boundaries.
 :::

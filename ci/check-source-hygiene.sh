@@ -68,7 +68,19 @@ fi
 python3 - <<'PY'
 from pathlib import Path
 import re
+import runpy
 import sys
+
+# Reuse the measurement authority for reader-facing authoring-note guards.
+metrics = runpy.run_path("ci/manuscript-metrics.py")
+authoring_errors = 0
+for name, item in metrics["manuscript_metrics"](Path.cwd(), Path("manuscript/book-files.txt").resolve())["files"].items():
+    for phrase, hits in item["forbidden_phrase_hits"].items():
+        for hit in hits:
+            print(f"ERROR: {name}:{hit['line']}: forbidden authoring phrase: {phrase}", file=sys.stderr)
+    authoring_errors += item["forbidden_phrase_hit_count"]
+if authoring_errors:
+    sys.exit(1)
 
 roots = [Path("manuscript"), Path("review/proposal")]
 files = []

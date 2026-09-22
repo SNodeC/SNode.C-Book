@@ -437,21 +437,20 @@ The build includes IPv4, IPv6, and Unix-domain variants by default. Bluetooth L2
 
 The JSON examples are useful because they show a clean server/client split.
 
-The server side, `jsonserver`, combines an Express legacy `WebApp`, `JsonMiddleware`, a `POST /index.html` route, JSON attribute access, and a response.
-
-The client side, `jsonclient`, combines the HTTP legacy client, `MasterRequest`, a `POST /index.html` request, an `application/json` body, and response or parse-error callbacks.
+| Program | HTTP surface | Application handling |
+|---|---|---|
+| `jsonserver` | Express legacy `WebApp`, `POST /index.html` route | `JsonMiddleware`, JSON attributes, response |
+| `jsonclient` | HTTP legacy client, `MasterRequest`, `POST /index.html` request | `application/json` body, response or parse-error callbacks |
 
 Read the pair together to compare the client’s method, path, content type, and body with the server’s route and JSON middleware. It also shows optional feature availability: the server target depends on JSON support being present, while the client demonstrates an outgoing HTTP request shape.
 
 #### `testpost` as focused HTTP POST example
 
-`testpost` should be presented as a focused example, not as a polished application. It demonstrates an HTTP POST-oriented surface and links both legacy and TLS stream support.
+`testpost` is a focused HTTP POST example that links both legacy and TLS stream support.
 
 The legacy web app provides the `GET` form and `POST` body handling. The TLS web app reuses that application behavior on a TLS-capable endpoint.
 
 The source structure is useful because it shows two related application roles in one file: `express::legacy::in::WebApp` for the legacy HTTP endpoint and `express::tls::in::WebApp` for the TLS HTTP endpoint.
-
-The TLS app reuses the legacy app behavior. That makes `testpost` useful for Chapter 29 because it shows the same application behavior exposed over both the legacy carrier and the TLS carrier.
 
 When borrowing this shape, separate the reused route behavior from the TLS deployment policy. The fact that both variants register the same handlers says nothing about which peer identities the TLS endpoint verifies.
 

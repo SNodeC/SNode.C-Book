@@ -166,28 +166,4 @@ only then generalize or split the system
 
 SNode.C rewards this discipline because its architecture makes the boundaries explicit. It does not force good design automatically, but it gives good design places to live.
 
-### Closing perspective {.unnumbered}
-
-The promise of SNode.C is not that networking becomes trivial.
-
-Networking is not trivial. Protocols, timing, failures, deployment, security, diagnostics, and system evolution remain real engineering problems.
-
-The promise is different:
-
-```text
-network systems can remain understandable
-when their layers and boundaries remain visible
-```
-
-That is the book's central lesson.
-
-If the reader carries one idea forward, it should be this:
-
-```text
-Do not hide meaning too early.
-Place behavior where the right boundary can own it.
-Keep that boundary visible in code, configuration, diagnostics, build, deployment, and tests.
-```
-
-That is how SNode.C should be used.
-And that is how layered network applications in modern C++ can stay clear as they grow.
+Protocols, timing, failures, deployment, security, diagnostics, and system evolution remain real engineering problems. Place behavior where the right boundary can own it, and keep that boundary visible in code, configuration, diagnostics, build, deployment, and tests.

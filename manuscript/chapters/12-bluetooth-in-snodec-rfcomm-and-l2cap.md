@@ -116,23 +116,7 @@ The L2CAP address class is:
 net::l2::SocketAddress
 ```
 
-Its conceptual surface includes:
-
-- default construction,
-- construction from a Bluetooth address,
-- construction from a PSM,
-- construction from Bluetooth address plus PSM,
-- construction from an existing L2CAP socket address,
-- initialization,
-- `setBtAddress(...)` and `getBtAddress()`,
-- `setPsm(...)` and `getPsm()`,
-- and string rendering.
-
-This mirrors the endpoint identity:
-
-```text
-Bluetooth address + PSM
-```
+Its construction, initialization, Bluetooth-address access, and string rendering follow the RFCOMM shape above. The family-specific operations use a PSM: construction from a PSM or Bluetooth address plus PSM, construction from an existing L2CAP socket address, and `setPsm(...)` / `getPsm()`.
 
 A compact code anchor is:
 
@@ -280,41 +264,7 @@ Again, the structure mirrors RFCOMM, while the endpoint semantics differ.
 
 Bluetooth endpoint identity may be less familiar than IP host-plus-port identity, so the local/remote distinction is worth making explicit: changing the endpoint family does not erase direction.
 
-A server still has a local listening identity:
-
-```text
-local Bluetooth address + channel
-```
-
-or:
-
-```text
-local Bluetooth address + PSM
-```
-
-depending on the family.
-
-A client still has a remote peer identity:
-
-```text
-remote Bluetooth address + channel
-```
-
-or:
-
-```text
-remote Bluetooth address + PSM
-```
-
-The client may also refine its local side:
-
-```text
-local Bluetooth address
-local channel
-local PSM
-```
-
-depending on the overload and family. This continues Chapter 9's connection model. There is still a local side, a remote side, a bound identity, and a peer identity.
+For either family, the server configures a local listening identity and the client selects a remote peer, with optional local bind information. Each identity combines a Bluetooth address with the family's service selector: a channel for RFCOMM or a PSM for L2CAP. This continues Chapter 9's distinction between local, remote, bound, and peer identity.
 
 ### Establish the Bluetooth service before connecting
 
@@ -469,8 +419,3 @@ net-l2-stream-legacy
 ```
 
 The local lesson is the conditional family surface. Chapter 32 gives the broader include/component matrix.
-
-### Closing perspective
-
-Host-plus-port, path-based, and Bluetooth endpoint identities show the same architectural question from three lower-family angles. The lower-family tour has done its job once endpoint identity can be separated from protocol behavior.
-

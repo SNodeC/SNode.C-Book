@@ -564,7 +564,7 @@ The server has a different pressure boundary. Its response fragments pass throug
 
 For the compact example, the important distinction is between the accepted measurement and its delivery to one observer. A stalled observer must not become the owner of application state. A deployment can deliberately disconnect a slow observer, retain a bounded replay history, or reduce the update rate. Those are application choices around the framework's queue contract, not new SSE syntax.
 
-A disconnect or queue-admission failure also does not prove that an event reached the peer. Event IDs provide a continuity mechanism when the application supplies a corresponding replay policy. They are not delivery acknowledgements. Tests should observe the emitted stream and the reconnect behavior separately from the model's decision to accept a measurement.
+After a disconnect or queue-admission failure, event delivery remains uncertain. Event IDs provide a continuity mechanism when the application supplies a corresponding replay policy. They are not delivery acknowledgements. Tests should observe the emitted stream and the reconnect behavior separately from the model's decision to accept a measurement.
 
 ### Retry and continuity
 
@@ -639,7 +639,7 @@ That connects directly to the diagnostic model from Chapter 18 and the configura
 
 ### Real-time-style HTTP
 
-A live dashboard should distinguish a quiet source from a broken observation channel. The absence of measurements does not prove a transport failure, and a newly opened stream does not prove that missed measurements were replayed. Expose the last accepted measurement and stream state separately when that distinction matters to the reader of the dashboard.
+A live dashboard should distinguish a quiet source from a broken observation channel. A source can be quiet while the transport is healthy, and a newly opened stream may have no replay of missed measurements. Expose the last accepted measurement and stream state separately when that distinction matters to the reader of the dashboard.
 
 For this example, reconnect observes the current measurement when one exists. It does not replay an event history from `Last-Event-ID`. To add replay, the application would need a bounded history and a policy for an ID older than that history; sending IDs alone does not provide either.
 

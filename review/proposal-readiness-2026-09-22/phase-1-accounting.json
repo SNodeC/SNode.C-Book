@@ -1,0 +1,22 @@
+{
+  "application_production_code": {
+    "added": 0,
+    "removed": 0
+  },
+  "ci_hygiene_support": {
+    "added": 12,
+    "removed": 0
+  },
+  "manuscript": {
+    "added": 64,
+    "removed": 305
+  },
+  "companion_readme": {
+    "added": 2,
+    "removed": 2
+  },
+  "review_test_support": {
+    "added": 82,
+    "removed": 0
+  }
+}

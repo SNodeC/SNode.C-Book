@@ -17,11 +17,7 @@ That is the subject of this chapter.
 
 Part IV separated protocol behavior, context construction, lower-family selection, and endpoint identity. Part V asks how these choices become visible, adjustable, persistent, and operable.
 
-The central idea is:
-
-::: {.snodec-rule title="Configuration rule"}
 In SNode.C, configuration makes a communication role concrete: it gives the role endpoint values, operational switches, instance identity, and activation-time shape.
-:::
 
 Through a `SocketServer` or `SocketClient` handle, the application configures a server-side or client-side communication role. Constructing a named endpoint registers its configuration instance. Each `listen(...)` or `connect(...)` call then starts an activation flow for that configured role.
 
@@ -174,7 +170,7 @@ The command line is therefore a discovery surface as well as a way to override v
 
 A user can ask for help at different levels:
 
-```shell
+```sh
 echoserver --help
 echoserver echo --help
 echoserver echo local --help
@@ -590,9 +586,3 @@ The next chapter makes the distinction observable. We will inspect the same port
 - Sections such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` scope options by responsibility.
 - Parameterless `listen(onStatus)` and `connect(onStatus)` are useful because the role can already be configured before activation.
 :::
-
-### Closing perspective
-
-Configuration makes protocol behavior, context creation, lower-family choice, and endpoint identity visible to applications and operators.
-
-The practical structure is application configuration, instance configuration, sections, and the concrete options that expose the model.

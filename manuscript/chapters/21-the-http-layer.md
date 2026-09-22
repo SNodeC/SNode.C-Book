@@ -396,7 +396,7 @@ req->upgrade(
 
 The particular upgraded protocol is not important yet. The HTTP layer supplies an explicit transition from request/response handling into a named socket-context upgrade.
 
-From this chapter onward, some examples are printed as compact fragments so that the book can focus on the architectural idea being discussed. Complete buildable source versions are part of the book's electronic companion material; the published edition should make them available through its companion repository or download page. For this HTTP-upgrade example, the corresponding companion programs are `HttpUpgrade-Server` and `HttpUpgrade-Client`.
+The complete programs for this HTTP-upgrade example are `HttpUpgrade-Server` and `HttpUpgrade-Client` under `companion/examples/`.
 
 #### HTTP-upgrade deployment contract
 

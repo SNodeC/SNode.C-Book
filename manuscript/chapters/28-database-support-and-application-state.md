@@ -52,7 +52,7 @@ This distinction matters because database work should not be treated as random h
 \index{database module}
 
 
-The database support in SNode.C has a concrete scope. The current concrete database module is MariaDB-focused. It should not be presented as a generic multi-backend ORM or database-independent abstraction.
+The database support in SNode.C has a concrete scope. The current concrete database module is MariaDB-focused. It is not a generic multi-backend ORM or database-independent abstraction.
 
 The accurate statement is:
 
@@ -674,7 +674,7 @@ Run a failure case in the same isolated environment by using a nonexistent table
 
 A useful transaction exercise inserts a uniquely identified test row, deliberately fails the next statement, and verifies the chosen rollback policy from another connection. Do not infer rollback from an error log. The expected row count must agree with the declared policy. Keep setup and cleanup confined to the dedicated test schema; the printed measurement example does not supply general migration or retry machinery.
 
-This exercise requires a running MariaDB service, suitable credentials, and a controlled schema. Compilation and framework CTest results are separate evidence; they do not establish that this service-dependent exercise has run.
+This exercise requires a running MariaDB service, suitable credentials, and a controlled schema.
 
 ### Diagnostic identity and controlled persistence checks
 
@@ -684,7 +684,7 @@ The database boundary can now participate in semantic diagnostics as well as in 
 
 The compact program uses the public application logger for its own observations. Framework-owned database records and application decisions remain different evidence. A successful connection is not a successful transaction, and a queued command is not proof that durable state has changed. Preserve those distinctions when correlating database records with HTTP, SSE, or MQTT activity.
 
-A persistence test also needs an explicitly controlled service environment. The framework's general CTest suite and an installed-consumer build do not establish that a particular database, schema, credential set, or transaction sequence works. Use isolated state, known input, and explicit cleanup for that check. The companion program is a small integration example, not a claim that every database deployment is covered by the framework test suite.
+Use isolated state, known input, and explicit cleanup when testing a particular database, schema, credential set, or transaction sequence.
 
 ::: {.snodec-remember title="What to remember"}
 - Persistence is another system boundary.
@@ -694,7 +694,3 @@ A persistence test also needs an explicitly controlled service environment. The 
 - `MariaDBClient` is the application-facing database object.
 - `MariaDBConnectionDetails` describes the database endpoint and credentials.
 :::
-
-### Closing perspective
-
-Persistence is an application-state boundary. Protocol events become application meaning, application meaning changes runtime state, and selected state crosses the persistence boundary into durable storage. That boundary changes application design because durable memory, query flow, transactions, database failure, and database backpressure enter the same event-driven world as the protocol layers.

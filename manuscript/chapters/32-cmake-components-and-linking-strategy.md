@@ -112,12 +112,6 @@ This is a maintenance decision. Warnings are not treated as harmless background 
 
 That is demanding, especially in a cross-platform framework, but it has real benefits. Questionable conversions are caught early, unreachable code becomes visible, compiler upgrades reveal problems immediately, and warning regressions cannot accumulate silently.
 
-The important lesson is:
-
-::: {.snodec-rule title="Build-policy rule"}
-build policy is code-quality policy.
-:::
-
 A strict build is one of the ways a systems framework protects itself over time.
 
 #### Strict does not mean naïve

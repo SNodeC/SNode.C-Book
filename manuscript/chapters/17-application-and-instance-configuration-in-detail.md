@@ -412,7 +412,7 @@ The important habit is to think in sections even when the C++ syntax permits a s
 
 On the command line, the hierarchy becomes a path:
 
-```shell
+```sh
 echoserver echo local --port 8080
 ```
 
@@ -434,7 +434,7 @@ The command-line interface is also a guided configuration surface.
 
 It can help the user discover the model step by step instead of requiring the full structure to be known in advance:
 
-```shell
+```sh
 echoserver --help
 echoserver echo --help
 echoserver echo local --help
@@ -454,7 +454,7 @@ A parameterless `listen()` or `connect()` can fail in a way that points the user
 
 A schematic server-side session shows the idea. Here the executable is `echoserver` and the named server instance is `echo`; the exact diagnostic wording depends on the target application:
 
-```shell
+```sh
 $ echoserver
 [RequiresError] echoserver requires echo
 

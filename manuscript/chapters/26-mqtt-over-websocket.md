@@ -284,7 +284,7 @@ Predict the observations before running a complete endpoint pair:
 
 Inspect the implementation’s `data`, `buffer`, `cursor`, and `size` to explain the first two rows. The scheduled event feeds the MQTT receiver and republishes itself while unread bytes remain. This is the event coalescing behavior from Chapter 6 used at a protocol boundary.
 
-For runtime evidence, use an installed MQTT WebSocket endpoint with the `mqtt` subprotocol and record HTTP 101, selected subprotocol, binary message exchange, and MQTT CONNACK separately. The source exercise establishes the adapter path. A successful broker exchange, subscription, and publication still require the broader integration exercise from Chapter 25; the book’s native CONNECT-byte probe does not cover this carrier.
+For runtime evidence, use an installed MQTT WebSocket endpoint with the `mqtt` subprotocol and record HTTP 101, selected subprotocol, binary message exchange, and MQTT CONNACK separately. Then extend the broker exchange with the subscription and publication observations from Chapter 25.
 
 ### Build artifacts mirror the composition
 
@@ -491,7 +491,3 @@ MQTT carried by WebSocket:
 ```
 
 Chapter 32 gives the consolidated source-derived component/header matrix.
-
-### Closing perspective
-
-MQTT-over-WebSocket is a concrete cross-stack composition: HTTP negotiates the upgrade, WebSocket carries messages, the subprotocol selects MQTT, and `MqttContext` bridges the carrier to the MQTT protocol object.

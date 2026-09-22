@@ -365,8 +365,6 @@ server.listen(8080, 5, callback);
 
 For a first reading, it is tempting to say that this line “starts the server.” That is close, but not precise enough for SNode.C.
 
-A better mental model is:
-
 ::: {.snodec-rule title="Runtime registration rule"}
 The named server configuration already exists. `listen(...)` sets the shown defaults and registers a listening flow; the runtime machinery advances that flow after `core::SNodeC::start()` is called.
 :::

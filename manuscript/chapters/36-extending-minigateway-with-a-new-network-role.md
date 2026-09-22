@@ -38,11 +38,7 @@ The extension is easier to read as a before/after change:
 | MQTT role | unchanged | unchanged |
 | Unix-domain input role | absent | added |
 
-The repeated model and role names in the table are intentional: they are the comparison points for the source diff. The rule being tested is:
-
-::: {.snodec-rule title="MiniGateway extension rule"}
-Add the boundary that owns the new concern.
-:::
+The repeated model and role names in the table are the comparison points for the source diff.
 
 ::: {.snodec-warning title="Convenience-callback warning"}
 Do not hide a new input path inside an unrelated callback merely because that callback is already available. A convenient callback is not necessarily the right architectural boundary.

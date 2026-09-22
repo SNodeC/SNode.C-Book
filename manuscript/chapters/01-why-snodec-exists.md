@@ -157,14 +157,6 @@ A protocol implemented in a SNode.C context can often remain recognizable when t
 
 This does not mean lower layers are irrelevant. They are very relevant. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP have different addressing models, operating-system assumptions, and deployment consequences.
 
-The point is different:
-
-::: {.snodec-rule title="Separation rule"}
-SNode.C lets lower-layer choices and application-layer behavior be reasoned about separately without pretending that they are unrelated.
-:::
-
-That is the architectural lens the reader should keep from the beginning.
-
 ### In the spirit of node.js, but not node.js in C++
 
 \index{node.js}
@@ -233,6 +225,8 @@ Chapter 3 gives the first full example.
 
 Here it is enough to understand why the book starts small: the small example gives the first clear view of the structure.
 
+Keep the measurement example from the opening in mind. Adding another input should force a decision about addressing and parsing; it should not quietly create a second authority for measurement ordering. That is the kind of judgment the later chapters will make concrete. First, the framework must be built and its smallest communication path made observable.
+
 ::: {.snodec-remember title="What to remember"}
 - SNode.C is introduced in this book as the concrete framework for layered network programming, not merely as a collection of APIs.
 - Its value comes from recurring roles and boundaries: runtime, configured communication role, registered runtime-visible instance, concrete connection, factory, and per-connection context.
@@ -240,7 +234,3 @@ Here it is enough to understand why the book starts small: the small example giv
 - The first echo example is small because it exposes the shape of the framework without hiding it behind protocol complexity.
 - MQTTSuite becomes important later as a reference ecosystem, but the book first builds the framework model that makes such systems understandable.
 :::
-
-### Closing perspective
-
-Keep the measurement example from the opening in mind. Adding another input should force a decision about addressing and parsing; it should not quietly create a second authority for measurement ordering. That is the kind of judgment the later chapters will make concrete. First, the framework must be built and its smallest communication path made observable.

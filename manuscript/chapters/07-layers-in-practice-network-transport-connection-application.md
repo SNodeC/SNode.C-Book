@@ -97,8 +97,6 @@ This says: network-facing code, Bluetooth RFCOMM family, stream transport, TLS c
 
 Once this habit is learned, long names become useful instead of intimidating. They are not random C++ namespace growth. They are compact layer descriptions.
 
-A useful reading rule is:
-
 ::: {.snodec-rule title="Layer-reading rule"}
 Read a SNode.C communication type as a stack description before reading it as an isolated API name.
 :::
@@ -503,7 +501,7 @@ Once the reader understands that RFCOMM and L2CAP belong to the same architectur
 \index{cross-layer responsibility}
 
 
-A good systems book should avoid two opposite mistakes. The first mistake is to collapse everything into one big communication soup. The second mistake is to imagine layers as perfectly sealed walls that never influence one another.
+Two opposite mistakes obscure the model: collapsing everything into one big communication soup, and imagining layers as perfectly sealed walls that never influence one another.
 
 SNode.C avoids the first mistake structurally. As readers, we should avoid the second. Layers are real and useful, but they still influence each other.
 

@@ -490,9 +490,7 @@ A server-side instance may have one name that remains stable across the process 
 \index{onDisconnect@\texttt{onDisconnect}}
 
 
-Chapter 9 needs one especially clear distinction: not all callbacks report the same kind of event.
-
-SNode.C has several callback layers.
+SNode.C has several callback layers, each reporting a different kind of event.
 
 | Callback type | Receives | Meaning |
 |---|---|---|
@@ -623,7 +621,7 @@ In the echo example, the context decides what to do when data arrives. It reads 
 
 A client can make several connection attempts while remaining one configured role. A successful attempt creates a peer episode; an unsuccessful attempt may never reach that point. A later HTTP upgrade can replace the context while preserving the established connection.
 
-This distinction now appears explicitly in lifecycle diagnostics and regression tests. Listener activity, connection attempts, established connections, and attached contexts should not be counted as interchangeable objects. An increasing attempt count does not prove that several peers were connected, and a context detach does not by itself prove that the transport closed.
+Count listener activity, connection attempts, established connections, and attached contexts separately. Several attempts may precede one connection, and a context can detach while the transport remains open.
 
 When a derived context needs to distinguish an upgrade-style replacement from final closure, the stream context exposes a protected detach reason. It distinguishes `ContextSwitch` from `ConnectionClose`. That is protocol-lifecycle information, not a reason to transfer transport ownership into the context.
 
@@ -703,6 +701,8 @@ When reading a new SNode.C type or callback, the first question should be:
 
 That question usually prevents the most common misunderstandings.
 
+Before the family-specific chapters, classify three events: an address cannot be bound, a TLS handshake fails, and a protocol context is replaced during upgrade. The first may produce no peer connection; the second can involve connection machinery without reaching protocol readiness; the third can detach a context while the peer connection continues. Choose diagnostics at the boundary that can distinguish those outcomes. That exercise is more useful than counting every callback as another “connection event.”
+
 ::: {.snodec-remember title="What to remember"}
 - The `SocketServer`/`SocketClient` handle is the handle used to configure and register a server-side or client-side instance.
 - The registered instance is the long-lived runtime-visible role; a `SocketConnection` is one concrete peer relationship under that role.
@@ -712,7 +712,3 @@ That question usually prevents the most common misunderstandings.
 - Factories create per-connection contexts; contexts implement protocol behavior over the connection.
 - Status callbacks, connection lifecycle callbacks, and context callbacks belong to different layers of the model.
 :::
-
-### Closing perspective
-
-Before the family-specific chapters, classify three events: an address cannot be bound, a TLS handshake fails, and a protocol context is replaced during upgrade. The first may produce no peer connection; the second can involve connection machinery without reaching protocol readiness; the third can detach a context while the peer connection continues. Choose diagnostics at the boundary that can distinguish those outcomes. That exercise is more useful than counting every callback as another “connection event.”

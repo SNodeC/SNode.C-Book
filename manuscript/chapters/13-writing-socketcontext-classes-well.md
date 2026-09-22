@@ -23,11 +23,7 @@ The handle, instance, connection, factory, and context vocabulary now matters fr
 \index{connection-local behavior}
 
 
-A compact definition is:
-
-::: {.snodec-rule title="Context responsibility rule"}
 A `SocketContext` is the per-connection application protocol endpoint attached to a `SocketConnection`.
-:::
 
 Every part of that sentence matters.
 

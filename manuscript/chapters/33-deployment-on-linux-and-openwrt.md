@@ -598,7 +598,7 @@ The application may still support daemonization, but on OpenWrt the deployed rol
 
 The first practical step is to identify the recipe's source, not to start cross-compiling. The separately maintained [SNode.C OpenWrt feed](https://github.com/SNodeC/OpenWRT) is useful packaging source, but its `net/snode.c/Makefile` at commit `c9378fe95f7c015752c748fc4ab012b585d294d1` still declares `PKG_VERSION:=1.0.1` and downloads the framework's `OpenWRT` branch. It does not select this book's current 2.0 source. Its module list also contains the old `net-un-phy` component. Installing that recipe unchanged would answer a different compatibility question.
 
-This gives the walkthrough a real prerequisite: a recipe port for the selected 2.0 contents and the exact target SDK. The steps below explain the build and deployment rehearsal once that prerequisite is satisfied. They are not evidence that the old feed already builds 2.0. No OpenWrt SDK build or device run is claimed for this edition's editorial verification.
+This gives the walkthrough a real prerequisite: a recipe port for the selected 2.0 contents and the exact target SDK. The steps below explain the build and deployment rehearsal once that prerequisite is satisfied. They are not evidence that the old feed already builds 2.0.
 
 On a disposable target or test image, record the release, target and available space before choosing its matching SDK:
 
@@ -672,7 +672,7 @@ logread -e book-echo
 
 Between start, restart and stop, test the listener from the development host through an SSH loopback tunnel, for example `ssh -N -L 18094:127.0.0.1:18093 root@TEST_DEVICE`, substituting the test device's actual address. Run the Linux exercise's independent Python peer against local port `18094`. Expect the exact echo after start and restart, then a failed exchange after stop. This avoids making a teaching listener reachable from the router's external interfaces. The SSH client and server must permit forwarding; if they do not, use an available target-side peer and record that substitution.
 
-Finally, repeat the invalid-port experiment from the Linux exercise, inspect the service failure, restore the configuration, and verify a fresh successful exchange. Enable boot startup only after these checks on the disposable target, then test one reboot. Installation, successful start, restart, controlled failure, recovery and boot behavior are separate observations. Until the matching SDK, ported recipe and target are available, these remain pending deployment evidence rather than desktop test results.
+Finally, repeat the invalid-port experiment from the Linux exercise, inspect the service failure, restore the configuration, and verify a fresh successful exchange. Enable boot startup only after these checks on the disposable target, then test one reboot. Installation, successful start, restart, controlled failure, recovery and boot behavior are separate observations. Run this rehearsal only when the matching SDK, ported recipe, and target are available.
 
 ### Rebuild and inspect the installed system
 

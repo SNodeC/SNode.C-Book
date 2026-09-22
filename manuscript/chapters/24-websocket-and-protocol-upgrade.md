@@ -666,7 +666,3 @@ The bridge from this chapter is simple: WebSocket provides the upgraded bidirect
 
 
 WebSocket crosses HTTP negotiation, upgraded socket context, framing, and optional subprotocol selection. The local rule is therefore to include the highest public header for the WebSocket abstraction directly named by the file and link the matching WebSocket component surface. Chapter 32 gives the consolidated component/header matrix, including the MQTT-over-WebSocket adapters.
-
-### Closing perspective
-
-WebSocket completes the web-protocol climb by using HTTP as a negotiation boundary and then moving the connection episode into bidirectional message communication. The result is not just another HTTP handler but an upgraded carrier for message-oriented protocols.

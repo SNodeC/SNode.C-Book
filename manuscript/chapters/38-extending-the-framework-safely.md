@@ -554,9 +554,3 @@ For a flow-related extension, preserve the current invariant explicitly: one pub
 - Framework-level extensions should represent reusable framework boundaries, not one project's policy.
 - Contexts, factories, middleware, routers, subprotocols, MQTT objects, configuration, and tests should each protect their own boundary.
 :::
-
-### Closing perspective
-
-MiniGateway and MiniGateway Extended have already shown this discipline in application form: the Unix-domain input role was added as a new boundary around the same model instead of being hidden inside HTTP, SSE, or MQTT code. The worked extension near the beginning of this chapter is the concrete proof: construction stayed in the factory, endpoint behavior stayed in the context, and application ordering stayed in the model.
-
-Safe extension is the final design test. A system is well built when the next capability still has an honest place to go.

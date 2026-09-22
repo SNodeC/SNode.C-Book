@@ -1,0 +1,106 @@
+{
+  "pages_before_phase_0_baseline": 490,
+  "pages_after": 482,
+  "final_console_warnings_and_bad_boxes": 0,
+  "final_latex_logs": [
+    {
+      "file": "build/proposal-readiness-phase-1/figures/contact-sheet/figures-contact-sheet.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-01-layer-stack/fig-01-layer-stack.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-02-runtime-instance-connection-context/fig-02-runtime-instance-connection-context.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-03-event-runtime-picture/fig-03-event-runtime-picture.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-04-lower-family-transfer-model/fig-04-lower-family-transfer-model.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-05-server-client-connection-context-path/fig-05-server-client-connection-context-path.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-06-web-protocol-layer-structure/fig-06-web-protocol-layer-structure.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-07-native-mqtt-vs-mqtt-over-websocket/fig-07-native-mqtt-vs-mqtt-over-websocket.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-08-iot-boundary-constellation/fig-08-iot-boundary-constellation.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-09-application-system-role-constellation/fig-09-application-system-role-constellation.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-10-mqttsuite-ecosystem-map/fig-10-mqttsuite-ecosystem-map.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-11-build-install-package-deployment-surface/fig-11-build-install-package-deployment-surface.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-12-minigateway-extended-network-role-architecture/fig-12-minigateway-extended-network-role-architecture.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-13-configuration-hierarchy/fig-13-configuration-hierarchy.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-14-logging-diagnostic-visibility-map/fig-14-logging-diagnostic-visibility-map.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-15-tls-connection-layer-specialization/fig-15-tls-connection-layer-specialization.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-16-retry-reconnect-flow/fig-16-retry-reconnect-flow.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-17-persistence-boundary/fig-17-persistence-boundary.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/figures/fig-18-testing-confidence-surfaces/fig-18-testing-confidence-surfaces.log",
+      "warnings_and_bad_boxes": 0
+    },
+    {
+      "file": "build/proposal-readiness-phase-1/snodec-book.log",
+      "warnings_and_bad_boxes": 0
+    }
+  ],
+  "visual_review_pages": [
+    17,
+    43,
+    49,
+    63,
+    68,
+    84,
+    87,
+    116,
+    118,
+    123,
+    138,
+    343,
+    346,
+    456,
+    465,
+    471
+  ],
+  "visual_review_scope": "Representative changed pages and all eight restored rule boxes; not a full-page visual audit."
+}

@@ -360,7 +360,7 @@ An application should be clear about:
 
 This does not mean Unix domain sockets are complicated.
 
-It means the family expresses locality through path identity, and application design should respect that. A path under a temporary directory, a runtime directory, or a service-specific directory communicates different operational expectations. The book does not need to prescribe one layout here, but the chapter should make clear that the path is part of the service design, not an incidental string literal.
+It means the family expresses locality through path identity, and application design should respect that. A path under a temporary directory, a runtime directory, or a service-specific directory communicates different operational expectations. The path is part of the service design, not an incidental string literal.
 
 #### Unix domain sockets are not a replacement for IP
 

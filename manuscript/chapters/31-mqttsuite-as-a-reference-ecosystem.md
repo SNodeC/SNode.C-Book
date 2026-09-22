@@ -303,7 +303,7 @@ But MQTTStore can also go further. It can project selected JSON payload fields i
 
 A useful model distinguishes raw-envelope storage from optional typed projection. In the current `MariaDbStorage::store(...)`, raw insertion is submitted and `storeProjections(...)` is then called; the projection does not wait for the raw insert’s success callback. These are separately queued writes, not one demonstrated atomic transaction.
 
-Successful raw storage preserves what arrived. Successful projection gives selected content a queryable database shape. Their independent errors matter: a successful MQTT receive or one successful insert does not prove that both views were stored.
+Successful raw storage preserves what arrived. Successful projection gives selected content a queryable database shape. Their independent errors matter: check each storage result even when MQTT reception or the other insert succeeded.
 
 #### Projection as state design
 
@@ -400,7 +400,7 @@ For the bridge, identify source selection, destination selection, topic-prefix b
 
 For the store, identify the raw insert and each matching projection insert, then locate their success and error callbacks. Write down what observation would establish each outcome. A database row, a projection row, and broker delivery are three separate facts.
 
-A bounded deployment exercise can use a unique topic prefix and a fixed sequence of ten publications, with an independent subscriber and database query as observers. Stop one destination and predict which other observations should continue. Running that exercise requires configured broker and database services; the architectural source trace does not claim that those services have been exercised.
+A bounded deployment exercise can use a unique topic prefix and a fixed sequence of ten publications, with an independent subscriber and database query as observers. Stop one destination and predict which other observations should continue. Running that exercise requires configured broker and database services.
 
 ### Reading MQTTSuite architecturally
 
@@ -427,9 +427,3 @@ The point is cooperation. MQTTSuite shows how SNode.C-based applications can rem
 - Shared support exists where it serves reusable ecosystem semantics, such as mapping and mapping administration.
 - The build system and configuration surfaces expose much of the system surface.
 :::
-
-### Closing perspective
-
-MQTTSuite is evidence that SNode.C can support a coherent ecosystem of focused tools: a broker, an integrator, a bridge, a command-line client, a persistence service, and shared support libraries.
-
-It closes this part of the book by showing persistence, applications, systems, and ecosystem structure in one SNode.C-based reference project.

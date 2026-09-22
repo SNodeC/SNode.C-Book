@@ -1,0 +1,3 @@
+PASS: fresh metrics match saved Phase 1 metrics; all four hygiene thresholds pass
+PASS: all 62 inputs preserve code, source markers, index entries, figures and non-closing headings
+PASS: manuscript input order is unchanged; shell labels are sh, including nested example

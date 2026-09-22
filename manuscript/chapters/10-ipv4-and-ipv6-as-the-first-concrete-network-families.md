@@ -42,12 +42,6 @@ A typical stream application still involves:
 
 Nothing about moving from IPv4 to IPv6 changes that architectural shape.
 
-The first major observation is:
-
-::: {.snodec-rule title="Family-independent pattern"}
-The handle / instance / connection / factory / context / runtime pattern is more fundamental than the specific IP family.
-:::
-
 IPv4 and IPv6 show this without changing endpoint identity as radically as Unix domain sockets or Bluetooth do. Both IP families still use the familiar host-plus-port idea. That makes the comparison focused: the lower family changes, but the application architecture does not collapse into a different model.
 
 #### Same server/client/context shape
@@ -126,9 +120,7 @@ Here “host” should be read broadly. It may be a numeric address such as `127
 
 The stream wrappers make the shared model especially visible.
 
-The IPv4 and IPv6 server wrappers provide parallel `listen(...)` convenience overloads. These overloads set local configuration such as host, port, and backlog, then delegate to the general `listen(onStatus)` path.
-
-Likewise, the IPv4 and IPv6 client wrappers provide parallel `connect(...)` convenience overloads. These overloads set the remote host and port, optionally set local bind information, and then delegate to the general `connect(onStatus)` path.
+For both IP families, the convenience overloads set endpoint configuration before delegating: server `listen(...)` calls set the local host, port, and backlog; client `connect(...)` calls set the remote host and port, with optional local bind information. The general paths are `listen(onStatus)` and `connect(onStatus)`, respectively.
 
 So the convenience API is not a separate communication model. It configures the handle and then enters the same registration path that Chapter 9 described.
 
@@ -235,28 +227,12 @@ different internet family
 
 #### Textual address form and wildcard form
 
-The textual address form changes.
+The address forms differ while the wildcard-port value stays the same:
 
-IPv4 examples often use addresses such as:
-
-```text
-127.0.0.1
-0.0.0.0
-```
-
-IPv6 examples often use addresses such as:
-
-```text
-::1
-::
-```
-
-The wildcard form also changes:
-
-| Family | Wildcard host | Wildcard port |
-|---|---|---|
-| IPv4 | `0.0.0.0` | `0` |
-| IPv6 | `::` | `0` |
+| Family | Loopback host | Wildcard host | Wildcard port |
+|---|---|---|---|
+| IPv4 | `127.0.0.1` | `0.0.0.0` | `0` |
+| IPv6 | `::1` | `::` | `0` |
 
 Chapter 8 already explained address semantics in detail. Here the important point is simply that the wildcard idea transfers, but its concrete family representation changes.
 
@@ -272,27 +248,10 @@ IPv6 has its own address family and its own operational questions, even though t
 
 The convenience overloads also make local and remote roles visible.
 
-For a server, the most important early configuration is local:
-
-```text
-local host
-local port
-backlog
-```
-
-For a client, the most important early configuration is remote:
-
-```text
-remote host
-remote port
-```
-
-and, optionally:
-
-```text
-local bind host
-local bind port
-```
+| Role | Endpoint configuration | Additional choice |
+|---|---|---|
+| Server | local host and port | backlog |
+| Client | remote host and port | optional local bind host and port |
 
 This directly continues Chapter 8 and Chapter 9.
 
@@ -349,11 +308,7 @@ This path shows host plus port, server plus client, status callback, and runtime
 
 #### Move immediately to IPv6
 
-IPv6 should follow soon after the first stable IPv4 picture.
-
-If IPv6 appears only much later, IPv4 can start to look like the normal case and IPv6 like an advanced appendix. That would be the wrong lesson for SNode.C.
-
-The IPv6 version should feel deliberately close:
+The IPv6 version follows the same shape:
 
 ```cpp
 using EchoServer6 = net::in6::stream::legacy::SocketServer<MyFactory>;

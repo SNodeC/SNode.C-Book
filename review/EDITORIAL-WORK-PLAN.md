@@ -62,8 +62,24 @@ and independent counts pass. The existing PDF has 490 pages; it was not rebuilt
 in Phase 0. Evidence, exact definitions, exit-check commands, and the phase status
 table are in `review/proposal-readiness-2026-09-22/REPORT.md`.
 
-Stop after Phase 0. Phase 1 is the next unstarted phase; first rerun Phase 0's
-exit checks as listed in REPORT.md. No restructuring approval is recorded.
+Phase 1 completed on 22 September 2026 after freshly rechecking Phase 0.
+The teaching-book amendment below is recorded in its own commit. This phase
+applies only its rule-box criterion: eight applicable principles were restored,
+leaving 20 rule boxes; every restoration is listed in REPORT.md. There are zero
+forbidden phrases and closing sections, and shell fences use `sh`. Useful closing
+exercises remain in their chapters; repeated verification claims are consolidated
+in Conventions. No chapter consolidation or later-phase pedagogical work occurred.
+
+The manuscript has 150,566 words (−1,358), 1,005 chapter subheadings (−15), and
+465 text fences (−13). Hygiene, source alignment, guard regression, and companion
+compilation pass. The final PDF has 482 pages (Phase 0 baseline: 490), zero LaTeX
+warnings and bad boxes; 16 representative rendered pages were inspected. Complete
+listing contents, figures, index entries, and input order are preserved. Exact
+checks and limits are in `review/proposal-readiness-2026-09-22/REPORT.md`, Phase 1.
+
+Stop after Phase 1. Phase 2 is next; first rerun Phase 1's exit checks listed in
+REPORT.md. Read the teaching-book amendment before planning sample-chapter work.
+No restructuring approval is recorded.
 
 ## Author amendment — teaching book, 2026-09-22
 
