@@ -166,4 +166,6 @@ only then generalize or split the system
 
 SNode.C rewards this discipline because its architecture makes the boundaries explicit. It does not force good design automatically, but it gives good design places to live.
 
-Protocols, timing, failures, deployment, security, diagnostics, and system evolution remain real engineering problems. Place behavior where the right boundary can own it, and keep that boundary visible in code, configuration, diagnostics, build, deployment, and tests.
+Networking does not become trivial with SNode.C. Protocols, timing, failures, deployment, security, diagnostics, and system evolution remain real engineering problems. What the framework offers is that a network system can stay understandable as it grows, as long as its layers and boundaries stay visible. Place behavior where the right boundary can own it, and keep that boundary visible in code, configuration, diagnostics, build, deployment, and tests.
+
+Above all: do not hide meaning too early.
