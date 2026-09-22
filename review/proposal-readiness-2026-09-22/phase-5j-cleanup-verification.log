@@ -1,0 +1,9 @@
+Post-final-suite process and space check, 2026-09-22, observed tool output:
+COMMAND: ps -C mariadbd -o pid,user,args
+    PID USER     COMMAND
+   1587 mysql    /usr/sbin/mariadbd
+COMMAND: df -h /tmp
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs            32G   31G  558M  99% /tmp
+Only the pre-existing system MariaDB remains. No book-db private server remains.
+The three initial leaked servers were stopped by the author before the final run.

@@ -1,0 +1,57 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 45
+    Start 45: exercise-ch23-durable
+
+45: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "durable" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23/persistence-lab"
+45: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23
+45: Test timeout computed to be: 90
+45: PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+45: PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+1/4 Test #45: exercise-ch23-durable ............   Passed    1.09 sec
+test 46
+    Start 46: exercise-ch23-error
+
+46: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "error" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23/persistence-lab"
+46: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23
+46: Test timeout computed to be: 90
+46: PASS: SQL error 1146 leaves the connection usable; the chained query completes and independent row count stays zero
+2/4 Test #46: exercise-ch23-error ..............   Passed    1.14 sec
+test 47
+    Start 47: exercise-ch24-composition
+
+47: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch17/dispatch.py" "framing" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch17/dispatch-lab"
+47: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch24
+47: Test timeout computed to be: 30
+47: PASS: incomplete headers produce no handler/response; completing headers produces one 200
+3/4 Test #47: exercise-ch24-composition ........   Passed    0.30 sec
+test 48
+    Start 48: exercise-ch24-part-checkpoint
+
+48: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23/persistence-lab" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/examples/MiniGateway/minigateway"
+48: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch24
+48: Test timeout computed to be: 120
+48: PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+48: PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+48: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+48: PASS: Part IX checkpoint contrasts database read-back with the separate in-memory gateway restart; apply the README MQTTStore outcome map
+4/4 Test #48: exercise-ch24-part-checkpoint ....   Passed    1.50 sec
+
+The following tests passed:
+	exercise-ch23-durable
+	exercise-ch23-error
+	exercise-ch24-composition
+	exercise-ch24-part-checkpoint
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+equipped    =   3.74 sec*proc (3 tests)
+
+Total Test time (real) =   4.04 sec

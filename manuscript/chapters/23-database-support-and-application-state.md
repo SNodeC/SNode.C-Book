@@ -1,35 +1,31 @@
 ## Database Support and Application State {#database-support-and-application-state}
 
+::: {.snodec-objectives title="Learning objectives"}
+- **O1.** Distinguish transient acceptance, queued database work and committed state.
+- **O2.** Observe command ordering, SQL failure and read-back after client restart.
+- **O3.** Choose persistence ownership, transaction decisions and bounded overload policy.
+:::
+
 \index{database support}
 \index{application state}
 \index{persistence}
-
 
 ### From protocol boundaries to persistence boundaries
 
 Persistence answers a question that protocols alone cannot answer: which information should survive after a connection, request, message, or process has ended?
 
-A protocol boundary asks how information moves between active participants. A persistence boundary asks what information should remain after the immediate conversation is over. That second question changes the architecture of an application. The application now has to decide what belongs in memory, what belongs in durable storage, when database work should be started, how database results flow back into the event-driven application, what happens when the database is unavailable, and how persistence interacts with protocol roles such as HTTP, MQTT, WebSocket, SSE, and local-control interfaces.
+A protocol boundary asks how information moves; persistence asks what remains afterward. The application must choose memory or durable storage, when to start database work, how results return to its event-driven roles, and what happens when storage is unavailable. A protocol event receives domain meaning before it causes an optional persistence decision.
 
-A useful model is that a protocol event first receives application interpretation, then may update runtime state, and only then crosses an optional persistence boundary into durable application state.
-
-Persistence is an application-state boundary that should be chosen deliberately, not an automatic part of every request or every message. In SNode.C, the concrete implementation discussed here is the MariaDB integration layer: a client object, connection details, event-integrated connection handling, command objects, command sequences, and result or error callbacks.
-
-Figure \ref{fig:persistence-boundary} shows the boundary that should stay visible when database support enters an SNode.C application. The upper lane stays on the transient communication side: peer connections, protocol contexts, and application interpretation live in the runtime and give incoming events their application meaning. The lower lane stays on the durable-state side: once the application has decided that something should survive process lifetime, the work crosses the persistence boundary and becomes explicit persistence work. The diagram keeps database integration behind that boundary instead of presenting persistence as part of transport or protocol mechanics.
+Figure \ref{fig:persistence-boundary} separates transient connections, contexts and application interpretation from explicitly chosen durable work. Queues and client memory remain on the transient side; crossing into database work does not make submission a commit. The MariaDB client, connection and command API implement that work after the application decides what matters.
 
 ![Persistence boundary in an SNode.C application: protocol contexts translate peer events into application meaning, application state decides what is worth keeping, and the database client submits explicit persistence work. Queued work and client memory are still transient; the diagram does not equate submission with a durable commit.](assets/figures/pdf/fig-17-persistence-boundary.pdf){#fig:persistence-boundary width=90% latex-placement="tbp"}
-
-Figure \ref{fig:persistence-boundary} therefore makes two decisions visible at the same time. Protocol and transport activity do not automatically imply durable storage, and persistence begins with an application-state decision: what changed, what matters, and what is worth keeping. Only after that decision do the database client, its command API, and the durable store become part of the flow.
 
 ::: {.snodec-rule title="Persistence rule"}
 Persist application facts, not raw transport accidents.
 :::
 
-### Persistence as an application-state boundary
-
 \index{persistence boundary}
 \index{application-state boundary}
-
 
 A database client still communicates through a protocol and transport. Its role in this application is persistence and query, rather than the device or observer conversation. It stores state, retrieves state, changes state, and may become the durable memory of a larger system. Read the distinction by application purpose: HTTP, MQTT, WebSocket, Bluetooth, and Unix-domain sockets can carry conversations whose accepted facts the persistence role later records.
 
@@ -44,71 +40,33 @@ A compact comparison helps:
 | application question | what did the peer say? | what should be remembered? |
 | SNode.C concern | event-driven communication | event-integrated persistence work |
 
-This distinction matters because database work should not be treated as random helper code hidden inside protocol callbacks. It belongs to the application-state architecture. A protocol callback may trigger a persistence decision, but the database boundary should still remain visible as its own architectural concern.
+A protocol callback may trigger a persistence decision, but database work belongs to the application-state architecture, with its own lifetime and failure policy.
 
-### What SNode.C currently supports
+### The MariaDB module and its public client
+
+The current concrete database module is MariaDB-focused, not a generic multi-backend ORM. It integrates a client, connection details, queued commands and result/error callbacks into the event-driven runtime. CMake creates `db-mariadb` only when `libmariadb` is found and installs its MariaDB-specific headers.
 
 \index{MariaDB}
 \index{database module}
 
-
-The database support in SNode.C has a concrete scope. The current concrete database module is MariaDB-focused. It is not a generic multi-backend ORM or database-independent abstraction.
-
-The accurate statement is:
-
-::: {.snodec-note title="MariaDB scope note"}
-SNode.C currently provides a MariaDB integration layer shaped to work inside the same event-driven runtime discipline as the rest of the framework.
-:::
-
-This narrower statement keeps the chapter aligned with the implementation. It lets the chapter focus on what the code actually provides: a client object, connection details, an event-integrated connection, command objects, command sequences, and callbacks for result or error handling.
-
-#### MariaDB-focused database module
-
-The MariaDB module is added only when `libmariadb` is found by CMake; otherwise the `db-mariadb` target is not created. When it is available, the module builds the shared library:
-
-```text
-db-mariadb
-```
-
-and installs MariaDB-specific headers under the MariaDB database include path.
-
-For ordinary application use, the public surface has a clear source side and build side. The source-side front door is the MariaDB client header:
+Ordinary application use begins with the public client header:
 
 ```cpp
 #include <database/mariadb/MariaDBClient.h>
 ```
 
-The matching build-side component is:
+The matching component is `db-mariadb`. Include lower command headers only when directly naming a lower command type; ordinary use goes through the public client.
 
-```text
-db-mariadb
-```
+The module provides these public types and operations:
 
-That header is the source-facing entry to the normal MariaDB client abstraction. Application code should not include individual command headers merely to use the usual client API; those lower headers belong behind the public client surface unless the application directly names a lower command type. The component supplies the binary/library surface for the same MariaDB module.
-
-The module contains the concrete pieces needed for MariaDB integration:
-
-- `MariaDBClient`,
-- `MariaDBClientASyncAPI`,
-- `MariaDBClientSyncAPI`,
-- `MariaDBConnection`,
-- `MariaDBConnectionDetails`,
-- `MariaDBCommand`,
-- asynchronous and sync-style command variants,
-- `MariaDBCommandSequence`,
-- `MariaDBLibrary`,
-- asynchronous commands,
-- sync-style metadata commands.
+- `MariaDBClient` with asynchronous and sync-style APIs;
+- `MariaDBConnection` and its `MariaDBConnectionDetails`;
+- command variants and `MariaDBCommandSequence`;
+- `MariaDBLibrary`.
 
 These types let the reader trace ownership from the public client to a connection and its queued commands. Keep that trace concrete when moving from the small listing to a larger persistence service.
 
-#### Test application as demonstration, not production model
-
-The `testmariadb` application should be read as a demonstration and test program for the API shape and runtime integration, not as a production persistence architecture. A test application can be compact, direct, and repetitive because its purpose is to exercise and show the pieces.
-
-Such an application can demonstrate database configuration, runtime initialization, construction of connection details, use of client objects, state-change reporting, command execution, result handling, metadata access, command sequencing, transaction flow, and scheduling patterns.
-
-But a real application must make its own architectural decisions.
+The repository's `testmariadb` demonstrates configuration, runtime setup, client construction, state callbacks, commands, metadata, sequences, transactions and timers. Its compact API exercise is not a production persistence architecture.
 
 | Test app demonstrates | Production code should decide |
 |---|---|
@@ -119,26 +77,14 @@ But a real application must make its own architectural decisions.
 | timers | scheduling policy |
 | direct values | secure configuration and secret handling |
 
-The test application shows how the pieces work. A real application must decide how persistence belongs to its own roles, configuration, security model, resource limits, and failure policy.
-
 ### Runtime state and database state
 
 \index{runtime state}
 \index{database state}
 
-
-Runtime state and database state are not the same thing. Runtime state exists while the application is running. Database state survives beyond the current runtime episode.
-
-A useful distinction is:
-
-| State kind | Typical contents |
-|---|---|
-| runtime state | live connections, sessions, timers, pending work, queues, caches, and current protocol relationships |
-| database state | persisted facts, measurement history, users, audit records, durable configuration, and long-lived application data |
+Runtime state includes connections, timers, pending work and caches. Database state records selected facts that should survive the current process, such as measurement history, users, audit records and durable configuration.
 
 The decision is not always obvious. Some information may exist in both places: the database as durable source of truth, and a runtime cache as the current fast-access representation. The application must decide how those representations are synchronized. A cache without a synchronization policy is not architecture; it is an assumption.
-
-#### What belongs where?
 
 A practical table helps:
 
@@ -157,51 +103,15 @@ A practical table helps:
 
 This table forces the application to say which state is transient, durable, or cached; it is not a rulebook. The database should not become a dumping ground for every transient detail. Runtime memory should not pretend to be durable when it is not. The persistence boundary should be explicit.
 
-### `MariaDBClient` as the application-facing database object
-
 \index{MariaDBClient@\texttt{MariaDBClient}}
 \index{MariaDBConnectionDetails@\texttt{MariaDBConnectionDetails}}
 \index{database client}
 
-
 The main application-facing object is `database::mariadb::MariaDBClient`. It combines the asynchronous command API and the sync-style metadata API, owns the internal connection object, stores the connection details, and reports connection state through a state-change callback.
 
-It is constructed from:
-
-```text
-MariaDBConnectionDetails
-  + state-change callback
-```
-
-and exposes:
-
-```text
-async command API
-  + sync-style metadata API
-```
-
-A useful model is:
-
-```text
-MariaDBConnectionDetails
-  + onStateChanged callback
-      -> MariaDBClient
-          -> async commands
-          -> sync-style metadata calls
-          -> event-integrated connection
-```
-
-The state-change callback receives a state object containing:
-
-- error number,
-- error message,
-- connected flag.
-
-This fits SNode.C’s runtime style. The application issues database operations and can also observe whether the database resource is connected, unavailable, or in an error state.
+The state callback receives an error number, error message and connected flag.
 
 A database client is an application-facing persistence object integrated with the runtime, not the same kind of configured role as a socket server or client instance. It may belong to a role or service in the application, but it is not itself the same conceptual object as a registered runtime-visible socket instance.
-
-#### `MariaDBConnectionDetails`
 
 `MariaDBConnectionDetails` describes the database endpoint and credentials.
 
@@ -220,20 +130,11 @@ The `connectionName` is especially useful for diagnostics. A named database conn
 
 The credential fields deserve care. A test program may place credentials close to the example to keep the demonstration compact. A real application needs an explicit policy for configuration, secret storage, deployment, and logging.
 
-#### State-change callback
-
-The state-change callback makes the database connection visible to the application. That matters because a database is a runtime participant. It may be connected, disconnected, unavailable, misconfigured, rejected by authentication, or failed during operation.
-
-The callback gives the application a place to react. When the database connects, persistence-dependent work may be enabled. When it is unavailable, the application may report degraded state, pause periodic writes, and keep protocol roles alive when that is the right policy.
-
-The exact policy belongs to the application. The framework exposes the state. The application decides what the state means operationally.
-
-The state callback is database observability at the application boundary. It makes the persistence role visible instead of hiding database availability inside failed commands.
+The state callback exposes connected, disconnected, unavailable, misconfigured, authentication-rejected or failed operation states. The application chooses what follows: enable persistence-dependent work, pause periodic writes, report degradation or keep other protocol roles alive. Database availability should not be hidden inside individual failed commands.
 
 ### A minimal MariaDB client example
 
 \index{MariaDB!minimal client example}
-
 
 The following listing is intentionally smaller than the repository's `testmariadb` application. It shows the shape of ordinary application use: configure connection details, construct the database client, observe connection state, submit SQL work, continue through callbacks, and then start the SNode.C runtime.
 
@@ -249,7 +150,7 @@ CREATE TABLE measurements (
 );
 ```
 
-This setup note is only there to make the example concrete. Chapter 23 is not a MariaDB administration chapter. A real deployment also needs a deliberate policy for database users, privileges, credentials, schema migration, backup, and secret handling.
+A deployment also needs deliberate users, privileges, credentials, schema migration, backup and secret handling.
 
 <!-- snodec-source: companion/examples/MariaDB-Minimal/main.cpp -->
 ```cpp
@@ -327,70 +228,25 @@ The corresponding build-side dependency is the MariaDB component:
 target_link_libraries(myapp PRIVATE snodec::db-mariadb)
 ```
 
-That target exists only in SNode.C builds where `libmariadb` was found. The source-side public header and the build-side component therefore form the usual pair:
-
-```text
-source side:
-  <database/mariadb/MariaDBClient.h>
-
-build side:
-  snodec::db-mariadb
-```
+That target exists only when `libmariadb` was found. It pairs with the public client header used above.
 
 ### Database work inside the event-driven runtime
 
 \index{MariaDBConnection@\texttt{MariaDBConnection}}
 \index{event-driven database access}
 
+`MariaDBConnection` participates as a read, write and exceptional-condition event receiver. It owns the active database interaction, tracks the active command, queues sequences and handles readiness, timeouts and connection state.
 
-The architectural heart of the MariaDB module is event-loop integration. Database work participates in the SNode.C event-driven runtime instead of simply calling SQL and blocking.
+A command starts a MariaDB nonblocking operation. If it needs descriptor readiness, the event loop wakes the connection to continue it; it then completes, fails or waits again. Application callbacks receive the result or error. The application does not need its own blocking progress loop.
 
-A useful model is:
+Event integration leaves other callbacks runnable while ordinary command progress waits, but it does not remove database latency or saturation. Pending sequences still need an application policy.
 
-```text
-MariaDB socket descriptor
-  -> SNode.C event receivers
-      -> command continuation
-          -> result callback or error callback
-```
-
-Internally, `MariaDBConnection` participates as a read, write, and exceptional-condition event receiver. The database descriptor becomes part of the same event-driven discipline as socket descriptors. It handles command execution, command continuation, command completion, read events, write events, exceptional-condition events, related timeouts, and connection state.
-
-Conceptually, a database command starts a MariaDB nonblocking operation, waits for descriptor readiness when needed, continues the command, and then completes, fails, or waits again.
-
-The application-facing API remains callback-shaped. The internal connection handles the event-driven continuation.
-
-Event-integrated database work avoids blocking the application around ordinary command progress, but it does not make database latency disappear. A slow database is still slow. A saturated database is still saturated. The difference is that database progress can be coordinated with the same event-driven runtime discipline as the network layers.
-
-#### `MariaDBConnection` and event receivers
-
-The internal connection owns the active database interaction. It tracks the active command, queues command sequences, observes connection state, and reacts to read, write, and exceptional-condition readiness.
-
-The source-shaped progression is: start a command, wait for read/write readiness or completion, continue the command, and then mark the command as completed.
-
-This is the database equivalent of the earlier event-driven communication model. The specific resource is different. The runtime discipline remains familiar.
-
-#### Command continuation
-
-A database command may not complete immediately. It may need the underlying MariaDB socket to become readable or writable. The event loop tells the connection when progress is possible. Then the connection continues the current command.
-
-If the command needs read/write readiness, the event loop wakes the connection; the command then continues and either completes or waits again.
-
-The exact MariaDB C API detail is secondary. Database work is expressed as explicit continuation, not as an invisible blocking detour inside a protocol callback.
-
-### Database work as commands and command sequences
+Database operations become explicit command objects and ordered sequences.
 
 \index{database commands}
 \index{command sequences}
 \index{query()@\texttt{query()}}
 \index{exec()@\texttt{exec()}}
-
-
-The MariaDB layer represents database work explicitly. Database operations become command objects. Command objects can be grouped into command sequences. That gives database work structure inside the event-driven runtime: command objects enter a sequence, the sequence is queued on the connection, the event loop continues the work, and success or error callbacks report the result.
-
-This pattern is central to the database API. The application describes ordered database work. The connection drives that work through the event loop.
-
-#### Async API: query, exec, transactions, commit, rollback
 
 The asynchronous API exposes the main database operations:
 
@@ -407,8 +263,6 @@ Each method uses success and error callbacks. The exact SQL is application-speci
 
 The plural names `startTransactions(...)` and `endTransactions(...)` select transaction mode; they do not make a command sequence an automatic all-or-nothing operation.
 
-#### Sync-style metadata calls
-
 The sync-style API exposes metadata calls such as:
 
 | Method | Meaning |
@@ -418,20 +272,9 @@ The sync-style API exposes metadata calls such as:
 
 “Sync-style” here identifies metadata-style command surfaces; the application-facing flow still uses callbacks. These calls read state that the MariaDB client library already has after a completed command or result step. They do not stand for arbitrary blocking SQL work inside an event-driven application.
 
-#### `query(...)` versus `exec(...)`
+`exec(...)` covers action statements such as insert, update, delete and schema modification. `query(...)` selects row iteration. Both send SQL text; the API makes the intended result handling explicit.
 
-The difference between `query(...)` and `exec(...)` is an application intention.
-
-| Method | Use when |
-|---|---|
-| `exec(...)` | the SQL statement performs an action and row iteration is not the main result |
-| `query(...)` | the SQL statement produces rows the application wants to inspect |
-
-`exec(...)` covers action-oriented statements such as insert, update, delete, and schema modification. `query(...)` covers row-producing statements where the application wants to inspect result records.
-
-The database receives SQL text in both cases. The application-facing API makes the intended use clearer.
-
-#### Command sequences
+### Command sequences and callback ordering
 
 A `MariaDBCommandSequence` allows database operations to be chained. The sequence itself is also an API surface: it inherits the asynchronous and sync-style API shapes so commands can be appended in order.
 
@@ -450,8 +293,6 @@ The command sequence expresses the order. The application does not need to write
 A command sequence is not the same thing as a transaction. A command sequence expresses ordered database work. A transaction is a database consistency boundary represented through ordered commands.
 
 Both can appear together, but they are different ideas.
-
-#### Chaining, callbacks, and metadata reads
 
 The call shape is important. A chained call appends to the command sequence returned by the previous operation:
 
@@ -486,25 +327,9 @@ Sequence order also has a failure boundary. A success callback means that partic
 \index{commit@\texttt{commit}}
 \index{rollback@\texttt{rollback}}
 
+Transactions use the same ordered command mechanism but add a database consistency boundary. The application must choose whether to commit, roll back, retry, compensate or stop after an error.
 
-Transactions are not outside the event model. They are represented as ordered database commands in the same command-sequence mechanism.
-
-A useful model is:
-
-```text
-startTransactions
-  -> exec / query
-      -> commit or rollback
-          -> endTransactions
-```
-
-Transactions are not just present; their flow remains visible and ordered. A transaction can succeed. It can fail. A rollback may be needed. An application may need to report degraded state, retry, compensate, or stop a workflow.
-
-A transaction is not outside the event model; it is a policy and ordering boundary expressed through database commands and callbacks.
-
-#### A compact transaction sequence
-
-A command sequence keeps ordered database work visible. Transaction flow is not hidden behind a helper that silently blocks. The following success-path illustration shows when transaction mode begins, which work is queued, when commit is requested, and when transaction mode is left again. Its comment-only error callbacks do not implement recovery.
+The following success-path illustration shows transaction mode, queued work, commit and departure from transaction mode. Its comment-only error callbacks do not implement recovery.
 
 ```cpp
 db.startTransactions(
@@ -542,35 +367,16 @@ The source uses the plural method names `startTransactions(...)` and `endTransac
 
 Queuing `db.rollback(...)` from that insert’s error callback would create a new sequence behind the remaining commands; it would not jump ahead of this prequeued commit. A production workflow that must choose commit or rollback should enqueue the dependent operation only after observing the required outcome and should prevent unrelated work from interleaving on that connection. The transaction sketch teaches API order, not that complete failure policy.
 
-### Timers and database work
-
-Timers can trigger database work. The timer starts a database command sequence, the MariaDB event integration continues the work, and a callback reports result or error.
-
-This is especially relevant for IoT systems. A service may periodically aggregate sensor values, clean old rows, reconcile database state with runtime state, refresh derived status, publish stored values, or check for pending commands.
-
-The timer starts the work. The database layer does not become a blocking loop. It remains part of the same runtime world.
+Timers can start database sequences for periodic aggregation, row cleanup, reconciliation, derived status, stored-value publication or pending-command checks. The event loop continues the work; its callbacks report completion or failure. A new timer tick must account for earlier work still pending.
 
 ### Persistence service design
 
 \index{persistence service design}
 \index{database client ownership}
 
+A protocol callback interprets input; a domain operation decides what it means; a persistence service owns durable work. Direct access can be acceptable for a small example, but larger applications should avoid repeating SQL, transaction and retry policy across HTTP, MQTT, WebSocket and local-control callbacks.
 
-Database access should be designed as part of the application architecture. It should not automatically be scattered through every protocol callback. Sometimes direct access is acceptable. But in larger systems, a persistence service or application-level component is often clearer. In that shape, a protocol callback interprets input, a domain operation decides what it means, a persistence service owns durable work, and the MariaDB command sequence executes that work.
-
-The protocol layer interprets protocol input. The domain layer decides what the input means. The persistence layer decides what must be stored, updated, read, or rolled back.
-
-In the boundary language of Chapter 22, persistence may be its own role or service, especially when several protocol surfaces touch the same durable state.
-
-#### Keep database logic out of low-level protocol callbacks
-
-A protocol callback should usually interpret protocol input, not become the whole persistence layer. For example, an HTTP handler, MQTT callback, WebSocket message handler, or `SocketContext` method may receive an event. It should not automatically contain all SQL construction, transaction policy, retry policy, and error handling inline.
-
-A cleaner design validates and interprets HTTP, MQTT, WebSocket, or local-control input first, then calls an application service, schedules persistence work, and reports success, failure, or degraded state.
-
-This keeps protocol code readable. It also prevents database details from leaking into every communication boundary.
-
-#### Database client ownership and lifetime
+In the boundary language of Chapter 22, a persistence service is especially useful when several protocol surfaces touch the same durable state. Validate and interpret input first, then schedule persistence and report success, failure or degraded state.
 
 The lifetime of the database client should match the lifetime of the application role or service that owns persistence. The test application creates clients directly in `main()` because it is a compact demonstration. A structured application should decide ownership explicitly.
 
@@ -581,19 +387,12 @@ The lifetime of the database client should match the lifetime of the application
 | dedicated persistence component | good for multi-protocol systems |
 | shared global | risky unless ownership and shutdown are explicit |
 
-The design question is:
-
-```text
-What lifetime should this database connection or database service have relative to the roles that use it?
-```
-
-That affects shutdown, error handling, resource limits, and system clarity.
+Choose the connection or service lifetime relative to its callers; that choice affects shutdown, errors and resource limits.
 
 ### Persistence, failure, and backpressure
 
 \index{persistence!backpressure}
 \index{database failure}
-
 
 Persistence changes failure thinking. A system may be partially healthy:
 
@@ -608,8 +407,6 @@ A database failure is not always an application failure. It may mean stop accept
 The MariaDB API exposes state and errors. The application must decide the policy.
 
 Chapter 15’s vocabulary still applies: timeout, retry, shutdown, failure state, and degraded behavior must be decided at the boundary that owns the failing work.
-
-#### Persistence can introduce backpressure
 
 When incoming protocol activity is faster than database completion, pending command sequences accumulate. Event integration keeps other callbacks runnable; it does not bound that queue for the application.
 
@@ -627,44 +424,7 @@ This is a system-design problem. The application needs a policy.
 
 Persistence is not free. A database boundary has throughput, latency, and failure behavior. A persistence queue without a limit is not a policy; it is delayed failure.
 
-### Database state in multi-protocol IoT systems
-
-In a multi-protocol IoT system, persistence is one boundary among several. A possible state flow is:
-
-```text
-sensor update
-  -> MQTT publish
-      -> application state update
-          -> database insert
-              -> SSE dashboard update
-```
-
-Another system may use a different order:
-
-```text
-HTTP command
-  -> validate operator request
-      -> database transaction
-          -> MQTT command publish
-              -> WebSocket status update
-```
-
-The correct order depends on the domain. Sometimes persistence follows communication; sometimes persistence authorizes or precedes communication.
-
-Persistence participates in the system flow. It should not be treated as an isolated afterthought.
-
-A multi-protocol system may need to coordinate:
-
-- current runtime state,
-- persisted state,
-- MQTT messages,
-- HTTP requests,
-- WebSocket sessions,
-- SSE streams,
-- local-control commands,
-- database transactions.
-
-That coordination is application architecture. The database module provides the event-integrated persistence tool. The application decides how durable state fits into the system.
+Ordering follows the domain contract. A sensor update may arrive over MQTT, update application state, be inserted into the database, then appear on SSE. An operator HTTP command may instead require validation and a committed transaction before publishing an MQTT command and updating WebSocket status. Persistence can follow, authorize or precede communication; choose which outcome each observer may truthfully report.
 
 ### Observe acceptance and durability separately
 
@@ -676,8 +436,6 @@ A useful transaction exercise inserts a uniquely identified test row, deliberate
 
 This exercise requires a running MariaDB service, suitable credentials, and a controlled schema.
 
-### Diagnostic identity and controlled persistence checks
-
 \index{MariaDBClient@\texttt{MariaDBClient}!diagnostic identity}
 
 The database boundary can now participate in semantic diagnostics as well as in the event loop. `MariaDBClient` accepts an optional instance-name argument after its connection details and state callback. That name gives the database connection a useful diagnostic identity; it does not create a socket server, an MQTT role, or a separate configuration hierarchy.
@@ -687,10 +445,19 @@ The compact program uses the public application logger for its own observations.
 Use isolated state, known input, and explicit cleanup when testing a particular database, schema, credential set, or transaction sequence.
 
 ::: {.snodec-remember title="What to remember"}
-- Persistence is another system boundary.
-- Persistence is where selected application information survives beyond one connection, message, request, or runtime episode.
-- SNode.C currently provides MariaDB-focused database support through `db-mariadb`.
-- Database state and runtime state are different.
-- `MariaDBClient` is the application-facing database object.
-- `MariaDBConnectionDetails` describes the database endpoint and credentials.
+- Database state outlives the client; connection and submission alone establish no commit.
+- Chained operations share a sequence; new asynchronous calls inside callbacks join the queue later.
+- Metadata callbacks read completed command state; they do not submit arbitrary blocking SQL.
+- A command error can leave later commands queued, so commit/rollback decisions require explicit control.
+- Persistence ownership, shutdown, backpressure and replay policy belong to the application.
+:::
+
+::: {.snodec-exercise title="Exercises"}
+1. **Review (O1).** Classify a connection, pending sequence, cached measurement and committed row. Which can survive the client process?
+2. **Review (O2, O3).** Why can rollback queued inside an error callback fail to precede an already chained commit? Contrast an immediate metadata read.
+3. **Lab (O1, O2).** Run the equipped durability lab. Expect one affected row, independent read-back after client shutdown and the same row after a read-only client restart.
+4. **Lab (O2, O3).** Run the equipped SQL-error lab. Expect missing-table error 1146, completion of the following query and zero rows from an independent observer.
+5. **Design (O1, O3).** Define durable acceptance for a measurement service. Choose transaction ownership, an overload limit and how to resolve an uncertain write after disconnection.
+
+Public solutions and bounded lab commands: `companion/exercises/ch23/README.md`.
 :::

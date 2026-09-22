@@ -55,7 +55,7 @@ jobs:
           sudo apt-get install -y \
             cmake ninja-build pkg-config python3 \
             libasio-dev libssl-dev zlib1g-dev libbluetooth-dev libmariadb-dev libmagic-dev \
-            nlohmann-json3-dev \
+            nlohmann-json3-dev mariadb-server mariadb-client \
             ${{ matrix.packages }}
 
       - name: Reconstruct the current source tree recorded by the book

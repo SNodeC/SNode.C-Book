@@ -1,0 +1,17 @@
+COMMAND: bash ci/check-source-hygiene.sh
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 298 current references, 374 old-reference dispositions.
+F....
+======================================================================
+FAIL: test_current_structure (__main__.ChapterReferences.test_current_structure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/build/phase-5j-final-extracted/ci/test-chapter-references.py", line 36, in test_current_structure
+    self.assertGreater(self.check(), 300)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: 298 not greater than 300
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.081s
+
+FAILED (failures=1)

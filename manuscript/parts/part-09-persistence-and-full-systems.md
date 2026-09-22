@@ -3,3 +3,5 @@
 Part VIII widened the communication picture from one stack to several cooperating roles. This part adds the state that survives individual exchanges and then studies complete executable systems.
 
 MariaDB-backed persistence, applications in `src/apps`, system composition, and MQTTSuite show how roles, state, configuration, observability, and deployment meet in real programs. Part X then turns to the build, installation, and maintenance surfaces that make those systems reproducible.
+
+The checkpoint reads a committed measurement after the database client restarts, then contrasts the gateway’s transient state. Use those observations to separate broker delivery, raw storage and projection when tracing a publication through the worked system.

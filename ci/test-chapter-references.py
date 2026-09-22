@@ -33,7 +33,17 @@ class ChapterReferences(unittest.TestCase):
             return MODULE['check'](self.root)
 
     def test_current_structure(self):
-        self.assertGreater(self.check(), 300)
+        register = self.root / REVIEW / 'phase-5a-reference-register.json'
+        data = json.loads(register.read_text())
+        self.assertEqual(self.check(), len(data['references']))
+
+    def test_missing_migration_identity(self):
+        register = self.root / REVIEW / 'phase-5a-reference-register.json'
+        data = json.loads(register.read_text())
+        data['migration_dispositions'].pop()
+        register.write_text(json.dumps(data))
+        with self.assertRaises(AssertionError):
+            self.check()
 
     def test_valid_but_wrong_number_even_if_label_is_registered(self):
         path = self.root / 'README.md'

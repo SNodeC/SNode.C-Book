@@ -233,7 +233,7 @@
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
-      "text": "Chapters 16\u201323",
+      "text": "Chapters 16–23",
       "targets": [
         "the-http-layer",
         "the-express-like-framework",
@@ -289,7 +289,7 @@
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
-      "text": "Chapters 4\u201315",
+      "text": "Chapters 4–15",
       "targets": [
         "the-mental-model-of-snodec",
         "core-runtime-and-event-processing",
@@ -756,7 +756,7 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "The section \u201cUnix domain sockets\u201d",
+      "text": "The section “Unix domain sockets”",
       "targets": [
         "unix-domain-sockets"
       ],
@@ -811,7 +811,7 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapters 3\u20135",
+      "text": "Chapters 3–5",
       "targets": [
         "your-first-working-program-the-echo-pair",
         "the-mental-model-of-snodec",
@@ -831,7 +831,7 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapters 6\u20138",
+      "text": "Chapters 6–8",
       "targets": [
         "socket-addresses-and-address-semantics",
         "servers-clients-and-connections",
@@ -1176,7 +1176,7 @@
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "the section \u201cApplication and instance configuration\u201d",
+      "text": "the section “Application and instance configuration”",
       "targets": [
         "application-and-instance-configuration-in-detail"
       ],
@@ -1187,7 +1187,7 @@
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "the section \u201cConfiguration principles\u201d",
+      "text": "the section “Configuration principles”",
       "targets": [
         "configuration-philosophy-in-snodec"
       ],
@@ -1245,7 +1245,7 @@
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "Chapters 6\u20138",
+      "text": "Chapters 6–8",
       "targets": [
         "socket-addresses-and-address-semantics",
         "servers-clients-and-connections",
@@ -1934,17 +1934,6 @@
     },
     {
       "file": "manuscript/chapters/23-database-support-and-application-state.md",
-      "text": "Chapter 23",
-      "targets": [
-        "database-support-and-application-state"
-      ],
-      "source_ids": [
-        "R280"
-      ],
-      "line": 252
-    },
-    {
-      "file": "manuscript/chapters/23-database-support-and-application-state.md",
       "text": "Chapter 22",
       "targets": [
         "designing-iot-systems-with-multiple-protocols"
@@ -1952,7 +1941,7 @@
       "source_ids": [
         "R281"
       ],
-      "line": 563
+      "line": 379
     },
     {
       "file": "manuscript/chapters/23-database-support-and-application-state.md",
@@ -1963,7 +1952,16 @@
       "source_ids": [
         "R282"
       ],
-      "line": 610
+      "line": 409
+    },
+    {
+      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
+      "text": "Chapter 25",
+      "targets": [
+        "cmake-components-and-linking-strategy"
+      ],
+      "source_ids": [],
+      "line": 117
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -1976,7 +1974,7 @@
         "R283",
         "R284"
       ],
-      "line": 377
+      "line": 172
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -1987,7 +1985,7 @@
       "source_ids": [
         "R285"
       ],
-      "line": 377
+      "line": 172
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -1998,7 +1996,7 @@
       "source_ids": [
         "R286"
       ],
-      "line": 428
+      "line": 185
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -2009,40 +2007,7 @@
       "source_ids": [
         "R287"
       ],
-      "line": 496
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cReading complete applications\u201d",
-      "targets": [
-        "learning-from-the-applications-in-src-apps"
-      ],
-      "source_ids": [
-        "R288"
-      ],
-      "line": 496
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "Chapter 23",
-      "targets": [
-        "database-support-and-application-state"
-      ],
-      "source_ids": [
-        "R289"
-      ],
-      "line": 513
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "Chapter 23",
-      "targets": [
-        "database-support-and-application-state"
-      ],
-      "source_ids": [
-        "R290"
-      ],
-      "line": 528
+      "line": 239
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -2053,51 +2018,7 @@
       "source_ids": [
         "R291"
       ],
-      "line": 536
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cReading complete applications\u201d",
-      "targets": [
-        "learning-from-the-applications-in-src-apps"
-      ],
-      "source_ids": [
-        "R292"
-      ],
-      "line": 677
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cFrom applications to systems\u201d",
-      "targets": [
-        "from-applications-to-systems"
-      ],
-      "source_ids": [
-        "R293"
-      ],
-      "line": 680
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cMQTTSuite as a worked system\u201d",
-      "targets": [
-        "mqttsuite-as-a-reference-ecosystem"
-      ],
-      "source_ids": [
-        "R294"
-      ],
-      "line": 683
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cMQTTSuite as a worked system\u201d",
-      "targets": [
-        "mqttsuite-as-a-reference-ecosystem"
-      ],
-      "source_ids": [
-        "R295"
-      ],
-      "line": 749
+      "line": 258
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -2108,7 +2029,7 @@
       "source_ids": [
         "R296"
       ],
-      "line": 842
+      "line": 344
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -2119,7 +2040,7 @@
       "source_ids": [
         "R297"
       ],
-      "line": 914
+      "line": 365
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -2131,7 +2052,7 @@
       "source_ids": [
         "R298"
       ],
-      "line": 940
+      "line": 376
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -2142,29 +2063,7 @@
       "source_ids": [
         "R299"
       ],
-      "line": 1034
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cFrom applications to systems\u201d",
-      "targets": [
-        "from-applications-to-systems"
-      ],
-      "source_ids": [
-        "R300"
-      ],
-      "line": 1034
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cReading complete applications\u201d",
-      "targets": [
-        "learning-from-the-applications-in-src-apps"
-      ],
-      "source_ids": [
-        "R301"
-      ],
-      "line": 1042
+      "line": 412
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -2175,51 +2074,7 @@
       "source_ids": [
         "R302"
       ],
-      "line": 1060
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cReading complete applications\u201d",
-      "targets": [
-        "learning-from-the-applications-in-src-apps"
-      ],
-      "source_ids": [
-        "R303"
-      ],
-      "line": 1110
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "the section \u201cFrom applications to systems\u201d",
-      "targets": [
-        "from-applications-to-systems"
-      ],
-      "source_ids": [
-        "R304"
-      ],
-      "line": 1141
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "the section \u201cReading complete applications\u201d",
-      "targets": [
-        "learning-from-the-applications-in-src-apps"
-      ],
-      "source_ids": [
-        "R305"
-      ],
-      "line": 1217
-    },
-    {
-      "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "the section \u201cFrom applications to systems\u201d",
-      "targets": [
-        "from-applications-to-systems"
-      ],
-      "source_ids": [
-        "R306"
-      ],
-      "line": 1279
+      "line": 425
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -2230,7 +2085,7 @@
       "source_ids": [
         "R307"
       ],
-      "line": 1413
+      "line": 552
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
@@ -2241,7 +2096,7 @@
       "source_ids": [
         "R308"
       ],
-      "line": 1528
+      "line": 603
     },
     {
       "file": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
@@ -3396,6 +3251,26 @@
       "text": "Chapter 22",
       "targets": [
         "designing-iot-systems-with-multiple-protocols"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch23/README.md",
+      "text": "Chapter 23",
+      "targets": [
+        "database-support-and-application-state"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch24/README.md",
+      "text": "Chapter 24",
+      "targets": [
+        "learning-from-the-applications-in-src-apps",
+        "from-applications-to-systems",
+        "mqttsuite-as-a-reference-ecosystem"
       ],
       "source_ids": [],
       "line": 1
@@ -5387,7 +5262,7 @@
       "id": "R179",
       "old_file": "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
       "old_line": 393,
-      "old_text": "Chapters 8\u201312",
+      "old_text": "Chapters 8–12",
       "old_chapters": [
         8,
         9,
@@ -5537,7 +5412,7 @@
       "id": "R192",
       "old_file": "manuscript/chapters/17-application-and-instance-configuration-in-detail.md",
       "old_line": 760,
-      "old_text": "Chapters 08\u201312",
+      "old_text": "Chapters 08–12",
       "old_chapters": [
         8,
         9,
@@ -6516,8 +6391,8 @@
       "old_chapters": [
         28
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/23-database-support-and-application-state.md:252"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R281",
@@ -6604,8 +6479,8 @@
       "old_chapters": [
         29
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:496"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R289",
@@ -6615,8 +6490,8 @@
       "old_chapters": [
         28
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:513"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R290",
@@ -6626,8 +6501,8 @@
       "old_chapters": [
         28
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:528"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R291",
@@ -6648,8 +6523,8 @@
       "old_chapters": [
         29
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:677"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R293",
@@ -6659,8 +6534,8 @@
       "old_chapters": [
         30
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:680"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R294",
@@ -6670,8 +6545,8 @@
       "old_chapters": [
         31
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:683"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R295",
@@ -6681,8 +6556,8 @@
       "old_chapters": [
         31
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:749"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R296",
@@ -6737,8 +6612,8 @@
       "old_chapters": [
         30
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:1034"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R301",
@@ -6748,8 +6623,8 @@
       "old_chapters": [
         29
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:1042"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R302",
@@ -6770,8 +6645,8 @@
       "old_chapters": [
         29
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:1110"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R304",
@@ -6781,8 +6656,8 @@
       "old_chapters": [
         30
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:1141"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R305",
@@ -6792,8 +6667,8 @@
       "old_chapters": [
         29
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:1217"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R306",
@@ -6803,8 +6678,8 @@
       "old_chapters": [
         30
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/24-snodec-in-larger-systems.md:1279"
+      "status": "retired",
+      "evidence": "Phase 5j removes duplicated self-reference, seam narration or repeated framing. The worked application/system trace and its technical prerequisites remain. See phase-5j-manuscript.diff and chapter-ledger.md Phase 5j."
     },
     {
       "id": "R307",
@@ -7536,7 +7411,7 @@
       "id": "R368",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 32,
-      "old_text": "Chapters 35\u201336",
+      "old_text": "Chapters 35–36",
       "old_chapters": [
         35,
         36
@@ -7548,7 +7423,7 @@
       "id": "R369",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 34,
-      "old_text": "Chapters 1\u20137",
+      "old_text": "Chapters 1–7",
       "old_chapters": [
         1,
         2,
@@ -7565,7 +7440,7 @@
       "id": "R370",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 34,
-      "old_text": "Chapters 16\u201318 and 20\u201323, then 25, 32, and 35",
+      "old_text": "Chapters 16–18 and 20–23, then 25, 32, and 35",
       "old_chapters": [
         16,
         17,
@@ -7600,7 +7475,7 @@
       "id": "R372",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 129,
-      "old_text": "Chapters 35\u201336",
+      "old_text": "Chapters 35–36",
       "old_chapters": [
         35,
         36

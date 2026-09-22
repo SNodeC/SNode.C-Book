@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5i is completed after freshly rerunning the Phase 5h exit gate. Parts I–VIII and the approved front-matter work are complete. Phase 5j has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5j is completed after freshly rerunning the Phase 5i exit gate. Parts I–IX and the approved front-matter work are complete. Phase 5k has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -22,7 +22,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5g — Part VI | completed | `proposal-readiness: phase 5g follow-up — move TLS fixture into companion material`; initial Phase 5g commit retained | 2026-09-22 | metrics-after-phase-5g.json; phase-5g-exit-checks.json; chapter-ledger.md; phase-5g-entry-*.log; phase-5g-final-*.log; phase-5g-visual-review.md; completion account below |
 | 5h — Part VII | completed | `proposal-readiness: phase 5h — refine Part VII and verify web protocol boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5h.json; phase-5h-exit-checks.json; chapter-ledger.md; phase-5h-final-*.log; phase-5h-visual-review.md; completion account below |
 | 5i — Part VIII | completed | `proposal-readiness: phase 5i — refine Part VIII and verify MQTT delivery boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5i.json; phase-5i-exit-checks.json; chapter-ledger.md; phase-5i-entry-*.log; phase-5i-final-*.log; phase-5i-visual-review.md; completion account below |
-| 5j — Part IX | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5j — Part IX | completed | `proposal-readiness: phase 5j — refine Part IX and verify persistence boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5j.json; phase-5j-exit-checks.json; chapter-ledger.md; phase-5j-entry-*.log; phase-5j-final-*.log; phase-5j-visual-review.md; completion account below |
 | 5k — Part X | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5l — Part XI only | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5m — appendix, closing material and global audit | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -2471,3 +2471,120 @@ Commit: `proposal-readiness: phase 5i — refine Part VIII and verify MQTT deliv
 **Stop after Phase 5i.** Phase 5j (Part IX) has not started. Before it starts,
 rerun this exit gate with the recorded installation/runtime environment. Remaining
 Part sessions, the final global audit and Phase 6 proposal refresh remain pending.
+
+
+## Phase 5j — Part IX completed, 2026-09-22
+
+### Entry gate and scope
+
+Before editing, freshly reran Phase 5i: `phase-5j-entry-results.json` records all
+ten groups passing, `phase-5j-entry-labs.log` records 48/48 labs, and
+`phase-5j-entry-exit-checks.json` records exact metrics agreement and all prior
+budget, teaching, preservation, PDF and package gates. Historical Phase 5i evidence
+is unchanged. Only Part IX manuscript inputs changed (`phase-5j-manuscript.diff`;
+`check-phase-5j.py:21`). No next Part or proposal-source refresh was started.
+
+Edited and reread Chapters 23–24, public answers and the Part IX opener. The
+chapter ledger supplies a source-line audit of preserved teaching. Chapter 24's
+stop rule is met: the condensed application/system/suite progression retains its
+examples and qualifications, with repeated catalogues, diagrams and endorsements
+removed. Budgets were ceilings, not targets; no reserve draw was needed.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 23 | 5,197 → 3,826 / 3,900 | 4,697 → 3,460 | 500 → 366 | 31 → 10 / 10 | 334.80 |
+| 24 | 10,556 → 5,591 / 6,200 | 9,518 → 5,329 | 1,038 → 262 | 70 → 17 / 17 | 304.35 |
+
+Part IX **9,417 / 10,100**; reserve used **0**, remaining **2,750**. Each chapter
+opens with three objectives and closes with five recap bullets and five exercises
+(two review, two labs, one design). All objectives and exercises map both ways;
+public answers and expected observations are in `companion/exercises/ch23/README.md`
+and `ch24/README.md`, with mapping and exact lines in chapter-ledger.md.
+
+### Verified execution and artifacts
+
+| Check | Result and evidence |
+| --- | --- |
+| Source hygiene and reference regressions | pass; `phase-5j-final-hygiene.log`; six regression tests, 298 current references, 39 stable topics, all 374 migration dispositions |
+| Complete-listing alignment | pass; `phase-5j-final-alignment.log` |
+| Measurement regression | pass; `phase-5j-final-metrics-tests.log` |
+| Installed companion examples and lab targets | built; `phase-5j-final-companion.log` |
+| Public labs | 52/52 run and pass; `phase-5j-final-labs.log:596`; four new observations at :533–561 |
+| Teaching, behavior and lifetime tests | run and pass; `phase-5j-final-teaching.log`, `phase-5j-final-behavior.log`, `phase-5j-final-lifetime.log:200` |
+| PDF, proposal, samples and full package | built; `phase-5j-final-package.log`; full 358 → 338 pages, samples 54, proposal 6 |
+| Final PDF warnings / bad boxes | zero in all three; `phase-5j-exit-checks.json` records hashes and pages |
+| Extracted package hygiene | pass; `phase-5j-final-extracted-hygiene.log`; 352 archived files equal working files in exit checker |
+| Scope, budgets, samples and preservation | pass; `phase-5j-exit-checks.log`; all 293 executable/configuration fences, figure IDs, indices, markers and C++ order preserved |
+| Final visual review | complete affected Part, contents and transition inspected; `phase-5j-visual-review.md` |
+| Private-server cleanup | no private server remains; `phase-5j-cleanup-verification.log` |
+
+The final result manifest combines the full runtime suite with the subsequently
+rerun hygiene/package checks after a regression-test and prose-layout correction.
+No runtime or fixture source changed after the 52-test run. `SNODEC_PREFIX` and
+`LD_LIBRARY_PATH` used by the runner are recorded in execution logs; builds use
+`build/proposal-readiness-phase-5j-examples` and the existing PDF build directory.
+
+The persistence lab tests autocommitted state after **client** shutdown/restart,
+using independent queries; its error case tests SQL failure on a usable connection.
+The checkpoint then contrasts an independent in-memory gateway restart. The raw/
+projection map is a public design discussion, not a claimed MQTTStore deployment.
+Explicit transaction rollback, database crash recovery, replay correctness and
+hosted CI are **not newly verified**. Equipped dependencies and a local alternative
+are documented; the CI dependency list now includes MariaDB server/client tools.
+
+### Failures found and resolved
+
+- `phase-5j-lab-development-run.log`: database observations ran, but host AppArmor
+  rejected shutdown signals and three private fixture servers remained. The
+  author reported them killed; a fresh process check confirmed only the existing
+  system service. No system service was stopped or changed.
+- `phase-5j-lab-corrected-run.log`: low temporary space prevented initialization;
+  `phase-5j-lab-final-run.log`: a workspace temporary-directory trial met a host
+  MariaDB file-policy rejection. Automatic approval review rejected another
+  bounded retry while leaked servers still occupied space; that command did not
+  execute. After author cleanup, the fixture uses a 512 MiB free-space guard,
+  bounded InnoDB storage and SQL SHUTDOWN. Live state is retained if shutdown fails.
+  `phase-5j-lab-verified-cleanup-run.log` passes all four new labs, and the final
+  52-lab run also passes. Final process/free-space evidence is recorded separately.
+- `phase-5j-initial-suite-hygiene.log` and extracted counterpart: the regression
+  test required more than 300 references despite valid authorized condensation
+  leaving 298. Replaced that incidental floor with exact agreement with the
+  register, and added a negative test rejecting a missing migration identity.
+  Wrong-topic, unregistered-reference, order and anchor tests remain. The checker
+  itself is unchanged; `ci/test-chapter-references.py:35` contains the correction.
+- `phase-5j-layout-initial-checks.log` / `phase-5j-layout-initial-package.log`:
+  one long inline type paragraph overflowed. A bullet list retained every name;
+  repeated role endorsements were removed to avoid an exercise continuation page.
+  Final builds and images pass without suppressing warnings or altering styles.
+
+### Accounting and handoff
+
+Whole book: **116,122 → 109,822 words (−6,300)**; prose **105,064 → 99,674**;
+fenced **11,058 → 10,148**. Fenced reduction is redundant text blocks, not executable
+listings. Deep chapter headings **472 → 398**; text fences **192 → 136**; rules
+**20 → 20**; objectives/exercise callouts **24 → 26** each; forbidden/closing hits
+remain **0**. Mean chapter-section prose **229.58** remains below the final 250
+threshold; remaining chapter pedagogy and the global audit are still pending.
+The 115,000-word ceiling is currently met, not a claim that all phases are complete.
+Front matter **1,980 / 2,500**; all Part openers **1,327 / 1,650**. Original five
+sample reductions and density gates remain valid (`phase-5j-exit-checks.json`).
+
+Register changes retire redundant references R280, R288–R290, R292–R295 and
+R300–R301, R303–R306 with evidence, retaining all migration dispositions. R283/R284
+share their retained combined destination; author seam identities R275/R276 and
+both topic targets remain. Three new references (Chapter 25 and two solution
+headings) bring 309 occurrences to 298. All three Chapter 24 stable topic anchors
+remain in place; source positions are refreshed without deriving target identities
+from chapter numbers.
+
+Production **+0/−0**; public fixture/test/CI support **+156/−3, net +153**, including
+143 new lab/registration lines. Existing examples and earlier lab implementations
+are unchanged. Canonical client generation and reused HTTP/gateway observers avoid
+parallel application implementations; new code supplies disposable database setup,
+independent observations and cleanup. Answers and review tooling are accounted
+separately from production. Final diff review found no second state authority.
+
+Commit: `proposal-readiness: phase 5j — refine Part IX and verify persistence boundaries` (containing this report).
+**Stop after Phase 5j.** Next is Phase 5k, Part X only, after a fresh re-execution
+of this gate with the recorded installation/runtime environment. Author teaching
+preservation, reserve accounting, 5l/5m split and Phase 6 proposal refresh remain.

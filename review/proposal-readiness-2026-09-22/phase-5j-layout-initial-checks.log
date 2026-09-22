@@ -1,0 +1,6 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 298 current references, 374 old-reference dispositions.
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/review/proposal-readiness-2026-09-22/check-phase-5j.py", line 118, in <module>
+    assert not re.search('Warning|Overfull|Underfull',(BUILD/(name+'.log')).read_text()),name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: snodec-book

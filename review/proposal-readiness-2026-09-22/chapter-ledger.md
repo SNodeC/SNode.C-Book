@@ -1126,3 +1126,124 @@ Local installed-package builds and loopback execution are verified; hosted CI,
 deployment TLS, full malformed-packet matrices, overload, persistence and QoS 1/2
 are not newly verified. Existing smoke/lifetime checks also pass. Final PDF visual
 review is recorded in `phase-5i-visual-review.md`.
+
+
+## Phase 5j — Part IX, 2026-09-22
+
+Edited and reread Chapters 23–24, their public solutions and the Part IX opener.
+The fresh entry gate reproduces Phase 5i exactly (`phase-5j-entry-exit-checks.json`);
+metrics compare `metrics-after-phase-5i.json` with `metrics-after-phase-5j.json`.
+Budgets are ceilings. Condensed repeated component explanations, role catalogues,
+layer/role text blocks and summary endorsements. Kept the actual dependency graph,
+complete executable examples and technical qualifications.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 23 | 5,197 → 3,826 / 3,900 | 4,697 → 3,460 | 500 → 366 | 31 → 10 / 10 | 334.80 |
+| 24 | 10,556 → 5,591 / 6,200 | 9,518 → 5,329 | 1,038 → 262 | 70 → 17 / 17 | 304.35 |
+
+Part IX: **9,417 / 10,100** words. No reserve used; **2,750 remains**. The Chapter
+24 preservation stop rule is satisfied by the retained-content audit below, not
+by its word count alone. The merged chapter retains all three teaching stages:
+read an application, reason about system ownership, then trace MQTTSuite. The
+reduction removes repeated treatments across those stages. Teaching apparatus
+costs 231 words in Chapter 23 and 260 in Chapter 24, included in the budgets.
+
+### Objective ↔ exercise mapping
+
+| Exercise | Tier | Objectives | Public solution |
+| --- | --- | --- | --- |
+| 23.1 | Review | O1 | `companion/exercises/ch23/README.md:3` |
+| 23.2 | Review | O2, O3 | `companion/exercises/ch23/README.md:12` |
+| 23.3 | Lab | O1, O2 | `companion/exercises/ch23/README.md:28` |
+| 23.4 | Lab | O2, O3 | `companion/exercises/ch23/README.md:67` |
+| 23.5 | Design | O1, O3 | `companion/exercises/ch23/README.md:85` |
+| 24.1 | Review | O1 | `companion/exercises/ch24/README.md:3` |
+| 24.2 | Review | O2, O3 | `companion/exercises/ch24/README.md:12` |
+| 24.3 | Lab | O1 | `companion/exercises/ch24/README.md:28` |
+| 24.4 | Lab | O2, O3 | `companion/exercises/ch24/README.md:48` |
+| 24.5 | Design | O1, O2, O3 | `companion/exercises/ch24/README.md:87` |
+
+| Objective | Exercises |
+| --- | --- |
+| 23.O1 | 23.1, 23.3, 23.5 |
+| 23.O2 | 23.2, 23.3, 23.4 |
+| 23.O3 | 23.2, 23.4, 23.5 |
+| 24.O1 | 24.1, 24.3, 24.5 |
+| 24.O2 | 24.2, 24.4, 24.5 |
+| 24.O3 | 24.2, 24.4, 24.5 |
+
+### Content-preservation audit
+
+Ch23 = `manuscript/chapters/23-database-support-and-application-state.md`,
+Ch24 = `manuscript/chapters/24-snodec-in-larger-systems.md`.
+
+| Retained explanation, example or qualification | Evidence |
+| --- | --- |
+| Persistence versus protocol boundary, figure/caption and principle | Ch23:13 |
+| Concrete module, public header/component and demonstration-versus-service policy | Ch23:45 |
+| Runtime/durable/cache classification, synchronization, client/connection details and credentials | Ch23:80 |
+| Complete marked MariaDB-Minimal program, SQL schema and component fragment | Ch23:135 |
+| Event integration, pending work, full command/metadata tables and query versus exec | Ch23:233 |
+| Chained sequence versus nested callback, immediate metadata and uncertain writes | Ch23:277 |
+| Complete transaction illustration and prequeued commit/rollback qualification; timers | Ch23:324 |
+| Persistence service boundaries and client lifetime/ownership table | Ch23:372 |
+| Partial health, bounded overload policy and both domain-ordering examples | Ch23:392 |
+| Independent read-back, SQL error, optional transaction experiment and diagnostic identity | Ch23:429 |
+| Application categories, guards and non-template qualification | Ch24:9 |
+| In-tree/installed fragments, actual dependency graph, optional JSON/MariaDB and includes | Ch24:23 |
+| Entire entry-point sketch, runtime sequence and compatibility example | Ch24:142 |
+| Generated echo matrix, JSON request/route pair, POST legacy/TLS qualification, pipe and database examples | Ch24:176 |
+| Consumer/test distinctions, concrete JSON reading recipe, variant packaging costs, commented TLS check qualification | Ch24:252 |
+| System scope without assuming distribution; role/instance distinctions, figure, monitoring-role and process-choice tables | Ch24:277 |
+| Compatibility across deployments, local/network/upgraded/Bluetooth boundaries and state ownership | Ch24:334 |
+| Complete pseudo-configuration, observability, reconnect uncertainty and role-specific failure policies | Ch24:367 |
+| Domain responsibilities, carrier evolution, recovery and gateway health/outage qualification | Ch24:420 |
+| Suite figure/caption, distinct five tools, mapping library, build-file map and deployment qualification | Ch24:438 |
+| Mapping above MQTT core, administration and conditional management capabilities | Ch24:482 |
+| Broker MQTT/web/SSE/WebSocket boundaries and complete instance-name matrix | Ch24:499 |
+| Integration versus topology, mapping lifecycle and optional Bluetooth qualification | Ch24:523 |
+| CLI, raw envelope fields, payload classifications, typed projection and separate queued-write errors | Ch24:542 |
+| Carriers, enabled builds, repeatable configuration and constrained-deployment qualification | Ch24:575 |
+| Concrete bridge/store source trace, private CONNECT qualification and ten-publication experiment | Ch24:599 |
+
+`check-phase-5j.py` verifies all 293 executable/configuration fences, C++ block
+order, source markers, index occurrences and figure IDs against Phase 5i. Existing
+application, earlier lab implementations and CI lifetime tests are unchanged.
+`phase-5j-manuscript.diff` records the edits. The prose audit is a contextual reread,
+separate from mechanical preservation and runtime checks. No substantive example
+was removed to fit a ceiling; no reserve transfer was needed.
+
+### Built, run and limits
+
+All **52 public labs** pass (`phase-5j-final-labs.log:596`), including four new
+registrations. The Chapter 23 fixture derives from the unchanged MariaDB-Minimal
+program: only private connection details and the selected SQL statement vary.
+The original command chain, metadata reads and result/error callbacks remain.
+An independent MariaDB CLI observes one autocommitted measurement after client
+exit, then the restarted client reads it without adding a second row. The error
+lab observes missing-table error 1146, completion of the chained query and zero
+rows. These are client-lifetime and command-error observations, not explicit
+transaction rollback, server crash recovery or reconnection replay tests.
+
+Chapter 24 reuses the unchanged HTTP route/framing observer, then its checkpoint
+runs database read-back followed by the unchanged MiniGateway outage/restart lab.
+The public outcome map distinguishes broker delivery, bridge forwarding, mapping,
+raw storage, typed projection, client restart, gateway acceptance and restart.
+It is a worked interpretation of separate observations, not a database-enabled
+gateway or an executed MQTTStore deployment. The no-database local alternative
+is explicitly weaker and does not substitute for the equipped exit check.
+
+Production code **+0/−0**. Requested lab/test/CI support **+156/−3, net +153**:
+143 new fixture/registration lines, plus common registration, CI dependencies and
+reference regression changes. The fixture owns a disposable local database and
+bounded independent observations; no second persistence implementation or gateway
+state store was introduced. Public answers are documentation; the phase checker
+is review support. Reduction/reuse supplies both Chapter 24 labs and the Chapter
+23 client logic. The new observer is needed to run the requested persistence labs.
+
+The first DB run exposed host signal restrictions and leaked three private
+servers. The author stopped them; cleanup now uses SQL SHUTDOWN before removing
+state, with a free-space preflight and bounded storage. Final labs leave no private
+server. REPORT.md records failures and cleanup evidence. Hosted CI, database crash
+recovery, explicit rollback and a deployed MQTTSuite are **not newly verified**.

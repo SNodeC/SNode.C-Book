@@ -1,0 +1,184 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 309 current references, 374 old-reference dispositions.
+{
+  "chapters": [
+    {
+      "chapter": 20,
+      "path": "manuscript/chapters/20-mqtt-support-in-snodec.md",
+      "words_before": 2997,
+      "words_after": 2005,
+      "budget": 2350,
+      "prose_words": 1878,
+      "code_words": 127,
+      "headings": 5,
+      "heading_ceiling": 5,
+      "average_section_prose_words": 359.6,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 216
+    },
+    {
+      "chapter": 21,
+      "path": "manuscript/chapters/21-mqtt-over-websocket.md",
+      "words_before": 2731,
+      "words_after": 1782,
+      "budget": 2100,
+      "prose_words": 1716,
+      "code_words": 66,
+      "headings": 4,
+      "heading_ceiling": 4,
+      "average_section_prose_words": 409.25,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 221
+    },
+    {
+      "chapter": 22,
+      "path": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
+      "words_before": 3964,
+      "words_after": 2922,
+      "budget": 2950,
+      "prose_words": 2899,
+      "code_words": 23,
+      "headings": 8,
+      "heading_ceiling": 8,
+      "average_section_prose_words": 348.5,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Review",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 236
+    }
+  ],
+  "part_viii_words": 6709,
+  "part_viii_budget": 7400,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1291,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "prior_lifetime_tests_preserved": true,
+  "canonical_entry_dependencies_unique": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 358,
+      "sha256": "c2313fbd28ce9b913df92d9aaf0a5ab8d18ed574fa25ed9147f0c5ed187d8e81",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "0dc3af74bf9e39a02cc4b4b0af64928104915a51900e5f807afcfec840d96175",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "8484da84755a5ee431a1caefa60e8230f1c6349db008fe2d51b015e98379e5bf",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 347,
+  "reserve_used": 0,
+  "reserve_remaining": 2750,
+  "global_words": 116122,
+  "word_delta_from_phase_5h": -2946
+}
+PASS: Part VIII budgets, pedagogy, mappings, scope, preserved listings, clean final PDFs and package contents.
+Execution and editorial/visual review are recorded in separate Phase 5i logs; future Parts are not certified.

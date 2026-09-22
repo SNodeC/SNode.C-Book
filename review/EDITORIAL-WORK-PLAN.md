@@ -1485,3 +1485,58 @@ Commit: `proposal-readiness: phase 5i — refine Part VIII and verify MQTT deliv
 **Stop after Phase 5i.** Next is Phase 5j, Part IX only, after freshly rerunning
 this gate with the recorded installation/runtime setup. Author preservation rules,
 reserve accounting, the 5l/5m split and Phase 6 proposal refresh remain in force.
+
+
+## Phase 5j — Part IX completed, 2026-09-22
+
+The Phase 5i exit gate was freshly rerun before editing: exact metrics agreement,
+48/48 prior labs, all ten check groups and clean PDF/package builds. Historical
+evidence remains unchanged; `phase-5j-entry-*` supplies the fresh gate.
+
+Edited and reread Chapters 23–24, public solutions and the Part IX opener. Budgets
+were ceilings: removed repeated component/role explanations, stacks and summary
+endorsements. Preserved all executable examples, dependency graph, figures, index
+entries, source markers, transaction ordering and partial-failure qualifications.
+Chapter 24 satisfies the preservation stop rule; the ledger records its source-line
+audit. No reserve used; **2,750 remains**.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 23 | 5,197 → 3,826 / 3,900 | 4,697 → 3,460 | 500 → 366 | 31 → 10 / 10 | 334.80 |
+| 24 | 10,556 → 5,591 / 6,200 | 9,518 → 5,329 | 1,038 → 262 | 70 → 17 / 17 | 304.35 |
+
+Part IX: **9,417 / 10,100**. Both chapters have three objectives, five recap bullets
+and five exercises (two review, two labs, one design), mapped both ways with public
+answers. Four new registrations bring the suite to **52/52 passing**. Equipped
+MariaDB labs independently read autocommitted state after client exit/restart and
+observe SQL error with a still-usable connection. The Part checkpoint contrasts
+that with MiniGateway's in-memory restart, then applies the public raw/projection
+outcome map. It does not claim server crash recovery or an MQTTStore deployment.
+
+The lab derives its client from the unchanged canonical example; HTTP and gateway
+observers are reused. Production growth is zero; lab/test/CI support is +156/−3,
+net +153. CI installs database tools. A reference regression now checks complete
+registration instead of an obsolete count floor and rejects missing migration
+identities. Host database signal/space failures were resolved with author cleanup,
+bounded fixture storage and SQL SHUTDOWN; no private servers remain. REPORT.md
+retains the failed attempts and final execution evidence.
+
+All hygiene/reference, alignment, measurement, installed companion/lab, teaching,
+behavior/lifetime, PDF/proposal/sample/package and extracted-package checks pass.
+Full PDF **338 pages**, down from 358; samples 54 and proposal 6, all with zero
+warnings/bad boxes. Complete affected Part, contents and transition pages were
+rendered and inspected. Final metrics, artifact hashes and 352-file package check
+are in `metrics-after-phase-5j.json`, `phase-5j-exit-checks.json`,
+`phase-5j-final-results.json`, REPORT.md and chapter-ledger.md.
+
+Whole book **109,822 words**, 398 deep headings, 136 text fences, 20 rules and zero
+forbidden/closing hits. Mean section prose 229.58 and remaining chapter pedagogy
+still require the later phases/global audit. Front matter **1,980 / 2,500**; Part
+openers **1,327 / 1,650**. All five sample gates remain valid. The register covers
+298 current references, 39 topics and all 374 original dispositions, including
+the author's combined seam identities and topic targets.
+
+Commit: `proposal-readiness: phase 5j — refine Part IX and verify persistence boundaries`.
+**Stop after Phase 5j.** Next is Phase 5k, Part X only, after freshly rerunning this
+gate with the recorded environment. Preservation stop rules, reserve accounting,
+the 5l/5m split and Phase 6 proposal refresh remain in force.

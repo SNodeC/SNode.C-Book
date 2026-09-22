@@ -1,0 +1,186 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 45
+    Start 45: exercise-ch23-durable
+
+45: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "durable" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23/persistence-lab"
+45: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23
+45: Test timeout computed to be: 90
+45: PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+45: PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+45: Traceback (most recent call last):
+45:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 102, in <module>
+45:     observe(mode, client)
+45:     ~~~~~~~^^^^^^^^^^^^^^
+45:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 85, in observe
+45:     with database() as (socket, query):
+45:          ~~~~~~~~^^
+45:   File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+45:     next(self.gen)
+45:     ~~~~^^^^^^^^^^
+45:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 56, in database
+45:     process.terminate()
+45:     ~~~~~~~~~~~~~~~~~^^
+45:   File "/usr/lib/python3.14/subprocess.py", line 2252, in terminate
+45:     self.send_signal(signal.SIGTERM)
+45:     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+45:   File "/usr/lib/python3.14/subprocess.py", line 2244, in send_signal
+45:     os.kill(self.pid, sig)
+45:     ~~~~~~~^^^^^^^^^^^^^^^
+45: PermissionError: [Errno 13] Permission denied
+1/4 Test #45: exercise-ch23-durable ............***Failed    1.03 sec
+PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 102, in <module>
+    observe(mode, client)
+    ~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 85, in observe
+    with database() as (socket, query):
+         ~~~~~~~~^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 56, in database
+    process.terminate()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/subprocess.py", line 2252, in terminate
+    self.send_signal(signal.SIGTERM)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2244, in send_signal
+    os.kill(self.pid, sig)
+    ~~~~~~~^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+
+test 46
+    Start 46: exercise-ch23-error
+
+46: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "error" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23/persistence-lab"
+46: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23
+46: Test timeout computed to be: 90
+46: PASS: SQL error 1146 leaves the connection usable; the chained query completes and independent row count stays zero
+46: Traceback (most recent call last):
+46:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 102, in <module>
+46:     observe(mode, client)
+46:     ~~~~~~~^^^^^^^^^^^^^^
+46:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 85, in observe
+46:     with database() as (socket, query):
+46:          ~~~~~~~~^^
+46:   File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+46:     next(self.gen)
+46:     ~~~~^^^^^^^^^^
+46:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 56, in database
+46:     process.terminate()
+46:     ~~~~~~~~~~~~~~~~~^^
+46:   File "/usr/lib/python3.14/subprocess.py", line 2252, in terminate
+46:     self.send_signal(signal.SIGTERM)
+46:     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+46:   File "/usr/lib/python3.14/subprocess.py", line 2244, in send_signal
+46:     os.kill(self.pid, sig)
+46:     ~~~~~~~^^^^^^^^^^^^^^^
+46: PermissionError: [Errno 13] Permission denied
+2/4 Test #46: exercise-ch23-error ..............***Failed    1.27 sec
+PASS: SQL error 1146 leaves the connection usable; the chained query completes and independent row count stays zero
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 102, in <module>
+    observe(mode, client)
+    ~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 85, in observe
+    with database() as (socket, query):
+         ~~~~~~~~^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 56, in database
+    process.terminate()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/subprocess.py", line 2252, in terminate
+    self.send_signal(signal.SIGTERM)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2244, in send_signal
+    os.kill(self.pid, sig)
+    ~~~~~~~^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+
+test 47
+    Start 47: exercise-ch24-composition
+
+47: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch17/dispatch.py" "framing" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch17/dispatch-lab"
+47: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch24
+47: Test timeout computed to be: 30
+47: PASS: incomplete headers produce no handler/response; completing headers produces one 200
+3/4 Test #47: exercise-ch24-composition ........   Passed    0.29 sec
+test 48
+    Start 48: exercise-ch24-part-checkpoint
+
+48: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23/persistence-lab" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/examples/MiniGateway/minigateway"
+48: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch24
+48: Test timeout computed to be: 120
+48: PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+48: PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+48: Traceback (most recent call last):
+48:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 102, in <module>
+48:     observe(mode, client)
+48:     ~~~~~~~^^^^^^^^^^^^^^
+48:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 85, in observe
+48:     with database() as (socket, query):
+48:          ~~~~~~~~^^
+48:   File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+48:     next(self.gen)
+48:     ~~~~^^^^^^^^^^
+48:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 56, in database
+48:     process.terminate()
+48:     ~~~~~~~~~~~~~~~~~^^
+48:   File "/usr/lib/python3.14/subprocess.py", line 2252, in terminate
+48:     self.send_signal(signal.SIGTERM)
+48:     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+48:   File "/usr/lib/python3.14/subprocess.py", line 2244, in send_signal
+48:     os.kill(self.pid, sig)
+48:     ~~~~~~~^^^^^^^^^^^^^^^
+48: PermissionError: [Errno 13] Permission denied
+4/4 Test #48: exercise-ch24-part-checkpoint ....***Failed    0.89 sec
+PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 102, in <module>
+    observe(mode, client)
+    ~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 85, in observe
+    with database() as (socket, query):
+         ~~~~~~~~^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 56, in database
+    process.terminate()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/subprocess.py", line 2252, in terminate
+    self.send_signal(signal.SIGTERM)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2244, in send_signal
+    os.kill(self.pid, sig)
+    ~~~~~~~^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+
+
+The following tests passed:
+	exercise-ch24-composition
+
+25% tests passed, 3 tests failed out of 4
+
+Label Time Summary:
+equipped    =   3.18 sec*proc (3 tests)
+
+Total Test time (real) =   3.48 sec
+
+The following tests FAILED:
+	 45 - exercise-ch23-durable (Failed)                    equipped
+	 46 - exercise-ch23-error (Failed)                      equipped
+	 48 - exercise-ch24-part-checkpoint (Failed)            equipped
+Errors while running CTest

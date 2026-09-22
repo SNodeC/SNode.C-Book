@@ -1,0 +1,362 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 45
+    Start 45: exercise-ch23-durable
+
+45: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "durable" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23/persistence-lab"
+45: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23
+45: Test timeout computed to be: 90
+45: Traceback (most recent call last):
+45:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 100, in <module>
+45:     observe(mode, client)
+45:     ~~~~~~~^^^^^^^^^^^^^^
+45:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 83, in observe
+45:     with database() as (socket, query):
+45:          ~~~~~~~~^^
+45:   File "/usr/lib/python3.14/contextlib.py", line 141, in __enter__
+45:     return next(self.gen)
+45:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 29, in database
+45:     assert setup.returncode == 0, setup.stdout + setup.stderr
+45:            ^^^^^^^^^^^^^^^^^^^^^
+45: AssertionError: Installing MariaDB/MySQL system tables in '/tmp/book-db-93eqrfze/data' ...
+45: 
+45: Installation of system tables failed!  Examine the logs in
+45: /tmp/book-db-93eqrfze/data for more information.
+45: 
+45: The problem could be conflicting information in an external
+45: my.cnf files. You can ignore these by doing:
+45: 
+45:     shell> /usr/bin/mariadb-install-db --defaults-file=~/.my.cnf
+45: 
+45: You can also try to start the mariadbd daemon with:
+45: 
+45:     shell> /usr/sbin/mariadbd --skip-grant-tables --general-log &
+45: 
+45: and use the command line tool /usr/bin/mariadb
+45: to connect to the mysql database and look at the grant tables:
+45: 
+45:     shell> /usr/bin/mariadb -u root mysql
+45:     MariaDB> show tables;
+45: 
+45: Try '/usr/sbin/mariadbd --help' if you have problems with paths.  Using
+45: --general-log gives you a log in /tmp/book-db-93eqrfze/data that may be helpful.
+45: 
+45: The latest information about mariadb-install-db is available at
+45: https://mariadb.com/kb/en/installing-system-tables-mysql_install_db
+45: You can find the latest source at https://downloads.mariadb.org and
+45: the MariaDB discuss email list at https://lists.mariadb.org/postorius/lists/discuss.lists.mariadb.org/
+45: 
+45: Please check all of the above before submitting a bug report
+45: at https://mariadb.org/jira
+45: 
+45: 2026-09-22 22:24:36 0 [ERROR] InnoDB: preallocating 10485760 bytes for file .//undo003 failed with error 28
+45: 2026-09-22 22:24:36 0 [ERROR] InnoDB: Unable to allocate .//undo003
+45: 2026-09-22 22:24:36 0 [ERROR] InnoDB: Could not create undo tablespace './/undo003'.
+45: 2026-09-22 22:24:36 0 [ERROR] InnoDB: Database creation was aborted with error Generic error. You may need to delete the ibdata1 file before trying to start up again.
+45: 2026-09-22 22:24:36 0 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+45: 2026-09-22 22:24:36 0 [ERROR] Unknown/unsupported storage engine: InnoDB
+45: 2026-09-22 22:24:36 0 [ERROR] Aborting
+45: 
+1/4 Test #45: exercise-ch23-durable ............***Failed    0.23 sec
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 100, in <module>
+    observe(mode, client)
+    ~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 83, in observe
+    with database() as (socket, query):
+         ~~~~~~~~^^
+  File "/usr/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 29, in database
+    assert setup.returncode == 0, setup.stdout + setup.stderr
+           ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Installing MariaDB/MySQL system tables in '/tmp/book-db-93eqrfze/data' ...
+
+Installation of system tables failed!  Examine the logs in
+/tmp/book-db-93eqrfze/data for more information.
+
+The problem could be conflicting information in an external
+my.cnf files. You can ignore these by doing:
+
+    shell> /usr/bin/mariadb-install-db --defaults-file=~/.my.cnf
+
+You can also try to start the mariadbd daemon with:
+
+    shell> /usr/sbin/mariadbd --skip-grant-tables --general-log &
+
+and use the command line tool /usr/bin/mariadb
+to connect to the mysql database and look at the grant tables:
+
+    shell> /usr/bin/mariadb -u root mysql
+    MariaDB> show tables;
+
+Try '/usr/sbin/mariadbd --help' if you have problems with paths.  Using
+--general-log gives you a log in /tmp/book-db-93eqrfze/data that may be helpful.
+
+The latest information about mariadb-install-db is available at
+https://mariadb.com/kb/en/installing-system-tables-mysql_install_db
+You can find the latest source at https://downloads.mariadb.org and
+the MariaDB discuss email list at https://lists.mariadb.org/postorius/lists/discuss.lists.mariadb.org/
+
+Please check all of the above before submitting a bug report
+at https://mariadb.org/jira
+
+2026-09-22 22:24:36 0 [ERROR] InnoDB: preallocating 10485760 bytes for file .//undo003 failed with error 28
+2026-09-22 22:24:36 0 [ERROR] InnoDB: Unable to allocate .//undo003
+2026-09-22 22:24:36 0 [ERROR] InnoDB: Could not create undo tablespace './/undo003'.
+2026-09-22 22:24:36 0 [ERROR] InnoDB: Database creation was aborted with error Generic error. You may need to delete the ibdata1 file before trying to start up again.
+2026-09-22 22:24:36 0 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+2026-09-22 22:24:36 0 [ERROR] Unknown/unsupported storage engine: InnoDB
+2026-09-22 22:24:36 0 [ERROR] Aborting
+
+
+test 46
+    Start 46: exercise-ch23-error
+
+46: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "error" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23/persistence-lab"
+46: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23
+46: Test timeout computed to be: 90
+46: Traceback (most recent call last):
+46:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 100, in <module>
+46:     observe(mode, client)
+46:     ~~~~~~~^^^^^^^^^^^^^^
+46:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 83, in observe
+46:     with database() as (socket, query):
+46:          ~~~~~~~~^^
+46:   File "/usr/lib/python3.14/contextlib.py", line 141, in __enter__
+46:     return next(self.gen)
+46:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 29, in database
+46:     assert setup.returncode == 0, setup.stdout + setup.stderr
+46:            ^^^^^^^^^^^^^^^^^^^^^
+46: AssertionError: Installing MariaDB/MySQL system tables in '/tmp/book-db-9ska02eb/data' ...
+46: 
+46: Installation of system tables failed!  Examine the logs in
+46: /tmp/book-db-9ska02eb/data for more information.
+46: 
+46: The problem could be conflicting information in an external
+46: my.cnf files. You can ignore these by doing:
+46: 
+46:     shell> /usr/bin/mariadb-install-db --defaults-file=~/.my.cnf
+46: 
+46: You can also try to start the mariadbd daemon with:
+46: 
+46:     shell> /usr/sbin/mariadbd --skip-grant-tables --general-log &
+46: 
+46: and use the command line tool /usr/bin/mariadb
+46: to connect to the mysql database and look at the grant tables:
+46: 
+46:     shell> /usr/bin/mariadb -u root mysql
+46:     MariaDB> show tables;
+46: 
+46: Try '/usr/sbin/mariadbd --help' if you have problems with paths.  Using
+46: --general-log gives you a log in /tmp/book-db-9ska02eb/data that may be helpful.
+46: 
+46: The latest information about mariadb-install-db is available at
+46: https://mariadb.com/kb/en/installing-system-tables-mysql_install_db
+46: You can find the latest source at https://downloads.mariadb.org and
+46: the MariaDB discuss email list at https://lists.mariadb.org/postorius/lists/discuss.lists.mariadb.org/
+46: 
+46: Please check all of the above before submitting a bug report
+46: at https://mariadb.org/jira
+46: 
+46: 2026-09-22 22:24:36 0 [ERROR] InnoDB: preallocating 10485760 bytes for file .//undo003 failed with error 28
+46: 2026-09-22 22:24:36 0 [ERROR] InnoDB: Unable to allocate .//undo003
+46: 2026-09-22 22:24:36 0 [ERROR] InnoDB: Could not create undo tablespace './/undo003'.
+46: 2026-09-22 22:24:36 0 [ERROR] InnoDB: Database creation was aborted with error Generic error. You may need to delete the ibdata1 file before trying to start up again.
+46: 2026-09-22 22:24:36 0 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+46: 2026-09-22 22:24:36 0 [ERROR] Unknown/unsupported storage engine: InnoDB
+46: 2026-09-22 22:24:36 0 [ERROR] Aborting
+46: 
+2/4 Test #46: exercise-ch23-error ..............***Failed    0.25 sec
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 100, in <module>
+    observe(mode, client)
+    ~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 83, in observe
+    with database() as (socket, query):
+         ~~~~~~~~^^
+  File "/usr/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 29, in database
+    assert setup.returncode == 0, setup.stdout + setup.stderr
+           ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Installing MariaDB/MySQL system tables in '/tmp/book-db-9ska02eb/data' ...
+
+Installation of system tables failed!  Examine the logs in
+/tmp/book-db-9ska02eb/data for more information.
+
+The problem could be conflicting information in an external
+my.cnf files. You can ignore these by doing:
+
+    shell> /usr/bin/mariadb-install-db --defaults-file=~/.my.cnf
+
+You can also try to start the mariadbd daemon with:
+
+    shell> /usr/sbin/mariadbd --skip-grant-tables --general-log &
+
+and use the command line tool /usr/bin/mariadb
+to connect to the mysql database and look at the grant tables:
+
+    shell> /usr/bin/mariadb -u root mysql
+    MariaDB> show tables;
+
+Try '/usr/sbin/mariadbd --help' if you have problems with paths.  Using
+--general-log gives you a log in /tmp/book-db-9ska02eb/data that may be helpful.
+
+The latest information about mariadb-install-db is available at
+https://mariadb.com/kb/en/installing-system-tables-mysql_install_db
+You can find the latest source at https://downloads.mariadb.org and
+the MariaDB discuss email list at https://lists.mariadb.org/postorius/lists/discuss.lists.mariadb.org/
+
+Please check all of the above before submitting a bug report
+at https://mariadb.org/jira
+
+2026-09-22 22:24:36 0 [ERROR] InnoDB: preallocating 10485760 bytes for file .//undo003 failed with error 28
+2026-09-22 22:24:36 0 [ERROR] InnoDB: Unable to allocate .//undo003
+2026-09-22 22:24:36 0 [ERROR] InnoDB: Could not create undo tablespace './/undo003'.
+2026-09-22 22:24:36 0 [ERROR] InnoDB: Database creation was aborted with error Generic error. You may need to delete the ibdata1 file before trying to start up again.
+2026-09-22 22:24:36 0 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+2026-09-22 22:24:36 0 [ERROR] Unknown/unsupported storage engine: InnoDB
+2026-09-22 22:24:36 0 [ERROR] Aborting
+
+
+test 47
+    Start 47: exercise-ch24-composition
+
+47: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch17/dispatch.py" "framing" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch17/dispatch-lab"
+47: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch24
+47: Test timeout computed to be: 30
+47: PASS: incomplete headers produce no handler/response; completing headers produces one 200
+3/4 Test #47: exercise-ch24-composition ........   Passed    0.29 sec
+test 48
+    Start 48: exercise-ch24-part-checkpoint
+
+48: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch23/persistence-lab" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/examples/MiniGateway/minigateway"
+48: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5j-examples/companion/exercises/ch24
+48: Test timeout computed to be: 120
+48: Traceback (most recent call last):
+48:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 100, in <module>
+48:     observe(mode, client)
+48:     ~~~~~~~^^^^^^^^^^^^^^
+48:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 83, in observe
+48:     with database() as (socket, query):
+48:          ~~~~~~~~^^
+48:   File "/usr/lib/python3.14/contextlib.py", line 141, in __enter__
+48:     return next(self.gen)
+48:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 29, in database
+48:     assert setup.returncode == 0, setup.stdout + setup.stderr
+48:            ^^^^^^^^^^^^^^^^^^^^^
+48: AssertionError: Installing MariaDB/MySQL system tables in '/tmp/book-db-fyglufj6/data' ...
+48: 
+48: Installation of system tables failed!  Examine the logs in
+48: /tmp/book-db-fyglufj6/data for more information.
+48: 
+48: The problem could be conflicting information in an external
+48: my.cnf files. You can ignore these by doing:
+48: 
+48:     shell> /usr/bin/mariadb-install-db --defaults-file=~/.my.cnf
+48: 
+48: You can also try to start the mariadbd daemon with:
+48: 
+48:     shell> /usr/sbin/mariadbd --skip-grant-tables --general-log &
+48: 
+48: and use the command line tool /usr/bin/mariadb
+48: to connect to the mysql database and look at the grant tables:
+48: 
+48:     shell> /usr/bin/mariadb -u root mysql
+48:     MariaDB> show tables;
+48: 
+48: Try '/usr/sbin/mariadbd --help' if you have problems with paths.  Using
+48: --general-log gives you a log in /tmp/book-db-fyglufj6/data that may be helpful.
+48: 
+48: The latest information about mariadb-install-db is available at
+48: https://mariadb.com/kb/en/installing-system-tables-mysql_install_db
+48: You can find the latest source at https://downloads.mariadb.org and
+48: the MariaDB discuss email list at https://lists.mariadb.org/postorius/lists/discuss.lists.mariadb.org/
+48: 
+48: Please check all of the above before submitting a bug report
+48: at https://mariadb.org/jira
+48: 
+48: 2026-09-22 22:24:37 0 [ERROR] InnoDB: preallocating 10485760 bytes for file .//undo003 failed with error 28
+48: 2026-09-22 22:24:37 0 [ERROR] InnoDB: Unable to allocate .//undo003
+48: 2026-09-22 22:24:37 0 [ERROR] InnoDB: Could not create undo tablespace './/undo003'.
+48: 2026-09-22 22:24:37 0 [ERROR] InnoDB: Database creation was aborted with error Generic error. You may need to delete the ibdata1 file before trying to start up again.
+48: 2026-09-22 22:24:37 0 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+48: 2026-09-22 22:24:37 0 [ERROR] Unknown/unsupported storage engine: InnoDB
+48: 2026-09-22 22:24:37 0 [ERROR] Aborting
+48: 
+4/4 Test #48: exercise-ch24-part-checkpoint ....***Failed    0.27 sec
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 100, in <module>
+    observe(mode, client)
+    ~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 83, in observe
+    with database() as (socket, query):
+         ~~~~~~~~^^
+  File "/usr/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py", line 29, in database
+    assert setup.returncode == 0, setup.stdout + setup.stderr
+           ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Installing MariaDB/MySQL system tables in '/tmp/book-db-fyglufj6/data' ...
+
+Installation of system tables failed!  Examine the logs in
+/tmp/book-db-fyglufj6/data for more information.
+
+The problem could be conflicting information in an external
+my.cnf files. You can ignore these by doing:
+
+    shell> /usr/bin/mariadb-install-db --defaults-file=~/.my.cnf
+
+You can also try to start the mariadbd daemon with:
+
+    shell> /usr/sbin/mariadbd --skip-grant-tables --general-log &
+
+and use the command line tool /usr/bin/mariadb
+to connect to the mysql database and look at the grant tables:
+
+    shell> /usr/bin/mariadb -u root mysql
+    MariaDB> show tables;
+
+Try '/usr/sbin/mariadbd --help' if you have problems with paths.  Using
+--general-log gives you a log in /tmp/book-db-fyglufj6/data that may be helpful.
+
+The latest information about mariadb-install-db is available at
+https://mariadb.com/kb/en/installing-system-tables-mysql_install_db
+You can find the latest source at https://downloads.mariadb.org and
+the MariaDB discuss email list at https://lists.mariadb.org/postorius/lists/discuss.lists.mariadb.org/
+
+Please check all of the above before submitting a bug report
+at https://mariadb.org/jira
+
+2026-09-22 22:24:37 0 [ERROR] InnoDB: preallocating 10485760 bytes for file .//undo003 failed with error 28
+2026-09-22 22:24:37 0 [ERROR] InnoDB: Unable to allocate .//undo003
+2026-09-22 22:24:37 0 [ERROR] InnoDB: Could not create undo tablespace './/undo003'.
+2026-09-22 22:24:37 0 [ERROR] InnoDB: Database creation was aborted with error Generic error. You may need to delete the ibdata1 file before trying to start up again.
+2026-09-22 22:24:37 0 [ERROR] Plugin 'InnoDB' registration as a STORAGE ENGINE failed.
+2026-09-22 22:24:37 0 [ERROR] Unknown/unsupported storage engine: InnoDB
+2026-09-22 22:24:37 0 [ERROR] Aborting
+
+
+
+The following tests passed:
+	exercise-ch24-composition
+
+25% tests passed, 3 tests failed out of 4
+
+Label Time Summary:
+equipped    =   0.75 sec*proc (3 tests)
+
+Total Test time (real) =   1.04 sec
+
+The following tests FAILED:
+	 45 - exercise-ch23-durable (Failed)                    equipped
+	 46 - exercise-ch23-error (Failed)                      equipped
+	 48 - exercise-ch24-part-checkpoint (Failed)            equipped
+Errors while running CTest

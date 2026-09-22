@@ -1,12 +1,12 @@
 # Public exercises and solutions
 
-These are the public solutions for Parts I–VIII and the later sample chapters. Each chapter has two
+These are the public solutions for Parts I–IX and the later sample chapters. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
 
 Use the installed SNode.C environment prepared in Chapter 2. Add standalone Asio
-headers (`libasio-dev` on Debian/Ubuntu) for the Chapter 1 comparison. The labs need no external broker service, database, radio hardware, or framework source build. The Bluetooth selector lab needs installed Bluetooth components and development support; its optional physical RFCOMM extension is an equipped lab. IPv6 loopback must be available for the IP-family comparison.
+headers (`libasio-dev` on Debian/Ubuntu) for the Chapter 1 comparison. Most labs need no external service, radio hardware or framework source build; Part IX adds an equipped local database fixture as described below. The Bluetooth selector lab needs installed Bluetooth components and development support; its optional physical RFCOMM extension is an equipped lab. IPv6 loopback must be available for the IP-family comparison.
 
 From the book repository root:
 
@@ -56,6 +56,13 @@ support and reuses the canonical MQTT client role. Its equipped broker labs need
 that server component; a packet-peer lab and gateway outage lab offer observations
 without starting a broker. MQTT-over-WebSocket labs use the installed adapter with
 a controlled peer. No external broker package, account or service is required.
+
+Part IX equipped labs need MariaDB server and client tools (`mariadb-server` and
+`mariadb-client` on Debian/Ubuntu). They initialize a private temporary database,
+disable networking and use a private Unix socket as the current ordinary user.
+No existing database or credentials are used. Missing tools fail explicitly. The
+HTTP composition and gateway restart observations remain local alternatives; they
+do not establish database durability. Use `-LE equipped` for a local-only subset.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.
