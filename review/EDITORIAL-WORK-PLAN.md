@@ -1540,3 +1540,69 @@ Commit: `proposal-readiness: phase 5j — refine Part IX and verify persistence 
 **Stop after Phase 5j.** Next is Phase 5k, Part X only, after freshly rerunning this
 gate with the recorded environment. Preservation stop rules, reserve accounting,
 the 5l/5m split and Phase 6 proposal refresh remain in force.
+
+
+## Phase 5k — Part X completed, 2026-09-22
+
+Freshly reran the Phase 5j exit gate before editing: ten groups and 52 labs pass,
+metrics reproduce exactly and prior preservation, chapter, PDF and package gates
+hold (`phase-5k-entry-results.json`, `phase-5k-entry-exit-checks.json`). Historical
+Phase 5j records are unchanged.
+
+Edited and reread Chapters 25–27, their public solutions and the Part X opener.
+Repeated component/include framing, deployment catalogues and testing endorsements
+are condensed. The complete component graph/header matrix, Linux/OpenWrt worked
+paths, test taxonomy, sanitizer qualifications, regression recipe and bounded
+measurement remain. The chapter ledger records a source-line preservation audit
+for all three chapters subject to the author's stop rule.
+
+| Chapter | Words / ceiling | Deep headings / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: |
+| 25 | 3,903 / 4,100 | 10 / 10 | 328.00 |
+| 26 | 3,596 / 3,700 | 10 / 10 | 327.30 |
+| 27 | 4,169 / 4,200 | 10 / 10 | 376.60 |
+
+**Reserve draw: 400 to Chapter 27**, raising its original 3,800 ceiling to 4,200
+so concrete test distinctions and benchmark/sanitizer limits remain intact.
+REPORT.md records the justification. Part X is **11,668 / 12,000**; planned total
+**112,650**, reserve **2,350 remaining**, hard ceiling **115,000**. Other budgets
+remain ceilings; they are not invitations to remove useful teaching.
+
+Each chapter has three objectives, five recap bullets and five mapped exercises
+(two review, two labs, one design). All public answers and expected observations
+are in `companion/exercises/ch25`–`ch27`; mappings run both ways in the ledger.
+The Part X checkpoint builds and installs the canonical consumer, distinguishes
+component failure from endpoint refusal and records 200 exact-payload samples.
+One shared driver owns temporary installation and observations; previous consumer
+labs and the printed Python calculation are reused. Production code growth is
+zero; fixture/registration/alignment support is +174/−3, net +171 lines.
+
+All **58 public labs**, teaching/behavior/lifetime checks, hygiene/reference
+regressions, source alignment, metric tests, companion builds and full PDF/package
+builds pass locally (`phase-5k-final-results.json` and cited logs in REPORT.md).
+The 37th exact source marker covers the unchanged Python benchmark; a negative
+mutation check confirms mismatch rejection. All 293 executable/configuration
+fences, index entries, figure IDs and prior markers are preserved. No private
+fixture servers remain after the run. Hosted CI, actual systemd/procd deployment,
+OpenWrt SDK execution, ASan execution and production load are not newly verified.
+
+Full PDF **338 → 322 pages**, sample **54**, proposal **6**, all with zero final
+warnings and bad boxes. All 360 package files match working sources. The full
+Part, contents and next transition were rendered and visually reviewed; see
+`phase-5k-visual-review.md`. A long-name paragraph and two literal Markdown
+headings were corrected; the phase checker now checks Pandoc heading recognition.
+No production styles changed. Proposal-source refresh stays in Phase 6.
+
+Whole manuscript **109,822 → 103,934 words**, deep chapter headings **398 → 307**,
+mean section prose **229.58 → 281.20**, text fences **136 → 97**, rules **20**,
+forbidden/closing hits **0**. Front matter **1,980 / 2,500**; Part openers
+**1,362 / 1,650**. These numerical thresholds are currently met; remaining
+pedagogy and the final global audit are not complete. References: 294 current
+occurrences, 39 topics, all 374 migration dispositions, author seam identities
+and targets retained (`phase-5k-reference-audit.md`).
+
+Commit: `proposal-readiness: phase 5k — refine Part X and verify installed consumers`.
+**Stop after Phase 5k.** Next is Phase 5l, Part XI only, after freshly rerunning
+this gate with the logged environment. Then 5m covers Appendix A, closing material
+and the global audit; Phase 6 refreshes the proposal. Preserve the remaining
+2,350-word reserve and all author teaching-content stop rules.

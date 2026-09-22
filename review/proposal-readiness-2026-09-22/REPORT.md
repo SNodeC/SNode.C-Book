@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5j is completed after freshly rerunning the Phase 5i exit gate. Parts I–IX and the approved front-matter work are complete. Phase 5k has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5k is completed after freshly rerunning the Phase 5j exit gate. Parts I–X and the approved front-matter work are complete. Phase 5l has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -23,7 +23,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5h — Part VII | completed | `proposal-readiness: phase 5h — refine Part VII and verify web protocol boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5h.json; phase-5h-exit-checks.json; chapter-ledger.md; phase-5h-final-*.log; phase-5h-visual-review.md; completion account below |
 | 5i — Part VIII | completed | `proposal-readiness: phase 5i — refine Part VIII and verify MQTT delivery boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5i.json; phase-5i-exit-checks.json; chapter-ledger.md; phase-5i-entry-*.log; phase-5i-final-*.log; phase-5i-visual-review.md; completion account below |
 | 5j — Part IX | completed | `proposal-readiness: phase 5j — refine Part IX and verify persistence boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5j.json; phase-5j-exit-checks.json; chapter-ledger.md; phase-5j-entry-*.log; phase-5j-final-*.log; phase-5j-visual-review.md; completion account below |
-| 5k — Part X | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5k — Part X | completed | `proposal-readiness: phase 5k — refine Part X and verify installed consumers` (containing this report) | 2026-09-22 | metrics-after-phase-5k.json; phase-5k-exit-checks.json; chapter-ledger.md; phase-5k-entry-*.log; phase-5k-final-*.log; phase-5k-visual-review.md; completion account below |
 | 5l — Part XI only | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5m — appendix, closing material and global audit | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 6 — proposal refresh | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -2588,3 +2588,145 @@ Commit: `proposal-readiness: phase 5j — refine Part IX and verify persistence 
 **Stop after Phase 5j.** Next is Phase 5k, Part X only, after a fresh re-execution
 of this gate with the recorded installation/runtime environment. Author teaching
 preservation, reserve accounting, 5l/5m split and Phase 6 proposal refresh remain.
+
+
+## Phase 5k — Part X completed, 2026-09-22
+
+### Entry gate and editorial scope
+
+Before editing, freshly reran Phase 5j. `phase-5k-entry-results.json` records all
+ten check groups passing; `phase-5k-entry-labs.log` records 52/52 public labs;
+`phase-5k-entry-exit-checks.json` records exact metric agreement, prior chapter
+budgets/teaching, preserved examples, clean PDFs and package checks. Historical
+Phase 5j evidence is unchanged. `check-phase-5k.py:21` and
+`phase-5k-manuscript.diff` restrict manuscript changes to Chapters 25–27 and their
+Part X opener. No next Part or proposal-source refresh was started.
+
+Edited and reread all three chapters and public solutions. Removed repeated
+component/include framing, deployment inventories, test-scope endorsements and
+small text blocks while preserving the worked examples and qualifications.
+`chapter-ledger.md` provides source-line evidence for each retained teaching
+surface, including every chapter subject to the author's preservation stop rule.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 25 | 6,311 → 3,903 / 4,100 | 5,623 → 3,402 | 688 → 501 | 40 → 10 / 10 | 328.00 |
+| 26 | 5,558 → 3,596 / 3,700 | 5,240 → 3,383 | 318 → 213 | 40 → 10 / 10 | 327.30 |
+| 27 | 5,722 → 4,169 / 4,200 | 5,257 → 3,913 | 465 → 256 | 41 → 10 / 10 | 376.60 |
+
+**Authorized reserve draw: 400 words for Chapter 27**, increasing its original
+3,800 ceiling to 4,200. The detailed test taxonomy, diagnostic-versus-wire
+examples, reconfiguration rollback qualification, sanitizer setup limits and
+bounded timing interpretation carry distinct teaching. Further cuts solely to
+reach 3,800 would work against the preservation instruction. Part X is
+**11,668 / 12,000** (original ceiling 11,600); reserve used **400**, remaining
+**2,350**. The revised planned total is **112,650**, below the hard 115,000 ceiling.
+This is a reserve allocation, not a new length target for the other chapters.
+
+Each chapter opens with three objectives and closes with five recap bullets and
+five exercises (two review, two labs, one design). Every objective maps to an
+exercise and vice versa. Public answers and commands are in
+`companion/exercises/ch25/README.md`, `ch26/README.md`, `ch27/README.md`; the ledger
+records both directions and source lines. The Part X checkpoint carries an
+external consumer through build, private installation, diagnosis and measurement.
+
+### Verified execution and artifacts
+
+| Check | Result and evidence |
+| --- | --- |
+| Hygiene and reference regressions | pass; `phase-5k-final-hygiene.log`; 294 references, 39 stable topics, all 374 migration dispositions and six regression tests |
+| Complete-listing alignment | pass; `phase-5k-final-alignment.log`; 37 exact marked listings, including the unchanged public Python benchmark |
+| Python alignment negative check | run and pass; `phase-5k-python-alignment-regression.log`; virtually changing the sample count is rejected by the real checker |
+| Measurement regressions | pass; `phase-5k-final-metrics-tests.log` |
+| Installed companion examples and lab targets | built; `phase-5k-final-companion.log` |
+| Public labs | 58/58 run and pass; `phase-5k-final-labs.log:1076`; six new tests at :564–1042 |
+| Teaching, behavior and lifetime checks | run and pass; `phase-5k-final-teaching.log`, `phase-5k-final-behavior.log`, `phase-5k-final-lifetime.log` |
+| Full PDF, proposal, samples and package | built; `phase-5k-final-package.log`; full 338 → 322 pages, samples 54, proposal 6 |
+| Final PDF warnings / bad boxes | zero in all three; hashes and pages in `phase-5k-exit-checks.json` |
+| Extracted-package hygiene | pass; `phase-5k-final-extracted-hygiene.log`; all 360 archive files equal working files in exit check |
+| Budgets, teaching, preservation and scope | pass; `phase-5k-exit-checks.log`; all 293 executable/configuration fences, figures, indices, prior markers and C++ order retained |
+| Parsed heading counts | ten per chapter; Pandoc AST agrees with source metrics in `check-phase-5k.py` |
+| Final visual review | complete Part, contents and next transition inspected; `phase-5k-visual-review.md` |
+| Private-server cleanup | no private echo or database server remains; `phase-5k-cleanup-verification.log` |
+
+`phase-5k-final-results.json` combines the successful full suite with the final
+hygiene/package rebuilds following prose and heading-spacing corrections. Runtime
+sources did not change after the 58-test run. The selected installation and loader
+environment are recorded in execution logs; companion build directory is
+`build/proposal-readiness-phase-5k-examples`, with PDFs built in the existing
+`build/proposal-readiness-phase-2` directory. These are local CI-path executions,
+not a claim of a hosted CI run or a new framework CTest run.
+
+The Chapter 25 labs reuse the existing external-consumer and missing-component
+experiments. One shared Chapter 26 driver builds the canonical EchoPair, confirms
+its selected package, installs it privately and observes exact binary echo,
+normal shutdown, refusal after shutdown and a new process identity after restart.
+The configuration lab observes status 2 for a nonnumeric port, restores the file,
+and repeats the exchange. No host service definition is installed or changed.
+
+Chapter 27 contrasts configuration-time component failure with a refused endpoint
+after a successful installed build. Its checkpoint executes the unchanged printed
+Python calculation from `companion/exercises/ch27/roundtrip.py`, substituting only
+the private endpoint. The final run records 20 warm-ups and 200 verified 256-byte
+samples (`phase-5k-final-labs.log:1038`); median 12.88 µs and p95 19.80 µs are a
+local diagnostic observation, not a stable performance baseline or capacity claim.
+The public solutions describe the workload, additional recording requirements and
+limitations. Actual systemd supervision, OpenWrt SDK/procd deployment, ASan
+execution, long-running load and production capacity are **not newly verified**;
+the chapter's complete equipped walkthroughs and technical qualifications remain.
+
+### Failures found and resolved
+
+- `phase-5k-development-build.log`: the new benchmark marker was rejected because
+  alignment allowed sources only under `companion/examples`. The same checker
+  now accepts `companion/exercises` and Python fences, retaining exact content
+  comparison. The corrected build and negative mismatch check pass.
+- `phase-5k-development-labs.log`: two consumer labs passed; four installation
+  labs failed because executable `DT_RUNPATH` did not cover the core library's
+  transitive event-loop dependency. The private Linux consumer now selects
+  inherited `DT_RPATH` via `--disable-new-dtags`, using the selected installation's
+  library directories and clearing loader environment overrides before execution.
+  This local installation policy is explained in the chapter and public answers;
+  it does not claim relocatable packaging. All six then pass in
+  `phase-5k-development-corrected-labs.log`, followed by the full 58-lab suite.
+- `phase-5k-layout-initial.log:2263`: a paragraph of long test names overflowed;
+  a short list keeps every name and removes the bad box. Visual review found two
+  headings after index commands rendered literally; blank lines restore their
+  heading status, with parsed-heading checks added to the phase checker. Final
+  images and all final LaTeX logs pass without production-style changes.
+
+### Metrics, accounting and handoff
+
+| Global measure | Phase 5j | Phase 5k | Delta / status |
+| --- | ---: | ---: | --- |
+| Total words | 109,822 | 103,934 | −5,888; numerical hard and stretch ceilings currently met |
+| Prose words | 99,674 | 94,287 | −5,387 |
+| Fenced words | 10,148 | 9,647 | −501 from text blocks; executable/configuration fences unchanged |
+| Chapter deep headings | 398 | 307 | −91 |
+| Mean chapter-section prose | 229.58 | 281.20 | numerical 250 threshold currently met |
+| Text fences | 136 | 97 | −39 |
+| Objective / exercise callouts | 26 / 26 | 29 / 29 | three chapters added |
+| Rule boxes | 20 | 20 | cap retained |
+| Forbidden phrases / Closing perspective | 0 / 0 | 0 / 0 | gates retained |
+
+Source: `metrics-after-phase-5k.json`. Front matter **1,980 / 2,500**; all Part
+openers **1,362 / 1,650**. Original sample reduction/density gates remain valid
+in the exit checker. Numerical global progress does not complete the remaining
+chapter pedagogy, closing work or final audit.
+
+Reference count **298 → 294**: R318–R320, R327, R330–R332 are retired with explicit
+reasons; three solution headings are added. Other targets and migration identities
+remain, including both R275/R276 author seam identities and topics. See
+`phase-5k-reference-audit.md` and `phase-5a-reference-register.json`.
+
+Production **+0/−0**. Public fixture/registration support **+172/−1**; alignment
+check **+2/−2**; combined **+174/−3, net +171**. New support consists of one shared
+126-line installed-consumer driver, the 26-line canonical printed benchmark copy
+and 19 registration lines. Existing applications, earlier labs and common harness
+are unchanged. Answers and phase review tooling are accounted separately.
+Final diff review found no duplicate application or benchmark implementation.
+
+Commit: `proposal-readiness: phase 5k — refine Part X and verify installed consumers` (containing this report).
+**Stop after Phase 5k.** Next is Phase 5l, Part XI only, after freshly rerunning
+this exit gate. The preservation rules, remaining 2,350-word reserve, separate
+5m global audit and Phase 6 proposal refresh remain in force.

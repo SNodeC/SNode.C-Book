@@ -1,0 +1,2 @@
+Check: ps -eo pid=,args=, selecting private installed-echo and book-db servers.
+PASS: no private installed echo or database server remains.

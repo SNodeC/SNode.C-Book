@@ -1,0 +1,994 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 49
+    Start 49: exercise-ch25-consumer
+
+49: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch25/../ch02/solution.py" "consumer"
+49: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/companion/exercises/ch25
+49: Test timeout computed to be: 180
+49: -- The CXX compiler identification is GNU 16.2.0
+49: -- Detecting CXX compiler ABI info
+49: -- Detecting CXX compiler ABI info - done
+49: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+49: -- Detecting CXX compile features
+49: -- Detecting CXX compile features - done
+49: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+49:   net-in-stream: loading dependencies 'net-in-phy-stream'
+49:     net-in-phy-stream: loading dependencies 'net-in-phy'
+49:       net-in-phy: loading dependencies 'net-in'
+49:         net-in: loading dependencies 'net'
+49:           net: loading dependencies 'core-socket'
+49:             core-socket: loading dependencies 'core'
+49:               core: loading dependencies 'mux-epoll, utils'
+49:                 mux-epoll: loaded
+49:                 utils: loading dependencies 'logger'
+49:                   logger: loaded
+49:                 utils: loaded
+49:               core: loaded
+49:             core-socket: loaded
+49:           net: loaded
+49:         net-in: loaded
+49:       net-in-phy: loaded
+49:     net-in-phy-stream: loaded
+49:   net-in-stream: loaded
+49:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+49:     core-socket-stream: loading dependencies 'core-socket'
+49:       core-socket: already loaded
+49:     core-socket-stream: loaded
+49:   core-socket-stream-legacy: loaded
+49: net-in-stream-legacy: loaded
+49: -- Configuring done (0.2s)
+49: -- Generating done (0.0s)
+49: -- Build files have been written to: /tmp/snodec-environment-lab-ip8rc0ze/build
+49: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+49: [ 33%] Linking CXX static library libechosocketcontext.a
+49: [ 33%] Built target echosocketcontext
+49: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+49: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+49: [ 83%] Linking CXX executable echoserver
+49: [100%] Linking CXX executable echoclient
+49: [100%] Built target echoserver
+49: [100%] Built target echoclient
+49: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+49: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+1/6 Test #49: exercise-ch25-consumer ...........   Passed    3.79 sec
+test 50
+    Start 50: exercise-ch25-component
+
+50: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch25/../ch02/solution.py" "component"
+50: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/companion/exercises/ch25
+50: Test timeout computed to be: 180
+50: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+50:   net-in-stream: loading dependencies 'net-in-phy-stream'
+50:     net-in-phy-stream: loading dependencies 'net-in-phy'
+50:       net-in-phy: loading dependencies 'net-in'
+50:         net-in: loading dependencies 'net'
+50:           net: loading dependencies 'core-socket'
+50:             core-socket: loading dependencies 'core'
+50:               core: loading dependencies 'mux-epoll, utils'
+50:                 mux-epoll: loaded
+50:                 utils: loading dependencies 'logger'
+50:                   logger: loaded
+50:                 utils: loaded
+50:               core: loaded
+50:             core-socket: loaded
+50:           net: loaded
+50:         net-in: loaded
+50:       net-in-phy: loaded
+50:     net-in-phy-stream: loaded
+50:   net-in-stream: loaded
+50:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+50:     core-socket-stream: loading dependencies 'core-socket'
+50:       core-socket: already loaded
+50:     core-socket-stream: loaded
+50:   core-socket-stream-legacy: loaded
+50: net-in-stream-legacy: loaded
+50: -- Configuring done (0.0s)
+50: -- Generating done (0.0s)
+50: -- Build files have been written to: /tmp/snodec-environment-lab-57b0pnrz/build
+50: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+50: [ 33%] Linking CXX static library libechosocketcontext.a
+50: [ 33%] Built target echosocketcontext
+50: [ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+50: [ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+50: [ 83%] Linking CXX executable echoserver
+50: [100%] Linking CXX executable echoclient
+50: [100%] Built target echoserver
+50: [100%] Built target echoclient
+50: -- The CXX compiler identification is GNU 16.2.0
+50: -- Detecting CXX compiler ABI info
+50: -- Detecting CXX compiler ABI info - done
+50: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+50: -- Detecting CXX compile features
+50: -- Detecting CXX compile features - done
+50: CMake Error at CMakeLists.txt:9 (find_package):
+50:   Found package configuration file:
+50: 
+50:     /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+50: 
+50:   but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+50:   NOT FOUND.  Reason given by package:
+50: 
+50:   Unsupported SNode.C component requested: net-in-stream-missing
+50: 
+50: 
+50: 
+50: -- Configuring incomplete, errors occurred!
+50: 
+50: PASS: missing component stops configuration before any runtime endpoint exists
+50: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+50: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+2/6 Test #50: exercise-ch25-component ..........   Passed    3.76 sec
+test 51
+    Start 51: exercise-ch26-lifecycle
+
+51: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py" "lifecycle"
+51: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/companion/exercises/ch26
+51: Test timeout computed to be: 180
+51: -- The CXX compiler identification is GNU 16.2.0
+51: -- Detecting CXX compiler ABI info
+51: -- Detecting CXX compiler ABI info - done
+51: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+51: -- Detecting CXX compile features
+51: -- Detecting CXX compile features - done
+51: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+51:   net-in-stream: loading dependencies 'net-in-phy-stream'
+51:     net-in-phy-stream: loading dependencies 'net-in-phy'
+51:       net-in-phy: loading dependencies 'net-in'
+51:         net-in: loading dependencies 'net'
+51:           net: loading dependencies 'core-socket'
+51:             core-socket: loading dependencies 'core'
+51:               core: loading dependencies 'mux-epoll, utils'
+51:                 mux-epoll: loaded
+51:                 utils: loading dependencies 'logger'
+51:                   logger: loaded
+51:                 utils: loaded
+51:               core: loaded
+51:             core-socket: loaded
+51:           net: loaded
+51:         net-in: loaded
+51:       net-in-phy: loaded
+51:     net-in-phy-stream: loaded
+51:   net-in-stream: loaded
+51:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+51:     core-socket-stream: loading dependencies 'core-socket'
+51:       core-socket: already loaded
+51:     core-socket-stream: loaded
+51:   core-socket-stream-legacy: loaded
+51: net-in-stream-legacy: loaded
+51: -- Configuring done (0.2s)
+51: -- Generating done (0.0s)
+51: -- Build files have been written to: /tmp/installed-echo-ftv0sl1_/build
+51: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+51: [ 33%] Linking CXX static library libechosocketcontext.a
+51: [ 33%] Built target echosocketcontext
+51: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+51: [ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+51: [ 83%] Linking CXX executable echoserver
+51: [ 83%] Built target echoserver
+51: [100%] Linking CXX executable echoclient
+51: [100%] Built target echoclient
+51: -- Install configuration: "Release"
+51: -- Installing: /tmp/installed-echo-ftv0sl1_/install/bin/echoserver
+51: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-ftv0sl1_/install/bin/echoserver" to "/tmp/installed-echo-ftv0sl1_/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+51: -- Installing: /tmp/installed-echo-ftv0sl1_/install/bin/echoclient
+51: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-ftv0sl1_/install/bin/echoclient" to "/tmp/installed-echo-ftv0sl1_/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+51: PASS: fresh external Release consumer installed at /tmp/installed-echo-ftv0sl1_/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+51: /tmp/installed-echo-ftv0sl1_/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+51: 
+51: Traceback (most recent call last):
+51:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 38, in running
+51:     yield process, path
+51:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 55, in exchange
+51:     with connect(port, process) as peer:
+51:          ~~~~~~~^^^^^^^^^^^^^^^
+51:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 63, in connect
+51:     raise RuntimeError('Server exited before connection')
+51: RuntimeError: Server exited before connection
+51: 
+51: During handling of the above exception, another exception occurred:
+51: 
+51: Traceback (most recent call last):
+51:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 122, in <module>
+51:     if mode == 'lifecycle': lifecycle(binary, work)
+51:                             ~~~~~~~~~^^^^^^^^^^^^^^
+51:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 71, in lifecycle
+51:     first = exchange(binary, args, port); second = exchange(binary, args, port)
+51:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 54, in exchange
+51:     with running(binary, args) as (process, log):
+51:          ~~~~~~~^^^^^^^^^^^^^^
+51:   File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+51:     self.gen.throw(value)
+51:     ~~~~~~~~~~~~~~^^^^^^^
+51:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 56, in running
+51:     raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+51: RuntimeError: Process exited 127: /tmp/installed-echo-ftv0sl1_/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+51: 
+3/6 Test #51: exercise-ch26-lifecycle ..........***Failed    6.45 sec
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/installed-echo-ftv0sl1_/build
+[ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[ 33%] Linking CXX static library libechosocketcontext.a
+[ 33%] Built target echosocketcontext
+[ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[ 83%] Linking CXX executable echoserver
+[ 83%] Built target echoserver
+[100%] Linking CXX executable echoclient
+[100%] Built target echoclient
+-- Install configuration: "Release"
+-- Installing: /tmp/installed-echo-ftv0sl1_/install/bin/echoserver
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-ftv0sl1_/install/bin/echoserver" to "/tmp/installed-echo-ftv0sl1_/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+-- Installing: /tmp/installed-echo-ftv0sl1_/install/bin/echoclient
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-ftv0sl1_/install/bin/echoclient" to "/tmp/installed-echo-ftv0sl1_/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+PASS: fresh external Release consumer installed at /tmp/installed-echo-ftv0sl1_/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+/tmp/installed-echo-ftv0sl1_/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 38, in running
+    yield process, path
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 55, in exchange
+    with connect(port, process) as peer:
+         ~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 63, in connect
+    raise RuntimeError('Server exited before connection')
+RuntimeError: Server exited before connection
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 122, in <module>
+    if mode == 'lifecycle': lifecycle(binary, work)
+                            ~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 71, in lifecycle
+    first = exchange(binary, args, port); second = exchange(binary, args, port)
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 54, in exchange
+    with running(binary, args) as (process, log):
+         ~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 56, in running
+    raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+RuntimeError: Process exited 127: /tmp/installed-echo-ftv0sl1_/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+
+
+test 52
+    Start 52: exercise-ch26-configuration
+
+52: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py" "configuration"
+52: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/companion/exercises/ch26
+52: Test timeout computed to be: 180
+52: -- The CXX compiler identification is GNU 16.2.0
+52: -- Detecting CXX compiler ABI info
+52: -- Detecting CXX compiler ABI info - done
+52: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+52: -- Detecting CXX compile features
+52: -- Detecting CXX compile features - done
+52: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+52:   net-in-stream: loading dependencies 'net-in-phy-stream'
+52:     net-in-phy-stream: loading dependencies 'net-in-phy'
+52:       net-in-phy: loading dependencies 'net-in'
+52:         net-in: loading dependencies 'net'
+52:           net: loading dependencies 'core-socket'
+52:             core-socket: loading dependencies 'core'
+52:               core: loading dependencies 'mux-epoll, utils'
+52:                 mux-epoll: loaded
+52:                 utils: loading dependencies 'logger'
+52:                   logger: loaded
+52:                 utils: loaded
+52:               core: loaded
+52:             core-socket: loaded
+52:           net: loaded
+52:         net-in: loaded
+52:       net-in-phy: loaded
+52:     net-in-phy-stream: loaded
+52:   net-in-stream: loaded
+52:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+52:     core-socket-stream: loading dependencies 'core-socket'
+52:       core-socket: already loaded
+52:     core-socket-stream: loaded
+52:   core-socket-stream-legacy: loaded
+52: net-in-stream-legacy: loaded
+52: -- Configuring done (0.2s)
+52: -- Generating done (0.0s)
+52: -- Build files have been written to: /tmp/installed-echo-f4_6hzrd/build
+52: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+52: [ 33%] Linking CXX static library libechosocketcontext.a
+52: [ 33%] Built target echosocketcontext
+52: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+52: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+52: [ 83%] Linking CXX executable echoserver
+52: [100%] Built target echoserver
+52: [100%] Linking CXX executable echoclient
+52: [100%] Built target echoclient
+52: -- Install configuration: "Release"
+52: -- Installing: /tmp/installed-echo-f4_6hzrd/install/bin/echoserver
+52: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-f4_6hzrd/install/bin/echoserver" to "/tmp/installed-echo-f4_6hzrd/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+52: -- Installing: /tmp/installed-echo-f4_6hzrd/install/bin/echoclient
+52: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-f4_6hzrd/install/bin/echoclient" to "/tmp/installed-echo-f4_6hzrd/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+52: PASS: fresh external Release consumer installed at /tmp/installed-echo-f4_6hzrd/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+52: Traceback (most recent call last):
+52:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 123, in <module>
+52:     elif mode == 'configuration': invalid_configuration(binary, work)
+52:                                   ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+52:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 80, in invalid_configuration
+52:     assert result.returncode == 2 and '--port' in output, (result.returncode, output)
+52:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+52: AssertionError: (127, '/tmp/installed-echo-f4_6hzrd/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE\n')
+4/6 Test #52: exercise-ch26-configuration ......***Failed    6.43 sec
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/installed-echo-f4_6hzrd/build
+[ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[ 33%] Linking CXX static library libechosocketcontext.a
+[ 33%] Built target echosocketcontext
+[ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[ 83%] Linking CXX executable echoserver
+[100%] Built target echoserver
+[100%] Linking CXX executable echoclient
+[100%] Built target echoclient
+-- Install configuration: "Release"
+-- Installing: /tmp/installed-echo-f4_6hzrd/install/bin/echoserver
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-f4_6hzrd/install/bin/echoserver" to "/tmp/installed-echo-f4_6hzrd/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+-- Installing: /tmp/installed-echo-f4_6hzrd/install/bin/echoclient
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-f4_6hzrd/install/bin/echoclient" to "/tmp/installed-echo-f4_6hzrd/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+PASS: fresh external Release consumer installed at /tmp/installed-echo-f4_6hzrd/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 123, in <module>
+    elif mode == 'configuration': invalid_configuration(binary, work)
+                                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py", line 80, in invalid_configuration
+    assert result.returncode == 2 and '--port' in output, (result.returncode, output)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (127, '/tmp/installed-echo-f4_6hzrd/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE\n')
+
+test 53
+    Start 53: exercise-ch27-diagnosis
+
+53: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py" "diagnosis"
+53: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/companion/exercises/ch27
+53: Test timeout computed to be: 300
+53: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+53:   net-in-stream: loading dependencies 'net-in-phy-stream'
+53:     net-in-phy-stream: loading dependencies 'net-in-phy'
+53:       net-in-phy: loading dependencies 'net-in'
+53:         net-in: loading dependencies 'net'
+53:           net: loading dependencies 'core-socket'
+53:             core-socket: loading dependencies 'core'
+53:               core: loading dependencies 'mux-epoll, utils'
+53:                 mux-epoll: loaded
+53:                 utils: loading dependencies 'logger'
+53:                   logger: loaded
+53:                 utils: loaded
+53:               core: loaded
+53:             core-socket: loaded
+53:           net: loaded
+53:         net-in: loaded
+53:       net-in-phy: loaded
+53:     net-in-phy-stream: loaded
+53:   net-in-stream: loaded
+53:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+53:     core-socket-stream: loading dependencies 'core-socket'
+53:       core-socket: already loaded
+53:     core-socket-stream: loaded
+53:   core-socket-stream-legacy: loaded
+53: net-in-stream-legacy: loaded
+53: -- Configuring done (0.0s)
+53: -- Generating done (0.0s)
+53: -- Build files have been written to: /tmp/snodec-environment-lab-7dnzdywl/build
+53: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+53: [ 33%] Linking CXX static library libechosocketcontext.a
+53: [ 33%] Built target echosocketcontext
+53: [ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+53: [ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+53: [ 83%] Linking CXX executable echoserver
+53: [100%] Linking CXX executable echoclient
+53: [100%] Built target echoserver
+53: [100%] Built target echoclient
+53: -- The CXX compiler identification is GNU 16.2.0
+53: -- Detecting CXX compiler ABI info
+53: -- Detecting CXX compiler ABI info - done
+53: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+53: -- Detecting CXX compile features
+53: -- Detecting CXX compile features - done
+53: CMake Error at CMakeLists.txt:9 (find_package):
+53:   Found package configuration file:
+53: 
+53:     /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+53: 
+53:   but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+53:   NOT FOUND.  Reason given by package:
+53: 
+53:   Unsupported SNode.C component requested: net-in-stream-missing
+53: 
+53: 
+53: 
+53: -- Configuring incomplete, errors occurred!
+53: 
+53: PASS: missing component stops configuration before any runtime endpoint exists
+53: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+53: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+53: -- The CXX compiler identification is GNU 16.2.0
+53: -- Detecting CXX compiler ABI info
+53: -- Detecting CXX compiler ABI info - done
+53: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+53: -- Detecting CXX compile features
+53: -- Detecting CXX compile features - done
+53: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+53:   net-in-stream: loading dependencies 'net-in-phy-stream'
+53:     net-in-phy-stream: loading dependencies 'net-in-phy'
+53:       net-in-phy: loading dependencies 'net-in'
+53:         net-in: loading dependencies 'net'
+53:           net: loading dependencies 'core-socket'
+53:             core-socket: loading dependencies 'core'
+53:               core: loading dependencies 'mux-epoll, utils'
+53:                 mux-epoll: loaded
+53:                 utils: loading dependencies 'logger'
+53:                   logger: loaded
+53:                 utils: loaded
+53:               core: loaded
+53:             core-socket: loaded
+53:           net: loaded
+53:         net-in: loaded
+53:       net-in-phy: loaded
+53:     net-in-phy-stream: loaded
+53:   net-in-stream: loaded
+53:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+53:     core-socket-stream: loading dependencies 'core-socket'
+53:       core-socket: already loaded
+53:     core-socket-stream: loaded
+53:   core-socket-stream-legacy: loaded
+53: net-in-stream-legacy: loaded
+53: -- Configuring done (0.2s)
+53: -- Generating done (0.0s)
+53: -- Build files have been written to: /tmp/installed-echo-6tw7pxh_/build
+53: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+53: [ 33%] Linking CXX static library libechosocketcontext.a
+53: [ 33%] Built target echosocketcontext
+53: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+53: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+53: [ 83%] Linking CXX executable echoserver
+53: [100%] Linking CXX executable echoclient
+53: [100%] Built target echoserver
+53: [100%] Built target echoclient
+53: -- Install configuration: "Release"
+53: -- Installing: /tmp/installed-echo-6tw7pxh_/install/bin/echoserver
+53: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-6tw7pxh_/install/bin/echoserver" to "/tmp/installed-echo-6tw7pxh_/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+53: -- Installing: /tmp/installed-echo-6tw7pxh_/install/bin/echoclient
+53: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-6tw7pxh_/install/bin/echoclient" to "/tmp/installed-echo-6tw7pxh_/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+53: PASS: fresh external Release consumer installed at /tmp/installed-echo-6tw7pxh_/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+53: /tmp/installed-echo-6tw7pxh_/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+53: 
+53: Traceback (most recent call last):
+53:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 38, in running
+53:     yield process, path
+53:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 91, in diagnose
+53:     with connect(port, process) as peer:
+53:          ~~~~~~~^^^^^^^^^^^^^^^
+53:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 63, in connect
+53:     raise RuntimeError('Server exited before connection')
+53: RuntimeError: Server exited before connection
+53: 
+53: During handling of the above exception, another exception occurred:
+53: 
+53: Traceback (most recent call last):
+53:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 124, in <module>
+53:     elif mode in {'diagnosis', 'checkpoint'}: diagnose(binary, work, mode == 'checkpoint')
+53:                                               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+53:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 90, in diagnose
+53:     with running(binary, args) as (process, log):
+53:          ~~~~~~~^^^^^^^^^^^^^^
+53:   File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+53:     self.gen.throw(value)
+53:     ~~~~~~~~~~~~~~^^^^^^^
+53:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 56, in running
+53:     raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+53: RuntimeError: Process exited 127: /tmp/installed-echo-6tw7pxh_/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+53: 
+5/6 Test #53: exercise-ch27-diagnosis ..........***Failed   10.27 sec
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/snodec-environment-lab-7dnzdywl/build
+[ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[ 33%] Linking CXX static library libechosocketcontext.a
+[ 33%] Built target echosocketcontext
+[ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[ 83%] Linking CXX executable echoserver
+[100%] Linking CXX executable echoclient
+[100%] Built target echoserver
+[100%] Built target echoclient
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Error at CMakeLists.txt:9 (find_package):
+  Found package configuration file:
+
+    /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+
+  but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+  NOT FOUND.  Reason given by package:
+
+  Unsupported SNode.C component requested: net-in-stream-missing
+
+
+
+-- Configuring incomplete, errors occurred!
+
+PASS: missing component stops configuration before any runtime endpoint exists
+PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/installed-echo-6tw7pxh_/build
+[ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[ 33%] Linking CXX static library libechosocketcontext.a
+[ 33%] Built target echosocketcontext
+[ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[ 83%] Linking CXX executable echoserver
+[100%] Linking CXX executable echoclient
+[100%] Built target echoserver
+[100%] Built target echoclient
+-- Install configuration: "Release"
+-- Installing: /tmp/installed-echo-6tw7pxh_/install/bin/echoserver
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-6tw7pxh_/install/bin/echoserver" to "/tmp/installed-echo-6tw7pxh_/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+-- Installing: /tmp/installed-echo-6tw7pxh_/install/bin/echoclient
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-6tw7pxh_/install/bin/echoclient" to "/tmp/installed-echo-6tw7pxh_/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+PASS: fresh external Release consumer installed at /tmp/installed-echo-6tw7pxh_/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+/tmp/installed-echo-6tw7pxh_/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 38, in running
+    yield process, path
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 91, in diagnose
+    with connect(port, process) as peer:
+         ~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 63, in connect
+    raise RuntimeError('Server exited before connection')
+RuntimeError: Server exited before connection
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 124, in <module>
+    elif mode in {'diagnosis', 'checkpoint'}: diagnose(binary, work, mode == 'checkpoint')
+                                              ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 90, in diagnose
+    with running(binary, args) as (process, log):
+         ~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 56, in running
+    raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+RuntimeError: Process exited 127: /tmp/installed-echo-6tw7pxh_/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+
+
+test 54
+    Start 54: exercise-ch27-checkpoint
+
+54: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py" "checkpoint"
+54: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/companion/exercises/ch27
+54: Test timeout computed to be: 300
+54: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+54:   net-in-stream: loading dependencies 'net-in-phy-stream'
+54:     net-in-phy-stream: loading dependencies 'net-in-phy'
+54:       net-in-phy: loading dependencies 'net-in'
+54:         net-in: loading dependencies 'net'
+54:           net: loading dependencies 'core-socket'
+54:             core-socket: loading dependencies 'core'
+54:               core: loading dependencies 'mux-epoll, utils'
+54:                 mux-epoll: loaded
+54:                 utils: loading dependencies 'logger'
+54:                   logger: loaded
+54:                 utils: loaded
+54:               core: loaded
+54:             core-socket: loaded
+54:           net: loaded
+54:         net-in: loaded
+54:       net-in-phy: loaded
+54:     net-in-phy-stream: loaded
+54:   net-in-stream: loaded
+54:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+54:     core-socket-stream: loading dependencies 'core-socket'
+54:       core-socket: already loaded
+54:     core-socket-stream: loaded
+54:   core-socket-stream-legacy: loaded
+54: net-in-stream-legacy: loaded
+54: -- Configuring done (0.0s)
+54: -- Generating done (0.0s)
+54: -- Build files have been written to: /tmp/snodec-environment-lab-lphn5mgv/build
+54: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+54: [ 33%] Linking CXX static library libechosocketcontext.a
+54: [ 33%] Built target echosocketcontext
+54: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+54: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+54: [ 83%] Linking CXX executable echoclient
+54: [100%] Linking CXX executable echoserver
+54: [100%] Built target echoclient
+54: [100%] Built target echoserver
+54: -- The CXX compiler identification is GNU 16.2.0
+54: -- Detecting CXX compiler ABI info
+54: -- Detecting CXX compiler ABI info - done
+54: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+54: -- Detecting CXX compile features
+54: -- Detecting CXX compile features - done
+54: CMake Error at CMakeLists.txt:9 (find_package):
+54:   Found package configuration file:
+54: 
+54:     /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+54: 
+54:   but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+54:   NOT FOUND.  Reason given by package:
+54: 
+54:   Unsupported SNode.C component requested: net-in-stream-missing
+54: 
+54: 
+54: 
+54: -- Configuring incomplete, errors occurred!
+54: 
+54: PASS: missing component stops configuration before any runtime endpoint exists
+54: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+54: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+54: -- The CXX compiler identification is GNU 16.2.0
+54: -- Detecting CXX compiler ABI info
+54: -- Detecting CXX compiler ABI info - done
+54: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+54: -- Detecting CXX compile features
+54: -- Detecting CXX compile features - done
+54: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+54:   net-in-stream: loading dependencies 'net-in-phy-stream'
+54:     net-in-phy-stream: loading dependencies 'net-in-phy'
+54:       net-in-phy: loading dependencies 'net-in'
+54:         net-in: loading dependencies 'net'
+54:           net: loading dependencies 'core-socket'
+54:             core-socket: loading dependencies 'core'
+54:               core: loading dependencies 'mux-epoll, utils'
+54:                 mux-epoll: loaded
+54:                 utils: loading dependencies 'logger'
+54:                   logger: loaded
+54:                 utils: loaded
+54:               core: loaded
+54:             core-socket: loaded
+54:           net: loaded
+54:         net-in: loaded
+54:       net-in-phy: loaded
+54:     net-in-phy-stream: loaded
+54:   net-in-stream: loaded
+54:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+54:     core-socket-stream: loading dependencies 'core-socket'
+54:       core-socket: already loaded
+54:     core-socket-stream: loaded
+54:   core-socket-stream-legacy: loaded
+54: net-in-stream-legacy: loaded
+54: -- Configuring done (0.2s)
+54: -- Generating done (0.0s)
+54: -- Build files have been written to: /tmp/installed-echo-w577m9vb/build
+54: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+54: [ 33%] Linking CXX static library libechosocketcontext.a
+54: [ 33%] Built target echosocketcontext
+54: [ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+54: [ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+54: [ 83%] Linking CXX executable echoserver
+54: [ 83%] Built target echoserver
+54: [100%] Linking CXX executable echoclient
+54: [100%] Built target echoclient
+54: -- Install configuration: "Release"
+54: -- Installing: /tmp/installed-echo-w577m9vb/install/bin/echoserver
+54: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-w577m9vb/install/bin/echoserver" to "/tmp/installed-echo-w577m9vb/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+54: -- Installing: /tmp/installed-echo-w577m9vb/install/bin/echoclient
+54: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-w577m9vb/install/bin/echoclient" to "/tmp/installed-echo-w577m9vb/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+54: PASS: fresh external Release consumer installed at /tmp/installed-echo-w577m9vb/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+54: /tmp/installed-echo-w577m9vb/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+54: 
+54: Traceback (most recent call last):
+54:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 38, in running
+54:     yield process, path
+54:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 91, in diagnose
+54:     with connect(port, process) as peer:
+54:          ~~~~~~~^^^^^^^^^^^^^^^
+54:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 63, in connect
+54:     raise RuntimeError('Server exited before connection')
+54: RuntimeError: Server exited before connection
+54: 
+54: During handling of the above exception, another exception occurred:
+54: 
+54: Traceback (most recent call last):
+54:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 124, in <module>
+54:     elif mode in {'diagnosis', 'checkpoint'}: diagnose(binary, work, mode == 'checkpoint')
+54:                                               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+54:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 90, in diagnose
+54:     with running(binary, args) as (process, log):
+54:          ~~~~~~~^^^^^^^^^^^^^^
+54:   File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+54:     self.gen.throw(value)
+54:     ~~~~~~~~~~~~~~^^^^^^^
+54:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 56, in running
+54:     raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+54: RuntimeError: Process exited 127: /tmp/installed-echo-w577m9vb/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+54: 
+6/6 Test #54: exercise-ch27-checkpoint .........***Failed   10.37 sec
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/snodec-environment-lab-lphn5mgv/build
+[ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[ 33%] Linking CXX static library libechosocketcontext.a
+[ 33%] Built target echosocketcontext
+[ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[ 83%] Linking CXX executable echoclient
+[100%] Linking CXX executable echoserver
+[100%] Built target echoclient
+[100%] Built target echoserver
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Error at CMakeLists.txt:9 (find_package):
+  Found package configuration file:
+
+    /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+
+  but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+  NOT FOUND.  Reason given by package:
+
+  Unsupported SNode.C component requested: net-in-stream-missing
+
+
+
+-- Configuring incomplete, errors occurred!
+
+PASS: missing component stops configuration before any runtime endpoint exists
+PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/installed-echo-w577m9vb/build
+[ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[ 33%] Linking CXX static library libechosocketcontext.a
+[ 33%] Built target echosocketcontext
+[ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[ 83%] Linking CXX executable echoserver
+[ 83%] Built target echoserver
+[100%] Linking CXX executable echoclient
+[100%] Built target echoclient
+-- Install configuration: "Release"
+-- Installing: /tmp/installed-echo-w577m9vb/install/bin/echoserver
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-w577m9vb/install/bin/echoserver" to "/tmp/installed-echo-w577m9vb/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+-- Installing: /tmp/installed-echo-w577m9vb/install/bin/echoclient
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-w577m9vb/install/bin/echoclient" to "/tmp/installed-echo-w577m9vb/install/:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib"
+PASS: fresh external Release consumer installed at /tmp/installed-echo-w577m9vb/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+/tmp/installed-echo-w577m9vb/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 38, in running
+    yield process, path
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 91, in diagnose
+    with connect(port, process) as peer:
+         ~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 63, in connect
+    raise RuntimeError('Server exited before connection')
+RuntimeError: Server exited before connection
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 124, in <module>
+    elif mode in {'diagnosis', 'checkpoint'}: diagnose(binary, work, mode == 'checkpoint')
+                                              ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 90, in diagnose
+    with running(binary, args) as (process, log):
+         ~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 56, in running
+    raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+RuntimeError: Process exited 127: /tmp/installed-echo-w577m9vb/install/bin/echoserver: symbol lookup error: /usr/local/lib/libsnodec-core-mux-epoll.so.2: undefined symbol: _ZNK6logger13LogScopeOwner6loggerENS_14BoundaryLogger4SinkESt8functionIFNSt6chrono10time_pointINS4_3_V212system_clockENS4_8durationIlSt5ratioILl1ELl1000000000EEEEEEvEE
+
+
+
+The following tests passed:
+	exercise-ch25-consumer
+	exercise-ch25-component
+
+33% tests passed, 4 tests failed out of 6
+
+Total Test time (real) =  41.08 sec
+
+The following tests FAILED:
+	 51 - exercise-ch26-lifecycle (Failed)
+	 52 - exercise-ch26-configuration (Failed)
+	 53 - exercise-ch27-diagnosis (Failed)
+	 54 - exercise-ch27-checkpoint (Failed)
+Errors while running CTest

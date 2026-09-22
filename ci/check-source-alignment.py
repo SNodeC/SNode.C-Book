@@ -83,7 +83,7 @@ def main() -> int:
     sources = list((ROOT / "manuscript").rglob("*.md"))
     sources += list((ROOT / "review/proposal").glob("*.md"))
     sources += list((ROOT / "assets/figures/src").glob("*.tex"))
-    marked = re.compile(r"<!-- snodec-source: ([^\n]+?) -->\s*\n```(?:cpp|cmake)\n(.*?)\n```", re.S)
+    marked = re.compile(r"<!-- snodec-source: ([^\n]+?) -->\s*\n```(?:cpp|cmake|python)\n(.*?)\n```", re.S)
     count = 0
     for path in sources:
         text = path.read_text()
@@ -93,7 +93,7 @@ def main() -> int:
             errors.append(f"Old reader-facing baseline remains in {path.relative_to(ROOT)}")
         for match in marked.finditer(text):
             source = (ROOT / match[1]).resolve()
-            if not source.is_relative_to(ROOT / "companion/examples") or not source.is_file():
+            if not any(source.is_relative_to(ROOT / "companion" / area) for area in ("examples", "exercises")) or not source.is_file():
                 errors.append(f"Invalid companion source marker: {match[1]}")
                 continue
             count += 1

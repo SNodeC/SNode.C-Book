@@ -2107,7 +2107,7 @@
       "source_ids": [
         "R309"
       ],
-      "line": 589
+      "line": 316
     },
     {
       "file": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
@@ -2118,7 +2118,7 @@
       "source_ids": [
         "R310"
       ],
-      "line": 589
+      "line": 316
     },
     {
       "file": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
@@ -2129,7 +2129,7 @@
       "source_ids": [
         "R311"
       ],
-      "line": 589
+      "line": 316
     },
     {
       "file": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
@@ -2140,7 +2140,7 @@
       "source_ids": [
         "R312"
       ],
-      "line": 599
+      "line": 318
     },
     {
       "file": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
@@ -2151,7 +2151,7 @@
       "source_ids": [
         "R313"
       ],
-      "line": 652
+      "line": 327
     },
     {
       "file": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
@@ -2162,7 +2162,7 @@
       "source_ids": [
         "R314"
       ],
-      "line": 728
+      "line": 369
     },
     {
       "file": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
@@ -2173,7 +2173,7 @@
       "source_ids": [
         "R315"
       ],
-      "line": 761
+      "line": 396
     },
     {
       "file": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
@@ -2184,7 +2184,7 @@
       "source_ids": [
         "R316"
       ],
-      "line": 919
+      "line": 468
     },
     {
       "file": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
@@ -2195,40 +2195,7 @@
       "source_ids": [
         "R317"
       ],
-      "line": 71
-    },
-    {
-      "file": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
-      "text": "Chapter 25",
-      "targets": [
-        "cmake-components-and-linking-strategy"
-      ],
-      "source_ids": [
-        "R318"
-      ],
-      "line": 135
-    },
-    {
-      "file": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
-      "text": "Chapter 25",
-      "targets": [
-        "cmake-components-and-linking-strategy"
-      ],
-      "source_ids": [
-        "R319"
-      ],
-      "line": 143
-    },
-    {
-      "file": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
-      "text": "Chapter 25",
-      "targets": [
-        "cmake-components-and-linking-strategy"
-      ],
-      "source_ids": [
-        "R320"
-      ],
-      "line": 169
+      "line": 31
     },
     {
       "file": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
@@ -2239,7 +2206,7 @@
       "source_ids": [
         "R321"
       ],
-      "line": 311
+      "line": 126
     },
     {
       "file": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
@@ -2250,7 +2217,7 @@
       "source_ids": [
         "R322"
       ],
-      "line": 425
+      "line": 225
     },
     {
       "file": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
@@ -2261,7 +2228,7 @@
       "source_ids": [
         "R323"
       ],
-      "line": 684
+      "line": 340
     },
     {
       "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
@@ -2272,7 +2239,7 @@
       "source_ids": [
         "R324"
       ],
-      "line": 51
+      "line": 35
     },
     {
       "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
@@ -2284,7 +2251,7 @@
       "source_ids": [
         "R325"
       ],
-      "line": 141
+      "line": 119
     },
     {
       "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
@@ -2295,18 +2262,7 @@
       "source_ids": [
         "R326"
       ],
-      "line": 149
-    },
-    {
-      "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
-      "text": "Chapter 13",
-      "targets": [
-        "logging-diagnostics-and-runtime-introspection"
-      ],
-      "source_ids": [
-        "R327"
-      ],
-      "line": 157
+      "line": 123
     },
     {
       "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
@@ -2319,7 +2275,7 @@
       "source_ids": [
         "R328"
       ],
-      "line": 184
+      "line": 150
     },
     {
       "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
@@ -2330,40 +2286,7 @@
       "source_ids": [
         "R329"
       ],
-      "line": 206
-    },
-    {
-      "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
-      "text": "Chapter 25",
-      "targets": [
-        "cmake-components-and-linking-strategy"
-      ],
-      "source_ids": [
-        "R330"
-      ],
-      "line": 249
-    },
-    {
-      "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
-      "text": "Chapter 26",
-      "targets": [
-        "deployment-on-linux-and-openwrt"
-      ],
-      "source_ids": [
-        "R331"
-      ],
-      "line": 355
-    },
-    {
-      "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
-      "text": "Chapter 27",
-      "targets": [
-        "testing-debugging-and-benchmarking"
-      ],
-      "source_ids": [
-        "R332"
-      ],
-      "line": 355
+      "line": 166
     },
     {
       "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
@@ -2374,7 +2297,7 @@
       "source_ids": [
         "R333"
       ],
-      "line": 393
+      "line": 287
     },
     {
       "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
@@ -2385,7 +2308,7 @@
       "source_ids": [
         "R334"
       ],
-      "line": 401
+      "line": 295
     },
     {
       "file": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
@@ -2396,7 +2319,7 @@
       "source_ids": [
         "R335"
       ],
-      "line": 531
+      "line": 347
     },
     {
       "file": "manuscript/parts/part-11-building-and-evaluating-minigateway.md",
@@ -3271,6 +3194,33 @@
         "learning-from-the-applications-in-src-apps",
         "from-applications-to-systems",
         "mqttsuite-as-a-reference-ecosystem"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch25/README.md",
+      "text": "Chapter 25",
+      "targets": [
+        "cmake-components-and-linking-strategy"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch26/README.md",
+      "text": "Chapter 26",
+      "targets": [
+        "deployment-on-linux-and-openwrt"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch27/README.md",
+      "text": "Chapter 27",
+      "targets": [
+        "testing-debugging-and-benchmarking"
       ],
       "source_ids": [],
       "line": 1
@@ -6810,8 +6760,8 @@
       "old_chapters": [
         32
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md:135"
+      "status": "retired",
+      "evidence": "Phase 5k Part X condensation: repeated chapter pointer removed; the surrounding component, deployment or test explanation remains. See phase-5k-reference-audit.md and the Phase 5k commit diff."
     },
     {
       "id": "R319",
@@ -6821,8 +6771,8 @@
       "old_chapters": [
         32
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md:143"
+      "status": "retired",
+      "evidence": "Phase 5k Part X condensation: repeated chapter pointer removed; the surrounding component, deployment or test explanation remains. See phase-5k-reference-audit.md and the Phase 5k commit diff."
     },
     {
       "id": "R320",
@@ -6832,8 +6782,8 @@
       "old_chapters": [
         32
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md:169"
+      "status": "retired",
+      "evidence": "Phase 5k Part X condensation: repeated chapter pointer removed; the surrounding component, deployment or test explanation remains. See phase-5k-reference-audit.md and the Phase 5k commit diff."
     },
     {
       "id": "R321",
@@ -6910,8 +6860,8 @@
       "old_chapters": [
         18
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/27-testing-debugging-and-benchmarking.md:157"
+      "status": "retired",
+      "evidence": "Phase 5k Part X condensation: repeated chapter pointer removed; the surrounding component, deployment or test explanation remains. See phase-5k-reference-audit.md and the Phase 5k commit diff."
     },
     {
       "id": "R328",
@@ -6945,8 +6895,8 @@
       "old_chapters": [
         32
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/27-testing-debugging-and-benchmarking.md:249"
+      "status": "retired",
+      "evidence": "Phase 5k Part X condensation: repeated chapter pointer removed; the surrounding component, deployment or test explanation remains. See phase-5k-reference-audit.md and the Phase 5k commit diff."
     },
     {
       "id": "R331",
@@ -6956,8 +6906,8 @@
       "old_chapters": [
         33
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/27-testing-debugging-and-benchmarking.md:355"
+      "status": "retired",
+      "evidence": "Phase 5k Part X condensation: repeated chapter pointer removed; the surrounding component, deployment or test explanation remains. See phase-5k-reference-audit.md and the Phase 5k commit diff."
     },
     {
       "id": "R332",
@@ -6967,8 +6917,8 @@
       "old_chapters": [
         34
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/27-testing-debugging-and-benchmarking.md:355"
+      "status": "retired",
+      "evidence": "Phase 5k Part X condensation: repeated chapter pointer removed; the surrounding component, deployment or test explanation remains. See phase-5k-reference-audit.md and the Phase 5k commit diff."
     },
     {
       "id": "R333",

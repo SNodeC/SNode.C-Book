@@ -1,6 +1,6 @@
 # Public exercises and solutions
 
-These are the public solutions for Parts I–IX and the later sample chapters. Each chapter has two
+These are the public solutions for Parts I–X and the later sample chapters. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
@@ -63,6 +63,12 @@ disable networking and use a private Unix socket as the current ordinary user.
 No existing database or credentials are used. Missing tools fail explicitly. The
 HTTP composition and gateway restart observations remain local alternatives; they
 do not establish database durability. Use `-LE equipped` for a local-only subset.
+
+Part X reuses the external EchoPair build and missing-component experiment, then
+installs a fresh Release consumer into a temporary prefix. Runtime checks clear
+loader overrides and use the installation's library paths. They observe process
+restart, invalid-configuration recovery, endpoint refusal and a bounded echo
+measurement. They do not install a service unit or deploy to an OpenWrt device.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.

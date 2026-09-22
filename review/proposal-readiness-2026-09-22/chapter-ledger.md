@@ -1247,3 +1247,141 @@ servers. The author stopped them; cleanup now uses SQL SHUTDOWN before removing
 state, with a free-space preflight and bounded storage. Final labs leave no private
 server. REPORT.md records failures and cleanup evidence. Hosted CI, database crash
 recovery, explicit rollback and a deployed MQTTSuite are **not newly verified**.
+
+
+## Phase 5k — Part X, 2026-09-22
+
+Edited and reread all three chapters, the Part X opener and public solutions.
+Fresh entry evidence is in `phase-5k-entry-exit-checks.json`; historical Phase 5j
+evidence is unchanged. Budgets include new teaching apparatus and remain ceilings.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 25 | 6,311 → 3,903 / 4,100 | 5,623 → 3,402 | 688 → 501 | 40 → 10 / 10 | 328.00 |
+| 26 | 5,558 → 3,596 / 3,700 | 5,240 → 3,383 | 318 → 213 | 40 → 10 / 10 | 327.30 |
+| 27 | 5,722 → 4,169 / 4,200 | 5,257 → 3,913 | 465 → 256 | 41 → 10 / 10 | 376.60 |
+
+**Reserve allocation:** 400 words to Chapter 27, raising 3,800 to 4,200.
+Part X is **11,668 / 12,000**; reserve used **400**, remaining **2,350**.
+The original planned total rises from 112,250 to **112,650**, below the hard
+115,000 ceiling. Retaining the concrete test taxonomy, diagnostic-versus-wire
+distinction, non-rollback reconfiguration qualification, sanitizer setup limits
+and bounded benchmark interpretation is preferable to forcing further cuts.
+The stop rule applies to all three chapters; the preservation audit below
+separates retained teaching from removed restatement.
+
+Each chapter has three observable objectives, five recap bullets and five
+exercises: two review, two labs and one design. The public answers use the same
+objective identifiers. The Part X checkpoint builds and installs the canonical
+consumer, diagnoses a refused endpoint and records 200 exact-payload samples.
+
+### Objective ↔ exercise mapping
+
+| Exercise | Tier | Objectives | Public solution |
+| --- | --- | --- | --- |
+| 25.1 | Review | O1 | `companion/exercises/ch25/README.md:3` |
+| 25.2 | Review | O1, O3 | `companion/exercises/ch25/README.md:11` |
+| 25.3 | Lab | O1, O2 | `companion/exercises/ch25/README.md:20` |
+| 25.4 | Lab | O2, O3 | `companion/exercises/ch25/README.md:43` |
+| 25.5 | Design | O1, O3 | `companion/exercises/ch25/README.md:56` |
+| 26.1 | Review | O1, O3 | `companion/exercises/ch26/README.md:3` |
+| 26.2 | Review | O2, O3 | `companion/exercises/ch26/README.md:12` |
+| 26.3 | Lab | O1, O2 | `companion/exercises/ch26/README.md:22` |
+| 26.4 | Lab | O2, O3 | `companion/exercises/ch26/README.md:54` |
+| 26.5 | Design | O1, O3 | `companion/exercises/ch26/README.md:72` |
+| 27.1 | Review | O1 | `companion/exercises/ch27/README.md:3` |
+| 27.2 | Review | O1, O3 | `companion/exercises/ch27/README.md:12` |
+| 27.3 | Lab | O1, O2 | `companion/exercises/ch27/README.md:21` |
+| 27.4 | Lab | O1, O2, O3 | `companion/exercises/ch27/README.md:40` |
+| 27.5 | Design | O1, O3 | `companion/exercises/ch27/README.md:72` |
+
+| Objective | Exercises |
+| --- | --- |
+| 25.O1 | 25.1, 25.2, 25.3, 25.5 |
+| 25.O2 | 25.3, 25.4 |
+| 25.O3 | 25.2, 25.4, 25.5 |
+| 26.O1 | 26.1, 26.3, 26.5 |
+| 26.O2 | 26.2, 26.3, 26.4 |
+| 26.O3 | 26.1, 26.2, 26.4, 26.5 |
+| 27.O1 | 27.1, 27.2, 27.3, 27.4, 27.5 |
+| 27.O2 | 27.3, 27.4 |
+| 27.O3 | 27.2, 27.4, 27.5 |
+
+### Content-preservation audit
+
+Ch25 = `manuscript/chapters/25-cmake-components-and-linking-strategy.md`,
+Ch26 = `manuscript/chapters/26-deployment-on-linux-and-openwrt.md`,
+Ch27 = `manuscript/chapters/27-testing-debugging-and-benchmarking.md`.
+
+| Retained explanation, example or qualification | Evidence |
+| --- | --- |
+| Top-level/src responsibilities; C++20, warnings, platform exceptions, linker and ASan qualification | Ch25:14 |
+| Complete dependency graph, shared-path and extra-edge interpretation | Ch25:76 |
+| Public include examples and complete component/header matrix | Ch25:186 |
+| Alias/link fragments, PUBLIC/PRIVATE/INTERFACE static-library qualification, ownership rule/checklist | Ch25:237 |
+| Multiplexer default versus process override; core/family composition; separate legacy/TLS targets | Ch25:290 |
+| Upgrade directory contract; Express base/concrete ownership; WebSocket and native/carried MQTT | Ch25:309 |
+| Optional enhancement/requirement/gate distinctions; complete compiled-default list and runtime-policy qualification | Ch25:331 |
+| Test/application switches, full commands, instrumentation, private-header discipline and logger request/export distinction | Ch25:373 |
+| Export machinery, full external CMake example, include snippet and eleven-step reading recipe | Ch25:406 |
+| Installed architecture figure, warning, Linux rehearsal and component-package examples | Ch26:13 |
+| CPack capability/limit, dependency table, multiplexer and runtime-selected modules | Ch26:35 |
+| Four deployment questions and transitive loader-path qualification | Ch26:64 |
+| Root/user directories, group ownership, foreground supervision, generated config and mutable state | Ch26:82 |
+| Complete Linux install/configuration/peer/systemd commands and failure/restart/cleanup walkthrough | Ch26:124 |
+| TLS trust/ownership/renewal, database endpoint/schema/failure policy and web assets | Ch26:217 |
+| Embedded costs, matching SDK, recipe/dependency, release-specific packaging, feed trust and procd | Ch26:229 |
+| Entire equipped OpenWrt prerequisite, recipe table, commands, service script, SSH peer and reboot qualification | Ch26:253 |
+| Coherent installed artifacts, target validation and configuration-versus-log distinction | Ch26:333 |
+| Fourteen-question checklist, service-account rehearsal and MiniGateway liveness/readiness qualification | Ch26:346 |
+| Framework and label commands, independent build/run/skip and registration-count distinctions | Ch27:16 |
+| Test tree, complete category table, architecture figure and helper responsibility | Ch27:58 |
+| Address excerpt, diagnostic-versus-wire distinction, parser pending state, lifetime, resource and semantic logging cases | Ch27:93 |
+| Family matrix, named tests, HTTP/Express boundaries, WebSocket/SSE limits, non-rollback reconfiguration and pipes | Ch27:133 |
+| Named source-policy checks, restrictions, intentional exceptions and lexical limits | Ch27:172 |
+| Staged-consumer scope, full external commands and independent peer/pair distinction | Ch27:194 |
+| Outcome table, timeouts, CI scope, full ASan commands and toolchain/runtime/hardware/load qualifications | Ch27:229 |
+| Installed modules/loader behavior, service operations and target-specific checks | Ch27:279 |
+| Diagnostic boundary list, concrete instance names, reproducible reports, lifetime questions and full regression recipe | Ch27:299 |
+| Workload dimensions, complete Python measurement, exact bytes, small-sample p95, latency/throughput distinction and profiling | Ch27:341 |
+
+`check-phase-5k.py` verifies all 293 executable/configuration fences, C++ order,
+all index occurrences and figure IDs against Phase 5j. Existing complete markers
+remain, and the unchanged benchmark now has an exact public Python source marker.
+The checker also compares parsed Pandoc headings with source heading counts.
+The chapter diff records removed repeated framing, duplicated lists and text
+blocks; no executable example was cut for budget. The unchanged Linux/OpenWrt
+walkthroughs remain equipped extensions, separate from locally executed labs.
+
+### Built, run and limits
+
+All **58 public labs** pass (`phase-5k-final-labs.log:1076`). New tests appear
+at :564–1042. Chapter 25 reuses the unchanged environment/component experiments.
+Chapters 26–27 share one fresh Release consumer build/private installation driver.
+It checks the selected CMake package and clears loader environment overrides for
+the installed process. Two lifecycle exchanges establish exact binary echo, a
+new PID after restart and connection refusal after shutdown. The invalid port
+stops startup with configuration status 2; restoring configuration restores echo.
+
+The diagnostic pair contrasts component discovery failure with endpoint refusal.
+The checkpoint executes the chapter’s canonical Python measurement with only
+its fixed endpoint replaced by a private port: 20 warm-ups, 200 checked 256-byte
+samples, median and nearest-rank p95. A virtual changed-sample negative check
+confirms alignment rejects a differing Python companion (`phase-5k-python-alignment-regression.log`).
+Timing is a local diagnostic observation, not a capacity claim or baseline.
+
+Hosted CI, actual systemd supervision, SDK/procd deployment, instrumented ASan
+execution and load/capacity experiments are **not newly verified**. Public answers
+explain those limits and retain the equipped extensions. No host service changes.
+
+Production **+0/−0**. Public lab/registration support **+172/−1** (171 new lines,
+plus the existing registration-line extension); alignment tooling **+2/−2**.
+Combined fixture/check support: **+174/−3, net +171**. This includes 26 lines
+copied unchanged from the printed Python calculation and a single 126-line
+installed-consumer observer. Canonical application sources, previous lab
+implementations and the common harness remain unchanged; no second application
+implementation or benchmark calculation was introduced. Public answers and
+phase review tools are documentation/review support, accounted separately.
+
+Development failures and their retained logs are described in REPORT.md. Final
+process inspection found no private echo or database server left running.

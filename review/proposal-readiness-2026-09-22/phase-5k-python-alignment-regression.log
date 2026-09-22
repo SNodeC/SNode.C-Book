@@ -1,0 +1,3 @@
+Negative check: virtually change the public benchmark from 220 exchanges to 221; no disk content changes.
+ERROR: Complete listing differs: manuscript/chapters/27-testing-debugging-and-benchmarking.md -> companion/exercises/ch27/roundtrip.py
+PASS: the real alignment checker rejects a Python companion/listing mismatch.

@@ -1,0 +1,143 @@
+{
+  "chapters": [
+    {
+      "chapter": 23,
+      "path": "manuscript/chapters/23-database-support-and-application-state.md",
+      "words_before": 5197,
+      "words_after": 3826,
+      "budget": 3900,
+      "prose_words": 3460,
+      "code_words": 366,
+      "headings": 10,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 334.8,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 231
+    },
+    {
+      "chapter": 24,
+      "path": "manuscript/chapters/24-snodec-in-larger-systems.md",
+      "words_before": 10556,
+      "words_after": 5591,
+      "budget": 6200,
+      "prose_words": 5329,
+      "code_words": 262,
+      "headings": 17,
+      "heading_ceiling": 17,
+      "average_section_prose_words": 304.35,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 260
+    }
+  ],
+  "part_ix_words": 9417,
+  "part_ix_budget": 10100,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1327,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "prior_lifetime_tests_preserved": true,
+  "canonical_entry_dependencies_unique": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 338,
+      "sha256": "5da6944b336e419d2c25818597f16cefbf771e7ba610ba10dd43b889a73c33f9",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "5000eb1517e1de517c9aad5f74454bd4473b610830ab6f419a74e167585cface",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "1c69529381fe6dcaf0f96a4ad6b1f9a1d15a5d811c9825e7342b6f7a7fc0e73a",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 352,
+  "reserve_used": 0,
+  "reserve_remaining": 2750,
+  "global_words": 109822,
+  "word_delta_from_phase_5i": -6300
+}
+PASS: Part IX budgets, pedagogy, mappings, scope, preserved listings, clean final PDFs and package contents.
+Execution and editorial/visual review are recorded in separate Phase 5j logs; future Parts are not certified.

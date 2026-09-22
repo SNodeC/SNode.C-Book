@@ -1,51 +1,21 @@
 ## Deployment on Linux and OpenWrt {#deployment-on-linux-and-openwrt}
 
+::: {.snodec-objectives title="Learning objectives"}
+- **O1.** Distinguish a linked application from a complete installed runtime environment.
+- **O2.** Observe installed echo behavior, process restart and configuration-error recovery.
+- **O3.** Choose service ownership, resources and target-specific deployment checks.
+:::
+
 \index{deployment}
 \index{Linux deployment}
 \index{OpenWrt}
 
-
-### Why deployment belongs after CMake
-
-Deployment is where build decisions meet the operating system.
-
-The subject is deployment, but the real topic is still architectural visibility. Deployment is where SNode.C's build choices enter the filesystem. Shared libraries, component packages, executable applications, exported CMake package files, runtime-loaded protocol modules, configuration directories, log directories, pid directories, service definitions, and package-manager metadata are not unrelated operational leftovers. They are the installed form of the architecture.
-
-The distinction is simple:
-
-```text
-linking:
-  the binary can be produced
-
-deployment:
-  the complete runtime environment exists
-```
-
-That distinction matters for SNode.C because the framework is used to build long-running communication roles: HTTP applications, MQTT tools, WebSocket upgrade handlers, database-connected services, IoT-facing components, and full systems such as MQTTSuite. Once those applications leave the build tree, the important questions are no longer only compiler and linker questions:
-
-```text
-Where are the libraries installed?
-Where are runtime-loaded modules installed?
-Which packages are required?
-Which user or group owns runtime state?
-Where do configuration, logs, and pid files live?
-How is the service supervised?
-Which TLS, database, or web-asset resources belong to the deployment?
-What changes on embedded Linux or OpenWrt?
-```
-
-These questions are not afterthoughts. They decide whether the built architecture can actually run.
-
 ### Deployment as installed architecture
+
+Deployment is where build decisions meet the operating system. Linking produces a binary; running a service requires its libraries, modules, configuration, supervision, writable state and application resources to exist with the correct ownership.
 
 \index{installed architecture}
 \index{filesystem layout}
-
-
-#### Architecture entering the filesystem
-
-Deployment is architecture entering the filesystem. When SNode.C is installed, the framework's internal boundaries become visible as libraries, executables, exported package files, runtime-loaded modules, configuration directories, service definitions, package metadata, and managed runtime state.
-
 A small experimental program may run from the build tree with a manually adjusted environment. A serious deployment needs a reproducible filesystem shape. Figure \ref{fig:build-install-package-deployment-surface} shows the path from a build component to an installed runtime surface.
 
 ::: {.snodec-warning title="Install-tree warning"}
@@ -54,44 +24,13 @@ Do not confuse build-tree success with install-tree success. A running role also
 
 ![The build-to-deployment path in which component choices become installed packages, service definition, configuration, and runtime state.](assets/figures/pdf/fig-11-build-install-package-deployment-surface.pdf){#fig:build-install-package-deployment-surface width=90% latex-placement="tbp"}
 
-Figure \ref{fig:build-install-package-deployment-surface} is intentionally not only a build pipeline. Each step preserves architectural information. A CMake target expresses a component boundary. An install component gives that boundary a filesystem location. A package component adds dependency metadata. The deployed runtime surface then has to contain everything the running role needs: libraries, executables, runtime-loaded modules, configuration, service definition, writable state, and deployment-specific resources.
+The figure goes beyond compilation: a component acquires an install location and package dependency metadata, then joins a service definition, configuration and writable state.
 
-The installed system should still reveal what was built. If the build selected HTTP, Express, MQTT, WebSocket, TLS, MariaDB support, or a particular network family, deployment should not hide those choices behind one opaque pile of files.
+General-purpose Linux workstations, servers, virtual machines and Debian-like SBCs provide the first rehearsal: build, install, package, configure and supervise. Even here the executable may need protocol extensions, TLS material, database access or web assets.
 
-#### General-purpose Linux as the first deployment target
+Chapter 25's component boundaries remain useful after installation. An IPv4 stream tool need not carry HTTP, MQTT or MariaDB; a web administrator may need Express but no MQTT; a bridge selects client/carrier support, while a store adds persistence.
 
-The first deployment target is general-purpose Linux: development workstations, servers, virtual machines, single-board computers running Debian-like distributions, and Linux-based lab systems. This environment is easiest to understand because it is close to the development system:
-
-CMake build, CMake install, CPack component package, package-manager installation, filesystem layout, service definition, and runtime configuration/state.
-
-Even there, SNode.C has a richer deployment story than a single executable. The framework installs component libraries, exported package configuration, runtime-sensitive protocol-extension layouts, and applications that may need logs, pid files, TLS material, database access, web assets, and service supervision.
-
-#### Component meaning should survive installation
-
-Chapter 25 treated SNode.C components as architectural surfaces. Deployment should preserve that meaning. A Linux package set does not have to collapse everything into one enormous install unit.
-
-For example, a small IPv4 stream tool does not need HTTP, WebSocket, MQTT, and MariaDB libraries. A web administration application may need HTTP and Express but not MQTT. An MQTT bridge may need MQTT client support and selected transport components. A database-backed store may need MariaDB support while a pure broker may not.
-
-This is where component packaging becomes practical. A deployment is easier to reason about when installed packages still reflect the same component boundaries that existed in the build.
-
-For runtime packages, this mostly means the right libraries, configuration, service files, and runtime-loadable modules. For development packages, it also means that public headers and exported CMake targets preserve the same component boundaries for external consumers.
-
-#### Deployment as runtime shape
-
-Copying one executable is rarely the whole deployment. A SNode.C application may need:
-
-- shared libraries,
-- runtime-loaded upgrade or subprotocol modules,
-- external library dependencies,
-- configuration files,
-- a writable log directory,
-- a writable pid directory,
-- TLS certificates and private keys,
-- database connectivity,
-- application-specific files such as web assets,
-- and a service definition.
-
-The binary is only one part of the deployed system. Deployment proves that all the other pieces are present, placed correctly, owned correctly, and visible to the runtime.
+Runtime packages supply libraries, modules, configuration and service files. Development packages also supply public headers and exported targets. Check the complete role: external libraries, readable configuration, writable log/pid directories, TLS keys and trust, database connectivity and web assets can all be required beyond the executable.
 
 ### Packages and installed component surfaces
 
@@ -100,26 +39,9 @@ The binary is only one part of the deployed system. Deployment proves that all t
 \index{package dependencies}
 \index{runtime-loaded modules}
 
+The top-level build includes packaging after `src`. Its CPack configuration enables Debian packages, shared-library dependency and metadata generation, component dependencies and installation, and one package per component group.
 
-#### CPack as the ordinary Linux packaging bridge
-
-SNode.C's top-level build enters `src` and then includes the project packaging configuration. Packaging is therefore part of the project build story, not an unrelated external script.
-
-The packaging configuration enables Debian package generation, shared-library dependency generation, shared-library metadata generation, component dependency handling, component installation, and one package per component group. That matters because it lets the component model survive into deployable packages.
-
-A useful deployment path is: SNode.C component target, install component, CPack component package, package dependency metadata, and target installation.
-
-The component model is therefore not only useful while compiling from source. It can become visible to the target system's package manager.
-
-#### What CPack solves, and what it does not solve
-
-CPack can package installed components and express package dependencies. It can help generate binary packages from install rules and component metadata.
-
-It does not create a complete deployment policy. It does not decide service supervision, certificate material, database schema, site-specific configuration, OpenWrt feed layout, repository signing policy, or operational update policy.
-
-CPack provides the packaging bridge. It does not replace system design.
-
-#### Package dependencies follow component dependencies
+CPack turns install rules into packages. It does not decide supervision, certificate material, database schema, site configuration, OpenWrt feed layout, repository signing or update policy.
 
 Package dependencies should follow component dependencies, and development packages should install the public headers that correspond to the components they expose. That is exactly what the SNode.C packaging configuration expresses.
 
@@ -132,59 +54,19 @@ Examples include:
 | WebSocket server/client packages | shared WebSocket layer and the corresponding HTTP side |
 | `net-in-stream-tls` | `net-in-stream`, `core-socket-stream-tls` |
 
-This mirrors the component graph from Chapter 25. A package manager should not have to rediscover the architecture from filenames. The package metadata should already carry the dependency story.
-
-#### Multiplexer packages and runtime overrides
+The metadata carries the component graph to the package manager. `mux-epoll`, `mux-poll` and `mux-select` are separate packages; `core` requires its selected default and `utils`. Additional multiplexers can be installed deliberately for process-local overrides such as `LD_PRELOAD`, without changing the application's event model.
 
 \index{multiplexer packages}
 \index{runtime overrides}
 
+Ordinary dependencies must be found by the platform loader. HTTP upgrade and WebSocket subprotocol modules add runtime selection: the application can start successfully while a later upgrade fails because its module is missing or misplaced. Install these libraries where SNode.C expects them or where configuration selects them.
 
-Chapter 25 introduced the multiplexer choice. Deployment makes that choice visible.
-
-SNode.C has package components for the multiplexer libraries:
-
-```text
-mux-epoll
-mux-poll
-mux-select
-```
-
-The `core` package depends on the selected default multiplexer component:
-
-`core` with the selected `mux-${IO_Multiplexer}` component and `utils`.
-
-That is the ordinary deployment path. A deployment may still install additional multiplexer libraries deliberately if process-local override techniques such as `LD_PRELOAD` are part of the operational or diagnostic strategy. That gives two deployment modes:
-
-normal package dependency, where the selected default multiplexer is installed with `core`; and explicit operational override, where an additional multiplexer library is available for process-local override.
-
-Both mechanisms remain deployment decisions. They do not change the application-facing event-driven model.
-
-#### Installed paths and runtime-loaded modules
-
-Some libraries are ordinary link-time dependencies. Others participate in runtime protocol composition. HTTP upgrade support, WebSocket upgrade handling, WebSocket subprotocol support, and MQTT-over-WebSocket composition make installation paths operationally important.
-
-For ordinary linked libraries, the platform loader must find the dependency. For upgrade and subprotocol composition, SNode.C must also find the libraries that participate in runtime protocol composition. A dynamically loaded or path-sensitive module must therefore be installed where the runtime expects it, or where configuration tells the runtime to find it.
-
-Chapter 25 identified the build-side properties that make such runtime composition visible. In deployment, those choices stop being abstract build details. They become the difference between:
-
-application starts, the runtime protocol extension is found, and WebSocket or MQTT-over-WebSocket works.
-
-and:
-
-application starts, runtime protocol extension is missing, and the upgrade path fails.
-
-A missing WebSocket upgrade or subprotocol module may look like an application failure, but it can be a deployment-path failure.
-
-#### RPATH as deployment policy
+### RPATH as deployment policy
 
 \index{RPATH@\texttt{RPATH}}
 \index{deployment policy}
 
-
-RPATH is often treated as a linker detail. For SNode.C it can also be part of deployment policy.
-
-In a build tree, library locations are usually convenient and known. In an installed system, the runtime loader must still find the libraries. For ordinary system libraries, the platform linker configuration may be enough. For nested SNode.C protocol-extension layouts, install RPATH and well-defined library directories can be part of the runtime contract.
+Build-tree lookup paths are not installed lookup paths. System linker configuration may locate ordinary libraries, while nested protocol-extension layouts can require install RPATH and explicit directories.
 
 A deployment should answer:
 
@@ -195,6 +77,8 @@ A deployment should answer:
 
 RPATH can preserve intended lookup paths for installed components, but deployment still has to ensure that the files, permissions, and package dependencies are actually present on the target. The last question becomes especially important for OpenWrt and other cross-compiled environments.
 
+For the private Linux installation below, also inspect transitive library lookup. An executable’s `DT_RUNPATH` applies only to its direct dependencies. The companion lifecycle lab uses `-DCMAKE_EXE_LINKER_FLAGS=-Wl,--disable-new-dtags` to select inherited `DT_RPATH` for its private prefix. A maintained package instead needs a coherent loader policy for the complete installed dependency graph.
+
 ### Runtime state and service operation
 
 \index{runtime state}
@@ -202,9 +86,6 @@ RPATH can preserve intended lookup paths for installed components, but deploymen
 \index{daemonization}
 \index{service managers}
 \index{pid files}
-
-
-#### Configuration directories
 
 SNode.C's configuration model creates real deployment expectations. When run with effective root privileges, the current configuration startup code uses system-level directories:
 
@@ -222,91 +103,25 @@ In non-root mode, the current code chooses a user base from `XDG_CONFIG_HOME`, `
 <user-base>/.local/run/snode.c
 ```
 
-This distinction is useful. The same application can run in development as a normal user and in deployment as a system service, without pretending that those are the same mode. The directories are part of the operational shell of the application.
-
-#### The `snodec` group and ownership model
+These locations distinguish ordinary-user development from root-mode operation; service identity determines which paths must be prepared.
 
 When root-mode directory creation is needed, SNode.C expects a management group. The default group name is compiled from `GROUP_NAME`, whose current build default is `snodec`. During root-mode directory creation, the code looks up that group and uses it for group ownership. If the group is missing, directory setup is treated as a configuration/runtime setup error.
 
-A deployment package or installation procedure therefore has to prepare the runtime ownership model. That usually means:
+Prepare that group, directory ownership and permissions, and service-user membership where appropriate. Avoid world-writable runtime directories. A failure to read configuration or create a log/pid file is a deployment failure before it is a protocol problem.
 
-- create the configured group if it does not exist,
-- set directory ownership and permissions correctly,
-- add service users where appropriate,
-- avoid world-writable runtime directories,
-- and make sure the application can create or read its configuration, log, and pid files.
+The configuration shell exposes `--daemonize`, `--user-name`, `--group-name`, `--kill`, `--log-file` and `--enforce-log-file`. These let applications manage background execution, identity and files; they do not replace host supervision.
 
-This supports operational reliability and security hygiene. A service that cannot create its pid file or log file because deployment forgot directory ownership will fail in a way that looks unrelated to HTTP, MQTT, WebSocket, or database code.
-
-#### Daemonization and service managers
-
-SNode.C applications expose daemonization-related options through the configuration shell. The root configuration includes options such as:
-
-```text
---daemonize
---user-name
---group-name
---kill
---log-file
---enforce-log-file
-```
-
-An application can run in foreground mode or daemon mode, write pid files, and switch user or group privileges, but those capabilities do not remove the need for a host service manager.
-
-On general-purpose Linux, a long-running service is often better supervised by systemd or the local service manager. That service manager can own restart policy, logging integration, dependencies, user identity, and lifecycle. On OpenWrt, a continuously running packaged SNode.C application should normally be integrated with the platform service supervision model, commonly `procd`.
-
-The deployment question is therefore not only:
-
-```text
-Can the program daemonize itself?
-```
-
-It is also:
-
-```text
-Which operating-system service model should supervise this role?
-```
-
-SNode.C gives applications an operational shell. Deployment integrates that shell with the host service model.
-
-#### Foreground mode during development
+A Linux service manager can own restart, logging, dependencies and process lifetime. OpenWrt normally uses `procd`. Run in the foreground beneath a foreground-process supervisor rather than daemonizing out of its control.
 
 During development and debugging, foreground execution is usually the clearest mode. It keeps process output, configuration experiments, and failure behavior visible before the role is hidden behind a service manager.
 
 A typical development rhythm is to run in the foreground, inspect help and effective configuration, enable a narrow semantic logging override if needed, write a configuration file, and move the role into a managed service.
 
-Deployment begins with understanding the effective configuration, not with hiding the process in the background.
+Generated configuration records the deployed role map: enabled instances, endpoints, TLS, retries/timeouts, application logging/daemon options and state directories. Keep it as a reproducible deployment artifact.
 
-#### Generated configuration as deployment artifact
+Logs and pid files are mutable runtime state. Decide where they live, who can read and write them, how logs rotate and whether the supervisor needs the pid file or it is only an application convenience.
 
-SNode.C's ability to show and write configuration is especially important in deployment. A generated configuration file is a reproducible description of the deployed role shape.
-
-It can record:
-
-- which configured roles exist,
-- which registered instances are enabled,
-- which local and remote addresses are used,
-- which TLS settings are active,
-- which retry and timeout policies matter,
-- which application-level options shape logging or daemon behavior,
-- and which runtime-state directories are used.
-
-This is particularly valuable for multi-role systems. A SNode.C configuration file can become a readable map of the deployed role constellation. That is much clearer than a shell script full of opaque command-line fragments.
-
-#### Logs and pid files as managed state
-
-Logs and pid files are runtime state. They are not source files, and they are not static configuration. A deployment answers:
-
-- where are logs written?
-- who can read them?
-- are they rotated by the operating system?
-- where is the pid file written?
-- does the service user have permission to write it?
-- does the init system rely on it, or is it only a SNode.C convenience?
-
-A pid file and a log file are not architectural features, but unmanaged pid and log locations can break an otherwise correct deployment. A network framework can be technically correct and still fail operationally if runtime state is unmanaged.
-
-#### A worked Linux service: the installed echo server
+### A worked Linux service: the installed echo server
 
 Use the Chapter 3 echo server for a small service rehearsal. It needs no broker, database, web assets, or protocol module, so the exercise isolates installation, configuration, supervision, and shutdown. The example uses a systemd user manager and a private loopback port. The user manager must be available in the login session; this does not configure a system-wide service or boot-time user lingering.
 
@@ -405,56 +220,11 @@ Remove the rehearsal unit and its dedicated configuration when finished, then ru
 \index{database dependencies}
 \index{web assets}
 
+TLS needs certificate chains, private keys, CA files/directories, renewal policy, ownership, permissions and any SNI configuration. Linking a TLS component supplies none of that deployment policy.
 
-#### TLS certificate material
+Chapter 23's persistence boundary requires a client-library package plus a database endpoint, credentials, schema, permissions and an unavailable-database policy. Record both the package dependency and the persistent-state contract; MQTTStore and history services depend on both.
 
-TLS deployment is not finished when an application links against TLS-capable components. A TLS deployment also installs and protects certificate material:
-
-- certificate chains,
-- private keys,
-- CA files or CA directories,
-- renewal policy,
-- file ownership,
-- file permissions,
-- and SNI-related configuration where needed.
-
-A TLS-capable binary is not yet a secure deployment. The certificate and trust material must be deployed correctly too.
-
-#### Database dependencies and persistent state
-
-Chapter 23 treated persistence as an application-state boundary. Deployment turns that boundary into library dependencies, credentials, schema assumptions, database reachability, and failure policy.
-
-An application may need the MariaDB client library on the target. It may also need access to a database server, socket path or network endpoint, database name, user, password source, schema, and permissions. Database deployment is therefore both:
-
-```text
-package dependency deployment
-  + persistent-state deployment
-```
-
-A good deployment makes the database contract visible:
-
-- which package provides the client library,
-- which configuration values identify the database endpoint,
-- which schema is expected,
-- which credentials are required,
-- and what happens when the database is unavailable.
-
-This becomes especially important for MQTTStore, IoT history, monitoring, or other persistence-facing applications.
-
-#### Web assets and application-specific files
-
-Some applications deploy more than binaries and shared libraries. For example, the MQTTSuite broker build installs browser assets for its web interface below a MQTTSuite web directory.
-
-That is a concrete reminder that application deployment may include:
-
-- executables,
-- SNode.C libraries,
-- web assets,
-- configuration files,
-- service definitions,
-- and runtime directories.
-
-Those files belong to different parts of the filesystem and have different update and ownership expectations. A deployment that treats all of them as one anonymous copy step loses useful structure.
+Applications can also install web assets, as the MQTTSuite broker does below its web directory. Executables, libraries, assets, configuration, service definitions and runtime directories have different update and ownership rules; one anonymous copy step hides those distinctions.
 
 ### Embedded Linux and OpenWrt
 
@@ -462,139 +232,25 @@ Those files belong to different parts of the filesystem and have different updat
 \index{OpenWrt!deployment}
 \index{OpenWrt SDK}
 
+Embedded targets make storage, memory, library count, startup time, log volume, writable flash and optional dependencies more expensive. Package only the protocol families, modules and applications the target uses.
 
-#### Embedded Linux changes the deployment priorities
+OpenWrt adds embedded, cross-compiled and package-managed constraints to Linux. Typical systems use BusyBox, musl, `procd` and overlay filesystems. The matching SDK supplies the target CPU, C library, ABI, compiler/linker and library environment; a desktop binary is not a substitute.
 
-General-purpose Linux teaches the basic model. Embedded Linux does not change the architecture, but it changes the cost of every dependency.
+The flow is SDK, package recipe, cross-compiled package, feed/image, package-manager installation, service and runtime configuration. Commands and package formats depend on the selected release. Let that release's build system produce its package format instead of treating an extension as a stable interface.
 
-On smaller targets, deployment becomes more sensitive to:
+Recipes should preserve useful component boundaries: core and multiplexer, network families, TLS, HTTP/Express, WebSocket, MQTT, MariaDB and selected applications may be split separately. This is packaging policy, not a claim that the repository ships that feed layout. Declare TLS, JSON, database and Bluetooth dependencies explicitly; where JSON is built into a component, ensure the SDK supplies it reproducibly.
 
-- storage size,
-- memory use,
-- library count,
-- package granularity,
-- startup time,
-- log volume,
-- writable flash use,
-- cross-compilation correctness,
-- and external dependency selection.
+A feed identifies available packages/versions, dependencies and target architectures for installation or image builds. Repository metadata, signing and update trust belong to distribution; a correctly compiled package alone cannot establish them.
 
-Therefore, SNode.C's componentized design matters. A constrained target does not need to carry protocol families, database support, example applications, or dynamic modules it never uses. On embedded systems, linking and packaging discipline become resource discipline.
-
-#### OpenWrt is Linux under embedded constraints
-
-OpenWrt is Linux, but it is not ordinary server deployment. It targets routers and embedded network devices, and it commonly appears with BusyBox, musl, `procd`, overlay filesystems, cross-compilation workflows, and package-manager-based system assembly rather than a full desktop/server distribution model.
-
-A compact mental model is SNode.C Linux deployment under embedded, cross-compiled, package-managed constraints.
-
-That is the heart of the OpenWrt part of the chapter.
-
-#### The OpenWrt SDK as packaging environment
-
-For application packages, the OpenWrt SDK is usually the right starting point. A binary copied from a desktop build tree is usually the wrong deployment artifact for OpenWrt.
-
-The target may differ in:
-
-- CPU architecture,
-- C library,
-- ABI,
-- compiler version,
-- linker behavior,
-- available libraries,
-- filesystem layout,
-- package manager,
-- and default security expectations.
-
-The SDK provides a target-specific cross-compilation environment. That is the right environment for C++ applications with shared libraries, optional dependencies, and package metadata.
-
-#### OpenWrt deployment flow
+A `procd` service declares the command, configuration, user/group, restart policy and prerequisites. Keep the application in its intended supervision model even if it also supports self-daemonization.
 
 \index{OpenWrt!deployment flow}
 \index{feeds}
 \index{package recipes}
-
-
-A compact OpenWrt deployment flow runs through the OpenWrt SDK, package recipe, cross-compiled package, feed or image build, package-manager installation, `procd` service definition, and SNode.C configuration/runtime state.
-
-The exact commands depend on the OpenWrt release and build setup. The architectural flow remains stable.
-
-#### Package recipes should preserve component meaning
-
-An OpenWrt package recipe should not flatten SNode.C blindly. It should preserve the smallest useful deployable surface.
-
-A feed may choose to split packages along component lines such as:
-
-- core runtime libraries,
-- selected multiplexer libraries,
-- network-family components,
-- TLS stream support,
-- HTTP support,
-- Express support,
-- WebSocket support,
-- MQTT support,
-- MariaDB support,
-- selected applications,
-- selected MQTTSuite executables.
-
-The exact split is a packaging policy decision, not a statement that the SNode.C repository already ships this particular OpenWrt feed layout. The principle is stable:
-
-small target, small package surface, explicit dependencies, and reproducible image.
-
-This is how an embedded target stays understandable.
-
-#### OpenWrt dependencies must be explicit
-
-OpenWrt packages declare dependencies explicitly. A package that needs TLS depends on the selected TLS library packages. An MQTT or HTTP component that needs JSON support depends on the JSON package if it is dynamically provided, or ensures it is built appropriately. A MariaDB-backed tool depends on the MariaDB client library. A Bluetooth component depends on Bluetooth stack support where applicable.
-
-This is image reproducibility and build correctness. An OpenWrt image is assembled from many small packages. Hidden dependencies make the final image fragile and difficult to reproduce.
-
-#### Package-manager format is release-specific
-
-OpenWrt package-manager tooling and package formats are release-specific. The durable lesson is not a filename extension.
-
-A package recipe should express the software correctly and let the OpenWrt build system produce the package format used by the selected release. That keeps the deployment lesson stable even when the package-manager workflow changes.
-
-#### Feeds are distribution boundaries
-
-An OpenWrt feed is a distribution boundary expressed through package recipes.
-
-A feed tells downstream systems:
-
-- which packages exist,
-- which versions are available,
-- which dependencies they require,
-- which target architectures are supported,
-- and which packages can be installed or built into an image.
-
-A compact view is: package recipes, package dependencies, target-architecture builds, and repository metadata.
-
-A clear feed layout makes the system easier to build, install, update, and reproduce.
-
-#### Repository signing and update trust
-
-Once packages are distributed through an OpenWrt package repository, signing becomes part of deployment trust. The target device must be able to trust repository metadata and package source according to the package manager used by that OpenWrt release.
-
-This is especially important for routers and network infrastructure devices. A technically correct package is still not a complete deployment story if the repository cannot be trusted or updated cleanly.
-
-#### `procd` service integration
-
 \index{procd@\texttt{procd}}
 \index{OpenWrt!service integration}
 
-
-On OpenWrt, `procd` is the normal service supervision layer. A continuously running SNode.C application packaged for OpenWrt should therefore be described as a `procd`-managed service.
-
-That service definition is where deployment expresses:
-
-- how the process starts,
-- which configuration file is used,
-- which user or group is used,
-- whether the service restarts,
-- and which dependencies must be available before startup.
-
-The application may still support daemonization, but on OpenWrt the deployed role should fit the platform service model.
-
-#### A worked OpenWrt path: verify the package before the device
+### A worked OpenWrt path: verify the package before the device
 
 The first practical step is to identify the recipe's source, not to start cross-compiling. The separately maintained [SNode.C OpenWrt feed](https://github.com/SNodeC/OpenWRT) is useful packaging source, but its `net/snode.c/Makefile` at commit `c9378fe95f7c015752c748fc4ab012b585d294d1` still declares `PKG_VERSION:=1.0.1` and downloads the framework's `OpenWRT` branch. It does not select this book's current 2.0 source. Its module list also contains the old `net-un-phy` component. Installing that recipe unchanged would answer a different compatibility question.
 
@@ -691,7 +347,6 @@ This is also why configuration metadata and semantic logs serve different purpos
 
 \index{deployment reading workflow}
 
-
 ::: {.snodec-checklist title="Practical deployment checklist"}
 A SNode.C deployment can be read with a checklist. It is not a command sequence; it is a way to keep deployment architectural.
 
@@ -711,34 +366,24 @@ A SNode.C deployment can be read with a checklist. It is not a command sequence;
 14. Which trust model protects package updates?
 :::
 
-A shorter mental grouping is: artifact, dependencies, configuration, runtime state, service manager, package source, and trust/update model.
-
-#### What deployment should not hide
-
-A deployment should not hide:
-
-- missing runtime-loaded modules,
-- implicit package dependencies,
-- writable directories with unclear ownership,
-- certificate placement,
-- private-key permissions,
-- database schema assumptions,
-- service supervision policy,
-- package-manager format assumptions,
-- repository trust assumptions,
-- or platform-specific differences between general-purpose Linux and OpenWrt.
-
-When these details are hidden, failures appear later as unrelated runtime problems. When they are explicit, deployment becomes another readable part of the system.
-
 A deployment rehearsal should preserve the application's actual operating conditions. Run the installed executable under the intended service account, with its real configuration path and working directory, before putting a supervisor around it. Verify that named endpoint sections resolve as intended, the Unix-domain directory is writable where required, TLS material is readable where required, and the installed protocol modules can be found. Then stop the process normally and observe its cleanup before testing restart. A build-tree run under the developer's account leaves all of those deployment boundaries untested.
 
 For MiniGateway, keep liveness and readiness distinct. `/health` demonstrates a responsive HTTP role. It does not query broker acceptance, database durability, or the freshness of measurements. A supervisor can use a liveness observation without pretending it establishes those wider application guarantees.
 
 ::: {.snodec-remember title="What to remember"}
-- Deployment is architecture entering the filesystem.
-- Linking proves that the binary can be built; deployment proves that the runtime environment exists.
-- SNode.C's component model and public include hierarchy should survive installation and packaging.
-- CPack connects install components to ordinary Linux packages, but it does not replace service, certificate, database, repository, or update policy.
-- Package dependencies should follow component dependencies.
-- Runtime-loaded upgrade and subprotocol modules make installation paths and RPATH part of deployment.
+- Installed libraries, runtime-selected modules, configuration and writable state must all fit the deployed role.
+- Package dependencies carry component choices; they do not supply service or update policy.
+- Foreground execution makes configuration and shutdown observable before supervision.
+- Service restart, completed protocol work and application readiness are separate observations.
+- OpenWrt requires the matching SDK, explicit recipe dependencies and target-runtime checks.
+:::
+
+::: {.snodec-exercise title="Exercises"}
+1. **Review (O1, O3).** An installed executable starts but its WebSocket upgrade fails. Which library, module-path, package and permission observations would separate the possible causes?
+2. **Review (O2, O3).** Why should a foreground-process supervisor own restart? Distinguish active status, successful echo, liveness and application readiness.
+3. **Lab (O1, O2).** Run the private-installation lifecycle lab. Build and install EchoPair, exchange exact bytes, restart it with a new process identity, repeat the exchange and observe refusal after shutdown.
+4. **Lab (O2, O3).** Run the invalid-configuration lab. A nonnumeric port must stop startup; restore the port and observe a successful installed exchange. Explain which service-manager checks the local process lab leaves open.
+5. **Design (O1, O3).** Plan the OpenWrt rehearsal for a chosen disposable target. Identify SDK/recipe prerequisites, library and asset packages, writable state, supervision, update trust and the observations required before enabling boot startup.
+
+Public solutions and bounded lab commands: `companion/exercises/ch26/README.md`.
 :::
