@@ -58,12 +58,9 @@ check_absent 'retry: 1000' 'old SSE retry output'
 check_absent 'id:2' 'old compact SSE id output'
 check_absent 'TODO|FIXME|PLACEHOLDER' 'authoring markers'
 
-chapter10_count="$(find manuscript/chapters -maxdepth 1 -type f -name '10-*.md' 2>/dev/null | wc -l | tr -d ' ')"
-if [[ "$chapter10_count" != "1" ]]; then
-  echo "ERROR: expected exactly one Chapter 10 file, found ${chapter10_count}" >&2
-  find manuscript/chapters -maxdepth 1 -type f -name '10-*.md' >&2 || true
-  fail=1
-fi
+# Ordered chapter coverage and intended reference topics share one check.
+python3 ci/check-chapter-references.py
+python3 ci/test-chapter-references.py
 
 python3 - <<'PY'
 from pathlib import Path

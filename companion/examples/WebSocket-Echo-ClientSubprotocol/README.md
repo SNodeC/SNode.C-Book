@@ -1,6 +1,6 @@
 # WebSocket-Echo-ClientSubprotocol
 
-Compact WebSocket client subprotocol module used by Chapter 24.
+Compact WebSocket client subprotocol module used by Chapter 19.
 
 The shared library exports `echoClientSubProtocolFactory()`. With the output name
 used in `CMakeLists.txt`, the built module follows the dynamic subprotocol naming

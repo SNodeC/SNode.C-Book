@@ -908,3 +908,45 @@ with these changes:
    Parts that need them. Broker-, database-, and hardware-dependent labs are marked
    as equipped labs, with a local-only alternative observation where possible.
 Phase 5a may start.
+
+
+## Phase 5a — approved structure applied, 2026-09-22
+
+Completed the author-approved 30-chapter, eleven-Part TOC and Appendix A, including
+the merged chapter boundaries and Part XI's final architectural-judgment chapter.
+Updated manuscript order, headings, Part openings, STRUCTURE, README, current
+cross-references, sample inputs, and public solution paths/targets. The previous
+Phase 4 gate was rerun before editing; evidence is in REPORT.md's Phase 5a section.
+
+The operational map is
+`review/proposal-readiness-2026-09-22/phase-5a-approved-structure.json`.
+`ci/check-chapter-references.py` checks all 360 current references against topic
+anchors and the approved map, with all 374 old occurrences accounted in the
+migration register. Five regression tests include a valid-but-wrong number.
+All 36 marked complete listings, 293 executable/configuration fences, 1,033 index
+insertions, 18 figures, and the twelve existing lab implementation files survive
+the moves. Sample objective IDs and exercises are unchanged; chapter-ledger.md
+maps old 23/35/37 to current 18/28/30 and the corresponding public solutions.
+
+Hygiene/alignment, companion build, ten labs, existing teaching/behavior/lifetime
+checks, all PDF/package targets, and extracted-package hygiene pass locally.
+Final PDF warnings and bad boxes are zero. Pages: proposal 6 → 6, combined samples
+54 → 54, manuscript 470 → 458. Metrics: 146,210 total words, 131,744 prose,
+14,466 fenced, 934 chapter subheadings, 434 text fences, 20 rules, zero forbidden
+phrases/closing sections. No Part condensation or new teaching apparatus is
+claimed; the epilogue essay and environment reconstruction remain unchanged.
+See `metrics-after-phase-5a.json`, `phase-5a-exit-checks.json`, and cited build logs.
+
+Author changes govern the remaining sessions: Phase 5b adds the Lab environment
+section and equipped-lab labeling; the content-preservation stop rule applies to
+new 4, 6, 12, 24, 25, 26, and 27. Planned words remain 112,250, reserve used 0,
+reserve remaining 2,750, hard ceiling 115,000. Any later draw requires a recorded
+justification and nonnegative balance. Phase 5l covers Part XI only, with current
+Chapter 30 receiving the integrated checkpoint. Phase 5m covers Appendix A,
+epilogue (closing essay only; budget 1,900), back matter, and final global audit.
+Proposal refresh remains Phase 6; the dossier and evidence source stay at their
+Phase 3 snapshot and the sample bridge explains the current numbering.
+
+Commit: `proposal-readiness: phase 5a — apply approved teaching-book structure`.
+Stop here. Next session: Phase 5b only, after rerunning the Phase 5a entry checks
+listed in REPORT.md. No later Part session or Phase 6 begins in this session.

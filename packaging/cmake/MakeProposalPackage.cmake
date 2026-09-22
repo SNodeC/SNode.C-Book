@@ -38,6 +38,8 @@ set(REQUIRED_SOURCE_FILES
     ".github/workflows/book-package.yml"
     ".github/workflows/companion-examples.yml"
     "ci/check-source-hygiene.sh"
+    "review/proposal-readiness-2026-09-22/phase-5a-approved-structure.json"
+    "review/proposal-readiness-2026-09-22/phase-5a-reference-register.json"
     "ci/build-book-package.sh"
     "ci/build-companion-examples.sh"
     "ci/run-behavior-smoke-tests.sh"

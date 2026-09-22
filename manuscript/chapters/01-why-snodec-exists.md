@@ -1,4 +1,4 @@
-## Why SNode.C Exists
+## Why SNode.C Exists {#why-snodec-exists}
 
 \index{SNode.C}
 \index{event-driven network applications}
@@ -171,7 +171,7 @@ The later MQTTSuite broker, integrator, bridge, command-line, and store roles ex
 
 Although the details come later, the recurring SNode.C application shape can already be previewed. A configured server or client role is advanced by the runtime; connections receive per-connection contexts through factories; those contexts hold the application protocol behavior.
 
-Chapter 3 makes this pattern executable; Chapter 5 names it more formally.
+Chapter 3 makes this pattern executable; Chapter 4 names it more formally.
 
 
 The echo pair exposes server and client creation, context construction, callback flow, data input and output, runtime startup, and the boundary between framework logic and application logic with very little distraction.

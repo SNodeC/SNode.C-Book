@@ -1,6 +1,6 @@
 # MariaDB-Minimal
 
-Compact MariaDB client example used by Chapter 28.
+Compact MariaDB client example used by Chapter 23.
 
 The example is intended to compile as a SNode.C consumer application. Running it
 requires a reachable MariaDB server and a schema such as the one shown in the

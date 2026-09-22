@@ -1,4 +1,4 @@
-## Your First Working Program: The Echo Pair
+## Your First Working Program: The Echo Pair {#your-first-working-program-the-echo-pair}
 
 \index{echo pair}
 \index{first program}
@@ -41,7 +41,7 @@ role:           one server, one client
 Here `legacy` has the same meaning introduced in Chapter 2: it denotes the non-TLS stream connection variant. It does not mean that the component is obsolete.
 
 
-The framework also provides `examples/echo`, an installed-consumer project with configuration discovery and deterministic external-peer tests. Return to that broader example in Chapter 34. Here the host and port remain visible in the entry points.
+The framework also provides `examples/echo`, an installed-consumer project with configuration discovery and deterministic external-peer tests. Return to that broader example in Chapter 27. Here the host and port remain visible in the entry points.
 
 
 The teaching version consists of four source files:
@@ -70,7 +70,7 @@ Before writing code, it helps to name the three roles.
 \index{SocketClient@\texttt{SocketClient}}
 
 
-The visible `SocketServer` or `SocketClient` object is an application-side handle. Its name identifies endpoint configuration; `listen(...)` or `connect(...)` registers work using that configuration. An established peer connection appears later. Chapter 5 develops the distinction between handle, configured instance, and activation flow.
+The visible `SocketServer` or `SocketClient` object is an application-side handle. Its name identifies endpoint configuration; `listen(...)` or `connect(...)` registers work using that configuration. An established peer connection appears later. Chapter 4 develops the distinction between handle, configured instance, and activation flow.
 
 For this chapter, the visible handle types are:
 
@@ -243,7 +243,7 @@ core::socket::stream::SocketContext* EchoClientSocketContextFactory::create(
 
 `onConnected()` marks attachment of this protocol context to the ready connection. Only the client sends an initial message. If the server also sent immediately, the example would no longer show the client-initiated communication pattern clearly.
 
-`onReceivedFromPeer()` reads available bytes into a local buffer. If bytes were read, the context can log them at debug level and sends the same bytes back. The semantic log scope belongs to the context; Chapter 18 explains its identity and filtering. The return value tells the framework how many bytes were consumed.
+`onReceivedFromPeer()` reads available bytes into a local buffer. If bytes were read, the context can log them at debug level and sends the same bytes back. The semantic log scope belongs to the context; Chapter 13 explains its identity and filtering. The return value tells the framework how many bytes were consumed.
 
 The factories allocate the concrete context. The framework owns the surrounding connection machinery; the user supplies the protocol object that belongs to a connection.
 
@@ -325,7 +325,7 @@ The named server configuration already exists. `listen(...)` sets the shown defa
 :::
 
 
-The current `listen(...)` call also returns a flow handle. The echo server deliberately does not retain it: the runtime callbacks keep the listening operation alive. Ignoring that return value does not stop the server. A program that needs to stop one listening flow later can retain the handle; Chapters 9 and 20 explain that control without making the first example manage a lifecycle it does not need.
+The current `listen(...)` call also returns a flow handle. The echo server deliberately does not retain it: the runtime callbacks keep the listening operation alive. Ignoring that return value does not stop the server. A program that needs to stop one listening flow later can retain the handle; Chapters 7 and 15 explain that control without making the first example manage a lifecycle it does not need.
 
 
 \index{client application}

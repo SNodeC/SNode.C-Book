@@ -21,11 +21,10 @@ cmake --build build/labs --parallel 2
 ctest --test-dir build/labs --output-on-failure
 ```
 
-Each chapter README gives a focused build target and test command. Chapter 1, 23,
-and 35 labs build the canonical companion programs, then use Python's standard
+Each chapter README gives a focused build target and test command. Chapters 1, 18 and 28 labs build the canonical companion programs, then use Python's standard
 library to make observations at their public socket/HTTP interfaces. Chapter 3
 adds a client with a changed greeting while inheriting the existing reflection
-behavior. Chapter 35 also isolates JSON validation before acceptance; Chapter 37 compiles
+behavior. Chapter 28 also isolates JSON validation before acceptance; Chapter 30 compiles
 the canonical `MeasurementModel.cpp` into two ownership experiments. There is only one implementation of each reused algorithm.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary

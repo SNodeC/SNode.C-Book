@@ -1,6 +1,6 @@
 # SSE-EventSource-Client
 
-Compact EventSource client example used by Chapter 23.
+Compact EventSource client example used by Chapter 18.
 
 It connects to `/events`, registers open/message/custom-event/error callbacks,
 and then enters the SNode.C runtime.

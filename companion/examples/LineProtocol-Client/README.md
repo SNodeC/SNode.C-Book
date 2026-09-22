@@ -1,7 +1,7 @@
 # LineProtocol-Client
 
 This compact example is the runnable client counterpart to the line-command
-`SocketContext` introduced in Chapter 13.
+`SocketContext` introduced in Chapter 9.
 
 It connects to `localhost:8090` using the legacy IPv4 stream stack:
 

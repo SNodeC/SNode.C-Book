@@ -80,7 +80,7 @@ def logging_check(env: dict[str, str]) -> None:
         raise RuntimeError("Stable event identity missing")
     if not records[3].get("error") or "no file operation" not in records[3]["message"]:
         raise RuntimeError("Explicit demonstration error missing")
-    print("PASS: Chapter 18 public logging fields, event, override, and typed error")
+    print("PASS: Chapter 13 public logging fields, event, override, and typed error")
 
 
 def server_check(env: dict[str, str]) -> None:

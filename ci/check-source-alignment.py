@@ -55,18 +55,19 @@ def main() -> int:
         text = (ROOT / name).read_text()
         if sha not in text or version not in text:
             errors.append(f"Missing current source pin/version in {name}")
-    chapters = sorted((ROOT / "manuscript/chapters").glob("[0-9][0-9]-*.md"))
-    if len(chapters) != 38:
-        errors.append(f"Expected 38 numbered chapters, found {len(chapters)}")
+    chapters = [ROOT / name for name in (ROOT / "manuscript/book-files.txt").read_text().splitlines()
+                if re.match(r"manuscript/chapters/(?:\d\d-|appendix-)", name)]
     claims = json.loads((ROOT / "review/verification/source-claims.json").read_text())
     if claims["framework_manifest"] != values["SNODEC_WORKTREE_MANIFEST"]:
         errors.append("Chapter evidence does not reference the authoritative source manifest")
     records = claims["chapters"]
-    if sorted(record["chapter"] for record in records) != list(range(1, 39)):
-        errors.append("Chapter evidence must cover each numbered chapter exactly once")
+    if [ROOT / record["manuscript"] for record in records] != chapters:
+        errors.append("Chapter evidence must cover each ordered chapter and appendix exactly once")
     for record in records:
         manuscript = ROOT / record["manuscript"]
-        if manuscript not in chapters or not manuscript.name.startswith(f"{record['chapter']:02}-"):
+        identity = (f"{record['chapter']:02}-" if isinstance(record['chapter'], int)
+                    else f"appendix-{record['chapter'].lower()}-")
+        if manuscript not in chapters or not manuscript.name.startswith(identity):
             errors.append(f"Invalid chapter evidence target: {record['manuscript']}")
         for anchor in record["framework_sources"]:
             if anchor["path"] not in manifest["files"]:
@@ -123,7 +124,7 @@ def main() -> int:
     if errors:
         print("\n".join("ERROR: " + error for error in errors), file=sys.stderr)
         return 1
-    print(f"Source alignment passed: 38 chapter evidence records, {count} exact complete listings; "
+    print(f"Source alignment passed: {len(records)} chapter/appendix evidence records, {count} exact complete listings; "
           f"SNode.C {version}, base {sha}, working-tree digest {manifest['tree_sha256']}")
     return 0
 

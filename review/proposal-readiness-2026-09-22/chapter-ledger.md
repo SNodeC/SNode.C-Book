@@ -11,9 +11,9 @@ complete listings; they are not separate conceptual sections.
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | [1](../../manuscript/chapters/01-why-snodec-exists.md) | 2,343 | 1,723 | 26.46% | 10 → 5 | 327.00 | edited and reread in context |
 | [3](../../manuscript/chapters/03-your-first-working-program-the-echo-pair.md) | 2,674 | 1,987 | 25.69% | 23 → 6 | 315.50 | edited and reread in context |
-| [23](../../manuscript/chapters/23-server-sent-events-and-real-time-http.md) | 3,664 | 2,897 | 20.93% | 31 → 7 | 398.00 | edited and reread in context |
-| [35](../../manuscript/chapters/35-building-minigateway.md) | 2,378 | 1,863 | 21.66% | 35 → 6 | 294.33 | edited and reread in context |
-| [37](../../manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md) | 2,395 | 1,859 | 22.38% | 15 → 6 | 291.00 | edited and reread in context |
+| [23](../../manuscript/chapters/18-server-sent-events-and-real-time-http.md) | 3,664 | 2,897 | 20.93% | 31 → 7 | 398.00 | edited and reread in context |
+| [35](../../manuscript/chapters/28-building-minigateway.md) | 2,378 | 1,863 | 21.66% | 35 → 6 | 294.33 | edited and reread in context |
+| [37](../../manuscript/chapters/30-architectural-judgment-choosing-the-right-layer-and-boundary.md) | 2,395 | 1,859 | 22.38% | 15 → 6 | 291.00 | edited and reread in context |
 
 ## Objectives and exercises
 
@@ -114,3 +114,28 @@ and local layout fences are excluded from prose exactly like other fences.
 Initial Phase 2 results remain in REPORT.md and its original logs; the follow-up
 entry snapshot is `metrics-before-phase-2-follow-up.json`. Current rendered-page
 inspection is recorded in `phase-2-follow-up-visual-review.md`.
+
+
+## Phase 5a identity migration — 2026-09-22
+
+The Phase 2 measurements and objective/exercise rows above retain their original
+chapter identifiers as historical evidence. Their chapter links now resolve to
+the current manuscript. Objective IDs O1–O3 and exercise numbers 1–5 are unchanged;
+each row for an old chapter maps to the corresponding current chapter below.
+This is a structural reread of references and transitions, not a new sample rewrite.
+
+| Phase 2 identity | Current chapter | Current public solution directory | Lab target |
+| --- | --- | --- | --- |
+| 1 | 1 | `companion/exercises/ch01/` | `ch01-lab` |
+| 3 | 3 | `companion/exercises/ch03/` | `ch03-lab` |
+| 23 | 18 | `companion/exercises/ch18/` | `ch18-lab` |
+| 35 | 28 | `companion/exercises/ch28/` | `ch28-lab` |
+| 37 | 30 | `companion/exercises/ch30/` | `ch30-lab` |
+
+The corresponding README answers, lab source files, CMake subdirectories, targets,
+and CTest names moved together. `phase-5a-labs.log` records all ten passing tests.
+`phase-5a-exit-checks.json` records current prose reductions, section averages,
+objective/exercise mappings, and public-answer coverage under these identities.
+No new lab, objective, exercise, or learning milestone was added in Phase 5a.
+The integrated checkpoint assigned to current Chapter 30 remains Phase 5l work;
+the epilogue remains an essay without exercises, as the author approved.

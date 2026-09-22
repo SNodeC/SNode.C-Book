@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest executed phase is Phase 4, whose restructure plan awaits author approval; Phase 3 remains the latest completed implementation phase.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest executed phase is Phase 5a. The author approved the restructure with changes in EDITORIAL-WORK-PLAN.md; the approved structure is now applied. Part condensation has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -12,9 +12,21 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 1 — book-wide hygiene | completed | `proposal-readiness: phase 1 — refine manuscript hygiene and preserve teaching principles` (containing this report); separate author-amendment commit | 2026-09-22 | Phase 1 evidence below; metrics-after-phase-1.json; phase-1-source-hygiene.log; phase-1-source-alignment.log; phase-1-companion-build.log; phase-1-pdf-final.log |
 | 2 — five sample chapters and author follow-up | completed | `proposal-readiness: phase 2 follow-up — sample chapter strengthening` (containing this report); initial Phase 2 commit retained | 2026-09-22 | chapter-ledger.md; metrics-after-phase-2.json; phase-2-exit-checks.json; phase-2-follow-up-labs.log; phase-2-follow-up-pdf-final-build.log; phase-2-follow-up-visual-review.md |
 | 3 — proposal package | completed | `proposal-readiness: phase 3 — prepare teaching-book proposal package` (containing this report) | 2026-09-22 | Phase 3 evidence below; metrics-after-phase-3.json; phase-3-bibliography.json; phase-3-exit-checks.json; phase-3-package-final.log; phase-3-archive-labs.log; phase-3-visual-review.md |
-| 4 — restructure plan | awaiting author approval | `proposal-readiness: phase 4 — propose consolidated teaching-book structure` (containing this report) | 2026-09-22 | RESTRUCTURE-PLAN.md; phase-4-reference-map.md; phase-4-plan-checks.json; metrics-after-phase-4.json; Phase 4 evidence below |
-| 5a — approved TOC | not started | — | — | Gated on recorded author approval |
-| 5b onward — one Part per session | not started | — | — | Instantiate one row per approved Part before executing it; final sub-phase must meet all global targets |
+| 4 — restructure plan | approved with author changes | `proposal-readiness: phase 4 — propose consolidated teaching-book structure` (containing this report) | 2026-09-22 | RESTRUCTURE-PLAN.md; phase-4-reference-map.md; phase-4-plan-checks.json; metrics-after-phase-4.json; Phase 4 evidence below |
+| 5a — approved TOC | completed | `proposal-readiness: phase 5a — apply approved teaching-book structure` (containing this report) | 2026-09-22 | phase-5a-approved-structure.json; phase-5a-reference-register.json; phase-5a-exit-checks.json; metrics-after-phase-5a.json; Phase 5a evidence below |
+| 5b — Part I | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5c — Part II | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5d — Part III | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5e — Part IV | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5f — Part V | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5g — Part VI | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5h — Part VII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5i — Part VIII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5j — Part IX | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5k — Part X | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5l — Part XI only | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5m — appendix, closing material and global audit | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 6 — proposal refresh | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 
 Commit subjects (resolve with `git log --oneline --grep='^proposal-readiness: phase 0'`):
 
@@ -872,3 +884,222 @@ rerun `check-phase-4.py`, the Phase 3 entry commands above (capturing new output
 separately), and the no-manuscript-change/plan coverage checks against this phase's
 recorded inputs. If the author requests a different plan, revise the plan and its
 arithmetic in Phase 4 before applying it. Stop after this Phase 4 commit.
+
+
+## Phase 5a — approved structure applied, 2026-09-22
+
+### Approval and entry gate
+
+**Authorization:** `review/EDITORIAL-WORK-PLAN.md:894` records the author's approval
+of the 30 chapters, eleven Parts, Appendix A, 112,250-word plan, merge boundaries,
+and MiniGateway milestones, with four amendments. `phase-5a-approved-structure.json`
+records that map and its current paths, chapter budgets, Part membership, protected
+cut chapters, reserve, and amended session schedule. The Phase 4 proposal and
+inventory remain historical planning evidence; their closing approval request is
+superseded by the author's recorded approval, not silently treated as permission.
+
+Before manuscript changes, the Phase 4 checker reran successfully against the
+unchanged manuscript: `phase-5a-entry-plan-checks.json` verifies its arithmetic,
+all 62 old inputs, inventory coverage, and empty manuscript diff. The Phase 4
+commit's manuscript diff was also empty. Fresh metrics in
+`phase-5a-entry-metrics.log` equal `metrics-after-phase-4.json`. The author approval
+changes session ownership and pedagogical constraints, not the approved map or
+112,250-word arithmetic; no reserve was consumed.
+
+The previous phase's listed implementation checks were executed anew: hygiene,
+source alignment, companion build, ten labs, all three proposal/package targets,
+and the Phase 3 exit checker. Evidence: `phase-5a-entry-hygiene.log`,
+`phase-5a-entry-alignment.log`, `phase-5a-entry-companion.log`,
+`phase-5a-entry-labs.log`, `phase-5a-entry-package.log`, and
+`phase-5a-entry-proposal-checks.json`. Its checker output was redirected in memory
+so historical Phase 3 evidence stayed untouched. The seven proposal sections and
+five recorded publisher bibliography records still pass the content check.
+No new live publisher-site verification is claimed in this structural phase.
+Entry PDF counts were proposal 6, samples 54, manuscript 470, with clean logs.
+
+### Applied structure and editorial limits
+
+**Edited and reread:** the moved chapter headings, merged section boundaries,
+changed references and prerequisite sentences, Part introductions, reading guide,
+README positioning, STRUCTURE table, sample bridge, and companion navigation.
+The author-approved map is now the manifest order: 30 numbered chapters in eleven
+Parts, followed by the unnumbered epilogue and Appendix A before reference material.
+Current source paths and all old→new identities are in
+`phase-5a-approved-structure.json`; the source diff shows the moves and joins.
+
+The five approved consolidations preserve the constituent technical sections.
+Their former chapter headings become named sections. Duplicate recap shells are
+joined into one five-point recap per consolidated chapter. The small existing
+public-type/header/component explanation moves from old 4 into current 4; it is
+not duplicated in Appendix A. Current 4 starts from EchoPair, rather than assuming
+that the learner has read the contributor appendix. References in current 6 now
+introduce current 7's connection-lifecycle discussion as upcoming work. The final
+judgment chapter belongs to Part XI and points to Appendix A for extension.
+
+The existing two running-head mechanisms use shorter navigation labels after
+renumbering; the runtime section label uses its actual section counter. The
+unnumbered epilogue opener resets the running head to EPILOGUE. The epilogue essay
+itself remains byte-identical. No objectives, recap, or exercises were added to it.
+The environment reconstruction passage is also unchanged; its ordinary later
+chapter references follow the new numbering (`check-phase-5a.py`).
+
+**Not claimed:** a new line-by-line editorial reread of all retained manuscript
+prose, completed condensation, newly implemented MiniGateway milestones, or new
+teaching apparatus. Those belong to the author-approved later sessions. The
+larger merged chapters deliberately retain detailed explanations and listings
+until their dedicated Part review; their budgets are not yet met.
+
+### Cross-references and consumers
+
+`ci/check-chapter-references.py` checks the ordered chapter and Part identities,
+39 unique topic anchors, and **360 current references** across all manuscript
+inputs, README, STRUCTURE, and companion Markdown. Numeric, plural/range,
+appendix, and relocated section references retain intended subject anchors from
+the approved old→new map. The main-path source-reading introduction has its own
+explicit destination. A valid number alone cannot satisfy the check.
+
+`phase-5a-reference-register.json` provides a disposition for **all 374** original
+inventory occurrences. Nine disappear or are rephrased with explicit reasons:
+old 5's prerequisite/closing (R086/R090), old 7's two fixed running heads and
+backward prerequisite (R096/R097/R099), old 37's two running heads
+(R342/R343), and the removed Part XII opener (R366/R367). Original authoring-note
+policy strings remain guards. The approved Phase 3 proposal/evidence snapshot is
+explicitly outside current-manuscript renumbering until Phase 6; the sample bridge
+explains the old/current identities and its selection table uses current numbers.
+
+Five regression tests exercise the current structure, an unregistered reference,
+reordered chapters, a missing topic anchor, and a **valid-but-wrong number even
+when its display label is mechanically updated in the register**. Evidence:
+`phase-5a-reference-tests.log`. Hygiene runs the checker and its regression tests;
+the companion workflow also runs the checker. The archive includes its two
+required identity/register JSON files. `phase-5a-archive-hygiene.log` proves the
+packaged copy runs without relying on an unshipped working-tree file.
+
+`ci/check-source-alignment.py` now gets chapter/appendix coverage from the ordered
+manifest, replacing its hardcoded 38-chapter check. Current source-claim records
+are remapped by union of their contracts and anchors; historical evidence is not
+rewritten. All **36 marked complete listings**, **293 executable/configuration
+fences**, **1,033 index insertions**, and **18 figure labels** are preserved.
+Evidence: `phase-5a-hygiene.log` and `phase-5a-exit-checks.json`.
+
+The sample identities are **1, 3, 18, 28, 30**. CMake's sample inputs and public
+exercise folders/targets/tests move with them. The twelve lab implementation files
+remain byte-identical across the moves. `chapter-ledger.md` records the identity
+translation without rewriting Phase 2's historical measures or objective IDs.
+All five samples retain their ≥20% original prose reduction, ≥250 section average,
+three objectives, five mapped exercises in all three tiers, and public answers.
+The exact current figures are in `phase-5a-exit-checks.json`.
+
+### Builds, runtime checks, and visual review
+
+**Built and run successfully:**
+
+- Source hygiene, alignment, chapter-reference check and five negative/positive
+  regression tests: `phase-5a-hygiene.log` and `phase-5a-reference-tests.log`.
+- Measurement regression tests: `phase-5a-metrics-tests.log`.
+- Full companion build including standalone Asio and renamed sample lab targets:
+  `phase-5a-companion-build.log`.
+- All ten public labs: `phase-5a-labs.log`.
+- Teaching, behavioral, and lifetime/echo checks:
+  `phase-5a-teaching-smoke.log`, `phase-5a-behavior-smoke.log`, and
+  `phase-5a-lifetime.log`.
+- `proposal`, `proposal-sample-pdf`, `proposal-package` (including full `pdf`):
+  `phase-5a-package-final.log`. The initial build logs retain the observed running
+  header and first-pass convergence warnings; those were resolved. All three
+  preserved `phase-5a-*-latex.log` files (trailing whitespace normalized) and the final build console contain
+  **zero LaTeX warnings and zero bad boxes**.
+- Package source refresh after CI/register documentation changes:
+  `phase-5a-package-source-refresh.log`. `check-phase-5a.py` verifies every one of
+  the **289** archived files against its current source/PDF, with no duplicates
+  or Python cache files (`phase-5a-exit-checks.json`). The extracted archive also
+  passes hygiene and reference tests (`phase-5a-archive-hygiene.log`).
+
+Local runtime checks used approved local socket access. These are executed local
+results, not a claim of hosted-CI execution or new deployment/hardware validation.
+Changed chapter openings, merge boundaries, headers, appendix placement, and the
+sample bridge received targeted rendered review, recorded in
+`phase-5a-visual-review.md`. This is not an all-page visual reread.
+
+| PDF | Before | After |
+| --- | ---: | ---: |
+| Proposal/evidence snapshot | 6 | 6 |
+| Proposal with five current samples | 54 | 54 |
+| Full manuscript | 470 | 458 |
+
+The proposal/evidence source documents remain byte-identical to the approved entry
+snapshot. The author explicitly assigns their TOC, positioning/evidence, and page
+refresh to **Phase 6**. Their earlier extent is therefore not presented as the
+new manuscript's pagination. The sample bridge is a necessary navigation repair,
+not an early proposal rewrite.
+
+### Metrics and phase exit
+
+Evidence: `metrics-after-phase-5a.json` versus `metrics-after-phase-4.json`.
+
+| Metric | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| Total words | 146,950 | 146,210 | −740 |
+| Prose words | 132,500 | 131,744 | −756 |
+| Fenced words | 14,450 | 14,466 | +16 |
+| Chapter headings, level 3 and deeper | 921 | 934 | +13 |
+| Average section prose | 132.89 | 130.30 | −2.59 |
+| Text fences | 434 | 434 | 0 |
+| Rule boxes | 20 | 20 | 0 |
+| Remember boxes | 38 | 31 | −7 |
+| Closing-perspective sections / forbidden hits | 0 / 0 | 0 / 0 | 0 / 0 |
+
+The new section shells make the retained source treatments identifiable; the
+heading increase is reported rather than hidden by relabeling. Fenced-word
+changes are text-reference wording and LaTeX navigation, not executable-code cuts.
+The book remains **31,210 words above 115,000**, 41,210 above the stretch target,
+384 headings above 550, and 184 text fences above 250. These are later condensation
+requirements, not Phase 5a exits. The approved planned total remains **112,250**;
+reserve used **0**, reserve remaining **2,750**.
+
+`check-phase-5a.py` passes (`phase-5a-exit-checks.log` and JSON): approved TOC,
+references, preservation, sample pedagogy, rendered numbering, clean final PDFs,
+and archive contents. Full build and all listed local checks pass. Phase 5a is
+**completed**; Phase 5b has not started. The commit is
+`proposal-readiness: phase 5a — apply approved teaching-book structure`.
+
+Application production code **+0/−0**; existing lab implementation **+0/−0**
+(exact moves). The new reference checker is **98 lines** of CI support and its
+regression tests are **73 lines** of test support; the report-local exit checker
+is **122 lines** of verification support. Small existing CI/build edits replace
+fixed chapter assumptions and register renamed targets. Documentation, narrative
+joins, source-claim mapping, and evidence are accounted separately from application
+code. No production architecture or framework implementation is added.
+
+### Handoff: recheck before Phase 5b
+
+Read PROMPT.md, the recorded author approval, and the approved structure JSON.
+Before the next Part edit, regenerate metrics and rerun:
+
+```sh
+bash ci/check-source-hygiene.sh
+python3 ci/test-manuscript-metrics.py
+SNODEC_PREFIX="$PWD/build/ci-fix-2026-09-22/install-gcc" BOOK_EXAMPLES_BUILD_DIR="$PWD/build/proposal-readiness-phase-5a-examples" bash ci/build-companion-examples.sh
+SNODEC_PREFIX="$PWD/build/ci-fix-2026-09-22/install-gcc" ctest --test-dir build/proposal-readiness-phase-5a-examples --output-on-failure --no-tests=error
+cmake --build build/proposal-readiness-phase-2 --target proposal proposal-sample-pdf proposal-package
+python3 review/proposal-readiness-2026-09-22/check-phase-5a.py
+```
+
+Capture fresh evidence under the next phase's prefix. The Phase 5a checker uses
+its recorded metrics and old approval snapshot; do not rewrite historical Phase
+2–4 checkers to accept the new structure. Rerun the three existing runtime smoke
+commands recorded above if their inputs change; their Phase 5a results are fresh.
+If an entry exit fails, report the gap and stop before Part edits.
+
+Phase 5b covers Part I only, its opener/checkpoint, public solutions, and the
+approved front-matter allowance. It must add Chapter 2's short Lab environment
+section listing optional MQTT broker, MariaDB, TLS fixture, and Bluetooth needs
+by Part. Mark dependent labs as equipped labs and provide local-only alternatives
+where possible. Do not add those in Phase 5a.
+
+The stop rule protects current chapters **4, 6, 12, 24, 25, 26, 27**: qualify the
+Part instead of removing teaching content to hit its budget. Justified reserve
+use must be recorded here and never make the 2,750-word reserve negative or the
+115,000 ceiling exceedable. Phase **5l is Part XI only**, including the integrated
+checkpoint transferred from the epilogue to current Chapter 30. Phase **5m** owns
+Appendix A, the essay-only epilogue (budget 1,900), back matter, and final global
+audit. Phase **6** owns the proposal refresh. Stop after the Phase 5a commit.

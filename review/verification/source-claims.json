@@ -56,26 +56,8 @@
     },
     {
       "chapter": 4,
-      "manuscript": "manuscript/chapters/04-reading-the-codebase-with-confidence.md",
-      "reviewed_contract": "Source navigation follows public family wrappers into shared machinery",
-      "framework_sources": [
-        {
-          "path": "src/net/in/stream/SocketServer.h",
-          "needle": "FlowHandle",
-          "line": 75
-        },
-        {
-          "path": "src/core/socket/stream/SocketServer.h",
-          "needle": "realListen",
-          "line": 184
-        }
-      ],
-      "companion_sources": []
-    },
-    {
-      "chapter": 5,
-      "manuscript": "manuscript/chapters/05-the-mental-model-of-snodec.md",
-      "reviewed_contract": "Configuration registration, per-call flows and connection/context ownership",
+      "manuscript": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
+      "reviewed_contract": "Configuration registration, per-call flows and connection/context ownership; Framework layers describe implementation responsibilities",
       "framework_sources": [
         {
           "path": "src/net/config/ConfigInstance.cpp",
@@ -91,13 +73,23 @@
           "path": "src/core/socket/stream/SocketClient.h",
           "needle": "FlowHandle connect",
           "line": 298
+        },
+        {
+          "path": "src/net/in/stream/tls/SocketClient.h",
+          "needle": "SocketClient",
+          "line": 49
+        },
+        {
+          "path": "src/core/socket/stream/SocketConnection.h",
+          "needle": "SocketConnection",
+          "line": 88
         }
       ],
       "companion_sources": []
     },
     {
-      "chapter": 6,
-      "manuscript": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+      "chapter": 5,
+      "manuscript": "manuscript/chapters/05-core-runtime-and-event-processing.md",
       "reviewed_contract": "Public tick state restriction and start-driven event dispatch",
       "framework_sources": [
         {
@@ -119,27 +111,9 @@
       "companion_sources": []
     },
     {
-      "chapter": 7,
-      "manuscript": "manuscript/chapters/07-layers-in-practice-network-transport-connection-application.md",
-      "reviewed_contract": "Framework layers describe implementation responsibilities",
-      "framework_sources": [
-        {
-          "path": "src/net/in/stream/tls/SocketClient.h",
-          "needle": "SocketClient",
-          "line": 49
-        },
-        {
-          "path": "src/core/socket/stream/SocketConnection.h",
-          "needle": "SocketConnection",
-          "line": 88
-        }
-      ],
-      "companion_sources": []
-    },
-    {
-      "chapter": 8,
-      "manuscript": "manuscript/chapters/08-socket-addresses-and-address-semantics.md",
-      "reviewed_contract": "Family-specific endpoint identity and local versus remote configuration",
+      "chapter": 6,
+      "manuscript": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+      "reviewed_contract": "Family-specific endpoint identity and local versus remote configuration; IPv4 and IPv6 wrapper symmetry requires separate runtime checks; Unix pathname safety and local peer identity",
       "framework_sources": [
         {
           "path": "src/net/in/SocketAddress.cpp",
@@ -150,13 +124,38 @@
           "path": "src/net/un/SocketAddress.cpp",
           "needle": "SocketAddress",
           "line": 42
+        },
+        {
+          "path": "src/net/in/stream/SocketClient.h",
+          "needle": "SocketClient",
+          "line": 45
+        },
+        {
+          "path": "src/net/in6/stream/SocketClient.h",
+          "needle": "SocketClient",
+          "line": 45
+        },
+        {
+          "path": "tests/component/net/Inet6LegacyServerClientPayloadExchangeTest.cpp",
+          "needle": "main",
+          "line": 203
+        },
+        {
+          "path": "tests/component/net/UnixPhysicalSocketPathSafetyTest.cpp",
+          "needle": "main",
+          "line": 115
+        },
+        {
+          "path": "src/net/un/phy/PhysicalSocket.hpp",
+          "needle": "unlink",
+          "line": 197
         }
       ],
       "companion_sources": []
     },
     {
-      "chapter": 9,
-      "manuscript": "manuscript/chapters/09-servers-clients-and-connections.md",
+      "chapter": 7,
+      "manuscript": "manuscript/chapters/07-servers-clients-and-connections.md",
       "reviewed_contract": "Separate flows share endpoint policy; termination is not connection closure",
       "framework_sources": [
         {
@@ -178,49 +177,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 10,
-      "manuscript": "manuscript/chapters/10-ipv4-and-ipv6-as-the-first-concrete-network-families.md",
-      "reviewed_contract": "IPv4 and IPv6 wrapper symmetry requires separate runtime checks",
-      "framework_sources": [
-        {
-          "path": "src/net/in/stream/SocketClient.h",
-          "needle": "SocketClient",
-          "line": 45
-        },
-        {
-          "path": "src/net/in6/stream/SocketClient.h",
-          "needle": "SocketClient",
-          "line": 45
-        },
-        {
-          "path": "tests/component/net/Inet6LegacyServerClientPayloadExchangeTest.cpp",
-          "needle": "main",
-          "line": 203
-        }
-      ],
-      "companion_sources": []
-    },
-    {
-      "chapter": 11,
-      "manuscript": "manuscript/chapters/11-unix-domain-sockets.md",
-      "reviewed_contract": "Unix pathname safety and local peer identity",
-      "framework_sources": [
-        {
-          "path": "tests/component/net/UnixPhysicalSocketPathSafetyTest.cpp",
-          "needle": "main",
-          "line": 115
-        },
-        {
-          "path": "src/net/un/phy/PhysicalSocket.hpp",
-          "needle": "unlink",
-          "line": 197
-        }
-      ],
-      "companion_sources": []
-    },
-    {
-      "chapter": 12,
-      "manuscript": "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "chapter": 8,
+      "manuscript": "manuscript/chapters/08-bluetooth-in-snodec-rfcomm-and-l2cap.md",
       "reviewed_contract": "Distinct Bluetooth families, BlueZ build prerequisites, and platform-owned pairing/service preparation",
       "framework_sources": [
         {
@@ -247,8 +205,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 13,
-      "manuscript": "manuscript/chapters/13-writing-socketcontext-classes-well.md",
+      "chapter": 9,
+      "manuscript": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
       "reviewed_contract": "Connection-local input consumption and queue admission",
       "framework_sources": [
         {
@@ -267,8 +225,8 @@
       ]
     },
     {
-      "chapter": 14,
-      "manuscript": "manuscript/chapters/14-writing-socketcontextfactory-classes-well.md",
+      "chapter": 10,
+      "manuscript": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
       "reviewed_contract": "Factory creation and injected dependency lifetimes",
       "framework_sources": [
         {
@@ -283,8 +241,8 @@
       ]
     },
     {
-      "chapter": 15,
-      "manuscript": "manuscript/chapters/15-building-the-same-protocol-over-different-lower-layers.md",
+      "chapter": 11,
+      "manuscript": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
       "reviewed_contract": "Reusing context/factory above different carrier wrappers",
       "framework_sources": [
         {
@@ -301,9 +259,9 @@
       "companion_sources": []
     },
     {
-      "chapter": 16,
-      "manuscript": "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
-      "reviewed_contract": "Endpoint configuration is shared across independently controlled flows",
+      "chapter": 12,
+      "manuscript": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
+      "reviewed_contract": "Endpoint configuration is shared across independently controlled flows; Configuration hierarchy and configuration destruction differ from flow lifetime",
       "framework_sources": [
         {
           "path": "src/utils/Config.cpp",
@@ -319,15 +277,7 @@
           "path": "src/utils/Config.cpp",
           "needle": "bool Config::reconfigure()",
           "line": 1070
-        }
-      ],
-      "companion_sources": []
-    },
-    {
-      "chapter": 17,
-      "manuscript": "manuscript/chapters/17-application-and-instance-configuration-in-detail.md",
-      "reviewed_contract": "Configuration hierarchy and configuration destruction differ from flow lifetime",
-      "framework_sources": [
+        },
         {
           "path": "src/net/config/ConfigInstance.h",
           "needle": "ConfigInstance",
@@ -347,8 +297,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 18,
-      "manuscript": "manuscript/chapters/18-logging-diagnostics-and-runtime-introspection.md",
+      "chapter": 13,
+      "manuscript": "manuscript/chapters/13-logging-diagnostics-and-runtime-introspection.md",
       "reviewed_contract": "Public logging facade, scoped policy and numeric global CLI startup",
       "framework_sources": [
         {
@@ -387,8 +337,8 @@
       ]
     },
     {
-      "chapter": 19,
-      "manuscript": "manuscript/chapters/19-tls-across-the-framework.md",
+      "chapter": 14,
+      "manuscript": "manuscript/chapters/14-tls-across-the-framework.md",
       "reviewed_contract": "TLS trust selection and SSL_CTX policy before SSL construction",
       "framework_sources": [
         {
@@ -410,8 +360,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 20,
-      "manuscript": "manuscript/chapters/20-timeouts-retries-and-failure-modes.md",
+      "chapter": 15,
+      "manuscript": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
       "reviewed_contract": "Retry/reconnect retain the same per-call flow; queue limits remain connection policy",
       "framework_sources": [
         {
@@ -433,8 +383,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 21,
-      "manuscript": "manuscript/chapters/21-the-http-layer.md",
+      "chapter": 16,
+      "manuscript": "manuscript/chapters/16-the-http-layer.md",
       "reviewed_contract": "HTTP parser defaults and request/response policy boundaries",
       "framework_sources": [
         {
@@ -451,8 +401,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 22,
-      "manuscript": "manuscript/chapters/22-the-express-like-framework.md",
+      "chapter": 17,
+      "manuscript": "manuscript/chapters/17-the-express-like-framework.md",
       "reviewed_contract": "Express route dispatch and middleware continuation",
       "framework_sources": [
         {
@@ -474,8 +424,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 23,
-      "manuscript": "manuscript/chapters/23-server-sent-events-and-real-time-http.md",
+      "chapter": 18,
+      "manuscript": "manuscript/chapters/18-server-sent-events-and-real-time-http.md",
       "reviewed_contract": "SSE fragment framing and subscription removal at HTTP-context disconnection",
       "framework_sources": [
         {
@@ -509,8 +459,8 @@
       ]
     },
     {
-      "chapter": 24,
-      "manuscript": "manuscript/chapters/24-websocket-and-protocol-upgrade.md",
+      "chapter": 19,
+      "manuscript": "manuscript/chapters/19-websocket-and-protocol-upgrade.md",
       "reviewed_contract": "Echo preserves text/binary type and counted payload; carrier supplies complete-message callbacks",
       "framework_sources": [
         {
@@ -554,8 +504,8 @@
       ]
     },
     {
-      "chapter": 25,
-      "manuscript": "manuscript/chapters/25-mqtt-support-in-snodec.md",
+      "chapter": 20,
+      "manuscript": "manuscript/chapters/20-mqtt-support-in-snodec.md",
       "reviewed_contract": "MQTT 3.1.1 and the optional private CONNECT protocol-level bit",
       "framework_sources": [
         {
@@ -574,8 +524,8 @@
       ]
     },
     {
-      "chapter": 26,
-      "manuscript": "manuscript/chapters/26-mqtt-over-websocket.md",
+      "chapter": 21,
+      "manuscript": "manuscript/chapters/21-mqtt-over-websocket.md",
       "reviewed_contract": "MQTT over WebSocket uses the binary adapter after HTTP upgrade",
       "framework_sources": [
         {
@@ -592,8 +542,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 27,
-      "manuscript": "manuscript/chapters/27-designing-iot-systems-with-multiple-protocols.md",
+      "chapter": 22,
+      "manuscript": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
       "reviewed_contract": "Adapters and application state retain separate responsibilities",
       "framework_sources": [
         {
@@ -613,8 +563,8 @@
       ]
     },
     {
-      "chapter": 28,
-      "manuscript": "manuscript/chapters/28-database-support-and-application-state.md",
+      "chapter": 23,
+      "manuscript": "manuscript/chapters/23-database-support-and-application-state.md",
       "reviewed_contract": "MariaDB command sequences and transactions are distinct",
       "framework_sources": [
         {
@@ -638,9 +588,9 @@
       ]
     },
     {
-      "chapter": 29,
-      "manuscript": "manuscript/chapters/29-learning-from-the-applications-in-src-apps.md",
-      "reviewed_contract": "Applications illustrate API shape and chosen policy, not universal guarantees",
+      "chapter": 24,
+      "manuscript": "manuscript/chapters/24-snodec-in-larger-systems.md",
+      "reviewed_contract": "Applications illustrate API shape and chosen policy, not universal guarantees; Independent endpoint roles within one runtime do not imply dependency readiness; MQTTSuite is an external architectural case study; framework primitives remain shared",
       "framework_sources": [
         {
           "path": "src/apps/CMakeLists.txt",
@@ -651,15 +601,7 @@
           "path": "src/apps/echo/model/clients.h",
           "needle": "X509_VERIFY_PARAM_set1_host",
           "line": 102
-        }
-      ],
-      "companion_sources": []
-    },
-    {
-      "chapter": 30,
-      "manuscript": "manuscript/chapters/30-from-applications-to-systems.md",
-      "reviewed_contract": "Independent endpoint roles within one runtime do not imply dependency readiness",
-      "framework_sources": [
+        },
         {
           "path": "src/core/socket/stream/SocketClient.h",
           "needle": "flow->armReconnectTimer",
@@ -669,18 +611,7 @@
           "path": "src/express/WebApp.h",
           "needle": "WebApp",
           "line": 59
-        }
-      ],
-      "companion_sources": [
-        "companion/examples/MiniGateway/main.cpp",
-        "companion/examples/MiniGateway/MiniGatewayWeb.cpp"
-      ]
-    },
-    {
-      "chapter": 31,
-      "manuscript": "manuscript/chapters/31-mqttsuite-as-a-reference-ecosystem.md",
-      "reviewed_contract": "MQTTSuite is an external architectural case study; framework primitives remain shared",
-      "framework_sources": [
+        },
         {
           "path": "src/iot/mqtt/server/Mqtt.h",
           "needle": "Mqtt",
@@ -692,11 +623,14 @@
           "line": 45
         }
       ],
-      "companion_sources": []
+      "companion_sources": [
+        "companion/examples/MiniGateway/main.cpp",
+        "companion/examples/MiniGateway/MiniGatewayWeb.cpp"
+      ]
     },
     {
-      "chapter": 32,
-      "manuscript": "manuscript/chapters/32-cmake-components-and-linking-strategy.md",
+      "chapter": 25,
+      "manuscript": "manuscript/chapters/25-cmake-components-and-linking-strategy.md",
       "reviewed_contract": "Exported components and direction of public dependencies",
       "framework_sources": [
         {
@@ -718,8 +652,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 33,
-      "manuscript": "manuscript/chapters/33-deployment-on-linux-and-openwrt.md",
+      "chapter": 26,
+      "manuscript": "manuscript/chapters/26-deployment-on-linux-and-openwrt.md",
       "reviewed_contract": "Installed deployment, configuration and process lifecycle",
       "framework_sources": [
         {
@@ -741,8 +675,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 34,
-      "manuscript": "manuscript/chapters/34-testing-debugging-and-benchmarking.md",
+      "chapter": 27,
+      "manuscript": "manuscript/chapters/27-testing-debugging-and-benchmarking.md",
       "reviewed_contract": "Actual test registration and separate evidence categories",
       "framework_sources": [
         {
@@ -784,8 +718,8 @@
       "companion_sources": []
     },
     {
-      "chapter": 35,
-      "manuscript": "manuscript/chapters/35-building-minigateway.md",
+      "chapter": 28,
+      "manuscript": "manuscript/chapters/28-building-minigateway.md",
       "reviewed_contract": "Gateway model sequencing, explicit web role, SSE ownership and standard MQTT CONNECT",
       "framework_sources": [
         {
@@ -811,8 +745,8 @@
       ]
     },
     {
-      "chapter": 36,
-      "manuscript": "manuscript/chapters/36-extending-minigateway-with-a-new-network-role.md",
+      "chapter": 29,
+      "manuscript": "manuscript/chapters/29-extending-minigateway-with-a-new-network-role.md",
       "reviewed_contract": "A new Unix role preserves the model boundary and record framing invariant",
       "framework_sources": [
         {
@@ -832,8 +766,8 @@
       ]
     },
     {
-      "chapter": 37,
-      "manuscript": "manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "chapter": 30,
+      "manuscript": "manuscript/chapters/30-architectural-judgment-choosing-the-right-layer-and-boundary.md",
       "reviewed_contract": "Configuration identity is a different design decision from flow control",
       "framework_sources": [
         {
@@ -852,10 +786,20 @@
       ]
     },
     {
-      "chapter": 38,
-      "manuscript": "manuscript/chapters/38-extending-the-framework-safely.md",
-      "reviewed_contract": "Extensions preserve per-call cancellation and sibling-flow independence",
+      "chapter": "A",
+      "manuscript": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+      "reviewed_contract": "Source navigation follows public family wrappers into shared machinery; Extensions preserve per-call cancellation and sibling-flow independence",
       "framework_sources": [
+        {
+          "path": "src/net/in/stream/SocketServer.h",
+          "needle": "FlowHandle",
+          "line": 75
+        },
+        {
+          "path": "src/core/socket/stream/SocketServer.h",
+          "needle": "realListen",
+          "line": 184
+        },
         {
           "path": "tests/component/net/InetPerCallFlowTest.cpp",
           "needle": "main",

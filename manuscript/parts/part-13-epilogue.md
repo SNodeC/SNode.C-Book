@@ -3,8 +3,9 @@
 What to Take Away from SNode.C}
 \label{epilogue-what-to-take-away-from-snode.c}
 \addcontentsline{toc}{part}{Epilogue — What to Take Away from SNode.C}
+\markboth{EPILOGUE}{EPILOGUE}
 ```
 
 The MiniGateway chapters close the construction arc: the same vocabulary used for small examples can describe an application that combines web observation, MQTT integration, local state, configuration, diagnostics, and extension.
 
-The final design chapters then name the judgment behind that construction. The epilogue gathers both arcs into the book's final point. SNode.C is not primarily a shortcut for opening sockets; it is a way of keeping network-system architecture visible while applications grow from simple connections to protocols, protocols to roles, roles to applications, and applications to deployable systems.
+The final design chapter then names the judgment behind that construction. The epilogue gathers both arcs into the book's final point. SNode.C is not primarily a shortcut for opening sockets; it is a way of keeping network-system architecture visible while applications grow from simple connections to protocols, protocols to roles, roles to applications, and applications to deployable systems.

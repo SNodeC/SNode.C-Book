@@ -1,0 +1,25 @@
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5a-examples
+      Start  1: exercise-ch01
+ 1/10 Test  #1: exercise-ch01 .....................   Passed    0.22 sec
+      Start  2: exercise-ch01-independent-peers
+ 2/10 Test  #2: exercise-ch01-independent-peers ...   Passed    0.12 sec
+      Start  3: exercise-ch03
+ 3/10 Test  #3: exercise-ch03 .....................   Passed    0.12 sec
+      Start  4: exercise-ch03-occupied-port
+ 4/10 Test  #4: exercise-ch03-occupied-port .......   Passed    0.11 sec
+      Start  5: exercise-ch18
+ 5/10 Test  #5: exercise-ch18 .....................   Passed    0.08 sec
+      Start  6: exercise-ch18-observers
+ 6/10 Test  #6: exercise-ch18-observers ...........   Passed    0.08 sec
+      Start  7: exercise-ch28
+ 7/10 Test  #7: exercise-ch28 .....................   Passed    0.12 sec
+      Start  8: exercise-ch28-validation
+ 8/10 Test  #8: exercise-ch28-validation ..........   Passed    0.00 sec
+      Start  9: exercise-ch30
+ 9/10 Test  #9: exercise-ch30 .....................   Passed    0.00 sec
+      Start 10: exercise-ch30-model-instances
+10/10 Test #10: exercise-ch30-model-instances .....   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 10
+
+Total Test time (real) =   0.87 sec

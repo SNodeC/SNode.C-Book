@@ -1,0 +1,36 @@
+{
+  "required_sections": [
+    "Pitch",
+    "Reader and learning path",
+    "Comparable titles",
+    "Manuscript overview and estimated extent",
+    "Revision plan",
+    "Author platform and market evidence",
+    "Companion material and technical verification"
+  ],
+  "verified_comparables": 5,
+  "manuscript_metrics_match": true,
+  "part_pages_sum": 470,
+  "pdfs": {
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "3dab5e96738a0f6fcbdcc0c8c67ae5566a0d2c46ac350946676026df37230d66",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "e8db1a1e0524952463c6b2cd8b821937b0562d74b0b80dd2480c2d982b3f6659",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "snodec-book": {
+      "pages": 470,
+      "sha256": "99ea0f10c249d6940c841e934e0aa3a47b0e078eed9762773d6cb0d2029a78c2",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_byte_identical_files": 134,
+  "archive_sha256": "864abf0b5badf82dc04ff0937460a2d89dfe37a54b62af7df55647aa03f32ec3"
+}

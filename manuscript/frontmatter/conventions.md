@@ -16,4 +16,4 @@ The word role is used deliberately. It usually means the part an object or confi
 
 The word layer is also used deliberately. A layer is not decoration in the diagrams. It marks a boundary where one kind of responsibility should not silently collapse into another.
 
-An endpoint handle and a flow handle are different objects. The endpoint handle configures a named server or client. A flow handle is the shared controller returned by one explicit `listen(...)` or `connect(...)` call. Several flows can use the same endpoint configuration. Chapters 5, 9, and 20 develop the distinction where it affects lifetime, activation, and recovery.
+An endpoint handle and a flow handle are different objects. The endpoint handle configures a named server or client. A flow handle is the shared controller returned by one explicit `listen(...)` or `connect(...)` call. Several flows can use the same endpoint configuration. Chapters 4, 7 and 15 develop the distinction where it affects lifetime, activation, and recovery.

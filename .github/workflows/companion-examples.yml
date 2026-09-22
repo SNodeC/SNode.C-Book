@@ -36,6 +36,7 @@ jobs:
         id: baseline
         shell: bash
         run: |
+          python3 ci/check-chapter-references.py
           python3 ci/check-source-alignment.py
           source source-baseline/book-source-baseline.env
           echo "repository=$SNODEC_REPOSITORY_ID" >> "$GITHUB_OUTPUT"
