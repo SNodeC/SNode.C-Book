@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest completed phase is Phase 5a. The Phase 5b entry attempt is blocked by a reference-register mismatch after subsequent author seam edits. Part condensation has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest completed phase is Phase 5a. The earlier Phase 5b entry failure has been repaired with explicit author authorization (record below). Part condensation has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -14,7 +14,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 3 — proposal package | completed | `proposal-readiness: phase 3 — prepare teaching-book proposal package` (containing this report) | 2026-09-22 | Phase 3 evidence below; metrics-after-phase-3.json; phase-3-bibliography.json; phase-3-exit-checks.json; phase-3-package-final.log; phase-3-archive-labs.log; phase-3-visual-review.md |
 | 4 — restructure plan | approved with author changes | `proposal-readiness: phase 4 — propose consolidated teaching-book structure` (containing this report) | 2026-09-22 | RESTRUCTURE-PLAN.md; phase-4-reference-map.md; phase-4-plan-checks.json; metrics-after-phase-4.json; Phase 4 evidence below |
 | 5a — approved TOC | completed | `proposal-readiness: phase 5a — apply approved teaching-book structure` (containing this report) | 2026-09-22 | phase-5a-approved-structure.json; phase-5a-reference-register.json; phase-5a-exit-checks.json; metrics-after-phase-5a.json; Phase 5a evidence below |
-| 5b — Part I | blocked at entry | `proposal-readiness: phase 5b — record failed prerequisite check` (containing this report) | 2026-09-22 | phase-5b-entry-hygiene.log; phase-5b-entry-exit.log; phase-5b-entry-results.json; metrics-after-phase-5b.json; entry-gap account below |
+| 5b — Part I | prerequisite repaired; not yet started | `proposal-readiness: phase 5b — record failed prerequisite check` (containing this report) | 2026-09-22 | phase-5b-entry-hygiene.log; phase-5b-entry-exit.log; phase-5b-entry-results.json; metrics-after-phase-5b.json; entry-gap account below |
 | 5c — Part II | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5d — Part III | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5e — Part IV | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -1172,3 +1172,34 @@ edits and the Phase 5a exit checks rerun before retrying Phase 5b. Do not revert
 author's prose or overwrite historical Phase 5a evidence. Part I's budgets,
 Chapter 2 Lab environment section, mapped exercises/public solutions, and running
 project checkpoint all remain pending. This session stops at the entry gate.
+
+
+## Authorized prerequisite repair before Phase 5b — 2026-09-22
+
+The author explicitly requested this repair as a separate commit before resuming
+Part I. The two edits in `author edit: fix two 5a seam references` are the
+authorized post-Phase-5a baseline: **146,205 total / 131,739 prose / 14,466 fenced
+words**, a five-word prose reduction. `author-seam-baseline.json` records the two
+files and delta; `metrics-after-author-seam-edits.json` records the fresh counts.
+The reference-register diff joins R275 and R276, with both original topic anchors,
+on the single Chapter 12 mention in Chapter 22:313. All 374 historical migration
+dispositions remain; there are now 359 current occurrences.
+
+**Run and passed:** hygiene (including references and source alignment), metric
+regressions, companion build, all ten public labs, proposal/sample/package targets,
+and all original Phase 5a exit assertions. Evidence: `author-seam-hygiene.log`,
+`author-seam-metrics-tests.log`, `author-seam-companion.log`, `author-seam-labs.log`,
+`author-seam-package.log`, `author-seam-exit-checks.log`, and
+`phase-5a-author-seam-exit-checks.json`. The small review-only wrapper
+`check-author-seam-baseline.py` first verifies the authorized delta and joined
+identities, then executes the unchanged historical checker with only its metrics
+input and result destination substituted in memory. The historical checker,
+metrics and exit JSON are unchanged. All 289 packaged inputs match current files.
+PDF pages: manuscript 458, samples 54, proposal 6; final warnings/bad boxes: zero.
+No new PDF visual-review claim is made for this unchanged-prose repair.
+
+`git diff -- manuscript` is empty for the repair. No application or lab
+implementation changes. The register, baseline records and repair documentation
+were edited and reread. The earlier failed-entry evidence above remains historical.
+**Gate repaired; Part I may now begin** under the author's explicit continuation
+request. Separate commit: `proposal-readiness: reconcile 5a register with author seam edits`.

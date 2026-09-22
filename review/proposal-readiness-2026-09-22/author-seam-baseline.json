@@ -1,0 +1,17 @@
+{
+  "authorization": "Author instruction: reconcile 5a register with author seam edits; preserve manuscript and historical evidence.",
+  "author_commit_subject": "author edit: fix two 5a seam references",
+  "changed_manuscript_files": [
+    "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
+    "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md"
+  ],
+  "total_word_delta": -5,
+  "prose_word_delta": -5,
+  "code_word_delta": 0,
+  "merged_reference_identities": [
+    "R275",
+    "R276"
+  ],
+  "historical_metrics": "metrics-after-phase-5a.json",
+  "authorized_metrics": "metrics-after-author-seam-edits.json"
+}

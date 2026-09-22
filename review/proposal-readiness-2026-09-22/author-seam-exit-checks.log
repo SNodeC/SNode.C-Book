@@ -1,0 +1,217 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 359 current references, 374 old-reference dispositions.
+{
+  "approved_structure_applied": true,
+  "numbered_chapters": 30,
+  "parts": 11,
+  "appendices": 1,
+  "sample_chapters": [
+    {
+      "old": 1,
+      "current": 1,
+      "prose_words": 1724,
+      "reduction_percent": 26.42,
+      "average_section_prose_words": 327.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "public_answers": true
+    },
+    {
+      "old": 3,
+      "current": 3,
+      "prose_words": 1988,
+      "reduction_percent": 25.65,
+      "average_section_prose_words": 315.5,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "public_answers": true
+    },
+    {
+      "old": 23,
+      "current": 18,
+      "prose_words": 2898,
+      "reduction_percent": 20.91,
+      "average_section_prose_words": 398.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "public_answers": true
+    },
+    {
+      "old": 35,
+      "current": 28,
+      "prose_words": 1864,
+      "reduction_percent": 21.61,
+      "average_section_prose_words": 294.33,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "public_answers": true
+    },
+    {
+      "old": 37,
+      "current": 30,
+      "prose_words": 1856,
+      "reduction_percent": 22.51,
+      "average_section_prose_words": 291.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "public_answers": true
+    }
+  ],
+  "epilogue_unchanged": true,
+  "chapter_2_reconstruction_unchanged": true,
+  "preserved_executable_configuration_fences": 293,
+  "preserved_index_insertions": 1033,
+  "preserved_figures": 18,
+  "unchanged_lab_implementation_files": 12,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 458,
+      "sha256": "3e2b261fa9034d7bde74a1eabd7067897b3db67388af0431d69fa5b539da4dda",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "e7765a86b68a6693f5ced18f013efe46d90223449b36154d1eafdd6c5e5464b9",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "3051a71b73aa5bd76c484434dda993bd046334be1b08806fb64c90704c0ccb2f",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 289,
+  "proposal_refresh_deferred_to_phase_6": true,
+  "planned_words": 112250,
+  "reserve_used": 0,
+  "reserve_remaining": 2750
+}
+PASS: Phase 5a structure, references, preservation, sample pedagogy, final PDFs, and archive contents.
+Actual build/runtime execution and targeted visual/editorial reread have separate logs; no Part condensation is claimed.

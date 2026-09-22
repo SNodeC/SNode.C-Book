@@ -2709,20 +2709,11 @@
       "file": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
       "text": "Chapter 12",
       "targets": [
-        "configuration-philosophy-in-snodec"
-      ],
-      "source_ids": [
-        "R275"
-      ],
-      "line": 313
-    },
-    {
-      "file": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
-      "text": "Chapter 12",
-      "targets": [
+        "configuration-philosophy-in-snodec",
         "application-and-instance-configuration-in-detail"
       ],
       "source_ids": [
+        "R275",
         "R276"
       ],
       "line": 313

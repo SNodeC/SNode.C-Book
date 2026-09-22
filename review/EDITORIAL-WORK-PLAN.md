@@ -978,3 +978,22 @@ Status: **blocked at entry**, not completed. Commit:
 `proposal-readiness: phase 5b — record failed prerequisite check`.
 Stop here. Reconcile the reference/metric gate with the author edits, then recheck
 Phase 5a before retrying Phase 5b; do not revert the author's prose.
+
+
+## Author-authorized seam repair and Phase 5b resumption — 2026-09-22
+
+The author requests the register/baseline repair and then Phase 5b in this session.
+R275/R276 now share the single Chapter 12 occurrence, retaining both topics and
+identities. The two author seam edits (−5 prose words) establish the authorized
+146,205-word entry baseline. Historical Phase 5a evidence is unchanged; fresh
+metrics and all original exit assertions are recorded separately in
+`review/proposal-readiness-2026-09-22/author-seam-baseline.json`,
+`metrics-after-author-seam-edits.json`, and `phase-5a-author-seam-exit-checks.json`.
+Hygiene/alignment, metrics tests, companion build, ten labs and all PDF/package
+targets pass. Pages remain 458 / 54 / 6, with zero final warnings/bad boxes.
+REPORT.md cites every command log and explains the historical-checker wrapper.
+No manuscript prose changed for this repair. The earlier entry failure remains
+in the chronological record; its gate is now passed.
+
+Separate commit: `proposal-readiness: reconcile 5a register with author seam edits`.
+Next, execute Phase 5b only: Part I and its approved front-matter work.
