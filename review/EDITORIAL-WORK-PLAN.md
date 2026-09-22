@@ -157,6 +157,37 @@ Stop after this commit. Phase 4 is next, limited to RESTRUCTURE-PLAN.md and endi
 awaiting author approval. It must evaluate early MiniGateway milestones and
 runnable Part checkpoints; no restructuring approval is recorded.
 
+## Phase 4 — restructure plan awaiting author approval, 2026-09-22
+
+Phase 3's entry checks were re-executed successfully: unchanged metrics, sample
+exits, hygiene/alignment, companion compilation, all ten labs, and all proposal
+package targets. Socket-based labs initially met a sandbox restriction; the same
+tests passed with local socket access. The PDFs remain 6, 54, and 470 pages with
+zero warnings/bad boxes. Primary publisher records and the teaching path were
+rechecked; evidence is in REPORT.md's Phase 4 section.
+
+The concrete proposal is `review/proposal-readiness-2026-09-22/RESTRUCTURE-PLAN.md`:
+30 numbered chapters in 11 Parts, a contributor Appendix A, the preserved epilogue,
+and a 112,250-word total budget including all supporting and pedagogical material.
+All five candidate merges are evaluated; the minimum source-reading introduction
+stays on the main learning path. The final construction/extension chapters remain
+adjacent (new 28–29) and are followed by architectural judgment (new 30).
+
+The plan includes an old→new map, chapter budgets, 374 chapter-reference records,
+figure/index impact, early MiniGateway milestones, and a runnable checkpoint for
+every Part. The plan check accounts for all 62 manuscript inputs exactly once and
+confirms the budget arithmetic. The unchanged manuscript remains 146,950 words;
+`metrics-after-phase-4.json` and the scope diff prove this is planning only.
+
+**Status: awaiting author approval. Approval has not been given.** The author must
+approve this concrete plan before Phase 5a; record that decision here. The proposed
+Part sessions are 5b–5l, with the final Part owning the associated appendix,
+epilogue, reference material, and global/proposal refresh. No restructuring,
+new objectives/exercises, or milestone implementation occurred in Phase 4.
+
+Commit: `proposal-readiness: phase 4 — propose consolidated teaching-book structure`.
+Stop after this commit. Do not begin Phase 5a on the basis of this plan's existence.
+
 ## Author amendment — teaching book, 2026-09-22
 
 Accepted during Phase 1; the full amendment is appended to

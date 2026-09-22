@@ -1,0 +1,771 @@
+{
+  "status": "awaiting author approval",
+  "chapters": [
+    {
+      "new": "1",
+      "part": "I",
+      "title": "Why SNode.C Exists",
+      "old": [
+        1
+      ],
+      "source_files": [
+        "manuscript/chapters/01-why-snodec-exists.md"
+      ],
+      "current_total_words": 1820,
+      "current_prose_words": 1723,
+      "current_fenced_words": 97,
+      "total_word_budget": 1850,
+      "prose_allowance_with_all_current_fences": 1753,
+      "heading_ceiling": 5
+    },
+    {
+      "new": "2",
+      "part": "I",
+      "title": "Preparing Your Environment",
+      "old": [
+        2
+      ],
+      "source_files": [
+        "manuscript/chapters/02-preparing-your-environment.md"
+      ],
+      "current_total_words": 2944,
+      "current_prose_words": 2638,
+      "current_fenced_words": 306,
+      "total_word_budget": 3350,
+      "prose_allowance_with_all_current_fences": 3044,
+      "heading_ceiling": 9
+    },
+    {
+      "new": "3",
+      "part": "I",
+      "title": "Your First Working Program: The Echo Pair",
+      "old": [
+        3
+      ],
+      "source_files": [
+        "manuscript/chapters/03-your-first-working-program-the-echo-pair.md"
+      ],
+      "current_total_words": 2565,
+      "current_prose_words": 1987,
+      "current_fenced_words": 578,
+      "total_word_budget": 2650,
+      "prose_allowance_with_all_current_fences": 2072,
+      "heading_ceiling": 6
+    },
+    {
+      "new": "4",
+      "part": "II",
+      "title": "The Mental Model and Layers in Practice",
+      "old": [
+        5,
+        7
+      ],
+      "source_files": [
+        "manuscript/chapters/05-the-mental-model-of-snodec.md",
+        "manuscript/chapters/07-layers-in-practice-network-transport-connection-application.md"
+      ],
+      "current_total_words": 7807,
+      "current_prose_words": 7294,
+      "current_fenced_words": 513,
+      "total_word_budget": 5300,
+      "prose_allowance_with_all_current_fences": 4787,
+      "heading_ceiling": 15
+    },
+    {
+      "new": "5",
+      "part": "II",
+      "title": "Core Runtime and Event Processing",
+      "old": [
+        6
+      ],
+      "source_files": [
+        "manuscript/chapters/06-core-runtime-and-event-processing.md"
+      ],
+      "current_total_words": 5189,
+      "current_prose_words": 5090,
+      "current_fenced_words": 99,
+      "total_word_budget": 3700,
+      "prose_allowance_with_all_current_fences": 3601,
+      "heading_ceiling": 11
+    },
+    {
+      "new": "6",
+      "part": "III",
+      "title": "Network Families: Addresses, IPv4/IPv6, and Unix Sockets",
+      "old": [
+        8,
+        10,
+        11
+      ],
+      "source_files": [
+        "manuscript/chapters/08-socket-addresses-and-address-semantics.md",
+        "manuscript/chapters/10-ipv4-and-ipv6-as-the-first-concrete-network-families.md",
+        "manuscript/chapters/11-unix-domain-sockets.md"
+      ],
+      "current_total_words": 8266,
+      "current_prose_words": 7801,
+      "current_fenced_words": 465,
+      "total_word_budget": 5200,
+      "prose_allowance_with_all_current_fences": 4735,
+      "heading_ceiling": 15
+    },
+    {
+      "new": "7",
+      "part": "III",
+      "title": "Servers, Clients, and Connections",
+      "old": [
+        9
+      ],
+      "source_files": [
+        "manuscript/chapters/09-servers-clients-and-connections.md"
+      ],
+      "current_total_words": 4858,
+      "current_prose_words": 4628,
+      "current_fenced_words": 230,
+      "total_word_budget": 3650,
+      "prose_allowance_with_all_current_fences": 3420,
+      "heading_ceiling": 10
+    },
+    {
+      "new": "8",
+      "part": "III",
+      "title": "Bluetooth in SNode.C: RFCOMM and L2CAP",
+      "old": [
+        12
+      ],
+      "source_files": [
+        "manuscript/chapters/12-bluetooth-in-snodec-rfcomm-and-l2cap.md"
+      ],
+      "current_total_words": 2612,
+      "current_prose_words": 2462,
+      "current_fenced_words": 150,
+      "total_word_budget": 2200,
+      "prose_allowance_with_all_current_fences": 2050,
+      "heading_ceiling": 5
+    },
+    {
+      "new": "9",
+      "part": "IV",
+      "title": "Writing `SocketContext` Classes Well",
+      "old": [
+        13
+      ],
+      "source_files": [
+        "manuscript/chapters/13-writing-socketcontext-classes-well.md"
+      ],
+      "current_total_words": 4297,
+      "current_prose_words": 3993,
+      "current_fenced_words": 304,
+      "total_word_budget": 3200,
+      "prose_allowance_with_all_current_fences": 2896,
+      "heading_ceiling": 8
+    },
+    {
+      "new": "10",
+      "part": "IV",
+      "title": "Writing `SocketContextFactory` Classes Well",
+      "old": [
+        14
+      ],
+      "source_files": [
+        "manuscript/chapters/14-writing-socketcontextfactory-classes-well.md"
+      ],
+      "current_total_words": 3866,
+      "current_prose_words": 3575,
+      "current_fenced_words": 291,
+      "total_word_budget": 2800,
+      "prose_allowance_with_all_current_fences": 2509,
+      "heading_ceiling": 7
+    },
+    {
+      "new": "11",
+      "part": "IV",
+      "title": "Building the Same Protocol over Different Lower Layers",
+      "old": [
+        15
+      ],
+      "source_files": [
+        "manuscript/chapters/15-building-the-same-protocol-over-different-lower-layers.md"
+      ],
+      "current_total_words": 3627,
+      "current_prose_words": 3306,
+      "current_fenced_words": 321,
+      "total_word_budget": 2800,
+      "prose_allowance_with_all_current_fences": 2479,
+      "heading_ceiling": 7
+    },
+    {
+      "new": "12",
+      "part": "V",
+      "title": "Configuring Applications and Named Instances",
+      "old": [
+        16,
+        17
+      ],
+      "source_files": [
+        "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
+        "manuscript/chapters/17-application-and-instance-configuration-in-detail.md"
+      ],
+      "current_total_words": 8698,
+      "current_prose_words": 8187,
+      "current_fenced_words": 511,
+      "total_word_budget": 5400,
+      "prose_allowance_with_all_current_fences": 4889,
+      "heading_ceiling": 16
+    },
+    {
+      "new": "13",
+      "part": "V",
+      "title": "Logging, Diagnostics, and Runtime Introspection",
+      "old": [
+        18
+      ],
+      "source_files": [
+        "manuscript/chapters/18-logging-diagnostics-and-runtime-introspection.md"
+      ],
+      "current_total_words": 3778,
+      "current_prose_words": 3478,
+      "current_fenced_words": 300,
+      "total_word_budget": 2750,
+      "prose_allowance_with_all_current_fences": 2450,
+      "heading_ceiling": 7
+    },
+    {
+      "new": "14",
+      "part": "VI",
+      "title": "TLS Across the Framework",
+      "old": [
+        19
+      ],
+      "source_files": [
+        "manuscript/chapters/19-tls-across-the-framework.md"
+      ],
+      "current_total_words": 3790,
+      "current_prose_words": 3593,
+      "current_fenced_words": 197,
+      "total_word_budget": 2950,
+      "prose_allowance_with_all_current_fences": 2753,
+      "heading_ceiling": 8
+    },
+    {
+      "new": "15",
+      "part": "VI",
+      "title": "Timeouts, Retries, and Failure Modes",
+      "old": [
+        20
+      ],
+      "source_files": [
+        "manuscript/chapters/20-timeouts-retries-and-failure-modes.md"
+      ],
+      "current_total_words": 4533,
+      "current_prose_words": 4219,
+      "current_fenced_words": 314,
+      "total_word_budget": 3400,
+      "prose_allowance_with_all_current_fences": 3086,
+      "heading_ceiling": 9
+    },
+    {
+      "new": "16",
+      "part": "VII",
+      "title": "The HTTP Layer",
+      "old": [
+        21
+      ],
+      "source_files": [
+        "manuscript/chapters/21-the-http-layer.md"
+      ],
+      "current_total_words": 3515,
+      "current_prose_words": 3125,
+      "current_fenced_words": 390,
+      "total_word_budget": 2600,
+      "prose_allowance_with_all_current_fences": 2210,
+      "heading_ceiling": 6
+    },
+    {
+      "new": "17",
+      "part": "VII",
+      "title": "The Express-Like Framework",
+      "old": [
+        22
+      ],
+      "source_files": [
+        "manuscript/chapters/22-the-express-like-framework.md"
+      ],
+      "current_total_words": 3058,
+      "current_prose_words": 2805,
+      "current_fenced_words": 253,
+      "total_word_budget": 2350,
+      "prose_allowance_with_all_current_fences": 2097,
+      "heading_ceiling": 5
+    },
+    {
+      "new": "18",
+      "part": "VII",
+      "title": "Server-Sent Events and Real-Time HTTP",
+      "old": [
+        23
+      ],
+      "source_files": [
+        "manuscript/chapters/23-server-sent-events-and-real-time-http.md"
+      ],
+      "current_total_words": 3268,
+      "current_prose_words": 2897,
+      "current_fenced_words": 371,
+      "total_word_budget": 3300,
+      "prose_allowance_with_all_current_fences": 2929,
+      "heading_ceiling": 7
+    },
+    {
+      "new": "19",
+      "part": "VII",
+      "title": "WebSocket and Protocol Upgrade",
+      "old": [
+        24
+      ],
+      "source_files": [
+        "manuscript/chapters/24-websocket-and-protocol-upgrade.md"
+      ],
+      "current_total_words": 3982,
+      "current_prose_words": 3431,
+      "current_fenced_words": 551,
+      "total_word_budget": 3050,
+      "prose_allowance_with_all_current_fences": 2499,
+      "heading_ceiling": 7
+    },
+    {
+      "new": "20",
+      "part": "VIII",
+      "title": "MQTT Support in SNode.C",
+      "old": [
+        25
+      ],
+      "source_files": [
+        "manuscript/chapters/25-mqtt-support-in-snodec.md"
+      ],
+      "current_total_words": 2996,
+      "current_prose_words": 2708,
+      "current_fenced_words": 288,
+      "total_word_budget": 2350,
+      "prose_allowance_with_all_current_fences": 2062,
+      "heading_ceiling": 5
+    },
+    {
+      "new": "21",
+      "part": "VIII",
+      "title": "MQTT over WebSocket",
+      "old": [
+        26
+      ],
+      "source_files": [
+        "manuscript/chapters/26-mqtt-over-websocket.md"
+      ],
+      "current_total_words": 2730,
+      "current_prose_words": 2352,
+      "current_fenced_words": 378,
+      "total_word_budget": 2100,
+      "prose_allowance_with_all_current_fences": 1722,
+      "heading_ceiling": 4
+    },
+    {
+      "new": "22",
+      "part": "VIII",
+      "title": "Designing IoT Systems with Multiple Protocols",
+      "old": [
+        27
+      ],
+      "source_files": [
+        "manuscript/chapters/27-designing-iot-systems-with-multiple-protocols.md"
+      ],
+      "current_total_words": 3971,
+      "current_prose_words": 3787,
+      "current_fenced_words": 184,
+      "total_word_budget": 2950,
+      "prose_allowance_with_all_current_fences": 2766,
+      "heading_ceiling": 8
+    },
+    {
+      "new": "23",
+      "part": "IX",
+      "title": "Database Support and Application State",
+      "old": [
+        28
+      ],
+      "source_files": [
+        "manuscript/chapters/28-database-support-and-application-state.md"
+      ],
+      "current_total_words": 5196,
+      "current_prose_words": 4696,
+      "current_fenced_words": 500,
+      "total_word_budget": 3900,
+      "prose_allowance_with_all_current_fences": 3400,
+      "heading_ceiling": 10
+    },
+    {
+      "new": "24",
+      "part": "IX",
+      "title": "SNode.C in Larger Systems",
+      "old": [
+        29,
+        30,
+        31
+      ],
+      "source_files": [
+        "manuscript/chapters/29-learning-from-the-applications-in-src-apps.md",
+        "manuscript/chapters/30-from-applications-to-systems.md",
+        "manuscript/chapters/31-mqttsuite-as-a-reference-ecosystem.md"
+      ],
+      "current_total_words": 10711,
+      "current_prose_words": 9685,
+      "current_fenced_words": 1026,
+      "total_word_budget": 6200,
+      "prose_allowance_with_all_current_fences": 5174,
+      "heading_ceiling": 17
+    },
+    {
+      "new": "25",
+      "part": "X",
+      "title": "CMake Components, Public Headers, and Linking Strategy",
+      "old": [
+        32
+      ],
+      "source_files": [
+        "manuscript/chapters/32-cmake-components-and-linking-strategy.md"
+      ],
+      "current_total_words": 6310,
+      "current_prose_words": 5622,
+      "current_fenced_words": 688,
+      "total_word_budget": 4100,
+      "prose_allowance_with_all_current_fences": 3412,
+      "heading_ceiling": 10
+    },
+    {
+      "new": "26",
+      "part": "X",
+      "title": "Deployment on Linux and OpenWrt",
+      "old": [
+        33
+      ],
+      "source_files": [
+        "manuscript/chapters/33-deployment-on-linux-and-openwrt.md"
+      ],
+      "current_total_words": 5557,
+      "current_prose_words": 5239,
+      "current_fenced_words": 318,
+      "total_word_budget": 3700,
+      "prose_allowance_with_all_current_fences": 3382,
+      "heading_ceiling": 10
+    },
+    {
+      "new": "27",
+      "part": "X",
+      "title": "Testing, Debugging, and Benchmarking",
+      "old": [
+        34
+      ],
+      "source_files": [
+        "manuscript/chapters/34-testing-debugging-and-benchmarking.md"
+      ],
+      "current_total_words": 5722,
+      "current_prose_words": 5257,
+      "current_fenced_words": 465,
+      "total_word_budget": 3800,
+      "prose_allowance_with_all_current_fences": 3335,
+      "heading_ceiling": 10
+    },
+    {
+      "new": "28",
+      "part": "XI",
+      "title": "Building MiniGateway",
+      "old": [
+        35
+      ],
+      "source_files": [
+        "manuscript/chapters/35-building-minigateway.md"
+      ],
+      "current_total_words": 3834,
+      "current_prose_words": 1863,
+      "current_fenced_words": 1971,
+      "total_word_budget": 3850,
+      "prose_allowance_with_all_current_fences": 1879,
+      "heading_ceiling": 6
+    },
+    {
+      "new": "29",
+      "part": "XI",
+      "title": "Extending MiniGateway with a New Network Role",
+      "old": [
+        36
+      ],
+      "source_files": [
+        "manuscript/chapters/36-extending-minigateway-with-a-new-network-role.md"
+      ],
+      "current_total_words": 2966,
+      "current_prose_words": 2065,
+      "current_fenced_words": 901,
+      "total_word_budget": 3150,
+      "prose_allowance_with_all_current_fences": 2249,
+      "heading_ceiling": 6
+    },
+    {
+      "new": "30",
+      "part": "XI",
+      "title": "Architectural Judgment: Choosing the Right Layer and Boundary",
+      "old": [
+        37
+      ],
+      "source_files": [
+        "manuscript/chapters/37-architectural-judgment-choosing-the-right-layer-and-boundary.md"
+      ],
+      "current_total_words": 1877,
+      "current_prose_words": 1859,
+      "current_fenced_words": 18,
+      "total_word_budget": 1900,
+      "prose_allowance_with_all_current_fences": 1882,
+      "heading_ceiling": 6
+    },
+    {
+      "new": "A",
+      "part": "Appendix",
+      "title": "Reading and Extending the Framework",
+      "old": [
+        4,
+        38
+      ],
+      "source_files": [
+        "manuscript/chapters/04-reading-the-codebase-with-confidence.md",
+        "manuscript/chapters/38-extending-the-framework-safely.md"
+      ],
+      "current_total_words": 6976,
+      "current_prose_words": 5718,
+      "current_fenced_words": 1258,
+      "total_word_budget": 4700,
+      "prose_allowance_with_all_current_fences": 3442,
+      "heading_ceiling": 10
+    }
+  ],
+  "support": [
+    {
+      "new": "E",
+      "title": "Epilogue: The Principles Behind the Programs",
+      "source_files": [
+        "manuscript/chapters/epilogue.md"
+      ],
+      "total_word_budget": 1900,
+      "heading_ceiling": 4,
+      "current_total_words": 1529,
+      "current_fenced_words": 167,
+      "prose_allowance_with_all_current_fences": 1733
+    },
+    {
+      "new": "front",
+      "title": "Front matter",
+      "source_files": [
+        "manuscript/frontmatter/frontmatter.md",
+        "manuscript/frontmatter/preface.md",
+        "manuscript/frontmatter/how-to-read-this-book.md",
+        "manuscript/frontmatter/conventions.md",
+        "manuscript/frontmatter/author-note.md",
+        "manuscript/frontmatter/acknowledgements.md",
+        "manuscript/frontmatter/mainmatter.md"
+      ],
+      "total_word_budget": 2500,
+      "current_total_words": 2291,
+      "current_fenced_words": 7,
+      "prose_allowance_with_all_current_fences": 2493
+    },
+    {
+      "new": "parts",
+      "title": "Eleven Part openings/checkpoints and epilogue opener",
+      "source_files": [
+        "manuscript/parts/part-01-getting-oriented.md",
+        "manuscript/parts/part-02-the-snodec-architecture.md",
+        "manuscript/parts/part-03-networking-foundations-in-snodec.md",
+        "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md",
+        "manuscript/parts/part-05-configuration-and-operational-behavior.md",
+        "manuscript/parts/part-06-secure-and-robust-communication.md",
+        "manuscript/parts/part-07-web-protocols-and-web-applications.md",
+        "manuscript/parts/part-08-iot-and-message-oriented-systems.md",
+        "manuscript/parts/part-09-persistence-and-full-systems.md",
+        "manuscript/parts/part-10-building-porting-and-maintaining.md",
+        "manuscript/parts/part-11-building-a-minigateway-application.md",
+        "manuscript/parts/part-12-designing-with-snodec.md",
+        "manuscript/parts/part-13-epilogue.md"
+      ],
+      "total_word_budget": 1650,
+      "current_total_words": 1075,
+      "current_fenced_words": 19,
+      "prose_allowance_with_all_current_fences": 1631
+    },
+    {
+      "new": "back",
+      "title": "Reference material and public-solution pointers",
+      "source_files": [
+        "manuscript/backmatter/backmatter.md",
+        "manuscript/backmatter/further-reading.md",
+        "manuscript/backmatter/index.md"
+      ],
+      "total_word_budget": 1000,
+      "current_total_words": 736,
+      "current_fenced_words": 21,
+      "prose_allowance_with_all_current_fences": 979
+    }
+  ],
+  "old_to_new": {
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "5": "4",
+    "7": "4",
+    "6": "5",
+    "8": "6",
+    "10": "6",
+    "11": "6",
+    "9": "7",
+    "12": "8",
+    "13": "9",
+    "14": "10",
+    "15": "11",
+    "16": "12",
+    "17": "12",
+    "18": "13",
+    "19": "14",
+    "20": "15",
+    "21": "16",
+    "22": "17",
+    "23": "18",
+    "24": "19",
+    "25": "20",
+    "26": "21",
+    "27": "22",
+    "28": "23",
+    "29": "24",
+    "30": "24",
+    "31": "24",
+    "32": "25",
+    "33": "26",
+    "34": "27",
+    "35": "28",
+    "36": "29",
+    "37": "30",
+    "4": "A",
+    "38": "A"
+  },
+  "planned_total_words": 112250,
+  "numbered_chapters": 30,
+  "parts": 11,
+  "orientation_transfer": {
+    "from_old_chapter": 4,
+    "to_new_chapter": "4",
+    "max_words": 300,
+    "budget_note": "Already included in both the destination limit and the total; subtract from Appendix A retained content, never count as added allowance."
+  },
+  "part_plan": [
+    {
+      "part": "I",
+      "title": "Getting Oriented",
+      "chapters": [
+        1,
+        2,
+        3
+      ],
+      "chapter_words": 7850
+    },
+    {
+      "part": "II",
+      "title": "The SNode.C Architecture",
+      "chapters": [
+        4,
+        5
+      ],
+      "chapter_words": 9000
+    },
+    {
+      "part": "III",
+      "title": "Networking Foundations in SNode.C",
+      "chapters": [
+        6,
+        7,
+        8
+      ],
+      "chapter_words": 11050
+    },
+    {
+      "part": "IV",
+      "title": "From Raw Connections to Application Protocols",
+      "chapters": [
+        9,
+        10,
+        11
+      ],
+      "chapter_words": 8800
+    },
+    {
+      "part": "V",
+      "title": "Configuration and Operational Behavior",
+      "chapters": [
+        12,
+        13
+      ],
+      "chapter_words": 8150
+    },
+    {
+      "part": "VI",
+      "title": "Secure and Robust Communication",
+      "chapters": [
+        14,
+        15
+      ],
+      "chapter_words": 6350
+    },
+    {
+      "part": "VII",
+      "title": "Web Protocols and Web Applications",
+      "chapters": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "chapter_words": 11300
+    },
+    {
+      "part": "VIII",
+      "title": "IoT and Message-Oriented Systems",
+      "chapters": [
+        20,
+        21,
+        22
+      ],
+      "chapter_words": 7400
+    },
+    {
+      "part": "IX",
+      "title": "Persistence and Full Systems",
+      "chapters": [
+        23,
+        24
+      ],
+      "chapter_words": 10100
+    },
+    {
+      "part": "X",
+      "title": "Building, Porting, and Maintaining",
+      "chapters": [
+        25,
+        26,
+        27
+      ],
+      "chapter_words": 11600
+    },
+    {
+      "part": "XI",
+      "title": "Building and Evaluating MiniGateway",
+      "chapters": [
+        28,
+        29,
+        30
+      ],
+      "chapter_words": 8900
+    }
+  ]
+}

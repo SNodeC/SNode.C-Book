@@ -1,0 +1,21 @@
+{
+  "status": "awaiting author approval",
+  "manuscript_unchanged": true,
+  "manuscript_files_accounted_once": 62,
+  "old_chapters_mapped": 38,
+  "proposed_numbered_chapters": 30,
+  "parts_with_checkpoints": 11,
+  "planned_words": 112250,
+  "net_reduction_planned": 34700,
+  "unallocated_words_to_hard_ceiling": 2750,
+  "chapter_heading_ceiling": 269,
+  "sample_prose_budget_ceilings_preserve_phase_2_reductions": true,
+  "singular_manuscript_references_covered": 276,
+  "reference_occurrences": 374,
+  "references_requiring_treatment": 326,
+  "index_insertions": 1033,
+  "unique_index_keys": 821,
+  "figures": 18,
+  "manual_page_marks": 5
+}
+PASS: planning arithmetic and inventory; no manuscript edits. This is not author approval or proof of executed condensation.

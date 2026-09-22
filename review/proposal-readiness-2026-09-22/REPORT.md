@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest completed work is Phase 3, the teaching-book proposal package.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest executed phase is Phase 4, whose restructure plan awaits author approval; Phase 3 remains the latest completed implementation phase.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -12,7 +12,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 1 — book-wide hygiene | completed | `proposal-readiness: phase 1 — refine manuscript hygiene and preserve teaching principles` (containing this report); separate author-amendment commit | 2026-09-22 | Phase 1 evidence below; metrics-after-phase-1.json; phase-1-source-hygiene.log; phase-1-source-alignment.log; phase-1-companion-build.log; phase-1-pdf-final.log |
 | 2 — five sample chapters and author follow-up | completed | `proposal-readiness: phase 2 follow-up — sample chapter strengthening` (containing this report); initial Phase 2 commit retained | 2026-09-22 | chapter-ledger.md; metrics-after-phase-2.json; phase-2-exit-checks.json; phase-2-follow-up-labs.log; phase-2-follow-up-pdf-final-build.log; phase-2-follow-up-visual-review.md |
 | 3 — proposal package | completed | `proposal-readiness: phase 3 — prepare teaching-book proposal package` (containing this report) | 2026-09-22 | Phase 3 evidence below; metrics-after-phase-3.json; phase-3-bibliography.json; phase-3-exit-checks.json; phase-3-package-final.log; phase-3-archive-labs.log; phase-3-visual-review.md |
-| 4 — restructure plan | not started | — | — | No plan or author approval recorded |
+| 4 — restructure plan | awaiting author approval | `proposal-readiness: phase 4 — propose consolidated teaching-book structure` (containing this report) | 2026-09-22 | RESTRUCTURE-PLAN.md; phase-4-reference-map.md; phase-4-plan-checks.json; metrics-after-phase-4.json; Phase 4 evidence below |
 | 5a — approved TOC | not started | — | — | Gated on recorded author approval |
 | 5b onward — one Part per session | not started | — | — | Instantiate one row per approved Part before executing it; final sub-phase must meet all global targets |
 
@@ -757,3 +757,118 @@ console and final LaTeX logs for zero warnings/bad boxes. Stop on a failed exit.
 Phase 4 remains a planning-only session ending **awaiting author approval**;
 no changes under `manuscript/` are authorized by that phase. This session stops
 with the Phase 3 commit.
+
+
+## Phase 4 — consolidated teaching-book plan (awaiting author approval)
+
+### Previous-phase gate: executed again
+
+The working tree was clean on entry. Fresh `phase-4-entry-metrics.json` exactly
+matches `metrics-after-phase-3.json`; the comparison ran successfully.
+`phase-4-entry-source-checks.json` records successful metrics, comparison,
+Phase 2 sample exits, hygiene, and complete-listing alignment, with the individual
+`phase-4-entry-{metrics,metrics-comparison,samples,hygiene,alignment}.log` files.
+The companion build passed (`phase-4-entry-companion.log`).
+
+The initial sandboxed runtime check passed three model-only labs but could not
+create sockets for the other seven (`phase-4-entry-labs.log`: `PermissionError`,
+operation not permitted). The same unmodified tests were rerun with approved
+local socket access: **all ten passed**, exit 0, recorded in
+`phase-4-entry-labs-local.log`. This is a resolved execution-environment restriction,
+not a suppressed test or a changed runtime implementation.
+
+All three required targets (`proposal`, `proposal-sample-pdf`, `proposal-package`)
+were executed; the package dependency also rebuilt the full manuscript. The
+console (`phase-4-entry-package.log`) and each preserved
+`phase-4-entry-*-latex.log` have zero warnings and zero bad boxes. Actual PDF
+counts remain proposal/evidence **6**, combined samples **54**, full manuscript
+**470**. The previous phase's checker passed against the fresh artifacts and
+archive. Its output is captured as `phase-4-entry-proposal-checks.json` and log;
+its output filename was redirected in memory so the Phase 3 evidence is preserved.
+No PDF layout inputs changed; no new visual reread is claimed.
+
+The proposal's seven components and independent-learning path were reread.
+The five bibliographic records were rechecked against primary publisher results;
+`phase-4-entry-bibliography.json` records the details. InformIT direct opens timed
+out, but its returned publisher search record confirmed the same print ISBN,
+authors, edition, publication date, and copyright year. The Asio record was read
+through Packt's US URL when the AU page did not load. Sources:
+[InformIT](https://www.informit.com/store/unix-network-programming-volume-1-the-sockets-networking-9780131411555),
+[Packt: Asio cookbook](https://www.packtpub.com/en-us/product/boostasio-c-network-programming-cookbook-9781783986545),
+[Packt: C networking](https://www.packtpub.com/en-gb/product/hands-on-network-programming-with-c-9781789349863),
+[Packt: Node.js](https://www.packtpub.com/en-au/product/nodejs-design-patterns-9781803238944),
+and [Manning](https://www.manning.com/books/c-plus-plus-concurrency-in-action-second-edition).
+The approved [AUTHOR TO SUPPLY] items remain unchanged. The Phase 3 entry gate
+therefore passes; no manuscript prerequisite gap was found.
+
+### Plan written and reread
+
+`RESTRUCTURE-PLAN.md` was written and reread as a proposal for approval, not an
+executed restructuring. Structural inspection used the Markdown inputs, their
+headings and measures, the candidate chapters' explanatory passages, adjacent
+prerequisites, source markers, and existing companion/lab surfaces. This is not
+a claim of a fresh line-by-line editorial reread of all 38 chapters.
+
+| Required planning item | Evidence and conclusion |
+| --- | --- |
+| All five candidate merges argued | RESTRUCTURE-PLAN.md:31; each is accepted with stated teaching boundaries; old 4's minimum introduction stays on the main path |
+| Consolidated TOC and per-chapter budgets | RESTRUCTURE-PLAN.md:128; 30 numbered chapters, 11 named Parts, Appendix A, epilogue, and all supporting matter total 112,250 words |
+| Complete old→new map | RESTRUCTURE-PLAN.md:245; all 38 old numbered chapters have destinations; sample identities remain distinct |
+| Every affected manual reference | phase-4-reference-map.md:1 and phase-4-reference-inventory.json; 374 occurrences, 326 migration treatments; all 276 metrics-counted singular manuscript references covered |
+| Index/figure impact | RESTRUCTURE-PLAN.md:348; 18 retained figure labels/assets, 1,033 index insertions / 821 keys, five hardcoded page marks, and 30 Part-reference occurrences |
+| Early MiniGateway milestones and Part checkpoints | RESTRUCTURE-PLAN.md:395; eleven runnable checkpoint plans with explicit expected outcomes and existing-versus-future evidence |
+| Cumulative-path risks and implementation sequencing | RESTRUCTURE-PLAN.md:438 and 453; protects prerequisites, canonical model, complete capstone listings, public solutions, and intent-aware reference validation |
+
+The plan reduces numbered chapters by consolidating repeated treatments and
+moves the contributor material into a counted appendix. The old final judgment
+chapter joins the capstone Part. Every source input is allocated once; the small
+source-reading transfer remains within the destination budgets. The 112,250-word
+plan requires **34,700 fewer total words**, leaving 2,750 below the hard ceiling.
+All 14,450 current fenced tokens are retained in its conservative arithmetic;
+new teaching apparatus is budgeted within, not above, the totals. Proposed heading
+ceilings sum to 269, with actual section averages still required to reach 250.
+The plan does not claim these future prose or pedagogical results are achieved.
+
+The reference register records singular/plural mentions, ranges, line-wrapped
+lists, printed README references, current publication/companion documentation,
+and relevant tool messages. It explicitly distinguishes the legacy authoring-note
+guard from reader references. A range containing old Chapter 4 is not blindly
+mapped into a prerequisite on the contributor appendix. References between merged
+chapters require meaningful section targets, and numerical validity alone will
+not suffice for Phase 5a's planned reference check.
+
+`check-phase-4.py` ran successfully (`phase-4-plan-checks.log` and JSON). It checks
+all 62 ordered inputs are accounted once, current row totals/fenced counts,
+complete chapter mapping, budget arithmetic, sample prose-budget limits against
+the original Phase 2 thresholds, inventory coverage and current source locations,
+figure assets, and one checkpoint for each proposed Part. This review-only checker
+validates a proposed plan; it is not Phase 5a's unimplemented reference validator.
+
+### Unchanged manuscript and phase exit
+
+`metrics-after-phase-4.json` is byte-identical to the Phase 3 exit and Phase 4
+entry measurements. Total words **146,950**, prose **132,500**, fenced words
+**14,450**, chapter subheadings **921**, average section length **132.89**, text
+fences **434**, rule boxes **20**, closing sections **0**, forbidden hits **0**:
+all deltas are zero. PDF pages before/after are 6/6, 54/54, and 470/470.
+
+`git diff HEAD --name-only -- manuscript` produced no paths; the check also runs
+inside `check-phase-4.py`. The final changed-file audit is captured in
+`phase-4-scope-check.log`: only the active plan/report/evidence directory and
+EDITORIAL-WORK-PLAN.md are changed. The proposal, manuscript, companion, production
+configuration, and existing CI implementations receive no edits in this phase.
+
+Application production code **+0/−0**; companion/test implementation **+0/−0**;
+existing build/CI support **+0/−0**. The new 82-line checker is review validation
+support; all other additions are planning documents, measurements, or execution
+evidence. No new milestone program or solution is implemented. No new broker,
+database, hardware, deployment, or hosted-CI result is claimed.
+
+The Phase 4 document and no-manuscript-change exits are satisfied. Its required
+status is **awaiting author approval**, not completed. Approval has not been
+recorded and Phase 5a has not started. The next session must first obtain/record
+approval of the concrete TOC, budgets, and milestone plan. Before implementation,
+rerun `check-phase-4.py`, the Phase 3 entry commands above (capturing new output
+separately), and the no-manuscript-change/plan coverage checks against this phase's
+recorded inputs. If the author requests a different plan, revise the plan and its
+arithmetic in Phase 4 before applying it. Stop after this Phase 4 commit.

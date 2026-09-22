@@ -1,0 +1,78 @@
+{
+  "verified_date": "2026-09-22",
+  "method": "Rechecked publisher bibliographic records; the original proposal and recorded bibliography remain unchanged.",
+  "books": [
+    {
+      "authors": [
+        "W. Richard Stevens",
+        "Bill Fenner",
+        "Andrew M. Rudoff"
+      ],
+      "title": "UNIX Network Programming, Volume 1: The Sockets Networking API",
+      "edition": "3rd",
+      "publisher": "Addison-Wesley Professional",
+      "publication_date": "2003-11-14",
+      "year": 2003,
+      "isbn13": "9780131411555",
+      "source": "https://www.informit.com/store/unix-network-programming-volume-1-the-sockets-networking-9780131411555",
+      "note": "Publisher lists publication November 14, 2003 and copyright 2004; proposal distinguishes both.",
+      "phase_4_result": "Matched InformIT publisher search record including 2003 publication and 2004 copyright; direct opens timed out."
+    },
+    {
+      "authors": [
+        "Dmytro Radchuk"
+      ],
+      "title": "Boost.Asio C++ Network Programming Cookbook",
+      "edition": "1st",
+      "publisher": "Packt Publishing",
+      "publication_date": "2016-01-25",
+      "year": 2016,
+      "isbn13": "9781783986545",
+      "source": "https://www.packtpub.com/en-au/product/boostasio-c-network-programming-cookbook-9781783986545",
+      "phase_4_result": "matched publisher page: authors, title, publisher/imprint, edition and publication year",
+      "phase_4_checked_url": "https://www.packtpub.com/en-us/product/boostasio-c-network-programming-cookbook-9781783986545"
+    },
+    {
+      "authors": [
+        "Lewis Van Winkle"
+      ],
+      "title": "Hands-On Network Programming with C",
+      "edition": "1st",
+      "publisher": "Packt Publishing",
+      "publication_date": "2019-05-13",
+      "year": 2019,
+      "isbn13": "9781789349863",
+      "source": "https://www.packtpub.com/en-gb/product/hands-on-network-programming-with-c-9781789349863",
+      "phase_4_result": "matched publisher page: authors, title, publisher/imprint, edition and publication year"
+    },
+    {
+      "authors": [
+        "Luciano Mammino",
+        "Mario Casciaro"
+      ],
+      "title": "Node.js Design Patterns",
+      "edition": "4th",
+      "publisher": "Packt Publishing",
+      "publication_date": "2025-09-25",
+      "year": 2025,
+      "isbn13": "9781803238944",
+      "source": "https://www.packtpub.com/en-au/product/nodejs-design-patterns-9781803238944",
+      "note": "Fourth-edition publisher listing gives Mammino before Casciaro.",
+      "phase_4_result": "matched publisher page: authors, title, publisher/imprint, edition and publication year"
+    },
+    {
+      "authors": [
+        "Anthony Williams"
+      ],
+      "title": "C++ Concurrency in Action",
+      "edition": "2nd",
+      "publisher": "Manning Publications",
+      "publication_date": "2019-02",
+      "year": 2019,
+      "isbn13": "9781617294693",
+      "source": "https://www.manning.com/books/c-plus-plus-concurrency-in-action-second-edition",
+      "phase_4_result": "matched publisher page: authors, title, publisher/imprint, edition and publication year"
+    }
+  ],
+  "phase_4_recheck_date": "2026-09-22"
+}

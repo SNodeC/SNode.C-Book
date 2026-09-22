@@ -1,0 +1,1 @@
+Command: python3 ci/manuscript-metrics.py --output review/proposal-readiness-2026-09-22/phase-4-entry-metrics.json

@@ -1,0 +1,33 @@
+Command: git diff HEAD --name-only -- manuscript
+Result: no paths; manuscript unchanged.
+
+Command: git status --short
+ M review/EDITORIAL-WORK-PLAN.md
+ M review/proposal-readiness-2026-09-22/REPORT.md
+?? review/proposal-readiness-2026-09-22/RESTRUCTURE-PLAN.md
+?? review/proposal-readiness-2026-09-22/check-phase-4.py
+?? review/proposal-readiness-2026-09-22/metrics-after-phase-4.json
+?? review/proposal-readiness-2026-09-22/phase-4-entry-alignment.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-bibliography.json
+?? review/proposal-readiness-2026-09-22/phase-4-entry-book-proposal-package-latex.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-book-proposal-sample-package-latex.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-companion.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-hygiene.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-labs-local.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-labs.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-metrics-comparison.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-metrics.json
+?? review/proposal-readiness-2026-09-22/phase-4-entry-metrics.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-package.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-proposal-checks.json
+?? review/proposal-readiness-2026-09-22/phase-4-entry-proposal-checks.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-samples.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-snodec-book-latex.log
+?? review/proposal-readiness-2026-09-22/phase-4-entry-source-checks.json
+?? review/proposal-readiness-2026-09-22/phase-4-plan-checks.json
+?? review/proposal-readiness-2026-09-22/phase-4-plan-checks.log
+?? review/proposal-readiness-2026-09-22/phase-4-plan-data.json
+?? review/proposal-readiness-2026-09-22/phase-4-reference-inventory.json
+?? review/proposal-readiness-2026-09-22/phase-4-reference-map.md
+
+PASS: changed paths confined to this phase evidence/plan and EDITORIAL-WORK-PLAN.md.

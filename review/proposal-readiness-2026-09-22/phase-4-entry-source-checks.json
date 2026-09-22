@@ -1,0 +1,22 @@
+[
+  {
+    "check": "metrics",
+    "exit_code": 0
+  },
+  {
+    "check": "metrics-comparison",
+    "exit_code": 0
+  },
+  {
+    "check": "samples",
+    "exit_code": 0
+  },
+  {
+    "check": "hygiene",
+    "exit_code": 0
+  },
+  {
+    "check": "alignment",
+    "exit_code": 0
+  }
+]

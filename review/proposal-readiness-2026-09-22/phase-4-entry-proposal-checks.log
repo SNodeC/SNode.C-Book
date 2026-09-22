@@ -1,0 +1,38 @@
+{
+  "required_sections": [
+    "Pitch",
+    "Reader and learning path",
+    "Comparable titles",
+    "Manuscript overview and estimated extent",
+    "Revision plan",
+    "Author platform and market evidence",
+    "Companion material and technical verification"
+  ],
+  "verified_comparables": 5,
+  "manuscript_metrics_match": true,
+  "part_pages_sum": 470,
+  "pdfs": {
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "42ac06590d54b51e7da97696dda0f6c89414bafd5d89778627f9ff46594e7eb1",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "4a23e9dd81aad12b1c99e9553ca37989afce50df78c9215f5abfd1e10d6947cc",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "snodec-book": {
+      "pages": 470,
+      "sha256": "eb919e0e3a429f6b6cbbe5aed709524676c97b4011055534bf548eeb53811aac",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_byte_identical_files": 134,
+  "archive_sha256": "8eb1ca02d1659ba34fbee9e2343f6396c243cb61eafdcd11a362595f5516ad82"
+}
+PASS: section coverage, recorded bibliography, manuscript metrics, pagination, clean final PDF logs, and archive contents
+Reread quality, live publisher verification, actual build execution, labs, and visual review require their separate evidence.
