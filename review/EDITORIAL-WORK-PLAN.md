@@ -77,9 +77,25 @@ warnings and bad boxes; 16 representative rendered pages were inspected. Complet
 listing contents, figures, index entries, and input order are preserved. Exact
 checks and limits are in `review/proposal-readiness-2026-09-22/REPORT.md`, Phase 1.
 
-Stop after Phase 1. Phase 2 is next; first rerun Phase 1's exit checks listed in
-REPORT.md. Read the teaching-book amendment before planning sample-chapter work.
-No restructuring approval is recorded.
+Phase 2 completed on 22 September 2026 after re-executing the Phase 1 exits.
+The author's restored epilogue is preserved; its +39 prose words are the expected
+entry difference, recorded in REPORT.md. Chapters 1, 3, 23, 35, and 37 now each
+have three observable objectives, a recap of at most five bullets, and review,
+lab, and design exercises with public solutions. Prose reductions are 22–32%
+including the new teaching material; average section lengths all exceed 250.
+`chapter-ledger.md` records every objective↔exercise mapping and the contextual
+reread. Chapter 35 retains every listing unchanged.
+
+The Asio comparison and all lab dependencies compile; five public labs pass.
+Hygiene, source alignment, and metrics regression pass. The full PDF has 470
+pages (entry 482), zero LaTeX warnings, and zero bad boxes. Visual evidence and
+all command results are in the Phase 2 section of REPORT.md. The manuscript has
+146,525 words and 921 chapter subheadings; global condensation remains future work.
+The five sample chapters are the only manuscript files changed in this phase.
+
+Stop after Phase 2. Phase 3 is next; rerun the Phase 2 checks listed in REPORT.md
+before starting. Proposal positioning and learning-path work remain Phase 3;
+no restructuring approval is recorded.
 
 ## Author amendment — teaching book, 2026-09-22
 

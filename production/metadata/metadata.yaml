@@ -40,6 +40,8 @@ header-includes:
     \usepackage{tocloft,parskip}
     \usepackage{makeidx}
     \makeindex
+    % Allow contents rows to absorb page breaks with modest, distributed spacing.
+    \setlength{\cftbeforesecskip}{0pt plus 0.4pt}
     \setlength{\cftchapnumwidth}{1.5em}
     \setlength{\cftsecnumwidth}{3em}
     \setlength{\cftsubsecnumwidth}{3.8em}

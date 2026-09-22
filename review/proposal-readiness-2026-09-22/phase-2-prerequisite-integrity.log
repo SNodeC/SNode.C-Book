@@ -1,0 +1,4 @@
+Only epilogue.md differs from Phase 1; +39 prose words, deliberate author edit. Historical Phase 1 metrics retained.
+PASS: fresh metrics match Phase 2 entry metrics (accepted author epilogue: +39 words); all four hygiene thresholds pass
+PASS: all 62 inputs preserve code, source markers, index entries, figures and non-closing headings
+PASS: manuscript input order is unchanged; shell labels are sh, including nested example

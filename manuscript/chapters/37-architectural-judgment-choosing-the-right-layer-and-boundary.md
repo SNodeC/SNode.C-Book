@@ -7,7 +7,13 @@
 \index{boundary choice}
 
 
-### Why this chapter matters now
+::: {.snodec-objectives title="Learning objectives"}
+- **O1.** Explain why acceptance order belongs to the shared model rather than an input or observer.
+- **O2.** Build a model experiment and observe ordering and unsubscribe behavior independently of transport.
+- **O3.** Choose protocol, process, and implementation boundaries from lifetime and operational requirements.
+:::
+
+### A decision model for changing requirements
 
 Architectural judgment begins before code is written: it is the decision about where a concern should live.
 
@@ -15,48 +21,15 @@ The reader has now built and extended MiniGateway after studying its underlying 
 
 MiniGateway made that problem concrete: one measurement model had to remain independent while several input, observation, and integration roles shared it. This chapter steps back from that application and turns the decision pattern into an explicit design model.
 
-The recurring design question is simple but demanding:
-
-```text
-right concern
-  -> right owner
-      -> right surface
-          -> right operational visibility
-```
-
-This synthesis chapter turns local decisions from the preceding parts into a compact design model rather than adding another API tour.
-
-::: {.snodec-checklist title="Judgment checklist"}
-- What kind of concern is this?
-- Which layer or role can honestly own it?
-- Which protocol surface expresses the conversation most directly?
-- Which lifetime does the concern have: connection, application, system, deployment, or durable state?
-- Which failure and diagnostic information must remain visible?
-:::
-
 Here, *role* is used in the system-design sense unless the text explicitly refers to configured runtime roles and registered instances.
 
-### Start by avoiding category mistakes
 
-A category mistake happens when a concern is placed in a layer that cannot properly own it. Common examples are:
-
-- putting protocol behavior into the server/client handle or configuration shell,
-- putting connection policy into an arbitrary application handler,
-- putting role orchestration into a factory,
-- putting transport concerns into the web layer,
-- putting database ownership policy into a protocol endpoint,
-- putting service-supervisor policy into per-connection code,
-- putting system-shape decisions into request callbacks.
-
-SNode.C makes these mistakes visible because it separates handles, registered instances, connections, contexts, factories, protocol layers, configuration, deployment, and diagnostics. The first rule is therefore:
+A category mistake places a concern where its lifetime or policy cannot be owned: for example, global ordering in a request callback or service-supervisor policy in per-connection code.
 
 ::: {.snodec-rule title="Category rule"}
 Choose the layer by the kind of concern, not by where the code first feels convenient.
 :::
 
-Code placed in a convenient but unrelated callback may work locally while still giving that callback responsibility it cannot properly own.
-
-### A compact decision model
 
 Most design choices in this book reduce to five questions:
 
@@ -77,7 +50,6 @@ Use this table to slow down the decision before code hardens around the wrong ab
 
 MiniGateway contains a small but real contested decision: where should the authoritative measurement sequence number live?
 
-Several answers are plausible at first.
 
 | Candidate owner | Why it is tempting | Cost |
 |---|---|---|
@@ -100,24 +72,12 @@ Measurement MeasurementModel::accept(Measurement measurement) {
 }
 ```
 
-This is not merely a convenient implementation detail. It resolves a real conflict between producer identity and gateway identity.
 
 If MiniGateway were preserving a sensor's original sample number, the incoming payload would need its own field for that fact. But the sequence used by SSE event ids, status output, MQTT publication of accepted measurements, and local observation is the gateway's acceptance order. That order belongs to the model because the model is the only object that sees all accepted measurements after protocol-specific parsing has finished.
 
-Run the decision model against this choice:
+Input roles parse measurements; the shared model assigns acceptance order once. This order lasts only as long as the in-memory application. Every output reports the same accepted sequence.
 
-| Question | Answer in MiniGateway |
-|---|---|
-| What kind of concern is this? | accepted application state, not transport syntax |
-| Which role can honestly own it? | the shared model, because all input roles converge there |
-| Which protocol surface expresses it? | none; it is above MQTT, HTTP, SSE, and Unix-domain input |
-| Which lifetime does it have? | application lifetime in this in-memory gateway |
-| Which diagnostic consequence follows? | every outward role reports the same accepted sequence |
-
-The rejected alternatives are not absurd. They are wrong for this application because they make each input role partly responsible for global ordering. The model-owned rule is smaller and stricter: input roles may parse measurements, but acceptance order is assigned once, at the boundary where a measurement becomes application state.
-
-
-### Choosing the communication family
+### Choose family and protocol by the conversation
 
 \index{communication family}
 \index{network family selection}
@@ -127,7 +87,6 @@ At the lowest practical level, the communication family shapes endpoint identity
 
 Use **IPv4/IPv6** for genuinely network-facing roles, **Unix domain sockets** for local machine IPC, and **Bluetooth RFCOMM/L2CAP** for nearby, paired, device-near, or commissioning-oriented exchange. Do not choose a family merely because it is familiar. Bluetooth can carry byte streams, but that does not make it a general-purpose integration bus.
 
-### Choosing the protocol surface
 
 \index{protocol surface}
 \index{API surface}
@@ -147,34 +106,18 @@ Once the communication family is plausible, ask what kind of conversation the ap
 
 A lower layer is not automatically simpler. Use a stream endpoint when the domain protocol really is the conversation; use HTTP, SSE, WebSocket, or MQTT when the application already speaks in requests, observations, messages, topics, or brokered publications.
 
-### Native and composed protocol forms
 
 \index{native protocol}
 \index{composed protocol}
 \index{protocol composition}
 
 
-Some decisions are not between protocols but between native and composed forms:
-
-```text
-native MQTT
-  or
-MQTT over WebSocket
-
-plain HTTP response
-  or
-SSE over HTTP
-
-ordinary HTTP request/response
-  or
-HTTP upgrade to WebSocket
-```
+MQTT can run natively or over WebSocket; an HTTP response can finish immediately or carry SSE records.
 
 A native form makes the protocol itself the main surface. A composed form carries one protocol's semantics through another layer because the environment demands it: browser compatibility, firewall traversal, shared HTTP infrastructure, or a web-facing integration point.
 
-The question is not which stack is richer. The question is which stack states the system relationship most honestly.
 
-### Choosing role and process shape
+### Choose role and process boundaries
 
 \index{role boundary}
 \index{deployment boundary}
@@ -185,7 +128,6 @@ A role is a responsibility seen from the system: producer, consumer, observer, c
 
 Roles may live in one process or several processes. Split them when lifetimes, privileges, restart policies, deployment targets, resource limits, or operational ownership differ. Keep them together when they share one lifecycle and separation would create artificial coordination work. Neither shape is automatically superior.
 
-### Worked decision: why the Unix-domain input became a role
 
 \index{MiniGateway Extended!role boundary}
 \index{Unix domain sockets!role boundary}
@@ -199,26 +141,9 @@ MiniGateway Extended adds local measurement input through a Unix-domain socket. 
 | create a Unix-domain input role | local processes need a direct stream interface controlled by filesystem access | adds a socket path, framing rules, and a lower-family dependency |
 | use a separate collector service | device access needs different privileges or restart behavior | introduces another deployment unit and an interprocess recovery contract |
 
-Chapter 36 selects the Unix-domain role because its exercise requires direct local input. The cost is real: MiniGateway Extended has one more source-file group, one more configured role name, one more socket path, and one more component dependency. The payoff is that every existing role remains honest.
+Chapter 36 chooses direct local input, at the cost of another socket path, configured role, file group, and component dependency. An HTTP input remains valid when producers already share the web contract. With the Unix-domain role, later IPC framing changes stay there; web-observation changes stay in the web role; broker-topic changes stay in the MQTT role. The model remains their shared acceptance boundary.
 
-```text
-web role:
-  remains HTTP administration and observation
-
-MQTT role:
-  remains broker-facing integration
-
-Unix-domain input role:
-  owns local measurement injection
-
-MeasurementModel:
-  remains the shared acceptance boundary
-```
-
-An HTTP input would be a valid choice under different requirements; MiniGateway already uses one for simulation. The decision here is whether local producers should share that web contract, join the brokered system, or obtain a separate local interface. Once selected, the shape should leave the next change easy to place. A future change to local IPC parsing should affect the Unix-domain input role. A future change to web observation should affect the web role. A future change to broker topics should affect the MQTT role. That separation is exactly what the split test is meant to preserve.
-
-
-### Choosing implementation layer
+### Place implementation and operational policy
 
 \index{implementation layer}
 \index{context discipline}
@@ -240,7 +165,6 @@ After the system shape is clear, place the code at the layer that owns the behav
 
 This is where many technical debts begin. A value placed in the wrong layer may seem harmless until a second transport, second role, second deployment mode, or second failure policy appears.
 
-### Code, configuration, failure, and diagnostics
 
 \index{configuration!design judgment}
 \index{failure policy}
@@ -253,7 +177,6 @@ Failure policy follows the same ownership rule. A low-level socket can report th
 
 Diagnostics must preserve enough identity to be useful: role, configured instance name where applicable, endpoint, state, protocol phase, and reason. A log message that hides those facts may be technically correct and still operationally poor.
 
-### When to split, and when not to split
 
 \index{over-abstraction}
 \index{modularity}
@@ -271,30 +194,7 @@ If a future change would affect only one responsibility, that responsibility sho
 
 Visibility can mean a separate class, factory, context, configuration section, service, executable, or test. It does not always mean a new framework layer.
 
-### Common bad instincts
-
-This chapter is meant to cure habits that look efficient at first:
-
-- choosing a protocol because it is familiar rather than because it matches the conversation,
-- hiding deployment policy inside protocol callbacks,
-- making a factory responsible for runtime behavior,
-- treating Bluetooth, Unix-domain sockets, IPv4, and IPv6 as address-format variants only,
-- using composed protocols without environmental need,
-- choosing native protocol forms when browser or web-proxy compatibility is the actual requirement,
-- treating configuration as an afterthought,
-- logging events without enough role or endpoint identity,
-- erasing small meaningful differences behind a large vague abstraction.
-
-### Common misunderstandings
-
-| Misunderstanding | Corrected view |
-|---|---|
-| Architectural judgment means memorizing a preferred stack. | Judgment means choosing the layer, role, protocol family, and deployment shape for the actual system concern. |
-| The framework should tell me the one correct packaging style. | SNode.C supports several valid packaging and deployment shapes; the architect chooses the one that fits the operational situation. |
-| Good abstraction means hiding as many layers as possible. | Good abstraction hides accidental detail while preserving meaningful structure. Hiding everything is opacity. |
-| Once I know the APIs, judgment is automatic. | API knowledge is necessary, but design maturity comes from placing responsibilities where later change will still make sense. |
-
-### The architectural principle
+### Keep meaning with its owner
 
 ::: {.snodec-rule title="Architectural principle"}
 Keep meaning visible until the layer, role, or operational surface that owns it can take responsibility for it.
@@ -307,7 +207,15 @@ The current flow API provides another concrete boundary test. Two explicit conne
 The next chapter applies this judgment to extension: new features should be added where their responsibility, lifetime, and operational consequences remain clear.
 
 ::: {.snodec-remember title="What to remember"}
-- Choose family and protocol surface by peer identity, deployment reality, and the conversation the role needs to have.
-- Place state, configuration, failure policy, and diagnostics where their lifetime and consequences are visible.
-- Split responsibilities when that exposes meaning; avoid splits that only add ceremony.
+- Choose family and protocol by peer identity, deployment, and the required conversation.
+- Place state and policy where their lifetime and consequences can be owned.
+- Split responsibilities when independent change warrants it; a new responsibility need not mean a new process.
+:::
+
+::: {.snodec-exercise title="Exercises"}
+1. **Review (O1).** Why can neither an SSE event ID nor a producer-supplied sequence define MiniGateway acceptance order? Explain how to retain a sensor's original sample number.
+2. **Lab (O2).** Build and run the model-ownership solution. Submit measurements carrying conflicting sequence numbers; expect accepted order 1, 2, 3. Unsubscribe one observer before the third acceptance and verify only the remaining observer receives it.
+3. **Design (O3).** A local sensor reader requires elevated device privileges and independent restarts. Choose a process boundary and an IPC contract. Use the decision tables to justify identity, framing, recovery, and diagnostic ownership.
+
+Public solutions and lab commands: `companion/exercises/ch37/README.md`.
 :::

@@ -31,6 +31,7 @@ endif()
 
 if(SNODEC_BOOK_BUILD_COMPANION_EXAMPLES)
   enable_language(CXX)
+  enable_testing()
   add_subdirectory(companion)
 endif()
 

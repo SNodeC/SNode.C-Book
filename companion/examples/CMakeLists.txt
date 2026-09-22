@@ -10,6 +10,7 @@ include(GNUInstallDirs)
 
 set(SNODEC_BOOK_EXAMPLE_DIRS
     EchoPair
+    Comparison-AsioEcho
     SemanticLogging
     HttpUpgrade-Server
     HttpUpgrade-Client
@@ -30,6 +31,7 @@ endforeach()
 
 set(SNODEC_BOOK_EXAMPLE_TARGETS
     echoserver
+    asio-echo
     echoclient
     semantic-logging
     http-upgrade-server

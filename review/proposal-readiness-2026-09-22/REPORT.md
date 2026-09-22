@@ -1,16 +1,16 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The Phase 0 record below is historical; Phase 1 results follow it.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; the latest completed phase is Phase 2.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
-is appended verbatim, including its original escaped markup.
+was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
 
 | Phase | Status | Commit | Date | Evidence |
 | --- | --- | --- | --- | --- |
 | 0 — scope and measurement | completed | Separate scope revision; Phase 0 completion commit containing this report (subjects below) | 2026-09-22 | AGENTS.md:18; EDITORIAL-WORK-PLAN.md:32; PROMPT.md; metrics-before.json; metrics-after-phase-0.json; measurement-checks.log; metrics-tests.log |
 | 1 — book-wide hygiene | completed | `proposal-readiness: phase 1 — refine manuscript hygiene and preserve teaching principles` (containing this report); separate author-amendment commit | 2026-09-22 | Phase 1 evidence below; metrics-after-phase-1.json; phase-1-source-hygiene.log; phase-1-source-alignment.log; phase-1-companion-build.log; phase-1-pdf-final.log |
-| 2 — five sample chapters | not started | — | — | No sample-chapter edits or exercise solutions executed |
+| 2 — five sample chapters | completed | `proposal-readiness: phase 2 — refine teaching samples and publish exercise solutions` (containing this report) | 2026-09-22 | chapter-ledger.md; metrics-after-phase-2.json; phase-2-exit-checks.json; phase-2-labs.log; phase-2-pdf-final.log; phase-2-visual-review.md |
 | 3 — proposal package | not started | — | — | No proposal rewrite or package builds executed |
 | 4 — restructure plan | not started | — | — | No plan or author approval recorded |
 | 5a — approved TOC | not started | — | — | Gated on recorded author approval |
@@ -315,3 +315,163 @@ Require zero warnings/bad boxes in the fresh PDF console and final LaTeX logs,
 and recheck the measured 482 pages. Confirm both the separate author-amendment
 commit and the Phase 1 completion commit, and a clean working tree. Phase 1 ends
 here; Phase 2 has not begun.
+
+## Phase 2 — five teaching samples
+
+Completed 2026-09-22, after the Phase 1 prerequisite checks below. This phase
+applies the teaching-book amendment to Chapters 1, 3, 23, 35, and 37 only.
+No Phase 3 proposal rewrite or later phase was started.
+
+### Phase 1 exit re-verification and accepted author change
+
+Fresh `metrics-before-phase-2.json` differs from `metrics-after-phase-1.json`
+only in `manuscript/chapters/epilogue.md`: +39 prose/total words from the deliberate
+`author edit: restore epilogue closing`. Entry total: 150,605. This is the expected
+author change named in the session request, not a failed editorial criterion.
+The exact historical JSON-equality assertion initially detected that difference;
+`phase-2-prerequisite-integrity.log` records the reconciliation, then checks against
+the fresh entry metrics while retaining all original code/structure checks.
+The historical checker and Phase 1 evidence files were not rewritten.
+
+Re-executed evidence:
+
+| Phase 1 prerequisite | Evidence in this directory | Result |
+| --- | --- | --- |
+| Four hygiene thresholds and manuscript preservation | `phase-2-prerequisite-integrity.log`, `phase-2-prerequisite-integrity.json` | forbidden 0, closing 0, rule 20, shell label sh; executable code and non-closing structure preserved |
+| Actual forbidden-phrase guard entry point | `phase-2-prerequisite-guards.log` | all nine case-varied, wrapped guard fixtures rejected |
+| Metrics counter tests | `phase-2-prerequisite-metrics-tests.log` | 5 passed |
+| Source hygiene and alignment | `phase-2-prerequisite-hygiene.log`, `phase-2-prerequisite-alignment.log` | passed |
+| Companion build | `phase-2-prerequisite-companion.log` | passed with supplied installation |
+| PDF target | `phase-2-prerequisite-pdf.log` | 482 pages; final LaTeX log had no warnings or bad boxes |
+
+### Editorial results and exit criteria
+
+`chapter-ledger.md` gives exact before/after figures, all 15 objective↔exercise
+mappings, solution paths, and reread notes. All five chapters were **edited and
+reread in context**, including the destinations of the Chapter 3 vocabulary
+handoff and Chapter 37 extension transition. Each now opens with three observable
+objectives and closes with one recap of at most five bullets followed by three
+exercises: review, lab, design. No recap bullet restates its chapter title.
+The public README solutions give the conceptual answers, reproducible lab commands
+with expected outcomes, and justified design discussions.
+
+| Chapter | Prose before → after | Reduction | Average section prose after |
+| --- | ---: | ---: | ---: |
+| 1 | 2,343 → 1,604 | 31.54% | 303.40 |
+| 3 | 2,674 → 1,934 | 27.67% | 306.67 |
+| 23 | 3,664 → 2,843 | 22.41% | 390.29 |
+| 35 | 2,378 → 1,752 | 26.32% | 275.83 |
+| 37 | 2,395 → 1,868 | 22.00% | 292.50 |
+
+All prose totals include the new objectives, recaps, exercises, and formatting
+markup. Code cannot inflate the section averages. `check-phase-2.py` regenerated
+and checked the metrics, 20% cuts, 250-word averages, callout positions, three tiers,
+and objective coverage; see `phase-2-exit-checks.log` and `.json`.
+
+Chapter 1's side-by-side EchoPair/Asio comparison is 514 words. Its platform,
+runtime, and ecosystem statements and primary sources are documented in
+`phase-2-comparison-evidence.md`. The ecosystem assessment is qualitative;
+no adoption or performance number is asserted. The standalone Asio build passed
+without SNode.C (`phase-2-asio-standalone.log`).
+
+All complete printed companion listings still match their files (36 complete
+listings checked by `phase-2-alignment.log`). Chapter 35 preserves **every fenced
+block byte-for-byte**, including its nested README; see `phase-2-exit-checks.json`.
+Chapter 3 removes eight isolated extracts of code already printed in full along
+with their repeated explanation, while retaining every complete source/build
+listing. The remaining fence reductions remove explanatory text diagrams and
+repeated framing. No program logic or complete listing was cut to meet the prose
+budget. The five samples preserve their figure, index, and source markers; every
+other ordered manuscript input is unchanged from phase entry, including the
+restored epilogue. Input order is unchanged. `STRUCTURE.md` records the sample
+pedagogy and section grouping; no chapter consolidation occurred.
+
+### Build, run, and visual evidence
+
+| Check | Evidence | Result |
+| --- | --- | --- |
+| Hygiene and complete listing alignment | `phase-2-hygiene.log`, `phase-2-alignment.log` | passed |
+| Metrics regression, including objectives | `phase-2-metrics-tests.log` | 5 passed |
+| All companion programs and C++ lab solutions | `phase-2-companion.log`, `phase-2-companion-final.log` | built with GCC and supplied installation |
+| Public labs, actual execution | `phase-2-labs.log` | 5/5 CTest cases passed with expected observable outputs |
+| Asio independent configuration and compilation | `phase-2-asio-standalone.log` | passed |
+| Full PDF target | `phase-2-pdf-final.log`, `phase-2-pdf-checks.json` | 470 pages, zero LaTeX warnings, zero bad boxes |
+| Rendered sample pages and contents | `phase-2-rendered-pages.json`, `phase-2-visual-review.md` | inspected; label orphan corrected and affected pages re-rendered |
+
+The initial sandbox run compiled the examples but could not open local sockets.
+A permitted local run then caught a test-harness assumption: SNode.C's handled
+SIGINT returns `-stopsig` (`EventLoop.cpp:318`), observed as status 254. The harness
+now accepts that value only when it actually requests shutdown, still rejecting
+unexpected exits and timeouts. It also explicitly closes the streaming response
+before its HTTP connection. `phase-2-companion-runtime.log` retains the first
+failure; `phase-2-labs.log` records final successful observations. No application
+behavior or expected payload was weakened to obtain a pass.
+
+The CI workflow installs standalone Asio headers and invokes these same five CTest
+cases in both existing compiler jobs. Its lab step is separate from compilation
+and the other smoke-test steps, so a lab failure does not suppress unrelated tests.
+See the diff of `.github/workflows/companion-examples.yml`, root and companion
+CMake files, and `companion/exercises/*/CMakeLists.txt`. Remote CI was **not run**
+in this session; local GCC build/run is the executed evidence. The Chapter 35 lab
+intentionally uses no broker and claims no broker-delivery validation.
+
+Callouts use the existing palette and breakable box style in
+`production/filters/snodec-callouts.lua:13` and
+`production/latex/snodec-callouts.tex:81`. The shorter TOC exposed one underfull
+vertical box; `production/metadata/metadata.yaml:42` gives its existing section-row
+spacing modest stretch. This fixes layout without suppressing warnings. Filename
+labels in Chapters 3 and 35 stay with their listings through a local `\Needspace`
+constraint. The final build preserves the existing warning thresholds.
+
+### Metrics delta and implementation accounting
+
+| Metric | Phase 2 entry | Phase 2 exit | Delta |
+| --- | ---: | ---: | ---: |
+| Total words | 150,605 | 146,525 | -4,080 |
+| Prose words | 135,625 | 132,172 | -3,453 |
+| Fenced words, including markers | 14,980 | 14,353 | -627 |
+| Chapter subheadings | 1,005 | 921 | -84 |
+| Average section prose, book-wide | 124.75 | 132.53 | +7.78 |
+| text fences | 465 | 434 | −31 |
+| rule boxes | 20 | 20 | 0 |
+| objectives / exercise callouts | 0 / 0 | 5 / 5 | +5 / +5 |
+| Full PDF pages | 482 | 470 | −12 |
+
+Remaining global distance: 31,525 words above 115,000 (41,525 above the stretch
+105,000), 371 chapter subheadings above 550, and 184 text fences above 250.
+Those are Phase 5 targets, not unmet sample-chapter criteria. Forbidden phrases
+and closing-perspective sections remain zero. Shell fences remain `sh`.
+
+New executable companion application code: **117 C++ lines** (85 Asio server,
+32 greeting client); existing companion application sources: **0 added/removed**.
+New lab verification code: **262 lines** (27 C++ model experiment and 235 Python
+harness/observation lines). Counter regression support adds **2 lines**; the phase
+exit checker and CMake/CI/style support are accounted separately from application
+code. The explicitly requested Asio comparison needs an independent implementation;
+the other labs reuse canonical examples and the canonical model rather than copy
+those implementations. The greeting solution inherits reflection and changes only
+initiation. This is authorized teaching material, not a fix requiring production
+framework expansion.
+
+### Recheck before Phase 3
+
+Run the following from the repository root; use the actual installed prefix.
+Do not substitute file existence for successful command execution:
+
+```sh
+python3 ci/manuscript-metrics.py --output /tmp/phase-2-recheck.json
+cmp /tmp/phase-2-recheck.json review/proposal-readiness-2026-09-22/metrics-after-phase-2.json
+python3 review/proposal-readiness-2026-09-22/check-phase-2.py
+python3 ci/test-manuscript-metrics.py
+bash ci/check-source-hygiene.sh
+python3 ci/check-source-alignment.py
+SNODEC_PREFIX="$PWD/build/ci-fix-2026-09-22/install-gcc" BOOK_EXAMPLES_BUILD_DIR="$PWD/build/proposal-readiness-phase-2-examples"   bash ci/build-companion-examples.sh
+SNODEC_PREFIX="$PWD/build/ci-fix-2026-09-22/install-gcc"   ctest --test-dir build/proposal-readiness-phase-2-examples --output-on-failure --no-tests=error
+cmake --build build/proposal-readiness-phase-2 --target pdf
+```
+
+Check the final LaTeX log for `Warning`, `Overfull`, and `Underfull`; all counts
+must remain zero. Read `chapter-ledger.md` to recheck pedagogical coverage and
+public solution quality. The scripted metrics comparison will surface later
+author edits explicitly; reconcile an authorized change without rewriting this
+historical baseline. Stop here: Phase 3 remains unstarted.

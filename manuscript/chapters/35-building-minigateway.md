@@ -5,13 +5,16 @@
 \index{gateway application}
 
 
-### Why this chapter exists
+::: {.snodec-objectives title="Learning objectives"}
+- **O1.** Explain how all input paths share one acceptance rule and representation.
+- **O2.** Build MiniGateway and observe the same accepted state through HTTP and SSE while MQTT is unavailable.
+- **O3.** Decide which guarantees require persistence, delivery evidence, or a different topic policy.
+:::
 
-MiniGateway is the point where the book's vocabulary becomes one deliberately small application.
+### One model, several communication roles
 
-MiniGateway is modest. It is neither a second MQTTSuite nor a broker, dashboard product, or hardware driver. It is a compact SNode.C application that owns one piece of domain state and exposes that state through several communication boundaries.
 
-The application keeps the latest environmental measurement in memory. A measurement contains temperature, humidity, voltage, a sequence number, and an internal timestamp. The printed JSON codec exposes the first four values; it does not serialize the timestamp. Whenever a new measurement enters the application, MiniGateway performs one internal state transition and then lets the outward-facing roles observe the accepted state.
+MiniGateway keeps the latest environmental measurement in memory. A measurement contains temperature, humidity, voltage, a sequence number, and an internal timestamp. The printed JSON codec exposes the first four values; it does not serialize the timestamp. Whenever a new measurement enters the application, MiniGateway performs one internal state transition and then lets the outward-facing roles observe the accepted state.
 
 ```text
 new measurement
@@ -23,15 +26,10 @@ new measurement
           -> MQTT output publisher, if connected
 ```
 
-This is the core of the project. Everything else in the chapter exists to keep this path honest.
-
-### What the application does
 
 \index{MiniGateway!application purpose}
 \index{measurement gateway}
 
-
-MiniGateway, as built in this chapter, has two outward-facing communication roles.
 
 The first role is an HTTP/Express role. It is the browser-friendly and command-line-friendly observation surface. It exposes four paths:
 
@@ -51,23 +49,9 @@ POST /simulate
 
 The second role is a native MQTT client role named `mqtt-uplink`. It connects to an MQTT broker, starts an MQTT session, subscribes to a measurement-input topic, accepts valid measurement payloads, and publishes accepted measurements to a measurement-output topic. The model, not the incoming MQTT payload, owns the authoritative sequence number.
 
-MiniGateway does not poll measurements. SNode.C runs the application in its event-driven runtime model, and MiniGateway keeps the project consistent with that model. A new measurement is handled when a new measurement event enters the model.
-
-::: {.snodec-checklist title="MiniGateway role checklist"}
-- HTTP administration role
-- SSE observation path
-- MQTT-uplink role
-- shared measurement model
-- JSON measurement codec
-- configuration
-- runtime startup
-:::
 
 MiniGateway creates local teaching input through `/simulate`. That route is not the final device interface; it is a controlled input boundary. Chapter 36 adds a small Unix-domain socket input to demonstrate how the application can grow without changing the HTTP, SSE, MQTT, or model structure.
 
-The rest of this chapter is intentionally procedural. Each command and file is introduced only to show how one architectural role becomes executable code.
-
-### How to use MiniGateway
 
 The first useful command for an SNode.C application is still the generated help output:
 
@@ -89,7 +73,7 @@ curl -X POST http://localhost:8080/simulate
 curl http://localhost:8080/status
 ```
 
-A representative confirmed smoke-test run produces normal JSON measurement output. The internal timestamp is not part of this JSON representation; the observable behavior is that `/simulate` accepts a measurement and `/status` reports the same accepted state:
+`/simulate` accepts a measurement; `/status` reports the same state. The timestamp remains internal:
 
 ```text
 $ curl -X POST http://localhost:8080/simulate
@@ -111,7 +95,7 @@ Then trigger another measurement from a second terminal:
 curl -X POST http://localhost:8080/simulate
 ```
 
-The SSE terminal should receive an event. A representative confirmed SSE smoke run shows a measurement event on the open stream:
+The SSE terminal receives the next accepted state:
 
 ```text
 event: measurement
@@ -139,9 +123,8 @@ A simple check is:
 ss -ltnp 'sport = :8080'
 ```
 
-This belongs to honest testing of deployed communication roles, not to a MiniGateway-specific trick.
 
-### The shape of MiniGateway
+### Source structure and build target
 
 \index{MiniGateway!application architecture}
 \index{MQTT client role}
@@ -167,7 +150,7 @@ MiniGateway/
   README.md
 ```
 
-That split is part of the lesson: the domain object is not an HTTP route, the model is not an MQTT protocol object, and the JSON codec is not a socket context. The web role and MQTT role are assembled around one shared model that `main.cpp` creates.
+The model, codec, web role, and MQTT role have separate responsibilities around the one model created in `main.cpp`:
 
 ```text
 domain fact
@@ -198,15 +181,15 @@ composition root
   -> main.cpp
 ```
 
-A one-file version could be useful for a first experiment. Here the separate files make the next exercise possible: the Unix-domain input can be added while the web and MQTT roles retain their existing responsibilities. The extra file navigation buys a visible place for each independently changing concern. Chapter 36 keeps the same split visible when it adds the Unix-domain measurement input. That extension is introduced as another SNode.C communication role, not as behavior hidden inside the HTTP routes, the SSE response path, or the MQTT client object.
+The file split gives the Unix-domain input added in Chapter 36 a home without changing HTTP routes or MQTT behavior. A one-file version would reduce navigation but obscure those independently changing concerns.
 
-### Stage 1: the build target
+**The build target**
 
 \index{MiniGateway!build target}
 \index{CMakeLists.txt@\texttt{CMakeLists.txt}}
 
 
-MiniGateway is an external SNode.C consumer. It therefore uses installed package targets and installed public headers, not private in-tree targets or private implementation headers. The selected components already say a lot about the application:
+MiniGateway consumes installed public headers and package targets. Its selected components are:
 
 ```text
 http-server-express-legacy-in
@@ -219,9 +202,11 @@ mqtt-client
   -> MQTT client-side protocol support
 ```
 
-The build file does not manually list every lower library that those components need. SNode.C's exported targets carry that dependency information. That is the same component discipline discussed in Chapter 32, now used by a small application.
+Exported targets carry lower-library dependencies; the application selects components, as in Chapter 32.
 
-#### `CMakeLists.txt`
+\Needspace{5\baselineskip}
+
+**`CMakeLists.txt`**
 
 <!-- snodec-source: companion/examples/MiniGateway/CMakeLists.txt -->
 ```cmake
@@ -286,18 +271,20 @@ add_custom_target(
 )
 ```
 
-### Stage 2: the measurement value and JSON codec
+### The value, codec, and acceptance model
 
 \index{MiniGateway!measurement model}
 \index{Measurement@\texttt{Measurement}}
 \index{MeasurementJsonCodec@\texttt{MeasurementJsonCodec}}
 
 
-The first application type is `Measurement`, deliberately plain. The domain value has no knowledge of HTTP, SSE, MQTT, sockets, configuration, or deployment. It is the fact that the application owns and exposes.
+`Measurement` is a plain domain value without network or deployment knowledge.
 
-The JSON conversion is separated into `MeasurementJsonCodec`. This keeps `Measurement` as a simple value type while still giving the web, SSE, and MQTT roles one shared representation.
+`MeasurementJsonCodec` gives HTTP, SSE, and MQTT one shared representation while keeping conversion outside the value type.
 
-#### `Measurement.h`
+\Needspace{5\baselineskip}
+
+**`Measurement.h`**
 
 <!-- snodec-source: companion/examples/MiniGateway/Measurement.h -->
 ```cpp
@@ -322,7 +309,9 @@ namespace minigateway {
 #endif // MINIGATEWAY_MEASUREMENT_H
 ```
 
-#### `MeasurementJsonCodec.h`
+\Needspace{5\baselineskip}
+
+**`MeasurementJsonCodec.h`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MeasurementJsonCodec.h -->
 ```cpp
@@ -346,7 +335,9 @@ namespace minigateway {
 #endif // MINIGATEWAY_MEASUREMENT_JSON_CODEC_H
 ```
 
-#### `MeasurementJsonCodec.cpp`
+\Needspace{5\baselineskip}
+
+**`MeasurementJsonCodec.cpp`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MeasurementJsonCodec.cpp -->
 ```cpp
@@ -402,15 +393,14 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-### Stage 3: the shared measurement model
+**The shared measurement model**
 
 \index{MeasurementModel@\texttt{MeasurementModel}}
 \index{MiniGateway!shared model}
 
 
-`MeasurementModel` is the local model for the guided project. It holds the current measurement, accepts new measurements, assigns the next sequence number, and notifies subscribers.
+`MeasurementModel` owns the current measurement. Every input enters through `accept(...)`; output roles subscribe to accepted state:
 
-The model replaces the need for separate state and bus objects. That keeps the application small without hiding the important boundary: all measurement changes enter through `accept(...)`, and all outward-facing roles observe accepted measurements through subscriptions.
 
 ```text
 MeasurementModel::accept(measurement)
@@ -422,7 +412,9 @@ MeasurementModel::accept(measurement)
 
 The subscription handle makes ownership explicit. `subscribe(...)` returns the stored listener's list iterator; `unsubscribe(...)` removes that listener when its owner is finished. The SSE route connects this operation to the HTTP context's disconnect callback, as developed in Chapter 23. MQTT output keeps its subscription for the model's lifetime. Listeners only observe the accepted measurement; they do not remove entries while publication is iterating the list. The model and its network callbacks run on the event-loop thread, and the model outlives the active roles.
 
-#### `MeasurementModel.h`
+\Needspace{5\baselineskip}
+
+**`MeasurementModel.h`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MeasurementModel.h -->
 ```cpp
@@ -459,7 +451,9 @@ namespace minigateway {
 #endif // MINIGATEWAY_MEASUREMENT_MODEL_H
 ```
 
-#### `MeasurementModel.cpp`
+\Needspace{5\baselineskip}
+
+**`MeasurementModel.cpp`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MeasurementModel.cpp -->
 ```cpp
@@ -499,17 +493,19 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-### Stage 4: MiniGateway-specific MQTT configuration
+### Configuration, diagnostics, and the web role
 
 \index{ConfigSections@\texttt{ConfigSections}}
 \index{MiniGateway!MQTT configuration}
 
 
-The MQTT client role needs application-specific MQTT settings: client id, keep-alive, measurement input topic, measurement output topic, QoS, and retain behavior. These are not hard-coded inside `MiniGatewayMqtt`. They belong to the configured role.
+The configured MQTT role owns client ID, keep-alive, input/output topics, QoS, and retain behavior.
 
-The shape follows the same general pattern as MQTTSuite's command-line/configuration sections: the application adds a subcommand to the configured instance, exposes configurable options, and the protocol object reads the effective values when the connection context is constructed.
+Following MQTTSuite's configuration pattern, a subcommand exposes these options and the protocol object reads their effective values when its context is constructed.
 
-#### `ConfigSections.h`
+\Needspace{5\baselineskip}
+
+**`ConfigSections.h`**
 
 <!-- snodec-source: companion/examples/MiniGateway/ConfigSections.h -->
 ```cpp
@@ -552,7 +548,9 @@ namespace minigateway {
 #endif // MINIGATEWAY_CONFIG_SECTIONS_H
 ```
 
-#### `ConfigSections.cpp`
+\Needspace{5\baselineskip}
+
+**`ConfigSections.cpp`**
 
 <!-- snodec-source: companion/examples/MiniGateway/ConfigSections.cpp -->
 ```cpp
@@ -607,7 +605,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-### Stage 5: shared socket-state reporting
+**Shared socket-state reporting**
 
 \index{SocketStateReporter@\texttt{SocketStateReporter}}
 \index{socket state reporting}
@@ -615,7 +613,9 @@ namespace minigateway {
 
 Both runtime roles report socket state in the same way. `SocketStateReporter` keeps that diagnostic policy outside the web role and outside the MQTT role.
 
-#### `SocketStateReporter.h`
+\Needspace{5\baselineskip}
+
+**`SocketStateReporter.h`**
 
 <!-- snodec-source: companion/examples/MiniGateway/SocketStateReporter.h -->
 ```cpp
@@ -635,7 +635,9 @@ namespace minigateway {
 #endif // MINIGATEWAY_SOCKET_STATE_REPORTER_H
 ```
 
-#### `SocketStateReporter.cpp`
+\Needspace{5\baselineskip}
+
+**`SocketStateReporter.cpp`**
 
 <!-- snodec-source: companion/examples/MiniGateway/SocketStateReporter.cpp -->
 ```cpp
@@ -665,7 +667,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-### Stage 6: the web and SSE role
+**The web and SSE role**
 
 \index{MiniGatewayWeb@\texttt{MiniGatewayWeb}}
 \index{SSE!MiniGateway}
@@ -674,9 +676,11 @@ namespace minigateway {
 
 `MiniGatewayWeb` owns the HTTP/Express role. It registers the HTTP routes, connects `/status` and `/simulate` to the model, and uses model subscriptions to drive the SSE endpoint.
 
-The web role does not know about MQTT. It only knows the model. That is the important design boundary: a browser request and an MQTT publish can both become model input, but they do not call each other.
+Web and MQTT inputs converge on the model; they do not call each other.
 
-#### `MiniGatewayWeb.h`
+\Needspace{5\baselineskip}
+
+**`MiniGatewayWeb.h`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MiniGatewayWeb.h -->
 ```cpp
@@ -698,7 +702,9 @@ namespace minigateway {
 #endif // MINIGATEWAY_WEB_H
 ```
 
-#### `MiniGatewayWeb.cpp`
+\Needspace{5\baselineskip}
+
+**`MiniGatewayWeb.cpp`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MiniGatewayWeb.cpp -->
 ```cpp
@@ -803,7 +809,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-### Stage 7: the MQTT protocol object
+### The MQTT protocol and its connection factory
 
 \index{MiniGatewayMqtt@\texttt{MiniGatewayMqtt}}
 \index{MQTT!MiniGateway protocol object}
@@ -817,7 +823,9 @@ The `connected` flag becomes true after an accepted `CONNACK`. It is not evidenc
 
 The final argument to `sendConnect(...)` is `false`. In the current source, the loop-prevention option sets a private bit in the MQTT protocol-level byte; it is not the MQTT 5 No Local subscription option and must not be enabled when ordinary MQTT 3.1.1 interoperability is intended. MiniGateway instead uses separate input and output topics. Keep those topic sets disjoint when configuring the example: a subscription that also matches its publication topic can feed an accepted measurement back into the model. A deployment that deliberately overlaps the topics needs an explicit application-level origin policy.
 
-#### `MiniGatewayMqtt.h`
+\Needspace{5\baselineskip}
+
+**`MiniGatewayMqtt.h`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MiniGatewayMqtt.h -->
 ```cpp
@@ -878,7 +886,9 @@ namespace minigateway {
 #endif // MINIGATEWAY_MQTT_H
 ```
 
-#### `MiniGatewayMqtt.cpp`
+\Needspace{5\baselineskip}
+
+**`MiniGatewayMqtt.cpp`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MiniGatewayMqtt.cpp -->
 ```cpp
@@ -984,7 +994,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-### Stage 8: constructing MQTT contexts
+**Constructing MQTT contexts**
 
 \index{MiniGatewayMqttSocketContextFactory@\texttt{MiniGatewayMqttSocketContextFactory}}
 \index{MiniGateway!MQTT context construction}
@@ -1000,9 +1010,10 @@ stream SocketConnection
               -> MeasurementModel
 ```
 
-This is the preconfigured-factory idea in concrete form. The SNode.C socket layer constructs contexts when connections exist, while the application supplies the model object that those contexts need.
 
-#### `MiniGatewayMqttSocketContextFactory.h`
+\Needspace{5\baselineskip}
+
+**`MiniGatewayMqttSocketContextFactory.h`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.h -->
 ```cpp
@@ -1031,7 +1042,9 @@ namespace minigateway {
 #endif // MINIGATEWAY_MQTT_SOCKET_CONTEXT_FACTORY_H
 ```
 
-#### `MiniGatewayMqttSocketContextFactory.cpp`
+\Needspace{5\baselineskip}
+
+**`MiniGatewayMqttSocketContextFactory.cpp`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.cpp -->
 ```cpp
@@ -1067,7 +1080,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-### Stage 9: starting the MQTT client role
+**Starting the MQTT client role**
 
 \index{MiniGatewayMqttClient@\texttt{MiniGatewayMqttClient}}
 \index{MiniGateway!MQTT client startup}
@@ -1077,9 +1090,11 @@ namespace minigateway {
 
 The web role is named `web`, so its endpoint can be operated through the same configuration tree: `web local --host 127.0.0.1 --port 8081` selects a local test endpoint without editing the application. Naming the existing role keeps deployment policy outside route code.
 
-The role name `mqtt-uplink` appears in configuration, diagnostics, and state reporting. It is the runtime name of this application role, not a separate application object.
+The name `mqtt-uplink` identifies the role in configuration and diagnostics.
 
-#### `MiniGatewayMqttClient.h`
+\Needspace{5\baselineskip}
+
+**`MiniGatewayMqttClient.h`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MiniGatewayMqttClient.h -->
 ```cpp
@@ -1104,7 +1119,9 @@ namespace minigateway {
 #endif // MINIGATEWAY_MQTT_CLIENT_H
 ```
 
-#### `MiniGatewayMqttClient.cpp`
+\Needspace{5\baselineskip}
+
+**`MiniGatewayMqttClient.cpp`**
 
 <!-- snodec-source: companion/examples/MiniGateway/MiniGatewayMqttClient.cpp -->
 ```cpp
@@ -1152,23 +1169,19 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-### Stage 10: assembling the runtime roles
+### Assembly and observable behavior
 
 \index{MiniGateway!runtime assembly}
 \index{runtime roles}
 \index{composition root}
 
 
-The main file stays deliberately small and performs four tasks:
+`main()` initializes SNode.C, creates the shared model, passes it to both roles, and enters the event loop:
 
-1. initialize SNode.C,
-2. create the shared `MeasurementModel`,
-3. pass that model to the web role and MQTT role,
-4. enter the SNode.C event loop.
 
-The practical architecture point is small but important: `main()` owns the application model, and the SNode.C roles use it instead of inventing separate state. That is how the guided project turns the endpoint roles from earlier chapters into code without adding another framework layer.
+\Needspace{5\baselineskip}
 
-#### `main.cpp`
+**`main.cpp`**
 
 <!-- snodec-source: companion/examples/MiniGateway/main.cpp -->
 ```cpp
@@ -1192,15 +1205,14 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-### Building the MiniGateway source package
 
 \index{MiniGateway!source package}
 \index{README.md@\texttt{README.md}}
 
 
-The source package that accompanies this chapter contains a short build note. It is simple because the chapter assumes SNode.C is already installed as a CMake package.
+\Needspace{5\baselineskip}
 
-#### `README.md`
+**`README.md`**
 
 ````markdown
 # MiniGateway
@@ -1247,14 +1259,18 @@ Before extending the project, make its observations explicit:
 
 Use a separate observer to check MQTT output when a broker is available. In its absence, finish the HTTP and SSE checks and record the broker scenario as unexecuted.
 
-The example's guarantees stop at explicit boundaries. The model assigns a local sequence to each accepted measurement; it is not durable storage. An SSE subscription is removed when its HTTP context reports disconnection, even if no later measurement arrives. This releases that observer's response reference; it does not establish that earlier events reached the peer. Distinct MQTT input and output topics avoid the example feeding its own output back as fresh input; changing those topic sets changes that assumption. `/health` observes the web role, while `POST /simulate` mutates the model. Each of these facts can be checked independently, and none should be silently promoted into a stronger production guarantee.
-
 ::: {.snodec-remember title="What to remember"}
-- MiniGateway is a guided application, not a framework subsystem.
-- MiniGateway owns one current measurement and exposes it through HTTP, SSE, and MQTT.
-- `MeasurementModel` owns the current value, assigns authoritative sequence numbers, and notifies subscribers.
-- `MeasurementJsonCodec` keeps JSON conversion outside the plain `Measurement` value type.
-- `MiniGatewayWeb` owns the HTTP/SSE role.
-- `MiniGatewayMqttClient`, `MiniGatewayMqttSocketContextFactory`, and `MiniGatewayMqtt` own the MQTT role.
-- `main()` is the composition root: it creates the shared model and passes it to the network roles.
+- The shared model assigns acceptance order and notifies observers on the event-loop thread.
+- The JSON codec supplies one representation to HTTP, SSE, and MQTT.
+- HTTP and MQTT roles share the model without calling each other.
+- Disconnect removes an SSE subscription; the model outlives active roles.
+- Separate MQTT input/output topics prevent feedback; local sequence numbers reset with the process.
+:::
+
+::: {.snodec-exercise title="Exercises"}
+1. **Review (O1).** Trace an MQTT measurement from JSON decoding to the model, SSE, and outgoing publication. Where does the authoritative sequence come from?
+2. **Lab (O2).** Build and run the MiniGateway solution with an unavailable MQTT endpoint. Compare `/status`, two `/simulate` responses, and the matching SSE events. Restart: expect sequence zero again. Explain why working HTTP does not establish MQTT readiness.
+3. **Design (O3).** A deployment requires history across restarts and permits overlapping MQTT input/output topics. Identify the owners of durable acceptance order and origin filtering; justify which code must change before deployment.
+
+Public solutions and lab commands: `companion/exercises/ch35/README.md`.
 :::

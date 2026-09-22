@@ -44,11 +44,13 @@ class MetricsTests(unittest.TestCase):
         result = metrics.measure('### Closing perspective\n'
                                  '::: {.snodec-remember title="What to remember"}\n'
                                  '- Useful item\n:::\n'
+                                 '::: {.snodec-objectives}\n- Explain a behavior\n:::\n'
                                  ':::: {.snodec-exercise}\nDo something\n::::\n'
                                  'The phrase Closing perspective is prose.\n')
         self.assertEqual(len(result['closing_perspective_sections']), 1)
         self.assertEqual(result['callout_counts_by_class']['snodec-remember'], 1)
         self.assertEqual(result['callout_counts_by_class']['snodec-exercise'], 1)
+        self.assertEqual(result['callout_counts_by_class']['snodec-objectives'], 1)
 
     def test_unclosed_fence_fails(self):
         with self.assertRaisesRegex(ValueError, 'unclosed'):

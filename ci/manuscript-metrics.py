@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 import re
 
-CLASSES = ('remember', 'rule', 'note', 'warning', 'checklist', 'exercise')
+CLASSES = ('remember', 'rule', 'note', 'warning', 'checklist', 'exercise', 'objectives')
 FORBIDDEN = {
     'in the manuscript': r'\bin\s+the\s+manuscript\b',
     'manuscript material': r'\bmanuscript\s+material\b',

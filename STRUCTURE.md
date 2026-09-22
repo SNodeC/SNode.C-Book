@@ -9,6 +9,11 @@ The manuscript currently contains the planned front matter, all planned chapters
 
 The publisher-facing proposal material now uses an article-style proposal structure: a compact proposal PDF, a proposal-with-sample-chapters PDF, and a separate evidence sheet that distinguishes public repository evidence, author-confirmed professional context, and adoption claims that are not yet made.
 
+The five sample chapters (1, 3, 23, 35, 37) now group their explanations into
+fewer sections and include opening learning objectives, a closing recap, and
+three exercise tiers. Public answers and runnable labs are under
+`companion/exercises/`. Chapter order and the Part structure are unchanged.
+
 ## Front matter
 
 - Preface — **present**

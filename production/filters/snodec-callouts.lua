@@ -10,6 +10,8 @@
 -- with a stable data attribute for later CSS/HTML processing.
 
 local callouts = {
+  ["snodec-objectives"] = { env = "snodecobjectivesbox", title = "Learning objectives" },
+  ["snodec-exercise"] = { env = "snodecexercisebox", title = "Exercises" },
   ["snodec-remember"]  = { env = "snodecrememberbox",  title = "What to remember" },
   ["snodec-note"]      = { env = "snodecnotebox",      title = "Note" },
   ["snodec-warning"]   = { env = "snodecwarningbox",   title = "Warning" },

@@ -1,0 +1,620 @@
+Source alignment passed: 38 chapter evidence records, 36 exact complete listings; SNode.C 2.0.0, base 1f0f728fc9b3b45174f2cd790d83b2f493e58af1, working-tree digest c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf
+NOTICE: using a supplied installation; this run does not verify its framework commit or run framework CTests.
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+core: loading dependencies 'mux-epoll, utils'
+  mux-epoll: loaded
+  utils: loading dependencies 'logger'
+    logger: loaded
+  utils: loaded
+core: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+websocket-server: loading dependencies 'websocket, http-server'
+  websocket: loading dependencies 'utils'
+    utils: already loaded
+  websocket: loaded
+  websocket: configured
+  http-server: already loaded
+websocket-server: loaded
+http-client: loading dependencies 'http'
+  http: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: loading dependencies 'core'
+        core: loading dependencies 'mux-epoll, utils'
+          mux-epoll: loaded
+          utils: loading dependencies 'logger'
+            logger: loaded
+          utils: loaded
+        core: loaded
+      core-socket: loaded
+    core-socket-stream: loaded
+  http: loaded
+  http: configured
+http-client: loaded
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: already loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+websocket-client: loading dependencies 'websocket, http-client'
+  websocket: loading dependencies 'utils'
+    utils: already loaded
+  websocket: loaded
+  websocket: configured
+  http-client: already loaded
+websocket-client: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+http-client: loading dependencies 'http'
+  http: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: loading dependencies 'core'
+        core: loading dependencies 'mux-epoll, utils'
+          mux-epoll: loaded
+          utils: loading dependencies 'logger'
+            logger: loaded
+          utils: loaded
+        core: loaded
+      core-socket: loaded
+    core-socket-stream: loaded
+  http: loaded
+  http: configured
+http-client: loaded
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: already loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+websocket-server: loading dependencies 'websocket, http-server'
+  websocket: loading dependencies 'utils'
+    utils: loading dependencies 'logger'
+      logger: loaded
+    utils: loaded
+  websocket: loaded
+  websocket: configured
+  http-server: loading dependencies 'http'
+    http: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: loading dependencies 'core'
+          core: loading dependencies 'mux-epoll, utils'
+            mux-epoll: loaded
+            utils: already loaded
+          core: loaded
+        core-socket: loaded
+      core-socket-stream: loaded
+    http: loaded
+    http: configured
+  http-server: loaded
+websocket-server: loaded
+websocket-client: loading dependencies 'websocket, http-client'
+  websocket: loading dependencies 'utils'
+    utils: loading dependencies 'logger'
+      logger: loaded
+    utils: loaded
+  websocket: loaded
+  websocket: configured
+  http-client: loading dependencies 'http'
+    http: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: loading dependencies 'core'
+          core: loading dependencies 'mux-epoll, utils'
+            mux-epoll: loaded
+            utils: already loaded
+          core: loaded
+        core-socket: loaded
+      core-socket-stream: loaded
+    http: loaded
+    http: configured
+  http-client: loaded
+websocket-client: loaded
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: loading dependencies 'core'
+        core: loading dependencies 'mux-epoll, utils'
+          mux-epoll: loaded
+          utils: loading dependencies 'logger'
+            logger: loaded
+          utils: loaded
+        core: loaded
+      core-socket: loaded
+    core-socket-stream: loaded
+  mqtt: loaded
+mqtt-client: loaded
+db-mariadb: loading dependencies 'core'
+  core: loading dependencies 'mux-epoll, utils'
+    mux-epoll: loaded
+    utils: loading dependencies 'logger'
+      logger: loaded
+    utils: loaded
+  core: loaded
+db-mariadb: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+net-in-stream-legacy: already loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  mqtt: loaded
+mqtt-client: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+net-in-stream-legacy: already loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  mqtt: loaded
+mqtt-client: loaded
+net-un-stream-legacy: loading dependencies 'net-un-stream, core-socket-stream-legacy'
+  net-un-stream: loading dependencies 'net-un-phy-stream'
+    net-un-phy-stream: loading dependencies 'net-un-phy'
+      net-un-phy: loading dependencies 'net-un'
+        net-un: loading dependencies 'net'
+          net: already loaded
+        net-un: loaded
+      net-un-phy: loaded
+    net-un-phy-stream: loaded
+  net-un-stream: loaded
+  core-socket-stream-legacy: already loaded
+net-un-stream-legacy: loaded
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples
+ninja: no work to do.
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-2-examples
+    Start 1: exercise-ch01
+1/5 Test #1: exercise-ch01 ....................***Failed    0.16 sec
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/solution.py", line 12, in <module>
+    with running(binary, args) as (process, _):
+         ~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+RuntimeError: Process exited 254: 2026-09-22T11:27:29.429Z INF framework/instance core.socket.stream role=server inst=echoserver — listener started
+2026-09-22T11:27:29.429Z INF application/application echo — echoserver: listening on '127.0.0.1:36205'
+2026-09-22T11:27:29.451Z INF framework/connection core.socket.stream role=server inst=echoserver conn=1 — transport connected
+2026-09-22T11:27:29.451Z INF application/context core.socket.context inst=echoserver conn=1 — Echo context attached
+2026-09-22T11:27:29.493Z INF application/context core.socket.context inst=echoserver conn=1 — Echo context detached: connection close
+2026-09-22T11:27:29.494Z INF framework/connection core.socket.stream role=server inst=echoserver conn=1 — transport disconnected
+2026-09-22T11:27:29.494Z INF framework/connection core.socket.stream role=server inst=echoserver conn=2 — transport connected
+2026-09-22T11:27:29.494Z INF application/context core.socket.context inst=echoserver conn=2 — Echo context attached
+2026-09-22T11:27:29.495Z INF application/context core.socket.context inst=echoserver conn=2 — Echo context detached: connection close
+2026-09-22T11:27:29.495Z INF framework/connection core.socket.stream role=server inst=echoserver conn=2 — transport disconnected
+2026-09-22T11:27:29.495Z INF framework/instance core.socket.stream role=server inst=echoserver — listener stopped
+
+
+    Start 2: exercise-ch03
+2/5 Test #2: exercise-ch03 ....................***Failed    0.13 sec
+— Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.628Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.629Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.631Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.631Z DBG framework/context core.socket.context inst=echoserver conn=2 — SocketContext: EOF received
+2026-09-22T11:27:29.631Z DBG framework/connection core.socket.stream role=server inst=echoserver conn=2 — Shutdown (WR): success
+2026-09-22T11:27:29.631Z INF application/context core.socket.context inst=echoserver conn=2 — Echo context detached: connection close
+2026-09-22T11:27:29.631Z DBG framework/context core.socket.context inst=echoserver conn=2 — Context detached for connection close
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Connection 2 disconnected
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Local: localhost:48541
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Peer: localhost:57543
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Online Since: 2026-09-22 11:27:29 UTC
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Online Duration: 00:00:00
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Queued: 1152
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Sent: 1152
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Write Delta: 0
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Read: 1152
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Processed: 1152
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Read Delta: 0
+2026-09-22T11:27:29.631Z INF framework/connection core.socket.stream role=server inst=echoserver conn=2 — transport disconnected
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 33, in running
+    yield process, path
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/solution.py", line 14, in <module>
+    with running(client, ['greeting-client', 'remote', '--host=127.0.0.1', f'--port={port}']):
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+RuntimeError: Process exited 254: 2026-09-22T11:27:29.623Z INF framework/connection core.socket.stream role=client inst=greeting-client conn=1 — transport connected
+2026-09-22T11:27:29.631Z WRN framework/connection core.socket.stream role=client inst=greeting-client conn=1 — Send while shutdown in progress: ignoring
+2026-09-22T11:27:29.631Z INF application/context core.socket.context inst=greeting-client conn=1 — Echo context detached: connection close
+2026-09-22T11:27:29.631Z INF framework/connection core.socket.stream role=client inst=greeting-client conn=1 — transport disconnected
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/solution.py", line 11, in <module>
+    with running(server, ['--log-level=5', 'echoserver', 'local', '--host=127.0.0.1', f'--port={port}']) as (process, log):
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+RuntimeError: Process exited 254:  Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.630Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.631Z DBG application/context core.socket.context inst=echoserver conn=2 — Data to reflect: Learning by echo
+2026-09-22T11:27:29.631Z DBG framework/context core.socket.context inst=echoserver conn=2 — SocketContext: EOF received
+2026-09-22T11:27:29.631Z DBG framework/connection core.socket.stream role=server inst=echoserver conn=2 — Shutdown (WR): success
+2026-09-22T11:27:29.631Z INF application/context core.socket.context inst=echoserver conn=2 — Echo context detached: connection close
+2026-09-22T11:27:29.631Z DBG framework/context core.socket.context inst=echoserver conn=2 — Context detached for connection close
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Connection 2 disconnected
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Local: localhost:48541
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Peer: localhost:57543
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Online Since: 2026-09-22 11:27:29 UTC
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Online Duration: 00:00:00
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Queued: 1152
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Sent: 1152
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Write Delta: 0
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Read: 1152
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Processed: 1152
+2026-09-22T11:27:29.631Z DBG framework/instance core.socket.stream role=server inst=echoserver — Read Delta: 0
+2026-09-22T11:27:29.631Z INF framework/connection core.socket.stream role=server inst=echoserver conn=2 — transport disconnected
+2026-09-22T11:27:29.635Z INF framework/instance core.socket.stream role=server inst=echoserver — listener stopped
+
+
+    Start 3: exercise-ch23
+3/5 Test #3: exercise-ch23 ....................***Failed    1.12 sec
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/solution.py", line 9, in <module>
+    with running(sys.argv[1], ['legacy', 'local', '--host=127.0.0.1', f'--port={port}']) as (process, _):
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+RuntimeError: Process exited 254: 2026-09-22T11:27:29.714Z INF framework/instance core.socket.stream role=server inst=legacy — listener started
+2026-09-22T11:27:29.736Z INF framework/connection core.socket.stream role=server inst=legacy conn=1 — transport connected
+2026-09-22T11:27:29.736Z INF framework/connection core.socket.stream role=server inst=legacy conn=2 — transport connected
+2026-09-22T11:27:29.737Z INF framework/connection core.socket.stream role=server inst=legacy conn=1 — transport disconnected
+2026-09-22T11:27:29.738Z INF framework/connection core.socket.stream role=server inst=legacy conn=2 — transport disconnected
+2026-09-22T11:27:29.738Z INF framework/connection core.socket.stream role=server inst=legacy conn=3 — transport connected
+2026-09-22T11:27:29.739Z INF framework/connection core.socket.stream role=server inst=legacy conn=4 — transport connected
+2026-09-22T11:27:29.740Z INF framework/connection core.socket.stream role=server inst=legacy conn=4 — transport disconnected
+2026-09-22T11:27:29.740Z INF framework/connection core.socket.stream role=server inst=legacy conn=5 — transport connected
+2026-09-22T11:27:29.741Z INF framework/connection core.socket.stream role=server inst=legacy conn=5 — transport disconnected
+2026-09-22T11:27:29.741Z INF framework/connection core.socket.stream role=server inst=legacy conn=6 — transport connected
+2026-09-22T11:27:29.742Z INF framework/connection core.socket.stream role=server inst=legacy conn=3 — transport disconnected
+2026-09-22T11:27:29.742Z INF framework/instance core.socket.stream role=server inst=legacy — listener stopped
+2026-09-22T11:27:30.742Z WRN framework/connection core.socket.stream role=server inst=legacy conn=6 — Read timeout
+2026-09-22T11:27:30.743Z INF framework/connection core.socket.stream role=server inst=legacy conn=6 — transport disconnected
+
+
+    Start 4: exercise-ch35
+4/5 Test #4: exercise-ch35 ....................***Failed    1.13 sec
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch35/solution.py", line 16, in <module>
+    with running(sys.argv[1], args) as (process, _):
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+RuntimeError: Process exited 254: 2026-09-22T11:27:30.853Z INF framework/instance core.socket.stream role=server inst=web — listener started
+2026-09-22T11:27:30.853Z ERR application/application app — mqtt-uplink 127.0.0.1:43569 (127.0.0.1): Connection refused [111]
+2026-09-22T11:27:30.873Z INF framework/connection core.socket.stream role=server inst=web conn=1 — transport connected
+2026-09-22T11:27:30.874Z INF framework/connection core.socket.stream role=server inst=web conn=2 — transport connected
+2026-09-22T11:27:30.874Z INF framework/connection core.socket.stream role=server inst=web conn=1 — transport disconnected
+2026-09-22T11:27:30.875Z INF framework/connection core.socket.stream role=server inst=web conn=2 — transport disconnected
+2026-09-22T11:27:30.875Z INF framework/connection core.socket.stream role=server inst=web conn=3 — transport connected
+2026-09-22T11:27:30.876Z INF framework/connection core.socket.stream role=server inst=web conn=3 — transport disconnected
+2026-09-22T11:27:30.876Z INF framework/connection core.socket.stream role=server inst=web conn=4 — transport connected
+2026-09-22T11:27:30.876Z INF framework/connection core.socket.stream role=server inst=web conn=5 — transport connected
+2026-09-22T11:27:30.877Z INF framework/connection core.socket.stream role=server inst=web conn=5 — transport disconnected
+2026-09-22T11:27:30.878Z INF framework/connection core.socket.stream role=server inst=web conn=6 — transport connected
+2026-09-22T11:27:30.878Z INF framework/connection core.socket.stream role=server inst=web conn=6 — transport disconnected
+2026-09-22T11:27:30.879Z INF framework/connection core.socket.stream role=server inst=web conn=7 — transport connected
+2026-09-22T11:27:30.879Z INF framework/connection core.socket.stream role=server inst=web conn=7 — transport disconnected
+2026-09-22T11:27:30.879Z INF framework/connection core.socket.stream role=server inst=web conn=8 — transport connected
+2026-09-22T11:27:30.880Z INF framework/connection core.socket.stream role=server inst=web conn=8 — transport disconnected
+2026-09-22T11:27:30.880Z INF framework/instance core.socket.stream role=server inst=web — listener stopped
+2026-09-22T11:27:31.880Z WRN framework/connection core.socket.stream role=server inst=web conn=4 — Read timeout
+2026-09-22T11:27:31.880Z INF framework/connection core.socket.stream role=server inst=web conn=4 — transport disconnected
+
+
+    Start 5: exercise-ch37
+5/5 Test #5: exercise-ch37 ....................   Passed    0.00 sec
+
+20% tests passed, 4 tests failed out of 5
+
+Total Test time (real) =   2.55 sec
+
+The following tests FAILED:
+	  1 - exercise-ch01 (Failed)
+	  2 - exercise-ch03 (Failed)
+	  3 - exercise-ch23 (Failed)
+	  4 - exercise-ch35 (Failed)
+Errors while running CTest

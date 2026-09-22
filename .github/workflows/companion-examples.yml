@@ -53,7 +53,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             cmake ninja-build pkg-config python3 \
-            libssl-dev zlib1g-dev libbluetooth-dev libmariadb-dev libmagic-dev \
+            libasio-dev libssl-dev zlib1g-dev libbluetooth-dev libmariadb-dev libmagic-dev \
             nlohmann-json3-dev \
             ${{ matrix.packages }}
 
@@ -73,6 +73,12 @@ jobs:
           SNODEC_PREFIX: ${{ github.workspace }}/install/snodec
           BOOK_EXAMPLES_BUILD_DIR: ${{ github.workspace }}/build/ci-book-examples
         run: bash ci/build-companion-examples.sh
+
+      - name: Run public exercise labs
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          SNODEC_PREFIX: ${{ github.workspace }}/install/snodec
+        run: ctest --test-dir build/ci-book-examples --output-on-failure --no-tests=error
 
       - name: Run teaching-example smoke tests
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
@@ -108,6 +114,7 @@ jobs:
           name: book-verification-${{ matrix.compiler }}
           path: |
             build/verification-logs/
+            build/ci-book-examples/Testing/Temporary/
             build/teaching-smoke-logs/
             build/behavior-smoke-logs/
             build/example-lifetime-checks/runtime-logs/

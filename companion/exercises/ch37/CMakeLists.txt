@@ -1,0 +1,5 @@
+add_executable(model-ownership model-ownership.cpp ../../examples/MiniGateway/MeasurementModel.cpp)
+target_compile_features(model-ownership PRIVATE cxx_std_20)
+target_include_directories(model-ownership PRIVATE ../../examples/MiniGateway)
+add_custom_target(ch37-lab DEPENDS model-ownership)
+add_test(NAME exercise-ch37 COMMAND model-ownership)

@@ -4,7 +4,7 @@
 % box body so repeated callouts do not dominate dense technical pages.
 
 \usepackage[most]{tcolorbox}
-\usepackage{ragged2e}
+\usepackage{ragged2e,needspace}
 
 \definecolor{snodecCalloutText}{HTML}{1F2933}
 
@@ -75,4 +75,16 @@
   title={#1},
   colframe=snodecChecklistFrame,
   colback=snodecChecklistBack
+}
+
+% Teaching callouts reuse the established palette and spacing.
+\newtcolorbox{snodecobjectivesbox}[1]{
+  snodecboxbase,
+  halign upper code={\setlength{\RaggedRightRightskip}{0pt plus 3em}\RaggedRight},
+  title={#1}, colframe=snodecRememberFrame, colback=snodecRememberBack
+}
+\newtcolorbox{snodecexercisebox}[1]{
+  snodecboxbase,
+  halign upper code={\setlength{\RaggedRightRightskip}{0pt plus 3em}\RaggedRight},
+  title={#1}, colframe=snodecChecklistFrame, colback=snodecChecklistBack
 }
