@@ -746,3 +746,115 @@ control-tool UI, TLS, broker and deployment behavior are not executed by these
 labs. Their retained explanations are editorially reread, not newly runtime-certified.
 The Part V checkpoint prepares reproducible named-role operation for MiniGateway;
 it does not add a second gateway or logging implementation.
+
+
+## Phase 5g — Part VI, current Chapters 14–15 (2026-09-22)
+
+Edited and reread both chapters, the Part VI opener, both public solution READMEs,
+and transitions from Chapter 13 and into the unchanged Part VII opener. The
+reductions consolidate repeated layer descriptions, lifecycle definitions and
+summary questions. Budgets are ceilings; unused allowance is not a reason to
+remove teaching content. Neither approved chapter budget triggers the >35% stop
+rule, and no reserve is used: **2,750 remains**.
+
+| Chapter | Total before → after | Ceiling | Prose before → after | Fenced before → after | Headings before → after / ceiling | Mean section prose after |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 14 | 3,789 → 2,576 | 2,950 | 3,592 → 2,511 | 197 → 65 | 21 → 8 / 8 | 292.62 |
+| 15 | 4,534 → 2,990 | 3,400 | 4,220 → 2,922 | 314 → 68 | 37 → 8 / 9 | 339.88 |
+
+Part VI chapters: **5,566 / 6,350** words, including pedagogical apparatus.
+The 25 removed text fences restate sequences, distinctions or questions. All
+executable/configuration fences, C++ listing order, marked complete listings,
+index occurrences, figures and stable topic anchors survive unchanged. See
+`phase-5g-manuscript.diff` and `check-phase-5g.py`.
+
+### Objective ↔ exercise mapping
+
+Each chapter has three objectives, five recap bullets and five exercises in
+order: two reviews, two labs, one design. Paths below are relative to
+`companion/exercises/`; the README lab sections contain commands and expected
+observations, and all review/design sections contain public answers.
+
+| Exercise | Tier | Objectives | Solution and observation |
+| --- | --- | --- | --- |
+| 14.1 | Review | O1 | ch14/README.md:3 — wrapper responsibilities and conditional protocol reuse |
+| 14.2 | Review | O2, O3 | ch14/README.md:12 — trust/name/SNI; early callback versus secure readiness |
+| 14.3 | Lab | O2, O3 | ch14/README.md:23; tls.py policy — three identity outcomes and early null SSL |
+| 14.4 | Lab | O1, O3 | ch14/README.md:52; tls.py echo — binary reflection and reciprocal close-notify |
+| 14.5 | Design | O1, O2, O3 | ch14/README.md:71 — service/proxy trust, identity and authorization |
+| 15.1 | Review | O1, O2 | ch15/README.md:3 — failed activation, lost peer, disablement and NO_RETRY |
+| 15.2 | Review | O1, O3 | ch15/README.md:14 — inactivity, deadline, admission and delivery |
+| 15.3 | Lab | O1, O2 | ch15/README.md:24; recovery.py retry — two refused attempts, no attachment, natural exit |
+| 15.4 | Lab | O1, O2, O3 | ch15/README.md:43; recovery.py checkpoint — TLS identity outcomes, peer restart, fresh connection and echo |
+| 15.5 | Design | O2, O3 | ch15/README.md:71 — recovery/queue/deadline budget and replay contract |
+
+| Objective | Exercises that assess it |
+| --- | --- |
+| 14.O1 | 14.1, 14.4, 14.5 |
+| 14.O2 | 14.2, 14.3, 14.5 |
+| 14.O3 | 14.2, 14.3, 14.4, 14.5 |
+| 15.O1 | 15.1, 15.2, 15.3, 15.4 |
+| 15.O2 | 15.1, 15.3, 15.4, 15.5 |
+| 15.O3 | 15.2, 15.4, 15.5 |
+
+### Content-preservation audit
+
+Evidence paths are `manuscript/chapters/14-tls-across-the-framework.md` (Ch14)
+and `manuscript/chapters/15-timeouts-retries-and-failure-modes.md` (Ch15).
+All existing complete/excerpt executable listings and tables retain their
+technical content; repeated prose around them is consolidated.
+
+| Retained explanation, example or qualification | Evidence |
+| --- | --- |
+| TLS position, available-wrapper qualification, carrier identities, layer figure and legacy/TLS comparison | Ch14:17 |
+| Both wrapper alias listings, factory/context mapping, conditional reuse and getSSL access | Ch14:48 |
+| Ordinary configuration scopes, identity/trust/policy/timing table, client/server SNI distinction | Ch14:100 |
+| Explicit trust versus verification-disabled mode, SNI versus expected identity, early SSL_CTX/null SSL timing, shared endpoint policy | Ch14:126 |
+| Full DNS-policy sketch, required headers/trust file, IP-identity qualification and three-outcome local fixture | Ch14:134, :147, :151 |
+| Transport existence versus secure readiness and context attachment, handshake/shutdown failure | Ch14:163 |
+| Bounded existing shutdown, helper joining/idempotence, read observation during STOPPING, forced termination and non-vetoing signal callback | Ch14:176 |
+| Unix permissions, Bluetooth discovery/pairing/PSM, supported-carrier transfer and TLS-sensitive protocol examples | Ch14:191 |
+| Diagnostic boundary/error capture, scoped identity, privacy, failed-handshake/retry correlation, transfer experiment, proxy trust and deployment responsibility | Ch14:209 |
+| Protocol continuity rule; teaching recap and mapped exercises | Ch14:232, :244, :252 |
+| Timeout/retry/reconnect/shutdown/termination distinction, owner table and deliberate stop | Ch15:18 |
+| All timeout/delay scopes, inactivity versus deadline, instance policy versus independent activation controllers, protocol-timeout examples | Ch15:38 |
+| Retry/reconnect figure and rule, both original timer excerpts, retained flow, sibling independence, completion versus termination callbacks | Ch15:85 |
+| Retry enablement/count/fatal/timer checks, server/client comparison, scaling cap before jitter, retry-tries 0/1, indefinite versus finite policy | Ch15:138, :146 |
+| Fatal category versus retry permission, NO_RETRY semantics, disablement and phase/ownership tables | Ch15:179, :192 |
+| Queue defaults/watermark constraints, unchanged CLI example, immutable snapshots, four admission results and admission versus delivery | Ch15:226 |
+| Void-send overflow failure, frame atomicity, bounded application alternatives, pipe hysteresis, no resume during shutdown, HTTP fragment failure | Ch15:267 |
+| Inactivity/byte/deadline distinction, 4096-byte line example, absolute-deadline renewal qualification, missing extra deadline in teaching server | Ch15:279 |
+| Uncertain delivery, idempotency/operation identifiers, diagnostic scopes and Part VI checkpoint | Ch15:298, :300, :321 |
+| Five recap bullets and mapped exercises | Ch15:323, :331 |
+
+The single removed self-reference R204 is retired explicitly in the reference
+register; the timing explanation remains at Ch15:70. Other migration identities
+and intended targets are retained, and both new solution headings are registered.
+The reference checker covers 327 current references and all 374 migration identities.
+
+### Built, run, and limits
+
+The four new registrations pass within **36/36** public labs in
+`phase-5g-final-labs.log`; `phase-5g-final-companion.log` records their builds.
+Ch14 compiles the existing TLS policy probe and derives a TLS entry point from
+canonical EchoPair's two wrapper substitutions, sharing its unchanged context.
+Ch15 uses unchanged EchoPair and the same TLS fixture. No second echo, TLS policy
+implementation or recovery controller was added. Test support is +171/−1 lines
+(net +170), including registrations; application code is +0/−0.
+
+The TLS probe observes trusted matching success, trusted wrong-name rejection,
+untrusted matching-name rejection and early null SSL. A separate independent TLS
+client observes binary reflection and reciprocal close-notify. The checkpoint
+then uses a legacy TCP peer to observe failed activation before attachment and
+recovery after peer loss, with distinct connection identities, a fresh greeting
+and exact echo. It does not claim that this second half exercises TLS reconnect
+or automatic application replay. Fixtures use temporary keys/configuration,
+loopback, finite retries and bounded waits; OpenSSL and TLS support are required.
+
+The first secure-echo development run used incorrect certificate option names;
+local help identified `--cert` and `--cert-key`, and the corrected run passes.
+The first full suite exposed a native lab's library lookup outside the selected
+installation. Re-execution with that installation's runtime path passes all 36;
+no application or previous lab was changed. Both initial logs are retained.
+No hosted CI, production PKI, authorization deployment, stalled TLS peer,
+concurrent shutdown-path matrix or protocol-deadline implementation is claimed.

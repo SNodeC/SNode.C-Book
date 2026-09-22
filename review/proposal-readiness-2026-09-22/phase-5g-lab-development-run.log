@@ -1,0 +1,134 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 27
+    Start 27: exercise-ch14-trust-identity
+
+27: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py" "policy" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch14/tls-policy-lab" "/usr/bin/openssl"
+27: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch14
+27: Test timeout computed to be: 60
+27: PASS: trusted matching name; early SSL is null; ready=1
+27: PASS: trusted wrong name; early SSL is null; ready=0
+27: PASS: untrusted matching name; early SSL is null; ready=0
+1/4 Test #27: exercise-ch14-trust-identity .....   Passed    1.37 sec
+test 28
+    Start 28: exercise-ch14-secure-echo
+
+28: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py" "echo" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch14/tls-echo" "/usr/bin/openssl"
+28: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch14
+28: Test timeout computed to be: 60
+28: [/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch14/tls-echo] The following arguments were not expected: --cert-chain=/tmp/tls-echo-lab-2ef1yt7j/cert.pem --private-key=/tmp/tls-echo-lab-2ef1yt7j/key.pem
+28: 
+28: Append -h or --help to your command line for more information.
+28: 
+28: Traceback (most recent call last):
+28:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 38, in running
+28:     yield process, path
+28:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py", line 30, in echo
+28:     with connect(port, process) as peer:
+28:          ~~~~~~~^^^^^^^^^^^^^^^
+28:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 63, in connect
+28:     raise RuntimeError('Server exited before connection')
+28: RuntimeError: Server exited before connection
+28: 
+28: During handling of the above exception, another exception occurred:
+28: 
+28: Traceback (most recent call last):
+28:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py", line 42, in <module>
+28:     {'policy': policy, 'echo': echo}[sys.argv[1]](*sys.argv[2:])
+28:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+28:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py", line 28, in echo
+28:     with running(server, ['echoserver', 'local', '--host=127.0.0.1', f'--port={port}',
+28:          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28:                           'tls', f'--cert-chain={cert}', f'--private-key={key}']) as (process, log):
+28:                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28:   File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+28:     self.gen.throw(value)
+28:     ~~~~~~~~~~~~~~^^^^^^^
+28:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 56, in running
+28:     raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+28: RuntimeError: Process exited 2: [/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch14/tls-echo] The following arguments were not expected: --cert-chain=/tmp/tls-echo-lab-2ef1yt7j/cert.pem --private-key=/tmp/tls-echo-lab-2ef1yt7j/key.pem
+28: 
+28: Append -h or --help to your command line for more information.
+28: 
+2/4 Test #28: exercise-ch14-secure-echo ........***Failed    0.15 sec
+[/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch14/tls-echo] The following arguments were not expected: --cert-chain=/tmp/tls-echo-lab-2ef1yt7j/cert.pem --private-key=/tmp/tls-echo-lab-2ef1yt7j/key.pem
+
+Append -h or --help to your command line for more information.
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 38, in running
+    yield process, path
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py", line 30, in echo
+    with connect(port, process) as peer:
+         ~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 63, in connect
+    raise RuntimeError('Server exited before connection')
+RuntimeError: Server exited before connection
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py", line 42, in <module>
+    {'policy': policy, 'echo': echo}[sys.argv[1]](*sys.argv[2:])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py", line 28, in echo
+    with running(server, ['echoserver', 'local', '--host=127.0.0.1', f'--port={port}',
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          'tls', f'--cert-chain={cert}', f'--private-key={key}']) as (process, log):
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 56, in running
+    raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
+RuntimeError: Process exited 2: [/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch14/tls-echo] The following arguments were not expected: --cert-chain=/tmp/tls-echo-lab-2ef1yt7j/cert.pem --private-key=/tmp/tls-echo-lab-2ef1yt7j/key.pem
+
+Append -h or --help to your command line for more information.
+
+
+test 29
+    Start 29: exercise-ch15-bounded-retry
+
+29: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/recovery.py" "retry" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/examples/EchoPair/echoclient"
+29: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch15
+29: Test timeout computed to be: 80
+29: PASS: initial attempt plus one retry; two error statuses; no context attachment; natural exit
+29: {"v": 1, "ts": "2026-09-22T18:33:35.394Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:36869 (127.0.0.1): Connection refused [111]"}
+29: {"v": 1, "ts": "2026-09-22T18:33:35.595Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:36869 (127.0.0.1): Connection refused [111]"}
+3/4 Test #29: exercise-ch15-bounded-retry ......   Passed    0.27 sec
+test 30
+    Start 30: exercise-ch15-part-checkpoint
+
+30: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/recovery.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/examples/EchoPair/echoclient" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch14/tls-policy-lab"
+30: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5g-examples/companion/exercises/ch15
+30: Test timeout computed to be: 80
+30: PASS: trusted matching name; early SSL is null; ready=1
+30: PASS: trusted wrong name; early SSL is null; ready=0
+30: PASS: untrusted matching name; early SSL is null; ready=0
+30: PASS: retry before first attachment; peer stop/restart; two connection identities; fresh greeting and exact echo
+30: {"v": 1, "ts": "2026-09-22T18:33:35.950Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:40051 (127.0.0.1): Connection refused [111]"}
+30: {"v": 1, "ts": "2026-09-22T18:33:36.155Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context attached"}
+30: {"v": 1, "ts": "2026-09-22T18:33:36.156Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context detached: connection close"}
+30: {"v": 1, "ts": "2026-09-22T18:33:36.156Z", "level": "debug", "origin": "framework", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Context detached for connection close"}
+30: {"v": 1, "ts": "2026-09-22T18:33:36.358Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:40051 (127.0.0.1): Connection refused [111]"}
+30: {"v": 1, "ts": "2026-09-22T18:33:36.560Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "2", "message": "Echo context attached"}
+4/4 Test #30: exercise-ch15-part-checkpoint ....   Passed    0.96 sec
+
+The following tests passed:
+	exercise-ch14-trust-identity
+	exercise-ch15-bounded-retry
+	exercise-ch15-part-checkpoint
+
+75% tests passed, 1 tests failed out of 4
+
+Total Test time (real) =   2.75 sec
+
+The following tests FAILED:
+	 28 - exercise-ch14-secure-echo (Failed)
+Errors while running CTest

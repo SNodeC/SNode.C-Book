@@ -1,0 +1,139 @@
+{
+  "chapters": [
+    {
+      "chapter": 14,
+      "path": "manuscript/chapters/14-tls-across-the-framework.md",
+      "words_before": 3789,
+      "words_after": 2576,
+      "budget": 2950,
+      "prose_words": 2511,
+      "code_words": 65,
+      "headings": 8,
+      "heading_ceiling": 8,
+      "average_section_prose_words": 292.62,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 248
+    },
+    {
+      "chapter": 15,
+      "path": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
+      "words_before": 4534,
+      "words_after": 2990,
+      "budget": 3400,
+      "prose_words": 2922,
+      "code_words": 68,
+      "headings": 8,
+      "heading_ceiling": 9,
+      "average_section_prose_words": 339.88,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1, O2"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O2, O3"
+        ]
+      ],
+      "apparatus_words": 287
+    }
+  ],
+  "part_vi_words": 5566,
+  "part_vi_budget": 6350,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1218,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 382,
+      "sha256": "647716ae64d916b62341a2986608ec22ee0e695d91343a217796bdfe7f62014d",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "d94d6845a493e313498acfbdbae1f433315a353c95f19aadcce84dd5a72a1399",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "224581819325b12c91cdd68caadf790bec3e0e18cddf72686834c403715bc3f6",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 326,
+  "reserve_used": 0,
+  "reserve_remaining": 2750,
+  "global_words": 122049,
+  "word_delta_from_phase_5f": -2721
+}

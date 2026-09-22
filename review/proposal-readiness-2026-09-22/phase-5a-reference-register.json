@@ -233,7 +233,7 @@
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
-      "text": "Chapters 16–23",
+      "text": "Chapters 16\u201323",
       "targets": [
         "the-http-layer",
         "the-express-like-framework",
@@ -289,7 +289,7 @@
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
-      "text": "Chapters 4–15",
+      "text": "Chapters 4\u201315",
       "targets": [
         "the-mental-model-of-snodec",
         "core-runtime-and-event-processing",
@@ -756,7 +756,7 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "The section “Unix domain sockets”",
+      "text": "The section \u201cUnix domain sockets\u201d",
       "targets": [
         "unix-domain-sockets"
       ],
@@ -811,7 +811,7 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapters 3–5",
+      "text": "Chapters 3\u20135",
       "targets": [
         "your-first-working-program-the-echo-pair",
         "the-mental-model-of-snodec",
@@ -831,7 +831,7 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapters 6–8",
+      "text": "Chapters 6\u20138",
       "targets": [
         "socket-addresses-and-address-semantics",
         "servers-clients-and-connections",
@@ -1176,7 +1176,7 @@
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "the section “Application and instance configuration”",
+      "text": "the section \u201cApplication and instance configuration\u201d",
       "targets": [
         "application-and-instance-configuration-in-detail"
       ],
@@ -1187,7 +1187,7 @@
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "the section “Configuration principles”",
+      "text": "the section \u201cConfiguration principles\u201d",
       "targets": [
         "configuration-philosophy-in-snodec"
       ],
@@ -1245,7 +1245,7 @@
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "Chapters 6–8",
+      "text": "Chapters 6\u20138",
       "targets": [
         "socket-addresses-and-address-semantics",
         "servers-clients-and-connections",
@@ -1300,7 +1300,7 @@
       "source_ids": [
         "R196"
       ],
-      "line": 119
+      "line": 82
     },
     {
       "file": "manuscript/chapters/14-tls-across-the-framework.md",
@@ -1311,7 +1311,7 @@
       "source_ids": [
         "R197"
       ],
-      "line": 120
+      "line": 83
     },
     {
       "file": "manuscript/chapters/14-tls-across-the-framework.md",
@@ -1323,7 +1323,7 @@
       "source_ids": [
         "R198"
       ],
-      "line": 240
+      "line": 106
     },
     {
       "file": "manuscript/chapters/14-tls-across-the-framework.md",
@@ -1334,7 +1334,7 @@
       "source_ids": [
         "R199"
       ],
-      "line": 314
+      "line": 151
     },
     {
       "file": "manuscript/chapters/14-tls-across-the-framework.md",
@@ -1345,7 +1345,7 @@
       "source_ids": [
         "R200"
       ],
-      "line": 454
+      "line": 209
     },
     {
       "file": "manuscript/chapters/14-tls-across-the-framework.md",
@@ -1356,7 +1356,7 @@
       "source_ids": [
         "R201"
       ],
-      "line": 475
+      "line": 213
     },
     {
       "file": "manuscript/chapters/14-tls-across-the-framework.md",
@@ -1367,7 +1367,7 @@
       "source_ids": [
         "R202"
       ],
-      "line": 494
+      "line": 228
     },
     {
       "file": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
@@ -1378,18 +1378,7 @@
       "source_ids": [
         "R203"
       ],
-      "line": 235
-    },
-    {
-      "file": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
-      "text": "Chapter 15",
-      "targets": [
-        "timeouts-retries-and-failure-modes"
-      ],
-      "source_ids": [
-        "R204"
-      ],
-      "line": 235
+      "line": 70
     },
     {
       "file": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
@@ -1400,7 +1389,7 @@
       "source_ids": [
         "R205"
       ],
-      "line": 578
+      "line": 245
     },
     {
       "file": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
@@ -1411,7 +1400,7 @@
       "source_ids": [
         "R206"
       ],
-      "line": 587
+      "line": 254
     },
     {
       "file": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
@@ -1422,7 +1411,7 @@
       "source_ids": [
         "R207"
       ],
-      "line": 614
+      "line": 277
     },
     {
       "file": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
@@ -1433,7 +1422,7 @@
       "source_ids": [
         "R208"
       ],
-      "line": 622
+      "line": 284
     },
     {
       "file": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md",
@@ -1444,7 +1433,7 @@
       "source_ids": [
         "R209"
       ],
-      "line": 658
+      "line": 307
     },
     {
       "file": "manuscript/chapters/16-the-http-layer.md",
@@ -2290,7 +2279,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section “Reading complete applications”",
+      "text": "The section \u201cReading complete applications\u201d",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2334,7 +2323,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section “Reading complete applications”",
+      "text": "The section \u201cReading complete applications\u201d",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2345,7 +2334,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section “From applications to systems”",
+      "text": "The section \u201cFrom applications to systems\u201d",
       "targets": [
         "from-applications-to-systems"
       ],
@@ -2356,7 +2345,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section “MQTTSuite as a worked system”",
+      "text": "The section \u201cMQTTSuite as a worked system\u201d",
       "targets": [
         "mqttsuite-as-a-reference-ecosystem"
       ],
@@ -2367,7 +2356,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section “MQTTSuite as a worked system”",
+      "text": "The section \u201cMQTTSuite as a worked system\u201d",
       "targets": [
         "mqttsuite-as-a-reference-ecosystem"
       ],
@@ -2423,7 +2412,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section “From applications to systems”",
+      "text": "The section \u201cFrom applications to systems\u201d",
       "targets": [
         "from-applications-to-systems"
       ],
@@ -2434,7 +2423,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section “Reading complete applications”",
+      "text": "The section \u201cReading complete applications\u201d",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2456,7 +2445,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section “Reading complete applications”",
+      "text": "The section \u201cReading complete applications\u201d",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2467,7 +2456,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "the section “From applications to systems”",
+      "text": "the section \u201cFrom applications to systems\u201d",
       "targets": [
         "from-applications-to-systems"
       ],
@@ -2478,7 +2467,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "the section “Reading complete applications”",
+      "text": "the section \u201cReading complete applications\u201d",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2489,7 +2478,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "the section “From applications to systems”",
+      "text": "the section \u201cFrom applications to systems\u201d",
       "targets": [
         "from-applications-to-systems"
       ],
@@ -3601,6 +3590,24 @@
       "text": "Chapter 13",
       "targets": [
         "logging-diagnostics-and-runtime-introspection"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch14/README.md",
+      "text": "Chapter 14",
+      "targets": [
+        "tls-across-the-framework"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch15/README.md",
+      "text": "Chapter 15",
+      "targets": [
+        "timeouts-retries-and-failure-modes"
       ],
       "source_ids": [],
       "line": 1
@@ -5592,7 +5599,7 @@
       "id": "R179",
       "old_file": "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
       "old_line": 393,
-      "old_text": "Chapters 8–12",
+      "old_text": "Chapters 8\u201312",
       "old_chapters": [
         8,
         9,
@@ -5742,7 +5749,7 @@
       "id": "R192",
       "old_file": "manuscript/chapters/17-application-and-instance-configuration-in-detail.md",
       "old_line": 760,
-      "old_text": "Chapters 08–12",
+      "old_text": "Chapters 08\u201312",
       "old_chapters": [
         8,
         9,
@@ -5883,8 +5890,8 @@
       "old_chapters": [
         20
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/15-timeouts-retries-and-failure-modes.md:235"
+      "status": "retired",
+      "evidence": "Phase 5g removes a self-reference from the retry timing restatement; the retained Where waiting is bounded section explains both the timeout/delay distinction and reconnect timing. See phase-5g-manuscript.diff and chapter-ledger.md Phase 5g."
     },
     {
       "id": "R205",
@@ -7741,7 +7748,7 @@
       "id": "R368",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 32,
-      "old_text": "Chapters 35–36",
+      "old_text": "Chapters 35\u201336",
       "old_chapters": [
         35,
         36
@@ -7753,7 +7760,7 @@
       "id": "R369",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 34,
-      "old_text": "Chapters 1–7",
+      "old_text": "Chapters 1\u20137",
       "old_chapters": [
         1,
         2,
@@ -7770,7 +7777,7 @@
       "id": "R370",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 34,
-      "old_text": "Chapters 16–18 and 20–23, then 25, 32, and 35",
+      "old_text": "Chapters 16\u201318 and 20\u201323, then 25, 32, and 35",
       "old_chapters": [
         16,
         17,
@@ -7805,7 +7812,7 @@
       "id": "R372",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 129,
-      "old_text": "Chapters 35–36",
+      "old_text": "Chapters 35\u201336",
       "old_chapters": [
         35,
         36

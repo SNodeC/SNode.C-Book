@@ -1293,3 +1293,54 @@ migration identities; retirements in this Part are explicitly justified.
 **Stop after Phase 5f.** Next: Phase 5g, Part VI only, after freshly rerunning this
 phase’s exit criteria with new evidence. Author preservation rules, reserve
 accounting, 5l/5m split and Phase 6 proposal refresh remain in force.
+
+
+## Phase 5g — Part VI completed, 2026-09-22
+
+Re-executed the Phase 5f gate before editing, with exact fresh metric equality,
+all 32 existing labs, required runtime checks and clean publication builds.
+Historical evidence remains unchanged; `phase-5g-entry-*` and REPORT.md record
+the new verification. The author instruction remains controlling: budgets are
+ceilings, not targets; remove repetition while preserving explanations, examples
+and technical qualifications.
+
+Edited and reread Chapters 14–15, the Part VI opener and public solutions. Repeated
+layer summaries and lifecycle definitions are consolidated. The ledger records
+preservation of trust/name/SNI, early SSL policy, bounded shutdown, flow ownership,
+retry/count/jitter policy, queue admission, deadlines and replay uncertainty.
+Every executable/configuration fence, marked listing, index occurrence and figure
+remains unchanged; chapter structure and production formatting are unchanged.
+
+| Chapter | Final words / ceiling | Headings / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: |
+| 14 | 2,576 / 2,950 | 8 / 8 | 292.62 |
+| 15 | 2,990 / 3,400 | 8 / 9 | 339.88 |
+
+Part VI: **5,566 / 6,350**; reserve **2,750 remaining**, none used. Three objectives
+per chapter map to five exercises (two review, two labs, one design); each closes
+with five recap bullets. All solutions are public under `companion/exercises/ch14`
+and `ch15`. The checkpoint distinguishes three TLS identity outcomes from controlled
+retry/reconnect observations. It prepares MiniGateway uplink diagnostics without
+claiming application delivery from restored connectivity.
+
+All 36 public labs, companion build, hygiene/reference regression, source alignment,
+metrics tests, teaching/behavior/lifetime checks and PDF/package targets pass.
+Final full PDF **382 pages** (was 392), samples 54 and proposal 6; zero warnings and
+bad boxes. Nineteen affected/contents pages were visually reviewed. Existing TLS
+policy and EchoPair implementations are reused; production growth is zero and
+public test support is +170 net lines. Initial fixture-option and local runtime
+lookup failures are retained with corrected passing evidence. No hosted CI or
+production deployment is claimed.
+
+Book-wide counts: **122,049 words, 573 deep headings, 273 text fences**, 20 rules,
+zero forbidden phrases/closing sections. Global targets remain pending. Front
+matter is 1,980 / 2,500 and Part openers 1,218 / 1,650. The five sample gates survive.
+Evidence: REPORT.md, chapter-ledger.md, metrics-after-phase-5g.json,
+check-phase-5g.py, phase-5g-exit-checks.json, phase-5g-final-results.json,
+phase-5g-final-*.log and phase-5g-visual-review.md, all under
+`review/proposal-readiness-2026-09-22/`.
+
+Commit: `proposal-readiness: phase 5g — refine Part VI and verify secure recovery outcomes`.
+**Stop after Phase 5g.** Next: Phase 5h, Part VII only, after freshly rerunning this
+phase's exit gate using the final logs' selected runtime environment. Preservation
+rules, reserve accounting, the 5l/5m split and Phase 6 proposal refresh remain in force.

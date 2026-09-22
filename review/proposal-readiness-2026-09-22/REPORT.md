@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5f is completed after freshly re-verifying the Phase 5e gate. Parts I–V and the approved front-matter work are complete. Phase 5g has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5g is completed after freshly re-verifying the Phase 5f gate. Parts I–VI and the approved front-matter work are complete. Phase 5h has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -19,7 +19,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5d — Part III | completed | `proposal-readiness: phase 5d follow-up — relocate stranded Unix-socket introduction`; initial Phase 5d commit retained | 2026-09-22 | metrics-after-phase-5d.json; phase-5d-exit-checks.json; chapter-ledger.md; phase-5d-final-*.log; phase-5d-visual-review.md; completion account below |
 | 5e — Part IV | completed | `proposal-readiness: phase 5e — refine Part IV and verify protocol framing` (containing this report) | 2026-09-22 | metrics-after-phase-5e.json; phase-5e-exit-checks.json; chapter-ledger.md; phase-5e-final-*.log; phase-5e-visual-review.md; completion account below |
 | 5f — Part V | completed | `proposal-readiness: phase 5f — refine Part V and verify configuration diagnostics` (containing this report) | 2026-09-22 | metrics-after-phase-5f.json; phase-5f-exit-checks.json; chapter-ledger.md; phase-5f-entry-*.log; phase-5f-final-*.log; phase-5f-visual-review.md; completion account below |
-| 5g — Part VI | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5g — Part VI | completed | `proposal-readiness: phase 5g — refine Part VI and verify secure recovery outcomes` (containing this report) | 2026-09-22 | metrics-after-phase-5g.json; phase-5g-exit-checks.json; chapter-ledger.md; phase-5g-entry-*.log; phase-5g-final-*.log; phase-5g-visual-review.md; completion account below |
 | 5h — Part VII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5i — Part VIII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5j — Part IX | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -2001,3 +2001,137 @@ current Phase 5f exit checks. Its runtime and artifact commands are recorded in
 the final logs; `check-phase-5f.py` supplies the metrics/preservation assertions.
 Preserve historical evidence when recording that new gate. Proposal source refresh
 remains Phase 6; the whole-book targets are not yet met or claimed complete.
+
+
+## Phase 5g — Part VI completed (2026-09-22)
+
+### Entry gate: Phase 5f re-executed before editing
+
+Started from a clean refinement branch. Fresh metrics exactly matched
+`metrics-after-phase-5f.json`: 124,770 words. `check-phase-5g-entry.py` reruns the
+previous phase assertions with new output paths, preserving historical evidence.
+Part V budgets, pedagogy, sample gates, scope, references and listing/index/figure
+preservation passed (`phase-5g-entry-gate.log`, `phase-5g-entry-exit-checks.json`).
+
+All ten execution groups passed in `phase-5g-entry-results.json`: hygiene/reference
+regressions, source alignment, metrics tests, companion build, all 32 existing
+public labs, teaching, behavior, lifetime, publication targets and extracted-package
+hygiene. Their command-bearing `phase-5g-entry-*.log` files record execution.
+Entry PDFs reproduce 392 full-manuscript, 54 sample and 6 proposal pages, zero
+warnings/bad boxes, and 320 package files identical to their inputs. The recorded
+status was therefore independently reverified before Part VI editing.
+
+### Edited and reread
+
+The ordered manuscript edits are limited to Chapters 14–15 and the Part VI opener.
+The diff consolidates repeated layer descriptions, lifecycle definitions, mirrored
+role explanations and summary questions. Trust versus expected identity versus
+SNI, early callback timing, bounded TLS shutdown, activation-flow ownership,
+retry-count semantics, queue admission, protocol deadlines and uncertain delivery
+remain fully explained. Both retained rules state principles the reader applies.
+No explanation, example or qualification was removed merely to undershoot a ceiling.
+See `phase-5g-manuscript.diff` and the line-cited preservation audit in
+`chapter-ledger.md`, Phase 5g.
+
+Both complete chapters and solution READMEs were reread with the Part transitions.
+Each chapter opens with three observable objectives and ends with five recap
+bullets then five exercises: two reviews, two labs, one design. Every exercise
+maps to objectives and every objective is assessed; public answers and commands
+exist. Evidence: `manuscript/chapters/14-tls-across-the-framework.md`:3, :244, :252;
+`manuscript/chapters/15-timeouts-retries-and-failure-modes.md`:3, :323, :331;
+`companion/exercises/ch14/README.md`; `companion/exercises/ch15/README.md`;
+the ledger's two mapping tables; `phase-5g-exit-checks.json`.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: |
+| 14 — TLS | 3,789 → 2,576 / 2,950 | 3,592 → 2,511 | 21 → 8 / 8 | 292.62 |
+| 15 — failure and recovery | 4,534 → 2,990 / 3,400 | 4,220 → 2,922 | 37 → 8 / 9 | 339.88 |
+
+Part VI: **5,566 / 6,350** words. Reserve: **0 used, 2,750 remaining**. Neither
+approved chapter budget triggers the >35% stop rule; the preservation audit still
+checks their distinct teaching. All 293 executable/configuration fences, each
+chapter's C++ listing sequence, all index occurrences, figure captions/IDs and
+36 marked complete listings remain unchanged (`check-phase-5g.py`, alignment log).
+The 25 removed text fences contain repeated diagrams/questions, not executable code.
+Chapter order, stable anchors, production formatting and proposal sources are unchanged.
+
+### Built and run
+
+| Check | Evidence | Result |
+| --- | --- | --- |
+| Hygiene and chapter-reference regressions | phase-5g-final-hygiene.log; phase-5g-final-closing-hygiene.log | pass; 327 current references, 39 stable topics, 374 original dispositions |
+| Complete source-listing alignment | phase-5g-final-alignment.log | pass; 36 exact complete listings |
+| Metrics regression | phase-5g-final-metrics-tests.log | pass |
+| Companion and public lab targets | phase-5g-final-companion.log | build passes through existing CI path |
+| Public exercises | phase-5g-final-labs.log | 36/36 pass, including four new registrations |
+| Teaching, behavior and lifetime | phase-5g-final-teaching.log; phase-5g-final-behavior.log; phase-5g-final-lifetime.log | pass |
+| Full PDF, proposal, sample and package | phase-5g-final-package.log; phase-5g-final-artifact-refresh.log | pass; final refresh includes layout corrections |
+| Extracted-package hygiene | phase-5g-final-extracted-hygiene.log | pass on final package |
+| Budgets, teaching contract, mappings, preservation and artifacts | phase-5g-exit-checks.log; phase-5g-exit-checks.json | pass |
+
+All ten final execution groups return zero (`phase-5g-final-results.json`).
+The Part VI checkpoint first repeats the trust/name fixture's three outcomes,
+then observes a controlled peer's initial refusal, first attachment, loss,
+failed recovery attempt and second attachment with a distinct connection identity.
+The fresh greeting and exact echo establish the restored stream's behavior.
+The recovery half uses legacy TCP: it does not claim TLS reconnect or replay of
+an earlier application request. A separate TLS echo lab observes binary reflection
+and reciprocal close-notify. The public solutions state these boundaries.
+
+New labs reuse canonical EchoPair and the existing TLS policy probe/fixture.
+CMake derives the TLS server entry point by the taught include/namespace change,
+linking the unchanged context. No application implementation was added or changed:
+**production code +0/−0**. Requested lab/test support is **+171/−1 lines, net +170**
+(two Python fixtures and CMake registrations). This supplies independent peers and
+observations, not another echo algorithm, TLS policy or recovery state machine.
+Public README answers are documentation and counted separately.
+
+The initial secure-echo fixture used incorrect certificate option names; installed
+local help supplied `--cert` and `--cert-key`. `phase-5g-lab-development-run.log`
+retains the failure; `phase-5g-lab-corrected-run.log` and final labs pass. The first
+full suite's native deferred-work lab needed an explicit runtime search path to
+the selected installation (`phase-5g-initial-full-labs.log`). The final command
+records that path and all 36 pass; no existing lab or application was changed.
+Use the same runtime environment when rerunning this phase's gate.
+
+Verification limits: local installed dependency and loopback only; no hosted CI
+run, production PKI, authorization deployment, TLS reconnect, stalled TLS peer or
+complete concurrent shutdown matrix is claimed. The protocol-deadline and replay
+policies are explained and discussed, not implemented by these labs. Temporary
+certificate/key generation, process/socket bounds and dependencies are documented
+in the public solutions.
+
+### Artifacts, global deltas and handoff
+
+Full manuscript **392 → 382** pages; sample package **54 → 54**; proposal **6 → 6**.
+All three final LaTeX logs contain zero warnings and zero bad boxes. Final hashes
+and **326-file** package/source equality are recorded in `phase-5g-exit-checks.json`.
+Nineteen rendered pages were inspected: contents, complete affected Part and the
+following Part opener. The corrected recap and failure-visibility sentence were
+rendered and rechecked; see `phase-5g-visual-review.md`. No warning suppression or
+formatting workaround was added.
+
+| Measure | Phase 5f | Phase 5g | Delta / remaining global work |
+| --- | ---: | ---: | --- |
+| Total words | 124,770 | 122,049 | −2,721; 7,049 above final ceiling |
+| Prose words | 112,106 | 109,763 | −2,343 |
+| Fenced words | 12,664 | 12,286 | −378 from text blocks; executable fences unchanged |
+| Chapter headings at ### or deeper | 615 | 573 | −42; 23 above final ceiling |
+| Mean chapter-section prose | 167.98 | 176.09 | final global 250 still pending; both Part VI chapters pass |
+| Text fences | 298 | 273 | −25; 23 above final ceiling |
+| Objective / exercise callouts | 16 / 16 | 18 / 18 | both chapters added |
+| Rule boxes | 20 | 20 | cap met |
+| Forbidden phrases / Closing perspective | 0 / 0 | 0 / 0 | gates retained |
+
+Metrics: `metrics-after-phase-5g.json` against `metrics-after-phase-5f.json`.
+Front matter stays 1,980 / 2,500; all Part openers are 1,218 / 1,650. The original
+five samples retain their ≥20% prose reductions and section-density gates.
+R204, a redundant Chapter 15 self-reference, is explicitly retired with evidence
+in `phase-5a-reference-register.json`; the timing explanation remains. Other topic
+targets and migration identities survive. Both new solution headings are registered.
+
+**Stop after Phase 5g.** Next is Phase 5h, Part VII only, after freshly rerunning
+this phase's metrics and listed exit checks. `check-phase-5g.py` supplies the
+preservation/teaching/artifact assertions; final logs record execution commands
+and the required runtime environment. Preserve historical evidence. Proposal
+source refresh remains Phase 6, and the whole-book targets remain unfinished.

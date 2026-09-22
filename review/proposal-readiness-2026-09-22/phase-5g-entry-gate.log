@@ -1,0 +1,142 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 326 current references, 374 old-reference dispositions.
+{
+  "chapters": [
+    {
+      "chapter": 12,
+      "path": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
+      "words_before": 8615,
+      "words_after": 4273,
+      "budget": 5400,
+      "prose_words": 4023,
+      "code_words": 250,
+      "headings": 10,
+      "heading_ceiling": 16,
+      "average_section_prose_words": 391.2,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Design",
+          "O2, O3"
+        ]
+      ],
+      "apparatus_words": 279
+    },
+    {
+      "chapter": 13,
+      "path": "manuscript/chapters/13-logging-diagnostics-and-runtime-introspection.md",
+      "words_before": 3779,
+      "words_after": 2698,
+      "budget": 2750,
+      "prose_words": 2481,
+      "code_words": 217,
+      "headings": 7,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 340.43,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 280
+    }
+  ],
+  "part_v_words": 6971,
+  "part_v_budget": 8150,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1182,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 392,
+      "sha256": "19075e017ef1279ac31e1cdec07a2f0f4a4cccb16671f2d10225cdc6a960f843",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "49cda20c45d2b3b34c79563fc7b4e6ce07299eb57e306717294077c1fbdee6f5",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "6952d6bb8ec645bbab28a47240a0ab9451207c7327172e02dd0010953639b084",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 320,
+  "reserve_used": 0,
+  "reserve_remaining": 2750,
+  "global_words": 124770,
+  "word_delta_from_phase_5e": -5390
+}
+PASS: Part V budgets, pedagogy, mappings, scope, preserved listings, clean final PDFs and package contents.
+Execution and editorial/visual review are recorded in separate Phase 5f logs; future Parts are not certified.
