@@ -790,7 +790,7 @@ An IPv4 endpoint is not the same thing as an IPv6 endpoint. A Unix domain socket
 
 A common address interface can be useful when an application chooses endpoint families dynamically and stores them in one collection. Family-specific types make different operations and fields visible to the compiler, but require explicit selection or dispatch when the family itself is a runtime choice. SNode.C's concrete address types favor that visibility. The application must still decide how to represent a user-selected endpoint before it reaches the concrete family API.
 
-Once the endpoint family is chosen, the next question is what kind of communication relationship that family will carry. Before going there, however, the family-specific address meaning deserves its own treatment. Therefore, Chapter 6 follows naturally from this chapter. Once the reader understands that the network layer chooses an endpoint family, the next question is unavoidable:
+Once the endpoint family is chosen, the next question is what kind of communication relationship that family will carry. Before going there, however, the family-specific address meaning deserves its own treatment. Chapter 6 gives it that treatment. Once the reader understands that the network layer chooses an endpoint family, the next question is unavoidable:
 
 > What exactly does an address mean in each family?
 

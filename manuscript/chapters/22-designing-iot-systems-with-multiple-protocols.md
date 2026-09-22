@@ -310,7 +310,7 @@ A multi-protocol system may be a single executable when the roles are tightly re
 
 In a multi-protocol system, configuration becomes a map of roles and boundaries. It can express which roles exist, which roles are enabled, which protocol family each role uses, which endpoints each role binds or connects to, which TLS material belongs to which role, which MQTT peers or brokers are used, which web interfaces are exposed, which retry or reconnect policies apply, and which local-control sockets exist.
 
-This connects directly to Chapter 12's named instances and role visibility and Chapter 12's structured configuration model. In this chapter, those ideas become configuration as a system boundary map.
+This connects directly to Chapter 12's named instances, role visibility, and structured configuration model. In this chapter, those ideas become configuration as a system boundary map.
 
 In SNode.C terms, configuration should make configured roles and registered instances legible. At the system-design level, it should also show which boundary each role serves. A configuration file should not be only a pile of values. In a multi-protocol IoT system, it should help answer:
 
