@@ -29,6 +29,34 @@ conversations through the repository's `AGENTS.md`. It is self-contained; the
 previous publisher review and technical-refinement report provide additional
 context when available.
 
+## Author scope revision — proposal readiness, 2026-09-22
+
+The author explicitly authorized the proposal-readiness pass recorded verbatim in
+`review/proposal-readiness-2026-09-22/PROMPT.md`. This revision supersedes conflicting
+AGENTS.md instructions, governing constraints 1–2 below, earlier no-shortening
+acceptance criteria, and previous completion statements for this new pass.
+Historical progress records below remain historical.
+
+A shortening target now applies: total whitespace tokens at most 115,000 (stretch
+105,000). Remove redundant prose, duplicate summaries, and restated framing;
+do not cut code listings to reach the target. Preserve the author's voice,
+teaching approach, technical depth of explanations and code, cumulative
+progression, and MiniGateway capstone. Chapter consolidation is permitted only
+after explicit author approval of RESTRUCTURE-PLAN.md at the Phase 4 gate.
+
+Execute exactly one phase per session on SNode.C-2.0-refinement. The full prompt
+sets the measurable targets, scope exclusions, paths, ordered phases, checks,
+and exit criteria. Later sessions must read it, consult REPORT.md, and rerun the
+previous phase's exit checks before starting. Missing criteria require stopping;
+record qualified or blocked work accurately. Phase 4 ends awaiting author approval;
+Phase 5a and each subsequent Part condensation run in separate sessions. Never
+squash away the separate scope-revision commit.
+
+Current session: Phase 0 only. Scope revision and verbatim prompt are recorded
+first and committed before measurement work. Phase 0 measurement is pending;
+Phase 1 and all subsequent phases have not started. Progress and evidence for this
+pass live in `review/proposal-readiness-2026-09-22/REPORT.md`.
+
 ## Governing constraints
 
 1. Refine the existing book in its established voice and depth. Do not rewrite

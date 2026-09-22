@@ -15,11 +15,17 @@ precedence; record accepted scope changes in the plan.
 ## Non-negotiable editorial constraints
 
 - Refine existing passages; do not replace parts with newly written treatments.
-- Preserve the author's reading/writing style, explanatory depth, cumulative
-  teaching method, and the 38-chapter structure.
-- There is no shortening target, word budget, or desired percentage reduction.
-  Incidental shortening from removing redundant material is acceptable. Do not
-  trim examples, explanations, or useful reinforcement just to make the book shorter.
+- Follow **Author scope revision — proposal readiness, 2026-09-22** in
+  `review/EDITORIAL-WORK-PLAN.md` and its verbatim prompt at
+  `review/proposal-readiness-2026-09-22/PROMPT.md`; it supersedes conflicting
+  earlier constraints for this pass.
+- Preserve the author's voice, teaching approach, technical depth of explanations
+  and code, cumulative progression, and MiniGateway capstone.
+- A shortening target now applies: at most 115,000 whitespace tokens (stretch
+  105,000), reducing redundant prose, duplicate summaries, and restated framing,
+  without cutting code listings to meet the target.
+- Chapter consolidation requires the author's approval of RESTRUCTURE-PLAN.md
+  at the Phase 4 gate. Until then, preserve the chapter structure.
 - Distinguish deliberate pedagogical reinforcement from repetition that adds no
   new explanation, application, consequence, or useful reminder.
 - Read the Markdown inputs in `manuscript/book-files.txt`, not the PDF, as the
