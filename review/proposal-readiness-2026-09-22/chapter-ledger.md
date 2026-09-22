@@ -1006,3 +1006,123 @@ are **not newly exercised**; their explanations remain. No hosted CI or producti
 deployment is claimed. Existing teaching, behavior and lifetime checks also pass.
 The full manuscript and contents were rendered for targeted review; REPORT.md
 and `phase-5h-visual-review.md` record the result.
+
+
+## Phase 5i — Part VIII, 2026-09-22
+
+Edited and reread Chapters 20–22, their public solutions and the Part VIII opener.
+The fresh entry gate reproduces Phase 5h exactly (`phase-5i-entry-exit-checks.json`);
+metrics below compare `metrics-after-phase-5h.json` with `metrics-after-phase-5i.json`.
+Budgets are ceilings. Kept the detailed packet/carrier explanations, protocol
+examples, operating costs and partial-failure qualifications; condensed repeated
+stack blocks, duplicate comparison/summary passages and tiny headings.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 20 | 2,997 → 2,005 / 2,350 | 2,709 → 1,878 | 288 → 127 | 22 → 5 / 5 | 359.60 |
+| 21 | 2,731 → 1,782 / 2,100 | 2,353 → 1,716 | 378 → 66 | 17 → 4 / 4 | 409.25 |
+| 22 | 3,964 → 2,922 / 2,950 | 3,780 → 2,899 | 184 → 23 | 24 → 8 / 8 | 348.50 |
+
+Part VIII totals **9,692 → 6,709 / 7,400** words. No reserve used; **2,750 remains**.
+New teaching apparatus is 216/221/236 words respectively, already included in the
+chapter totals. Each chapter has three objectives, five recap bullets and five
+exercises (two review, two labs, one design). Mean section lengths exceed 250.
+
+### Objective ↔ exercise coverage
+
+| Exercise | Tier | Objectives | Public solution |
+| --- | --- | --- | --- |
+| 20.1 | Review | O1 | `companion/exercises/ch20/README.md:3` |
+| 20.2 | Review | O1, O3 | `companion/exercises/ch20/README.md:12` |
+| 20.3 | Lab | O1, O2 | `companion/exercises/ch20/README.md:22` |
+| 20.4 | Lab | O2, O3 | `companion/exercises/ch20/README.md:43` |
+| 20.5 | Design | O3 | `companion/exercises/ch20/README.md:68` |
+| 21.1 | Review | O1 | `companion/exercises/ch21/README.md:3` |
+| 21.2 | Review | O1, O3 | `companion/exercises/ch21/README.md:13` |
+| 21.3 | Lab | O1, O2 | `companion/exercises/ch21/README.md:22` |
+| 21.4 | Lab | O2, O3 | `companion/exercises/ch21/README.md:49` |
+| 21.5 | Design | O3 | `companion/exercises/ch21/README.md:61` |
+| 22.1 | Review | O1, O3 | `companion/exercises/ch22/README.md:3` |
+| 22.2 | Review | O1, O2 | `companion/exercises/ch22/README.md:13` |
+| 22.3 | Lab | O1, O2 | `companion/exercises/ch22/README.md:23` |
+| 22.4 | Lab | O1, O2, O3 | `companion/exercises/ch22/README.md:39` |
+| 22.5 | Design | O3 | `companion/exercises/ch22/README.md:71` |
+
+| Objective | Exercises |
+| --- | --- |
+| 20.O1 | 20.1, 20.2, 20.3 |
+| 20.O2 | 20.3, 20.4 |
+| 20.O3 | 20.2, 20.4, 20.5 |
+| 21.O1 | 21.1, 21.2, 21.3 |
+| 21.O2 | 21.3, 21.4 |
+| 21.O3 | 21.2, 21.4, 21.5 |
+| 22.O1 | 22.1, 22.2, 22.3, 22.4 |
+| 22.O2 | 22.2, 22.3, 22.4 |
+| 22.O3 | 22.1, 22.4, 22.5 |
+
+### Content-preservation audit
+
+Ch20 = `manuscript/chapters/20-mqtt-support-in-snodec.md`,
+Ch21 = `manuscript/chapters/21-mqtt-over-websocket.md`,
+Ch22 = `manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md`.
+
+| Retained explanation, example or qualification | Evidence |
+| --- | --- |
+| Protocol family, shared packet/deserializer/session/topic vocabulary, native versus WebSocket carriers | Ch20:13 |
+| Mqtt lifecycle, packet delivery, server/client specialization, QoS acknowledgement helpers and transport/protocol timing | Ch20:45 |
+| Native context bridge, component roles, broker/session lifetime and full client/server operation lists | Ch20:87 |
+| Entire SensorClient excerpt, link fragment, MQTT 3.1.1/private-extension qualification | Ch20:155 |
+| Accepted CONNACK versus SUBACK, independent delivery, QoS 0 limits and ten-message interoperability experiment | Ch20:223 |
+| Headers, JSON dependency versus payload meaning and complete diagnostic boundary list | Ch20:241 |
+| Carrier figure/caption and comparison table, sequential admission and operating costs | Ch21:13 |
+| Generic adapter shape, both aliases, message/packet distinction, buffer/scheduling and normal/error closing | Ch21:45 |
+| CONNECT hex example, segmented/binary/text/invalid-input table, cursor/size and scheduled receive explanation | Ch21:114 |
+| Both partial CMake examples, necessary concrete carrier/factory, diagnostics and separate timing owners | Ch21:139 |
+| Scientific measurement example, figure/caption and all five detailed boundary-role explanations | Ch22:13 |
+| Consumer-driven protocol choice, fan-out measurement example and durable-ordering qualification | Ch22:74, :99 |
+| MQTT/HTTP/SSE/WebSocket/Bluetooth/Unix choices, machine/human qualification and native/WebSocket costs | Ch22:133 |
+| Single-process lifetime versus failure isolation, serialization, identity/ordering and permissions | Ch22:171 |
+| Configuration and observation per role; author seam reference retains both configuration topic targets | Ch22:188 |
+| Per-role failure table and complete eight-step design recipe | Ch22:215 |
+| Broker/storage outage, acceptance/durability/delivery, distinct MQTT input/output or origin rule, SSE sequence | Ch22:247 |
+
+`check-phase-5i.py` verifies all 293 executable/configuration fences, C++ block
+order, source markers, index occurrences and figure IDs against Phase 5h. Existing
+application, earlier lab implementations and CI lifetime tests are unchanged.
+`phase-5i-manuscript.diff` records all manuscript edits. The technical prose audit
+is an editorial reread, separate from the mechanical preservation checks.
+
+### Built, run and limits
+
+All **48 public labs** pass (`phase-5i-final-labs.log`), including six new
+registrations. Chapter 20 observes CONNECT before accepted CONNACK, SUBSCRIBE and
+PUBLISH, then a command callback; its separate installed-broker fixture gives an
+independent subscriber's granted SUBACK and exact delivered topic/payload.
+Chapter 21 observes HTTP 101, selected mqtt, masked binary CONNECT, fragmented
+binary CONNACK, canonical role traffic and command reception. The same CONNACK bytes
+as text produce the wrong-opcode diagnostic and close 1002.
+
+The Chapter 22 checkpoint runs broker delivery first, then the unchanged public
+MiniGateway outage lab. It verifies HTTP/status/SSE agreement while MQTT is refused,
+and in-memory sequence reset on restart. These are two separate experiments: no
+live gateway disconnect, reconnect replay, durability or third-party broker
+interoperability is claimed. The complete expected boundary map is public at
+`companion/exercises/ch22/README.md:56`. Broker-dependent labs are explicitly
+labelled equipped, with packet-peer and outage observations as local alternatives.
+
+Production code **+0/−0**; requested fixture/test support **+300/−2, net +298**.
+Native launchers and the WebSocket factory reuse installed protocol/context owners
+and the canonical SensorClient. Bounded independent peers supply test observations;
+there is no second production parser, adapter, broker or measurement model.
+The Chapter 19 observer handles the opposite WebSocket role (unmasked server frames);
+the new Chapter 21 peer observes masked client frames and sends server frames.
+The shared MQTT packet assertions are reused by both native and WebSocket labs.
+README answers are documentation; the phase checker is review support.
+
+Both generated WebSocket lab entry points track their canonical mains through one
+normalized `CMAKE_CONFIGURE_DEPENDS` registration in the exercise root. Existing
+Chapter 19 logic is unchanged. Full configuration/build and its prior labs pass.
+Local installed-package builds and loopback execution are verified; hosted CI,
+deployment TLS, full malformed-packet matrices, overload, persistence and QoS 1/2
+are not newly verified. Existing smoke/lifetime checks also pass. Final PDF visual
+review is recorded in `phase-5i-visual-review.md`.

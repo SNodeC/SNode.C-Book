@@ -1,0 +1,34 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 41
+    Start 41: exercise-ch21-binary
+
+41: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py" "binary" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch21/mqtt-ws-lab"
+41: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch21
+41: Test timeout computed to be: 40
+41: PASS: HTTP 101, mqtt selection and binary MQTT CONNECT observed
+41: PASS: fragmented binary CONNACK admits MQTT flow; binary command reaches canonical role
+1/2 Test #41: exercise-ch21-binary .............   Passed    0.19 sec
+test 42
+    Start 42: exercise-ch21-text
+
+42: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py" "text" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch21/mqtt-ws-lab"
+42: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch21
+42: Test timeout computed to be: 40
+42: PASS: HTTP 101, mqtt selection and binary MQTT CONNECT observed
+42: PASS: same packet bytes in text trigger protocol-error close 1002
+2/2 Test #42: exercise-ch21-text ...............   Passed    0.07 sec
+
+The following tests passed:
+	exercise-ch21-binary
+	exercise-ch21-text
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   0.26 sec

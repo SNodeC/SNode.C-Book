@@ -4,7 +4,6 @@ foreach(role IN ITEMS Server Client)
   string(TOLOWER "${role}" side)
   set(example "${CMAKE_CURRENT_SOURCE_DIR}/../../examples/HttpUpgrade-${role}")
   set(echo "${CMAKE_CURRENT_SOURCE_DIR}/../../examples/WebSocket-Echo-${role}Subprotocol")
-  set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${example}/main.cpp")
   file(READ "${example}/main.cpp" main)
   string(PREPEND main "#include <web/websocket/${side}/SubProtocolFactorySelector.h>\n#include \"Echo${role}Factory.h\"\n")
   string(REPLACE "web::websocket::${side}::SocketContextUpgradeFactory::link();"

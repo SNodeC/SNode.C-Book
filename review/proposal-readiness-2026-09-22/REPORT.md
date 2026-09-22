@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5h is completed after the separately committed TLS-fixture follow-up freshly re-verified the Phase 5g gate. Parts I–VII and the approved front-matter work are complete. Phase 5i has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5i is completed after freshly rerunning the Phase 5h exit gate. Parts I–VIII and the approved front-matter work are complete. Phase 5j has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -21,7 +21,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5f — Part V | completed | `proposal-readiness: phase 5f — refine Part V and verify configuration diagnostics` (containing this report) | 2026-09-22 | metrics-after-phase-5f.json; phase-5f-exit-checks.json; chapter-ledger.md; phase-5f-entry-*.log; phase-5f-final-*.log; phase-5f-visual-review.md; completion account below |
 | 5g — Part VI | completed | `proposal-readiness: phase 5g follow-up — move TLS fixture into companion material`; initial Phase 5g commit retained | 2026-09-22 | metrics-after-phase-5g.json; phase-5g-exit-checks.json; chapter-ledger.md; phase-5g-entry-*.log; phase-5g-final-*.log; phase-5g-visual-review.md; completion account below |
 | 5h — Part VII | completed | `proposal-readiness: phase 5h — refine Part VII and verify web protocol boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5h.json; phase-5h-exit-checks.json; chapter-ledger.md; phase-5h-final-*.log; phase-5h-visual-review.md; completion account below |
-| 5i — Part VIII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5i — Part VIII | completed | `proposal-readiness: phase 5i — refine Part VIII and verify MQTT delivery boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5i.json; phase-5i-exit-checks.json; chapter-ledger.md; phase-5i-entry-*.log; phase-5i-final-*.log; phase-5i-visual-review.md; completion account below |
 | 5j — Part IX | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5k — Part X | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5l — Part XI only | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -2322,3 +2322,152 @@ Commit: `proposal-readiness: phase 5h — refine Part VII and verify web protoco
 rerun this gate using the final logs' selected installation and runtime environment.
 The remaining Part sessions, final global audit and Phase 6 proposal-source refresh
 remain pending; passing the heading/text-fence counts alone does not complete them.
+
+
+## Phase 5i — Part VIII completed, 2026-09-22
+
+### Entry gate and editorial scope
+
+Before editing, freshly reran all Phase 5h exit checks. Metrics exactly reproduced
+`metrics-after-phase-5h.json`; all ten execution groups passed, including all 42
+existing public labs and fresh PDF/package builds. `phase-5i-entry-results.json`,
+`phase-5i-entry-*.log` and `phase-5i-entry-exit-checks.json` record the run. The
+unchanged Phase 5h checker logic was rerun with entry-log/output paths redirected;
+historical Phase 5h evidence remains intact. Entry PDFs: **368/54/6 pages**
+(manuscript/samples/proposal), zero warnings and bad boxes.
+
+Used the same selected installation and runtime setup as that gate:
+`SNODEC_PREFIX=build/ci-fix-2026-09-22/install-gcc` (absolute path in the process),
+`BOOK_EXAMPLES_BUILD_DIR=build/proposal-readiness-phase-5i-examples`, parallelism 4,
+and all selected prefix shared-library directories in `LD_LIBRARY_PATH` (recorded
+in each final execution log). PDF targets use `build/proposal-readiness-phase-2`.
+
+Edited and reread Chapters 20–22, their solutions and the Part VIII opener. Budgets
+were ceilings: removed repeated layer diagrams, duplicate comparisons, restated
+framing and summaries. Kept the full client excerpt, MQTT packet/acknowledgement
+vocabulary, carrier and session lifetimes, adapter buffer/scheduling mechanics,
+all component snippets, costs, scientific examples and partial-failure contracts.
+The ledger supplies a source-line preservation audit; `phase-5i-manuscript.diff`
+records the edits. No structural change or production formatting change occurred.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 20 | 2,997 → 2,005 / 2,350 | 2,709 → 1,878 | 288 → 127 | 22 → 5 / 5 | 359.60 |
+| 21 | 2,731 → 1,782 / 2,100 | 2,353 → 1,716 | 378 → 66 | 17 → 4 / 4 | 409.25 |
+| 22 | 3,964 → 2,922 / 2,950 | 3,780 → 2,899 | 184 → 23 | 24 → 8 / 8 | 348.50 |
+
+Part VIII: **6,709 / 7,400**, from 9,692 words. Reserve used **0**; **2,750 remains**.
+Each chapter has three objectives, five recap bullets and five exercises: two
+review, two labs and one design. The ledger records both directions of the mapping;
+`check-phase-5i.py` verifies coverage and matching public solution headings.
+
+The Part checkpoint is at
+`manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md:269` and
+`companion/exercises/ch22/README.md:39`. It separately observes broker/subscriber
+delivery and MiniGateway acceptance with unavailable MQTT. It does not pretend
+that the gateway was attached to that first broker or that a live disconnect was
+tested. The expected boundary map distinguishes session, subscription, delivery,
+accepted state and observation (`companion/exercises/ch22/README.md:56`).
+
+### Execution evidence and architecture accounting
+
+All ten groups in `phase-5i-final-results.json` pass:
+
+| Group | Evidence |
+| --- | --- |
+| Hygiene, chapter/topic references and reference regression | `phase-5i-final-hygiene.log` |
+| Complete-listing alignment | `phase-5i-final-alignment.log` |
+| Measurement regression | `phase-5i-final-metrics-tests.log` |
+| Installed-package companion and lab compilation | `phase-5i-final-companion.log` |
+| 48/48 public labs, including six new registrations | `phase-5i-final-labs.log` |
+| Teaching smoke checks | `phase-5i-final-teaching.log` |
+| Behavior smoke checks | `phase-5i-final-behavior.log` |
+| Existing SSE/WebSocket lifetime checks | `phase-5i-final-lifetime.log` |
+| Full manuscript, proposal, sample PDF and package | `phase-5i-final-package.log` |
+| Extracted source-package hygiene | `phase-5i-final-extracted-hygiene.log` |
+
+`check-phase-5i.py` independently checks budgets, pedagogy, references, scope,
+retained sample gates, all 293 executable/configuration fences, C++ block order,
+source markers, index entries and figure IDs. Existing companion applications,
+earlier lab implementations and CI lifetime tests are unchanged. Results are
+`phase-5i-exit-checks.json` and `.log`.
+
+The governing invariant is that installed MQTT roles/adapters own protocol behavior
+and the existing model owns gateway acceptance. The native client/broker launchers
+and WebSocket factory attach those existing owners; bounded peers observe their
+public behavior. A broker fixture is needed for subscriber delivery evidence,
+which a controlled packet peer alone cannot provide. The author-requested public
+lab support adds no replacement broker, adapter, parser or model implementation.
+**Production +0/−0; requested fixture/test support +300/−2, net +298 lines**,
+including CMake registration. README answers and review checkers are separate
+from production/test logic.
+
+The new WebSocket consumer exposed duplicate configure dependency paths for the
+same canonical client main. Moved registration from the Chapter 19 directory to
+one normalized root registration shared by both consumers
+(`companion/exercises/CMakeLists.txt:2`). This fixes the dependency owner instead
+of copying a second canonical main. Existing Chapter 19 tests still pass.
+
+New runtime observations: CONNECT and bounded quietness before CONNACK; canonical
+SUBSCRIBE/PUBLISH and command callback; real installed-broker SUBACK plus exact
+independent subscriber delivery; WebSocket upgrade/mqtt selection, binary CONNECT,
+fragmented binary CONNACK and command; text-opcode error with close 1002; and the
+accepted-state/outage checkpoint. The equipped broker lab uses a disposable local
+installed server fixture. Fixed canonical topics and client ID are isolated by a
+fresh private broker/port and temporary session directory, not falsely described
+as a unique topic prefix. Public solutions state each fixture's scope and cleanup.
+
+Initial failures remain recorded:
+
+- `phase-5i-lab-development-build.log`: Ninja duplicate configure dependency;
+  corrected by the single normalized registration described above.
+- `phase-5i-lab-corrected-build.log`: C++ factory-selector deduction rejected a
+  lambda object; unary `+` supplies the required function pointer. Corrected full
+  compilation is in `phase-5i-lab-final-build.log` and the final companion log.
+- `phase-5i-lab-development-run.log`: the WebSocket test peer assumed a space after
+  every HTTP header colon. Parsing now splits at the colon and strips optional
+  whitespace. Both adapter tests pass in `phase-5i-adapter-corrected-run.log`, then
+  all 48 pass together in the final run. No behavior assertion was removed.
+
+Local installed-package builds and loopback execution are verified. Hosted CI,
+third-party broker interoperability, deployment TLS, durability, QoS 1/2 recovery,
+full malformed-packet/overload matrices and live gateway reconnection are **not
+newly verified**. The chapters retain the associated technical qualifications.
+
+### Artifacts, metrics and handoff
+
+Full manuscript **368 → 358 pages**; samples **54 → 54**; proposal **6 → 6**.
+All three have **zero final LaTeX warnings and bad boxes**. PDF hashes and
+**347-file** package/source equality are in `phase-5i-exit-checks.json`. Physical
+pages 174–193 (complete Part VIII and next Part transition) and contents pages
+5–6 were rendered and visually reviewed; details are in `phase-5i-visual-review.md`.
+All figures, listings, tables and callouts fit; no formatting changes or warning
+suppression were needed. Proposal source refresh remains the authorized Phase 6 task.
+
+| Global measure | Entry baseline | Phase 5i | Delta / remaining |
+| --- | ---: | ---: | --- |
+| Total words | 119,068 | 116,122 | −2,946; 1,122 above final hard ceiling |
+| Prose words | 107,376 | 105,064 | −2,312 |
+| Fenced words | 11,692 | 11,058 | −634 from text blocks; executable fences unchanged |
+| Chapter deep headings | 518 | 472 | −46; numerical ceiling retained |
+| Mean chapter-section prose | 190.53 | 204.45 | final global 250 gate remains pending |
+| Text fences | 229 | 192 | −37; numerical ceiling retained |
+| Objective / exercise callouts | 21 / 21 | 24 / 24 | all three chapters added |
+| Rule boxes | 20 | 20 | cap retained |
+| Forbidden phrases / Closing perspective | 0 / 0 | 0 / 0 | gates retained |
+
+Metrics: `metrics-after-phase-5i.json`. Front matter remains **1,980 / 2,500**;
+Part openers **1,291 / 1,650**. The original five samples retain their ≥20% prose
+reduction and density gates. References: **309 current occurrences**, 39 topics,
+all 374 original migration dispositions. Redundant references R248, R250, R251,
+R253, R254, R256–R259, R262, R265, R266, R269 and R271 are explicitly retired with
+reasons in `phase-5a-reference-register.json`; remaining targets/identities are
+preserved, three solution headings and one checkpoint reference registered.
+The single author seam reference still carries both R275/R276 identities and both
+topic targets. This is retirement of repeated prose references, not renumbering.
+
+Commit: `proposal-readiness: phase 5i — refine Part VIII and verify MQTT delivery boundaries`.
+
+**Stop after Phase 5i.** Phase 5j (Part IX) has not started. Before it starts,
+rerun this exit gate with the recorded installation/runtime environment. Remaining
+Part sessions, the final global audit and Phase 6 proposal refresh remain pending.

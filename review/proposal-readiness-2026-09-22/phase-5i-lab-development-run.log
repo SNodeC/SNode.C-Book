@@ -1,0 +1,314 @@
+COMMAND: ctest --test-dir build/proposal-readiness-phase-5i-examples -R ^exercise-ch(20|21|22)- --output-on-failure --no-tests=error -V
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 39
+    Start 39: exercise-ch20-wire
+
+39: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch20/mqtt.py" "wire" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch20/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch20/mqtt-broker-lab"
+39: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch20
+39: Test timeout computed to be: 40
+39: PASS: CONNECT first; no subscription/publication before acceptance; accepted session produces SUBSCRIBE/PUBLISH and receives command
+1/6 Test #39: exercise-ch20-wire .................   Passed    0.32 sec
+test 40
+    Start 40: exercise-ch20-delivery
+
+40: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch20/mqtt.py" "delivery" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch20/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch20/mqtt-broker-lab"
+40: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch20
+40: Test timeout computed to be: 40
+40: PASS: observer session accepted by CONNACK
+40: PASS: subscriber receives SUBACK granting QoS 0
+40: PASS: independent subscriber receives exact topic sensors/temperature/value and payload 23.5
+40: PASS: broker routes command to canonical client role
+2/6 Test #40: exercise-ch20-delivery .............   Passed    0.18 sec
+test 41
+    Start 41: exercise-ch21-binary
+
+41: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py" "binary" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch21/mqtt-ws-lab"
+41: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch21
+41: Test timeout computed to be: 40
+41: 2026-09-22T19:44:13.250Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+41: 2026-09-22T19:44:13.250Z TRC framework/system core.event-loop — SNode.C: Starting ... HELLO
+41: 2026-09-22T19:44:13.252Z TRC framework/system core.event-loop — Core::EventLoop: started
+41: 2026-09-22T19:44:13.252Z DBG framework/instance core.socket.stream role=client inst=legacy — Initiating connect
+41: 2026-09-22T19:44:13.252Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt started
+41: 2026-09-22T19:44:13.252Z DBG framework/connection core.socket — legacy Connect: starting
+41: 2026-09-22T19:44:13.252Z TRC framework/connection core.socket — legacy open 0.0.0.0:0 (0.0.0.0): success
+41: 2026-09-22T19:44:13.252Z TRC framework/connection core.socket — legacy bind 0.0.0.0:0 (0.0.0.0) (effective: 0.0.0.0:33399): success
+41: 2026-09-22T19:44:13.252Z TRC framework/connection core.socket — legacy connect 127.0.0.1:43081 (127.0.0.1): success
+41: 2026-09-22T19:44:13.252Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor enabled
+41: 2026-09-22T19:44:13.252Z DBG framework/connection core.socket — legacy enable 127.0.0.1:43081: success
+41: 2026-09-22T19:44:13.252Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (local): localhost:33399
+41: 2026-09-22T19:44:13.252Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (remote): localhost:43081
+41: 2026-09-22T19:44:13.252Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor enabled
+41: 2026-09-22T19:44:13.252Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — WRITE descriptor enabled
+41: 2026-09-22T19:44:13.253Z DBG framework/connection core.socket — legacy connect 127.0.0.1:43081 (127.0.0.1): success
+41: 2026-09-22T19:44:13.253Z DBG framework/connection core.socket —   localhost:33399 -> localhost:43081
+41: 2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt succeeded
+41: 2026-09-22T19:44:13.253Z TRC application/application app — HTTP client connection status for 127.0.0.1:43081 (127.0.0.1)
+41: 2026-09-22T19:44:13.253Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport connected
+41: 2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connecting
+41: 2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:33399
+41: 2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:43081
+41: 2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connected
+41: 2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:33399
+41: 2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:43081
+41: 2026-09-22T19:44:13.253Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketContext created successful
+41: 2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+41: 2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context attached
+41: 2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) accepted: GET /ws HTTP/1.1
+41: 2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) queued: GET /ws HTTP/1.1 - QueueSize = 1 - Flags: 0 - 0
+41: 2026-09-22T19:44:13.253Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request started: id=0
+41: 2026-09-22T19:44:13.253Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+41: 2026-09-22T19:44:13.253Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgradeFactory create success: websocket
+41: 2026-09-22T19:44:13.253Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Initiating upgrade: GET /ws HTTP/1.1
+41: 2026-09-22T19:44:13.253Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Upgrade request:
+41: │   Request:                 Method : GET
+41: │          :                    Url : /ws
+41: │          :                Version : HTTP/1.1
+41: │    Header:             Connection : Upgrade
+41: │          :                   Host : 127.0.0.1:43081
+41: │          :      Sec-WebSocket-Key : pB2NRXd9HoXM8PAJjJmJ4Q==
+41: │          : Sec-WebSocket-Protocol : mqtt
+41: │          :  Sec-WebSocket-Version : 13
+41: │          :                Upgrade : websocket
+41: │          :           X-Powered-By : SNode.C
+41: 2026-09-22T19:44:13.253Z TRC application/application app — upgrade request initiation: accepted
+41: 2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) delivered: GET /ws HTTP/1.1 0
+41: 2026-09-22T19:44:13.253Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor disabled
+41: 2026-09-22T19:44:13.253Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — OnReadError: EOF received
+41: 2026-09-22T19:44:13.253Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor disabled
+41: 2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — SocketContext: EOF received
+41: 
+41: Traceback (most recent call last):
+41:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py", line 88, in <module>
+41:     run(*sys.argv[1:])
+41:     ~~~^^^^^^^^^^^^^^^
+41:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py", line 60, in run
+41:     headers = dict(line.split(b': ', 1) for line in bytes(request).split(b'\r\n')[1:-2])
+41: ValueError: dictionary update sequence element #1 has length 1; 2 is required
+3/6 Test #41: exercise-ch21-binary ...............***Failed    0.07 sec
+2026-09-22T19:44:13.250Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-22T19:44:13.250Z TRC framework/system core.event-loop — SNode.C: Starting ... HELLO
+2026-09-22T19:44:13.252Z TRC framework/system core.event-loop — Core::EventLoop: started
+2026-09-22T19:44:13.252Z DBG framework/instance core.socket.stream role=client inst=legacy — Initiating connect
+2026-09-22T19:44:13.252Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt started
+2026-09-22T19:44:13.252Z DBG framework/connection core.socket — legacy Connect: starting
+2026-09-22T19:44:13.252Z TRC framework/connection core.socket — legacy open 0.0.0.0:0 (0.0.0.0): success
+2026-09-22T19:44:13.252Z TRC framework/connection core.socket — legacy bind 0.0.0.0:0 (0.0.0.0) (effective: 0.0.0.0:33399): success
+2026-09-22T19:44:13.252Z TRC framework/connection core.socket — legacy connect 127.0.0.1:43081 (127.0.0.1): success
+2026-09-22T19:44:13.252Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor enabled
+2026-09-22T19:44:13.252Z DBG framework/connection core.socket — legacy enable 127.0.0.1:43081: success
+2026-09-22T19:44:13.252Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (local): localhost:33399
+2026-09-22T19:44:13.252Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (remote): localhost:43081
+2026-09-22T19:44:13.252Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor enabled
+2026-09-22T19:44:13.252Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — WRITE descriptor enabled
+2026-09-22T19:44:13.253Z DBG framework/connection core.socket — legacy connect 127.0.0.1:43081 (127.0.0.1): success
+2026-09-22T19:44:13.253Z DBG framework/connection core.socket —   localhost:33399 -> localhost:43081
+2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt succeeded
+2026-09-22T19:44:13.253Z TRC application/application app — HTTP client connection status for 127.0.0.1:43081 (127.0.0.1)
+2026-09-22T19:44:13.253Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport connected
+2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connecting
+2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:33399
+2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:43081
+2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connected
+2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:33399
+2026-09-22T19:44:13.253Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:43081
+2026-09-22T19:44:13.253Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketContext created successful
+2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context attached
+2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) accepted: GET /ws HTTP/1.1
+2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) queued: GET /ws HTTP/1.1 - QueueSize = 1 - Flags: 0 - 0
+2026-09-22T19:44:13.253Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request started: id=0
+2026-09-22T19:44:13.253Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-22T19:44:13.253Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgradeFactory create success: websocket
+2026-09-22T19:44:13.253Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Initiating upgrade: GET /ws HTTP/1.1
+2026-09-22T19:44:13.253Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Upgrade request:
+│   Request:                 Method : GET
+│          :                    Url : /ws
+│          :                Version : HTTP/1.1
+│    Header:             Connection : Upgrade
+│          :                   Host : 127.0.0.1:43081
+│          :      Sec-WebSocket-Key : pB2NRXd9HoXM8PAJjJmJ4Q==
+│          : Sec-WebSocket-Protocol : mqtt
+│          :  Sec-WebSocket-Version : 13
+│          :                Upgrade : websocket
+│          :           X-Powered-By : SNode.C
+2026-09-22T19:44:13.253Z TRC application/application app — upgrade request initiation: accepted
+2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) delivered: GET /ws HTTP/1.1 0
+2026-09-22T19:44:13.253Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor disabled
+2026-09-22T19:44:13.253Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — OnReadError: EOF received
+2026-09-22T19:44:13.253Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor disabled
+2026-09-22T19:44:13.253Z DBG framework/context core.socket.context inst=legacy conn=1 — SocketContext: EOF received
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py", line 88, in <module>
+    run(*sys.argv[1:])
+    ~~~^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py", line 60, in run
+    headers = dict(line.split(b': ', 1) for line in bytes(request).split(b'\r\n')[1:-2])
+ValueError: dictionary update sequence element #1 has length 1; 2 is required
+
+test 42
+    Start 42: exercise-ch21-text
+
+42: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py" "text" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch21/mqtt-ws-lab"
+42: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch21
+42: Test timeout computed to be: 40
+42: 2026-09-22T19:44:13.328Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+42: 2026-09-22T19:44:13.328Z TRC framework/system core.event-loop — SNode.C: Starting ... HELLO
+42: 2026-09-22T19:44:13.330Z TRC framework/system core.event-loop — Core::EventLoop: started
+42: 2026-09-22T19:44:13.330Z DBG framework/instance core.socket.stream role=client inst=legacy — Initiating connect
+42: 2026-09-22T19:44:13.330Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt started
+42: 2026-09-22T19:44:13.330Z DBG framework/connection core.socket — legacy Connect: starting
+42: 2026-09-22T19:44:13.331Z TRC framework/connection core.socket — legacy open 0.0.0.0:0 (0.0.0.0): success
+42: 2026-09-22T19:44:13.331Z TRC framework/connection core.socket — legacy bind 0.0.0.0:0 (0.0.0.0) (effective: 0.0.0.0:38955): success
+42: 2026-09-22T19:44:13.331Z TRC framework/connection core.socket — legacy connect 127.0.0.1:51869 (127.0.0.1): success
+42: 2026-09-22T19:44:13.331Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor enabled
+42: 2026-09-22T19:44:13.331Z DBG framework/connection core.socket — legacy enable 127.0.0.1:51869: success
+42: 2026-09-22T19:44:13.331Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (local): localhost:38955
+42: 2026-09-22T19:44:13.331Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (remote): localhost:51869
+42: 2026-09-22T19:44:13.331Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor enabled
+42: 2026-09-22T19:44:13.331Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — WRITE descriptor enabled
+42: 2026-09-22T19:44:13.331Z DBG framework/connection core.socket — legacy connect 127.0.0.1:51869 (127.0.0.1): success
+42: 2026-09-22T19:44:13.331Z DBG framework/connection core.socket —   localhost:38955 -> localhost:51869
+42: 2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt succeeded
+42: 2026-09-22T19:44:13.331Z TRC application/application app — HTTP client connection status for 127.0.0.1:51869 (127.0.0.1)
+42: 2026-09-22T19:44:13.331Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport connected
+42: 2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connecting
+42: 2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:38955
+42: 2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:51869
+42: 2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connected
+42: 2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:38955
+42: 2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:51869
+42: 2026-09-22T19:44:13.331Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketContext created successful
+42: 2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+42: 2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context attached
+42: 2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) accepted: GET /ws HTTP/1.1
+42: 2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) queued: GET /ws HTTP/1.1 - QueueSize = 1 - Flags: 0 - 0
+42: 2026-09-22T19:44:13.332Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request started: id=0
+42: 2026-09-22T19:44:13.332Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+42: 2026-09-22T19:44:13.332Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgradeFactory create success: websocket
+42: 2026-09-22T19:44:13.332Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Initiating upgrade: GET /ws HTTP/1.1
+42: 2026-09-22T19:44:13.332Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Upgrade request:
+42: │   Request:                 Method : GET
+42: │          :                    Url : /ws
+42: │          :                Version : HTTP/1.1
+42: │    Header:             Connection : Upgrade
+42: │          :                   Host : 127.0.0.1:51869
+42: │          :      Sec-WebSocket-Key : j1EsNpcuMQDbSRrcWcXzXw==
+42: │          : Sec-WebSocket-Protocol : mqtt
+42: │          :  Sec-WebSocket-Version : 13
+42: │          :                Upgrade : websocket
+42: │          :           X-Powered-By : SNode.C
+42: 2026-09-22T19:44:13.332Z TRC application/application app — upgrade request initiation: accepted
+42: 2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) delivered: GET /ws HTTP/1.1 0
+42: 2026-09-22T19:44:13.332Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor disabled
+42: 
+42: Traceback (most recent call last):
+42:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py", line 88, in <module>
+42:     run(*sys.argv[1:])
+42:     ~~~^^^^^^^^^^^^^^^
+42:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py", line 60, in run
+42:     headers = dict(line.split(b': ', 1) for line in bytes(request).split(b'\r\n')[1:-2])
+42: ValueError: dictionary update sequence element #1 has length 1; 2 is required
+4/6 Test #42: exercise-ch21-text .................***Failed    0.08 sec
+2026-09-22T19:44:13.328Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-22T19:44:13.328Z TRC framework/system core.event-loop — SNode.C: Starting ... HELLO
+2026-09-22T19:44:13.330Z TRC framework/system core.event-loop — Core::EventLoop: started
+2026-09-22T19:44:13.330Z DBG framework/instance core.socket.stream role=client inst=legacy — Initiating connect
+2026-09-22T19:44:13.330Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt started
+2026-09-22T19:44:13.330Z DBG framework/connection core.socket — legacy Connect: starting
+2026-09-22T19:44:13.331Z TRC framework/connection core.socket — legacy open 0.0.0.0:0 (0.0.0.0): success
+2026-09-22T19:44:13.331Z TRC framework/connection core.socket — legacy bind 0.0.0.0:0 (0.0.0.0) (effective: 0.0.0.0:38955): success
+2026-09-22T19:44:13.331Z TRC framework/connection core.socket — legacy connect 127.0.0.1:51869 (127.0.0.1): success
+2026-09-22T19:44:13.331Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor enabled
+2026-09-22T19:44:13.331Z DBG framework/connection core.socket — legacy enable 127.0.0.1:51869: success
+2026-09-22T19:44:13.331Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (local): localhost:38955
+2026-09-22T19:44:13.331Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — PeerAddress (remote): localhost:51869
+2026-09-22T19:44:13.331Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — READ descriptor enabled
+2026-09-22T19:44:13.331Z TRC framework/connection core.socket.stream role=client inst=legacy conn=1 — WRITE descriptor enabled
+2026-09-22T19:44:13.331Z DBG framework/connection core.socket — legacy connect 127.0.0.1:51869 (127.0.0.1): success
+2026-09-22T19:44:13.331Z DBG framework/connection core.socket —   localhost:38955 -> localhost:51869
+2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — connection attempt succeeded
+2026-09-22T19:44:13.331Z TRC application/application app — HTTP client connection status for 127.0.0.1:51869 (127.0.0.1)
+2026-09-22T19:44:13.331Z INF framework/connection core.socket.stream role=client inst=legacy conn=1 — transport connected
+2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connecting
+2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:38955
+2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:51869
+2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Connection 1 connected
+2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Local: localhost:38955
+2026-09-22T19:44:13.331Z DBG framework/instance core.socket.stream role=client inst=legacy — Peer: localhost:51869
+2026-09-22T19:44:13.331Z DBG framework/connection core.socket.stream role=client inst=legacy conn=1 — SocketContext created successful
+2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — Context attached
+2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: context attached
+2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) accepted: GET /ws HTTP/1.1
+2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) queued: GET /ws HTTP/1.1 - QueueSize = 1 - Flags: 0 - 0
+2026-09-22T19:44:13.332Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — request started: id=0
+2026-09-22T19:44:13.332Z DBG framework/connection web.http — upgrade plugin 'websocket' selected from static cache
+2026-09-22T19:44:13.332Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — SocketContextUpgradeFactory create success: websocket
+2026-09-22T19:44:13.332Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Initiating upgrade: GET /ws HTTP/1.1
+2026-09-22T19:44:13.332Z DBG framework/connection web.http.client role=client inst=legacy conn=1 — Upgrade request:
+│   Request:                 Method : GET
+│          :                    Url : /ws
+│          :                Version : HTTP/1.1
+│    Header:             Connection : Upgrade
+│          :                   Host : 127.0.0.1:51869
+│          :      Sec-WebSocket-Key : j1EsNpcuMQDbSRrcWcXzXw==
+│          : Sec-WebSocket-Protocol : mqtt
+│          :  Sec-WebSocket-Version : 13
+│          :                Upgrade : websocket
+│          :           X-Powered-By : SNode.C
+2026-09-22T19:44:13.332Z TRC application/application app — upgrade request initiation: accepted
+2026-09-22T19:44:13.332Z DBG framework/context core.socket.context inst=legacy conn=1 — HTTP: Request (0) delivered: GET /ws HTTP/1.1 0
+2026-09-22T19:44:13.332Z TRC framework/system core.eventreceiver inst="legacy SocketConnector connect" — WRITE descriptor disabled
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py", line 88, in <module>
+    run(*sys.argv[1:])
+    ~~~^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py", line 60, in run
+    headers = dict(line.split(b': ', 1) for line in bytes(request).split(b'\r\n')[1:-2])
+ValueError: dictionary update sequence element #1 has length 1; 2 is required
+
+test 43
+    Start 43: exercise-ch22-unavailable-output
+
+43: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/../ch28/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/examples/MiniGateway/minigateway"
+43: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch22
+43: Test timeout computed to be: 60
+43: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+5/6 Test #43: exercise-ch22-unavailable-output ...   Passed    0.15 sec
+test 44
+    Start 44: exercise-ch22-part-checkpoint
+
+44: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/../ch20/mqtt.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch20/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch20/mqtt-broker-lab" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/examples/MiniGateway/minigateway"
+44: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5i-examples/companion/exercises/ch22
+44: Test timeout computed to be: 60
+44: PASS: observer session accepted by CONNACK
+44: PASS: subscriber receives SUBACK granting QoS 0
+44: PASS: independent subscriber receives exact topic sensors/temperature/value and payload 23.5
+44: PASS: broker routes command to canonical client role
+44: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+44: PASS: Part VIII checkpoint: broker-delivery evidence and separate HTTP/status/SSE acceptance with unavailable MQTT; see README boundary map
+6/6 Test #44: exercise-ch22-part-checkpoint ......   Passed    0.33 sec
+
+The following tests passed:
+	exercise-ch20-wire
+	exercise-ch20-delivery
+	exercise-ch22-unavailable-output
+	exercise-ch22-part-checkpoint
+
+67% tests passed, 2 tests failed out of 6
+
+Total Test time (real) =   1.13 sec
+
+The following tests FAILED:
+	 41 - exercise-ch21-binary (Failed)
+	 42 - exercise-ch21-text (Failed)
+Errors while running CTest

@@ -1,114 +1,34 @@
 ## MQTT Support in SNode.C {#mqtt-support-in-snodec}
 
+::: {.snodec-objectives title="Learning objectives"}
+- **O1.** Explain how MQTT packets, session state and carrier contexts divide responsibilities.
+- **O2.** Observe connection, session acceptance, subscription and delivered publication separately.
+- **O3.** Choose carrier and delivery evidence for a brokered telemetry boundary.
+:::
+
 \index{MQTT}
 \index{message-oriented communication}
 \index{IoT}
 
-
-### From web protocols to message-oriented communication
+### MQTT as a protocol family
 
 MQTT changes the unit of communication. The application is no longer mainly handling requests, routes, event streams, or upgraded message frames; it is exchanging broker-mediated publications and subscriptions.
 
 MQTT is not part of the web stack. It has its own packet vocabulary, session behavior, topic model, keep-alive timing, publish flow, and client/server roles. But the architectural discipline does not change.
 
-That is the central idea of this chapter:
-
-::: {.snodec-note title="MQTT-layering note"}
-MQTT is not part of the web stack, but it fits the same SNode.C layering discipline.
-:::
-
-The application-layer protocol meaning changes from web requests, event streams, and upgrades to brokered packet semantics, while the familiar SNode.C model remains: runtime, configured roles, registered instances, lower families, stream transport, legacy or TLS connection handling, per-connection contexts, configuration, diagnostics, timing, and failure behavior.
-
-SNode.C supports MQTT in two important forms:
-
-```text
-native MQTT
-  -> MQTT directly above the stream connection model
-
-MQTT over WebSocket
-  -> MQTT carried as a WebSocket subprotocol
-```
-
-Chapter 20 introduces MQTT as a protocol family and shows how both forms belong to the same architecture. Chapter 21 then narrows the view to MQTT carried as a WebSocket subprotocol.
-
-### MQTT in the layered SNode.C model
+Native MQTT combines a stream `SocketContext` with `MqttContext`; MQTT over WebSocket combines a WebSocket subprotocol role with the same MQTT-facing bridge. The former carries MQTT directly over a stream, while the latter adds HTTP upgrade and WebSocket framing. Chapter 21 develops that carrier choice.
 
 \index{MQTT!layered model}
 \index{application protocol}
-
-
-Native MQTT fits the same stack discipline the reader already knows: lower communication family, stream transport, legacy-or-TLS connection handling, then MQTT protocol semantics.
-
-This looks different from HTTP, but the architectural discipline is familiar. The lower layers still provide the communication relationship. MQTT changes the application-layer interpretation of that relationship. Incoming bytes are no longer raised into HTTP requests and responses. They are raised into MQTT control packets, sessions, topics, publish flows, acknowledgements, and keep-alive behavior.
-
-The WebSocket-carried form adds the web-upgrade stack underneath MQTT:
-
-```text
-HTTP upgrade
-  -> WebSocket
-      -> MQTT subprotocol
-          -> MQTT protocol semantics
-```
-
-MQTT then adds packet-structured, message-oriented protocol semantics that can use either the native stream path or, in the WebSocket-carried form, the upgraded bidirectional carrier from the previous chapter. MQTT-over-WebSocket is not a new transport trick: it is MQTT semantics carried as a WebSocket subprotocol over an upgraded HTTP connection. The carrier changes; the MQTT protocol identity remains recognizable.
-
-### Native MQTT and MQTT over WebSocket side by side
-
 \index{MQTT!native}
 \index{MQTT!over WebSocket}
-
-
-A compact comparison is enough here; Chapter 21 treats the WebSocket-carried form in detail.
-
-| Concern | Native MQTT | MQTT over WebSocket |
-|---|---|---|
-| carrier | stream connection | WebSocket upgraded connection |
-| SNode.C integration | stream `SocketContext` plus `MqttContext` | WebSocket subprotocol role plus `MqttContext` |
-| protocol identity | MQTT directly above stream | MQTT above WebSocket |
-| MQTT meaning | sessions, topics, control packets, publish flow | same MQTT semantics |
-| book focus | introduced in this chapter | treated in detail in Chapter 21 |
-
-These are not two unrelated MQTT implementations. The MQTT semantics remain stable; the carrier path changes.
-
-### MQTT as a protocol family
 
 \index{MQTT!protocol family}
 \index{MQTT!control packets}
 \index{MQTT!topics}
 \index{MQTT!sessions}
 
-
-MQTT support in SNode.C is broader than a broker application or a client helper. The shared MQTT module contains protocol structure. It provides the vocabulary and mechanics that server and client roles build on.
-
-A useful way to read the module is:
-
-```text
-protocol family
-  -> shared vocabulary and mechanics
-
-endpoint roles
-  -> server/broker and client specialization
-
-carriers
-  -> native stream or WebSocket subprotocol
-```
-
-The shared MQTT layer includes concerns such as:
-
-- control packets,
-- fixed headers,
-- deserialization,
-- sessions,
-- topics,
-- MQTT context,
-- native socket-context integration,
-- WebSocket subprotocol integration.
-
-At this level, MQTT is treated as a protocol family. Server and client roles then specialize that shared protocol foundation.
-
-#### Core protocol module
-
-The shared MQTT module provides the common pieces that both server and client roles need.
+The shared MQTT module supplies packet structure, deserialization, sessions and topics. Server and client roles specialize that foundation:
 
 | Shared concern | Meaning |
 |---|---|
@@ -122,30 +42,11 @@ The shared MQTT module provides the common pieces that both server and client ro
 | `Session` | MQTT session state |
 | `Topic` | topic representation |
 
-This shared vocabulary forms the protocol foundation from which server/broker-oriented behavior and client behavior are built, not an application convenience.
-
-#### Control packets, fixed headers, sessions, and topics
-
-MQTT should not be described only as “messages.” MQTT is message-oriented in the broad sense, but its protocol unit is a control-packet vocabulary with session, topic, acknowledgement, and keep-alive semantics.
-
-A compact model is:
-
-```text
-packet shape
-  -> control-packet type
-      -> session state
-          -> topic semantics
-              -> acknowledgement flow
-```
-
-That is why packet classes, fixed-header handling, deserialization, sessions, and topics belong in the core MQTT module. They are part of the MQTT protocol layer, not incidental application helpers.
-
-### `Mqtt` as the protocol object
+### `Mqtt` and its carriers
 
 \index{Mqtt@\texttt{Mqtt}}
 \index{MQTT!protocol object}
 \index{keep-alive}
-
 
 The central code-shaped MQTT object is `iot::mqtt::Mqtt`.
 
@@ -163,29 +64,11 @@ A compact view of its responsibilities is:
 | keep-alive | MQTT protocol-level liveness timing |
 | distribution hook | distribute received publish packets |
 
-The lower connection delivers bytes. The MQTT object gives those bytes protocol meaning.
-
-#### Lifecycle and packet delivery
-
-MQTT has lifecycle behavior. It reacts to connection and disconnection, and it handles packet creation and delivery.
-
-Conceptually:
-
-```text
-connection event
-  -> MQTT lifecycle hook
-
-incoming bytes
-  -> fixed header
-      -> control-packet deserializer
-          -> MQTT packet delivery
-```
+Connection events invoke MQTT lifecycle hooks. Incoming bytes pass through fixed-header handling and a control-packet deserializer before completed-packet delivery.
 
 The creation of a packet deserializer and the delivery of the completed packet are specialized by the server and client sides. That keeps shared MQTT framing and packet flow in the protocol core while still allowing broker-oriented and client-oriented behavior to differ.
 
 Application code should not have to manually switch on raw incoming MQTT byte sequences inside an unrelated socket callback. Packet interpretation belongs in the MQTT layer.
-
-#### Publish and acknowledgement flow
 
 MQTT has explicit packet vocabulary. For example, the core object exposes helpers and hooks around:
 
@@ -197,51 +80,15 @@ MQTT has explicit packet vocabulary. For example, the core object exposes helper
 | `sendPubrel` / `onPubrel` | QoS 2 release step |
 | `sendPubcomp` / `onPubcomp` | QoS 2 completion step |
 
-These packet names show where acknowledgement state belongs; the chapter does not attempt a complete MQTT QoS reference. The architectural point is smaller and more important for this part of the book:
-
-```text
-MQTT is packet-structured,
-not just a generic byte stream.
-```
-
-The explicit packet vocabulary belongs in the MQTT layer.
-
-#### Session and keep-alive timing
-
-MQTT owns some of its own state and timing. A useful distinction is:
-
-```text
-session
-  -> MQTT relationship state
-
-keep-alive
-  -> MQTT protocol-level liveness timing
-```
-
-This connects directly to Chapter 15. Chapter 15 separated transport timeouts, retry/reconnect delay, and protocol-level timing. MQTT keep-alive is another example of protocol-level timing.
+These helpers locate acknowledgement state without replacing a complete MQTT QoS reference. A session holds MQTT relationship state; keep-alive is protocol-level liveness timing. Chapter 15 distinguishes that timing from transport timeouts and retry/reconnect delay.
 
 The lower connection may have read or write timeouts. A configured client or server instance may have retry or reconnect policy. TLS may have handshake and shutdown timing. MQTT adds its own liveness meaning at the protocol layer. Keep-alive is therefore not just a socket timeout with another name.
-
-### Native MQTT over stream connections
 
 \index{MQTT!native over streams}
 \index{MqttContext@\texttt{MqttContext}}
 \index{SocketContext@\texttt{SocketContext}}
 
-
-Native MQTT uses the lower stream architecture directly. Its code shape is:
-
-```text
-core::socket::stream::SocketContext
-  + iot::mqtt::MqttContext
-      -> iot::mqtt::SocketContext
-```
-
-This tells the reader how MQTT fits into the earlier context model. The native MQTT endpoint is still a stream socket context, but its receive/send lifecycle is routed through the MQTT-facing context.
-
-#### `SocketContext` plus `MqttContext`
-
-The native MQTT `SocketContext` combines two sides.
+The native endpoint combines the familiar per-connection stream context with the MQTT-facing bridge:
 
 | Side | Meaning |
 |---|---|
@@ -251,37 +98,11 @@ The native MQTT `SocketContext` combines two sides.
 
 `MqttContext` bridges the protocol object to whichever carrier is used underneath, letting it read, write, end, or close without replacing the lower socket context.
 
-A useful way to read the composition is:
-
-```text
-transport-facing context
-  + MQTT-facing context
-      -> MQTT-aware connection endpoint
-```
-
-That composition is important. Native MQTT does not replace the lower architecture. It plugs MQTT protocol behavior into the normal per-connection context model.
-
-#### MQTT as protocol layer, not transport replacement
-
-Native MQTT still sits above:
-
-- a lower family,
-- stream transport,
-- legacy or TLS connection handling,
-- runtime-driven lifecycle,
-- configuration,
-- diagnostics.
-
-The difference is the application-layer interpretation. At the HTTP layer, incoming data becomes request/response meaning. At the MQTT layer, incoming data becomes MQTT packet, session, topic, acknowledgement, and keep-alive meaning.
-
-The structure changes at the protocol level. The lower transport architecture remains.
-
-### Server and client specialization
+The native context retains the lower family, legacy or TLS carrier, runtime lifecycle, configuration and diagnostics. MQTT interprets the received bytes as packets, sessions, topics and acknowledgements, instead of HTTP requests and responses.
 
 \index{MQTT!server role}
 \index{MQTT!client role}
 \index{broker role}
-
 
 The MQTT module separates shared protocol infrastructure from role-specific behavior.
 
@@ -295,11 +116,7 @@ A useful module view is:
 | `mqtt-server-websocket` | server-side MQTT WebSocket subprotocol |
 | `mqtt-client-websocket` | client-side MQTT WebSocket subprotocol |
 
-This mirrors earlier patterns in the book. There is a shared protocol core. Server and client roles specialize that core. WebSocket-carried forms then connect the same protocol family to the upgrade/subprotocol architecture from Chapter 19.
-
 A named endpoint supplies configuration for its activation flows. Each resulting connection receives an MQTT-aware context and protocol object. Broker or session state may deliberately outlive that one connection; do not place it in a short-lived receive buffer merely because both are called state.
-
-#### Server as broker-oriented role
 
 The server-side MQTT role derives from the shared MQTT protocol object and connects it to broker-oriented behavior, rather than acting as a listener that only parses MQTT bytes.
 
@@ -316,8 +133,6 @@ It handles concerns such as:
 - server-side WebSocket subprotocol support.
 
 This is the right place for broker-oriented behavior. Broker behavior does not belong in the shared protocol core as a hidden global assumption. The shared core provides packet, session, context, and topic vocabulary; the server role connects that vocabulary to broker-specific behavior.
-
-#### Client as protocol participant
 
 The client side is also a real protocol participant, not a transport wrapper that sends MQTT-looking bytes.
 
@@ -337,17 +152,13 @@ and it exposes client-originated operations such as:
 - `PINGREQ`,
 - `DISCONNECT`.
 
-This keeps the client/server model balanced. Both sides share the MQTT protocol family. Each side has its own role-specific behavior.
-
-
 ### A compact MQTT client role
 
 \index{MQTT!client example}
 \index{Publish@\texttt{Publish}}
 \index{Connack@\texttt{Connack}}
 
-
-A compact MQTT client example should show the protocol role, not an entire transport setup. The following class expresses the MQTT side of the application: connect, subscribe, publish, receive publishes, and disconnect on shutdown.
+The following compact class expresses the MQTT side of the application: connect, subscribe, publish, receive publishes, and disconnect on shutdown.
 
 ```cpp
 #include <iot/mqtt/client/Mqtt.h>
@@ -427,29 +238,15 @@ For a bounded experiment, use a unique topic prefix, one publisher, one subscrib
 
 Chapter 24 introduces a concrete broker ecosystem in which to carry out this interoperability and restart exercise.
 
-### MQTT as a WebSocket subprotocol
+### Build and diagnostic boundaries
 
 \index{MQTT!WebSocket subprotocol}
 \index{WebSocket!subprotocols}
 
-
-MQTT-over-WebSocket is where Chapter 20 connects back to Chapter 19. The relevant composition is:
-
-```text
-WebSocket subprotocol role
-  + MqttContext
-      -> MQTT-over-WebSocket endpoint
-```
-
-Native MQTT uses a stream `SocketContext` plus `MqttContext`. MQTT-over-WebSocket changes the carrier-facing side to a WebSocket subprotocol role, while the MQTT-facing context remains recognizable. That is the symmetry Chapter 21 develops in detail.
-
-Chapter 20 only establishes the model: MQTT remains MQTT, while the carrier can be native stream or WebSocket.
-
-### MQTT public surface: protocol headers and components
+The WebSocket carrier substitutes a subprotocol role for the native stream context. The MQTT-facing bridge remains the same; keep carrier selection separate from session and topic policy.
 
 \index{MQTT!public surface}
 \index{iot::mqtt@\texttt{iot::mqtt}}
-
 
 MQTT code includes the MQTT abstraction it directly names. A client-side MQTT protocol object is introduced through:
 
@@ -459,42 +256,16 @@ MQTT code includes the MQTT abstraction it directly names. A client-side MQTT pr
 
 Shared support remains below `<iot/mqtt/...>` for topics, packets, socket-context bridging, and protocol support. The build-side components distinguish shared support, native roles, and WebSocket-carried compositions; Chapter 25 collects those mappings in one source-derived table.
 
-### Build/component note: JSON dependency is not MQTT identity
-
 \index{JSON dependency}
 \index{MQTT!component identity}
 
-
 In the current SNode.C build, the MQTT component is enabled when `nlohmann_json >= 3.11` is found; otherwise CMake emits a warning and does not add the MQTT targets.
 
-That is a build/component fact. It should not be confused with the conceptual definition of MQTT.
+This is a component dependency, not MQTT payload identity: sessions, topics and control packets define the protocol. Applications may choose JSON for structured payloads without making it mandatory MQTT meaning.
 
-MQTT should first be understood through:
+Topic-based distribution supports telemetry, commands and events between many participants, including larger systems as well as small devices.
 
-- sessions,
-- topics,
-- control packets,
-- publish flow,
-- client/server roles,
-- native and WebSocket-carried forms.
-
-Structured payloads and integration systems may use JSON. The current build uses `nlohmann_json` as a component dependency. But JSON is not the conceptual center of MQTT.
-
-### MQTT and IoT-facing systems
-
-MQTT is the first major protocol family in the book that clearly points toward IoT and machine-to-machine messaging. That does not mean MQTT is only useful in small devices. It means MQTT is well suited to systems where many participants exchange state, telemetry, commands, or events through topics.
-
-In SNode.C, this makes MQTT a natural bridge toward later system-level discussions:
-
-```text
-devices
-  -> topics
-      -> broker-oriented distribution
-          -> protocol integration
-              -> dashboards and applications
-```
-
-This is also where the diagnostic model remains important. MQTT problems may involve:
+Diagnose MQTT problems at the owning boundary:
 
 - lower endpoint selection,
 - TLS configuration,
@@ -507,15 +278,22 @@ This is also where the diagnostic model remains important. MQTT problems may inv
 - broker distribution,
 - WebSocket subprotocol selection when MQTT is carried over WebSocket.
 
-The topic model and broker-oriented distribution make MQTT useful for IoT-facing systems. The SNode.C layering model keeps those systems explainable.
-
-Chapter 22 will later combine these ideas with multiple protocols and IoT system design. For now, Chapter 20 keeps the focus on MQTT as a protocol family inside SNode.C.
+Chapter 22 uses these observations when assigning protocol roles in a larger IoT system.
 
 ::: {.snodec-remember title="What to remember"}
-- MQTT opens the message-oriented part of the book.
-- MQTT is not a web protocol, but it fits the same SNode.C layering discipline.
-- MQTT is a protocol family with shared packet, session, topic, context, and keep-alive concerns.
-- `Mqtt` is the MQTT protocol object, not just a socket callback.
-- `MqttContext` bridges the MQTT protocol object to the carrier underneath.
-- Native MQTT combines stream `SocketContext` with `MqttContext`.
+- `Mqtt` owns protocol meaning; `MqttContext` connects it to a native or WebSocket carrier.
+- Session and broker state may outlive one connection; keep-alive is protocol timing.
+- CONNACK, SUBACK and subscriber receipt establish different milestones.
+- QoS 0 publication does not acknowledge delivery to another application.
+- Choose JSON payloads independently of the component’s JSON build dependency.
+:::
+
+::: {.snodec-exercise title="Exercises"}
+1. **Review (O1).** Trace one received control packet from its carrier through the deserializer to its MQTT role.
+2. **Review (O1, O3).** Why do CONNECT, CONNACK, SUBACK and subscriber receipt answer different questions? What can a QoS 0 publisher know?
+3. **Lab (O1, O2).** Run the local packet-peer lab. Expect CONNECT first, no subscription before CONNACK, then the canonical subscription, telemetry and received command.
+4. **Lab (O2, O3).** Run the equipped broker lab using its disposable local fixture. Expect granted SUBACK and an independent subscriber’s exact topic/payload, then a command received by the client.
+5. **Design (O3).** Choose native or WebSocket carriage for telemetry. State the evidence required before claiming session acceptance or application delivery.
+
+Public solutions and bounded lab commands: `companion/exercises/ch20/README.md`.
 :::

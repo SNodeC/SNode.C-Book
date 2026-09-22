@@ -1,12 +1,12 @@
 # Public exercises and solutions
 
-These are the public solutions for Parts I–VII and the later sample chapters. Each chapter has two
+These are the public solutions for Parts I–VIII and the later sample chapters. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
 
 Use the installed SNode.C environment prepared in Chapter 2. Add standalone Asio
-headers (`libasio-dev` on Debian/Ubuntu) for the Chapter 1 comparison. The mandatory labs need no broker, database, radio hardware, or framework source build. The Bluetooth selector lab needs installed Bluetooth components and development support; its optional physical RFCOMM extension is an equipped lab. IPv6 loopback must be available for the IP-family comparison.
+headers (`libasio-dev` on Debian/Ubuntu) for the Chapter 1 comparison. The labs need no external broker service, database, radio hardware, or framework source build. The Bluetooth selector lab needs installed Bluetooth components and development support; its optional physical RFCOMM extension is an equipped lab. IPv6 loopback must be available for the IP-family comparison.
 
 From the book repository root:
 
@@ -50,6 +50,12 @@ Part VII shares one synchronous route fixture for HTTP admission and Express
 continuation. The existing SSE observer labs feed the checkpoint. WebSocket labs
 build linked-factory variants from canonical entry points and subprotocol sources;
 no module installation or external web service is required for those labs.
+
+Part VIII builds a disposable local broker fixture from installed `mqtt-server`
+support and reuses the canonical MQTT client role. Its equipped broker labs need
+that server component; a packet-peer lab and gateway outage lab offer observations
+without starting a broker. MQTT-over-WebSocket labs use the installed adapter with
+a controlled peer. No external broker package, account or service is required.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.

@@ -1,4 +1,9 @@
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
-foreach(chapter IN ITEMS ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08 ch09 ch10 ch11 ch12 ch13 ch14 ch15 ch16 ch17 ch18 ch19 ch28 ch30)
+# Both WebSocket labs derive entry points from these canonical sources.
+foreach(role IN ITEMS Server Client)
+  get_filename_component(entry "${CMAKE_CURRENT_SOURCE_DIR}/../examples/HttpUpgrade-${role}/main.cpp" REALPATH)
+  set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${entry}")
+endforeach()
+foreach(chapter IN ITEMS ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08 ch09 ch10 ch11 ch12 ch13 ch14 ch15 ch16 ch17 ch18 ch19 ch20 ch21 ch22 ch28 ch30)
   add_subdirectory(${chapter})
 endforeach()

@@ -1424,3 +1424,64 @@ Commit: `proposal-readiness: phase 5h — refine Part VII and verify web protoco
 **Stop after Phase 5h.** Next is Phase 5i, Part VIII only, after freshly rerunning
 this gate with the recorded installation/runtime environment. Author preservation
 rules, reserve accounting, the 5l/5m split and Phase 6 proposal refresh remain in force.
+
+
+## Phase 5i — Part VIII completed, 2026-09-22
+
+The Phase 5h entry gate was freshly rerun before editing: exact metrics agreement,
+all 42 prior labs, all other checks and clean PDF/package builds. Historical
+Phase 5h evidence is unchanged; `phase-5i-entry-*` supplies fresh evidence.
+
+Edited and reread Chapters 20–22, public solutions and the Part VIII opener.
+Budgets were ceilings: removed duplicated stacks, comparisons and framing while
+retaining packet/carrier mechanics, all executable examples, component fragments,
+costs, lifetimes and partial-failure qualifications. The ledger contains the
+source-line preservation audit; all index entries, figures and source markers
+are mechanically preserved. No structural or production-formatting changes.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 20 | 2,997 → 2,005 / 2,350 | 2,709 → 1,878 | 288 → 127 | 22 → 5 / 5 | 359.60 |
+| 21 | 2,731 → 1,782 / 2,100 | 2,353 → 1,716 | 378 → 66 | 17 → 4 / 4 | 409.25 |
+| 22 | 3,964 → 2,922 / 2,950 | 3,780 → 2,899 | 184 → 23 | 24 → 8 / 8 | 348.50 |
+
+Part VIII: **6,709 / 7,400**. Reserve used **0**, remaining **2,750**. Each chapter
+has three objectives, five recap bullets and five exercises (two review, two labs,
+one design), with full bidirectional mapping and public solutions. Six new test
+registrations bring the suite to **48/48 passing**. The Part checkpoint distinguishes
+real local broker/subscriber delivery from a separate MiniGateway outage test that
+keeps accepted HTTP/status/SSE state observable. Broker labs are marked equipped;
+packet-peer and outage observations provide local alternatives.
+
+Native launchers and the WebSocket factory reuse installed MQTT and canonical
+SensorClient ownership; the outage lab reuses the unchanged gateway and observer.
+Production growth is zero; requested fixture/test support is +300/−2 lines, net
++298. One normalized configure dependency registration serves both generated
+WebSocket consumers. Initial dependency, lambda conversion and test-header parsing
+failures are retained with their corrections in REPORT.md.
+
+All hygiene/reference, listing alignment, metric regression, companion/lab builds,
+48 labs, teaching/behavior/lifetime, PDF/proposal/sample/package and extracted
+package checks pass. These are local installed-package/loopback observations;
+third-party interoperability, hosted CI, deployment TLS, persistence and reconnect
+replay are not newly claimed.
+
+Full PDF **358 pages**, down from 368; samples 54, proposal 6; zero warnings/bad
+boxes. Complete Part VIII, next transition and relevant contents pages were
+rendered and visually checked. Evidence: `metrics-after-phase-5i.json`,
+`phase-5i-exit-checks.json`, `phase-5i-final-results.json`, `phase-5i-final-*.log`,
+`phase-5i-visual-review.md`, REPORT.md and chapter-ledger.md under
+`review/proposal-readiness-2026-09-22/`.
+
+Whole book **116,122 words**, 472 deep headings, 192 text fences, 20 rules, zero
+forbidden/closing hits. The final word/density targets and remaining chapter
+pedagogy are pending. Front matter **1,980 / 2,500**; Part openers **1,291 / 1,650**.
+The five sample gates remain valid. The reference register covers 309 current
+occurrences, 39 topics and all 374 original dispositions; R275/R276 retain both
+author seam topic targets and identities.
+
+Commit: `proposal-readiness: phase 5i — refine Part VIII and verify MQTT delivery boundaries`.
+
+**Stop after Phase 5i.** Next is Phase 5j, Part IX only, after freshly rerunning
+this gate with the recorded installation/runtime setup. Author preservation rules,
+reserve accounting, the 5l/5m split and Phase 6 proposal refresh remain in force.

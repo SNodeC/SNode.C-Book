@@ -1736,17 +1736,6 @@
     },
     {
       "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 20",
-      "targets": [
-        "mqtt-support-in-snodec"
-      ],
-      "source_ids": [
-        "R248"
-      ],
-      "line": 32
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
       "text": "Chapter 21",
       "targets": [
         "mqtt-over-websocket"
@@ -1754,29 +1743,7 @@
       "source_ids": [
         "R249"
       ],
-      "line": 32
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 21",
-      "targets": [
-        "mqtt-over-websocket"
-      ],
-      "source_ids": [
-        "R250"
-      ],
-      "line": 61
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 21",
-      "targets": [
-        "mqtt-over-websocket"
-      ],
-      "source_ids": [
-        "R251"
-      ],
-      "line": 69
+      "line": 19
     },
     {
       "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
@@ -1787,29 +1754,7 @@
       "source_ids": [
         "R252"
       ],
-      "line": 221
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 15",
-      "targets": [
-        "timeouts-retries-and-failure-modes"
-      ],
-      "source_ids": [
-        "R253"
-      ],
-      "line": 221
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 19",
-      "targets": [
-        "websocket-and-protocol-upgrade"
-      ],
-      "source_ids": [
-        "R254"
-      ],
-      "line": 298
+      "line": 83
     },
     {
       "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
@@ -1820,51 +1765,7 @@
       "source_ids": [
         "R255"
       ],
-      "line": 428
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 20",
-      "targets": [
-        "mqtt-support-in-snodec"
-      ],
-      "source_ids": [
-        "R256"
-      ],
-      "line": 436
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 19",
-      "targets": [
-        "websocket-and-protocol-upgrade"
-      ],
-      "source_ids": [
-        "R257"
-      ],
-      "line": 436
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 21",
-      "targets": [
-        "mqtt-over-websocket"
-      ],
-      "source_ids": [
-        "R258"
-      ],
-      "line": 444
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 20",
-      "targets": [
-        "mqtt-support-in-snodec"
-      ],
-      "source_ids": [
-        "R259"
-      ],
-      "line": 446
+      "line": 239
     },
     {
       "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
@@ -1875,7 +1776,7 @@
       "source_ids": [
         "R260"
       ],
-      "line": 460
+      "line": 257
     },
     {
       "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
@@ -1886,18 +1787,7 @@
       "source_ids": [
         "R261"
       ],
-      "line": 512
-    },
-    {
-      "file": "manuscript/chapters/20-mqtt-support-in-snodec.md",
-      "text": "Chapter 20",
-      "targets": [
-        "mqtt-support-in-snodec"
-      ],
-      "source_ids": [
-        "R262"
-      ],
-      "line": 512
+      "line": 281
     },
     {
       "file": "manuscript/chapters/21-mqtt-over-websocket.md",
@@ -1908,7 +1798,7 @@
       "source_ids": [
         "R263"
       ],
-      "line": 32
+      "line": 18
     },
     {
       "file": "manuscript/chapters/21-mqtt-over-websocket.md",
@@ -1919,29 +1809,7 @@
       "source_ids": [
         "R264"
       ],
-      "line": 32
-    },
-    {
-      "file": "manuscript/chapters/21-mqtt-over-websocket.md",
-      "text": "Chapter 20",
-      "targets": [
-        "mqtt-support-in-snodec"
-      ],
-      "source_ids": [
-        "R265"
-      ],
-      "line": 60
-    },
-    {
-      "file": "manuscript/chapters/21-mqtt-over-websocket.md",
-      "text": "Chapter 21",
-      "targets": [
-        "mqtt-over-websocket"
-      ],
-      "source_ids": [
-        "R266"
-      ],
-      "line": 60
+      "line": 18
     },
     {
       "file": "manuscript/chapters/21-mqtt-over-websocket.md",
@@ -1952,7 +1820,7 @@
       "source_ids": [
         "R267"
       ],
-      "line": 266
+      "line": 116
     },
     {
       "file": "manuscript/chapters/21-mqtt-over-websocket.md",
@@ -1963,18 +1831,16 @@
       "source_ids": [
         "R268"
       ],
-      "line": 285
+      "line": 135
     },
     {
       "file": "manuscript/chapters/21-mqtt-over-websocket.md",
-      "text": "Chapter 20",
+      "text": "Chapter 22",
       "targets": [
-        "mqtt-support-in-snodec"
+        "designing-iot-systems-with-multiple-protocols"
       ],
-      "source_ids": [
-        "R269"
-      ],
-      "line": 287
+      "source_ids": [],
+      "line": 137
     },
     {
       "file": "manuscript/chapters/21-mqtt-over-websocket.md",
@@ -1985,18 +1851,7 @@
       "source_ids": [
         "R270"
       ],
-      "line": 312
-    },
-    {
-      "file": "manuscript/chapters/21-mqtt-over-websocket.md",
-      "text": "Chapter 21",
-      "targets": [
-        "mqtt-over-websocket"
-      ],
-      "source_ids": [
-        "R271"
-      ],
-      "line": 431
+      "line": 156
     },
     {
       "file": "manuscript/chapters/21-mqtt-over-websocket.md",
@@ -2007,7 +1862,7 @@
       "source_ids": [
         "R272"
       ],
-      "line": 439
+      "line": 198
     },
     {
       "file": "manuscript/chapters/21-mqtt-over-websocket.md",
@@ -2018,7 +1873,7 @@
       "source_ids": [
         "R273"
       ],
-      "line": 493
+      "line": 205
     },
     {
       "file": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
@@ -2029,7 +1884,7 @@
       "source_ids": [
         "R274"
       ],
-      "line": 259
+      "line": 157
     },
     {
       "file": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
@@ -2042,7 +1897,7 @@
         "R275",
         "R276"
       ],
-      "line": 313
+      "line": 194
     },
     {
       "file": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
@@ -2053,7 +1908,7 @@
       "source_ids": [
         "R277"
       ],
-      "line": 329
+      "line": 198
     },
     {
       "file": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
@@ -2064,7 +1919,7 @@
       "source_ids": [
         "R278"
       ],
-      "line": 382
+      "line": 230
     },
     {
       "file": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
@@ -2075,7 +1930,7 @@
       "source_ids": [
         "R279"
       ],
-      "line": 431
+      "line": 253
     },
     {
       "file": "manuscript/chapters/23-database-support-and-application-state.md",
@@ -3514,6 +3369,33 @@
       "text": "Chapter 19",
       "targets": [
         "websocket-and-protocol-upgrade"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch20/README.md",
+      "text": "Chapter 20",
+      "targets": [
+        "mqtt-support-in-snodec"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch21/README.md",
+      "text": "Chapter 21",
+      "targets": [
+        "mqtt-over-websocket"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch22/README.md",
+      "text": "Chapter 22",
+      "targets": [
+        "designing-iot-systems-with-multiple-protocols"
       ],
       "source_ids": [],
       "line": 1
@@ -6282,8 +6164,8 @@
       "old_chapters": [
         25
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:32"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R249",
@@ -6304,8 +6186,8 @@
       "old_chapters": [
         26
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:61"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R251",
@@ -6315,8 +6197,8 @@
       "old_chapters": [
         26
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:69"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R252",
@@ -6337,8 +6219,8 @@
       "old_chapters": [
         20
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:221"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R254",
@@ -6348,8 +6230,8 @@
       "old_chapters": [
         24
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:298"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R255",
@@ -6370,8 +6252,8 @@
       "old_chapters": [
         25
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:436"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R257",
@@ -6381,8 +6263,8 @@
       "old_chapters": [
         24
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:436"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R258",
@@ -6392,8 +6274,8 @@
       "old_chapters": [
         26
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:444"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R259",
@@ -6403,8 +6285,8 @@
       "old_chapters": [
         25
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:446"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R260",
@@ -6436,8 +6318,8 @@
       "old_chapters": [
         25
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/20-mqtt-support-in-snodec.md:512"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R263",
@@ -6469,8 +6351,8 @@
       "old_chapters": [
         25
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/21-mqtt-over-websocket.md:60"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R266",
@@ -6480,8 +6362,8 @@
       "old_chapters": [
         26
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/21-mqtt-over-websocket.md:60"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R267",
@@ -6513,8 +6395,8 @@
       "old_chapters": [
         25
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/21-mqtt-over-websocket.md:287"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R270",
@@ -6535,8 +6417,8 @@
       "old_chapters": [
         26
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/21-mqtt-over-websocket.md:431"
+      "status": "retired",
+      "evidence": "Phase 5i removes repeated self-reference or duplicated carrier/timing framing. Protocol distinctions and substantive explanations remain in the consolidated Part VIII sections. See phase-5i-manuscript.diff and chapter-ledger.md Phase 5i."
     },
     {
       "id": "R272",

@@ -1,0 +1,1350 @@
+diff --git a/manuscript/chapters/20-mqtt-support-in-snodec.md b/manuscript/chapters/20-mqtt-support-in-snodec.md
+index 5dc6af9..006d7af 100644
+--- a/manuscript/chapters/20-mqtt-support-in-snodec.md
++++ b/manuscript/chapters/20-mqtt-support-in-snodec.md
+@@ -1,114 +1,34 @@
+ ## MQTT Support in SNode.C {#mqtt-support-in-snodec}
+ 
++::: {.snodec-objectives title="Learning objectives"}
++- **O1.** Explain how MQTT packets, session state and carrier contexts divide responsibilities.
++- **O2.** Observe connection, session acceptance, subscription and delivered publication separately.
++- **O3.** Choose carrier and delivery evidence for a brokered telemetry boundary.
++:::
++
+ \index{MQTT}
+ \index{message-oriented communication}
+ \index{IoT}
+ 
+-
+-### From web protocols to message-oriented communication
++### MQTT as a protocol family
+ 
+ MQTT changes the unit of communication. The application is no longer mainly handling requests, routes, event streams, or upgraded message frames; it is exchanging broker-mediated publications and subscriptions.
+ 
+ MQTT is not part of the web stack. It has its own packet vocabulary, session behavior, topic model, keep-alive timing, publish flow, and client/server roles. But the architectural discipline does not change.
+ 
+-That is the central idea of this chapter:
+-
+-::: {.snodec-note title="MQTT-layering note"}
+-MQTT is not part of the web stack, but it fits the same SNode.C layering discipline.
+-:::
+-
+-The application-layer protocol meaning changes from web requests, event streams, and upgrades to brokered packet semantics, while the familiar SNode.C model remains: runtime, configured roles, registered instances, lower families, stream transport, legacy or TLS connection handling, per-connection contexts, configuration, diagnostics, timing, and failure behavior.
+-
+-SNode.C supports MQTT in two important forms:
+-
+-```text
+-native MQTT
+-  -> MQTT directly above the stream connection model
+-
+-MQTT over WebSocket
+-  -> MQTT carried as a WebSocket subprotocol
+-```
+-
+-Chapter 20 introduces MQTT as a protocol family and shows how both forms belong to the same architecture. Chapter 21 then narrows the view to MQTT carried as a WebSocket subprotocol.
+-
+-### MQTT in the layered SNode.C model
++Native MQTT combines a stream `SocketContext` with `MqttContext`; MQTT over WebSocket combines a WebSocket subprotocol role with the same MQTT-facing bridge. The former carries MQTT directly over a stream, while the latter adds HTTP upgrade and WebSocket framing. Chapter 21 develops that carrier choice.
+ 
+ \index{MQTT!layered model}
+ \index{application protocol}
+-
+-
+-Native MQTT fits the same stack discipline the reader already knows: lower communication family, stream transport, legacy-or-TLS connection handling, then MQTT protocol semantics.
+-
+-This looks different from HTTP, but the architectural discipline is familiar. The lower layers still provide the communication relationship. MQTT changes the application-layer interpretation of that relationship. Incoming bytes are no longer raised into HTTP requests and responses. They are raised into MQTT control packets, sessions, topics, publish flows, acknowledgements, and keep-alive behavior.
+-
+-The WebSocket-carried form adds the web-upgrade stack underneath MQTT:
+-
+-```text
+-HTTP upgrade
+-  -> WebSocket
+-      -> MQTT subprotocol
+-          -> MQTT protocol semantics
+-```
+-
+-MQTT then adds packet-structured, message-oriented protocol semantics that can use either the native stream path or, in the WebSocket-carried form, the upgraded bidirectional carrier from the previous chapter. MQTT-over-WebSocket is not a new transport trick: it is MQTT semantics carried as a WebSocket subprotocol over an upgraded HTTP connection. The carrier changes; the MQTT protocol identity remains recognizable.
+-
+-### Native MQTT and MQTT over WebSocket side by side
+-
+ \index{MQTT!native}
+ \index{MQTT!over WebSocket}
+ 
+-
+-A compact comparison is enough here; Chapter 21 treats the WebSocket-carried form in detail.
+-
+-| Concern | Native MQTT | MQTT over WebSocket |
+-|---|---|---|
+-| carrier | stream connection | WebSocket upgraded connection |
+-| SNode.C integration | stream `SocketContext` plus `MqttContext` | WebSocket subprotocol role plus `MqttContext` |
+-| protocol identity | MQTT directly above stream | MQTT above WebSocket |
+-| MQTT meaning | sessions, topics, control packets, publish flow | same MQTT semantics |
+-| book focus | introduced in this chapter | treated in detail in Chapter 21 |
+-
+-These are not two unrelated MQTT implementations. The MQTT semantics remain stable; the carrier path changes.
+-
+-### MQTT as a protocol family
+-
+ \index{MQTT!protocol family}
+ \index{MQTT!control packets}
+ \index{MQTT!topics}
+ \index{MQTT!sessions}
+ 
+-
+-MQTT support in SNode.C is broader than a broker application or a client helper. The shared MQTT module contains protocol structure. It provides the vocabulary and mechanics that server and client roles build on.
+-
+-A useful way to read the module is:
+-
+-```text
+-protocol family
+-  -> shared vocabulary and mechanics
+-
+-endpoint roles
+-  -> server/broker and client specialization
+-
+-carriers
+-  -> native stream or WebSocket subprotocol
+-```
+-
+-The shared MQTT layer includes concerns such as:
+-
+-- control packets,
+-- fixed headers,
+-- deserialization,
+-- sessions,
+-- topics,
+-- MQTT context,
+-- native socket-context integration,
+-- WebSocket subprotocol integration.
+-
+-At this level, MQTT is treated as a protocol family. Server and client roles then specialize that shared protocol foundation.
+-
+-#### Core protocol module
+-
+-The shared MQTT module provides the common pieces that both server and client roles need.
++The shared MQTT module supplies packet structure, deserialization, sessions and topics. Server and client roles specialize that foundation:
+ 
+ | Shared concern | Meaning |
+ |---|---|
+@@ -122,31 +42,12 @@ The shared MQTT module provides the common pieces that both server and client ro
+ | `Session` | MQTT session state |
+ | `Topic` | topic representation |
+ 
+-This shared vocabulary forms the protocol foundation from which server/broker-oriented behavior and client behavior are built, not an application convenience.
+-
+-#### Control packets, fixed headers, sessions, and topics
+-
+-MQTT should not be described only as “messages.” MQTT is message-oriented in the broad sense, but its protocol unit is a control-packet vocabulary with session, topic, acknowledgement, and keep-alive semantics.
+-
+-A compact model is:
+-
+-```text
+-packet shape
+-  -> control-packet type
+-      -> session state
+-          -> topic semantics
+-              -> acknowledgement flow
+-```
+-
+-That is why packet classes, fixed-header handling, deserialization, sessions, and topics belong in the core MQTT module. They are part of the MQTT protocol layer, not incidental application helpers.
+-
+-### `Mqtt` as the protocol object
++### `Mqtt` and its carriers
+ 
+ \index{Mqtt@\texttt{Mqtt}}
+ \index{MQTT!protocol object}
+ \index{keep-alive}
+ 
+-
+ The central code-shaped MQTT object is `iot::mqtt::Mqtt`.
+ 
+ It is the protocol object, not a socket callback and not the complete endpoint by itself. It owns MQTT-level lifecycle, packet delivery, session setup, publish acknowledgement flow, packet identifiers, keep-alive state, and distribution hooks. To become a concrete endpoint, it is connected to a carrier through `MqttContext` and either a native stream `SocketContext` or a WebSocket `SubProtocol`.
+@@ -163,30 +64,12 @@ A compact view of its responsibilities is:
+ | keep-alive | MQTT protocol-level liveness timing |
+ | distribution hook | distribute received publish packets |
+ 
+-The lower connection delivers bytes. The MQTT object gives those bytes protocol meaning.
+-
+-#### Lifecycle and packet delivery
+-
+-MQTT has lifecycle behavior. It reacts to connection and disconnection, and it handles packet creation and delivery.
+-
+-Conceptually:
+-
+-```text
+-connection event
+-  -> MQTT lifecycle hook
+-
+-incoming bytes
+-  -> fixed header
+-      -> control-packet deserializer
+-          -> MQTT packet delivery
+-```
++Connection events invoke MQTT lifecycle hooks. Incoming bytes pass through fixed-header handling and a control-packet deserializer before completed-packet delivery.
+ 
+ The creation of a packet deserializer and the delivery of the completed packet are specialized by the server and client sides. That keeps shared MQTT framing and packet flow in the protocol core while still allowing broker-oriented and client-oriented behavior to differ.
+ 
+ Application code should not have to manually switch on raw incoming MQTT byte sequences inside an unrelated socket callback. Packet interpretation belongs in the MQTT layer.
+ 
+-#### Publish and acknowledgement flow
+-
+ MQTT has explicit packet vocabulary. For example, the core object exposes helpers and hooks around:
+ 
+ | Packet helper/hook | Meaning |
+@@ -197,51 +80,15 @@ MQTT has explicit packet vocabulary. For example, the core object exposes helper
+ | `sendPubrel` / `onPubrel` | QoS 2 release step |
+ | `sendPubcomp` / `onPubcomp` | QoS 2 completion step |
+ 
+-These packet names show where acknowledgement state belongs; the chapter does not attempt a complete MQTT QoS reference. The architectural point is smaller and more important for this part of the book:
+-
+-```text
+-MQTT is packet-structured,
+-not just a generic byte stream.
+-```
+-
+-The explicit packet vocabulary belongs in the MQTT layer.
+-
+-#### Session and keep-alive timing
+-
+-MQTT owns some of its own state and timing. A useful distinction is:
+-
+-```text
+-session
+-  -> MQTT relationship state
+-
+-keep-alive
+-  -> MQTT protocol-level liveness timing
+-```
+-
+-This connects directly to Chapter 15. Chapter 15 separated transport timeouts, retry/reconnect delay, and protocol-level timing. MQTT keep-alive is another example of protocol-level timing.
++These helpers locate acknowledgement state without replacing a complete MQTT QoS reference. A session holds MQTT relationship state; keep-alive is protocol-level liveness timing. Chapter 15 distinguishes that timing from transport timeouts and retry/reconnect delay.
+ 
+ The lower connection may have read or write timeouts. A configured client or server instance may have retry or reconnect policy. TLS may have handshake and shutdown timing. MQTT adds its own liveness meaning at the protocol layer. Keep-alive is therefore not just a socket timeout with another name.
+ 
+-### Native MQTT over stream connections
+-
+ \index{MQTT!native over streams}
+ \index{MqttContext@\texttt{MqttContext}}
+ \index{SocketContext@\texttt{SocketContext}}
+ 
+-
+-Native MQTT uses the lower stream architecture directly. Its code shape is:
+-
+-```text
+-core::socket::stream::SocketContext
+-  + iot::mqtt::MqttContext
+-      -> iot::mqtt::SocketContext
+-```
+-
+-This tells the reader how MQTT fits into the earlier context model. The native MQTT endpoint is still a stream socket context, but its receive/send lifecycle is routed through the MQTT-facing context.
+-
+-#### `SocketContext` plus `MqttContext`
+-
+-The native MQTT `SocketContext` combines two sides.
++The native endpoint combines the familiar per-connection stream context with the MQTT-facing bridge:
+ 
+ | Side | Meaning |
+ |---|---|
+@@ -251,38 +98,12 @@ The native MQTT `SocketContext` combines two sides.
+ 
+ `MqttContext` bridges the protocol object to whichever carrier is used underneath, letting it read, write, end, or close without replacing the lower socket context.
+ 
+-A useful way to read the composition is:
+-
+-```text
+-transport-facing context
+-  + MQTT-facing context
+-      -> MQTT-aware connection endpoint
+-```
+-
+-That composition is important. Native MQTT does not replace the lower architecture. It plugs MQTT protocol behavior into the normal per-connection context model.
+-
+-#### MQTT as protocol layer, not transport replacement
+-
+-Native MQTT still sits above:
+-
+-- a lower family,
+-- stream transport,
+-- legacy or TLS connection handling,
+-- runtime-driven lifecycle,
+-- configuration,
+-- diagnostics.
+-
+-The difference is the application-layer interpretation. At the HTTP layer, incoming data becomes request/response meaning. At the MQTT layer, incoming data becomes MQTT packet, session, topic, acknowledgement, and keep-alive meaning.
+-
+-The structure changes at the protocol level. The lower transport architecture remains.
+-
+-### Server and client specialization
++The native context retains the lower family, legacy or TLS carrier, runtime lifecycle, configuration and diagnostics. MQTT interprets the received bytes as packets, sessions, topics and acknowledgements, instead of HTTP requests and responses.
+ 
+ \index{MQTT!server role}
+ \index{MQTT!client role}
+ \index{broker role}
+ 
+-
+ The MQTT module separates shared protocol infrastructure from role-specific behavior.
+ 
+ A useful module view is:
+@@ -295,12 +116,8 @@ A useful module view is:
+ | `mqtt-server-websocket` | server-side MQTT WebSocket subprotocol |
+ | `mqtt-client-websocket` | client-side MQTT WebSocket subprotocol |
+ 
+-This mirrors earlier patterns in the book. There is a shared protocol core. Server and client roles specialize that core. WebSocket-carried forms then connect the same protocol family to the upgrade/subprotocol architecture from Chapter 19.
+-
+ A named endpoint supplies configuration for its activation flows. Each resulting connection receives an MQTT-aware context and protocol object. Broker or session state may deliberately outlive that one connection; do not place it in a short-lived receive buffer merely because both are called state.
+ 
+-#### Server as broker-oriented role
+-
+ The server-side MQTT role derives from the shared MQTT protocol object and connects it to broker-oriented behavior, rather than acting as a listener that only parses MQTT bytes.
+ 
+ It handles concerns such as:
+@@ -317,8 +134,6 @@ It handles concerns such as:
+ 
+ This is the right place for broker-oriented behavior. Broker behavior does not belong in the shared protocol core as a hidden global assumption. The shared core provides packet, session, context, and topic vocabulary; the server role connects that vocabulary to broker-specific behavior.
+ 
+-#### Client as protocol participant
+-
+ The client side is also a real protocol participant, not a transport wrapper that sends MQTT-looking bytes.
+ 
+ It handles client-side packet flow such as:
+@@ -337,17 +152,13 @@ and it exposes client-originated operations such as:
+ - `PINGREQ`,
+ - `DISCONNECT`.
+ 
+-This keeps the client/server model balanced. Both sides share the MQTT protocol family. Each side has its own role-specific behavior.
+-
+-
+ ### A compact MQTT client role
+ 
+ \index{MQTT!client example}
+ \index{Publish@\texttt{Publish}}
+ \index{Connack@\texttt{Connack}}
+ 
+-
+-A compact MQTT client example should show the protocol role, not an entire transport setup. The following class expresses the MQTT side of the application: connect, subscribe, publish, receive publishes, and disconnect on shutdown.
++The following compact class expresses the MQTT side of the application: connect, subscribe, publish, receive publishes, and disconnect on shutdown.
+ 
+ ```cpp
+ #include <iot/mqtt/client/Mqtt.h>
+@@ -427,30 +238,16 @@ For a bounded experiment, use a unique topic prefix, one publisher, one subscrib
+ 
+ Chapter 24 introduces a concrete broker ecosystem in which to carry out this interoperability and restart exercise.
+ 
+-### MQTT as a WebSocket subprotocol
++### Build and diagnostic boundaries
+ 
+ \index{MQTT!WebSocket subprotocol}
+ \index{WebSocket!subprotocols}
+ 
+-
+-MQTT-over-WebSocket is where Chapter 20 connects back to Chapter 19. The relevant composition is:
+-
+-```text
+-WebSocket subprotocol role
+-  + MqttContext
+-      -> MQTT-over-WebSocket endpoint
+-```
+-
+-Native MQTT uses a stream `SocketContext` plus `MqttContext`. MQTT-over-WebSocket changes the carrier-facing side to a WebSocket subprotocol role, while the MQTT-facing context remains recognizable. That is the symmetry Chapter 21 develops in detail.
+-
+-Chapter 20 only establishes the model: MQTT remains MQTT, while the carrier can be native stream or WebSocket.
+-
+-### MQTT public surface: protocol headers and components
++The WebSocket carrier substitutes a subprotocol role for the native stream context. The MQTT-facing bridge remains the same; keep carrier selection separate from session and topic policy.
+ 
+ \index{MQTT!public surface}
+ \index{iot::mqtt@\texttt{iot::mqtt}}
+ 
+-
+ MQTT code includes the MQTT abstraction it directly names. A client-side MQTT protocol object is introduced through:
+ 
+ ```cpp
+@@ -459,42 +256,16 @@ MQTT code includes the MQTT abstraction it directly names. A client-side MQTT pr
+ 
+ Shared support remains below `<iot/mqtt/...>` for topics, packets, socket-context bridging, and protocol support. The build-side components distinguish shared support, native roles, and WebSocket-carried compositions; Chapter 25 collects those mappings in one source-derived table.
+ 
+-### Build/component note: JSON dependency is not MQTT identity
+-
+ \index{JSON dependency}
+ \index{MQTT!component identity}
+ 
+-
+ In the current SNode.C build, the MQTT component is enabled when `nlohmann_json >= 3.11` is found; otherwise CMake emits a warning and does not add the MQTT targets.
+ 
+-That is a build/component fact. It should not be confused with the conceptual definition of MQTT.
+-
+-MQTT should first be understood through:
+-
+-- sessions,
+-- topics,
+-- control packets,
+-- publish flow,
+-- client/server roles,
+-- native and WebSocket-carried forms.
++This is a component dependency, not MQTT payload identity: sessions, topics and control packets define the protocol. Applications may choose JSON for structured payloads without making it mandatory MQTT meaning.
+ 
+-Structured payloads and integration systems may use JSON. The current build uses `nlohmann_json` as a component dependency. But JSON is not the conceptual center of MQTT.
++Topic-based distribution supports telemetry, commands and events between many participants, including larger systems as well as small devices.
+ 
+-### MQTT and IoT-facing systems
+-
+-MQTT is the first major protocol family in the book that clearly points toward IoT and machine-to-machine messaging. That does not mean MQTT is only useful in small devices. It means MQTT is well suited to systems where many participants exchange state, telemetry, commands, or events through topics.
+-
+-In SNode.C, this makes MQTT a natural bridge toward later system-level discussions:
+-
+-```text
+-devices
+-  -> topics
+-      -> broker-oriented distribution
+-          -> protocol integration
+-              -> dashboards and applications
+-```
+-
+-This is also where the diagnostic model remains important. MQTT problems may involve:
++Diagnose MQTT problems at the owning boundary:
+ 
+ - lower endpoint selection,
+ - TLS configuration,
+@@ -507,15 +278,22 @@ This is also where the diagnostic model remains important. MQTT problems may inv
+ - broker distribution,
+ - WebSocket subprotocol selection when MQTT is carried over WebSocket.
+ 
+-The topic model and broker-oriented distribution make MQTT useful for IoT-facing systems. The SNode.C layering model keeps those systems explainable.
+-
+-Chapter 22 will later combine these ideas with multiple protocols and IoT system design. For now, Chapter 20 keeps the focus on MQTT as a protocol family inside SNode.C.
++Chapter 22 uses these observations when assigning protocol roles in a larger IoT system.
+ 
+ ::: {.snodec-remember title="What to remember"}
+-- MQTT opens the message-oriented part of the book.
+-- MQTT is not a web protocol, but it fits the same SNode.C layering discipline.
+-- MQTT is a protocol family with shared packet, session, topic, context, and keep-alive concerns.
+-- `Mqtt` is the MQTT protocol object, not just a socket callback.
+-- `MqttContext` bridges the MQTT protocol object to the carrier underneath.
+-- Native MQTT combines stream `SocketContext` with `MqttContext`.
++- `Mqtt` owns protocol meaning; `MqttContext` connects it to a native or WebSocket carrier.
++- Session and broker state may outlive one connection; keep-alive is protocol timing.
++- CONNACK, SUBACK and subscriber receipt establish different milestones.
++- QoS 0 publication does not acknowledge delivery to another application.
++- Choose JSON payloads independently of the component’s JSON build dependency.
++:::
++
++::: {.snodec-exercise title="Exercises"}
++1. **Review (O1).** Trace one received control packet from its carrier through the deserializer to its MQTT role.
++2. **Review (O1, O3).** Why do CONNECT, CONNACK, SUBACK and subscriber receipt answer different questions? What can a QoS 0 publisher know?
++3. **Lab (O1, O2).** Run the local packet-peer lab. Expect CONNECT first, no subscription before CONNACK, then the canonical subscription, telemetry and received command.
++4. **Lab (O2, O3).** Run the equipped broker lab using its disposable local fixture. Expect granted SUBACK and an independent subscriber’s exact topic/payload, then a command received by the client.
++5. **Design (O3).** Choose native or WebSocket carriage for telemetry. State the evidence required before claiming session acceptance or application delivery.
++
++Public solutions and bounded lab commands: `companion/exercises/ch20/README.md`.
+ :::
+diff --git a/manuscript/chapters/21-mqtt-over-websocket.md b/manuscript/chapters/21-mqtt-over-websocket.md
+index d75b83e..03ee3d6 100644
+--- a/manuscript/chapters/21-mqtt-over-websocket.md
++++ b/manuscript/chapters/21-mqtt-over-websocket.md
+@@ -1,64 +1,32 @@
+ ## MQTT over WebSocket {#mqtt-over-websocket}
+ 
++::: {.snodec-objectives title="Learning objectives"}
++- **O1.** Trace buffered WebSocket payload through the scheduled MQTT receive path.
++- **O2.** Test binary MQTT exchange and diagnose wrong WebSocket message type.
++- **O3.** Choose components and failure observations for a composed MQTT connection.
++:::
++
+ \index{MQTT over WebSocket}
+ \index{MQTT!over WebSocket}
+ \index{WebSocket!MQTT carrier}
+ 
+-
+ ### MQTT carried by the WebSocket upgrade stack
+ 
+ \index{MQTT over WebSocket!upgrade stack}
+ \index{WebSocket upgrade}
+ 
+-
+-MQTT appears in SNode.C in two carrier forms:
+-
+-```text
+-native MQTT
+-  -> MQTT above a stream connection
+-
+-MQTT over WebSocket
+-  -> MQTT above a WebSocket subprotocol
+-```
+-
+-The second form follows the complete stack: HTTP upgrade, WebSocket, selected subprotocol role, `MqttContext`, and MQTT protocol semantics.
+-
+-::: {.snodec-note title="MQTT-over-WebSocket note"}
+-MQTT over WebSocket in SNode.C is MQTT expressed as a WebSocket subprotocol on top of the HTTP upgrade stack.
+-:::
+-
+-That sentence defines the composition precisely. MQTT-over-WebSocket is not native MQTT with a few additional HTTP headers, ordinary HTTP, or plain WebSocket without higher protocol meaning. The HTTP headers belong to upgrade negotiation; after a successful upgrade, MQTT packet data is carried as WebSocket message payload and interpreted by the MQTT layer.
+-
+-This chapter combines the HTTP-upgrade and WebSocket-subprotocol path from Chapter 19 with the `MqttContext`, packet, session, topic, keep-alive, and publish-flow semantics from Chapter 20:
+-
+-```text
+-WebSocket subprotocol role
+-  + MqttContext
+-      -> MQTT-over-WebSocket endpoint
+-```
+-
+-Each layer still has a responsibility: HTTP negotiates the upgrade, WebSocket provides the upgraded bidirectional message carrier, the WebSocket subprotocol role gives that carrier a selected protocol surface, `MqttContext` bridges the carrier to the MQTT protocol object, and MQTT provides packet, session, topic, keep-alive, and publish-flow semantics. No layer disappears; that is the main point of the chapter.
+-
+-### The composition in one model
++MQTT over WebSocket combines the HTTP-upgrade and subprotocol path from Chapter 19 with the packet, session, topic, keep-alive and publish-flow semantics from Chapter 20. HTTP negotiates the upgrade; WebSocket carries MQTT packet bytes in binary messages. The MQTT layer interprets those bytes after the adapter delivers them through `MqttContext`.
+ 
+ \index{protocol composition}
+ \index{composed protocol}
+ 
+-
+-Read the full stack from the lower communication family through stream transport and legacy-or-TLS connection handling, then through HTTP request/response, HTTP upgrade, WebSocket, the selected WebSocket subprotocol role, and finally MQTT protocol semantics.
+-
+ Read the composition as a sequence of admitted inputs. The lower connection carries the HTTP negotiation. Successful negotiation admits WebSocket frames. The selected MQTT subprotocol admits binary payload into the MQTT receive buffer. MQTT packet parsing then decides whether that payload is a valid MQTT conversation.
+ 
+ Each successful step leaves later steps unproven. This is the main diagnostic cost of the carrier composition, and the reason to keep its boundaries visible in both logs and tests.
+ 
+-### Native MQTT and MQTT-over-WebSocket side by side
+-
+ \index{MQTT!native}
+ \index{MQTT!over WebSocket}
+ 
+-
+-Chapter 20 introduced native MQTT first. Chapter 21 sharpens the carrier contrast.
+-
+ Figure \ref{fig:native-mqtt-vs-mqtt-over-websocket} shows the distinction. Native MQTT writes MQTT packets directly to a stream or TLS stream. MQTT over WebSocket reaches the same MQTT packet and session semantics through an HTTP upgrade path and WebSocket frames. The point is the carrier contrast, not a split in MQTT semantics.
+ 
+ ![Native MQTT and MQTT over WebSocket share MQTT protocol semantics but use different carrier paths.](assets/figures/pdf/fig-07-native-mqtt-vs-mqtt-over-websocket.pdf){#fig:native-mqtt-vs-mqtt-over-websocket width=90% latex-placement="tbp"}
+@@ -72,12 +40,6 @@ Figure \ref{fig:native-mqtt-vs-mqtt-over-websocket} shows the distinction. Nativ
+ | MQTT semantics | sessions, packets, topics, keep-alive, publish flow | same MQTT semantics |
+ | failure surface | stream and MQTT layers | HTTP upgrade, WebSocket, subprotocol, and MQTT layers |
+ 
+-The central message is simple: MQTT semantics stay MQTT; the carrier path changes.
+-
+-### Why this carrier composition matters
+-
+-MQTT-over-WebSocket exists for systems that want MQTT semantics while using a WebSocket-capable communication path. That can matter when communication already lives inside web-facing infrastructure, when an HTTP upgrade path is available, or when MQTT participates in a system that otherwise uses HTTP and WebSocket boundaries.
+-
+ A native client avoids HTTP upgrade and WebSocket framing when both endpoints can use the native service directly. A WebSocket path is useful when a browser-facing or existing HTTP infrastructure requires that carrier, but adds upgrade configuration, subprotocol selection, and another framing boundary. Sharing MQTT semantics does not make those operating costs identical.
+ 
+ ### The MQTT-over-WebSocket subprotocol type
+@@ -85,7 +47,6 @@ A native client avoids HTTP upgrade and WebSocket framing when both endpoints ca
+ \index{MqttContext@\texttt{MqttContext}}
+ \index{WebSocket!subprotocols}
+ 
+-
+ The code-shaped center of this chapter is the generic MQTT WebSocket subprotocol type.
+ 
+ In simplified form, its shape is:
+@@ -108,109 +69,17 @@ The two bases identify the adapter’s responsibilities. The WebSocket role supp
+ | `SubProtocol<WSSubProtocolRoleT>` | MQTT protocol behavior carried over a WebSocket subprotocol |
+ | `OnReceivedFromPeerEvent` | scheduling hook that feeds buffered WebSocket payload into MQTT receive processing |
+ 
+-This is MQTT protocol behavior attached to a different carrier, not a second MQTT implementation.
+-
+-#### WebSocket role plus `MqttContext`
+-
+-The template parameter keeps the WebSocket role open. The same generic MQTT-over-WebSocket adapter can be used with a server-side WebSocket subprotocol role or with a client-side WebSocket subprotocol role.
+-
+-The composition can be read as:
+-
+-```text
+-WebSocket role
+-  -> connection, frame, message, and subprotocol carrier behavior
+-
+-MqttContext
+-  -> MQTT-facing receive/send/end/close behavior
+-
+-MQTT SubProtocol
+-  -> protocol bridge between both sides
+-```
+-
+-The WebSocket role does not become MQTT by itself. It remains the carrier-facing side of the adapter. The MQTT protocol object does not become WebSocket-specific by itself. It sees the carrier through `MqttContext`.
+-
+-This separation is what keeps the composition clean.
+-
+-#### WebSocket message flow into MQTT receive flow
++The role parameter selects the server or client WebSocket surface. MQTT sees either carrier through `MqttContext`, rather than embedding WebSocket-specific behavior in the protocol object.
+ 
+ WebSocket is a message-oriented carrier. MQTT is a byte-oriented packet protocol. The adapter has to bridge those two views.
+ 
+-A useful model is:
+-
+-```text
+-WebSocket message callbacks
+-  -> MQTT subprotocol buffer
+-      -> MqttContext recv()
+-          -> MQTT packet deserialization
+-              -> MQTT packet handling
+-```
+-
+-The WebSocket side reacts to message start, message data, message end, and message errors. MQTT processing then receives buffered bytes through the `MqttContext` receive path.
+-
+-In source-shaped terms:
+-
+-```text
+-onMessageData(...)
+-  -> accumulate WebSocket payload data
+-
+-onMessageEnd()
+-  -> move accumulated payload into the MQTT receive buffer
+-  -> schedule MQTT receive processing
+-
+-recv(...)
+-  -> present buffered bytes to the MQTT protocol object
+-```
+-
+-The adapter needs both sides because WebSocket framing and MQTT packet semantics remain distinct. WebSocket decides how payload arrives. MQTT decides what the payload means.
++`onMessageData(...)` accumulates payload. At message end the adapter appends the collected bytes to the MQTT receive buffer and schedules processing; `recv(...)` then presents buffered bytes to MQTT packet deserialization. WebSocket message boundaries and MQTT packet boundaries remain distinct.
+ 
+ There is also an important binary/text distinction. MQTT packet data is byte-oriented. In this adapter, text WebSocket messages are not the MQTT-over-WebSocket path. MQTT data is processed through the binary message path into the MQTT receive buffer. A text frame is therefore not simply “another way to carry MQTT”; it belongs to the wrong WebSocket message type for this adapter.
+ 
+-#### Runtime event integration
+-
+-The MQTT-over-WebSocket adapter has to fit into the event-driven runtime and the static type composition.
+-
+-Runtime integration is explicit. The adapter owns an `OnReceivedFromPeerEvent` that schedules MQTT receive processing after WebSocket message data has been buffered. This keeps MQTT packet processing inside the same event-driven runtime model as the rest of SNode.C.
+-
+-The subprotocol therefore participates in several runtime-facing actions:
+-
+-- connection handling,
+-- disconnection handling,
+-- signal handling,
+-- message-start handling,
+-- message-data handling,
+-- message-end handling,
+-- message-error handling,
+-- scheduled peer-data processing.
++The adapter owns an `OnReceivedFromPeerEvent` that schedules processing after payload has been buffered. Connection, disconnection, signal, message-start/data/end/error and peer-data events all participate in the same runtime.
+ 
+-Remember:
+-
+-```text
+-WebSocket delivers protocol data over time.
+-MQTT processing must be scheduled inside the same event-driven runtime.
+-```
+-
+-The adapter keeps that relationship explicit.
+-
+-#### Send, end, and close
+-
+-The bridge also works in the other direction. MQTT-facing output has to become WebSocket output.
+-
+-Conceptually:
+-
+-```text
+-MqttContext send(...)
+-  -> WebSocket sendMessage(...)
+-
+-MqttContext end()
+-  -> WebSocket close handshake
+-
+-MqttContext close()
+-  -> WebSocket protocol-error close
+-```
+-
+-The exact protocol mechanics belong to the implementation. The architectural point is that `MqttContext` gives MQTT a stable carrier-facing surface, while the subprotocol adapter maps that surface to WebSocket behavior.
+-
+-### Server-side and client-side aliases
++In the other direction, `MqttContext::send(...)` maps to WebSocket message output, `end()` requests a close handshake, and `close()` requests protocol-error closure. The stable MQTT-facing surface therefore preserves different normal and error endings.
+ 
+ The generic MQTT WebSocket subprotocol type is specialized through simple role aliases.
+ 
+@@ -226,25 +95,12 @@ On the client side:
+ using SubProtocol = iot::mqtt::SubProtocol<web::websocket::client::SubProtocol>;
+ ```
+ 
+-The aliases do not duplicate the MQTT-over-WebSocket adapter. They bind the same generic adapter to either the server-side or client-side WebSocket subprotocol role.
+-
+-| Alias side | Meaning |
+-|---|---|
+-| server alias | MQTT over a server-side WebSocket subprotocol role |
+-| client alias | MQTT over a client-side WebSocket subprotocol role |
+-| shared template | common MQTT-over-WebSocket bridge logic |
+-
+-The MQTT bridge logic is shared. The WebSocket role type keeps side-specific behavior explicit.
+-
+-This keeps reuse and role clarity together. The server/client distinction is not hidden, but the protocol bridge is not duplicated.
+-
+-### Each layer keeps its responsibility
++The aliases bind the shared adapter to the corresponding WebSocket role; neither duplicates the bridge logic.
+ 
+ \index{layer responsibility}
+ \index{protocol composition}
+ 
+-
+-MQTT-over-WebSocket is easy to misunderstand if the stack is flattened. Each layer has a different job.
++Use the ownership map when a composed connection fails:
+ 
+ | Layer | Responsibility |
+ |---|---|
+@@ -255,15 +111,9 @@ MQTT-over-WebSocket is easy to misunderstand if the stack is flattened. Each lay
+ | WebSocket subprotocol role | selected protocol surface above WebSocket |
+ | MQTT | packet, session, topic, keep-alive, and publish-flow semantics |
+ 
+-This table is the chapter’s main operational reminder.
+-
+-MQTT does not dissolve into WebSocket. WebSocket does not disappear under MQTT. HTTP still matters because it negotiated the upgrade. The lower connection still matters because it carries the whole stack.
+-
+-This is exactly why the layered model is useful. It gives each concern a place.
+-
+ ### Follow one binary payload across the adapter
+ 
+-A small source exercise makes the composition testable without confusing it with a complete broker deployment. Read `src/iot/mqtt/SubProtocol.hpp` beside the packet deserializer from Chapter 20. Follow one message through `onMessageStart`, `onMessageData`, `onMessageEnd`, the scheduled receive event, and `recv(...)`.
++A small source exercise follows the adapter before testing a complete endpoint pair. Read `src/iot/mqtt/SubProtocol.hpp` beside the packet deserializer from Chapter 20. Follow one message through `onMessageStart`, `onMessageData`, `onMessageEnd`, the scheduled receive event, and `recv(...)`.
+ 
+ For a concrete input, consider these MQTT 3.1.1 CONNECT bytes, using clean session, a 60-second keep-alive, and the four-character client ID `book`:
+ 
+@@ -284,14 +134,13 @@ Predict the observations before running a complete endpoint pair:
+ 
+ Inspect the implementation’s `data`, `buffer`, `cursor`, and `size` to explain the first two rows. The scheduled event feeds the MQTT receiver and republishes itself while unread bytes remain. This is the event coalescing behavior from Chapter 5 used at a protocol boundary.
+ 
+-For runtime evidence, use an installed MQTT WebSocket endpoint with the `mqtt` subprotocol and record HTTP 101, selected subprotocol, binary message exchange, and MQTT CONNACK separately. Then extend the broker exchange with the subscription and publication observations from Chapter 20.
++The public labs in `companion/exercises/ch21/` attach the unchanged client role to this adapter. A controlled WebSocket peer records HTTP 101, `mqtt` selection, binary CONNECT, successful CONNACK and the later MQTT packet exchange separately. It also tests fragmented binary input and wrong-type closure. This isolates the adapter; the broker-delivery checkpoint in Chapter 22 supplies the separate subscriber observation.
+ 
+-### Build artifacts mirror the composition
++### Build artifacts and diagnostics
+ 
+ \index{build artifacts}
+ \index{component selection}
+ 
+-
+ The build structure mirrors the architectural structure.
+ 
+ | Artifact | Meaning |
+@@ -301,14 +150,9 @@ The build structure mirrors the architectural structure.
+ | `mqtt-server-websocket` | server-side MQTT WebSocket subprotocol |
+ | `mqtt-client-websocket` | client-side MQTT WebSocket subprotocol |
+ 
+-MQTT-over-WebSocket is therefore not an application trick outside the framework. It has an explicit component surface for the server and client sides of the composition.
+-
+-### MQTT-over-WebSocket as component selection
+-
+ \index{MQTT over WebSocket!component selection}
+ \index{linking strategy}
+ 
+-
+ Reuse the MQTT role from Chapter 20 when selecting the WebSocket carrier. The MQTT role remains an MQTT role; the WebSocket-carried variant adds the WebSocket subprotocol component that lets MQTT packets travel through an HTTP/WebSocket upgrade path.
+ 
+ A compact client-side build fragment therefore looks like this:
+@@ -321,16 +165,7 @@ target_link_libraries(gateway
+         snodec::websocket-client)
+ ```
+ 
+-The native MQTT component expresses the MQTT client role. The WebSocket-carried component expresses the MQTT/WebSocket adapter. The WebSocket client component expresses the upgraded carrier side. This is a component-level statement of the same architecture described in prose:
+-
+-```text
+-MQTT client role
+-  + MQTT-over-WebSocket subprotocol
+-      + WebSocket client carrier
+-          -> MQTT semantics over an upgraded HTTP/WebSocket connection
+-```
+-
+-The server side follows the same rule in the opposite role:
++The three client components supply the MQTT role, its WebSocket adapter, and the WebSocket carrier. The corresponding server roles are:
+ 
+ ```cmake
+ target_link_libraries(gateway
+@@ -342,152 +177,47 @@ target_link_libraries(gateway
+ 
+ These are partial link fragments. A runnable application also needs its concrete HTTP carrier, upgrade entry point, and selectable MQTT subprotocol factory. Linking an adapter library does not by itself create or register that application-specific factory.
+ 
+-### Diagnostics across the composed stack
+-
+ \index{MQTT over WebSocket!diagnostics}
+ \index{stack diagnostics}
+ 
++Locate the first failed observation, then assign its owner:
+ 
+-A failure in MQTT-over-WebSocket may belong to several layers.
+-
+-It may be caused by:
+-
+-- lower connection establishment,
+-- TLS configuration,
+-- HTTP upgrade negotiation,
+-- WebSocket framing or control behavior,
+-- binary/text message mismatch,
+-- subprotocol selection,
+-- WebSocket message data not reaching the MQTT receive buffer,
+-- MQTT packet parsing,
+-- MQTT session behavior,
+-- MQTT keep-alive behavior,
+-- application shutdown.
+-
+-That separation reflects the reality of a composed stack, not a weakness.
+-
+-The diagnostic question is:
+-
+-```text
+-At which layer did the failure occur?
+-```
+-
+-A second question is just as important:
+-
+-```text
+-At which layer does this meaning belong?
+-```
+-
+-Examples:
+-
+-```text
+-Could not connect
+-  -> lower endpoint, transport, TLS, or configuration
+-
+-Upgrade rejected
+-  -> HTTP / WebSocket upgrade boundary
+-
+-Subprotocol not selected
+-  -> WebSocket subprotocol negotiation
+-
+-Text frame appeared
+-  -> wrong WebSocket message type for this MQTT adapter
+-
+-Frame error
+-  -> WebSocket layer
+-
+-Payload not delivered to MQTT recv()
+-  -> WebSocket-to-MQTT adapter boundary
+-
+-Malformed MQTT packet
+-  -> MQTT protocol layer
+-
+-Session or keep-alive problem
+-  -> MQTT lifecycle layer
+-```
+-
+-There are also timing concerns at several layers:
+-
+-```text
+-transport or TLS timing
+-  -> lower connection behavior
+-
+-HTTP upgrade timing
+-  -> upgrade boundary
+-
+-WebSocket close / control behavior
+-  -> WebSocket lifecycle
+-
+-MQTT keep-alive timing
+-  -> MQTT protocol liveness
+-```
+-
+-This is where the earlier chapters on diagnostics, timeouts, and failure modes remain useful. MQTT-over-WebSocket does not need a new operational philosophy. It needs the existing layered diagnostic model applied to a deeper stack.
+-
+-### From one composed stack to multi-protocol systems
+-
+-MQTT-over-WebSocket matters because it connects MQTT semantics with web-upgrade infrastructure. That makes it a useful example before moving to broader IoT system design.
+-
+-Chapter 21 shows one concrete cross-stack composition:
+-
+-```text
+-MQTT
+-  -> carried as WebSocket subprotocol
+-      -> reached through HTTP upgrade
+-```
+-
+-Chapter 22 widens the view from one composed stack to systems that combine several protocol families, carriers, gateways, dashboards, and integration points.
+-
+-A single composed stack may look like this:
+-
+-```text
+-MQTT over WebSocket
+-```
+-
+-A multi-protocol system may combine:
+-
+-- MQTT,
+-- HTTP,
+-- WebSocket,
+-- Bluetooth or local links,
+-- lower IP or local communication choices,
+-- dashboards,
+-- gateways,
+-- sensors,
+-- brokers,
+-- integrations.
++| Observation | Boundary to inspect |
++|---|---|
++| cannot connect | endpoint, transport, TLS or configuration |
++| upgrade rejected | HTTP/WebSocket upgrade |
++| subprotocol not selected | WebSocket negotiation and factory availability |
++| text payload or frame error | WebSocket message type or frame validation |
++| payload never reaches `recv()` | adapter buffer and scheduled receive event |
++| malformed packet | MQTT parsing |
++| session or keep-alive failure | MQTT lifecycle and protocol liveness |
++| shutdown stalls | the close/termination boundary currently outstanding |
+ 
+-The next chapter is therefore not only about another protocol. It is about system composition.
++Transport/TLS timing, upgrade timing, WebSocket control/close and MQTT keep-alive have different owners. Apply the diagnostics and failure vocabulary already established instead of reducing the whole connection to one online/offline flag.
+ 
+-::: {.snodec-remember title="What to remember"}
+-- MQTT-over-WebSocket carries MQTT as a WebSocket subprotocol.
+-- HTTP still matters because it negotiates the upgrade.
+-- WebSocket still matters because it provides the upgraded bidirectional message carrier.
+-- The WebSocket subprotocol role supplies the carrier-facing side of the adapter.
+-- `MqttContext` supplies the MQTT-facing receive/send/end/close bridge.
+-- The generic MQTT WebSocket subprotocol template is reused for server and client aliases.
+-- MQTT packet data is byte-oriented and is carried through the WebSocket message path into MQTT receive processing.
+-- Native MQTT and MQTT-over-WebSocket are sibling compositions of the same MQTT protocol family.
+-- The carrier path changes; MQTT packet, session, topic, keep-alive, and publish-flow semantics remain recognizable.
+-- Failures can belong to lower connection, TLS, HTTP upgrade, WebSocket framing, subprotocol selection, MQTT parsing, MQTT session, or keep-alive behavior.
+-:::
+-
+-### Native MQTT and MQTT-over-WebSocket public surfaces
++Chapter 22 moves from this composed connection to systems with several independent protocol boundaries. A gateway may share domain state across them without making their negotiation, timing or recovery policies identical.
+ 
+ \index{MQTT!public surface}
+ \index{MQTT over WebSocket!public surface}
+ 
++Native MQTT files include the MQTT headers they directly use. MQTT-over-WebSocket files include the WebSocket-carried MQTT abstraction they directly name. The component table above separates native roles from their WebSocket adapters.
+ 
+-Native MQTT files include the MQTT headers they directly use. MQTT-over-WebSocket files include the WebSocket-carried MQTT abstraction they directly name. On the build side, the distinction is explicit:
++Chapter 25 gives the consolidated source-derived component/header matrix.
+ 
+-```text
+-native MQTT:
+-  mqtt-client
+-  mqtt-server
++::: {.snodec-remember title="What to remember"}
++- HTTP negotiation, WebSocket selection and MQTT session acceptance are separate steps.
++- Binary message callbacks buffer bytes; a scheduled event feeds MQTT parsing.
++- Server and client aliases share the adapter while keeping carrier roles explicit.
++- MQTT send, normal end and error close map to distinct WebSocket actions.
++- Linking adapter components does not create the selectable application factory.
++:::
+ 
+-MQTT carried by WebSocket:
+-  mqtt-client-websocket
+-  mqtt-server-websocket
+-```
++::: {.snodec-exercise title="Exercises"}
++1. **Review (O1).** Follow fragmented binary input through `data`, `buffer`, `cursor`, `size` and the scheduled event.
++2. **Review (O1, O3).** Distinguish the HTTP upgrade factory, MQTT subprotocol factory and MQTT protocol object. What does linking alone leave undone?
++3. **Lab (O1, O2).** Run the binary adapter lab. Expect HTTP 101, `mqtt` selection and binary CONNECT; fragmented binary CONNACK must enable the role’s subscription/publication and command reception.
++4. **Lab (O2, O3).** Send the same CONNACK bytes as text. Expect a wrong-opcode diagnostic and protocol-error close 1002, rather than treating text as a valid carrier choice.
++5. **Design (O3).** An upgraded connection never produces MQTT session acceptance. Order your observations across framing, adapter scheduling, packet parsing and broker policy.
+ 
+-Chapter 25 gives the consolidated source-derived component/header matrix.
++Public solutions and bounded lab commands: `companion/exercises/ch21/README.md`.
++:::
+diff --git a/manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md b/manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md
+index ba95860..81632f7 100644
+--- a/manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md
++++ b/manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md
+@@ -1,36 +1,24 @@
+ ## Designing IoT Systems with Multiple Protocols {#designing-iot-systems-with-multiple-protocols}
+ 
++::: {.snodec-objectives title="Learning objectives"}
++- **O1.** Map protocol consumers, authoritative state and acceptance at an IoT boundary.
++- **O2.** Verify delivery separately from accepted state when an output is unavailable.
++- **O3.** Justify protocol, process and recovery choices for independent system roles.
++:::
++
+ \index{IoT systems}
+ \index{multi-protocol systems}
+ \index{system boundaries}
+ 
+-
+ ### From protocol composition to system boundaries
+ 
+ A whole IoT system rarely has only one conversation. Devices, dashboards, brokers, local tools, databases, and administration surfaces often need different protocol shapes in the same design.
+ 
+-This chapter is therefore not about using every protocol everywhere; it is about deciding where each protocol belongs. Multi-protocol IoT systems are boundary design.
+-
+-The pieces are now available: lower families, Unix domain sockets, Bluetooth RFCOMM and L2CAP, HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, MQTT over WebSocket, TLS, configuration, diagnostics, timeouts, and failure behavior. The question is no longer only:
+-
+-```text
+-How does this protocol work?
+-```
+-
+-The question becomes:
+-
+-```text
+-Which system boundary does this protocol serve?
+-```
+-
+-That question is the main design rule of this chapter: boundary first, protocol second.
+-
+-### IoT systems are boundary systems
++Start by asking which boundary needs a conversation and who consumes it, then choose the protocol. Multi-protocol design requires that ordering, not every protocol everywhere.
+ 
+ \index{IoT systems!boundary systems}
+ \index{boundary roles}
+ 
+-
+ IoT architecture is not defined by sensors alone. Sensors, boards, radio modules, and local devices matter, but they do not define the communication architecture by themselves. The architecture is defined by the points where information crosses from device-near code to local services, from local services to integration infrastructure, from integration infrastructure to user interfaces, and from live state into persistent or external systems.
+ 
+ \index{data-collection systems}
+@@ -45,15 +33,12 @@ Figure \ref{fig:iot-boundary-constellation} shows an IoT system as a constellati
+ 
+ Each connector in Figure \ref{fig:iot-boundary-constellation} is a boundary, and each boundary may need a different protocol family. Multi-protocol design is therefore normal in IoT systems, not automatically a sign of complexity gone wrong. Reusing an existing protocol can reduce operating cost, while introducing another can fit a boundary more precisely. Make the tradeoff explicit: what does the new protocol simplify for its consumers, and what does it add to deployment, diagnosis, and maintenance?
+ 
+-### Recurring boundary roles in IoT systems
+-
+ \index{device-facing role}
+ \index{local-control role}
+ \index{integration role}
+ \index{observation role}
+ \index{administration role}
+ 
+-
+ A useful starting point is to name recurring boundary roles. In this chapter, a boundary role is a design position in the system. It is not automatically a fixed framework class. A concrete SNode.C application may realize such a role through one or more configured roles and registered instances.
+ 
+ | Boundary role | Question |
+@@ -66,32 +51,22 @@ A useful starting point is to name recurring boundary roles. In this chapter, a
+ 
+ These roles help discussion; they do not force implementation structure. A small application may combine several of them. A larger deployment may split them across several processes. The roles are different conversations.
+ 
+-#### Device-facing role
+-
+ The device-facing role talks toward hardware or device-near components. This may involve Bluetooth RFCOMM, Bluetooth L2CAP, a custom stream protocol, a serial or local helper process, or another device-near boundary.
+ 
+ This role is usually close to physical constraints. It may care about commissioning, local range, device identity, pairing, sampling, or hardware-specific timing. Device-facing does not automatically mean globally reachable, brokered, or web-facing. It means that the system is close to the physical edge and should not pretend that this boundary has the same structure as a dashboard, a broker, or an administration API.
+ 
+-#### Local-control role
+-
+ The local-control role connects cooperating processes on the same machine. It may be used for command tools, helper processes, service supervision, local administration, process separation, or device-facing adapters.
+ 
+ Unix domain sockets are often a clean fit here. They express a local process boundary without pretending that the interaction is a remote network service. Not every local interaction needs HTTP, MQTT, or a TCP port. Sometimes the explicit boundary is local, same-host, and intentionally not exposed beyond that host.
+ 
+-#### Integration role
+-
+ The integration role exchanges machine messages. MQTT is often a strong fit here because it provides publish/subscribe flow, topic-based routing, brokered distribution, decoupled producers and consumers, and machine-to-machine message exchange.
+ 
+ This role can become the integration spine of the system. That does not mean it should become every other boundary. The integration spine is powerful precisely because it has a clear job: machine-facing message exchange.
+ 
+-#### Observation role
+-
+ The observation role exposes state and change to humans, dashboards, or monitoring consumers. It may involve HTTP status endpoints, SSE streams, WebSocket connections, dashboard views, metrics pages, or activity feeds.
+ 
+ Observation is not the same as control. It often needs a live or near-live view, but it does not necessarily need bidirectional command semantics. A dashboard that watches state changes has a different boundary shape from a control session that modifies state.
+ 
+-#### Administration role
+-
+ The administration role configures, controls, and inspects the system. It may involve HTTP/Express endpoints, authentication middleware, command-line configuration, local Unix-domain control, diagnostic pages, or management APIs.
+ 
+ This role is often operator-facing. It should be explicit because administration errors can affect the whole system. A system that hides administration behind an accidental data path is harder to reason about and harder to secure operationally.
+@@ -101,7 +76,6 @@ This role is often operator-facing. It should be explicit because administration
+ \index{protocol family selection}
+ \index{boundary needs}
+ 
+-
+ A good protocol choice starts with the boundary's shape: local or remote, one-way or bidirectional, human-facing or machine-facing, transient or durable, brokered or point-to-point. A boundary-oriented design asks what each boundary needs before choosing a protocol.
+ 
+ A compact mapping is:
+@@ -117,56 +91,18 @@ A compact mapping is:
+ | bridge boundary | MQTT over WebSocket | MQTT semantics through a WebSocket path |
+ | persistence boundary | database/client integration | durable state or external service state |
+ 
+-Use this table as a starting point, not as a rulebook. The decision should always come back to the boundary:
+-
+-```text
+-What crosses this boundary?
+-Who consumes it?
+-How long does it live?
+-Does it need bidirectional flow?
+-Does it need brokered distribution?
+-Does it need local-only access?
+-Does it need operator visibility?
+-Is the data transient or durable?
+-Does it need persistence?
+-```
+-
+-Those questions usually lead to a clearer protocol choice than starting with a favorite protocol and forcing it everywhere.
+-
+-### A constellation of protocol stacks
++Use the table as a starting point. Ask what crosses the boundary, who consumes it and how long it lives. Decide whether it needs two-way flow, brokered distribution, local-only access, operator visibility or durable storage.
+ 
+ \index{protocol stacks}
+ \index{role constellations}
+ 
+-
+-An IoT system in SNode.C often becomes a constellation of smaller stacks that meet at domain state, integration points, dashboards, local control paths, or persistence boundaries, rather than one tall vertical stack.
+-
+-For example:
+-
+-| Stack role | Typical protocol surface |
+-|---|---|
+-| device edge | Bluetooth or custom stream |
+-| integration | MQTT |
+-| administration | HTTP / Express |
+-| observation | SSE |
+-| interaction | WebSocket |
+-| local control | Unix domain socket |
+-
+-These stacks are not redundant duplicates. They are different conversations at different system boundaries. That is the main reason SNode.C can be useful in larger IoT designs.
+-
+-SNode.C's component structure reflects this breadth: lower-family stream components, HTTP/Express, WebSocket, MQTT, MQTT-over-WebSocket, database support, and IoT modules are separate but architecturally related pieces. The protocol surfaces can differ, but the framework keeps a shared architectural language: runtime lifecycle, configured roles, registered instances, contexts, factories, configuration, logging, diagnostics, timeouts, and failure handling.
+-
+-The goal is architectural coherence across protocol diversity, not protocol uniformity.
+-
+-
+-### Telemetry, control, observation, and administration are different conversations
++### Telemetry, control, observation, and administration
+ 
+ \index{IoT systems!telemetry}
+ \index{IoT systems!control}
+ \index{IoT systems!observation}
+ \index{IoT systems!administration}
+ 
+-
+ Many weak IoT architectures become confusing because they collapse several conversations into one channel. A stronger design keeps the differences visible.
+ 
+ | Conversation | Meaning |
+@@ -192,97 +128,45 @@ sensor reading
+ 
+ This is one accepted fact projected through several roles. The indentation shows fan-out, not a requirement that the database wait for an SSE browser or that SSE wait for broker delivery. If the domain requires durable acceptance before publication, make that different ordering explicit.
+ 
+-The compact principle is that the same domain fact may legitimately appear in different conversations and on different protocol surfaces. This helps keep protocol-specific behavior out of the domain model. The domain meaning is shared; the surfaces are boundary-specific.
++Keep protocol-specific behavior in those output adapters; the accepted domain meaning belongs to their shared model.
+ 
+-### MQTT as an integration spine, not the whole system
++### Choosing the carrier at each boundary
+ 
+ \index{MQTT!integration spine}
+ 
+-
+-MQTT is often a good integration spine. It is strong when the system needs asynchronous publish/\allowbreak{}subscribe flow, decoupled producers and consumers, brokered message routing, topic-based integration, and machine-to-machine message exchange.
+-
+-That makes MQTT a natural fit for telemetry and integration boundaries. It does not make MQTT the whole system. A browser-facing dashboard may prefer HTTP, SSE, or WebSocket. A local management plane may prefer Unix domain sockets. A device-near boundary may prefer Bluetooth or a custom stream service. A persistence boundary may involve a database or external service client.
+-
+-The useful design rule is:
+-
+-```text
+-Use MQTT where brokered machine messaging is the real boundary.
+-Do not force MQTT to replace every other boundary.
+-```
+-
+-MQTT works best as an integration spine for the conversation it expresses well, not as a universal surface.
+-
+-### HTTP and Express as management and operator-facing surfaces
++MQTT fits asynchronous publish/subscribe, decoupled producers and consumers, brokered routing and machine-facing integration. It need not replace a dashboard, local control plane, device adapter or persistence boundary.
+ 
+ \index{HTTP!management surface}
+ \index{Express-like framework!operator surface}
+ 
+-
+ HTTP and the Express-like layer often fit management and operator-facing boundaries. They are useful for dashboards, status pages, management APIs, REST-like control surfaces, authentication middleware, static assets, and structured routing.
+ 
+-A useful distinction is that MQTT often expresses machine-facing integration, while HTTP and the Express-like layer often express operator-facing structure. Treat this distinction as a design pattern rather than a law. HTTP APIs may also be consumed by machines, and MQTT data may ultimately be visualized by humans. The point is that HTTP/Express naturally gives structure to operator-facing and application-facing surfaces, while MQTT naturally gives structure to brokered machine messaging.
+-
+-A compact comparison:
+-
+-| Concern | Often better fit |
+-|---|---|
+-| publish telemetry | MQTT |
+-| subscribe to machine events | MQTT |
+-| serve dashboard page | HTTP / Express |
+-| expose admin API | HTTP / Express |
+-| authenticate an operator request | Express middleware |
+-| show current status | HTTP endpoint or dashboard |
+-| stream live state to a UI | SSE |
+-| interactive live browser session | WebSocket |
+-
+-This division of labor is often clearer than forcing MQTT to become the web interface or forcing HTTP to become the integration broker.
+-
+-### SSE and WebSocket as live observation and interaction surfaces
++Treat the machine-facing/operator-facing distinction as a pattern, not a law: HTTP APIs may serve machines, and MQTT data may eventually be visualized by people.
+ 
+ \index{SSE!observation surface}
+ \index{WebSocket!interaction surface}
+ 
+-
+ SSE and WebSocket become useful when the human-facing or monitoring-facing side needs live behavior. They are related to HTTP-facing design, but they serve different temporal shapes.
+ 
+ SSE is a good fit when updates flow mainly from server to client: live metrics, state changes, activity feeds, alerts, and dashboard updates. WebSocket is a good fit when the interaction is bidirectional: browser control sessions, live command channels, collaborative dashboards, interactive monitoring tools, or custom bidirectional protocols.
+ 
+-SSE and WebSocket are often presentation or interaction boundaries. They do not automatically replace the MQTT integration role. A clear design may use MQTT for device data, HTTP/Express for dashboard structure, SSE for live dashboard updates, and WebSocket for interactive browser control. The protocols are not competing when the boundaries are different.
+-
+-### MQTT-over-WebSocket as a bridge boundary
++A dashboard can therefore use HTTP for its structure, SSE for observation and WebSocket for control while MQTT remains the integration path.
+ 
+ \index{MQTT over WebSocket!bridge boundary}
+ 
+-
+-MQTT-over-WebSocket is useful when MQTT semantics must travel through a WebSocket-oriented path. It is not a universal default, and it is not “more general MQTT.” It is MQTT semantics intentionally carried through a WebSocket-oriented boundary.
+-
+-A good decision rule is simple: use native MQTT when the integration boundary is naturally MQTT, and use MQTT over WebSocket only when the surrounding path is WebSocket-oriented and MQTT semantics must survive there. This follows directly from Chapter 21. MQTT-over-WebSocket connects:
+-
+-```text
+-MQTT semantics
+-  -> WebSocket subprotocol
+-      -> HTTP upgrade path
+-```
+-
+-That composition helps when the system genuinely needs it; it should not be used only because it sounds more general. Explicit boundary placement matters more than maximum reuse of one path.
+-
+-### Bluetooth at the device edge
++Choose native MQTT when endpoints can use it directly. Choose MQTT over WebSocket when the surrounding path requires WebSocket while MQTT semantics must survive, accepting the added negotiation and framing from Chapter 21.
+ 
+ \index{Bluetooth!device edge}
+ 
+-
+ Bluetooth belongs where the system is close to devices. RFCOMM and L2CAP are useful near boundaries such as local device exchange, commissioning, nearby peer communication, appliance or sensor interaction, and device-local service roles.
+ 
+-Bluetooth usually should not become the integration spine of the whole system. It normally belongs at one system edge, as a local adapter role that may feed MQTT integration, dashboard views, storage, or external services. This keeps the local device-specific boundary separate from the wider integration boundary. Bluetooth can be exactly the right tool near the physical edge without being the right tool for brokered system-wide distribution.
+-
+-### Unix domain sockets for local control
++A local Bluetooth adapter may feed integration, dashboards or storage without becoming their distribution infrastructure.
+ 
+ \index{Unix domain sockets!local control}
+ 
+-
+ Unix domain sockets are often a clean same-host boundary. They fit situations such as a command-line tool controlling a long-running service, a helper process talking to a broker or bridge process, a device-facing adapter communicating with a local integration service, a web-facing role coordinating with a local service, or local administration without remote exposure.
+ 
+-This is a good example of an explicit boundary. Not every local interaction needs to be a network service. Not every control path needs HTTP. A Unix-domain control plane can make a system simpler by keeping local coordination local.
++A local control plane need not expose a TCP port or add HTTP merely to coordinate same-host processes.
+ 
+ ### One process or several cooperating applications
+ 
+@@ -301,30 +185,15 @@ The right choice depends on deployment, failure isolation, configuration, resour
+ 
+ Within one process, adapters can use the same model and one event-loop lifetime. That avoids serialization and cross-process coordination, but a blocking callback or process failure affects every role. Separate processes can restart or run under different permissions; they must then agree on message identity, ordering, and what to do when the other process is unavailable.
+ 
+-A multi-protocol system may be a single executable when the roles are tightly related and share lifecycle. It may be clearer as several smaller processes when the boundaries, failure behavior, or operational ownership differ.
+-
+-### Configuration as a map of roles
++### Configuration and observability across roles
+ 
+ \index{configuration!role map}
+ 
+-
+ In a multi-protocol system, configuration becomes a map of roles and boundaries. It can express which roles exist, which roles are enabled, which protocol family each role uses, which endpoints each role binds or connects to, which TLS material belongs to which role, which MQTT peers or brokers are used, which web interfaces are exposed, which retry or reconnect policies apply, and which local-control sockets exist.
+ 
+ This connects directly to Chapter 12's named instances, role visibility, and structured configuration model. In this chapter, those ideas become configuration as a system boundary map.
+ 
+-In SNode.C terms, configuration should make configured roles and registered instances legible. At the system-design level, it should also show which boundary each role serves. A configuration file should not be only a pile of values. In a multi-protocol IoT system, it should help answer:
+-
+-```text
+-Which boundary is this?
+-Which role owns it?
+-Which protocol family serves it?
+-How does it fail?
+-How is it observed?
+-```
+-
+-The configuration becomes part of the architecture because it tells operators what system they are actually running.
+-
+-### Observability across role boundaries
++For each configured role and registered instance, name its boundary, protocol, endpoint, failure policy and observation surface. The configuration tells operators which system is actually running.
+ 
+ More boundaries mean more possible failure points. That makes observability part of the architecture. Chapter 13's diagnostic rule becomes more important here: visibility should preserve the boundary at which a fact belongs.
+ 
+@@ -339,36 +208,15 @@ Useful questions include:
+ | Is the live stream active? | SSE or WebSocket state |
+ | Which role is failing? | role-specific logs, metrics, counters, and configuration |
+ 
+-In a multi-protocol system, diagnostics should be role-specific. It should be possible to see that:
+-
+-```text
+-HTTP admin is healthy
+-MQTT integration is reconnecting
+-Bluetooth edge is disabled
+-SSE dashboard stream is active
+-local control socket is unavailable
+-```
++A useful status view can report healthy HTTP administration, reconnecting MQTT, disabled Bluetooth, active SSE and unavailable local control independently.
+ 
+-Those are different operational facts. They should not be hidden behind one generic “online/offline” flag.
++Do not hide these independent facts behind one online/offline flag.
+ 
+ ### Failure policy by role
+ 
+ \index{failure policy!by role}
+ 
+-
+-Failure policy should match the role. A single global rule such as:
+-
+-```text
+-everything retries forever
+-```
+-
+-or:
+-
+-```text
+-everything fails fast
+-```
+-
+-is usually too crude. Different roles need different temporal behavior.
++A single global choice between retrying forever and failing fast is too crude. Choose temporal behavior for each role:
+ 
+ | Role | Typical failure policy |
+ |---|---|
+@@ -383,18 +231,6 @@ This connects to Chapter 15's vocabulary of timeout, retry, reconnect, disableme
+ 
+ A retry policy that is sensible for an MQTT integration client may be actively misleading for a local administration endpoint. The role that owns the boundary should also own its failure policy. Timeouts, retries, reconnects, disablement, shutdown, and degraded state should be chosen for the boundary, not imposed globally.
+ 
+-A system becomes more understandable when each boundary has its own temporal behavior.
+-
+-### Reusing meaning across different surfaces
+-
+-The same domain state may be exposed through different surfaces. That is not duplication if each surface belongs to a different boundary.
+-
+-For example, the same sensor state may be published to MQTT, shown through an HTTP status endpoint, streamed through SSE, used in a WebSocket control session, written to a database, exposed through a local Unix-domain command, and reflected into a Bluetooth-facing commissioning role.
+-
+-The meaning is shared, but the surfaces are different. The useful distinction is between shared domain meaning and the several honest protocol surfaces that expose it. This is better than forcing one protocol surface to serve every consumer, and it also helps keep protocol-specific behavior out of the domain model. The domain model should not become an MQTT model, an HTTP model, or a WebSocket model merely because the same state is visible through those surfaces.
+-
+-### Practical design recipe
+-
+ A practical recipe for multi-protocol IoT design is:
+ 
+ 1. Identify the real system boundaries.
+@@ -406,21 +242,7 @@ A practical recipe for multi-protocol IoT design is:
+ 7. Split into several processes when that improves clarity.
+ 8. Reuse domain meaning without forcing every surface to use the same protocol.
+ 
+-This design discipline is not the only valid method. It helps prevent two common mistakes:
+-
+-```text
+-one protocol everywhere
+-```
+-
+-and:
+-
+-```text
+-many protocols without clear boundaries
+-```
+-
+-The first mistake hides real differences. The second mistake creates accidental complexity. The better path is to let different protocols serve clear roles at explicit boundaries so the resulting system remains coherent.
+-
+-The number of protocols is less important than whether every protocol choice remains explainable.
++This recipe avoids both forcing one protocol everywhere and adding protocols without an explicit consumer, owner or operating cost.
+ 
+ ### Test the boundary map with one unavailable output
+ 
+@@ -433,11 +255,19 @@ This exercise is the reading milestone for the chapter. A useful boundary map ex
+ For the gateway developed later, follow one measurement through those boundaries before adding another protocol. The input adapter validates its representation, the model accepts a new local state, and each output adapter projects that accepted state into its own protocol. The MQTT input topic must remain distinct from the output topic unless the application has an explicit origin rule. The SSE event identifier describes the model's accepted sequence; storage and broker acknowledgement have separate outcomes. Those distinctions become operationally important as soon as one output is unavailable while another remains healthy.
+ 
+ ::: {.snodec-remember title="What to remember"}
+-- IoT architecture is defined by communication boundaries, not only by devices.
+-- Telemetry, control, observation, administration, and device exchange are different conversations.
+-- MQTT often fits integration; HTTP/Express often fits management; SSE and WebSocket often fit live observation and interaction.
+-- Bluetooth belongs near device edges, while Unix-domain sockets often fit same-host control.
+-- MQTT-over-WebSocket is a bridge boundary, not a universal default.
+-- Multi-protocol design can live in one process or in several cooperating applications when roles, configuration, diagnostics, and failure policy stay boundary-specific.
+-- Protocol diversity is not chaos when boundaries are clear.
++- Choose a boundary’s consumers and conversation before its protocol.
++- Project one accepted domain fact through adapters; outputs do not become competing state owners.
++- Administration, observation, control and integration need explicit policies.
++- One-process simplicity trades against shared failure; separate processes need identity and ordering contracts.
++- Report acceptance, durability and delivery separately when a role fails.
++:::
++
++::: {.snodec-exercise title="Exercises"}
++1. **Review (O1, O3).** Distinguish a system boundary role from a configured SNode.C instance. When can several roles share a process?
++2. **Review (O1, O2).** Explain why one accepted measurement can appear on MQTT and SSE without duplication of authority. What changes when acceptance promises durability?
++3. **Lab (O1, O2).** Run the unavailable-output lab. Expect HTTP status and SSE to agree on accepted measurements despite MQTT refusal; restart resets the in-memory sequence.
++4. **Lab (O1, O2, O3).** Run the Part VIII checkpoint: first observe broker delivery with the canonical client role, then separate gateway acceptance with unavailable MQTT. Complete the public boundary map from those observations.
++5. **Design (O3).** Split a field-instrument gateway into roles. Choose carriers, permissions, retry policy and the truth its dashboard may report during broker or storage failure.
++
++Public solutions and bounded lab commands: `companion/exercises/ch22/README.md`.
+ :::
+diff --git a/manuscript/parts/part-08-iot-and-message-oriented-systems.md b/manuscript/parts/part-08-iot-and-message-oriented-systems.md
+index 01b6cb5..f14e017 100644
+--- a/manuscript/parts/part-08-iot-and-message-oriented-systems.md
++++ b/manuscript/parts/part-08-iot-and-message-oriented-systems.md
+@@ -3,3 +3,5 @@
+ The web chapters ended with upgraded and long-lived communication. This part introduces MQTT and then places it beside WebSocket and HTTP as one surface in larger IoT designs.
+ 
+ Native MQTT, MQTT over WebSocket, and multi-protocol systems are treated as choices about who talks to whom, through which surface, and for what purpose. Part IX then adds durable application state and reads complete applications as systems rather than isolated protocol examples.
++
++The checkpoint observes a publication at an independent broker subscriber, then checks that local gateway state remains observable when MQTT is unavailable. Keep session, subscription, delivery and application acceptance separate as these roles join the running project.
