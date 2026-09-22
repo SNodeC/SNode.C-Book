@@ -1,0 +1,15 @@
+Run: https://github.com/SNodeC/SNode.C-Book/actions/runs/35671387353
+Compiler: clang
+Book commit: 8497bc1ce34a79805f650e4abc4bbfa78d3fcb98
+Result: success
+Selected hosted log lines:
+2026-09-22T00:18:24.1642654Z Source alignment passed: 38 chapter evidence records, 36 exact complete listings; SNode.C 2.0.0, base 1f0f728fc9b3b45174f2cd790d83b2f493e58af1, working-tree digest c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf
+2026-09-22T00:18:37.8420968Z Source alignment passed: 38 chapter evidence records, 36 exact complete listings; SNode.C 2.0.0, base 1f0f728fc9b3b45174f2cd790d83b2f493e58af1, working-tree digest c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf
+2026-09-22T00:18:37.9374215Z Source alignment passed: 38 chapter evidence records, 36 exact complete listings; SNode.C 2.0.0, base 1f0f728fc9b3b45174f2cd790d83b2f493e58af1, working-tree digest c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf
+2026-09-22T00:18:38.1007505Z Source alignment passed: 38 chapter evidence records, 36 exact complete listings; SNode.C 2.0.0, base 1f0f728fc9b3b45174f2cd790d83b2f493e58af1, working-tree digest c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf
+2026-09-22T00:33:53.9265521Z   1/183 Test   #1: StagedInstalledConsumerTest ................................   Passed    9.04 sec
+2026-09-22T00:34:05.0252361Z 100% tests passed, 0 tests failed out of 183
+2026-09-22T00:34:13.1725646Z 100% tests passed, 0 tests failed out of 4
+2026-09-22T00:35:11.9666778Z Companion example build passed.
+2026-09-22T00:35:14.0371570Z Behavioral smoke tests passed.
+2026-09-22T00:35:48.6957332Z All selected example lifetime/echo checks passed.

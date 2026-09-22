@@ -1,0 +1,72 @@
+{
+  "book_functional_commit": "8497bc1ce34a79805f650e4abc4bbfa78d3fcb98",
+  "source_tree_sha256": "c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf",
+  "framework_head_at_capture": "37b3a1e16de436c818eed807ee8a962f7cbbf43b",
+  "framework_local_changes": [
+    " M tests/StagedInstalledConsumerTest.cmake"
+  ],
+  "isolated_framework_tests": {
+    "gcc": 183,
+    "clang": 183,
+    "system_library_directory_hidden": "/usr/local/lib"
+  },
+  "local_final_package_rebuilt": true,
+  "packaged_framework_patch_matches_current_source_capture": true,
+  "local_final_pdf_verification": {
+    "pdfs": [
+      {
+        "file": "snodec-book.pdf",
+        "pages": 490,
+        "sha256": "1fbc604f2bb2ea81e28aabfbb6c930a1e5c407f1d5393ec0098cc19630030234",
+        "warnings": []
+      },
+      {
+        "file": "book-proposal-package.pdf",
+        "pages": 11,
+        "sha256": "769dfd1fe56f2b974a530cad5995ab3694c719022bc82e436cb22db04b93aa46",
+        "warnings": [
+          "Package caption Warning: Unused \\captionsetup[table] on input line 47."
+        ]
+      },
+      {
+        "file": "book-proposal-sample-package.pdf",
+        "pages": 65,
+        "sha256": "dcb10321defff3cc40a012ceca9543ce6eb9f72ace82b9bd91c0f59e41339c91",
+        "warnings": [
+          "LaTeX Font Warning: Font shape `TU/LatinModernMono(0)/b/n' undefined",
+          "Package caption Warning: Unused \\captionsetup[table] on input line 47.",
+          "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+        ]
+      }
+    ],
+    "book_page_labels_unchanged": true,
+    "contents_unchanged": true,
+    "index_unchanged": true,
+    "contents_destinations_verified": 1092,
+    "changed_book_page_streams": [],
+    "manuscript_and_typography_unchanged": true
+  },
+  "local_log_sha256": {
+    "ctest-isolated-gcc.log": "886521f1ffc5a4f82996f120c30221d7e30b70b5087f56fc5d8125d8c61ea1a0",
+    "ctest-isolated-clang.log": "441560ba67fe9d9d531c3a6a3930bdd17624cb2663b83d7909659833fed27ae6",
+    "staged-library-resolution.txt": "f0f631c575753a28547b87d792ad09ba2b6d31ffcd65bbd71d586e5d444b0d94",
+    "book-package-final-source.log": "199edc2ac4f1aae616fcdb533833bd4ae63cb08146940f92bef1be9ce363753a"
+  },
+  "hosted_ci_status": "All jobs successful",
+  "hosted_runs": {
+    "publication": {
+      "url": "https://github.com/SNodeC/SNode.C-Book/actions/runs/35671387324",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    "companion": {
+      "url": "https://github.com/SNodeC/SNode.C-Book/actions/runs/35671387353",
+      "conclusion": "success",
+      "gcc_framework_tests": 183,
+      "clang_framework_tests": 183,
+      "gcc_external_echo_tests": 4,
+      "clang_external_echo_tests": 4,
+      "all_teaching_behavior_lifetime_steps": "success"
+    }
+  }
+}

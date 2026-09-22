@@ -1,0 +1,34 @@
+{
+  "pdfs": [
+    {
+      "file": "snodec-book.pdf",
+      "pages": 490,
+      "sha256": "1fbc604f2bb2ea81e28aabfbb6c930a1e5c407f1d5393ec0098cc19630030234",
+      "warnings": []
+    },
+    {
+      "file": "book-proposal-package.pdf",
+      "pages": 11,
+      "sha256": "769dfd1fe56f2b974a530cad5995ab3694c719022bc82e436cb22db04b93aa46",
+      "warnings": [
+        "Package caption Warning: Unused \\captionsetup[table] on input line 47."
+      ]
+    },
+    {
+      "file": "book-proposal-sample-package.pdf",
+      "pages": 65,
+      "sha256": "dcb10321defff3cc40a012ceca9543ce6eb9f72ace82b9bd91c0f59e41339c91",
+      "warnings": [
+        "LaTeX Font Warning: Font shape `TU/LatinModernMono(0)/b/n' undefined",
+        "Package caption Warning: Unused \\captionsetup[table] on input line 47.",
+        "LaTeX Font Warning: Some font shapes were not available, defaults substituted."
+      ]
+    }
+  ],
+  "book_page_labels_unchanged": true,
+  "contents_unchanged": true,
+  "index_unchanged": true,
+  "contents_destinations_verified": 1092,
+  "changed_book_page_streams": [],
+  "manuscript_and_typography_unchanged": true
+}

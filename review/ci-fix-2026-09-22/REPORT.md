@@ -1,7 +1,7 @@
 # CI toolchain repair — 22 September 2026
 
-Status: publication CI passes with TeX Live 2026. A second, staged-consumer
-test-environment correction passes isolated local tests; its hosted run is pending.
+Status: complete. Publication and both companion compiler jobs pass on GitHub
+at functional book commit `8497bc1ce34a79805f650e4abc4bbfa78d3fcb98`.
 
 ## Confirmed failures and governing requirements
 
@@ -76,6 +76,11 @@ retain their original source identities.
   missing bold-monospace shape/substitution warning. The book's font/caption
   cleanup was not applied to those independent profiles. These warnings are
   recorded in `pdf-verification.json`; they do not fail the publication job.
+- Pandoc-crossref also emits its existing upstream version-mismatch warning:
+  its binary was built with Pandoc 3.9.0.2, while this workflow uses 3.10.1.
+  The successful builds and unchanged contents destinations verify this book's
+  outputs; they are not a claim of upstream support for every use of that pair.
+  “Zero warnings” above refers to the book's final LaTeX log.
 
 Full logs and disposable build trees are under `build/ci-fix-2026-09-22/`.
 The local compiler versions differ from GitHub's Ubuntu toolchains; local success
@@ -130,3 +135,23 @@ Additional accounting: application/production code 0 added / 0 removed;
 test-support CMake 2 added / 0 removed, comprising one comment and one environment
 assignment. This supplies the temporary installation's execution environment
 within the existing test; no second library-loading implementation is added.
+
+## Final hosted verification
+
+- [Publication run 35671387324](https://github.com/SNodeC/SNode.C-Book/actions/runs/35671387324)
+  passes on its first attempt with TeX Live 2026 and Pandoc 3.10.1. All PDF/package
+  builds, the archive check, and artifact upload pass.
+- [Companion run 35671387353](https://github.com/SNodeC/SNode.C-Book/actions/runs/35671387353)
+  passes for both GCC and Clang. Each passes all 183 framework tests, including
+  `StagedInstalledConsumerTest`, all four installed echo tests, companion builds,
+  teaching smoke tests, behavioral checks, and SSE lifetime/WebSocket echo checks.
+- The final local publication package contains the updated source patch and
+  manifest exactly. The regenerated book retains 490 pages, identical page
+  content streams and labels, all 1,092 contents destinations, and zero final
+  LaTeX warnings or bad boxes. The independently scoped proposal and crossref
+  warnings described above remain; no manuscript or typography file changed.
+
+`followup-evidence.json`, `github-final-jobs.json`, and selected hosted log
+excerpts record the final results. The evidence-only closing commit uses
+`[skip ci]`: it changes review records only; the tested workflow, manuscript,
+companion files, and framework snapshot remain those of `8497bc1`.

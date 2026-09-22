@@ -686,3 +686,16 @@ The source capture includes this two-line test-support change against the
 author's current HEAD `37b3a1e16de436c818eed807ee8a962f7cbbf43b`. Fresh hosted
 verification of this follow-up remains pending. Application code, manuscript,
 typography, and all deferred scopes remain unchanged; see the CI repair report.
+
+### 22 September 2026 — CI repair complete on GitHub
+
+Book commit `8497bc1ce34a79805f650e4abc4bbfa78d3fcb98` passes publication run
+`35671387324` and both GCC/Clang jobs in companion run `35671387353`. TeX Live
+2026 publication builds and uploads successfully; each compiler passes all 183
+framework tests, four installed echo tests, and all existing companion and
+runtime checks. The staged epoll loading failure is fixed by the test-local
+library path. Final local source-package and PDF checks also pass, with the book
+unchanged at 490 pages and zero final LaTeX warnings/bad boxes. Evidence is in
+`review/ci-fix-2026-09-22/REPORT.md` and `followup-evidence.json`. Only review
+records change in the closing evidence commit; no previously deferred scope is
+completed or reopened by this CI repair.

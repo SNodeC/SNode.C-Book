@@ -1,0 +1,60 @@
+Run: https://github.com/SNodeC/SNode.C-Book/actions/runs/35671387324
+Job: 106568401324
+Book commit: 8497bc1ce34a79805f650e4abc4bbfa78d3fcb98
+Result: success (first attempt)
+Selected hosted log lines:
+2026-09-22T00:19:57.2218284Z [36;1mxelatex --version | grep -F 'TeX Live 2026'[0m
+2026-09-22T00:20:08.1052232Z pandoc 3.10.1
+2026-09-22T00:20:08.1110050Z XeTeX 3.141592653-2.6-0.999998 (TeX Live 2026)
+2026-09-22T00:20:15.9483161Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:16.1205058Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:16.2194400Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:16.2433582Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:16.3430847Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:16.5681684Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:17.3131024Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:17.4895884Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:17.5008469Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:17.8636780Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:18.0370350Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:18.0476075Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:18.6686001Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:18.9538312Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:18.9753502Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:19.5366774Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:19.6496151Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:19.6607147Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:20.4517595Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:25.8782594Z WARNING: pandoc-crossref was compiled with pandoc 3.9.0.2 but is being run through 3.10.1. This is not supported. Strange things may (and likely will) happen silently.
+2026-09-22T00:20:25.8783409Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:25.8882305Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:20:25.8883880Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:25.8980925Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:31.0321939Z WARNING: pandoc-crossref was compiled with pandoc 3.9.0.2 but is being run through 3.10.1. This is not supported. Strange things may (and likely will) happen silently.
+2026-09-22T00:20:31.0323329Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:31.0431191Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:20:31.0433707Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:20:31.0532472Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:06.5314173Z WARNING: pandoc-crossref was compiled with pandoc 3.9.0.2 but is being run through 3.10.1. This is not supported. Strange things may (and likely will) happen silently.
+2026-09-22T00:21:06.5314838Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:06.5484715Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:21:06.5486814Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:06.5594401Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:12.3645284Z WARNING: pandoc-crossref was compiled with pandoc 3.9.0.2 but is being run through 3.10.1. This is not supported. Strange things may (and likely will) happen silently.
+2026-09-22T00:21:12.3646457Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:12.3779501Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:21:12.3781658Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:12.3899267Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:18.7239786Z WARNING: pandoc-crossref was compiled with pandoc 3.9.0.2 but is being run through 3.10.1. This is not supported. Strange things may (and likely will) happen silently.
+2026-09-22T00:21:18.7240974Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:18.7343576Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:21:18.7346222Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:18.7437008Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:53.6467465Z WARNING: pandoc-crossref was compiled with pandoc 3.9.0.2 but is being run through 3.10.1. This is not supported. Strange things may (and likely will) happen silently.
+2026-09-22T00:21:53.6468232Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:53.6610690Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-22T00:21:53.6612975Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:53.6731978Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-22T00:21:53.9000027Z Archive path check passed: 309 unique entries
+2026-09-22T00:21:53.9031815Z Book package build passed.
+2026-09-22T00:21:55.4156103Z Artifact snodec-book-proposal-package has been successfully uploaded! Final size is 6774892 bytes. Artifact ID is 10671161578
