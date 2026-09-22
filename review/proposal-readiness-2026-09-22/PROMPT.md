@@ -272,55 +272,55 @@ Phase 5b onward:
 
 Run Phase 0 only now.
 
-\## Author amendment — teaching book (2026-09-22)
+## Author amendment — teaching book (2026-09-22)
 This amendment supersedes conflicting items above. The book is a teaching book: the
 reader learns SNode.C and layered network programming from the book itself.
 
-\### Reader and market
-\- Primary reader: a learner working through the book — an advanced student or a
-&#x20; C++ developer — who has the stated prerequisites but no SNode.C knowledge. The book
-&#x20; must teach this reader without a lecturer.
-\- Phase 3, item 2 is replaced accordingly: position the book as a teaching book for
-&#x20; learning layered, event-driven network programming in C++ with SNode.C.
-\- Course use is a secondary benefit, stated in one sentence. Mention the framework's
-&#x20; origin in the course "Network and Distributed Systems" (FH Upper Austria, Hagenberg).
-&#x20; Do not build the proposal around course adoption.
+### Reader and market
+- Primary reader: a learner working through the book — an advanced student or a
+  C++ developer — who has the stated prerequisites but no SNode.C knowledge. The book
+  must teach this reader without a lecturer.
+- Phase 3, item 2 is replaced accordingly: position the book as a teaching book for
+  learning layered, event-driven network programming in C++ with SNode.C.
+- Course use is a secondary benefit, stated in one sentence. Mention the framework's
+  origin in the course "Network and Distributed Systems" (FH Upper Austria, Hagenberg).
+  Do not build the proposal around course adoption.
 
-\### Pedagogical elements (sample chapters in Phase 2, all others in Phase 5)
-\- Every chapter opens with a "Learning objectives" callout (\`.snodec-objectives\`,
-&#x20; styled in production/filters and production/latex).
-&#x20; \- It contains 3–5 observable objectives (explain, implement, diagnose, decide).
-&#x20; \- No objective may restate the chapter title.
-\- Every chapter closes with "What to remember" (≤ 5 bullets), then exercises.
-\- Exercises come in three tiers:
-&#x20; 1\. review questions (conceptual);
-&#x20; 2\. labs (build, run, observe, each with an expected outcome);
-&#x20; 3\. design problems (choose and justify).
-\- Every exercise maps to at least one objective, and every objective has at least
-&#x20; one exercise. Record the mapping in chapter-ledger.md.
-\- All solutions are public, so a reader working alone can check their work:
-&#x20; \- lab solutions go in companion/exercises/\<chapter>/ and build in CI;
-&#x20; \- review-question answers and design-problem discussions go in one back-matter
-&#x20;   section, "Solutions and discussion", or in companion/exercises/\<chapter>/README.md.
-\- The snodec-rule cap is 20 instead of 12. Keep rules that state a principle the
-&#x20; reader must apply.
+### Pedagogical elements (sample chapters in Phase 2, all others in Phase 5)
+- Every chapter opens with a "Learning objectives" callout (`.snodec-objectives`,
+  styled in production/filters and production/latex).
+  - It contains 3–5 observable objectives (explain, implement, diagnose, decide).
+  - No objective may restate the chapter title.
+- Every chapter closes with "What to remember" (≤ 5 bullets), then exercises.
+- Exercises come in three tiers:
+  1\. review questions (conceptual);
+  2\. labs (build, run, observe, each with an expected outcome);
+  3\. design problems (choose and justify).
+- Every exercise maps to at least one objective, and every objective has at least
+  one exercise. Record the mapping in chapter-ledger.md.
+- All solutions are public, so a reader working alone can check their work:
+  - lab solutions go in companion/exercises/<chapter>/ and build in CI;
+  - review-question answers and design-problem discussions go in one back-matter
+    section, "Solutions and discussion", or in companion/exercises/<chapter>/README.md.
+- The snodec-rule cap is 20 instead of 12. Keep rules that state a principle the
+  reader must apply.
 
-\### Learning path
-\- MiniGateway becomes a running project: Phase 4 must evaluate milestones starting in
-&#x20; the early chapters, with Ch. 35–36 as the final integration.
-\- Plan the TOC so each Part ends with a checkpoint the reader can run and verify.
-\- Phase 3 replaces the reading routes in the proposal with one clear learning path
-&#x20; plus at most two shortcuts (for example, "web and MQTT gateway first").
+### Learning path
+- MiniGateway becomes a running project: Phase 4 must evaluate milestones starting in
+  the early chapters, with Ch. 35–36 as the final integration.
+- Plan the TOC so each Part ends with a checkpoint the reader can run and verify.
+- Phase 3 replaces the reading routes in the proposal with one clear learning path
+  plus at most two shortcuts (for example, "web and MQTT gateway first").
 
-\### Added exit criteria
-\- Phase 1: the snodec-rule exit criterion becomes ≤ 20.
-\- Phase 2, for each sample chapter:
-&#x20; \- objectives are present;
-&#x20; \- all three exercise tiers are present;
-&#x20; \- the objective↔exercise table is complete;
-&#x20; \- lab solutions build;
-&#x20; \- the other solutions exist.
-\- Phase 3: the proposal states the teaching-book positioning and the learning path.
-\- Final Phase 5 sub-phase: every chapter meets all pedagogical elements.
+### Added exit criteria
+- Phase 1: the snodec-rule exit criterion becomes ≤ 20.
+- Phase 2, for each sample chapter:
+  - objectives are present;
+  - all three exercise tiers are present;
+  - the objective↔exercise table is complete;
+  - lab solutions build;
+  - the other solutions exist.
+- Phase 3: the proposal states the teaching-book positioning and the learning path.
+- Final Phase 5 sub-phase: every chapter meets all pedagogical elements.
 
-\<paste the amendment block here>
+<paste the amendment block here>
