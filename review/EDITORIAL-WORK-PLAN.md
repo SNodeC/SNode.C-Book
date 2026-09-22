@@ -1039,3 +1039,44 @@ Commit: `proposal-readiness: phase 5b — refine Part I and establish the measur
 **Stop after Phase 5b.** Next session: Phase 5c (Part II only), first rerunning the
 current Phase 5b gate listed in REPORT.md. Author-approved content-preservation
 stop rules, reserve accounting, 5l/5m split and Phase 6 proposal refresh still apply.
+
+
+## Phase 5c — Part II completed, 2026-09-22
+
+Freshly reran the Phase 5b metrics, all exit assertions, twelve labs, companion and
+runtime checks, PDF/package targets and extracted-package hygiene before editing.
+All passed; historical evidence remains unchanged. Part II now meets its budgets:
+Chapter 4 is 4,338 / 5,300 words with fourteen sections, Chapter 5 is 2,983 / 3,700
+with ten. Mean section prose is 294.50 and 278.10; total 7,321 / 9,000. The Chapter
+4 content-preservation stop rule is satisfied: substantive explanations remain,
+with the retained-topic audit in chapter-ledger.md. No reserve used; 2,750 remains.
+
+Both chapters have three objectives, one five-bullet recap, two review questions,
+two labs and one design problem, complete mappings and public solutions. The
+Part II checkpoint reuses the canonical measurement model: incoming sequence
+numbers 900,2,1 become accepted order 1,2,3; removing one observer between calls
+leaves the other receiving new values. This is explicitly a model experiment.
+A separate new public-API lab observes deferred callback execution and lifetime;
+the other three labs reuse existing model/peer test implementations. No duplicate
+application owner or protocol implementation was added.
+
+All sixteen public labs, hygiene/alignment, metrics/reference regressions,
+companion build, teaching/behavior/lifetime checks, PDF/package builds, archive
+identity and extracted-package hygiene pass locally. Full PDF pages: 454 → 438;
+samples remain 54 and proposal 6. Final warnings/bad boxes: zero. The book's existing
+ragged-bottom setting was moved into its preamble to fix a contents-page underfull
+box without diagnostic suppression; no front-matter prose changed. Both chapters,
+solutions and transitions were reread, and all Part II rendered pages plus the
+contents were inspected. Initial configuration/layout failures remain documented.
+
+Full counts: 140,336 words, 848 chapter subheadings, 399 text fences, 20 rules,
+zero forbidden phrases/closing sections. All executable listings, figure/index
+markers and existing sample reductions remain. Evidence under
+`review/proposal-readiness-2026-09-22/`: REPORT.md, chapter-ledger.md,
+metrics-after-phase-5c.json, check-phase-5c.py, phase-5c-exit-checks.json,
+phase-5c-entry-*.log, phase-5c-final-*.log and phase-5c-visual-review.md.
+
+Commit: `proposal-readiness: phase 5c — condense Part II and teach shared measurement ownership`.
+**Stop after Phase 5c.** Next: Phase 5d (Part III only), after rerunning the current
+Phase 5c gate listed in REPORT.md. Author-approved stop rules, reserve accounting,
+5l/5m split and Phase 6 proposal refresh still apply.

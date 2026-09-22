@@ -1,6 +1,6 @@
 # Public exercises and solutions
 
-These are the public solutions for Part I and the later sample chapters. Each chapter has two
+These are the public solutions for Parts I–II and the later sample chapters. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
@@ -27,6 +27,10 @@ and diagnose an intentionally missing component in a temporary copy. Chapter 3
 adds a client with a changed greeting while inheriting the existing reflection
 behavior, then checks independent measurement peers for the Part I checkpoint. Chapter 28 also isolates JSON validation before acceptance; Chapter 30 compiles
 the canonical `MeasurementModel.cpp` into two ownership experiments. There is only one implementation of each reused algorithm.
+
+The architecture labs reuse the existing measurement-model experiments and EchoPair
+peer harness; the runtime lab separately checks deferred callbacks through the installed
+public API. The Part II checkpoint needs no transport or external service.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.

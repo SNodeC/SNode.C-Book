@@ -1,0 +1,11 @@
+find_package(snodec REQUIRED COMPONENTS core)
+add_executable(deferred-work deferred-work.cpp)
+target_compile_features(deferred-work PRIVATE cxx_std_20)
+target_link_libraries(deferred-work PRIVATE snodec::core)
+add_custom_target(ch05-lab DEPENDS deferred-work model-ownership)
+add_test(NAME exercise-ch05-deferred-work COMMAND deferred-work)
+add_test(NAME exercise-ch05-model-checkpoint COMMAND $<TARGET_FILE:model-ownership>)
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/config")
+set_tests_properties(exercise-ch05-deferred-work PROPERTIES
+  ENVIRONMENT "XDG_CONFIG_HOME=${CMAKE_CURRENT_BINARY_DIR}/config" TIMEOUT 10)
+set_tests_properties(exercise-ch05-model-checkpoint PROPERTIES TIMEOUT 10)

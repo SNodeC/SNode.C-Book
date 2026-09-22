@@ -1,0 +1,183 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 360 current references, 374 old-reference dispositions.
+{
+  "chapters": [
+    {
+      "chapter": 1,
+      "path": "manuscript/chapters/01-why-snodec-exists.md",
+      "words_before": 1821,
+      "words_after": 1821,
+      "budget": 1850,
+      "prose_words": 1724,
+      "code_words": 97,
+      "headings": 5,
+      "heading_ceiling": 5,
+      "average_section_prose_words": 327.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 248
+    },
+    {
+      "chapter": 2,
+      "path": "manuscript/chapters/02-preparing-your-environment.md",
+      "words_before": 2945,
+      "words_after": 3006,
+      "budget": 3350,
+      "prose_words": 2755,
+      "code_words": 251,
+      "headings": 8,
+      "heading_ceiling": 9,
+      "average_section_prose_words": 331.5,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 286
+    },
+    {
+      "chapter": 3,
+      "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "words_before": 2566,
+      "words_after": 2568,
+      "budget": 2650,
+      "prose_words": 2026,
+      "code_words": 542,
+      "headings": 6,
+      "heading_ceiling": 6,
+      "average_section_prose_words": 321.83,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 277
+    }
+  ],
+  "part_i_words": 7395,
+  "part_i_budget": 7850,
+  "frontmatter_words": 1981,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1017,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 454,
+      "sha256": "4f59be24eef0530360ae2c31492afd05dea80bd61d46c540936d471b1fe0d5fc",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "14fd87eacd608406f6a05a5c465df20c9a9c4c1b244c0d6ddc29e9564f473e28",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "61be9445080749c448f85d7f3211362660f62dd0a517989fbda186cc0cde8d5c",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 292,
+  "reserve_used": 0,
+  "reserve_remaining": 2750,
+  "global_words": 145973,
+  "word_delta_from_author_baseline": -232
+}
+PASS: Part I budgets, pedagogy, mappings, scope, preserved listings, clean final PDFs and package contents.
+Execution and editorial/visual review are recorded in separate Phase 5b logs; future Parts are not certified.
+PASS: previous phase exits and extracted-package hygiene

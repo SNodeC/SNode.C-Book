@@ -1,0 +1,470 @@
+Source alignment passed: 31 chapter/appendix evidence records, 36 exact complete listings; SNode.C 2.0.0, base 1f0f728fc9b3b45174f2cd790d83b2f493e58af1, working-tree digest c83b6344c09b1b1a106bac2fb47cabd0c21543d6e66c19a5432303378770eebf
+NOTICE: using a supplied installation; this run does not verify its framework commit or run framework CTests.
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+core: loading dependencies 'mux-epoll, utils'
+  mux-epoll: loaded
+  utils: loading dependencies 'logger'
+    logger: loaded
+  utils: loaded
+core: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+websocket-server: loading dependencies 'websocket, http-server'
+  websocket: loading dependencies 'utils'
+    utils: already loaded
+  websocket: loaded
+  websocket: configured
+  http-server: already loaded
+websocket-server: loaded
+http-client: loading dependencies 'http'
+  http: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: loading dependencies 'core'
+        core: loading dependencies 'mux-epoll, utils'
+          mux-epoll: loaded
+          utils: loading dependencies 'logger'
+            logger: loaded
+          utils: loaded
+        core: loaded
+      core-socket: loaded
+    core-socket-stream: loaded
+  http: loaded
+  http: configured
+http-client: loaded
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: already loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+websocket-client: loading dependencies 'websocket, http-client'
+  websocket: loading dependencies 'utils'
+    utils: already loaded
+  websocket: loaded
+  websocket: configured
+  http-client: already loaded
+websocket-client: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+http-client: loading dependencies 'http'
+  http: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: loading dependencies 'core'
+        core: loading dependencies 'mux-epoll, utils'
+          mux-epoll: loaded
+          utils: loading dependencies 'logger'
+            logger: loaded
+          utils: loaded
+        core: loaded
+      core-socket: loaded
+    core-socket-stream: loaded
+  http: loaded
+  http: configured
+http-client: loaded
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: already loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+websocket-server: loading dependencies 'websocket, http-server'
+  websocket: loading dependencies 'utils'
+    utils: loading dependencies 'logger'
+      logger: loaded
+    utils: loaded
+  websocket: loaded
+  websocket: configured
+  http-server: loading dependencies 'http'
+    http: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: loading dependencies 'core'
+          core: loading dependencies 'mux-epoll, utils'
+            mux-epoll: loaded
+            utils: already loaded
+          core: loaded
+        core-socket: loaded
+      core-socket-stream: loaded
+    http: loaded
+    http: configured
+  http-server: loaded
+websocket-server: loaded
+websocket-client: loading dependencies 'websocket, http-client'
+  websocket: loading dependencies 'utils'
+    utils: loading dependencies 'logger'
+      logger: loaded
+    utils: loaded
+  websocket: loaded
+  websocket: configured
+  http-client: loading dependencies 'http'
+    http: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: loading dependencies 'core'
+          core: loading dependencies 'mux-epoll, utils'
+            mux-epoll: loaded
+            utils: already loaded
+          core: loaded
+        core-socket: loaded
+      core-socket-stream: loaded
+    http: loaded
+    http: configured
+  http-client: loaded
+websocket-client: loaded
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: loading dependencies 'core'
+        core: loading dependencies 'mux-epoll, utils'
+          mux-epoll: loaded
+          utils: loading dependencies 'logger'
+            logger: loaded
+          utils: loaded
+        core: loaded
+      core-socket: loaded
+    core-socket-stream: loaded
+  mqtt: loaded
+mqtt-client: loaded
+db-mariadb: loading dependencies 'core'
+  core: loading dependencies 'mux-epoll, utils'
+    mux-epoll: loaded
+    utils: loading dependencies 'logger'
+      logger: loaded
+    utils: loaded
+  core: loaded
+db-mariadb: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+net-in-stream-legacy: already loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  mqtt: loaded
+mqtt-client: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+net-in-stream-legacy: already loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  mqtt: loaded
+mqtt-client: loaded
+net-un-stream-legacy: loading dependencies 'net-un-stream, core-socket-stream-legacy'
+  net-un-stream: loading dependencies 'net-un-phy-stream'
+    net-un-phy-stream: loading dependencies 'net-un-phy'
+      net-un-phy: loading dependencies 'net-un'
+        net-un: loading dependencies 'net'
+          net: already loaded
+        net-un: loaded
+      net-un-phy: loaded
+    net-un-phy-stream: loaded
+  net-un-stream: loaded
+  core-socket-stream-legacy: already loaded
+net-un-stream-legacy: loaded
+core: loading dependencies 'mux-epoll, utils'
+  mux-epoll: loaded
+  utils: loading dependencies 'logger'
+    logger: loaded
+  utils: loaded
+core: loaded
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5c-examples
+[1/73] Building CXX object companion/examples/EchoPair/CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[2/73] Building CXX object companion/examples/WebSocket-Echo-ServerSubprotocol/CMakeFiles/websocket-echo-server-subprotocol.dir/EchoServer.cpp.o
+[3/73] Building CXX object companion/examples/WebSocket-Echo-ServerSubprotocol/CMakeFiles/websocket-echo-server-subprotocol.dir/EchoServerFactory.cpp.o
+[4/73] Building CXX object companion/examples/WebSocket-Echo-ClientSubprotocol/CMakeFiles/websocket-echo-client-subprotocol.dir/EchoClient.cpp.o
+[5/73] Linking CXX static library companion/examples/EchoPair/libechosocketcontext.a
+[6/73] Building CXX object companion/examples/WebSocket-Echo-ClientSubprotocol/CMakeFiles/websocket-echo-client-subprotocol.dir/EchoClientFactory.cpp.o
+[7/73] Building CXX object companion/examples/EchoPair/CMakeFiles/echoserver.dir/echoserver.cpp.o
+[8/73] Building CXX object companion/examples/EchoPair/CMakeFiles/echoclient.dir/echoclient.cpp.o
+[9/73] Building CXX object companion/examples/SemanticLogging/CMakeFiles/semantic-logging.dir/main.cpp.o
+[10/73] Building CXX object companion/examples/Comparison-AsioEcho/CMakeFiles/asio-echo.dir/main.cpp.o
+[11/73] Building CXX object companion/examples/HttpUpgrade-Server/CMakeFiles/http-upgrade-server.dir/main.cpp.o
+[12/73] Building CXX object companion/examples/HttpUpgrade-Client/CMakeFiles/http-upgrade-client.dir/main.cpp.o
+[13/73] Building CXX object companion/examples/SSE-Server/CMakeFiles/sse-server.dir/main.cpp.o
+[14/73] Linking CXX shared library companion/examples/WebSocket-Echo-ServerSubprotocol/libsnodec-websocket-echo-server.so.2
+[15/73] Linking CXX shared library companion/examples/WebSocket-Echo-ClientSubprotocol/libsnodec-websocket-echo-client.so.2
+[16/73] Building CXX object companion/examples/SSE-EventSource-Client/CMakeFiles/sse-eventsource-client.dir/main.cpp.o
+[17/73] Building CXX object companion/examples/LineProtocol-Server/CMakeFiles/line-protocol-server.dir/LineCommandServerContext.cpp.o
+[18/73] Building CXX object companion/examples/LineProtocol-Server/CMakeFiles/line-protocol-server.dir/main.cpp.o
+[19/73] Building CXX object companion/examples/LineProtocol-Client/CMakeFiles/line-protocol-client.dir/LineCommandClientContext.cpp.o
+[20/73] Building CXX object companion/examples/MQTT-ClientRole/CMakeFiles/mqtt-client-role.dir/SensorClient.cpp.o
+[21/73] Building CXX object companion/examples/LineProtocol-Client/CMakeFiles/line-protocol-client.dir/main.cpp.o
+[22/73] Building CXX object companion/examples/MariaDB-Minimal/CMakeFiles/mariadb-minimal.dir/main.cpp.o
+[23/73] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MeasurementModel.cpp.o
+[24/73] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/main.cpp.o
+[25/73] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MeasurementJsonCodec.cpp.o
+[26/73] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqttClient.cpp.o
+[27/73] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayWeb.cpp.o
+[28/73] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqtt.cpp.o
+[29/73] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/SocketStateReporter.cpp.o
+[30/73] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqttSocketContextFactory.cpp.o
+[31/73] Building CXX object companion/examples/MiniGateway/CMakeFiles/minigateway.dir/ConfigSections.cpp.o
+[32/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementModel.cpp.o
+[33/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/main.cpp.o
+[34/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementJsonCodec.cpp.o
+[35/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketServer.cpp.o
+[36/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayWeb.cpp.o
+[37/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketContextFactory.cpp.o
+[38/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketContext.cpp.o
+[39/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqtt.cpp.o
+[40/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqttClient.cpp.o
+[41/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/SocketStateReporter.cpp.o
+[42/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqttSocketContextFactory.cpp.o
+[43/73] Building CXX object companion/examples/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/ConfigSections.cpp.o
+[44/73] Building CXX object companion/exercises/ch05/CMakeFiles/deferred-work.dir/deferred-work.cpp.o
+[45/73] Building CXX object companion/exercises/ch03/CMakeFiles/greeting-client.dir/greeting-client.cpp.o
+[46/73] Building CXX object companion/exercises/ch28/CMakeFiles/measurement-validation.dir/__/__/examples/MiniGateway/MeasurementModel.cpp.o
+[47/73] Building CXX object companion/exercises/ch28/CMakeFiles/measurement-validation.dir/validation.cpp.o
+[48/73] Building CXX object companion/exercises/ch30/CMakeFiles/model-ownership.dir/model-ownership.cpp.o
+[49/73] Building CXX object companion/exercises/ch30/CMakeFiles/model-ownership.dir/__/__/examples/MiniGateway/MeasurementModel.cpp.o
+[50/73] Building CXX object companion/exercises/ch28/CMakeFiles/measurement-validation.dir/__/__/examples/MiniGateway/MeasurementJsonCodec.cpp.o
+[51/73] Building CXX object companion/exercises/ch30/CMakeFiles/model-instances.dir/model-instances.cpp.o
+[52/73] Linking CXX executable companion/examples/EchoPair/echoserver
+[53/73] Linking CXX executable companion/examples/EchoPair/echoclient
+[54/73] Linking CXX executable companion/examples/Comparison-AsioEcho/asio-echo
+[55/73] Building CXX object companion/exercises/ch30/CMakeFiles/model-instances.dir/__/__/examples/MiniGateway/MeasurementModel.cpp.o
+[56/73] Linking CXX executable companion/examples/SemanticLogging/semantic-logging
+[57/73] Linking CXX executable companion/examples/HttpUpgrade-Client/http-upgrade-client
+[58/73] Linking CXX executable companion/examples/HttpUpgrade-Server/http-upgrade-server
+[59/73] Linking CXX executable companion/examples/SSE-Server/sse-server
+[60/73] Linking CXX executable companion/examples/SSE-EventSource-Client/sse-eventsource-client
+[61/73] Creating library symlink companion/examples/WebSocket-Echo-ServerSubprotocol/libsnodec-websocket-echo-server.so
+[62/73] Creating library symlink companion/examples/WebSocket-Echo-ClientSubprotocol/libsnodec-websocket-echo-client.so
+[63/73] Linking CXX executable companion/examples/LineProtocol-Server/line-protocol-server
+[64/73] Linking CXX executable companion/examples/LineProtocol-Client/line-protocol-client
+[65/73] Linking CXX static library companion/examples/MQTT-ClientRole/libmqtt-client-role.a
+[66/73] Linking CXX executable companion/examples/MariaDB-Minimal/mariadb-minimal
+[67/73] Linking CXX executable companion/examples/MiniGateway/minigateway
+[68/73] Linking CXX executable companion/examples/MiniGateway-Extended/minigateway-extended
+[69/73] Linking CXX executable companion/exercises/ch05/deferred-work
+[70/73] Linking CXX executable companion/exercises/ch03/greeting-client
+[71/73] Linking CXX executable companion/exercises/ch30/model-ownership
+[72/73] Linking CXX executable companion/exercises/ch28/measurement-validation
+[73/73] Linking CXX executable companion/exercises/ch30/model-instances
+Companion example build passed.

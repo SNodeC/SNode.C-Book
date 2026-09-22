@@ -609,27 +609,7 @@
       "source_ids": [
         "R087"
       ],
-      "line": 272
-    },
-    {
-      "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
-      "text": "The source-reading introduction",
-      "targets": [
-        "reading-public-types-and-components"
-      ],
-      "source_ids": [
-        "R088"
-      ],
-      "line": 397
-    },
-    {
-      "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
-      "text": "source-reading introduction",
-      "targets": [
-        "reading-public-types-and-components"
-      ],
-      "source_ids": [],
-      "line": 585
+      "line": 73
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -640,18 +620,7 @@
       "source_ids": [
         "R089"
       ],
-      "line": 585
-    },
-    {
-      "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
-      "text": "Chapter 5",
-      "targets": [
-        "core-runtime-and-event-processing"
-      ],
-      "source_ids": [
-        "R098"
-      ],
-      "line": 643
+      "line": 190
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -662,7 +631,7 @@
       "source_ids": [
         "R100"
       ],
-      "line": 793
+      "line": 323
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -673,7 +642,7 @@
       "source_ids": [
         "R101"
       ],
-      "line": 896
+      "line": 347
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -684,7 +653,7 @@
       "source_ids": [
         "R102"
       ],
-      "line": 952
+      "line": 365
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -695,7 +664,7 @@
       "source_ids": [
         "R103"
       ],
-      "line": 1046
+      "line": 402
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -706,7 +675,7 @@
       "source_ids": [
         "R104"
       ],
-      "line": 1046
+      "line": 402
     },
     {
       "file": "manuscript/chapters/05-core-runtime-and-event-processing.md",
@@ -718,7 +687,7 @@
       "source_ids": [
         "R091"
       ],
-      "line": 119
+      "line": 102
     },
     {
       "file": "manuscript/chapters/05-core-runtime-and-event-processing.md",
@@ -729,7 +698,7 @@
       "source_ids": [
         "R092"
       ],
-      "line": 185
+      "line": 111
     },
     {
       "file": "manuscript/chapters/05-core-runtime-and-event-processing.md",
@@ -740,7 +709,7 @@
       "source_ids": [
         "R093"
       ],
-      "line": 243
+      "line": 119
     },
     {
       "file": "manuscript/chapters/05-core-runtime-and-event-processing.md",
@@ -751,7 +720,7 @@
       "source_ids": [
         "R094"
       ],
-      "line": 515
+      "line": 222
     },
     {
       "file": "manuscript/chapters/05-core-runtime-and-event-processing.md",
@@ -763,7 +732,7 @@
       "source_ids": [
         "R095"
       ],
-      "line": 590
+      "line": 248
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -4012,6 +3981,33 @@
       ],
       "source_ids": [],
       "line": 1
+    },
+    {
+      "file": "manuscript/parts/part-02-the-snodec-architecture.md",
+      "text": "Chapter 5",
+      "targets": [
+        "core-runtime-and-event-processing"
+      ],
+      "source_ids": [],
+      "line": 7
+    },
+    {
+      "file": "companion/exercises/ch04/README.md",
+      "text": "Chapter 4",
+      "targets": [
+        "the-mental-model-of-snodec"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch05/README.md",
+      "text": "Chapter 5",
+      "targets": [
+        "core-runtime-and-event-processing"
+      ],
+      "source_ids": [],
+      "line": 1
     }
   ],
   "migration_dispositions": [
@@ -4987,8 +4983,8 @@
       "old_chapters": [
         4
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md:397"
+      "status": "retired during Phase 5c condensation",
+      "evidence": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md: Phase 5c diff removes a repeated source-reading pointer and duplicate runtime-preview sentence; the anchored introduction and Chapter 5 handoff remain."
     },
     {
       "id": "R089",
@@ -5099,8 +5095,8 @@
       "old_chapters": [
         6
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md:643"
+      "status": "retired during Phase 5c condensation",
+      "evidence": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md: Phase 5c diff removes a repeated source-reading pointer and duplicate runtime-preview sentence; the anchored introduction and Chapter 5 handoff remain."
     },
     {
       "id": "R099",

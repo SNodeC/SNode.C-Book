@@ -218,3 +218,94 @@ Part. Later Parts' lab implementations remain for their own sessions. Front matt
 now states the independent learner, public-solution workflow and one learning path
 with two shortcuts. Edited Markdown, solutions and the Part I/II transition were
 reread; PDF evidence is separately recorded in `phase-5b-visual-review.md`.
+
+
+## Phase 5c — Part II, 2026-09-22
+
+Edited and reread: Chapters 4–5, their public solutions, and the Part II opener.
+The unchanged Part III transition was reread in context. Before figures come from
+`metrics-after-phase-5b.json`; after figures from `metrics-after-phase-5c.json`.
+
+| Chapter | Total before → after / budget | Prose before → after | Fenced before → after | Sections before → after / ceiling | Mean section prose |
+| --- | --- | --- | --- | --- | --- |
+| 4 | 7,809 → 4,338 / 5,300 | 7,296 → 4,290 | 513 → 48 | 55 → 14 / 15 | 294.50 |
+| 5 | 5,188 → 2,983 / 3,700 | 5,089 → 2,908 | 99 → 75 | 47 → 10 / 11 | 278.10 |
+
+Part II is **7,321 / 9,000 words**. No reserve used; 2,750 remains. The fenced
+reduction is entirely removed `text` blocks, not executable listings. The original
+C++ fences remain byte-identical and in order. Both chapters have three objectives,
+one five-bullet recap, and five exercises in the order review/review/lab/lab/design.
+Apparatus content words are 297 and 312 respectively.
+
+### Objective ↔ exercise coverage
+
+| Exercise | Tier | Objective(s) | Public solution |
+| --- | --- | --- | --- |
+| 4.1 | Review | O1 | `companion/exercises/ch04/README.md`, answer 1 |
+| 4.2 | Review | O2 | same README, answer 2 |
+| 4.3 | Lab | O3 | same README, answer 3; canonical model-instances target |
+| 4.4 | Lab | O1 | same README, answer 4; canonical EchoPair and existing independent-peers script |
+| 4.5 | Design | O1, O2, O3 | same README, answer 5 |
+| 5.1 | Review | O1 | `companion/exercises/ch05/README.md`, answer 1 |
+| 5.2 | Review | O2 | same README, answer 2 |
+| 5.3 | Lab | O1, O2 | same README, answer 3; `deferred-work.cpp` |
+| 5.4 | Lab | O3 | same README, answer 4; canonical model-ownership target |
+| 5.5 | Design | O1, O2, O3 | same README, answer 5 |
+
+Reverse mapping: Ch4 O1→1/4/5, O2→2/5, O3→3/5; Ch5 O1→1/3/5,
+O2→2/3/5, O3→4/5. Every objective has an exercise and every exercise has an
+objective. Public answers explain both expected outcomes and their limits.
+
+### Executed labs and checkpoint
+
+Using the common public configuration, build `ch04-lab ch05-lab`, then run
+`ctest --test-dir build/labs -R '^exercise-ch0[45]-' --output-on-failure -V`.
+The actual fresh session build directory is `build/proposal-readiness-phase-5c-examples`.
+
+- `exercise-ch04-model-instances`: shared model assigns 1,2; separate owners each
+  start at 1. Reuses `ch30/model-instances.cpp` and the canonical model.
+- `exercise-ch04-independent-peers`: an active peer receives exact binary bytes
+  while another is idle, and continues after the idle peer closes. Reuses the
+  existing peer harness and EchoPair; does not terminate the listening flow.
+- `exercise-ch05-deferred-work`: empty trace before start, RUNNING dispatch,
+  trace 1,2,3, child observes that the first callback has returned. Explicit checks
+  remain active in release builds. No latency/fairness guarantee is inferred.
+- `exercise-ch05-model-checkpoint`: producer sequences 900,2,1 become accepted
+  order 1,2,3. Remove one observer between acceptance calls; it retains 1,2 while
+  the other sees all three. Reuses `ch30/model-ownership.cpp` and the canonical
+  MiniGateway model, without requiring the later chapter. This executes model
+  ownership/removal, not event-loop scheduling, transport teardown or persistence.
+
+All four pass within **16/16** public labs. Evidence: `phase-5c-final-companion.log`,
+`phase-5c-final-labs.log`, `phase-5c-runtime-results.json`, `phase-5c-exit-checks.json`.
+CMake registration follows the existing CI discovery path; no hosted run is claimed.
+The initial missing imported-core-target scope was fixed with the lab directory's
+explicit `find_package(snodec REQUIRED COMPONENTS core)`; its failed configuration
+log remains `phase-5c-initial-companion.log`.
+
+### Content-preservation audit
+
+Chapter 4's stop rule was evaluated before claiming completion. Condensation
+removes repeated definitions, inventories and arrow chains inherited from the
+merged chapters; it retains the substantive teaching, as the following final
+locations show. No budget-driven removal of a distinct explanation was needed.
+
+| Retained teaching | Final manuscript evidence |
+| --- | --- |
+| Endpoint/handle/flow distinction, retries, independent activations, reference-capture lifetimes | Ch4:53 and :117 |
+| Connection callbacks versus context behavior, factories and per-peer state | Ch4:77 |
+| Shared model versus per-peer partial record, with observable contrast | Ch4:111 and public answer 4.3 |
+| Configuration, flow control, metrics at their distinct stages | Ch4:164 |
+| Source/type/header/component views (intro ≤300 words), type decoding | Ch4:192 and :252 |
+| Runtime versus layers; OSI qualification; all five network families | Ch4:224 and :290 |
+| Common-address versus family-specific tradeoff, stream framing | Ch4:315 and :325 |
+| Legacy/TLS distinction, operational/security obligations and public components | Ch4:334 |
+| Protocol carriers, Express/MQTT/WebSocket composition and failure diagnosis | Ch4:360 |
+| Build selection versus runtime configuration, cross-layer consequences | Ch4:383 and :404 |
+
+The four existing applied rule boxes, both chapter figures, index entries and all
+executable listings remain. Chapter 5 keeps its source excerpts, public stepping
+restriction, runtime state/status distinction, thread ownership, event publication
+versus separate queued callbacks, multiplexer stages, descriptor lifecycle, timers,
+and coordinated shutdown. Its final section applies that reasoning to the mapped
+Part II checkpoint. Visual evidence is separate in `phase-5c-visual-review.md`.

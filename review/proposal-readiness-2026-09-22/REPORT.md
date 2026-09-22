@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological; Phase 5b is now completed after the separately committed, author-authorized prerequisite repair. Part I and the approved front-matter work are complete. Phase 5c has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5c is completed after freshly passing the Phase 5b entry gate. Parts I–II and the approved front-matter work are complete. Phase 5d has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -15,7 +15,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 4 — restructure plan | approved with author changes | `proposal-readiness: phase 4 — propose consolidated teaching-book structure` (containing this report) | 2026-09-22 | RESTRUCTURE-PLAN.md; phase-4-reference-map.md; phase-4-plan-checks.json; metrics-after-phase-4.json; Phase 4 evidence below |
 | 5a — approved TOC | completed | `proposal-readiness: phase 5a — apply approved teaching-book structure` (containing this report) | 2026-09-22 | phase-5a-approved-structure.json; phase-5a-reference-register.json; phase-5a-exit-checks.json; metrics-after-phase-5a.json; Phase 5a evidence below |
 | 5b — Part I | completed | `proposal-readiness: phase 5b — refine Part I and establish the measurement checkpoint` (containing this report); separate prerequisite repair retained | 2026-09-22 | metrics-after-phase-5b.json; phase-5b-exit-checks.json; chapter-ledger.md; phase-5b-final-*.log; phase-5b-visual-review.md; completion account below |
-| 5c — Part II | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5c — Part II | completed | `proposal-readiness: phase 5c — condense Part II and teach shared measurement ownership` (containing this report) | 2026-09-22 | metrics-after-phase-5c.json; phase-5c-exit-checks.json; chapter-ledger.md; phase-5c-final-*.log; phase-5c-visual-review.md; completion account below |
 | 5d — Part III | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5e — Part IV | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5f — Part V | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -1323,3 +1323,142 @@ Stop here. Phase 5c is the next Part session, after rerunning the current Phase 
 metrics/assertions, hygiene/alignment, companion build, twelve labs, smoke/lifetime
 checks, PDF/package targets, and extracted-package hygiene. Do not run the historical
 5a checker as a Part I exit: it intentionally asserts the uncondensed prior state.
+
+
+## Phase 5c — Part II completed, 2026-09-22
+
+### Previous-phase gate, rerun before editing
+
+The working tree was clean at entry. Fresh metrics exactly reproduced the Phase
+5b snapshot (145,973 total words). The Phase 5b checker ran with only its output
+path redirected to `phase-5c-entry-previous-exit-checks.json`, retaining its original
+assertions and historical evidence. It passed all Part I budgets, mappings, scope,
+preservation, archive identity and PDF checks. Fresh hygiene/reference regressions,
+source alignment, metric regressions, companion build, all twelve existing labs,
+teaching/behavior/lifetime tests, PDF/package targets and extracted-package hygiene
+also passed. Evidence: `phase-5c-entry-results.json`,
+`phase-5c-entry-runtime-results.json`, `phase-5c-entry-*.log` and the redirected exit
+JSON. Entry page counts were **454 / 54 / 6** (full / samples / proposal).
+
+### Edited and reread
+
+- `manuscript/chapters/04-the-mental-model-and-layers-in-practice.md:11` now connects
+  the merged mental-model and layer material through fourteen sections. Repeated
+  definitions, inventories and twenty-eight text blocks become connected prose
+  or comparison tables. All substantive lifetime, callback, factory, address,
+  component, TLS, protocol-carrier and cross-layer explanations remain. The
+  ≤300-word public-name introduction is at `:192`. The canonical measurement
+  owner is introduced at `:111`, then applied in the mapped exercises at `:427`.
+- `manuscript/chapters/05-core-runtime-and-event-processing.md:14` retains all
+  runtime source excerpts while consolidating forty-seven headings into ten.
+  State versus status, the public stepping restriction, capture/thread ownership,
+  event publication, descriptor lifecycle, timers, and coordinated shutdown remain
+  explicit. The new mapped Part II checkpoint is at `:250` and its lab at `:270`.
+- `manuscript/parts/part-02-the-snodec-architecture.md:7` points to the model
+  checkpoint and separate deferred-callback experiment. Both chapters open with
+  three objectives and close with one five-bullet recap, then five exercises.
+  The public `companion/exercises/ch04/README.md` and `ch05/README.md` provide all
+  answers, commands and expected observations. Edited reader text and solutions
+  were reread; the unchanged Part III transition was reread in context.
+
+The Chapter 4 content-preservation stop rule was applied: no distinct teaching
+explanation needed removal to meet the budget, and no reserve is drawn.
+`chapter-ledger.md`, the Phase 5c content-preservation table, identifies the final
+location of each retained topic. All original C++ blocks remain byte-identical
+and in order in both chapters. The exit checker also preserves all 293 book-wide
+executable/configuration fences, complete-listing markers, index entries and
+figure declarations. Applied rule boxes are retained, not reduced to meet a quota.
+
+### Measured exit criteria
+
+| Chapter | Total before → after / budget | Prose before → after | Headings before → after / ceiling | Mean section prose |
+| --- | --- | --- | --- | --- |
+| 4 | 7,809 → 4,338 / 5,300 | 7,296 → 4,290 | 55 → 14 / 15 | 294.50 |
+| 5 | 5,188 → 2,983 / 3,700 | 5,089 → 2,908 | 47 → 10 / 11 | 278.10 |
+
+Part II: **7,321 / 9,000 words**. Each chapter has two review questions, two labs
+and one design problem, complete objective↔exercise coverage, and public solutions.
+The ledger records the ten forward mappings and both reverse maps. Front matter:
+**1,980 / 2,500**; all Part/epilogue openers: **1,057 / 1,650**. Reserve:
+**0 used; 2,750 remaining**. All five original samples retain their ≥20% prose
+reductions and section-length targets; their manuscript text is unchanged here.
+
+Full manuscript: **140,336 total / 126,451 prose / 13,885 fenced words**, down
+**5,637 total / 5,147 prose / 490 fenced**. Of the fenced decrease, 489 tokens are
+removed text blocks; one is the existing page-bottom directive moved out of the
+manifest into metadata. Executable listings are not shortened. Chapter subheadings:
+**926 → 848**; text fences: **429 → 399**; C++ fences: **199 → 199**; rules:
+**20 → 20**; forbidden phrases and closing sections: **0**; shell label: `sh`.
+
+The global limits are due in the final audit, not this Part session: 25,336 words,
+298 chapter subheadings and 149 text fences remain above their final ceilings;
+global mean section prose is 138.0. Later Parts, Appendix A, and the final audit
+remain pending. The author-approved proposal refresh remains Phase 6.
+
+### Built, run, and inspected
+
+The governing lab invariants are one canonical accepted-state owner, observer
+removal before captured state dies, and deferred callbacks that execute after
+registration and after the current callback returns. Three new CTest entries reuse
+existing sources: shared/separate model instances, independent EchoPair peers,
+and model ownership/removal. The sole new C++ test, `companion/exercises/ch05/deferred-work.cpp:7`,
+observes the installed public API; all captured local state outlives `start()`.
+Its explicit assertions execute in release builds. This avoids another model,
+protocol parser, or application implementation. The model checkpoint executes
+acceptance/removal between calls; it does not claim runtime scheduling, removal
+during notification, transport teardown, durability or cross-process ordering.
+
+| Check | Executed result | Evidence |
+| --- | --- | --- |
+| Fresh metrics and Part II assertions | Pass: budgets, pedagogy, mappings, sample retention, scope and preservation | metrics-after-phase-5c.json; check-phase-5c.py; phase-5c-exit-checks.json; phase-5c-final-exit.log |
+| Metric regression tests | Pass | phase-5c-final-metrics-tests.log |
+| Hygiene and reference regression tests | Pass; 360 current references, 39 stable topics, all 374 original dispositions | phase-5c-final-hygiene.log |
+| Source alignment | Pass, 36 exact complete listings | phase-5c-final-alignment.log |
+| Companion build | Pass using supplied installation; all examples and labs built | phase-5c-final-companion.log |
+| Public labs | **16/16 pass**, including four Part II entries | phase-5c-final-labs.log; phase-5c-runtime-results.json |
+| Teaching and behavioral smoke tests | Pass | phase-5c-final-teaching.log; phase-5c-final-behavior.log |
+| SSE lifetime and WebSocket cases | Pass | phase-5c-final-lifetime.log |
+| Proposal, sample, full PDF and package | Pass | phase-5c-final-package.log; phase-5c-build-results.json |
+| Archive input identity / extracted hygiene | All 297 packaged files match; hygiene passes from extraction | phase-5c-exit-checks.json; phase-5c-final-extracted-hygiene.log |
+| PDF logs and targeted rendered-page review | Zero warnings/bad boxes; edited chapters and contents inspected | phase-5c-exit-checks.json; phase-5c-visual-review.md |
+
+Pages (before → after): **full manuscript 454 → 438; samples 54 → 54; proposal
+6 → 6**. The build directory for examples is `build/proposal-readiness-phase-5c-examples`;
+PDF targets use `build/proposal-readiness-phase-2`. These are local executions of
+CI workflow checks, not a hosted run or new equipped-hardware/deployment validation.
+
+The first companion configuration failed because the imported core target was
+visible only in a sibling CMake directory. The lab now explicitly finds its own
+required core component; no duplicate target or implementation is introduced.
+The failure remains in `phase-5c-initial-companion.log`. The initial PDF target
+built but recorded one underfull contents-page box. The existing `\raggedbottom`
+setting moved from `manuscript/frontmatter/mainmatter.md` into
+`production/metadata/metadata.yaml` after `\makeindex`, making the book's existing
+natural-bottom policy apply to the contents too. This is the only change outside
+Part II manuscript text; no prose, warning threshold or suppression changed.
+`check-phase-5c.py` asserts that exact one-line relocation. The initial log is
+retained as `phase-5c-initial-package.log`; the final logs are clean.
+
+Reference-register maintenance follows the edited passages: R088 and R098 have
+explicit retirement dispositions for duplicate pointers; one other redundant
+Phase 5a pointer is removed, and three new Part/opener/solution pointers have
+explicit topic targets. Existing retained references only receive new line evidence.
+The author's combined R275/R276 entry remains intact. No TOC, chapter numbering,
+framework source, application implementation or historical result changes.
+
+Diff accounting: application production implementation **+0/−0**; new lab C++
+**+36/−0**; lab CMake registration **+19/−1**; book page-bottom policy **+1/−1**;
+review-only exit automation **+134/−0**. Documentation and generated evidence are
+separate. New test support is required to observe the requested callback contract;
+it uses the existing public API and canonical examples rather than duplicating
+application state or behavior. The completed diff was reviewed for duplication,
+lifetime mistakes, scope expansion and accidental listing changes.
+
+**Status: completed.** Commit:
+`proposal-readiness: phase 5c — condense Part II and teach shared measurement ownership`.
+Stop here. Phase 5d is next, covering Part III only. Before editing, rerun the
+current Phase 5c metrics/assertions, hygiene/alignment, metric/reference tests,
+companion build, sixteen labs, teaching/behavior/lifetime checks, PDF/package
+targets and extracted-package hygiene. Use `check-phase-5c.py` as the current
+exit checker; historical Phase 5b assertions intentionally describe the earlier
+uncondensed Part II state and are not the next entry gate.
