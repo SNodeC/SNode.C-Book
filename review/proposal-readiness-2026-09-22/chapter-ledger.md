@@ -345,3 +345,121 @@ No reserve used; 2,750 remains. Application/test code growth: zero.
 Separate commit: `proposal-readiness: phase 5c follow-up — remove triple name/component explanation`.
 This freshly passed follow-up is the authorized Phase 5d entry baseline; the author
 explicitly requests Phase 5d next in the same session.
+
+
+## Phase 5d — Part III completed, 2026-09-22
+
+Baseline: the separately committed author-requested Phase 5c follow-up;
+`metrics-after-phase-5c-follow-up.json`. After: `metrics-after-phase-5d.json` and
+`phase-5d-exit-checks.json`. Chapter counts include all pedagogical apparatus.
+Edited and reread: Chapters 6–8, the Part III opener, and all three public solution
+READMEs. The unchanged Part IV opener was reread for the transition. Rendered-page
+review is separate in `phase-5d-visual-review.md`.
+
+| Chapter | Words before → after | Budget | Prose before → after | Fenced words before → after | Sections before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 6 | 8,080 → 4,168 | 5,200 | 7,615 → 3,952 | 465 → 216 | 63 → 12 / 15 | 319.25 |
+| 7 | 4,859 → 3,084 | 3,650 | 4,629 → 3,032 | 230 → 52 | 32 → 9 / 10 | 324.67 |
+| 8 | 2,613 → 2,170 | 2,200 | 2,463 → 2,059 | 150 → 111 | 25 → 5 / 5 | 393.40 |
+
+Part III totals **9,422 / 11,050** words. No reserve used; 2,750 remains.
+All original C++ excerpts remain byte-identical and in order within their chapters.
+Fenced-word reductions remove explanatory `text` blocks, not executable listings.
+Each chapter opens with three objectives and ends with one five-bullet recap,
+then five exercises: two review questions, two labs and one design problem.
+
+### Objective ↔ exercise mapping and public solutions
+
+All numbered answers are in `companion/exercises/chNN/README.md`, under matching
+exercise headings. The chapter objective callouts begin at line 3; exercise
+callouts begin at Ch6:600, Ch7:363, and Ch8:273.
+
+| Chapter.exercise | Tier | Objectives | Public answer / executable observation |
+| --- | --- | --- | --- |
+| 6.1 | Review | O1 | ch06/README.md §1: configured defaults versus usable local/remote endpoints |
+| 6.2 | Review | O3 | ch06/README.md §2: unsupported credentials and authorization |
+| 6.3 | Lab | O1, O2 | ch06/README.md §3; `exercise-ch06-ip-families` |
+| 6.4 | Lab | O3 | ch06/README.md §4; `exercise-ch06-unix-path` |
+| 6.5 | Design | O1, O2, O3 | ch06/README.md §5: local producer endpoint and deployment obligations |
+| 7.1 | Review | O1 | ch07/README.md §1: handle, flow, connection and role lifetimes |
+| 7.2 | Review | O2 | ch07/README.md §2: callback stage and borrowed-pointer lifetime |
+| 7.3 | Lab | O3 | ch07/README.md §3; `exercise-ch07-independent-peers` |
+| 7.4 | Lab | O2 | ch07/README.md §4; `exercise-ch07-occupied-endpoint` |
+| 7.5 | Design | O1, O2, O3 | ch07/README.md §5: independent destinations, shared accepted state |
+| 8.1 | Review | O1 | ch08/README.md §1: device identity and family-specific selector |
+| 8.2 | Review | O2 | ch08/README.md §2: ordered diagnosis of an equipped exchange |
+| 8.3 | Lab | O1 | ch08/README.md §3; `exercise-ch08-selectors`; optional physical extension |
+| 8.4 | Lab | O3 | ch08/README.md §4; `exercise-ch08-part-checkpoint` |
+| 8.5 | Design | O2, O3 | ch08/README.md §5: BLE advertisement versus supported stream input |
+
+| Objective | Exercises |
+| --- | --- |
+| 6.O1 | 6.1, 6.3, 6.5 |
+| 6.O2 | 6.3, 6.5 |
+| 6.O3 | 6.2, 6.4, 6.5 |
+| 7.O1 | 7.1, 7.5 |
+| 7.O2 | 7.2, 7.4, 7.5 |
+| 7.O3 | 7.3, 7.5 |
+| 8.O1 | 8.1, 8.3 |
+| 8.O2 | 8.2, 8.5 |
+| 8.O3 | 8.4, 8.5 |
+
+### Built and run
+
+All six new registrations pass within **22/22** public labs; exact commands and
+observations are in `phase-5d-final-labs.log`, with build evidence in
+`phase-5d-final-companion.log` and exit assertions in `phase-5d-exit-checks.json`.
+The ordinary companion CMake discovery path includes all three new directories.
+No hosted CI execution is claimed.
+
+- IP families: exact binary measurement-shaped bytes over IPv4 and IPv6 loopback;
+  producer/service identities match the opposite server observations. Rendered
+  names are resolved within the chosen family before comparing endpoints.
+- Unix path: identical bytes and opposite pathname identities; each endpoint
+  removes its owned path, while an unrelated sentinel survives. These assertions
+  occur before temporary-directory cleanup, so fixture cleanup cannot hide a leak.
+- Independent peers: existing fixture observes one peer progressing while another
+  is idle and after that peer closes. No shared-model behavior is inferred.
+- Occupied endpoint: existing fixture observes a second listener's activation
+  failure while the original listener continues reflecting bytes.
+- Bluetooth selectors: public getters expose an empty initial configured device
+  string and zero selectors; initialization retains one chosen device with channel
+  16 and PSM 4097. This opens no radio socket.
+- Part III checkpoint: the same canonical EchoPair context/factory handles the
+  same bytes over loopback IP and a private Unix path, with identity and cleanup
+  observations. Echoing bytes does not assign accepted measurement order.
+
+`family-server.cpp` is one thin driver compiled for five carriers, reusing the
+canonical context/factory. Its optional RFCOMM and L2CAP targets build. The public
+RFCOMM two-host procedure is an **optional equipped extension, not run** here;
+physical Bluetooth delivery remains unverified. IPv6 loopback and installed
+Bluetooth development/components are required for the mandatory local tests.
+
+### Content-preservation audit
+
+The author stop rule applies to Chapter 6. Its cuts remove the repeated family
+introductions, mirrored descriptions and stack-arrow blocks inherited from the
+merge. Distinct explanations and examples remain at the following final locations;
+no substantive topic was removed to meet the budget.
+
+| Retained teaching | Final chapter evidence |
+| --- | --- |
+| Local/remote direction, family-specific address meaning and endpoint identity | Ch6:9, :64 |
+| Defaults, constructors, initialization, rendered versus actual observations | Ch6:173 |
+| IPv4/IPv6 resolution, concrete endpoints, convenience overloads | Ch6:242, :281 |
+| Context reuse with separate family observations and dual-stack policy | Ch6:302, :331 |
+| Complete existing IPv4/IPv6 comparison excerpts | Ch6:341 |
+| Pathname/abstract Unix identities, listening/connecting, datagram distinction | Ch6:409, :447 |
+| Directory access, path cleanup/ownership and deployment | Ch6:526 |
+| Credential query/status, unsupported result and authorization decision | Ch6:547 |
+| Public family headers/components | Ch6:242 and :447 |
+
+Chapter 7 retains independent flow control, shared endpoint configuration, retry
+ownership, connection surfaces/counters, TLS readiness, detach/disconnect timing,
+factory dependencies and per-peer state (sections at :51, :84, :134, :204, :252,
+:297, :317, :327). Both applied rules and its figure remain. Chapter 8 retains
+service-selector distinctions, local/remote direction, conditional components,
+Classic/BLE distinction, equipment preparation and both interactive `bluetoothctl`
+blocks (:13, :97, :161, :201, :234). Every index occurrence and existing executable
+excerpt remains; the preservation checker verifies those claims against the
+committed entry baseline.

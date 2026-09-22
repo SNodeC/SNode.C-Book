@@ -512,6 +512,15 @@
       "line": 408
     },
     {
+      "file": "manuscript/chapters/02-preparing-your-environment.md",
+      "text": "Chapter 1",
+      "targets": [
+        "why-snodec-exists"
+      ],
+      "source_ids": [],
+      "line": 415
+    },
+    {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
       "text": "Chapter 2",
       "targets": [
@@ -743,18 +752,7 @@
       "source_ids": [
         "R105"
       ],
-      "line": 61
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapter 4",
-      "targets": [
-        "layers-in-practice-network-transport-connection-application"
-      ],
-      "source_ids": [
-        "R106"
-      ],
-      "line": 103
+      "line": 38
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -765,7 +763,7 @@
       "source_ids": [
         "R107"
       ],
-      "line": 221
+      "line": 135
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -776,40 +774,7 @@
       "source_ids": [
         "R108"
       ],
-      "line": 405
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapter 4",
-      "targets": [
-        "layers-in-practice-network-transport-connection-application"
-      ],
-      "source_ids": [
-        "R120"
-      ],
-      "line": 547
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "The section \u201cAddress semantics\u201d",
-      "targets": [
-        "socket-addresses-and-address-semantics"
-      ],
-      "source_ids": [
-        "R121"
-      ],
-      "line": 557
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "the section \u201cAddress semantics\u201d",
-      "targets": [
-        "socket-addresses-and-address-semantics"
-      ],
-      "source_ids": [
-        "R122"
-      ],
-      "line": 574
+      "line": 227
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -820,7 +785,7 @@
       "source_ids": [
         "R123"
       ],
-      "line": 582
+      "line": 287
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -831,107 +796,7 @@
       "source_ids": [
         "R124"
       ],
-      "line": 631
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "The section \u201cAddress semantics\u201d",
-      "targets": [
-        "socket-addresses-and-address-semantics"
-      ],
-      "source_ids": [
-        "R125"
-      ],
-      "line": 694
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "the section \u201cAddress semantics\u201d",
-      "targets": [
-        "socket-addresses-and-address-semantics"
-      ],
-      "source_ids": [
-        "R126"
-      ],
-      "line": 713
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapter 7",
-      "targets": [
-        "servers-clients-and-connections"
-      ],
-      "source_ids": [
-        "R127"
-      ],
-      "line": 713
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "The section \u201cAddress semantics\u201d",
-      "targets": [
-        "socket-addresses-and-address-semantics"
-      ],
-      "source_ids": [
-        "R128"
-      ],
-      "line": 715
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapter 7",
-      "targets": [
-        "servers-clients-and-connections"
-      ],
-      "source_ids": [
-        "R129"
-      ],
-      "line": 715
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "The section \u201cIPv4 and IPv6\u201d",
-      "targets": [
-        "ipv4-and-ipv6-as-the-first-concrete-network-families"
-      ],
-      "source_ids": [
-        "R130"
-      ],
-      "line": 715
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapters 6 and 7",
-      "targets": [
-        "socket-addresses-and-address-semantics",
-        "servers-clients-and-connections"
-      ],
-      "source_ids": [
-        "R131"
-      ],
-      "line": 836
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "The section \u201cAddress semantics\u201d",
-      "targets": [
-        "socket-addresses-and-address-semantics"
-      ],
-      "source_ids": [
-        "R132"
-      ],
-      "line": 836
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapter 7",
-      "targets": [
-        "servers-clients-and-connections"
-      ],
-      "source_ids": [
-        "R133"
-      ],
-      "line": 836
+      "line": 310
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -942,29 +807,7 @@
       "source_ids": [
         "R134"
       ],
-      "line": 875
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "the section \u201cIPv4 and IPv6\u201d",
-      "targets": [
-        "ipv4-and-ipv6-as-the-first-concrete-network-families"
-      ],
-      "source_ids": [
-        "R135"
-      ],
-      "line": 926
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "the section \u201cIPv4 and IPv6\u201d",
-      "targets": [
-        "ipv4-and-ipv6-as-the-first-concrete-network-families"
-      ],
-      "source_ids": [
-        "R136"
-      ],
-      "line": 1074
+      "line": 407
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -975,7 +818,7 @@
       "source_ids": [
         "R137"
       ],
-      "line": 1127
+      "line": 505
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -986,7 +829,7 @@
       "source_ids": [
         "R138"
       ],
-      "line": 1174
+      "line": 522
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -1001,29 +844,7 @@
       "source_ids": [
         "R139"
       ],
-      "line": 1285
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "the section \u201cUnix domain sockets\u201d",
-      "targets": [
-        "unix-domain-sockets"
-      ],
-      "source_ids": [
-        "R140"
-      ],
-      "line": 1300
-    },
-    {
-      "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapter 8",
-      "targets": [
-        "bluetooth-in-snodec-rfcomm-and-l2cap"
-      ],
-      "source_ids": [
-        "R141"
-      ],
-      "line": 1300
+      "line": 574
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -1034,7 +855,7 @@
       "source_ids": [
         "R142"
       ],
-      "line": 1325
+      "line": 590
     },
     {
       "file": "manuscript/chapters/07-servers-clients-and-connections.md",
@@ -1045,7 +866,7 @@
       "source_ids": [
         "R109"
       ],
-      "line": 10
+      "line": 15
     },
     {
       "file": "manuscript/chapters/07-servers-clients-and-connections.md",
@@ -1056,7 +877,7 @@
       "source_ids": [
         "R110"
       ],
-      "line": 225
+      "line": 108
     },
     {
       "file": "manuscript/chapters/07-servers-clients-and-connections.md",
@@ -1067,18 +888,7 @@
       "source_ids": [
         "R111"
       ],
-      "line": 373
-    },
-    {
-      "file": "manuscript/chapters/07-servers-clients-and-connections.md",
-      "text": "Chapter 6",
-      "targets": [
-        "socket-addresses-and-address-semantics"
-      ],
-      "source_ids": [
-        "R112"
-      ],
-      "line": 397
+      "line": 164
     },
     {
       "file": "manuscript/chapters/07-servers-clients-and-connections.md",
@@ -1089,18 +899,7 @@
       "source_ids": [
         "R113"
       ],
-      "line": 437
-    },
-    {
-      "file": "manuscript/chapters/07-servers-clients-and-connections.md",
-      "text": "Chapter 7",
-      "targets": [
-        "servers-clients-and-connections"
-      ],
-      "source_ids": [
-        "R114"
-      ],
-      "line": 554
+      "line": 220
     },
     {
       "file": "manuscript/chapters/07-servers-clients-and-connections.md",
@@ -1111,18 +910,7 @@
       "source_ids": [
         "R115"
       ],
-      "line": 582
-    },
-    {
-      "file": "manuscript/chapters/07-servers-clients-and-connections.md",
-      "text": "Chapter 7",
-      "targets": [
-        "servers-clients-and-connections"
-      ],
-      "source_ids": [
-        "R116"
-      ],
-      "line": 616
+      "line": 299
     },
     {
       "file": "manuscript/chapters/07-servers-clients-and-connections.md",
@@ -1133,7 +921,7 @@
       "source_ids": [
         "R117"
       ],
-      "line": 628
+      "line": 325
     },
     {
       "file": "manuscript/chapters/07-servers-clients-and-connections.md",
@@ -1144,7 +932,7 @@
       "source_ids": [
         "R118"
       ],
-      "line": 628
+      "line": 325
     },
     {
       "file": "manuscript/chapters/07-servers-clients-and-connections.md",
@@ -1155,7 +943,7 @@
       "source_ids": [
         "R119"
       ],
-      "line": 655
+      "line": 332
     },
     {
       "file": "manuscript/chapters/08-bluetooth-in-snodec-rfcomm-and-l2cap.md",
@@ -1166,7 +954,7 @@
       "source_ids": [
         "R143"
       ],
-      "line": 129
+      "line": 88
     },
     {
       "file": "manuscript/chapters/08-bluetooth-in-snodec-rfcomm-and-l2cap.md",
@@ -1177,7 +965,7 @@
       "source_ids": [
         "R144"
       ],
-      "line": 267
+      "line": 159
     },
     {
       "file": "manuscript/chapters/08-bluetooth-in-snodec-rfcomm-and-l2cap.md",
@@ -1188,7 +976,7 @@
       "source_ids": [
         "R145"
       ],
-      "line": 346
+      "line": 217
     },
     {
       "file": "manuscript/chapters/08-bluetooth-in-snodec-rfcomm-and-l2cap.md",
@@ -1199,7 +987,7 @@
       "source_ids": [
         "R146"
       ],
-      "line": 366
+      "line": 230
     },
     {
       "file": "manuscript/chapters/08-bluetooth-in-snodec-rfcomm-and-l2cap.md",
@@ -1210,7 +998,7 @@
       "source_ids": [
         "R147"
       ],
-      "line": 421
+      "line": 261
     },
     {
       "file": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
@@ -3821,7 +3609,7 @@
       "source_ids": [
         "R046"
       ],
-      "line": 24
+      "line": 23
     },
     {
       "file": "companion/exercises/README.md",
@@ -3832,7 +3620,7 @@
       "source_ids": [
         "R047"
       ],
-      "line": 26
+      "line": 25
     },
     {
       "file": "companion/exercises/README.md",
@@ -3843,7 +3631,7 @@
       "source_ids": [
         "R048"
       ],
-      "line": 28
+      "line": 27
     },
     {
       "file": "companion/exercises/README.md",
@@ -3854,7 +3642,7 @@
       "source_ids": [
         "R049"
       ],
-      "line": 28
+      "line": 27
     },
     {
       "file": "companion/exercises/ch01/README.md",
@@ -3965,15 +3753,6 @@
       "line": 7
     },
     {
-      "file": "manuscript/chapters/02-preparing-your-environment.md",
-      "text": "Chapter 1",
-      "targets": [
-        "why-snodec-exists"
-      ],
-      "source_ids": [],
-      "line": 415
-    },
-    {
       "file": "companion/exercises/ch02/README.md",
       "text": "Chapter 2",
       "targets": [
@@ -4005,6 +3784,33 @@
       "text": "Chapter 5",
       "targets": [
         "core-runtime-and-event-processing"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch06/README.md",
+      "text": "Chapter 6",
+      "targets": [
+        "socket-addresses-and-address-semantics"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch07/README.md",
+      "text": "Chapter 7",
+      "targets": [
+        "servers-clients-and-connections"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch08/README.md",
+      "text": "Chapter 8",
+      "targets": [
+        "bluetooth-in-snodec-rfcomm-and-l2cap"
       ],
       "source_ids": [],
       "line": 1
@@ -5184,8 +4990,8 @@
       "old_chapters": [
         7
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:103"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R107",
@@ -5250,8 +5056,8 @@
       "old_chapters": [
         8
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/07-servers-clients-and-connections.md:397"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/07-servers-clients-and-connections.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R113",
@@ -5272,8 +5078,8 @@
       "old_chapters": [
         9
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/07-servers-clients-and-connections.md:554"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/07-servers-clients-and-connections.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R115",
@@ -5294,8 +5100,8 @@
       "old_chapters": [
         9
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/07-servers-clients-and-connections.md:616"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/07-servers-clients-and-connections.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R117",
@@ -5338,8 +5144,8 @@
       "old_chapters": [
         7
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:547"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R121",
@@ -5349,8 +5155,8 @@
       "old_chapters": [
         8
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:557"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R122",
@@ -5360,8 +5166,8 @@
       "old_chapters": [
         8
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:574"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R123",
@@ -5393,8 +5199,8 @@
       "old_chapters": [
         8
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:694"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R126",
@@ -5404,8 +5210,8 @@
       "old_chapters": [
         8
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:713"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R127",
@@ -5415,8 +5221,8 @@
       "old_chapters": [
         9
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:713"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R128",
@@ -5426,8 +5232,8 @@
       "old_chapters": [
         8
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:715"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R129",
@@ -5437,8 +5243,8 @@
       "old_chapters": [
         9
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:715"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R130",
@@ -5448,8 +5254,8 @@
       "old_chapters": [
         10
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:715"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R131",
@@ -5460,8 +5266,8 @@
         8,
         9
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:836"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R132",
@@ -5471,8 +5277,8 @@
       "old_chapters": [
         8
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:836"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R133",
@@ -5482,8 +5288,8 @@
       "old_chapters": [
         9
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:836"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R134",
@@ -5504,8 +5310,8 @@
       "old_chapters": [
         10
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:926"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R136",
@@ -5515,8 +5321,8 @@
       "old_chapters": [
         10
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:1074"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R137",
@@ -5563,8 +5369,8 @@
       "old_chapters": [
         11
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:1300"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R141",
@@ -5574,8 +5380,8 @@
       "old_chapters": [
         12
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:1300"
+      "status": "retired",
+      "evidence": "Phase 5d: redundant framing/self-pointer removed in manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md; see Phase 5d diff and chapter-ledger.md."
     },
     {
       "id": "R142",

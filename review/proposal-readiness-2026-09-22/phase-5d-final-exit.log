@@ -1,0 +1,182 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 343 current references, 374 old-reference dispositions.
+{
+  "chapters": [
+    {
+      "chapter": 6,
+      "path": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+      "words_before": 8080,
+      "words_after": 4168,
+      "budget": 5200,
+      "prose_words": 3952,
+      "code_words": 216,
+      "headings": 12,
+      "heading_ceiling": 15,
+      "average_section_prose_words": 319.25,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 295
+    },
+    {
+      "chapter": 7,
+      "path": "manuscript/chapters/07-servers-clients-and-connections.md",
+      "words_before": 4859,
+      "words_after": 3084,
+      "budget": 3650,
+      "prose_words": 3032,
+      "code_words": 52,
+      "headings": 9,
+      "heading_ceiling": 10,
+      "average_section_prose_words": 324.67,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O1, O2, O3"
+        ]
+      ],
+      "apparatus_words": 302
+    },
+    {
+      "chapter": 8,
+      "path": "manuscript/chapters/08-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "words_before": 2613,
+      "words_after": 2170,
+      "budget": 2200,
+      "prose_words": 2059,
+      "code_words": 111,
+      "headings": 5,
+      "heading_ceiling": 5,
+      "average_section_prose_words": 393.4,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O3"
+        ],
+        [
+          "Design",
+          "O2, O3"
+        ]
+      ],
+      "apparatus_words": 318
+    }
+  ],
+  "part_iii_words": 9422,
+  "part_iii_budget": 11050,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1100,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 418,
+      "sha256": "c4ad962907388bda0543f42154c44bbbc0a44590e8a9b76a5bad236179a7265e",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "8a82121eb85bf64626523804fb3a71608f4222fd4e5a098e0f15424219ea7ce2",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "778209bbdea4a780afcfebf88e0459ff5b54c0243c30429ca058a40c7024158c",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 306,
+  "reserve_used": 0,
+  "reserve_remaining": 2750,
+  "global_words": 133986,
+  "word_delta_from_phase_5c_follow_up": -6087
+}
+PASS: Part III budgets, pedagogy, mappings, scope, preserved listings, clean final PDFs and package contents.
+Execution and editorial/visual review are recorded in separate Phase 5d logs; future Parts are not certified.

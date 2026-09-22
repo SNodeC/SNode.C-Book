@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5c is completed after freshly passing the Phase 5b entry gate. Parts I–II and the approved front-matter work are complete. Phase 5d has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5d is completed after the separately committed author-requested Phase 5c follow-up and its fresh exit checks. Parts I–III and the approved front-matter work are complete. Phase 5e has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -16,7 +16,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5a — approved TOC | completed | `proposal-readiness: phase 5a — apply approved teaching-book structure` (containing this report) | 2026-09-22 | phase-5a-approved-structure.json; phase-5a-reference-register.json; phase-5a-exit-checks.json; metrics-after-phase-5a.json; Phase 5a evidence below |
 | 5b — Part I | completed | `proposal-readiness: phase 5b — refine Part I and establish the measurement checkpoint` (containing this report); separate prerequisite repair retained | 2026-09-22 | metrics-after-phase-5b.json; phase-5b-exit-checks.json; chapter-ledger.md; phase-5b-final-*.log; phase-5b-visual-review.md; completion account below |
 | 5c — Part II | completed | `proposal-readiness: phase 5c follow-up — remove triple name/component explanation`; initial Phase 5c commit retained | 2026-09-22 | metrics-after-phase-5c.json; phase-5c-exit-checks.json; chapter-ledger.md; phase-5c-final-*.log; phase-5c-visual-review.md; completion account below |
-| 5d — Part III | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5d — Part III | completed | `proposal-readiness: phase 5d — refine Part III and verify endpoint-family labs` (containing this report) | 2026-09-22 | metrics-after-phase-5d.json; phase-5d-exit-checks.json; chapter-ledger.md; phase-5d-final-*.log; phase-5d-visual-review.md; completion account below |
 | 5e — Part IV | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5f — Part V | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5g — Part VI | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -1498,3 +1498,167 @@ No reserve used; 2,750 remains. Application/test code growth: zero.
 Separate commit: `proposal-readiness: phase 5c follow-up — remove triple name/component explanation`.
 This freshly passed follow-up is the authorized Phase 5d entry baseline; the author
 explicitly requests Phase 5d next in the same session.
+
+
+## Phase 5d — Part III completed, 2026-09-22
+
+### Entry gate and scope
+
+Before Part III edits, completed the author-requested Part II repair and separately
+committed it as `proposal-readiness: phase 5c follow-up — remove triple name/component explanation`.
+Its freshly executed Phase 5c assertions, sixteen public labs, full checks and
+PDF/package targets passed: `phase-5c-follow-up-results.json`,
+`phase-5c-follow-up-exit-checks.json`, and `phase-5c-follow-up-*.log`.
+`metrics-after-phase-5c-follow-up.json` is this session's entry baseline (140,073
+words; full PDF 436 pages). Historical Phase 5c evidence remains unchanged.
+
+Edited and reread: Chapters 6–8 and the Part III opener; all public answers in
+`companion/exercises/ch06/README.md`, `ch07/README.md`, and `ch08/README.md`.
+The unchanged Part IV opener was reread for the transition. Scope/preservation
+assertions in `check-phase-5d.py` compare the current manuscript against the
+separate follow-up commit: only those four Part III inputs change. All original
+C++ excerpts remain byte-identical and in order; book-wide executable/configuration
+fences (293), source markers, index occurrences and figure markers are preserved.
+Proposal text, structure/order and production styling are unchanged in this phase.
+
+The condensation combines repeated family introductions, mirrored endpoint
+explanations and text arrows. Chapter 6's author-required content-preservation
+audit is in `chapter-ledger.md`, with final section locations for every substantive
+topic. Its network-family, resolution, dual-stack, Unix ownership, credential and
+authorization teaching remains. Chapter 7 retains the distinct lifetimes and
+callback stages; Chapter 8 retains controller/service preparation and the two
+interactive Bluetooth command blocks. No reserve is needed and no teaching topic
+was cut to force a budget pass.
+
+### Budgets and pedagogy
+
+Evidence: `metrics-after-phase-5d.json`, `phase-5d-exit-checks.json`, and the
+Phase 5d chapter-ledger tables (including all fifteen exercise mappings and reverse
+objective mappings).
+
+| Chapter | Words before → after / budget | Sections / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: |
+| 6 | 8,080 → 4,168 / 5,200 | 12 / 15 | 319.25 |
+| 7 | 4,859 → 3,084 / 3,650 | 9 / 10 | 324.67 |
+| 8 | 2,613 → 2,170 / 2,200 | 5 / 5 | 393.40 |
+
+Part III: **15,552 → 9,422 / 11,050 words**. Each chapter has three observable
+objectives, one five-bullet recap, then two review questions, two labs and one
+design problem. Every objective has an exercise and every exercise has an objective;
+all fifteen public answers exist and were reread. Apparatus tokens are included
+in these budgets. Front matter remains 1,980 / 2,500; all Part/epilogue openers
+are 1,100 / 1,650. Reserve used: **0**; remaining: **2,750**.
+
+| Whole-book metric | Entry → after | Delta |
+| --- | ---: | ---: |
+| Total words | 140,073 → 133,986 | −6,087 |
+| Prose words | 126,188 → 120,567 | −5,621 |
+| Fenced words | 13,885 → 13,419 | −466, explanatory text blocks only |
+| Chapter headings ≥3 | 847 → 753 | −94 |
+| Average chapter-section prose | 137.85 → 147.98 | +10.13 |
+| Text fences | 399 → 348 | −51 |
+| C++ fences | 199 → 199 | 0 |
+| Rule boxes | 20 → 20 | 0 |
+| Objectives / exercise callouts | 8 / 8 → 11 / 11 | +3 each |
+| Forbidden phrases / Closing perspective | 0 / 0 → 0 / 0 | 0 |
+
+The difference between the Part reduction and global reduction is the 43-word
+Part III checkpoint addition. Global ceilings are not yet phase requirements:
+18,986 words, 203 headings and 98 text fences remain above the final ceilings;
+book-wide mean section prose is still below 250. Later Parts and the final audit
+remain pending. The five earlier samples retain their required prose reductions
+and section density; the current assertion results record those values.
+
+### Companion responsibility, builds and execution
+
+The governing invariant is one protocol implementation across carriers, with
+family-specific endpoint identity and explicit resource ownership. The canonical
+EchoPair context/factory remains the sole echo implementation. One 26-line thin
+`companion/exercises/ch06/family-server.cpp` selects a public family type/header
+at compilation, reports copied identities during the borrowed-pointer callback,
+and uses the existing listen/runtime path. Five carrier targets reuse that driver.
+The fixture owns its client path; the server owns its service path; assertions
+run before temporary-directory cleanup. Nothing adds measurement acceptance to echo.
+
+Existing peer and occupied-port fixtures are reused directly for Chapter 7.
+The additional 27-line Bluetooth selector test opens no socket and checks public
+configuration/initialization. These test additions supply observations not exposed
+by the existing CLI-only echo example; they do not add an application architecture
+or a second model, parser, or lifecycle owner. Existing application and prior lab
+implementation files remain unchanged, as checked against the entry commit.
+
+All **22/22** public lab registrations ran and passed locally, including the six
+new Chapter 6–8 registrations. `phase-5d-final-labs.log` records actual endpoint
+identities, exact-byte observations, default/selected Bluetooth fields and cleanup.
+The Part III checkpoint is Chapter 8 exercise 4 and uses loopback IPv4 plus a
+private Unix path. The separate family lab also executes IPv6. Public README
+commands configure/build through the existing CMake/CI discovery path.
+
+Both optional radio drivers compile. The two-host RFCOMM procedure is public but
+**not run**; physical radio delivery and pairing remain **not verified**. L2CAP
+physical delivery is not claimed. The mandatory selector/local-checkpoint labs
+need installed Bluetooth components/development dependencies, but no radio.
+IPv6 loopback is required and is not silently skipped. No hosted CI run is claimed.
+
+| Check executed | Result / evidence |
+| --- | --- |
+| Source hygiene and reference checker/regressions | Pass; `phase-5d-final-hygiene.log` (five reference regression cases) |
+| Complete-listing alignment | Pass, 36 exact listings; `phase-5d-final-alignment.log` |
+| Metrics regression tests | Pass; `phase-5d-final-metrics-tests.log` |
+| Companion build and public exercise targets | Pass; `phase-5d-final-companion.log` |
+| All public labs | 22/22 pass; `phase-5d-final-labs.log` |
+| Teaching / behavior / lifetime execution | Pass; corresponding `phase-5d-final-*.log` |
+| Proposal, sample PDF and full package builds | Pass; `phase-5d-final-package.log` |
+| Extracted-package hygiene | Pass; `phase-5d-final-extracted-hygiene.log` |
+| Budgets, mappings, scope, artifact preservation | Pass; `phase-5d-final-exit.log`, `phase-5d-exit-checks.json` |
+
+`phase-5d-final-results.json` records zero exits for every executed command group.
+The command/environment paths appear in the logs: example build directory
+`build/proposal-readiness-phase-5d-examples`, configured install prefix
+`build/ci-fix-2026-09-22/install-gcc`, and PDF build directory
+`build/proposal-readiness-phase-2`.
+
+Initial failures are retained, not represented as passing evidence:
+
+- `phase-5d-initial-companion.log`: unsupported top-level Bluetooth component names;
+  corrected to the supported public legacy-stream components used by the chapter.
+- `phase-5d-initial-labs.log`: assumed wildcard text from the default getter;
+  corrected the lab and the two reader passages to distinguish the empty configured
+  string from an explicit wildcard address.
+- `phase-5d-initial-identity-check.log` and
+  `phase-5d-initial-rendered-name-attempt.log`: numeric-only display assumptions;
+  the final fixture resolves rendered names within the selected family and compares
+  actual endpoint tuples. It still asserts both directions of identity.
+- `phase-5d-initial-package.log`: an underfull line in a compressed slash-separated
+  constructor phrase; normal prose fixed the line without suppressing diagnostics.
+
+### References, PDF evidence and accounting
+
+The current reference register retains all **39 stable topics** and **374 original
+migration dispositions**. There are **343 current references**, previously 360.
+Twenty redundant framing/self-references are explicitly retired:
+`R106 R120 R121 R122 R125 R126 R127 R128 R129 R130 R131 R132 R133 R135 R136 R140 R141 R112 R114 R116`.
+Three public solution title references are newly registered. The register diff
+records each retirement and its replacement evidence; surviving target identities
+remain. The author's combined R275/R276 reference remains intact. The checker
+passes after refreshing line evidence, without changing the old→new mapping.
+
+Pages: **full 436 → 418**, samples **54 → 54**, proposal **6 → 6**.
+All three final LaTeX logs have **zero warnings and zero bad boxes**. The package
+contains 306 files, each byte-identical to its current source/artifact, including
+new public labs and answers. `phase-5d-exit-checks.json` records hashes, page counts,
+archive identity and diagnostic checks. Targeted visual review covered physical
+pages 2–4, 9 and 57–84; see `phase-5d-visual-review.md`. It is not a whole-book
+visual recertification. Proposal content/page-table refresh remains Phase 6.
+
+Implementation line accounting: existing application production **+0/−0**;
+new test C++ **+53/−0**, test Python **+72/−0**, test CMake **+36/−1**;
+phase-specific review checker **+132/−0**. Public README procedures and all
+manuscript/report evidence are documentation, counted separately from production
+and executable test support. No production-code growth occurred.
+
+Commit: `proposal-readiness: phase 5d — refine Part III and verify endpoint-family labs`.
+**Stop after Phase 5d. Phase 5e is not started.** Its entry gate must freshly rerun
+metrics and `check-phase-5d.py`, the 22 public labs, hygiene/alignment and regression
+checks, companion/runtime checks, PDF/package builds and extracted-package hygiene.
+Use fresh entry log/output paths so the evidence above remains historical.

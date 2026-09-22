@@ -1,0 +1,10 @@
+[1/10] Building CXX object companion/exercises/ch06/CMakeFiles/endpoint-un.dir/family-server.cpp.o
+[2/10] Building CXX object companion/exercises/ch08/CMakeFiles/endpoint-rc.dir/__/ch06/family-server.cpp.o
+[3/10] Building CXX object companion/exercises/ch06/CMakeFiles/endpoint-in6.dir/family-server.cpp.o
+[4/10] Building CXX object companion/exercises/ch08/CMakeFiles/endpoint-l2.dir/__/ch06/family-server.cpp.o
+[5/10] Building CXX object companion/exercises/ch06/CMakeFiles/endpoint-in.dir/family-server.cpp.o
+[6/10] Linking CXX executable companion/exercises/ch06/endpoint-in6
+[7/10] Linking CXX executable companion/exercises/ch06/endpoint-un
+[8/10] Linking CXX executable companion/exercises/ch06/endpoint-in
+[9/10] Linking CXX executable companion/exercises/ch08/endpoint-l2
+[10/10] Linking CXX executable companion/exercises/ch08/endpoint-rc

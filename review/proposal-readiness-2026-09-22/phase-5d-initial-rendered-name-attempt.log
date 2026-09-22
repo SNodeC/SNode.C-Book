@@ -1,0 +1,120 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 11
+    Start 11: exercise-ch06-ip-families
+
+11: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py" "ipv4" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch06/endpoint-in" "ipv6" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch06/endpoint-in6"
+11: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch06
+11: Test timeout computed to be: 40
+11: 2026-09-22T16:35:52.579Z INF framework/instance core.socket.stream role=server inst=endpoint — listener started
+11: BOUND	127.0.0.1:38153
+11: 2026-09-22T16:35:52.604Z INF framework/connection core.socket.stream role=server inst=endpoint conn=1 — transport connected
+11: IDENTITY	localhost:38153	localhost:56848
+11: 2026-09-22T16:35:52.604Z INF application/context core.socket.context inst=endpoint conn=1 — Echo context attached
+11:
+11: Traceback (most recent call last):
+11:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py", line 61, in <module>
+11:     assert host_text.strip('[]') == observed[0] and int(port_text) == observed[1]
+11:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11: AssertionError
+1/6 Test #11: exercise-ch06-ip-families .........***Failed    0.10 sec
+2026-09-22T16:35:52.579Z INF framework/instance core.socket.stream role=server inst=endpoint — listener started
+BOUND	127.0.0.1:38153
+2026-09-22T16:35:52.604Z INF framework/connection core.socket.stream role=server inst=endpoint conn=1 — transport connected
+IDENTITY	localhost:38153	localhost:56848
+2026-09-22T16:35:52.604Z INF application/context core.socket.context inst=endpoint conn=1 — Echo context attached
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py", line 61, in <module>
+    assert host_text.strip('[]') == observed[0] and int(port_text) == observed[1]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+test 12
+    Start 12: exercise-ch06-unix-path
+
+12: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py" "unix" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch06/endpoint-un"
+12: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch06
+12: Test timeout computed to be: 40
+12: IDENTITY	/tmp/endpoint-lab-xgvxej37/service.sock	/tmp/endpoint-lab-xgvxej37/producer.sock
+12: unix: producer local=/tmp/endpoint-lab-xgvxej37/producer.sock, service=/tmp/endpoint-lab-xgvxej37/service.sock
+12: PASS: unix: exact measurement bytes, matching identities, owned cleanup
+2/6 Test #12: exercise-ch06-unix-path ...........   Passed    0.08 sec
+test 13
+    Start 13: exercise-ch07-independent-peers
+
+13: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/../ch01/independent-peers.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/examples/EchoPair/echoserver"
+13: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch07
+13: Test timeout computed to be: 40
+13: PASS: snodec: active peer works while another is idle and after it closes
+3/6 Test #13: exercise-ch07-independent-peers ...   Passed    0.09 sec
+test 14
+    Start 14: exercise-ch07-occupied-endpoint
+
+14: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/../ch03/occupied-port.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/examples/EchoPair/echoserver"
+14: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch07
+14: Test timeout computed to be: 40
+14: PASS: second listener reports occupied endpoint; original owner still reflects bytes
+4/6 Test #14: exercise-ch07-occupied-endpoint ...   Passed    0.12 sec
+test 15
+    Start 15: exercise-ch08-selectors
+
+15: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch08/bluetooth-selectors
+15: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch08
+15: Test timeout computed to be: 40
+15: Default: empty configured device string, zero selectors
+15: RFCOMM 10:3D:1C:AC:BA:9C:16
+15: L2CAP 10:3D:1C:AC:BA:9C:4097
+15: PASS: one device; channel 16 and PSM 4097 (0x1001); no radio operation
+5/6 Test #15: exercise-ch08-selectors ...........   Passed    0.01 sec
+test 16
+    Start 16: exercise-ch08-part-checkpoint
+
+16: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch08/../ch06/families.py" "ipv4" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch06/endpoint-in" "unix" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch06/endpoint-un"
+16: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5d-examples/companion/exercises/ch08
+16: Test timeout computed to be: 40
+16: 2026-09-22T16:35:52.977Z INF framework/instance core.socket.stream role=server inst=endpoint — listener started
+16: BOUND	127.0.0.1:54425
+16: 2026-09-22T16:35:53.002Z INF framework/connection core.socket.stream role=server inst=endpoint conn=1 — transport connected
+16: IDENTITY	localhost:54425	localhost:40450
+16: 2026-09-22T16:35:53.002Z INF application/context core.socket.context inst=endpoint conn=1 — Echo context attached
+16:
+16: Traceback (most recent call last):
+16:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch08/../ch06/families.py", line 61, in <module>
+16:     assert host_text.strip('[]') == observed[0] and int(port_text) == observed[1]
+16:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16: AssertionError
+6/6 Test #16: exercise-ch08-part-checkpoint .....***Failed    0.09 sec
+2026-09-22T16:35:52.977Z INF framework/instance core.socket.stream role=server inst=endpoint — listener started
+BOUND	127.0.0.1:54425
+2026-09-22T16:35:53.002Z INF framework/connection core.socket.stream role=server inst=endpoint conn=1 — transport connected
+IDENTITY	localhost:54425	localhost:40450
+2026-09-22T16:35:53.002Z INF application/context core.socket.context inst=endpoint conn=1 — Echo context attached
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch08/../ch06/families.py", line 61, in <module>
+    assert host_text.strip('[]') == observed[0] and int(port_text) == observed[1]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+
+The following tests passed:
+	exercise-ch06-unix-path
+	exercise-ch07-independent-peers
+	exercise-ch07-occupied-endpoint
+	exercise-ch08-selectors
+
+67% tests passed, 2 tests failed out of 6
+
+Total Test time (real) =   0.49 sec
+
+The following tests FAILED:
+	 11 - exercise-ch06-ip-families (Failed)
+	 16 - exercise-ch08-part-checkpoint (Failed)
+Errors while running CTest

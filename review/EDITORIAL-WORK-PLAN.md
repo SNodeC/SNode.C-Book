@@ -1116,3 +1116,49 @@ No reserve used; 2,750 remains. Application/test code growth: zero.
 Separate commit: `proposal-readiness: phase 5c follow-up — remove triple name/component explanation`.
 This freshly passed follow-up is the authorized Phase 5d entry baseline; the author
 explicitly requests Phase 5d next in the same session.
+
+
+## Phase 5d — Part III completed, 2026-09-22
+
+After the separately committed author-requested Phase 5c follow-up, its fresh exit
+checks, sixteen labs and full build/runtime/package checks passed before Part III
+editing. The authorized baseline is `metrics-after-phase-5c-follow-up.json`.
+Historical Phase 5c evidence remains unchanged.
+
+Chapters 6–8 now meet their budgets: 4,168 / 5,200; 3,084 / 3,650; 2,170 / 2,200
+words. They have 12, 9 and 5 sections, respectively, with mean section prose of
+319.25, 324.67 and 393.40. Part III totals 9,422 / 11,050 words. The Chapter 6
+content-preservation stop rule is satisfied; its retained-topic audit is in
+chapter-ledger.md. Every original C++ excerpt, index occurrence and figure remains.
+No reserve used; 2,750 remains.
+
+Each chapter has three objectives, one five-bullet recap and five mapped exercises
+(two review, two labs, one design), with public answers. One thin family driver
+reuses the canonical EchoPair context/factory for five carriers; earlier peer and
+occupied-port fixtures are reused unchanged. The Part III checkpoint observes
+identical bytes over loopback IP and a private Unix path, opposite endpoint
+identities and owned-path cleanup before fixture cleanup. Bluetooth selector
+configuration is tested without radio hardware. Optional RFCOMM/L2CAP drivers
+build; the public equipped RFCOMM procedure was not run and radio delivery remains
+unverified. No existing application implementation changed.
+
+All 22 public labs, hygiene/alignment, metrics/reference regressions, companion
+build, teaching/behavior/lifetime checks, PDF/package builds, archive identity
+and extracted-package hygiene pass locally. Final LaTeX warnings/bad boxes: zero.
+Pages: full 436 → 418; samples 54 and proposal 6 unchanged. Chapters, solutions
+and transitions were reread; targeted rendered pages were visually inspected.
+The initial component, test-assumption and layout failures remain documented.
+
+Whole-book counts: 133,986 words (−6,087), 753 chapter subheadings (−94), 348 text
+fences (−51), 20 rules and zero forbidden phrases/closing sections. Later Parts
+still owe the global reductions. Front matter remains within 2,500 words and all
+Part openers within 1,650. The reference register preserves all migration identities
+and stable topics, with explicit dispositions for removed framing references.
+
+Evidence in `review/proposal-readiness-2026-09-22/`: REPORT.md, chapter-ledger.md,
+metrics-after-phase-5d.json, check-phase-5d.py, phase-5d-exit-checks.json,
+phase-5d-final-results.json, phase-5d-final-*.log and phase-5d-visual-review.md.
+Commit: `proposal-readiness: phase 5d — refine Part III and verify endpoint-family labs`.
+**Stop after Phase 5d.** Next is Phase 5e (Part IV only), after freshly rerunning
+the current Phase 5d gate in REPORT.md. Author-approved preservation stop rules,
+reserve accounting, 5l/5m split and Phase 6 proposal refresh still apply.

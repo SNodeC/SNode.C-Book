@@ -1,13 +1,12 @@
 # Public exercises and solutions
 
-These are the public solutions for Parts I–II and the later sample chapters. Each chapter has two
+These are the public solutions for Parts I–III and the later sample chapters. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
 
 Use the installed SNode.C environment prepared in Chapter 2. Add standalone Asio
-headers (`libasio-dev` on Debian/Ubuntu) for the Chapter 1 comparison. No broker,
-database, hardware, or framework source build is required by these labs.
+headers (`libasio-dev` on Debian/Ubuntu) for the Chapter 1 comparison. The mandatory labs need no broker, database, radio hardware, or framework source build. The Bluetooth selector lab needs installed Bluetooth components and development support; its optional physical RFCOMM extension is an equipped lab. IPv6 loopback must be available for the IP-family comparison.
 
 From the book repository root:
 
@@ -31,6 +30,10 @@ the canonical `MeasurementModel.cpp` into two ownership experiments. There is on
 The architecture labs reuse the existing measurement-model experiments and EchoPair
 peer harness; the runtime lab separately checks deferred callbacks through the installed
 public API. The Part II checkpoint needs no transport or external service.
+
+Part III compiles thin family drivers around the same EchoPair context and factory,
+checks IP and Unix identities/cleanup, and constructs Bluetooth service selectors
+without opening a radio socket.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.
