@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import contextlib
-import json
 import os
 import pathlib
 import signal
@@ -63,24 +62,10 @@ def running(name: str, args: list[str], env: dict[str, str]):
 
 
 def logging_check(env: dict[str, str]) -> None:
-    run = subprocess.run([str(executable("semantic-logging"))], env=env, capture_output=True,
-                         text=True, timeout=10, check=True)
-    (LOGS / "semantic-logging.jsonl").write_text(run.stdout)
-    records = [json.loads(line) for line in run.stdout.splitlines() if line.strip()]
-    if len(records) != 4:
-        raise RuntimeError(f"Expected four demonstration records, got {len(records)}")
-    for record in records:
-        for key, expected in {"origin": "application", "boundary": "application",
-                              "component": "gateway.measurements", "instance": "measurement-input"}.items():
-            if record.get(key) != expected:
-                raise RuntimeError(f"Semantic field {key} differs: {record}")
-    if [r["level"] for r in records] != ["info", "info", "debug", "warn"]:
-        raise RuntimeError("Semantic severity/component override result differs")
-    if records[1].get("event") != "measurement.accepted":
-        raise RuntimeError("Stable event identity missing")
-    if not records[3].get("error") or "no file operation" not in records[3]["message"]:
-        raise RuntimeError("Explicit demonstration error missing")
-    print("PASS: Chapter 13 public logging fields, event, override, and typed error")
+    import runpy
+    observe = runpy.run_path(str(ROOT / 'companion/exercises/ch13/records.py'))['observe']
+    output = observe(executable("semantic-logging"), env)
+    (LOGS / "semantic-logging.jsonl").write_text(output)
 
 
 def server_check(env: dict[str, str]) -> None:

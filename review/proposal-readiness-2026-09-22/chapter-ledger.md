@@ -633,3 +633,116 @@ qualification about when reuse should stop remains. No new generic chapter treat
 replaces the author's explanations, and the unused word allowance is not a reason
 to cut further. None of this Part's approved budgets triggers the >35% stop rule;
 the content audit above still records preservation explicitly.
+
+
+## Phase 5f — Part V, current Chapters 12–13 (2026-09-22)
+
+Edited and reread both full chapters, their Part V opener, public solution READMEs,
+and the transitions from Chapter 11 and into the unchanged Part VI opener. The
+ordered Markdown inputs remain the manuscript authority. This is the Part V pass;
+no later chapter is certified here.
+
+### Chapter metrics and preserved teaching
+
+| Chapter | Total before → after | Ceiling | Prose before → after | Fenced before → after | Headings before → after / ceiling | Mean section prose after |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 12 | 8,615 → 4,273 | 5,400 | 8,104 → 4,023 | 511 → 250 | 73 → 10 / 16 | 391.2 |
+| 13 | 3,779 → 2,698 | 2,750 | 3,479 → 2,481 | 300 → 217 | 20 → 7 / 7 | 340.43 |
+
+Part V chapters total **6,971 / 8,150** words; no reserve used, **2,750** remains.
+The ceilings do not require filling unused space or cutting substantive content.
+Chapter 12 triggers the author’s preservation stop rule. Its reduction comes from
+merging the former configuration principles/anatomy treatments: repeated hierarchy,
+input-path, naming, scope catalogue, persistence and parameterless-activation
+explanations. The detailed qualifications below survive. Chapter 13 retains its
+API examples, error semantics, policy timing and diagnostic limitations while
+compressing repeated framing around them. The 25 removed text fences contain
+restated diagrams, questions or vocabulary; all executable/configuration fences
+and complete listings remain byte-identical. See the phase manuscript diff and
+`check-phase-5f.py` preservation assertions.
+
+### Objective ↔ exercise mapping
+
+Both chapters open with three observable objectives and close with five recap
+bullets followed by two review questions, two labs and one design problem.
+Public solutions use the same numbering and objective IDs.
+
+| Exercise | Tier | Objectives | Public solution / executable observation |
+| --- | --- | --- | --- |
+| 12.1 | Review | O1 | ch12/README.md: peer observation versus configurable endpoint; three views |
+| 12.2 | Review | O2 | ch12/README.md: reparse success/failure versus live activity |
+| 12.3 | Lab | O1, O2 | ch12/configuration.py precedence: 8080 → 18091 → 18092; file unchanged |
+| 12.4 | Lab | O1, O2 | ch12/configuration.py discovery: help narrows scope; port 70000 rejected |
+| 12.5 | Design | O2, O3 | ch12/README.md: independent uplinks, disabled admin role and replacement policy |
+| 13.1 | Review | O1 | ch13/README.md: origin, boundary, optional identity and connection lifetime |
+| 13.2 | Review | O2, O3 | ch13/README.md: ordered overrides, evaluation and confidentiality |
+| 13.3 | Lab | O1, O2 | ch13/records.py: four canonical JSON records; no invented peer |
+| 13.4 | Lab | O1, O2, O3 | ch12/configuration.py checkpoint: selected endpoint echoes with scoped records |
+| 13.5 | Design | O3 | ch13/README.md: submission versus delivery; safe failure evidence |
+
+Solution paths above are relative to `companion/exercises/`. Exact build/test
+commands and expected observations are in each README’s numbered lab sections.
+
+| Objective | Exercises that assess it |
+| --- | --- |
+| 12.O1 | 12.1, 12.3, 12.4 |
+| 12.O2 | 12.2, 12.3, 12.4, 12.5 |
+| 12.O3 | 12.5 |
+| 13.O1 | 13.1, 13.3, 13.4 |
+| 13.O2 | 13.2, 13.3, 13.4 |
+| 13.O3 | 13.2, 13.4, 13.5 |
+
+### Content-preservation audit
+
+Evidence paths below are `manuscript/chapters/12-configuring-applications-and-named-instances.md`
+(Ch12) and `manuscript/chapters/13-logging-diagnostics-and-runtime-introspection.md`
+(Ch13). All index occurrences and stable anchors remain; no figure was removed.
+
+| Retained explanation, example or qualification | Evidence |
+| --- | --- |
+| Named endpoint registration versus explicit activation; all three input paths, pointer/section qualification and convenience calls | Ch12:9, :32 |
+| CLI > file > C++ precedence, late registration, shared endpoint settings versus distinct flow controllers | Ch12:111, :117 |
+| Anonymous helper clients and local helper servers, operator-facing names, disablement versus lifecycle controls | Ch12:119 |
+| Parameterless activation, server/client/TLS required values and application choice over runtime changes | Ch12:178 |
+| Application/instance/section scope; representative hierarchy figure, deeper/anonymous-node qualification; variable rename versus operational-key compatibility | Ch12:211 |
+| Full section catalogue: local/remote/address families, accepted peer ≠ configurable remote, connection timeouts/block sizes, socket retry/backoff/jitter, server limits, TLS specialization | Ch12:280 |
+| API/CLI/INI examples, progressive help and schematic required-value errors | Ch12:375 |
+| RUNNING/event-loop-thread reparse, original CLI priority, re-created registered roles, final validation, failure without rollback, frozen bootstrap, future activation/restart choice | Ch12:444 |
+| Canonical echo experiment, inspection status 2, commented defaults, one-run override versus write action | Ch12:468 |
+| Durable values versus run-specific actions, shown/generated configuration and command-line views | Ch12:507 |
+| INI comment metadata, deeper/anonymous nodes, effective/configured/default values, incomplete historical/default/validator information | Ch12:538 |
+| snodec-control preview/materialize/canonical save/preflight/run distinctions, optional UI and separate build switches | Ch12:549 |
+| Frozen logging and policy snapshots, readable multi-instance files, protocol/factory ownership, FlowHandle/terminateFlow/setOnDestroy distinctions | Ch12:564, :594 |
+| Diagnostic evidence table and scope/event/filter figure | Ch13:14 |
+| Public logger constructors/defaults, origin versus layer, exact component keys, optional owned identity strings, live-connection derivation without ownership | Ch13:34 |
+| Inherited helper/facade differences, private-helper limits, Diagnostic responsibility rule | Ch13:129, :138 |
+| Severity versus control, warn/Warning, bounded formatting language/errors, stable observed event names, errno capture and typed categories | Ch13:142 |
+| Ordered thresholds, scoped pairs/numeric global option qualification, standalone versus runtime bootstrap, frozen reparse policy and logger creation timing | Ch13:208 |
+| Complete canonical SemanticLogging listing and constructed-error qualification | Ch13:237 |
+| Versioned JSON/absent fields, terminal/plain validation, quiet versus file sinks, synchronous borrowed binary dump including NUL/empty/unbounded-size semantics | Ch13:273 |
+| Disabled dump/formatting versus evaluated arguments, guard without protocol side effects, caching limits and confidentiality | Ch13:295 |
+| Attempt/connection/context/session distinctions and counter scopes; reproducible Part V checkpoint | Ch13:313 |
+
+### Built, run, and limits
+
+`phase-5f-final-companion.log` builds the canonical EchoPair and SemanticLogging
+through the existing CI path; the four new registrations pass within **32/32**
+public labs (`phase-5f-final-labs.log:322–354`, :404). No hosted run is claimed.
+The tests share the existing bounded process harness and isolated environment.
+The public JSON observer replaces the former duplicate smoke-test assertions;
+all previous assertions survive, with absence-of-invented-identity checks added.
+Application implementations and printed executable examples remain unchanged.
+
+The precedence fixture reads the one known port assignment, distinguishing comments
+from an active assignment; it is not a general configuration parser. Display/help
+status 2 is accepted explicitly. The rejected value identifies `--port`, not a
+full instance/section path; the command and local help identify that scope. The
+checkpoint confirms real loopback reflection at the CLI-selected port in both
+logging policies and checks actual semantic context identity. Suppressed output
+alone is never taken to mean no activity.
+
+These are startup observations. Runtime reparse, rollback, live listener replacement,
+control-tool UI, TLS, broker and deployment behavior are not executed by these
+labs. Their retained explanations are editorially reread, not newly runtime-certified.
+The Part V checkpoint prepares reproducible named-role operation for MiniGateway;
+it does not add a second gateway or logging implementation.

@@ -1,5 +1,11 @@
 ## Logging, Diagnostics, and Runtime Introspection {#logging-diagnostics-and-runtime-introspection}
 
+::: {.snodec-objectives title="Learning objectives"}
+- **O1.** Attribute a diagnostic to its origin, responsibility and available runtime identity.
+- **O2.** Configure a scoped logging override and verify its effect in emitted records.
+- **O3.** Diagnose a failed operation without inventing lifecycle facts or exposing unnecessary data.
+:::
+
 \index{logging}
 \index{semantic logging}
 \index{diagnostics}
@@ -9,26 +15,7 @@
 
 Configuration describes the system that should run. Diagnostics explain the system that did run: which roles became active, which connections existed, which protocol decisions were made, and where progress stopped.
 
-That distinction matters in an event-driven application. A client handle can exist before a connection attempt succeeds. A connection can exist before a TLS handshake completes. A context can be replaced during an HTTP upgrade without the underlying peer relationship ending. A message such as `connected` is therefore useful only when the reader knows which boundary it describes.
-
-SNode.C makes that boundary part of its logging model. A semantic log record carries an origin, a boundary, a component, and optional runtime identity alongside its severity and message. The application does not have to compress every diagnostic fact into a sentence and then recover those facts by searching the sentence later.
-
-The model is:
-
-```text
-where the event belongs
-  -> origin and boundary
-
-which part of the system is involved
-  -> component and runtime identity
-
-what happened
-  -> severity, optional event name, message, optional error
-```
-
-This chapter connects that model to the configuration hierarchy from Chapter 12 and to the connection and context lifetimes introduced earlier. The purpose is not to produce more output. It is to make output attributable.
-
-### A diagnostic map before an API
+A client may exist before connecting, TLS may still be negotiating on an established connection, and HTTP upgrade may replace a context without ending the peer connection. A useful record identifies the boundary it describes. Semantic logging records origin, boundary, component and optional runtime identity alongside severity and message. These connect the configuration from Chapter 12 to observed lifetimes.
 
 Runtime visibility is broader than logging. A useful investigation combines several kinds of evidence:
 
@@ -40,11 +27,7 @@ Runtime visibility is broader than logging. A useful investigation combines seve
 | counters and timing | How much work passed through a boundary, and over what interval? |
 | an external observation | What did the peer, operating system, or service supervisor actually observe? |
 
-A failed request may originate in routing, but it may also originate in a disabled instance, a wrong endpoint, a parser limit, a TLS error, or a connection that was already shutting down. The diagnostic method should identify the failing boundary before assuming that the application handler is wrong.
-
-Semantic logging gives these observations a common vocabulary. It does not replace packet inspection, effective-configuration output, or a small reproducing test. It makes those other observations easier to correlate with the framework's own activity.
-
-Figure \ref{fig:logging-diagnostic-visibility-map} shows the relationship between a semantic scope, an event, filtering policy, and output. Origin and boundary are independent dimensions. A context can emit application-origin protocol meaning while the framework emits its own context-lifecycle records.
+Locate a failed request at its actual boundary: disabled instance, endpoint, TLS, parser, routing, or shutdown. Correlate semantic records with effective configuration, packet inspection and a reproducing test. Figure \ref{fig:logging-diagnostic-visibility-map} separates scope, event, filtering and output; application-origin protocol meaning can coexist with framework-origin context-lifecycle records.
 
 ![Semantic logging in SNode.C: origin, boundary, component, and optional identity describe a scope; severity and event data describe an occurrence; startup policy selects records for text or JSON output.](assets/figures/pdf/fig-14-logging-diagnostic-visibility-map.pdf){#fig:logging-diagnostic-visibility-map width=90% latex-placement="tbp"}
 
@@ -61,7 +44,7 @@ New application code enters through one public header:
 #include <Log.h>
 ```
 
-The application-facing namespace is `snode::log`. It provides a copyable logger value rather than asking application code to know the backend or construct the framework's internal record machinery.
+`snode::log` provides a copyable logger value without exposing backend record machinery.
 
 The main construction functions serve different purposes:
 
@@ -72,9 +55,7 @@ The main construction functions serve different purposes:
 | `forConnection(connection, ...)` | a scope derived from a live connection's instance name and connection identifier |
 | `makeLogger(scope)` | a deliberately constructed origin, boundary, component, and identity |
 
-The defaults are convenient for a small program. An application logger defaults to component `app`, application origin, and application boundary. A framework logger defaults to component `framework` and system boundary. Those defaults are not a substitute for choosing a useful component name in a larger system.
-
-For example, an application can distinguish its measurement processing from its MQTT integration without inventing two logging backends:
+An application logger defaults to component `app`, application origin and application boundary; a framework logger defaults to component `framework` and system boundary. Larger applications can name diagnostic responsibilities explicitly:
 
 ```cpp
 auto measurementLog = snode::log::application("gateway.measurements");
@@ -84,50 +65,34 @@ measurementLog.info("Measurement service initialized");
 mqttLog.debug("Preparing the MQTT application role");
 ```
 
-The component names in this example are application-defined diagnostic names. They are not CMake components, protocol names enforced by the framework, or claims that those two operations have completed a network handshake.
-
-SNode.C also retains lower-level logging headers and `SemanticLog.h` for existing consumers and internal integration. They should not become the starting point of a new application chapter. The public facade keeps ordinary application code independent of the backend, while existing object-scoped helpers remain useful where the framework already owns the scope.
-
-### Origin, boundary, component, and identity
+These are application-defined diagnostic names, not CMake components or handshake claims. Existing consumers retain lower-level headers and `SemanticLog.h`; new application code uses the public facade.
 
 \index{logging!origin}
 \index{logging!boundary}
 \index{logging!component}
 \index{logging!identity}
 
-A severity says how important a record is. It does not say who owns its meaning. The semantic scope answers that second question.
-
-#### Origin identifies the speaker
-
 `Origin::Framework` means that the record describes framework-owned behavior. `Origin::Application` means that the record describes application-owned behavior.
 
 This is not the same division as low-level versus high-level code. An application protocol context can be close to a connection and still speak for the application. An HTTP parser can operate above the raw stream and still speak for the framework.
 
-Origin lets an operator ask for detailed application diagnostics without necessarily requesting every framework detail, or inspect framework behavior while reducing application chatter. It is an ownership distinction that also becomes an operational filter.
+Origin can filter application detail independently from framework detail.
 
-#### Boundary identifies the responsibility
-
-The public boundary vocabulary is `Application`, `Configuration`, `Instance`, `Connection`, `Context`, and `System`.
+The public vocabulary distinguishes six responsibility boundaries: `Application`, `Configuration`, `Instance`, `Connection`, `Context`, and `System`.
 
 A configured client role and one successful peer connection are different boundaries. Retry belongs to the role and its connection attempts. A peer's lifetime belongs to the connection. The interpretation of received protocol data belongs to the context or other protocol-owning object. Configuration discovery and validation have their own boundary, even though they happen within the same executable.
 
-A boundary is not a declaration that every event at that boundary has the same severity. A connection may produce a normal informational transition, a debugging detail, or an error. Boundary and severity answer different questions.
+Boundary identifies responsibility; severity identifies importance.
 
-#### Component identifies the diagnostic subsystem
-
-A component name groups related records within the semantic model. Framework components name areas such as runtime, sockets, and protocols. An application should choose names that remain useful as its implementation grows.
-
-A name such as `gateway.measurements` is usually more stable than the name of one temporary callback. The component should describe the diagnostic responsibility rather than the incidental function that currently implements it.
+Components group related records. Prefer a stable responsibility such as `gateway.measurements` to a temporary callback’s name.
 
 Component names are exact policy keys. They should not be treated as an undocumented wildcard language or as an inheritance tree inferred from dots in the name.
-
-#### Identity distinguishes concrete runtime work
 
 `Identity` can carry an instance name, a server/client role, and a connection identifier. These fields are optional because not every event has all three identities.
 
 Startup has no peer connection. A named client can fail before a connected peer episode exists. A context can have instance and connection identity without having an independently assigned server/client role. Omitting a fact that is not available is better than inventing one.
 
-Both `Scope` and `Identity` own their string data. A logger therefore need not retain borrowed views into a temporary name. That is important when a callback or a logger value outlives the local expression that assembled its scope.
+`Scope` and `Identity` own their strings, so a logger can outlive the expression that assembled its scope.
 
 A deliberately constructed context scope can look like this:
 
@@ -142,19 +107,13 @@ auto log = snode::log::makeLogger(std::move(scope));
 log.debug("Measurement context configured");
 ```
 
-This is a scope-construction example, not a fabricated connection event. When a live connection is available, derive its actual identity instead of assigning an arbitrary connection string.
-
-### Connection and context scopes
+This constructs a scope. Derive connection identity from a live connection when available; do not invent it.
 
 \index{forConnection()@\texttt{forConnection()}}
 \index{SocketContext!logging}
 \index{frameworkLog()@\texttt{frameworkLog()}}
 
-`forConnection(...)` takes a connection object by reference.
-
-It uses `getInstanceName()` and `getConnectionId()` to populate the scope; the connection identifier is represented as a string in the public identity.
-
-Inside code that already has a valid stream connection, an application-facing logger can be constructed as follows:
+`forConnection(...)` takes a connection reference and copies its `getInstanceName()` and `getConnectionId()` into the scope; the public connection identifier is a string. From a live stream context:
 
 ```cpp
 auto log = snode::log::forConnection(
@@ -166,9 +125,7 @@ auto log = snode::log::forConnection(
 log.info("Measurement input ready");
 ```
 
-The example assumes a live connection obtained from a stream context. It does not extend the connection's ownership. Constructing a scope from identity is not the same thing as retaining the connection object itself.
-
-SNode.C stream contexts also expose inherited `log()` and `frameworkLog()` helpers. These are already associated with the context's owned diagnostic scope. A derived application context can use the application-origin helper directly:
+The logger does not retain ownership of the connection. Stream contexts also expose inherited `log()` and `frameworkLog()` helpers with an already owned context scope. A derived context can use:
 
 ```cpp
 void MeasurementContext::onConnected() {
@@ -176,15 +133,11 @@ void MeasurementContext::onConnected() {
 }
 ```
 
-The method body is illustrative; `MeasurementContext` stands for the application's derived context. The important distinction is that `log()` contributes application-origin meaning and `frameworkLog()` is the framework-origin context surface. Their existing return type belongs to the lower-level logging model; it is not the `snode::log::Logger` facade type. Ordinary severity calls look similar, but code should not mix the two namespaces' level enums or error-method names accidentally.
-
-An application that needs the public facade's `event(...)`, `systemError(...)`, or `Level` type can use a `snode::log` logger. A derived context that only needs its existing application-scoped severity methods can use the inherited helper without rebuilding the scope. A framework maintainer should preserve the origin already owned by the framework boundary.
+`MeasurementContext` stands for the application’s derived context. `log()` contributes application-origin meaning; `frameworkLog()` supplies framework-origin context diagnostics. Their return type is lower-level, not `snode::log::Logger`: do not mix level enums or error-method names. Use the facade for its `event(...)`, `systemError(...)` or `Level`; use the inherited helper for ordinary context-scoped severity calls. Some protocol-specific helpers are private, so use only documented public or inherited surfaces.
 
 ::: {.snodec-rule title="Diagnostic responsibility rule"}
 Log from the boundary that owns the meaning, and preserve the identity that the boundary already knows.
 :::
-
-This rule does not imply that every protocol object exposes a public `log()` method. Some protocol-specific logging helpers are deliberately private. A consumer should use the public facade or a documented inherited surface, not reach into a private helper because its name looks convenient.
 
 ### Severity, events, and errors
 
@@ -192,11 +145,7 @@ This rule does not imply that every protocol object exposes a public `log()` met
 \index{structured events}
 \index{systemError()@\texttt{systemError()}}
 
-The public severity enum is:
-
-```text
-Trace  Debug  Info  Warning  Error  Critical  Off
-```
+The public levels are `Trace`, `Debug`, `Info`, `Warning`, `Error`, `Critical`, and `Off`.
 
 The six emitting methods are `trace`, `debug`, `info`, `warn`, `error`, and `critical`. Notice the spelling distinction: the enum value is `Level::Warning`, while the method is `warn(...)`. `Off` disables output; it is not another kind of emitted diagnostic.
 
@@ -211,9 +160,7 @@ A useful severity policy is:
 | `Error` | a failed operation that needs attention |
 | `Critical` | a severe condition with broad operational consequences |
 
-Logging severity does not perform the recovery action. In particular, a `critical(...)` call does not replace a decision to stop the runtime, close a connection, reject a request, or return an error. The control path and the explanation of that control path remain separate.
-
-#### Stream and formatted messages
+Severity does not perform recovery: `critical(...)` does not stop the runtime, close a connection, or reject a request. Make that control decision explicitly.
 
 The severity methods support both stream construction and positional `{}` formatting:
 
@@ -223,11 +170,9 @@ log.info() << "Accepted measurement sequence " << sequence;
 log.info("Accepted measurement sequence {}", sequence);
 ```
 
-The public formatting surface is deliberately small. It supports positional `{}` placeholders and escaped `{{` and `}}` braces. It should not be described as the complete `std::format` or fmt formatting language. Malformed braces and argument-count mismatches throw `std::invalid_argument` when formatting is performed.
+Formatting supports positional `{}` and escaped `{{`/`}}`, not the complete `std::format` or fmt language. Malformed braces or argument-count mismatches throw `std::invalid_argument` when formatting occurs.
 
-The two lines above are alternatives, not a reason to emit the same event twice. Choose the form that keeps the local code readable.
-
-#### Stable event names
+Choose either form; do not emit the event twice.
 
 A named event separates a machine-facing classification from a human-facing explanation:
 
@@ -238,11 +183,7 @@ log.event(snode::log::Level::Info,
           sequence);
 ```
 
-`measurement.accepted` is an application-defined event name in this example. Its value is that a downstream consumer can recognize the event without depending on the exact English wording of the message. Changing punctuation should not require changing an operational query.
-
-A stable event name should describe a completed or observed fact. It should not say that publication succeeded when the code has only queued a publication request.
-
-#### Explicit system errors
+The application-defined name `measurement.accepted` lets a collector classify the event independently of English wording. Name an observed fact: queuing publication does not establish successful delivery.
 
 A system error should carry the error from the failing operation, not whichever `errno` happens to be visible later.
 
@@ -253,7 +194,7 @@ log.systemError(snode::log::Level::Error,
                 "Unable to open measurement input");
 ```
 
-Capture the value immediately after the relevant failure. When a callback already supplies an error number, use that argument instead of consulting the process's current `errno`. The overload taking `std::error_code` also preserves an explicit category, which matters when the error is not a generic POSIX error number.
+Capture `errno` immediately after failure; prefer a callback’s supplied error number when available. The `std::error_code` overload also preserves the category for errors outside generic POSIX numbering.
 
 The stream form is available as well:
 
@@ -262,7 +203,7 @@ log.systemError(snode::log::Level::Error, errorNumber)
     << "Unable to open " << path;
 ```
 
-Protocol rejection, configuration validation, and application policy are not automatically system errors. A malformed measurement can deserve a warning without having any meaningful operating-system error attached to it.
+Protocol rejection or failed validation can warrant a warning without a meaningful system error.
 
 ### Startup policy and filter precedence
 
@@ -270,17 +211,7 @@ Protocol rejection, configuration validation, and application policy are not aut
 \index{logging!configuration}
 \index{log-format@\texttt{log-format}}
 
-Logging policy belongs to startup and deployment, not to every protocol callback.
-
-The effective threshold is selected in this order:
-
-```text
-matching instance override
-  -> matching component override
-      -> boundary override
-          -> origin override
-              -> global threshold
-```
+Startup policy chooses a threshold in order: instance, component, boundary, origin, then global.
 
 The first applicable override selects the threshold. These are not five successive minimum filters. A component override can therefore enable debugging for one component even when the global threshold is `Error`; an instance override can be more specific still.
 
@@ -293,25 +224,19 @@ A normal SNode.C application exposes this policy through its existing root confi
   mqtt-uplink remote --host 127.0.0.1 --port 1883
 ```
 
-The MQTT endpoint is explicit because the role still needs its ordinary connection configuration. Logging options do not satisfy unrelated required endpoint values.
+The MQTT role still needs endpoint configuration; logging options do not supply it.
 
 The corresponding override options are `--log-origin-level`, `--log-boundary-level`, `--log-component-level`, and `--log-instance-level`. Their values use `name=level` pairs; lists can contain comma-separated pairs. Named levels are suitable for these scoped pairs. The global `--log-level` option is a separate case in the recorded startup path: use its numeric form (`0` off, `1` critical, `2` error, `3` warn, `4` info, `5` debug, `6` trace). Although the validator recognizes names, the current initialization path can attempt integer conversion before that normalization has taken effect. The examples use the numeric spelling so the demonstrated commands reach runtime bootstrap.
 
-A focused debugging run should normally change the narrowest useful scope. Raising every framework component to trace can obscure the one connection being investigated and can change timing substantially.
+Change the narrowest useful scope. Global trace output can obscure a connection and change timing.
 
-#### Public settings and the runtime configuration path
+Standalone logger programs can call `configure(Settings)` for thresholds, output format, color, quiet mode, files and semantic overrides. A normal SNode.C service instead gets its policy through `core::SNodeC::init(...)` and runtime bootstrap. Do not overlay an unrelated `configure(Settings)` and expect merging: it initializes and freezes its own policy, not a live per-record adjustment.
 
-The public facade also provides `configure(Settings)`. A standalone program that uses the logger directly can select levels, text or JSON output, color policy, quiet mode, a log file, and semantic overrides through that value.
-
-A normal SNode.C application already has a startup configuration path: `core::SNodeC::init(...)` and runtime bootstrap establish the application configuration and apply its semantic logging policy. Do not layer an unrelated `configure(Settings)` call over that path and assume that both configurations will merge. The public configuration function initializes and freezes its own policy; it is not a per-record adjustment or a documented live-reconfiguration interface for a running SNode.C service.
-
-The runtime `reconfigure()` operation from Chapter 12 preserves that bootstrap policy too. A changed `log-level` or `log-format` value in the parsed tree is not evidence that existing logging has adopted it. Compare emitted records with the established policy, and use a controlled restart when deployment logging must change.
-
-Create long-lived logger values after the intended startup policy has been established. The facade constructs a logger with an effective threshold, while framework-owned scopes have their own lifecycle and generation-aware caching. Those details are reasons to respect the startup boundary, not reasons for application code to manage internal cache generations.
+Runtime `reconfigure()` from Chapter 12 also preserves bootstrap logging. Parsed `log-level` or `log-format` changes need not affect emitted records; use a controlled restart to change deployment logging. Create long-lived facade loggers after policy establishment because they capture an effective threshold. Framework-owned scopes manage their own lifecycle and generation-aware caches; application code should not manage those generations.
 
 ### A complete public-API example
 
-The electronic companion `SemanticLogging` is deliberately a logging-only program. It does not start an event loop or pretend that a network connection has been established. That makes the public settings path visible without mixing it with runtime bootstrap.
+The companion `SemanticLogging` uses the standalone settings path without an event loop or network connection:
 
 <!-- snodec-source: companion/examples/SemanticLogging/main.cpp -->
 ```cpp
@@ -343,9 +268,7 @@ int main() {
 }
 ```
 
-The error in the last record is deliberately constructed. It demonstrates typed error reporting; it is not a transcript of a failed file operation. The JSON output can be checked for origin, boundary, component, instance, severity, event name, and error data without fixing a timestamp or relying on terminal color.
-
-The example links the installed logger target through the normal SNode.C package dependency graph. The companion source tree contains the complete CMake project. It is useful to compare this small program with the network-oriented examples, where startup policy comes from the SNode.C application configuration instead.
+The constructed error demonstrates typed reporting, not an attempted file operation. Check JSON fields rather than timestamps or terminal color. The complete companion CMake project links the installed logger target.
 
 ### Text, JSON, and presentation
 
@@ -353,19 +276,13 @@ The example links the installed logger target through the normal SNode.C package
 \index{logging!output modes}
 \index{logging!presentation}
 
-Human-readable text and machine-readable JSON are presentations of the same semantic event, not separate logging systems.
+Text and JSON present the same semantic event. The versioned JSON shape includes timestamp, level, origin, boundary, component and message, plus identity, event and error fields when present. Missing identity is unknown, not a verified empty value.
 
-The structured output has a versioned record shape. It includes timestamp, level, origin, boundary, component, and message, with identity, event, and error fields where those facts are present. An absent identity should not be interpreted as an empty but verified identity. Downstream processing should distinguish missing information from a known value.
+`emit(...)` accepts a `Message` with plain and terminal presentations of the same facts. The framework validates allowed terminal escapes; file and JSON output remain plain.
 
-Text output keeps those facts readable at a terminal. JSON output keeps them available to a collector without requiring the collector to reverse-engineer the English message. Both forms should retain the same meaning.
+Quiet mode controls the console; a file sink is separate. Configure sinks, daemonization, supervision and color at application scope, without competing context-owned log files.
 
-`emit(...)` can accept a `Message` with separate plain and terminal presentations. That is useful for an intentionally formatted diagnostic, but it is not permission to place different facts in the two versions. File and JSON output should remain usable without terminal escape sequences. The framework validates the relationship between plain text and allowed terminal presentation rather than trusting arbitrary escape sequences.
-
-Quiet mode controls console output; a configured file sink is a separate destination. File logging, daemonization, service supervision, and terminal color should be configured at the application boundary. A context should not open its own competing log file merely because it needs one additional message.
-
-#### Binary data through the same diagnostic scope
-
-The public logger also provides `hexDump(...)` for binary observations. It accepts a `std::string_view` or `std::span<const std::byte>` and borrows the bytes only for that synchronous call. An explicit length keeps embedded NUL bytes visible:
+`hexDump(...)` borrows a `std::string_view` or `std::span<const std::byte>` synchronously. Explicit length preserves embedded NUL bytes:
 
 ```cpp
 const std::string_view payload("A\0B", 3);
@@ -374,16 +291,12 @@ log.hexDump(snode::log::Level::Trace, "Received payload", payload);
 
 This fragment uses `<string_view>` beside the public logging header and an already constructed logger. The resulting record retains that logger's scope. Its message contains the label, total byte count, and sixteen-byte rows with offsets, hexadecimal bytes, and a printable-ASCII column. Empty input produces a zero-byte heading without a data row. The operation does not truncate a large payload or adapt it to the terminal width.
 
-Text files and JSON use the plain presentation. Terminal color follows the existing output policy; it does not change the observed bytes. MQTT and WebSocket diagnostics use the same operation through their existing internal scopes. The shared renderer is compiled into the logging library, while the utility library retains its dependency on that library. Application code need not assemble a second colored dump before emitting a record.
-
-A disabled level returns before dump formatting. Preparing the argument is still ordinary C++ evaluation: if obtaining the bytes requires serializing a packet, guard that work with `enabled(...)`. An enabled large dump has synchronous formatting and output cost, and its contents need the same confidentiality decision as any other diagnostic.
-
-### Cost, confidentiality, and diagnostic restraint
+The scope and observed bytes remain the same across plain file/JSON output and policy-colored terminal output. MQTT and WebSocket use the shared dump operation through their internal scopes. The renderer belongs to the logging library; the utility library retains its dependency on that library. Applications need not assemble a second colored dump. Enabled large dumps have synchronous formatting/output cost and need a confidentiality decision.
 
 \index{logging!disabled paths}
 \index{logging!sensitive data}
 
-A disabled formatted log call skips the logger's formatting work. It does not undo the normal C++ evaluation of arguments before the call. The same issue applies to an expensive expression supplied to a stream operator.
+A disabled `hexDump(...)` returns before dump formatting. A disabled formatted log call skips the logger's formatting work. It does not undo the normal C++ evaluation of arguments before the call. The same issue applies to an expensive expression supplied to a stream operator.
 
 Guard work that exists only to prepare a diagnostic:
 
@@ -393,13 +306,9 @@ if (log.enabled(snode::log::Level::Trace)) {
 }
 ```
 
-Here `buildDiagnosticSummary` represents application work. It is not a SNode.C API. The point is where the work is placed: inside the enabled check, so it need not run when the record is disabled.
+`buildDiagnosticSummary` is application work, placed inside the guard. Keep necessary side effects outside: changing log policy must not change measurement acceptance or protocol state. Caching a logger avoids repeated scope construction, but disabled output implies no general zero-allocation or zero-cost guarantee. Chapter 27 separates suppression, formatting, lifetime and backend contracts.
 
-Do not put necessary application side effects in such an expression. Enabling logging must not decide whether a measurement is accepted or a protocol state advances. Conversely, disabling logging should not silently skip required work.
-
-Caching a suitable logger can avoid repeatedly constructing the same application scope, but no general zero-allocation or zero-cost promise follows from the existence of a disabled path. The code and tests distinguish suppression, formatting, scope lifetime, and backend output. Chapter 27 explains how those contracts are protected.
-
-Payloads, authorization headers, cookies, credentials, and configuration values can also contain sensitive data. A useful diagnostic often records the operation, size, identity, and reason without recording the entire content. Semantic fields improve attribution; they do not automatically redact an application-defined message. The application still owns that decision.
+Payloads, headers, cookies, credentials and configuration can expose sensitive data. Prefer operation, size, identity and reason when content is unnecessary. Semantic fields do not automatically redact messages; the application owns that decision.
 
 ### Reading lifecycle evidence correctly
 
@@ -410,28 +319,28 @@ A connection attempt, an established transport, an attached context, and a proto
 
 When a client retries, the named role can remain the same while the attempt changes. When HTTP upgrades to WebSocket, the context changes while the peer connection continues. When MQTT resumes or establishes a session, protocol meaning is added above the transport. Diagnostic wording should preserve these distinctions rather than report each transition as another undifferentiated connection.
 
-A useful reading sequence is:
+Not every run reaches an established transport or protocol session. An endpoint can fail before a connection exists, and an intentional context switch is not necessarily a network failure.
 
-```text
-configured role
-  -> activation or connection attempt
-      -> established transport
-          -> context attachment
-              -> protocol activity
-                  -> context detach and transport shutdown
-```
-
-Not every run traverses every stage. An endpoint can fail before a connection exists, and an intentional context switch is not necessarily a network failure.
-
-Counters need the same care. Cumulative queued bytes are not the current pending queue length. Read bytes and processed bytes describe different boundaries. A context's counters describe its own period of protocol responsibility, while connection counters describe the broader peer episode. Raising trace output does not remove the need to interpret the counter at the boundary that owns it.
+Counters need the same care. Cumulative queued bytes differ from pending queue length; read bytes differ from processed bytes. Context counters cover that context’s period of responsibility; connection counters cover the broader peer episode.
 
 The effective configuration is the companion artifact for this reading. Record the selected endpoint, limits, retry policy, and log policy along with the observed sequence. A short event history plus the exact configuration is usually a better bug report than an unbounded payload dump.
+
+**Part V checkpoint — make the role reproducible and diagnosable.** Use the public lab to repeat the echo precedence experiment with an unused loopback port. Run that endpoint first at global `Error`, then with component `echo=info` and instance `echoserver=debug` overrides. Both runs must echo the same bytes; only the scoped run reveals the listening and context records. Reject port 70000 and locate `--port` through local help. Keep the selected configuration with the short event history. These startup observations do not test runtime reconfiguration.
 
 ::: {.snodec-remember title="What to remember"}
 - Semantic logging records origin, boundary, component, and optional runtime identity separately from the message.
 - New application code uses `<Log.h>` and `snode::log`; existing context helpers retain their own object-scoped API.
-- Severity, event identity, and typed system errors answer different diagnostic questions.
 - Instance, component, boundary, origin, and global thresholds form an ordered override policy established at startup.
 - Disabled logging does not prevent ordinary C++ argument evaluation; guard expensive diagnostic-only work explicitly.
 - A useful record explains the boundary that owns the event without inventing lifecycle facts or exposing unnecessary sensitive content.
+:::
+
+::: {.snodec-exercise title="Exercises"}
+Public answers, lab commands and expected observations are in `companion/exercises/ch13/README.md`.
+
+1. **Review (O1).** A context logs an accepted record while the framework logs transport attachment. Assign origin, boundary and available identity to each; explain any absent fields.
+2. **Review (O2, O3).** With global `Error` and a matching component `Debug` override, which threshold applies? Does disabling trace prevent argument evaluation or redact sensitive data?
+3. **Lab (O1, O2).** Build and run `SemanticLogging`. Expect four JSON records, including debug under the component override, a stable event and the explicitly constructed error. Verify that no connection identity is invented.
+4. **Lab (O1, O2, O3).** Complete the **Part V checkpoint** above: compare effective configuration, actual echo behavior and scoped records; locate a rejected endpoint value through local help.
+5. **Design (O3).** An MQTT publish request is queued before a connection fails. Choose event names, identities and safe diagnostic fields that distinguish submission from delivery without logging credentials or inventing a peer.
 :::

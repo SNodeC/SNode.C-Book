@@ -1,0 +1,182 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 333 current references, 374 old-reference dispositions.
+{
+  "chapters": [
+    {
+      "chapter": 9,
+      "path": "manuscript/chapters/09-writing-socketcontext-classes-well.md",
+      "words_before": 4298,
+      "words_after": 3089,
+      "budget": 3200,
+      "prose_words": 2913,
+      "code_words": 176,
+      "headings": 8,
+      "heading_ceiling": 8,
+      "average_section_prose_words": 345.75,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 292
+    },
+    {
+      "chapter": 10,
+      "path": "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md",
+      "words_before": 3867,
+      "words_after": 2265,
+      "budget": 2800,
+      "prose_words": 2129,
+      "code_words": 136,
+      "headings": 6,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 328.33,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O1"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 285
+    },
+    {
+      "chapter": 11,
+      "path": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
+      "words_before": 3626,
+      "words_after": 2555,
+      "budget": 2800,
+      "prose_words": 2362,
+      "code_words": 193,
+      "headings": 7,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 312.57,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 272
+    }
+  ],
+  "part_iv_words": 7909,
+  "part_iv_budget": 8800,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1149,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 406,
+      "sha256": "8cdefbf9e076003b3fb0f39394197b965351a8e6a984a81314148d4517f5755b",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "304be806842c14ec14760250c1c2c2f1f521fc5e230d088898b98f9900d69a7b",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "c8add8407da4a199223bd176094d5a0c5d05de67aaa415c0c421360f55e76b30",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 314,
+  "reserve_used": 0,
+  "reserve_remaining": 2750,
+  "global_words": 130160,
+  "word_delta_from_phase_5d_follow_up": -3833
+}
+PASS: Part IV budgets, pedagogy, mappings, scope, preserved listings, clean final PDFs and package contents.
+Execution and editorial/visual review are recorded in separate Phase 5e logs; future Parts are not certified.

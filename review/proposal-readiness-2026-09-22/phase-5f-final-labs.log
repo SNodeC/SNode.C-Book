@@ -1,0 +1,406 @@
+COMMAND: ctest --test-dir /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples --output-on-failure --no-tests=error -V
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+      Start  1: exercise-ch01
+
+1: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/Comparison-AsioEcho/asio-echo"
+1: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch01
+1: Test timeout computed to be: 40
+1: PASS: snodec: 20480 binary bytes unchanged; next connection also works
+1: PASS: asio: 20480 binary bytes unchanged; next connection also works
+ 1/32 Test  #1: exercise-ch01 .....................   Passed    0.20 sec
+test 2
+      Start  2: exercise-ch01-independent-peers
+
+2: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/independent-peers.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/Comparison-AsioEcho/asio-echo"
+2: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch01
+2: Test timeout computed to be: 40
+2: PASS: snodec: active peer works while another is idle and after it closes
+2: PASS: asio: active peer works while another is idle and after it closes
+ 2/32 Test  #2: exercise-ch01-independent-peers ...   Passed    0.11 sec
+test 3
+      Start  3: exercise-ch02-consumer
+
+3: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch02/solution.py" "consumer"
+3: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch02
+3: Test timeout computed to be: 180
+3: -- The CXX compiler identification is GNU 16.2.0
+3: -- Detecting CXX compiler ABI info
+3: -- Detecting CXX compiler ABI info - done
+3: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+3: -- Detecting CXX compile features
+3: -- Detecting CXX compile features - done
+3: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+3:   net-in-stream: loading dependencies 'net-in-phy-stream'
+3:     net-in-phy-stream: loading dependencies 'net-in-phy'
+3:       net-in-phy: loading dependencies 'net-in'
+3:         net-in: loading dependencies 'net'
+3:           net: loading dependencies 'core-socket'
+3:             core-socket: loading dependencies 'core'
+3:               core: loading dependencies 'mux-epoll, utils'
+3:                 mux-epoll: loaded
+3:                 utils: loading dependencies 'logger'
+3:                   logger: loaded
+3:                 utils: loaded
+3:               core: loaded
+3:             core-socket: loaded
+3:           net: loaded
+3:         net-in: loaded
+3:       net-in-phy: loaded
+3:     net-in-phy-stream: loaded
+3:   net-in-stream: loaded
+3:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+3:     core-socket-stream: loading dependencies 'core-socket'
+3:       core-socket: already loaded
+3:     core-socket-stream: loaded
+3:   core-socket-stream-legacy: loaded
+3: net-in-stream-legacy: loaded
+3: -- Configuring done (0.2s)
+3: -- Generating done (0.0s)
+3: -- Build files have been written to: /tmp/snodec-environment-lab-conrdvh_/build
+3: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+3: [ 33%] Linking CXX static library libechosocketcontext.a
+3: [ 33%] Built target echosocketcontext
+3: [ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+3: [ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+3: [ 83%] Linking CXX executable echoserver
+3: [100%] Linking CXX executable echoclient
+3: [100%] Built target echoserver
+3: [100%] Built target echoclient
+3: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+3: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+ 3/32 Test  #3: exercise-ch02-consumer ............   Passed    3.89 sec
+test 4
+      Start  4: exercise-ch02-component
+
+4: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch02/solution.py" "component"
+4: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch02
+4: Test timeout computed to be: 180
+4: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+4:   net-in-stream: loading dependencies 'net-in-phy-stream'
+4:     net-in-phy-stream: loading dependencies 'net-in-phy'
+4:       net-in-phy: loading dependencies 'net-in'
+4:         net-in: loading dependencies 'net'
+4:           net: loading dependencies 'core-socket'
+4:             core-socket: loading dependencies 'core'
+4:               core: loading dependencies 'mux-epoll, utils'
+4:                 mux-epoll: loaded
+4:                 utils: loading dependencies 'logger'
+4:                   logger: loaded
+4:                 utils: loaded
+4:               core: loaded
+4:             core-socket: loaded
+4:           net: loaded
+4:         net-in: loaded
+4:       net-in-phy: loaded
+4:     net-in-phy-stream: loaded
+4:   net-in-stream: loaded
+4:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+4:     core-socket-stream: loading dependencies 'core-socket'
+4:       core-socket: already loaded
+4:     core-socket-stream: loaded
+4:   core-socket-stream-legacy: loaded
+4: net-in-stream-legacy: loaded
+4: -- Configuring done (0.0s)
+4: -- Generating done (0.0s)
+4: -- Build files have been written to: /tmp/snodec-environment-lab-_iogfocw/build
+4: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+4: [ 33%] Linking CXX static library libechosocketcontext.a
+4: [ 33%] Built target echosocketcontext
+4: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+4: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+4: [ 83%] Linking CXX executable echoserver
+4: [100%] Linking CXX executable echoclient
+4: [100%] Built target echoserver
+4: [100%] Built target echoclient
+4: -- The CXX compiler identification is GNU 16.2.0
+4: -- Detecting CXX compiler ABI info
+4: -- Detecting CXX compiler ABI info - done
+4: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+4: -- Detecting CXX compile features
+4: -- Detecting CXX compile features - done
+4: CMake Error at CMakeLists.txt:9 (find_package):
+4:   Found package configuration file:
+4: 
+4:     /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+4: 
+4:   but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+4:   NOT FOUND.  Reason given by package:
+4: 
+4:   Unsupported SNode.C component requested: net-in-stream-missing
+4: 
+4: 
+4: 
+4: -- Configuring incomplete, errors occurred!
+4: 
+4: PASS: missing component stops configuration before any runtime endpoint exists
+4: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/cmake/snodec
+4: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+ 4/32 Test  #4: exercise-ch02-component ...........   Passed    3.90 sec
+test 5
+      Start  5: exercise-ch03
+
+5: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch03/greeting-client"
+5: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch03
+5: Test timeout computed to be: 40
+5: PASS: EchoPair receives Learning by echo
+5: PASS: independent measurement peers reflect even invalid values; closing one leaves the other usable
+5: PASS: changed greeting and unchanged binary reflection with a controlled peer
+ 5/32 Test  #5: exercise-ch03 .....................   Passed    0.14 sec
+test 6
+      Start  6: exercise-ch03-occupied-port
+
+6: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/occupied-port.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver"
+6: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch03
+6: Test timeout computed to be: 40
+6: PASS: second listener reports occupied endpoint; original owner still reflects bytes
+ 6/32 Test  #6: exercise-ch03-occupied-port .......   Passed    0.12 sec
+test 7
+      Start  7: exercise-ch04-model-instances
+
+7: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch30/model-instances
+7: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch04
+7: Test timeout computed to be: 40
+7: PASS: shared inputs accept 1,2; separate model instances each accept 1
+ 7/32 Test  #7: exercise-ch04-model-instances .....   Passed    0.00 sec
+test 8
+      Start  8: exercise-ch04-independent-peers
+
+8: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch04/../ch01/independent-peers.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver"
+8: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch04
+8: Test timeout computed to be: 40
+8: PASS: snodec: active peer works while another is idle and after it closes
+ 8/32 Test  #8: exercise-ch04-independent-peers ...   Passed    0.09 sec
+test 9
+      Start  9: exercise-ch05-deferred-work
+
+9: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch05/deferred-work
+9: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch05
+9: Environment variables: 
+9:  XDG_CONFIG_HOME=/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch05/config
+9: Test timeout computed to be: 10
+9: PASS: empty trace before start; RUNNING dispatch gives 1,2,3; child sees first callback returned
+ 9/32 Test  #9: exercise-ch05-deferred-work .......   Passed    0.01 sec
+test 10
+      Start 10: exercise-ch05-model-checkpoint
+
+10: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch30/model-ownership
+10: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch05
+10: Test timeout computed to be: 10
+10: PASS: input 900,2,1 -> accepted 1,2,3; detached observer sees only 1,2
+10/32 Test #10: exercise-ch05-model-checkpoint ....   Passed    0.00 sec
+test 11
+      Start 11: exercise-ch06-ip-families
+
+11: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py" "ipv4" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch06/endpoint-in" "ipv6" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch06/endpoint-in6"
+11: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch06
+11: Test timeout computed to be: 40
+11: IDENTITY	localhost:48847	localhost:33630
+11: ipv4: producer local=('127.0.0.1', 33630), service=('127.0.0.1', 48847)
+11: PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+11: IDENTITY	localhost:60707	localhost:33610
+11: ipv6: producer local=('::1', 33610, 0, 0), service=('::1', 60707, 0, 0)
+11: PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+11/32 Test #11: exercise-ch06-ip-families .........   Passed    0.14 sec
+test 12
+      Start 12: exercise-ch06-unix-path
+
+12: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py" "unix" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch06/endpoint-un"
+12: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch06
+12: Test timeout computed to be: 40
+12: IDENTITY	/tmp/endpoint-lab-p2xjb4hc/service.sock	/tmp/endpoint-lab-p2xjb4hc/producer.sock
+12: unix: producer local=/tmp/endpoint-lab-p2xjb4hc/producer.sock, service=/tmp/endpoint-lab-p2xjb4hc/service.sock
+12: PASS: unix: exact measurement bytes, matching identities, owned cleanup
+12/32 Test #12: exercise-ch06-unix-path ...........   Passed    0.10 sec
+test 13
+      Start 13: exercise-ch07-independent-peers
+
+13: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/../ch01/independent-peers.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver"
+13: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch07
+13: Test timeout computed to be: 40
+13: PASS: snodec: active peer works while another is idle and after it closes
+13/32 Test #13: exercise-ch07-independent-peers ...   Passed    0.10 sec
+test 14
+      Start 14: exercise-ch07-occupied-endpoint
+
+14: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/../ch03/occupied-port.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver"
+14: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch07
+14: Test timeout computed to be: 40
+14: PASS: second listener reports occupied endpoint; original owner still reflects bytes
+14/32 Test #14: exercise-ch07-occupied-endpoint ...   Passed    0.13 sec
+test 15
+      Start 15: exercise-ch08-selectors
+
+15: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch08/bluetooth-selectors
+15: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch08
+15: Test timeout computed to be: 40
+15: Default: empty configured device string, zero selectors
+15: RFCOMM 10:3D:1C:AC:BA:9C:16
+15: L2CAP 10:3D:1C:AC:BA:9C:4097
+15: PASS: one device; channel 16 and PSM 4097 (0x1001); no radio operation
+15/32 Test #15: exercise-ch08-selectors ...........   Passed    0.02 sec
+test 16
+      Start 16: exercise-ch08-part-checkpoint
+
+16: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch08/../ch06/families.py" "ipv4" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch06/endpoint-in" "unix" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch06/endpoint-un"
+16: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch08
+16: Test timeout computed to be: 40
+16: IDENTITY	localhost:49217	localhost:47952
+16: ipv4: producer local=('127.0.0.1', 47952), service=('127.0.0.1', 49217)
+16: PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+16: IDENTITY	/tmp/endpoint-lab-p06uik2r/service.sock	/tmp/endpoint-lab-p06uik2r/producer.sock
+16: unix: producer local=/tmp/endpoint-lab-p06uik2r/producer.sock, service=/tmp/endpoint-lab-p06uik2r/service.sock
+16: PASS: unix: exact measurement bytes, matching identities, owned cleanup
+16/32 Test #16: exercise-ch08-part-checkpoint .....   Passed    0.14 sec
+test 17
+      Start 17: exercise-ch09-framing
+
+17: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch09/protocol.py" "framing" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/LineProtocol-Server/line-protocol-server"
+17: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch09
+17: Test timeout computed to be: 40
+17: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+17/32 Test #17: exercise-ch09-framing .............   Passed    0.21 sec
+test 18
+      Start 18: exercise-ch09-limits
+
+18: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch09/protocol.py" "limits" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/LineProtocol-Server/line-protocol-server"
+18: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch09
+18: Test timeout computed to be: 40
+18: Overlong input: closed; diagnostic bytes delivered=0
+18: Overlong input: closed; diagnostic bytes delivered=0
+18: PASS: 4096 bytes accepted including optional CR; 4097 closes with or without delimiter
+18/32 Test #18: exercise-ch09-limits ..............   Passed    0.31 sec
+test 19
+      Start 19: exercise-ch10-isolation
+
+19: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch10/../ch09/protocol.py" "isolation" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/LineProtocol-Server/line-protocol-server"
+19: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch10
+19: Test timeout computed to be: 40
+19: PASS: independent pending buffers; replacement starts fresh; surviving peer progresses
+19/32 Test #19: exercise-ch10-isolation ...........   Passed    0.19 sec
+test 20
+      Start 20: exercise-ch10-refusal
+
+20: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch10/../ch09/protocol.py" "refusal" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch10/line-refusal"
+20: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch10
+20: Test timeout computed to be: 40
+20: PASS: null factory result closes before READY; later valid context replies
+20/32 Test #20: exercise-ch10-refusal .............   Passed    0.09 sec
+test 21
+      Start 21: exercise-ch11-part-checkpoint
+
+21: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch11/../ch09/protocol.py" "transfer" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/LineProtocol-Server/line-protocol-server" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch11/line-unix"
+21: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch11
+21: Test timeout computed to be: 40
+21: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+21: Observed ip: 60197
+21: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+21: Observed unix: /tmp/line-lab-ko1y3wui/line.sock
+21: PASS: Part IV checkpoint: identical reconstructed replies over IPv4 and Unix; owned cleanup
+21/32 Test #21: exercise-ch11-part-checkpoint .....   Passed    0.36 sec
+test 22
+      Start 22: exercise-ch11-endpoint-failure
+
+22: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch11/../ch09/protocol.py" "endpoint-failure" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch11/line-unix"
+22: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch11
+22: Test timeout computed to be: 40
+22: PASS: missing path fails before protocol; valid peer reports command error and remains usable
+22/32 Test #22: exercise-ch11-endpoint-failure ....   Passed    0.11 sec
+test 23
+      Start 23: exercise-ch12-precedence
+
+23: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch12/configuration.py" "precedence" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver"
+23: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch12
+23: Test timeout computed to be: 40
+23: PASS: source/file/CLI ports [8080, 18091, 18092]; file unchanged; inspection status 2
+23/32 Test #23: exercise-ch12-precedence ..........   Passed    0.10 sec
+test 24
+      Start 24: exercise-ch12-discovery
+
+24: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch12/configuration.py" "discovery" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver"
+24: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch12
+24: Test timeout computed to be: 40
+24: PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+24/32 Test #24: exercise-ch12-discovery ...........   Passed    0.10 sec
+test 25
+      Start 25: exercise-ch13-records
+
+25: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/records.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/SemanticLogging/semantic-logging"
+25: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch13
+25: Test timeout computed to be: 40
+25: PASS: four semantic records; component Debug overrides global Info; event and typed error; no invented peer
+25: {"v":1,"ts":"2026-09-22T18:08:18.585Z","level":"info","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","message":"Measurement example initialized"}
+25: {"v":1,"ts":"2026-09-22T18:08:18.585Z","level":"info","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","event":"measurement.accepted","message":"Accepted measurement sequence 1"}
+25: {"v":1,"ts":"2026-09-22T18:08:18.585Z","level":"debug","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","message":"Diagnostic sequence 1"}
+25: {"v":1,"ts":"2026-09-22T18:08:18.585Z","level":"warn","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","message":"Demonstration error; no file operation was attempted","error":{"code":13,"text":"Permission denied"}}
+25/32 Test #25: exercise-ch13-records .............   Passed    0.06 sec
+test 26
+      Start 26: exercise-ch13-part-checkpoint
+
+26: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/EchoPair/echoserver"
+26: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch13
+26: Test timeout computed to be: 40
+26: PASS: source/file/CLI ports [8080, 18091, 51461]; file unchanged; inspection status 2
+26: PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+26: PASS: Part V checkpoint: CLI-selected listener echoes; narrow overrides reveal role/context records
+26: Global Error run: 0 records; scoped run: [{"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Initiating listen", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.822Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "info", "message": "listener started", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.823Z", "v": 1}, {"boundary": "application", "component": "echo", "level": "info", "message": "echoserver: listening on '127.0.0.1:51461'", "origin": "application", "ts": "2026-09-22T18:08:18.823Z", "v": 1}, {"boundary": "connection", "component": "core.socket.stream", "connection": "1", "instance": "echoserver", "level": "info", "message": "transport connected", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.839Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Connection 1 connecting", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.839Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Local: localhost:51461", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.839Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Peer: localhost:52640", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.839Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Connection 1 connected", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.839Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Local: localhost:51461", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.839Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Peer: localhost:52640", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.839Z", "v": 1}, {"boundary": "connection", "component": "core.socket.stream", "connection": "1", "instance": "echoserver", "level": "debug", "message": "SocketContext created successful", "origin": "framework", "role": "server", "ts": "2026-09-22T18:08:18.839Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "debug", "message": "Context attached", "origin": "framework", "ts": "2026-09-22T18:08:18.839Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "info", "message": "Echo context attached", "origin": "application", "ts": "2026-09-22T18:08:18.840Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "debug", "message": "Data to reflect: part-v-checkpoint", "origin": "application", "ts": "2026-09-22T18:08:18.840Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "debug", "message": "SocketContext: EOF received", "origin": "framework", "ts": "2026-09-22T18:08:18.840Z", "v": 1}]
+26/32 Test #26: exercise-ch13-part-checkpoint .....   Passed    0.27 sec
+test 27
+      Start 27: exercise-ch18
+
+27: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch18/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/SSE-Server/sse-server"
+27: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch18
+27: Test timeout computed to be: 40
+27: PASS: 406 on restricted Accept; two matching live events; reconnect starts at current state
+27/32 Test #27: exercise-ch18 .....................   Passed    0.10 sec
+test 28
+      Start 28: exercise-ch18-observers
+
+28: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch18/observers.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/SSE-Server/sse-server"
+28: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch18
+28: Test timeout computed to be: 40
+28: PASS: both observers see the same acceptance; remaining observer continues after peer closes
+28/32 Test #28: exercise-ch18-observers ...........   Passed    0.11 sec
+test 29
+      Start 29: exercise-ch28
+
+29: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch28/solution.py" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/examples/MiniGateway/minigateway"
+29: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch28
+29: Test timeout computed to be: 40
+29: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+29/32 Test #29: exercise-ch28 .....................   Passed    0.14 sec
+test 30
+      Start 30: exercise-ch28-validation
+
+30: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch28/measurement-validation
+30: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch28
+30: Test timeout computed to be: 10000000
+30: PASS: three invalid inputs leave state and notifications unchanged; next acceptance is 2
+30/32 Test #30: exercise-ch28-validation ..........   Passed    0.00 sec
+test 31
+      Start 31: exercise-ch30
+
+31: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch30/model-ownership
+31: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch30
+31: Test timeout computed to be: 10000000
+31: PASS: input 900,2,1 -> accepted 1,2,3; detached observer sees only 1,2
+31/32 Test #31: exercise-ch30 .....................   Passed    0.00 sec
+test 32
+      Start 32: exercise-ch30-model-instances
+
+32: Test command: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch30/model-instances
+32: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5f-examples/companion/exercises/ch30
+32: Test timeout computed to be: 10000000
+32: PASS: shared inputs accept 1,2; separate model instances each accept 1
+32/32 Test #32: exercise-ch30-model-instances .....   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 32
+
+Total Test time (real) =  11.26 sec

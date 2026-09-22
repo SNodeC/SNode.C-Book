@@ -17,14 +17,19 @@ def free_port():
         return sock.getsockname()[1]
 
 
+def environment(config_home):
+    env = dict(os.environ, XDG_CONFIG_HOME=str(config_home))
+    prefix = env.get('SNODEC_PREFIX')
+    if prefix:
+        libraries = sorted({str(p.parent) for p in Path(prefix).rglob('*.so*')})
+        env['LD_LIBRARY_PATH'] = ':'.join(libraries + [env.get('LD_LIBRARY_PATH', '')])
+    return env
+
+
 @contextlib.contextmanager
 def running(executable, args):
     with tempfile.TemporaryDirectory(prefix='snodec-lab-') as temp:
-        env = dict(os.environ, XDG_CONFIG_HOME=temp)
-        prefix = env.get('SNODEC_PREFIX')
-        if prefix:
-            libraries = sorted({str(p.parent) for p in Path(prefix).rglob('*.so*')})
-            env['LD_LIBRARY_PATH'] = ':'.join(libraries + [env.get('LD_LIBRARY_PATH', '')])
+        env = environment(temp)
         path = Path(temp) / 'process.log'
         with path.open('wb') as output:
             process = subprocess.Popen([executable, *args], env=env, stdout=output,

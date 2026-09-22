@@ -233,7 +233,7 @@
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
-      "text": "Chapters 16\u201323",
+      "text": "Chapters 16–23",
       "targets": [
         "the-http-layer",
         "the-express-like-framework",
@@ -289,7 +289,7 @@
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
-      "text": "Chapters 4\u201315",
+      "text": "Chapters 4–15",
       "targets": [
         "the-mental-model-of-snodec",
         "core-runtime-and-event-processing",
@@ -756,7 +756,7 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "The section \u201cUnix domain sockets\u201d",
+      "text": "The section “Unix domain sockets”",
       "targets": [
         "unix-domain-sockets"
       ],
@@ -811,7 +811,7 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapters 3\u20135",
+      "text": "Chapters 3–5",
       "targets": [
         "your-first-working-program-the-echo-pair",
         "the-mental-model-of-snodec",
@@ -831,7 +831,7 @@
     },
     {
       "file": "manuscript/chapters/06-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
-      "text": "Chapters 6\u20138",
+      "text": "Chapters 6–8",
       "targets": [
         "socket-addresses-and-address-semantics",
         "servers-clients-and-connections",
@@ -1176,106 +1176,25 @@
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "Chapter 11",
-      "targets": [
-        "building-the-same-protocol-over-different-lower-layers"
-      ],
-      "source_ids": [
-        "R177"
-      ],
-      "line": 50
-    },
-    {
-      "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "The section \u201cApplication and instance configuration\u201d",
+      "text": "the section “Application and instance configuration”",
       "targets": [
         "application-and-instance-configuration-in-detail"
       ],
       "source_ids": [
         "R178"
       ],
-      "line": 252
+      "line": 115
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "Chapters 6\u20138",
-      "targets": [
-        "socket-addresses-and-address-semantics",
-        "servers-clients-and-connections",
-        "ipv4-and-ipv6-as-the-first-concrete-network-families",
-        "unix-domain-sockets",
-        "bluetooth-in-snodec-rfcomm-and-l2cap"
-      ],
-      "source_ids": [
-        "R179"
-      ],
-      "line": 395
-    },
-    {
-      "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "The section \u201cApplication and instance configuration\u201d",
-      "targets": [
-        "application-and-instance-configuration-in-detail"
-      ],
-      "source_ids": [
-        "R180"
-      ],
-      "line": 425
-    },
-    {
-      "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "the section \u201cConfiguration principles\u201d",
-      "targets": [
-        "configuration-philosophy-in-snodec"
-      ],
-      "source_ids": [
-        "R181"
-      ],
-      "line": 427
-    },
-    {
-      "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "The section \u201cApplication and instance configuration\u201d",
-      "targets": [
-        "application-and-instance-configuration-in-detail"
-      ],
-      "source_ids": [
-        "R182"
-      ],
-      "line": 550
-    },
-    {
-      "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "The section \u201cConfiguration principles\u201d",
+      "text": "the section “Configuration principles”",
       "targets": [
         "configuration-philosophy-in-snodec"
       ],
       "source_ids": [
         "R183"
       ],
-      "line": 756
-    },
-    {
-      "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "The section \u201cConfiguration principles\u201d",
-      "targets": [
-        "configuration-philosophy-in-snodec"
-      ],
-      "source_ids": [
-        "R184"
-      ],
-      "line": 770
-    },
-    {
-      "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "The section \u201cApplication and instance configuration\u201d",
-      "targets": [
-        "application-and-instance-configuration-in-detail"
-      ],
-      "source_ids": [
-        "R185"
-      ],
-      "line": 772
+      "line": 278
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
@@ -1286,29 +1205,7 @@
       "source_ids": [
         "R186"
       ],
-      "line": 958
-    },
-    {
-      "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "The section \u201cConfiguration principles\u201d",
-      "targets": [
-        "configuration-philosophy-in-snodec"
-      ],
-      "source_ids": [
-        "R187"
-      ],
-      "line": 967
-    },
-    {
-      "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "The section \u201cApplication and instance configuration\u201d",
-      "targets": [
-        "application-and-instance-configuration-in-detail"
-      ],
-      "source_ids": [
-        "R188"
-      ],
-      "line": 969
+      "line": 373
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
@@ -1319,7 +1216,7 @@
       "source_ids": [
         "R189"
       ],
-      "line": 1056
+      "line": 440
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
@@ -1330,7 +1227,7 @@
       "source_ids": [
         "R190"
       ],
-      "line": 1096
+      "line": 470
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
@@ -1344,11 +1241,11 @@
       "source_ids": [
         "R191"
       ],
-      "line": 1269
+      "line": 570
     },
     {
       "file": "manuscript/chapters/12-configuring-applications-and-named-instances.md",
-      "text": "Chapters 6\u20138",
+      "text": "Chapters 6–8",
       "targets": [
         "socket-addresses-and-address-semantics",
         "servers-clients-and-connections",
@@ -1359,7 +1256,7 @@
       "source_ids": [
         "R192"
       ],
-      "line": 1342
+      "line": 603
     },
     {
       "file": "manuscript/chapters/13-logging-diagnostics-and-runtime-introspection.md",
@@ -1370,7 +1267,7 @@
       "source_ids": [
         "R193"
       ],
-      "line": 29
+      "line": 18
     },
     {
       "file": "manuscript/chapters/13-logging-diagnostics-and-runtime-introspection.md",
@@ -1381,7 +1278,7 @@
       "source_ids": [
         "R194"
       ],
-      "line": 308
+      "line": 235
     },
     {
       "file": "manuscript/chapters/13-logging-diagnostics-and-runtime-introspection.md",
@@ -1392,7 +1289,7 @@
       "source_ids": [
         "R195"
       ],
-      "line": 400
+      "line": 309
     },
     {
       "file": "manuscript/chapters/14-tls-across-the-framework.md",
@@ -2393,7 +2290,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cReading complete applications\u201d",
+      "text": "The section “Reading complete applications”",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2437,7 +2334,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cReading complete applications\u201d",
+      "text": "The section “Reading complete applications”",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2448,7 +2345,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cFrom applications to systems\u201d",
+      "text": "The section “From applications to systems”",
       "targets": [
         "from-applications-to-systems"
       ],
@@ -2459,7 +2356,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cMQTTSuite as a worked system\u201d",
+      "text": "The section “MQTTSuite as a worked system”",
       "targets": [
         "mqttsuite-as-a-reference-ecosystem"
       ],
@@ -2470,7 +2367,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cMQTTSuite as a worked system\u201d",
+      "text": "The section “MQTTSuite as a worked system”",
       "targets": [
         "mqttsuite-as-a-reference-ecosystem"
       ],
@@ -2526,7 +2423,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cFrom applications to systems\u201d",
+      "text": "The section “From applications to systems”",
       "targets": [
         "from-applications-to-systems"
       ],
@@ -2537,7 +2434,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cReading complete applications\u201d",
+      "text": "The section “Reading complete applications”",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2559,7 +2456,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "The section \u201cReading complete applications\u201d",
+      "text": "The section “Reading complete applications”",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2570,7 +2467,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "the section \u201cFrom applications to systems\u201d",
+      "text": "the section “From applications to systems”",
       "targets": [
         "from-applications-to-systems"
       ],
@@ -2581,7 +2478,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "the section \u201cReading complete applications\u201d",
+      "text": "the section “Reading complete applications”",
       "targets": [
         "learning-from-the-applications-in-src-apps"
       ],
@@ -2592,7 +2489,7 @@
     },
     {
       "file": "manuscript/chapters/24-snodec-in-larger-systems.md",
-      "text": "the section \u201cFrom applications to systems\u201d",
+      "text": "the section “From applications to systems”",
       "targets": [
         "from-applications-to-systems"
       ],
@@ -3685,6 +3582,25 @@
       "text": "Chapter 11",
       "targets": [
         "building-the-same-protocol-over-different-lower-layers"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch12/README.md",
+      "text": "Chapter 12",
+      "targets": [
+        "configuration-philosophy-in-snodec",
+        "application-and-instance-configuration-in-detail"
+      ],
+      "source_ids": [],
+      "line": 1
+    },
+    {
+      "file": "companion/exercises/ch13/README.md",
+      "text": "Chapter 13",
+      "targets": [
+        "logging-diagnostics-and-runtime-introspection"
       ],
       "source_ids": [],
       "line": 1
@@ -5658,8 +5574,8 @@
       "old_chapters": [
         15
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/12-configuring-applications-and-named-instances.md:50"
+      "status": "retired",
+      "evidence": "Phase 5f Chapter 12 diff: redundant merged-section introduction/catalogue/naming reference removed; topic explanations and all stable anchors retained. See chapter-ledger.md Phase 5f content audit."
     },
     {
       "id": "R178",
@@ -5676,7 +5592,7 @@
       "id": "R179",
       "old_file": "manuscript/chapters/16-configuration-philosophy-in-snodec.md",
       "old_line": 393,
-      "old_text": "Chapters 8\u201312",
+      "old_text": "Chapters 8–12",
       "old_chapters": [
         8,
         9,
@@ -5684,8 +5600,8 @@
         11,
         12
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/12-configuring-applications-and-named-instances.md:395"
+      "status": "retired",
+      "evidence": "Phase 5f Chapter 12 diff: redundant merged-section introduction/catalogue/naming reference removed; topic explanations and all stable anchors retained. See chapter-ledger.md Phase 5f content audit."
     },
     {
       "id": "R180",
@@ -5695,8 +5611,8 @@
       "old_chapters": [
         17
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/12-configuring-applications-and-named-instances.md:425"
+      "status": "retired",
+      "evidence": "Phase 5f Chapter 12 diff: redundant merged-section introduction/catalogue/naming reference removed; topic explanations and all stable anchors retained. See chapter-ledger.md Phase 5f content audit."
     },
     {
       "id": "R181",
@@ -5706,8 +5622,8 @@
       "old_chapters": [
         16
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/12-configuring-applications-and-named-instances.md:427"
+      "status": "retired",
+      "evidence": "Phase 5f Chapter 12 diff: redundant merged-section introduction/catalogue/naming reference removed; topic explanations and all stable anchors retained. See chapter-ledger.md Phase 5f content audit."
     },
     {
       "id": "R182",
@@ -5717,8 +5633,8 @@
       "old_chapters": [
         17
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/12-configuring-applications-and-named-instances.md:550"
+      "status": "retired",
+      "evidence": "Phase 5f Chapter 12 diff: redundant merged-section introduction/catalogue/naming reference removed; topic explanations and all stable anchors retained. See chapter-ledger.md Phase 5f content audit."
     },
     {
       "id": "R183",
@@ -5739,8 +5655,8 @@
       "old_chapters": [
         16
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/12-configuring-applications-and-named-instances.md:770"
+      "status": "retired",
+      "evidence": "Phase 5f Chapter 12 diff: redundant merged-section introduction/catalogue/naming reference removed; topic explanations and all stable anchors retained. See chapter-ledger.md Phase 5f content audit."
     },
     {
       "id": "R185",
@@ -5750,8 +5666,8 @@
       "old_chapters": [
         17
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/12-configuring-applications-and-named-instances.md:772"
+      "status": "retired",
+      "evidence": "Phase 5f Chapter 12 diff: redundant merged-section introduction/catalogue/naming reference removed; topic explanations and all stable anchors retained. See chapter-ledger.md Phase 5f content audit."
     },
     {
       "id": "R186",
@@ -5772,8 +5688,8 @@
       "old_chapters": [
         16
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/12-configuring-applications-and-named-instances.md:967"
+      "status": "retired",
+      "evidence": "Phase 5f Chapter 12 diff: redundant merged-section introduction/catalogue/naming reference removed; topic explanations and all stable anchors retained. See chapter-ledger.md Phase 5f content audit."
     },
     {
       "id": "R188",
@@ -5783,8 +5699,8 @@
       "old_chapters": [
         17
       ],
-      "status": "mapped",
-      "evidence": "manuscript/chapters/12-configuring-applications-and-named-instances.md:969"
+      "status": "retired",
+      "evidence": "Phase 5f Chapter 12 diff: redundant merged-section introduction/catalogue/naming reference removed; topic explanations and all stable anchors retained. See chapter-ledger.md Phase 5f content audit."
     },
     {
       "id": "R189",
@@ -5826,7 +5742,7 @@
       "id": "R192",
       "old_file": "manuscript/chapters/17-application-and-instance-configuration-in-detail.md",
       "old_line": 760,
-      "old_text": "Chapters 08\u201312",
+      "old_text": "Chapters 08–12",
       "old_chapters": [
         8,
         9,
@@ -7825,7 +7741,7 @@
       "id": "R368",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 32,
-      "old_text": "Chapters 35\u201336",
+      "old_text": "Chapters 35–36",
       "old_chapters": [
         35,
         36
@@ -7837,7 +7753,7 @@
       "id": "R369",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 34,
-      "old_text": "Chapters 1\u20137",
+      "old_text": "Chapters 1–7",
       "old_chapters": [
         1,
         2,
@@ -7854,7 +7770,7 @@
       "id": "R370",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 34,
-      "old_text": "Chapters 16\u201318 and 20\u201323, then 25, 32, and 35",
+      "old_text": "Chapters 16–18 and 20–23, then 25, 32, and 35",
       "old_chapters": [
         16,
         17,
@@ -7889,7 +7805,7 @@
       "id": "R372",
       "old_file": "review/proposal/book-proposal-package.md",
       "old_line": 129,
-      "old_text": "Chapters 35\u201336",
+      "old_text": "Chapters 35–36",
       "old_chapters": [
         35,
         36

@@ -1246,3 +1246,50 @@ Commit: `proposal-readiness: phase 5e — refine Part IV and verify protocol fra
 **Stop after Phase 5e.** Next: Phase 5f, Part V only, after freshly rerunning the
 current Phase 5e gate in REPORT.md. Author preservation rules, reserve accounting,
 5l/5m split and Phase 6 proposal refresh still apply.
+
+
+## Phase 5f — Part V completed, 2026-09-22
+
+Freshly reran the Phase 5e entry gate before editing: exact metric equality,
+Part IV budgets/pedagogy, reference and preservation checks, all 28 existing labs,
+companion/runtime checks and clean publication builds. New evidence is in
+REPORT.md’s Phase 5f entry account and `phase-5f-entry-*`; prior evidence remains
+historical and unchanged.
+
+Edited and reread Chapters 12–13 and the Part V opener. Configuration’s repeated
+merged introductions/catalogues are consolidated around the existing echo
+precedence experiment. Diagnostics retains its scope, lifetime, error, frozen-policy
+and output qualifications while tightening framing. Every executable/configuration
+fence, marked complete listing, index occurrence and figure remains unchanged.
+The recorded author instruction applies: budgets are ceilings, not targets;
+explanations, examples and technical qualifications were not cut merely to fit.
+Chapter 12’s preservation stop rule is accounted for by the ledger’s topic audit.
+
+| Chapter | Final words / ceiling | Headings / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: |
+| 12 | 4,273 / 5,400 | 10 / 16 | 391.20 |
+| 13 | 2,698 / 2,750 | 7 / 7 | 340.43 |
+
+Part V: **6,971 / 8,150**. Reserve remains **2,750**, none used. Both chapters have
+three objectives, a five-bullet recap, two review questions, two labs and one design
+problem, with complete objective↔exercise mappings and public solutions. The Part V
+checkpoint checks reproducible endpoint selection and scoped runtime diagnostics
+using canonical EchoPair and SemanticLogging, without introducing another app.
+
+All 32 public labs pass, including four new registrations. Hygiene/reference
+regression, alignment, metrics tests, companion build, teaching/behavior/lifetime,
+PDF/proposal/sample/package and extracted-package checks pass. Runtime reparse,
+live listener replacement and deployment behavior are explained, not newly exercised.
+Production code growth is zero; the requested lab/test support is +119 net lines.
+
+Full PDF: **392 pages** (was 406), zero warnings/bad boxes; samples 54, proposal 6.
+Targeted rendered pages were reviewed, including objectives/recaps/exercises, both
+figures and preserved listings. Final metrics, hashes and checks are in
+`metrics-after-phase-5f.json`, `phase-5f-exit-checks.json` and REPORT.md. Whole book:
+**124,770 words, 615 deep headings, 298 text fences**; final global targets remain
+pending. The reference checker covers 326 current occurrences and all 374 old
+migration identities; retirements in this Part are explicitly justified.
+
+**Stop after Phase 5f.** Next: Phase 5g, Part VI only, after freshly rerunning this
+phase’s exit criteria with new evidence. Author preservation rules, reserve
+accounting, 5l/5m split and Phase 6 proposal refresh remain in force.
