@@ -5,7 +5,13 @@
 \index{source checkout}
 
 
-### Why the environment matters
+::: {.snodec-objectives title="Learning objectives"}
+- **O1.** Explain how source, build, install, and consumer locations affect which framework an application uses.
+- **O2.** Build an external application and verify the installed package selected by CMake.
+- **O3.** Diagnose a missing component and distinguish build dependencies from lab equipment.
+:::
+
+### Working areas and their purposes
 
 Before the architecture can become interesting, the toolchain must be boring. The examples in this book should build, run, and fail in understandable ways, so the first practical task is to keep the source tree, build tree, install prefix, and later playground project separate.
 
@@ -13,13 +19,7 @@ This is more than tidiness. SNode.C is a real C++ framework with a core runtime,
 
 For example, successfully rebuilding a framework library does not refresh a different copy already installed in a local prefix. An external application can still compile against that older installation. Keeping the locations explicit makes that failure understandable.
 
-The goal of this chapter is therefore simple:
-
-> Prepare a development setup that lets you build SNode.C, run examples, inspect the framework source tree, and later compile small applications against installed SNode.C public headers and installed SNode.C components.
-
 This is not a general Linux installation guide. It does not try to cover every distribution, every package manager, every editor, or every cross-compilation target. The concrete commands assume a normal Linux development machine, with Debian-style package names where package installation is shown. The ideas transfer to other systems, but package names and installation commands may need adjustment.
-
-### Working areas, different purposes
 
 During the book it helps to keep four locations mentally separate:
 
@@ -47,13 +47,7 @@ A local install prefix can live outside these source and build directories:
 
 The framework source tree remains the source of truth for the implementation. The build tree is disposable. The install prefix is what external projects consume. The playground is where you can test your understanding.
 
-### What the environment must support
-
-For the first part of the book, the environment must support five activities: **clone and build SNode.C**, **run small server and client examples**, **inspect the framework source tree and build tree separately**, **install the framework into a known prefix**, and **compile small external programs against installed SNode.C public headers and installed SNode.C components**.
-
-Optional technologies should also be visible when available. Bluetooth RFCOMM and Bluetooth L2CAP require the appropriate BlueZ development files. MariaDB support requires MariaDB development files. These optional areas do not have to be used immediately, but the environment should not hide them accidentally.
-
-### Compiler and CMake expectations
+### Tools and development packages
 
 \index{compiler requirements}
 \index{CMake@\texttt{CMake}}
@@ -80,8 +74,6 @@ clang++ --version
 ```
 
 It is fine if only one of GCC or Clang is used, as long as it satisfies the required version.
-
-### Required and optional packages
 
 \index{build environment!dependencies}
 \index{build environment!optional dependencies}
@@ -205,8 +197,6 @@ cmake --build snode.c-ninja -j$(nproc)
 
 The build can take some time. That is normal. The framework uses many templates and builds many components and examples.
 
-### Installing the framework
-
 \index{installation}
 \index{install tree}
 
@@ -260,8 +250,6 @@ Keep useful lifecycle output enabled while working through the first examples. C
 Do not make the first examples silent before you understand what they are doing.
 :::
 
-### Selecting application, test, and diagnostic builds
-
 \index{SNODEC_BUILD_APPS@\texttt{SNODEC\_BUILD\_APPS}}
 \index{SNODEC_BUILD_TESTS@\texttt{SNODEC\_BUILD\_TESTS}}
 \index{SNODEC_ENABLE_ASAN@\texttt{SNODEC\_ENABLE\_ASAN}}
@@ -291,7 +279,7 @@ The logger backend is fetched as an implementation dependency during configurati
 
 The source snapshot used by this edition declares version `2.0.0`. It starts a new C++ API/ABI epoch: rebuild applications and dynamically loaded extensions against the same headers and libraries. Keeping an older binary beside a newer installation is not the same as rebuilding that application successfully.
 
-### Finding built executables
+### Find, run, and observe the first pair
 
 Build-tree layouts differ depending on generator, configuration, and installation choices. Rather than memorizing one exact executable path, learn how to inspect the build tree.
 
@@ -310,22 +298,10 @@ find . -type f -executable | grep apps
 
 This is often more robust than assuming one fixed path.
 
-When later chapters refer to example applications, the important distinction is:
-
-```text
-source file location
-  -> where the example is implemented
-
-build-tree executable location
-  -> where the configured build placed the binary
-
-installed executable location
-  -> where installation placed the binary, if it was installed
-```
-
-Do not confuse these three. Many build problems become easier to diagnose once this distinction is clear.
-
-### Running server and client programs
+The source file tells you where behavior is implemented; the build-tree executable
+is the binary produced by the selected configuration. An installed executable is
+a separate copy, refreshed by installation. Check which one your shell starts
+before diagnosing an apparent failure to rebuild.
 
 \index{server program}
 \index{client program}
@@ -348,13 +324,11 @@ Ctrl-C
 
 The first time you run such an example, pay attention to the output. You are not simply checking that the program works. You are learning how the framework makes runtime behavior visible.
 
-### Do not hide runtime output too early
-
 Use the first run to distinguish three observations: the listener reports readiness, the client establishes a connection, and the contexts exchange bytes. A build success proves none of those runtime facts. If only the first observation appears, inspect the client's destination and diagnostics before changing the echo context.
 
 Keep `--log-level=5` for the short teaching run so payload diagnostics are visible, then stop the pair. Later, Chapter 13 separates framework and application scopes so diagnostic volume can be reduced deliberately. The useful habit is to retain evidence of the boundary under investigation, rather than treating either silence or maximum verbosity as a permanent policy.
 
-### Preparing a separate playground project
+### Build against the installed public components
 
 \index{playground project}
 \index{external consumer project}
@@ -386,8 +360,6 @@ snodec-playground/
 
 Do not worry yet about writing all of this. Chapter 3 introduces the first concrete program. The point here is only to prepare a place where an external application can live.
 
-### Components and public headers as installed architecture
-
 \index{components}
 \index{public headers}
 \index{installed architecture}
@@ -418,28 +390,15 @@ The application does not include the lower core socket headers merely because th
 
 The actual echo pair has separate server and client targets, but both follow the same public-header/component pairing.
 
-The component name is not arbitrary. It encodes a path through the architecture:
-
-```text
-net-in-stream-legacy
-```
-
-can be read as:
-
-```text
-layer area:     net
-network family: in       (IPv4)
-transport:      stream
-connection:     legacy   (non-TLS stream connection variant)
-```
+Read `net-in-stream-legacy` as the network layer (`net`), IPv4 family (`in`),
+stream transport, and non-TLS connection variant. The matching include path spells
+those choices with slashes instead of dashes.
 
 The term `legacy` is important. In this naming context it denotes the non-TLS stream connection variant. It does not, by itself, mean that the component is obsolete or deprecated.
 
 Later chapters will introduce additional component names for IPv6, Unix domain sockets, Bluetooth RFCOMM, Bluetooth L2CAP, TLS variants, HTTP, WebSocket, MQTT, and database support.
 
 Do not try to memorize all names at this stage. Learn the shape instead. SNode.C component names and public include paths are compact forms of architectural information. The dashes in a component name and the slashes in an include path often describe the same stack from different technical viewpoints.
-
-### Check which installation the playground consumes
 
 \index{source tree}
 \index{build tree}
@@ -450,28 +409,42 @@ After configuring the playground in Chapter 3, inspect its `CMakeCache.txt` for 
 
 This check becomes useful when a source change appears to have no effect. First rebuild and reinstall the framework into the selected prefix, then rebuild the consumer. If you intend to switch installations, use a fresh consumer build directory or explicitly correct its cached package location. Changing the source checkout alone does not change an already selected installed package.
 
-::: {.snodec-checklist title="Environment checklist"}
-Before moving on, you should be able to answer these questions.
+### Lab environment
 
-- Can I clone the SNode.C repository?
-- Can I configure an out-of-tree build?
-- Can I compile the framework?
-- Can I find built example executables?
-- Can I run a server and a client in separate terminals?
-- Do I understand the difference between the source directory, build directory, and install prefix?
-- Do I know whether optional Bluetooth development files are installed?
-- Do I know whether optional MariaDB development files are installed?
-- Do I know whether I am using a local install prefix or a system-wide install?
-- Do I have a separate playground project for later external experiments?
+The first echo labs need the installed framework, CMake, a C++ compiler, Python 3,
+and loopback sockets. The Chapter 1 comparison additionally needs standalone Asio
+headers (`libasio-dev` on Debian-style systems). Later experiments introduce
+optional services and equipment. Development headers let a target compile; they
+do not start a service or provide a radio.
 
-If the answer to these questions is yes, the environment is ready for the first program.
-:::
+| Dependency | Where it is needed | Local observation before the equipped run |
+|---|---|---|
+| MQTT broker | Parts VIII and IX: publish/subscribe and MQTTSuite integration | Inspect a generated CONNECT packet with a controlled peer; delivery through a broker still needs a broker run. |
+| MariaDB server and test database | Part IX: persistence | Exercise the in-memory model; persistence and reconnection need the database. |
+| Local TLS certificate/key fixture | Part VI; secure variants in Parts VII–VIII | Use a loopback TLS peer and local trust configuration; no public certificate is needed. |
+| Bluetooth adapter and compatible peer | Part III: RFCOMM/L2CAP exchange | Inspect address/service selection without hardware; actual radio exchange needs both peers. |
+
+Broker-, database-, and hardware-dependent experiments are **equipped labs**.
+They may use services on the same machine; “equipped” describes an additional
+prerequisite, not a remote deployment. Check the lab's setup and expected outcome
+before running it. A local-only alternative answers a narrower question: reflecting
+bytes or updating an in-memory model does not establish broker delivery, database
+durability, or a radio connection. Keep those observations separate in your notes.
 
 ::: {.snodec-remember title="What to remember"}
-- Keep the source tree, build tree, install tree, and playground project separate; each has a different purpose.
-- Use an out-of-tree build so generated files and compiled binaries do not obscure the source tree.
-- A local install prefix makes external examples predictable because headers, libraries, and CMake package files live in one known place.
-- Component names such as `net-in-stream-legacy` encode architectural position; public include paths such as `<net/in/stream/legacy/SocketServer.h>` encode the corresponding C++ source-facing entry point; `legacy` means the non-TLS stream connection variant.
-- Runtime output is part of the learning process. Do not silence diagnostics before the first examples are understood.
-- The environment is ready when the framework builds, example programs can be found and run, and an external playground project can consume the installed package.
+- Separate source, build, installation, and consumer directories; rebuilding alone does not update an installed package.
+- Check `snodec_DIR` in the consumer cache to identify the selected installation.
+- Pair the highest public header used by a target with its corresponding component; `legacy` denotes the non-TLS variant.
+- Distinguish successful compilation from listener readiness, connection establishment, and byte exchange.
+- Install development dependencies for compilation; arrange services and hardware separately for equipped labs.
+:::
+
+::: {.snodec-exercise title="Exercises"}
+1. **Review (O1).** A framework change compiles, but the playground still behaves as before. Which locations and cache entry would you inspect, and in what order?
+2. **Review (O3).** Why can a MariaDB target compile while its persistence lab cannot run? Identify what the in-memory alternative can establish.
+3. **Lab (O2).** Build the supplied external-consumer solution against your local installation. Inspect `snodec_DIR` and run EchoPair’s server with a bounded peer. Expect the chosen prefix and `environment-ready` returned unchanged.
+4. **Lab (O3).** Run the missing-component solution. It introduces a component-name error in a temporary copy, then repairs and builds that copy. Expect configuration failure naming the missing component, followed by a successful build and byte exchange. Explain why changing the runtime port cannot fix the first failure.
+5. **Design (O1, O2, O3).** Choose a directory layout and lab plan for a machine with two framework installations and no broker or Bluetooth adapter. Justify how you will identify the selected package and limit your conclusions.
+
+Public answers, commands, and expected observations: `companion/exercises/ch02/README.md`.
 :::

@@ -197,7 +197,7 @@
       "source_ids": [
         "R362"
       ],
-      "line": 27
+      "line": 32
     },
     {
       "file": "manuscript/frontmatter/preface.md",
@@ -208,7 +208,7 @@
       "source_ids": [
         "R363"
       ],
-      "line": 31
+      "line": 36
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
@@ -233,45 +233,6 @@
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
-      "text": "Chapters 1\u20135",
-      "targets": [
-        "why-snodec-exists",
-        "preparing-your-environment",
-        "your-first-working-program-the-echo-pair",
-        "the-mental-model-of-snodec",
-        "core-runtime-and-event-processing",
-        "layers-in-practice-network-transport-connection-application"
-      ],
-      "source_ids": [
-        "R353"
-      ],
-      "line": 23
-    },
-    {
-      "file": "manuscript/frontmatter/how-to-read-this-book.md",
-      "text": "Chapters 6\u201315",
-      "targets": [
-        "socket-addresses-and-address-semantics",
-        "servers-clients-and-connections",
-        "ipv4-and-ipv6-as-the-first-concrete-network-families",
-        "unix-domain-sockets",
-        "bluetooth-in-snodec-rfcomm-and-l2cap",
-        "writing-socketcontext-classes-well",
-        "writing-socketcontextfactory-classes-well",
-        "building-the-same-protocol-over-different-lower-layers",
-        "configuration-philosophy-in-snodec",
-        "application-and-instance-configuration-in-detail",
-        "logging-diagnostics-and-runtime-introspection",
-        "tls-across-the-framework",
-        "timeouts-retries-and-failure-modes"
-      ],
-      "source_ids": [
-        "R354"
-      ],
-      "line": 23
-    },
-    {
-      "file": "manuscript/frontmatter/how-to-read-this-book.md",
       "text": "Chapters 16\u201323",
       "targets": [
         "the-http-layer",
@@ -286,7 +247,7 @@
       "source_ids": [
         "R355"
       ],
-      "line": 24
+      "line": 21
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
@@ -298,7 +259,7 @@
       "source_ids": [
         "R356"
       ],
-      "line": 24
+      "line": 21
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
@@ -313,7 +274,7 @@
       "source_ids": [
         "R357"
       ],
-      "line": 24
+      "line": 21
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
@@ -324,7 +285,7 @@
       "source_ids": [
         "R358"
       ],
-      "line": 25
+      "line": 22
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
@@ -350,7 +311,7 @@
       "source_ids": [
         "R359"
       ],
-      "line": 25
+      "line": 22
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
@@ -361,7 +322,7 @@
         "testing-debugging-and-benchmarking"
       ],
       "source_ids": [],
-      "line": 25
+      "line": 22
     },
     {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
@@ -372,20 +333,7 @@
       "source_ids": [
         "R360"
       ],
-      "line": 25
-    },
-    {
-      "file": "manuscript/frontmatter/how-to-read-this-book.md",
-      "text": "Chapters 22, 24 and 30",
-      "targets": [
-        "designing-iot-systems-with-multiple-protocols",
-        "from-applications-to-systems",
-        "architectural-judgment-choosing-the-right-layer-and-boundary"
-      ],
-      "source_ids": [
-        "R361"
-      ],
-      "line": 27
+      "line": 22
     },
     {
       "file": "manuscript/frontmatter/conventions.md",
@@ -397,6 +345,15 @@
         "R350"
       ],
       "line": 11
+    },
+    {
+      "file": "manuscript/frontmatter/conventions.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [],
+      "line": 13
     },
     {
       "file": "manuscript/frontmatter/conventions.md",
@@ -497,7 +454,7 @@
       "source_ids": [
         "R070"
       ],
-      "line": 257
+      "line": 247
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -508,7 +465,7 @@
       "source_ids": [
         "R071"
       ],
-      "line": 288
+      "line": 276
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -519,7 +476,7 @@
       "source_ids": [
         "R072"
       ],
-      "line": 339
+      "line": 315
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -530,7 +487,7 @@
       "source_ids": [
         "R073"
       ],
-      "line": 355
+      "line": 329
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -541,7 +498,7 @@
       "source_ids": [
         "R074"
       ],
-      "line": 387
+      "line": 361
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -552,7 +509,7 @@
       "source_ids": [
         "R075"
       ],
-      "line": 449
+      "line": 408
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -563,7 +520,7 @@
       "source_ids": [
         "R076"
       ],
-      "line": 41
+      "line": 25
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -574,7 +531,7 @@
       "source_ids": [
         "R077"
       ],
-      "line": 44
+      "line": 28
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -585,7 +542,7 @@
       "source_ids": [
         "R078"
       ],
-      "line": 73
+      "line": 57
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -596,7 +553,7 @@
       "source_ids": [
         "R079"
       ],
-      "line": 246
+      "line": 230
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -608,7 +565,7 @@
       "source_ids": [
         "R080"
       ],
-      "line": 328
+      "line": 312
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -619,7 +576,7 @@
       "source_ids": [
         "R081"
       ],
-      "line": 395
+      "line": 379
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -630,7 +587,7 @@
       "source_ids": [
         "R082"
       ],
-      "line": 457
+      "line": 441
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -641,7 +598,7 @@
       "source_ids": [
         "R083"
       ],
-      "line": 466
+      "line": 450
     },
     {
       "file": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
@@ -3906,7 +3863,7 @@
       "source_ids": [
         "R047"
       ],
-      "line": 25
+      "line": 26
     },
     {
       "file": "companion/exercises/README.md",
@@ -3917,7 +3874,7 @@
       "source_ids": [
         "R048"
       ],
-      "line": 27
+      "line": 28
     },
     {
       "file": "companion/exercises/README.md",
@@ -3928,7 +3885,7 @@
       "source_ids": [
         "R049"
       ],
-      "line": 27
+      "line": 28
     },
     {
       "file": "companion/exercises/ch01/README.md",
@@ -4028,6 +3985,33 @@
         "R058"
       ],
       "line": 30
+    },
+    {
+      "file": "manuscript/parts/part-01-getting-oriented.md",
+      "text": "Chapter 3",
+      "targets": [
+        "your-first-working-program-the-echo-pair"
+      ],
+      "source_ids": [],
+      "line": 7
+    },
+    {
+      "file": "manuscript/chapters/02-preparing-your-environment.md",
+      "text": "Chapter 1",
+      "targets": [
+        "why-snodec-exists"
+      ],
+      "source_ids": [],
+      "line": 415
+    },
+    {
+      "file": "companion/exercises/ch02/README.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [],
+      "line": 1
     }
   ],
   "migration_dispositions": [
@@ -7960,8 +7944,8 @@
         6,
         7
       ],
-      "status": "mapped",
-      "evidence": "manuscript/frontmatter/how-to-read-this-book.md:23"
+      "status": "retired during Phase 5b condensation",
+      "evidence": "manuscript/frontmatter/how-to-read-this-book.md: Phase 5b diff removes duplicate external-application route and researcher route; linear path plus web/MQTT and contributor shortcuts remain."
     },
     {
       "id": "R354",
@@ -7983,8 +7967,8 @@
         19,
         20
       ],
-      "status": "mapped",
-      "evidence": "manuscript/frontmatter/how-to-read-this-book.md:23"
+      "status": "retired during Phase 5b condensation",
+      "evidence": "manuscript/frontmatter/how-to-read-this-book.md: Phase 5b diff removes duplicate external-application route and researcher route; linear path plus web/MQTT and contributor shortcuts remain."
     },
     {
       "id": "R355",
@@ -8092,8 +8076,8 @@
         30,
         37
       ],
-      "status": "mapped",
-      "evidence": "manuscript/frontmatter/how-to-read-this-book.md:27"
+      "status": "retired during Phase 5b condensation",
+      "evidence": "manuscript/frontmatter/how-to-read-this-book.md: Phase 5b diff removes duplicate external-application route and researcher route; linear path plus web/MQTT and contributor shortcuts remain."
     },
     {
       "id": "R362",

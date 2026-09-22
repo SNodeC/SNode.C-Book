@@ -139,3 +139,82 @@ objective/exercise mappings, and public-answer coverage under these identities.
 No new lab, objective, exercise, or learning milestone was added in Phase 5a.
 The integrated checkpoint assigned to current Chapter 30 remains Phase 5l work;
 the epilogue remains an essay without exercises, as the author approved.
+
+
+## Phase 5b — Part I (current numbering), 2026-09-22
+
+Baseline: `metrics-after-author-seam-edits.json`; after:
+`metrics-after-phase-5b.json`. These rows supplement the historical sample records.
+Every ceiling includes markup and all fenced words. The fenced-word reductions
+below remove only text diagrams/restatement, not executable listings.
+
+| Chapter | Total before → after / budget | Prose before → after | Fenced before → after | H before → after / ceiling | Mean section prose words |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 1821 → 1821 / 1850 | 1724 → 1724 | 97 → 97 | 5 → 5 / 5 | 327.0 |
+| 2 | 2945 → 3006 / 3350 | 2639 → 2755 | 306 → 251 | 16 → 8 / 9 | 331.5 |
+| 3 | 2566 → 2568 / 2650 | 1988 → 2026 | 578 → 542 | 6 → 6 / 6 | 321.83 |
+
+Chapter 1 is reread and retained without prose edits: it already meets its budget,
+comparison/excerpt requirements and teaching contract. Chapter 2 is edited and
+reread: its eight connected sections retain preparation commands and add three
+objectives, five recap bullets, five exercises, and the Lab environment guidance.
+Chapter 3 is edited and reread: two redundant text blocks are removed, and Lab 3
+now includes the Part I measurement-transport checkpoint. The surrounding code,
+callback explanation, recap, and mapped labs remain. Both sample chapters retain
+the original ≥20% prose reductions (Chapter 1: 26.42%; Chapter 3: 24.23%).
+Chapter 2's objectives, recap, and exercises total 286 content words, below the
+400-word apparatus allowance (301 including callout delimiters and titles).
+
+### Objective ↔ exercise coverage
+
+| Exercise | Tier | Objective(s) | Public answer/discussion |
+| --- | --- | --- | --- |
+| 1.1 | Review | O1 | `companion/exercises/ch01/README.md`, answer 1 |
+| 1.2 | Review | O2 | `companion/exercises/ch01/README.md`, answer 2 |
+| 1.3 | Lab | O2 | `companion/exercises/ch01/README.md`, answer 3 |
+| 1.4 | Lab | O2 | `companion/exercises/ch01/README.md`, answer 4 |
+| 1.5 | Design | O3 | `companion/exercises/ch01/README.md`, answer 5 |
+| 2.1 | Review | O1 | `companion/exercises/ch02/README.md`, answer 1 |
+| 2.2 | Review | O3 | `companion/exercises/ch02/README.md`, answer 2 |
+| 2.3 | Lab | O2 | `companion/exercises/ch02/README.md`, answer 3 |
+| 2.4 | Lab | O3 | `companion/exercises/ch02/README.md`, answer 4 |
+| 2.5 | Design | O1, O2, O3 | `companion/exercises/ch02/README.md`, answer 5 |
+| 3.1 | Review | O1 | `companion/exercises/ch03/README.md`, answer 1 |
+| 3.2 | Review | O1 | `companion/exercises/ch03/README.md`, answer 2 |
+| 3.3 | Lab | O2 | `companion/exercises/ch03/README.md`, answer 3 |
+| 3.4 | Lab | O3 | `companion/exercises/ch03/README.md`, answer 4 |
+| 3.5 | Design | O3 | `companion/exercises/ch03/README.md`, answer 5 |
+
+Reverse mapping: Ch1 O1→1, O2→2/3/4, O3→5; Ch2 O1→1/5,
+O2→3/5, O3→2/4/5; Ch3 O1→1/2, O2→3, O3→4/5. All objectives
+have exercises and all exercises have objectives. Review/design answers are in
+the listed public READMEs. All chapters close with one recap (≤5 bullets), then
+exactly two review questions, two labs, and one design problem.
+
+### Built and run
+
+- Ch1: canonical EchoPair and Asio; `exercise-ch01` and
+  `exercise-ch01-independent-peers` pass.
+- Ch2: `ch02-lab` reuses canonical EchoPair; `exercise-ch02-consumer` and
+  `exercise-ch02-component` each configure and build an independent external
+  consumer, inspect its package cache, and verify exact `environment-ready` bytes.
+  The second first diagnoses an intentional missing component in a temporary copy.
+- Ch3: `ch03-lab`, `exercise-ch03`, and `exercise-ch03-occupied-port` pass.
+  Lab 3 checks greeting/binary reflection plus two measurement peers, reflection
+  of an invalid value, and continued service after the other peer closes. This
+  establishes transport, not domain acceptance; no new model/parser is introduced.
+
+Evidence: `phase-5b-final-companion.log`, `phase-5b-final-labs.log`,
+`phase-5b-exit-checks.json`; commands are in each public README. The existing
+GitHub workflow registers/runs these via the chapter CMake subdirectory; this
+session executed the same local commands, not a hosted CI run.
+An initial attempt incorrectly expected a zero help exit; the failure log
+`phase-5b-initial-labs.log` is retained. The final environment labs observe an
+actual bounded byte exchange using the existing peer/process harness.
+
+Chapter 2 and Conventions distinguish equipped labs (broker/database/hardware)
+from local-only observations, and list MQTT, MariaDB, TLS, and Bluetooth needs by
+Part. Later Parts' lab implementations remain for their own sessions. Front matter
+now states the independent learner, public-solution workflow and one learning path
+with two shortcuts. Edited Markdown, solutions and the Part I/II transition were
+reread; PDF evidence is separately recorded in `phase-5b-visual-review.md`.

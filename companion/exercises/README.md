@@ -1,6 +1,6 @@
 # Public exercises and solutions
 
-These are the public solutions for the five sample chapters. Each chapter has two
+These are the public solutions for Part I and the later sample chapters. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
@@ -22,9 +22,10 @@ ctest --test-dir build/labs --output-on-failure
 ```
 
 Each chapter README gives a focused build target and test command. Chapters 1, 18 and 28 labs build the canonical companion programs, then use Python's standard
-library to make observations at their public socket/HTTP interfaces. Chapter 3
+library to make observations at their public socket/HTTP interfaces. The environment labs build EchoPair as an independent installed-package consumer
+and diagnose an intentionally missing component in a temporary copy. Chapter 3
 adds a client with a changed greeting while inheriting the existing reflection
-behavior. Chapter 28 also isolates JSON validation before acceptance; Chapter 30 compiles
+behavior, then checks independent measurement peers for the Part I checkpoint. Chapter 28 also isolates JSON validation before acceptance; Chapter 30 compiles
 the canonical `MeasurementModel.cpp` into two ownership experiments. There is only one implementation of each reused algorithm.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary

@@ -12,25 +12,25 @@
     "manual_references": "Literal Chapter followed by an integer outside code fences; source line and matched text recorded, including self-references. Ranges/plural Chapters require editorial review."
   },
   "totals": {
-    "total_words": 145973,
-    "prose_words": 131598,
-    "code_words": 14375,
-    "code_content_words": 12907,
-    "fence_marker_words": 1468,
+    "total_words": 146205,
+    "prose_words": 131739,
+    "code_words": 14466,
+    "code_content_words": 12988,
+    "fence_marker_words": 1478,
     "forbidden_phrase_hit_count": 0,
     "heading_counts_by_level": {
       "1": 12,
       "2": 38,
-      "3": 332,
+      "3": 340,
       "4": 446,
       "5": 157,
       "6": 3
     },
     "callout_counts_by_class": {
-      "snodec-checklist": 5,
-      "snodec-exercise": 6,
+      "snodec-checklist": 6,
+      "snodec-exercise": 5,
       "snodec-note": 13,
-      "snodec-objectives": 6,
+      "snodec-objectives": 5,
       "snodec-remember": 31,
       "snodec-rule": 20,
       "snodec-warning": 10
@@ -44,32 +44,32 @@
       "python": 2,
       "sh": 59,
       "sql": 1,
-      "text": 429
+      "text": 434
     },
-    "chapter_headings_level_3_and_deeper": 926,
-    "chapter_section_prose_words": 121849,
-    "average_chapter_section_prose_words": 131.59,
+    "chapter_headings_level_3_and_deeper": 934,
+    "chapter_section_prose_words": 121696,
+    "average_chapter_section_prose_words": 130.3,
     "closing_perspective_sections": 0,
     "term_occurrence_counts": {
-      "role": 680,
-      "boundary/boundaries": 504,
-      "visible": 208,
+      "role": 681,
+      "boundary/boundaries": 505,
+      "visible": 210,
       "is not a": 71,
       "does not prove": 4,
       "does not by itself": 6
     },
-    "manual_chapter_reference_count": 245
+    "manual_chapter_reference_count": 242
   },
   "requested_baseline_comparison": {
     "total_words": {
       "expected": 151922,
-      "actual": 145973,
-      "delta": -5949
+      "actual": 146205,
+      "delta": -5717
     },
     "chapter_headings_level_3_and_deeper": {
       "expected": 1020,
-      "actual": 926,
-      "delta": -94
+      "actual": 934,
+      "delta": -86
     },
     "closing_perspective_sections": {
       "expected": 15,
@@ -88,8 +88,8 @@
     },
     "text_fences": {
       "expected": 478,
-      "actual": 429,
-      "delta": -49
+      "actual": 434,
+      "delta": -44
     },
     "cpp_fences": {
       "expected": 205,
@@ -98,8 +98,8 @@
     },
     "snodec-exercise": {
       "expected": 0,
-      "actual": 6,
-      "delta": 6
+      "actual": 5,
+      "delta": 5
     }
   },
   "files": {
@@ -156,8 +156,8 @@
       "manual_chapter_references": []
     },
     "manuscript/frontmatter/preface.md": {
-      "total_words": 691,
-      "prose_words": 691,
+      "total_words": 917,
+      "prose_words": 917,
       "code_words": 0,
       "code_content_words": 0,
       "fence_marker_words": 0,
@@ -170,8 +170,8 @@
         "6": 0
       },
       "section_count": 3,
-      "section_prose_words": 505,
-      "average_section_prose_words": 168.33,
+      "section_prose_words": 731,
+      "average_section_prose_words": 243.67,
       "callout_counts_by_class": {
         "snodec-remember": 0,
         "snodec-rule": 0,
@@ -206,25 +206,33 @@
           {
             "line": 5,
             "match": "boundaries"
+          },
+          {
+            "line": 13,
+            "match": "boundaries"
           }
         ],
         "visible": [
           {
             "line": 5,
             "match": "visible"
+          },
+          {
+            "line": 15,
+            "match": "visible"
           }
         ],
         "is not a": [
           {
-            "line": 34,
+            "line": 29,
             "match": "is not a"
           },
           {
-            "line": 34,
+            "line": 29,
             "match": "is not a"
           },
           {
-            "line": 42,
+            "line": 37,
             "match": "is not a"
           }
         ],
@@ -233,18 +241,18 @@
       },
       "manual_chapter_references": [
         {
-          "line": 32,
+          "line": 27,
           "match": "Chapter 2"
         },
         {
-          "line": 36,
+          "line": 31,
           "match": "Chapter 2"
         }
       ]
     },
     "manuscript/frontmatter/how-to-read-this-book.md": {
-      "total_words": 554,
-      "prose_words": 554,
+      "total_words": 667,
+      "prose_words": 667,
       "code_words": 0,
       "code_content_words": 0,
       "fence_marker_words": 0,
@@ -287,11 +295,15 @@
           {
             "line": 5,
             "match": "role"
+          },
+          {
+            "line": 27,
+            "match": "role"
           }
         ],
         "boundary/boundaries": [
           {
-            "line": 22,
+            "line": 25,
             "match": "boundary"
           }
         ],
@@ -308,8 +320,8 @@
       ]
     },
     "manuscript/frontmatter/conventions.md": {
-      "total_words": 454,
-      "prose_words": 454,
+      "total_words": 440,
+      "prose_words": 440,
       "code_words": 0,
       "code_content_words": 0,
       "fence_marker_words": 0,
@@ -401,10 +413,6 @@
       "manual_chapter_references": [
         {
           "line": 11,
-          "match": "Chapter 2"
-        },
-        {
-          "line": 13,
           "match": "Chapter 2"
         }
       ]
@@ -567,8 +575,8 @@
       "manual_chapter_references": []
     },
     "manuscript/parts/part-01-getting-oriented.md": {
-      "total_words": 122,
-      "prose_words": 122,
+      "total_words": 92,
+      "prose_words": 92,
       "code_words": 0,
       "code_content_words": 0,
       "fence_marker_words": 0,
@@ -614,12 +622,7 @@
         "does not prove": [],
         "does not by itself": []
       },
-      "manual_chapter_references": [
-        {
-          "line": 7,
-          "match": "Chapter 3"
-        }
-      ]
+      "manual_chapter_references": []
     },
     "manuscript/chapters/01-why-snodec-exists.md": {
       "total_words": 1821,
@@ -743,36 +746,36 @@
       ]
     },
     "manuscript/chapters/02-preparing-your-environment.md": {
-      "total_words": 3006,
-      "prose_words": 2755,
-      "code_words": 251,
-      "code_content_words": 197,
-      "fence_marker_words": 54,
+      "total_words": 2945,
+      "prose_words": 2639,
+      "code_words": 306,
+      "code_content_words": 246,
+      "fence_marker_words": 60,
       "heading_counts_by_level": {
         "1": 0,
         "2": 1,
-        "3": 8,
+        "3": 16,
         "4": 0,
         "5": 0,
         "6": 0
       },
-      "section_count": 8,
-      "section_prose_words": 2652,
-      "average_section_prose_words": 331.5,
+      "section_count": 16,
+      "section_prose_words": 2537,
+      "average_section_prose_words": 158.56,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
         "snodec-note": 0,
         "snodec-warning": 1,
-        "snodec-checklist": 0,
-        "snodec-exercise": 1,
-        "snodec-objectives": 1
+        "snodec-checklist": 1,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
       },
       "fenced_blocks_by_language": {
         "cmake": 2,
         "cpp": 1,
         "sh": 17,
-        "text": 7
+        "text": 10
       },
       "closing_perspective_sections": [],
       "forbidden_phrase_hits": {
@@ -791,31 +794,35 @@
         "role": [],
         "boundary/boundaries": [
           {
-            "line": 329,
+            "line": 355,
             "match": "boundary"
           }
         ],
         "visible": [
           {
-            "line": 315,
+            "line": 54,
             "match": "visible"
           },
           {
-            "line": 325,
+            "line": 339,
             "match": "visible"
           },
           {
-            "line": 329,
+            "line": 349,
+            "match": "visible"
+          },
+          {
+            "line": 355,
             "match": "visible"
           }
         ],
         "is not a": [
           {
-            "line": 22,
+            "line": 20,
             "match": "is not a"
           },
           {
-            "line": 66,
+            "line": 72,
             "match": "is not a"
           }
         ],
@@ -824,41 +831,37 @@
       },
       "manual_chapter_references": [
         {
-          "line": 247,
+          "line": 257,
           "match": "Chapter 13"
         },
         {
-          "line": 276,
+          "line": 288,
           "match": "Chapter 27"
         },
         {
-          "line": 315,
+          "line": 339,
           "match": "Chapter 3"
         },
         {
-          "line": 329,
+          "line": 355,
           "match": "Chapter 13"
         },
         {
-          "line": 361,
+          "line": 387,
           "match": "Chapter 3"
         },
         {
-          "line": 408,
+          "line": 449,
           "match": "Chapter 3"
-        },
-        {
-          "line": 415,
-          "match": "Chapter 1"
         }
       ]
     },
     "manuscript/chapters/03-your-first-working-program-the-echo-pair.md": {
-      "total_words": 2568,
-      "prose_words": 2026,
-      "code_words": 542,
-      "code_content_words": 512,
-      "fence_marker_words": 30,
+      "total_words": 2566,
+      "prose_words": 1988,
+      "code_words": 578,
+      "code_content_words": 544,
+      "fence_marker_words": 34,
       "heading_counts_by_level": {
         "1": 0,
         "2": 1,
@@ -868,8 +871,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 1931,
-      "average_section_prose_words": 321.83,
+      "section_prose_words": 1893,
+      "average_section_prose_words": 315.5,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 1,
@@ -883,7 +886,7 @@
         "cmake": 2,
         "cpp": 5,
         "sh": 3,
-        "text": 5
+        "text": 7
       },
       "closing_perspective_sections": [],
       "forbidden_phrase_hits": {
@@ -901,61 +904,61 @@
       "term_occurrences": {
         "role": [
           {
-            "line": 68,
+            "line": 84,
             "match": "role"
           },
           {
-            "line": 68,
+            "line": 84,
             "match": "role"
           },
           {
-            "line": 164,
+            "line": 180,
             "match": "Role"
           },
           {
-            "line": 164,
+            "line": 180,
             "match": "role"
           },
           {
-            "line": 303,
+            "line": 319,
             "match": "role"
           },
           {
-            "line": 368,
+            "line": 384,
             "match": "role"
           },
           {
-            "line": 368,
+            "line": 384,
             "match": "role"
           },
           {
-            "line": 447,
+            "line": 463,
             "match": "role"
           },
           {
-            "line": 494,
+            "line": 510,
             "match": "role"
           }
         ],
         "boundary/boundaries": [
           {
-            "line": 234,
+            "line": 250,
             "match": "boundary"
           },
           {
-            "line": 238,
+            "line": 254,
             "match": "boundary"
           },
           {
-            "line": 496,
+            "line": 512,
             "match": "boundary"
           },
           {
-            "line": 509,
+            "line": 525,
             "match": "boundaries"
           },
           {
-            "line": 516,
+            "line": 532,
             "match": "boundaries"
           }
         ],
@@ -965,33 +968,33 @@
             "match": "visible"
           },
           {
-            "line": 28,
+            "line": 44,
             "match": "visible"
           },
           {
-            "line": 57,
+            "line": 73,
             "match": "visible"
           },
           {
-            "line": 59,
+            "line": 75,
             "match": "visible"
           },
           {
-            "line": 98,
+            "line": 114,
             "match": "visible"
           },
           {
-            "line": 460,
+            "line": 476,
             "match": "visible"
           },
           {
-            "line": 505,
+            "line": 521,
             "match": "visible"
           }
         ],
         "is not a": [
           {
-            "line": 235,
+            "line": 251,
             "match": "is not a"
           }
         ],
@@ -1000,31 +1003,31 @@
       },
       "manual_chapter_references": [
         {
-          "line": 25,
+          "line": 41,
           "match": "Chapter 2"
         },
         {
-          "line": 28,
+          "line": 44,
           "match": "Chapter 27"
         },
         {
-          "line": 57,
+          "line": 73,
           "match": "Chapter 4"
         },
         {
-          "line": 230,
+          "line": 246,
           "match": "Chapter 13"
         },
         {
-          "line": 379,
+          "line": 395,
           "match": "Chapter 2"
         },
         {
-          "line": 441,
+          "line": 457,
           "match": "Chapter 2"
         },
         {
-          "line": 450,
+          "line": 466,
           "match": "Chapter 2"
         }
       ]

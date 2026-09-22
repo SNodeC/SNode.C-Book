@@ -970,7 +970,7 @@ PDF counts remain 6 / 54 / 458 with clean final LaTeX logs.
 
 Evidence: `review/proposal-readiness-2026-09-22/phase-5b-entry-results.json`,
 `phase-5b-entry-hygiene.log`, `phase-5b-entry-exit.log`, and
-`metrics-after-phase-5b.json`; REPORT.md contains the exact gap and command results.
+`metrics-after-phase-5b-blocked-entry.json`; REPORT.md contains the exact gap and command results.
 Only records change; Part I condensation, Lab environment guidance, exercises,
 solutions, and the checkpoint remain pending. Reserve use remains zero.
 
@@ -997,3 +997,45 @@ in the chronological record; its gate is now passed.
 
 Separate commit: `proposal-readiness: reconcile 5a register with author seam edits`.
 Next, execute Phase 5b only: Part I and its approved front-matter work.
+
+
+## Phase 5b — Part I and front matter completed, 2026-09-22
+
+The author-requested seam repair was committed separately first, with all Phase
+5a checks passing and the authorized −5-word baseline recorded. Part I then met
+its approved budgets and teaching requirements: Chapter 1 remains 1,821 words;
+Chapter 2 is 3,006 (eight sections), Chapter 3 is 2,568; total 7,395 / 7,850.
+Mean section prose is 327.00 / 331.50 / 321.83. Front matter is 1,981 / 2,500.
+The two samples retain their original ≥20% prose reductions. No reserve is used;
+2,750 words remain available under the existing author-approved stop rules.
+
+Chapter 2 has three objectives, one recap, and five mapped exercises, including
+two independently built/run external-consumer labs. Its Lab environment section
+lists MQTT broker, MariaDB, TLS fixture and Bluetooth dependencies by Part,
+identifies equipped labs and explains the narrower local alternatives. Every
+Part I chapter now has public answers and complete objective↔exercise coverage.
+Chapter 3's existing greeting lab is the mapped Part I checkpoint: independent
+measurement peers reflect exact bytes, including invalid input, without implying
+acceptance. The canonical EchoPair remains the sole application implementation.
+Later equipped labs remain for the corresponding Part sessions.
+
+All twelve public labs, hygiene/alignment, metrics/reference regressions,
+companion builds, teaching/behavior/lifetime checks, full PDF/package targets,
+archive identity checks and extracted-package hygiene pass locally. Final PDF
+warnings and bad boxes are zero. Pages: full 458 → 454, samples 54 → 54, proposal
+6 → 6. Edited text and public solutions were reread; targeted rendered-page review
+is recorded separately. An initial help-exit test assumption and the subsequent
+bounded-exchange correction are documented without discarding the failure log.
+
+Full counts: 145,973 words, 926 chapter subheadings, 429 text fences, 20 rules,
+zero forbidden phrases/closing sections. Remaining global reductions are for
+later Parts. Evidence under `review/proposal-readiness-2026-09-22/`: REPORT.md,
+chapter-ledger.md, metrics-after-phase-5b.json, phase-5b-exit-checks.json,
+phase-5b-final-*.log, phase-5b-visual-review.md. The blocked entry snapshot is
+preserved as metrics-after-phase-5b-blocked-entry.json; historical Phase 5a evidence
+is unchanged except the explicitly current reference register.
+
+Commit: `proposal-readiness: phase 5b — refine Part I and establish the measurement checkpoint`.
+**Stop after Phase 5b.** Next session: Phase 5c (Part II only), first rerunning the
+current Phase 5b gate listed in REPORT.md. Author-approved content-preservation
+stop rules, reserve accounting, 5l/5m split and Phase 6 proposal refresh still apply.

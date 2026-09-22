@@ -16,27 +16,11 @@
 
 The first program is small enough to follow from startup to byte exchange: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong. Use `--log-level=5` to include the reflected payload diagnostics; the example is deliberately bounded by the reader stopping it, not by a protocol message count.
 
-That behavior is simple, but the structure is already the structure of many later SNode.C programs:
-
-```text
-runtime
-  -> server or client instance
-      -> socket context factory
-          -> per-connection socket context
-              -> application protocol behavior
-```
-
+The runtime drives endpoint work; the factory supplies each connection with a
+context whose callbacks implement the echo behavior. We can follow that division
+in four source files.
 
 The framework echo application under `src/apps/echo` combines one shared model with several network families and stream modes. The four-file `EchoPair` companion selects just IPv4, stream transport, and the non-TLS `legacy` variant so the first program stays readable.
-
-The selected variant is:
-
-```text
-network family: IPv4 / in
-transport:      stream
-connection:     legacy
-role:           one server, one client
-```
 
 Here `legacy` has the same meaning introduced in Chapter 2: it denotes the non-TLS stream connection variant. It does not mean that the component is obsolete.
 
@@ -542,7 +526,7 @@ A direct blocking loop gives a short request/reply exchange an easy-to-follow se
 ::: {.snodec-exercise title="Exercises"}
 1. **Review (O1).** Trace one connection from the server handle through the factory to the context. Who owns the returned context?
 2. **Review (O1).** Why does only the client send the initial greeting, although both contexts use the same receive callback?
-3. **Lab (O2).** Build and run the supplied greeting-client solution against EchoPair. It changes only the initial greeting to `Learning by echo`. Observe that greeting and a binary reply returned unchanged; explain why reflection needs no change.
+3. **Lab (O2).** Build and run the supplied greeting-client solution against EchoPair. It changes only the initial greeting to `Learning by echo`. Observe that greeting and a binary reply returned unchanged. For the Part I checkpoint, send measurement-shaped bytes through independent peers; expect exact reflection even for an invalid value. Close one peer and check the other still works. Explain why byte transport supplies no domain acceptance.
 4. **Lab (O3).** Build EchoPair and run the occupied-port lab. Start a second server on the first server’s endpoint. Expect a bind error from the second process and unchanged reflection from the first.
 5. **Design (O3).** A client reaches no greeting callback. Choose the first diagnostic to inspect for an unavailable port, and contrast it with the check for corrupted echoed bytes. Justify the order.
 

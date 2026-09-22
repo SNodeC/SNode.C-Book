@@ -17,7 +17,17 @@ with running(server, ['--log-level=5', 'echoserver', 'local', '--host=127.0.0.1'
             if time.monotonic() > deadline:
                 raise TimeoutError('EchoPair did not observe the changed greeting')
             time.sleep(0.02)
+    with connect(port, process) as active, connect(port, process) as idle:
+        payload = b'sensor-a,21.5\nsensor-a,not-a-number\n'
+        active.sendall(payload)
+        assert receive(active, len(payload)) == payload
+        idle.sendall(b'sensor-b,18.0\n')
+        assert receive(idle, len(b'sensor-b,18.0\n')) == b'sensor-b,18.0\n'
+        idle.close()
+        active.sendall(payload)
+        assert receive(active, len(payload)) == payload
 print('PASS: EchoPair receives Learning by echo')
+print('PASS: independent measurement peers reflect even invalid values; closing one leaves the other usable')
 
 with socket.socket() as listener:
     listener.bind(('127.0.0.1', 0))

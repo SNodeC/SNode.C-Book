@@ -8,17 +8,22 @@ SNode.C is the worked system throughout the book by design. A general survey can
 
 ### Who this book is for {.unnumbered}
 
-The primary reader is a C++ developer or advanced student who can already build a small Linux program and now needs to organize several communication roles. The book follows that reader from a working echo pair to a system whose protocols, configuration, diagnostics, and long-running data flows remain understandable together. A course, prototype, installation, or measurement system can provide the same reason to follow that path.
+The primary reader is a learner: an advanced student or C++ developer with the
+prerequisites below and no SNode.C knowledge. The book follows that reader from
+a working echo pair to a system whose protocols, configuration, diagnostics,
+and long-running data flows remain understandable together. You can work through
+it without a lecturer, using the objectives to direct your reading and the public
+solutions to check your reasoning and experiments.
 
-Experienced C++ developers and technical system builders are the closest readers. They already understand classes, templates, ownership, build systems, and long-lived software, and they want more than a recipe. They want to see where the boundaries are, which pieces can be reused, which pieces should remain separate, and how new behavior can be added without turning an application into an accidental collection of callbacks.
+You may already recognize a protocol stack but find it difficult to locate its
+layers in real C++ code. Here those concepts become types, callbacks,
+configuration sections, components, and deployable applications. The examples
+keep that architecture readable as devices, protocols, and services accumulate.
+Makers, scientists, and interdisciplinary teams can use the same path when
+building measurement and integration systems with the stated prerequisites.
 
-Teachers and lecturers are another important audience. For them, the value is not only in the individual examples, but in the path through the material: a small echo pair, a visible runtime model, network families, protocol contexts, configuration, diagnostics, deployment, and finally an integrating MiniGateway project. The book can serve as a course spine for event-driven programming, network protocols, IoT architecture, and systems thinking.
-
-Advanced learners and students may already know the broad idea of a protocol stack: perhaps Ethernet, IP, TCP, TLS, HTTP, WebSocket, MQTT, local IPC, or Bluetooth. Such readers may understand the layers in theory, but still have difficulty recognizing those layers in real C++ code. The book gives them a concrete source tree in which abstract networking concepts become roles, types, callbacks, configuration sections, components, and deployable applications.
-
-Makers and prototypers may come from microcontrollers, home labs, sensor systems, Linux boards, routers, dashboards, artistic installations, or experimental technical setups. They may not want a purely academic treatment, but they do need growing systems to remain understandable. For these readers, SNode.C is useful because it lets practical work keep an architectural shape while devices, protocols, and services accumulate.
-
-The book can also support technically involved scientists, domain researchers, and interdisciplinary teams who specify, adapt, or supervise data-collection and integration systems together with developers. Environmental monitoring, biological observation, lab instrumentation, field sensing, distributed measurement stations, and similar systems all face the same architectural question: how sensing, transport, storage, observation, control, and management interfaces fit together without becoming an opaque tangle.
+SNode.C originated in the course “Network and Distributed Systems” at FH Upper
+Austria, Hagenberg; course use is a secondary benefit of the book's progression.
 
 The book remains a technical book. It does not hide C++, protocols, build systems, or operational detail. Its aim is to make those details readable as parts of a system.
 

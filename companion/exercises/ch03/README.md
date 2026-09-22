@@ -40,9 +40,23 @@ copy, changing the original greeting directly is equivalent for this experiment.
 
 The automated solution first observes the changed greeting at the actual server,
 then runs the client against a controlled peer. That peer checks the exact greeting
-and sends a 5,000-byte binary reply, which must return unchanged. Expect two PASS
+and sends a 5,000-byte binary reply, which must return unchanged. Expect three PASS
 lines. This separates the initiation callback from reflection and avoids relying
 only on fast, repetitive ping-pong logs.
+
+### Part I checkpoint: measurement transport
+
+The same Lab 3 command also opens two bounded peers to EchoPair. The first sends
+`sensor-a,21.5` and `sensor-a,not-a-number`, each followed by a newline; the second
+sends `sensor-b,18.0`. Each receives exactly its own bytes. After closing the
+second peer, the first sends again and must still receive identical bytes. The
+checkpoint PASS line names both independence and reflection of the invalid value.
+
+These observations establish a byte-transport baseline for MiniGateway. The echo
+context neither parses a numeric measurement nor accepts domain state: even the
+invalid value returns unchanged. Later milestones will add framing, validation,
+and one shared accepted model. No acceptance sequence or stored measurement is
+created here. Explain that limit before treating the transport run as a gateway.
 
 ## 4. Lab (O3)
 
