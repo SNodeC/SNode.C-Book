@@ -1,0 +1,1377 @@
+diff --git a/manuscript/chapters/16-the-http-layer.md b/manuscript/chapters/16-the-http-layer.md
+index ebe61b0..6bbba92 100644
+--- a/manuscript/chapters/16-the-http-layer.md
++++ b/manuscript/chapters/16-the-http-layer.md
+@@ -1,56 +1,25 @@
+ ## The HTTP Layer {#the-http-layer}
+ 
++::: {.snodec-objectives title="Learning objectives"}
++- **O1.** Trace stream input through HTTP parsing to application handling.
++- **O2.** Observe message completion and parser-limit rejection at a local HTTP endpoint.
++- **O3.** Choose parser, streaming and upgrade policies at their owning boundaries.
++:::
++
+ \index{HTTP}
+ \index{HTTP layer}
+ \index{web protocols}
+ 
+-
+ ### From robust streams to HTTP messages
+ 
+ The line protocol already gave bytes command meaning. HTTP now gives the application a standard request/response vocabulary, with parsing and message boundaries handled by the framework’s HTTP layer.
+ 
+-At the stream level, application code often works close to received data and protocol-specific byte interpretation. At the HTTP level, the application-facing unit changes:
+-
+-```text
+-request
+-  -> response
+-```
+-
+-That is the central idea of this chapter:
+-
+-::: {.snodec-note title="HTTP layer note"}
+-HTTP raises the application-facing meaning from stream data to request and response objects without replacing the lower SNode.C architecture.
+-:::
+-
+ A request callback runs only after the lower connection and HTTP parser have made the request available. This ordering gives the chapter a practical question: when an application handler never runs, did the peer fail to connect, did HTTP reject its input, or did the application fail after receiving a valid request? The layer boundaries distinguish those observations.
+ 
+-### HTTP in the layered SNode.C model
+-
+ \index{HTTP!layered model}
+ \index{application layer}
+ 
+-
+-The layer model now adds HTTP request/response meaning above the familiar lower family, stream transport, and legacy-or-TLS connection handling.
+-
+-The earlier chapters taught the lower part of this structure. They established named endpoint configuration, explicit activation flows, factory-created contexts, and the diagnostics used to distinguish those lifetimes.
+-
+-Chapter 16 introduces the first major web-facing protocol layer above that foundation. The transfer question therefore changes direction. Earlier chapters often asked:
+-
+-```text
+-Can the same application protocol move across different lower layers?
+-```
+-
+-This chapter asks:
+-
+-```text
+-Can the same lower architecture support a richer protocol layer?
+-```
+-
+-For HTTP, the answer is yes. The lower architecture stays visible. The protocol meaning becomes richer. HTTP adds a protocol layer through HTTP-specific contexts and factories on top of the stream model; it does not replace context, factory, connection, configuration, or runtime progress.
+-
+-### Plain streams and HTTP messages side by side
+-
+-A compact comparison shows the transition.
++HTTP contexts and factories build on named endpoints, activation flows and stream connections. The lower family and legacy-or-TLS carrier remain in place:
+ 
+ | Concern | Plain stream layer | HTTP layer |
+ |---|---|---|
+@@ -63,38 +32,11 @@ A compact comparison shows the transition.
+ | diagnostics | connection lifecycle, counters, timing, and failure behavior | same plus HTTP parsing and request/response meaning |
+ | extension point | protocol code in the context | routing, SSE, WebSocket upgrade, higher web layers |
+ 
+-The important shift in this table is responsibility for message completeness. A handler receives the HTTP object after the protocol layer has recognized its structure; it should not introduce a second HTTP framing parser.
+-
+-The application is no longer forced to decide where an HTTP request begins and ends. More precisely, the HTTP layer takes responsibility for message boundary recognition, start-line and header parsing, content and trailer handling, request/response object construction, and HTTP-specific connection behavior.
+-
+-### Server-side HTTP: from bytes to ready requests
+-
+ \index{HTTP server}
+ \index{Request@\texttt{Request}}
+ \index{Response@\texttt{Response}}
+ 
+-
+-At the plain stream level, the protocol endpoint may react to incoming bytes. At the HTTP server level, the central application-facing event is different:
+-
+-```text
+-a complete HTTP request is ready
+-```
+-
+-The HTTP layer consumes stream data, parses HTTP, creates request/response objects, and calls the application at the HTTP level. This changes what application code sees. It does not change the runtime model underneath.
+-
+-The useful server-side picture is:
+-
+-```text
+-stream data
+-  -> parser state
+-      -> start line / headers / content / trailers
+-          -> Request
+-              -> application handler with Request and Response
+-```
+-
+-That is the main semantic lift on the server side.
+-
+-#### The HTTP server wrapper
++The HTTP context parses the start line, headers, content and trailers before invoking the application with a ready request and its response.
+ 
+ The generic HTTP server wrapper has a simple shape:
+ 
+@@ -127,35 +69,7 @@ A concrete IPv4 legacy HTTP server is then one specialization of this idea:
+ using Server = web::http::server::Server<net::in::stream::legacy::SocketServer>;
+ ```
+ 
+-The lower layer is still present. The HTTP layer plugs into it.
+-
+-#### Request and response as the application-facing unit
+-
+-The server-side application callback receives HTTP objects, not raw transport data.
+-
+-Conceptually:
+-
+-```text
+-stream data arrives
+-  -> HTTP parser consumes stream data
+-      -> HTTP request becomes available
+-          -> application receives Request and Response
+-```
+-
+-The application no longer has to treat every connection as an uninterpreted stream. It can respond to HTTP meaning.
+-
+-The server-side HTTP context still derives from the stream context model. It overrides stream-context lifecycle and receive behavior, but it uses that lower behavior to deliver HTTP requests. That is the right boundary:
+-
+-```text
+-stream context machinery
+-  -> receives data
+-
+-HTTP server context
+-  -> interprets HTTP
+-
+-application handler
+-  -> handles Request and Response
+-```
++The server context still overrides stream lifecycle and receive behavior. It interprets HTTP so the application handles a request instead of introducing a second framing parser.
+ 
+ The same principle from Chapters 9 and 10 still applies: the context implements protocol behavior, and the factory creates the per-connection protocol endpoint. HTTP changes the protocol behavior implemented by the context; it does not remove the context/factory boundary.
+ 
+@@ -166,21 +80,7 @@ The same principle from Chapters 9 and 10 still applies: the context implements
+ \index{Request@\texttt{Request}}
+ \index{Response@\texttt{Response}}
+ 
+-
+-The HTTP client follows the same general pattern. It is a client-side HTTP protocol layer built on a lower client handle and a registered client instance, not a raw client that writes a manually assembled request line.
+-
+-Conceptually:
+-
+-```text
+-lower client handle / registered client instance
+-  -> HTTP client SocketContextFactory
+-      -> HTTP client SocketContext
+-          -> MasterRequest / Request / Response
+-```
+-
+-The lower client still establishes and maintains the connection. The HTTP layer gives the application a request/response-oriented client surface.
+-
+-#### The HTTP client wrapper
++The lower client establishes and maintains the connection; the HTTP client layer coordinates requests and responses over it.
+ 
+ The generic HTTP client wrapper has the shape:
+ 
+@@ -198,20 +98,6 @@ It uses an HTTP client `SocketContextFactory` on top of the lower socket client
+ - HTTP-connected and HTTP-disconnected callbacks,
+ - access to the instance configuration.
+ 
+-The important teaching point is the same as on the server side:
+-
+-```text
+-lower client handle / registered client instance
+-  -> remains responsible for connection behavior
+-
+-HTTP client layer
+-  -> adds HTTP request/response meaning
+-```
+-
+-The lower SNode.C architecture remains present. The application-facing unit changes.
+-
+-#### `MasterRequest`, `Request`, and `Response`
+-
+ The client side has to manage the relationship between a client connection and one or more HTTP requests and responses, rather than a single raw write.
+ 
+ That is why the HTTP client vocabulary contains:
+@@ -222,39 +108,9 @@ That is why the HTTP client vocabulary contains:
+ | `Request` | concrete HTTP request |
+ | `Response` | concrete HTTP response |
+ 
+-`MasterRequest` owns the sending path for concrete requests and delivers responses or parse errors through callbacks. The exact internal mechanics belong to the implementation and reference documentation; the important point here is the semantic level. The client is now expressed in HTTP terms.
+-
+-#### HTTP-specific configuration
+-
+-The HTTP client adds an HTTP-specific configuration subcommand to the existing instance configuration hierarchy. That subcommand is named:
+-
+-```text
+-http
+-```
+-
+-It contains HTTP behavior such as:
+-
+-```text
+---host
+---pipelined-requests
+-```
+-
+-This continues the configuration model from Chapter 12. HTTP-specific configuration attaches to the configured role rather than acting as a random side channel.
+-
+-The HTTP layer can also derive HTTP meaning from lower connection configuration where appropriate. For example, if the HTTP Host header is empty, the client setup can derive a default Host header from the remote socket address. That is a small but useful example of responsibility placement:
+-
+-```text
+-remote endpoint
+-  -> belongs to lower configuration
+-
+-Host header
+-  -> belongs to HTTP configuration
++`MasterRequest` owns the sending path for concrete requests and delivers responses or parse errors through callbacks.
+ 
+-HTTP client layer
+-  -> may derive the HTTP default from the lower endpoint
+-```
+-
+-The application does not need to repeat that adaptation in every client.
++The client’s `http` configuration subcommand supplies `--host` and `--pipelined-requests` within the hierarchy from Chapter 12. If the HTTP Host field is empty, setup can derive its default from the remote socket address. The remote endpoint belongs to lower configuration, while the Host field belongs to HTTP; each application need not repeat that adaptation.
+ 
+ ### What HTTP adds above the stream layer
+ 
+@@ -263,7 +119,6 @@ The application does not need to repeat that adaptation in every client.
+ \index{HTTP headers}
+ \index{HTTP status}
+ 
+-
+ The HTTP layer contains the machinery needed to turn stream communication into HTTP message semantics, in addition to server and client aliases.
+ 
+ | Added concern | Meaning |
+@@ -276,10 +131,6 @@ The HTTP layer contains the machinery needed to turn stream communication into H
+ | upgrade machinery | allows HTTP to negotiate another protocol |
+ | EventSource support | builds streaming-style behavior on HTTP |
+ 
+-Therefore, HTTP is a real protocol layer in SNode.C, not a convenience function for writing a few text lines to a socket.
+-
+-#### Parsing and decoding
+-
+ HTTP arrives over a stream. A stream does not know HTTP message boundaries by itself. The HTTP layer therefore needs parsing and decoding machinery. That includes concerns such as:
+ 
+ - request parsing,
+@@ -290,20 +141,9 @@ HTTP arrives over a stream. A stream does not know HTTP message boundaries by it
+ - HTTP/1.0 response decoding,
+ - content decoding.
+ 
+-These are HTTP-layer responsibilities. They are what allow the application-facing server callback to receive a `Request` and `Response` instead of raw stream fragments.
+-
+-#### MIME handling
+-
+ MIME handling is practical HTTP support for serving content. A server often needs to associate a file or resource with a content type. SNode.C includes MIME support and can use libmagic when available for better type detection.
+ 
+-This belongs in the HTTP layer because content type is HTTP meaning. It should not be mixed into the lower socket layer. At the same time, MIME handling is not the central architectural transition of this chapter. The central transition is still:
+-
+-```text
+-stream data
+-  -> HTTP request/response meaning
+-```
+-
+-#### Status, headers, and utilities
++Content type is HTTP meaning and belongs above the socket layer.
+ 
+ HTTP also needs ordinary protocol utilities:
+ 
+@@ -313,43 +153,14 @@ HTTP also needs ordinary protocol utilities:
+ - case-insensitive HTTP maps,
+ - utility functions for HTTP syntax and behavior.
+ 
+-These pieces are part of the protocol layer. They keep HTTP concerns grouped with HTTP rather than spreading them through application code.
+-
+-### Lower families and connection handling still matter
+-
+-Using HTTP does not make the lower carrier disappear. In SNode.C, HTTP remains above a selected communication family and connection mode: lower family, stream transport, legacy or TLS handling, then HTTP.
+-
+-That is enough to prevent the main misconception. HTTP is the higher protocol layer; IPv4, IPv6, Unix-domain sockets, Bluetooth families where available, and legacy or TLS connection handling still define how the peer relationship is carried.
+-
+-### HTTP as a bridge to higher web protocols
+-
+ \index{HTTP upgrade}
+ \index{WebSocket upgrade}
+ \index{EventSource@\texttt{EventSource}}
+ 
+-
+-HTTP is also a bridge. It can become the place where an application moves upward into more specialized web behavior.
+-
+-Two examples are especially important for the next chapters:
+-
+-- upgrade support,
+-- EventSource support.
+-
+-#### Upgrade support
++HTTP also supplies the boundary for selecting an upgraded protocol and support for long-lived EventSource responses.
+ 
+ HTTP upgrade support belongs in the HTTP layer because HTTP is where the upgrade decision is negotiated. The upgraded protocol may later be WebSocket, but the boundary itself is not WebSocket-specific. An HTTP request names an upgrade target, the HTTP layer selects a socket-context upgrade factory for that name, and the selected upgraded context takes over the same connection episode after the HTTP response confirms the transition.
+ 
+-Conceptually:
+-
+-```text
+-HTTP request/response layer
+-  -> upgrade decision
+-      -> selected SocketContextUpgrade
+-          -> another protocol layer may take over
+-```
+-
+-This is a clean architectural boundary. The lower connection remains the same peer episode. The protocol context attached to it changes.
+-
+ A compact server-side upgrade route has this shape. The example uses `websocket` because that is the concrete upgrade protocol used in the following WebSocket chapter, but the call itself belongs to the HTTP/Express boundary:
+ 
+ ```cpp
+@@ -394,13 +205,9 @@ req->upgrade(
+     });
+ ```
+ 
+-The particular upgraded protocol is not important yet. The HTTP layer supplies an explicit transition from request/response handling into a named socket-context upgrade.
+-
+ The complete programs for this HTTP-upgrade example are `HttpUpgrade-Server` and `HttpUpgrade-Client` under `companion/examples/`.
+ 
+-#### HTTP-upgrade deployment contract
+-
+-Most SNode.C components follow the ordinary C++ library rule: source files include the public headers they use, the application links the corresponding component, and the installed libraries must be available to the platform loader at runtime. The book does not repeat that ordinary deployment rule for every component. HTTP upgrade is different because the upgrade name is also a runtime selection key.
++Ordinary components require their headers, linked libraries and runtime loader access. HTTP upgrade additionally resolves a runtime selection key.
+ 
+ SNode.C can resolve an HTTP upgrade factory through a linked registration path or by loading a role-specific shared object at runtime. The common dynamic deployment contract is compact:
+ 
+@@ -448,16 +255,7 @@ target_link_libraries(my_ws_client PRIVATE
+ 
+ The operational rule is simple: dynamic deployment needs the correctly named module in the HTTP upgrade directory; linked deployment needs the factory registration object to be linked and retained. Both paths must make the same upgrade name resolvable at the HTTP boundary.
+ 
+-#### EventSource and streaming-style HTTP
+-
+-EventSource support shows that HTTP is not limited to short request/response exchanges. The response remains HTTP-based, but the application behavior becomes stream-like:
+-
+-```text
+-HTTP response stream
+-  -> Server-Sent Events / EventSource behavior
+-```
+-
+-Chapter 18 treats Server-Sent Events in detail. Here, the important point is placement: EventSource belongs naturally near HTTP because it uses HTTP semantics for streaming-style behavior.
++EventSource keeps the HTTP response open for event-stream records. Chapter 18 develops its parsing, observer lifetime and recovery behavior.
+ 
+ ### Parser and server policy are connection contracts
+ 
+@@ -496,38 +294,18 @@ The distinction is the same as elsewhere in the framework: transport and streami
+ 
+ ### Trace a request that the application never receives
+ 
+-Use three requests to separate connection success from application admission: one ordinary request, one malformed request line, and one request that exceeds a deliberately small HTTP parser limit. Observe the response or closure and whether the application handler ran. A successful TCP connection is compatible with HTTP rejection before that handler.
++The public labs in `companion/exercises/ch16/` separate connection success from application admission: one ordinary request, one malformed request line, and one request that exceeds a deliberately small HTTP parser limit. Observe the response or closure and whether the application handler ran. A successful TCP connection is compatible with HTTP rejection before that handler.
+ 
+ The current framework provides executable counterparts in `InetHttpServerMalformedRequestBehaviorTest`, `InetHttpServerRequestPolicyTest`, and `InetExpressHttpParserLimitTest`. Read the chosen fixture’s request bytes and configured limit before running it; the test name alone does not define its boundary cases. Chapter 27 explains how to select these component tests from a configured framework build.
+ 
+ This is also a design choice. A byte or field limit belongs in parser policy because rejected input must not reach ordinary application handling. A rule about which authenticated user may request a resource belongs in application handling, after a valid request exists. Increasing a parser limit cannot repair an authorization decision, and adding middleware cannot bound memory already consumed before middleware is called.
+ 
+-### From HTTP support to web application structure
+-
+-Chapter 16 is a bridge between two parts of the book. HTTP relies on the earlier runtime, lower-family, stream-connection, context/factory, configuration, diagnostics, TLS, and failure-handling material.
+-
+-This chapter raises that structure to HTTP. The later web chapters build on HTTP through Express-like routing and middleware, Server-Sent Events, and WebSocket upgrade.
+-
+-Use the protocol references in the back matter for HTTP’s wire rules. Here the reading milestone is to trace a parsed request into one handler and place a failure before or after that boundary.
+-
+-Chapter 16 explains how HTTP becomes request/response semantics. Chapter 17 asks how larger HTTP applications organize those request/response handlers into routing, middleware, and application structure.
+-
+-::: {.snodec-remember title="What to remember"}
+-- HTTP is a protocol layer above the stream connection model.
+-- HTTP raises the application-facing unit from stream data to request and response objects.
+-- HTTP adds request/response semantics while the lower runtime, connection, configuration, diagnostic, timing, and failure surfaces remain visible.
+-- HTTP server wrappers plug an HTTP context factory and request-ready callback into lower server shells.
+-- HTTP client wrappers plug an HTTP context factory, HTTP connection callbacks, and `MasterRequest` coordination into lower client shells.
+-- HTTP-specific client configuration lives in the `http` subcommand for behavior such as Host header and pipelining.
+-:::
+-
+-### HTTP public surface: role headers and components
++Chapter 17 builds routing and middleware on this request-ready boundary. Use the back-matter protocol references for HTTP’s wire rules; the immediate milestone is locating a failure before or after one application handler.
+ 
+ \index{web::http@\texttt{web::http}}
+ \index{HTTP components}
+ \index{public headers}
+ 
+-
+ HTTP code includes the HTTP abstraction it directly names. An IPv4 legacy HTTP server uses:
+ 
+ ```cpp
+@@ -541,3 +319,21 @@ and the matching client role uses:
+ ```
+ 
+ It should not include a lower socket header merely because HTTP is carried by that socket stack. Chapter 25 consolidates the complete source/header and component mapping.
++
++::: {.snodec-remember title="What to remember"}
++- The HTTP parser establishes message completeness before invoking ordinary application handling.
++- Server contexts deliver ready requests; client `MasterRequest` coordinates sending and response callbacks.
++- Parser, pending-request and write-queue limits govern different resources and use connection snapshots.
++- Upgrade changes the protocol context on the same connection; the selected factory must be available.
++- Check file-source creation and pipe attachment, and distinguish descriptor ownership from path confinement.
++:::
++
++::: {.snodec-exercise title="Exercises"}
++1. **Review (O1).** Explain how the server context and client `MasterRequest` divide connection and HTTP responsibilities.
++2. **Review (O1, O3).** Why does successful TCP connection not imply application admission? Distinguish file-descriptor ownership from path confinement.
++3. **Lab (O1, O2).** Build the public framing lab. Send headers without their final blank line, then complete them. Expect no early handler invocation and one completed response.
++4. **Lab (O2, O3).** Run the parser-limit lab with one valid, one malformed and one over-limit request. Expect only the valid request to reach application handling.
++5. **Design (O3).** Choose limits for an upload endpoint and an SSE observer. Explain which parser, queue and application resources each limit bounds.
++
++Public solutions and bounded lab commands: `companion/exercises/ch16/README.md`.
++:::
+diff --git a/manuscript/chapters/17-the-express-like-framework.md b/manuscript/chapters/17-the-express-like-framework.md
+index adce922..d611ec3 100644
+--- a/manuscript/chapters/17-the-express-like-framework.md
++++ b/manuscript/chapters/17-the-express-like-framework.md
+@@ -1,39 +1,26 @@
+ ## The Express-Like Framework {#the-express-like-framework}
+ 
++::: {.snodec-objectives title="Learning objectives"}
++- **O1.** Trace a ready request through controller, mounted router and handler.
++- **O2.** Diagnose continuation and short-circuit behavior from responses and handler visits.
++- **O3.** Decide where shared routing, validation and resource policy belongs.
++:::
++
+ \index{Express-like framework}
+ \index{web application framework}
+ \index{routing}
+ 
+-
+ ### From HTTP messages to application structure
+ 
+ HTTP messages are no longer handled only by an HTTP request-ready callback; the Express-like layer organizes them through routers, routes, middleware chains, request/response facades, and explicit continuation.
+ 
+-The lower stack remains visible: the Express-like application layer sits above HTTP request/response, which still sits above the selected stream and connection handling. HTTP gives message meaning; the Express-like layer gives application structure. Routed application flow is therefore the next web-protocol step: HTTP messages become organized handler chains rather than isolated callbacks.
+-
+-### The Express-like layer in the layered SNode.C model
+-
+ \index{Express-like framework!layered model}
+ 
+-
+-Read the layer from runtime registration through the selected lower family and HTTP request/response handling to Express-like routing and middleware.
++HTTP provides message meaning; Express organizes application handling above it.
+ 
+ The visible `WebAppT<ServerT>` object in application code is the handle. Through that handle, the application configures a server-side communication role and registers a runtime-visible server instance. Constructing the named handle registers its configuration; `listen(...)` initiates a flow. Express routing begins later, when HTTP makes a request ready.
+ 
+-With HTTP request and response semantics in place, the question becomes what happens when HTTP handling becomes application structure. The answer is:
+-
+-```text
+-HTTP request ready
+-  -> Controller(req, res)
+-      -> root route dispatch
+-          -> router / middleware / application handler
+-```
+-
+-This is the transition from protocol handling to web-application composition.
+-
+-### HTTP messages and Express-like application flow side by side
+-
+-A compact comparison makes the new layer visible.
++A ready HTTP request enters a `Controller`, then the root route dispatches it through routers, middleware and handlers:
+ 
+ | Concern | HTTP layer | Express-like layer |
+ |---|---|---|
+@@ -46,35 +33,12 @@ A compact comparison makes the new layer visible.
+ | reuse mechanism | HTTP server/client wrappers | routers and middleware |
+ | lower layers | still present | still present underneath HTTP |
+ 
+-The HTTP layer gives the application request and response objects. The Express-like layer gives the application a way to organize what should happen with them.
+-
+-### What “Express-like” means here
+-
+ \index{Express-like framework!semantics}
+-
+-
+-“Express-like” does not mean that SNode.C embeds Node.js or the JavaScript Express runtime. It means that the C++ web-application layer uses a familiar application model:
+-
+-- `WebApp`,
+-- `Router`,
+-- `.use()`,
+-- `.get()`, `.post()`, and other HTTP verb methods,
+-- middleware callbacks,
+-- `Next`,
+-- mounted routers,
+-- request and response facades,
+-- built-in middleware.
+-
+-The layer is Express-like in its programming model. It is still SNode.C in its runtime, connection, configuration, diagnostics, and lower-layer architecture.
+-
+-This distinction matters because the familiar surface should not hide the underlying model. A SNode.C Express-like application is still carried by an application-side web-app/server handle, a registered server instance, an HTTP server layer, legacy or TLS connection handling, lower-family choices, configuration, diagnostics, timing, and failure behavior.
+-
+-### WebApp, WebAppT, and the HTTP server below
+-
+ \index{WebApp@\texttt{WebApp}}
+ \index{WebAppT@\texttt{WebAppT}}
+ \index{HTTP server}
+ 
++“Express-like” names the C++ programming model, not an embedded Node.js or JavaScript Express runtime. Familiar routing and middleware still use SNode.C’s connection, configuration and event-driven runtime.
+ 
+ The core composition is visible in two steps.
+ 
+@@ -106,12 +70,6 @@ This composition explains how HTTP request handling becomes Express-like applica
+ | `ServerT` | concrete HTTP server type underneath |
+ | `WebAppT<ServerT>` | combined Express-like application surface and HTTP server handle |
+ 
+-This web-application surface is joined to a concrete HTTP server rather than acting as a separate web runtime.
+-
+-#### WebApp as router-shaped application
+-
+-`WebApp` derives from `Router`. Because `WebApp` is router-shaped, the application root is not a separate routing concept. The application itself is the root router, and `WebAppT` makes that root router runnable by combining it with a concrete HTTP server.
+-
+ `WebApp` also exposes runtime-facing lifecycle operations such as:
+ 
+ - `init(...)`,
+@@ -122,10 +80,6 @@ This web-application surface is joined to a concrete HTTP server rather than act
+ - `state()`,
+ - `reconfigure()` while the runtime is running, with the configuration boundaries from Chapter 12.
+ 
+-This keeps the web-application layer connected to the same event-driven runtime story introduced earlier in the book. A web application is a route structure that still runs inside the SNode.C runtime, not a loose set of route functions.
+-
+-#### WebAppT as the bridge to a concrete HTTP server
+-
+ `WebAppT<ServerT>` is the joining point. It inherits the router-shaped `WebApp` surface and the concrete HTTP server type. When the HTTP server reports a ready request, `WebAppT` wraps that request/response pair in a `Controller` and dispatches it into the root route.
+ 
+ The concrete alias is not the main point; it is an example of the general pattern. An IPv4 legacy Express-like web application can be shaped as:
+@@ -142,21 +96,7 @@ express::legacy::in::WebApp
+ 
+ The same idea applies to other lower-family and connection-handling variants where provided.
+ 
+-The pattern is:
+-
+-```text
+-Express-like WebAppT
+-  + concrete HTTP server
+-      -> runnable web application
+-```
+-
+-This matches the design pattern from Chapter 16. The HTTP layer remains underneath; the Express-like layer organizes application behavior above it.
+-
+-#### From HTTP request readiness to Express dispatch
+-
+-The key bridge is the moment when HTTP request readiness enters the Express-like routing structure.
+-
+-Follow the ready-request callback in `WebAppT` into its controller construction, then into root-route dispatch. This is the concrete source trace behind the opening diagram. It separates the lifetime of one request’s dispatch from the longer lifetime of the application’s route tree.
++Follow the ready-request callback in `WebAppT` into its controller construction, then into root-route dispatch. This is the source trace behind the composition above. It separates the lifetime of one request’s dispatch from the longer lifetime of the application’s route tree.
+ 
+ The HTTP layer has parsed the request and prepared a response object. The Express-like layer now decides which application structure should handle that request. That decision belongs above HTTP because it depends on route paths, mounted routers, middleware, and routing policy.
+ 
+@@ -169,16 +109,7 @@ The `Controller` is the dispatch-time object that carries the Express request/re
+ \index{mounted routers}
+ \index{middleware}
+ 
+-
+-`Router` is the main composition unit of the Express-like layer. It lets a web application be assembled from parts instead of being written as one large request callback.
+-
+-A router can contribute:
+-
+-- route handlers,
+-- middleware,
+-- mounted routers,
+-- method-specific behavior,
+-- routing policy.
++`Router` composes handlers, middleware and mounted routers. A route connects request properties to application behavior; a mounted router groups related paths, and middleware supplies shared behavior without copying it into every handler.
+ 
+ The routing surface includes familiar methods such as:
+ 
+@@ -194,36 +125,6 @@ The routing surface includes familiar methods such as:
+ - `.patch()`,
+ - `.head()`.
+ 
+-The method list matters because each method attaches structure to the route tree. The method count is secondary; routing, middleware, and mounted routers become composable:
+-
+-```text
+-application
+-  -> router
+-      -> route
+-      -> middleware
+-      -> mounted router
+-```
+-
+-#### Routes, mounted routers, and middleware
+-
+-A route is a point where request properties and application behavior meet. A mounted router lets a larger application be built from smaller route structures. Middleware lets common behavior be placed into the request flow without duplicating it in every handler.
+-
+-Together, these ideas move the application from:
+-
+-```text
+-one request callback
+-```
+-
+-to:
+-
+-```text
+-structured request processing
+-```
+-
+-That is the main application-level gain of the Express-like layer.
+-
+-#### Routing policy
+-
+ At this layer, route matching is part of application correctness. The router exposes policy controls such as:
+ 
+ | Policy | Question |
+@@ -242,7 +143,6 @@ These policies belong to the router. They are not socket concerns and not generi
+ \index{middleware callbacks}
+ \index{Next@\texttt{Next}}
+ 
+-
+ The Express-like layer distinguishes two important callback shapes.
+ 
+ | Callback shape | Meaning |
+@@ -250,70 +150,13 @@ The Express-like layer distinguishes two important callback shapes.
+ | `(req, res)` | application handler; may produce a response |
+ | `(req, res, next)` | middleware participant; may continue the chain |
+ 
+-This distinction teaches the layer model clearly. Not every function attached to a route has the same responsibility. Some handlers answer. Some middleware participates in a chain. Some middleware may inspect, modify, authorize, log, or prepare state before passing control onward.
+-
+-#### Application handlers
+-
+-An application handler receives a request and a response. Its typical responsibility is to produce an answer for a matched request.
+-
+-Conceptually:
+-
+-```text
+-matched route
+-  -> application handler
+-      -> response
+-```
+-
+-This is the simplest Express-like callback shape.
+-
+-#### Middleware handlers
+-
+-A middleware handler receives a request, a response, and a `Next` object. Its responsibility is not necessarily to finish the response.
+-
+-It may:
+-
+-- inspect the request,
+-- add application state,
+-- enforce authentication,
+-- log or trace,
+-- parse or prepare input,
+-- serve content,
+-- pass control to the next component.
+-
+-Conceptually:
+-
+-```text
+-middleware
+-  -> maybe handle
+-  -> maybe modify state
+-  -> maybe call next()
+-```
+-
+-Therefore, middleware should not be read as another name for a route handler.
+-
+-#### `Next` and middleware flow
+-
+-`Next` makes middleware continuation explicit. A middleware can decide whether the request flow should continue.
+-
+-The model is:
+-
+-```text
+-middleware(req, res, next)
+-  -> does its work
+-      -> next()
+-          -> following middleware / router / handler
+-```
++An application handler typically answers a matched request. Middleware may inspect, modify, authorize, log, parse or serve before deciding whether to answer or call `next()`. Returning from middleware does not itself continue the chain.
+ 
+ `Next` is the application-visible continuation object for the dispatcher chain, not a scheduler or thread handoff.
+ 
+-This makes flow control part of the application model. The chain is visible to the user. That is one of the main differences between a simple HTTP callback and an Express-like application framework.
+-
+-### Dispatchers behind the API
+-
+ \index{dispatcher}
+ \index{routing dispatch}
+ 
+-
+ The user-facing API is built on internal dispatcher roles.
+ 
+ A compact view is:
+@@ -334,27 +177,7 @@ When a request stops advancing, inspect which dispatcher owns its continuation.
+ \index{Response@\texttt{Response}}
+ \index{facade}
+ 
+-
+-Chapter 16 introduced HTTP request and response objects. Chapter 17 raises them into Express-like application facades.
+-
+-The facade does two things:
+-
+-```text
+-keeps access to HTTP meaning
+-  + adds application-structure meaning
+-```
+-
+-That is different from replacing the HTTP objects. The Express-like layer wraps and enriches them:
+-
+-```text
+-HTTP objects
+-  -> protocol message meaning
+-
+-Express facades
+-  -> web-application meaning
+-```
+-
+-#### Request facade
++The Express facades retain HTTP message access and add routing context and application-oriented operations.
+ 
+ The Express-like `Request` adds routing and application context to the lower HTTP request.
+ 
+@@ -365,19 +188,6 @@ The Express-like `Request` adds routing and application context to the lower HTT
+ | HTTP metadata | method, URL, HTTP version, headers, trailer |
+ | parsed input | query values, cookies, body |
+ 
+-This is the request-side semantic lift. The application can ask route-level questions, not only HTTP parsing questions:
+-
+-```text
+-Which route parameter was matched?
+-What was the original URL?
+-Which mounted base path led here?
+-Which cookie or query value is present?
+-```
+-
+-Those are web-application questions.
+-
+-#### Response facade
+-
+ The Express-like `Response` adds application-oriented response operations to the lower HTTP response.
+ 
+ | Response aspect | Examples |
+@@ -389,21 +199,6 @@ The Express-like `Response` adds application-oriented response operations to the
+ | redirects | `redirect`, `location` |
+ | advanced HTTP | `upgrade`, fragments, socket-context access |
+ 
+-This is the response-side semantic lift. The application can express common web responses directly:
+-
+-```text
+-send JSON
+-redirect
+-set a cookie
+-send a file
+-return a status
+-upgrade the connection
+-```
+-
+-Those operations still produce HTTP behavior underneath. The facade makes the application intent clearer.
+-
+-#### Controlled access to lower HTTP capabilities
+-
+ The facade raises the application API, but it does not hide all lower HTTP capabilities. Advanced operations remain available when the application genuinely needs them.
+ 
+ Examples include:
+@@ -414,16 +209,13 @@ Examples include:
+ - socket-context access,
+ - lower header control.
+ 
+-The facade is a raised application surface with deliberate access points back to lower HTTP capabilities when the application genuinely needs them, not a wall. This keeps the application interface convenient without pretending that lower HTTP and connection realities no longer exist.
+-
+-### Built-in middleware as reusable application behavior
+-
+ \index{middleware}
+ \index{static serving}
+ \index{virtual hosts}
+ \index{JSON middleware}
+ \index{authentication middleware}
+ 
++These deliberate access points keep advanced HTTP and connection behavior available without making it every route’s responsibility.
+ 
+ The Express-like module also provides reusable middleware. Built-in middleware packages common request-processing behavior so it can be mounted once and reused across routes.
+ 
+@@ -437,34 +229,17 @@ Examples include:
+ | `VerboseRequest` | request visibility |
+ | `JsonMiddleware` | JSON request handling |
+ 
+-These belong above HTTP and below application-specific route logic. They are reusable application behaviors. That is middleware territory.
+-
+-#### Authentication, static serving, virtual hosts, request visibility, and JSON handling
+-
+-Basic authentication, static serving, virtual-host routing, verbose request reporting, and JSON handling are examples of reusable application behavior. They can be attached through middleware instead of being baked into the lower socket layer, the HTTP parser, or every individual route handler.
+-
+ Static serving may involve root directories, index handling, fall-through behavior, headers, cookies, and connection-state decisions after the response. Those are practical application concerns, but they do not belong in the socket layer or in every route handler.
+ 
+ `VHost` belongs here because host-based dispatch is web-application routing behavior. `VerboseRequest` belongs here because request visibility is useful across routes but should not be duplicated inside every handler.
+ 
+ The Express module includes JSON middleware when the required `nlohmann_json` dependency is present; the build treats that dependency as required for this module. Architecturally, JSON middleware belongs to the same group of reusable request-processing behavior.
+ 
+-The architectural point is:
+-
+-```text
+-common request-processing behavior
+-  -> reusable middleware
+-```
+-
+-### Lower layers still matter
+-
+-The Express-like layer changes application organization. It does not remove the lower stack. A route handler may look high-level, but bind/listen activation, TLS setup, HTTP parsing, response streaming, upgrade behavior, timeout boundaries, diagnostics, and shutdown still belong to the same layered runtime model.
+-
+-That is the useful distinction: Express organizes web application logic; it does not hide the architecture beneath it.
++Bind/listen activation, TLS setup, HTTP parsing, timeout boundaries and shutdown still belong to the underlying runtime. Routing organizes the application work above those responsibilities.
+ 
+ ### Observe continuation and a completed response
+ 
+-The source tree contains two small, complete exercises for the dispatch boundary. They use real loopback HTTP connections and assert both the response seen by the client and the handlers that ran:
++The public fixture in `companion/exercises/ch17/` provides both dispatch experiments below. Both observe loopback responses and handler visits. Corresponding optional framework tests can be selected with:
+ 
+ ```sh
+ ctest --test-dir "$SNODEC_BUILD" --output-on-failure \
+@@ -473,7 +248,7 @@ ctest --test-dir "$SNODEC_BUILD" --output-on-failure \
+ 
+ Here `SNODEC_BUILD` is a configured and built framework test tree, as established in Chapter 27. These tests require local socket access. Their source files live in `tests/component/express`.
+ 
+-Read `InetExpressMiddlewareMountOrderTest.cpp` first. Application middleware records `app-before` and calls `next()`. Router middleware appends `router-before` and calls `next()`. The router’s `/status` handler appends `handler`; the router is mounted at `/api`.
++Read the companion `dispatch.cpp` mount-order path first; `InetExpressMiddlewareMountOrderTest.cpp` is its optional framework counterpart. Application middleware records `app-before` and calls `next()`. Router middleware appends `router-before` and calls `next()`. The router’s `/status` handler appends `handler`; the router is mounted at `/api`.
+ 
+ | Request | Expected observation |
+ |---|---|
+@@ -482,47 +257,17 @@ Read `InetExpressMiddlewareMountOrderTest.cpp` first. Application middleware rec
+ 
+ The test counts those visits. A 200 response alone would not prove that middleware ran in the intended order.
+ 
+-Now read `InetExpressMiddlewareShortCircuitTest.cpp`. Its first callback sends status 403, a diagnostic header, and `middleware stopped request`. It does not call `next()`. The following application handler would send 200, but its invocation count must remain zero. This is a deliberate response that ends dispatch, not an HTTP parsing error or a failed connection.
++The companion’s `/blocked` path demonstrates short-circuiting. Its optional framework counterpart is `InetExpressMiddlewareShortCircuitTest.cpp`. The middleware sends status 403, a diagnostic header, and `middleware stopped request`. It does not call `next()`. The following application handler would send 200, but its invocation count must remain zero. This is a deliberate response that ends dispatch, not an HTTP parsing error or a failed connection.
+ 
+ For a local experiment, work in a scratch copy of the test. Change the middleware to call `next()` without sending its 403 response, and predict the new response and counts before changing the assertions. Then restore the original. Do not leave both `send(...)` and unconditional continuation in place: that expresses two competing decisions about who answers the same request.
+ 
+ A flat request callback remains reasonable for one small endpoint. Mounted routers become useful when several endpoints share policy or path context. Their cost is less visible control flow: route order, mount paths, and explicit continuation become part of correctness. The paired response and invocation observations keep that cost visible.
+ 
+-### From Express-like routing to Server-Sent Events
+-
+-Chapter 17 is the second step in Part VII. Chapter 16 introduced the HTTP layer. Chapter 17 showed how HTTP handling becomes application structure.
+-
+-The next chapter moves to a specific HTTP-based real-time mechanism:
+-
+-```text
+-Server-Sent Events
+-```
+-
+-This is a natural next step. The reader now understands:
+-
+-```text
+-HTTP request / response
+-  -> Express-like application structure
+-      -> long-lived HTTP event streaming
+-```
+-
+-Chapter 18 then asks what happens when a route is not a short request/response exchange, but a long-lived one-way event stream. Server-Sent Events will show how the web stack handles that shape while still using the same layered discipline.
+-
+-::: {.snodec-remember title="What to remember"}
+-- The Express-like layer sits above HTTP and organizes HTTP handling into web-application structure.
+-- `WebApp` is a router-shaped application surface.
+-- `WebAppT<ServerT>` combines that application surface with a concrete HTTP server type.
+-- HTTP request readiness enters the Express layer through a controller and the root route.
+-- `Router` composes routes, middleware, mounted routers, method-specific handlers, and routing policy.
+-- Application callbacks and middleware callbacks have different responsibilities.
+-:::
+-
+-### Express public surface: WebApp header and carrier component
++Chapter 18 extends this routing model to a long-lived, one-way event response. Its observer lifetime needs more than the completed-response examples here.
+ 
+ \index{Express components}
+ \index{WebApp@\texttt{WebApp}!public surface}
+ 
+-
+ A file that directly uses the IPv4 legacy Express WebApp includes:
+ 
+ ```cpp
+@@ -542,3 +287,21 @@ http-server-express-legacy-in
+ ```
+ 
+ It selects the Express layer together with the IPv4 legacy stream carrier. The source-side and build-side names rhyme without being the same mechanism. Chapter 25 gives the source-derived matrix for the broader set of components and headers.
++
++::: {.snodec-remember title="What to remember"}
++- `WebAppT<ServerT>` joins a root router and concrete HTTP server; request readiness starts controller dispatch.
++- Mounted paths, route order and parameter policy affect which handler receives a request.
++- Middleware may answer or continue explicitly; `next()` is not a thread handoff.
++- Facades add routing context and common responses while keeping deliberate access to lower HTTP operations.
++- Observe both the completed response and handler visits when checking dispatch or short-circuit behavior.
++:::
++
++::: {.snodec-exercise title="Exercises"}
++1. **Review (O1).** How do `WebApp`, `WebAppT` and `Controller` connect the route tree to the runtime?
++2. **Review (O2, O3).** Contrast returning from middleware, calling `next()` and sending a response. Why should a handler not send and then continue unconditionally?
++3. **Lab (O1, O2).** Run the mount-order lab. Compare `/api/status` with `/outside`: expect ordered app/router/handler visits for 200, but only app middleware for 404.
++4. **Lab (O2).** Run the short-circuit lab. Expect middleware’s 403 response and zero visits to the following handler.
++5. **Design (O1, O3).** Place shared authentication, JSON handling and a mounted sensor API. Explain route order, parent parameters and which limits must act before middleware.
++
++Public solutions and bounded lab commands: `companion/exercises/ch17/README.md`.
++:::
+diff --git a/manuscript/chapters/19-websocket-and-protocol-upgrade.md b/manuscript/chapters/19-websocket-and-protocol-upgrade.md
+index a446a65..e432fce 100644
+--- a/manuscript/chapters/19-websocket-and-protocol-upgrade.md
++++ b/manuscript/chapters/19-websocket-and-protocol-upgrade.md
+@@ -1,62 +1,30 @@
+ ## WebSocket and Protocol Upgrade {#websocket-and-protocol-upgrade}
+ 
++::: {.snodec-objectives title="Learning objectives"}
++- **O1.** Distinguish HTTP upgrade, subprotocol selection and connection continuity.
++- **O2.** Verify WebSocket message type, payload, fragmentation and closing behavior.
++- **O3.** Decide resource and observer policies without confusing connectivity with accepted state.
++:::
++
+ \index{WebSocket}
+ \index{protocol upgrade}
+ \index{HTTP upgrade}
+ 
+-
+ ### From event streams to upgraded bidirectional communication
+ 
+ HTTP can remain open as a one-way event stream; it can also negotiate an upgrade. After a successful WebSocket upgrade, the same lower connection no longer behaves as ordinary request/response HTTP. The connection episode continues as bidirectional, message-oriented communication.
+ 
+-That is the central idea of this chapter:
+-
+-::: {.snodec-note title="Upgrade-boundary note"}
+-WebSocket starts in HTTP, but after the upgrade the connection is handled as a bidirectional message-oriented WebSocket connection.
+-:::
+-
+ This makes WebSocket different from both ordinary HTTP and Server-Sent Events. Figure \ref{fig:web-protocol-layer-structure} places these ideas in the relationship used in this part of the book: HTTP request/response is the common web-protocol foundation; Server-Sent Events and WebSocket are dependent protocol shapes inside the same web protocol layer; and the Express-like application structure uses that layer to organize application-facing endpoints.
+ 
+ ![The web protocol layer with HTTP request/response as the common foundation for Server-Sent Events and WebSocket, and with the Express-like application structure using that layer.](assets/figures/pdf/fig-06-web-protocol-layer-structure.pdf){#fig:web-protocol-layer-structure width=88% latex-placement="tbp"}
+ 
+-The key word for the WebSocket path in Figure \ref{fig:web-protocol-layer-structure} is:
+-
+-```text
+-upgrade
+-```
+-
+ Upgrade does not mean that the lower connection disappears. The lower family, stream transport, TLS state if present, connection identity, counters, runtime lifecycle, and diagnostic surface remain part of the same peer episode. The protocol context interpreting that episode changes.
+ 
+ Figure \ref{fig:web-protocol-layer-structure} also prevents a wrong reading of the web chapters. Express-like routing is an application-structuring layer, not the protocol parent of SSE or WebSocket. Application code can use the Express-like structure to organize ordinary HTTP routes, SSE endpoints, and WebSocket upgrade entry points, or it can use the web protocol layer directly where that is the better fit.
+ 
+-WebSocket closes the main web-protocol climb before the book moves to MQTT.
+-
+-### WebSocket in the layered SNode.C web stack
+-
+ \index{WebSocket!layered model}
+ 
+-
+-The WebSocket stack keeps the lower family, stream transport, and legacy-or-TLS connection handling, then uses HTTP request/response for upgrade negotiation before WebSocket frames and subprotocol semantics take over.
+-
+-The practical consequence is continuity of connection identity. Correlate the HTTP negotiation and subsequent WebSocket records as phases of one peer episode; do not count the upgrade as a second accepted socket.
+-
+-After a successful upgrade, ordinary request/response handling no longer owns that connection episode. The upgraded WebSocket context does.
+-
+-A compact model is:
+-
+-```text
+-HTTP request
+-  -> upgrade negotiation
+-      -> upgraded connection context
+-          -> WebSocket frames
+-              -> subprotocol semantics
+-```
+-
+-With TLS, the WebSocket upgrade happens above the secure stream connection. The secure connection remains the carrier underneath the HTTP negotiation and the WebSocket frames.
+-
+-That handover is also an ownership boundary: ordinary route dispatch no longer receives the bytes as subsequent HTTP requests.
+-
+-### HTTP, SSE, and WebSocket side by side
++After upgrade, correlate HTTP negotiation and WebSocket records as phases of one connection. Ordinary route dispatch no longer receives its bytes as later HTTP requests; with TLS, the secure carrier remains underneath.
+ 
+ Chapter 18 compared the three interaction shapes. For implementation, the decisive observation is what happens after the first response:
+ 
+@@ -68,72 +36,19 @@ Chapter 18 compared the three interaction shapes. For implementation, the decisi
+ 
+ This distinction prevents a misleading test result. A successful HTTP exchange proves neither that SSE delivered an event nor that a requested WebSocket subprotocol was selected.
+ 
+-### WebSocket after the HTTP upgrade boundary
+-
+ \index{HTTP upgrade}
+ \index{WebSocket!upgrade boundary}
+ 
+-
+ Chapter 16 described HTTP upgrade as a generic HTTP-layer boundary. That is where the client names an upgrade target, the server accepts or rejects the transition, and the HTTP layer selects a socket-context upgrade implementation.
+ 
+-This chapter now specializes that generic boundary to WebSocket. In the HTTP upgrade layer the selected upgrade name is:
+-
+-```text
+-websocket
+-```
+-
+-That name selects the upgraded connection type. It is not yet an application protocol name. After the WebSocket upgrade has succeeded, the WebSocket layer may perform another selection step: the WebSocket subprotocol.
+-
+-This gives two separate questions:
+-
+-```text
+-HTTP upgrade name
+-  -> which upgraded connection context should replace ordinary HTTP?
+-
+-WebSocket subprotocol name
+-  -> which application protocol should run inside the WebSocket connection?
+-```
+-
+-Keeping those questions separate is important. The HTTP upgrade machinery belongs to the web/HTTP layer. The WebSocket subprotocol machinery belongs to the WebSocket layer.
+-
+-### WebSocket as the concrete upgraded protocol
+-
+-WebSocket is the concrete upgrade target discussed here.
+-
+-For WebSocket, the generic model becomes:
+-
+-```text
+-HTTP request
+-  -> upgrade negotiation
+-      -> WebSocket SocketContextUpgrade
+-          -> WebSocket frames
+-              -> WebSocket subprotocol
+-```
+-
+-After the WebSocket upgrade succeeds, ordinary HTTP request/response handling is no longer the application-facing model for that connection episode. The upgraded connection is handled as WebSocket.
+-
+-That means the protocol layer now cares about:
+-
+-- frames,
+-- message boundaries,
+-- fragmentation,
+-- ping,
+-- pong,
+-- close,
+-- payload counters,
+-- subprotocol behavior.
+-
+-The connection is still the same peer relationship underneath. The protocol interpretation has changed.
+-
+-### `SocketContextUpgrade` as the boundary object
+-
+ \index{SocketContextUpgrade@\texttt{SocketContextUpgrade}}
+ \index{upgrade boundary}
+ 
++The HTTP upgrade name `websocket` selects the upgraded connection context. The WebSocket subprotocol name selects the application meaning carried inside it. HTTP upgrade selection and WebSocket subprotocol selection are separate responsibilities.
+ 
+-The central code-shaped concept in this chapter is `SocketContextUpgrade`.
++### `SocketContextUpgrade` as the boundary object
+ 
+-In the generic upgrade model, it represents the boundary between HTTP negotiation and the selected upgraded protocol context. For WebSocket, it represents the boundary between HTTP and WebSocket.
++The WebSocket `SocketContextUpgrade` connects HTTP negotiation to the context that handles WebSocket framing and subprotocol behavior.
+ 
+ In simplified form, the generic WebSocket upgrade context has this shape:
+ 
+@@ -146,9 +61,7 @@ class SocketContextUpgrade
+ };
+ ```
+ 
+-The class shape expresses the architecture in C++: one base keeps the object attached to HTTP upgrade, while the other exposes the WebSocket and subprotocol surface used after the transition.
+-
+-The template parameters keep both sides visible at the type level: `Request` and `Response` describe the HTTP negotiation side, while `SubProtocolT` names the upgraded WebSocket meaning. The object therefore lives exactly at the transition point. It is still able to explain where the connection came from, and it also provides the surface needed for the protocol that now takes over.
++Its bases retain the HTTP upgrade side and expose the WebSocket/subprotocol surface. `RequestT` and `ResponseT` describe negotiation; `SubProtocolT` describes the carried protocol.
+ 
+ | Base / role | Meaning |
+ |---|---|
+@@ -157,43 +70,6 @@ The template parameters keep both sides visible at the type level: `Request` and
+ | socket connection | continues carrying the same peer episode |
+ | `Request` / `Response` | represent the HTTP upgrade negotiation side |
+ 
+-It is not an ordinary HTTP context. It is not a plain stream context. It is an upgraded context.
+-
+-#### Same connection, new protocol identity
+-
+-The upgrade does not create a completely unrelated connection. It changes what the existing connection means.
+-
+-Before the upgrade:
+-
+-```text
+-connection
+-  -> HTTP request / response context
+-```
+-
+-After the upgrade:
+-
+-```text
+-same connection
+-  -> WebSocket socket-context upgrade
+-      -> WebSocket frames
+-          -> subprotocol behavior
+-```
+-
+-Diagnostics and application reasoning still depend on the same peer episode: connection identity, lower endpoint, TLS state, counters, timeout behavior, and runtime lifecycle remain attached to it. The protocol context interpreting that episode changes.
+-
+-#### HTTP upgrade context plus WebSocket subprotocol context
+-
+-The generic WebSocket upgrade context combines two responsibilities. The HTTP upgrade side describes where the transition comes from. The WebSocket/subprotocol side describes what the connection becomes after the transition.
+-
+-That is why the class combines:
+-
+-```text
+-HTTP upgrade context
+-  + WebSocket subprotocol context
+-```
+-
+-This keeps the layer boundary explicit. The framework does not pretend WebSocket is merely another HTTP callback. It also does not pretend WebSocket is unrelated to HTTP.
+-
+ ### WebSocket messages and frames
+ 
+ \index{WebSocket frames}
+@@ -202,57 +78,7 @@ This keeps the layer boundary explicit. The framework does not pretend WebSocket
+ \index{pong frame}
+ \index{close frame}
+ 
+-
+-After the upgrade, the application-facing model changes again.
+-
+-Earlier chapters showed:
+-
+-```text
+-HTTP
+-  -> request / response
+-
+-SSE
+-  -> event
+-
+-WebSocket
+-  -> message / frame
+-```
+-
+-The WebSocket layer must understand message and frame structure. Frames are protocol units. Messages are the application-facing payload units assembled through frame handling.
+-
+-A useful separation is:
+-
+-```text
+-application-facing shift
+-  -> messages
+-
+-protocol machinery
+-  -> frames, continuation, control frames
+-
+-callback / API surface
+-  -> message start, data, end, error
+-```
+-
+-The WebSocket layer provides operations for:
+-
+-- sending a complete message,
+-- starting a message,
+-- sending continuation frames,
+-- ending a message,
+-- sending ping,
+-- sending pong,
+-- sending close,
+-- reading and writing frame chunks,
+-- reacting to message start,
+-- reacting to message data,
+-- reacting to message end,
+-- reacting to message errors.
+-
+-This belongs in the WebSocket layer. Applications should not have to reimplement WebSocket framing in every protocol.
+-
+-#### Data and continuation frames
+-
+-A compact view of frame categories is:
++Frames are protocol units; messages are application payloads assembled through frame handling. The carrier sends complete messages or start/continuation/end fragments and handles incoming frame chunks and control frames. The callback surface exposes message start, data, end and error, so applications need not reimplement framing.
+ 
+ | WebSocket concern | Meaning |
+ |---|---|
+@@ -263,34 +89,11 @@ A compact view of frame categories is:
+ | pong | ping response / control signal |
+ | close | protocol-level closing signal |
+ 
+-Text and binary frames carry application data. Continuation frames allow fragmented messages. The WebSocket layer keeps those protocol details in one place.
+-
+-#### Ping, pong, and close
+-
+-Ping, pong, and close are WebSocket protocol concerns. They are not subprotocol business messages.
+-
+-A ping is a control signal. A pong is a control response. A close frame is a protocol-level closing signal.
+-
+-This distinction matters because it keeps application semantics separate from WebSocket protocol mechanics. An application protocol carried over WebSocket may define its own messages. It should not have to reinvent WebSocket liveness and closing behavior.
+-
+-### Server-side and client-side upgrade responsibilities
++Text and binary frames carry application data; continuation frames extend a fragmented message. Ping, pong and close are carrier control signals, not subprotocol business messages. Applications keep their own message semantics separate from these liveness and closing mechanisms.
+ 
+ \index{WebSocket!server-side upgrade}
+ \index{WebSocket!client-side upgrade}
+ 
+-
+-Server and client WebSocket support are related, but not identical.
+-
+-Both sides use the same broad idea:
+-
+-```text
+-HTTP upgrade
+-  -> WebSocket socket-context upgrade
+-      -> selected WebSocket subprotocol
+-```
+-
+-But they enter the transition from different responsibilities.
+-
+ | Side | Upgrade responsibility |
+ |---|---|
+ | server | receive an HTTP upgrade request, parse requested subprotocol names, select a supported subprotocol, and confirm the upgrade |
+@@ -301,17 +104,10 @@ The server side receives a set of requested subprotocol names and selects what i
+ 
+ The client side initiates the upgrade. It prepares the WebSocket upgrade request, validates the response, and continues only when the server response proves that the upgrade was accepted.
+ 
+-This mirrors earlier server/client distinctions in the book. The symmetry remains. The responsibilities differ.
+-
+-#### Upgrade calls belong to the HTTP boundary
+-
+-Chapter 16 showed the compact server-side `res->upgrade(...)` and client-side `req->upgrade(...)` calls. This chapter deliberately does not repeat them. Here the concern is what the selected `websocket` upgrade means after the HTTP boundary has been crossed: WebSocket framing, control frames, subprotocol selection, and subprotocol deployment.
+-
+-### The WebSocket module structure
++Chapter 16 showed the compact server-side `res->upgrade(...)` and client-side `req->upgrade(...)` calls. After that HTTP boundary, the selected `websocket` upgrade supplies framing, control frames, subprotocol selection, and subprotocol deployment.
+ 
+ \index{WebSocket!module structure}
+ 
+-
+ The build/module split mirrors the architectural split: shared WebSocket mechanics are separate from the server-side and client-side HTTP upgrade roles.
+ 
+ | Module | Meaning |
+@@ -320,19 +116,7 @@ The build/module split mirrors the architectural split: shared WebSocket mechani
+ | `websocket-server` | server-side HTTP upgrade integration and subprotocol selection |
+ | `websocket-client` | client-side HTTP upgrade integration and subprotocol selection |
+ 
+-The shared layer contains WebSocket concerns such as:
+-
+-- receiver,
+-- transmitter,
+-- socket-context upgrade,
+-- subprotocol,
+-- subprotocol context,
+-- subprotocol factory,
+-- subprotocol factory selector.
+-
+-The server and client layers build on that shared base and connect it to the corresponding HTTP server or HTTP client side.
+-
+-This module split is useful because the protocol mechanics are shared while the upgrade roles differ.
++The shared layer contains receivers/transmitters, upgrade contexts and subprotocol factories/selectors; role modules connect those mechanics to the corresponding HTTP side.
+ 
+ ### Subprotocols as the next semantic layer
+ 
+@@ -340,24 +124,11 @@ This module split is useful because the protocol mechanics are shared while the
+ \index{SubProtocol@\texttt{SubProtocol}}
+ \index{SubProtocolContext@\texttt{SubProtocolContext}}
+ 
+-
+-WebSocket is not the final semantic layer in SNode.C. It is a bidirectional message channel with a subprotocol layer.
++WebSocket is a bidirectional message channel with a subprotocol layer.
+ 
+ That subprotocol gives the WebSocket channel its application/message semantics. A raw WebSocket message is not yet a complete application idea. It may be a chat message, a telemetry update, a dashboard command, an MQTT packet, or something else.
+ 
+-A useful model is:
+-
+-```text
+-WebSocket
+-  -> upgraded bidirectional carrier
+-
+-WebSocket subprotocol
+-  -> application/message semantics carried over WebSocket
+-```
+-
+-This distinction is important. A small application can implement its message meaning in one dedicated handler. A selectable subprotocol adds a useful boundary when a carrier serves several named protocols or loads their factories independently. Its cost is another negotiated name and deployment artifact that must agree on both sides.
+-
+-#### `SubProtocol` and `SubProtocolContext`
++A small application can implement its message meaning in one dedicated handler. A selectable subprotocol adds a useful boundary when a carrier serves several named protocols or loads their factories independently. Its cost is another negotiated name and deployment artifact that must agree on both sides.
+ 
+ The WebSocket layer provides explicit subprotocol infrastructure.
+ 
+@@ -368,12 +139,6 @@ The WebSocket layer provides explicit subprotocol infrastructure.
+ | `SubProtocolFactory` | creates subprotocol instances |
+ | `SubProtocolFactorySelector` | resolves requested subprotocol names in a server or client selection context |
+ 
+-This keeps WebSocket mechanics and application-message semantics separated.
+-
+-WebSocket provides the upgraded carrier. The subprotocol defines what the messages mean.
+-
+-#### WebSocket subprotocol deployment contract
+-
+ Chapter 16 distinguished ordinary linked-library deployment from runtime-selected upgrade modules. WebSocket subprotocols use the same idea one level later. Subprotocol selection is a second deployment boundary, below the HTTP-upgrade boundary: the HTTP upgrade module makes the connection a WebSocket connection, and the WebSocket subprotocol factory gives that connection its application semantics.
+ 
+ For dynamically loaded subprotocols, SNode.C looks below the WebSocket subprotocol directory. The selector first checks an application-specific subdirectory and then falls back to the shared directory:
+@@ -441,7 +206,7 @@ target_link_libraries(my_ws_client PRIVATE
+ 
+ The exact target names are application choices; the contract is the name-to-factory resolution. A WebSocket subprotocol name must resolve to a factory on the correct role side. Dynamic deployment provides that factory through a correctly named module. Linked deployment provides it through linked and retained registration code. A missing HTTP-upgrade module prevents the connection from becoming WebSocket; a missing subprotocol factory means that WebSocket exists, but the requested application protocol cannot be instantiated.
+ 
+-#### A compact WebSocket subprotocol
++### A compact WebSocket subprotocol
+ 
+ A WebSocket application is usually not written as a raw byte loop. The application supplies a subprotocol object. The WebSocket layer handles the upgraded carrier, frames, messages, and control behavior; the subprotocol object receives lifecycle and message callbacks.
+ 
+@@ -568,13 +333,6 @@ echoClientSubProtocolFactory() {
+ }
+ ```
+ 
+-A dynamically loaded deployment must install both role modules with the names expected by the selectors:
+-
+-```text
+-libsnodec-websocket-echo-server.so.<SOVERSION>
+-libsnodec-websocket-echo-client.so.<SOVERSION>
+-```
+-
+ The base subprotocol and factory shape belongs to the shared WebSocket component, while each concrete role module links the corresponding role component:
+ 
+ ```cmake
+@@ -618,51 +376,36 @@ Then use a scratch client copy to request an unsupported subprotocol name. The s
+ 
+ Next, send both a text message and a binary message containing a zero byte. The reply must keep the original WebSocket message type and exactly the same payload bytes. Repeat with an empty message, two successive messages on one connection, and a message split into continuation frames. These observations test the companion's echo contract; successful upgrade alone does not establish them. A malformed frame should still be rejected by the carrier's validation path, which has a separate responsibility.
+ 
+-### Lower layers and diagnostics still matter
+-
+-A WebSocket problem may belong to several layers:
+-
+-```text
+-lower connection
+-  -> TLS
+-      -> HTTP upgrade
+-          -> upgrade factory / selector
+-              -> WebSocket framing
+-                  -> subprotocol
+-                      -> application shutdown
+-```
+-
+-Chapter 19 adds upgrade-boundary evidence to the earlier diagnostic vocabulary: negotiation, selected subprotocol, frame parsing, control frames, and close behavior. The operational question is not “which single layer failed?”, but where the first observable failure appears in this stack.
+-
+-### From WebSocket carriers to MQTT semantics
++This adds upgrade-boundary evidence to the earlier diagnostic vocabulary: negotiation, selected subprotocol, frame parsing, control frames, and close behavior. The operational question is not “which single layer failed?”, but where the first observable failure appears in this stack.
+ 
+ \index{MQTT over WebSocket}
+ \index{WebSocket!as carrier}
+ 
+-
+ The next chapter moves to MQTT. MQTT can be used directly in SNode.C, and Chapter 21 will show how it can also be carried as a WebSocket subprotocol.
+ 
+ The bridge from this chapter is simple: WebSocket provides the upgraded bidirectional carrier; MQTT over WebSocket later places MQTT semantics inside that carrier.
+ 
+-::: {.snodec-remember title="What to remember"}
+-- WebSocket begins as HTTP upgrade and continues as a bidirectional message-oriented connection.
+-- Upgrade changes the protocol context while keeping the underlying connection.
+-- HTTP upgrade is the generic boundary described in Chapter 16; WebSocket is the concrete upgraded protocol used here.
+-- `SocketContextUpgrade` is the boundary object between HTTP negotiation and the upgraded protocol context.
+-- WebSocket uses frames, messages, and control frames such as ping, pong, and close.
+-- Server and client upgrade paths are related but not identical.
+-- The shared `websocket` module contains framing and subprotocol infrastructure; server and client modules connect it to the HTTP sides.
+-- WebSocket is an upgraded carrier; the subprotocol gives carried messages their application meaning.
+-- Subprotocol factories and selectors keep subprotocol selection structured and extensible.
+-- A dynamically loaded WebSocket subprotocol must be installed in the WebSocket subprotocol directory and follow the role-specific file-name and factory-symbol conventions.
+-- A linked subprotocol deployment resolves the same subprotocol name through the selector's linked factory path instead of opening a shared object at runtime.
+-- Lower-family, TLS, runtime, configuration, diagnostics, timeout, and failure behavior remain relevant after upgrade.
+-:::
+-
+-### WebSocket public surface
+-
+ \index{WebSocket!public surface}
+ \index{web::websocket@\texttt{web::websocket}}
+ 
+-
+ WebSocket crosses HTTP negotiation, upgraded socket context, framing, and optional subprotocol selection. The local rule is therefore to include the highest public header for the WebSocket abstraction directly named by the file and link the matching WebSocket component surface. Chapter 25 gives the consolidated component/header matrix, including the MQTT-over-WebSocket adapters.
++
++The Part VII checkpoint first observes the SSE example's accepted measurement through POST results and two event streams, then removes one observer while the other continues. Its separate WebSocket exchange checks negotiation and message behavior; an echo is not a second owner of measurement state.
++
++::: {.snodec-remember title="What to remember"}
++- Upgrade replaces the protocol context while retaining the lower connection and its identity.
++- The HTTP upgrade name and WebSocket subprotocol name select different factories.
++- Frames carry messages and control signals; echo must preserve message type and counted payload bytes.
++- Receiver frame, message and fragment limits protect different dimensions; snapshots do not change retroactively.
++- Verify upgrade acceptance, selected subprotocol and actual message behavior separately, with matching role modules or retained linked registration.
++:::
++
++::: {.snodec-exercise title="Exercises"}
++1. **Review (O1).** Which factory does `websocket` select, and which does `echo` select? What survives the context change?
++2. **Review (O2, O3).** Why must echo preserve message type and counted bytes? Contrast frame, message and fragment limits with application validation.
++3. **Lab (O1, O2).** Run the negotiation lab. Expect the canonical client’s `hello` echo; request an unsupported subprotocol and verify no echo attachment.
++4. **Lab (O1, O2, O3).** Run the Part VII checkpoint: compare two accepted SSE measurements across observers, remove one observer, then separately verify WebSocket binary/empty/fragmented messages, ping and close.
++5. **Design (O1, O3).** Choose SSE plus POST or a WebSocket subprotocol for a dashboard with commands. State message semantics, receive/output bounds and recovery responsibilities.
++
++Public solutions and bounded lab commands: `companion/exercises/ch19/README.md`.
++:::
+diff --git a/manuscript/parts/part-07-web-protocols-and-web-applications.md b/manuscript/parts/part-07-web-protocols-and-web-applications.md
+index 5f39d71..26b7129 100644
+--- a/manuscript/parts/part-07-web-protocols-and-web-applications.md
++++ b/manuscript/parts/part-07-web-protocols-and-web-applications.md
+@@ -3,3 +3,5 @@
+ Part VI dealt with connection behavior before web semantics entered the picture. This part raises the model into HTTP, Express-like routing, Server-Sent Events, WebSocket upgrade, and WebSocket subprotocols.
+ 
+ The web stack is presented as a sequence of protocol surfaces built on lower connection machinery, not as one monolithic abstraction. Part VIII then shifts from web-facing interaction to MQTT and message-oriented IoT systems.
++
++The checkpoint follows two accepted measurements through POST responses and independent SSE observers, then checks WebSocket negotiation and message behavior separately. These are the web-facing pieces of MiniGateway: shared state, observation lifetime and explicit protocol contracts.

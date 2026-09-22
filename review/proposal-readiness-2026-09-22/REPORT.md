@@ -1,7 +1,7 @@
 # Proposal readiness — phase report
 
 Session date: 2026-09-22. Work branch: `SNode.C-2.0-refinement`, created directly
-from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5g is completed after freshly re-verifying the Phase 5f gate. Parts I–VI and the approved front-matter work are complete. Phase 5h has not started.
+from `SNode.C-2.0` with a clean working tree. The phase records below are chronological. Phase 5h is completed after the separately committed TLS-fixture follow-up freshly re-verified the Phase 5g gate. Parts I–VII and the approved front-matter work are complete. Phase 5i has not started.
 The author request is preserved in [PROMPT.md](PROMPT.md). Its initial block was
 subsequently unescaped in a separate Phase 0 commit; the teaching-book amendment
 was subsequently unescaped by deliberate author work; its teaching requirements govern Phase 2.
@@ -20,7 +20,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5e — Part IV | completed | `proposal-readiness: phase 5e — refine Part IV and verify protocol framing` (containing this report) | 2026-09-22 | metrics-after-phase-5e.json; phase-5e-exit-checks.json; chapter-ledger.md; phase-5e-final-*.log; phase-5e-visual-review.md; completion account below |
 | 5f — Part V | completed | `proposal-readiness: phase 5f — refine Part V and verify configuration diagnostics` (containing this report) | 2026-09-22 | metrics-after-phase-5f.json; phase-5f-exit-checks.json; chapter-ledger.md; phase-5f-entry-*.log; phase-5f-final-*.log; phase-5f-visual-review.md; completion account below |
 | 5g — Part VI | completed | `proposal-readiness: phase 5g follow-up — move TLS fixture into companion material`; initial Phase 5g commit retained | 2026-09-22 | metrics-after-phase-5g.json; phase-5g-exit-checks.json; chapter-ledger.md; phase-5g-entry-*.log; phase-5g-final-*.log; phase-5g-visual-review.md; completion account below |
-| 5h — Part VII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
+| 5h — Part VII | completed | `proposal-readiness: phase 5h — refine Part VII and verify web protocol boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5h.json; phase-5h-exit-checks.json; chapter-ledger.md; phase-5h-final-*.log; phase-5h-visual-review.md; completion account below |
 | 5i — Part VIII | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5j — Part IX | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 5k — Part X | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
@@ -2181,3 +2181,144 @@ no production or test logic; excluding exact file moves, CMake/Python wiring is
 
 Separate commit: `proposal-readiness: phase 5g follow-up — move TLS fixture into companion material`.
 The freshly passed follow-up gate permits Phase 5h to begin in this session.
+
+
+## Phase 5h — Part VII completed (2026-09-22)
+
+### Entry gate, scope and editorial result
+
+The separate author-requested TLS-fixture follow-up was completed and committed
+before Part VII editing. Its freshly rerun Phase 5g checks, 36 public labs, review
+consumer and clean artifacts are recorded in `phase-5g-follow-up-results.json`,
+`phase-5g-follow-up-exit-checks.json` and command-bearing follow-up logs. The
+entry metrics are `metrics-after-phase-5g-follow-up.json`; original Phase 5g
+records remain historical. This satisfies the previous-phase entry gate.
+
+Applied only the approved Part VII scope, Chapters 16–19, plus its opener/checkpoint
+and public solutions. Budgets are ceilings, not targets. Edited and reread Chapters
+16, 17 and 19 in context; reread Chapter 18 and retained it byte-for-byte because
+it already meets the gates. The prose revision consolidates repeated stack,
+context/factory and upgrade explanations and removes arrow-chain restatement.
+The content-preservation audit in chapter-ledger.md cites retained explanations,
+examples and qualifications by source line; `phase-5h-manuscript.diff` records the
+actual changes. No structure, chapter order or production styling was changed.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 16 | 3,514 → 2,471 / 2,600 | 3,124 → 2,305 | 390 → 166 | 24 → 6 / 6 | 368.17 |
+| 17 | 3,059 → 2,065 / 2,350 | 2,806 → 1,999 | 253 → 66 | 26 → 5 / 5 | 382.80 |
+| 18 | 3,269 → 3,269 / 3,300 | 2,898 → 2,898 | 371 → 371 | 7 → 7 / 7 | 398.00 |
+| 19 | 3,983 → 3,000 / 3,050 | 3,432 → 2,638 | 551 → 362 | 23 → 7 / 7 | 363.14 |
+
+Part VII: **13,825 → 10,805 / 11,300**. No reserve draw; **2,750 remains**.
+All four chapters meet their word/headings ceilings and ≥250 mean section prose.
+Each has three observable objectives, five recap bullets, two review questions,
+two labs and one design problem. All objective↔exercise mappings and public answers
+are recorded in chapter-ledger.md and `companion/exercises/ch16`, `ch17`, `ch18`,
+`ch19`. The checker compares the exercise IDs directly with the solution headings.
+
+The Part checkpoint follows two accepted measurements through POST results and
+independent SSE streams, then verifies WebSocket negotiation/message behavior
+separately (`manuscript/chapters/19-websocket-and-protocol-upgrade.md:393`;
+`companion/exercises/ch19/README.md:44`). It uses existing accepted-state and
+observer ownership, preparing the capstone without adding another state store.
+The SSE program has no `/status` route; POST results and events are the actual
+observable boundary.
+
+### Execution evidence and architecture accounting
+
+All ten required execution groups pass in `phase-5h-final-results.json`:
+
+| Group | Execution evidence |
+| --- | --- |
+| Hygiene, reference/topic check and regression | `phase-5h-final-hygiene.log` |
+| Marked complete-listing alignment | `phase-5h-final-alignment.log` |
+| Measurement regression | `phase-5h-final-metrics-tests.log` |
+| Installed-package companion and exercise compilation | `phase-5h-final-companion.log` |
+| 42/42 public labs, including six new tests | `phase-5h-final-labs.log` |
+| Existing teaching smoke checks | `phase-5h-final-teaching.log` |
+| Existing behavior smoke checks | `phase-5h-final-behavior.log` |
+| SSE lifetime and dynamic WebSocket checks | `phase-5h-final-lifetime.log` |
+| Full manuscript, proposal, samples and package | `phase-5h-final-package.log` |
+| Final extracted source-package hygiene | `phase-5h-final-extracted-hygiene.log` |
+
+`check-phase-5h.py` independently reruns metrics, chapter budgets, pedagogy and
+solution mappings, retained sample gates, references, scope, listing/index/figure
+preservation, LaTeX warning checks and package equality. Output is
+`phase-5h-exit-checks.json` and `.log`. All 293 executable/configuration fences,
+all C++ excerpt order, source markers, index occurrences and figure IDs survive.
+The original application and earlier lab implementations remain unchanged.
+
+The governing invariant is one owner for parsing/routing/echo behavior and one
+implementation of each reused test observation. Public HTTP/Express labs share a
+37-line synchronous route fixture and one independent peer script. WebSocket labs
+reuse canonical subprotocol sources and derive linked entry points. Existing wire
+assertions move intact into `companion/exercises/ch19/wire.py`, imported by the
+CI lifetime test; syntax-tree comparisons verify that every earlier wire assertion
+and the SSE lifetime-test function remains. No production fix or growth is needed:
+**production +0/−0; requested test support +278/−68, net +210 lines**. New README
+solutions and review checkers are accounted as documentation/review support.
+
+The six new tests observe incomplete-header quietness then completion; valid HTTP
+versus malformed/over-limit rejection before application entry; mounted-route
+order and unmounted 404; middleware 403 without continuation; selected echo versus
+unsupported subprotocol; and the SSE/WebSocket checkpoint. The actual malformed
+and over-limit statuses are 405/431, and unsupported subprotocol returns 404 in
+this run. Assertions require the relevant boundary behavior, not universal status
+codes for all possible invalid input. The unchanged client also receives hello
+and closes; independent peers test counted binary payloads and fragmentation.
+
+Initial failures and their corrections are retained:
+
+- `phase-5h-lab-development-build.log`: missing imported WebSocket targets;
+  explicit component discovery in the lab CMake fixes configuration. Corrected
+  compilation is in `phase-5h-lab-corrected-build.log` and final companion output.
+- `phase-5h-initial-lifetime.log`: extracting WebSocket helpers also removed the
+  `struct` import still needed by SSE reset checks. Restored the import; final
+  lifetime output passes all existing cases, with no assertion removed.
+- `phase-5h-missing-prefix-labs.log`: a later test invocation omitted the documented
+  `SNODEC_PREFIX` for two existing environment labs. The final invocation records
+  that prefix and its runtime search path and passes 42/42. No lab was weakened.
+
+These are local installed-package builds and loopback observations, not a hosted
+CI run or deployment certification. Full parser-policy matrices, descriptor
+streaming errors, invalid WebSocket frames, receiver-limit failures and deployment
+TLS were not newly run. Explanations and qualifications remain in their sections.
+
+### Artifacts, metrics and handoff
+
+Full manuscript **382 → 368 pages**; samples **54 → 54**; proposal **6 → 6**.
+Final LaTeX warnings and bad boxes: **zero** for all three. PDF hashes and
+**336-file** package/source equality appear in `phase-5h-exit-checks.json`.
+Targeted visual review covered physical pages 142–174 and contents page 5, with
+Chapter 19 re-rendered after the final table-continuation correction. All listings,
+tables, figure/caption and callouts fit. Details and initial layout corrections
+are recorded in `phase-5h-visual-review.md`. No production-formatting changes or
+warning suppression were introduced.
+
+| Global measure | Entry baseline | Phase 5h | Delta / remaining |
+| --- | ---: | ---: | --- |
+| Total words | 122,052 | 119,068 | −2,984; 4,068 above final hard ceiling |
+| Prose words | 109,760 | 107,376 | −2,384 |
+| Fenced words | 12,292 | 11,692 | −600 from text blocks; executable fences unchanged |
+| Chapter deep headings | 573 | 518 | −55; final numerical ceiling met |
+| Mean chapter-section prose | 176.08 | 190.53 | global 250 gate remains pending |
+| Text fences | 273 | 229 | −44; final numerical ceiling met |
+| Objective / exercise callouts | 18 / 18 | 21 / 21 | three chapters added |
+| Rule boxes | 20 | 20 | cap retained |
+| Forbidden phrases / Closing perspective | 0 / 0 | 0 / 0 | gates retained |
+
+Metrics are saved as `metrics-after-phase-5h.json`. Front matter stays 1,980 / 2,500;
+all Part openers are 1,254 / 1,650. The original five samples retain their ≥20%
+prose reductions and density criteria (`phase-5h-exit-checks.json`). The reference
+checker covers **319 current occurrences**, 39 stable topics and all 374 original
+migration dispositions. Redundant occurrences R210, R217, R218, R222–R224,
+R226–R228, R244 and R246 are explicitly retired with evidence in the register;
+remaining topic targets/identities are retained and three new solution headings
+registered. This is reference retirement with prose condensation, not renumbering.
+
+Commit: `proposal-readiness: phase 5h — refine Part VII and verify web protocol boundaries`.
+**Stop after Phase 5h.** Phase 5i (Part VIII) has not started. Before it starts,
+rerun this gate using the final logs' selected installation and runtime environment.
+The remaining Part sessions, final global audit and Phase 6 proposal-source refresh
+remain pending; passing the heading/text-fence counts alone does not complete them.

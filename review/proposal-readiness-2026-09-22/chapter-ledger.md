@@ -869,3 +869,140 @@ Chapter 14 is 2,579 words (2,508 prose + 71 fenced), mean section prose 292.25;
 Part VI 5,569 / 6,350. All 36 public labs and the review consumer pass; original
 metrics remain historical. See REPORT.md's follow-up and
 `metrics-after-phase-5g-follow-up.json` for the authorized next-phase baseline.
+
+
+## Phase 5h — Part VII (2026-09-22)
+
+Entry baseline: `metrics-after-phase-5g-follow-up.json`, authorized by the separate
+TLS-fixture follow-up. Fresh prerequisite execution is recorded in REPORT.md and
+`phase-5g-follow-up-*`; no historical gate evidence was overwritten.
+
+Chapters 16, 17 and 19 and the Part opener: **edited and reread in sequence**.
+Chapter 18: **reread, unchanged**; its existing explanation, apparatus and solutions
+already meet the approved ceiling and teaching criteria. Budgets were treated as
+ceilings: repeated layer summaries and diagram-like text blocks were removed;
+substantive policy, examples and qualifications remain.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 16 | 3,514 → 2,471 / 2,600 | 3,124 → 2,305 | 390 → 166 | 24 → 6 / 6 | 368.17 |
+| 17 | 3,059 → 2,065 / 2,350 | 2,806 → 1,999 | 253 → 66 | 26 → 5 / 5 | 382.80 |
+| 18 | 3,269 → 3,269 / 3,300 | 2,898 → 2,898 | 371 → 371 | 7 → 7 / 7 | 398.00 |
+| 19 | 3,983 → 3,000 / 3,050 | 3,432 → 2,638 | 551 → 362 | 23 → 7 / 7 | 363.14 |
+
+Part VII chapters total **13,825 → 10,805 / 11,300**. Reserve used **0**;
+**2,750 remains**. Front matter stays **1,980 / 2,500**; all Part openers are
+**1,254 / 1,650**. Each chapter has three objectives, five recap bullets and five
+exercises (two review, two labs, one design). Mean section prose exceeds 250 in
+all four. The original five samples retain their ≥20% reductions and density gates.
+
+### Objective ↔ exercise coverage
+
+| Exercise | Tier | Objectives | Public solution |
+| --- | --- | --- | --- |
+| 16.1 | Review | O1 | `companion/exercises/ch16/README.md:3` |
+| 16.2 | Review | O1, O3 | `companion/exercises/ch16/README.md:13` |
+| 16.3 | Lab | O1, O2 | `companion/exercises/ch16/README.md:26` |
+| 16.4 | Lab | O2, O3 | `companion/exercises/ch16/README.md:47` |
+| 16.5 | Design | O3 | `companion/exercises/ch16/README.md:66` |
+| 17.1 | Review | O1 | `companion/exercises/ch17/README.md:3` |
+| 17.2 | Review | O2, O3 | `companion/exercises/ch17/README.md:12` |
+| 17.3 | Lab | O1, O2 | `companion/exercises/ch17/README.md:20` |
+| 17.4 | Lab | O2 | `companion/exercises/ch17/README.md:41` |
+| 17.5 | Design | O1, O3 | `companion/exercises/ch17/README.md:54` |
+| 18.1 | Review | O1 | `companion/exercises/ch18/README.md:3` |
+| 18.2 | Review | O1 | `companion/exercises/ch18/README.md:17` |
+| 18.3 | Lab | O2 | `companion/exercises/ch18/README.md:25` |
+| 18.4 | Lab | O2 | `companion/exercises/ch18/README.md:47` |
+| 18.5 | Design | O3 | `companion/exercises/ch18/README.md:64` |
+| 19.1 | Review | O1 | `companion/exercises/ch19/README.md:3` |
+| 19.2 | Review | O2, O3 | `companion/exercises/ch19/README.md:12` |
+| 19.3 | Lab | O1, O2 | `companion/exercises/ch19/README.md:22` |
+| 19.4 | Lab | O1, O2, O3 | `companion/exercises/ch19/README.md:44` |
+| 19.5 | Design | O1, O3 | `companion/exercises/ch19/README.md:72` |
+
+| Objective | Exercises |
+| --- | --- |
+| 16.O1 | 16.1, 16.2, 16.3 |
+| 16.O2 | 16.3, 16.4 |
+| 16.O3 | 16.2, 16.4, 16.5 |
+| 17.O1 | 17.1, 17.3, 17.5 |
+| 17.O2 | 17.2, 17.3, 17.4 |
+| 17.O3 | 17.2, 17.5 |
+| 18.O1 | 18.1, 18.2 |
+| 18.O2 | 18.3, 18.4 |
+| 18.O3 | 18.5 |
+| 19.O1 | 19.1, 19.3, 19.4, 19.5 |
+| 19.O2 | 19.2, 19.3, 19.4 |
+| 19.O3 | 19.2, 19.4, 19.5 |
+
+### Content-preservation audit
+
+Evidence paths below use Ch16 = `manuscript/chapters/16-the-http-layer.md`,
+Ch17 = `manuscript/chapters/17-the-express-like-framework.md`,
+Ch18 = `manuscript/chapters/18-server-sent-events-and-real-time-http.md`, and
+Ch19 = `manuscript/chapters/19-websocket-and-protocol-upgrade.md`.
+
+| Retained explanation, example or qualification | Evidence |
+| --- | --- |
+| Stream/HTTP distinction, lower-family comparison, generic/concrete server shapes, context/factory responsibilities | Ch16:13 |
+| Client wrapper, MasterRequest coordination, HTTP Host versus remote endpoint and pipelining configuration | Ch16:76 |
+| Parsing/decoding, MIME/libmagic, status/header tools, both upgrade call excerpts, complete programs, dynamic paths/symbols and linked deployment | Ch16:115 |
+| Parser defaults, terminator/trailer/decoded-byte counting, pending requests, pipelining and immutable connection policy | Ch16:260 |
+| Null file source, failed attachment cleanup, later stream errors, adopted descriptor ownership versus directory confinement | Ch16:280 |
+| Parser rejection versus application authorization, independent observations, public headers/components | Ch16:295 |
+| WebApp/WebAppT composition and aliases, named handle/activation, lifecycle API, controller and route-tree lifetimes | Ch17:13 |
+| Complete routing surface, strict/case routing, merged parent parameters | Ch17:105 |
+| Handler/middleware callbacks, Next, dispatcher roles, explicit continuation versus thread scheduling | Ch17:140 |
+| Request/response tables, lower capabilities, static/vhost/JSON/authentication middleware, required JSON dependency and underlying runtime responsibilities | Ch17:174 |
+| Mount-order and short-circuit experiments, response and visit counts, optional framework CTest, scratch continuation variant and public component headers | Ch17:240 |
+| Entire established SSE treatment, both complete examples, subscription iterator/teardown and publisher lifetime, Accept restriction, EventSource fields/states, parsing guards, resource policy, retry/ID continuity and recovery limits | Ch18:15, :53, :215, :305, :354, :369, :397; byte-identical to entry |
+| Web protocol figure and caption, connection/TLS continuity, HTTP versus SSE versus WebSocket observations, two independent negotiated names | Ch19:13 |
+| Upgrade context bases and template, frame/message/control distinction, server/client responsibilities and module roles | Ch19:49, :73 |
+| Subprotocol costs, factory/selector roles, dynamic search paths and symbols, linked examples and failure boundaries | Ch19:121 |
+| Full echo server/client excerpts and factory/link snippets, typed counted bytes, buffer lifetime and whole-message resource tradeoff | Ch19:209 |
+| Frame/message/fragment bounds, zero defaults versus protocol validity, close 1009, receive snapshots versus sender policy | Ch19:351 |
+| Negotiation/rejection and byte/type experiments, diagnostics, MQTT bridge, headers/components and accepted-state/observer checkpoint | Ch19:371 |
+
+`check-phase-5h.py` compares all 293 executable/configuration fences, each chapter's
+C++ block order, every source marker, index occurrence and figure ID against the
+entry commit. Existing application and lab implementation files remain unchanged.
+It also compares the moved WebSocket helper functions and every exchange assertion
+as Python syntax trees and preserves the prior SSE lifetime-test function exactly.
+`phase-5h-manuscript.diff` records the prose and heading changes. Technical prose
+preservation is an editorial reread, not inferred solely from fence equality.
+
+### Built, run and limits
+
+All **42 public labs** pass (`phase-5h-final-labs.log`), including six new
+registrations and the unchanged two SSE labs. The public HTTP/Express fixture uses
+one ordinary route tree for message-completion, parser-rejection, mounted-order
+and short-circuit observations. Its trace is test-only, with synchronous handlers
+and sequential requests; it is not a parallel application-state implementation.
+
+WebSocket labs compile canonical echo sources and generate linked-factory entry
+points from the canonical HTTP-upgrade mains. The negotiation test observes the
+canonical client's hello/close and rejects an unsupported name without attaching
+echo. The checkpoint reuses the SSE observer lab, then checks WebSocket text,
+binary/NUL/non-UTF8, empty/sequential/longer and fragmented payloads, interleaved
+ping/pong and close. It shares one independent wire observer with the existing
+lifetime check. That existing check additionally runs the dynamic-module route.
+
+The SSE checkpoint has no invented `/status` endpoint: POST 200 JSON and matching
+event IDs/data show accepted state. Two observers agree, then one disconnects and
+the remaining observer receives the next accepted measurement. This is separate
+from WebSocket echo, which is not another measurement-state authority.
+
+Production code changes: **+0/−0**. Requested public fixture/test support, including
+registrations and extraction from CI: **+278/−68 lines, net +210**. This comprises
+one 37-line route fixture and bounded peer observations; it adds no framework
+parser, router, echo algorithm or application recovery controller. README answers
+are documentation, not production/test logic. The phase checker is review support.
+
+Local installed-package builds and loopback execution are verified. All malformed
+HTTP variants, trailer/body/pipelining limits, file-streaming failure paths,
+WebSocket invalid-frame/receiver-limit cases, authentication and deployment TLS
+are **not newly exercised**; their explanations remain. No hosted CI or production
+deployment is claimed. Existing teaching, behavior and lifetime checks also pass.
+The full manuscript and contents were rendered for targeted review; REPORT.md
+and `phase-5h-visual-review.md` record the result.

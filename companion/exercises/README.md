@@ -1,6 +1,6 @@
 # Public exercises and solutions
 
-These are the public solutions for Parts I–VI and the later sample chapters. Each chapter has two
+These are the public solutions for Parts I–VII and the later sample chapters. Each chapter has two
 review answers, two observable labs, and a design discussion. Try the exercise before
 reading its solution. `O1`–`O3` refer to the objectives printed at the chapter opening;
 each exercise and solution identifies its objective explicitly.
@@ -45,6 +45,11 @@ Part VI adds the OpenSSL command-line tool, installed TLS components and Python'
 standard-library TLS support. Temporary certificates exercise trust and expected
 identity; EchoPair supplies secure echo and controlled retry/reconnect observations.
 The fixtures generate and remove their own private keys and need no external CA.
+
+Part VII shares one synchronous route fixture for HTTP admission and Express
+continuation. The existing SSE observer labs feed the checkpoint. WebSocket labs
+build linked-factory variants from canonical entry points and subprotocol sources;
+no module installation or external web service is required for those labs.
 
 The lab peers bind loopback and choose unused ports. Each process gets temporary
 configuration, is stopped on success or failure, and has a bounded test duration.

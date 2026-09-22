@@ -1,0 +1,72 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 31
+    Start 31: exercise-ch16-framing
+
+31: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch16/../ch17/dispatch.py" "framing" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch17/dispatch-lab"
+31: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch16
+31: Test timeout computed to be: 30
+31: PASS: incomplete headers produce no handler/response; completing headers produces one 200
+1/6 Test #31: exercise-ch16-framing ............   Passed    0.29 sec
+test 32
+    Start 32: exercise-ch16-limits
+
+32: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch16/../ch17/dispatch.py" "limits" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch17/dispatch-lab"
+32: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch16
+32: Test timeout computed to be: 30
+32: PASS: rejected input returns 405
+32: PASS: rejected input returns 431
+32: PASS: only valid request entered application dispatch
+2/6 Test #32: exercise-ch16-limits .............   Passed    0.10 sec
+test 33
+    Start 33: exercise-ch17-order
+
+33: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch17/dispatch.py" "order" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch17/dispatch-lab"
+33: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch17
+33: Test timeout computed to be: 30
+33: PASS: mounted route visits app,router,handler; outside path visits only app and returns 404
+3/6 Test #33: exercise-ch17-order ..............   Passed    0.10 sec
+test 34
+    Start 34: exercise-ch17-stop
+
+34: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch17/dispatch.py" "stop" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch17/dispatch-lab"
+34: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch17
+34: Test timeout computed to be: 30
+34: PASS: middleware returns 403 and ends dispatch; following handler never runs
+4/6 Test #34: exercise-ch17-stop ...............   Passed    0.09 sec
+test 37
+    Start 37: exercise-ch19-negotiation
+
+37: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch19/solution.py" "negotiation" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch19/ws-lab-server" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch19/ws-lab-client"
+37: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch19
+37: Test timeout computed to be: 60
+37: PASS: unsupported subprotocol rejected: HTTP/1.1 404 Not Found
+37: PASS: canonical client negotiates echo, receives hello and closes; unsupported name never attaches echo
+5/6 Test #37: exercise-ch19-negotiation ........   Passed    0.13 sec
+test 38
+    Start 38: exercise-ch19-part-checkpoint
+
+38: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch19/solution.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch19/ws-lab-server" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/examples/SSE-Server/sse-server"
+38: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5h-examples/companion/exercises/ch19
+38: Test timeout computed to be: 60
+38: PASS: both observers see the same acceptance; remaining observer continues after peer closes
+38: PASS: Part VII checkpoint: shared accepted SSE state survives one observer disconnect; separate WebSocket type/bytes/fragment/control/close checks pass
+6/6 Test #38: exercise-ch19-part-checkpoint ....   Passed    0.32 sec
+
+The following tests passed:
+	exercise-ch16-framing
+	exercise-ch16-limits
+	exercise-ch17-order
+	exercise-ch17-stop
+	exercise-ch19-negotiation
+	exercise-ch19-part-checkpoint
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =   1.04 sec

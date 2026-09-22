@@ -1,0 +1,223 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 319 current references, 374 old-reference dispositions.
+{
+  "chapters": [
+    {
+      "chapter": 16,
+      "path": "manuscript/chapters/16-the-http-layer.md",
+      "words_before": 3514,
+      "words_after": 2471,
+      "budget": 2600,
+      "prose_words": 2305,
+      "code_words": 166,
+      "headings": 6,
+      "heading_ceiling": 6,
+      "average_section_prose_words": 368.17,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2, O3"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 223
+    },
+    {
+      "chapter": 17,
+      "path": "manuscript/chapters/17-the-express-like-framework.md",
+      "words_before": 3059,
+      "words_after": 2065,
+      "budget": 2350,
+      "prose_words": 1999,
+      "code_words": 66,
+      "headings": 5,
+      "heading_ceiling": 5,
+      "average_section_prose_words": 382.8,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 223
+    },
+    {
+      "chapter": 18,
+      "path": "manuscript/chapters/18-server-sent-events-and-real-time-http.md",
+      "words_before": 3269,
+      "words_after": 3269,
+      "budget": 3300,
+      "prose_words": 2898,
+      "code_words": 371,
+      "headings": 7,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 398.0,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Lab",
+          "O2"
+        ],
+        [
+          "Design",
+          "O3"
+        ]
+      ],
+      "apparatus_words": 275
+    },
+    {
+      "chapter": 19,
+      "path": "manuscript/chapters/19-websocket-and-protocol-upgrade.md",
+      "words_before": 3983,
+      "words_after": 3000,
+      "budget": 3050,
+      "prose_words": 2638,
+      "code_words": 362,
+      "headings": 7,
+      "heading_ceiling": 7,
+      "average_section_prose_words": 363.14,
+      "objectives": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "exercise_mapping": [
+        [
+          "Review",
+          "O1"
+        ],
+        [
+          "Review",
+          "O2, O3"
+        ],
+        [
+          "Lab",
+          "O1, O2"
+        ],
+        [
+          "Lab",
+          "O1, O2, O3"
+        ],
+        [
+          "Design",
+          "O1, O3"
+        ]
+      ],
+      "apparatus_words": 234
+    }
+  ],
+  "part_vii_words": 10805,
+  "part_vii_budget": 11300,
+  "frontmatter_words": 1980,
+  "frontmatter_budget": 2500,
+  "all_part_openers_words": 1254,
+  "all_part_openers_budget": 1650,
+  "retained_sample_reductions": [
+    {
+      "chapter": "1",
+      "prose_reduction_percent": 26.42
+    },
+    {
+      "chapter": "3",
+      "prose_reduction_percent": 24.23
+    },
+    {
+      "chapter": "18",
+      "prose_reduction_percent": 20.91
+    },
+    {
+      "chapter": "28",
+      "prose_reduction_percent": 21.61
+    },
+    {
+      "chapter": "30",
+      "prose_reduction_percent": 22.51
+    }
+  ],
+  "preserved_executable_configuration_fences": 293,
+  "preservation_and_scope_checks_passed": true,
+  "prior_websocket_and_sse_assertions_preserved": true,
+  "pdfs": {
+    "snodec-book": {
+      "pages": 368,
+      "sha256": "81989ff441286382e018c2a982f3077dccb6e81d4b9e27f91784ed66dd47d220",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-package": {
+      "pages": 6,
+      "sha256": "978c42a7b4b42d69ee81b003bdce9a55ff1bca08fa7831cac36de9811a2ac653",
+      "warnings": 0,
+      "bad_boxes": 0
+    },
+    "book-proposal-sample-package": {
+      "pages": 54,
+      "sha256": "ad327c4d23d09fb3c59f6921a169f49ff37349d2f6b03961c8f0843edfe6a083",
+      "warnings": 0,
+      "bad_boxes": 0
+    }
+  },
+  "archive_identical_files": 336,
+  "reserve_used": 0,
+  "reserve_remaining": 2750,
+  "global_words": 119068,
+  "word_delta_from_phase_5g_follow_up": -2984
+}
+PASS: Part VII budgets, pedagogy, mappings, scope, preserved listings, clean final PDFs and package contents.
+Execution and editorial/visual review are recorded in separate Phase 5h logs; future Parts are not certified.

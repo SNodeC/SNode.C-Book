@@ -1366,3 +1366,61 @@ Separate commit: `proposal-readiness: phase 5g follow-up — move TLS fixture in
 The authorized Phase 5h entry baseline is `metrics-after-phase-5g-follow-up.json`;
 `check-phase-5g-follow-up.py` supplies the current gate. Continue with Part VII only,
 keeping budgets as ceilings and preserving technical teaching. Stop after Phase 5h.
+
+
+## Phase 5h — Part VII completed, 2026-09-22
+
+Entered after the separately committed author-requested companion TLS-fixture
+follow-up freshly reran the Phase 5g exit gate. Its authorized metrics baseline
+is `metrics-after-phase-5g-follow-up.json`; original Phase 5g evidence is historical.
+
+Edited and reread Chapters 16, 17 and 19 and the Part VII opener. Reread Chapter 18
+and kept it unchanged: its teaching apparatus and detailed SSE treatment already
+meet the gates. Budgets were ceilings; repetitions and restated layer diagrams
+were removed while parser/streaming policy, dispatch lifetimes, deployment and
+WebSocket resource qualifications remain. Every executable/configuration fence,
+marked listing, index entry and figure is preserved. No structural or formatting
+change was required. The ledger supplies a source-line content audit.
+
+| Chapter | Words before → after / ceiling | Prose before → after | Fenced words before → after | Deep headings before → after / ceiling | Mean section prose |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 16 | 3,514 → 2,471 / 2,600 | 3,124 → 2,305 | 390 → 166 | 24 → 6 / 6 | 368.17 |
+| 17 | 3,059 → 2,065 / 2,350 | 2,806 → 1,999 | 253 → 66 | 26 → 5 / 5 | 382.80 |
+| 18 | 3,269 → 3,269 / 3,300 | 2,898 → 2,898 | 371 → 371 | 7 → 7 / 7 | 398.00 |
+| 19 | 3,983 → 3,000 / 3,050 | 3,432 → 2,638 | 551 → 362 | 23 → 7 / 7 | 363.14 |
+
+Part VII: **10,805 / 11,300**; reserve **2,750 remains**, none used. Three objectives
+per chapter map completely to two review questions, two public labs and one design
+problem. Each chapter closes with five recap bullets and the exercises. Six new
+registrations bring the public suite to **42/42 passing**. The checkpoint observes
+two accepted SSE measurements and independent subscriber lifetime, then separately
+checks WebSocket negotiation and typed/fragmented messages, ping and close.
+
+HTTP/Express labs share one synchronous route fixture. WebSocket labs compile
+canonical echo sources and generate linked-factory mains; the existing dynamic
+lifetime test shares the same unchanged wire assertions. Production growth is zero;
+requested test support is +278/−68 lines (net +210). No second parser, routing
+engine, echo algorithm or application state store was added.
+
+Hygiene/reference regression, listing alignment, measurement tests, installed
+companion build, all labs, teaching/behavior/lifetime, PDF/proposal/sample/package
+and extracted-package checks pass. Initial component-import, Python-import and
+invocation-environment failures are retained with their corrections in REPORT.md.
+Local loopback behavior is verified; hosted CI and deployment TLS are not claimed.
+
+Full PDF: **368 pages** (was 382), samples 54, proposal 6; zero final warnings and
+bad boxes. Complete affected Part, transition and contents pages were rendered
+and visually checked; layout corrections were prose-only. Final metrics, artifact
+hashes and the 336-file package equality check are in `metrics-after-phase-5h.json`,
+`phase-5h-exit-checks.json`, `phase-5h-final-results.json` and REPORT.md.
+
+Whole book: **119,068 words**, 518 deep headings, 229 text fences, 20 rules and
+zero forbidden/closing hits. The final word and global section-density targets
+and remaining chapter pedagogy are still pending. Front matter is 1,980 / 2,500;
+Part openers 1,254 / 1,650. Sample gates remain valid. The reference register covers
+319 current occurrences, 39 stable topics and all 374 old migration dispositions.
+
+Commit: `proposal-readiness: phase 5h — refine Part VII and verify web protocol boundaries`.
+**Stop after Phase 5h.** Next is Phase 5i, Part VIII only, after freshly rerunning
+this gate with the recorded installation/runtime environment. Author preservation
+rules, reserve accounting, the 5l/5m split and Phase 6 proposal refresh remain in force.
