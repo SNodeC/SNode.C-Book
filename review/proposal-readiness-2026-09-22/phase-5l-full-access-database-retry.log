@@ -1,0 +1,123 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 45
+    Start 45: exercise-ch23-durable
+
+45: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "durable" "/home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/companion/exercises/ch23/persistence-lab"
+45: Working Directory: /home/voc/projects/snodec/publications/book/build/proposal-readiness-phase-5k-examples/companion/exercises/ch23
+45: Test timeout computed to be: 90
+45: Traceback (most recent call last):
+45:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 110, in <module>
+45:     observe(mode, client)
+45:     ~~~~~~~^^^^^^^^^^^^^^
+45:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 93, in observe
+45:     with database() as (socket, query):
+45:          ~~~~~~~~^^
+45:   File "/usr/lib/python3.14/contextlib.py", line 141, in __enter__
+45:     return next(self.gen)
+45:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 34, in database
+45:     assert setup.returncode == 0, setup.stdout + setup.stderr
+45:            ^^^^^^^^^^^^^^^^^^^^^
+45: AssertionError: Installing MariaDB/MySQL system tables in '/home/voc/projects/snodec/publications/book/build/t/book-db-hlbik_en/data' ...
+45: 
+45: Installation of system tables failed!  Examine the logs in
+45: /home/voc/projects/snodec/publications/book/build/t/book-db-hlbik_en/data for more information.
+45: 
+45: The problem could be conflicting information in an external
+45: my.cnf files. You can ignore these by doing:
+45: 
+45:     shell> /usr/bin/mariadb-install-db --defaults-file=~/.my.cnf
+45: 
+45: You can also try to start the mariadbd daemon with:
+45: 
+45:     shell> /usr/sbin/mariadbd --skip-grant-tables --general-log &
+45: 
+45: and use the command line tool /usr/bin/mariadb
+45: to connect to the mysql database and look at the grant tables:
+45: 
+45:     shell> /usr/bin/mariadb -u root mysql
+45:     MariaDB> show tables;
+45: 
+45: Try '/usr/sbin/mariadbd --help' if you have problems with paths.  Using
+45: --general-log gives you a log in /home/voc/projects/snodec/publications/book/build/t/book-db-hlbik_en/data that may be helpful.
+45: 
+45: The latest information about mariadb-install-db is available at
+45: https://mariadb.com/kb/en/installing-system-tables-mysql_install_db
+45: You can find the latest source at https://downloads.mariadb.org and
+45: the MariaDB discuss email list at https://lists.mariadb.org/postorius/lists/discuss.lists.mariadb.org/
+45: 
+45: Please check all of the above before submitting a bug report
+45: at https://mariadb.org/jira
+45: 
+45: 2026-09-22 23:38:45 0 [Warning] Can't create test file '/home/voc/projects/snodec/publications/book/build/t/book-db-hlbik_en/data/jupiter.lower-test' (Errcode: 13 "Permission denied")
+45: 2026-09-22 23:38:45 0 [ERROR] mariadbd: Can't create/write to file './ddl_recovery.log' (Errcode: 13 "Permission denied")
+45: 2026-09-22 23:38:45 0 [ERROR] DDL_LOG: Failed to create ddl log file: ./ddl_recovery.log
+45: 2026-09-22 23:38:45 0 [ERROR] Aborting
+45: 
+1/1 Test #45: exercise-ch23-durable ............***Failed    0.11 sec
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 110, in <module>
+    observe(mode, client)
+    ~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 93, in observe
+    with database() as (socket, query):
+         ~~~~~~~~^^
+  File "/usr/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py", line 34, in database
+    assert setup.returncode == 0, setup.stdout + setup.stderr
+           ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Installing MariaDB/MySQL system tables in '/home/voc/projects/snodec/publications/book/build/t/book-db-hlbik_en/data' ...
+
+Installation of system tables failed!  Examine the logs in
+/home/voc/projects/snodec/publications/book/build/t/book-db-hlbik_en/data for more information.
+
+The problem could be conflicting information in an external
+my.cnf files. You can ignore these by doing:
+
+    shell> /usr/bin/mariadb-install-db --defaults-file=~/.my.cnf
+
+You can also try to start the mariadbd daemon with:
+
+    shell> /usr/sbin/mariadbd --skip-grant-tables --general-log &
+
+and use the command line tool /usr/bin/mariadb
+to connect to the mysql database and look at the grant tables:
+
+    shell> /usr/bin/mariadb -u root mysql
+    MariaDB> show tables;
+
+Try '/usr/sbin/mariadbd --help' if you have problems with paths.  Using
+--general-log gives you a log in /home/voc/projects/snodec/publications/book/build/t/book-db-hlbik_en/data that may be helpful.
+
+The latest information about mariadb-install-db is available at
+https://mariadb.com/kb/en/installing-system-tables-mysql_install_db
+You can find the latest source at https://downloads.mariadb.org and
+the MariaDB discuss email list at https://lists.mariadb.org/postorius/lists/discuss.lists.mariadb.org/
+
+Please check all of the above before submitting a bug report
+at https://mariadb.org/jira
+
+2026-09-22 23:38:45 0 [Warning] Can't create test file '/home/voc/projects/snodec/publications/book/build/t/book-db-hlbik_en/data/jupiter.lower-test' (Errcode: 13 "Permission denied")
+2026-09-22 23:38:45 0 [ERROR] mariadbd: Can't create/write to file './ddl_recovery.log' (Errcode: 13 "Permission denied")
+2026-09-22 23:38:45 0 [ERROR] DDL_LOG: Failed to create ddl log file: ./ddl_recovery.log
+2026-09-22 23:38:45 0 [ERROR] Aborting
+
+
+
+0% tests passed, 1 tests failed out of 1
+
+Label Time Summary:
+equipped    =   0.11 sec*proc (1 test)
+
+Total Test time (real) =   0.11 sec
+
+The following tests FAILED:
+	 45 - exercise-ch23-durable (Failed)                    equipped
+Errors while running CTest

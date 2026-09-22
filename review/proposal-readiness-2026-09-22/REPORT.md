@@ -24,7 +24,7 @@ was subsequently unescaped by deliberate author work; its teaching requirements 
 | 5i — Part VIII | completed | `proposal-readiness: phase 5i — refine Part VIII and verify MQTT delivery boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5i.json; phase-5i-exit-checks.json; chapter-ledger.md; phase-5i-entry-*.log; phase-5i-final-*.log; phase-5i-visual-review.md; completion account below |
 | 5j — Part IX | completed | `proposal-readiness: phase 5j — refine Part IX and verify persistence boundaries` (containing this report) | 2026-09-22 | metrics-after-phase-5j.json; phase-5j-exit-checks.json; chapter-ledger.md; phase-5j-entry-*.log; phase-5j-final-*.log; phase-5j-visual-review.md; completion account below |
 | 5k — Part X | completed | `proposal-readiness: phase 5k — refine Part X and verify installed consumers` (containing this report) | 2026-09-22 | metrics-after-phase-5k.json; phase-5k-exit-checks.json; chapter-ledger.md; phase-5k-entry-*.log; phase-5k-final-*.log; phase-5k-visual-review.md; completion account below |
-| 5l — Part XI only | blocked | `proposal-readiness: phase 5l — record blocked prerequisite gate` (containing this report) | 2026-09-22 | metrics-after-phase-5l.json; phase-5l-workspace-permitted-entry-results.json; phase-5l-workspace-permitted-entry-exit-checks.json; phase-5l-workspace-permitted-entry-labs.log; blocked entry and author-steered retry accounts below |
+| 5l — Part XI only | blocked | `proposal-readiness: phase 5l — confirm host-policy prerequisite` (containing this report); earlier blocked-gate commit retained | 2026-09-22 | metrics-after-phase-5l.json; phase-5l-workspace-permitted-entry-results.json; phase-5l-full-access-database-retry.log; phase-5l-workspace-apparmor-denial.log; full-access retry account below |
 | 5m — appendix, closing material and global audit | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 | 6 — proposal refresh | not started | — | — | Author-approved schedule; see Phase 5a handoff below |
 
@@ -2849,3 +2849,28 @@ check. Manuscript and implementation remain unchanged; all metrics still exactly
 match Phase 5k. Phase 5l remains **blocked before editing** under the previous-phase
 entry rule. Its budgets, ledger, reserve and historical Phase 5k evidence remain
 unchanged. The phase commit records the failed attempts and this latest constraint.
+
+
+### Phase 5l full-access retry — host policy confirmed
+
+The author restored full execution access while retaining the instruction never
+to use `/tmp` for temporary files and to keep work in the workspace as long as
+possible. Retried the previously failing durability lab with `TMPDIR`, `TMP` and
+`TEMP` set to workspace `build/t`; it still fails during initialization with
+Errcode 13 (`phase-5l-full-access-database-retry.log`). No manuscript edits began.
+Fresh metrics again exactly reproduce Phase 5k.
+
+Read-only privileged kernel-log inspection now confirms the cause:
+`phase-5l-workspace-apparmor-denial.log` records AppArmor's `mariadbd` profile denying
+creation of both `jupiter.lower-test` and `ddl_recovery.log` under the private
+workspace directory. This resolves the earlier uncertainty about host policy.
+Restoring the execution environment's full access does not remove that profile.
+
+Prepared `phase-5l-proposed-mariadbd-local.conf`, restricted to owner access under
+this workspace's `build/t/book-db-*` directories. A preview combined with the
+existing profile passes `apparmor_parser --skip-kernel-load --skip-cache`
+(`phase-5l-proposed-apparmor-parse.log`, exit 0). The existing local override was
+empty when inspected. The proposed host-policy change requires specific author
+approval; the question was submitted before installation or profile reload.
+No host change has been applied at this point. Phase 5l remains blocked pending
+that decision and a passing complete entry recheck; historical evidence remains.

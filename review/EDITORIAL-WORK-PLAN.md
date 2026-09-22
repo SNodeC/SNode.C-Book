@@ -1667,3 +1667,18 @@ Phase 5l remains **blocked before Part XI edits**. Metrics are unchanged at
 historical Phase 5k evidence, ledger and 2,350-word reserve are unchanged. The
 latest REPORT.md retry account supersedes the earlier temporary-space handoff.
 Commit: `proposal-readiness: phase 5l — record blocked prerequisite gate`.
+
+
+### Phase 5l — full access restored; temporary files remain in workspace
+
+Author instruction: “OK, you get again full access - but never use /tmp for
+temporary files - only work in workspace as long as possible!”
+
+The focused database retry still fails. Kernel evidence now confirms AppArmor's
+`mariadbd` profile denies file creation in the private workspace data directory
+(`phase-5l-workspace-apparmor-denial.log`). A two-rule owner-only exception for
+workspace `build/t/book-db-*` is prepared and syntax-checked; installation into
+`/etc/apparmor.d/local/mariadbd` and profile reload await the author's specific
+approval. No host policy change or Part XI edit has yet been made. Keep the
+workspace-only temporary environment in all subsequent checks and rerun the full
+entry gate before beginning Phase 5l implementation.
