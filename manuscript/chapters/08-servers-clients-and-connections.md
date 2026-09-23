@@ -330,21 +330,13 @@ The factory keeps a construction decision close to the endpoint handle while app
 
 The important test is state isolation. Two peers must not share an unfinished input buffer merely because the factory is shared. Conversely, two contexts may deliberately refer to one application model when that model represents a fact shared by the whole service. Factory lifetime and protocol-state lifetime answer different questions.
 
-The following table summarizes the responsibility boundaries.
+Chapter 4's Figure \ref{fig:snodec-runtime-model} and “Runtime terms and lifetimes” box define the objects. Here, use that model to distinguish the three operational questions this chapter adds:
 
-| Concern | Belongs primarily to |
+| Concern | Where to look and what to distinguish |
 |---|---|
-| naming and configuration of the instance | instance / handle configuration |
-| listen or connect intent | instance |
-| retry and reconnect policy | instance and flow-controller machinery |
-| concrete peer relationship | `SocketConnection` |
-| local, bind, and remote endpoint views | `SocketConnection` |
-| data movement to and from the peer | `SocketConnection`, usually used through context methods |
-| protocol behavior | `SocketContext` |
-| creation of per-connection protocol endpoint | `SocketContextFactory` |
-| listen/connect attempt status | listen/connect status callback |
-| connection lifecycle observation | instance lifecycle callback |
-| protocol lifecycle reaction | context callback |
+| retry and reconnect policy | The instance supplies configured settings; each activation's flow controller advances its recovery. A retry after failed establishment differs from reconnect after a peer relationship ends. |
+| local, bind and remote endpoint views | Ask the connection for the requested bind address, the actual local address and the peer's remote address. Port zero in a bind request can become a concrete local port after the operating system assigns it. |
+| status and callback layers | Listen/connect status reports an attempt; instance callbacks observe the peer lifecycle; context callbacks implement protocol reactions. A failure before secure readiness need not produce a protocol callback. |
 
 Before moving to Bluetooth, classify three events: an address cannot be bound, a TLS handshake fails, and a protocol context is replaced during upgrade. The first may produce no peer connection; the second can involve connection machinery without reaching protocol readiness; the third can detach a context while the peer connection continues. Choose diagnostics at the boundary that can distinguish those outcomes. That exercise is more useful than counting every callback as another “connection event.”
 

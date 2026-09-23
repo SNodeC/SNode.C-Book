@@ -24,3 +24,13 @@ including source spellings and immutable references, with its justification.
 P1: source alignment passes (33 records, 37 complete listings); chapter references
 and all 16 smoothing assertion groups pass. Fresh total: 110,232 tokens; every
 chapter remains within its floor and cap.
+
+## P2 — Ch8 operational concerns
+
+The reduced table points to Ch4's existing figure and terminology box. Endpoint
+views are declared separately in `src/core/socket/stream/SocketConnection.h:132`.
+Recovery and attempt callbacks are in `src/core/socket/stream/SocketClient.h:184`
+and `:298`; reconnect control is declared in
+`src/core/socket/stream/ClientFlowController.h:79`. The connection callback
+wrappers are in `src/core/socket/stream/SocketServer.h:126` and `:136`. These
+confirm the retained distinctions; the removed rows repeat Ch4's taxonomy.
