@@ -1,6 +1,6 @@
 # Pitch
 
-A working socket example is only the beginning: a learner must also understand where protocol behavior, connection lifetime, and shared application state belong as a service grows. *Layered Network Programming with SNode.C* teaches an advanced student or C++ developer with no SNode.C knowledge to build, diagnose, and extend layered, event-driven network applications. A cumulative path leads from an echo pair through HTTP, live event streams, WebSocket, and MQTT to MiniGateway, a service whose communication roles share one measurement model. Volker Christian combines the framework creator's design knowledge with teaching across the prerequisite chain, from first programming and C++ to sockets and distributed systems. Complete programs, runnable checkpoints, and public solutions let the reader learn independently and reason about the next requirement.
+A working socket example is only the beginning: a learner must also understand where protocol behavior, connection lifetime, and shared application state belong as a service grows. *Layered Network Programming with SNode.C* teaches an advanced student or C++ developer with no SNode.C knowledge to build, diagnose, and extend layered, event-driven network applications. A cumulative path leads from an echo pair through HTTP, live event streams, WebSocket, and MQTT to MiniGateway, a service whose HTTP, SSE and MQTT components share one measurement model. Volker Christian combines the framework creator's design knowledge with teaching across the prerequisite chain, from first programming and C++ to sockets and distributed systems. Complete programs, runnable checkpoints, and public solutions let the reader learn independently and reason about the next requirement.
 
 # Project snapshot
 
@@ -11,8 +11,8 @@ A working socket example is only the beginning: a learner must also understand w
 | Author | Volker Christian |
 | Format | Teaching book for independent study; modern C++, Linux-oriented examples |
 | Available material | 32 chapters in 11 Parts, contributor appendix, epilogue, reference material and index; complete companion sources and public solutions |
-| Current extent | 110,177 whitespace tokens, including 7,838 fenced tokens; 326 pages in the rebuilt reading PDF; publisher pagination pending |
-| Length ceiling | At most 115,000 words; the 105,000 stretch target is also met |
+| Current extent | 110,767 whitespace tokens, including 7,876 fenced tokens; 330 pages in the rebuilt reading PDF; publisher pagination pending |
+| Length ceiling | At most 115,000 words |
 | **Source baseline** | SNode.C project version `2.0.0`, public commit `07ca9a2936ee72582df7d159cb06666fe23e30f8`, verified by its file manifest. |
 
 # Reader and learning path
@@ -27,9 +27,9 @@ Makers, scientists, and interdisciplinary teams with the same prerequisites may 
 
 ## The learning path
 
-Read the book in order. Parts I–II establish a working echo pair and the runtime model behind it: measurement-shaped bytes lead to a shared acceptance order and independent observers. Parts III–IV vary the communication family and carry a framed line protocol across IP and Unix sockets. Parts V–VI make named roles configurable, diagnosable, secure, and resilient. Parts VII–IX add web observation, broker delivery, and persistence while distinguishing each from application acceptance. Part X develops build, deployment, and testing practice. Part XI assembles MiniGateway, extends it with a Unix-domain input, and uses the resulting system to judge where future responsibilities belong. Appendix A serves readers who want to trace or extend the framework itself.
+Read the book in order. Parts I–II establish a working echo pair and the runtime model behind it: measurement-shaped bytes lead to a shared acceptance order and independent observers. Parts III–IV vary the network family and carry a framed line protocol across IP and Unix sockets. Parts V–VI make named instances configurable, diagnosable, secure, and resilient. Parts VII–IX add web observation, broker delivery, and persistence while distinguishing each from application acceptance. Part X develops build, deployment, and testing practice. Part XI assembles MiniGateway, extends it with a Unix-domain input, and uses the resulting system to judge where future responsibilities belong. Appendix A serves readers who want to trace or extend the framework itself.
 
-Each Part ends with a checkpoint the reader can run and verify. The final integration in Chapters 30–32 combines HTTP and Unix inputs, malformed-input rejection, SSE observer lifetimes, unavailable MQTT, and restart behavior. After the P3 apparatus gate, every numbered chapter and Appendix A opens with observable objectives and closes with a short recap, two review questions, two labs with expected outcomes, and one design problem. Public solutions map every exercise to its objectives. The epilogue remains a closing essay.
+Each Part ends with a checkpoint the reader can run and verify. The final integration in Chapters 30–32 combines HTTP and Unix inputs, malformed-input rejection, SSE observer lifetimes, unavailable MQTT, and restart behavior. Every numbered chapter and Appendix A opens with observable objectives and closes with a short recap, two review questions, two labs with expected outcomes, and one design problem. Public solutions map every exercise to its objectives. The epilogue remains a closing essay.
 
 One optional shortcut is **web and MQTT gateway first**: after Chapters 1–6, study Chapters 13–14 and 17–24, then 27 and 30. Use the local HTTP/SSE lab before adding a broker; return to the family, framing, security, and deployment chapters before adapting the gateway for use beyond the lab. The main learning path remains cumulative.
 
@@ -40,14 +40,14 @@ These books locate the proposal on the specialist programming shelf. The distinc
 - **W. Richard Stevens, Bill Fenner, and Andrew M. Rudoff, *UNIX Network Programming, Volume 1: The Sockets Networking API*, third edition. Addison-Wesley Professional, 2003** (copyright 2004). Its detailed UNIX sockets treatment is a foundation; this book follows a C++ framework from connection behavior to a shared multi-protocol application model. [Publisher record](https://www.informit.com/store/unix-network-programming-volume-1-the-sockets-networking-9780131411555).
 - **Dmytro Radchuk, *Boost.Asio C++ Network Programming Cookbook*. Packt Publishing, 2016.** Its task-oriented Asio recipes contrast with this book's cumulative progression through one framework, configuration model, and integrated capstone. [Publisher record](https://www.packtpub.com/en-au/product/boostasio-c-network-programming-cookbook-9781783986545).
 - **Lewis Van Winkle, *Hands-On Network Programming with C*. Packt Publishing, 2019.** Its C socket and protocol examples teach network programming directly; this book concentrates on C++ object lifetime, protocol composition, and shared application state within SNode.C. [Publisher record](https://www.packtpub.com/en-gb/product/hands-on-network-programming-with-c-9781789349863).
-- **Luciano Mammino and Mario Casciaro, *Node.js Design Patterns*, fourth edition. Packt Publishing, 2025.** Its JavaScript/Node.js patterns address asynchronous application design; this book teaches related ownership and composition questions through explicit C++ contexts, factories, and lower communication families. [Publisher record](https://www.packtpub.com/en-au/product/nodejs-design-patterns-9781803238944).
+- **Luciano Mammino and Mario Casciaro, *Node.js Design Patterns*, fourth edition. Packt Publishing, 2025.** Its JavaScript/Node.js patterns address asynchronous application design; this book teaches related ownership and composition questions through explicit C++ contexts, factories, and network families. [Publisher record](https://www.packtpub.com/en-au/product/nodejs-design-patterns-9781803238944).
 - **Anthony Williams, *C++ Concurrency in Action*, second edition. Manning Publications, 2019.** Its emphasis is multithreaded C++ and synchronization; this book follows event-loop-driven networking and the placement of protocol and application responsibilities. [Publisher record](https://www.manning.com/books/c-plus-plus-concurrency-in-action-second-edition).
 
 # Manuscript overview and estimated extent
 
 ## Part plan
 
-The 32-chapter structure and contributor appendix are implemented. Word counts come from the current Markdown manifest. The rebuilt reading PDF has 326 pages. Part page ranges are not quoted here; publisher trim and typesetting will change the printed extent.
+The 32-chapter structure and contributor appendix are implemented. Word counts come from the current Markdown manifest. The rebuilt reading PDF has 330 pages. Part page ranges are not quoted here; publisher trim and typesetting will change the printed extent.
 
 | Part | Chapters | Pages |
 |--------------------------------------------------------|-------------:|------:|
@@ -111,17 +111,17 @@ Chapters 1, 3, 19, 30, and 32 demonstrate the opening explanation, first complet
 
 # Revision plan
 
-The manuscript is undergoing the authorized pedagogical-smoothing pass. The 32-chapter structure is implemented; four split chapters complete their apparatus at P3, and the content and continuity gates remain in progress. Publisher-directed technical review, copy-editing, permissions and production follow this pass, together with the outstanding author evidence and delivery commitments below. Technical depth, complete code listings, cumulative explanations, and MiniGateway remain central.
+The completed pedagogical revision gives readers a gentler opening: they meet a concrete problem and follow a working exchange before naming its abstractions. Splitting the runtime/layer treatment and the application/system treatment created two additional chapters, each with its own learning cycle. Protocol and build chapters now start from an example and explain the mechanism before collecting reference details. The expanded synthesis works through three design decisions and their consequences. Technical depth, complete code listings, cumulative explanations and MiniGateway remain central. Publisher-directed technical review, copy-editing, permissions and production follow, together with the outstanding author evidence and delivery commitments below.
 
 | Requirement | Completed in the supplied material | Maintain through final production |
 |--------------------|----------------------------------------|----------------------------------------|
-| Length | 110,177 total whitespace tokens, including 7,838 fenced tokens | At least 107,338; wish 112,338; ceiling 115,000; retain complete code listings |
-| Section density | 252 chapter subheadings; average 334.87 prose words per section | At most 550 subheadings; average at least 250 |
+| Length | 110,767 total whitespace tokens, including 7,876 fenced tokens | Author's ceiling: at most 115,000 words; retain complete code listings |
+| Section density | 259 chapter subheadings; average 365.17 prose words per section | At most 550 subheadings; average at least 250 |
 | Teaching pattern | 32 chapters and Appendix A: 99 objectives, 165 mapped exercises, public answers and lab solutions | 3–5 objectives, recap of at most five bullets, all three exercise tiers and full objective coverage |
 | Applied principles | 20 rule boxes; zero closing-perspective sections or flagged authoring notes | At most 20 applicable rules; preserve concise recaps and clean reader text |
-| Explanatory blocks | 45 text fences | At most 250; retain useful explanations and technical qualifications |
+| Explanatory blocks | 46 text fences | At most 250; retain useful explanations and technical qualifications |
 | Learning progression | 11 runnable Part checkpoints; earlier measurement milestones lead to Chapters 30–32 | Preserve the cumulative path and the epilogue's closing-essay role |
-| Companion and production | Public 07ca9a29: fresh framework build, 185 framework tests pass at R2; 66 public labs and smoke/lifetime suites pass at P7; complete listings match their sources | Rebuild and rerun affected examples after technical edits; refresh page estimates at publisher typesetting |
+| Companion and production | Public 07ca9a29: fresh framework build, 185 framework tests passed; 66 public labs and smoke/lifetime suites passed before the final editorial polish; complete listings match their sources | Rebuild and rerun affected examples after technical edits; refresh page estimates at publisher typesetting |
 
 **[AUTHOR TO SUPPLY]** Weeks to final manuscript after acceptance and hours per week available for revisions; agree the delivery schedule with the publisher before promising a date.
 

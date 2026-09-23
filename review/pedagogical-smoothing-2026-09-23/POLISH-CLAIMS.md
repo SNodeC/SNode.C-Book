@@ -19,7 +19,7 @@ including source spellings and immutable references, with its justification.
 | Ch8 and 16: activation flow owns recovery and reports listen/connect attempts | `src/core/socket/stream/SocketServer.h:184`; `src/core/socket/stream/SocketServer.h:202`; `src/core/socket/stream/SocketClient.h:263`; `src/core/socket/stream/SocketClient.h:298`; `src/net/config/ConfigPhysicalSocket.h:83` | Use flow, attempt status and instance configuration. Keep system-level recovery consequences as application responsibilities. |
 | Ch17–18, 20–22: protocol classes, server/client components and factory selectors are concrete implementation choices | `src/web/http/server/SocketContextUpgradeFactorySelector.h:56`; `src/web/http/client/SocketContextUpgradeFactorySelector.h:56`; `src/iot/mqtt/SubProtocol.h:82`; `src/iot/mqtt/client/SubProtocol.h:56`; `src/iot/mqtt/server/SubProtocol.h:56`; `src/iot/mqtt/client/Mqtt.h:84` | Use class, component, side, object or implementation. `WSSubProtocolRoleT` remains the actual template identifier. |
 | Ch26–28: MQTT/HTTP names identify protocols, not application responsibilities or ABI guarantees | Same public protocol headers above; `src/net/in/stream/legacy/SocketServer.h:68` | Local terminology correction only; no new compatibility guarantee. |
-| Ch1, 13, 30–31 and Part V: system-design responsibility versus named runtime identity | `companion/examples/MiniGateway/main.cpp`; `companion/examples/MiniGateway-Extended/main.cpp` (unchanged book examples); framework `src/core/socket/Socket.h:60` | Web, MQTT uplink and local measurement input remain application roles. General design wording introduces no new framework behavior. |
+| Ch1, 13, 30–31 and Part V: system-design responsibility versus named runtime identity | `companion/examples/MiniGateway/main.cpp:7`; `companion/examples/MiniGateway-Extended/main.cpp:7` (unchanged book examples); framework `src/core/socket/Socket.h:60` | Web, MQTT uplink and local measurement input remain application roles. General design wording introduces no new framework behavior. |
 
 P1: source alignment passes (33 records, 37 complete listings); chapter references
 and all 16 smoothing assertion groups pass. Fresh total: 110,232 tokens; every
@@ -43,7 +43,7 @@ The installed consumer's public requirement is unchanged:
 `companion/examples/EchoPair/CMakeLists.txt:9` requests SNode.C 2.0.0 and
 `net-in-stream-legacy`; the framework alias is
 `src/net/in/stream/legacy/SocketServer.h:68`. The framework's build root is
-`CMakeLists.txt:1`; package exports are declared in `src/CMakeLists.txt`.
+`CMakeLists.txt:40`; package exports are declared in `src/CMakeLists.txt:187` and installed at `:199`.
 This is shell/build guidance, not a new runtime claim. Ch2 is 3,248 tokens,
 within 3,006–3,250; total 110,313. No cap waiver is needed.
 
@@ -96,8 +96,8 @@ the existing method/facade inventory inside the Routing API reference box.
 Only the HTTP/Express comparison table remains outside. The moved technical
 content is unchanged; the connecting prose still places route matching above
 HTTP parsing and sockets. Composition and lifecycle declarations:
-`src/express/WebApp.h:58`, `src/express/WebAppT.h:62`;
-router controls: `src/express/Router.h`. No code listing changed.
+`src/express/WebApp.h:59`, `src/express/WebAppT.h:57`;
+router controls: `src/express/Router.h:103`. No code listing changed.
 All 16 smoothing assertion groups pass, with every chapter floor preserved.
 
 ## P7 — a different multi-protocol decision
@@ -134,12 +134,12 @@ continue to distinguish communication, acceptance, delivery and durability.
 
 The positive wording preserves the same technical conditions:
 
-- Ch1: the unchanged companion `MiniGateway/model/MeasurementModel.h` defines
+- Ch1: the unchanged companion `companion/examples/MiniGateway/MeasurementModel.h:11` defines
   shared accepted state and observers; a multiple-peer check remains necessary.
 - Ch5/7: `src/net/in/stream/legacy/SocketServer.h:68` and the corresponding
   IPv6 alias retain distinct address families and reuse the context. The prose
   directs the reader to verify the selected platform's dual-stack behavior.
-- Ch8/14: `src/core/socket/stream/SocketConnection.h` separates send admission
+- Ch8/14: `src/core/socket/stream/SocketConnection.h:103` separates send admission
   from the peer's later receive; diagnostics now name those two observations.
 - Ch18: `src/express/WebAppT.h:83` starts controller dispatch; the unchanged
   printed `companion/exercises/ch18/dispatch.cpp:13` records middleware order.
@@ -149,8 +149,39 @@ The positive wording preserves the same technical conditions:
 - Ch25: the new sentence describes a reading and execution method, without
   changing a technical claim.
 - Ch30: unchanged `companion/examples/MiniGateway/` configuration declarations
-  and defaults remain distinct from activation in `main.cpp`; the positive
+  in `ConfigSections.h:11` and defaults in `ConfigSections.cpp:11` remain
+  distinct from activation in `MiniGatewayMqttClient.cpp:35`, called by
+  `main.cpp:14`; the positive
   formulation explicitly places connection initiation in startup code.
 
 All 16 smoothing assertion groups pass; total **110,775**, every floor and cap
 satisfied. No timeout, assertion, complete listing or companion source changed.
+
+
+## P9 — publisher-facing extent and completed revision
+
+The proposal describes the gentler opening, two additional chapters from the
+approved splits, example-led protocol/build treatments and expanded synthesis.
+All internal phase/budget wording has been removed from the live proposal
+Markdown. Current manuscript quantities come from `metrics-after-polish.json`:
+110,767 total tokens, 102,891 outside fences and 7,876 in fences; 259 chapter
+subheadings, mean section prose 365.17, 46 text fences, 20 rule boxes, 99
+objectives and 165 exercises. The rebuilt reading PDF has 330 pages. The
+proposal/evidence sheet match those values. Dated repository/public-interest
+figures remain historical observations; no fresh market survey is asserted.
+
+### Final-check closure within P1/P6
+
+The evidence commit includes two small omissions found by the new checker:
+Ch24's remaining “protocol roles” becomes “application services” (application
+response to database status, `src/database/mariadb/MariaDBClient.h:97`);
+Ch18's expected-request table becomes two prose bullets preserving both results
+(`companion/exercises/ch18/dispatch.cpp:13`, `:33`, `:37`). The printed fixture
+and its assertions are unchanged. The Chapter 8 pointer added in P2 is registered
+against the existing Ch4 runtime-model topic; neither checker nor target identity
+is changed. The final terminology inventory updates its line addresses.
+
+The global no-taxonomy-table condition still flags the Conventions glossary
+and Appendix A's reading-path table. Those existing tables are outside P2's
+explicit Ch8 edit. They are not silently exempted: polish assertion group 2
+remains failed and register row 16 / continuity remains partly met.
