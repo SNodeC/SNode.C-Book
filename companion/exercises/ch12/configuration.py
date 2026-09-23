@@ -5,9 +5,8 @@ import re
 import subprocess
 import sys
 import tempfile
-import time
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from lab_support import connect, environment, free_port, receive, running
+from lab_support import connect, environment, free_port, receive, running, wait_log
 
 
 def invoke(binary, args, home):
@@ -68,16 +67,10 @@ def checkpoint(binary, home):
                 payload = b'part-v-checkpoint'
                 peer.sendall(payload)
                 assert receive(peer, len(payload)) == payload
-            deadline = time.monotonic() + 5
-            while True:
-                text = log.read_text()
-                rows = [json.loads(line) for line in text.splitlines(keepends=True)
-                        if line.endswith('\n')]
-                if not scoped or any('part-v-checkpoint' in r.get('message', '') for r in rows):
-                    histories.append(rows)
-                    break
-                assert time.monotonic() < deadline, rows
-                time.sleep(0.02)
+            if scoped:
+                wait_log(log, 'part-v-checkpoint')
+            histories.append([json.loads(line) for line in log.read_text().splitlines(keepends=True)
+                              if line.endswith('\n')])
     assert not histories[0], histories[0]
     records = histories[1]
     assert any(r['component'] == 'echo' and r['level'] == 'info'

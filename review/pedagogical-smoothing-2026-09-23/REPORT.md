@@ -22,8 +22,8 @@ supersedes that stop. R continues with failed checks explicitly qualified.
 | R1 | complete | e67295c2dfa4e09dd2ea14cdf11e66c08d2eaf52 |
 | R2 | complete | e4f8a612695afeb957293920ea92350e4012aede |
 | R3 | local claims reconciled | fa62fa1bf554f4efa7a5c71527cb15b67ead1492; R-claim-review.md |
-| R evidence | qualified; author directs continuation | containing `review: re-baseline evidence` commit; R-results.json |
-| P0b-resume | next | new installation only |
+| R evidence | qualified; author directs continuation | 1ceb6ef527386a18421e419fcce3122f0ccd472c; R-results.json |
+| P0b-resume | qualified; author directs continuation | containing entry-gate commit; P0b-resume-results.json, lab-repair-review.md |
 | P1–P7 | pending | no pedagogical smoothing edits yet |
 
 ## Source and review
@@ -66,8 +66,8 @@ The companion CTest run passes **51/62** (R-labs.log). Ten failures are SIGINT
 shutdown timeouts; one is a scoped-record snapshot race. R4-shutdown-diagnosis.json
 and R4-shutdown-backtrace.log reproduce a successful echo followed by a process
 still waiting in epoll with its logging worker present after SIGINT. This is not
-an assertion that the network exchange itself failed. No shutdown timeout or
-assertion has been relaxed, and no framework workaround is added.
+an assertion that the network exchange itself failed. At this R gate no shutdown timeout or assertion had been relaxed. Follow-up 03
+subsequently authorizes longer shutdown grace; no framework workaround is added.
 
 The authorized timing correction in companion/exercises/ch12/configuration.py:71
 waits up to five seconds for the expected payload log, reading complete JSON
@@ -98,8 +98,25 @@ SHA-256 remains c34bbab40ac13289e993af8504344f8d1435e1ec5ca87d4fb7ad6dfac8020155
 D1–D6 smoothing changes remain pending; only the public-pin amendment to D3 has
 been applied. No fabricated chapter assessment or apparatus completion is claimed.
 
-Open: P0b-resume and P1–P7. Qualified: framework and companion CTests as above;
+Open: P1–P7. Qualified: framework and companion CTests as above;
 the author directs continuation, and all failures remain visible. No framework
 changes are authorized. Floor/cap waivers: none. No new hosted CI, hardware or
 deployment validation is claimed. Push only the work branch on final completion
 or a later non-overridden stop condition.
+
+## P0b resume and author-requested lab fixes
+
+Follow-ups 03/04 authorize longer normal SIGINT grace and diagnosed lab repairs.
+The full resumed suite executes all 62 labs: 51 pass, 11 fail after 60 seconds
+on graceful shutdown. All 12 other check groups pass, including the new-prefix
+smoke suites and package build (P0b-resume-results.json). Metrics-before-resume.json
+records 100,323 tokens; no manuscript changed. The old P0b evidence is untouched.
+
+Lab-driver repairs consolidate complete-record waiting, handle partial live JSON,
+and allow inner shutdown grace in nested checkpoint timeouts. Three regression
+tests pass; the focused integration rerun passes 11/12, with the quiet logging
+checkpoint still blocked by framework shutdown before its scoped observation.
+See lab-repair-review.md for exact scope, evidence and source diagnosis. The
+framework records SIGINT and STOPPING but leaves the event-loop thread waiting
+in epoll; forced kill remains failure. Framework source is unchanged and frozen.
+P0b is qualified under the explicit continuation, not marked all checks passed.

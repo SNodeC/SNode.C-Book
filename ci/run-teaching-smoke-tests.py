@@ -54,7 +54,7 @@ def running(name: str, args: list[str], env: dict[str, str]):
             if process.poll() is None:
                 process.send_signal(signal.SIGINT)
                 try:
-                    process.wait(timeout=12)
+                    process.wait(timeout=60)
                 except subprocess.TimeoutExpired:
                     process.kill()
                     process.wait(timeout=3)

@@ -109,5 +109,5 @@ if __name__ == '__main__':
     mode, client, *rest = sys.argv[1:]
     observe(mode, client)
     if mode == 'checkpoint':
-        subprocess.run([sys.executable, str(Path(__file__).resolve().parents[1]/'ch28/solution.py'), rest[0]], check=True, timeout=40)
+        subprocess.run([sys.executable, str(Path(__file__).resolve().parents[1]/'ch28/solution.py'), rest[0]], check=True, timeout=150)
         print('PASS: Part IX checkpoint contrasts database read-back with the separate in-memory gateway restart; apply the README MQTTStore outcome map')

@@ -1,0 +1,213 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 26
+      Start 26: exercise-ch13-part-checkpoint
+
+26: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/EchoPair/echoserver"
+26: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch13
+26: Test timeout computed to be: 180
+26: PASS: source/file/CLI ports [8080, 18091, 41211]; file unchanged; inspection status 2
+26: PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+26: Traceback (most recent call last):
+26:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+26:     process.wait(timeout=60)
+26:     ~~~~~~~~~~~~^^^^^^^^^^^^
+26:   File "/usr/lib/python3.14/subprocess.py", line 1279, in wait
+26:     return self._wait(timeout=timeout)
+26:            ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+26:   File "/usr/lib/python3.14/subprocess.py", line 2076, in _wait
+26:     raise TimeoutExpired(self.args, timeout)
+26: subprocess.TimeoutExpired: Command '['/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/EchoPair/echoserver', '--config-file', '/tmp/config-lab-4on75e5q/echo.conf', '--log-level=2', '--log-format=json', 'echoserver', 'local', '--host=127.0.0.1', '--port=41211']' timed out after 60 seconds
+26: 
+26: During handling of the above exception, another exception occurred:
+26: 
+26: Traceback (most recent call last):
+26:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py", line 89, in <module>
+26:     {'precedence': precedence, 'discovery': discovery, 'checkpoint': checkpoint}[mode](binary, home)
+26:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+26:   File "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py", line 64, in checkpoint
+26:     with running(binary, [*args, *policy, 'echoserver', 'local', '--host=127.0.0.1',
+26:          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+26:                           f'--port={port}']) as (process, log):
+26:                           ^^^^^^^^^^^^^^^^^^
+26:   File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+26:     next(self.gen)
+26:     ~~~~^^^^^^^^^^
+26:   File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 51, in running
+26:     raise RuntimeError('Process did not stop after SIGINT')
+26: RuntimeError: Process did not stop after SIGINT
+ 1/12 Test #26: exercise-ch13-part-checkpoint ......***Failed   60.21 sec
+PASS: source/file/CLI ports [8080, 18091, 41211]; file unchanged; inspection status 2
+PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    process.wait(timeout=60)
+    ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2076, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/EchoPair/echoserver', '--config-file', '/tmp/config-lab-4on75e5q/echo.conf', '--log-level=2', '--log-format=json', 'echoserver', 'local', '--host=127.0.0.1', '--port=41211']' timed out after 60 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py", line 89, in <module>
+    {'precedence': precedence, 'discovery': discovery, 'checkpoint': checkpoint}[mode](binary, home)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py", line 64, in checkpoint
+    with running(binary, [*args, *policy, 'echoserver', 'local', '--host=127.0.0.1',
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          f'--port={port}']) as (process, log):
+                          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 51, in running
+    raise RuntimeError('Process did not stop after SIGINT')
+RuntimeError: Process did not stop after SIGINT
+
+test 29
+      Start 29: exercise-ch15-bounded-retry
+
+29: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/recovery.py" "retry" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/EchoPair/echoclient"
+29: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch15
+29: Test timeout computed to be: 180
+29: PASS: initial attempt plus one retry; two error statuses; no context attachment; natural exit
+29: {"v": 1, "ts": "2026-09-23T12:34:24.703Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:44305 (127.0.0.1): Connection refused [111]"}
+29: {"v": 1, "ts": "2026-09-23T12:34:24.905Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:44305 (127.0.0.1): Connection refused [111]"}
+ 2/12 Test #29: exercise-ch15-bounded-retry ........   Passed    0.32 sec
+test 30
+      Start 30: exercise-ch15-part-checkpoint
+
+30: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/recovery.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/EchoPair/echoclient" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch14/tls-policy-lab"
+30: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch15
+30: Test timeout computed to be: 180
+30: PASS: trusted matching name; early SSL is null; ready=1
+30: PASS: trusted wrong name; early SSL is null; ready=0
+30: PASS: untrusted matching name; early SSL is null; ready=0
+30: PASS: retry before first attachment; peer stop/restart; two connection identities; fresh greeting and exact echo
+30: {"v": 1, "ts": "2026-09-23T12:34:25.257Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:44789 (127.0.0.1): Connection refused [111]"}
+30: {"v": 1, "ts": "2026-09-23T12:34:25.459Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context attached"}
+30: {"v": 1, "ts": "2026-09-23T12:34:25.491Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context detached: connection close"}
+30: {"v": 1, "ts": "2026-09-23T12:34:25.491Z", "level": "debug", "origin": "framework", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Context detached for connection close"}
+30: {"v": 1, "ts": "2026-09-23T12:34:25.693Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:44789 (127.0.0.1): Connection refused [111]"}
+30: {"v": 1, "ts": "2026-09-23T12:34:25.895Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "2", "message": "Echo context attached"}
+ 3/12 Test #30: exercise-ch15-part-checkpoint ......   Passed    0.94 sec
+test 37
+      Start 37: exercise-ch19-negotiation
+
+37: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch19/solution.py" "negotiation" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch19/ws-lab-server" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch19/ws-lab-client"
+37: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch19
+37: Test timeout computed to be: 180
+37: PASS: unsupported subprotocol rejected: HTTP/1.1 404 Not Found
+37: PASS: canonical client negotiates echo, receives hello and closes; unsupported name never attaches echo
+ 4/12 Test #37: exercise-ch19-negotiation ..........   Passed    0.14 sec
+test 38
+      Start 38: exercise-ch19-part-checkpoint
+
+38: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch19/solution.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch19/ws-lab-server" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/SSE-Server/sse-server"
+38: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch19
+38: Test timeout computed to be: 180
+38: PASS: both observers see the same acceptance; remaining observer continues after peer closes
+38: PASS: Part VII checkpoint: shared accepted SSE state survives one observer disconnect; separate WebSocket type/bytes/fragment/control/close checks pass
+ 5/12 Test #38: exercise-ch19-part-checkpoint ......   Passed    0.32 sec
+test 39
+      Start 39: exercise-ch20-wire
+
+39: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch20/mqtt.py" "wire" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch20/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch20/mqtt-broker-lab"
+39: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch20
+39: Test timeout computed to be: 180
+39: PASS: CONNECT first; no subscription/publication before acceptance; accepted session produces SUBSCRIBE/PUBLISH and receives command
+ 6/12 Test #39: exercise-ch20-wire .................   Passed    0.34 sec
+test 40
+      Start 40: exercise-ch20-delivery
+
+40: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch20/mqtt.py" "delivery" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch20/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch20/mqtt-broker-lab"
+40: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch20
+40: Test timeout computed to be: 180
+40: PASS: observer session accepted by CONNACK
+40: PASS: subscriber receives SUBACK granting QoS 0
+40: PASS: independent subscriber receives exact topic sensors/temperature/value and payload 23.5
+40: PASS: broker routes command to canonical client role
+ 7/12 Test #40: exercise-ch20-delivery .............   Passed    0.21 sec
+test 43
+      Start 43: exercise-ch22-unavailable-output
+
+43: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/../ch28/solution.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/MiniGateway/minigateway"
+43: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch22
+43: Test timeout computed to be: 180
+43: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+ 8/12 Test #43: exercise-ch22-unavailable-output ...   Passed    0.16 sec
+test 44
+      Start 44: exercise-ch22-part-checkpoint
+
+44: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/../ch20/mqtt.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch20/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch20/mqtt-broker-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/MiniGateway/minigateway"
+44: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch22
+44: Test timeout computed to be: 180
+44: PASS: observer session accepted by CONNACK
+44: PASS: subscriber receives SUBACK granting QoS 0
+44: PASS: independent subscriber receives exact topic sensors/temperature/value and payload 23.5
+44: PASS: broker routes command to canonical client role
+44: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+44: PASS: Part VIII checkpoint: broker-delivery evidence and separate HTTP/status/SSE acceptance with unavailable MQTT; see README boundary map
+ 9/12 Test #44: exercise-ch22-part-checkpoint ......   Passed    0.36 sec
+test 45
+      Start 45: exercise-ch23-durable
+
+45: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "durable" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch23/persistence-lab"
+45: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch23
+45: Test timeout computed to be: 180
+45: PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+45: PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+10/12 Test #45: exercise-ch23-durable ..............   Passed    1.77 sec
+test 46
+      Start 46: exercise-ch23-error
+
+46: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "error" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch23/persistence-lab"
+46: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch23
+46: Test timeout computed to be: 180
+46: PASS: SQL error 1146 leaves the connection usable; the chained query completes and independent row count stays zero
+11/12 Test #46: exercise-ch23-error ................   Passed    1.23 sec
+test 48
+      Start 48: exercise-ch24-part-checkpoint
+
+48: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch23/persistence-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/MiniGateway/minigateway"
+48: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/exercises/ch24
+48: Test timeout computed to be: 180
+48: PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+48: PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+48: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+48: PASS: Part IX checkpoint contrasts database read-back with the separate in-memory gateway restart; apply the README MQTTStore outcome map
+12/12 Test #48: exercise-ch24-part-checkpoint ......   Passed    2.51 sec
+
+The following tests passed:
+	exercise-ch15-bounded-retry
+	exercise-ch15-part-checkpoint
+	exercise-ch19-negotiation
+	exercise-ch19-part-checkpoint
+	exercise-ch20-wire
+	exercise-ch20-delivery
+	exercise-ch22-unavailable-output
+	exercise-ch22-part-checkpoint
+	exercise-ch23-durable
+	exercise-ch23-error
+	exercise-ch24-part-checkpoint
+
+92% tests passed, 1 tests failed out of 12
+
+Label Time Summary:
+equipped    =   5.51 sec*proc (3 tests)
+
+Total Test time (real) =  68.52 sec
+
+The following tests FAILED:
+	 26 - exercise-ch13-part-checkpoint (Failed)
+Errors while running CTest

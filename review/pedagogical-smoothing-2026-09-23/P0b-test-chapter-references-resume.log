@@ -1,0 +1,11 @@
+COMMAND: python3 ci/test-chapter-references.py
+SNODEC_PREFIX=/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc
+BOOK_EXAMPLES_BUILD_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples
+BOOK_BUILD_DIR=build/proposal-readiness-phase-2
+TMPDIR=/tmp
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/websocket
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.150s
+
+OK

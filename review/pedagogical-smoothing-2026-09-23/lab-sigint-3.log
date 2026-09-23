@@ -1,0 +1,60 @@
+2026-09-23T12:28:55.671Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-23T12:28:55.672Z TRC framework/system core.event-loop — SNode.C: Starting ... HELLO
+2026-09-23T12:28:55.676Z TRC framework/system core.event-loop — Core::EventLoop: started
+2026-09-23T12:28:55.676Z DBG framework/instance core.socket.stream role=server inst=echoserver — Initiating listen
+2026-09-23T12:28:55.676Z DBG framework/connection core.socket — echoserver Listen: starting
+2026-09-23T12:28:55.676Z DBG framework/connection core.socket — echoserver open 127.0.0.1:50219 (127.0.0.1): success
+2026-09-23T12:28:55.676Z DBG framework/connection core.socket — echoserver bind 127.0.0.1:50219 (127.0.0.1) (effective: 127.0.0.1:50219): success
+2026-09-23T12:28:55.676Z DBG framework/connection core.socket — echoserver listen 127.0.0.1:50219: success
+2026-09-23T12:28:55.676Z TRC framework/system core.eventreceiver inst="echoserver SocketAcceptor accept" — READ descriptor enabled
+2026-09-23T12:28:55.676Z DBG framework/connection core.socket — echoserver enable 127.0.0.1:50219: success
+2026-09-23T12:28:55.676Z INF framework/instance core.socket.stream role=server inst=echoserver — listener started
+2026-09-23T12:28:55.676Z INF application/application echo — echoserver: listening on '127.0.0.1:50219'
+2026-09-23T12:28:55.693Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — PeerAddress (local): localhost:50219
+2026-09-23T12:28:55.694Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — PeerAddress (remote): localhost:49320
+2026-09-23T12:28:55.694Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — READ descriptor enabled
+2026-09-23T12:28:55.694Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — WRITE descriptor enabled
+2026-09-23T12:28:55.694Z INF framework/connection core.socket.stream role=server inst=echoserver conn=1 — transport connected
+2026-09-23T12:28:55.694Z DBG framework/connection core.socket — echoserver accept 127.0.0.1:50219: success
+2026-09-23T12:28:55.694Z DBG framework/connection core.socket —   localhost:49320 -> localhost:50219
+2026-09-23T12:28:55.694Z DBG framework/instance core.socket.stream role=server inst=echoserver — Connection 1 connecting
+2026-09-23T12:28:55.694Z DBG framework/instance core.socket.stream role=server inst=echoserver — Local: localhost:50219
+2026-09-23T12:28:55.694Z DBG framework/instance core.socket.stream role=server inst=echoserver — Peer: localhost:49320
+2026-09-23T12:28:55.694Z DBG framework/instance core.socket.stream role=server inst=echoserver — Connection 1 connected
+2026-09-23T12:28:55.694Z DBG framework/instance core.socket.stream role=server inst=echoserver — Local: localhost:50219
+2026-09-23T12:28:55.694Z DBG framework/instance core.socket.stream role=server inst=echoserver — Peer: localhost:49320
+2026-09-23T12:28:55.694Z DBG framework/connection core.socket.stream role=server inst=echoserver conn=1 — SocketContext created successful
+2026-09-23T12:28:55.694Z DBG framework/context core.socket.context inst=echoserver conn=1 — Context attached
+2026-09-23T12:28:55.694Z INF application/context core.socket.context inst=echoserver conn=1 — Echo context attached
+2026-09-23T12:28:55.895Z DBG application/context core.socket.context inst=echoserver conn=1 — Data to reflect: diagnosis
+2026-09-23T12:28:55.898Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — OnReadError: EOF received
+2026-09-23T12:28:55.898Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — READ descriptor disabled
+2026-09-23T12:28:55.898Z DBG framework/context core.socket.context inst=echoserver conn=1 — SocketContext: EOF received
+2026-09-23T12:28:55.898Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — Stop writing
+2026-09-23T12:28:55.898Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — Write shutdown started
+2026-09-23T12:28:55.898Z TRC framework/system core.event-loop — Core: Received signal 'Interrupt' (SIGINT = 2)
+2026-09-23T12:28:55.898Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — Shutdown (WR)
+2026-09-23T12:28:55.899Z DBG framework/connection core.socket.stream role=server inst=echoserver conn=1 — Shutdown (WR): success
+2026-09-23T12:28:55.899Z TRC framework/connection core.socket.stream role=server inst=echoserver conn=1 — WRITE descriptor disabled
+2026-09-23T12:28:55.899Z INF application/context core.socket.context inst=echoserver conn=1 — Echo context detached: connection close
+2026-09-23T12:28:55.899Z DBG framework/context core.socket.context inst=echoserver conn=1 — Context detached for connection close
+2026-09-23T12:28:55.899Z DBG framework/instance core.socket.stream role=server inst=echoserver — Connection 1 disconnected
+2026-09-23T12:28:55.899Z DBG framework/instance core.socket.stream role=server inst=echoserver — Local: localhost:50219
+2026-09-23T12:28:55.899Z DBG framework/instance core.socket.stream role=server inst=echoserver — Peer: localhost:49320
+2026-09-23T12:28:55.899Z DBG framework/instance core.socket.stream role=server inst=echoserver — Online Since: 2026-09-23 12:28:55 UTC
+2026-09-23T12:28:55.900Z DBG framework/instance core.socket.stream role=server inst=echoserver — Online Duration: 00:00:00
+2026-09-23T12:28:55.900Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Queued: 9
+2026-09-23T12:28:55.900Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Sent: 9
+2026-09-23T12:28:55.900Z DBG framework/instance core.socket.stream role=server inst=echoserver — Write Delta: 0
+2026-09-23T12:28:55.900Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Read: 9
+2026-09-23T12:28:55.900Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Processed: 9
+2026-09-23T12:28:55.900Z DBG framework/instance core.socket.stream role=server inst=echoserver — Read Delta: 0
+2026-09-23T12:28:55.900Z INF framework/connection core.socket.stream role=server inst=echoserver conn=1 — transport disconnected
+2026-09-23T12:28:55.901Z TRC framework/system core.event-loop — Core::EventLoop: Stopped
+2026-09-23T12:28:55.902Z TRC framework/system core.event-loop — Core: Graceful shutdown after signal SIGINT
+2026-09-23T12:28:55.902Z TRC framework/system core.eventreceiver inst="echoserver SocketAcceptor accept" — READ descriptor disabled
+2026-09-23T12:28:55.902Z INF framework/instance core.socket.stream role=server inst=echoserver — listener stopped
+2026-09-23T12:28:55.903Z TRC framework/system core.event-loop — Core: Terminate remaining DescriptorEventReceivers and timers
+2026-09-23T12:28:55.903Z TRC framework/system core.event-loop — Core: Shutdown config system
+2026-09-23T12:28:55.904Z TRC framework/system core.event-loop — Core: All resources released
+2026-09-23T12:28:55.904Z TRC framework/system core.event-loop — SNode.C: Ended ... BYE

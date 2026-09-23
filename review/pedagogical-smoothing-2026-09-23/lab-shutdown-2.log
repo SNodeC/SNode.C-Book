@@ -1,0 +1,39 @@
+2026-09-23T12:29:17.446Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-23T12:29:17.451Z DBG framework/instance core.socket.stream role=server inst=echoserver — Initiating listen
+2026-09-23T12:29:17.451Z DBG framework/connection core.socket — echoserver Listen: starting
+2026-09-23T12:29:17.451Z DBG framework/connection core.socket — echoserver open 127.0.0.1:47591 (127.0.0.1): success
+2026-09-23T12:29:17.451Z DBG framework/connection core.socket — echoserver bind 127.0.0.1:47591 (127.0.0.1) (effective: 127.0.0.1:47591): success
+2026-09-23T12:29:17.451Z DBG framework/connection core.socket — echoserver listen 127.0.0.1:47591: success
+2026-09-23T12:29:17.451Z DBG framework/connection core.socket — echoserver enable 127.0.0.1:47591: success
+2026-09-23T12:29:17.451Z INF framework/instance core.socket.stream role=server inst=echoserver — listener started
+2026-09-23T12:29:17.451Z INF application/application echo — echoserver: listening on '127.0.0.1:47591'
+2026-09-23T12:29:17.468Z INF framework/connection core.socket.stream role=server inst=echoserver conn=1 — transport connected
+2026-09-23T12:29:17.468Z DBG framework/connection core.socket — echoserver accept 127.0.0.1:47591: success
+2026-09-23T12:29:17.468Z DBG framework/connection core.socket —   localhost:35052 -> localhost:47591
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Connection 1 connecting
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Local: localhost:47591
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Peer: localhost:35052
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Connection 1 connected
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Local: localhost:47591
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Peer: localhost:35052
+2026-09-23T12:29:17.468Z DBG framework/connection core.socket.stream role=server inst=echoserver conn=1 — SocketContext created successful
+2026-09-23T12:29:17.468Z DBG framework/context core.socket.context inst=echoserver conn=1 — Context attached
+2026-09-23T12:29:17.468Z INF application/context core.socket.context inst=echoserver conn=1 — Echo context attached
+2026-09-23T12:29:17.468Z DBG application/context core.socket.context inst=echoserver conn=1 — Data to reflect: diagnosis
+2026-09-23T12:29:17.468Z DBG framework/context core.socket.context inst=echoserver conn=1 — SocketContext: EOF received
+2026-09-23T12:29:17.468Z DBG framework/connection core.socket.stream role=server inst=echoserver conn=1 — Shutdown (WR): success
+2026-09-23T12:29:17.468Z INF application/context core.socket.context inst=echoserver conn=1 — Echo context detached: connection close
+2026-09-23T12:29:17.468Z DBG framework/context core.socket.context inst=echoserver conn=1 — Context detached for connection close
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Connection 1 disconnected
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Local: localhost:47591
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Peer: localhost:35052
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Online Since: 2026-09-23 12:29:17 UTC
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Online Duration: 00:00:00
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Queued: 9
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Sent: 9
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Write Delta: 0
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Read: 9
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Total Processed: 9
+2026-09-23T12:29:17.468Z DBG framework/instance core.socket.stream role=server inst=echoserver — Read Delta: 0
+2026-09-23T12:29:17.468Z INF framework/connection core.socket.stream role=server inst=echoserver conn=1 — transport disconnected
+2026-09-23T12:29:17.468Z INF framework/instance core.socket.stream role=server inst=echoserver — listener stopped

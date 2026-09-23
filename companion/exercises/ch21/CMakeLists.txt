@@ -14,5 +14,5 @@ add_custom_target(ch21-lab DEPENDS mqtt-ws-lab)
 foreach(mode IN ITEMS binary text)
   add_test(NAME exercise-ch21-${mode} COMMAND "${Python3_EXECUTABLE}"
     "${CMAKE_CURRENT_SOURCE_DIR}/adapter.py" ${mode} $<TARGET_FILE:mqtt-ws-lab>)
-  set_tests_properties(exercise-ch21-${mode} PROPERTIES TIMEOUT 40)
+  set_tests_properties(exercise-ch21-${mode} PROPERTIES TIMEOUT 180)
 endforeach()

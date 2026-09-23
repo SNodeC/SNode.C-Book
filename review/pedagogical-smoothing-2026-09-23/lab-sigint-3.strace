@@ -1,0 +1,20 @@
+1048713 14:28:55.696662 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048713 14:28:55.696905 rt_sigprocmask(SIG_BLOCK, [HUP INT ALRM TERM], [], 8) = 0
+1048713 14:28:55.696928 epoll_pwait(6, [{events=EPOLLIN, data=0x565552c25e40}], 3, 59997, [], 8) = 1
+1048713 14:28:55.896354 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048713 14:28:55.896471 rt_sigprocmask(SIG_BLOCK, [HUP INT ALRM TERM], [], 8) = 0
+1048713 14:28:55.896799 epoll_pwait(6, [{events=EPOLLIN, data=0x565552c25d70}], 3, 0, [], 8) = 1
+1048713 14:28:55.897538 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048713 14:28:55.897591 rt_sigprocmask(SIG_BLOCK, [HUP INT ALRM TERM], [], 8) = 0
+1048713 14:28:55.897640 epoll_pwait(6, [], 3, 0, [], 8) = 0
+1048713 14:28:55.897687 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048713 14:28:55.897733 rt_sigprocmask(SIG_BLOCK, [HUP INT ALRM TERM], [], 8) = 0
+1048713 14:28:55.897801 epoll_pwait(6, [{events=EPOLLIN, data=0x565552c25e40}], 3, 59999, [], 8) = 1
+1048714 14:28:55.898006 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=1048680, si_uid=1000} ---
+1048714 14:28:55.899005 rt_sigreturn({mask=[]}) = -1 EINTR (Interrupted system call)
+1048713 14:28:55.901295 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048713 14:28:55.903114 rt_sigprocmask(SIG_BLOCK, [HUP INT ALRM TERM], [], 8) = 0
+1048713 14:28:55.903487 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048714 14:28:55.906039 rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0
+1048714 14:28:55.906557 +++ exited with 0 +++
+1048713 14:28:55.908485 +++ exited with 254 +++

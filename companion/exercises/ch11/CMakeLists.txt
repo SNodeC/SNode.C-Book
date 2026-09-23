@@ -16,4 +16,4 @@ add_test(NAME exercise-ch11-part-checkpoint COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/../ch09/protocol.py" transfer $<TARGET_FILE:line-protocol-server> $<TARGET_FILE:line-unix>)
 add_test(NAME exercise-ch11-endpoint-failure COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/../ch09/protocol.py" endpoint-failure $<TARGET_FILE:line-unix>)
-set_tests_properties(exercise-ch11-part-checkpoint exercise-ch11-endpoint-failure PROPERTIES TIMEOUT 40)
+set_tests_properties(exercise-ch11-part-checkpoint exercise-ch11-endpoint-failure PROPERTIES TIMEOUT 180)

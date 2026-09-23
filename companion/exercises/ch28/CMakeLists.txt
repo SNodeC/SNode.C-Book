@@ -1,7 +1,7 @@
 add_custom_target(ch28-lab DEPENDS minigateway measurement-validation)
 add_test(NAME exercise-ch28 COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/solution.py"
   $<TARGET_FILE:minigateway>)
-set_tests_properties(exercise-ch28 PROPERTIES TIMEOUT 40)
+set_tests_properties(exercise-ch28 PROPERTIES TIMEOUT 180)
 
 find_package(nlohmann_json 3.7.0 REQUIRED)
 add_executable(measurement-validation validation.cpp

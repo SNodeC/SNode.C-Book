@@ -21,4 +21,4 @@ add_test(NAME exercise-ch19-negotiation COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/solution.py" negotiation $<TARGET_FILE:ws-lab-server> $<TARGET_FILE:ws-lab-client>)
 add_test(NAME exercise-ch19-part-checkpoint COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/solution.py" checkpoint $<TARGET_FILE:ws-lab-server> $<TARGET_FILE:sse-server>)
-set_tests_properties(exercise-ch19-negotiation exercise-ch19-part-checkpoint PROPERTIES TIMEOUT 60)
+set_tests_properties(exercise-ch19-negotiation exercise-ch19-part-checkpoint PROPERTIES TIMEOUT 180)

@@ -2011,3 +2011,32 @@ independent shutdown failure. Following the author's explicit continuation,
 keep these CTests qualified and proceed; no framework changes or shutdown
 workarounds. R-results.json and REPORT.md distinguish every result. R evidence
 commit subject: `review: re-baseline evidence` (qualified, not all tests passed).
+
+
+### Follow-up 03 — allow normal SIGINT shutdown more time
+
+Author instruction stored verbatim in FOLLOWUP-03.md. Raise the shared public
+lab and teaching-smoke SIGINT grace periods to 60 seconds (previously 5/12),
+and existing enclosing exercise timeouts below 180 seconds to 180 (retaining
+10-second non-process model tests and existing 300-second build tests). Keep
+all graceful-exit assertions and forced-kill failures. No signal targeting or
+framework workaround. Re-run P0b-resume with the new limits, recording actual
+outcomes. This is an explicit timeout amendment to the previous constraints.
+
+### Follow-up 04 — repair diagnosed lab-driver defects
+
+The author explicitly requests lab fixes where their cause is known; verbatim
+instruction is in FOLLOWUP-04.md. Review asynchronous-output observations and
+shutdown ownership across their consumers. Repair driver timing and enclosing
+timeout defects without weakening observable assertions. Framework source stays
+read-only and frozen; do not hide a framework shutdown failure with a different
+signal, thread targeting, or a forced-kill success. Continue the editorial run
+under Follow-up 02, keeping remaining framework failures qualified.
+
+P0b-resume now executed: 51/62 labs pass with 60-second grace; all eleven failures
+are SIGINT shutdown. All other twelve check groups pass. The author-requested
+lab repairs preserve assertions; 3/3 focused regression tests and 11/12 integration
+rechecks pass, with the remaining logging checkpoint stopped by framework shutdown.
+Evidence: P0b-resume-results.json and lab-repair-review.md. Framework freeze matches
+R0. Entry remains qualified under Follow-up 02; continue P1. Manuscript remains
+100,323 tokens and unchanged since R3.

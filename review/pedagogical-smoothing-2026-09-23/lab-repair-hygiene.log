@@ -1,0 +1,8 @@
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 298 current references, 374 old-reference dispositions.
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.148s
+
+OK
+Source alignment passed: 31 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, base 8b8da56e0349191d4658ca8f820a490539eccd4d, working-tree digest f00e7f9c16854d70c3d2122272458c581bacd108882ed13004c7d6d2173348ee
+Source hygiene checks passed.

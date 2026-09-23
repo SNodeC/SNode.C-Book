@@ -11,7 +11,8 @@ from ch14.tls import policy
 
 
 def records(path):
-    return [json.loads(line) for line in path.read_text().splitlines() if line.startswith('{')]
+    return [json.loads(line) for line in path.read_text().splitlines(keepends=True)
+            if line.startswith('{') and line.endswith('\n')]
 
 
 def wait_for(process, path, predicate):

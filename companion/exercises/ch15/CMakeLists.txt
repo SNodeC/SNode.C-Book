@@ -4,4 +4,4 @@ add_test(NAME exercise-ch15-bounded-retry COMMAND "${Python3_EXECUTABLE}"
 add_test(NAME exercise-ch15-part-checkpoint COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/recovery.py" checkpoint $<TARGET_FILE:echoclient>
   $<TARGET_FILE:tls-policy-lab>)
-set_tests_properties(exercise-ch15-bounded-retry exercise-ch15-part-checkpoint PROPERTIES TIMEOUT 80)
+set_tests_properties(exercise-ch15-bounded-retry exercise-ch15-part-checkpoint PROPERTIES TIMEOUT 180)

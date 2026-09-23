@@ -1,0 +1,17 @@
+1048756 14:28:56.706433 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048756 14:28:56.706668 rt_sigprocmask(SIG_BLOCK, [HUP INT ALRM TERM], [], 8) = 0
+1048756 14:28:56.707124 epoll_pwait(6, [{events=EPOLLIN, data=0x55d067e39e40}], 3, 59995, [], 8) = 1
+1048756 14:28:56.904668 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048756 14:28:56.904812 rt_sigprocmask(SIG_BLOCK, [HUP INT ALRM TERM], [], 8) = 0
+1048756 14:28:56.904879 epoll_pwait(6, [{events=EPOLLIN, data=0x55d067e39d70}], 3, 0, [], 8) = 1
+1048757 14:28:56.905352 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=1048680, si_uid=1000} ---
+1048756 14:28:56.905377 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048756 14:28:56.905428 rt_sigprocmask(SIG_BLOCK, [HUP INT ALRM TERM], [], 8) = 0
+1048756 14:28:56.905480 epoll_pwait(6, [{events=EPOLLIN, data=0x55d067e39e40}], 3, 0, [], 8) = 1
+1048757 14:28:56.906116 rt_sigreturn({mask=[]}) = 123
+1048756 14:28:56.908648 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048756 14:28:56.909597 rt_sigprocmask(SIG_BLOCK, [HUP INT ALRM TERM], [], 8) = 0
+1048756 14:28:56.909709 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1048757 14:28:56.914045 rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0
+1048757 14:28:56.914277 +++ exited with 0 +++
+1048756 14:28:56.916703 +++ exited with 254 +++

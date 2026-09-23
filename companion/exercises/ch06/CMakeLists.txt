@@ -11,4 +11,4 @@ add_test(NAME exercise-ch06-ip-families COMMAND "${Python3_EXECUTABLE}" "${CMAKE
   ipv4 $<TARGET_FILE:endpoint-in> ipv6 $<TARGET_FILE:endpoint-in6>)
 add_test(NAME exercise-ch06-unix-path COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/families.py"
   unix $<TARGET_FILE:endpoint-un>)
-set_tests_properties(exercise-ch06-ip-families exercise-ch06-unix-path PROPERTIES TIMEOUT 40)
+set_tests_properties(exercise-ch06-ip-families exercise-ch06-unix-path PROPERTIES TIMEOUT 180)

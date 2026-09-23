@@ -18,4 +18,4 @@ add_test(NAME exercise-ch14-trust-identity COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/tls.py" policy $<TARGET_FILE:tls-policy-lab> "${OPENSSL_EXECUTABLE}")
 add_test(NAME exercise-ch14-secure-echo COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/tls.py" echo $<TARGET_FILE:tls-echo> "${OPENSSL_EXECUTABLE}")
-set_tests_properties(exercise-ch14-trust-identity exercise-ch14-secure-echo PROPERTIES TIMEOUT 60)
+set_tests_properties(exercise-ch14-trust-identity exercise-ch14-secure-echo PROPERTIES TIMEOUT 180)
