@@ -14,7 +14,7 @@
 \index{example applications}
 \index{application structure}
 
-The database chapter separated receiving a value from accepting it and making it durable. We can now read an entire application without expecting its entry point to implement every one of those responsibilities. The task is to discover what the executable assembles, where each operation is implemented, and which observable result would show that the assembled program works.
+The database chapter separated receiving a value from accepting it and making it durable. We can now read an entire application without expecting its entry point to implement every one of those responsibilities. The task is to discover what the executable assembles, where each operation is implemented, and which expected result to observe when running the assembled program.
 
 Choose one program and keep one question in view. For echo, ask how the selected server returns a peer's bytes. Begin with the build target to identify the source files and direct components. Then find the composition root: the place that constructs application dependencies and connects them to framework objects. Follow its public includes and linked components before tracing `main()` into configuration, activation and runtime start. Finally find the callback that implements the byte contract and the test that observes it.
 

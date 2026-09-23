@@ -571,7 +571,7 @@ namespace minigateway {
 #endif // MINIGATEWAY_CONFIG_SECTIONS_H
 ```
 
-These declarations expose the MQTT settings that deployment may vary while leaving the model contract fixed. They do not establish a broker connection; the implementation below registers defaults and getters that the protocol and startup code can consume.
+These declarations expose the MQTT settings that deployment may vary while leaving the model contract fixed. The implementation below registers defaults and getters that the protocol and startup code can consume when they configure and initiate the broker connection.
 
 \Needspace{5\baselineskip}
 

@@ -1,0 +1,86 @@
+[
+  {
+    "path": "manuscript/chapters/01-why-snodec-exists.md",
+    "before": "successful communication with one peer cannot establish that several peers share state correctly.",
+    "after": "a shared-state check needs several peers, each reading and updating the same accepted state.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/05-layers-in-practice.md",
+    "before": "At this point, predict only what the example can establish.",
+    "after": "At this point, predict the observable result of the example.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/05-layers-in-practice.md",
+    "before": "It does not establish that the two endpoint identities have the same reach, access controls or deployment rules.",
+    "after": "Assess each endpoint identity separately for its reach, access controls and deployment rules; byte equality answers the protocol question.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before": "A successful IPv4 run does not establish IPv6 availability, and an IPv6 wildcard listener should not be assumed to replace a separately configured IPv4 listener on every platform.",
+    "after": "Verify IPv6 availability with its own exchange, and configure IPv4 separately unless the selected platform explicitly provides the intended dual-stack behavior for an IPv6 wildcard listener.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "before": "A queued reply is not proof of receipt. The useful echo test waits for the exact response instead of inferring delivery from the callback's return.",
+    "after": "The useful echo test waits until the peer receives the exact response. Its receipt check observes the completed exchange separately from the earlier callback that queued those bytes.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before": "Name observed facts: queuing publication does not establish delivery.",
+    "after": "Name observed facts separately: publication queued, then subscriber receipt observed.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/18-the-express-like-framework.md",
+    "before": "The response body and `X-Trace` header therefore expose the path `app-before,router-before,handler`; status 200 alone would not establish that order.",
+    "after": "The response body and `X-Trace` header therefore expose the path `app-before,router-before,handler`; compare their complete trace to check each handler visit in order.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "before": "A successful submission call is therefore especially easy to overread: it cannot prove that another application received the value.",
+    "after": "Observe delivery at the receiving application by comparing the actual topic and payload with the publication submitted by the sender.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "before": "It does not demonstrate durable storage, recovery after restart or processing by every subscriber that might have been interested.",
+    "after": "Durable storage, recovery after restart and processing by other interested subscribers each need their own experiment and observed result.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "before": "The task is to discover what the executable assembles, where each operation is implemented, and which observable result would show that the assembled program works.",
+    "after": "The task is to discover what the executable assembles, where each operation is implemented, and which expected result to observe when running the assembled program.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
+    "before": "A broker accepting a publication does not make a storage process available; a storage process receiving it does not establish that a database commit succeeded.",
+    "after": "Check three separate outcomes: the broker accepts the publication, the storage process receives it, and the database commits the write. Each outcome needs its own witness.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
+    "before": "A subscriber at that broker can establish local distribution by observing both values.",
+    "after": "A subscriber at that broker records local distribution by observing both values.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
+    "before": "The first subscriber may still receive, while the second cannot yet prove forwarding.",
+    "after": "The first subscriber may still receive; report forwarding as incomplete until the second subscriber observes the publication.",
+    "absent_from_c7b76c1": true
+  },
+  {
+    "path": "manuscript/chapters/30-building-minigateway.md",
+    "before": "They do not establish a broker connection; the implementation below registers defaults and getters that the protocol and startup code can consume.",
+    "after": "The implementation below registers defaults and getters that the protocol and startup code can consume when they configure and initiate the broker connection.",
+    "absent_from_c7b76c1": true
+  }
+]

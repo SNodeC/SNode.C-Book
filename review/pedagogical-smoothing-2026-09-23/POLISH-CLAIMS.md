@@ -122,3 +122,35 @@ They add no framework API behavior. Headers, code, tables, immutable anchors
 and figure filenames are not prose sentences. Their spellings are excluded from
 sentence analysis; visible captions remain included. No abstract-noun sentence
 exception is needed. All 16 smoothing groups pass; total 110,762 tokens.
+
+## P8 — replace repeated verification qualifications with observed facts
+
+The exact author regex now matches **46** constructions (60 immediately before
+P8; 61 at the original follow-up snapshot; 46 at c7b76c1). All 14 replaced
+passages are absent from the entire c7b76c1 manuscript. The before/after audit
+is `polish-verification-rewrites.json`; an initial candidate present in that
+baseline was rejected without changing it. Qualifications retained elsewhere
+continue to distinguish communication, acceptance, delivery and durability.
+
+The positive wording preserves the same technical conditions:
+
+- Ch1: the unchanged companion `MiniGateway/model/MeasurementModel.h` defines
+  shared accepted state and observers; a multiple-peer check remains necessary.
+- Ch5/7: `src/net/in/stream/legacy/SocketServer.h:68` and the corresponding
+  IPv6 alias retain distinct address families and reuse the context. The prose
+  directs the reader to verify the selected platform's dual-stack behavior.
+- Ch8/14: `src/core/socket/stream/SocketConnection.h` separates send admission
+  from the peer's later receive; diagnostics now name those two observations.
+- Ch18: `src/express/WebAppT.h:83` starts controller dispatch; the unchanged
+  printed `companion/exercises/ch18/dispatch.cpp:13` records middleware order.
+- Ch21/26: `src/iot/mqtt/Mqtt.cpp:257`, `:306` and
+  `src/iot/mqtt/server/broker/Session.cpp:77` separate submission, MQTT receipt
+  and forwarding. Neither source promises an application database transaction.
+- Ch25: the new sentence describes a reading and execution method, without
+  changing a technical claim.
+- Ch30: unchanged `companion/examples/MiniGateway/` configuration declarations
+  and defaults remain distinct from activation in `main.cpp`; the positive
+  formulation explicitly places connection initiation in startup code.
+
+All 16 smoothing assertion groups pass; total **110,775**, every floor and cap
+satisfied. No timeout, assertion, complete listing or companion source changed.

@@ -130,7 +130,7 @@ Chapter 7 gives address semantics their detailed treatment. A Unix socket path, 
 
 Try the smallest family change first. Begin with the IPv4 echo server type and replace the family selection with Unix domain sockets. Keep the stream form, legacy variant and echo factory. The public server header moves from the `net/in` path to `net/un`, and the corresponding component becomes `net-un-stream-legacy`. The context can still reflect the bytes it reads; it does not need to interpret an IP address to implement that behavior.
 
-At this point, predict only what the example can establish. The two family-server builds in the lab use the same source and reflect the same payload. Byte equality supports reuse of the echo context. It does not establish that the two endpoint identities have the same reach, access controls or deployment rules. Those questions belong to the address chapter. Here, the important skill is locating the changed selection and finding the matching header and component without altering protocol code.
+At this point, predict the observable result of the example. The two family-server builds in the lab use the same source and reflect the same payload. Byte equality supports reuse of the echo context. Assess each endpoint identity separately for its reach, access controls and deployment rules; byte equality answers the protocol question. Those questions belong to the address chapter. Here, the important skill is locating the changed selection and finding the matching header and component without altering protocol code.
 
 ### The transport layer: communication form
 

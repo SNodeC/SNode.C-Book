@@ -309,7 +309,7 @@ IPv4 and IPv6 instances can participate in the same event runtime. Giving them s
 
 Status callbacks report activation attempts; connection callbacks observe peers; context methods implement protocol behavior. Chapter 8 develops those distinctions.
 
-The first useful comparison is an observed exchange. Run the same context once over an IPv4 loopback endpoint and once over an IPv6 loopback endpoint. The payload and context callbacks should remain the same; the address type, formatted endpoint, and operating-system family differ. A successful IPv4 run does not establish IPv6 availability, and an IPv6 wildcard listener should not be assumed to replace a separately configured IPv4 listener on every platform. The family-specific component tests keep those exchanges separate for exactly this reason.
+The first useful comparison is an observed exchange. Run the same context once over an IPv4 loopback endpoint and once over an IPv6 loopback endpoint. The payload and context callbacks should remain the same; the address type, formatted endpoint, and operating-system family differ. Verify IPv6 availability with its own exchange, and configure IPv4 separately unless the selected platform explicitly provides the intended dual-stack behavior for an IPv6 wildcard listener. The family-specific component tests keep those exchanges separate for exactly this reason.
 
 \index{address family}
 \index{wildcard form}

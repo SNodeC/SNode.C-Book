@@ -31,7 +31,7 @@ Use Chapter 4's runtime terminology here rather than a second taxonomy. Follow o
 
 When this peer is accepted, the framework creates the connection machinery and asks the configured factory for its context. The context can now react to attachment. Its partial input and protocol decisions belong to this peer relationship. The server's named instance still supplies configuration for the listener and later peers; the accepted connection does not turn that instance into a new object for each message.
 
-Next the peer sends bytes. Readiness leads to receive handling, where the context consumes available input and may queue a reply. Those actions occupy different points in the timeline: bytes available, bytes processed and reply observed by the peer. A queued reply is not proof of receipt. The useful echo test waits for the exact response instead of inferring delivery from the callback's return.
+Next the peer sends bytes. Readiness leads to receive handling, where the context consumes available input and may queue a reply. Those actions occupy different points in the timeline: bytes available, bytes processed and reply observed by the peer. The useful echo test waits until the peer receives the exact response. Its receipt check observes the completed exchange separately from the earlier callback that queued those bytes.
 
 Finally the peer closes. That connection and its attached context must finish their lifecycle without erasing another peer's protocol state. The listener may remain available for the next peer. Conversely, intentionally stopping the listening flow need not close this already accepted connection. This single-peer path is the reference against which retry, reconnect and the connection/context callback distinctions below should be read.
 

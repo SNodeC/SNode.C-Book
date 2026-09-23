@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-For `GET /api/status`, application middleware first records `app-before` and calls `next()`. The `/api` mount then selects the router, whose middleware appends `router-before` and continues. Its `/status` handler appends `handler` and sends the completed trace. The response body and `X-Trace` header therefore expose the path `app-before,router-before,handler`; status 200 alone would not establish that order.
+For `GET /api/status`, application middleware first records `app-before` and calls `next()`. The `/api` mount then selects the router, whose middleware appends `router-before` and continues. Its `/status` handler appends `handler` and sends the completed trace. The response body and `X-Trace` header therefore expose the path `app-before,router-before,handler`; compare their complete trace to check each handler visit in order.
 
 For `GET /blocked`, application middleware still runs first. The next matching middleware sends 403 and deliberately does not continue. The subsequent `/blocked` handler is unreachable on that path. Returning from the middleware does not implicitly call `next()`. The fixture's `UNEXPECTED-HANDLER` output would reveal a violation even if another response looked plausible.
 

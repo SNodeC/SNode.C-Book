@@ -179,7 +179,7 @@ log.event(snode::log::Level::Info,
           sequence);
 ```
 
-`measurement.accepted` permits classification independently of wording. Name observed facts: queuing publication does not establish delivery.
+`measurement.accepted` permits classification independently of wording. Name observed facts separately: publication queued, then subscriber receipt observed.
 
 A system error should carry the error from the failing operation, not whichever `errno` happens to be visible later.
 
