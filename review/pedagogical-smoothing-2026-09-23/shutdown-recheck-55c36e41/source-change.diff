@@ -1,0 +1,259 @@
+diff --git a/src/core/EventLoop.cpp b/src/core/EventLoop.cpp
+index c612f857e..ba332b371 100644
+--- a/src/core/EventLoop.cpp
++++ b/src/core/EventLoop.cpp
+@@ -60,7 +60,7 @@
+ 
+ namespace core {
+ 
+-    int EventLoop::stopsig = 0;
++    volatile std::sig_atomic_t EventLoop::stopsig = 0;
+     unsigned long EventLoop::tickCounter = 0;
+     core::State EventLoop::eventLoopState = State::LOADED;
+ 
+@@ -105,6 +105,15 @@ namespace core {
+                 logger::LogLevel::Error, errnum, "Core::EventLoop sigaddset failed: signal={} phase={}", signalName(signum), phase);
+             return false;
+         }
++
++        bool logPthreadSigmaskFailure(int error, const char* phase) {
++            if (error == 0) {
++                return true;
++            }
++
++            EventLoop::instance().log().sysError(logger::LogLevel::Error, error, "Core::EventLoop pthread_sigmask failed: phase={}", phase);
++            return false;
++        }
+     } // namespace
+ 
+     static std::string getTickCounterAsString() {
+@@ -210,13 +219,24 @@ namespace core {
+         logSigaddsetFailure(sigaddset(&newSet, SIGHUP), SIGHUP, "tick-block-mask");
+ 
+         sigset_t oldSet{};
+-        logSignalFailure(sigprocmask(SIG_BLOCK, &newSet, &oldSet), "sigprocmask", "tick-block");
++        const bool signalMaskBlocked = logPthreadSigmaskFailure(pthread_sigmask(SIG_BLOCK, &newSet, &oldSet), "tick-block");
+ 
+-        if (eventLoopState == State::RUNNING || eventLoopState == State::STOPPING) {
++        if ((eventLoopState == State::RUNNING && stopsig == 0) || eventLoopState == State::STOPPING) {
+             tickStatus = eventMultiplexer.tick(timeOut, oldSet);
+         }
+ 
+-        logSignalFailure(sigprocmask(SIG_SETMASK, &oldSet, nullptr), "sigprocmask", "tick-restore");
++        if (stopsig > 0 && eventLoopState == State::RUNNING) {
++            const int signalNumber = stopsig;
++            EventLoop::instance().log().trace("Core: Received signal '{}' (SIG{} = {})",
++                                              utils::system::strsignal(signalNumber),
++                                              utils::system::sigabbrev_np(signalNumber),
++                                              signalNumber);
++            stop();
++        }
++
++        if (signalMaskBlocked) {
++            logPthreadSigmaskFailure(pthread_sigmask(SIG_SETMASK, &oldSet, nullptr), "tick-restore");
++        }
+ 
+         return tickStatus;
+     }
+@@ -387,10 +407,7 @@ namespace core {
+     }
+ 
+     void EventLoop::stoponsig(int sig) {
+-        EventLoop::instance().log().trace(
+-            "Core: Received signal '{}' (SIG{} = {})", utils::system::strsignal(sig), utils::system::sigabbrev_np(sig), sig);
+         stopsig = sig;
+-        stop();
+     }
+ 
+ } // namespace core
+diff --git a/src/core/EventLoop.h b/src/core/EventLoop.h
+index 599b8ace8..83d9ee682 100644
+--- a/src/core/EventLoop.h
++++ b/src/core/EventLoop.h
+@@ -56,6 +56,7 @@ namespace utils {
+     class Timeval;
+ }
+ 
++#include <csignal>
+ #include <optional>
+ 
+ #endif /* DOXYGEN_SHOULD_SKIP_THIS */
+@@ -85,7 +86,6 @@ namespace core {
+ 
+         static core::State getEventLoopState();
+ 
+-
+     private:
+         // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays, hicpp-avoid-c-arrays, modernize-avoid-c-arrays)
+         static bool init(int argc, char* argv[]);
+@@ -103,7 +103,7 @@ namespace core {
+         mutable std::optional<logger::BoundaryLogger> cachedLog_;
+         mutable unsigned long cachedLogGeneration_ = 0;
+ 
+-        static int stopsig;
++        static volatile std::sig_atomic_t stopsig;
+ 
+         static unsigned long tickCounter;
+ 
+diff --git a/src/log/detail/SpdlogBackend.cpp b/src/log/detail/SpdlogBackend.cpp
+index cc061cb91..e3b501a7a 100644
+--- a/src/log/detail/SpdlogBackend.cpp
++++ b/src/log/detail/SpdlogBackend.cpp
+@@ -16,6 +16,8 @@
+ #include "utils/hexdump.h"
+ 
+ #include <algorithm>
++#include <cerrno>
++#include <csignal>
+ #include <cstdint>
+ #include <cstring>
+ #include <limits>
+@@ -27,6 +29,7 @@
+ #include <spdlog/sinks/callback_sink.h>
+ #include <spdlog/sinks/rotating_file_sink.h>
+ #include <spdlog/sinks/stdout_color_sinks.h>
++#include <system_error>
+ #include <type_traits>
+ #include <unistd.h>
+ #include <utility>
+@@ -35,6 +38,31 @@
+ #endif /* DOXYGEN_SHOULD_SKIP_THIS */
+ 
+ namespace {
++    class SignalBlockGuard {
++    public:
++        SignalBlockGuard() {
++            sigset_t blockedSignals{};
++            if (::sigfillset(&blockedSignals) != 0) {
++                throw std::system_error(errno, std::generic_category(), "sigfillset");
++            }
++
++            const int error = ::pthread_sigmask(SIG_BLOCK, &blockedSignals, &previousMask);
++            if (error != 0) {
++                throw std::system_error(error, std::generic_category(), "pthread_sigmask");
++            }
++        }
++
++        ~SignalBlockGuard() {
++            static_cast<void>(::pthread_sigmask(SIG_SETMASK, &previousMask, nullptr));
++        }
++
++        SignalBlockGuard(const SignalBlockGuard&) = delete;
++        SignalBlockGuard& operator=(const SignalBlockGuard&) = delete;
++
++    private:
++        sigset_t previousMask{};
++    };
++
+     enum class RenderMode : std::uint8_t { Plain, Color, Json };
+ 
+     enum PayloadFlag : std::uint16_t {
+@@ -140,7 +168,10 @@ namespace logger::detail {
+             }
+ 
+             constexpr std::size_t queueSize = 8192;
+-            threadPool = std::make_shared<spdlog::details::thread_pool>(queueSize, 1);
++            {
++                const SignalBlockGuard signalBlockGuard;
++                threadPool = std::make_shared<spdlog::details::thread_pool>(queueSize, 1);
++            }
+ 
+             for (const LogRecord& record : pending) {
+                 emitSemantic(record, semanticStdoutLogger, semanticFileLogger);
+diff --git a/tests/component/core/CMakeLists.txt b/tests/component/core/CMakeLists.txt
+index ee7b2d69e..7a229d26b 100644
+--- a/tests/component/core/CMakeLists.txt
++++ b/tests/component/core/CMakeLists.txt
+@@ -123,7 +123,7 @@ set_tests_properties(
+     SNodeCStopFromCallbackTest PROPERTIES LABELS "component;core;lifecycle"
+                                           SKIP_RETURN_CODE 77 TIMEOUT 5
+ )
+-foreach(scenario IN ITEMS requested signal)
++foreach(scenario IN ITEMS requested signal signal-wait)
+     add_test(NAME ShutdownReceiverNotification_${scenario}
+              COMMAND ShutdownReceiverNotificationTest ${scenario}
+     )
+diff --git a/tests/component/core/ShutdownReceiverNotificationTest.cpp b/tests/component/core/ShutdownReceiverNotificationTest.cpp
+index 94b154a69..bd5e75abb 100644
+--- a/tests/component/core/ShutdownReceiverNotificationTest.cpp
++++ b/tests/component/core/ShutdownReceiverNotificationTest.cpp
+@@ -15,8 +15,11 @@
+ #include "support/TestResult.h"
+ #include "utils/Timeval.h"
+ 
++#include <chrono>
+ #include <csignal>
+ #include <string>
++#include <sys/wait.h>
++#include <unistd.h>
+ 
+ namespace {
+ 
+@@ -71,7 +74,9 @@ int main(int argc, char* argv[]) {
+         tests::support::printRootWithoutSNodeCGroupSkipMessage("ShutdownReceiverNotificationTest");
+     } else {
+         const std::string scenario = argc > 1 ? argv[1] : "requested";
+-        const bool signalShutdown = scenario == "signal";
++        const bool signalWhileWaiting = scenario == "signal-wait";
++        const bool signalShutdown = scenario == "signal" || signalWhileWaiting;
++        const int shutdownSignal = signalWhileWaiting ? SIGINT : signalShutdown ? SIGTERM : 0;
+         int callbackCount = 0;
+         core::ShutdownContext receivedContext;
+ 
+@@ -83,23 +88,44 @@ int main(int argc, char* argv[]) {
+             static_cast<void>(new ShutdownReceiver(pipe.releaseReadFd(), pipe.releaseWriteFd(), callbackCount, receivedContext));
+         }
+ 
+-        core::timer::Timer stopTimer = core::timer::Timer::singleshotTimer(
+-            [signalShutdown]() {
+-                if (signalShutdown) {
+-                    static_cast<void>(::kill(::getpid(), SIGTERM));
+-                } else {
+-                    core::SNodeC::stop();
+-                }
+-            },
+-            utils::Timeval({0, 1000}));
++        pid_t signalerPid = -1;
++        core::timer::Timer stopTimer;
++        if (signalWhileWaiting) {
++            signalerPid = ::fork();
++            testResult.expectTrue(signalerPid >= 0, "SIGINT sender process starts");
++            if (signalerPid == 0) {
++                ::usleep(100000);
++                const int killResult = ::kill(::getppid(), SIGINT);
++                ::_exit(killResult == 0 ? 0 : 1);
++            }
++        } else {
++            stopTimer = core::timer::Timer::singleshotTimer(
++                [signalShutdown]() {
++                    if (signalShutdown) {
++                        static_cast<void>(::kill(::getpid(), SIGTERM));
++                    } else {
++                        core::SNodeC::stop();
++                    }
++                },
++                utils::Timeval({0, 1000}));
++        }
++
++        const auto startTime = std::chrono::steady_clock::now();
++        const int startResult = core::SNodeC::start(signalWhileWaiting ? utils::Timeval({5, 0}) : utils::Timeval({1, 0}));
++        const auto elapsed = std::chrono::steady_clock::now() - startTime;
+ 
+-        const int startResult = core::SNodeC::start(utils::Timeval({1, 0}));
++        if (signalerPid > 0) {
++            int signalerStatus = 0;
++            testResult.expectEqual(signalerPid, ::waitpid(signalerPid, &signalerStatus, 0), "SIGINT sender process is reaped");
++            testResult.expectTrue(WIFEXITED(signalerStatus) && WEXITSTATUS(signalerStatus) == 0, "SIGINT sender process succeeds");
++            testResult.expectTrue(elapsed < std::chrono::seconds(2), "SIGINT interrupts the waiting event-loop thread immediately");
++        }
+ 
+         testResult.expectEqual(1, callbackCount, "active receiver receives shutdown exactly once");
+         testResult.expectTrue(receivedContext.reason == (signalShutdown ? core::ShutdownReason::Signal : core::ShutdownReason::Requested),
+                               "shutdown reason identifies the trigger");
+-        testResult.expectEqual(signalShutdown ? SIGTERM : 0, receivedContext.signal, "signal number is preserved only for signal shutdown");
+-        testResult.expectEqual(signalShutdown ? -SIGTERM : 0, startResult, "event loop returns the triggering signal");
++        testResult.expectEqual(shutdownSignal, receivedContext.signal, "signal number is preserved only for signal shutdown");
++        testResult.expectEqual(-shutdownSignal, startResult, "event loop returns the triggering signal");
+ 
+         core::SNodeC::free();
+         result = testResult.processResult();

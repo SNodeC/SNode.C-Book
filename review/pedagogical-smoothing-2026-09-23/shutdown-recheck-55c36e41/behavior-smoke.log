@@ -1,0 +1,18 @@
+COMMAND: ["bash", "ci/run-behavior-smoke-tests.sh"]
+SOURCE: 55c36e418a831573ac9b5284830f4bd0d5074bac
+PREFIX: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/install-gcc
+Using example build directory: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples
+Using SNode.C install prefix: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/install-gcc
+SSE-Server smoke endpoint: http://127.0.0.1:60563/events
+MiniGateway Extended smoke endpoint: http://127.0.0.1:39403
+MiniGateway Extended Unix socket: /tmp/snodec-book-smoke-1106272.sock
+Starting sse-server: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/SSE-Server/sse-server legacy local --port 60563
+SSE-Server runtime smoke test passed.
+Starting minigateway-extended: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/MiniGateway-Extended/minigateway-extended web local --host 127.0.0.1 --port 39403 measurement-input local --sun-path /tmp/snodec-book-smoke-1106272.sock mqtt-uplink remote --host 127.0.0.1 --port 1883
+MiniGateway Extended Unix-input runtime smoke test passed.
+Starting line-length: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/LineProtocol-Server/line-protocol-server lineprotocolserver local --host 127.0.0.1 --port 36311
+Line length: exact boundary accepted; overlong whole/split records rejected.
+Starting minigateway-mqtt-wire: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/MiniGateway/minigateway web --disabled mqtt-uplink remote --host 127.0.0.1 --port 46093
+Starting minigateway-extended-mqtt-wire: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/MiniGateway-Extended/minigateway-extended web --disabled mqtt-uplink remote --host 127.0.0.1 --port 54115 measurement-input --disabled
+Both gateways send CONNECT with MQTT protocol level 4; no private bit.
+Behavioral smoke tests passed.

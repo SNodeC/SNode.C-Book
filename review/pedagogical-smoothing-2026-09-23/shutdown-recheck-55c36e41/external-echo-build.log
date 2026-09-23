@@ -1,0 +1,9 @@
+COMMAND: ["cmake", "--build", "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo", "--parallel", "4"]
+SOURCE: 55c36e418a831573ac9b5284830f4bd0d5074bac
+PREFIX: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/install-gcc
+[1/6] Building CXX object CMakeFiles/echo-context.dir/EchoSocketContext.cpp.o
+[2/6] Linking CXX static library libecho-context.a
+[3/6] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[4/6] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[5/6] Linking CXX executable echoserver
+[6/6] Linking CXX executable echoclient

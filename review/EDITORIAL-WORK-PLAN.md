@@ -2110,3 +2110,28 @@ here. The separate restored ch13 log snapshot timing concern remains unverified
 behind shutdown. Book work stays paused. Per-exercise assertions reached, source
 path, suite-coverage limitations and raw traces:
 shutdown-investigation-9746d186/REPORT.md under this pass.
+
+### Follow-up 08 — verify the new signal-ownership fix, then report
+
+The author requests another check after the framework changes (verbatim in
+FOLLOWUP-08.md). Verification-only scope: no manuscript refinement or repair.
+Read-only author tree clean at 55c36e418a831573ac9b5284830f4bd0d5074bac.
+A verified fresh 1,448-file export/build/install passes all 185 framework CTests,
+all four external echo tests, all 62 public exercises and teaching/behavior/
+lifetime suites, with zero skips. All twelve previously failing exercises pass
+with their restored drivers and timeouts. The new framework signal-wait
+regression passes in 0.11 seconds; the 4,096-record drain regression also passes.
+
+The prior idle-listener SIGINT reproduction passes 100/100 fresh processes,
+alternating disabled/default logging and three signal-delivery delays, retaining
+the five-second grace. Every worker mask blocks SIGINT; normal status 254 in all
+trials, maximum observed shutdown 7.74 ms. No wake-up traffic or timeout extension.
+The old shutdown failure no longer reproduces. The scoped logging checkpoint
+passes in this run; this does not certify arbitrary early async log snapshots.
+
+Source freeze and tracked/non-ignored manuscript/ci/companion hashes are unchanged.
+No test or timeout edits; ci/companion still match fa62fa1. No runtime failures or
+skips remain in this check. Formal source-baseline reconciliation to the new HEAD
+and unfinished P1 editorial work remain pending explicit resumption. Evidence:
+shutdown-recheck-55c36e41/REPORT.md, all-tests.md, summary.json, raw logs and
+sigint-stress.json under this pass. Verification complete; stop and report.

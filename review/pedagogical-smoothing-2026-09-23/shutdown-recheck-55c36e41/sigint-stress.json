@@ -1,0 +1,2352 @@
+[
+  {
+    "index": 0,
+    "mode": "disabled",
+    "pid": 1106661,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=40065"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106662,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032506221905350685,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 1,
+    "mode": "default",
+    "pid": 1106663,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=55093"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106664,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034312820062041283,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 2,
+    "mode": "disabled",
+    "pid": 1106665,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=45475"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106666,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032961589749902487,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 3,
+    "mode": "default",
+    "pid": 1106667,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=40705"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106668,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033527410123497248,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 4,
+    "mode": "disabled",
+    "pid": 1106669,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=59889"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106670,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003303032834082842,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 5,
+    "mode": "default",
+    "pid": 1106671,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=39687"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106672,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034032240509986877,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 6,
+    "mode": "disabled",
+    "pid": 1106673,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=52749"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106674,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033366200514137745,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 7,
+    "mode": "default",
+    "pid": 1106675,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=57381"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106676,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003362606978043914,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 8,
+    "mode": "disabled",
+    "pid": 1106677,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=52535"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106678,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.00337120215408504,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 9,
+    "mode": "default",
+    "pid": 1106679,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=49595"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106680,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003245810978114605,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 10,
+    "mode": "disabled",
+    "pid": 1106681,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=37539"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106682,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032880541402846575,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 11,
+    "mode": "default",
+    "pid": 1106683,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=37613"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106684,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033282600343227386,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 12,
+    "mode": "disabled",
+    "pid": 1106686,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=35019"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106687,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003287549829110503,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 13,
+    "mode": "default",
+    "pid": 1106688,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=44715"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106689,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032549770548939705,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 14,
+    "mode": "disabled",
+    "pid": 1106690,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=36937"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106692,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003278043819591403,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 15,
+    "mode": "default",
+    "pid": 1106693,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=48205"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106694,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033422361593693495,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 16,
+    "mode": "disabled",
+    "pid": 1106695,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=35755"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106696,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033686161041259766,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 17,
+    "mode": "default",
+    "pid": 1106697,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=58963"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106698,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034825410693883896,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 18,
+    "mode": "disabled",
+    "pid": 1106699,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=42557"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106700,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003259639022871852,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 19,
+    "mode": "default",
+    "pid": 1106701,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=48959"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106702,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.00365703203715384,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 20,
+    "mode": "disabled",
+    "pid": 1106711,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=35667"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106712,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032026891130954027,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 21,
+    "mode": "default",
+    "pid": 1106713,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=49519"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106714,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003459661966189742,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 22,
+    "mode": "disabled",
+    "pid": 1106715,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=52349"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106716,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032918329816311598,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 23,
+    "mode": "default",
+    "pid": 1106717,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=56025"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106718,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032762440387159586,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 24,
+    "mode": "disabled",
+    "pid": 1106719,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=39233"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106720,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003363975090906024,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 25,
+    "mode": "default",
+    "pid": 1106721,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=38265"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106722,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003344401018694043,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 26,
+    "mode": "disabled",
+    "pid": 1106723,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=37753"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106724,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032806729432195425,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 27,
+    "mode": "default",
+    "pid": 1106725,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=37511"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106726,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032915151678025723,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 28,
+    "mode": "disabled",
+    "pid": 1106727,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=40565"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106728,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034204290714114904,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 29,
+    "mode": "default",
+    "pid": 1106729,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=54015"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106730,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003260641125962138,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 30,
+    "mode": "disabled",
+    "pid": 1106731,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=46059"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106732,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0031533699948340654,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 31,
+    "mode": "default",
+    "pid": 1106733,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=58807"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106734,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003241232130676508,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 32,
+    "mode": "disabled",
+    "pid": 1106735,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=33233"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106736,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033581960014998913,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 33,
+    "mode": "default",
+    "pid": 1106738,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=38363"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106740,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003321633907034993,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 34,
+    "mode": "disabled",
+    "pid": 1106741,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=38581"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106742,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033450538758188486,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 35,
+    "mode": "default",
+    "pid": 1106743,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=40315"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106744,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003406499046832323,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 36,
+    "mode": "disabled",
+    "pid": 1106745,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=34727"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106746,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032846529502421618,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 37,
+    "mode": "default",
+    "pid": 1106751,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=54961"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106755,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003364976029843092,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 38,
+    "mode": "disabled",
+    "pid": 1106756,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=34041"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106757,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033822371624410152,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 39,
+    "mode": "default",
+    "pid": 1106758,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=56101"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106759,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033486648462712765,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 40,
+    "mode": "disabled",
+    "pid": 1106760,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=42853"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106761,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033562330063432455,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 41,
+    "mode": "default",
+    "pid": 1106762,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=47645"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106763,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003412100952118635,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 42,
+    "mode": "disabled",
+    "pid": 1106764,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=34073"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106765,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032429969869554043,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 43,
+    "mode": "default",
+    "pid": 1106766,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=55547"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106767,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0031840719748288393,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 44,
+    "mode": "disabled",
+    "pid": 1106768,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=57547"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106769,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032712440006434917,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 45,
+    "mode": "default",
+    "pid": 1106770,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=38257"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106771,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032759669702500105,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 46,
+    "mode": "disabled",
+    "pid": 1106772,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=49259"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106773,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034379009157419205,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 47,
+    "mode": "default",
+    "pid": 1106776,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=46453"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106778,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032121329568326473,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 48,
+    "mode": "disabled",
+    "pid": 1106781,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=33995"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106785,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.00328658614307642,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 49,
+    "mode": "default",
+    "pid": 1106786,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=48897"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106787,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033699949271976948,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 50,
+    "mode": "disabled",
+    "pid": 1106788,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=49477"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106790,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.00773830316029489,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 51,
+    "mode": "default",
+    "pid": 1106791,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=33165"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106792,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032393040601164103,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 52,
+    "mode": "disabled",
+    "pid": 1106793,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=35705"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106794,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033558611758053303,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 53,
+    "mode": "default",
+    "pid": 1106795,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=57279"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106796,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032641298603266478,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 54,
+    "mode": "disabled",
+    "pid": 1106797,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=58343"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106798,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003177165985107422,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 55,
+    "mode": "default",
+    "pid": 1106799,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=37059"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106800,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003446904942393303,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 56,
+    "mode": "disabled",
+    "pid": 1106803,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=47675"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106804,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003484712913632393,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 57,
+    "mode": "default",
+    "pid": 1106805,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=47693"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106806,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034278640523552895,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 58,
+    "mode": "disabled",
+    "pid": 1106807,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=43119"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106808,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034900279715657234,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 59,
+    "mode": "default",
+    "pid": 1106809,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=36503"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106810,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.007424489129334688,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 60,
+    "mode": "disabled",
+    "pid": 1106811,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=35941"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106813,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033422010019421577,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 61,
+    "mode": "default",
+    "pid": 1106814,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=42295"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106815,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033199030440300703,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 62,
+    "mode": "disabled",
+    "pid": 1106816,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=42469"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106817,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003290780121460557,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 63,
+    "mode": "default",
+    "pid": 1106818,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=45241"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106819,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034166560508310795,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 64,
+    "mode": "disabled",
+    "pid": 1106821,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=59587"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106822,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003380731912329793,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 65,
+    "mode": "default",
+    "pid": 1106824,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=54165"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106825,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032910341396927834,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 66,
+    "mode": "disabled",
+    "pid": 1106826,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=35179"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106827,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033658589236438274,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 67,
+    "mode": "default",
+    "pid": 1106828,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=57897"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106829,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034008340444415808,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 68,
+    "mode": "disabled",
+    "pid": 1106830,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=46979"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106831,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003341834992170334,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 69,
+    "mode": "default",
+    "pid": 1106832,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=39705"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106833,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003424067050218582,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 70,
+    "mode": "disabled",
+    "pid": 1106834,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=60927"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106835,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034103929065167904,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 71,
+    "mode": "default",
+    "pid": 1106836,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=46293"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106837,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032651161309331656,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 72,
+    "mode": "disabled",
+    "pid": 1106839,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=59467"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106841,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003321154974400997,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 73,
+    "mode": "default",
+    "pid": 1106842,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=46785"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106843,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003313300898298621,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 74,
+    "mode": "disabled",
+    "pid": 1106844,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=57323"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106845,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0034350280184298754,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 75,
+    "mode": "default",
+    "pid": 1106846,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=42889"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106855,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003365473821759224,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 76,
+    "mode": "disabled",
+    "pid": 1106856,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=55503"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106857,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033870809711515903,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 77,
+    "mode": "default",
+    "pid": 1106858,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=40427"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106859,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003331159008666873,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 78,
+    "mode": "disabled",
+    "pid": 1106860,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=46871"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106861,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.007615933893248439,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 79,
+    "mode": "default",
+    "pid": 1106862,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=52719"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106864,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032129879109561443,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 80,
+    "mode": "disabled",
+    "pid": 1106866,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=43595"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106867,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.007305321982130408,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 81,
+    "mode": "default",
+    "pid": 1106868,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=51541"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106869,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003256323980167508,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 82,
+    "mode": "disabled",
+    "pid": 1106870,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=39387"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106871,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033010949846357107,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 83,
+    "mode": "default",
+    "pid": 1106872,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=44171"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106878,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.007442299043759704,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 84,
+    "mode": "disabled",
+    "pid": 1106886,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=54647"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106887,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.007425161777064204,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 85,
+    "mode": "default",
+    "pid": 1106888,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=49917"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106895,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003344845026731491,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 86,
+    "mode": "disabled",
+    "pid": 1106906,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=37697"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106907,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0075933500193059444,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 87,
+    "mode": "default",
+    "pid": 1106908,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=48949"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106909,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.00749823497608304,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 88,
+    "mode": "disabled",
+    "pid": 1106917,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=56241"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106918,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.00759863993152976,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 89,
+    "mode": "default",
+    "pid": 1106919,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=44717"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106920,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003379144938662648,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 90,
+    "mode": "disabled",
+    "pid": 1106921,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=47979"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106922,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003386658150702715,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 91,
+    "mode": "default",
+    "pid": 1106923,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=41215"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106924,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0032897391356527805,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 92,
+    "mode": "disabled",
+    "pid": 1106925,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=47839"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106926,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.00334963109344244,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 93,
+    "mode": "default",
+    "pid": 1106927,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=49575"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106928,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003310753032565117,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 94,
+    "mode": "disabled",
+    "pid": 1106929,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=52091"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106930,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003411326091736555,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 95,
+    "mode": "default",
+    "pid": 1106931,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=47505"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106932,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.007490625837817788,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 96,
+    "mode": "disabled",
+    "pid": 1106933,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=51313"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106934,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.003303882898762822,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 97,
+    "mode": "default",
+    "pid": 1106935,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=33867"
+    ],
+    "idle_delay_seconds": 0.002,
+    "workers": [
+      {
+        "tid": 1106936,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033364880364388227,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 98,
+    "mode": "disabled",
+    "pid": 1106937,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=39575"
+    ],
+    "idle_delay_seconds": 0.01,
+    "workers": [
+      {
+        "tid": 1106938,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.007494147168472409,
+    "returncode": 254,
+    "passed": true
+  },
+  {
+    "index": 99,
+    "mode": "default",
+    "pid": 1106939,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/examples/companion/examples/EchoPair/echoserver",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=59381"
+    ],
+    "idle_delay_seconds": 0,
+    "workers": [
+      {
+        "tid": 1106940,
+        "blocked_mask": "fffffffe7ffbfeff",
+        "sigint_blocked": true
+      }
+    ],
+    "shutdown_seconds": 0.0033761048689484596,
+    "returncode": 254,
+    "passed": true
+  }
+]

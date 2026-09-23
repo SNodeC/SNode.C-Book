@@ -1,0 +1,55 @@
+COMMAND: ["ctest", "--test-dir", "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo", "--output-on-failure", "--no-tests=error", "-V", "--output-junit", "/home/voc/projects/snodec/publications/book/review/pedagogical-smoothing-2026-09-23/shutdown-recheck-55c36e41/external-echo-tests.xml"]
+SOURCE: 55c36e418a831573ac9b5284830f4bd0d5074bac
+PREFIX: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/install-gcc
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/DartConfiguration.tcl
+Parse Config file:/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: echo.config-surface
+
+1: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/source/examples/echo/tests/echo_tests.py" "config" "--server" "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/echoserver" "--client" "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/echoclient"
+1: Working Directory: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/tests
+1: Test timeout computed to be: 10
+1/4 Test #1: echo.config-surface ..............   Passed    0.08 sec
+test 2
+    Start 2: echo.server-external-peer
+
+2: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/source/examples/echo/tests/echo_tests.py" "server" "--server" "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/echoserver"
+2: Working Directory: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/tests
+2: Test timeout computed to be: 10
+2/4 Test #2: echo.server-external-peer ........   Passed    0.12 sec
+test 3
+    Start 3: echo.client-external-peer
+
+3: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/source/examples/echo/tests/echo_tests.py" "client" "--client" "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/echoclient"
+3: Working Directory: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/tests
+3: Test timeout computed to be: 10
+3/4 Test #3: echo.client-external-peer ........   Passed    0.06 sec
+test 4
+    Start 4: echo.pair-smoke
+
+4: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/source/examples/echo/tests/echo_tests.py" "pair" "--server" "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/echoserver" "--client" "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/echoclient"
+4: Working Directory: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-55c36e41/external-echo/tests
+4: Test timeout computed to be: 10
+4/4 Test #4: echo.pair-smoke ..................   Passed    0.36 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+client           =   0.06 sec*proc (1 test)
+configuration    =   0.08 sec*proc (1 test)
+echo             =   0.62 sec*proc (4 tests)
+example          =   0.62 sec*proc (4 tests)
+external         =   0.62 sec*proc (4 tests)
+pair             =   0.36 sec*proc (1 test)
+payload          =   0.18 sec*proc (2 tests)
+server           =   0.12 sec*proc (1 test)
+smoke            =   0.36 sec*proc (1 test)
+
+Total Test time (real) =   0.62 sec

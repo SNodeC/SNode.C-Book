@@ -1,0 +1,7 @@
+2026-09-23T14:15:47.750Z INF framework/instance core.socket.stream role=server inst=echoserver — listener started
+2026-09-23T14:15:47.751Z INF application/application echo — echoserver: listening on '127.0.0.1:55093'
+2026-09-23T14:15:47.753Z INF framework/connection core.socket.stream role=server inst=echoserver conn=1 — transport connected
+2026-09-23T14:15:47.753Z INF application/context core.socket.context inst=echoserver conn=1 — Echo context attached
+2026-09-23T14:15:47.754Z INF application/context core.socket.context inst=echoserver conn=1 — Echo context detached: connection close
+2026-09-23T14:15:47.754Z INF framework/connection core.socket.stream role=server inst=echoserver conn=1 — transport disconnected
+2026-09-23T14:15:47.756Z INF framework/instance core.socket.stream role=server inst=echoserver — listener stopped

@@ -1,0 +1,12 @@
+{
+  "trials": 100,
+  "passed": 100,
+  "failed": 0,
+  "grace_seconds": 5,
+  "logging_modes": [
+    "disabled",
+    "default"
+  ],
+  "maximum_shutdown_seconds": 0.00773830316029489,
+  "median_shutdown_seconds": 0.0033468593610450625
+}

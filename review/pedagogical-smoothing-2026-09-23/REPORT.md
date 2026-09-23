@@ -1,4 +1,16 @@
-# Pedagogical smoothing — paused pending framework repair
+# Pedagogical smoothing — runtime verification green; refinement paused
+
+Current author instruction: FOLLOWUP-08.md requests another verification and
+report. Clean framework **55c36e418a831573ac9b5284830f4bd0d5074bac** passes the
+fresh build, **185/185 framework tests**, **4/4 external echo tests**, **62/62
+public exercises**, and teaching/behavior/lifetime checks, with zero skips.
+The dedicated SIGINT reproduction passes **100/100** trials with the original
+five-second grace (maximum observed shutdown 7.74 ms). All twelve previously
+failing exercises now pass unchanged. No framework, manuscript, test or timeout
+edits; source and book inputs preserved. See
+[the complete new verification](shutdown-recheck-55c36e41/REPORT.md).
+Book refinement has not resumed and the recorded source pin remains 8b8da56.
+The earlier verification and investigation notes below are historical.
 
 Follow-up 07 requests detailed investigation only. The new trace confirms SIGINT
 on the logging worker while main remains in epoll; a later listener connection
@@ -42,7 +54,7 @@ supersedes that stop. R continues with failed checks explicitly qualified.
 | R evidence | qualified; author directs continuation | 1ceb6ef527386a18421e419fcce3122f0ccd472c; R-results.json |
 | P0b-resume | qualified; author directs continuation | containing entry-gate commit; P0b-resume-results.json, lab-repair-review.md |
 | P1 | incomplete; paused by author | uncommitted vocabulary edits; no P1 gate commit |
-| P2–P7 | not started | awaiting framework repair and resumed source agreement |
+| P2–P7 | not started | runtime recheck green at 55c36e41; source-baseline reconciliation and explicit refinement resumption pending |
 
 ## Source and review
 
