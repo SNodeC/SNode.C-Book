@@ -17,7 +17,7 @@
 
 The reader has now built and extended MiniGateway after studying its underlying runtime and protocols. The harder task is deciding which of those choices should survive when requirements change: whether state must outlive the process, whether a peer needs a different trust boundary, or whether two roles need independent operation.
 
-Here, *role* is used in the system-design sense unless the text explicitly refers to configured runtime roles and registered instances.
+Here, *role* means a design responsibility, while an instance supplies a concrete endpoint’s configuration and runtime identity.
 
 
 A category mistake places a concern where its lifetime or policy cannot be owned: for example, global ordering in a request callback or service-supervisor policy in per-connection code.
@@ -31,7 +31,7 @@ Most design choices in this book reduce to five questions:
 
 | Decision | Ask this | Typical home |
 |---|---|---|
-| Communication family | Where is the peer, and how is it identified? | IPv4, IPv6, Unix-domain, RFCOMM, L2CAP |
+| Network family | Where is the peer, and how is it identified? | IPv4, IPv6, Unix-domain, RFCOMM, L2CAP |
 | Protocol surface | What kind of conversation is this? | stream protocol, HTTP, SSE, WebSocket, MQTT |
 | Role shape | Who produces, observes, commands, adapts, or administers? | explicit application roles and configured instances |
 | Lifetime | How long should this state or policy live? | context, application model, database, service, deployment |
@@ -73,11 +73,11 @@ Input roles parse measurements; the shared model assigns acceptance order once. 
 
 ### Choose family and protocol by the conversation
 
-\index{communication family}
+\index{network family}
 \index{network family selection}
 
 
-At the lowest practical level, the communication family shapes endpoint identity, permissions, diagnostics, deployment, and operating-system assumptions.
+At the lowest practical level, the network family shapes endpoint identity, permissions, diagnostics, deployment, and operating-system assumptions.
 
 Use **IPv4/IPv6** for genuinely network-facing roles, **Unix domain sockets** for local machine IPC, and **Bluetooth RFCOMM/L2CAP** for nearby, paired, device-near, or commissioning-oriented exchange. Do not choose a family merely because it is familiar. Bluetooth can carry byte streams, but that does not make it a general-purpose integration bus.
 
@@ -86,7 +86,7 @@ Use **IPv4/IPv6** for genuinely network-facing roles, **Unix domain sockets** fo
 \index{API surface}
 
 
-Once the communication family is plausible, ask what kind of conversation the application actually needs.
+Once the network family is plausible, ask what kind of conversation the application actually needs.
 
 | The conversation wants... | Candidate surface |
 |---|---|
@@ -132,10 +132,10 @@ MiniGateway Extended adds local measurement input through a Unix-domain socket. 
 |---|---|---|
 | add an HTTP `POST` route | producers already use HTTP and share its authentication policy | requires request parsing and web access policy for the input |
 | publish measurements through MQTT | producers already participate in the brokered system | local input depends on broker availability and topic permissions |
-| create a Unix-domain input role | local processes need a direct stream interface controlled by filesystem access | adds a socket path, framing rules, and a lower-family dependency |
+| create a Unix-domain input role | local processes need a direct stream interface controlled by filesystem access | adds a socket path, framing rules, and a network-family dependency |
 | use a separate collector service | device access needs different privileges or restart behavior | introduces another deployment unit and an interprocess recovery contract |
 
-Chapter 29 chooses direct local input, at the cost of another socket path, configured role, file group, and component dependency. An HTTP input remains valid when producers already share the web contract. With the Unix-domain role, later IPC framing changes stay there; web-observation changes stay in the web role; broker-topic changes stay in the MQTT role. The model remains their shared acceptance boundary.
+Chapter 29 chooses direct local input, at the cost of another socket path, instance, file group, and component dependency. An HTTP input remains valid when producers already share the web contract. With the Unix-domain role, later IPC framing changes stay there; web-observation changes stay in the web role; broker-topic changes stay in the MQTT role. The model remains their shared acceptance boundary.
 
 ### Place implementation and operational policy
 
@@ -192,7 +192,7 @@ Keep meaning visible until the layer, role, or operational surface that owns it 
 
 Do not push meaning downward merely because a lower callback sees an event first. Do not push it upward merely because a global object can reach everything. Place the concern where its lifetime, audience, failure consequence, and diagnostic needs are all visible.
 
-The current flow API provides another concrete boundary test. Two explicit connections can have independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate endpoint roles. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.
+The current flow API provides another concrete boundary test. Two explicit connections can have independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate instances. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.
 
 Appendix A applies this judgment to framework extension: new features should be added where their responsibility, lifetime, and operational consequences remain clear.
 
@@ -204,7 +204,7 @@ Appendix A applies this judgment to framework extension: new features should be 
 
 ::: {.snodec-exercise title="Exercises"}
 1. **Review (O1).** Why can neither an SSE event ID nor a producer-supplied sequence define MiniGateway acceptance order? Explain how to retain a sensor's original sample number.
-2. **Review (O3).** When do two connections need separate endpoint roles rather than two flow handles?
+2. **Review (O3).** When do two connections need separate instances rather than two flow handles?
 3. **Lab (O2).** Build and run the model-ownership solution. Submit measurements carrying conflicting sequence numbers; expect accepted order 1, 2, 3. Unsubscribe one observer before the third acceptance and verify only the remaining observer receives it.
 4. **Lab (O1, O2).** Build and run the model-instances lab: shared inputs give order 1, 2; separate models each start at 1. Then run the **Part XI checkpoint** in the public solutions: combine HTTP and Unix input with MQTT unavailable, reject malformed CSV, disconnect/reconnect an SSE observer, and restart the gateway. Expect one local acceptance order, a current-state snapshot on reconnect, and sequence zero after restart.
 5. **Design (O3).** A local sensor reader requires elevated device privileges and independent restarts. Choose a process boundary and an IPC contract. Use the checkpoint observations and decision tables to justify identity, framing, recovery, and diagnostic ownership.

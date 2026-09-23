@@ -1,7 +1,7 @@
 ## TLS Across the Framework {#tls-across-the-framework}
 
 ::: {.snodec-objectives title="Learning objectives"}
-- **O1.** Explain which responsibilities TLS changes and which remain with the carrier and protocol.
+- **O1.** Explain which responsibilities TLS changes and which remain with the network family and protocol.
 - **O2.** Distinguish trust, expected peer identity and SNI when diagnosing a secure connection.
 - **O3.** Decide where to apply handshake, shutdown and deployment policy.
 :::
@@ -19,15 +19,15 @@ Identity, trust, handshake timing and close-notify belong to secure connection h
 \index{TLS!connection layer}
 \index{connection-layer specialization}
 
-TLS sits above the lower family and stream transport and below the application protocol. The registered instance still owns the role, and its factory still creates the protocol context.
+TLS sits above the network family and stream transport and below the application protocol. The instance still supplies shared configuration, and its factory still creates the protocol context.
 
-Where a TLS wrapper exists for a lower family, this pattern applies. The chapter uses IPv4 examples because they are familiar, not because the architectural idea is IPv4-specific. The same connection-layer specialization can be expressed for other lower families where the corresponding TLS stream components are available.
+Where a TLS wrapper exists for a network family, this pattern applies. The chapter uses IPv4 examples because they are familiar, not because the architectural idea is IPv4-specific. The same connection-layer specialization can be expressed for other network families where the corresponding TLS stream components are available.
 
-Not every lower family has identical deployment meaning. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP still have different endpoint identities and operating-system assumptions. The point is that TLS does not erase that lower-family identity. It specializes the stream connection handling above it.
+Not every network family has identical deployment meaning. IPv4, IPv6, Unix domain sockets, RFCOMM, and L2CAP still have different endpoint identities and operating-system assumptions. The point is that TLS does not erase that network-family identity. It specializes the stream connection handling above it.
 
 Figure \ref{fig:tls-connection-layer-specialization} locates this specialization without enumerating every TLS-enabled class variant.
 
-![TLS as a connection-layer specialization: the lower family, application protocol, and socket context shape remain stable, while the stream connection is specialized from legacy byte transport to TLS-secured byte transport.](assets/figures/pdf/fig-15-tls-connection-layer-specialization.pdf){#fig:tls-connection-layer-specialization width=90% latex-placement="tbp"}
+![TLS as a connection-layer specialization: the network family, application protocol, and socket context shape remain stable, while the stream connection is specialized from legacy byte transport to TLS-secured byte transport.](assets/figures/pdf/fig-15-tls-connection-layer-specialization.pdf){#fig:tls-connection-layer-specialization width=90% latex-placement="tbp"}
 
 \index{legacy streams}
 \index{TLS streams}
@@ -35,9 +35,9 @@ Figure \ref{fig:tls-connection-layer-specialization} locates this specialization
 
 | Concern | Legacy stream | TLS stream |
 |---|---|---|
-| handle | selects a lower-family stream role | selects a lower-family TLS stream role |
-| registered instance | same runtime-visible role model | same runtime-visible role model |
-| lower family | IPv4, IPv6, Unix domain sockets, Bluetooth, etc. | still present beneath TLS |
+| handle | selects a network-family stream type | selects a network-family TLS stream type |
+| instance | same instance model | same instance model |
+| network family | IPv4, IPv6, Unix domain sockets, Bluetooth, etc. | still present beneath TLS |
 | connection machinery | legacy reader/writer | TLS reader/writer |
 | setup work | socket/connect/listen | socket/connect/listen plus SSL object setup and TLS handshake |
 | shutdown work | socket shutdown/close | socket shutdown/close plus TLS shutdown and close-notify handling |
@@ -76,7 +76,7 @@ The important parts are:
 
 | Part | Meaning |
 |---|---|
-| `net::in::stream::SocketServer` / `SocketClient` | existing lower-family stream server/client shell |
+| `net::in::stream::SocketServer` / `SocketClient` | existing network-family stream server/client shell |
 | TLS `SocketAcceptor` / `SocketConnector` | TLS-aware connection-layer creation |
 | TLS config type | ordinary stream configuration extended with TLS settings |
 | `SocketContextFactoryT` | the factory construction pattern from Chapter 10 |
@@ -190,11 +190,11 @@ Handshake failure, established-stream shutdown, and an already active shutdown h
 
 These lifecycle cases require separate observations; none replaces deployment checks for trust, names or application authorization.
 
-### Carrier and protocol decisions
+### Network family and protocol decisions {#carrier-and-protocol-decisions}
 
-For a Unix-domain carrier, pathname permissions still determine who can reach the socket, while TLS peer verification answers a separate identity question. For a Bluetooth carrier, discovery, service endpoint selection, and any pairing required by the platform’s security policy still precede the secure conversation. An encrypted stream cannot repair a wrong PSM, an inaccessible pathname, or a missing route.
+For a Unix-domain connection, pathname permissions still determine who can reach the socket, while TLS peer verification answers a separate identity question. For a Bluetooth connection, discovery, service endpoint selection, and any pairing required by the platform’s security policy still precede the secure conversation. An encrypted stream cannot repair a wrong PSM, an inaccessible pathname, or a missing route.
 
-The IPv4 examples make the TLS boundary visible without adding those setup requirements. Transferring the protocol to another supported carrier preserves the trust and identity decisions while adding that carrier’s own reachability and operating-system checks.
+The IPv4 examples make the TLS boundary visible without adding those setup requirements. Transferring the protocol to another supported network family preserves the trust and identity decisions while adding that network family’s own reachability and operating-system checks.
 
 A context can retain its readiness, read/send and state-handling logic when the secure and insecure conversations agree. TLS details enter protocol logic deliberately when they have application meaning.
 
@@ -223,7 +223,7 @@ Locate a TLS failure along its lifecycle: transport establishment, SSL object cr
 
 Use configuration display to inspect TLS settings. Use semantic lifecycle records to distinguish attempts, transport readiness, and protocol attachment. Preserve the explicit system or TLS error from the failing boundary rather than substituting an unrelated later `errno`.
 
-Use scoped debug or trace policy for detailed handshake and shutdown investigation. Connection identity connects those records to a concrete peer episode. Certificate and trust diagnostics should remain useful without exposing private key material or unnecessary sensitive values. TLS uses the same semantic diagnostic model as the rest of the framework.
+Use scoped debug or trace policy for detailed handshake and shutdown investigation. Connection identity connects those records to a concrete connection. Certificate and trust diagnostics should remain useful without exposing private key material or unnecessary sensitive values. TLS uses the same semantic diagnostic model as the rest of the framework.
 
 Correlate the failed TLS episode with its connection identity before interpreting later retry records as a second failure of the same handshake.
 
@@ -235,7 +235,7 @@ There is also a deployment choice. In-process TLS keeps the peer’s TLS connect
 Write the protocol endpoint as if secure and insecure transport are the same conversation whenever that is actually true.
 :::
 
-Let the selected handle, registered instance, TLS wrapper and configuration carry the secure-transport differences unless they change protocol semantics.
+Let the selected handle, instance, TLS wrapper and configuration carry the secure-transport differences unless they change protocol semantics.
 
 \index{TLS!deployment responsibility}
 
@@ -244,8 +244,8 @@ TLS-capable components make secure connection handling possible; they do not by 
 That distinction will matter again in the deployment chapters. A binary may be linked with TLS support and still fail as a secure service if the surrounding filesystem, permissions, and trust material are wrong. TLS-capable linking is not the same as TLS deployment.
 
 ::: {.snodec-remember title="What to remember"}
-- TLS adds secure setup, verification and shutdown between the carrier and protocol.
-- The handle, registered instance and factory retain their responsibilities when the stream wrapper changes.
+- TLS adds secure setup, verification and shutdown between the network family and protocol.
+- The handle, instance and factory retain their responsibilities when the stream wrapper changes.
 - Trust, expected identity and SNI require separate decisions before secure readiness.
 - A context can remain TLS-independent when secure and insecure transports carry the same conversation.
 - Use certificate or TLS properties in protocol logic when they affect application semantics.

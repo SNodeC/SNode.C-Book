@@ -28,7 +28,7 @@ The figure goes beyond compilation: a component acquires an install location and
 
 General-purpose Linux workstations, servers, virtual machines and Debian-like SBCs provide the first rehearsal: build, install, package, configure and supervise. Even here the executable may need protocol extensions, TLS material, database access or web assets.
 
-Chapter 25's component boundaries remain useful after installation. An IPv4 stream tool need not carry HTTP, MQTT or MariaDB; a web administrator may need Express but no MQTT; a bridge selects client/carrier support, while a store adds persistence.
+Chapter 25's component boundaries remain useful after installation. An IPv4 stream tool need not carry HTTP, MQTT or MariaDB; a web administrator may need Express but no MQTT; a bridge selects client and stream support, while a store adds persistence.
 
 Runtime packages supply libraries, modules, configuration and service files. Development packages also supply public headers and exported targets. Check the complete role: external libraries, readable configuration, writable log/pid directories, TLS keys and trust, database connectivity and web assets can all be required beyond the executable.
 
@@ -366,7 +366,7 @@ A SNode.C deployment can be read with a checklist. It is not a command sequence;
 14. Which trust model protects package updates?
 :::
 
-A deployment rehearsal should preserve the application's actual operating conditions. Run the installed executable under the intended service account, with its real configuration path and working directory, before putting a supervisor around it. Verify that named endpoint sections resolve as intended, the Unix-domain directory is writable where required, TLS material is readable where required, and the installed protocol modules can be found. Then stop the process normally and observe its cleanup before testing restart. A build-tree run under the developer's account leaves all of those deployment boundaries untested.
+A deployment rehearsal should preserve the application's actual operating conditions. Run the installed executable under the intended service account, with its real configuration path and working directory, before putting a supervisor around it. Verify that named instance sections resolve as intended, the Unix-domain directory is writable where required, TLS material is readable where required, and the installed protocol modules can be found. Then stop the process normally and observe its cleanup before testing restart. A build-tree run under the developer's account leaves all of those deployment boundaries untested.
 
 For MiniGateway, keep liveness and readiness distinct. `/health` demonstrates a responsive HTTP role. It does not query broker acceptance, database durability, or the freshness of measurements. A supervisor can use a liveness observation without pretending it establishes those wider application guarantees.
 

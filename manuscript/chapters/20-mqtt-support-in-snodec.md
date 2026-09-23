@@ -82,7 +82,7 @@ MQTT has explicit packet vocabulary. For example, the core object exposes helper
 
 These helpers locate acknowledgement state without replacing a complete MQTT QoS reference. A session holds MQTT relationship state; keep-alive is protocol-level liveness timing. Chapter 15 distinguishes that timing from transport timeouts and retry/reconnect delay.
 
-The lower connection may have read or write timeouts. A configured client or server instance may have retry or reconnect policy. TLS may have handshake and shutdown timing. MQTT adds its own liveness meaning at the protocol layer. Keep-alive is therefore not just a socket timeout with another name.
+The lower connection may have read or write timeouts. An instance on the client or server side may have retry or reconnect policy. TLS may have handshake and shutdown timing. MQTT adds its own liveness meaning at the protocol layer. Keep-alive is therefore not just a socket timeout with another name.
 
 \index{MQTT!native over streams}
 \index{MqttContext@\texttt{MqttContext}}
@@ -98,10 +98,10 @@ The native endpoint combines the familiar per-connection stream context with the
 
 `MqttContext` bridges the protocol object to whichever carrier is used underneath, letting it read, write, end, or close without replacing the lower socket context.
 
-The native context retains the lower family, legacy or TLS carrier, runtime lifecycle, configuration and diagnostics. MQTT interprets the received bytes as packets, sessions, topics and acknowledgements, instead of HTTP requests and responses.
+The native context retains the network family, legacy or TLS connection variant, runtime lifecycle, configuration and diagnostics. MQTT interprets the received bytes as packets, sessions, topics and acknowledgements, instead of HTTP requests and responses.
 
-\index{MQTT!server role}
-\index{MQTT!client role}
+\index{MQTT!server side}
+\index{MQTT!client side}
 \index{broker role}
 
 The MQTT module separates shared protocol infrastructure from role-specific behavior.
@@ -112,11 +112,11 @@ A useful module view is:
 |---|---|
 | `mqtt` | shared MQTT protocol core |
 | `mqtt-server` | server/broker-oriented role layer |
-| `mqtt-client` | client role layer |
+| `mqtt-client` | client-side layer |
 | `mqtt-server-websocket` | server-side MQTT WebSocket subprotocol |
 | `mqtt-client-websocket` | client-side MQTT WebSocket subprotocol |
 
-A named endpoint supplies configuration for its activation flows. Each resulting connection receives an MQTT-aware context and protocol object. Broker or session state may deliberately outlive that one connection; do not place it in a short-lived receive buffer merely because both are called state.
+A named instance supplies configuration for its activation flows. Each resulting connection receives an MQTT-aware context and protocol object. Broker or session state may deliberately outlive that one connection; do not place it in a short-lived receive buffer merely because both are called state.
 
 The server-side MQTT role derives from the shared MQTT protocol object and connects it to broker-oriented behavior, rather than acting as a listener that only parses MQTT bytes.
 
@@ -132,7 +132,7 @@ It handles concerns such as:
 - shared socket-context factories,
 - server-side WebSocket subprotocol support.
 
-This is the right place for broker-oriented behavior. Broker behavior does not belong in the shared protocol core as a hidden global assumption. The shared core provides packet, session, context, and topic vocabulary; the server role connects that vocabulary to broker-specific behavior.
+This is the right place for broker-oriented behavior. Broker behavior does not belong in the shared protocol core as a hidden global assumption. The shared core provides packet, session, context, and topic vocabulary; the server side connects that vocabulary to broker-specific behavior.
 
 The client side is also a real protocol participant, not a transport wrapper that sends MQTT-looking bytes.
 
@@ -152,7 +152,7 @@ and it exposes client-originated operations such as:
 - `PINGREQ`,
 - `DISCONNECT`.
 
-### A compact MQTT client role
+### A compact MQTT client {#a-compact-mqtt-client-role}
 
 \index{MQTT!client example}
 \index{Publish@\texttt{Publish}}
@@ -216,7 +216,7 @@ The corresponding native MQTT client component is:
 target_link_libraries(my_mqtt_client PRIVATE snodec::mqtt-client)
 ```
 
-The shared `mqtt` component is the protocol core. The `mqtt-client` component adds the client role on top of that core. The component exists only when the MQTT build prerequisites are available.
+The shared `mqtt` component is the protocol core. The `mqtt-client` component adds the client side on top of that core. The component exists only when the MQTT build prerequisites are available.
 
 The current implementation is an MQTT 3.1.1 path. Read the `sendConnect(...)` arguments with that version in mind: the optional loop-prevention argument changes the protocol-level byte using a private extension. It is not a portable subscription setting. The compact client leaves it disabled. Also distinguish socket readiness from MQTT acceptance. The client implementation handles CONNACK before delivering the successful application callback, so a connected socket alone is not evidence that the broker accepted the MQTT session or a later subscription.
 

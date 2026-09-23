@@ -1,0 +1,44 @@
+[
+  {
+    "path": "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md",
+    "before": "### Configured endpoints and activation flows",
+    "after": "### Instances and activation flows",
+    "preserved_anchor": "configured-endpoints-and-activation-flows"
+  },
+  {
+    "path": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
+    "before": "### The lower-family transfer model",
+    "after": "### The network-family transfer model",
+    "preserved_anchor": "the-lower-family-transfer-model"
+  },
+  {
+    "path": "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md",
+    "before": "### Designing for lower-family transfer",
+    "after": "### Designing for network-family transfer",
+    "preserved_anchor": "designing-for-lower-family-transfer"
+  },
+  {
+    "path": "manuscript/chapters/13-logging-diagnostics-and-runtime-introspection.md",
+    "before": "### From configured roles to visible runtime behavior",
+    "after": "### From instances to visible runtime behavior",
+    "preserved_anchor": "from-configured-roles-to-visible-runtime-behavior"
+  },
+  {
+    "path": "manuscript/chapters/14-tls-across-the-framework.md",
+    "before": "### Carrier and protocol decisions",
+    "after": "### Network family and protocol decisions",
+    "preserved_anchor": "carrier-and-protocol-decisions"
+  },
+  {
+    "path": "manuscript/chapters/20-mqtt-support-in-snodec.md",
+    "before": "### A compact MQTT client role",
+    "after": "### A compact MQTT client side",
+    "preserved_anchor": "a-compact-mqtt-client-role"
+  },
+  {
+    "path": "manuscript/chapters/22-designing-iot-systems-with-multiple-protocols.md",
+    "before": "### Choosing the carrier at each boundary",
+    "after": "### Choosing the connection at each boundary",
+    "preserved_anchor": "choosing-the-carrier-at-each-boundary"
+  }
+]

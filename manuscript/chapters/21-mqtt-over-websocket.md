@@ -104,7 +104,7 @@ Use the ownership map when a composed connection fails:
 
 | Layer | Responsibility |
 |---|---|
-| lower family / stream | peer communication path |
+| network family / stream | peer communication path |
 | TLS, if used | secure connection handling |
 | HTTP | upgrade negotiation |
 | WebSocket | upgraded bidirectional message carrier, framing, binary payload delivery, and control behavior |
@@ -134,7 +134,7 @@ Predict the observations before running a complete endpoint pair:
 
 Inspect the implementation’s `data`, `buffer`, `cursor`, and `size` to explain the first two rows. The scheduled event feeds the MQTT receiver and republishes itself while unread bytes remain. This is the event coalescing behavior from Chapter 5 used at a protocol boundary.
 
-The public labs in `companion/exercises/ch21/` attach the unchanged client role to this adapter. A controlled WebSocket peer records HTTP 101, `mqtt` selection, binary CONNECT, successful CONNACK and the later MQTT packet exchange separately. It also tests fragmented binary input and wrong-type closure. This isolates the adapter; the broker-delivery checkpoint in Chapter 22 supplies the separate subscriber observation.
+The public labs in `companion/exercises/ch21/` attach the unchanged client side to this adapter. A controlled WebSocket peer records HTTP 101, `mqtt` selection, binary CONNECT, successful CONNACK and the later MQTT packet exchange separately. It also tests fragmented binary input and wrong-type closure. This isolates the adapter; the broker-delivery checkpoint in Chapter 22 supplies the separate subscriber observation.
 
 ### Build artifacts and diagnostics
 
@@ -165,7 +165,7 @@ target_link_libraries(gateway
         snodec::websocket-client)
 ```
 
-The three client components supply the MQTT role, its WebSocket adapter, and the WebSocket carrier. The corresponding server roles are:
+The three client components supply the MQTT role, its WebSocket adapter, and the WebSocket carrier. The corresponding server-side components are:
 
 ```cmake
 target_link_libraries(gateway
@@ -175,7 +175,7 @@ target_link_libraries(gateway
         snodec::websocket-server)
 ```
 
-These are partial link fragments. A runnable application also needs its concrete HTTP carrier, upgrade entry point, and selectable MQTT subprotocol factory. Linking an adapter library does not by itself create or register that application-specific factory.
+These are partial link fragments. A runnable application also needs its concrete HTTP stream connection, upgrade entry point, and selectable MQTT subprotocol factory. Linking an adapter library does not by itself create or register that application-specific factory.
 
 \index{MQTT over WebSocket!diagnostics}
 \index{stack diagnostics}

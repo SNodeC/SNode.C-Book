@@ -13,7 +13,7 @@
 
 Reliable communication includes more than establishing a connection; it also means deciding what happens when establishment, operation, shutdown, or recovery does not complete as expected.
 
-Communication is not a single action. It unfolds over time. Constructing a named endpoint registers its configuration instance. An explicit call may then activate a flow for that role. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client instance may reconnect. A failed activation attempt may be retried. A role-level flow may be stopped.
+Communication is not a single action. It unfolds over time. Constructing an endpoint handle with a name registers a named instance. An explicit call may then activate a flow for that instance. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client instance may reconnect. A failed activation attempt may be retried. An activation flow may be stopped.
 
 ### The time-and-failure map
 
@@ -65,7 +65,7 @@ An inactivity bound cannot substitute for a protocol response deadline. A connec
 
 Retry timing policy comes from the registered server or client instance. Each activation flow owns the timer and attempt state that apply that policy.
 
-For a server, that may mean retrying listen activation. For a client, that may mean retrying connect activation. This is role-level behavior, but two explicit activations of the same configured role retain separate controllers. Stopping one flow must not cancel the other. Neither timer belongs inside a peer's protocol context.
+For a server, that may mean retrying listen activation. For a client, that may mean retrying connect activation. This is activation behavior, but two explicit activations of the same instance retain separate controllers. Stopping one flow must not cancel the other. Neither timer belongs inside a peer's protocol context.
 
 TLS initialization and shutdown add bounded phases at the connection layer, as Chapter 14 explains. Client reconnect delay schedules restoration after a connection ends; it is not a bound on a connection already in progress.
 
@@ -141,7 +141,7 @@ Server retry checks enablement, stopped-flow state, classified failure, retry-on
 | Instance kind | Retry focus | Reconnect focus |
 |---|---|---|
 | server | retry listen activation | normally not applicable |
-| client | retry connect activation | restore client role after disconnect |
+| client | retry connect activation | restore client side after disconnect |
 
 ### Retry timing policy
 
@@ -313,7 +313,7 @@ A useful diagnostic map keeps several surfaces visible:
 - ordinary logs for lifecycle events,
 - typed system errors and TLS-specific error evidence for the failing semantic boundary,
 - scoped debug/trace records for timing and retry decisions,
-- connection counters and durations as evidence from one peer episode,
+- connection counters and durations as evidence from one connection,
 - and context-level protocol logs for protocol meaning.
 
 Failure handling without visibility is difficult to operate. Retry without visibility is especially dangerous because it can turn a clear failure into a quiet loop.

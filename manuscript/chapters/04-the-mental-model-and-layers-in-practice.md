@@ -18,13 +18,13 @@ The echo pair supplies a first working example. We now connect its lifetimes to 
 
 The echo program introduced a public type, an activation path, a factory, and a context. This chapter asks how those pieces relate when the program has several peers, several operations, and lifetimes that no longer match the local variables in `main()`.
 
-Memorizing names can work for the first small example, but it does not scale. A useful mental model tells you what kind of thing each part is, what job it has, and how control and data move through the system. Read SNode.C as an event-driven framework in which configured roles register communication intent, the runtime advances that intent, and per-connection contexts express protocol behavior above selectable lower layers.
+Memorizing names can work for the first small example, but it does not scale. A useful mental model tells you what kind of thing each part is, what job it has, and how control and data move through the system. Read SNode.C as an event-driven framework in which instances register communication intent, the runtime advances that intent, and per-connection contexts express protocol behavior above selectable lower layers.
 
 As shown in Figure \ref{fig:snodec-runtime-model}, application code uses a visible handle to configure an instance and start an activation flow. The runtime advances that flow; a concrete connection can appear; the factory creates a context; and the context expresses protocol behavior for that peer.
 
 ![From endpoint configuration through activation to per-connection behavior. Arrows show the creation and use path, not a chain of exclusive ownership or nested lifetimes.](assets/figures/pdf/fig-02-runtime-instance-connection-context.pdf){#fig:snodec-runtime-model width=82% latex-placement="tbp"}
 
-The figure keeps the configured endpoint separate from each explicit activation. One endpoint can have several flows, and a listening flow can end while a connection it accepted continues. The factory is shared by the role and used when a connection needs a context; its position in the drawing does not make it a child owned by each connection.
+The figure keeps the instance separate from each explicit activation. One endpoint can have several flows, and a listening flow can end while a connection it accepted continues. The factory is shared by the instance and used when a connection needs a context; its position in the drawing does not make it a child owned by each connection.
 
 \index{runtime}
 \index{core::SNodeC@\texttt{core::SNodeC}}
@@ -46,29 +46,29 @@ and later enters runtime processing:
 return core::SNodeC::start();
 ```
 
-Between those two lines, the application creates communication roles and registers what they should do.
+Between those two lines, the application creates endpoint handles and registers what they should do.
 
 For that reason, `core::SNodeC::start()` is the point where registered communication work can be advanced by the framework runtime, not a ceremonial final line.
 
-### Configured endpoints and activation flows
+### Instances and activation flows {#configured-endpoints-and-activation-flows}
 
 \index{instances}
-\index{configured communication role}
+\index{instance!configuration and runtime identity}
 
 
-An instance is a configured communication role. Its activation flows participate in the runtime and use that shared configuration while listening or connecting.
+An instance is the configuration-and-runtime identity created through an endpoint handle. Its activation flows participate in the runtime and use that shared configuration while listening or connecting.
 
-In everyday discussion, the `SocketServer`/`SocketClient` handle in user code may also be called an instance. That is natural and often harmless. In the stricter vocabulary used here, the visible C++ object is the application-side endpoint handle. Its shared configuration represents the configured instance; a named configuration joins the configuration tree when it is constructed. Through `listen(...)` or `connect(...)`, the handle registers activation intent for that role. The configured role, the activation flow, and the peer connection that may appear later are related, but they are not the same object.
+The visible `SocketServer`/`SocketClient` object is the application-side endpoint handle. Its shared configuration belongs to the instance; a named instance joins the configuration tree when it is constructed. Through `listen(...)` or `connect(...)`, the handle registers activation intent for that instance. The instance, the activation flow, and the peer connection that may appear later are related, but they are not the same object.
 
-Each explicit activation call returns its own flow handle: a `std::shared_ptr<ServerFlowController>` or `std::shared_ptr<ClientFlowController>`. Automatic retries and reconnects continue that flow. Another explicit call creates another flow, while the endpoint configuration and callbacks remain shared. This distinction lets an application stop one activation sequence without treating the entire configured role as one indivisible operation.
+Each explicit activation call returns its own flow handle: a `std::shared_ptr<ServerFlowController>` or `std::shared_ptr<ClientFlowController>`. Automatic retries and reconnects continue that flow. Another explicit call creates another flow, while the endpoint configuration and callbacks remain shared. This distinction lets an application stop one activation sequence without treating the entire instance as one indivisible operation.
 
-This distinction prevents a common beginner mistake. It is tempting to put all behavior into the server or client object because that object is visible in `main()`. In SNode.C, the server or client instance should usually describe the communication role. Protocol behavior belongs one step deeper, in the context attached to an actual peer connection.
+This distinction prevents a common beginner mistake. It is tempting to put all behavior into the server or client object because that object is visible in `main()`. In SNode.C, the handle configures the instance. Protocol behavior belongs one step deeper, in the context attached to an actual peer connection.
 
 A name such as `echoserver` or `echoclient` already carries architectural weight. Instance names become natural anchors for configuration, diagnostics, callbacks, and operational behavior. Later chapters will use that fact more heavily.
 
-The local endpoint handle is the server or client object used to configure and register the role. Keeping it in scope is clear and often useful, but the local variable is not the whole runtime story.
+The local endpoint handle is the server or client object used to configure the instance. Keeping it in scope is clear and often useful, but the local variable is not the whole runtime story.
 
-The configuration and shared endpoint context can outlive the local handle because active framework work retains the state it needs. They supply the role's name, policy, factory, and callbacks across connection episodes. This is the lifetime meant when the book calls the instance long-lived; it is not a claim that the local wrapper must remain on the stack throughout every callback.
+The configuration and shared endpoint context can outlive the local handle because active framework work retains the state it needs. They supply the instance's name, policy, factory, and callbacks across connections. This is the lifetime meant when the book calls the instance long-lived; it is not a claim that the local wrapper must remain on the stack throughout every callback.
 
 That distinction matters when passing dependencies to a factory. Keeping endpoint state alive does not extend the lifetime of an arbitrary object captured by reference. If every connection uses an application model, arrange for that model to remain valid until the last such use. Chapter 10 develops that construction boundary in detail.
 
@@ -108,7 +108,7 @@ A `SocketContextFactory` creates contexts because a context belongs to a connect
 
 
 
-A server instance can produce many connections over time; a client can lose a connection and reconnect. Each peer episode therefore has its own connection and protocol state. A context should not be used as a global protocol singleton.
+A server instance can produce many connections over time; a client can lose a connection and reconnect. Each connection therefore has its own protocol state. A context should not be used as a global protocol singleton.
 
 The running measurement example adds another lifetime. A peer context may hold a partial record while bytes arrive. Once a value is parsed, an application model shared by the input contexts can assign its acceptance order. Construct that model outside the per-peer factory and keep it alive through every callback that uses it. Creating a model in each context would restart the sequence for each peer.
 
@@ -157,7 +157,7 @@ The lifetime rule is:
 `instance lifetime` >= `connection lifetime` >= `context lifetime`
 :::
 
-That rule describes the configured role, connection, and attached context; it does not describe the lifetime of a local wrapper variable or a flow handle. An instance can outlive one connection. A connection carries one current protocol context, and an upgrade can replace that context during the same peer relationship. The context is meaningful in relation to the connection it serves. The listening flow may already have ended while an accepted connection continues.
+That rule describes the instance, connection, and attached context; it does not describe the lifetime of a local wrapper variable or a flow handle. An instance can outlive one connection. A connection carries one current protocol context, and an upgrade can replace that context during the same peer relationship. The context is meaningful in relation to the connection it serves. The listening flow may already have ended while an accepted connection continues.
 
 Use this distinction when testing a multi-peer server. Leave one peer idle while a second sends bytes; close the idle peer and send again through the surviving connection. Unchanged replies show that one connection's inactivity and closure did not end the other. They do not establish what happens when the listening flow itself is terminated; that is a separate operation.
 
@@ -171,11 +171,11 @@ Use this distinction when testing a multi-peer server. Leave one peer idle while
 
 
 
-Addresses, backlog, retry limits, retry-on-fatal behavior, jitter, reconnect policy, instance requirements, and timeouts shape what a configured role does. Server and client templates consult those settings while advancing its lifecycle. A name such as `echoserver` gives configuration and diagnostics a stable operational identity.
+Addresses, backlog, retry limits, retry-on-fatal behavior, jitter, reconnect policy, instance requirements, and timeouts shape what an instance does. Server and client templates consult those settings while advancing its lifecycle. A name such as `echoserver` gives configuration and diagnostics a stable operational identity.
 
 The flow-controller path is what gives `listen(...)` and `connect(...)` their runtime semantics beyond the immediate system call.
 
-A flow can be started, observed, retried, terminated, and associated with runtime-visible state. This is what allows a server or client role to behave operationally rather than just perform one procedural action.
+A flow can be started, observed, retried, terminated, and associated with runtime-visible state. This is what allows an instance to retain operational settings across attempts rather than just perform one procedural action.
 
 ::: {.snodec-rule title="Runtime-flow rule"}
 `listen(...)` and `connect(...)` register activation flows for configured instances; the runtime advances those flows and the connections they produce.
@@ -187,7 +187,7 @@ Connection-level callbacks observe, measure, supervise, or adapt the connection.
 
 The connection and context expose total sent, queued, read, and processed bytes, online-since time, and online duration. These quantities support diagnostics and backpressure reasoning. Read the counter appropriate to the question: queued output and bytes already sent describe different stages.
 
-A reconnect creates another peer episode; an HTTP upgrade can replace a protocol context within the same connection. When a subsystem changes, locate its configured endpoint, flow, connection, factory, and current context before assuming that familiar names imply unchanged lifetimes. The following public-name reading connects these objects to layer choices; Chapter 5 subsequently opens their event runtime from the inside.
+A reconnect creates another connection; an HTTP upgrade can replace a protocol context within the same connection. When a subsystem changes, locate its instance, flow, connection, factory, and current context before assuming that familiar names imply unchanged lifetimes. The following public-name reading connects these objects to layer choices; Chapter 5 subsequently opens their event runtime from the inside.
 
 ### Reading public types and components {#reading-public-types-and-components}
 
@@ -282,7 +282,7 @@ The network layer answers the first concrete communication question:
 
 > Which kind of endpoint identity are we using?
 
-This is where SNode.C chooses among lower communication families.
+This is where SNode.C chooses among network families.
 
 | Family | Namespace fragment | Typical endpoint identity |
 |---|---|---|
@@ -327,7 +327,7 @@ The family selects endpoint identity; transport selects the communication relati
 
 The connection layer manages the concrete peer relationship. `legacy` is the established name for the non-TLS stream variant; it does not mean obsolete. `tls` adds TLS-secured handling to the stream. That distinction is separate from the transport choice: stream describes the communication form, while the connection machinery determines how that relationship is established and maintained.
 
-TLS changes handshakes, certificate material, peer validation, SNI or hostname concerns, timing, failure modes, and diagnostics. The application can often retain its server/client handle shape, configured endpoint, factory/context pattern, protocol behavior, event runtime, and lower family choice. An unchanged context is a reuse benefit; operating the secured service still requires security policy.
+TLS changes handshakes, certificate material, peer validation, SNI or hostname concerns, timing, failure modes, and diagnostics. The application can often retain its server/client handle shape, instance, factory/context pattern, protocol behavior, event runtime, and network family choice. An unchanged context is a reuse benefit; operating the secured service still requires security policy.
 
 A transport connection, completed handshake, and accepted peer identity are distinct observations. Chapter 14 examines those obligations and their callback timing.
 
@@ -349,9 +349,9 @@ Include the role the source file names, not the whole lower socket stack manuall
 
 Above the connection layer, communication receives meaning. A small custom protocol may use a derived `SocketContext`, as the echo pair in Chapter 3 does. Higher framework support includes HTTP, WebSocket, Express-like routing, MQTT, and MQTT over WebSocket. Persistence belongs to the larger application architecture; it is not another communication layer in this stack.
 
-Higher protocols retain their lower carriers. A web server supplies web behavior over a selected stream stack. MQTT over WebSocket additionally carries one application protocol through another: the lower connection, HTTP upgrade, WebSocket subprotocol, and MQTT session each have a distinct success condition.
+Higher protocols retain the underlying stream connection. A web server supplies web behavior over a selected stream stack. MQTT over WebSocket additionally carries one application protocol through another: the lower connection, HTTP upgrade, WebSocket subprotocol, and MQTT session each have a distinct success condition.
 
-Representative components are `http`, `http-server`, `http-client`, `http-server-express`, `websocket-server`, `websocket-client`, `mqtt`, `mqtt-server`, `mqtt-client`, `mqtt-server-websocket`, and `mqtt-client-websocket`. Express server components also encode carrier choices: `http-server-express-legacy-in`, `-in6`, `-rc`, and `-un`; the corresponding TLS names replace `legacy` with `tls`. Read these as architectural statements rather than memorizing the inventory.
+Representative components are `http`, `http-server`, `http-client`, `http-server-express`, `websocket-server`, `websocket-client`, `mqtt`, `mqtt-server`, `mqtt-client`, `mqtt-server-websocket`, and `mqtt-client-websocket`. Express server components also encode network-family and connection-variant choices: `http-server-express-legacy-in`, `-in6`, `-rc`, and `-un`; the corresponding TLS names replace `legacy` with `tls`. Read these as architectural statements rather than memorizing the inventory.
 
 A source file naming an Express IPv4 legacy WebApp uses its public Express header:
 
@@ -359,7 +359,7 @@ A source file naming an Express IPv4 legacy WebApp uses its public Express heade
 #include <express/legacy/in/WebApp.h>
 ```
 
-That header represents a WebApp over HTTP over its lower carrier. A source file that also directly names a lower socket client includes that role's public header too.
+That header represents a WebApp over HTTP over its stream connection. A source file that also directly names a lower socket client includes that client's public header too.
 
 A missing HTTP response can begin at several boundaries. The client may address the wrong listener; TLS may reject the peer; the HTTP parser may reject the request; or the selected route may never finish its response. The route handler is only one candidate. Trace the observations in that order before changing application logic.
 
@@ -384,14 +384,14 @@ This comparison is a design exercise, not a complete TLS conversion recipe. Its 
 
 ### Reuse and cross-layer consequences
 
-\index{lower carriers}
+\index{network families}
 \index{protocol reuse}
 \index{layer boundaries}
 \index{cross-layer responsibility}
 
-Suppose one context protocol moves from IPv4 to IPv6, Unix sockets, RFCOMM, or L2CAP. Address syntax, binding and connection semantics, permissions, required equipment, deployment, configuration, and diagnostics may change. The runtime, configured role, factory/context pattern, and broad connection lifecycle remain recognizable. Transfer means separating those changes from the reusable behavior, not declaring carriers interchangeable.
+Suppose one context protocol moves from IPv4 to IPv6, Unix sockets, RFCOMM, or L2CAP. Address syntax, binding and connection semantics, permissions, required equipment, deployment, configuration, and diagnostics may change. The runtime, instance, factory/context pattern, and broad connection lifecycle remain recognizable. Transfer means separating those changes from the reusable behavior, not declaring network families interchangeable.
 
-RFCOMM and L2CAP exercise this same model near devices. IoT and machine-to-machine systems may combine device communication, network transport, web interfaces, message integration, and deployment constraints. Treat Bluetooth as a lower family with concrete discovery, pairing, permissions, and hardware requirements, rather than as an exception to the architecture.
+RFCOMM and L2CAP exercise this same model near devices. IoT and machine-to-machine systems may combine device communication, network transport, web interfaces, message integration, and deployment constraints. Treat Bluetooth as a network family with concrete discovery, pairing, permissions, and hardware requirements, rather than as an exception to the architecture.
 
 Two mistakes obscure this model: collapsing all communication into one responsibility, and imagining perfectly sealed layers. TLS changes timing and configuration; protocol buffering affects backpressure; moving to a Unix path changes security assumptions. Layers isolate concerns enough to reason locally while preserving those cross-layer consequences.
 
@@ -401,7 +401,7 @@ For a measurement gateway, identify both the primary owner and the downstream ef
 - Endpoint configuration, each activation flow, a peer connection, and its current context have distinct lifetimes.
 - Factories create per-connection behavior; shared application state needs a separate owner that survives its users.
 - Public types, headers, and components express corresponding layer choices.
-- A lower-carrier change can reuse protocol behavior while changing addressing, security, and deployment obligations.
+- A network-family change can reuse protocol behavior while changing addressing, security, and deployment obligations.
 - Supervise connections at the appropriate callback boundary and keep protocol state in the context.
 :::
 

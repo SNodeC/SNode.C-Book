@@ -47,7 +47,7 @@ POST /simulate
   -> create one synthetic measurement and inject it into the normal application path
 ```
 
-The second role is a native MQTT client role named `mqtt-uplink`. It connects to an MQTT broker, starts an MQTT session, subscribes to a measurement-input topic, accepts valid measurement payloads, and publishes accepted measurements to a measurement-output topic. The model, not the incoming MQTT payload, owns the authoritative sequence number.
+The second role uses a native MQTT client named `mqtt-uplink`. It connects to an MQTT broker, starts an MQTT session, subscribes to a measurement-input topic, accepts valid measurement payloads, and publishes accepted measurements to a measurement-output topic. The model, not the incoming MQTT payload, owns the authoritative sequence number.
 
 
 MiniGateway creates local teaching input through `/simulate`. That route is not the final device interface; it is a controlled input boundary. Chapter 29 adds a small Unix-domain socket input to demonstrate how the application can grow without changing the HTTP, SSE, MQTT, or model structure.
@@ -127,7 +127,7 @@ ss -ltnp 'sport = :8080'
 ### Source structure and build target
 
 \index{MiniGateway!application architecture}
-\index{MQTT client role}
+\index{MQTT client side}
 \index{HTTP administration role}
 \index{SSE observation role}
 
@@ -172,7 +172,7 @@ JSON representation
 web/SSE role
   -> MiniGatewayWeb
 
-MQTT carrier startup
+MQTT connection startup
   -> MiniGatewayMqttClient
 
 MQTT protocol behavior
@@ -203,7 +203,7 @@ http-server-express-legacy-in
   -> HTTP/Express role over IPv4 legacy stream
 
 net-in-stream-legacy
-  -> native IPv4 stream carrier for the MQTT client
+  -> native IPv4 stream connection for the MQTT client
 
 mqtt-client
   -> MQTT client-side protocol support
@@ -1009,7 +1009,7 @@ namespace minigateway {
 \index{MiniGateway!MQTT context construction}
 
 
-SNode.C's MQTT layer is used through a socket context. The factory creates an `iot::mqtt::SocketContext` and passes it a `MiniGatewayMqtt` protocol object. The factory also carries the shared model reference that was provided when the MQTT client role was created.
+SNode.C's MQTT layer is used through a socket context. The factory creates an `iot::mqtt::SocketContext` and passes it a `MiniGatewayMqtt` protocol object. The factory also carries the shared model reference that was provided when the MQTT client was created.
 
 ```text
 stream SocketConnection
@@ -1089,7 +1089,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-**Starting the MQTT client role**
+**Starting the MQTT client**
 
 \index{MiniGatewayMqttClient@\texttt{MiniGatewayMqttClient}}
 \index{MiniGateway!MQTT client startup}

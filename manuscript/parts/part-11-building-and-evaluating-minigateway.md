@@ -1,6 +1,6 @@
 # Building and Evaluating MiniGateway
 
-The previous parts supplied the pieces: communication families, protocol layers, configuration, diagnostics, persistence, deployment, testing, and system-level vocabulary. This part combines those pieces into one deliberately small application.
+The previous parts supplied the pieces: network families, protocol layers, configuration, diagnostics, persistence, deployment, testing, and system-level vocabulary. This part combines those pieces into one deliberately small application.
 
 MiniGateway combines web administration, SSE observation, MQTT integration, and shared application state. The final checkpoint exercises mixed inputs and observer lifetimes before asking which responsibilities need independent operation.
 

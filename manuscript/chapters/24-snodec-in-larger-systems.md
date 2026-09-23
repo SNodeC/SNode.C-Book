@@ -12,7 +12,7 @@
 \index{example applications}
 \index{application structure}
 
-Executable applications are where runtime setup, selected components, application objects, configured roles, callbacks, routes, persistence and installable targets meet. Start with the build target: its public includes, linked components and optional dependencies establish what the entry point can assemble.
+Executable applications are where runtime setup, selected components, application objects, instances, callbacks, routes, persistence and installable targets meet. Start with the build target: its public includes, linked components and optional dependencies establish what the entry point can assemble.
 
 \index{src/apps@\texttt{src/apps}!study material}
 
@@ -41,9 +41,9 @@ A simplified view of the selected application targets is:
 | `jsonclient` | `http-client` + `net-in-stream-legacy` | outgoing HTTP request/response example |
 | `testpipe` | `core` | pipe event behavior inside the runtime |
 | `database/testmariadb` | `db-mariadb`, built when MariaDB support is available | MariaDB API and persistence demonstration |
-| echo family | `echosocketcontext` + generated `net-...-stream-...` combinations | one protocol model across carriers and stream modes |
+| echo family | `echosocketcontext` + generated `net-...-stream-...` combinations | one protocol model across network families and connection variants |
 
-Link lines select direct application-facing components, not every implementation dependency. Include blocks likewise name the public abstractions the source directly uses. For a high-level protocol application, the direct choices are usually its protocol/application component and concrete carrier.
+Link lines select direct application-facing components, not every implementation dependency. Include blocks likewise name the public abstractions the source directly uses. For a high-level protocol application, the direct choices are usually its protocol/application component and composed stream connection.
 
 Consider this in-tree build fragment:
 
@@ -58,7 +58,7 @@ target_link_libraries(
 )
 ```
 
-It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream carrier. The equivalent external form uses exported `snodec::...` targets:
+It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream connection. The equivalent external form uses exported `snodec::...` targets:
 
 ```cmake
 find_package(snodec REQUIRED
@@ -112,7 +112,7 @@ my-ipv4-legacy-webapp
                         `-- snodec::logger
 ```
 
-The two branches are the application's direct decisions. The HTTP branch supplies protocol/application support, including lower context/runtime dependencies, optional `libmagic` and the Express layer's JSON requirement. The carrier branch composes IPv4, stream transport, physical network support and legacy stream operation. Their internal dependencies can overlap without requiring the application to list them again.
+The two branches are the application's direct decisions. The HTTP branch supplies protocol/application support, including lower context/runtime dependencies, optional `libmagic` and the Express layer's JSON requirement. The stream branch composes IPv4, stream transport, physical network support and legacy stream operation. Their internal dependencies can overlap without requiring the application to list them again.
 
 This is a teaching view of the component graph, not a linker command. Detailed component rules belong in Chapter 25; here use the graph to locate each application's choices.
 
@@ -186,7 +186,7 @@ Chapter 3 introduced `EchoSocketContext` through the deliberately simplified `ec
 
 The repository echo family generalizes the same idea. The full echo application structure uses a shared echo protocol model, generated server executables, generated client executables, several network families, legacy and TLS stream modes, and compile definitions for the selected combination.
 
-Compare one generated target’s compile definitions with the common source. The selection should change the concrete carrier aliases without introducing another echo parser.
+Compare one generated target’s compile definitions with the common source. The selection should change the composed stream connection aliases without introducing another echo parser.
 
 The build includes IPv4, IPv6, and Unix-domain variants by default. Bluetooth L2CAP and RFCOMM echo variants are added only when BlueZ support is available. That conditionality matters because it is part of the application shape: not every generated executable exists in every build.
 
@@ -262,15 +262,15 @@ The repository also contains design notes under `docs/` and operational tooling 
 \index{application reading workflow}
 \index{composition depth}
 
-Choose the next example by the behavior you need to understand. For callback progress without a network protocol, read `testpipe`; for request/response agreement, compare `jsonclient` and `jsonserver`; for carrier reuse, compare generated echo targets.
+Choose the next example by the behavior you need to understand. For callback progress without a network protocol, read `testpipe`; for request/response agreement, compare `jsonclient` and `jsonserver`; for network-family reuse, compare generated echo targets.
 
 For each, record the build target, feature guards, entry point, runtime initialization, objects and configured instances, registered behavior, activation and observations. Ask whether build and source agree.
 
-Apply this method to `jsonclient`: write down carrier, HTTP method/path, body content type, success and parse-error callbacks, then inspect the matching server route. A disagreement is an application-contract question even when both binaries compile.
+Apply this method to `jsonclient`: write down network family and connection variant, HTTP method/path, body content type, success and parse-error callbacks, then inspect the matching server route. A disagreement is an application-contract question even when both binaries compile.
 
-Separate generated carrier/role executables make a different packaging choice from one program with several runtime roles.
+Separate executables generated for each network family and server/client side make a different packaging choice from one program with several runtime roles.
 
-The echo family makes variants explicit: separate generated targets expose variants clearly but increase the set of binaries to package and test. A combined executable can activate several carriers together and share application state, at the cost of a larger option surface and shared process lifecycle. Choose according to whether deployments need independent variants or simultaneous roles.
+The echo family makes variants explicit: separate generated targets expose variants clearly but increase the set of binaries to package and test. A combined executable can activate several network families together and share application state, at the cost of a larger option surface and shared process lifecycle. Choose according to whether deployments need independent variants or simultaneous roles.
 
 When borrowing from an in-tree application, separate three things in the reading notes: a public API shape, the example's selected policy, and an outcome actually tested. The TLS echo source is a useful case: it exposes the pre-handshake callback, but its commented hostname-checking statements do not execute. The same distinction applies to disabled roles, optional modules, and configured retry policy. A source example is strongest when it gives the reader a path to verify behavior, rather than when every nearby comment is treated as a runtime guarantee.
 
@@ -297,7 +297,7 @@ Figure \ref{fig:application-system-role-constellation} is intentionally not a bu
 
 Ask which responsibilities exist, not only which classes are instantiated.
 
-In this chapter, a role is a system-design responsibility. A concrete SNode.C program may realize such a role through a server/client handle, its shared endpoint configuration, and explicit activation flows. These terms should not be collapsed into one another. The role belongs to the system design; the configured role belongs to the SNode.C configuration surface; the registered instance is what the runtime can observe and operate.
+In this chapter, a role is a system-design responsibility. A concrete SNode.C program may realize such a role through a server/client handle, its shared endpoint configuration, and explicit activation flows. These terms should not be collapsed into one another. The role belongs to the system design; an instance supplies the configuration and runtime identity of a concrete endpoint.
 
 A small monitoring system can be described by its consumers and state boundaries:
 
@@ -310,7 +310,7 @@ A small monitoring system can be described by its consumers and state boundaries
 | `local-control` | operator tool on the same host |
 | `database-state` | persistence of accepted application state |
 
-These are role names, not necessarily executable names. Some roles may be routes inside one application. Some may be configured roles. Some may be service-level responsibilities. Some roles are nested inside others: an SSE route may belong to a web role, while still being useful as a named observation boundary.
+These are role names, not necessarily executable names. Some roles may be routes inside one application. Some may be instances. Some may be service-level responsibilities. Some roles are nested inside others: an SSE route may belong to a web role, while still being useful as a named observation boundary.
 
 The role `database-state` is intentionally different from `admin-http` or `mqtt-ingest`. It is not the same kind of communication role as a socket server or client. It names the persistence boundary that owns durable application state.
 
@@ -411,7 +411,7 @@ Named instances, role-oriented configuration, logging, connection identity, gene
 
 Apply Chapter 15's timeout, retry, reconnect, disablement, shutdown and failure vocabulary per role. Decide which role may retry, must avoid storms, is optional, should wait for a dependency or must fail fast to protect state.
 
-Reconnecting `mqtt-ingest` restores a carrier; it does not resolve missed or duplicated application operations. Reconnecting `database-state` likewise leaves the application to determine whether an interrupted write committed. Both roles need visible recovery state, but their acceptance and replay rules can differ. A local control interface may instead report failure immediately so an operator can act.
+Reconnecting `mqtt-ingest` restores a connection; it does not resolve missed or duplicated application operations. Reconnecting `database-state` likewise leaves the application to determine whether an interrupted write committed. Both roles need visible recovery state, but their acceptance and replay rules can differ. A local control interface may instead report failure immediately so an operator can act.
 
 Failure behavior belongs to the role that owns the boundary, not merely to the socket that reports the error.
 
@@ -422,9 +422,9 @@ Separate libraries, executables and feature guards show reusable components, ind
 \index{stable protocol core}
 \index{domain code}
 
-Chapter 11 keeps protocol logic stable while lower carriers change. At system scale, preserve domain meaning while deliberately changing carrier or deployment boundaries.
+Chapter 11 keeps protocol logic stable while network families change. At system scale, preserve domain meaning while deliberately changing network families, protocols or process boundaries.
 
-For example, a message-oriented domain protocol may begin as a native internal service. Later it may also be exposed through a WebSocket path, an HTTP-facing endpoint, or an MQTT integration boundary. The system remains easier to evolve if the protocol logic is not fused unnecessarily to one carrier or deployment shape.
+For example, a message-oriented domain protocol may begin as a native internal service. Later it may also be exposed through a WebSocket path, an HTTP-facing endpoint, or an MQTT integration boundary. The system remains easier to evolve if the protocol logic is not fused unnecessarily to one connection path or deployment shape.
 
 Communication structure does not replace domain code. Business rules, device models, integration mapping, authorization, database semantics, scheduling, orchestration, user interfaces and deployment policy remain application responsibilities.
 
@@ -475,9 +475,9 @@ A deployment may use any subset. Start with the corresponding build file, then f
 | `lib/CMakeLists.txt` | shared mapping support |
 | `mqttbroker/CMakeLists.txt` | broker and web/admin surface |
 | `mqttintegrator/CMakeLists.txt` | mapping integration and administration |
-| `mqttbridge/CMakeLists.txt` | bridge topology and optional carriers |
+| `mqttbridge/CMakeLists.txt` | bridge topology and optional network families |
 | `mqttcli/CMakeLists.txt` | operational client tool |
-| `mqttstore/CMakeLists.txt` | persistence-facing MQTT client role |
+| `mqttstore/CMakeLists.txt` | MQTT client responsible for persistence |
 
 ### Shared infrastructure where it belongs
 
@@ -518,7 +518,7 @@ The exact available instances depend on the build configuration and enabled role
 
 The names encode three dimensions: address family (`IPv4`, `IPv6`, or Unix-domain), protocol role (`MQTT` or `HTTP`), and security mode (`legacy`/plain or TLS).
 
-Constructing a named endpoint registers that name in the configuration hierarchy; activating it creates a separate flow. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
+Constructing a named instance registers that name in the configuration hierarchy; activating it creates a separate flow. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
 
 ### Integration and topology: MQTTIntegrator and MQTTBridge
 
@@ -537,7 +537,7 @@ Mappings may move through inspection, deployment/reload, persistence, history or
 
 MQTTBridge handles topology: logical bridge definitions, broker connections, selected topic movement and loop-prevention policy. It forwards under explicit bridge policy instead of primarily owning a broker or transforming payloads. A system can need both topology management and transformation.
 
-Start with ordinary IP broker connections. Optional Bluetooth L2CAP/RFCOMM stream components can fit specific deployments when build and platform support them. Carrier flexibility does not change the bridge role or make Bluetooth the default.
+Start with ordinary IP broker connections. Optional Bluetooth L2CAP/RFCOMM stream components can fit specific deployments when build and platform support them. Network-family flexibility does not change the bridge role or make Bluetooth the default.
 
 ### Operational and persistence roles
 
@@ -584,11 +584,11 @@ Choose:
 | direct MQTT | MQTT over IPv4, IPv6, or Unix-domain streams |
 | secured MQTT | TLS variants where enabled |
 | MQTT over WebSocket | MQTT crossing a web-compatible upgraded boundary |
-| web administration | HTTP/Express over selected carriers |
+| web administration | HTTP/Express over selected stream connections |
 | command-line operation | MQTT client behavior packaged as a CLI |
 | persistence | MQTT client behavior combined with database storage |
 
-Build options control which IPv4, IPv6, Unix, TLS, WebSocket/WSS, web/admin and optional lower-carrier combinations exist. The roles differ; the transport vocabulary remains shared.
+Build options control which IPv4, IPv6, Unix, TLS, WebSocket/WSS, web/admin and optional network-family combinations exist. The roles differ; the transport vocabulary remains shared.
 
 MQTTSuite also demonstrates a useful operational style: start with explicit options, verify the instance constellation, persist selected configuration where supported, and later restart from repeatable configuration.
 

@@ -1,7 +1,7 @@
 ## Servers, Clients, and Connections {#servers-clients-and-connections}
 
 ::: {.snodec-objectives title="Learning objectives"}
-- **O1.** Distinguish a configured role, an activation flow, a peer connection, and a replaceable context.
+- **O1.** Distinguish an instance, an activation flow, a peer connection, and a replaceable context.
 - **O2.** Diagnose a failure using the callback layer and connection facts that can observe it.
 - **O3.** Decide which state each peer owns and which application state must be shared.
 :::
@@ -12,7 +12,7 @@
 
 ### From endpoint to peer relationship
 
-A server or client handle gives application code access to a configured role. Its activation flows use the addresses from Chapter 6 to listen or connect; a successful peer episode then has its own connection lifetime.
+A server or client handle gives application code access to an instance. Its activation flows use the addresses from Chapter 6 to listen or connect; a successful connection then has its own lifetime.
 
 A server-side instance uses a local endpoint identity to listen and accept peers. A client-side instance uses a remote endpoint identity, and optionally a local one, to initiate a connection. A connection is the concrete peer relationship that appears when the listen or connect flow succeeds.
 
@@ -21,10 +21,10 @@ Figure \ref{fig:server-client-path} follows that activation path. It starts with
 ![The server/client activation path. Each explicit call creates a flow using shared endpoint policy; the arrows describe progress toward protocol behavior, not ownership or a guarantee of success.](assets/figures/pdf/fig-05-server-client-connection-context-path.pdf){#fig:server-client-path width=88% latex-placement="tbp"}
 
 ::: {.snodec-warning title="Instance/connection warning"}
-A server or client instance names the runtime-visible role under which connections appear; it is not itself a connection.
+An instance supplies the shared configuration under which connections appear; it is not itself a connection.
 :::
 
-\index{registered instance}
+\index{instance}
 \index{connection}
 
 Start with a responsibility map rather than a class hierarchy.
@@ -32,29 +32,29 @@ Start with a responsibility map rather than a class hierarchy.
 | Concept | Typical C++ representation | Responsibility |
 |---|---|---|
 | Application-side handle | `SocketServer` / `SocketClient` object visible in user code | configure and register the role |
-| Registered instance | server-side or client-side runtime-visible role | participate in runtime and flow-controller progress |
+| Instance | server-side or client-side instance | participate in runtime and flow-controller progress |
 | Activation flow | returned `ClientFlowController` / `ServerFlowController` shared handle | control one explicit connect/listen call and its automatic recovery |
 | Connection | `SocketConnection` | represent one concrete peer relationship |
 | Factory | `SocketContextFactory` | create a per-connection context |
 | Context | `SocketContext` | implement protocol behavior for one connection |
 
-The `SocketServer`/`SocketClient` handle exposes the shared configuration and callbacks of a role. Each explicit `listen(...)` or `connect(...)` starts a separate flow and returns its controller. A flow can make several automatic attempts over time; the configured role can also have several explicit flows. Neither count is the same as the number of established connections.
+The `SocketServer`/`SocketClient` handle exposes the shared configuration and callbacks of an instance. Each explicit `listen(...)` or `connect(...)` starts a separate flow and returns its controller. A flow can make several automatic attempts over time; the instance can also have several explicit flows. Neither count is the same as the number of established connections.
 
 The connection is the peer relationship. It has addresses, a descriptor, data flow, shutdown behavior, timeouts, timing information, counters, and names.
 
 The context is the application protocol endpoint attached to that connection. It is where protocol code reacts to lifecycle and input events.
 
-Test the distinction with a server that accepts two clients. It still has one configured role, but each client needs its own connection and protocol state. Stop accepting new peers and those two existing connections need not end. A single object count cannot describe all three facts.
+Test the distinction with a server that accepts two clients. It still has one instance, but each client needs its own connection and protocol state. Stop accepting new peers and those two existing connections need not end. A single object count cannot describe all three facts.
 
 Configuration belongs naturally to the instance, because configuration describes how the communication role should behave over time. Addresses appear at registration and later on connections, because they describe endpoint identity. Retry and reconnect behavior belongs to the instance and its flow-controller machinery, because it concerns how the role should keep trying or resume later. Protocol behavior belongs to the context, because it is relative to one concrete peer relationship.
 
 ### Handles and independent activation flows
 
-\index{server role}
-\index{client role}
+\index{server side}
+\index{client side}
 \index{runtime-visible instance}
 
-At the application-facing level, SNode.C exposes stream server and stream client templates. Concrete user-facing handle types are formed by combining the lower communication family, the transport form, and the connection handling variant.
+At the application-facing level, SNode.C exposes stream server and stream client templates. Concrete user-facing handle types are formed by combining the network family, the transport form, and the connection handling variant.
 
 Examples include:
 
@@ -77,7 +77,7 @@ first->terminateFlow();
 
 This is an API sketch using an existing client and status callback. The first call's pending attempts and recovery are terminated; the second call has its own controller. An established connection is a separate object and must be closed through the connection API when that is the application's intention. Dropping `first` without calling `terminateFlow()` would release only the application's reference.
 
-The configuration remains shared. Address-taking overloads update that endpoint configuration; they do not create immutable per-call destination snapshots. Use separately configured endpoints when two destinations need independent configuration. Flow independence is a control boundary, not a second configuration system.
+The configuration remains shared. Address-taking overloads update that endpoint configuration; they do not create immutable per-call destination snapshots. Use separate named instances when two destinations need independent configuration. Flow independence is a control boundary, not a second configuration system.
 
 There are also two different end observations. `setOnFlowTerminated(...)` reports termination of one flow. `setOnFlowCompleted(...)` runs when that controller is finally released, which can be delayed by a retained handle. The endpoint's `setOnDestroy(...)` callback instead follows destruction and unregistration of the shared configuration. Capture identifiers by value in these callbacks; capturing the object that owns the callback can create a lifetime cycle.
 
@@ -107,7 +107,7 @@ Calling `connect(...)` registers connection intent.
 
 The remote endpoint comes from the address semantics described in Chapter 6. The runtime then advances the actual connection attempt through the selected lower layer.
 
-A client-side instance may produce one connection, no connection, or several connection episodes over time if retry or reconnect behavior is configured. That is why the instance must not be confused with a single successful connection.
+A client-side instance may produce one connection, no connection, or several connections over time if retry or reconnect behavior is configured. That is why the instance must not be confused with a single successful connection.
 
 Client connection callbacks have the same surface as the server callbacks, but the client initiates a connection and may later reconnect.
 
@@ -137,7 +137,7 @@ The context may react to a connection while it exists. It may send application d
 \index{peer relationship}
 \index{connection metrics}
 
-If the server or client instance is the outer role, the `SocketConnection` is the concrete peer relationship.
+If the instance supplies the shared endpoint configuration, the `SocketConnection` is the concrete peer relationship.
 
 This is where communication becomes tangible.
 
@@ -241,7 +241,7 @@ getInstanceName()
 getConnectionName()
 ```
 
-The instance name identifies the configured role.
+The instance name connects configuration and runtime diagnostics.
 
 The connection name identifies a concrete peer relationship under that role.
 
@@ -316,7 +316,7 @@ In the echo example, the context decides what to do when data arrives. It reads 
 
 ### Count lifetimes separately
 
-A client can make several connection attempts while remaining one configured role. A successful attempt creates a peer episode; an unsuccessful attempt may never reach that point. A later HTTP upgrade can replace the context while preserving the established connection.
+A client can make several connection attempts while remaining one instance. A successful attempt creates a connection; an unsuccessful attempt may never reach that point. A later HTTP upgrade can replace the context while preserving the established connection.
 
 Count listener activity, connection attempts, established connections, and attached contexts separately. Several attempts may precede one connection, and a context can detach while the transport remains open.
 
@@ -338,7 +338,7 @@ The following table summarizes the responsibility boundaries.
 | Concern | Belongs primarily to |
 |---|---|
 | naming and configuration of the role | instance / handle configuration |
-| listen or connect intent | registered instance |
+| listen or connect intent | instance |
 | retry and reconnect policy | instance and flow-controller machinery |
 | concrete peer relationship | `SocketConnection` |
 | local, bind, and remote endpoint views | `SocketConnection` |
@@ -353,7 +353,7 @@ Before moving to Bluetooth, classify three events: an address cannot be bound, a
 
 
 ::: {.snodec-remember title="What to remember"}
-- A configured role can have several activation flows and many peer episodes; those are different counts.
+- An instance can have several activation flows and many connections; those are different counts.
 - Terminating a flow does not close an established peer, and retaining a pointer does not transfer connection ownership.
 - Status callbacks describe attempts, instance callbacks observe connections, and context methods implement the protocol.
 - Inspect bind, local, and remote identities separately; queued, sent, read, and processed bytes describe different stages.
@@ -361,7 +361,7 @@ Before moving to Bluetooth, classify three events: an address cannot be bound, a
 :::
 
 ::: {.snodec-exercise title="Exercises"}
-1. **Review (O1).** Two explicit connects share endpoint configuration. Explain why terminating one flow is different from dropping its handle, closing a peer, or destroying the configured role.
+1. **Review (O1).** Two explicit connects share endpoint configuration. Explain why terminating one flow is different from dropping its handle, closing a peer, or destroying the instance.
 2. **Review (O2).** Choose observations for a failed bind, TLS handshake failure, and final disconnect. State what may be copied during `onDisconnect` and why the borrowed pointer must not be retained.
 3. **Lab (O3).** Run the independent-peers solution. Keep one peer idle while another sends binary data; close the idle peer and repeat. Expect both replies unchanged. State what this demonstrates about peer isolation and what it does not establish about a shared model.
 4. **Lab (O2).** Run the occupied-endpoint solution. Start a second listener on the first listener’s endpoint. Expect an address-in-use diagnostic while the original peer still echoes; locate the failure before protocol behavior.

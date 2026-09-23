@@ -11,7 +11,7 @@
 \index{diagnostics}
 \index{runtime introspection}
 
-### From configured roles to visible runtime behavior
+### From instances to visible runtime behavior {#from-configured-roles-to-visible-runtime-behavior}
 
 Configuration describes the system that should run. Diagnostics explain the system that did run: which roles became active, which connections existed, which protocol decisions were made, and where progress stopped.
 
@@ -80,7 +80,7 @@ Origin can filter application detail independently from framework detail.
 
 The public vocabulary distinguishes six responsibility boundaries: `Application`, `Configuration`, `Instance`, `Connection`, `Context`, and `System`.
 
-A configured client role and one successful peer connection are different boundaries. Retry belongs to the role and its connection attempts. A peer's lifetime belongs to the connection. The interpretation of received protocol data belongs to the context or other protocol-owning object. Configuration discovery and validation have their own boundary, even though they happen within the same executable.
+An instance on the client side and one successful peer connection are different boundaries. Retry policy belongs to the instance and is applied by each activation flow. A peer's lifetime belongs to the connection. The interpretation of received protocol data belongs to the context or other protocol-owning object. Configuration discovery and validation have their own boundary, even though they happen within the same executable.
 
 Boundary identifies responsibility; severity identifies importance.
 
@@ -88,9 +88,9 @@ Components group related records. Prefer a stable responsibility such as `gatewa
 
 Component names are exact policy keys. They should not be treated as an undocumented wildcard language or as an inheritance tree inferred from dots in the name.
 
-`Identity` can carry an instance name, a server/client role, and a connection identifier. These fields are optional because not every event has all three identities.
+`Identity` can carry an instance name, a server/client side, and a connection identifier. These fields are optional because not every event has all three identities.
 
-Startup has no peer connection. A named client can fail before a connected peer episode exists. A context can have instance and connection identity without having an independently assigned server/client role. Omitting a fact that is not available is better than inventing one.
+Startup has no peer connection. A named client can fail before an established connection exists. A context can have instance and connection identity without having an independently assigned server/client side. Omitting a fact that is not available is better than inventing one.
 
 `Scope` and `Identity` own their strings, so a logger can outlive the expression that assembled its scope.
 
@@ -323,7 +323,7 @@ When a client retries, the named role can remain the same while the attempt chan
 
 Not every run reaches an established transport or protocol session. An endpoint can fail before a connection exists, and an intentional context switch is not necessarily a network failure.
 
-Counters need the same care. Cumulative queued bytes differ from pending queue length; read bytes differ from processed bytes. Context counters cover that context’s period of responsibility; connection counters cover the broader peer episode.
+Counters need the same care. Cumulative queued bytes differ from pending queue length; read bytes differ from processed bytes. Context counters cover that context’s period of responsibility; connection counters cover the full connection lifetime.
 
 The effective configuration is the companion artifact for this reading. Record the selected endpoint, limits, retry policy, and log policy along with the observed sequence. A short event history plus the exact configuration is usually a better bug report than an unbounded payload dump.
 

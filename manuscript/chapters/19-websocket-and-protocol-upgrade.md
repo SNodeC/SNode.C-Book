@@ -12,19 +12,19 @@
 
 ### From event streams to upgraded bidirectional communication
 
-HTTP can remain open as a one-way event stream; it can also negotiate an upgrade. After a successful WebSocket upgrade, the same lower connection no longer behaves as ordinary request/response HTTP. The connection episode continues as bidirectional, message-oriented communication.
+HTTP can remain open as a one-way event stream; it can also negotiate an upgrade. After a successful WebSocket upgrade, the same lower connection no longer behaves as ordinary request/response HTTP. The connection continues as bidirectional, message-oriented communication.
 
 This makes WebSocket different from both ordinary HTTP and Server-Sent Events. Figure \ref{fig:web-protocol-layer-structure} places these ideas in the relationship used in this part of the book: HTTP request/response is the common web-protocol foundation; Server-Sent Events and WebSocket are dependent protocol shapes inside the same web protocol layer; and the Express-like application structure uses that layer to organize application-facing endpoints.
 
 ![The web protocol layer with HTTP request/response as the common foundation for Server-Sent Events and WebSocket, and with the Express-like application structure using that layer.](assets/figures/pdf/fig-06-web-protocol-layer-structure.pdf){#fig:web-protocol-layer-structure width=88% latex-placement="tbp"}
 
-Upgrade does not mean that the lower connection disappears. The lower family, stream transport, TLS state if present, connection identity, counters, runtime lifecycle, and diagnostic surface remain part of the same peer episode. The protocol context interpreting that episode changes.
+Upgrade does not mean that the lower connection disappears. The network family, stream transport, TLS state if present, connection identity, counters, runtime lifecycle, and diagnostic surface remain part of the same connection. The protocol context interpreting its bytes changes.
 
 Figure \ref{fig:web-protocol-layer-structure} also prevents a wrong reading of the web chapters. Express-like routing is an application-structuring layer, not the protocol parent of SSE or WebSocket. Application code can use the Express-like structure to organize ordinary HTTP routes, SSE endpoints, and WebSocket upgrade entry points, or it can use the web protocol layer directly where that is the better fit.
 
 \index{WebSocket!layered model}
 
-After upgrade, correlate HTTP negotiation and WebSocket records as phases of one connection. Ordinary route dispatch no longer receives its bytes as later HTTP requests; with TLS, the secure carrier remains underneath.
+After upgrade, correlate HTTP negotiation and WebSocket records as phases of one connection. Ordinary route dispatch no longer receives its bytes as later HTTP requests; with TLS, the TLS connection remains underneath.
 
 Chapter 18 compared the three interaction shapes. For implementation, the decisive observation is what happens after the first response:
 
@@ -67,7 +67,7 @@ Its bases retain the HTTP upgrade side and expose the WebSocket/subprotocol surf
 |---|---|
 | HTTP `SocketContextUpgrade` | keeps the transition connected to HTTP upgrade |
 | `SubProtocolContext` | gives the upgraded connection its WebSocket/subprotocol surface |
-| socket connection | continues carrying the same peer episode |
+| socket connection | retains the same peer relationship |
 | `Request` / `Response` | represent the HTTP upgrade negotiation side |
 
 ### WebSocket messages and frames
@@ -78,7 +78,7 @@ Its bases retain the HTTP upgrade side and expose the WebSocket/subprotocol surf
 \index{pong frame}
 \index{close frame}
 
-Frames are protocol units; messages are application payloads assembled through frame handling. The carrier sends complete messages or start/continuation/end fragments and handles incoming frame chunks and control frames. The callback surface exposes message start, data, end and error, so applications need not reimplement framing.
+Frames are protocol units; messages are application payloads assembled through frame handling. The WebSocket layer sends complete messages or start/continuation/end fragments and handles incoming frame chunks and control frames. The callback surface exposes message start, data, end and error, so applications need not reimplement framing.
 
 | WebSocket concern | Meaning |
 |---|---|
@@ -89,7 +89,7 @@ Frames are protocol units; messages are application payloads assembled through f
 | pong | ping response / control signal |
 | close | protocol-level closing signal |
 
-Text and binary frames carry application data; continuation frames extend a fragmented message. Ping, pong and close are carrier control signals, not subprotocol business messages. Applications keep their own message semantics separate from these liveness and closing mechanisms.
+Text and binary frames carry application data; continuation frames extend a fragmented message. Ping, pong and close are WebSocket control signals, not subprotocol business messages. Applications keep their own message semantics separate from these liveness and closing mechanisms.
 
 \index{WebSocket!server-side upgrade}
 \index{WebSocket!client-side upgrade}
@@ -128,7 +128,7 @@ WebSocket is a bidirectional message channel with a subprotocol layer.
 
 That subprotocol gives the WebSocket channel its application/message semantics. A raw WebSocket message is not yet a complete application idea. It may be a chat message, a telemetry update, a dashboard command, an MQTT packet, or something else.
 
-A small application can implement its message meaning in one dedicated handler. A selectable subprotocol adds a useful boundary when a carrier serves several named protocols or loads their factories independently. Its cost is another negotiated name and deployment artifact that must agree on both sides.
+A small application can implement its message meaning in one dedicated handler. A selectable subprotocol adds a useful boundary when a WebSocket endpoint serves several named protocols or loads their factories independently. Its cost is another negotiated name and deployment artifact that must agree on both sides.
 
 The WebSocket layer provides explicit subprotocol infrastructure.
 
@@ -208,7 +208,7 @@ The exact target names are application choices; the contract is the name-to-fact
 
 ### A compact WebSocket subprotocol
 
-A WebSocket application is usually not written as a raw byte loop. The application supplies a subprotocol object. The WebSocket layer handles the upgraded carrier, frames, messages, and control behavior; the subprotocol object receives lifecycle and message callbacks.
+A WebSocket application is usually not written as a raw byte loop. The application supplies a subprotocol object. The WebSocket layer handles the upgraded connection, frames, messages, and control behavior; the subprotocol object receives lifecycle and message callbacks.
 
 A minimal echo pair needs one subprotocol on each side. The server-side object collects one message and sends its bytes back with the same message type. The teaching client sends text, while an independent client may also send binary data:
 
@@ -364,7 +364,7 @@ WebSocket preserves message boundaries above a stream, but preserving a boundary
 
 The defaults are zero, meaning unlimited for these configurable resource limits. Protocol validity rules still apply; an unlimited resource setting does not make an invalid WebSocket frame valid. A finite frame bound alone is also insufficient to bound a message assembled from many smaller frames. The three settings protect different dimensions of the same receiver.
 
-A receiver resource-limit violation uses close code `1009`, Message Too Big. The limit is enforced at the carrier boundary before the application can treat the rejected message as accepted subprotocol data. It does not replace application validation of message contents, authorization, or command semantics.
+A receiver resource-limit violation uses close code `1009`, Message Too Big. The limit is enforced at the WebSocket boundary before the application can treat the rejected message as accepted subprotocol data. It does not replace application validation of message contents, authorization, or command semantics.
 
 These settings are snapshotted when the upgrade creates its receiver. Changing configuration later does not revise that existing receiver’s limits. Nor do they introduce a corresponding sender-fragmentation policy: the current limits govern receiving. Chapter 15 covers the separate bounded-output contract below WebSocket, while Chapter 27 shows the receiver-validation and real-connection tests that protect these boundaries.
 
@@ -374,16 +374,16 @@ Run the companion `HttpUpgrade-Server` and `HttpUpgrade-Client` with the matchin
 
 Then use a scratch client copy to request an unsupported subprotocol name. The success criterion is no echo subprotocol attachment and no ordinary `hello` exchange; inspect the returned HTTP status and selection diagnostics rather than assuming every rejection uses one status code. Restore `echo` before testing message behavior.
 
-Next, send both a text message and a binary message containing a zero byte. The reply must keep the original WebSocket message type and exactly the same payload bytes. Repeat with an empty message, two successive messages on one connection, and a message split into continuation frames. These observations test the companion's echo contract; successful upgrade alone does not establish them. A malformed frame should still be rejected by the carrier's validation path, which has a separate responsibility.
+Next, send both a text message and a binary message containing a zero byte. The reply must keep the original WebSocket message type and exactly the same payload bytes. Repeat with an empty message, two successive messages on one connection, and a message split into continuation frames. These observations test the companion's echo contract; successful upgrade alone does not establish them. A malformed frame should still be rejected by the WebSocket layer's validation path, which has a separate responsibility.
 
 This adds upgrade-boundary evidence to the earlier diagnostic vocabulary: negotiation, selected subprotocol, frame parsing, control frames, and close behavior. The operational question is not “which single layer failed?”, but where the first observable failure appears in this stack.
 
 \index{MQTT over WebSocket}
-\index{WebSocket!as carrier}
+\index{WebSocket!message transport}
 
 The next chapter moves to MQTT. MQTT can be used directly in SNode.C, and Chapter 21 will show how it can also be carried as a WebSocket subprotocol.
 
-The bridge from this chapter is simple: WebSocket provides the upgraded bidirectional carrier; MQTT over WebSocket later places MQTT semantics inside that carrier.
+The bridge from this chapter is simple: WebSocket provides the upgraded bidirectional message transport; MQTT over WebSocket later places MQTT semantics inside that transport.
 
 \index{WebSocket!public surface}
 \index{web::websocket@\texttt{web::websocket}}

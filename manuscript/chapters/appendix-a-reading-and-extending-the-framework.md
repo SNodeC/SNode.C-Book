@@ -6,7 +6,7 @@
 
 ::: {.snodec-objectives title="Learning objectives"}
 - **O1.** Trace a public server type through its build component, activation flow, factory, and connection-local behavior.
-- **O2.** Build an installed consumer and verify a carrier extension without changing its protocol implementation.
+- **O2.** Build an installed consumer and verify a network-family extension without changing its protocol implementation.
 - **O3.** Choose an extension point and justify its ownership, configuration, failure policy, and regression tests.
 :::
 
@@ -37,7 +37,7 @@ The top-level `CMakeLists.txt` prepares helper modules and delegates into `src`.
 |---|---|
 | `src/log`, `src/utils` | Logging and common support |
 | `src/core` | Runtime, event processing, timers, socket abstractions |
-| `src/net` | Lower communication families and transport specializations |
+| `src/net` | Network families and transport specializations |
 | `src/web`, `src/express` | Web protocols and Express-like request flow |
 | `src/database`, `src/iot` | Database and IoT-oriented support |
 | `src/apps` | Variant-oriented demonstrations; enabled by `SNODEC_BUILD_APPS` |
@@ -72,7 +72,7 @@ SNode.C names encode architectural position. Consider:
 net::in::stream::legacy::SocketServer
 ```
 
-`net` identifies the network-facing layer, `in` IPv4, `stream` the transport form, `legacy` non-TLS connection handling, and `SocketServer` the server role. Related selections use `in6` for IPv6, `un` for Unix domain sockets, `rc` for RFCOMM, `l2` for L2CAP, and `tls` for secured connection handling, where the build and platform support the combination.
+`net` identifies the network-facing layer, `in` IPv4, `stream` the transport form, `legacy` non-TLS connection handling, and `SocketServer` the server side. Related selections use `in6` for IPv6, `un` for Unix domain sockets, `rc` for RFCOMM, `l2` for L2CAP, and `tls` for secured connection handling, where the build and platform support the combination.
 
 Use the name to predict where to read. Replacing `in` with `in6` leads toward IPv6 addressing; replacing `legacy` with `tls` leads toward secured connection handling. Neither tells you where echo behavior lives: that still leads to the application-supplied factory and context.
 
@@ -82,8 +82,8 @@ The recurring activation path is:
 
 | Endpoint handle | Activation | Subsequent reading path |
 |---|---|---|
-| `SocketServer` | `listen(...)` | Registered instance and listen flow, connection, factory, context |
-| `SocketClient` | `connect(...)` | Registered instance and connect flow, connection, factory, context |
+| `SocketServer` | `listen(...)` | Instance and listen flow, connection, factory, context |
+| `SocketClient` | `connect(...)` | Instance and connect flow, connection, factory, context |
 
 Configuration belongs to the endpoint; the flow tracks its activation. When a file feels difficult, locate it along this path before following another dependency.
 
@@ -152,7 +152,7 @@ Chapter 4 established the mental model; source navigation now locates the respon
 \index{framework pollution}
 \index{over-abstraction}
 
-Extension is safe only when the new behavior has a clear home. Applications may need protocol behavior, middleware, configuration, carriers, diagnostics, or reusable components. Extending the easiest file to reach can hide the responsibility and make the next change harder to place.
+Extension is safe only when the new behavior has a clear home. Applications may need protocol behavior, middleware, configuration, network families, diagnostics, or reusable components. Extending the easiest file to reach can hide the responsibility and make the next change harder to place.
 
 An extension must preserve four kinds of clarity:
 
@@ -167,7 +167,7 @@ Compilation alone establishes none of those relationships. Start application-loc
 Keep project-specific behavior at the application boundary unless the reusable boundary is real.
 :::
 
-Framework pollution appears when a framework class knows one product's topics, a transport knows its domain rule, a context opens its project-specific table, or a core target depends on an application library. A project rule may become a project library; a generic mapping mechanism may become reusable support; a lower family must fit the lower-family abstraction.
+Framework pollution appears when a framework class knows one product's topics, a transport knows its domain rule, a context opens its project-specific table, or a core target depends on an application library. A project rule may become a project library; a generic mapping mechanism may become reusable support; a network family must fit the network-family abstraction.
 
 Premature abstraction causes a related failure. Two similar fragments become a generic layer; their uses diverge, and the layer accumulates flags, callbacks and special cases. The warning sign is one context, middleware, target, or configuration section with unrelated reasons for change. Preserve meaning first; generality can emerge when the repeated responsibility is real.
 
@@ -217,7 +217,7 @@ This small excerpt shows the extension rule in code. The factory constructs. The
 | Where is application ordering? | still `MeasurementModel::accept(...)` |
 | What would be pollution? | putting local IPC parsing into HTTP, SSE, MQTT, or the model |
 
-The example stays deliberately small. It does not justify a reusable framework component, because the line protocol and measurement shape are project-specific. It does justify a separate application role, because the input boundary has a different peer identity, communication family, diagnostic surface, and future-change path from the web and MQTT roles.
+The example stays deliberately small. It does not justify a reusable framework component, because the line protocol and measurement shape are project-specific. It does justify a separate application role, because the input boundary has a different peer identity, network family, diagnostic surface, and future-change path from the web and MQTT roles.
 
 ### Choosing the protocol extension point
 
@@ -238,14 +238,14 @@ The following choices separate connection behavior, construction, and higher pro
 | `SocketContext` | Per-connection parsing, state, handshake, dispatch or cleanup. Keep durable state, global orchestration, database ownership, supervision and cross-role recovery elsewhere. |
 | `SocketContextFactory` | Construct the correct context with its configuration and application dependencies. Do not hide route registration, database opening, unrelated publication or deployment policy inside construction. |
 | Middleware/router | Request/response flow: logging, preprocessing, authentication, authorization, negotiation, route grouping, static assets or HTTP behavior. MQTT sessions and low-level socket retry do not become web policy. |
-| WebSocket subprotocol | Bidirectional message rules above the upgraded carrier. Preserve negotiation, message validity, state, close/error behavior and selected-subprotocol diagnostics. |
+| WebSocket subprotocol | Bidirectional message rules above the upgraded connection. Preserve negotiation, message validity, state, close/error behavior and selected-subprotocol diagnostics. |
 | MQTT application object | Publication, subscription, reactions and application state above MQTT. Retain the framework's packet, session, topic and QoS machinery. |
 
 A context may know its connection without owning the whole system role. A factory is more than an allocation hook: MQTTSuite's MQTT CLI factory retrieves configuration sections and creates an `iot::mqtt::SocketContext` with a client-side MQTT protocol object. This keeps construction policy separate from that object and the socket client. If a factory starts unrelated services, it has become an accidental orchestrator.
 
 Middleware is suitable when a concern is naturally expressed in request/response flow. Database schema ownership, device-specific domain rules, and cross-process supervision still need their own owners.
 
-For WebSocket, HTTP negotiates the upgrade, WebSocket supplies the message carrier, and the subprotocol supplies meaning. Do not reimplement HTTP or treat WebSocket frames as raw TCP bytes. An ordinary HTTP route needs no subprotocol; bidirectional interaction with its own message rules may. MQTT-over-WebSocket occupies that latter position.
+For WebSocket, HTTP negotiates the upgrade, WebSocket supplies the message transport, and the subprotocol supplies meaning. Do not reimplement HTTP or treat WebSocket frames as raw TCP bytes. An ordinary HTTP route needs no subprotocol; bidirectional interaction with its own message rules may. MQTT-over-WebSocket occupies that latter position.
 
 MQTT already owns connection setup, sessions, topics, subscriptions, QoS flow, keep-alive, acknowledgements and disconnect. MQTTSuite's `mqttcli` derives from the framework MQTT client class, overrides semantic callbacks and uses its send operations. Follow that direction: use `sendConnect`, `sendSubscribe`, `sendPublish` and `sendDisconnect`; keep topic policy explicit and session behavior configurable. Bypassing packet/session logic, hiding topic mapping in transport, or merging broker/client/application roles obscures which contract the extension changes.
 
@@ -263,7 +263,7 @@ For a new option, also state when its value takes effect. The current `SNodeC::r
 
 As Chapter 25 showed, reusable extensions need truthful public include and component surfaces. Names such as `mqtt-client-websocket`, `http-server-express-legacy-in`, or `net-in-stream-tls` describe a responsibility more accurately than `misc-network-stuff`, `common-utils2`, or `app-helper`.
 
-The target should say what architectural role the component plays and own its dependencies directly. The public header should say what source-facing abstraction the extension exposes. A component that needs HTTP or a selected carrier should declare that fact; a public front-door header should include or export the lower public declarations needed by the abstraction. A consumer should not have to know private implementation dependencies or private header order.
+The target should say what architectural role the component plays and own its dependencies directly. The public header should say what source-facing abstraction the extension exposes. A component that needs HTTP or a selected stream connection should declare that fact; a public front-door header should include or export the lower public declarations needed by the abstraction. A consumer should not have to know private implementation dependencies or private header order.
 
 For a framework-level extension, check the public front-door header, target name, dependency visibility, exported target, package component, optional dependency behavior, and installed runtime layout. Ignoring these may leave a component that compiles in-tree but fails in the installed framework. An external consumer test must use the public headers and exported targets without private header ordering or accidental source-tree include paths.
 
@@ -315,7 +315,7 @@ The table selects a starting point, not a claim that one test layer is sufficien
 
 Before editing, name the changed concern, its owner and scope, the layer it must not pollute, and the configuration, diagnostics, failure policy, tests, packaging and deployment consequences. Ask what the design makes easier or harder to change next.
 
-Use the questions as an exercise on the Chapter 29 parser: suppose the local producer needs its own sample number retained alongside the gateway sequence. Identify the domain field, CSV and JSON representation changes, accepted-state behavior, and observer assertions before editing. Then compare this with adding a second input carrier. The first changes the shared application contract; the second can preserve it. A useful answer names both the files that must change and the existing behavior that the tests must continue to protect.
+Use the questions as an exercise on the Chapter 29 parser: suppose the local producer needs its own sample number retained alongside the gateway sequence. Identify the domain field, CSV and JSON representation changes, accepted-state behavior, and observer assertions before editing. Then compare this with adding a second input network family. The first changes the shared application contract; the second can preserve it. A useful answer names both the files that must change and the existing behavior that the tests must continue to protect.
 
 For a flow-related extension, preserve the current invariant explicitly: one public activation call creates one controller, automatic recovery stays within that controller, and termination does not restart it. The shared endpoint configuration and connection identity allocation remain shared across its flows. Test cancellation of one flow beside a surviving sibling, and distinguish termination from final controller destruction. The current `InetPerCallFlowTest` is the relevant composed regression boundary; an old singleton-controller sketch would be the wrong foundation for this extension.
 
@@ -333,8 +333,8 @@ For a flow-related extension, preserve the current invariant explicitly: one pub
 1. **Review (O1).** Trace EchoPair's public server alias through the family wrapper, flow creation, factory and context. Which decisions are fixed by the alias, and which remain application-owned?
 2. **Review (O3).** A new runtime option appears after `reconfigure()`, but an established connection keeps its old policy. Explain the missing consumer/lifetime decision; why would reparsing alone not implement live change?
 3. **Lab (O1, O2).** Follow the public source-reading solution, then build EchoPair as an external installed-package consumer. Record the selected package, exported component, activation and factory paths. Expect `environment-ready` returned unchanged; explain which source-reading conclusions that observation cannot establish.
-4. **Lab (O2, O3).** Build the existing line-protocol carrier extension through the appendix target. Compare IPv4 and Unix-domain peers under fragmented/coalesced writes, invalid commands and `QUIT`. Expect identical protocol replies and owned-path cleanup. Identify the changed header, alias, listen argument and component; verify the context and factory remain shared.
-5. **Design (O1, O3).** Retain a producer sample number alongside MiniGateway's acceptance sequence. Identify domain, CSV/JSON, observer and regression changes, then contrast adding only a second carrier. Justify application-local ownership and the contracts each test protects.
+4. **Lab (O2, O3).** Build the existing line-protocol network-family extension through the appendix target. Compare IPv4 and Unix-domain peers under fragmented/coalesced writes, invalid commands and `QUIT`. Expect identical protocol replies and owned-path cleanup. Identify the changed header, alias, listen argument and component; verify the context and factory remain shared.
+5. **Design (O1, O3).** Retain a producer sample number alongside MiniGateway's acceptance sequence. Identify domain, CSV/JSON, observer and regression changes, then contrast adding only a second network family. Justify application-local ownership and the contracts each test protects.
 
 Public answers, source-reading steps, and bounded lab commands:
 `companion/exercises/appendix-a/README.md`.

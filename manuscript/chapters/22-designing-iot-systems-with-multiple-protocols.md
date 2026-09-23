@@ -39,7 +39,7 @@ Each connector in Figure \ref{fig:iot-boundary-constellation} is a boundary, and
 \index{observation role}
 \index{administration role}
 
-A useful starting point is to name recurring boundary roles. In this chapter, a boundary role is a design position in the system. It is not automatically a fixed framework class. A concrete SNode.C application may realize such a role through one or more configured roles and registered instances.
+A useful starting point is to name recurring boundary roles. In this chapter, a boundary role is a design position in the system. It is not automatically a fixed framework class. A concrete SNode.C application may realize such a role through one or more endpoint handles and their instances.
 
 | Boundary role | Question |
 |---|---|
@@ -130,7 +130,7 @@ This is one accepted fact projected through several roles. The indentation shows
 
 Keep protocol-specific behavior in those output adapters; the accepted domain meaning belongs to their shared model.
 
-### Choosing the carrier at each boundary
+### Choosing the connection at each boundary {#choosing-the-carrier-at-each-boundary}
 
 \index{MQTT!integration spine}
 
@@ -193,7 +193,7 @@ In a multi-protocol system, configuration becomes a map of roles and boundaries.
 
 This connects directly to Chapter 12's named instances, role visibility, and structured configuration model. In this chapter, those ideas become configuration as a system boundary map.
 
-For each configured role and registered instance, name its boundary, protocol, endpoint, failure policy and observation surface. The configuration tells operators which system is actually running.
+For each instance, name its boundary, protocol, endpoint, failure policy and observation surface. The configuration tells operators which system is actually running.
 
 More boundaries mean more possible failure points. That makes observability part of the architecture. Chapter 13's diagnostic rule becomes more important here: visibility should preserve the boundary at which a fact belongs.
 
@@ -266,8 +266,8 @@ For the gateway developed later, follow one measurement through those boundaries
 1. **Review (O1, O3).** Distinguish a system boundary role from a configured SNode.C instance. When can several roles share a process?
 2. **Review (O1, O2).** Explain why one accepted measurement can appear on MQTT and SSE without duplication of authority. What changes when acceptance promises durability?
 3. **Lab (O1, O2).** Run the unavailable-output lab. Expect HTTP status and SSE to agree on accepted measurements despite MQTT refusal; restart resets the in-memory sequence.
-4. **Lab (O1, O2, O3).** Run the Part VIII checkpoint: first observe broker delivery with the canonical client role, then separate gateway acceptance with unavailable MQTT. Complete the public boundary map from those observations.
-5. **Design (O3).** Split a field-instrument gateway into roles. Choose carriers, permissions, retry policy and the truth its dashboard may report during broker or storage failure.
+4. **Lab (O1, O2, O3).** Run the Part VIII checkpoint: first observe broker delivery with the canonical client side, then separate gateway acceptance with unavailable MQTT. Complete the public boundary map from those observations.
+5. **Design (O3).** Split a field-instrument gateway into roles. Choose network families and connection variants, permissions, retry policy and the truth its dashboard may report during broker or storage failure.
 
 Public solutions and bounded lab commands: `companion/exercises/ch22/README.md`.
 :::

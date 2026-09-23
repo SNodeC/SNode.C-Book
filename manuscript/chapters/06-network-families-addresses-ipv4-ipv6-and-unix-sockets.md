@@ -218,7 +218,7 @@ setChannel(...)
 setPsm(...)
 ```
 
-This helps when changing carriers: a port assignment cannot simply become a Unix path assignment, and a channel choice does not establish a valid PSM. Revisit the endpoint's meaning as well as the setter's spelling.
+This helps when changing network families: a port assignment cannot simply become a Unix path assignment, and a channel choice does not establish a valid PSM. Revisit the endpoint's meaning as well as the setter's spelling.
 
 All concrete classes render their addresses for startup logging, callbacks and diagnostics. Compare the requested identity with the actual endpoint before attributing a failure to the protocol.
 
@@ -303,7 +303,7 @@ The pattern can be summarized like this:
 
 When comparing the two families, ask: does the same protocol produce the same bytes and preserve separate state for each peer? Similar declarations establish where reuse is possible; those observations establish whether the selected composition actually behaves as intended.
 
-If the application protocol is written in a `SocketContext`, it does not automatically become an “IPv4 protocol” or an “IPv6 protocol.” It is application behavior carried over a lower family. The same context class can often be reused when the protocol behavior does not inspect or depend on family-specific address details.
+If the application protocol is written in a `SocketContext`, it does not automatically become an “IPv4 protocol” or an “IPv6 protocol.” It is application behavior carried over a network family. The same context class can often be reused when the protocol behavior does not inspect or depend on family-specific address details.
 
 IPv4 and IPv6 roles can participate in the same event runtime. Giving them separate instance names makes their configuration and diagnostics distinguishable even when they use one factory/context design. That is useful for a service that deliberately exposes two family-specific listeners: shared protocol behavior does not require one shared listening policy or one ambiguous operational name.
 
@@ -429,7 +429,7 @@ and link the matching component:
 
 `net-un-stream-legacy`.
 
-Chapter 25 collects the include/component matrix. The public family lab holds EchoPair’s context and factory fixed while comparing IPv4, IPv6 and a temporary Unix path. It checks returned bytes, actual local/remote identities, and cleanup before the Part checkpoint chooses a carrier for a local measurement producer.
+Chapter 25 collects the include/component matrix. The public family lab holds EchoPair’s context and factory fixed while comparing IPv4, IPv6 and a temporary Unix path. It checks returned bytes, actual local/remote identities, and cleanup before the Part checkpoint chooses a network family for a local measurement producer.
 
 \index{Unix domain sockets}
 \index{local IPC}

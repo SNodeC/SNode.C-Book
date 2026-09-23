@@ -18,7 +18,7 @@ HTTP messages are no longer handled only by an HTTP request-ready callback; the 
 
 HTTP provides message meaning; Express organizes application handling above it.
 
-The visible `WebAppT<ServerT>` object in application code is the handle. Through that handle, the application configures a server-side communication role and registers a runtime-visible server instance. Constructing the named handle registers its configuration; `listen(...)` initiates a flow. Express routing begins later, when HTTP makes a request ready.
+The visible `WebAppT<ServerT>` object in application code is the handle. Through that handle, the application configures an instance on the server side. Constructing the named handle registers its configuration; `listen(...)` initiates a flow. Express routing begins later, when HTTP makes a request ready.
 
 A ready HTTP request enters a `Controller`, then the root route dispatches it through routers, middleware and handlers:
 
@@ -94,7 +94,7 @@ The SNode.C source also provides the corresponding convenience alias:
 express::legacy::in::WebApp
 ```
 
-The same idea applies to other lower-family and connection-handling variants where provided.
+The same idea applies to other network-family and connection-handling variants where provided.
 
 Follow the ready-request callback in `WebAppT` into its controller construction, then into root-route dispatch. This is the source trace behind the composition above. It separates the lifetime of one request’s dispatch from the longer lifetime of the application’s route tree.
 
@@ -280,13 +280,13 @@ Code using the convenience server helpers includes:
 #include <express/legacy/in/Server.h>
 ```
 
-The corresponding carrier component is:
+The corresponding composed stream component is:
 
 ```text
 http-server-express-legacy-in
 ```
 
-It selects the Express layer together with the IPv4 legacy stream carrier. The source-side and build-side names rhyme without being the same mechanism. Chapter 25 gives the source-derived matrix for the broader set of components and headers.
+It selects the Express layer together with the IPv4 legacy stream connection. The source-side and build-side names rhyme without being the same mechanism. Chapter 25 gives the source-derived matrix for the broader set of components and headers.
 
 ::: {.snodec-remember title="What to remember"}
 - `WebAppT<ServerT>` joins a root router and concrete HTTP server; request readiness starts controller dispatch.

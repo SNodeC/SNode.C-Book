@@ -13,7 +13,7 @@
 
 ### The build structure as architecture
 
-Part IX assembled applications into systems. Those systems must now be built, linked, installed and consumed. CMake records their component choices; public headers expose the C++ abstractions an application can name. Read the two together to distinguish runtime infrastructure, protocol layers, concrete carriers, optional features and application targets.
+Part IX assembled applications into systems. Those systems must now be built, linked, installed and consumed. CMake records their component choices; public headers expose the C++ abstractions an application can name. Read the two together to distinguish runtime infrastructure, protocol layers, composed stream connections, optional features and application targets.
 
 \index{build structure}
 \index{architecture!build structure}
@@ -181,7 +181,7 @@ logger
                 `-- mqtt-client-websocket, shared path
 ```
 
-Follow the shared paths rather than treating the drawing as one stack. `websocket` reaches `utils`, its server role also reaches HTTP, and MQTT-over-WebSocket joins MQTT and WebSocket roles. HTTP, MQTT, database and concrete carriers attach to different parts of the shared runtime surface.
+Follow the shared paths rather than treating the drawing as one stack. `websocket` reaches `utils`, its server side also reaches HTTP, and MQTT-over-WebSocket joins MQTT and WebSocket roles. HTTP, MQTT, database and composed stream connections attach to different parts of the shared runtime surface.
 
 ### Public header hierarchy mirrors the component hierarchy
 
@@ -201,7 +201,7 @@ The matching component is `net-in-stream-legacy`. At the Express level, an IPv4 
 
 The corresponding component-side stack is not textually identical, but it rhymes with the same architecture:
 
-`snodec::http-server-express-legacy-in`, carrying its base Express/HTTP server side and the selected `snodec::net-in-stream-legacy` carrier.
+`snodec::http-server-express-legacy-in`, carrying its base Express/HTTP server side and the selected `snodec::net-in-stream-legacy` stream component.
 
 Headers expose declarations, aliases, templates, inline helpers, and source-facing public roles. Components expose compiled libraries, exported targets, usage requirements, and transitive link dependencies. They are two public contracts for the same stack, not one mechanism repeated twice.
 
@@ -220,18 +220,18 @@ In the source tree, examples and framework code include headers relative to the 
 | IPv6 legacy stream socket | `<net/in6/stream/legacy/SocketServer.h>` / `<net/in6/stream/legacy/SocketClient.h>` | `snodec::net-in6-stream-legacy` | IPv6 stream sockets over the unencrypted legacy stream layer. |
 | Unix-domain legacy stream socket | `<net/un/stream/legacy/SocketServer.h>` / `<net/un/stream/legacy/SocketClient.h>` | `snodec::net-un-stream-legacy` | Local stream sockets over the legacy stream layer. |
 | Unix-domain datagram socket | `<net/un/dgram/Socket.h>` | `snodec::net-un-dgram` | Local datagram socket surface. |
-| HTTP server/client role | `<web/http/legacy/in/Server.h>` / `<web/http/legacy/in/Client.h>` | `snodec::http-server` or `snodec::http-client`, plus the selected carrier component when the source directly names one | Raw HTTP role over a concrete carrier. Unlike Express, raw HTTP does not use a separate concrete Express carrier target. |
-| EventSource client | `<web/http/legacy/in/EventSource.h>` | `snodec::http-client`, plus the selected carrier component when needed | SSE client role over the selected HTTP client carrier. Server-side SSE is ordinary HTTP response streaming, not a separate component. |
+| HTTP server/client side | `<web/http/legacy/in/Server.h>` / `<web/http/legacy/in/Client.h>` | `snodec::http-server` or `snodec::http-client`, plus the selected composed stream component when the source directly names one | Raw HTTP implementation over a composed stream connection. Unlike Express, raw HTTP does not use a separate concrete Express stream target. |
+| EventSource client | `<web/http/legacy/in/EventSource.h>` | `snodec::http-client`, plus the selected composed stream component when needed | SSE client side over the selected HTTP client connection. Server-side SSE is ordinary HTTP response streaming, not a separate component. |
 | Express base layer | `<express/WebApp.h>` and other base Express headers | `snodec::http-server-express` | Express-like routing and middleware layer above the HTTP server surface. |
-| Express IPv4 legacy WebApp | `<express/legacy/in/WebApp.h>` | `snodec::http-server-express-legacy-in` | Express-like server over IPv4 legacy stream. The concrete target owns both the carrier choice and the Express base layer. |
+| Express IPv4 legacy WebApp | `<express/legacy/in/WebApp.h>` | `snodec::http-server-express-legacy-in` | Express-like server over IPv4 legacy stream. The concrete target owns both the stream selection and the Express base layer. |
 | Express IPv4 TLS WebApp | `<express/tls/in/WebApp.h>` | `snodec::http-server-express-tls-in` | Express-like server over IPv4 TLS stream. |
-| WebSocket base | `<web/websocket/SubProtocolFactory.h>` and related base WebSocket headers | `snodec::websocket` | Shared WebSocket/subprotocol machinery. This alone is not a concrete server or client role. |
-| WebSocket server/client role | `<web/websocket/server/SubProtocol.h>` / `<web/websocket/client/SubProtocol.h>` | `snodec::websocket-server` or `snodec::websocket-client` | Role-specific WebSocket upgrade/subprotocol surface. |
+| WebSocket base | `<web/websocket/SubProtocolFactory.h>` and related base WebSocket headers | `snodec::websocket` | Shared WebSocket/subprotocol machinery. This alone is not a concrete server or client side. |
+| WebSocket server/client side | `<web/websocket/server/SubProtocol.h>` / `<web/websocket/client/SubProtocol.h>` | `snodec::websocket-server` or `snodec::websocket-client` | Server-side or client-side WebSocket upgrade/subprotocol support. |
 | MQTT shared layer | `<iot/mqtt/Mqtt.h>` / `<iot/mqtt/Topic.h>` | `snodec::mqtt` | Shared MQTT packet/session/protocol machinery. This component is available only when the MQTT dependency gate is satisfied. |
-| MQTT native client | `<iot/mqtt/client/Mqtt.h>` | `snodec::mqtt-client` | Native MQTT client role. |
-| MQTT native server | `<iot/mqtt/server/Mqtt.h>` | `snodec::mqtt-server` | Native MQTT server role. |
-| MQTT-over-WebSocket client | `<iot/mqtt/client/SubProtocol.h>` plus the MQTT client role header directly named by the application | `snodec::mqtt-client-websocket` | MQTT client role carried through a WebSocket subprotocol. |
-| MQTT-over-WebSocket server | `<iot/mqtt/server/SubProtocol.h>` plus the MQTT server role header directly named by the application | `snodec::mqtt-server-websocket` | MQTT server role carried through a WebSocket subprotocol. |
+| MQTT native client | `<iot/mqtt/client/Mqtt.h>` | `snodec::mqtt-client` | Native MQTT client side. |
+| MQTT native server | `<iot/mqtt/server/Mqtt.h>` | `snodec::mqtt-server` | Native MQTT server side. |
+| MQTT-over-WebSocket client | `<iot/mqtt/client/SubProtocol.h>` plus the MQTT client side header directly named by the application | `snodec::mqtt-client-websocket` | MQTT client side carried through a WebSocket subprotocol. |
+| MQTT-over-WebSocket server | `<iot/mqtt/server/SubProtocol.h>` plus the MQTT server side header directly named by the application | `snodec::mqtt-server-websocket` | MQTT server side carried through a WebSocket subprotocol. |
 | MariaDB application state | `<database/mariadb/MariaDBClient.h>` | `snodec::db-mariadb` | MariaDB persistence boundary for application state. This component is available only when the MariaDB client library is found. |
 
 ### Namespaced targets are the consumer-facing interface
@@ -259,7 +259,7 @@ target_link_libraries(myapp
 )
 ```
 
-This selects Express-like HTTP over an IPv4 legacy carrier. Include a lower socket header only if the source directly names that socket abstraction.
+This selects Express-like HTTP over an IPv4 legacy stream connection. Include a lower socket header only if the source directly names that socket abstraction.
 
 \index{PUBLIC@\texttt{PUBLIC}}
 \index{PRIVATE@\texttt{PRIVATE}}
@@ -276,7 +276,7 @@ The central rule is simple:
 The target that needs a dependency should declare it. The source file that names an abstraction should include the public header that owns that abstraction.
 :::
 
-Select the protocol/application component, concrete carrier and features directly used by the application. The selected targets propagate their dependencies.
+Select the protocol/application component, composed stream connection and features directly used by the application. The selected targets propagate their dependencies.
 
 ::: {.snodec-checklist title="Package-boundary checklist"}
 - Does the component declare its own dependencies?
@@ -285,7 +285,7 @@ Select the protocol/application component, concrete carrier and features directl
 - Does the package export match the architecture?
 :::
 
-Two mistakes violate this ownership: omitting a required carrier, and manually repeating every lower dependency or header. The concrete `http-server-express-legacy-in` target avoids both by owning the IPv4 legacy carrier and Express base composition.
+Two mistakes violate this ownership: omitting a required stream component, and manually repeating every lower dependency or header. The concrete `http-server-express-legacy-in` target avoids both by owning the IPv4 legacy stream connection and Express base composition.
 
 ### Core, network, and transport composition
 
@@ -299,12 +299,12 @@ The implementations are separate shared libraries. Process-local overrides such 
 
 The runtime/socket progression is `core`, `core-socket`, `core-socket-stream`, then legacy or TLS stream operation. In particular, `core-socket-stream` depends on `core-socket`; it does not itself select a network family.
 
-Family targets add that selection. IPv4 legacy combines `net-in-stream` with `core-socket-stream-legacy`; IPv4 TLS combines the same family target with `core-socket-stream-tls`. IPv6, Unix-domain, RFCOMM and L2CAP supply corresponding family sides where available. The composed target is the usable carrier.
+Family targets add that selection. IPv4 legacy combines `net-in-stream` with `core-socket-stream-legacy`; IPv4 TLS combines the same family target with `core-socket-stream-tls`. IPv6, Unix-domain, RFCOMM and L2CAP supply corresponding family sides where available. The composed target supplies the selected stream implementation.
 
 \index{legacy variants}
 \index{TLS variants}
 
-Legacy and TLS are distinct targets, so a consumer can select either or both. A global Boolean does not silently change every carrier. The application protocol can stay stable while the connection-layer specialization changes.
+Legacy and TLS are distinct targets, so a consumer can select either or both. A global Boolean does not silently change every connection variant. The application protocol can stay stable while the connection-layer specialization changes.
 
 ### Protocol and application-layer components
 
@@ -317,16 +317,16 @@ HTTP upgrade support allows an upgrade protocol to be selected later by name. Th
 
 HTTP, Express and WebSocket also set library output directories and install RPATH properties. These identify runtime composition at build time; Chapter 26 checks the resulting installed lookup paths and permissions.
 
-The Express base `http-server-express` depends on `http-server` and JSON support. A concrete target such as `http-server-express-legacy-in` adds `net-in-stream-legacy`; its source front door is `<express/legacy/in/WebApp.h>` or `<express/legacy/in/Server.h>`. The base owns HTTP, and the concrete target owns the carrier.
+The Express base `http-server-express` depends on `http-server` and JSON support. A concrete target such as `http-server-express-legacy-in` adds `net-in-stream-legacy`; its source front door is `<express/legacy/in/WebApp.h>` or `<express/legacy/in/Server.h>`. The base owns HTTP, and the concrete target owns the stream composition.
 
-The same pattern supplies legacy/TLS IPv6 and Unix targets, with optional RFCOMM variants. Selecting `http-server-express-tls-in6`, for example, changes the carrier composition without moving HTTP's dependencies into application code.
+The same pattern supplies legacy/TLS IPv6 and Unix targets, with optional RFCOMM variants. Selecting `http-server-express-tls-in6`, for example, changes the stream composition without moving HTTP's dependencies into application code.
 
 \index{RPATH@\texttt{RPATH}}
 \index{runtime composition}
 
 WebSocket belongs to the HTTP upgrade family. The WebSocket build obtains HTTP upgrade directories from the HTTP target and places WebSocket-related artifacts beneath that layout. This mirrors the protocol model: WebSocket is an HTTP upgrade, not a separate protocol island. Chapter 19 gives the compact deployment contract for WebSocket subprotocol modules beneath the WebSocket upgrade directory.
 
-Native MQTT and MQTT-over-WebSocket are separate component selections. The base `mqtt` target supplies shared MQTT support, while `mqtt-client` and `mqtt-server` express native endpoint roles. `mqtt-client-websocket` and `mqtt-server-websocket` express the WebSocket-carried composition.
+Native MQTT and MQTT-over-WebSocket are separate component selections. The base `mqtt` target supplies shared MQTT support, while `mqtt-client` and `mqtt-server` supply the native MQTT client and server implementations. `mqtt-client-websocket` and `mqtt-server-websocket` express the WebSocket-carried composition.
 
 ### Optional features and generated configuration
 
@@ -472,7 +472,7 @@ Next inspect the link interface of `snodec::net-in-stream-legacy` in the install
 ::: {.snodec-remember title="What to remember"}
 - Headers expose named C++ abstractions; targets carry compiled dependencies and usage requirements.
 - Select supported package components and link exported targets, allowing each component to own its lower dependencies.
-- Concrete carrier targets and reusable base layers serve different purposes.
+- Composed stream targets and reusable base layers serve different purposes.
 - Optional dependency gates and compiled defaults affect what an installation supplies.
 - Test installed consumers and rebuild ABI-dependent applications and modules consistently.
 :::

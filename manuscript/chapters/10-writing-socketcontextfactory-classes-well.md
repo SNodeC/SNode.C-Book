@@ -150,7 +150,7 @@ The role decision is visible at construction; neither factory executes the conve
 \index{factory anti-patterns}
 \index{protocol behavior}
 
-Parsing, authentication exchanges and mid-protocol state transitions belong to the context. Retry, reconnect, accept-loop tuning and event sequencing belong to the registered instance, flow controller and runtime. Splitting those behaviors across construction and endpoint code makes the conversation harder to follow.
+Parsing, authentication exchanges and mid-protocol state transitions belong to the context. Retry, reconnect, accept-loop tuning and event sequencing belong to the instance, flow controller and runtime. Splitting those behaviors across construction and endpoint code makes the conversation harder to follow.
 
 A factory may pass explicit stable services into a context. That is different from becoming a service locator.
 
@@ -185,7 +185,7 @@ In schematic form, the pattern is:
 std::make_shared<SocketContextFactory>(std::forward<Args>(args)...)
 ```
 
-The argument pack allows the factory to be preconfigured at the point where the server or client handle is created. The resulting factory object is then part of the shared state used by the registered instance when connections appear.
+The argument pack allows the factory to be preconfigured at the point where the server or client handle is created. The resulting factory object is then part of the shared state used by the instance when connections appear.
 
 This means the server or client constructor can provide the stable information the factory needs. That information may then be stored in the factory and used later when `create(connection)` is called.
 
@@ -214,7 +214,7 @@ There is more than one correct factory shape. The right design depends on what n
 | separate server/client factories | the role distinction should be visible and simple |
 | parameterized factory | the context type is the same and only stable constructor data differs |
 | context-type-selecting factory | a small, explicit selection among endpoint types is needed |
-| preconfigured role factory | higher-level endpoint roles should be fixed at handle construction |
+| preconfigured role factory | application responsibilities should be fixed at handle construction |
 
 ::: {.snodec-warning title="Factory-scope warning"}
 The selection should remain a construction-time decision, not protocol execution.
@@ -250,7 +250,7 @@ Preconfigured factories allow the same framework mechanism to create different c
 
 A server/client handle can pass stable role and dependency information into the factory constructor. The factory can then use that information whenever it creates a context for a new connection.
 
-This can be used for simple role distinctions, such as server-side versus client-side contexts, but also for higher-level endpoint roles:
+This can be used for server-side versus client-side contexts, but also for application roles:
 
 - model-side endpoints,
 - view-side endpoints,
@@ -279,7 +279,7 @@ Create two peers through the same server and leave a partial command pending on 
 
 The failure path also has a contract: returning `nullptr` from `create(...)` causes the connection to close, as the source anchor shows. A test factory that deliberately refuses one connection can exercise that outcome. It should observe closure at the peer boundary and no protocol-ready context callback for the refused context; it should not manually delete a connection supplied by the framework.
 
-Chapter 11 will show how the same protocol can be carried over different lower families.
+Chapter 11 will show how the same protocol can be carried over different network families.
 
 Keep the context's input buffer and the factory's dependencies fixed while changing only the outer endpoint selection. The next chapter performs that comparison with a runnable line server, so reuse is checked through returned bytes as well as through similar declarations.
 

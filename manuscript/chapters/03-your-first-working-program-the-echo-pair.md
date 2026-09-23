@@ -300,7 +300,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-The SNode.C include is the public front-door header for the concrete server role used here: IPv4, stream transport, non-TLS `legacy` connection handling, and server-side behavior. The application does not manually include every lower `core/socket/...` header that participates in that composition. It includes the highest public header for the abstraction it directly names.
+The SNode.C include is the public front-door header for the concrete server side used here: IPv4, stream transport, non-TLS `legacy` connection handling, and server-side behavior. The application does not manually include every lower `core/socket/...` header that participates in that composition. It includes the highest public header for the abstraction it directly names.
 
 `core::SNodeC::init(argc, argv)` initializes the runtime before the named handle creates its configuration. The type alias selects IPv4, stream transport, non-TLS connection handling, and the echo context factory. The name `echoserver` identifies the endpoint in configuration and logs.
 
@@ -365,7 +365,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-The client uses the matching public front-door header for the client role. Server and client are different public roles even though they share the same lower family, transport form, and connection variant. The include path therefore changes only at the final role file: `SocketServer.h` versus `SocketClient.h`.
+The client uses the matching public front-door header for the client side. Server and client expose different operations even though they share the same network family, transport form, and connection variant. The include path therefore changes only at the final header: `SocketServer.h` versus `SocketClient.h`.
 
 The client uses the same sequence as the server: initialize, create a named handle, register `connect(...)`, then enter the runtime. The call registers work; it does not complete the exchange on the caller's stack. Only the client context sends the initial greeting.
 

@@ -163,7 +163,7 @@ The EventSource group covers basic and multiple events, multiline data, comments
 
 Neither group certifies all fragmentation sequences or browser/proxy deployments; read the actual assertions.
 
-`SNodeCReconfigureTest` exercises the public reconfiguration boundary from Chapter 12. It checks calls outside the running phase, successive file changes while the loop is running, command-line precedence, repeated final validation, a recreated named configuration instance, and parse failure followed by recovery. It also checks that runtime reparsing does not repeat bootstrap logging and daemonization effects. Read this test beside `SNodeC::reconfigure()` and `Config::reconfigure()`; a successful parse and a complete rollback after a failed parse are different promises. The current implementation makes the first available and does not promise the second.
+`SNodeCReconfigureTest` exercises the public reconfiguration boundary from Chapter 12. It checks calls outside the running phase, successive file changes while the loop is running, command-line precedence, repeated final validation, a recreated named instance, and parse failure followed by recovery. It also checks that runtime reparsing does not repeat bootstrap logging and daemonization effects. Read this test beside `SNodeC::reconfigure()` and `Config::reconfigure()`; a successful parse and a complete rollback after a failed parse are different promises. The current implementation makes the first available and does not promise the second.
 
 The core component tests also exercise timers, stopping from callbacks, file reading, descriptor-registration failure, and pipe behavior. Pipe tests cover ownership, bounded queues, immediate close, fairness, and timeouts.
 
@@ -316,7 +316,7 @@ Start by locating the failing boundary:
 
 Instance names connect configuration, callbacks, logs and operator language. `admin-http`, `mqtt-in`, `mqtt-out`, `local-control`, `event-stream` and `store-db` identify different responsibilities. Record role, endpoint, state, protocol phase and reason instead of only “connection failed”.
 
-A bug report is most useful when it can be reproduced at the right boundary. For SNode.C, a good reproduction should identify the component set, build type, installed or build-tree context, enabled lower families, legacy or TLS mode, configured instance names, exact protocol input where relevant, runtime sequence, and target platform.
+A bug report is most useful when it can be reproduced at the right boundary. For SNode.C, a good reproduction should identify the component set, build type, installed or build-tree context, enabled network families, legacy or TLS mode, configured instance names, exact protocol input where relevant, runtime sequence, and target platform.
 
 A routing bug should ideally be reproducible with a small route tree. A parser bug should ideally be reproducible with a small byte sequence. A deployment bug should ideally be reproducible from package installation and service startup. A reconnect bug should ideally describe the timing of peer availability, failure, retry, and recovery.
 

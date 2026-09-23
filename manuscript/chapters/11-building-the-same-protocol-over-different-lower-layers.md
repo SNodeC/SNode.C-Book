@@ -2,23 +2,23 @@
 
 ::: {.snodec-objectives title="Learning objectives"}
 - **O1.** Identify the source, component and endpoint changes needed to transfer the line protocol.
-- **O2.** Verify identical reconstructed replies across IPv4 and Unix-domain carriers.
-- **O3.** Decide when carrier-specific identity or trust assumptions require a different protocol policy.
+- **O2.** Verify identical reconstructed replies across IPv4 and Unix-domain network families.
+- **O3.** Decide when network-family-specific identity or trust assumptions require a different protocol policy.
 :::
 
-\index{lower-family transfer}
+\index{network-family transfer}
 \index{protocol reuse}
-\index{lower carriers}
+\index{network families}
 
 The line protocol now gives us something concrete to transfer: a receive buffer, three commands, response rules, and a factory that creates one parser per connection. This chapter keeps those files fixed while changing the endpoint that carries their bytes.
 
 Address identity, deployment, platform support, permissions, TLS and retry behavior still matter. The context and factory separation lets us ask which protocol decisions remain valid when those conditions change.
 
-### The lower-family transfer model
+### The network-family transfer model {#the-lower-family-transfer-model}
 
-\index{lower-family transfer}
+\index{network-family transfer}
 \index{network families}
-\index{carrier choice}
+\index{network-family choice}
 
 The transfer model keeps four questions apart:
 
@@ -26,14 +26,14 @@ The transfer model keeps four questions apart:
 |---|---|
 | What does the protocol do on one connection? | `SocketContext` |
 | Which context should be created for this connection? | `SocketContextFactory` |
-| Which lower family is selected? | the server/client handle type and its registration |
+| Which network family is selected? | the server/client handle type and its registration |
 | Which endpoint identity and deployment values are used? | `SocketAddress`, configuration, and startup/deployment data |
 
-This separation is the reason the same protocol core can often move across lower families without rewriting the protocol itself.
+This separation is the reason the same protocol core can often move across network families without rewriting the protocol itself.
 
-Figure \ref{fig:snodec-lower-family-transfer} shows the same idea as a transfer model: the protocol-side boundary remains stable, while the lower-family side changes endpoint identity, concrete server/client type, configuration, and deployment assumptions. It is a portability map for deciding what may stay stable and what must be reselected.
+Figure \ref{fig:snodec-lower-family-transfer} shows the same idea as a transfer model: the protocol-side boundary remains stable, while the network-family side changes endpoint identity, concrete server/client type, configuration, and deployment assumptions. It is a portability map for deciding what may stay stable and what must be reselected.
 
-![The lower-family transfer model. Branches show possible carrier selections for the same context abstraction, subject to protocol assumptions and platform support; they do not imply identical deployment behavior.](assets/figures/pdf/fig-04-lower-family-transfer-model.pdf){#fig:snodec-lower-family-transfer width=95% latex-placement="tbp"}
+![The network-family transfer model. Branches show possible network-family selections for the same context abstraction, subject to protocol assumptions and platform support; they do not imply identical deployment behavior.](assets/figures/pdf/fig-04-lower-family-transfer-model.pdf){#fig:snodec-lower-family-transfer width=95% latex-placement="tbp"}
 
 ### What can remain stable
 
@@ -56,21 +56,21 @@ These are context-level questions. They belong to the application protocol endpo
 
 A well-written `SocketContext` can answer these questions without immediately depending on whether the connection came from IPv4, IPv6, Unix domain sockets, RFCOMM, or L2CAP.
 
-That does not mean the context must be blind to its carrier.
+That does not mean the context must be blind to its network family.
 
-It means the context should only depend on lower-family facts when those facts are part of the protocol's meaning.
+It means the context should only depend on network-family facts when those facts are part of the protocol's meaning.
 
 Input handling, per-peer state, sending/reading, and protocol-driven timeout or close decisions may transfer. Address selection, deployment and reconnect policy should remain explicit outside the context.
 
 The useful question is:
 
-::: {.snodec-rule title="Protocol/carrier rule"}
-Does this code describe the protocol conversation, or does it describe the carrier and deployment environment?
+::: {.snodec-rule title="Protocol/network-family rule"}
+Does this code describe the protocol conversation, or does it describe the network-family and deployment environment?
 :::
 
-Protocol conversation belongs in the context. Carrier and deployment concerns usually belong outside it.
+Protocol conversation belongs in the context. Network-family and deployment concerns usually belong outside it.
 
-The factory may also transfer. If the same context type is suitable across several lower families, the factory can remain small and recognizable.
+The factory may also transfer. If the same context type is suitable across several network families, the factory can remain small and recognizable.
 
 It may still create:
 
@@ -90,9 +90,9 @@ new EchoSocketContext(connection, Role::Client)
 \index{endpoint configuration}
 \index{deployment assumptions}
 
-Lower-family transfer is not the same as pretending all families are identical. Several things usually change.
+Network-family transfer is not the same as pretending all families are identical. Several things usually change.
 
-The visible server/client handle type changes because the application chooses a different lower-family specialization.
+The visible server/client handle type changes because the application chooses a different network-family specialization.
 
 Examples include:
 
@@ -108,9 +108,9 @@ and the corresponding client types.
 
 The selected namespace and component change the endpoint semantics and platform requirements.
 
-The endpoint identity changes with the lower family.
+The endpoint identity changes with the network family.
 
-| Lower family | Endpoint identity |
+| Network family | Endpoint identity |
 |---|---|
 | IPv4 | host + port |
 | IPv6 | host + port |
@@ -122,7 +122,7 @@ These values enter convenience calls, configuration and deployment scripts. Loca
 
 Deployment also changes.
 
-| Lower family | Deployment consequence |
+| Network family | Deployment consequence |
 |---|---|
 | IPv4 | network reachability, interface exposure, firewall and routing questions |
 | IPv6 | IPv6 addressing, dual-stack or IPv6-only behavior, address notation |
@@ -134,7 +134,7 @@ Bluetooth additionally needs a supported adapter and any pairing/trust required 
 
 ### Echo as the smallest transfer microscope
 
-\index{echo pair!lower-family transfer}
+\index{echo pair!network-family transfer}
 
 The echo application gives the smallest useful example. Echo is interesting not because it is sophisticated, but because it exposes the placement boundary.
 
@@ -146,7 +146,7 @@ EchoSocketContext::EchoSocketContext(SocketConnection* socketConnection, Role ro
 
 The role is stored in the context.
 
-When the connection becomes ready, the client role starts the exchange:
+When the connection becomes ready, the client side starts the exchange:
 
 ```cpp
 if (role == Role::CLIENT) {
@@ -179,28 +179,28 @@ return new EchoSocketContext(socketConnection, EchoSocketContext::Role::CLIENT);
 ```
 
 \index{protocol reuse}
-\index{lower carriers}
+\index{network families}
 
-The carrier comparison is useful as a design test, not as a promise of automatic portability. If the protocol's meaning is independent of host/port, path, channel, or PSM, the same context and factory shape can often remain recognizable while the outer handle, address, configuration, and deployment surface change. If the protocol's meaning depends on one of those facts, the context should specialize instead of pretending that all carriers are the same.
+The network-family comparison is useful as a design test, not as a promise of automatic portability. If the protocol's meaning is independent of host/port, path, channel, or PSM, the same context and factory shape can often remain recognizable while the outer handle, address, configuration, and deployment surface change. If the protocol's meaning depends on one of those facts, the context should specialize instead of pretending that all network families are the same.
 
 This is the useful transfer question:
 
-::: {.snodec-rule title="Lower-family transfer test"}
-Can the protocol conversation stay honest when the carrier changes, or has carrier identity become part of the protocol meaning?
+::: {.snodec-rule title="Network-family transfer test"}
+Can the protocol conversation stay honest when the network family changes, or has network-family identity become part of the protocol meaning?
 :::
 
 ### A worked transfer: the line server over IPv4 and Unix sockets
 
-Changing the lower carrier changes the public role header and the linked component when application code directly names that carrier. The protocol context can remain stable, but the source/build front door follows the selected lower family and connection mode.
+Changing the network family changes the public role header and the linked component when application code directly names that stream type. The protocol context can remain stable, but the source/build front door follows the selected network family and connection mode.
 
-| Carrier role | Public include | Matching component |
+| Network family / connection variant | Public include | Matching component |
 |---|---|---|
 | IPv4 legacy stream server | `<net/in/stream/legacy/SocketServer.h>` | `net-in-stream-legacy` |
 | IPv6 legacy stream server | `<net/in6/stream/legacy/SocketServer.h>` | `net-in6-stream-legacy` |
 | Unix-domain legacy stream server | `<net/un/stream/legacy/SocketServer.h>` | `net-un-stream-legacy` |
 | IPv4 TLS stream server | `<net/in/stream/tls/SocketServer.h>` | `net-in-stream-tls` |
 
-Chapter 25 gives the complete matrix. Here the point is the transfer rule: keep protocol behavior stable where possible, and change the carrier-facing surface deliberately.
+Chapter 25 gives the complete matrix. Here the point is the transfer rule: keep protocol behavior stable where possible, and change the public type and component selection deliberately.
 
 Use the complete `LineProtocol-Server` companion from Chapter 9. This exercise needs the installed IPv4 and Unix-domain legacy stream components and Python 3 for an independent client. It does not require Bluetooth hardware. Create two copies in a new private working directory, using the book-package variable from Chapter 2:
 
@@ -211,7 +211,7 @@ cp -R "$SNODEC_BOOK_SOURCE/companion/examples/LineProtocol-Server" "$SNODEC_TRAN
 printf '%s\n' "$SNODEC_TRANSFER"
 ```
 
-Keep that directory path available in each terminal used below. In the `unix` copy, make four carrier-facing edits:
+Keep that directory path available in each terminal used below. In the `unix` copy, make four type, address, header and component edits:
 
 | Location | IPv4 selection | Unix-domain selection |
 |---|---|---|
@@ -276,16 +276,16 @@ for name, family, endpoint in endpoints:
 
 The expected output reports the same conversation for both families. The two writes deliberately avoid making a complete-command-per-write assumption, although the operating system can still combine them into one receive. Repeat the framing and length-limit cases from Chapter 9 if the context itself changes.
 
-For a carrier-specific failure, change only the Unix client's target to a nonexistent name inside the exercise directory. Connection establishment should fail before `READY`; the parser has not received an invalid command. Restore the target, repeat the successful exchange, then stop both servers with `Ctrl-C` and inspect the socket-path cleanup. This gives three distinct pieces of evidence: the unchanged protocol files, the same observed conversation, and different endpoint failure conditions.
+For a network-family-specific failure, change only the Unix client's target to a nonexistent name inside the exercise directory. Connection establishment should fail before `READY`; the parser has not received an invalid command. Restore the target, repeat the successful exchange, then stop both servers with `Ctrl-C` and inspect the socket-path cleanup. This gives three distinct pieces of evidence: the unchanged protocol files, the same observed conversation, and different endpoint failure conditions.
 
-### Designing for lower-family transfer
+### Designing for network-family transfer {#designing-for-lower-family-transfer}
 
-\index{lower-family transfer!design rules}
+\index{network-family transfer!design rules}
 \index{endpoint identity}
 
 If the protocol does not conceptually care whether the peer is identified by host/port, path, channel, or PSM, then those details should not dominate the context.
 
-A protocol may still inspect lower-family data for logging, diagnostics, authorization, routing, or policy. That is not forbidden. The important question is whether the lower-family detail is part of the protocol meaning or merely part of the carrier.
+A protocol may still inspect network-family data for logging, diagnostics, authorization, routing, or policy. That is not forbidden. The important question is whether the network-family detail is part of the protocol meaning or only needed to establish and operate the connection.
 
 Keep the frame accumulator, parser state and pending request with the connection. They should change at explicit lifecycle and input points, independently of the outer endpoint’s setup.
 
@@ -329,9 +329,9 @@ Role::CommandSink
 These are construction-time choices. The factory supplies the role; interpreting its protocol belongs in the resulting context.
 
 \index{preconfigured factories}
-\index{endpoint roles}
+\index{instances}
 
-Chapter 10 explained that server and client constructors can forward an argument pack into the factory constructor. That makes it possible to preconfigure factories with stable role and dependency information. This matters for lower-family transfer because the same mechanism can create role-specific endpoints over different carriers.
+Chapter 10 explained that server and client constructors can forward an argument pack into the factory constructor. That makes it possible to preconfigure factories with stable role and dependency information. This matters for network-family transfer because the same mechanism can create role-specific endpoints over different network families.
 
 Examples include:
 
@@ -341,16 +341,16 @@ Examples include:
 - requester / request handler,
 - model-side / view-side / controller-side endpoints.
 
-The same preconfigured endpoint can be created over another carrier when its assumptions still hold. Later MiniGateway chapters apply these roles to publishers, subscribers, gateways and adapters.
+The same preconfigured endpoint can be created over another network family when its assumptions still hold. Later MiniGateway chapters apply these roles to publishers, subscribers, gateways and adapters.
 
 ### When reuse should stop
 
 \index{over-abstraction}
 \index{protocol specialization}
 
-Lower-family transfer is useful only when it preserves clarity. There are cases where reuse should stop.
+Network-family transfer is useful only when it preserves clarity. There are cases where reuse should stop.
 
-A protocol may genuinely depend on a lower-family detail.
+A protocol may genuinely depend on a network-family detail.
 
 For example, a Bluetooth-oriented protocol may care about device identity in a way that is not equivalent to an IP address or a Unix-domain path.
 
@@ -378,23 +378,23 @@ A good design may have:
 - small role-specific factories,
 - and explicit deployment choices.
 
-This is clean factoring rather than failure. The goal is not to make all lower families look identical.
+This is clean factoring rather than failure. The goal is not to make all network families look identical.
 
 The goal is to keep the stable protocol core stable and the real family-specific differences visible.
 
-\index{configuration!lower-family transfer}
+\index{configuration!network-family transfer}
 
-Lower-family transfer naturally makes configuration more visible. Changing the carrier may change the selected handle type, registered instance name, local and remote endpoint values, factory arguments, TLS/legacy choice, retry policy, startup arguments, deployment files, and platform or permission requirements. Configuration is where that variation becomes explicit instead of leaking into protocol code.
+Network-family transfer naturally makes configuration more visible. Changing the network family may change the selected handle type, instance name, local and remote endpoint values, factory arguments, TLS/legacy choice, retry policy, startup arguments, deployment files, and platform or permission requirements. Configuration is where that variation becomes explicit instead of leaking into protocol code.
 
 ::: {.snodec-remember title="What to remember"}
-- A protocol can often keep its context and factory shape while the lower family changes.
-- Carrier choice, endpoint identity, configuration, and deployment remain explicit; they are not hidden by reuse.
-- Reuse should stop when lower-family semantics become part of the protocol's meaning.
+- A protocol can often keep its context and factory shape while the network family changes.
+- Network-family choice, endpoint identity, configuration, and deployment remain explicit; they are not hidden by reuse.
+- Reuse should stop when network-family semantics become part of the protocol's meaning.
 - Small family-specific outer code is often clearer than an over-generalized abstraction.
 :::
 
 ::: {.snodec-exercise title="Exercises"}
-1. **Review (O1).** List the carrier-facing edits in the worked transfer and the protocol files left unchanged. Explain why the status callback’s address type follows the server alias.
+1. **Review (O1).** List the type, address, header and component edits in the worked transfer and the protocol files left unchanged. Explain why the status callback’s address type follows the server alias.
 2. **Review (O3).** A local service authorizes commands by Unix peer credentials. Explain why moving its parser to an IP listener does not transfer that authorization policy.
 3. **Lab (O1, O2).** Build and run the Part IV checkpoint. Send the same fragmented and coalesced command sequence over IPv4 and a private Unix path. Expect identical reconstructed replies, partial-prefix silence, `QUIT` closure and Unix-path cleanup.
 4. **Lab (O2, O3).** Run the endpoint-failure lab. Expect a nonexistent Unix path to fail before `READY`; on the valid path, expect an unknown command to receive an error while a later `PING` still succeeds. Distinguish endpoint and protocol failure.

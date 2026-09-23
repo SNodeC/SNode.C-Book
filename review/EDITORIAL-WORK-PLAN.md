@@ -2180,3 +2180,14 @@ not reruns in this fix. Identified snapshot race resolved; API and user invocati
 unchanged. Evidence: checkpoint-log-fix/REPORT.md, results.json, summary.json,
 preservation.json and verbose CTest logs under this pass. Refinement stays paused;
 source reconciliation and unfinished P1 work remain pending explicit resumption.
+
+### Author handoff — snapshot for independent review
+
+The author requests committing and pushing the complete current book state for
+Claude to review the status and next steps. Preserve the unfinished P1 manuscript
+edits and existing P1 JSON evidence as a work-in-progress snapshot. This is not a
+P1 completion/gate commit. No manuscript content changes or new verification are
+performed for the handoff. Work remains paused; no next phase starts. Current
+state, evidence locations and pending source reconciliation are summarized in
+review/pedagogical-smoothing-2026-09-23/HANDOFF.md. Push only the existing work
+branch, without merging or updating SNode.C-2.0-refinement.

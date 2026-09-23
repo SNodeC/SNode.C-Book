@@ -1,7 +1,7 @@
 ## Configuring Applications and Named Instances {#configuring-applications-and-named-instances}
 
 ::: {.snodec-objectives title="Learning objectives"}
-- **O1.** Trace a named endpoint’s value through C++ defaults, file assignments and command-line overrides.
+- **O1.** Trace a named instance’s value through C++ defaults, file assignments and command-line overrides.
 - **O2.** Diagnose a configuration error and distinguish parsed values from existing runtime activity.
 - **O3.** Decide which communication roles need independent configuration and lifecycle control.
 :::
@@ -14,7 +14,7 @@
 
 Configuration is where architectural choices become adjustable by the operator. The context still implements the protocol and the factory creates contexts, but the application must choose its communication roles, endpoint values, connection variants and enablement.
 
-Through a `SocketServer` or `SocketClient` handle, the application configures a server-side or client-side communication role. Constructing a named endpoint registers its configuration instance. Each `listen(...)` or `connect(...)` call then starts an activation flow for that configured role.
+Through a `SocketServer` or `SocketClient` handle, the application configures an instance. Giving the instance a name registers it in the configuration hierarchy. Each `listen(...)` or `connect(...)` call then starts an activation flow for that instance.
 
 \index{configuration!architecture}
 \index{configured communication role}
@@ -23,7 +23,7 @@ Through a `SocketServer` or `SocketClient` handle, the application configures a 
 |---|---|
 | instance identity | which role is being configured |
 | role identity | server-side or client-side behavior |
-| lower-family shape | IPv4, IPv6, Unix domain sockets, RFCOMM, L2CAP, and connection variant |
+| network-family shape | IPv4, IPv6, Unix domain sockets, RFCOMM, L2CAP, and connection variant |
 | endpoint values | host, port, path, channel, PSM, or related local/remote values |
 | section structure | scoped areas such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` |
 | operational state | enabled or disabled, persistent or run-specific options |
@@ -71,7 +71,7 @@ fill the handle’s configuration before starting an activation. Source defaults
 
 Command-line configuration gives an already compiled application a way to be shaped at startup. That is especially important for named instances.
 
-A named server instance such as:
+A named instance on the server side such as:
 
 ```cpp
 EchoServer echoServer("echo");
@@ -114,7 +114,7 @@ External configuration can address the named roles present in the hierarchy when
 
 A deliberate runtime reparse can include roles registered later. It changes configuration values, not existing activity; the section “Application and instance configuration” develops its lifecycle and failure consequences.
 
-The current per-call flow model makes the configuration boundary particularly important. An endpoint exposes one shared configuration object. Each explicit activation receives its own controller, but that controller does not freeze a private copy of the endpoint settings. An address-taking `connect(...)` overload updates the endpoint's remote configuration before starting its flow. Use separate named endpoints for destinations that need independent configuration; retaining two flow handles is not a substitute for that separation.
+The current per-call flow model makes the configuration boundary particularly important. An endpoint exposes one shared configuration object. Each explicit activation receives its own controller, but that controller does not freeze a private copy of the endpoint settings. An address-taking `connect(...)` overload updates the endpoint's remote configuration before starting its flow. Use separate named instances for destinations that need independent configuration; retaining two flow handles is not a substitute for that separation.
 
 ### Named instances as configuration addresses
 
@@ -219,9 +219,9 @@ The following section locates these choices in the hierarchy. The echo experimen
 \index{instance scope}
 \index{section scope}
 
-Read the hierarchy from the outside inward: application-wide concerns, a named communication role, a responsibility section, then an option. Figure \ref{fig:configuration-hierarchy} shows that hierarchy as one structural model. The named-instance level is where a configured server/client role receives an externally addressable identity and can be enabled or disabled without removing the role from the application shape.
+Read the hierarchy from the outside inward: application-wide concerns, a named instance, a responsibility section, then an option. Figure \ref{fig:configuration-hierarchy} shows that hierarchy as one structural model. The named-instance level is where an instance receives an externally addressable identity and can be enabled or disabled without removing its endpoint handle from the application.
 
-![A representative named-endpoint hierarchy: application, instance, section, and option. Options can also belong directly to application or instance scope; discovery can describe deeper or anonymous nodes.](assets/figures/pdf/fig-13-configuration-hierarchy.pdf){#fig:configuration-hierarchy width=90% latex-placement="tbp"}
+![A representative named-instance hierarchy: application, instance, section, and option. Options can also belong directly to application or instance scope; discovery can describe deeper or anonymous nodes.](assets/figures/pdf/fig-13-configuration-hierarchy.pdf){#fig:configuration-hierarchy width=90% latex-placement="tbp"}
 
 Application scope belongs to the executable as a whole.
 
@@ -240,15 +240,15 @@ These options form the operational envelope in which all configured communicatio
 
 They answer questions about the process as a program, not about a particular server port, peer address, Unix-domain path, Bluetooth channel, or TLS certificate used by one instance.
 
-Instance scope belongs to one named server-side or client-side communication role. A server listens and accepts; a client connects. Their role identity appears in help, and their endpoint sections reflect that difference.
+Instance scope belongs to one named instance. A server listens and accepts; a client connects. Their role identity appears in help, and their endpoint sections reflect that difference.
 
 It contains concerns such as:
 
 - instance identity,
-- server/client role identity,
+- server/client side identity,
 - disabled state,
 - configurability,
-- and the set of sections that shape the role.
+- and the set of sections that configure the instance.
 
 The server/client object in application code is the handle. In the configuration model, a named instance is the externally addressable configuration identity of the communication role that the handle configures and registers.
 
@@ -304,9 +304,9 @@ For a server, it is usually the most important endpoint section because it descr
 
 For a client, it may describe an explicit local bind side if the application does not want to leave that side wildcarded.
 
-The concrete fields depend on the lower family.
+The concrete fields depend on the network family.
 
-| Lower family | Typical local fields |
+| Network family | Typical local fields |
 |---|---|
 | IPv4 / IPv6 | host and port |
 | Unix domain sockets | path |
@@ -434,12 +434,12 @@ $ echoserver echo local --port
 [ArgumentMismatch] --port: 1 required port:UINT in [0 - 65535] missing
 
 $ echoserver echo local --port 8080
-# The configured role can now enter its listening path.
+# The instance can now enter its listening path.
 ```
 
 Chapter 13 explains the semantic records from the successful listening path.
 
-A named client instance follows the same idea, but the required section is usually `remote` rather than `local`. The CLI therefore teaches the structure while it reports the missing values.
+A named instance on the client side follows the same idea, but the required section is usually `remote` rather than `local`. The CLI therefore teaches the structure while it reports the missing values.
 
 Help and the command line describe the executable’s configuration surface. They do not open an interactive management channel into a running process. The current source provides a separate application decision: call `core::SNodeC::reconfigure()` from the event-loop thread while the runtime is `RUNNING`. `express::WebApp::reconfigure()` forwards the same operation.
 
@@ -589,7 +589,7 @@ backend.remote.host = "127.0.0.1"
 backend.remote.port = 1883
 ```
 
-Each key says which configured role it belongs to. That is the value of named instances. They make configuration files describe application structure, not just isolated values.
+Each key says which instance it belongs to. That is the value of named instances. They make configuration files describe application structure, not just isolated values.
 
 ### Designing configuration for real applications
 
@@ -610,10 +610,10 @@ The construction boundary still belongs in `SocketContextFactory`.
 
 Configuration should expose variation; it should not replace application design.
 
-One final distinction prevents a subtle configuration mistake. A named endpoint is the address in the configuration tree; a returned `FlowHandle` is control over one activation. Starting the endpoint twice does not create two separately configurable instance names. Likewise, `terminateFlow()` ends that activation's pending work and recovery decisions, while `setOnDestroy(...)` observes the eventual release and unregistration of the shared configuration instance. Configuration identity, flow termination, and connection closure are three different observations.
+One final distinction prevents a subtle configuration mistake. A named instance is the address in the configuration tree; a returned `FlowHandle` is control over one activation. Starting the endpoint twice does not create two separately configurable instance names. Likewise, `terminateFlow()` ends that activation's pending work and recovery decisions, while `setOnDestroy(...)` observes the eventual release and unregistration of the shared instance. Configuration identity, flow termination, and connection closure are three different observations.
 
 ::: {.snodec-remember title="What to remember"}
-- The handle configures a server-side or client-side communication role; the registered instance carries that configured role into the runtime.
+- The endpoint handle configures an instance whose settings are shared by its activation flows.
 - The C++ API, configuration files, and command line feed one hierarchical configuration model.
 - Named instances become addressable in that hierarchy; anonymous instances remain internal to application code.
 - Sections such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` scope options by responsibility.

@@ -40,7 +40,7 @@ A common problem is **collapse of layers**. A small program begins with a socket
 Another is **one-protocol tunnel vision**: treating every concern as an HTTP route, a string over a socket, or an MQTT message. Each entry point is useful, but the application needs places for concerns that outlive one conversation.
 
 
-SNode.C separates communication family, transport, connection handling, and application protocol. Its contexts, factories, and configured endpoints make those choices explicit. HTTP, TLS, WebSocket, and MQTT build on that recurring structure.
+SNode.C separates network family, transport, connection handling, and application protocol. Its contexts, factories, and instances make those choices explicit. HTTP, TLS, WebSocket, and MQTT build on that recurring structure.
 
 This gives the reader transfer: IPv4, IPv6, Unix-domain sockets, and Bluetooth have different endpoint identities and deployment assumptions, but their architectural questions remain comparable.
 
@@ -169,7 +169,7 @@ The later MQTTSuite broker, integrator, bridge, command-line, and store roles ex
 \index{factory}
 
 
-Although the details come later, the recurring SNode.C application shape can already be previewed. A configured server or client role is advanced by the runtime; connections receive per-connection contexts through factories; those contexts hold the application protocol behavior.
+Although the details come later, the recurring SNode.C application shape can already be previewed. The runtime advances the listening or connecting work of an instance; connections receive per-connection contexts through factories; those contexts hold the application protocol behavior.
 
 Chapter 3 makes this pattern executable; Chapter 4 names it more formally.
 

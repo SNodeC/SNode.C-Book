@@ -19,11 +19,11 @@ A request callback runs only after the lower connection and HTTP parser have mad
 \index{HTTP!layered model}
 \index{application layer}
 
-HTTP contexts and factories build on named endpoints, activation flows and stream connections. The lower family and legacy-or-TLS carrier remain in place:
+HTTP contexts and factories build on named instances, activation flows and stream connections. The network family and legacy-or-TLS connection variant remain in place:
 
 | Concern | Plain stream layer | HTTP layer |
 |---|---|---|
-| lower family | IPv4, IPv6, Unix domain, RFCOMM where supported | still present |
+| network family | IPv4, IPv6, Unix domain, RFCOMM where supported | still present |
 | connection handling | legacy or TLS stream connection | still legacy or TLS underneath |
 | application-facing unit | bytes or custom stream protocol data | HTTP request and response |
 | context role | custom protocol endpoint | HTTP-aware protocol endpoint |
@@ -159,7 +159,7 @@ HTTP also needs ordinary protocol utilities:
 
 HTTP also supplies the boundary for selecting an upgraded protocol and support for long-lived EventSource responses.
 
-HTTP upgrade support belongs in the HTTP layer because HTTP is where the upgrade decision is negotiated. The upgraded protocol may later be WebSocket, but the boundary itself is not WebSocket-specific. An HTTP request names an upgrade target, the HTTP layer selects a socket-context upgrade factory for that name, and the selected upgraded context takes over the same connection episode after the HTTP response confirms the transition.
+HTTP upgrade support belongs in the HTTP layer because HTTP is where the upgrade decision is negotiated. The upgraded protocol may later be WebSocket, but the boundary itself is not WebSocket-specific. An HTTP request names an upgrade target, the HTTP layer selects a socket-context upgrade factory for that name, and the selected upgraded context takes over the same connection after the HTTP response confirms the transition.
 
 A compact server-side upgrade route has this shape. The example uses `websocket` because that is the concrete upgrade protocol used in the following WebSocket chapter, but the call itself belongs to the HTTP/Express boundary:
 
@@ -186,7 +186,7 @@ app.get("/ws", [](const std::shared_ptr<Request>& req, const std::shared_ptr<Res
 });
 ```
 
-The HTTP route is still visible at the boundary. After a successful upgrade, the selected upgraded socket context owns the connection episode. The route does not become the message loop of the upgraded protocol.
+The HTTP route is still visible at the boundary. After a successful upgrade, the selected upgraded socket context owns the connection. The route does not become the message loop of the upgraded protocol.
 
 On the client side, the HTTP client prepares an upgrade request and names the target upgrade protocol. For WebSocket that target name is `websocket`:
 
@@ -312,7 +312,7 @@ HTTP code includes the HTTP abstraction it directly names. An IPv4 legacy HTTP s
 #include <web/http/legacy/in/Server.h>
 ```
 
-and the matching client role uses:
+and the matching client side uses:
 
 ```cpp
 #include <web/http/legacy/in/Client.h>

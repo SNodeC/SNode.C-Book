@@ -111,7 +111,7 @@ The main application-facing object is `database::mariadb::MariaDBClient`. It com
 
 The state callback receives an error number, error message and connected flag.
 
-A database client is an application-facing persistence object integrated with the runtime, not the same kind of configured role as a socket server or client instance. It may belong to a role or service in the application, but it is not itself the same conceptual object as a registered runtime-visible socket instance.
+A database client is an application-facing persistence object integrated with the runtime, distinct from a socket instance. It may belong to a role or service in the application, but it is not itself the same conceptual object as a socket instance.
 
 `MariaDBConnectionDetails` describes the database endpoint and credentials.
 

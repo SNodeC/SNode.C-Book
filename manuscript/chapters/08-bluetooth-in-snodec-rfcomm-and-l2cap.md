@@ -3,7 +3,7 @@
 ::: {.snodec-objectives title="Learning objectives"}
 - **O1.** Construct and inspect Bluetooth device identities with distinct channel and PSM selectors.
 - **O2.** Diagnose which build, controller, pairing, service, or protocol stage prevents a Bluetooth exchange.
-- **O3.** Choose a local measurement carrier using observed endpoint identities and cleanup behavior.
+- **O3.** Choose a local measurement network family using observed endpoint identities and cleanup behavior.
 :::
 
 \index{Bluetooth}
@@ -16,7 +16,7 @@ Bluetooth is local in a different sense from Unix-domain sockets: the peer is ne
 
 Bluetooth uses device identity plus a family-specific service selector: an RFCOMM channel or an L2CAP PSM.
 
-After IPv4, IPv6, and Unix domain sockets, Bluetooth is the final lower-family variation before the focus moves upward to application protocol contexts.
+After IPv4, IPv6, and Unix domain sockets, Bluetooth is the final network-family variation before the focus moves upward to application protocol contexts.
 
 The first task is to identify which service the peer actually offers. A device address alone is not enough, and changing `rc` to `l2` in a type name does not translate an RFCOMM service into an L2CAP service. Once the matching endpoint is available, the existing factory/context model supplies protocol behavior over it.
 
@@ -24,7 +24,7 @@ The first task is to identify which service the peer actually offers. A device a
 \index{RFCOMM!channel}
 \index{L2CAP!PSM}
 
-SNode.C represents Bluetooth through two distinct lower families:
+SNode.C represents Bluetooth through two distinct network families:
 
 | Aspect | RFCOMM | L2CAP |
 |---|---|---|
@@ -32,8 +32,8 @@ SNode.C represents Bluetooth through two distinct lower families:
 | Address class | `net::rc::SocketAddress` | `net::l2::SocketAddress` |
 | Endpoint identity | Bluetooth address + channel | Bluetooth address + PSM |
 | Service selector | channel | PSM |
-| Server role | `SocketServer` | `SocketServer` |
-| Client role | `SocketClient` | `SocketClient` |
+| Server side | `SocketServer` | `SocketServer` |
+| Client side | `SocketClient` | `SocketClient` |
 | Context/factory model | stable | stable |
 | Runtime model | stable | stable |
 
@@ -196,7 +196,7 @@ scan off
 
 These are interactive `bluetoothctl` commands, not SNode.C options. An existing valid pairing need not be recreated. BlueZ versions may also establish trust or connect available profiles as part of `pair`; inspect the resulting state and the local policy instead of treating a generic “connected” indication as proof that the book's application service is ready. The BlueZ `bluetoothctl` manual and Device API documentation describe those platform operations.
 
-Pairing is therefore a platform and service requirement, not an unconditional requirement imposed by these SNode.C socket wrappers. SNode.C uses the prepared Bluetooth stack as a lower family; it does not replace controller setup, discovery, pairing, or authorization. Once those prerequisites are satisfied and the peer service is running, the ordinary listen/connect path can establish the application connection. The addressing choices are the ones already explained above.
+Pairing is therefore a platform and service requirement, not an unconditional requirement imposed by these SNode.C socket wrappers. SNode.C uses the prepared Bluetooth stack as a network family; it does not replace controller setup, discovery, pairing, or authorization. Once those prerequisites are satisfied and the peer service is running, the ordinary listen/connect path can establish the application connection. The addressing choices are the ones already explained above.
 
 ### Reusable protocol, explicit operating assumptions
 
@@ -260,14 +260,14 @@ with the corresponding component:
 
 The local lesson is the conditional family surface. Chapter 25 gives the broader include/component matrix.
 
-The Part III checkpoint compares two usable local producer endpoints before requiring radio equipment. Its thin drivers link the same EchoPair context and factory over IPv4 and Unix-domain streams. Send the same measurement-shaped bytes, then compare the actual peer and service identities. The Unix fixture owns a private directory: the server removes its socket path, the producer removes its own, and an unrelated file remains intact. Choosing a carrier changes those responsibilities without yet adding parsing or acceptance to the measurement model.
+The Part III checkpoint compares two usable local producer endpoints before requiring radio equipment. Its thin drivers link the same EchoPair context and factory over IPv4 and Unix-domain streams. Send the same measurement-shaped bytes, then compare the actual peer and service identities. The Unix fixture owns a private directory: the server removes its socket path, the producer removes its own, and an unrelated file remains intact. Choosing a network family changes those responsibilities without yet adding parsing or acceptance to the measurement model.
 
 ::: {.snodec-remember title="What to remember"}
 - A Bluetooth device address needs the service selector of the chosen family: RFCOMM channel or L2CAP PSM.
 - Building a component, powering a controller, pairing, starting a service, and receiving bytes are separate observations.
 - Local and remote direction remains explicit even when both endpoints use Bluetooth identities.
 - Reusable byte handling does not transfer timing, security, or deployment assumptions automatically.
-- Use actual endpoint and cleanup observations to choose a carrier; echoed bytes have not yet become accepted measurements.
+- Use actual endpoint and cleanup observations to choose a network family; echoed bytes have not yet become accepted measurements.
 :::
 
 ::: {.snodec-exercise title="Exercises"}

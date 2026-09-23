@@ -1,5 +1,11 @@
 # Pedagogical smoothing — checkpoint fixed; refinement paused
 
+Author handoff: the remaining P1 manuscript edits and three P1 JSON evidence
+files are preserved in a work-in-progress snapshot for independent review.
+P1 remains incomplete; no editorial gate is certified by this commit. See
+[HANDOFF.md](HANDOFF.md) for the current state and suggested review questions.
+No new tests or manuscript edits were made for this handoff.
+
 Current author instruction: FOLLOWUP-10.md authorizes fixing only the exercise
 verification timing while retaining APIs and usage. The ch13 checkpoint now
 reads its completed log after normal shutdown, using a retained read-only handle.
@@ -74,7 +80,7 @@ supersedes that stop. R continues with failed checks explicitly qualified.
 | R3 | local claims reconciled | fa62fa1bf554f4efa7a5c71527cb15b67ead1492; R-claim-review.md |
 | R evidence | qualified; author directs continuation | 1ceb6ef527386a18421e419fcce3122f0ccd472c; R-results.json |
 | P0b-resume | qualified; author directs continuation | containing entry-gate commit; P0b-resume-results.json, lab-repair-review.md |
-| P1 | incomplete; paused by author | uncommitted vocabulary edits; no P1 gate commit |
+| P1 | incomplete; paused by author | vocabulary edits preserved in independent-review snapshot; no P1 gate completion |
 | P2–P7 | not started | 07ca9a29 shutdown checks pass; ch13 driver fixed and 62/62 labs pass; source reconciliation and explicit resumption pending |
 
 ## Source and review

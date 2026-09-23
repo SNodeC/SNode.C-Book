@@ -118,7 +118,7 @@ A callback is a runtime-owned execution point, not an ordinary helper invoked at
 
 Chapter 4 separated the application-side handle from the runtime-visible instance.
 
-That distinction becomes concrete in the stream server and client code. The local `SocketServer` or `SocketClient` object used in application code names and configures a communication role. Each explicit `listen(...)` or `connect(...)` creates a controller for that call. Scheduled callbacks retain the controller together with the shared endpoint configuration and context. The current source therefore has one configured endpoint that can participate in several independent activation flows, rather than one endpoint-wide controller reused for every explicit call.
+That distinction becomes concrete in the stream server and client code. The local `SocketServer` or `SocketClient` object used in application code configures an instance. Each explicit `listen(...)` or `connect(...)` creates a controller for that call. Scheduled callbacks retain the controller together with the shared endpoint configuration and context. The current source therefore has one instance that can participate in several independent activation flows, rather than one endpoint-wide controller reused for every explicit call.
 
 The application begins with local expressions such as:
 
@@ -219,7 +219,7 @@ Socket acceptors, connectors, readers, and writers specialize this pattern. Trea
 
 `TimerEventPublisher` maintains a timer set, supports insertion and removal, computes the next timeout, publishes due events, and can stop its publisher. The `core::Timer` base is an ownership-oriented handle around a timer receiver, with `cancel()` and `restart()`. `core::timer::Timer` offers `intervalTimer(...)` and `singleshotTimer(...)` creation helpers.
 
-Timers participate in the same loop as descriptors and queued work. The multiplexer combines their deadlines with descriptor observation, so retries and reconnects can be scheduled without sleeps, blocking loops, or a second scheduler. Chapter 4 introduced those as operational concerns of configured roles; the timer machinery supplies their time-based progression.
+Timers participate in the same loop as descriptors and queued work. The multiplexer combines their deadlines with descriptor observation, so retries and reconnects can be scheduled without sleeps, blocking loops, or a second scheduler. Chapter 4 introduced those as operational concerns of instances; the timer machinery supplies their time-based progression.
 
 If a callback sleeps while waiting to retry, it also delays other connections, timers, queued events, timeout checks, and cleanup. Schedule the later action and return instead. This keeps the current protocol invariant intact while allowing unrelated roles to advance. A timer becoming due does not let its callback preempt a different callback that is still running.
 
