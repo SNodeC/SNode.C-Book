@@ -1916,3 +1916,30 @@ The framework freeze includes HEAD, porcelain status, the binary HEAD-diff diges
 and a sorted content-hash list of every untracked non-ignored file. No manuscript
 or companion text changed in P0a. Next: the exact P−1 C++20 target declarations,
 then all entry checks before any pedagogical edits.
+
+
+### Pedagogical smoothing — stopped at P0b, 2026-09-23
+
+P0a passed in `371a1b09738cb23e3981f2f15c9de9f037390e9c`; P−1 passed in
+`c70d9d1ca422bf57dbb7940b5112a31896efe8c6`. The latter adds only the ten
+prescribed C++20 target declarations; all 14 concrete targets build with Clang 19
+(default C++17), and 21 targeted compile commands explicitly select C++20.
+
+**Stop under §14:** the explicit entry source-alignment check against the frozen
+working tree fails on nine anchor checks and eleven file-content comparisons.
+This is unrelated to P−1. The framework freeze is unchanged. No repair was
+attempted and P1–P7 were not started. Every other entry group passed, including
+all 62 public labs, the companion and package builds, teaching/behavior/lifetime
+runs, both ci/test-*.py scripts, references, metrics and source/extracted hygiene.
+Build/runtime evidence uses the existing installed package and does not certify
+the current frozen source. check-smoothing.py was not created or run before stop.
+
+Manuscript tokens remain **100,338 → 100,338** against the new
+**107,338 / 112,338 / 115,000** thresholds. No manuscript changes or waivers.
+The entry gate blocks further pedagogical work; its unrelated source-evidence
+reconciliation must occur outside this stopped pass. The failed-gate evidence
+commit is `review: stop pedagogical smoothing at P0b source-alignment gate`.
+Only `book/pedagogical-smoothing-2026-09-23` is designated for push; no merge or
+source-branch push. Full status and evidence: `review/pedagogical-smoothing-2026-09-23/REPORT.md`,
+`P0b-results.json`, `P0b-stop-condition.json`, `P0b-*.log`, `P-minus-1-build.log`,
+`metrics-before.json`, `metrics-after.json`, and `framework-freeze-P0b-stop.json`.

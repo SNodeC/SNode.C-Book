@@ -1,0 +1,12 @@
+{
+  "total_tokens_before": 100338,
+  "total_tokens_after": 100338,
+  "fenced_tokens_after": 8151,
+  "source_markers": 37,
+  "index_entries": 1033,
+  "figure_ids": 18,
+  "rule_boxes": 20,
+  "manuscript_diff_empty": true,
+  "prompt_sha256_preserved": true,
+  "structure": "unchanged: 30 numbered chapters and Appendix A; splits not started"
+}

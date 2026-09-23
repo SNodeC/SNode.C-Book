@@ -1,0 +1,26 @@
+COMMAND: python3 ci/check-source-alignment.py --framework /home/voc/projects/snodec/snode.c
+SNODEC_PREFIX=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc
+BOOK_EXAMPLES_BUILD_DIR=/home/voc/projects/snodec/publications/book/build/pedagogical-smoothing-examples
+BOOK_BUILD_DIR=build/proposal-readiness-phase-2
+TMPDIR=/tmp
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/ci-fix-2026-09-22/install-gcc/lib/snode.c/web/http/upgrade/websocket
+ERROR: Source anchor differs: src/core/EventLoop.cpp:321
+ERROR: Source anchor differs: src/utils/Config.cpp:1070
+ERROR: Source anchor differs: src/Log.h:73
+ERROR: Source anchor differs: src/utils/Config.cpp:536
+ERROR: Source anchor differs: src/utils/Config.cpp:818
+ERROR: Source anchor differs: src/Log.h:173
+ERROR: Source anchor differs: src/log/SemanticLogger.cpp:697
+ERROR: Source anchor differs: src/CMakeLists.txt:130
+ERROR: Source anchor differs: src/utils/Config.cpp:1070
+ERROR: Framework source content differs: src/CMakeLists.txt
+ERROR: Framework source content differs: src/Log.h
+ERROR: Framework source content differs: src/core/EventLoop.cpp
+ERROR: Framework source content differs: src/log/Log.cpp
+ERROR: Framework source content differs: src/log/Logger.cpp
+ERROR: Framework source content differs: src/log/Logger.h
+ERROR: Framework source content differs: src/log/SemanticLogger.cpp
+ERROR: Framework source content differs: src/log/SemanticLogger.h
+ERROR: Framework source content differs: src/log/detail/SpdlogBackend.cpp
+ERROR: Framework source content differs: src/log/detail/SpdlogBackend.h
+ERROR: Framework source content differs: src/utils/Config.cpp
