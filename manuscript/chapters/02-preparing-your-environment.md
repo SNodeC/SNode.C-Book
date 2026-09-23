@@ -132,7 +132,7 @@ mkdir -p ~/projects
 cd ~/projects
 git clone https://github.com/SNodeC/snode.c.git
 cd snode.c
-git checkout --detach 8b8da56e0349191d4658ca8f820a490539eccd4d
+git checkout --detach 07ca9a2936ee72582df7d159cb06666fe23e30f8
 python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
 
@@ -149,7 +149,7 @@ The SNode.C repository uses `master` as its moving development line. Do not buil
 ```sh
 cd ~/projects/snode.c
 git fetch origin
-git checkout --detach 8b8da56e0349191d4658ca8f820a490539eccd4d
+git checkout --detach 07ca9a2936ee72582df7d159cb06666fe23e30f8
 python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
 

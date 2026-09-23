@@ -35,7 +35,7 @@ For networking, you should recognize sockets, addresses, connections, and the br
 
 The examples cover SNode.C 2.0.0 at the public commit below; Chapter 2 shows how to check out and verify it. Later versions may remain compatible, but source-derived explanations should be read against these recorded contents.
 
-`8b8da56e0349191d4658ca8f820a490539eccd4d`
+`07ca9a2936ee72582df7d159cb06666fe23e30f8`
 
 ### What this book is not {.unnumbered}
 

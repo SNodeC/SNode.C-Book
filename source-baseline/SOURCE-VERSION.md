@@ -1,13 +1,13 @@
 # Target SNode.C Source Version
 
 This edition targets SNode.C project version **2.0.0** at public commit
-`8b8da56e0349191d4658ca8f820a490539eccd4d`. The version is the CMake project version,
+`07ca9a2936ee72582df7d159cb06666fe23e30f8`. The version is the CMake project version,
 not a claim that a matching release tag exists.
 
 - Repository: `SNodeC/snode.c`
 - Source authority: the pinned public commit, checked against the clean author tree
-- Exact tree digest: `f00e7f9c16854d70c3d2122272458c581bacd108882ed13004c7d6d2173348ee`
-- Exact file contents: `framework-working-tree.json` (1,447 files)
+- Exact tree digest: `2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b`
+- Exact file contents: `framework-working-tree.json` (1,448 files)
 - Baseline recorded: `2026-09-23`
 - `framework-working-tree.patch` is empty; its digest remains checked.
 
@@ -19,7 +19,7 @@ package. Check out the public commit; no patch is needed.
 ```sh
 git clone https://github.com/SNodeC/snode.c.git
 cd snode.c
-git checkout --detach 8b8da56e0349191d4658ca8f820a490539eccd4d
+git checkout --detach 07ca9a2936ee72582df7d159cb06666fe23e30f8
 git rev-parse HEAD
 python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
