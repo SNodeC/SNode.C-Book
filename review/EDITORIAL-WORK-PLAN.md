@@ -2191,3 +2191,23 @@ performed for the handoff. Work remains paused; no next phase starts. Current
 state, evidence locations and pending source reconciliation are summarized in
 review/pedagogical-smoothing-2026-09-23/HANDOFF.md. Push only the existing work
 branch, without merging or updating SNode.C-2.0-refinement.
+
+
+### Follow-up 11 — consolidated scope and Phase R2
+
+Author instruction stored verbatim in
+`review/pedagogical-smoothing-2026-09-23/FOLLOWUP-11.md`. Active authority is
+PROMPT.md, FOLLOWUP-01 §5 (07ca9a29 replaces 8b8da56), and FOLLOWUP-11.
+Follow-ups 02–10 and their verification tasks are historical and complete.
+Continue from clean a2ecd9c; keep every commit and the 2e71f2a checkpoint fix.
+No timeout changes or test adaptations. Capture framework-freeze-R2.json and
+keep that same source state through P7; stop immediately on drift, a framework
+defect, or a false claim that cannot be locally corrected. Do not investigate
+framework changes after a stop.
+
+Phase R2 re-pins the live source records, changes only the three specified
+anchors, reviews signal/shutdown claims locally, and builds a fresh archive and
+installation for the complete P0b check set. Then finish P1 by contextual reread
+of the snapshot changes, counts/allowlist and fresh metrics; execute P2–P7 under
+the unchanged absolute 107,338 / 112,338 / 115,000 budgets. No gate is complete
+yet in this resumed run. Push the work branch on completion or stop; do not merge.

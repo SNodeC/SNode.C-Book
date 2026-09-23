@@ -1,0 +1,10 @@
+{
+  "book_entry": "a2ecd9c",
+  "framework": "07ca9a2936ee72582df7d159cb06666fe23e30f8",
+  "clean": true,
+  "public_origin_master": "07ca9a2936ee72582df7d159cb06666fe23e30f8",
+  "fresh_public_clone": "build/rebaseline-R2-07ca9a29-followup11/public-source",
+  "reachable": true,
+  "unused_existing_build": "build/rebaseline-R2-07ca9a29",
+  "prompt_unchanged": true
+}
