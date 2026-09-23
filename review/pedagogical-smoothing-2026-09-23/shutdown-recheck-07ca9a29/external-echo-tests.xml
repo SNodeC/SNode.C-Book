@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="4"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="jupiter"
+	time="0"
+	timestamp="2026-09-23T19:00:32"
+	>
+	<testcase name="echo.config-surface" classname="echo.config-surface" time="0.0805189" status="run">
+		<properties>
+			<property name="cmake_labels" value="configuration;echo;example;external"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="echo.server-external-peer" classname="echo.server-external-peer" time="0.132824" status="run">
+		<properties>
+			<property name="cmake_labels" value="echo;example;external;payload;server"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="echo.client-external-peer" classname="echo.client-external-peer" time="0.0789141" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;echo;example;external;payload"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="echo.pair-smoke" classname="echo.pair-smoke" time="0.365228" status="run">
+		<properties>
+			<property name="cmake_labels" value="echo;example;external;pair;smoke"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+</testsuite>

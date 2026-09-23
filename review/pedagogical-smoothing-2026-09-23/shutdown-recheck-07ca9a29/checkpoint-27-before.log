@@ -1,0 +1,11 @@
+{"v":1,"ts":"2026-09-23T17:03:24.118Z","level":"debug","origin":"framework","boundary":"instance","component":"core.socket.stream","instance":"echoserver","role":"server","message":"Initiating listen"}
+{"v":1,"ts":"2026-09-23T17:03:24.119Z","level":"info","origin":"framework","boundary":"instance","component":"core.socket.stream","instance":"echoserver","role":"server","message":"listener started"}
+{"v":1,"ts":"2026-09-23T17:03:24.119Z","level":"info","origin":"application","boundary":"application","component":"echo","message":"echoserver: listening on '127.0.0.1:50049'"}
+{"v":1,"ts":"2026-09-23T17:03:24.135Z","level":"info","origin":"framework","boundary":"connection","component":"core.socket.stream","instance":"echoserver","role":"server","connection":"1","message":"transport connected"}
+{"v":1,"ts":"2026-09-23T17:03:24.135Z","level":"debug","origin":"framework","boundary":"instance","component":"core.socket.stream","instance":"echoserver","role":"server","message":"Connection 1 connecting"}
+{"v":1,"ts":"2026-09-23T17:03:24.135Z","level":"debug","origin":"framework","boundary":"instance","component":"core.socket.stream","instance":"echoserver","role":"server","message":"Local: localhost:50049"}
+{"v":1,"ts":"2026-09-23T17:03:24.135Z","level":"debug","origin":"framework","boundary":"instance","component":"core.socket.stream","instance":"echoserver","role":"server","message":"Peer: localhost:56450"}
+{"v":1,"ts":"2026-09-23T17:03:24.135Z","level":"debug","origin":"framework","boundary":"instance","component":"core.socket.stream","instance":"echoserver","role":"server","message":"Connection 1 connected"}
+{"v":1,"ts":"2026-09-23T17:03:24.135Z","level":"debug","origin":"framework","boundary":"instance","component":"core.socket.stream","instance":"echoserver","role":"server","message":"Local: localhost:50049"}
+{"v":1,"ts":"2026-09-23T17:03:24.135Z","level":"debug","origin":"framework","boundary":"instance","component":"core.socket.stream","instance":"echoserver","role":"server","message":"Peer: localhost:56450"}
+{"v":1,"ts":"2026-09-23T17:03:24.135Z","level":"debug","origin":"framework","boundary":"connection","component":"core.socket.stream","instance":"echoserver","role":"server","connection":"1","message":"SocketContext created successful"}

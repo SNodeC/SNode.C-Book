@@ -2135,3 +2135,28 @@ skips remain in this check. Formal source-baseline reconciliation to the new HEA
 and unfinished P1 editorial work remain pending explicit resumption. Evidence:
 shutdown-recheck-55c36e41/REPORT.md, all-tests.md, summary.json, raw logs and
 sigint-stress.json under this pass. Verification complete; stop and report.
+
+### Follow-up 09 — verify synchronization simplification; report only
+
+The author requests another check after removal of logging synchronization
+constructs (verbatim in FOLLOWUP-09.md). Read-only source clean at
+07ca9a2936ee72582df7d159cb06666fe23e30f8; no book refinement or repairs.
+The author change removes backend/sink locks (+5/−19 lines); source inspection
+confirms the one-worker queue, captured sink lifetimes, signal masks and join
+before final flush remain. No arbitrary multithreaded API guarantee is claimed.
+
+Fresh verified build/install: framework 185/185 PASS, external echo 4/4 PASS,
+public labs 61/62 PASS, teaching/behavior/lifetime PASS, zero skips. Sole failure:
+ch13 checkpoint snapshots the log before shutdown and asserts against that old
+snapshot. Separate unchanged-harness observations reproduce the payload absent
+before shutdown in 14/40 cases and present after normal shutdown in 40/40.
+This is the previously recorded open async log observation race, not the old
+SIGINT hang. No driver or assertion has been altered. SIGINT stress remains
+100/100 PASS with the original five-second grace (maximum observed 7.65 ms).
+
+Framework freeze and manuscript/ci/companion hashes remain unchanged; original
+tests and timeouts preserved. Verification complete but qualified by ch13's
+snapshot timing failure. Formal source reconciliation and P1 work remain pending;
+book refinement stays paused. Complete suite results, ownership inspection,
+before/after log observations and preservation evidence:
+shutdown-recheck-07ca9a29/REPORT.md under this pass. Stop and report.

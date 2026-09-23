@@ -1,6 +1,17 @@
-# Pedagogical smoothing — runtime verification green; refinement paused
+# Pedagogical smoothing — runtime recheck qualified; refinement paused
 
-Current author instruction: FOLLOWUP-08.md requests another verification and
+Current author instruction: FOLLOWUP-09.md requests verification of logging
+synchronization simplification at clean **07ca9a2936ee72582df7d159cb06666fe23e30f8**.
+Fresh framework **185/185 PASS**, external echo **4/4 PASS**, public exercises
+**61/62 PASS**, teaching/behavior/lifetime PASS; zero skips. The only failure is
+ch13's early asynchronous log snapshot, not SIGINT cleanup. Separate observation
+finds its payload missing before shutdown in 14/40 cases but present afterwards
+in 40/40, all with normal exit. SIGINT stress passes **100/100** (maximum observed
+shutdown 7.65 ms). No tests, timeouts, source or manuscript files changed. See
+[the current recheck and diagnosis](shutdown-recheck-07ca9a29/REPORT.md).
+Book work remains paused; the following earlier verification entries are history.
+
+Earlier author instruction: FOLLOWUP-08.md requests another verification and
 report. Clean framework **55c36e418a831573ac9b5284830f4bd0d5074bac** passes the
 fresh build, **185/185 framework tests**, **4/4 external echo tests**, **62/62
 public exercises**, and teaching/behavior/lifetime checks, with zero skips.
@@ -54,7 +65,7 @@ supersedes that stop. R continues with failed checks explicitly qualified.
 | R evidence | qualified; author directs continuation | 1ceb6ef527386a18421e419fcce3122f0ccd472c; R-results.json |
 | P0b-resume | qualified; author directs continuation | containing entry-gate commit; P0b-resume-results.json, lab-repair-review.md |
 | P1 | incomplete; paused by author | uncommitted vocabulary edits; no P1 gate commit |
-| P2–P7 | not started | runtime recheck green at 55c36e41; source-baseline reconciliation and explicit refinement resumption pending |
+| P2–P7 | not started | 07ca9a29 shutdown checks pass; ch13 snapshot timing remains open; source reconciliation and explicit resumption pending |
 
 ## Source and review
 

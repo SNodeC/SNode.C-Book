@@ -1,0 +1,7 @@
+{
+  "trials": 40,
+  "payload_present_before": 26,
+  "payload_missing_before": 14,
+  "payload_present_after": 40,
+  "normal_sigint_shutdowns": 40
+}

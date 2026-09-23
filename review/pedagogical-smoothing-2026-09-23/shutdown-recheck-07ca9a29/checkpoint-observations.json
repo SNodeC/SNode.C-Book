@@ -1,0 +1,642 @@
+[
+  {
+    "trial": 0,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 1,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 2,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 3,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 4,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 9,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 5,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 6,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 7,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 15,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 8,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 9,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 10,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 11,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 11,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 12,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 7,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 13,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 14,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 15,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 12,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 16,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 17,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 10,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 18,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 19,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 9,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 20,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 21,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 22,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 6,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 23,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 12,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 24,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 13,
+      "context_count": 1,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 25,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 26,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 27,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 11,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 28,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 12,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 29,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 30,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 31,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 13,
+      "context_count": 1,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 32,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 33,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 34,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 12,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 35,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 36,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 37,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 38,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 10,
+      "context_count": 0,
+      "payload_record": false
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  },
+  {
+    "trial": 39,
+    "returncode": 254,
+    "before": {
+      "complete_json": true,
+      "record_count": 14,
+      "context_count": 2,
+      "payload_record": true
+    },
+    "after": {
+      "complete_json": true,
+      "record_count": 31,
+      "context_count": 3,
+      "payload_record": true
+    }
+  }
+]

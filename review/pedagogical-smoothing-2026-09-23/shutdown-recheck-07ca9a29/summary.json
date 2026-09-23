@@ -1,0 +1,91 @@
+{
+  "framework-tests": {
+    "total": 185,
+    "passed": 185,
+    "failed": 0,
+    "skipped": 0,
+    "failures": [],
+    "internal_skip_messages": []
+  },
+  "external-echo-tests": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "failures": [],
+    "internal_skip_messages": []
+  },
+  "labs": {
+    "total": 62,
+    "passed": 61,
+    "failed": 1,
+    "skipped": 0,
+    "failures": [
+      "exercise-ch13-part-checkpoint"
+    ],
+    "internal_skip_messages": []
+  },
+  "framework-configure": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "framework-build": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "framework-inventory": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "framework-install": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "external-echo-configure": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "external-echo-build": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "companion-build": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "lab-inventory": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "teaching-smoke": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "behavior-smoke": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "lifetime-tests": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "sigint-stress": {
+    "trials": 100,
+    "passed": 100,
+    "failed": 0,
+    "grace_seconds": 5,
+    "logging_modes": [
+      "disabled",
+      "default"
+    ],
+    "maximum_shutdown_seconds": 0.007647508988156915,
+    "median_shutdown_seconds": 0.0033967759227380157
+  },
+  "checkpoint-observations": {
+    "trials": 40,
+    "payload_present_before": 26,
+    "payload_missing_before": 14,
+    "payload_present_after": 40,
+    "normal_sigint_shutdowns": 40
+  }
+}
