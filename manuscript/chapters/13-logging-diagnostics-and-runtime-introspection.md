@@ -170,7 +170,7 @@ log.info() << "Accepted measurement sequence " << sequence;
 log.info("Accepted measurement sequence {}", sequence);
 ```
 
-Formatting supports positional `{}` and escaped `{{`/`}}`, not the complete `std::format` or fmt language. Malformed braces or argument-count mismatches throw `std::invalid_argument` when formatting occurs.
+Formatting supports positional `{}` and escaped `{{`/`}}`, not the complete `std::format` or fmt language. Enabled calls validate braces and argument counts on the caller, throwing `std::invalid_argument` for malformed input before submitting the record.
 
 Choose either form; do not emit the event twice.
 
@@ -232,6 +232,8 @@ Change the narrowest useful scope. Global trace output can obscure a connection 
 
 Standalone logger programs can call `configure(Settings)` for thresholds, output format, color, quiet mode, files and semantic overrides. A normal SNode.C service instead gets its policy through `core::SNodeC::init(...)` and runtime bootstrap. Do not overlay an unrelated `configure(Settings)` and expect merging: it initializes and freezes its own policy, not a live per-record adjustment.
 
+Normal services defer records while configuration is being assembled. Successful startup emits those pending records and starts one logging worker; a failed bootstrap discards them. Cleanup also starts delivery if the runtime was initialized without entering `start()`. Once the worker runs, returning from a log call means the record was submitted, not that its output is already visible. Wait for the record or for orderly process completion when checking a log; do not infer delivery from an unrelated callback finishing.
+
 Runtime `reconfigure()` from Chapter 12 also preserves bootstrap logging. Parsed `log-level` or `log-format` changes need not affect emitted records; use a controlled restart to change deployment logging. Create long-lived facade loggers after policy establishment because they capture an effective threshold. Framework-owned scopes manage their own lifecycle and generation-aware caches; application code should not manage those generations.
 
 ### A complete public-API example
@@ -291,7 +293,7 @@ log.hexDump(snode::log::Level::Trace, "Received payload", payload);
 
 This fragment uses `<string_view>` beside the public logging header and an already constructed logger. The resulting record retains that logger's scope. Its message contains the label, total byte count, and sixteen-byte rows with offsets, hexadecimal bytes, and a printable-ASCII column. Empty input produces a zero-byte heading without a data row. The operation does not truncate a large payload or adapt it to the terminal width.
 
-The scope and observed bytes remain the same across plain file/JSON output and policy-colored terminal output. MQTT and WebSocket use the shared dump operation through their internal scopes. The renderer belongs to the logging library; the utility library retains its dependency on that library. Applications need not assemble a second colored dump. Enabled large dumps have synchronous formatting/output cost and need a confidentiality decision.
+The scope and observed bytes remain the same across plain file/JSON output and policy-colored terminal output. MQTT and WebSocket use the shared dump operation through their internal scopes. The renderer belongs to the logging library; the utility library retains its dependency on that library. Applications need not assemble a second colored dump. Enabled large dumps copy the bytes before returning and need a confidentiality decision. After asynchronous logging starts, the logging worker formats and writes them; copying and queue submission still cost time on the caller. A full queue can block submission.
 
 \index{logging!disabled paths}
 \index{logging!sensitive data}
