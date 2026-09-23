@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="12"
+	failures="4"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="45"
+	timestamp="2026-09-23T15:34:57"
+	>
+	<testcase name="exercise-ch01" classname="exercise-ch01" time="0.335038" status="run">
+		<properties/>
+		<system-out>PASS: snodec: 20480 binary bytes unchanged; next connection also works
+PASS: asio: 20480 binary bytes unchanged; next connection also works
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch01-independent-peers" classname="exercise-ch01-independent-peers" time="5.20097" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    process.wait(timeout=5)
+    ~~~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2076, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver', 'echoserver', 'local', '--host=127.0.0.1', '--port=49125']' timed out after 5 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/independent-peers.py", line 11, in &lt;module&gt;
+    with running(binary, args) as (process, _):
+         ~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 51, in running
+    raise RuntimeError('Process did not stop after SIGINT')
+RuntimeError: Process did not stop after SIGINT
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch07-independent-peers" classname="exercise-ch07-independent-peers" time="5.15474" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    process.wait(timeout=5)
+    ~~~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2076, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver', 'echoserver', 'local', '--host=127.0.0.1', '--port=55073']' timed out after 5 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/../ch01/independent-peers.py", line 11, in &lt;module&gt;
+    with running(binary, args) as (process, _):
+         ~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 51, in running
+    raise RuntimeError('Process did not stop after SIGINT')
+RuntimeError: Process did not stop after SIGINT
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch11-part-checkpoint" classname="exercise-ch11-part-checkpoint" time="0.568171" status="run">
+		<properties/>
+		<system-out>PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+Observed ip: 40825
+PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+Observed unix: /tmp/line-lab-38p22asc/line.sock
+PASS: Part IV checkpoint: identical reconstructed replies over IPv4 and Unix; owned cleanup
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch11-endpoint-failure" classname="exercise-ch11-endpoint-failure" time="0.167281" status="run">
+		<properties/>
+		<system-out>PASS: missing path fails before protocol; valid peer reports command error and remains usable
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch13-part-checkpoint" classname="exercise-ch13-part-checkpoint" time="5.54578" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>PASS: source/file/CLI ports [8080, 18091, 47953]; file unchanged; inspection status 2
+PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    process.wait(timeout=5)
+    ~~~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2076, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver', '--config-file', '/tmp/config-lab-gliaov18/echo.conf', '--log-level=2', '--log-format=json', 'echoserver', 'local', '--host=127.0.0.1', '--port=47953']' timed out after 5 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py", line 86, in &lt;module&gt;
+    {'precedence': precedence, 'discovery': discovery, 'checkpoint': checkpoint}[mode](binary, home)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py", line 64, in checkpoint
+    with running(binary, [*args, *policy, 'echoserver', 'local', '--host=127.0.0.1',
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          f'--port={port}']) as (process, log):
+                          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 51, in running
+    raise RuntimeError('Process did not stop after SIGINT')
+RuntimeError: Process did not stop after SIGINT
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch14-secure-echo" classname="exercise-ch14-secure-echo" time="0.30771" status="run">
+		<properties/>
+		<system-out>PASS: trusted sensor.example; exact binary echo; reciprocal close_notify
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch16-framing" classname="exercise-ch16-framing" time="0.343838" status="run">
+		<properties/>
+		<system-out>PASS: incomplete headers produce no handler/response; completing headers produces one 200
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch17-order" classname="exercise-ch17-order" time="0.163444" status="run">
+		<properties/>
+		<system-out>PASS: mounted route visits app,router,handler; outside path visits only app and returns 404
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch24-composition" classname="exercise-ch24-composition" time="0.329513" status="run">
+		<properties/>
+		<system-out>PASS: incomplete headers produce no handler/response; completing headers produces one 200
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch26-lifecycle" classname="exercise-ch26-lifecycle" time="8.07098" status="run">
+		<properties/>
+		<system-out>-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+ ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch27-diagnosis" classname="exercise-ch27-diagnosis" time="19.0075" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/snodec-environment-lab-9hzgoqs0/build
+[ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[ 33%] Linking CXX static library libechosocketcontext.a
+[ 33%] Built target echosocketcontext
+[ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[ 83%] Linking CXX executable echoclient
+[100%] Linking CXX executable echoserver
+[100%] Built target echoserver
+[100%] Built target echoclient
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Error at CMakeLists.txt:9 (find_package):
+  Found package configuration file:
+
+    /home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+
+  but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+  NOT FOUND.  Reason given by package:
+
+  Unsupported SNode.C component requested: net-in-stream-missing
+
+
+
+-- Configuring incomplete, errors occurred!
+
+PASS: missing component stops configuration before any runtime endpoint exists
+PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/install-gcc/lib/cmake/snodec
+PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/installed-echo-rlr7h9o3/build
+[ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[ 33%] Linking CXX static library libechosocketcontext.a
+[ 33%] Built target echosocketcontext
+[ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[ 83%] Linking CXX executable echoserver
+[100%] Linking CXX executable echoclient
+[100%] Built target echoserver
+[100%] Built target echoclient
+-- Install configuration: "Release"
+-- Installing: /tmp/installed-echo-rlr7h9o3/install/bin/echoserver
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-rlr7h9o3/install/bin/echoserver" to "/tmp/installed-echo-rlr7h9o3/install/:/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/install-gcc/lib"
+-- Installing: /tmp/installed-echo-rlr7h9o3/install/bin/echoclient
+-- Set non-toolchain portion of runtime path of "/tmp/installed-echo-rlr7h9o3/install/bin/echoclient" to "/tmp/installed-echo-rlr7h9o3/install/:/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/install-gcc/lib"
+PASS: fresh external Release consumer installed at /tmp/installed-echo-rlr7h9o3/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/install-gcc/lib/cmake/snodec
+PASS: wrong endpoint is refused after a successful build; correct endpoint echoes
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    process.wait(timeout=5)
+    ~~~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2076, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/tmp/installed-echo-rlr7h9o3/install/bin/echoserver', '--config-file', '/tmp/installed-echo-rlr7h9o3/echo.conf']' timed out after 5 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 125, in &lt;module&gt;
+    elif mode in {'diagnosis', 'checkpoint'}: diagnose(binary, work, mode == 'checkpoint')
+                                              ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py", line 91, in diagnose
+    with running(binary, args) as (process, log):
+         ~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 51, in running
+    raise RuntimeError('Process did not stop after SIGINT')
+RuntimeError: Process did not stop after SIGINT
+</system-out>
+	</testcase>
+</testsuite>

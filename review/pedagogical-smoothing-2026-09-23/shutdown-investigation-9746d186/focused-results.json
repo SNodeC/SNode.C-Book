@@ -1,0 +1,62 @@
+[
+  {
+    "name": "exercise-ch01",
+    "result": "PASS",
+    "seconds": "0.335038"
+  },
+  {
+    "name": "exercise-ch01-independent-peers",
+    "result": "FAIL",
+    "seconds": "5.20097"
+  },
+  {
+    "name": "exercise-ch07-independent-peers",
+    "result": "FAIL",
+    "seconds": "5.15474"
+  },
+  {
+    "name": "exercise-ch11-part-checkpoint",
+    "result": "PASS",
+    "seconds": "0.568171"
+  },
+  {
+    "name": "exercise-ch11-endpoint-failure",
+    "result": "PASS",
+    "seconds": "0.167281"
+  },
+  {
+    "name": "exercise-ch13-part-checkpoint",
+    "result": "FAIL",
+    "seconds": "5.54578"
+  },
+  {
+    "name": "exercise-ch14-secure-echo",
+    "result": "PASS",
+    "seconds": "0.30771"
+  },
+  {
+    "name": "exercise-ch16-framing",
+    "result": "PASS",
+    "seconds": "0.343838"
+  },
+  {
+    "name": "exercise-ch17-order",
+    "result": "PASS",
+    "seconds": "0.163444"
+  },
+  {
+    "name": "exercise-ch24-composition",
+    "result": "PASS",
+    "seconds": "0.329513"
+  },
+  {
+    "name": "exercise-ch26-lifecycle",
+    "result": "PASS",
+    "seconds": "8.07098"
+  },
+  {
+    "name": "exercise-ch27-diagnosis",
+    "result": "FAIL",
+    "seconds": "19.0075"
+  }
+]

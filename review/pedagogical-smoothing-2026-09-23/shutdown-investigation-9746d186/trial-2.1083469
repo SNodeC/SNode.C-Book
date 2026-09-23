@@ -1,0 +1,3 @@
+1790170365.611927 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1790170365.622933 rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0
+1790170365.623143 +++ exited with 0 +++

@@ -1,0 +1,133 @@
+{
+  "framework_freeze_matches_previous_verification": true,
+  "tracked_manuscript_ci_companion_match_previous_verification": true,
+  "ci_companion_match_pre_adaptation_commit": true,
+  "all_files_in_previous_snapshot_unchanged": false,
+  "changed_ignored_build_artifacts": [
+    {
+      "path": "companion/build/Desktop_GCC-Debug/.ninja_deps",
+      "before": "fa60efe346788b39383caad9205ad2902f676e24aaad15e719fa45a72b21746e",
+      "after": "4a6d541ca3f6c0763e8aa9fd4ffb17f7d77f1c7436cdd55dfe319c82890e8f1c"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/.ninja_log",
+      "before": "129da8ec456d333b44f2d2716d0ebca41ce14d7c109910279edc6581b2703d65",
+      "after": "767bbffcea7ddfb31ac2a3af9ced30b8ef592ee649788de5b8b0b677d5161aac"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/EchoPair/CMakeFiles/echoclient.dir/echoclient.cpp.o",
+      "before": "a945f0f8cef12c47000e78834556452f10e6c85e5ed720078e11963c443f6a51",
+      "after": "cdb8991eb93bef7c3ea9aa80e855e099a4b6255eec83381726d030c7ebfd2fc3"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/EchoPair/CMakeFiles/echoserver.dir/echoserver.cpp.o",
+      "before": "bbe71b5143b2f27dab7b298c9ff3e25deaa11cd17cf9d563368cc6cd339ed151",
+      "after": "21df0e1949cf8baee1c3de06faca907725c11d4232d5a736533094232aa0cdc0"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/EchoPair/echoclient",
+      "before": "5a91522f209af331f90f89deef04f99cadd9749c9717123539799b57a28a5576",
+      "after": "d39a7af6231c1a2471c7435d0a78bee92954b44e9179c4a17d96fae3e160f5ce"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/EchoPair/echoserver",
+      "before": "1bf722dbf5b10c9344b5d2f52c161bab1ce36c9640a656f261543bcf26786e51",
+      "after": "6e0a7cce5eb3a42e512e7c6b172898838c83ebbbb69a3f2a50e18bb21b4c3499"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/HttpUpgrade-Client/CMakeFiles/http-upgrade-client.dir/main.cpp.o",
+      "before": "30749fe28f93892cf6bb5d76266b1157081d39c51f6b06fa2694c77545057c04",
+      "after": "73f7136be1725faff587018fc588df9728075cc461f52d882910b5a263dc9e8f"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/HttpUpgrade-Client/http-upgrade-client",
+      "before": "14eb457667d691ec4f7a9ce481a1649caaba4a26a1e312cbbc82508f7f577b55",
+      "after": "a9fd4a6fe99e99ed5226b02aa0e0dd3ff9e04004c1c64c0b71725c52d508d9cc"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/HttpUpgrade-Server/CMakeFiles/http-upgrade-server.dir/main.cpp.o",
+      "before": "e7d981a12e9486af347b178f4c8b4cd95f746e21c863e4e99139c20fb79a323b",
+      "after": "e78bf9ec3855f5e87dc2e5e113b78287b6f714402109086fa9d4e8324e80cb81"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/HttpUpgrade-Server/http-upgrade-server",
+      "before": "b52e2514fda55144e2ae2a3195b2691eec54a01bca39a50c30851a9dd4419463",
+      "after": "c29008cdec68fc0b720e057985c7a2c8703f43a7d7400a0936db5e363ad12aff"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/LineProtocol-Client/CMakeFiles/line-protocol-client.dir/main.cpp.o",
+      "before": "39395cf306ce076c18bff49b46f8e26bc4557107f7ca1d00b70bfc8c4b25c68f",
+      "after": "6be70bd116edd044083798a9bfa494e0a6113afcf2705601c3b4536b5bc666f9"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/LineProtocol-Client/line-protocol-client",
+      "before": "85e8d677f6f31b664b6a7e145692428b4dd6a6b3f377b5d585eb2104f860d878",
+      "after": "f445569a8a31d9dcbace291d9476b88715d0979afb3ebb8958355e802d1b0b96"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/LineProtocol-Server/CMakeFiles/line-protocol-server.dir/main.cpp.o",
+      "before": "60204fb77912f1687544dfef18226f0dc0b29cb5bf49de6c68691e92a606910f",
+      "after": "ddc2db224d5a1b1807a65209243263100989041e96c00d4bd058a4d0e35f0438"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/LineProtocol-Server/line-protocol-server",
+      "before": "4c26b64cd160a58ff5ad6772eaf61c9f2570630634b538b04aef6b139090dfe1",
+      "after": "90de99b1032e287b2fa8f85e39e0e3e008c252ee941c735ffd47e6e33d498c71"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketServer.cpp.o",
+      "before": "65654a7ec735a59c47c512d8f68032fe9091dcd05c06ff29ab115cf34c93ae4a",
+      "after": "b8034c48b471695a81138d76a6021c47974f3ae80e0b467da9e03dbb183760ef"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqttClient.cpp.o",
+      "before": "e33c92ff5efa890737d3460e5ae821f6abcf1e97b1715f1d49aae48b716c0f9a",
+      "after": "751d16484f41076425a6b9fdf25e4c5fdd703db93d55f02eb21cc268819bf270"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayWeb.cpp.o",
+      "before": "4c1bf1aa4c99657ddd79847a522f5e0084cdaf67bee25a527116cae03e062858",
+      "after": "62ed4e80f25679744465f7d844621bd06cf5ac00759bf4724c3a6bef1193c73c"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/MiniGateway-Extended/minigateway-extended",
+      "before": "e531d5117c931c5fb6f1b7be2d77d9f0ed3642af6f57a00b27ad11ba64924152",
+      "after": "ac4bdb0be98f94521f8e7f53ecec3990880e668f30b61160954302cbef1d8df7"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqttClient.cpp.o",
+      "before": "c311d3426be2c3ded4e5497f33ea01243417b28f47b69bd832bcc173ed9b6a59",
+      "after": "dab278fb9d7a1e086a1f9d133865a18b21aa3c48f6c76cb6fcc8ab18389265bb"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayWeb.cpp.o",
+      "before": "ae2a065668d29fcc61426a36b567a3a08005f009e6e2ad4b9a8b49b7817f3892",
+      "after": "efb9c96b8c435081fad8ccd4241cce17c48838619ae95ca27e3ce2d3f2fe77b2"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/MiniGateway/minigateway",
+      "before": "c574d51a7f1e947099de249d9b88be5eca6d0123cbdecfa270b83164b508ae8a",
+      "after": "47b008d96aab78f29c09c44af76a8238c842f6ed631b9a017a284b1de83cb462"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/SSE-EventSource-Client/CMakeFiles/sse-eventsource-client.dir/main.cpp.o",
+      "before": "3d5d90655eaf1c233eae52c202e61b1eb8f55d13add188f0e327654abeeec3dc",
+      "after": "e8c1e5e1b02683d0fc137425c27482c1a9c1d18a0037934a0a36c7ce09cd0e94"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/SSE-EventSource-Client/sse-eventsource-client",
+      "before": "3c48018c9878610c8bac25f895f8f2d63d96c854b93a4d3c427ed55bd09faf2d",
+      "after": "602a91659d628e978fedb9b158cd8c9969a1a1999f6e45e98477f6853bac86de"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/SSE-Server/CMakeFiles/sse-server.dir/main.cpp.o",
+      "before": "15928221c93afa15fbd3377ae56675dbca656661d0df4d444615ad1f4a3339fa",
+      "after": "4f2ef9ba523cc6aed81d08fac686201e462fd648c1bb6b09ff30fccab0020f77"
+    },
+    {
+      "path": "companion/build/Desktop_GCC-Debug/SSE-Server/sse-server",
+      "before": "03d0fda891443d939a306074989e6b5e2c8defda41f34f9d9eae44556866b83a",
+      "after": "8694c3c5611e46768351e177cf87f2dbbf785ebc37526d942d51f608daa6c4f1"
+    }
+  ]
+}

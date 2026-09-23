@@ -1,0 +1,77 @@
+[
+  {
+    "trial": 0,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=42585"
+    ],
+    "pid": 1083453,
+    "echo_passed": true,
+    "signal_time": 1790170365.5365167,
+    "exit": 254
+  },
+  {
+    "trial": 1,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=57765"
+    ],
+    "pid": 1083464,
+    "echo_passed": true,
+    "signal_time": 1790170365.5785406,
+    "exit": 254
+  },
+  {
+    "trial": 2,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=35041"
+    ],
+    "pid": 1083468,
+    "echo_passed": true,
+    "signal_time": 1790170365.6207964,
+    "exit": 254
+  },
+  {
+    "trial": 3,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=34575"
+    ],
+    "pid": 1083472,
+    "echo_passed": true,
+    "signal_time": 1790170365.6625898,
+    "sigint_timeout_seconds": 5,
+    "threads": [
+      {
+        "tid": 1083472,
+        "wchan": "do_epoll_wait",
+        "status": "Name:\techoserver\nUmask:\t0002\nState:\tS (sleeping)\nTgid:\t1083472\nNgid:\t0\nPid:\t1083472\nPPid:\t1083470\nTracerPid:\t1083470\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t6 20 24 25 29 30 44 46 100 102 106 112 114 118 1000 \nNStgid:\t1083472\nNSpid:\t1083472\nNSpgid:\t1083448\nNSsid:\t1083448\nKthread:\t0\nVmPeak:\t  160152 kB\nVmSize:\t   94616 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   17868 kB\nVmRSS:\t   17868 kB\nRssAnon:\t    4068 kB\nRssFile:\t   13800 kB\nRssShmem:\t       0 kB\nVmData:\t   12376 kB\nVmStk:\t     132 kB\nVmExe:\t     236 kB\nVmLib:\t    7000 kB\nVmPTE:\t      88 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t2\nSigQ:\t13/254579\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t0000000100006003\nCapInh:\t0000000800000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tfffffff\nCpus_allowed_list:\t0-27\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t899\nnonvoluntary_ctxt_switches:\t1\nx86_Thread_features:\t\nx86_Thread_features_locked:\t\n"
+      },
+      {
+        "tid": 1083473,
+        "wchan": "futex_do_wait",
+        "status": "Name:\techoserver\nUmask:\t0002\nState:\tS (sleeping)\nTgid:\t1083472\nNgid:\t0\nPid:\t1083473\nPPid:\t1083470\nTracerPid:\t1083470\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t6 20 24 25 29 30 44 46 100 102 106 112 114 118 1000 \nNStgid:\t1083472\nNSpid:\t1083473\nNSpgid:\t1083448\nNSsid:\t1083448\nKthread:\t0\nVmPeak:\t  160152 kB\nVmSize:\t   94616 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   17868 kB\nVmRSS:\t   17868 kB\nRssAnon:\t    4068 kB\nRssFile:\t   13800 kB\nRssShmem:\t       0 kB\nVmData:\t   12376 kB\nVmStk:\t     132 kB\nVmExe:\t     236 kB\nVmLib:\t    7000 kB\nVmPTE:\t      88 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t2\nSigQ:\t13/254579\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t0000000100006003\nCapInh:\t0000000800000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\tfffffff\nCpus_allowed_list:\t0-27\nMems_allowed:\t00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t23\nnonvoluntary_ctxt_switches:\t0\nx86_Thread_features:\t\nx86_Thread_features_locked:\t\n"
+      }
+    ],
+    "listener_probe_time": 1790170370.6633823,
+    "listener_probe_connected": true,
+    "exit_after_listener_probe": 254
+  }
+]

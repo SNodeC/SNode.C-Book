@@ -1,6 +1,12 @@
 # Pedagogical smoothing — paused pending framework repair
 
-Current author instruction: FOLLOWUP-06.md accepts clean framework 9746d186 and
+Follow-up 07 requests detailed investigation only. The new trace confirms SIGINT
+on the logging worker while main remains in epoll; a later listener connection
+releases the stall. Focused unchanged rerun: 8/12 pass, four reproduce this exact
+worker-signal/main-wait failure. No tests or timeouts changed. See
+[the detailed investigation](shutdown-investigation-9746d186/REPORT.md).
+
+Prior verification instruction: FOLLOWUP-06.md accepts clean framework 9746d186 and
 requests full verification followed by a stop. Verification is complete: framework
 **184/184 PASS**, external echo **4/4 PASS**, public labs **50/62 PASS, 12 SIGINT
 shutdown failures**, and teaching/behavior/lifetime suites PASS. No skips.

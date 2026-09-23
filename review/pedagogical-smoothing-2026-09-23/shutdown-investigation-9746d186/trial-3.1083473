@@ -1,0 +1,4 @@
+1790170365.654655 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+1790170365.662658 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=1083448, si_uid=1000} ---
+1790170370.670844 rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0
+1790170370.671215 +++ exited with 0 +++

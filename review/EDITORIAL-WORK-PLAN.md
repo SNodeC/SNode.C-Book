@@ -2089,3 +2089,24 @@ all 250 test names and diagnosis: shutdown-recheck-9746d186/REPORT.md,
 all-tests.md, summary.json and sigint-backtrace.log under this pass's review
 folder. Current book pin stays 8b8da56; the accepted new source needs formal
 reconciliation when refinement is explicitly resumed. No continuation now.
+
+### Follow-up 07 — investigate the failing exercises; no repairs
+
+The author requests detailed source-aligned investigation of the failing public
+exercises (verbatim instruction in FOLLOWUP-07.md). This remains a narrow
+investigation, not a resumption of smoothing or permission to adapt tests.
+
+Direct current-source tracing confirms process-directed SIGINT delivered to the
+async logging worker while the event-loop owner remains in epoll. A diagnostic
+listener connection releases the stalled echo process, which exits normally with
+254. The unmodified twelve failing CTests were rerun under tracing: eight pass,
+four fail at the original five-second SIGINT deadline. Every new failure traces
+the signal to the worker and main waiting until harness cleanup kills it. No
+framework/test/timeout/manuscript edits. Source freeze and tracked input hashes
+match; 25 ignored Desktop_GCC-Debug build outputs differ from the earlier broad
+snapshot and were neither used nor rebuilt here. The full prior suite remains
+184/184 framework, 4/4 external echo, 50/62 labs; no whole-suite rerun is claimed
+here. The separate restored ch13 log snapshot timing concern remains unverified
+behind shutdown. Book work stays paused. Per-exercise assertions reached, source
+path, suite-coverage limitations and raw traces:
+shutdown-investigation-9746d186/REPORT.md under this pass.
