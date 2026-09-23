@@ -105,7 +105,7 @@
         {
           "path": "src/core/EventLoop.cpp",
           "needle": "bool EventLoop::reconfigure()",
-          "line": 321
+          "line": 323
         }
       ],
       "companion_sources": []
@@ -276,7 +276,7 @@
         {
           "path": "src/utils/Config.cpp",
           "needle": "bool Config::reconfigure()",
-          "line": 1070
+          "line": 1071
         },
         {
           "path": "src/net/config/ConfigInstance.h",
@@ -304,12 +304,12 @@
         {
           "path": "src/Log.h",
           "needle": "configure",
-          "line": 73
+          "line": 72
         },
         {
           "path": "src/utils/Config.cpp",
           "needle": "logLevelOpt->as<int>()",
-          "line": 536
+          "line": 537
         },
         {
           "path": "src/utils/Config.cpp",
@@ -319,17 +319,17 @@
         {
           "path": "src/utils/Config.cpp",
           "needle": "phase == ParsePhase::Bootstrap",
-          "line": 818
+          "line": 819
         },
         {
           "path": "src/Log.h",
           "needle": "void hexDump(",
-          "line": 173
+          "line": 202
         },
         {
           "path": "src/log/SemanticLogger.cpp",
           "needle": "void BoundaryLogger::hexDump(",
-          "line": 697
+          "line": 728
         }
       ],
       "companion_sources": [
@@ -646,7 +646,7 @@
         {
           "path": "src/CMakeLists.txt",
           "needle": "SNODEC_BUILD_APPS",
-          "line": 130
+          "line": 131
         }
       ],
       "companion_sources": []
@@ -669,7 +669,7 @@
         {
           "path": "src/utils/Config.cpp",
           "needle": "bool Config::reconfigure()",
-          "line": 1070
+          "line": 1071
         }
       ],
       "companion_sources": []
