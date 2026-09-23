@@ -95,17 +95,17 @@
         {
           "path": "src/core/EventLoop.cpp",
           "needle": "TickStatus EventLoop::tick",
+          "line": 244
+        },
+        {
+          "path": "src/core/EventLoop.cpp",
+          "needle": "(eventLoopState == State::RUNNING && stopsig == 0) || eventLoopState == State::STOPPING",
           "line": 224
         },
         {
           "path": "src/core/EventLoop.cpp",
-          "needle": "eventLoopState == State::RUNNING || eventLoopState == State::STOPPING",
-          "line": 215
-        },
-        {
-          "path": "src/core/EventLoop.cpp",
           "needle": "bool EventLoop::reconfigure()",
-          "line": 323
+          "line": 343
         }
       ],
       "companion_sources": []
