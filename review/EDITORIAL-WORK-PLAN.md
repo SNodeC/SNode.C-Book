@@ -2219,3 +2219,8 @@ suites and the full static/package entry set. R2-results.json records outcomes;
 R2-build/ holds new runtime evidence and identical before/after source freezes.
 reviewed_tree_sha256 now records the new digest. No framework, existing driver,
 assertion or timeout changed. Separate P0b-R2-resume gate follows before P1.
+
+P0b-R2-resume passes all thirteen check groups, including 62/62 labs against
+the fresh R2 installation and package/extracted hygiene. Logs are named
+P0b-R2-resume-*; old P0b and P0b-resume records are untouched. Fresh metrics
+are metrics-before-R2-resume.json: 100,777 tokens. P1 can now be completed.

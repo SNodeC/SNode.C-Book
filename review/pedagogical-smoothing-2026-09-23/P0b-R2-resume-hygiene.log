@@ -1,0 +1,14 @@
+COMMAND: bash ci/check-source-hygiene.sh
+SNODEC_PREFIX=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc
+BOOK_EXAMPLES_BUILD_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples
+BOOK_BUILD_DIR=build/rebaseline-R2-07ca9a29-followup11/book
+TMPDIR=/tmp
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/web/http/upgrade/websocket
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 298 current references, 374 old-reference dispositions.
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.151s
+
+OK
+Source alignment passed: 31 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, base 07ca9a2936ee72582df7d159cb06666fe23e30f8, working-tree digest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+Source hygiene checks passed.

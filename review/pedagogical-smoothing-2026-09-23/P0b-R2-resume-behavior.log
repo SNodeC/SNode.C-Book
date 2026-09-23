@@ -1,0 +1,21 @@
+COMMAND: bash ci/run-behavior-smoke-tests.sh
+SNODEC_PREFIX=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc
+BOOK_EXAMPLES_BUILD_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples
+BOOK_BUILD_DIR=build/rebaseline-R2-07ca9a29-followup11/book
+TMPDIR=/tmp
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/web/http/upgrade/websocket
+Using example build directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples
+Using SNode.C install prefix: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc
+SSE-Server smoke endpoint: http://127.0.0.1:42653/events
+MiniGateway Extended smoke endpoint: http://127.0.0.1:57547
+MiniGateway Extended Unix socket: /tmp/smoothing-P0b-R2-resume.sock
+Starting sse-server: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/SSE-Server/sse-server legacy local --port 42653
+SSE-Server runtime smoke test passed.
+Starting minigateway-extended: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/MiniGateway-Extended/minigateway-extended web local --host 127.0.0.1 --port 57547 measurement-input local --sun-path /tmp/smoothing-P0b-R2-resume.sock mqtt-uplink remote --host 127.0.0.1 --port 1883
+MiniGateway Extended Unix-input runtime smoke test passed.
+Starting line-length: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/LineProtocol-Server/line-protocol-server lineprotocolserver local --host 127.0.0.1 --port 38751
+Line length: exact boundary accepted; overlong whole/split records rejected.
+Starting minigateway-mqtt-wire: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/MiniGateway/minigateway web --disabled mqtt-uplink remote --host 127.0.0.1 --port 43555
+Starting minigateway-extended-mqtt-wire: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/MiniGateway-Extended/minigateway-extended web --disabled mqtt-uplink remote --host 127.0.0.1 --port 38065 measurement-input --disabled
+Both gateways send CONNECT with MQTT protocol level 4; no private bit.
+Behavioral smoke tests passed.

@@ -47,7 +47,8 @@ No fetch, build or edit occurs in the author's framework tree.
 | R2 R1 pin | `4762369` | Live declarations, full manifest and empty patch |
 | R2 R2 anchors | `69ac502` | [R2-anchor-review.md](R2-anchor-review.md); all anchors verified |
 | R2 R3 claim review | `cfd65ab` | [R2-claim-review.md](R2-claim-review.md); only manuscript Ch5:89 changed |
-| R2 evidence | this evidence commit | [R2-build/results.json](R2-build/results.json), [R2-entry-results.json](R2-entry-results.json) |
+| R2 evidence | `2be416b` | [R2-build/results.json](R2-build/results.json), [R2-entry-results.json](R2-entry-results.json) |
+| P0b-R2-resume | this entry commit | All 13 groups pass, including 62/62 labs; P0b-R2-resume-results.json |
 | P1 | pending | Snapshot reread notes in [P1-context-review-notes.md](P1-context-review-notes.md) |
 | P2–P7 | not started | Entry gate must pass first |
 
