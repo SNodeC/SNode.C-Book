@@ -14,4 +14,4 @@ add_test(NAME exercise-ch08-selectors COMMAND bluetooth-selectors)
 add_test(NAME exercise-ch08-part-checkpoint COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/../ch06/families.py"
   ipv4 $<TARGET_FILE:endpoint-in> unix $<TARGET_FILE:endpoint-un>)
-set_tests_properties(exercise-ch08-selectors exercise-ch08-part-checkpoint PROPERTIES TIMEOUT 180)
+set_tests_properties(exercise-ch08-selectors exercise-ch08-part-checkpoint PROPERTIES TIMEOUT 40)

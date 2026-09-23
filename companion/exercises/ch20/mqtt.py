@@ -6,8 +6,9 @@ import struct
 import subprocess
 import sys
 import tempfile
+import time
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from lab_support import connect, free_port, receive, running, wait_log
+from lab_support import connect, free_port, receive, running
 
 
 def packet(peer):
@@ -43,6 +44,15 @@ def subscribe(peer, topic, identity=1):
     send(peer, 0x82, token + field(topic) + b'\x00')
     assert packet(peer) == (0x90, token + b'\x00')
     print('PASS: subscriber receives SUBACK granting QoS 0', flush=True)
+
+
+def wait_log(path, value):
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline:
+        if value in path.read_text():
+            return
+        time.sleep(.02)
+    raise AssertionError(f'Missing {value!r}: {path.read_text()}')
 
 
 def role_packets(peer):
@@ -97,5 +107,5 @@ if __name__ == '__main__':
         else:
             delivery(client, broker)
             if mode == 'checkpoint':
-                subprocess.run([sys.executable, str(Path(__file__).resolve().parents[1]/'ch28/solution.py'), rest[0]], check=True, timeout=150)
+                subprocess.run([sys.executable, str(Path(__file__).resolve().parents[1]/'ch28/solution.py'), rest[0]], check=True, timeout=40)
                 print('PASS: Part VIII checkpoint: broker-delivery evidence and separate HTTP/status/SSE acceptance with unavailable MQTT; see README boundary map')

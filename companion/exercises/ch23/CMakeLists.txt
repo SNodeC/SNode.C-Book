@@ -19,5 +19,5 @@ add_custom_target(ch23-lab DEPENDS persistence-lab)
 foreach(mode IN ITEMS durable error)
   add_test(NAME exercise-ch23-${mode} COMMAND "${Python3_EXECUTABLE}"
     "${CMAKE_CURRENT_SOURCE_DIR}/database.py" ${mode} $<TARGET_FILE:persistence-lab>)
-  set_tests_properties(exercise-ch23-${mode} PROPERTIES TIMEOUT 180 LABELS equipped)
+  set_tests_properties(exercise-ch23-${mode} PROPERTIES TIMEOUT 90 LABELS equipped)
 endforeach()

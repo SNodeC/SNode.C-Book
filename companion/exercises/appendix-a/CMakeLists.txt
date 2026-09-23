@@ -6,4 +6,4 @@ add_test(NAME exercise-appendix-a-carrier-extension COMMAND "${Python3_EXECUTABL
   "${CMAKE_CURRENT_SOURCE_DIR}/../ch09/protocol.py" transfer
   $<TARGET_FILE:line-protocol-server> $<TARGET_FILE:line-unix>)
 set_tests_properties(exercise-appendix-a-source-consumer PROPERTIES TIMEOUT 180)
-set_tests_properties(exercise-appendix-a-carrier-extension PROPERTIES TIMEOUT 180)
+set_tests_properties(exercise-appendix-a-carrier-extension PROPERTIES TIMEOUT 40)

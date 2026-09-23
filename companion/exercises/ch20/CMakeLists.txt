@@ -11,5 +11,5 @@ add_custom_target(ch20-lab DEPENDS mqtt-role-lab mqtt-broker-lab)
 foreach(mode IN ITEMS wire delivery)
   add_test(NAME exercise-ch20-${mode} COMMAND "${Python3_EXECUTABLE}"
     "${CMAKE_CURRENT_SOURCE_DIR}/mqtt.py" ${mode} $<TARGET_FILE:mqtt-role-lab> $<TARGET_FILE:mqtt-broker-lab>)
-  set_tests_properties(exercise-ch20-${mode} PROPERTIES TIMEOUT 180)
+  set_tests_properties(exercise-ch20-${mode} PROPERTIES TIMEOUT 40)
 endforeach()

@@ -1,0 +1,143 @@
+{
+  "baseline": "fa62fa1bf554f4efa7a5c71527cb15b67ead1492",
+  "reverted_commits_test_changes": [
+    "1ceb6ef527386a18421e419fcce3122f0ccd472c",
+    "48018aba87a90c6fc0870971e3e29949bd696525"
+  ],
+  "files": [
+    {
+      "path": "ci/run-teaching-smoke-tests.py",
+      "result": "matches baseline"
+    },
+    {
+      "path": "ci/test-lab-observations.py",
+      "result": "removed (absent at baseline)"
+    },
+    {
+      "path": "companion/exercises/appendix-a/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch01/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch03/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch04/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch06/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch07/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch08/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch09/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch10/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch11/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch12/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch12/configuration.py",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch13/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch14/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch15/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch15/recovery.py",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch16/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch17/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch18/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch19/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch19/solution.py",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch20/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch20/mqtt.py",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch21/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch22/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch23/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch23/database.py",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch24/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch28/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/ch29/CMakeLists.txt",
+      "result": "matches baseline"
+    },
+    {
+      "path": "companion/exercises/lab_support.py",
+      "result": "matches baseline"
+    }
+  ],
+  "manuscript_unchanged_by_revert": true,
+  "runtime_tests": "not run; author requests framework fix first"
+}

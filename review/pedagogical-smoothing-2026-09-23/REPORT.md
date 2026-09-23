@@ -1,4 +1,11 @@
-# Pedagogical smoothing — resumed under the CTest exception
+# Pedagogical smoothing — paused pending framework repair
+
+Current author instruction: FOLLOWUP-05.md supersedes continuation. The shutdown
+and asynchronous-log test adaptations have been reverted; SNode.C must be fixed
+before further work. All 33 affected paths match fa62fa1 exactly. The P−1 C++20
+fix remains. See test-revert-verification.json. No runtime tests were rerun.
+P1 vocabulary edits are incomplete and uncommitted; this revert preserves them.
+The results below describe historical executions, including the reverted drivers.
 
 Active branch: `book/pedagogical-smoothing-2026-09-23`. Date: 2026-09-23.
 PROMPT.md is unchanged; FOLLOWUP-01.md authorizes the public re-baseline and
@@ -24,7 +31,8 @@ supersedes that stop. R continues with failed checks explicitly qualified.
 | R3 | local claims reconciled | fa62fa1bf554f4efa7a5c71527cb15b67ead1492; R-claim-review.md |
 | R evidence | qualified; author directs continuation | 1ceb6ef527386a18421e419fcce3122f0ccd472c; R-results.json |
 | P0b-resume | qualified; author directs continuation | containing entry-gate commit; P0b-resume-results.json, lab-repair-review.md |
-| P1–P7 | pending | no pedagogical smoothing edits yet |
+| P1 | incomplete; paused by author | uncommitted vocabulary edits; no P1 gate commit |
+| P2–P7 | not started | awaiting framework repair and resumed source agreement |
 
 ## Source and review
 
@@ -99,7 +107,7 @@ D1–D6 smoothing changes remain pending; only the public-pin amendment to D3 ha
 been applied. No fabricated chapter assessment or apparatus completion is claimed.
 
 Open: P1–P7. Qualified: framework and companion CTests as above;
-the author directs continuation, and all failures remain visible. No framework
+the earlier continuation has been superseded by Follow-up 05; failures remain visible. No framework
 changes are authorized. Floor/cap waivers: none. No new hosted CI, hardware or
 deployment validation is claimed. Push only the work branch on final completion
 or a later non-overridden stop condition.

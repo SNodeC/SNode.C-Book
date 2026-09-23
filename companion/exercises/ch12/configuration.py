@@ -6,7 +6,7 @@ import subprocess
 import sys
 import tempfile
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from lab_support import connect, environment, free_port, receive, running, wait_log
+from lab_support import connect, environment, free_port, receive, running
 
 
 def invoke(binary, args, home):
@@ -67,10 +67,7 @@ def checkpoint(binary, home):
                 payload = b'part-v-checkpoint'
                 peer.sendall(payload)
                 assert receive(peer, len(payload)) == payload
-            if scoped:
-                wait_log(log, 'part-v-checkpoint')
-            histories.append([json.loads(line) for line in log.read_text().splitlines(keepends=True)
-                              if line.endswith('\n')])
+            histories.append([json.loads(line) for line in log.read_text().splitlines()])
     assert not histories[0], histories[0]
     records = histories[1]
     assert any(r['component'] == 'echo' and r['level'] == 'info'

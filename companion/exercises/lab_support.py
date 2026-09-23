@@ -44,7 +44,7 @@ def running(executable, args):
                 if interrupted:
                     process.send_signal(signal.SIGINT)
                     try:
-                        process.wait(timeout=60)
+                        process.wait(timeout=5)
                     except subprocess.TimeoutExpired:
                         process.kill()
                         process.wait()
@@ -54,16 +54,6 @@ def running(executable, args):
                 expected = (0, 254) if interrupted else (0,)
                 if process.returncode not in expected:
                     raise RuntimeError(f'Process exited {process.returncode}: {path.read_text(errors="replace")[-4000:]}')
-
-
-def wait_log(path, value):
-    deadline = time.monotonic() + 5
-    while time.monotonic() < deadline:
-        if any(value in line for line in path.read_text().splitlines(keepends=True)
-               if line.endswith('\n')):
-            return
-        time.sleep(.02)
-    raise AssertionError(f'Missing {value!r}: {path.read_text()}')
 
 
 def connect(port, process):

@@ -2040,3 +2040,22 @@ rechecks pass, with the remaining logging checkpoint stopped by framework shutdo
 Evidence: P0b-resume-results.json and lab-repair-review.md. Framework freeze matches
 R0. Entry remains qualified under Follow-up 02; continue P1. Manuscript remains
 100,323 tokens and unchanged since R3.
+
+### Follow-up 05 — revert test adaptations and pause for framework repair
+
+The author's latest instruction (verbatim in FOLLOWUP-05.md) supersedes the
+continuation and test-adaptation instructions above. The author identifies a
+framework shutdown issue involving late spdlog delivery after main terminates
+when receiving signals. Revert the test adaptations rather than accommodating
+that issue in the book's labs. Further smoothing and runtime checks are paused
+until the framework is fixed and its source authority is reconciled.
+
+All 33 affected ci/companion paths are restored exactly to fa62fa1 (before the
+R evidence test adaptation): this includes the initial configuration-log polling,
+the shared complete-record waiting, partial-JSON handling, added regression test,
+and all SIGINT, CTest and nested checkpoint timeout changes. The earlier P−1
+C++20 declarations remain. Evidence: test-revert-verification.json. No framework
+or manuscript files changed in this revert; the incomplete P1 vocabulary work
+and its untracked metrics remain uncommitted. Historical logs remain evidence
+of the earlier runs, not certification of the restored tests. No runtime tests
+or package rebuild were run for this revert.

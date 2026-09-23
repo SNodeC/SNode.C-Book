@@ -9,4 +9,4 @@ add_test(NAME exercise-ch10-isolation COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/../ch09/protocol.py" isolation $<TARGET_FILE:line-protocol-server>)
 add_test(NAME exercise-ch10-refusal COMMAND "${Python3_EXECUTABLE}"
   "${CMAKE_CURRENT_SOURCE_DIR}/../ch09/protocol.py" refusal $<TARGET_FILE:line-refusal>)
-set_tests_properties(exercise-ch10-isolation exercise-ch10-refusal PROPERTIES TIMEOUT 180)
+set_tests_properties(exercise-ch10-isolation exercise-ch10-refusal PROPERTIES TIMEOUT 40)

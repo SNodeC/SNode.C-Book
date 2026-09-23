@@ -1,0 +1,1 @@
+The framework has a current issue during shutdown - log messages from spdlog can come late after main-application has terminated ... when receiving signals ... Revert the test modifications - snode.c needs to be fixed before!
