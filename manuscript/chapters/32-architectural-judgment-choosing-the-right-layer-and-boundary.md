@@ -17,8 +17,6 @@
 
 The reader has now built and extended MiniGateway after studying its underlying runtime and protocols. The harder task is deciding which of those choices should survive when requirements change: whether state must outlive the process, whether a peer needs a different trust boundary, or whether two roles need independent operation.
 
-Here, *role* means a design responsibility, while an instance supplies a concrete endpoint’s configuration and runtime identity.
-
 
 A category mistake places a concern where its lifetime or policy cannot be owned: for example, global ordering in a request callback or service-supervisor policy in per-connection code.
 
@@ -70,6 +68,48 @@ Measurement MeasurementModel::accept(Measurement measurement) {
 If MiniGateway were preserving a sensor's original sample number, the incoming payload would need its own field for that fact. But the sequence used by SSE event ids, status output, MQTT publication of accepted measurements, and local observation is the gateway's acceptance order. That order belongs to the model because the model is the only object that sees all accepted measurements after protocol-specific parsing has finished.
 
 Input roles parse measurements; the shared model assigns acceptance order once. This order lasts only as long as the in-memory application. Every output reports the same accepted sequence.
+
+### Worked decision: where should persistence belong?
+
+\index{persistence!architectural decision}
+
+The requirement changes: after a gateway restart, the operator must recover the last durably stored measurement and understand whether a newly accepted value has reached storage. Chapter 24 showed why receiving a value, accepting it and committing it are different events. The existing in-memory model satisfies only the acceptance part. Adding a database call somewhere convenient cannot silently turn all three into one guarantee.
+
+There are three plausible placements. Each input could write its own parsed measurement, the shared application service could coordinate acceptance and persistence, or a separate storage subscriber could observe accepted measurements asynchronously. Writing from each input is tempting because it already has the data. It also duplicates ordering and failure decisions across HTTP, MQTT and local input. A storage subscriber isolates slow persistence but introduces lag and a recovery contract. Coordination at the application service keeps the decision together but must define what happens while the database is unavailable.
+
+Apply the five questions. The database peer has its own configured endpoint; that fact does not make socket code the owner of durable measurement semantics. The conversation is an application update with a storage result, not just a byte exchange. Inputs produce candidates, the model accepts them, and persistence records the chosen state. Durable state must outlive the process, whereas pending callbacks still need valid in-memory dependencies. Operators need separate evidence for acceptance, successful commit and recovery after restart.
+
+For a requirement that acknowledgement means durability, choose an application-level persistence operation whose success completes that acknowledgement. Keep parsing in each protocol adapter and use one place to decide the order and outcome of the state transition. The consequence is an explicit unavailable or failed-storage result that every input must represent. This is a new application contract; the current MiniGateway's immediate in-memory acceptance cannot simply be described as durable without implementing and verifying that change.
+
+If the actual requirement instead permits recent values to be lost, a storage subscriber may be sufficient. Then retain the current acceptance meaning and expose how far storage has progressed. The important verdict is conditional on the requirement, not on whether a database library is already linked. In either design, test a restart and a failed write, and verify the recovered value through the database. A broker receipt or an observer callback cannot replace that evidence.
+
+### Worked decision: when does an input deserve its own process?
+
+\index{process boundary!architectural decision}
+
+The local input from Chapter 31 now reads a device that needs elevated privileges and must restart independently when its driver fails. HTTP observation should remain available during that recovery. These requirements change the process decision even if the measurement format itself remains unchanged. The original direct Unix input was appropriate for local producers; it did not claim to isolate a privileged device reader inside the gateway process.
+
+Keeping device access in the gateway would preserve direct model calls and simple deployment, but it would give the whole process the device reader's privileges and failure consequences. A separate collector limits those privileges and permits independent restart. It also introduces a message path, an endpoint to configure, and a question about measurements that were read just before either process failed. A second process removes neither framing nor state ownership; those obligations must now be expressed across the process link.
+
+Use the five questions again. The peer is a same-host collector, so a controlled Unix socket is a plausible network-family choice. The conversation carries complete measurement candidates; the line protocol can remain suitable if its validation and size limits meet the requirement. The collector produces values, while the gateway remains the acceptance owner. The collector's device state can restart separately; accepted gateway state retains its existing lifetime. Operators need to distinguish collector unavailable, socket connection failed, candidate rejected and measurement accepted.
+
+Choose a separate collector for the stated privilege and independent-restart requirement. Keep the model in the gateway and pass validated candidates across the defined protocol, with filesystem access and service configuration controlling who may connect. The consequence is a recovery design to make explicit: the current one-way input has no acceptance acknowledgement, so a collector cannot infer acceptance merely from a successful write. If it must replay unconfirmed measurements safely, the protocol needs an identity and acknowledgement contract before replay can promise anything about duplicates.
+
+That consequence is a reason to document the limit, not to add an unrequested queue to every input context. For a best-effort sensor feed, dropping samples during collector restart may be acceptable. For loss-sensitive accounting, it is not. Test the chosen contract by restarting the collector while HTTP remains active and observing the first subsequent accepted value. Then test the gateway restart separately. Independent processes provide independent recovery only when each participant handles the other's absence according to a stated policy.
+
+### Worked decision: when should protocol reuse stop?
+
+\index{protocol reuse!limits}
+
+Chapter 12 reused a protocol over different lower layers. Now a remote device team asks to reuse the same measurement exchange for a paired local device and an Internet-facing service. The attraction is clear: one parser, one context shape and fewer places to change the record format. The requirement, however, includes different peer identities, access controls and intermittent-connection behavior. Reuse must preserve meaning under those conditions, not merely produce matching bytes in a local test.
+
+One option is to retain the protocol everywhere and vary only the family and connection configuration. Another is to share the measurement value and validation rules while using different protocol adapters. A third is to force every environment through one intermediate service. The first is simplest when the contracts actually agree. The second duplicates some integration code but makes different conversations explicit. The third centralizes operation while adding an availability dependency that may be unacceptable to a disconnected device.
+
+The five questions expose the decision. How is the peer identified and authorized in each deployment? Does the conversation require request/reply, replay acknowledgement, brokered distribution or merely byte delivery? Which participant produces the measurement, and which accepts it? Must unsent state survive a connection loss or process restart? Which operator can observe rejection and restore service? If those answers diverge, changing a family alias cannot resolve them, even though both implementations support stream reads and writes.
+
+For the stated case, share the domain value and validation where their rules remain identical, but stop insisting on one wire protocol if the remote service requires a different authenticated or acknowledged conversation. A local line adapter and a suitable remote protocol adapter can still call the same acceptance owner. The consequence is an explicit translation point: each adapter must preserve the measurement's meaning and report failures in terms its peer understands. Neither adapter should invent a second gateway sequence authority.
+
+Conversely, if testing establishes the same framing, identity policy and recovery contract across the selected families, retaining one context is justified. Record the limits of that conclusion: byte equality checks transfer, while disconnect, authorization and recovery experiments check the surrounding contract. Stop reuse at the first semantic obligation the shared protocol cannot express clearly. The successful architecture preserves useful common behavior without requiring every peer to pretend that its operational circumstances are identical.
 
 ### Choose family and protocol by the conversation
 
@@ -183,6 +223,8 @@ If a future change would affect only one responsibility, that responsibility sho
 :::
 
 Visibility can mean a separate class, factory, context, configuration section, service, executable, or test. It does not always mean a new framework layer.
+
+The three decisions can pull in different directions. Durability may require a storage result before acknowledgement, privilege separation may require another process, and protocol reuse may stop at that process's message contract. Resolve the requirements together before choosing classes: identify the one accepted-state authority, then state how each participant learns its result. That yields a design which can be tested at failures and restarts, rather than three individually plausible choices whose guarantees disappear when combined.
 
 ### Keep meaning with its owner
 

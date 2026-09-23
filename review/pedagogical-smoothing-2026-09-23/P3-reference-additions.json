@@ -1,0 +1,106 @@
+[
+  {
+    "file": "manuscript/chapters/01-why-snodec-exists.md",
+    "text": "Chapter 5",
+    "targets": [
+      "layers-in-practice"
+    ],
+    "context": "ing, and application protocol. The detailed layer model and its vocabulary follow in Chapter 5. HTTP, TLS, WebSocket, and MQTT build on that recurring structure.\n\nThis gives the reader transfer: IPv4, IPv6, Unix-domain "
+  },
+  {
+    "file": "manuscript/chapters/01-why-snodec-exists.md",
+    "text": "Chapter 3",
+    "targets": [
+      "your-first-working-program-the-echo-pair"
+    ],
+    "context": "lication wants to assemble itself.\n\nCompare the `Comparison-AsioEcho` companion with Chapter 3's `EchoPair`. Both implement asynchronous TCP byte reflection. The SNode.C side is explained step by step in Chapter 3. This"
+  },
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "text": "Chapter 3",
+    "targets": [
+      "your-first-working-program-the-echo-pair"
+    ],
+    "context": "x, and later playground project separate.\n\n::: {.snodec-note title=\"Shortest path to Chapter 3\"}\nFollow the commands below in this order: obtain the book package and framework source; configure an out-of-tree build; bui"
+  },
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "text": "Chapter 3",
+    "targets": [
+      "your-first-working-program-the-echo-pair"
+    ],
+    "context": " package; build the external EchoPair; then continue to its server and client run in Chapter 3. Use the same prefix throughout. Optional Bluetooth and database equipment can wait until the corresponding labs. If a step "
+  },
+  {
+    "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+    "text": "Chapter 2",
+    "targets": [
+      "preparing-your-environment"
+    ],
+    "context": " the first program stays readable.\n\nHere `legacy` has the same meaning introduced in Chapter 2: it denotes the non-TLS stream connection variant. It does not mean that the component is obsolete.\n\n\nThe framework also pro"
+  },
+  {
+    "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+    "text": "Chapter 29",
+    "targets": [
+      "testing-debugging-and-benchmarking"
+    ],
+    "context": "n discovery and deterministic external-peer tests. Return to that broader example in Chapter 29. Here the host and port remain visible in the entry points.\n\n\n\nThe repository version uses `servers.h` and `clients.h` to se"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "text": "Chapter 4",
+    "targets": [
+      "the-snodec-runtime-mental-model"
+    ],
+    "context": "t instance.\n\n\\index{configuration!architecture}\n\\index{instance!configuration}\n\nKeep Chapter 4's runtime model beside this configuration story. The named instance supplies one shared settings tree; each explicit activat"
+  },
+  {
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "text": "Chapter 27",
+    "targets": [
+      "cmake-components-and-linking-strategy"
+    ],
+    "context": "ection. The source-side and build-side names rhyme without being the same mechanism. Chapter 27 gives the source-derived matrix for the broader set of components and headers.\n:::\n\nChapter 19 extends this routing model to"
+  },
+  {
+    "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "text": "Chapter 23",
+    "targets": [
+      "designing-iot-systems-with-multiple-protocols"
+    ],
+    "context": "istribution,\n- WebSocket subprotocol selection when MQTT is carried over WebSocket.\n\nChapter 23 uses these observations when assigning protocol roles in a larger IoT system.\n\n::: {.snodec-note title=\"Build note\"}\nThe cor"
+  },
+  {
+    "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "text": "Chapter 22",
+    "targets": [
+      "mqtt-over-websocket"
+    ],
+    "context": "tablishment from session acceptance, subscription acceptance and subscriber receipt. Chapter 22 keeps that MQTT conversation and changes the path beneath it to WebSocket, adding observable steps before MQTT can begin.\n\n:"
+  },
+  {
+    "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+    "text": "Chapter 24",
+    "targets": [
+      "database-support-and-application-state"
+    ],
+    "context": "tored measurement and understand whether a newly accepted value has reached storage. Chapter 24 showed why receiving a value, accepting it and committing it are different events. The existing in-memory model satisfies on"
+  },
+  {
+    "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+    "text": "Chapter 31",
+    "targets": [
+      "extending-minigateway-with-a-new-network-role"
+    ],
+    "context": " own process?\n\n\\index{process boundary!architectural decision}\n\nThe local input from Chapter 31 now reads a device that needs elevated privileges and must restart independently when its driver fails. HTTP observation sho"
+  },
+  {
+    "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+    "text": "Chapter 12",
+    "targets": [
+      "building-the-same-protocol-over-different-lower-layers"
+    ],
+    "context": "## Worked decision: when should protocol reuse stop?\n\n\\index{protocol reuse!limits}\n\nChapter 12 reused a protocol over different lower layers. Now a remote device team asks to reuse the same measurement exchange for a pa"
+  }
+]

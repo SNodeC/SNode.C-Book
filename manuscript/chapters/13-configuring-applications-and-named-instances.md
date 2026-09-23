@@ -19,15 +19,7 @@ Through a `SocketServer` or `SocketClient` handle, the application configures an
 \index{configuration!architecture}
 \index{instance!configuration}
 
-| Part | Meaning |
-|---|---|
-| instance identity | which instance is being configured |
-| server/client side | listening or connecting behavior |
-| network family and connection variant | IPv4, IPv6, Unix domain sockets, RFCOMM or L2CAP; separately, legacy or TLS |
-| endpoint values | host, port, path, channel, PSM, or related local/remote values |
-| section structure | scoped areas such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` |
-| operational state | enabled or disabled, persistent or run-specific options |
-| activation | `listen(...)` or `connect(...)` using supplied configuration |
+Keep Chapter 4's runtime model beside this configuration story. The named instance supplies one shared settings tree; each explicit activation uses it. We will track `echoserver.local.port`: C++ supplies 8080, a deployment file selects 18091, and one command line selects 18092. The effective value is what startup consumes; a file assignment alone is neither a listening socket nor proof of successful activation.
 
 ### Three input paths, one configuration model
 
@@ -40,15 +32,15 @@ The C++ API supplies baseline defaults, a configuration file persists deployment
 For an IPv4 server, a minimal example may look like:
 
 ```cpp
-EchoServer echoServer;
+EchoServer echoServer("echoserver");
 
-echoServer.getConfig()->Local::setPort(8001);
+echoServer.getConfig()->Local::setPort(8080);
 ```
 
 In this case, the explicit `Local::` qualification is valid, but it is not required. The same server-side port can also be configured as:
 
 ```cpp
-echoServer.getConfig()->setPort(8001);
+echoServer.getConfig()->setPort(8080);
 ```
 
 `getConfig()` returns a pointer, hence `->`. This server configuration has no competing remote-port setter at this call site, so `Local::` is optional.
@@ -58,13 +50,13 @@ C++ code can provide baseline configuration. It can also express values that are
 Convenience overloads such as:
 
 ```cpp
-listen(8001, onStatus)
+listen(8080, onStatus)
 ```
 
 or:
 
 ```cpp
-connect("localhost", 8001, onStatus)
+connect("localhost", 8080, onStatus)
 ```
 
 fill the handle’s configuration before starting an activation. Source defaults remain useful for tests, small examples, and values determined by application structure.
@@ -74,7 +66,7 @@ Command-line configuration gives an already compiled application a way to be sha
 Constructing an endpoint handle with a name:
 
 ```cpp
-EchoServer echoServer("echo");
+EchoServer echoServer("echoserver");
 ```
 
 creates a named instance in the command-line hierarchy: application, instance, section, and option.
@@ -83,8 +75,8 @@ A user can ask for help at different levels:
 
 ```sh
 echoserver --help
-echoserver echo --help
-echoserver echo local --help
+echoserver echoserver --help
+echoserver echoserver local --help
 ```
 
 At each level, help reveals the next scope rather than requiring the user to guess a flat list of flags. Files persist that same structure.
@@ -98,12 +90,12 @@ instancename.sectionname.optionname = value
 For example:
 
 ```ini
-echo.local.port = 8080
+echoserver.local.port = 8080
 uplink.remote.host = "localhost"
 uplink.remote.port = 8080
 ```
 
-Here `echo` is a named instance on the server side and `uplink` is a separate named instance on the client side in an application that creates both. A server does not acquire a client’s `remote` section merely because that key is written in a file. The file can configure the named instances the executable actually exposes.
+Here `echoserver` is a named instance on the server side and `uplink` is a separate named instance on the client side in an application that creates both. A server does not acquire a client’s `remote` section merely because that key is written in a file. The file can configure the named instances the executable actually exposes.
 
 \index{configuration!precedence}
 \index{startup boundary}
@@ -117,6 +109,8 @@ A deliberate runtime reparse can include named instances registered later. It ch
 The current per-call flow model makes the configuration boundary particularly important. An endpoint exposes one shared configuration object. Each explicit activation receives its own controller, but that controller does not freeze a private copy of the endpoint settings. An address-taking `connect(...)` overload updates the endpoint's remote configuration before starting its flow. Use separate instances for destinations that need independent configuration; name them when operators need separate control; retaining two flow handles is not a substitute for that separation.
 
 ### Named instances as configuration addresses
+
+The port key begins with `echoserver` because the entry point created that named instance. The executable name alone would not identify which listener to configure in an application with several inputs.
 
 \index{named instances}
 \index{configuration addresses}
@@ -135,10 +129,10 @@ Externally operated servers usually benefit from named instances, because server
 A name such as:
 
 ```cpp
-EchoServer echoServer("echo");
+EchoServer echoServer("echoserver");
 ```
 
-gives the instance the external address `echo`. Choose names that remain useful in deployment files and operational procedures.
+gives the instance the external address `echoserver`. Choose names that remain useful in deployment files and operational procedures.
 
 A named instance can remain in the application while being disabled for a deployment, test, or diagnostic run. Its configuration stays inspectable, but the instance is removed from the required startup path.
 
@@ -152,7 +146,7 @@ At activation, disablement lets the framework report an intentionally inactive i
 
 Sections group options by responsibility: endpoint identity, established-connection behavior, socket retry, server acceptance or TLS.
 
-For the named server `echo` and the separate client `uplink`, examples include:
+For the named server `echoserver` and the separate client `uplink`, examples include:
 
 ```text
 echo local --port 8080
@@ -162,7 +156,7 @@ uplink remote --host localhost --port 8080
 or in configuration-file form:
 
 ```ini
-echo.local.port = 8080
+echoserver.local.port = 8080
 uplink.remote.host = "localhost"
 uplink.remote.port = 8080
 ```
@@ -209,6 +203,8 @@ Startup-only configuration has a useful cost model: one validated process begins
 The following section locates these choices in the hierarchy. The echo experiment then observes a port supplied in code, overridden by a file, and overridden for one invocation.
 
 ### Application and instance configuration {#application-and-instance-configuration-in-detail}
+
+For our running value, 18092 belongs to the named listener’s local endpoint. A process-wide logging option belongs elsewhere in the tree. Keeping those scopes explicit lets an operator change diagnostics without confusing them with where the server listens.
 
 \index{application configuration}
 \index{instance configuration}
@@ -270,14 +266,16 @@ This is also a useful discovery exercise: start with a named instance’s help, 
 Consider the operational name in this declaration:
 
 ```cpp
-EchoServer echoServer("echo");
+EchoServer echoServer("echoserver");
 ```
 
-The string `"echo"` is an operational key. Renaming the C++ variable `echoServer` does not rename that key. Changing the string does: deployment files, overrides, and diagnostic procedures that address `echo` must then change together.
+The string `"echoserver"` is an operational key. Renaming the C++ variable `echoServer` does not rename that key. Changing the string does: deployment files, overrides, and diagnostic procedures that address `echoserver` must then change together.
 
 Treat such a rename as an application-interface change, even when the C++ program still compiles. The naming choice in the section “Configuration principles” becomes a compatibility decision once a script depends on it.
 
 ### Section configuration: scoped responsibilities
+
+The next step in finding our port is `local`. It describes the server’s own listening endpoint, so putting 18092 in a client’s remote section would answer a different question. The section names preserve that distinction.
 
 \index{section configuration}
 \index{local section}
@@ -374,6 +372,8 @@ Chapter 15 discusses TLS in depth. Here the important point is the section bound
 
 ### Three views of the same model
 
+Follow the same local port through each notation below. The spelling changes from a C++ setter to a command path to a dotted file key, but these are three inputs to one option, not three independent settings to synchronize.
+
 \index{configuration!C++ API}
 \index{configuration!command line}
 \index{configuration!file}
@@ -399,15 +399,15 @@ Use section qualification when the local/remote meaning needs to be explicit.
 On the command line, the hierarchy becomes a path:
 
 ```sh
-echoserver echo local --port 8080
+echoserver echoserver local --port 8080
 ```
 
-This traverses the `echo` instance’s `local` section to set its `port`. Help follows the same path:
+This traverses the `echoserver` instance’s `local` section to set its `port`. Help follows the same path:
 
 ```sh
 echoserver --help
-echoserver echo --help
-echoserver echo local --help
+echoserver echoserver --help
+echoserver echoserver local --help
 ```
 
 This mirrors the hierarchy: application help, then instance help, then section help, and finally option details.
@@ -418,22 +418,22 @@ Together with `--show-config` and `--write-config`, the command line becomes a w
 
 Missing required values are reported at the scope that owns them.
 
-A schematic server-side session shows the idea. Here the executable is `echoserver` and the named instance is `echo`; the exact diagnostic wording depends on the target application:
+A schematic server-side session shows the idea. Here the executable is `echoserver` and the named instance is `echoserver`; the exact diagnostic wording depends on the target application:
 
 ```sh
 $ echoserver
-[RequiresError] echoserver requires echo
+[RequiresError] echoserver requires echoserver
 
-$ echoserver echo
-[RequiresError] echoserver:echo requires local
+$ echoserver echoserver
+[RequiresError] echoserver:echoserver requires local
 
-$ echoserver echo local
-[RequiresError] echoserver:echo:local requires --port
+$ echoserver echoserver local
+[RequiresError] echoserver:echoserver:local requires --port
 
-$ echoserver echo local --port
+$ echoserver echoserver local --port
 [ArgumentMismatch] --port: 1 required port:UINT in [0 - 65535] missing
 
-$ echoserver echo local --port 8080
+$ echoserver echoserver local --port 8080
 # The instance can now enter its listening path.
 ```
 
@@ -458,16 +458,16 @@ A successful reparse is therefore only one step in a live configuration change. 
 In a configuration file, the same hierarchy becomes a dotted key:
 
 ```ini
-echo.local.port = 8080
+echoserver.local.port = 8080
 uplink.remote.host = "localhost"
 uplink.remote.port = 8080
 ```
 
-Here `echo` names a server and `uplink` a separate client. Each dotted key must name a role and section that this executable actually creates.
+Here `echoserver` names a server and `uplink` a separate client. Each dotted key must name a role and section that this executable actually creates.
 
 ### Observe precedence with the echo server
 
-Use the Chapter 3 executable for a controlled experiment. Its instance is named `echoserver`, rather than the schematic `echo` used above, and its C++ listen call supplies port 8080. These inspection commands do not start a listening service:
+Use the Chapter 3 executable for a controlled experiment. Its instance is named `echoserver`, and its C++ listen call supplies the 8080 default used throughout this chapter. These inspection commands do not start a listening service:
 
 ```sh
 cd ~/projects/snodec-playground-build
@@ -482,7 +482,7 @@ printf 'echoserver.local.port = 18091\n' > "$SNODEC_CONFIG_EXERCISE/echo.conf"
 
 Find the assignments for `echoserver.local.port` in each output. Commented assignments beginning with `#` show defaults; an uncommented assignment supplies the selected override. The effective values are 8080, 18091, and 18092. In this source version the display action exits with status 2 after printing; that inspection exit is not a failed bind. The last invocation leaves the file at 18091: overriding a value for a run does not save it. `--write-config` is a separate action with a filesystem effect.
 
-Now inspect `./echoserver echoserver local --help`. The option belongs to the local endpoint even though three input paths can supply its value. If an unexpected value appears, inspect the selected configuration file and the full command line before changing the protocol context. That context does not choose the listening port.
+Now inspect `./echoserver echoserverserver local --help`. The option belongs to the local endpoint even though three input paths can supply its value. If an unexpected value appears, inspect the selected configuration file and the full command line before changing the protocol context. That context does not choose the listening port.
 
 The experiment observes startup parsing. To study a runtime reparse, use an application that deliberately calls `reconfigure()` while running, and separately observe the parsed value and the existing listener. The two need not change together.
 
@@ -505,6 +505,8 @@ echoClient.connect(onStatus);
 The configured instance supplies the endpoint; the activation call starts the work. Help can be narrowed to the failing instance and section.
 
 ### Persistent and nonpersistent values
+
+The file’s 18091 remains a deployment choice after a command selects 18092 for one run. Inspecting that effective value does not save it. Decide whether the port should survive another invocation before choosing a write action.
 
 \index{persistent options}
 \index{nonpersistent options}
@@ -536,6 +538,8 @@ Nonpersistent examples include:
 Files primarily describe durable choices. A CLI invocation can both override those choices and request an inspection action. `--show-config` reveals parsed values, generated configuration reveals their file form, and generated command lines show how to reproduce selected values.
 
 ### Structured discovery and snodec-control
+
+Help located `echoserver.local.port`; structured discovery lets a tool locate that same option and inspect its metadata. A preview of 18092 still needs target validation and a successful listen before it demonstrates a running endpoint.
 
 \index{snodec-control@\texttt{snodec-control}}
 \index{configuration!comment metadata}
@@ -577,7 +581,7 @@ Configuration files should be readable by humans, stable enough for deployment, 
 The dotted-key structure helps:
 
 ```ini
-echo.local.port = 8080
+echoserver.local.port = 8080
 ```
 
 For multi-instance applications, this becomes especially useful:
@@ -592,6 +596,8 @@ backend.remote.port = 1883
 Each key says which instance it belongs to. That is the value of named instances. They make configuration files describe application structure, not just isolated values.
 
 ### Designing configuration for real applications
+
+Return to the effective local port one final time: validation can reject an invalid value before listening, while a valid port can still fail to bind. Keep the parsed value, the activation result and the bytes later handled by a context separate.
 
 \index{configuration design}
 \index{deployment shape}

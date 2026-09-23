@@ -14,19 +14,21 @@
 ### From environment to first program
 
 
-The first program is small enough to follow from startup to byte exchange: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong. Use `--log-level=5` to include the reflected payload diagnostics; the example is deliberately bounded by the reader stopping it, not by a protocol message count.
+The first program is small enough to follow from startup to byte exchange: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong.
 
-The runtime drives endpoint work; the factory supplies each connection with a
-context whose callbacks implement the echo behavior. We can follow that division
-in four source files.
+### Follow one exchange before naming the objects
 
-The framework echo application under `src/apps/echo` combines one shared model with several network families and stream modes. The four-file `EchoPair` companion selects just IPv4, stream transport, and the non-TLS `legacy` variant so the first program stays readable.
+Read the two executables as separate processes. In `echoserver.cpp`, `main()` initializes the framework, chooses the server type and creates the object named `echoserver`. Its `listen()` call supplies the address, port and a callback that will report the attempt. This prepares listening work. It does not wait on the current stack for a client to send a greeting. The last line calls `start()`, allowing the runtime to advance the work and eventually report a listening result.
 
-Here `legacy` has the same meaning introduced in Chapter 2: it denotes the non-TLS stream connection variant. It does not mean that the component is obsolete.
+In another terminal, `echoclient.cpp` follows the corresponding sequence. Its `main()` initializes that process, creates `echoclient`, and calls `connect()` with the server's host and port. Its final `start()` lets the connecting work progress. These are two timelines, not two function calls inside one program. Start the server first so that a listener is available when the client attempts its connection. A refused connection is useful evidence about setup, but it is not evidence that the echo function is wrong.
 
+When the peer relationship is ready, the runtime asks the selected factory for the protocol object to attach. The declarations in `EchoSocketContext.h` tell us which factories serve the server and client and which callbacks the protocol implements. The factory definitions in `EchoSocketContext.cpp` construct the same context class with different side values. There is no manual construction of each peer's protocol object inside either `main()`; the peer appears later, while the runtime is processing events.
 
-The framework also provides `examples/echo`, an installed-consumer project with configuration discovery and deterministic external-peer tests. Return to that broader example in Chapter 29. Here the host and port remain visible in the entry points.
+After attachment, `onConnected()` in `EchoSocketContext.cpp` runs for that protocol object. The client side queues the initial greeting through `sendToPeer()`. The server side waits for incoming bytes. This difference starts the exchange exactly once from the client side; it is independent of how many bytes a later read returns. Queuing those greeting bytes and the server receiving them are separate steps, with connection progress between them.
 
+When bytes reach the server, `onReceivedFromPeer()` reads available data and sends those bytes back. The same file contains both operations, making the echo contract easy to locate. A receive callback may see only part of the original greeting or bytes grouped differently from the sender's calls. The program reflects bytes rather than interpreting records, so byte equality is the useful observation. On the client, the corresponding callback receives the reflection and sends it again.
+
+That is the path to keep beside the listings: startup and endpoint choices in the two entry points; declarations and construction choices in the header; attachment, greeting and byte reflection in the implementation. We can now name the objects without asking the names to explain the behavior first. The application configures a handle, the factory creates a context, and that context supplies the protocol callbacks for one connection.
 
 The teaching version consists of four source files:
 
@@ -37,7 +39,7 @@ echoserver.cpp
 echoclient.cpp
 ```
 
-The first two files define the application behavior, and the last two files define the server and client entry points. That separation is already meaningful: the echo protocol itself should not be mixed into `main()`. The server and client applications should create handles, configure roles, and register those roles with the framework, while the per-connection protocol behavior belongs in a `SocketContext`.
+The first two files define the application behavior, and the last two files define the server and client entry points. That separation is already meaningful: the echo protocol itself should not be mixed into `main()`. The server and client applications should create handles, configure instances, and register activation flows with the framework, while the per-connection protocol behavior belongs in a `SocketContext`.
 
 ### Handles, factories, and contexts
 
@@ -486,7 +488,7 @@ cd ~/projects/snodec-playground-build
 The client connects to `localhost` on port `8080` and sends the first message. The server receives it and reflects it. The client receives the reflection and reflects it again.
 
 
-The lifecycle and payload diagnostics connect each callback to an observable event.
+The lifecycle and payload diagnostics connect each callback to an observable event. `--log-level=5` includes the reflected payload; the reader stops this ping-pong rather than waiting for a protocol message count.
 
 Stop the example with `Ctrl-C`.
 
@@ -498,6 +500,18 @@ Keep these observations separate. A listen result establishes that the server re
 Changed reflected bytes lead to `onReceivedFromPeer()`; an unavailable address leads to the listening result and endpoint configuration; a missing initial greeting leads to the client's `onConnected()`. Locate the failure before changing code. The lab below changes only that greeting.
 
 ### What transfers to larger examples
+
+The runtime drives endpoint work; the factory supplies each connection with a
+context whose callbacks implement the echo behavior. We can follow that division
+in four source files.
+
+The framework echo application under `src/apps/echo` combines one shared model with several network families and stream modes. The four-file `EchoPair` companion selects just IPv4, stream transport, and the non-TLS `legacy` variant so the first program stays readable.
+
+Here `legacy` has the same meaning introduced in Chapter 2: it denotes the non-TLS stream connection variant. It does not mean that the component is obsolete.
+
+
+The framework also provides `examples/echo`, an installed-consumer project with configuration discovery and deterministic external-peer tests. Return to that broader example in Chapter 29. Here the host and port remain visible in the entry points.
+
 
 
 The repository version uses `servers.h` and `clients.h` to select endpoint types from build-time choices. Locate the supplied factory and then its context: variant selection changes the type, not the home of byte reflection.

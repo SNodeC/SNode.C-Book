@@ -77,23 +77,17 @@ The new SNode.C component is `net-un-stream-legacy`. The rest of the component s
 <!-- snodec-source: companion/examples/MiniGateway-Extended/CMakeLists.txt -->
 ```cmake
 cmake_minimum_required(VERSION 3.14)
-
 project(MiniGatewayExtended LANGUAGES CXX)
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
 include(GNUInstallDirs)
-
 find_package(nlohmann_json 3.7.0 REQUIRED)
-
 find_package(
     snodec 2.0.0 REQUIRED COMPONENTS http-server-express-legacy-in
                                      net-in-stream-legacy mqtt-client
                                      net-un-stream-legacy
 )
-
 add_executable(
     minigateway-extended
     main.cpp
@@ -121,7 +115,6 @@ add_executable(
     SocketStateReporter.h
     ConfigSections.h
 )
-
 target_link_libraries(
     minigateway-extended
     PRIVATE snodec::http-server-express-legacy-in snodec::net-in-stream-legacy
@@ -359,156 +352,106 @@ namespace minigateway {
 
 The implementation parses one line at a time. The optional sequence field is accepted syntactically, but `MeasurementModel` still assigns the authoritative sequence when the measurement enters the application.
 
-<!-- snodec-source: companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.cpp -->
+Read the implementation in three excerpts. The complete file remains `companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.cpp`; includes, construction, trimming/splitting helpers and lifecycle diagnostics remain there. The excerpts preserve the code responsible for framing, validation and acceptance, so those decisions can be read separately without changing their implementation.
+
+**Framing and buffering — excerpt.** The receive callback retains incomplete input in the connection's own buffer and processes only delimited lines.
+
 ```cpp
-#include "MeasurementUnixSocketContext.h"
+std::size_t MeasurementUnixSocketContext::onReceivedFromPeer() {
+    char chunk[4096];
+    const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
 
-#include <algorithm>
-#include <cctype>
-#include <chrono>
-#include <cmath>
-#include <core/socket/SocketAddress.h>
-#include <core/socket/stream/SocketConnection.h>
-#include <exception>
-#include <Log.h>
-#include <stdexcept>
-#include <utility>
-#include <vector>
+    if (chunkLen > 0) {
+        receiveBuffer.append(chunk, chunkLen);
 
-namespace minigateway {
+        std::size_t lineEnd = receiveBuffer.find('\n');
+        while (lineEnd != std::string::npos && lineEnd <= 4096) {
+            std::string line = receiveBuffer.substr(0, lineEnd);
+            if (!line.empty() && line.back() == '\r') {
+                line.pop_back();
+            }
 
-    namespace {
-
-        std::string trim(std::string value) {
-            value.erase(value.begin(), std::find_if(value.begin(), value.end(), [](unsigned char ch) {
-                            return !std::isspace(ch);
-                        }));
-            value.erase(std::find_if(value.rbegin(),
-                                     value.rend(),
-                                     [](unsigned char ch) {
-                                         return !std::isspace(ch);
-                                     })
-                            .base(),
-                        value.end());
-
-            return value;
+            processLine(line);
+            receiveBuffer.erase(0, lineEnd + 1);
+            lineEnd = receiveBuffer.find('\n');
         }
 
-        std::vector<std::string> splitCsvLine(const std::string& line) {
-            std::vector<std::string> values;
-            std::size_t valueStart = 0;
-
-            while (valueStart <= line.length()) {
-                const std::size_t valueEnd = line.find(',', valueStart);
-                values.push_back(trim(line.substr(valueStart, valueEnd - valueStart)));
-
-                if (valueEnd == std::string::npos) {
-                    break;
-                }
-                valueStart = valueEnd + 1;
-            }
-
-            return values;
-        }
-
-        double parseDouble(const std::string& value, const std::string& fieldName) {
-            std::size_t parsedLength = 0;
-            const double parsedValue = std::stod(value, &parsedLength);
-            if (parsedLength != value.length() || !std::isfinite(parsedValue)) {
-                throw std::invalid_argument("invalid " + fieldName + " value '" + value + "'");
-            }
-
-            return parsedValue;
-        }
-
-        std::uint64_t parseSequence(const std::string& value) {
-            std::size_t parsedLength = 0;
-            const auto parsedValue = std::stoull(value, &parsedLength);
-            if (parsedLength != value.length()) {
-                throw std::invalid_argument("invalid sequence value '" + value + "'");
-            }
-
-            return parsedValue;
-        }
-
-        Measurement parseMeasurementLine(const std::string& line) {
-            const std::vector<std::string> values = splitCsvLine(line);
-            if (values.size() != 3 && values.size() != 4) {
-                throw std::invalid_argument("expected temperature,humidity,voltage[,sequence]");
-            }
-
-            Measurement measurement;
-            measurement.temperature = parseDouble(values[0], "temperature");
-            measurement.humidity = parseDouble(values[1], "humidity");
-            measurement.voltage = parseDouble(values[2], "voltage");
-            measurement.sequence = values.size() == 4 ? parseSequence(values[3]) : 0;
-            measurement.timestamp = std::chrono::system_clock::now();
-
-            return measurement;
-        }
-
-    } // namespace
-
-    MeasurementUnixSocketContext::MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection,
-                                                               MeasurementModel& measurementModel)
-        : core::socket::stream::SocketContext(socketConnection)
-        , measurementModel(measurementModel) {
-    }
-
-    void MeasurementUnixSocketContext::onConnected() {
-        snode::log::application().trace() << "Measurement socket connected from " << getSocketConnection()->getRemoteAddress().toString();
-    }
-
-    void MeasurementUnixSocketContext::onDisconnected() {
-        snode::log::application().trace() << "Measurement socket disconnected from " << getSocketConnection()->getRemoteAddress().toString();
-    }
-
-    bool MeasurementUnixSocketContext::onSignal(int signum) {
-        snode::log::application().trace() << "Measurement socket disconnected due to signal " << signum;
-
-        return true;
-    }
-
-    std::size_t MeasurementUnixSocketContext::onReceivedFromPeer() {
-        char chunk[4096];
-        const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
-
-        if (chunkLen > 0) {
-            receiveBuffer.append(chunk, chunkLen);
-
-            std::size_t lineEnd = receiveBuffer.find('\n');
-            while (lineEnd != std::string::npos && lineEnd <= 4096) {
-                std::string line = receiveBuffer.substr(0, lineEnd);
-                if (!line.empty() && line.back() == '\r') {
-                    line.pop_back();
-                }
-
-                processLine(line);
-                receiveBuffer.erase(0, lineEnd + 1);
-                lineEnd = receiveBuffer.find('\n');
-            }
-
-            if (receiveBuffer.length() > 4096) {
-                snode::log::application().warn() << "Measurement socket line exceeds 4096 bytes; closing connection";
-                close();
-            }
-        }
-
-        return chunkLen;
-    }
-
-    void MeasurementUnixSocketContext::processLine(const std::string& line) const {
-        if (!line.empty()) {
-            try {
-                measurementModel.accept(parseMeasurementLine(line));
-            } catch (const std::exception& ex) {
-                snode::log::application().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
-            }
+        if (receiveBuffer.length() > 4096) {
+            snode::log::application().warn() << "Measurement socket line exceeds 4096 bytes; closing connection";
+            close();
         }
     }
 
-} // namespace minigateway
+    return chunkLen;
+}
 ```
+
+A stream read does not identify a record. The buffer combines fragments until a newline appears, then removes exactly the consumed prefix. Several lines received together can therefore produce several calls to `processLine()`, while half a line produces none yet. The size check applies to the accumulated record, not merely to one read's chunk. Closing on an oversized incomplete record prevents a later suffix from being mistaken for an independent valid measurement.
+
+The callback returns the number of bytes read, leaving later progress to the runtime. The buffer belongs to this context: sharing the factory and model does not combine different peers’ partial input.
+
+**Parsing and validation — excerpt.** After the omitted `splitCsvLine()` helper separates and trims fields, the conversion functions require full-field consumption and finite floating-point values.
+
+```cpp
+double parseDouble(const std::string& value, const std::string& fieldName) {
+    std::size_t parsedLength = 0;
+    const double parsedValue = std::stod(value, &parsedLength);
+    if (parsedLength != value.length() || !std::isfinite(parsedValue)) {
+        throw std::invalid_argument("invalid " + fieldName + " value '" + value + "'");
+    }
+
+    return parsedValue;
+}
+
+std::uint64_t parseSequence(const std::string& value) {
+    std::size_t parsedLength = 0;
+    const auto parsedValue = std::stoull(value, &parsedLength);
+    if (parsedLength != value.length()) {
+        throw std::invalid_argument("invalid sequence value '" + value + "'");
+    }
+
+    return parsedValue;
+}
+
+Measurement parseMeasurementLine(const std::string& line) {
+    const std::vector<std::string> values = splitCsvLine(line);
+    if (values.size() != 3 && values.size() != 4) {
+        throw std::invalid_argument("expected temperature,humidity,voltage[,sequence]");
+    }
+
+    Measurement measurement;
+    measurement.temperature = parseDouble(values[0], "temperature");
+    measurement.humidity = parseDouble(values[1], "humidity");
+    measurement.voltage = parseDouble(values[2], "voltage");
+    measurement.sequence = values.size() == 4 ? parseSequence(values[3]) : 0;
+    measurement.timestamp = std::chrono::system_clock::now();
+
+    return measurement;
+}
+```
+
+The field-count check makes the format explicit: three measurement values and an optional sequence. Conversion is not just extracting a numeric prefix. The consumed-length check rejects trailing characters, and the finite-value check rejects non-finite sensor values. Exceptions prevent the caller from accepting a partially constructed record. The timestamp is assigned when parsing creates the value; transport arrival alone has not yet changed accepted state.
+
+Notice what validation does not decide. The optional producer sequence can be read syntactically, but it is not authoritative gateway order. Several producers could present the same value or disagree about ordering. That conflict cannot be resolved separately inside each context without duplicating the policy. Parsing supplies a candidate measurement; the shared model remains the place that accepts it.
+
+**Acceptance — excerpt.** One small function connects the validated candidate to that owner.
+
+```cpp
+void MeasurementUnixSocketContext::processLine(const std::string& line) const {
+    if (!line.empty()) {
+        try {
+            measurementModel.accept(parseMeasurementLine(line));
+        } catch (const std::exception& ex) {
+            snode::log::application().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+        }
+    }
+}
+```
+
+An empty line leaves the model unchanged. A valid line reaches `accept()` once; an exception logs the rejected input and leaves it unaccepted. The observer routes and MQTT output see the model's result rather than a special Unix-input copy. This preserves the central invariant of the extension: a new input adds framing and validation while all inputs still use the same state transition.
+
+Read these three pieces as one path when testing: fragments become a line, a line becomes a validated candidate, and acceptance updates shared state. An exact byte transfer proves only the first prerequisite. A malformed line must leave `/status` unchanged, while two valid lines must advance local acceptance twice. Neither observation requires the input protocol to grow its own acknowledgement or sequence authority.
+
 
 The line-length rule is part of the new input contract. A record may contain at most 4096 bytes before its newline, including a trailing carriage return when present. The context checks the delimiter position before parsing and closes an overlong incomplete record as well. It does not discard a prefix and then accept the remaining suffix as a new measurement. Test the same rejected record in one write and in several writes; TCP or Unix-stream read boundaries must not change application acceptance.
 

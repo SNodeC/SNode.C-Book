@@ -1,6 +1,6 @@
 # Chapter 26 — solutions and discussion
 
-## 2. Review (O2, O3)
+## 1. Review (O1, O2)
 
 MQTTBroker owns brokerage and related administration/observation boundaries.
 MQTTIntegrator subscribes, applies mapping semantics and republishes. MQTTBridge
@@ -16,7 +16,16 @@ and each independent row. A successful subscription or broker delivery establish
 neither raw storage nor projection, and one insert's error need not imply the
 other failed. Do not label the pair an atomic transaction without that contract.
 
-## 4. Lab (O2, O3): Part IX checkpoint
+## 2. Review (O3)
+
+The publisher submits; its broker accepts the MQTT relationship and distributes
+matching publications. A source subscriber proves local delivery. MQTTBridge
+selects and forwards to a destination broker; a subscriber there proves that
+outcome. MQTTStore receives and submits raw/projection writes; each write's result
+and an independent database query prove storage separately. No earlier observer
+can certify a later participant's work solely from its own success.
+
+## 3. Lab (O1, O2): Part IX checkpoint
 
 **Equipped database checkpoint.** Use the private MariaDB setup in
 `../ch24/README.md`, then:
@@ -55,6 +64,22 @@ only the in-memory half. It does not replace the equipped checkpoint. The suite'
 unique-topic, ten-publication exercise additionally needs configured brokers and
 MQTTStore; it is not silently inferred from these component observations.
 
+## 4. Lab (O2, O3)
+
+```sh
+cmake --build build/labs --target ch26-lab
+ctest --test-dir build/labs -R '^exercise-ch26-publication-trace$' --output-on-failure -V
+```
+
+The unchanged delivery mode of `../ch21/mqtt.py` launches the canonical local
+broker and client fixtures. It needs loopback access, not an external broker,
+database or device. Expect a granted subscription, exact telemetry at the
+independent subscriber and an incoming command at the client. Attribute those
+outcomes to broker subscription/distribution, publisher submission and subscriber
+handling. This system-reading question differs from locating packet callbacks:
+name the participant responsible for each fact and what remains unobserved.
+It does not run MQTTBridge, MQTTStore or a multi-broker deployment.
+
 ## 5. Design (O1, O2, O3)
 
 Keep broker delivery, integration transformation, bridge forwarding and storage as
@@ -72,4 +97,4 @@ report each honestly. A health handler running establishes local progress, not
 readiness of every downstream service. Account for independent upgrades and old/new
 payload compatibility when splitting processes.
 
-TODO(P3-apparatus)
+

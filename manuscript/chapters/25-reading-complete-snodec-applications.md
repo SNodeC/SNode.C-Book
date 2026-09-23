@@ -2,7 +2,8 @@
 
 ::: {.snodec-objectives title="Learning objectives"}
 - **O1.** Trace a build target through its composition root to an observable application contract.
-TODO(P3-apparatus)
+- **O2.** Read an entry point as assembly of handles, instances and application dependencies.
+- **O3.** Relate an application to its installed-consumer example and behavioral tests.
 :::
 
 []{#snodec-in-larger-systems}
@@ -13,13 +14,17 @@ TODO(P3-apparatus)
 \index{example applications}
 \index{application structure}
 
+The database chapter separated receiving a value from accepting it and making it durable. We can now read an entire application without expecting its entry point to implement every one of those responsibilities. The task is to discover what the executable assembles, where each operation is implemented, and which observable result would show that the assembled program works.
+
+Choose one program and keep one question in view. For echo, ask how the selected server returns a peer's bytes. Begin with the build target to identify the source files and direct components. Then find the composition root: the place that constructs application dependencies and connects them to framework objects. Follow its public includes and linked components before tracing `main()` into configuration, activation and runtime start. Finally find the callback that implements the byte contract and the test that observes it.
+
+This order limits how much source must be understood at once. A generated family selection matters to reaching the peer, while the context's receive function matters to reflection. A shared model passed into a factory matters to state lifetime, while an install rule matters to finding the executable later. Keeping a written prediction beside each step prevents an interesting implementation file from becoming a detour unrelated to the behavior being read.
+
 Executable applications are where runtime setup, selected components, application objects, instances, callbacks, routes, persistence and installable targets meet. Start with the build target: its public includes, linked components and optional dependencies establish what the entry point can assemble.
 
 \index{src/apps@\texttt{src/apps}!study material}
 
 The applications in `src/apps` should not all be read in the same way. Some are application shells, some are focused examples, some are utility programs, and some are test or demonstration targets. Some demonstrate a protocol family. Some demonstrate a build pattern. They are not all production templates.
-
-The top-level app build also contains other targets, such as `configtest`, `warema-jalousien`, and a conditional `testregex`. Those are useful in their own contexts, but they are not needed for the main teaching path here.
 
 ### Build targets as the first architectural reading layer
 
@@ -174,6 +179,10 @@ The real file adds nested routers, JSON responses, SSE, timer-driven output and 
 
 `express-compat-server` selects the same HTTP/Express and IPv4 legacy components but serves compatibility and behavior comparison. Follow one route through `snode.c`, then compare policy; equal link composition does not imply equal application behavior.
 
+Pause at the end of the entry-point trace and account for dependencies captured by callbacks. If an application constructs a model and passes it by reference into factories or routes, the construction order is only the beginning of the lifetime argument. Find what keeps the model alive while callbacks can still run. Conversely, a dependency that is created separately for each connection should not accidentally become the service's authoritative state merely because it is easy to reach from a callback.
+
+Record three observations before modifying the application: which endpoint became active, which callback handled the selected input, and which result the external peer received. A successful build answers none of those runtime questions by itself. An exact echo reply answers the last one, but a diagnostic from the activation path helps distinguish a correct implementation reached at the wrong endpoint from an incorrect protocol implementation.
+
 ### Application families and focused examples
 
 \index{application families}
@@ -275,14 +284,18 @@ The echo family makes variants explicit: separate generated targets expose varia
 
 When borrowing from an in-tree application, separate three things in the reading notes: a public API shape, the example's selected policy, and an outcome actually tested. The TLS echo source is a useful case: it exposes the pre-handshake callback, but its commented hostname-checking statements do not execute. The same distinction applies to disabled roles, optional modules, and configured retry policy. A source example is strongest when it gives the reader a path to verify behavior, rather than when every nearby comment is treated as a runtime guarantee.
 
+We have followed one executable from target selection to an externally observable contract. The next chapter applies the same discipline between executables: a broker, bridge or store has its own entry point and tests, while their cooperation adds delivery, compatibility and recovery questions that no single `main()` can answer.
+
 ::: {.snodec-remember title="What to remember"}
 - Direct includes and component targets describe application choices; transitive dependencies belong to components.
 :::
 
 ::: {.snodec-exercise title="Exercises"}
-1. **Review (O1).** Compare the in-tree and installed application targets. Why do public includes and direct link components differ from the full dependency graph?
-3. **Lab (O1).** Trace the companion HTTP route fixture from its CMake target to initialization, route registration and runtime start. Run the composition lab: incomplete headers stay quiet, then completion reaches the expected handler chain.
-TODO(P3-apparatus)
+1. **Review (O1).** Compare in-tree and installed-consumer link names. Why should the application avoid repeating every lower dependency?
+2. **Review (O2).** Choose one `src/apps` entry point. List its handles, instances and linked components, and predict one observable behavior from the assembly.
+3. **Lab (O1, O3).** Run the composition fixture: an incomplete HTTP header causes no response or handler visit; completing it produces the routed response. Connect target, entry point and observed contract.
+4. **Lab (O1, O3).** Run the canonical consumer experiment and trace target → `main()` → linked components → exact echo reply. Explain the assembled application rather than repeating environment verification.
+5. **Design (O2, O3).** Specify your reading order and three observations to make before changing an unfamiliar application. Distinguish successful build, activation and protocol behavior.
 
 Public solutions and bounded lab commands: `companion/exercises/ch25/README.md`.
 :::

@@ -15,6 +15,10 @@
 
 Before the architecture can become interesting, the toolchain must be boring. The examples in this book should build, run, and fail in understandable ways, so the first practical task is to keep the source tree, build tree, install prefix, and later playground project separate.
 
+::: {.snodec-note title="Shortest path to Chapter 3"}
+Follow the commands below in this order: obtain the book package and framework source; configure an out-of-tree build; build; install into the chosen prefix; verify that CMake finds that installed package; build the external EchoPair; then continue to its server and client run in Chapter 3. Use the same prefix throughout. Optional Bluetooth and database equipment can wait until the corresponding labs. If a step fails, resolve it before moving to the next location: a successful framework build alone does not prove that the consumer selected that installation.
+:::
+
 This is more than tidiness. SNode.C is a real C++ framework with a core runtime, network-family components, stream transports, legacy and TLS connection variants, higher protocol layers, example applications, generated CMake targets, installable package components, and optional support for technologies such as Bluetooth and MariaDB.
 
 For example, successfully rebuilding a framework library does not refresh a different copy already installed in a local prefix. An external application can still compile against that older installation. Keeping the locations explicit makes that failure understandable.
@@ -117,6 +121,14 @@ These tools are not required for the first echo example. They are mentioned here
 \index{git checkout@\texttt{git checkout}}
 
 
+::: {.snodec-note title="Edition and source baseline"}
+\index{SNode.C!source baseline}
+\index{source baseline}
+\index{SNode.C 2.0.0}
+
+
+SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the SNode.C\textsubscript{\texttt{2.0.0}} baseline used for this edition. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
+
 First obtain this edition's electronic source package from the [SNode.C Book repository](https://github.com/SNodeC/SNode.C-Book) or its edition download. The commands below assume that the package is available at `~/projects/SNode.C-Book`. Point the shell variable at the actual location if yours differs:
 
 ```sh
@@ -153,7 +165,10 @@ git checkout --detach 07ca9a2936ee72582df7d159cb06666fe23e30f8
 python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
 
-Use a separate clone if the existing checkout contains your own work. A checkout already at the pin only needs verification. For normal reading, first learn where examples are located, how the build is organized, and which parts are source code, generated build output, or installation artifacts.
+Use a separate clone if the existing checkout contains your own work. A checkout already at the pin only needs verification. 
+
+No SNode.C 2.0 tag identifies this checkout: the public commit and content manifest provide the source identity. Compilation, runtime tests and deployment are separate evidence. The companion labs label broker, database and hardware prerequisites; an unequipped build is not an equipped run. MQTTSuite has a separate repository and revision, outside the framework manifest; its applications are a source-reading case study, not a certified deployment. Record its own build and configuration when reproducing them. No OpenWrt device run is claimed here. The source-baseline directory retains the reconstruction and verification details.
+:::
 
 ### Use an out-of-tree build
 

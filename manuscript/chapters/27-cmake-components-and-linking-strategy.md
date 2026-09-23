@@ -11,9 +11,23 @@
 \index{public headers}
 \index{linking strategy}
 
+### Begin with one installed consumer
+
+The system chapter assigned work to cooperating executables. Each executable now needs a reproducible way to consume the framework it actually uses. Start with the echo server: its source names an IPv4 legacy stream server, so the immediate build question is which component makes that public type usable. The answer should not require the application to repeat the framework's complete dependency graph.
+
+```cmake
+find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy)
+add_executable(app main.cpp)
+target_link_libraries(app PRIVATE snodec::net-in-stream-legacy)
+```
+
+This is an excerpt from a consumer build, after its project and language-standard setup. One requested component locates the composed stream implementation; the imported target carries its declared include and link requirements. Why is that one component enough, and where do the lower dependencies come from? Follow the target's public links: it combines the IPv4 stream branch with legacy stream handling, and those branches reach shared socket and runtime support.
+
+The application still includes the public header for the type it names and supplies its own source files. It does not locate each lower library manually. If discovery fails, first check the installed prefix and requested component. If compilation fails, inspect the named public abstraction and its header. These are different failures with different evidence, even though both appear during a build.
+
 ### The build structure as architecture
 
-Part IX assembled applications into systems. Those systems must now be built, linked, installed and consumed. CMake records their component choices; public headers expose the C++ abstractions an application can name. Read the two together to distinguish runtime infrastructure, protocol layers, composed stream implementations, optional features and application targets.
+With the consumer's choice established, read how the framework constructs and exports it. CMake records component choices; public headers expose the C++ abstractions an application can name. The framework's top-level settings explain how those artifacts are produced, rather than becoming instructions to copy every internal option into the consumer.
 
 \index{build structure}
 \index{architecture!build structure}
@@ -73,115 +87,30 @@ A name locates a layer, role or composition. `net-in-stream-tls` selects IPv4, s
 \index{components!libraries}
 \index{layered architecture!libraries}
 
-### A public component graph read from `logger` upward
+### The consumer's component subgraph
 
-The following selected public graph starts at `logger` and follows targets that depend on lower shared targets. It is not a source-directory tree or a complete inventory: system libraries, generated helpers, private details and some optional platform branches are omitted or abbreviated.
+The short consumer link line is supported by declared dependencies. This selected subgraph follows the application's requirement downward; repeated runtime nodes represent shared targets, not separate runtime instances. It omits system-library details and optional protocol branches that this echo consumer does not select.
 
-The real structure is a graph. Shared nodes repeat in this tree-shaped drawing, and Bluetooth branches exist only when available. Bracketed “also depends on” notes give an additional dependency of the parent, not another upward edge: `websocket-server` depends on both `websocket` and `http-server`; HTTP does not thereby depend on WebSocket.
-
+::: {.snodec-note title="Component reference: IPv4 legacy echo"}
 ```text
-logger
-`-- utils
-    |-- websocket
-    |   |-- websocket-server
-    |   |   |-- [also depends on http-server]
-    |   |   `-- mqtt-server-websocket
-    |   |       `-- [also depends on mqtt-server]
-    |   |
-    |   `-- websocket-client
-    |       |-- [also depends on http-client]
-    |       `-- mqtt-client-websocket
-    |           `-- [also depends on mqtt-client]
-    |
-    `-- core
-        |-- db-mariadb
-        |   `-- [also depends on libmariadb, if available]
-        |
-        |-- core-socket
-        |   |-- core-socket-stream
-        |   |   |-- core-socket-stream-legacy
-        |   |   |   |-- net-in-stream-legacy
-        |   |   |   |-- net-in6-stream-legacy
-        |   |   |   |-- net-un-stream-legacy
-        |   |   |   |-- net-rc-stream-legacy, if available
-        |   |   |   `-- net-l2-stream-legacy, if available
-        |   |   |
-        |   |   |-- core-socket-stream-tls
-        |   |   |   |-- net-in-stream-tls
-        |   |   |   |-- net-in6-stream-tls
-        |   |   |   |-- net-un-stream-tls
-        |   |   |   |-- net-rc-stream-tls, if available
-        |   |   |   `-- net-l2-stream-tls, if available
-        |   |   |
-        |   |   `-- http
-        |   |       |-- libmagic, if available
-        |   |       |
-        |   |       |-- http-server
-        |   |       |   `-- http-server-express
-        |   |       |       |-- nlohmann-json support
-        |   |       |       |-- http-server-express-legacy-in
-        |   |       |       |   `-- net-in-stream-legacy
-        |   |       |       |-- http-server-express-legacy-in6
-        |   |       |       |   `-- net-in6-stream-legacy
-        |   |       |       |-- http-server-express-legacy-un
-        |   |       |       |   `-- net-un-stream-legacy
-        |   |       |       |-- http-server-express-legacy-rc, if available
-        |   |       |       |   `-- net-rc-stream-legacy
-        |   |       |       |-- http-server-express-tls-in
-        |   |       |       |   `-- net-in-stream-tls
-        |   |       |       |-- http-server-express-tls-in6
-        |   |       |       |   `-- net-in6-stream-tls
-        |   |       |       |-- http-server-express-tls-un
-        |   |       |       |   `-- net-un-stream-tls
-        |   |       |       `-- http-server-express-tls-rc, if available
-        |   |       |           `-- net-rc-stream-tls
-        |   |       |
-        |   |       `-- http-client
-        |   |
-        |   `-- net
-        |       |-- net-in
-        |       |   `-- net-in-phy
-        |       |       `-- net-in-phy-stream
-        |       |           `-- net-in-stream
-        |       |               |-- net-in-stream-legacy
-        |       |               `-- net-in-stream-tls
-        |       |
-        |       |-- net-in6
-        |       |   `-- net-in6-phy
-        |       |       `-- net-in6-phy-stream
-        |       |           `-- net-in6-stream
-        |       |               |-- net-in6-stream-legacy
-        |       |               `-- net-in6-stream-tls
-        |       |
-        |       |-- net-un
-        |       |   |-- net-un-phy-stream
-        |       |   |   `-- net-un-stream
-        |       |   |       |-- net-un-stream-legacy
-        |       |   |       `-- net-un-stream-tls
-        |       |   `-- net-un-dgram
-        |       |
-        |       |-- net-rc, if available
-        |       |   `-- net-rc-phy
-        |       |       `-- net-rc-phy-stream
-        |       |           `-- net-rc-stream
-        |       |               |-- net-rc-stream-legacy
-        |       |               `-- net-rc-stream-tls
-        |       |
-        |       `-- net-l2, if available
-        |           `-- net-l2-phy
-        |               `-- net-l2-phy-stream
-        |                   `-- net-l2-stream
-        |                       |-- net-l2-stream-legacy
-        |                       `-- net-l2-stream-tls
-        |
-        `-- mqtt
-            |-- mqtt-server
-            |   `-- mqtt-server-websocket, shared path
-            `-- mqtt-client
-                `-- mqtt-client-websocket, shared path
+app
+`-- snodec::net-in-stream-legacy
+    |-- snodec::net-in-stream
+    |   `-- snodec::net-in-phy-stream
+    |       `-- snodec::net-in-phy
+    |           `-- snodec::net-in
+    |               `-- snodec::net
+    |                   `-- snodec::core-socket
+    `-- snodec::core-socket-stream-legacy
+        `-- snodec::core-socket-stream
+            `-- snodec::core-socket
+                `-- snodec::core
+                    `-- snodec::utils
+                        `-- snodec::logger
 ```
+:::
 
-Follow the shared paths rather than treating the drawing as one stack. `websocket` reaches `utils`, its server side also reaches HTTP, and MQTT-over-WebSocket joins MQTT and WebSocket roles. HTTP, MQTT, database and composed stream implementations attach to different parts of the shared runtime surface.
+The two direct branches answer different parts of the composition: the network-family path reaches physical socket support, while the legacy path supplies the selected stream-connection implementation. Shared dependencies propagate through the exported targets. Adding HTTP or MQTT would introduce a protocol component with its own declared dependencies; it would not make this application responsible for maintaining those components' lower link lines.
 
 ### Public header hierarchy mirrors the component hierarchy
 
@@ -208,7 +137,7 @@ Headers expose declarations, aliases, templates, inline helpers, and source-faci
 \index{component/header matrix}
 \index{public surface}
 
-The following matrix reflects the SNode.C\textsubscript{\texttt{2.0.0}} source snapshot used to prepare this edition of the book. It is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a role, and the component target or targets it would normally link when it needs the corresponding compiled surface.
+The following matrix is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a role, and the component target or targets it would normally link when it needs the corresponding compiled surface.
 
 In the source tree, examples and framework code include headers relative to the SNode.C source include root, for example `<express/legacy/in/WebApp.h>`. Installed consumers use the same public header shape below the installed `include/snode.c` prefix.
 
@@ -315,7 +244,7 @@ Legacy and TLS are distinct targets, so a consumer can select either or both. A 
 
 HTTP upgrade support allows an upgrade protocol to be selected later by name. The build therefore records HTTP and upgrade-library directories as target properties. Chapter 17 gives the HTTP-upgrade name-to-factory contract, and Chapter 20 applies the same pattern to WebSocket subprotocols. This chapter only identifies the build-side boundary; Chapter 28 follows that boundary into the installed runtime system.
 
-HTTP, Express and WebSocket also set library output directories and install RPATH properties. These identify runtime composition at build time; Chapter 28 checks the resulting installed lookup paths and permissions.
+HTTP, Express and WebSocket set output directories for their libraries and RPATH properties for installed lookup. The loader needs those locations when a program selects an upgrade or subprotocol; Chapter 28 checks the resulting installed lookup paths and permissions.
 
 The Express base `http-server-express` depends on `http-server` and JSON support. A concrete target such as `http-server-express-legacy-in` adds `net-in-stream-legacy`; its source front door is `<express/legacy/in/WebApp.h>` or `<express/legacy/in/Server.h>`. The base owns HTTP, and the concrete target owns the stream composition.
 

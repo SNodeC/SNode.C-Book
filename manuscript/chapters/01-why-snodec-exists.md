@@ -20,14 +20,28 @@
 
 Many networking frameworks make the first connection convenient. That matters when a developer wants to start a server or move data without studying the whole architecture.
 
-Convenience has a cost when it hides the communication model. One endpoint becomes several, TLS is added, configuration becomes operationally important, and deployment matters. The reader needs to understand how those concerns fit together.
+Start with a temperature sensor and a program that accepts one connection. The sensor sends a value, the program prints it, and the first successful reply feels like the whole problem. At that size, keeping the address, input buffer, conversion and reply together is easy to understand. There is only one sender to watch and one conversation to finish. The first test asks a concrete question: did the same value reach the other side?
+
+Now connect a second sensor. One sends a complete value immediately; the other pauses halfway through its input. The program needs to remember the unfinished input separately. If the first sensor closes, the second should still be able to finish. A single input buffer and a single “current peer” variable can no longer describe the work. The change is small at the user interface, but it exposes a design question: which information belongs to each conversation, and which information describes the service as a whole?
+
+Next add a browser that asks for the latest temperature. The browser speaks HTTP, while the sensor may still send a simple line. The HTTP request should not have to pretend to be a sensor message, and the line parser should not learn how to construct web responses. Each input needs to understand its own bytes. Both nevertheless need to agree about what the latest accepted measurement means. Supporting another protocol has turned one receive-and-reply loop into several related conversations.
+
+Suppose the program numbers accepted measurements. Two sensors can report the same timestamp, so arrival order must be decided somewhere. If each input keeps its own counter, both may call their first measurement number one. A browser asking for the latest value then sees a result whose ordering depends on which input supplied it. Giving one shared model the job of accepting and numbering values makes the decision explicit. Each input parses its own message, asks that model to accept a valid value, and uses the answer. The model can outlive any particular connection.
+
+The service then leaves the developer's laptop. Its listening address and port must change without editing the parser. An operator needs to distinguish the sensor input from the browser interface in help output and logs. A failed connection should identify the attempted endpoint, while a rejected measurement should explain the invalid value. These observations answer different questions. A successful socket connection does not establish that a measurement was valid, and a valid measurement does not establish that it was saved durably.
+
+Configuration therefore becomes part of understanding the program rather than a final collection of command-line switches. The developer supplies useful defaults; deployment supplies the actual endpoint; diagnostics reveal which choice took effect. If the sensor input is temporarily unavailable, that should not silently change the meaning of a value already accepted by the model. If the browser connects twice, those connections should observe the same accepted state rather than construct independent copies of it.
+
+This sequence is the motivation for learning the structure. At each step, keep the behavior already working and identify the new responsibility: another conversation, another parser, one common decision, or an operational setting. The goal is not to give a small echo program the machinery of a large service. It is to recognize the point at which a second responsibility needs a separate place. Later chapters give those places precise names and test what happens when one of them fails.
+
+A useful first experiment follows directly. Leave one sensor idle and let the other send twice, then disconnect the idle sensor. The surviving input should still work. Next ask the browser for the latest value after both inputs have disconnected. If the service is meant to retain accepted state while it runs, that answer should still exist. These observations turn an architectural discussion into questions a program can answer. They also prevent a misleading shortcut: successful communication with one peer cannot establish that several peers share state correctly. The book builds up such observations alongside the implementation, so each new responsibility arrives with a way to recognize its effect.
 
 SNode.C is interesting because it takes a different path. It is a layered, event-driven C++ framework that keeps the structure of networked applications visible without reducing networking to socket helpers, HTTP handlers, or MQTT utilities.
 
 
 > By the end of the book, you should be able to build servers and clients with SNode.C, understand why its architecture has the shape it has, and extend that architecture without breaking its conceptual boundaries.
 
-Consider a measurement that first arrives through a local socket and is later also accepted from MQTT. If each input callback assigns the sequence number, the application has two places that decide its ordering. If both callbacks hand a parsed value to one model, that decision has one owner. MiniGateway will make this example concrete. The point of the early layer vocabulary is to prepare the reader to recognize such a decision in code, including the cost of keeping several roles around one shared model.
+Consider a measurement that first arrives through a local socket and is later also accepted from MQTT. If each input callback assigns the sequence number, the application has two places that decide its ordering. If both callbacks hand a parsed value to one model, that decision has one owner. MiniGateway will make this example concrete. The example will let us recognize the same decision in code once the first program is running.
 
 
 \index{multi-protocol applications}
@@ -40,7 +54,7 @@ A common problem is **collapse of layers**. A small program begins with a socket
 Another is **one-protocol tunnel vision**: treating every concern as an HTTP route, a string over a socket, or an MQTT message. Each entry point is useful, but the application needs places for concerns that outlive one conversation.
 
 
-SNode.C separates network family, transport, connection handling, and application protocol. Its contexts, factories, and instances make those choices explicit. HTTP, TLS, WebSocket, and MQTT build on that recurring structure.
+SNode.C separates network family, transport, connection handling, and application protocol. The detailed layer model and its vocabulary follow in Chapter 5. HTTP, TLS, WebSocket, and MQTT build on that recurring structure.
 
 This gives the reader transfer: IPv4, IPv6, Unix-domain sockets, and Bluetooth have different endpoint identities and deployment assumptions, but their architectural questions remain comparable.
 
@@ -56,7 +70,7 @@ SNode.C is not trying to replace every C++ networking approach. It is most usefu
 
 Direct POSIX sockets give explicit operating-system control. Standalone Asio and Boost.Asio provide asynchronous I/O primitives with broad platform support; focused web frameworks offer a shorter route to an HTTP service. SNode.C supplies a more prescribed combination of protocol layers, endpoint configuration, and diagnostics. The best fit depends on which responsibilities the application wants to assemble itself.
 
-Compare the `Comparison-AsioEcho` companion with Chapter 3's `EchoPair`. Both implement asynchronous TCP byte reflection. This is a comparison of ownership and I/O flow, not a throughput benchmark:
+Compare the `Comparison-AsioEcho` companion with Chapter 3's `EchoPair`. Both implement asynchronous TCP byte reflection. The SNode.C side is explained step by step in Chapter 3. This is a comparison of ownership and I/O flow, not a throughput benchmark:
 
 | Decision | EchoPair (SNode.C) | Standalone Asio echo |
 |---|---|---|
@@ -128,15 +142,6 @@ The complete Asio source is `companion/examples/Comparison-AsioEcho/main.cpp`; t
 There are real costs to choosing SNode.C. Its documented build and deployment target is **Linux**, including OpenWrt; this book does not promise native Windows or macOS support. Its runtime has **one event loop per process**: blocking a callback holds up unrelated connections, and independent event loops require separate processes. Asio lets an application choose how it runs its I/O contexts. SNode.C also has a **small ecosystem** centered on its framework examples and MQTTSuite; plan for more direct source reading and fewer ready-made integrations than in a broad general-purpose ecosystem. These are practical constraints, not adoption statistics.
 
 Asio's [platform and build documentation](https://think-async.com/Asio/asio-1.30.2/doc/asio/using.html) describes its cross-platform, normally header-only use. For a one-off portable TCP client, that narrower dependency may be a better fit. SNode.C becomes useful when several communication surfaces need to share an application model and remain recognizable in configuration and diagnostics.
-
-### Source version used by this book
-
-\index{SNode.C!source baseline}
-\index{source baseline}
-\index{SNode.C 2.0.0}
-
-
-SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the SNode.C\textsubscript{\texttt{2.0.0}} baseline used for this edition. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
 
 ### Why “layered” matters here
 

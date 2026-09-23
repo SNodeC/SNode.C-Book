@@ -2,7 +2,7 @@
 
 ## 1. Review (O1)
 
-The local endpoint handle configures the role and registers activation. Shared
+The local endpoint handle configures the instance and registers activation. Shared
 endpoint state and runtime callbacks retain what active work needs after a local
 wrapper leaves scope. An explicit listen operation has its own flow; an accepted
 connection is a separate peer relationship and can survive termination of that
@@ -14,6 +14,15 @@ This does not keep an arbitrary reference capture alive. If a factory passes an
 application model to each context, the application must retain that model through
 the last use. The independent-peer lab below tests peer isolation, not cancellation
 of the listening flow; those are different observations.
+
+## 2. Review (O2)
+
+The listen-result message describes the flow's activation outcome using the named
+instance `echoserver`. The transport record describes connection 1; attachment and
+payload records describe its context. The local handle and the factory do not
+have their own construction messages in this excerpt. A name alone does not count
+connections or prove that a local wrapper remains in scope. The full observed log
+is in the pass evidence `P3-echo-observation.log`; the manuscript shows its bodies.
 
 ## 3. Lab (O3)
 
@@ -58,4 +67,15 @@ so neither of those operations is established by this run. It also does not say
 that stream reads preserve the boundaries of the peer's writes.
 
 
-TODO(P3-apparatus)
+
+
+## 5. Design (O1, O3)
+
+Retain two flow handles only if the application needs independent activation
+control. Both explicit connects use the instance's shared configuration. Each
+resulting context keeps its own partial input; each flow keeps its activation and
+recovery decisions; one separately retained model accepts parsed measurements
+from both. Keep that model alive through its users and remove subscriptions before
+captured state dies. No change of family, variant or protocol is needed to make
+these lifetime distinctions. Stopping a listener and closing an accepted peer
+remain separate operations.

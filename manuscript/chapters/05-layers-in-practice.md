@@ -1,11 +1,16 @@
 ## Layers in Practice {#layers-in-practice}
 
 ::: {.snodec-objectives title="Learning objectives"}
-- **O2.** Decode a public type, header, and component to identify the layer affected by a change.
-TODO(P3-apparatus)
+- **O1.** Decode a public type, header and component to locate a layer choice.
+- **O2.** Predict what changes and what remains shared when family, connection variant or protocol changes.
+- **O3.** Confirm a layer selection through component discovery, linking and an observable reply.
 :::
 
 ### Reading public types and components {#reading-public-types-and-components}
+
+The echo pair now has identifiable runtime objects: a handle configures an instance, a flow advances an activation, and a context serves a connection. Keep that picture fixed. The next question is what can change beneath the context while its byte-reflection behavior remains the same. Choosing IPv4 instead of a local Unix socket, or TLS instead of non-TLS handling, should lead us to a particular part of the composition rather than to a rewrite of the whole program.
+
+We will follow one proposed change through four views. The C++ type selects the composition, its public header makes that type available to the compiler, the component supplies its installed build requirements, and runtime configuration supplies the endpoint and policy. A successful link confirms agreement among the first three; the running program is still needed to establish the fourth. Keeping those checks separate makes a long type name useful instead of intimidating.
 
 The source tree, public headers, C++ names, and installed components expose related views of a layer choice. Their purposes differ: navigating implementation, including declarations, selecting a type, and linking an external program.
 
@@ -123,6 +128,10 @@ A common address interface can be useful when an application chooses endpoint fa
 
 Chapter 7 gives address semantics their detailed treatment. A Unix socket path, an IP port, and a Bluetooth channel or PSM remain different endpoint facts even when the context above them is reusable.
 
+Try the smallest family change first. Begin with the IPv4 echo server type and replace the family selection with Unix domain sockets. Keep the stream form, legacy variant and echo factory. The public server header moves from the `net/in` path to `net/un`, and the corresponding component becomes `net-un-stream-legacy`. The context can still reflect the bytes it reads; it does not need to interpret an IP address to implement that behavior.
+
+At this point, predict only what the example can establish. The two family-server builds in the lab use the same source and reflect the same payload. Byte equality supports reuse of the echo context. It does not establish that the two endpoint identities have the same reach, access controls or deployment rules. Those questions belong to the address chapter. Here, the important skill is locating the changed selection and finding the matching header and component without altering protocol code.
+
 ### The transport layer: communication form
 
 \index{transport layer}
@@ -131,6 +140,8 @@ Chapter 7 gives address semantics their detailed treatment. A Unix socket path, 
 For the early and central chapters, the important transport form is `stream`. It gives the framework a model for connection-oriented byte communication: establishing a peer relationship, reading and writing byte sequences, observing lifetime, shutting down, applying timeouts, and inserting TLS below the application protocol.
 
 The family selects endpoint identity; transport selects the communication relationship. Combined, these choices appear in `net::in::stream`, `net::in6::stream`, `net::un::stream`, `net::rc::stream`, and `net::l2::stream`. They let a context use a compatible stream surface while addressing and deployment remain family-specific. Choosing that surface does not remove the protocol's responsibility for framing records or interpreting payloads.
+
+For echo, a stream means that a callback consumes available bytes and sends bytes onward. Neither the family name nor the number of send calls defines a record boundary for a future measurement protocol. If one sender writes a measurement in two pieces, the parser must preserve enough state to assemble it. Reusing the stream interface therefore preserves a useful operation shape while leaving message interpretation above it. Ask this question before changing a buffer: is the problem how bytes travel, or what those bytes mean together?
 
 ### The connection layer: managing the peer relationship
 
@@ -158,6 +169,10 @@ Core variants are `core-socket-stream-legacy` and `core-socket-stream-tls`. Conc
 
 Include the role the source file names, not the whole lower socket stack manually. Bluetooth uses `net-rc-stream-legacy`, `net-rc-stream-tls`, `net-l2-stream-legacy`, and `net-l2-stream-tls` where support and build options make those components available. Read each as family, stream transport, and non-TLS or TLS connection handling; check availability separately from interpreting the name.
 
+Next hold IPv4 and echo fixed while selecting TLS. The server type and include path choose the TLS connection variant, and the installed component must agree. That selection does not provide a certificate, private key or trust decision by itself. An echo function can be unchanged while connection establishment now fails because the security configuration is incomplete. That is the expected consequence of assigning security to a distinct part of the program: the failure can occur before the context has any application bytes to reflect.
+
+This is why a layer decision has two answers. The primary change is the connection variant. Its consequences include setup material, timing and diagnostics. Listing those consequences is not a reason to place certificate handling inside the echo parser. It is a reason to test the new connection contract before using unchanged protocol behavior as evidence that the conversion worked.
+
 ### The application layer: protocol behavior
 
 \index{application layer}
@@ -181,6 +196,10 @@ A missing HTTP response can begin at several boundaries. The client may address 
 
 The same habit applies to MQTT over WebSocket. Establishing the lower connection does not establish that the HTTP upgrade selected the intended WebSocket subprotocol, and a successful upgrade does not establish that the MQTT session was accepted. Each layer has its own success condition. Later protocol chapters make those conditions concrete.
 
+Finally keep the lower IPv4 legacy stream selection and replace byte reflection with a line protocol. The context now accumulates partial input, finds complete lines and decides what each line means. Its factory must create that protocol object. The lower server header and component can stay unchanged because they still provide the same kind of connection. A changed application protocol is therefore a different case from the family and TLS changes above: the bytes acquire new meaning even though the lower composition is stable.
+
+Use these three experiments as a reading method. First state the intended behavior in ordinary words. Then name the layer responsible, select its public type and header, and check the installed component. Finally list the obligations that remain unchanged and the consequences that need a runtime observation. This order prevents a plausible-looking include path from becoming the entire argument for a design.
+
 ### The build system as confirmation
 
 \index{build system}
@@ -197,6 +216,10 @@ Use the first echo pair to check a proposed layer change. Keep the context and f
 After changing the selection, rebuild the consumer and configure the TLS variant with its certificate and trust policy. A successful link establishes build consumption; test the handshake and peer identity separately before comparing the echoed bytes.
 
 This comparison is a design exercise, not a complete TLS conversion recipe. Its expected result is a list of three different obligations: select the C++ type, consume its installed component, and configure its operational behavior. Chapter 15 supplies the security details; Chapter 27 explains the component dependency rules. The echo protocol's byte reflection remains a separate responsibility throughout.
+
+A useful failed-build prediction completes the comparison. If a consumer requests a nonexistent component, CMake cannot construct the intended imported target, so there is no executable yet whose socket behavior could be tested. If the correct component links but the program cannot reach its peer, inspect configuration and runtime evidence next. If the peer is reached but reflected bytes differ, return to the context contract. Each outcome narrows a different part of the path.
+
+The component lab deliberately introduces only the first kind of failure in a temporary copy. Restoring the component then permits the same source to build and reflect bytes. Keep both observations: restoration shows that the build choice agrees with the type, while the reply shows the selected composition can execute the protocol in that local experiment.
 
 ### Reuse and cross-layer consequences
 
@@ -219,9 +242,11 @@ For a measurement gateway, identify both the primary owner and the downstream ef
 :::
 
 ::: {.snodec-exercise title="Exercises"}
-2. **Review (O2).** Decode `net::rc::stream::tls::SocketServer<MyFactory>`. Which public header and component agree with it, and which operational obligations remain outside the type name?
-5. **Design (O1, O2, O3).** Add a Unix-domain measurement input beside an IPv4 input. Assign addressing, framing, acceptance order, and observer lifetime to owners; identify the type/header/component changes and justify what remains shared.
-TODO(P3-apparatus)
+1. **Review (O1).** Decode `net::rc::stream::tls::SocketServer<MyFactory>`. Give the matching public header and component, then name what the type does not configure.
+2. **Review (O1, O2).** Compare IPv4→Unix, legacy→TLS and echo→line protocol. For each change, name the affected type, header and component and what stays unchanged.
+3. **Lab (O2, O3).** Build and run the same echo source with IPv4 and Unix server selections only. Expect identical reflected bytes. Identify the changed type/header/component; address semantics are not this experiment’s learning objective.
+4. **Lab (O1, O3).** Run the component experiment: a missing component fails configuration, while the matching component configures, links and reflects bytes. Name the layer represented by the missing selection.
+5. **Design (O2).** Add Unix measurement input beside IPv4 input. Specify the type, header and component choices and the protocol/model behavior that remains shared. Leave runtime ownership to the preceding chapter’s design.
 
 Public solutions and bounded lab commands: `companion/exercises/ch05/README.md`.
 :::

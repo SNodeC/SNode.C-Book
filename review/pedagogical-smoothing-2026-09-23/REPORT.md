@@ -50,8 +50,9 @@ No fetch, build or edit occurs in the author's framework tree.
 | R2 evidence | `2be416b` | [R2-build/results.json](R2-build/results.json), [R2-entry-results.json](R2-entry-results.json) |
 | P0b-R2-resume | `77226ab` | All 13 groups pass, including 62/62 labs; P0b-R2-resume-results.json |
 | P1 | `c603b8f` | Snapshot reread notes in [P1-context-review-notes.md](P1-context-review-notes.md) |
-| P2 | this mechanical gate commit | 32 chapters + A; all 62 labs pass; P2-registry-review.md |
-| P3–P7 | pending | Teaching revisions follow the passing P2 gate |
+| P2 | `9df7d00` | 32 chapters + A; all 62 labs pass; P2-registry-review.md |
+| P3 | this content gate commit | 33 apparatus units; 66/66 labs; P3-gate-notes.md |
+| P4–P7 | pending | Tier 2/3, seams and final verification |
 
 Static entry checks pass: chapter references, source alignment (zero errors,
 31 chapter/appendix records, 37 complete listings), source hygiene, metrics,
@@ -76,3 +77,5 @@ Production-code changes: +0/−0. Existing tests/drivers and timeouts: +0/−0.
 New review orchestration is evidence support, not application implementation.
 The author framework is unchanged. Push only the work branch when the run ends;
 do not merge.
+
+P3 fresh total: **108,701** tokens. All 66 labs pass against the R2 installation; no assertions/timeouts changed. API/source review and mechanical gate details are in P3-api-review.md and P3-gate-notes.md. The complete CMake listing in Ch31 is synchronized at 60 lines by removing seven blank separators only. Remaining floor/cap checks await the final tier and seam pass.

@@ -1,14 +1,14 @@
 ## The SNode.C Runtime Mental Model {#the-snodec-runtime-mental-model}
 
 ::: {.snodec-objectives title="Learning objectives"}
-- **O1.** Explain which endpoint, flow, connection, and context state must survive a deferred operation.
-- **O3.** Decide which measurement state belongs to one peer and which needs a shared application owner.
-TODO(P3-apparatus)
+- **O1.** Explain the distinct lifetimes of endpoint handle, instance, flow, connection and context.
+- **O2.** Identify those objects in a running echo program and its diagnostics.
+- **O3.** Assign per-peer state and shared application state to owners that survive their users.
 :::
 
 []{#the-mental-model-and-layers-in-practice}
 
-The echo pair supplies a first working example. We now connect its lifetimes to the layers that can change beneath its protocol.
+The echo pair supplies a first working example. We now separate the lifetimes behind that exchange before changing any protocol or network family.
 
 ### The mental model {#the-mental-model-of-snodec}
 
@@ -27,6 +27,19 @@ As shown in Figure \ref{fig:snodec-runtime-model}, application code uses a visib
 ![From endpoint configuration through activation to per-connection behavior. Arrows show the creation and use path, not a chain of exclusive ownership or nested lifetimes.](assets/figures/pdf/fig-02-runtime-instance-connection-context.pdf){#fig:snodec-runtime-model width=82% latex-placement="tbp"}
 
 The figure keeps the instance separate from each explicit activation. One instance can have several flows, and a listening flow can end while a connection it accepted continues. The factory is shared by the instance and used when a connection needs a context; its position in the drawing does not make it a child owned by each connection.
+
+::: {.snodec-note title="Runtime terms and lifetimes"}
+| Object | Question answered | Lifetime to keep in mind |
+|---|---|---|
+| Endpoint handle | What does application code configure? | The local C++ wrapper has its own scope. |
+| Instance | Which configuration and identity does work use? | Shared state remains available to active users beyond a wrapper's scope. |
+| Flow | Which explicit listen or connect activation is advancing? | Its controller can span attempts; dropping the returned handle does not cancel it. |
+| Connection | Which peer relationship is this? | An accepted peer can continue after listening ends. |
+| Factory | Who creates the protocol object? | The instance shares this construction dependency across peers. |
+| Context | What protocol state belongs to this connection? | It serves the attached protocol and can be replaced during an upgrade. |
+:::
+
+Treat the table as questions to ask about the EchoPair trace, not as six nested containers. The arrows in the figure describe how work becomes possible. They do not mean that returning from a function destroys everything drawn below its local variable. The examples that follow keep the same byte-reflection behavior while changing one lifetime at a time.
 
 \index{runtime}
 \index{core::SNodeC@\texttt{core::SNodeC}}
@@ -76,6 +89,12 @@ That distinction matters when passing dependencies to a factory. Keeping endpoin
 
 The flow returned by one `listen(...)` or `connect(...)` call has its own control lifetime. Runtime callbacks retain it while its work is active, so discarding the returned handle is not a cancellation operation. Retaining it gives application code a way to terminate that flow or observe its progress. A server connection already accepted by a listener can remain alive after the listening flow ends. Do not insert the flow into a simple lifetime inequality that would require it to outlive every connection.
 
+Consider a helper that creates a server handle, registers listening and returns. Its local variable has ended. The registered work still needs the instance configuration, factory and callbacks, which the framework retains. A callback referring to a separate stack-local measurement model is a different matter: returning destroys that model. The safe lifetime argument must name the retained dependency, not merely say that “the server survives.”
+
+Now call `connect()` twice through one client handle. The two explicit activations share the instance's endpoint configuration but have separate flow controllers. A failed attempt and its automatic retry belong to the same activation sequence; the second explicit call does not merely request that retry sooner. If application code retains one returned flow handle, it has selected that activation for control. Stopping it should not be used as shorthand for changing all settings or stopping every operation associated with the instance.
+
+A named instance adds a useful way to identify these relationships. The name `echoclient` tells an operator which configuration to inspect. It does not identify a unique connected peer for all time. After disconnection and reconnection, the same instance name can accompany a new peer relationship and a fresh protocol object. Correlate the name with connection-specific diagnostics before deciding that a partial input buffer should still exist.
+
 ### Connections, contexts, and factories
 
 \index{connection}
@@ -115,6 +134,10 @@ An instance on the server side can produce many connections over time; a client 
 The running measurement example adds another lifetime. A peer context may hold a partial record while bytes arrive. Once a value is parsed, an application model shared by the input contexts can assign its acceptance order. Construct that model outside the per-peer factory and keep it alive through every callback that uses it. Creating a model in each context would restart the sequence for each peer.
 
 The public model lab makes that difference observable without introducing a gateway protocol yet. Two input references to one `MeasurementModel` receive acceptance sequences 1 and 2; two separate model objects each begin at 1. Sharing the C++ class is not sharing its state. The model is the application owner; the contexts remain protocol endpoints.
+
+For a concrete per-peer example, let one sender provide half a measurement line and pause. Its context retains that fragment. A second sender can deliver a complete line through a different context created by the same factory. Sharing construction policy does not merge their buffers. Only after parsing should both inputs reach the shared model, where one sequence orders their accepted measurements.
+
+This also explains why a factory is useful even when its construction function contains one allocation. The listener cannot create all future contexts at startup: neither the number of peers nor their connection objects is known then. The factory bridges that timing difference. It can give every new context access to the same long-lived model while still allocating fresh parsing state for each connection. What is shared is an explicit dependency, not every member of the context class.
 
 ### Startup and independent lifetimes
 
@@ -191,6 +214,19 @@ The connection and context expose total sent, queued, read, and processed bytes,
 
 A reconnect creates another connection; an HTTP upgrade can replace a protocol context within the same connection. When a subsystem changes, locate its instance, flow, connection, factory, and current context before assuming that familiar names imply unchanged lifetimes. The following public-name reading connects these objects to layer choices; Chapter 6 subsequently opens their event runtime from the inside.
 
+Before continuing, use the existing EchoPair diagnostics as an observation checkpoint. “listening on” reports activation progress for the configured server; “Echo context attached” reports a protocol object attached to a connection; “Data to reflect” reports that context's receive work. A second peer can produce another attachment while the server's instance name stays the same. Predict which of those observations changes when the second peer closes, then use the independent-peers lab to check the prediction. No log message by itself establishes the lifetime of an unrelated captured object.
+
+For Exercise 2, these message bodies are extracted from the existing EchoPair output; timestamps and semantic prefixes are omitted. The port is the ephemeral port used for this run.
+
+```text
+echoserver: listening on '127.0.0.1:45747'
+transport connected
+Echo context attached
+Data to reflect: hello-runtime
+```
+
+The diagnostic identifies `echoserver` throughout and `conn=1` on the connection/context records. Read the differing message subjects as evidence of progress at distinct stages.
+
 ::: {.snodec-remember title="What to remember"}
 - Endpoint configuration, each activation flow, a peer connection, and its current context have distinct lifetimes.
 - Factories create per-connection behavior; shared application state needs a separate owner that survives its users.
@@ -198,10 +234,11 @@ A reconnect creates another connection; an HTTP upgrade can replace a protocol c
 :::
 
 ::: {.snodec-exercise title="Exercises"}
-1. **Review (O1).** An accepted peer continues after its listener stops. Explain why neither the local handle's scope nor the listening flow's lifetime alone determines that connection's lifetime.
-3. **Lab (O3).** Build and run the shared-model solution. Send two inputs through references to one model, then through separate model objects. Expect sequences 1,2 for the shared owner and 1 from each separate owner. Explain the consequence of constructing a model per context.
-4. **Lab (O1).** Build EchoPair and run the independent-peers solution. Leave one peer idle, send binary bytes through another, then close the idle peer and repeat. Expect unchanged replies. State which lifetime relationship this observes and which listening-flow operation it does not test.
-TODO(P3-apparatus)
+1. **Review (O1).** An accepted peer continues after its listener stops. Explain why neither the local handle’s scope nor the listening flow’s lifetime alone determines that connection’s lifetime.
+2. **Review (O2).** Attribute the EchoPair excerpt below to handle, instance, flow, connection or context. Which object has no direct creation message here? Explain why repeated instance names do not mean one connection.
+3. **Lab (O3).** Run the shared-model solution: two input references produce accepted sequences 1,2 through one model, while separate models each begin at 1. Explain why a model per context partitions accepted state.
+4. **Lab (O1, O2).** Run the independent-peers solution. Leave one peer idle while the other exchanges bytes, then close the idle peer and repeat. Expect unchanged replies; distinguish peer isolation from stopping the listener.
+5. **Design (O1, O3).** Add a second explicit client flow against the same server. Assign partial input, activation control and accepted measurement state to per-connection, per-flow and shared owners. Keep the layers unchanged.
 
 Public solutions and bounded lab commands: `companion/exercises/ch04/README.md`.
 :::

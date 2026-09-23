@@ -319,6 +319,27 @@ Use the questions as an exercise on the Chapter 31 parser: suppose the local pro
 
 For a flow-related extension, preserve the current invariant explicitly: one public activation call creates one controller, automatic recovery stays within that controller, and termination does not restart it. The shared endpoint configuration and connection identity allocation remain shared across its flows. Test cancellation of one flow beside a surviving sibling, and distinguish termination from final controller destruction. The current `InetPerCallFlowTest` is the relevant composed regression boundary; an old singleton-controller sketch would be the wrong foundation for this extension.
 
+### Observed descriptor populations
+
+\index{descriptor events}
+\index{descriptor publishers}
+\index{descriptor receivers}
+\index{event receivers}
+
+A descriptor publisher manages observed receiver lists keyed by descriptor. It can enable, disable, suspend, and resume observation; publish active events; check timeouts; release disabled events; deliver signals; and disable the whole publisher. Descriptor handling therefore has a managed lifecycle beyond “call my function when this fd is ready.”
+
+Enable/disable governs entering or leaving the observed population. Suspend/resume represents temporary inactivity while the receiver remains part of the runtime model. Backpressure, staged activity, retry delays, and temporary quiescence need that distinction: an existing receiver need not produce events at every moment.
+
+The receiver derives from `EventReceiver`, tracks enablement and suspension, attaches to a descriptor, and has timeout and signal behavior. It implements reactions such as `dispatchEvent()`, `timeoutEvent()`, and `signalEvent(int)`. Publishers decide who is observed; receivers define what happens when that observation produces work.
+
+| Runtime object | Main responsibility | Simple mental rule |
+|---|---|---|
+| `DescriptorEventPublisher` | Manages the observed population for a descriptor channel | Decides *who is being observed* |
+| `DescriptorEventReceiver` | Defines behavior for one observed descriptor participant | Decides *what happens when observation produces work* |
+
+
+Socket acceptors, connectors, readers, and writers specialize this pattern. Treat them as runtime participants with observation, timeout, and cleanup state, rather than anonymous callbacks. Disabling observation and destroying the participant are different lifecycle steps; coordinated cleanup must respect any work still using it.
+
 ::: {.snodec-remember title="What to remember"}
 - Read SNode.C as a set of layers and recurring roles, not as a flat pile of source files.
 - Example applications show framework usage, but they are not the framework core; separate application decisions from reusable framework patterns.

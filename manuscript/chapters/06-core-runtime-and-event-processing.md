@@ -13,6 +13,24 @@
 
 ### The runtime picture and its source anchors
 
+The previous chapters separated runtime lifetimes from the layer choices beneath a context. Neither picture yet explains how two peers and a timer make progress in one process. To answer that, follow a single successful event-loop turn before reading the implementation. The question is practical: if one callback takes too long, which other work must wait?
+
+Imagine that peer A has bytes ready, a connection retry timer is due, one application callback is already queued, and peer B has reached its read-timeout deadline. These are four reasons to do work, not four independent threads. The runtime must coordinate them while preserving the objects that each callback still uses. We will use this situation as a thought experiment; it describes responsibilities within a successful turn rather than promising an order among callbacks that happen to become ready together.
+
+First comes the wait decision. The loop combines the caller's waiting bound with scheduled deadlines and descriptor observation. It should not sleep for a long interval when a timer already needs attention. Likewise, a ready descriptor gives it work without requiring an application-side blocking read loop. Waiting gathers evidence that progress is possible; it does not mean that a complete application message is available from peer A.
+
+Next, active descriptor and timer work is published toward the appropriate receivers. Peer A's readiness can lead to receive processing; the due retry can lead to another attempt. Publication identifies work to dispatch. It does not give either participant exclusive use of the processor until its entire conversation succeeds. The retry still has its own eventual result, and peer A may still supply only part of a record.
+
+Queued work then executes through the event queue. The already-queued application callback shares this scheduling domain with the work produced by readiness and deadlines. If it schedules another callback, that later work must not be treated as a recursive call at the scheduling expression. The deferred-work lab below makes the distinction observable: the first callback records its return before its deferred child can observe it as inactive.
+
+The timeout check asks a different question from readiness: has peer B gone too long without the progress its policy requires? Peer A having data does not answer that question for B. A timeout can initiate closure or another protocol reaction, so it must run while the relevant receiver and connection state are still valid. Finally, cleanup releases expired or disabled resources after the work that still needs them. A decision to stop observing an object and destruction of that object are distinct events.
+
+Now place a slow parser inside peer A's callback. While that callback is running, the loop cannot move ahead to the queued callback, the remaining timeout work or cleanup merely because those jobs belong to different peers. A due timer is a deadline to observe, not a preemptive execution slot. This explains the practical rule to do bounded work and return. The rule follows from the shared event loop, without requiring the reader to understand every receiver subclass first.
+
+The useful prediction is therefore about dependencies rather than exact timestamps. After a long callback, unrelated work can be late. After a callback queues output, the peer may not yet have received it. After timeout processing requests cleanup, destruction may still have work to respect. A test should observe the effect needed by the application—such as a callback trace or a reply—rather than infer it from a successful iteration status alone.
+
+With those questions established, the source map becomes easier to read. Locate where waiting is bounded, where work is published, where it executes and where resources are released. The same sequence will later explain why shutdown continues doing controlled work after ordinary running has ended. It also gives a concrete place to investigate application mistakes: a callback that never returns blocks more than its own connection.
+
 The runtime is where the model becomes observable. Descriptors become ready, timers expire, queued work runs, callbacks fire, and connections advance without each application inventing its own event loop. The public control surface is `core::SNodeC`; `core::EventLoop` orchestrates the loop, and `core::EventMultiplexer` coordinates waiting and dispatch.
 
 ![The SNode.C event-processing core connects runtime control, descriptor readiness, timers, queued work, and protocol dispatch.](assets/figures/pdf/fig-03-event-runtime-picture.pdf){#fig:snodec-event-runtime width=88% latex-placement="tbp"}
@@ -24,7 +42,7 @@ Figure \ref{fig:snodec-event-runtime} is an orientation map, not a promise about
 \index{SNode.C!source reading}
 
 
-The implementation follows the same structure. The excerpts below are abridged from the pinned SNode.C `2.0.0` source in `src/core/SNodeC.cpp`, `src/core/EventLoop.cpp`, and `src/core/EventMultiplexer.cpp`.
+The implementation follows the same structure. The excerpts below are abridged from `src/core/SNodeC.cpp`, `src/core/EventLoop.cpp`, and `src/core/EventMultiplexer.cpp`.
 
 First, the public facade really is a facade. `core::SNodeC` forwards runtime control to `core::EventLoop`:
 
@@ -68,6 +86,8 @@ if (tickStatus == TickStatus::SUCCESS) {
 }
 ```
 
+Use the thought experiment to read the following status vocabulary critically. A status describes the loop's control result; the application needs evidence that its own work occurred. In the deferred-work lab, that evidence is the ordered callback trace. In the echo program, it is received bytes. A timeout observation concerns elapsed inactivity for a particular participant. Mixing those three kinds of evidence would make a successful loop iteration appear to certify much more than the code actually observed.
+
 ### Public lifecycle and the stepping contract
 
 \index{core::SNodeC@\texttt{core::SNodeC}}
@@ -86,7 +106,7 @@ The public facade provides `init(int argc, char* argv[])`, `start(const utils::T
 
 For most applications, `start()` owns that progression until stopped, left without observed work, or given a terminating tick result. Its `timeOut` argument bounds a multiplexer wait within an iteration, not the application's total running time. The multiplexer takes the earlier of that bound and its next scheduled timeout, then can continue with another iteration. A service deadline needs its own timer or application policy.
 
-In the source tree recorded for this edition, the public `EventLoop::tick(...)` path calls `_tick(...)` while the state is `INITIALIZED`, whereas `_tick(...)` dispatches the multiplexer only in `RUNNING` with no pending stop signal, or in `STOPPING`. That means an ordinary `init()` followed by public `tick()` must not be presented as an equivalent way to advance the examples. The working startup path used throughout this book is `start()`, which bootstraps configuration and enters `RUNNING`. Internal tick structure explains how the runtime progresses; it does not by itself establish a supported external-loop recipe.
+Use `start()` to advance these examples. It bootstraps configuration and enters `RUNNING`. The public `EventLoop::tick(...)` path calls `_tick(...)` in `INITIALIZED`, but the internal multiplexer dispatch requires `RUNNING` with no pending stop signal, or `STOPPING`. Consequently, calling public `tick()` after `init()` is not equivalent to the startup path shown here. Read the internal tick sequence to understand coordination; do not infer an external-loop integration recipe from a successful return status.
 
 The coarse runtime phases are `LOADED`, `INITIALIZED`, `RUNNING`, and `STOPPING`. They describe the framework lifecycle; a listen or connect flow can advance only when the runtime processes its work. `TickStatus` instead describes one iteration:
 
@@ -191,27 +211,6 @@ This is a conceptual reading of `EventMultiplexer::tick()`, not a replacement fo
 
 Application code should perform the immediate protocol work, preserve its invariants, and return. Descriptor readiness is an opportunity to make progress, not permission to occupy the loop until an entire application task completes. Bound the work or design an explicit handoff when one operation would delay unrelated roles.
 
-### Observed descriptor populations
-
-\index{descriptor events}
-\index{descriptor publishers}
-\index{descriptor receivers}
-\index{event receivers}
-
-A descriptor publisher manages observed receiver lists keyed by descriptor. It can enable, disable, suspend, and resume observation; publish active events; check timeouts; release disabled events; deliver signals; and disable the whole publisher. Descriptor handling therefore has a managed lifecycle beyond “call my function when this fd is ready.”
-
-Enable/disable governs entering or leaving the observed population. Suspend/resume represents temporary inactivity while the receiver remains part of the runtime model. Backpressure, staged activity, retry delays, and temporary quiescence need that distinction: an existing receiver need not produce events at every moment.
-
-The receiver derives from `EventReceiver`, tracks enablement and suspension, attaches to a descriptor, and has timeout and signal behavior. It implements reactions such as `dispatchEvent()`, `timeoutEvent()`, and `signalEvent(int)`. Publishers decide who is observed; receivers define what happens when that observation produces work.
-
-| Runtime object | Main responsibility | Simple mental rule |
-|---|---|---|
-| `DescriptorEventPublisher` | Manages the observed population for a descriptor channel | Decides *who is being observed* |
-| `DescriptorEventReceiver` | Defines behavior for one observed descriptor participant | Decides *what happens when observation produces work* |
-
-
-Socket acceptors, connectors, readers, and writers specialize this pattern. Treat them as runtime participants with observation, timeout, and cleanup state, rather than anonymous callbacks. Disabling observation and destroying the participant are different lifecycle steps; coordinated cleanup must respect any work still using it.
-
 ### Timers and nonblocking callback work
 
 \index{timers}
@@ -250,6 +249,17 @@ The public application control surface remains `core::SNodeC`. That path explain
 ### Part II checkpoint: one accepted state
 
 The byte-transport checkpoint returned even an invalid measurement unchanged. We can now isolate the next responsibility: accepted state needs one owner, with observers whose lifetimes are explicit. The public solution compiles the canonical `MeasurementModel.cpp` directly; no HTTP, MQTT, or socket parser is needed to see this contract.
+
+The relevant public interface is this excerpt from `companion/examples/MiniGateway/MeasurementModel.h`; `Subscription` names the listener token returned by `subscribe()`:
+
+```cpp
+Measurement current() const;
+Measurement accept(Measurement measurement);
+Subscription subscribe(Listener listener);
+void unsubscribe(Subscription subscription);
+```
+
+Read the four operations as observation, acceptance, subscription and explicit removal. The protocol that eventually supplies a measurement is absent from this interface, so it cannot become a second place that orders accepted state.
 
 `accept(...)` takes a measurement by value, assigns the next local sequence, stores it, and invokes subscribed listeners synchronously. Two inputs carrying sequences 900 and 2 become accepted states 1 and 2. Remove the first observer between calls, then accept input numbered 1: the remaining observer sees accepted state 3, and `current()` agrees. The removed observer retains only its earlier observations. Unsubscribe the remaining listener before its captured storage leaves scope.
 

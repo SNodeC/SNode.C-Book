@@ -1,9 +1,9 @@
 ## From Applications to Systems: MQTTSuite {#from-applications-to-systems-mqttsuite}
 
 ::: {.snodec-objectives title="Learning objectives"}
-- **O2.** Separate process recovery, accepted state and durable storage with independent observations.
-- **O3.** Assign broker, mapping, bridge and storage responsibilities without conflating their outcomes.
-TODO(P3-apparatus)
+- **O1.** Separate process recovery, accepted state and durable storage through independent observations.
+- **O2.** Assign broker, mapping, bridge and storage responsibilities without conflating their outcomes.
+- **O3.** Trace one publication across processes and identify what each observation proves.
 :::
 
 ### From applications to systems {#from-applications-to-systems}
@@ -11,9 +11,9 @@ TODO(P3-apparatus)
 \index{system design}
 \index{role constellations}
 
-A system appears when several executable roles, state responsibilities and operational surfaces must be understood together. The build and entry-point view now widens to the contracts among those roles.
+The preceding chapter followed one executable from its build target through assembly to an observable result. Now let a publisher, broker and storage subscriber run separately. Each can start and fail independently, yet a user asks one question: did the reported measurement reach the intended destination and become durable? Answering it requires following the actors between applications as carefully as we followed callbacks within one.
 
-A SNode.C system may be one executable with several named roles. It may also be several cooperating executables. It may run on one host, across several processes, or across several machines. The word *system* does not automatically mean a distributed cloud of services. It means that the design is now understood as a constellation of roles and boundaries rather than as one application in isolation.
+A SNode.C system may keep several responsibilities in one executable or distribute them across processes and hosts. The choice matters because a function call inside one lifetime becomes a message exchange between separately operated programs. A broker accepting a publication does not make a storage process available; a storage process receiving it does not establish that a database commit succeeded. MQTTSuite supplies concrete broker, integration, bridge, command-line and store programs with which to reason about these distinctions.
 
 ### From applications to role constellations
 
@@ -183,8 +183,6 @@ Figure \ref{fig:mqttsuite-ecosystem-map} shows the suite as a role ecosystem aro
 
 The figure is intentionally not a pipeline. A deployment may use only the broker, one bridge, one store, one integrator, or several cooperating processes. Each tool occupies a distinct system role around topic flow, client state, persistence, bridging, and integration.
 
-MQTTSuite is a separate repository from SNode.C. The framework source manifest for this edition does not freeze a MQTTSuite checkout or certify a deployed suite. The chapter uses the suite as a source-oriented architectural case study. When reproducing its applications, record the suite revision and its own build and configuration requirements alongside the framework baseline; the five role names alone are not a compatibility or deployment test.
-
 \index{MQTTSuite!ecosystem shape}
 \index{role map}
 
@@ -330,13 +328,21 @@ Focused event-driven tools and explicit roles fit constrained deployments, but d
 
 ### Trace one publication through two tools
 
-Use the suite checkout, separately recorded from the framework checkout, to follow one selected publication. Start at `mqttbridge/lib/Mqtt.cpp`: the received publish is handed to the configured bridge’s publication path. Compare that with `mqttstore/lib/Mqtt.cpp` and `mqttstore/lib/MariaDbStorage.cpp`, where the same protocol event becomes a storage decision.
+Use the suite source to follow one selected publication. Start at `mqttbridge/lib/Mqtt.cpp`: the received publish is handed to the configured bridge’s publication path. Compare that with `mqttstore/lib/Mqtt.cpp` and `mqttstore/lib/MariaDbStorage.cpp`, where the same protocol event becomes a storage decision.
 
 For the bridge, identify source selection, destination selection, topic-prefix behavior, and loop policy before attempting a two-broker experiment. Its configured loop-prevention value is passed to MQTT CONNECT; Chapter 21 explains why the private protocol-level extension must not be assumed interoperable with every broker.
 
 For the store, identify the raw insert and each matching projection insert, then locate their success and error callbacks. Write down what observation would establish each outcome. A database row, a projection row, and broker delivery are three separate facts.
 
 A bounded deployment exercise can use a unique topic prefix and a fixed sequence of ten publications, with an independent subscriber and database query as observers. Stop one destination and predict which other observations should continue. Running that exercise requires configured broker and database services.
+
+Make the worked trace explicit at each process. The publisher submits a topic and payload to its broker. A subscriber at that broker can establish local distribution by observing both values. MQTTBridge receives the selected publication, applies its configured destination and topic treatment, and publishes toward the other broker. An independent subscriber there establishes the forwarded outcome; a source-side receipt alone cannot do so. MQTTStore receives a matching publication and submits raw storage and any selected projections. Database queries and their success/error callbacks establish those results separately from broker delivery.
+
+When the destination broker is unavailable, name the missing observation precisely. The first subscriber may still receive, while the second cannot yet prove forwarding. When the database fails, a store receive diagnostic can still be true while neither write succeeds. This way of reading the trace gives operators a useful statement of degraded behavior instead of a single ambiguous “system down” flag. It also identifies which process owns the next recovery action without giving that process authority over another process's state.
+
+### Part IX checkpoint: recovery and durable evidence
+
+Return to the accepted-state distinction with the equipped checkpoint in the public solutions. Observe a committed measurement after a database client restarts, then compare the gateway's in-memory restart. Use those observations to classify the suite trace: process recovery, broker delivery, raw insertion and projection insertion have different witnesses. The unequipped publication lab isolates the broker-distribution responsibility; it cannot substitute for the database result. Together the two experiments prepare the deployment questions that follow: which executable must exist, which component it consumes, and which external services its contract requires.
 
 \index{MQTTSuite!architectural reading}
 
@@ -348,10 +354,11 @@ A bounded deployment exercise can use a unique topic prefix and a fixed sequence
 :::
 
 ::: {.snodec-exercise title="Exercises"}
-2. **Review (O2, O3).** Assign ownership and restart consequences to MQTTBroker, MQTTIntegrator, MQTTBridge and MQTTStore. Why is a projection row a separate outcome from raw storage?
-4. **Lab (O2, O3).** Run the equipped Part IX checkpoint. Observe the committed measurement after database-client restart, contrast the gateway’s in-memory restart, and apply the public outcome map to MQTTStore’s raw/projection writes.
-5. **Design (O1, O2, O3).** Follow the worked publication trace with one unavailable destination. Specify process boundaries, compatibility, origin/loop policy, state owners and the observations required before reporting delivery or persistence.
-TODO(P3-apparatus)
+1. **Review (O1, O2).** Assign ownership and restart consequences to MQTTBroker, MQTTIntegrator, MQTTBridge and MQTTStore. Why is projection a separate result from raw storage?
+2. **Review (O3).** Follow the worked publication trace. Name the owning process and what the publisher, each subscriber and each database observation establishes.
+3. **Lab (O1, O2).** Run the equipped Part IX checkpoint. Compare a committed measurement after database-client restart with the gateway’s in-memory restart; apply the outcome map to raw and projection writes.
+4. **Lab (O2, O3).** Run the local broker-mediated publication experiment. Attribute publisher submission, subscription acceptance and exact subscriber receipt to the responsible participant. This run requires no external broker or database.
+5. **Design (O1, O2, O3).** Make one destination unavailable in the publication trace. Specify process responsibilities, compatibility, origin/loop policy, state owners and the evidence required before reporting delivery or persistence.
 
 Public solutions and bounded lab commands: `companion/exercises/ch26/README.md`.
 :::

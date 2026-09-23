@@ -18,7 +18,54 @@ HTTP messages are no longer handled only by an HTTP request-ready callback; the 
 
 HTTP provides message meaning; Express organizes application handling above it.
 
-The visible `WebAppT<ServerT>` object in application code is the handle. Through that handle, the application configures an instance on the server side. Constructing the named handle registers its configuration; `listen(...)` initiates a flow. Express routing begins later, when HTTP makes a request ready.
+Follow one request through the complete local fixture before reading the class composition. The application mounts a router under `/api`. Both the application and router add middleware, and the router supplies a `/status` handler. The same fixture also provides a deliberately blocked path.
+
+<!-- snodec-source: companion/exercises/ch18/dispatch.cpp -->
+```cpp
+// A synchronous test route tree: observations belong to one sequential request.
+#include <express/legacy/in/WebApp.h>
+#include <iostream>
+#include <string>
+
+int main(int argc, char* argv[]) {
+    express::WebApp::init(argc, argv);
+    const express::legacy::in::WebApp app("lab");
+    const express::Router router;
+    std::string trace;
+    app.use([&](const auto& req, const auto&, express::Next& next) {
+        trace = "app-before";
+        std::cout << "APP " << req->originalUrl << std::endl;
+        next();
+    });
+    app.use("/blocked", [](const auto&, const auto& res, express::Next&) {
+        std::cout << "STOP" << std::endl;
+        res->status(403).set("X-Trace", "app-before,stop").send("middleware stopped request");
+    });
+    app.get("/blocked", [](const auto&, const auto& res) {
+        std::cout << "UNEXPECTED-HANDLER" << std::endl;
+        res->send("unreachable");
+    });
+    router.use([&](const auto&, const auto&, express::Next& next) {
+        trace += ",router-before";
+        std::cout << "ROUTER" << std::endl;
+        next();
+    });
+    router.get("/status", [&](const auto&, const auto& res) {
+        trace += ",handler";
+        std::cout << "HANDLER" << std::endl;
+        res->set("X-Trace", trace).send(trace);
+    });
+    app.use("/api", router);
+    app.listen([](const auto&, const auto&) {});
+    return express::WebApp::start();
+}
+```
+
+For `GET /api/status`, application middleware first records `app-before` and calls `next()`. The `/api` mount then selects the router, whose middleware appends `router-before` and continues. Its `/status` handler appends `handler` and sends the completed trace. The response body and `X-Trace` header therefore expose the path `app-before,router-before,handler`; status 200 alone would not establish that order.
+
+For `GET /blocked`, application middleware still runs first. The next matching middleware sends 403 and deliberately does not continue. The subsequent `/blocked` handler is unreachable on that path. Returning from the middleware does not implicitly call `next()`. The fixture's `UNEXPECTED-HANDLER` output would reveal a violation even if another response looked plausible.
+
+The shared trace variable is suitable for this bounded fixture's sequential requests and synchronous dispatch. It is not a template for storing unrelated requests' state in one global buffer. Keep that testing assumption separate from the reusable route tree: the routes are long-lived, while each request has its own dispatch and response.
 
 A ready HTTP request enters a `Controller`, then the root route dispatches it through routers, middleware and handlers:
 
@@ -111,20 +158,6 @@ The `Controller` is the dispatch-time object that carries the Express request/re
 
 `Router` composes handlers, middleware and mounted routers. A route connects request properties to application behavior; a mounted router groups related paths, and middleware supplies shared behavior without copying it into every handler.
 
-The routing surface includes familiar methods such as:
-
-- `.use()`,
-- `.all()`,
-- `.get()`,
-- `.put()`,
-- `.post()`,
-- `.del()`,
-- `.connect()`,
-- `.options()`,
-- `.trace()`,
-- `.patch()`,
-- `.head()`.
-
 At this layer, route matching is part of application correctness. The router exposes policy controls such as:
 
 | Policy | Question |
@@ -143,13 +176,6 @@ These policies belong to the router. They are not socket concerns and not generi
 \index{middleware callbacks}
 \index{Next@\texttt{Next}}
 
-The Express-like layer distinguishes two important callback shapes.
-
-| Callback shape | Meaning |
-|---|---|
-| `(req, res)` | application handler; may produce a response |
-| `(req, res, next)` | middleware participant; may continue the chain |
-
 An application handler typically answers a matched request. Middleware may inspect, modify, authorize, log, parse or serve before deciding whether to answer or call `next()`. Returning from middleware does not itself continue the chain.
 
 `Next` is the application-visible continuation object for the dispatcher chain, not a scheduler or thread handoff.
@@ -158,14 +184,6 @@ An application handler typically answers a matched request. Middleware may inspe
 \index{routing dispatch}
 
 The user-facing API is built on internal dispatcher roles.
-
-A compact view is:
-
-| Dispatcher | Role |
-|---|---|
-| `ApplicationDispatcher` | invokes application-style callbacks |
-| `MiddlewareDispatcher` | handles middleware and `next()` flow |
-| `RouterDispatcher` | enters mounted routers |
 
 The dispatchers encode the fact that application callbacks, middleware callbacks, and mounted routers have different control-flow meanings.
 
@@ -181,33 +199,9 @@ The Express facades retain HTTP message access and add routing context and appli
 
 The Express-like `Request` adds routing and application context to the lower HTTP request.
 
-| Request aspect | Examples |
-|---|---|
-| routing context | `baseUrl`, `path`, `file`, `params`, `param(...)` |
-| original target | `originalUrl`, `originalPath` |
-| HTTP metadata | method, URL, HTTP version, headers, trailer |
-| parsed input | query values, cookies, body |
-
 The Express-like `Response` adds application-oriented response operations to the lower HTTP response.
 
-| Response aspect | Examples |
-|---|---|
-| status and headers | `status`, `set`, `append`, `type` |
-| cookies | `cookie`, `clearCookie` |
-| body output | `send`, `json`, `end` |
-| files | `sendFile`, `download`, `attachment` |
-| redirects | `redirect`, `location` |
-| advanced HTTP | `upgrade`, fragments, socket-context access |
-
 The facade raises the application API, but it does not hide all lower HTTP capabilities. Advanced operations remain available when the application genuinely needs them.
-
-Examples include:
-
-- upgrade,
-- fragment sending,
-- explicit end control,
-- socket-context access,
-- lower header control.
 
 \index{middleware}
 \index{static serving}
@@ -219,16 +213,6 @@ These deliberate access points keep advanced HTTP and connection behavior availa
 
 The Express-like module also provides reusable middleware. Built-in middleware packages common request-processing behavior so it can be mounted once and reused across routes.
 
-Examples include:
-
-| Middleware | Application concern |
-|---|---|
-| `BasicAuthentication` | route-level authentication |
-| `StaticMiddleware` | static file serving |
-| `VHost` | virtual-host based routing |
-| `VerboseRequest` | request visibility |
-| `JsonMiddleware` | JSON request handling |
-
 Static serving may involve root directories, index handling, fall-through behavior, headers, cookies, and connection-state decisions after the response. Those are practical application concerns, but they do not belong in the socket layer or in every route handler.
 
 `VHost` belongs here because host-based dispatch is web-application routing behavior. `VerboseRequest` belongs here because request visibility is useful across routes but should not be duplicated inside every handler.
@@ -236,6 +220,18 @@ Static serving may involve root directories, index handling, fall-through behavi
 The Express module includes JSON middleware when the required `nlohmann_json` dependency is present; the build treats that dependency as required for this module. Architecturally, JSON middleware belongs to the same group of reusable request-processing behavior.
 
 Bind/listen activation, TLS setup, HTTP parsing, timeout boundaries and shutdown still belong to the underlying runtime. Routing organizes the application work above those responsibilities.
+
+::: {.snodec-note title="Routing API reference"}
+| Need | Surface |
+|---|---|
+| Mount or match | `use`, `all`, `get`, `put`, `post`, `del`, `connect`, `options`, `trace`, `patch`, `head` |
+| Answer or continue | `(req, res)` handler; `(req, res, next)` middleware with explicit continuation |
+| Internal dispatch | `ApplicationDispatcher`, `MiddlewareDispatcher`, `RouterDispatcher` invoke those distinct participants |
+| Inspect routed input | `baseUrl`, `path`, `file`, `params`, `param`, `originalUrl`, `originalPath`; HTTP metadata, query, cookies and body |
+| Construct output | `status`, `set`, `append`, `type`, `cookie`, `clearCookie`, `send`, `json`, `end` |
+| Specialized output | `sendFile`, `download`, `attachment`, `redirect`, `location`; upgrade, fragments and socket-context access |
+| Reuse middleware | `BasicAuthentication`, `StaticMiddleware`, `VHost`, `VerboseRequest`, `JsonMiddleware` |
+:::
 
 ### Observe continuation and a completed response
 
@@ -263,11 +259,10 @@ For a local experiment, work in a scratch copy of the test. Change the middlewar
 
 A flat request callback remains reasonable for one small endpoint. Mounted routers become useful when several endpoints share policy or path context. Their cost is less visible control flow: route order, mount paths, and explicit continuation become part of correctness. The paired response and invocation observations keep that cost visible.
 
-Chapter 19 extends this routing model to a long-lived, one-way event response. Its observer lifetime needs more than the completed-response examples here.
-
 \index{Express components}
 \index{WebApp@\texttt{WebApp}!public surface}
 
+::: {.snodec-note title="Build note"}
 A file that directly uses the IPv4 legacy Express WebApp includes:
 
 ```cpp
@@ -287,6 +282,9 @@ http-server-express-legacy-in
 ```
 
 It selects the Express layer together with the IPv4 legacy stream connection. The source-side and build-side names rhyme without being the same mechanism. Chapter 27 gives the source-derived matrix for the broader set of components and headers.
+:::
+
+Chapter 19 extends this routing model to a long-lived, one-way event response. Its observer lifetime needs more than the completed-response examples here.
 
 ::: {.snodec-remember title="What to remember"}
 - `WebAppT<ServerT>` joins a root router and concrete HTTP server; request readiness starts controller dispatch.

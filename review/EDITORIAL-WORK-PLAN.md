@@ -2280,3 +2280,9 @@ changes and no production-code changes. Next is the mechanical P2 split.
 ### Follow-up 11 — P2 mechanical gate
 
 P1 committed as `c603b8f`. P2 splits, topic-based references, ordered source records, public exercise migration and live registries are complete. Reference checker, six regression tests, source alignment (zero errors), hygiene, companion build and 62/62 labs pass. Fresh total: 100,916 tokens. Evidence: `pedagogical-smoothing-2026-09-23/P2-registry-review.md` and P2 logs. Apparatus placeholders intentionally await P3. Framework freeze unchanged before P3 API review.
+
+### Follow-up 11 — P3 teaching and apparatus gate
+
+P2 committed as `9df7d00`. Tier 1 work and all four split-chapter apparatus sets are complete. The framework freeze remains identical to R2. All 33 apparatus units, source alignment (37 exact listings), references, hygiene, companion build and 66/66 labs pass. No test assertion or timeout changed. Fresh total: 108,701 tokens. Evidence: `pedagogical-smoothing-2026-09-23/P3-gate-notes.md`, API review, apparatus JSON, build and lab logs/XML. Next: P4 and P5, then seams and full exit gate.
+
+Author clarification during P3: explicitly approved the 67-line complete CMake listing adjustment. Seven blank separator lines were removed from canonical source and printed copy; all statements are unchanged and the exact-listing and build checks pass.

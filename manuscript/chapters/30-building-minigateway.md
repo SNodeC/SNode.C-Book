@@ -13,6 +13,8 @@
 
 ### One model, several communication roles
 
+Part X separated build, installation and runtime evidence. MiniGateway now uses those habits to assemble one accepted-state model with several protocol participants; begin by observing its behavior, then read the files in dependency order.
+
 
 MiniGateway keeps the latest environmental measurement in memory. A measurement contains temperature, humidity, voltage, a sequence number, and an internal timestamp. The printed JSON codec exposes the first four values; it does not serialize the timestamp. Whenever a new measurement enters the application, MiniGateway performs one internal state transition and then lets the outward-facing roles observe the accepted state.
 
@@ -278,6 +280,8 @@ add_custom_target(
 )
 ```
 
+The target now selects the protocol and connection components used by the application without repeating their lower dependencies. It does not define measurement meaning; the next file begins that domain contract before any route or broker callback uses it.
+
 ### The value, codec, and acceptance model
 
 \index{MiniGateway!measurement model}
@@ -316,6 +320,8 @@ namespace minigateway {
 #endif // MINIGATEWAY_MEASUREMENT_H
 ```
 
+This value holds a measurement without knowing how it arrived or who will observe it. Keeping network types out of the record lets the following codec serve HTTP, SSE and MQTT without turning representation into transport policy.
+
 \Needspace{5\baselineskip}
 
 **`MeasurementJsonCodec.h`**
@@ -341,6 +347,8 @@ namespace minigateway {
 
 #endif // MINIGATEWAY_MEASUREMENT_JSON_CODEC_H
 ```
+
+The declarations give every JSON-facing participant one representation contract. They do not accept state or assign its order; the implementation below must first turn valid fields into a value before an input can ask the model to accept it.
 
 \Needspace{5\baselineskip}
 
@@ -399,6 +407,8 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
+
+The codec rejects invalid numeric fields before returning a usable measurement and serializes the shared representation consistently. It does not know the current accepted sequence; that decision belongs to the model introduced next, after parsing has succeeded.
 
 \Needspace{5\baselineskip}
 
@@ -460,6 +470,8 @@ namespace minigateway {
 #endif // MINIGATEWAY_MEASUREMENT_MODEL_H
 ```
 
+The model exposes current state, acceptance and subscription without depending on either protocol. Its subscription token makes removal explicit; the implementation below must preserve one acceptance order and notify the registered observers through that same operation.
+
 \Needspace{5\baselineskip}
 
 **`MeasurementModel.cpp`**
@@ -501,6 +513,8 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
+
+Every accepted input now replaces current state and receives one locally assigned sequence before listeners run. The model has no database or broker-delivery knowledge, so the next configuration layer can adjust communication choices without redefining acceptance.
 
 ### Configuration, diagnostics, and the web role
 
@@ -556,6 +570,8 @@ namespace minigateway {
 
 #endif // MINIGATEWAY_CONFIG_SECTIONS_H
 ```
+
+These declarations expose the MQTT settings that deployment may vary while leaving the model contract fixed. They do not establish a broker connection; the implementation below registers defaults and getters that the protocol and startup code can consume.
 
 \Needspace{5\baselineskip}
 
@@ -614,6 +630,8 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
+The options now have names, defaults and accessors in one configuration section. Reading a topic value neither subscribes nor publishes; the following diagnostic helper will likewise report communication outcomes without taking over the operation that produced them.
+
 **Shared socket-state reporting**
 
 \index{SocketStateReporter@\texttt{SocketStateReporter}}
@@ -643,6 +661,8 @@ namespace minigateway {
 
 #endif // MINIGATEWAY_SOCKET_STATE_REPORTER_H
 ```
+
+Both communication paths can report their state through this common declaration. The helper receives identity and outcome explicitly instead of owning a socket; its implementation can therefore keep messages consistent without merging the lifetimes of the callers.
 
 \Needspace{5\baselineskip}
 
@@ -675,6 +695,8 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
+
+The state cases now produce comparable diagnostics for successful activation and failures. Reporting does not repair a failed endpoint or validate a measurement; the web implementation that follows still owns its routes and their application-level decisions.
 
 **The web and SSE role**
 
@@ -710,6 +732,8 @@ namespace minigateway {
 
 #endif // MINIGATEWAY_WEB_H
 ```
+
+The web construction function receives the shared model as a dependency instead of creating a second accepted-state owner. Its declaration leaves routing details to the implementation, where each route must distinguish accepting input from observing existing state.
 
 \Needspace{5\baselineskip}
 
@@ -818,6 +842,8 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
+The routes now share one model, and the SSE subscription is removed when its response context disconnects. A web observation cannot guarantee MQTT delivery; the next protocol object connects the same accepted state to the broker conversation separately.
+
 ### The MQTT protocol and its connection factory
 
 \index{MiniGatewayMqtt@\texttt{MiniGatewayMqtt}}
@@ -894,6 +920,8 @@ namespace minigateway {
 
 #endif // MINIGATEWAY_MQTT_H
 ```
+
+The MQTT object declares session callbacks and publication behavior while retaining access to the common model. It does not own HTTP routes or program startup; the implementation must connect packet events to acceptance without inventing another sequence counter.
 
 \Needspace{5\baselineskip}
 
@@ -1003,6 +1031,8 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
+Incoming MQTT data passes through the codec before acceptance, while outgoing data represents the model’s accepted measurement. Session handling remains here rather than in the model; the factory below supplies a fresh protocol object when a connection needs one.
+
 **Constructing MQTT contexts**
 
 \index{MiniGatewayMqttSocketContextFactory@\texttt{MiniGatewayMqttSocketContextFactory}}
@@ -1051,6 +1081,8 @@ namespace minigateway {
 #endif // MINIGATEWAY_MQTT_SOCKET_CONTEXT_FACTORY_H
 ```
 
+The factory declaration records the model dependency required by future contexts. It does not initiate connections or allocate a model per peer; the implementation must carry the existing shared owner into each newly constructed MQTT protocol object.
+
 \Needspace{5\baselineskip}
 
 **`MiniGatewayMqttSocketContextFactory.cpp`**
@@ -1088,6 +1120,8 @@ namespace minigateway {
 
 } // namespace minigateway
 ```
+
+The factory now joins one connection, its MQTT context and the application protocol object with the existing model reference. That reference still needs a valid lifetime; the next startup wrapper selects and activates the client without becoming another model owner.
 
 **Starting the MQTT client**
 
@@ -1127,6 +1161,8 @@ namespace minigateway {
 
 #endif // MINIGATEWAY_MQTT_CLIENT_H
 ```
+
+The alias fixes the native client composition and the startup declaration accepts the shared model. This file does not implement MQTT packet behavior; the implementation below configures the instance and installs the already-defined protocol construction path.
 
 \Needspace{5\baselineskip}
 
@@ -1178,6 +1214,8 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
+Startup now supplies endpoint defaults, MQTT options and state reporting before registering connection work. Registration is not broker acceptance; `main()` follows by constructing the model once and keeping it available while the runtime advances both communication paths.
+
 ### Assembly and observable behavior
 
 \index{MiniGateway!runtime assembly}
@@ -1213,6 +1251,8 @@ int main(int argc, char* argv[]) {
     return core::SNodeC::start();
 }
 ```
+
+The composition root creates one model and passes it to both roles before entering the runtime. Neither role can silently substitute its own acceptance order; the accompanying run instructions now test that assembled behavior through independent external observations.
 
 
 \index{MiniGateway!source package}

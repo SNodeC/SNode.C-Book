@@ -429,7 +429,9 @@
           "line": 64
         }
       ],
-      "companion_sources": []
+      "companion_sources": [
+        "companion/exercises/ch18/dispatch.cpp"
+      ]
     },
     {
       "chapter": 19,

@@ -341,19 +341,8 @@
       "targets": [
         "preparing-your-environment"
       ],
-      "source_ids": [
-        "R350"
-      ],
-      "line": 11
-    },
-    {
-      "file": "manuscript/frontmatter/conventions.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
       "source_ids": [],
-      "line": 13
+      "line": 11
     },
     {
       "file": "manuscript/frontmatter/conventions.md",
@@ -366,7 +355,7 @@
       "source_ids": [
         "R351"
       ],
-      "line": 19
+      "line": 17
     },
     {
       "file": "manuscript/parts/part-01-getting-oriented.md",
@@ -379,6 +368,24 @@
     },
     {
       "file": "manuscript/chapters/01-why-snodec-exists.md",
+      "text": "Chapter 5",
+      "targets": [
+        "layers-in-practice"
+      ],
+      "source_ids": [],
+      "line": 57
+    },
+    {
+      "file": "manuscript/chapters/01-why-snodec-exists.md",
+      "text": "Chapter 3",
+      "targets": [
+        "your-first-working-program-the-echo-pair"
+      ],
+      "source_ids": [],
+      "line": 73
+    },
+    {
+      "file": "manuscript/chapters/01-why-snodec-exists.md",
       "text": "Chapter 3",
       "targets": [
         "your-first-working-program-the-echo-pair"
@@ -386,7 +393,7 @@
       "source_ids": [
         "R063"
       ],
-      "line": 59
+      "line": 73
     },
     {
       "file": "manuscript/chapters/01-why-snodec-exists.md",
@@ -397,7 +404,7 @@
       "source_ids": [
         "R064"
       ],
-      "line": 126
+      "line": 140
     },
     {
       "file": "manuscript/chapters/01-why-snodec-exists.md",
@@ -408,7 +415,7 @@
       "source_ids": [
         "R065"
       ],
-      "line": 126
+      "line": 140
     },
     {
       "file": "manuscript/chapters/01-why-snodec-exists.md",
@@ -419,7 +426,7 @@
       "source_ids": [
         "R066"
       ],
-      "line": 174
+      "line": 179
     },
     {
       "file": "manuscript/chapters/01-why-snodec-exists.md",
@@ -430,7 +437,7 @@
       "source_ids": [
         "R067"
       ],
-      "line": 174
+      "line": 179
     },
     {
       "file": "manuscript/chapters/01-why-snodec-exists.md",
@@ -441,7 +448,7 @@
       "source_ids": [
         "R068"
       ],
-      "line": 192
+      "line": 197
     },
     {
       "file": "manuscript/chapters/01-why-snodec-exists.md",
@@ -452,7 +459,25 @@
       "source_ids": [
         "R069"
       ],
-      "line": 193
+      "line": 198
+    },
+    {
+      "file": "manuscript/chapters/02-preparing-your-environment.md",
+      "text": "Chapter 3",
+      "targets": [
+        "your-first-working-program-the-echo-pair"
+      ],
+      "source_ids": [],
+      "line": 18
+    },
+    {
+      "file": "manuscript/chapters/02-preparing-your-environment.md",
+      "text": "Chapter 3",
+      "targets": [
+        "your-first-working-program-the-echo-pair"
+      ],
+      "source_ids": [],
+      "line": 19
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -463,7 +488,7 @@
       "source_ids": [
         "R070"
       ],
-      "line": 245
+      "line": 260
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -474,7 +499,7 @@
       "source_ids": [
         "R071"
       ],
-      "line": 274
+      "line": 289
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -485,7 +510,7 @@
       "source_ids": [
         "R072"
       ],
-      "line": 313
+      "line": 328
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -496,7 +521,7 @@
       "source_ids": [
         "R073"
       ],
-      "line": 327
+      "line": 342
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -507,7 +532,7 @@
       "source_ids": [
         "R074"
       ],
-      "line": 359
+      "line": 374
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -518,7 +543,7 @@
       "source_ids": [
         "R075"
       ],
-      "line": 406
+      "line": 421
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -527,29 +552,7 @@
         "why-snodec-exists"
       ],
       "source_ids": [],
-      "line": 413
-    },
-    {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
-      "source_ids": [
-        "R076"
-      ],
-      "line": 25
-    },
-    {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapter 29",
-      "targets": [
-        "testing-debugging-and-benchmarking"
-      ],
-      "source_ids": [
-        "R077"
-      ],
-      "line": 28
+      "line": 428
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -560,7 +563,7 @@
       "source_ids": [
         "R078"
       ],
-      "line": 57
+      "line": 59
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -571,7 +574,7 @@
       "source_ids": [
         "R079"
       ],
-      "line": 230
+      "line": 232
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -583,7 +586,7 @@
       "source_ids": [
         "R080"
       ],
-      "line": 312
+      "line": 314
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -594,7 +597,7 @@
       "source_ids": [
         "R081"
       ],
-      "line": 379
+      "line": 381
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -605,7 +608,7 @@
       "source_ids": [
         "R082"
       ],
-      "line": 441
+      "line": 443
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -616,7 +619,29 @@
       "source_ids": [
         "R083"
       ],
-      "line": 450
+      "line": 452
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [
+        "R076"
+      ],
+      "line": 510
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 29",
+      "targets": [
+        "testing-debugging-and-benchmarking"
+      ],
+      "source_ids": [
+        "R077"
+      ],
+      "line": 513
     },
     {
       "file": "manuscript/parts/part-02-the-snodec-architecture.md",
@@ -636,7 +661,7 @@
       "source_ids": [
         "R087"
       ],
-      "line": 75
+      "line": 88
     },
     {
       "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
@@ -647,7 +672,7 @@
       "source_ids": [
         "R089"
       ],
-      "line": 192
+      "line": 215
     },
     {
       "file": "manuscript/chapters/05-layers-in-practice.md",
@@ -658,7 +683,7 @@
       "source_ids": [
         "R100"
       ],
-      "line": 124
+      "line": 129
     },
     {
       "file": "manuscript/chapters/05-layers-in-practice.md",
@@ -669,7 +694,7 @@
       "source_ids": [
         "R101"
       ],
-      "line": 148
+      "line": 159
     },
     {
       "file": "manuscript/chapters/05-layers-in-practice.md",
@@ -680,7 +705,7 @@
       "source_ids": [
         "R102"
       ],
-      "line": 166
+      "line": 181
     },
     {
       "file": "manuscript/chapters/05-layers-in-practice.md",
@@ -691,7 +716,7 @@
       "source_ids": [
         "R103"
       ],
-      "line": 199
+      "line": 218
     },
     {
       "file": "manuscript/chapters/05-layers-in-practice.md",
@@ -702,7 +727,7 @@
       "source_ids": [
         "R104"
       ],
-      "line": 199
+      "line": 218
     },
     {
       "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
@@ -714,7 +739,7 @@
       "source_ids": [
         "R091"
       ],
-      "line": 102
+      "line": 122
     },
     {
       "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
@@ -725,7 +750,7 @@
       "source_ids": [
         "R092"
       ],
-      "line": 111
+      "line": 131
     },
     {
       "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
@@ -736,7 +761,7 @@
       "source_ids": [
         "R093"
       ],
-      "line": 119
+      "line": 139
     },
     {
       "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
@@ -747,7 +772,7 @@
       "source_ids": [
         "R094"
       ],
-      "line": 222
+      "line": 221
     },
     {
       "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
@@ -759,7 +784,7 @@
       "source_ids": [
         "R095"
       ],
-      "line": 248
+      "line": 247
     },
     {
       "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -1194,6 +1219,15 @@
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+      "text": "Chapter 4",
+      "targets": [
+        "the-snodec-runtime-mental-model"
+      ],
+      "source_ids": [],
+      "line": 22
+    },
+    {
+      "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
       "text": "the section \u201cApplication and instance configuration\u201d",
       "targets": [
         "application-and-instance-configuration-in-detail"
@@ -1201,7 +1235,7 @@
       "source_ids": [
         "R178"
       ],
-      "line": 115
+      "line": 107
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -1212,7 +1246,7 @@
       "source_ids": [
         "R183"
       ],
-      "line": 278
+      "line": 274
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -1223,7 +1257,7 @@
       "source_ids": [
         "R186"
       ],
-      "line": 373
+      "line": 371
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -1259,7 +1293,7 @@
       "source_ids": [
         "R191"
       ],
-      "line": 570
+      "line": 574
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -1274,7 +1308,7 @@
       "source_ids": [
         "R192"
       ],
-      "line": 603
+      "line": 609
     },
     {
       "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
@@ -1552,7 +1586,7 @@
       "source_ids": [
         "R221"
       ],
-      "line": 81
+      "line": 128
     },
     {
       "file": "manuscript/chapters/18-the-express-like-framework.md",
@@ -1563,18 +1597,7 @@
       "source_ids": [
         "R225"
       ],
-      "line": 249
-    },
-    {
-      "file": "manuscript/chapters/18-the-express-like-framework.md",
-      "text": "Chapter 19",
-      "targets": [
-        "server-sent-events-and-real-time-http"
-      ],
-      "source_ids": [
-        "R229"
-      ],
-      "line": 266
+      "line": 245
     },
     {
       "file": "manuscript/chapters/18-the-express-like-framework.md",
@@ -1585,7 +1608,18 @@
       "source_ids": [
         "R230"
       ],
-      "line": 289
+      "line": 284
+    },
+    {
+      "file": "manuscript/chapters/18-the-express-like-framework.md",
+      "text": "Chapter 19",
+      "targets": [
+        "server-sent-events-and-real-time-http"
+      ],
+      "source_ids": [
+        "R229"
+      ],
+      "line": 287
     },
     {
       "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
@@ -1754,17 +1788,6 @@
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
-      "text": "Chapter 22",
-      "targets": [
-        "mqtt-over-websocket"
-      ],
-      "source_ids": [
-        "R249"
-      ],
-      "line": 19
-    },
-    {
-      "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
       "text": "Chapter 16",
       "targets": [
         "timeouts-retries-and-failure-modes"
@@ -1772,7 +1795,7 @@
       "source_ids": [
         "R252"
       ],
-      "line": 83
+      "line": 95
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1783,18 +1806,7 @@
       "source_ids": [
         "R255"
       ],
-      "line": 239
-    },
-    {
-      "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
-      "text": "Chapter 27",
-      "targets": [
-        "cmake-components-and-linking-strategy"
-      ],
-      "source_ids": [
-        "R260"
-      ],
-      "line": 257
+      "line": 237
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1805,7 +1817,29 @@
       "source_ids": [
         "R261"
       ],
-      "line": 281
+      "line": 270
+    },
+    {
+      "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+      "text": "Chapter 27",
+      "targets": [
+        "cmake-components-and-linking-strategy"
+      ],
+      "source_ids": [
+        "R260"
+      ],
+      "line": 287
+    },
+    {
+      "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+      "text": "Chapter 22",
+      "targets": [
+        "mqtt-over-websocket"
+      ],
+      "source_ids": [
+        "R249"
+      ],
+      "line": 297
     },
     {
       "file": "manuscript/chapters/22-mqtt-over-websocket.md",
@@ -1979,7 +2013,7 @@
         "cmake-components-and-linking-strategy"
       ],
       "source_ids": [],
-      "line": 118
+      "line": 123
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -1992,7 +2026,7 @@
         "R283",
         "R284"
       ],
-      "line": 173
+      "line": 178
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -2003,7 +2037,7 @@
       "source_ids": [
         "R285"
       ],
-      "line": 173
+      "line": 178
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -2014,7 +2048,7 @@
       "source_ids": [
         "R286"
       ],
-      "line": 186
+      "line": 195
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -2025,7 +2059,7 @@
       "source_ids": [
         "R287"
       ],
-      "line": 240
+      "line": 249
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -2036,7 +2070,7 @@
       "source_ids": [
         "R291"
       ],
-      "line": 259
+      "line": 268
     },
     {
       "file": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
@@ -2103,7 +2137,7 @@
       "source_ids": [
         "R307"
       ],
-      "line": 284
+      "line": 282
     },
     {
       "file": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
@@ -2114,7 +2148,7 @@
       "source_ids": [
         "R308"
       ],
-      "line": 335
+      "line": 333
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2125,7 +2159,7 @@
       "source_ids": [
         "R309"
       ],
-      "line": 316
+      "line": 245
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2136,7 +2170,7 @@
       "source_ids": [
         "R310"
       ],
-      "line": 316
+      "line": 245
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2147,7 +2181,7 @@
       "source_ids": [
         "R311"
       ],
-      "line": 316
+      "line": 245
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2158,7 +2192,7 @@
       "source_ids": [
         "R312"
       ],
-      "line": 318
+      "line": 247
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2169,7 +2203,7 @@
       "source_ids": [
         "R313"
       ],
-      "line": 327
+      "line": 256
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2180,7 +2214,7 @@
       "source_ids": [
         "R314"
       ],
-      "line": 369
+      "line": 298
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2191,7 +2225,7 @@
       "source_ids": [
         "R315"
       ],
-      "line": 396
+      "line": 325
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2202,7 +2236,7 @@
       "source_ids": [
         "R316"
       ],
-      "line": 468
+      "line": 397
     },
     {
       "file": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
@@ -2379,7 +2413,7 @@
       "source_ids": [
         "R336"
       ],
-      "line": 53
+      "line": 55
     },
     {
       "file": "manuscript/chapters/30-building-minigateway.md",
@@ -2390,7 +2424,7 @@
       "source_ids": [
         "R337"
       ],
-      "line": 191
+      "line": 193
     },
     {
       "file": "manuscript/chapters/30-building-minigateway.md",
@@ -2401,7 +2435,7 @@
       "source_ids": [
         "R338"
       ],
-      "line": 212
+      "line": 214
     },
     {
       "file": "manuscript/chapters/30-building-minigateway.md",
@@ -2412,7 +2446,7 @@
       "source_ids": [
         "R339"
       ],
-      "line": 422
+      "line": 432
     },
     {
       "file": "manuscript/chapters/30-building-minigateway.md",
@@ -2423,7 +2457,7 @@
       "source_ids": [
         "R340"
       ],
-      "line": 1229
+      "line": 1269
     },
     {
       "file": "manuscript/chapters/30-building-minigateway.md",
@@ -2434,7 +2468,34 @@
       "source_ids": [
         "R341"
       ],
-      "line": 1256
+      "line": 1296
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Chapter 24",
+      "targets": [
+        "database-support-and-application-state"
+      ],
+      "source_ids": [],
+      "line": 76
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Chapter 31",
+      "targets": [
+        "extending-minigateway-with-a-new-network-role"
+      ],
+      "source_ids": [],
+      "line": 90
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Chapter 12",
+      "targets": [
+        "building-the-same-protocol-over-different-lower-layers"
+      ],
+      "source_ids": [],
+      "line": 104
     },
     {
       "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
@@ -2445,7 +2506,7 @@
       "source_ids": [
         "R344"
       ],
-      "line": 138
+      "line": 178
     },
     {
       "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
@@ -2455,7 +2516,7 @@
         "extending-the-framework-safely"
       ],
       "source_ids": [],
-      "line": 197
+      "line": 239
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
