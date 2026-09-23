@@ -4,7 +4,9 @@
 
 The active scope is **Author scope revision — pedagogical smoothing, 2026-09-23**
 in `review/EDITORIAL-WORK-PLAN.md`, governed by the installed specification
-`review/pedagogical-smoothing-2026-09-23/PROMPT.md`. Execute its autonomous P0a–P7
+`review/pedagogical-smoothing-2026-09-23/PROMPT.md`, as amended by
+`review/pedagogical-smoothing-2026-09-23/FOLLOWUP-01.md` (public 8b8da56 pin,
+Phase R, then resumed gates). Execute its autonomous P0a–P7
 gates on `book/pedagogical-smoothing-2026-09-23`. This pass supersedes conflicting
 earlier one-phase-per-session, structure-freeze and 105,000-token stretch rules:
 the new must/wish/ceiling are 107,338 / 112,338 / 115,000 tokens, and the two

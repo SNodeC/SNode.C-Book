@@ -47,7 +47,7 @@ companion/examples/MiniGateway-Extended
 
 ## Target SNode.C source version
 
-This package is aligned with the SNode.C source baseline recorded in `source-baseline/SOURCE-VERSION.md`. The target is the current SNode.C **2.0.0 working tree**, including the uncommitted changes captured in `source-baseline/framework-working-tree.patch`. Commit `1f0f728fc9b3b45174f2cd790d83b2f493e58af1` is its reconstruction base, not the complete authority by itself. The file manifest records the exact source contents. CI reads `source-baseline/book-source-baseline.env`, reconstructs those contents, and verifies them before building. This is not a claim about a release tag or the current state of a remote branch.
+This package targets SNode.C **2.0.0** at public commit `8b8da56e0349191d4658ca8f820a490539eccd4d`. Readers check out that commit without a patch. The file manifest records the exact source contents; CI reads `source-baseline/book-source-baseline.env` and verifies them before building. See `source-baseline/SOURCE-VERSION.md` for the checkout instructions.
 
 The current proposal-readiness work and executed checks are documented in [the phase report](review/proposal-readiness-2026-09-22/REPORT.md). Structural migration is Phase 5a; Part-by-Part condensation and remaining teaching apparatus follow in separate sessions. The proposal dossier retains its Phase 3 pagination until the authorized Phase 6 refresh.
 

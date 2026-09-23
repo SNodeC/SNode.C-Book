@@ -28,7 +28,7 @@ The reported Hartbeespoort Dam application connects water-quality sensors and GP
 - **Samples:** Chapters **1, 3, 18, 28 and 30**, using the same teaching pattern. Each retains at least a 20% reduction in prose from its original sample baseline. The sample guide identifies the skill and observable outcome each demonstrates.
 - **Built and run:** the companion examples and lab dependencies compile, including the standalone Asio comparison. **62/62 local lab cases passed on 23 September 2026**; the full manuscript, proposal and sample PDFs build with zero LaTeX warnings and zero bad boxes. Complete printed listings match their companion sources.
 - **Observation limits:** local tests include broker delivery and database persistence across a client restart. They do not certify Bluetooth hardware, OpenWrt deployment, the author's field application, or a new hosted build. Public lab instructions state dependencies, expected outcomes, and the scope of each observation.
-- Manuscript baseline: project version `2.0.0`, current working-tree contents recorded by the edition manifest; reconstruction base `1f0f728fc9b3b45174f2cd790d83b2f493e58af1` plus the captured patch
+- Manuscript baseline: project version `2.0.0`, public commit `8b8da56e0349191d4658ca8f820a490539eccd4d`, with contents recorded by the edition manifest; no patch required
 
 ## Items still required from the author
 

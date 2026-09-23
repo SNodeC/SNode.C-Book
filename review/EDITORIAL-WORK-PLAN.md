@@ -1943,3 +1943,22 @@ Only `book/pedagogical-smoothing-2026-09-23` is designated for push; no merge or
 source-branch push. Full status and evidence: `review/pedagogical-smoothing-2026-09-23/REPORT.md`,
 `P0b-results.json`, `P0b-stop-condition.json`, `P0b-*.log`, `P-minus-1-build.log`,
 `metrics-before.json`, `metrics-after.json`, and `framework-freeze-P0b-stop.json`.
+
+
+### Follow-up 01 — source re-baseline and resumed smoothing
+
+Author instruction: `review/pedagogical-smoothing-2026-09-23/FOLLOWUP-01.md`,
+stored verbatim. PROMPT.md remains byte-for-byte unchanged. Resume from
+965bcbc on the existing work branch; P0a and P−1 remain complete and unsquashed.
+The author accepts the clean, public 8b8da56e0349191d4658ca8f820a490539eccd4d
+source, version 2.0.0, as the pin with no reader patch. Phase R authorizes the
+manifest/pin, exact nine anchor corrections, local corrections to claims changed
+by asynchronous logging, and a fresh framework installation under the book build
+directory. The author tree stays read-only. R0, P3 and P7 freezes must match P0a.
+Only the new installation supports resumed build/runtime evidence. Run R, repeat
+P0b with -resume logs, then P1–P7 autonomously with gate commits. Absolute budgets
+and all unaffected requirements remain. Follow-up 01's R stop conditions and
+PROMPT §14 apply. Push only the work branch on completion or stop.
+The original stop report is preserved in REPORT-P0b-stopped.md; original P0b logs
+and metrics remain historical. R0 passes; see R0-preconditions.json and
+framework-freeze-R0.json.

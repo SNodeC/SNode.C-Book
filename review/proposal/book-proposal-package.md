@@ -13,7 +13,7 @@ A working socket example is only the beginning: a learner must also understand w
 | Available material | 30 chapters in 11 Parts, contributor appendix, epilogue, reference material and index; complete companion sources and public solutions |
 | Current extent | 100,338 whitespace tokens, including 8,151 fenced tokens; 310 pages in the supplied A4 manuscript PDF |
 | Length ceiling | At most 115,000 words; the 105,000 stretch target is also met |
-| **Source baseline** | SNode.C project version `2.0.0`, current working tree reconstructed from base `1f0f728fc9b3b45174f2cd790d83b2f493e58af1` plus the recorded patch and file manifest. |
+| **Source baseline** | SNode.C project version `2.0.0`, public commit `8b8da56e0349191d4658ca8f820a490539eccd4d`, verified by its file manifest. |
 
 # Reader and learning path
 
@@ -169,4 +169,4 @@ All companion programs compile against the installed SNode.C package, and all 62
 
 ## Source-version baseline
 
-The manuscript is aligned with the source baseline recorded in `source-baseline/SOURCE-VERSION.md`: repository `SNodeC/snode.c`, project version `2.0.0`, commit `1f0f728fc9b3b45174f2cd790d83b2f493e58af1`. Readers reconstruct the current working tree by applying the edition's recorded patch to that base commit and verifying its file manifest. The base commit alone is not the reviewed source. The project version identifies this source snapshot; the proposal does not assert that a matching release tag exists.
+The manuscript is aligned with the source baseline recorded in `source-baseline/SOURCE-VERSION.md`: repository `SNodeC/snode.c`, project version `2.0.0`, commit `8b8da56e0349191d4658ca8f820a490539eccd4d`. Readers check out this public commit without a patch and verify its file manifest. The project version identifies this source snapshot; the proposal does not assert that a matching release tag exists.

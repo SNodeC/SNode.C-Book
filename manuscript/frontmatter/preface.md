@@ -33,9 +33,9 @@ The book assumes that you can read C++ classes and templates, follow virtual cal
 
 For networking, you should recognize sockets, addresses, connections, and the broad purpose of TLS, HTTP, WebSocket, and MQTT. The chapters explain the protocol behavior needed by their examples, so familiarity with every protocol's wire format is not a prerequisite. No prior knowledge of SNode.C is assumed. The implementation uses C++20, but the teaching path follows SNode.C's callbacks, contexts, and factories; it is not a course in every contemporary C++ concurrency model.
 
-The examples are written for the current SNode.C 2.0.0 source tree captured with this edition. Its base commit is shown below; the version names a source snapshot, not a newly asserted release tag. The edition also includes `source-baseline/framework-working-tree.patch` and a file manifest for the changes present in that source tree. The commit and those captured changes together identify the source used here. Chapter 2 shows how to reconstruct and check it. Later versions may remain compatible, but source-derived explanations should be read against the recorded contents.
+The examples cover SNode.C 2.0.0 at the public commit below; Chapter 2 shows how to check out and verify it. Later versions may remain compatible, but source-derived explanations should be read against these recorded contents.
 
-`1f0f728fc9b3b45174f2cd790d83b2f493e58af1`
+`8b8da56e0349191d4658ca8f820a490539eccd4d`
 
 ### What this book is not {.unnumbered}
 

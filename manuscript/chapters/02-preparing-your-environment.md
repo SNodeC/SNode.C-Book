@@ -123,7 +123,7 @@ First obtain this edition's electronic source package from the [SNode.C Book rep
 export SNODEC_BOOK_SOURCE="$HOME/projects/SNode.C-Book"
 ```
 
-This directory contains the manuscript, companion examples, and source-baseline record. It is separate from the framework source. The recorded framework tree includes current changes beyond its base commit, so checking out that commit is the first step, not the complete reconstruction.
+This directory contains the manuscript, companion examples, and source-baseline record. It is separate from the framework source. Check out the pinned public framework commit below.
 
 Choose a directory where you keep source repositories:
 
@@ -132,8 +132,7 @@ mkdir -p ~/projects
 cd ~/projects
 git clone https://github.com/SNodeC/snode.c.git
 cd snode.c
-git checkout --detach 1f0f728fc9b3b45174f2cd790d83b2f493e58af1
-git apply "$SNODEC_BOOK_SOURCE/source-baseline/framework-working-tree.patch"
+git checkout --detach 8b8da56e0349191d4658ca8f820a490539eccd4d
 python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
 
@@ -143,19 +142,18 @@ The checked-out framework source now lives in:
 ~/projects/snode.c/
 ```
 
-The book baseline is SNode.C\textsubscript{\texttt{2.0.0}}. The full commit is the base checkout target; `2.0.0` is the project version recorded by the source. The patch captures the current source-tree changes, and the checker compares the reconstructed file contents with the edition's manifest. Comparing `git rev-parse HEAD` alone would miss those changes.
+The book baseline is SNode.C\textsubscript{\texttt{2.0.0}}. The full commit is the checkout target; `2.0.0` is its project version. No patch is needed. The checker compares the file contents with the edition's manifest.
 
-The SNode.C repository uses `master` as its moving development line. Do not build the examples against an arbitrary newer checkout unless you deliberately want to check the book against a newer framework state. If you already have a clean clone, fetch the source and select the base explicitly, then apply the edition patch once:
+The SNode.C repository uses `master` as its moving development line. Do not build the examples against an arbitrary newer checkout unless you deliberately want to check the book against a newer framework state. If you already have a clean clone, fetch the source and select the pinned commit explicitly:
 
 ```sh
 cd ~/projects/snode.c
 git fetch origin
-git checkout --detach 1f0f728fc9b3b45174f2cd790d83b2f493e58af1
-git apply "$SNODEC_BOOK_SOURCE/source-baseline/framework-working-tree.patch"
+git checkout --detach 8b8da56e0349191d4658ca8f820a490539eccd4d
 python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
 
-Use a separate clone if the existing checkout contains your own work. An already reconstructed checkout only needs verification; applying the same patch twice is not an update procedure. For normal reading, first learn where examples are located, how the build is organized, and which parts are source code, generated build output, or installation artifacts.
+Use a separate clone if the existing checkout contains your own work. A checkout already at the pin only needs verification. For normal reading, first learn where examples are located, how the build is organized, and which parts are source code, generated build output, or installation artifacts.
 
 ### Use an out-of-tree build
 

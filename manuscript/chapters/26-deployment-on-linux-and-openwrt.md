@@ -275,7 +275,7 @@ Add the SNode.C recipe through a local feed under your control. Review the follo
 
 | Recipe surface | Required evidence for the current source |
 |---|---|
-| Source selection | The archive or checkout matches the book's framework manifest, including any author changes beyond the reconstruction base |
+| Source selection | The archive or checkout matches the book's framework manifest, at the pinned public commit |
 | Version and library names | Package version, SONAME major and installed filenames match the 2.0 build |
 | Component graph | Selected module recipes follow current targets; obsolete targets are removed rather than satisfied by old libraries |
 | Logger dependency | The current spdlog build dependency is supplied reproducibly by the SDK recipe; an undeclared configure-time download is not a package dependency policy |
@@ -283,7 +283,7 @@ Add the SNode.C recipe through a local feed under your control. Review the follo
 | Consumer application | The book echo consumer is cross-compiled against the staged target installation and installed as `/usr/bin/echoserver` |
 | Runtime ownership | The configured management group and configuration directories exist on the target |
 
-Keep the source check literal. `git archive HEAD` captures committed files only; it is insufficient if the author tree has uncommitted changes. The book's manifest and reconstruction patch identify the reviewed contents. Compare the SDK's prepared source files against that manifest before accepting the build. Likewise, do not point the consumer's `snodec_DIR` at the desktop installation: that would mix host and target artifacts.
+Keep the source check literal. Export the pinned public commit with `git archive`, rather than an arbitrary `HEAD`. The book's manifest identifies the reviewed contents. Compare the SDK's prepared source files against that manifest before accepting the build. Likewise, do not point the consumer's `snodec_DIR` at the desktop installation: that would mix host and target artifacts.
 
 After the ported recipe and echo package are selected, expand the SDK configuration and build the framework recipe with verbose output:
 

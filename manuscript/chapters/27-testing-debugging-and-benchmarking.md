@@ -51,7 +51,7 @@ A focused run shortens the feedback loop; it does not replace a broader run befo
 
 Count CTest registrations, not C++ files or assertions: one executable can supply several scenario registrations, depending on configuration.
 
-For this edition, source identity includes the recorded working-tree changes as well as the base commit.
+For this edition, source identity is the pinned public commit and its content manifest.
 
 A socket-creation `Operation not permitted` result did not exercise the exchange. Preserve it, identify the denied operation, and record any later permitted run separately.
 
