@@ -46,3 +46,19 @@ The installed consumer's public requirement is unchanged:
 `CMakeLists.txt:1`; package exports are declared in `src/CMakeLists.txt`.
 This is shell/build guidance, not a new runtime claim. Ch2 is 3,248 tokens,
 within 3,006–3,250; total 110,313. No cap waiver is needed.
+
+## P4 — one running configuration value
+
+Every level-3 section after the opening now begins from echoserver's port:
+8080 in code, 18091 in the file and 18092 for the selected invocation. No
+new configuration example was added. The existing help command's duplicated
+instance spelling was corrected locally to `echoserver echoserver local`.
+`src/net/in/config/ConfigAddress.h:109` declares the setter;
+`src/net/in/config/ConfigAddress.cpp:120` registers the port and its range,
+`:201` sets its default, and `:212` reads the selected value.
+`src/utils/Config.cpp:475` performs the separate write action;
+`:1071` and `:1075` separate reconfiguration and parsing. The unchanged public
+precedence experiment in `companion/exercises/ch13/` supplies the same three
+values; it was inspected, not rerun. The C++ defaults, file/CLI precedence,
+inspection and write distinction are preserved rather than newly inferred.
+All 16 smoothing assertion groups pass; total 110,372 tokens.

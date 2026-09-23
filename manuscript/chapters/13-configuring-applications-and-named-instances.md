@@ -27,7 +27,7 @@ Keep Chapter 4's runtime model beside this configuration story. The named instan
 \index{configuration!command line}
 \index{configuration!file}
 
-The C++ API supplies baseline defaults, a configuration file persists deployment choices, and the command line supplies run-specific overrides and inspection actions. All three feed the same hierarchy. The server/client handle exposes its configuration object directly.
+`echoserver.local.port` starts at the C++ default 8080, takes 18091 from the selected file, and becomes 18092 when the command line overrides that file. These inputs feed one option in the hierarchy. More generally, C++ supplies defaults, files persist deployment choices, and command lines supply invocation-specific overrides and inspection actions. The handle exposes the configuration object directly.
 
 For an IPv4 server, a minimal example may look like:
 
@@ -110,7 +110,7 @@ The current per-call flow model makes the configuration boundary particularly im
 
 ### Named instances as configuration addresses
 
-The port key begins with `echoserver` because the entry point created that named instance. The executable name alone would not identify which listener to configure in an application with several inputs.
+The key `echoserver.local.port` addresses the named instance created by the entry point; its 18091 file value belongs to that listener. The executable name alone would not identify which listener to configure in an application with several inputs.
 
 \index{named instances}
 \index{configuration addresses}
@@ -204,7 +204,7 @@ The following section locates these choices in the hierarchy. The echo experimen
 
 ### Application and instance configuration {#application-and-instance-configuration-in-detail}
 
-For our running value, 18092 belongs to the named listener’s local endpoint. A process-wide logging option belongs elsewhere in the tree. Keeping those scopes explicit lets an operator change diagnostics without confusing them with where the server listens.
+For our running value, `echoserver.local.port = 18092` belongs to the named listener’s local endpoint. A process-wide logging option belongs elsewhere in the tree. Keeping those scopes explicit lets an operator change diagnostics without confusing them with where the server listens.
 
 \index{application configuration}
 \index{instance configuration}
@@ -275,7 +275,7 @@ Treat such a rename as an application-interface change, even when the C++ progra
 
 ### Section configuration: scoped responsibilities
 
-The next step in finding our port is `local`. It describes the server’s own listening endpoint, so putting 18092 in a client’s remote section would answer a different question. The section names preserve that distinction.
+For `echoserver`, 18092 belongs in `local.port`: it selects where this server listens. The `local` section describes the server’s own endpoint; placing that value in a client’s `remote` section would instead select its destination. Section names preserve which endpoint the operator intends to change.
 
 \index{section configuration}
 \index{local section}
@@ -372,7 +372,7 @@ Chapter 15 discusses TLS in depth. Here the important point is the section bound
 
 ### Three views of the same model
 
-Follow the same local port through each notation below. The spelling changes from a C++ setter to a command path to a dotted file key, but these are three inputs to one option, not three independent settings to synchronize.
+Follow `echoserver.local.port` through the notations below: 8080 is the C++ default, 18091 the file choice, and 18092 the command-line override. The spelling changes from a C++ setter to a command path to a dotted file key, but these are three inputs to one option, not three independent settings to synchronize.
 
 \index{configuration!C++ API}
 \index{configuration!command line}
@@ -482,7 +482,7 @@ printf 'echoserver.local.port = 18091\n' > "$SNODEC_CONFIG_EXERCISE/echo.conf"
 
 Find the assignments for `echoserver.local.port` in each output. Commented assignments beginning with `#` show defaults; an uncommented assignment supplies the selected override. The effective values are 8080, 18091, and 18092. The display action exits with status 2 after printing; that inspection exit is not a failed bind. The last invocation leaves the file at 18091: overriding a value for a run does not save it. `--write-config` is a separate action with a filesystem effect.
 
-Now inspect `./echoserver echoserverserver local --help`. The option belongs to the local endpoint even though three input paths can supply its value. If an unexpected value appears, inspect the selected configuration file and the full command line before changing the protocol context. That context does not choose the listening port.
+Now inspect `./echoserver echoserver local --help`. The option belongs to the local endpoint even though three input paths can supply its value. If an unexpected value appears, inspect the selected configuration file and the full command line before changing the protocol context. That context does not choose the listening port.
 
 The experiment observes startup parsing. To study a runtime reparse, use an application that deliberately calls `reconfigure()` while running, and separately observe the parsed value and the existing listener. The two need not change together.
 
@@ -506,7 +506,7 @@ The configured instance supplies the endpoint; the activation call starts the wo
 
 ### Persistent and nonpersistent values
 
-The file’s 18091 remains a deployment choice after a command selects 18092 for one run. Inspecting that effective value does not save it. Decide whether the port should survive another invocation before choosing a write action.
+The file’s `echoserver.local.port = 18091` remains a deployment choice after a command selects 18092 for one run. Inspecting that effective value does not save it. Decide whether the port should survive another invocation before choosing a write action.
 
 \index{persistent options}
 \index{nonpersistent options}
@@ -597,7 +597,7 @@ Each key says which instance it belongs to. That is the value of named instances
 
 ### Designing configuration for real applications
 
-Return to the effective local port one final time: validation can reject an invalid value before listening, while a valid port can still fail to bind. Keep the parsed value, the activation result and the bytes later handled by a context separate.
+Return to `echoserver.local.port` one final time: 8080 is the default, 18091 the file choice, and 18092 the selected override. Validation can reject an invalid value before listening, while a valid port can still fail to bind. Keep the parsed value, the activation result and the bytes later handled by a context separate.
 
 \index{configuration design}
 \index{deployment shape}
