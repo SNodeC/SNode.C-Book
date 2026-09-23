@@ -1,6 +1,16 @@
-# Pedagogical smoothing — runtime recheck qualified; refinement paused
+# Pedagogical smoothing — checkpoint fixed; refinement paused
 
-Current author instruction: FOLLOWUP-09.md requests verification of logging
+Current author instruction: FOLLOWUP-10.md authorizes fixing only the exercise
+verification timing while retaining APIs and usage. The ch13 checkpoint now
+reads its completed log after normal shutdown, using a retained read-only handle.
+All assertions and timeouts are unchanged. **40/40 repeated checkpoint runs** and
+**62/62 public exercises pass** against unchanged clean framework 07ca9a29.
+Only companion/exercises/ch12/configuration.py changes outside review evidence;
+no framework, example/lab program, API, CLI or manuscript changes. See
+[the fix and validation](checkpoint-log-fix/REPORT.md).
+Book refinement remains paused. Earlier results below are historical.
+
+Earlier author instruction: FOLLOWUP-09.md requests verification of logging
 synchronization simplification at clean **07ca9a2936ee72582df7d159cb06666fe23e30f8**.
 Fresh framework **185/185 PASS**, external echo **4/4 PASS**, public exercises
 **61/62 PASS**, teaching/behavior/lifetime PASS; zero skips. The only failure is
@@ -65,7 +75,7 @@ supersedes that stop. R continues with failed checks explicitly qualified.
 | R evidence | qualified; author directs continuation | 1ceb6ef527386a18421e419fcce3122f0ccd472c; R-results.json |
 | P0b-resume | qualified; author directs continuation | containing entry-gate commit; P0b-resume-results.json, lab-repair-review.md |
 | P1 | incomplete; paused by author | uncommitted vocabulary edits; no P1 gate commit |
-| P2–P7 | not started | 07ca9a29 shutdown checks pass; ch13 snapshot timing remains open; source reconciliation and explicit resumption pending |
+| P2–P7 | not started | 07ca9a29 shutdown checks pass; ch13 driver fixed and 62/62 labs pass; source reconciliation and explicit resumption pending |
 
 ## Source and review
 

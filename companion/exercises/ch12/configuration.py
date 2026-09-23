@@ -1,4 +1,5 @@
 """Inspect the canonical echo configuration and correlate it with bounded runtime work."""
+from contextlib import ExitStack
 import json
 from pathlib import Path
 import re
@@ -61,13 +62,17 @@ def checkpoint(binary, home):
         policy = ['--log-level=2', '--log-format=json']
         if scoped:
             policy += ['--log-component-level=echo=info', '--log-instance-level=echoserver=debug']
-        with running(binary, [*args, *policy, 'echoserver', 'local', '--host=127.0.0.1',
-                              f'--port={port}']) as (process, log):
-            with connect(port, process) as peer:
-                payload = b'part-v-checkpoint'
-                peer.sendall(payload)
-                assert receive(peer, len(payload)) == payload
-            histories.append([json.loads(line) for line in log.read_text().splitlines()])
+        with ExitStack() as readers:
+            with running(binary, [*args, *policy, 'echoserver', 'local', '--host=127.0.0.1',
+                                  f'--port={port}']) as (process, log):
+                # Retain the log across the harness's temporary-directory cleanup.
+                completed_log = readers.enter_context(log.open())
+                with connect(port, process) as peer:
+                    payload = b'part-v-checkpoint'
+                    peer.sendall(payload)
+                    assert receive(peer, len(payload)) == payload
+            # Normal shutdown drains asynchronous records before we inspect them.
+            histories.append([json.loads(line) for line in completed_log])
     assert not histories[0], histories[0]
     records = histories[1]
     assert any(r['component'] == 'echo' and r['level'] == 'info'

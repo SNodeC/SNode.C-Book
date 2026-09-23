@@ -2160,3 +2160,23 @@ snapshot timing failure. Formal source reconciliation and P1 work remain pending
 book refinement stays paused. Complete suite results, ownership inspection,
 before/after log observations and preservation evidence:
 shutdown-recheck-07ca9a29/REPORT.md under this pass. Stop and report.
+
+### Follow-up 10 — fix only the checkpoint verification timing
+
+The author explicitly requests the fix and requires usage/API preservation
+(FOLLOWUP-10.md). Only companion/exercises/ch12/configuration.py, the Python
+driver for exercise-ch13-part-checkpoint, changes. It retains a read-only log
+handle across existing harness cleanup and reads after normal shutdown has
+drained the async queue. All assertions, function signatures, CLI arguments,
+CMake registrations and timeouts remain unchanged. No framework, C++ example,
+lab/exercise program or manuscript change. Production code +0/−0; verification
+driver +12/−7. No polling, extra delay or alternative shutdown path.
+
+Against unchanged clean 07ca9a29 and its previously verified installation:
+40/40 consecutive checkpoint runs and 62/62 public exercises PASS, zero skips.
+Assertion ASTs match and all other recorded book inputs are preserved. Framework
+and other suite results from Follow-up 09 remain historical same-source evidence,
+not reruns in this fix. Identified snapshot race resolved; API and user invocation
+unchanged. Evidence: checkpoint-log-fix/REPORT.md, results.json, summary.json,
+preservation.json and verbose CTest logs under this pass. Refinement stays paused;
+source reconciliation and unfinished P1 work remain pending explicit resumption.

@@ -1,0 +1,13 @@
+{
+  "checkpoint-repeat": {
+    "reported_testcases": 1,
+    "failed": 0,
+    "skipped": 0,
+    "successful_executions": 40
+  },
+  "labs": {
+    "reported_testcases": 62,
+    "failed": 0,
+    "skipped": 0
+  }
+}

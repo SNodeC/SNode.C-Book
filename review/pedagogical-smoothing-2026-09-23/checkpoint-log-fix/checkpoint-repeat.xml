@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="1"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="10"
+	timestamp="2026-09-23T19:12:09"
+	>
+	<testcase name="exercise-ch13-part-checkpoint" classname="exercise-ch13-part-checkpoint" time="0.272122" status="run">
+		<properties/>
+		<system-out>PASS: source/file/CLI ports [8080, 18091, 56861]; file unchanged; inspection status 2
+PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+PASS: Part V checkpoint: CLI-selected listener echoes; narrow overrides reveal role/context records
+Global Error run: 0 records; scoped run: [{"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Initiating listen", "origin": "framework", "role": "server", "ts": "2026-09-23T17:12:19.647Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "info", "message": "listener started", "origin": "framework", "role": "server", "ts": "2026-09-23T17:12:19.648Z", "v": 1}, {"boundary": "application", "component": "echo", "level": "info", "message": "echoserver: listening on '127.0.0.1:56861'", "origin": "application", "ts": "2026-09-23T17:12:19.648Z", "v": 1}, {"boundary": "connection", "component": "core.socket.stream", "...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+</testsuite>

@@ -1,0 +1,36 @@
+{
+  "checkpoint-repeat": {
+    "command": [
+      "ctest",
+      "--test-dir",
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-07ca9a29/examples",
+      "--output-on-failure",
+      "--no-tests=error",
+      "-V",
+      "-R",
+      "^exercise-ch13-part-checkpoint$",
+      "--repeat",
+      "until-fail:40",
+      "--output-junit",
+      "/home/voc/projects/snodec/publications/book/review/pedagogical-smoothing-2026-09-23/checkpoint-log-fix/checkpoint-repeat.xml"
+    ],
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:12:09.229379+00:00",
+    "finished_utc": "2026-09-23T17:12:19.688441+00:00"
+  },
+  "labs": {
+    "command": [
+      "ctest",
+      "--test-dir",
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-07ca9a29/examples",
+      "--output-on-failure",
+      "--no-tests=error",
+      "-V",
+      "--output-junit",
+      "/home/voc/projects/snodec/publications/book/review/pedagogical-smoothing-2026-09-23/checkpoint-log-fix/labs.xml"
+    ],
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:12:19.688744+00:00",
+    "finished_utc": "2026-09-23T17:13:29.270742+00:00"
+  }
+}

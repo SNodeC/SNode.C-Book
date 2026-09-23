@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="62"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="69"
+	timestamp="2026-09-23T19:12:19"
+	>
+	<testcase name="exercise-ch01" classname="exercise-ch01" time="0.211077" status="run">
+		<properties/>
+		<system-out>PASS: snodec: 20480 binary bytes unchanged; next connection also works
+PASS: asio: 20480 binary bytes unchanged; next connection also works
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch01-independent-peers" classname="exercise-ch01-independent-peers" time="0.134686" status="run">
+		<properties/>
+		<system-out>PASS: snodec: active peer works while another is idle and after it closes
+PASS: asio: active peer works while another is idle and after it closes
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch02-consumer" classname="exercise-ch02-consumer" time="4.10519" status="run">
+		<properties/>
+		<system-out>-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+ ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch02-component" classname="exercise-ch02-component" time="4.13007" status="run">
+		<properties/>
+		<system-out>net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-i...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch03" classname="exercise-ch03" time="0.1598" status="run">
+		<properties/>
+		<system-out>PASS: EchoPair receives Learning by echo
+PASS: independent measurement peers reflect even invalid values; closing one leaves the other usable
+PASS: changed greeting and unchanged binary reflection with a controlled peer
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch03-occupied-port" classname="exercise-ch03-occupied-port" time="0.127587" status="run">
+		<properties/>
+		<system-out>PASS: second listener reports occupied endpoint; original owner still reflects bytes
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch04-model-instances" classname="exercise-ch04-model-instances" time="0.00297125" status="run">
+		<properties/>
+		<system-out>PASS: shared inputs accept 1,2; separate model instances each accept 1
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch04-independent-peers" classname="exercise-ch04-independent-peers" time="0.103681" status="run">
+		<properties/>
+		<system-out>PASS: snodec: active peer works while another is idle and after it closes
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch05-deferred-work" classname="exercise-ch05-deferred-work" time="0.0122223" status="run">
+		<properties/>
+		<system-out>PASS: empty trace before start; RUNNING dispatch gives 1,2,3; child sees first callback returned
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch05-model-checkpoint" classname="exercise-ch05-model-checkpoint" time="0.00329994" status="run">
+		<properties/>
+		<system-out>PASS: input 900,2,1 -&gt; accepted 1,2,3; detached observer sees only 1,2
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch06-ip-families" classname="exercise-ch06-ip-families" time="0.135385" status="run">
+		<properties/>
+		<system-out>IDENTITY	localhost:46183	localhost:44804
+ipv4: producer local=('127.0.0.1', 44804), service=('127.0.0.1', 46183)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	localhost:57173	localhost:47908
+ipv6: producer local=('::1', 47908, 0, 0), service=('::1', 57173, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch06-unix-path" classname="exercise-ch06-unix-path" time="0.0974717" status="run">
+		<properties/>
+		<system-out>IDENTITY	/tmp/endpoint-lab-bg7uvqd0/service.sock	/tmp/endpoint-lab-bg7uvqd0/producer.sock
+unix: producer local=/tmp/endpoint-lab-bg7uvqd0/producer.sock, service=/tmp/endpoint-lab-bg7uvqd0/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch07-independent-peers" classname="exercise-ch07-independent-peers" time="0.107118" status="run">
+		<properties/>
+		<system-out>PASS: snodec: active peer works while another is idle and after it closes
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch07-occupied-endpoint" classname="exercise-ch07-occupied-endpoint" time="0.125435" status="run">
+		<properties/>
+		<system-out>PASS: second listener reports occupied endpoint; original owner still reflects bytes
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch08-selectors" classname="exercise-ch08-selectors" time="0.00892152" status="run">
+		<properties/>
+		<system-out>Default: empty configured device string, zero selectors
+RFCOMM 10:3D:1C:AC:BA:9C:16
+L2CAP 10:3D:1C:AC:BA:9C:4097
+PASS: one device; channel 16 and PSM 4097 (0x1001); no radio operation
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch08-part-checkpoint" classname="exercise-ch08-part-checkpoint" time="0.138199" status="run">
+		<properties/>
+		<system-out>IDENTITY	localhost:56587	localhost:53242
+ipv4: producer local=('127.0.0.1', 53242), service=('127.0.0.1', 56587)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	/tmp/endpoint-lab-nu585u13/service.sock	/tmp/endpoint-lab-nu585u13/producer.sock
+unix: producer local=/tmp/endpoint-lab-nu585u13/producer.sock, service=/tmp/endpoint-lab-nu585u13/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch09-framing" classname="exercise-ch09-framing" time="0.213078" status="run">
+		<properties/>
+		<system-out>PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch09-limits" classname="exercise-ch09-limits" time="0.303672" status="run">
+		<properties/>
+		<system-out>Overlong input: closed; diagnostic bytes delivered=0
+Overlong input: closed; diagnostic bytes delivered=0
+PASS: 4096 bytes accepted including optional CR; 4097 closes with or without delimiter
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch10-isolation" classname="exercise-ch10-isolation" time="0.197749" status="run">
+		<properties/>
+		<system-out>PASS: independent pending buffers; replacement starts fresh; surviving peer progresses
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch10-refusal" classname="exercise-ch10-refusal" time="0.0895015" status="run">
+		<properties/>
+		<system-out>PASS: null factory result closes before READY; later valid context replies
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch11-part-checkpoint" classname="exercise-ch11-part-checkpoint" time="0.361936" status="run">
+		<properties/>
+		<system-out>PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+Observed ip: 43457
+PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+Observed unix: /tmp/line-lab-a5tkd9ay/line.sock
+PASS: Part IV checkpoint: identical reconstructed replies over IPv4 and Unix; owned cleanup
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch11-endpoint-failure" classname="exercise-ch11-endpoint-failure" time="0.0974163" status="run">
+		<properties/>
+		<system-out>PASS: missing path fails before protocol; valid peer reports command error and remains usable
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch12-precedence" classname="exercise-ch12-precedence" time="0.10513" status="run">
+		<properties/>
+		<system-out>PASS: source/file/CLI ports [8080, 18091, 18092]; file unchanged; inspection status 2
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch12-discovery" classname="exercise-ch12-discovery" time="0.106726" status="run">
+		<properties/>
+		<system-out>PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch13-records" classname="exercise-ch13-records" time="0.0582452" status="run">
+		<properties/>
+		<system-out>PASS: four semantic records; component Debug overrides global Info; event and typed error; no invented peer
+{"v":1,"ts":"2026-09-23T17:12:30.837Z","level":"info","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","message":"Measurement example initialized"}
+{"v":1,"ts":"2026-09-23T17:12:30.837Z","level":"info","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","event":"measurement.accepted","message":"Accepted measurement sequence 1"}
+{"v":1,"ts":"2026-09-23T17:12:30.837Z","level":"debug","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","message":"Diagnostic sequence 1"}
+{"v":1,"ts":"2026-09-23T17:12:30.837Z","level":"warn","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","message":"Demonstration error; no file operation was attempted","error":{"code":13,"te...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch13-part-checkpoint" classname="exercise-ch13-part-checkpoint" time="0.265147" status="run">
+		<properties/>
+		<system-out>PASS: source/file/CLI ports [8080, 18091, 42107]; file unchanged; inspection status 2
+PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+PASS: Part V checkpoint: CLI-selected listener echoes; narrow overrides reveal role/context records
+Global Error run: 0 records; scoped run: [{"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Initiating listen", "origin": "framework", "role": "server", "ts": "2026-09-23T17:12:31.071Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "info", "message": "listener started", "origin": "framework", "role": "server", "ts": "2026-09-23T17:12:31.072Z", "v": 1}, {"boundary": "application", "component": "echo", "level": "info", "message": "echoserver: listening on '127.0.0.1:42107'", "origin": "application", "ts": "2026-09-23T17:12:31.072Z", "v": 1}, {"boundary": "connection", "component": "core.socket.stream", "...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch14-trust-identity" classname="exercise-ch14-trust-identity" time="1.3846" status="run">
+		<properties/>
+		<system-out>PASS: trusted matching name; early SSL is null; ready=1
+PASS: trusted wrong name; early SSL is null; ready=0
+PASS: untrusted matching name; early SSL is null; ready=0
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch14-secure-echo" classname="exercise-ch14-secure-echo" time="0.177434" status="run">
+		<properties/>
+		<system-out>PASS: trusted sensor.example; exact binary echo; reciprocal close_notify
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch15-bounded-retry" classname="exercise-ch15-bounded-retry" time="0.269973" status="run">
+		<properties/>
+		<system-out>PASS: initial attempt plus one retry; two error statuses; no context attachment; natural exit
+{"v": 1, "ts": "2026-09-23T17:12:32.724Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:59585 (127.0.0.1): Connection refused [111]"}
+{"v": 1, "ts": "2026-09-23T17:12:32.925Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:59585 (127.0.0.1): Connection refused [111]"}
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch15-part-checkpoint" classname="exercise-ch15-part-checkpoint" time="1.00309" status="run">
+		<properties/>
+		<system-out>PASS: trusted matching name; early SSL is null; ready=1
+PASS: trusted wrong name; early SSL is null; ready=0
+PASS: untrusted matching name; early SSL is null; ready=0
+PASS: retry before first attachment; peer stop/restart; two connection identities; fresh greeting and exact echo
+{"v": 1, "ts": "2026-09-23T17:12:33.287Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:35741 (127.0.0.1): Connection refused [111]"}
+{"v": 1, "ts": "2026-09-23T17:12:33.489Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context attached"}
+{"v": 1, "ts": "2026-09-23T17:12:33.521Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context detached: connection close"}
+{"v": 1, "ts": "2026-09-23T17:12:33.521Z", "level": "debug", "...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch16-framing" classname="exercise-ch16-framing" time="0.308099" status="run">
+		<properties/>
+		<system-out>PASS: incomplete headers produce no handler/response; completing headers produces one 200
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch16-limits" classname="exercise-ch16-limits" time="0.103476" status="run">
+		<properties/>
+		<system-out>PASS: rejected input returns 405
+PASS: rejected input returns 431
+PASS: only valid request entered application dispatch
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch17-order" classname="exercise-ch17-order" time="0.0945322" status="run">
+		<properties/>
+		<system-out>PASS: mounted route visits app,router,handler; outside path visits only app and returns 404
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch17-stop" classname="exercise-ch17-stop" time="0.0971876" status="run">
+		<properties/>
+		<system-out>PASS: middleware returns 403 and ends dispatch; following handler never runs
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch18" classname="exercise-ch18" time="0.0947751" status="run">
+		<properties/>
+		<system-out>PASS: 406 on restricted Accept; two matching live events; reconnect starts at current state
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch18-observers" classname="exercise-ch18-observers" time="0.103004" status="run">
+		<properties/>
+		<system-out>PASS: both observers see the same acceptance; remaining observer continues after peer closes
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch19-negotiation" classname="exercise-ch19-negotiation" time="0.126392" status="run">
+		<properties/>
+		<system-out>PASS: unsupported subprotocol rejected: HTTP/1.1 404 Not Found
+PASS: canonical client negotiates echo, receives hello and closes; unsupported name never attaches echo
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch19-part-checkpoint" classname="exercise-ch19-part-checkpoint" time="0.327673" status="run">
+		<properties/>
+		<system-out>PASS: both observers see the same acceptance; remaining observer continues after peer closes
+PASS: Part VII checkpoint: shared accepted SSE state survives one observer disconnect; separate WebSocket type/bytes/fragment/control/close checks pass
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch20-wire" classname="exercise-ch20-wire" time="0.341827" status="run">
+		<properties/>
+		<system-out>PASS: CONNECT first; no subscription/publication before acceptance; accepted session produces SUBSCRIBE/PUBLISH and receives command
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch20-delivery" classname="exercise-ch20-delivery" time="0.1908" status="run">
+		<properties/>
+		<system-out>PASS: observer session accepted by CONNACK
+PASS: subscriber receives SUBACK granting QoS 0
+PASS: independent subscriber receives exact topic sensors/temperature/value and payload 23.5
+PASS: broker routes command to canonical client role
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch21-binary" classname="exercise-ch21-binary" time="0.191729" status="run">
+		<properties/>
+		<system-out>PASS: HTTP 101, mqtt selection and binary MQTT CONNECT observed
+PASS: fragmented binary CONNACK admits MQTT flow; binary command reaches canonical role
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch21-text" classname="exercise-ch21-text" time="0.0715245" status="run">
+		<properties/>
+		<system-out>PASS: HTTP 101, mqtt selection and binary MQTT CONNECT observed
+PASS: same packet bytes in text trigger protocol-error close 1002
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch22-unavailable-output" classname="exercise-ch22-unavailable-output" time="0.145944" status="run">
+		<properties/>
+		<system-out>PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch22-part-checkpoint" classname="exercise-ch22-part-checkpoint" time="0.348371" status="run">
+		<properties/>
+		<system-out>PASS: observer session accepted by CONNACK
+PASS: subscriber receives SUBACK granting QoS 0
+PASS: independent subscriber receives exact topic sensors/temperature/value and payload 23.5
+PASS: broker routes command to canonical client role
+PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+PASS: Part VIII checkpoint: broker-delivery evidence and separate HTTP/status/SSE acceptance with unavailable MQTT; see README boundary map
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch23-durable" classname="exercise-ch23-durable" time="1.27549" status="run">
+		<properties>
+			<property name="cmake_labels" value="equipped"/>
+		</properties>
+		<system-out>PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch23-error" classname="exercise-ch23-error" time="1.22514" status="run">
+		<properties>
+			<property name="cmake_labels" value="equipped"/>
+		</properties>
+		<system-out>PASS: SQL error 1146 leaves the connection usable; the chained query completes and independent row count stays zero
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch24-composition" classname="exercise-ch24-composition" time="0.297612" status="run">
+		<properties/>
+		<system-out>PASS: incomplete headers produce no handler/response; completing headers produces one 200
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch24-part-checkpoint" classname="exercise-ch24-part-checkpoint" time="1.35364" status="run">
+		<properties>
+			<property name="cmake_labels" value="equipped"/>
+		</properties>
+		<system-out>PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+PASS: Part IX checkpoint contrasts database read-back with the separate in-memory gateway restart; apply the README MQTTStore outcome map
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch25-consumer" classname="exercise-ch25-consumer" time="3.99971" status="run">
+		<properties/>
+		<system-out>-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+ ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch25-component" classname="exercise-ch25-component" time="4.03927" status="run">
+		<properties/>
+		<system-out>net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-i...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch26-lifecycle" classname="exercise-ch26-lifecycle" time="6.83598" status="run">
+		<properties/>
+		<system-out>-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+ ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch26-configuration" classname="exercise-ch26-configuration" time="6.86647" status="run">
+		<properties/>
+		<system-out>-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+ ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch27-diagnosis" classname="exercise-ch27-diagnosis" time="11.0291" status="run">
+		<properties/>
+		<system-out>net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-i...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch27-checkpoint" classname="exercise-ch27-checkpoint" time="10.9251" status="run">
+		<properties/>
+		<system-out>net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-i...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch28" classname="exercise-ch28" time="0.163252" status="run">
+		<properties/>
+		<system-out>PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch28-validation" classname="exercise-ch28-validation" time="0.00324883" status="run">
+		<properties/>
+		<system-out>PASS: three invalid inputs leave state and notifications unchanged; next acceptance is 2
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch29-framing" classname="exercise-ch29-framing" time="0.118099" status="run">
+		<properties/>
+		<system-out>PASS: whole/fragmented records agree; malformed records do not advance order; producer 9000 becomes local order; 4096-byte CR record accepted; both overlong forms close without suffix acceptance
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch29-mixed" classname="exercise-ch29-mixed" time="0.147004" status="run">
+		<properties/>
+		<system-out>PASS: MQTT unavailable; HTTP/Unix input share order 1–4; malformed CSV adds no acceptance; surviving observer continues; reconnect gets current 3 then live 4; restart resets to zero
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch30" classname="exercise-ch30" time="0.00210996" status="run">
+		<properties/>
+		<system-out>PASS: input 900,2,1 -&gt; accepted 1,2,3; detached observer sees only 1,2
+</system-out>
+	</testcase>
+	<testcase name="exercise-ch30-model-instances" classname="exercise-ch30-model-instances" time="0.00177425" status="run">
+		<properties/>
+		<system-out>PASS: shared inputs accept 1,2; separate model instances each accept 1
+</system-out>
+	</testcase>
+	<testcase name="exercise-appendix-a-source-consumer" classname="exercise-appendix-a-source-consumer" time="4.10279" status="run">
+		<properties/>
+		<system-out>-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+ ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="exercise-appendix-a-carrier-extension" classname="exercise-appendix-a-carrier-extension" time="0.382329" status="run">
+		<properties/>
+		<system-out>PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+Observed ip: 36297
+PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+Observed unix: /tmp/line-lab-aodz9e7r/line.sock
+PASS: Part IV checkpoint: identical reconstructed replies over IPv4 and Unix; owned cleanup
+</system-out>
+	</testcase>
+</testsuite>
