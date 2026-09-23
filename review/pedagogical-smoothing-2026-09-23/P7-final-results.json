@@ -74,5 +74,6 @@
   "labs_total": 66,
   "waivers": [],
   "prompt_unchanged": true,
-  "archive_sha256": "d6ef9280eb1fefc373eb1c9c5e2e445cd089aeacddb599be69c77dff4f5b031a"
+  "archive_sha256": "d6ef9280eb1fefc373eb1c9c5e2e445cd089aeacddb599be69c77dff4f5b031a",
+  "gate_commit": "c1db599005024c66802548e65f2650a130988f47"
 }

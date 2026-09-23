@@ -72,7 +72,7 @@ The prompt’s Ch31 `MeasurementInputSocketContext.cpp` names the corresponding 
 | P3 | `0deb8b3` | P3-api-review.md, P3-gate-notes.md, P3-apparatus.json, P3 labs |
 | P4 + P5 | `6683818` | P4-P5-api-review.md, P5-core-mechanism-review.md, separate phase metrics |
 | P6 | `6b7d7c0` | seam-log.md and P6-seam-snapshots.json: all 55 manifest pairs |
-| P7 | P7_GATE_SHA | P7-final-results.json; final logs and diagnostics linked below |
+| P7 | `c1db599` | P7-final-results.json; final logs and diagnostics linked below |
 
 R2, pre-API P3 and P7 freeze records are identical: framework-freeze-R2.json, framework-freeze-P3-R2.json and framework-freeze-P7-R2.json. The author tree was never modified. The final digest comparison is recorded in P7-freeze-check.log.
 
