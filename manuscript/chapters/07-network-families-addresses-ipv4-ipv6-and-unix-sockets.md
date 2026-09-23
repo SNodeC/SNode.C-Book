@@ -589,6 +589,8 @@ Check the status before using the fields. `Unsupported` means that the platform 
 
 A same-user rule, a service-account rule, and a command-specific authorization rule are different application policies. The framework does not choose one merely because the peer is local. Tests for the credential query and socket-path handling protect transport facts; the application's trust policy needs its own tests.
 
+The next chapter uses these endpoint identities to follow listening, connecting and the lifetime of the peer relationship that results.
+
 ::: {.snodec-remember title="What to remember"}
 - Socket addresses belong to the network layer: they describe endpoint identity for a selected family.
 - SNode.C uses a shared address pattern, but each supported family keeps its own concrete `SocketAddress` type.

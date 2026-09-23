@@ -1,0 +1,61 @@
+# P6 seam log
+
+Read the final one or two body paragraphs against the next unit’s first two or three prose paragraphs, including all Part openers, Epilogue and Appendix A. Objectives, exercises, indexes and complete code blocks were inspected as apparatus rather than substituted for the teaching seam. Control-only front/backmatter files are identified below. Paths and final line anchors are from this gate.
+
+| # | From → to | Entry / continuity review and action |
+|---|---|---|
+| 1 | `manuscript/frontmatter/frontmatter.md:4` → `manuscript/frontmatter/preface.md:3` | Control-only frontmatter file; Preface supplies purpose and scope. |
+| 2 | `manuscript/frontmatter/preface.md:43` → `manuscript/frontmatter/how-to-read-this-book.md:3` | Purpose and prerequisites lead into ordered and optional reading routes. |
+| 3 | `manuscript/frontmatter/how-to-read-this-book.md:25` → `manuscript/frontmatter/conventions.md:3` | Practice milestones lead into notation and the reference glossary. |
+| 4 | `manuscript/frontmatter/conventions.md:39` → `manuscript/frontmatter/author-note.md:3` | Reference vocabulary gives way to explicit first-party author context; not a technical prerequisite. |
+| 5 | `manuscript/frontmatter/author-note.md:10` → `manuscript/frontmatter/acknowledgements.md:3` | Author perspective leads into acknowledgements; no conceptual dependency. |
+| 6 | `manuscript/frontmatter/acknowledgements.md:8` → `manuscript/frontmatter/mainmatter.md:1` | Mainmatter control file; no prose bridge required. |
+| 7 | `manuscript/frontmatter/mainmatter.md:4` → `manuscript/parts/part-01-getting-oriented.md:3` | Part I now begins from a working path rather than memorized terminology. |
+| 8 | `manuscript/parts/part-01-getting-oriented.md:8` → `manuscript/chapters/01-why-snodec-exists.md:21` | Part I milestone is grounded by the one-sensor problem runway. |
+| 9 | `manuscript/chapters/01-why-snodec-exists.md:187` → `manuscript/chapters/02-preparing-your-environment.md:16` | Need for one shared acceptance owner leads into a reproducible build environment. |
+| 10 | `manuscript/chapters/02-preparing-your-environment.md:449` → `manuscript/chapters/03-your-first-working-program-the-echo-pair.md:17` | Added exit to the installed echo consumer; next entry follows startup and byte exchange. |
+| 11 | `manuscript/chapters/03-your-first-working-program-the-echo-pair.md:532` → `manuscript/parts/part-02-the-snodec-architecture.md:3` | Echo callbacks and lifetimes motivate the Part II model. |
+| 12 | `manuscript/parts/part-02-the-snodec-architecture.md:8` → `manuscript/chapters/04-the-snodec-runtime-mental-model.md:11` | Part II names the three learning cycles; Ch4 starts with echo lifetimes. |
+| 13 | `manuscript/chapters/04-the-snodec-runtime-mental-model.md:232` → `manuscript/chapters/05-layers-in-practice.md:11` | Added transition after the log observation to changing layers with lifetimes held fixed. |
+| 14 | `manuscript/chapters/05-layers-in-practice.md:241` → `manuscript/chapters/06-core-runtime-and-event-processing.md:16` | Added event-loop handoff; next entry asks how two peers and a timer progress. |
+| 15 | `manuscript/chapters/06-core-runtime-and-event-processing.md:268` → `manuscript/parts/part-03-networking-foundations-in-snodec.md:3` | Model and deferred-work checkpoint remains final; next Part varies the network family. |
+| 16 | `manuscript/parts/part-03-networking-foundations-in-snodec.md:8` → `manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:15` | Part III endpoint choices lead to concrete address identities. |
+| 17 | `manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:594` → `manuscript/chapters/08-servers-clients-and-connections.md:15` | Added endpoint-to-activation handoff after local peer credentials. |
+| 18 | `manuscript/chapters/08-servers-clients-and-connections.md:352` → `manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md:15` | Failure classification prepares a different device identity and service selector. |
+| 19 | `manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md:265` → `manuscript/parts/part-04-from-raw-connections-to-application-protocols.md:3` | Part III checkpoint preserves byte transport versus parsing/acceptance distinction. |
+| 20 | `manuscript/parts/part-04-from-raw-connections-to-application-protocols.md:8` → `manuscript/chapters/10-writing-socketcontext-classes-well.md:13` | Part IV framing question is picked up by the context opening. |
+| 21 | `manuscript/chapters/10-writing-socketcontext-classes-well.md:377` → `manuscript/chapters/11-writing-socketcontextfactory-classes-well.md:13` | Context dependency question is answered by factory construction and lifetime. |
+| 22 | `manuscript/chapters/11-writing-socketcontextfactory-classes-well.md:286` → `manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md:13` | Factory/context remain fixed in the next runnable transfer comparison. |
+| 23 | `manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md:389` → `manuscript/parts/part-05-configuration-and-operational-behavior.md:3` | Network-family variation leads to configuration rather than leaking into protocol code. |
+| 24 | `manuscript/parts/part-05-configuration-and-operational-behavior.md:8` → `manuscript/chapters/13-configuring-applications-and-named-instances.md:15` | Part V reproducibility is made concrete by the echoserver local-port story. |
+| 25 | `manuscript/chapters/13-configuring-applications-and-named-instances.md:621` → `manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md:16` | Configuration versus actual activity leads directly into diagnostic evidence. |
+| 26 | `manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md:328` → `manuscript/parts/part-06-secure-and-robust-communication.md:3` | Final Part V checkpoint precedes connection security and recovery policy. |
+| 27 | `manuscript/parts/part-06-secure-and-robust-communication.md:8` → `manuscript/chapters/15-tls-across-the-framework.md:13` | Explicit diagnostic-to-TLS bridge distinguishes transport success and secure readiness. |
+| 28 | `manuscript/chapters/15-tls-across-the-framework.md:268` → `manuscript/chapters/16-timeouts-retries-and-failure-modes.md:14` | Added wait/retry/recovery handoff after TLS deployment obligations. |
+| 29 | `manuscript/chapters/16-timeouts-retries-and-failure-modes.md:351` → `manuscript/parts/part-07-web-protocols-and-web-applications.md:3` | Part VI checkpoint preserves secure identity versus restored-connection evidence. |
+| 30 | `manuscript/parts/part-07-web-protocols-and-web-applications.md:8` → `manuscript/chapters/17-the-http-layer.md:15` | Web Part opener leads from byte protocols to request completeness and rejection. |
+| 31 | `manuscript/chapters/17-the-http-layer.md:325` → `manuscript/chapters/18-the-express-like-framework.md:15` | Build note precedes request-ready-to-routing transition; dispatch fixture follows. |
+| 32 | `manuscript/chapters/18-the-express-like-framework.md:289` → `manuscript/chapters/19-server-sent-events-and-real-time-http.md:17` | Completed-response route trace leads to long-lived SSE response and observer lifetime. |
+| 33 | `manuscript/chapters/19-server-sent-events-and-real-time-http.md:437` → `manuscript/chapters/20-websocket-and-protocol-upgrade.md:15` | Build note precedes explicit move from one-way events to bidirectional messages. |
+| 34 | `manuscript/chapters/20-websocket-and-protocol-upgrade.md:395` → `manuscript/parts/part-08-iot-and-message-oriented-systems.md:3` | Part VII checkpoint keeps shared state separate from WebSocket echo before MQTT. |
+| 35 | `manuscript/parts/part-08-iot-and-message-oriented-systems.md:8` → `manuscript/chapters/21-mqtt-support-in-snodec.md:15` | Part VIII pub/sub milestone is grounded by two applications and a broker. |
+| 36 | `manuscript/chapters/21-mqtt-support-in-snodec.md:299` → `manuscript/chapters/22-mqtt-over-websocket.md:18` | MQTT outcome distinctions carry into additional WebSocket prerequisites. |
+| 37 | `manuscript/chapters/22-mqtt-over-websocket.md:219` → `manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md:15` | Composed-connection observations lead to multiple actors and their differing conversations. |
+| 38 | `manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md:267` → `manuscript/parts/part-09-persistence-and-full-systems.md:3` | Partial-failure map and accepted-state ownership motivate durable-state questions. |
+| 39 | `manuscript/parts/part-09-persistence-and-full-systems.md:8` → `manuscript/chapters/24-database-support-and-application-state.md:15` | Part IX checkpoint promises separate persistence and restart observations; database opening agrees. |
+| 40 | `manuscript/chapters/24-database-support-and-application-state.md:449` → `manuscript/chapters/25-reading-complete-snodec-applications.md:17` | Database outcomes lead into application assembly and an observable reading question. |
+| 41 | `manuscript/chapters/25-reading-complete-snodec-applications.md:289` → `manuscript/chapters/26-from-applications-to-systems-mqttsuite.md:14` | One executable’s contract leads directly into cooperating process outcomes. |
+| 42 | `manuscript/chapters/26-from-applications-to-systems-mqttsuite.md:349` → `manuscript/parts/part-10-building-porting-and-maintaining.md:3` | Final Part IX checkpoint leads to build, installation and external-service requirements. |
+| 43 | `manuscript/parts/part-10-building-porting-and-maintaining.md:8` → `manuscript/chapters/27-cmake-components-and-linking-strategy.md:16` | Part X reproducibility begins with one minimal installed consumer. |
+| 44 | `manuscript/chapters/27-cmake-components-and-linking-strategy.md:403` → `manuscript/chapters/28-deployment-on-linux-and-openwrt.md:15` | Added handoff from linked dependency graph to installed artifacts and runtime lookup. |
+| 45 | `manuscript/chapters/28-deployment-on-linux-and-openwrt.md:375` → `manuscript/chapters/29-testing-debugging-and-benchmarking.md:16` | Added test handoff; next chapter opens with installed-consumer, endpoint and measurement failures. |
+| 46 | `manuscript/chapters/29-testing-debugging-and-benchmarking.md:405` → `manuscript/parts/part-11-building-and-evaluating-minigateway.md:3` | Added capstone handoff after profiling versus workload evidence. |
+| 47 | `manuscript/parts/part-11-building-and-evaluating-minigateway.md:8` → `manuscript/chapters/30-building-minigateway.md:16` | Part XI assembly objective is picked up explicitly from Part X. |
+| 48 | `manuscript/chapters/30-building-minigateway.md:1315` → `manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:16` | Added local-input handoff retaining the existing model and observers. |
+| 49 | `manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:511` → `manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md:18` | Independent understanding versus independent restart leads into concrete architectural decisions. |
+| 50 | `manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md:241` → `manuscript/parts/part-13-epilogue.md:9` | Changed outgoing pointer to the immediate Epilogue, then Appendix A. |
+| 51 | `manuscript/parts/part-13-epilogue.md:12` → `manuscript/chapters/epilogue.md:7` | Epilogue opener and chapter gather the completed construction and judgment arcs. |
+| 52 | `manuscript/chapters/epilogue.md:104` → `manuscript/chapters/appendix-a-reading-and-extending-the-framework.md:24` | Appendix opening now works after both the echo pair and the final principle. |
+| 53 | `manuscript/chapters/appendix-a-reading-and-extending-the-framework.md:343` → `manuscript/backmatter/backmatter.md:1` | Backmatter control file; appendix closes with ownership and cleanup responsibility. |
+| 54 | `manuscript/backmatter/backmatter.md:7` → `manuscript/backmatter/further-reading.md:7` | Further Reading states how external references complement the chapter path. |
+| 55 | `manuscript/backmatter/further-reading.md:71` → `manuscript/backmatter/index.md:1` | Added public-solution/observation guidance before the index control file. |

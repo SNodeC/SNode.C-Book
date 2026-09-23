@@ -66,3 +66,5 @@ For the Bluetooth preparation in Chapter 9, consult the BlueZ project's
 [Device API](https://github.com/bluez/bluez/blob/master/doc/org.bluez.Device.rst). These
 cover controller state, discovery, pairing and trust; they do not define the
 application protocol implemented by a SNode.C context.
+
+Use the chapter’s public solution beside each experiment; compare its stated observation before consulting a broader reference.

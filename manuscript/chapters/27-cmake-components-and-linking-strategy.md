@@ -398,6 +398,8 @@ Apply the method to a scratch copy of `companion/examples/EchoPair`. Its source 
 
 Next inspect the link interface of `snodec::net-in-stream-legacy` in the installed target files. Follow its dependencies to the stream and network-family targets without copying that whole chain into the application. The dependency graph above is useful precisely because the component maintains this chain for its consumers.
 
+The consumer can now find and link its declared components. The next chapter checks where their installed artifacts must live when the executable leaves the build tree.
+
 ::: {.snodec-remember title="What to remember"}
 - Headers expose named C++ abstractions; targets carry compiled dependencies and usage requirements.
 - Select supported package components and link exported targets, allowing each component to own its lower dependencies.

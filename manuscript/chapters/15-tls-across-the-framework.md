@@ -263,6 +263,8 @@ TLS-capable components make secure connection handling possible; they do not by 
 
 That distinction will matter again in the deployment chapters. A binary may be linked with TLS support and still fail as a secure service if the surrounding filesystem, permissions, and trust material are wrong. TLS-capable linking is not the same as TLS deployment.
 
+Next, distinguish how long those connection phases may wait and when a failed attempt or lost peer should trigger recovery.
+
 ::: {.snodec-remember title="What to remember"}
 - TLS adds secure setup, verification and shutdown between the network family and protocol.
 - The handle, instance and factory retain their responsibilities when the stream wrapper changes.

@@ -1310,6 +1310,8 @@ Use a separate observer to check MQTT output when a broker is available. In its 
 
 \Needspace{10\baselineskip}
 
+The model and its current observers now have explicit contracts. The next chapter adds local input while preserving that same acceptance owner and those existing observations.
+
 ::: {.snodec-remember title="What to remember"}
 - The shared model assigns acceptance order and notifies observers on the event-loop thread.
 - The JSON codec supplies one representation to HTTP, SSE, and MQTT.

@@ -227,6 +227,8 @@ Data to reflect: hello-runtime
 
 The diagnostic identifies `echoserver` throughout and `conn=1` on the connection/context records. Read the differing message subjects as evidence of progress at distinct stages.
 
+With those runtime objects distinguished, keep their lifetimes fixed while the next chapter changes the layers beneath the context.
+
 ::: {.snodec-remember title="What to remember"}
 - Endpoint configuration, each activation flow, a peer connection, and its current context have distinct lifetimes.
 - Factories create per-connection behavior; shared application state needs a separate owner that survives its users.

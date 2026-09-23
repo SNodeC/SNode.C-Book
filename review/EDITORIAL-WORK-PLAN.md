@@ -2290,3 +2290,7 @@ Author clarification during P3: explicitly approved the 67-line complete CMake l
 ### Follow-up 11 — P4/P5 gate
 
 P3 committed as `0deb8b3`. Tier 2 and tier 3 work complete, including both optional rows because the pre-P5 projection was below 113,500. Core-mechanism sweep covers all 33 units. Fresh total 109,970; source alignment, references, hygiene, checker regressions and eight affected labs pass. The new retry setter excerpt compiles against the R2 installation in an isolated consumer copy. No companion application/driver/assertion/timeout changes. Evidence: `pedagogical-smoothing-2026-09-23/P4-P5-api-review.md`, `P5-core-mechanism-review.md`, phase metrics and logs. Next: every consecutive seam, then P7.
+
+### Follow-up 11 — P6 seam gate
+
+P4/P5 committed as `6683818`. Read all 55 consecutive manifest pairs, including Part openers, Epilogue and Appendix A; local handoffs are recorded in `pedagogical-smoothing-2026-09-23/seam-log.md` with final snapshots. References, source alignment and hygiene pass. Fresh total: 110,177. All 33 unit floors and caps are met without waivers. P7 full exit checks, diagnostic checker, final accounting and report remain.

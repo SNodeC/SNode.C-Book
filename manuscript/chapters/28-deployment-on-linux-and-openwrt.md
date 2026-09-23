@@ -370,6 +370,8 @@ A deployment rehearsal should preserve the application's actual operating condit
 
 For MiniGateway, keep liveness and readiness distinct. `/health` demonstrates a responsive HTTP role. It does not query broker acceptance, database durability, or the freshness of measurements. A supervisor can use a liveness observation without pretending it establishes those wider application guarantees.
 
+The next chapter turns those deployment observations into tests that distinguish package failures, wrong endpoints and application behavior.
+
 ::: {.snodec-remember title="What to remember"}
 - Installed libraries, runtime-selected modules, configuration and writable state must all fit the deployed role.
 - Package dependencies carry component choices; they do not supply service or update policy.

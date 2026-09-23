@@ -400,6 +400,8 @@ In an event-driven model, one slow boundary can affect other connections if the 
 
 A benchmark locates a regression in a workload; profiling locates cost in parsing, routing, serialization, TLS, logging, allocation, topic matching, database work, dispatch or application callbacks. Interpret both using the affected boundary.
 
+Carry that distinction into the capstone: build and install its components, then observe each application contract before interpreting diagnostics or timing.
+
 ::: {.snodec-remember title="What to remember"}
 - Choose unit, component, policy or installed-consumer tests according to the contract that can fail.
 - Count executed registrations and report skips, timeouts and unselected checks separately.

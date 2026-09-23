@@ -52,8 +52,9 @@ No fetch, build or edit occurs in the author's framework tree.
 | P1 | `c603b8f` | Snapshot reread notes in [P1-context-review-notes.md](P1-context-review-notes.md) |
 | P2 | `9df7d00` | 32 chapters + A; all 62 labs pass; P2-registry-review.md |
 | P3 | `0deb8b3` | 33 apparatus units; 66/66 labs; P3-gate-notes.md |
-| P4/P5 | this tier gate commit | 109,970 tokens; P4-P5-api-review.md and P5-core-mechanism-review.md |
-| P6/P7 | pending | Seams and full exit verification |
+| P4/P5 | `6683818` | 109,970 tokens; P4-P5-api-review.md and P5-core-mechanism-review.md |
+| P6 | this seam gate commit | 55 consecutive pairs; 110,177 tokens; seam-log.md |
+| P7 | pending | Full exit verification and report |
 
 Static entry checks pass: chapter references, source alignment (zero errors,
 31 chapter/appendix records, 37 complete listings), source hygiene, metrics,

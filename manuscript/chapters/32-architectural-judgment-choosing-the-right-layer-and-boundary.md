@@ -236,7 +236,7 @@ Do not push meaning downward merely because a lower callback sees an event first
 
 The current flow API provides another concrete boundary test. Two explicit connect calls create flows with independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate instances. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.
 
-Appendix A applies this judgment to framework extension: new features should be added where their responsibility, lifetime, and operational consequences remain clear.
+The epilogue gathers the principles behind these decisions. Appendix A then applies the same judgment to framework extension, following a public type inward while keeping responsibility, lifetime and operational consequences explicit.
 
 ::: {.snodec-remember title="What to remember"}
 - Choose family and protocol by peer identity, deployment, and the required conversation.

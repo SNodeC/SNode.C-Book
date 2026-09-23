@@ -236,6 +236,8 @@ Two mistakes obscure this model: collapsing all communication into one responsib
 
 For a measurement gateway, identify both the primary owner and the downstream effect of each change. A new endpoint family changes how input arrives; its context parses records. The accepted model owns ordering across inputs. HTTP or SSE can observe that state without becoming its authority. An observer subscription is another resource: remove it before destroying the object captured by its callback. The next chapter's model checkpoint makes that lifetime obligation observable alongside event-runtime reasoning.
 
+The next step is to follow that work through the shared event loop.
+
 ::: {.snodec-remember title="What to remember"}
 - Public types, headers, and components express corresponding layer choices.
 - A network-family change can reuse protocol behavior while changing addressing, security, and deployment obligations.

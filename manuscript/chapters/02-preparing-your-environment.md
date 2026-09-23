@@ -444,6 +444,8 @@ before running it. A local-only alternative answers a narrower question: reflect
 bytes or updating an in-memory model does not establish broker delivery, database
 durability, or a radio connection. Keep those observations separate in your notes.
 
+The installed echo consumer is now the starting point. Follow its startup and first byte exchange next, keeping these verified locations fixed.
+
 ::: {.snodec-remember title="What to remember"}
 - Separate source, build, installation, and consumer directories; rebuilding alone does not update an installed package.
 - Check `snodec_DIR` in the consumer cache to identify the selected installation.

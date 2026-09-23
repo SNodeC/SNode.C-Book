@@ -1,0 +1,695 @@
+[
+  {
+    "from": "manuscript/frontmatter/frontmatter.md",
+    "to": "manuscript/frontmatter/preface.md",
+    "exit": [],
+    "entry": [
+      "This book is an architecture-first guide to SNode.C. It teaches layered, event-driven network programming through one concrete C++ framework instead of treating the framework as a collection of isolated APIs.",
+      "The subject is practical, but the purpose is not only practical. The examples show how to start servers, connect clients, expose HTTP routes, stream events, upgrade to WebSocket, publish and consume MQTT traffic, persist application state, and deploy applications on Linux-oriented systems. The larger purpose is to make the boundaries visible while doing that work: network family, transport form, connection handling, protocol meaning, configuration, diagnostics, deployment, and application role.",
+      "SNode.C is the worked system throughout the book by design. A general survey can compare many libraries, but it often cannot follow one design deeply enough to show how the pieces hold together. This book makes the opposite choice. It follows one framework across many layers so that the same vocabulary can be recognized in small examples, protocol-specific chapters, and the MiniGateway capstone."
+    ]
+  },
+  {
+    "from": "manuscript/frontmatter/preface.md",
+    "to": "manuscript/frontmatter/how-to-read-this-book.md",
+    "exit": [
+      "This is not a beginner's introduction to C++, a complete textbook on networking, or an independent comparison of C++ networking frameworks. It is also not a complete reference manual for every SNode.C symbol.",
+      "The book explains SNode.C by showing why its abstractions exist, how they are used, and how they compose. When a chapter discusses TLS, HTTP, Server-Sent Events, WebSocket, MQTT, databases, OpenWrt, or testing, the purpose is to show how those subjects meet the framework's architecture. Each of those topics has deeper specialist literature; this book stays focused on the framework and the design vocabulary needed to use it responsibly."
+    ],
+    "entry": [
+      "Read the book as a gradual widening of scope, with MiniGateway as the running project. Begin with the objectives, work through the example, then attempt the review questions, labs, and design problem before consulting the public solutions under `companion/exercises/`. A lab is complete when you can explain its expected observation.",
+      "Parts I and II establish the basic vocabulary: runtime, role, connection, layer, context, factory, configuration, and event processing. These chapters are best read in order. Later chapters rely on their terminology and usually apply it rather than redefining it.",
+      "Parts III and IV move from raw network families to protocol-local behavior. They show how the same design vocabulary appears with IPv4, IPv6, Unix domain sockets, Bluetooth, custom `SocketContext` classes, and context factories."
+    ]
+  },
+  {
+    "from": "manuscript/frontmatter/how-to-read-this-book.md",
+    "to": "manuscript/frontmatter/conventions.md",
+    "exit": [
+      "Two shortcuts are useful once the introductory echo pair and its ownership model are familiar:",
+      "For a first practical milestone, complete the echo pair and its Part I checkpoint: reflect measurement-shaped bytes and distinguish transport from acceptance. For the web milestone, build the SSE companions and observe an event with a separate client. For the integration milestone, follow a measurement from MiniGateway input through the model to HTTP and SSE observation. The intervening architectural chapters give names to the decisions those exercises expose. Reading a table of roles is useful; being able to locate those roles in a running example is the stronger check of understanding."
+    ],
+    "entry": [
+      "Code identifiers, paths, component names, command names, and configuration keys are written in monospace, for example `SocketContext`, `net-in-stream-legacy`, `CMakeLists.txt`, and `--help`.",
+      "Shell examples assume a POSIX-like shell unless stated otherwise. Commands are intended to show the shape of the workflow. Local installation prefixes, compiler choices, package-manager paths, and service names may differ between systems.",
+      "C++ listings are teaching excerpts. Some are complete files from the companion examples; others are shortened to keep attention on the relevant boundary. When a listing is described as abridged or source-derived, it should be read as an explanatory slice, not as a replacement for the full file."
+    ]
+  },
+  {
+    "from": "manuscript/frontmatter/conventions.md",
+    "to": "manuscript/frontmatter/author-note.md",
+    "exit": [
+      "An endpoint handle and a flow handle are different objects. The endpoint handle configures an instance, which may be named or anonymous. A flow handle is the shared controller returned by one explicit `listen(...)` or `connect(...)` call. Several flows can use the same endpoint configuration. Chapters 4, 8 and 16 develop the distinction where it affects lifetime, activation, and recovery.",
+      "The same program can be described from the application, configuration, connection and protocol viewpoints. The terms below distinguish those viewpoints. They are a reference for the chapters that develop each idea, not a list to memorize before running the first example. When a sentence says that something survives, stops or changes, first identify which of these objects it describes. Two things drawn beside each other need not share a lifetime."
+    ],
+    "entry": [
+      "This is a first-party book. The author is the creator and maintainer of SNode.C and writes from inside the design of the framework.",
+      "That position has advantages and limits. The advantage is direct architectural knowledge: the book can explain why the framework separates runtime roles, connections, contexts, factories, protocol layers, configuration, diagnostics, and deployment concerns in the way it does. It can also connect public examples to implementation choices that are not obvious from an API reference alone.",
+      "The limit is that this book is not an independent review of SNode.C against every alternative C++ networking library. It does not try to rank frameworks or claim that one design is best for every project. It explains the design SNode.C uses, the kinds of systems that design supports, and the tradeoffs a reader should understand when adopting or extending it."
+    ]
+  },
+  {
+    "from": "manuscript/frontmatter/author-note.md",
+    "to": "manuscript/frontmatter/acknowledgements.md",
+    "exit": [
+      "The limit is that this book is not an independent review of SNode.C against every alternative C++ networking library. It does not try to rank frameworks or claim that one design is best for every project. It explains the design SNode.C uses, the kinds of systems that design supports, and the tradeoffs a reader should understand when adopting or extending it.",
+      "The book therefore asks to be judged on two levels: as a practical guide to SNode.C, and as a worked study of layered, event-driven network architecture in modern C++."
+    ],
+    "entry": [
+      "SNode.C grew out of practical networking work, teaching, experiments, and repeated attempts to keep communication software understandable as it becomes larger.",
+      "I am grateful to the students, colleagues, users, and reviewers whose questions forced the design vocabulary to become sharper. Questions about why a boundary exists are often more valuable than requests for another shortcut; they expose whether an architecture can still explain itself.",
+      "This book also depends on the wider open-source ecosystem around C++, CMake, Linux, TLS, HTTP, WebSocket, MQTT, databases, documentation tools, and typesetting. SNode.C is one framework, but it exists inside that larger technical culture."
+    ]
+  },
+  {
+    "from": "manuscript/frontmatter/acknowledgements.md",
+    "to": "manuscript/frontmatter/mainmatter.md",
+    "exit": [
+      "I am grateful to the students, colleagues, users, and reviewers whose questions forced the design vocabulary to become sharper. Questions about why a boundary exists are often more valuable than requests for another shortcut; they expose whether an architecture can still explain itself.",
+      "This book also depends on the wider open-source ecosystem around C++, CMake, Linux, TLS, HTTP, WebSocket, MQTT, databases, documentation tools, and typesetting. SNode.C is one framework, but it exists inside that larger technical culture."
+    ],
+    "entry": []
+  },
+  {
+    "from": "manuscript/frontmatter/mainmatter.md",
+    "to": "manuscript/parts/part-01-getting-oriented.md",
+    "exit": [],
+    "entry": [
+      "Every later design decision starts from a program whose behavior the reader can follow. This first part establishes that concrete base: why SNode.C exists, what environment is needed, how the first echo pair runs.",
+      "By the end of the part, the echo pair should run, and the reader should be able to follow its public server type to the factory and context that supply its behavior. Part II will use that concrete path to distinguish configuration, activation, connection lifetime, and runtime dispatch more precisely.",
+      "The Part I checkpoint is Chapter 3\u2019s greeting lab: send measurement-shaped bytes, check exact reflection and independent peers, and explain what the future MiniGateway still needs to accept a measurement."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-01-getting-oriented.md",
+    "to": "manuscript/chapters/01-why-snodec-exists.md",
+    "exit": [
+      "By the end of the part, the echo pair should run, and the reader should be able to follow its public server type to the factory and context that supply its behavior. Part II will use that concrete path to distinguish configuration, activation, connection lifetime, and runtime dispatch more precisely.",
+      "The Part I checkpoint is Chapter 3\u2019s greeting lab: send measurement-shaped bytes, check exact reflection and independent peers, and explain what the future MiniGateway still needs to accept a measurement."
+    ],
+    "entry": [
+      "Many networking frameworks make the first connection convenient. That matters when a developer wants to start a server or move data without studying the whole architecture.",
+      "Start with a temperature sensor and a program that accepts one connection. The sensor sends a value, the program prints it, and the first successful reply feels like the whole problem. At that size, keeping the address, input buffer, conversion and reply together is easy to understand. There is only one sender to watch and one conversation to finish. The first test asks a concrete question: did the same value reach the other side?",
+      "Now connect a second sensor. One sends a complete value immediately; the other pauses halfway through its input. The program needs to remember the unfinished input separately. If the first sensor closes, the second should still be able to finish. A single input buffer and a single \u201ccurrent peer\u201d variable can no longer describe the work. The change is small at the user interface, but it exposes a design question: which information belongs to each conversation, and which information describes the service as a whole?"
+    ]
+  },
+  {
+    "from": "manuscript/chapters/01-why-snodec-exists.md",
+    "to": "manuscript/chapters/02-preparing-your-environment.md",
+    "exit": [
+      "The echo pair exposes server and client creation, context construction, callback flow, data input and output, runtime startup, and the boundary between framework logic and application logic with very little distraction.",
+      "Keep the measurement example from the opening in mind. Adding another input should force a decision about addressing and parsing; it should not quietly create a second authority for measurement ordering. That is the kind of judgment the later chapters will make concrete. First, the framework must be built and its smallest communication path made observable."
+    ],
+    "entry": [
+      "Before the architecture can become interesting, the toolchain must be boring. The examples in this book should build, run, and fail in understandable ways, so the first practical task is to keep the source tree, build tree, install prefix, and later playground project separate.",
+      "This is more than tidiness. SNode.C is a real C++ framework with a core runtime, network-family components, stream transports, legacy and TLS connection variants, higher protocol layers, example applications, generated CMake targets, installable package components, and optional support for technologies such as Bluetooth and MariaDB.",
+      "For example, successfully rebuilding a framework library does not refresh a different copy already installed in a local prefix. An external application can still compile against that older installation. Keeping the locations explicit makes that failure understandable."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/02-preparing-your-environment.md",
+    "to": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+    "exit": [
+      "Broker-, database-, and hardware-dependent experiments are **equipped labs**.\nThey may use services on the same machine; \u201cequipped\u201d describes an additional\nprerequisite, not a remote deployment. Check the lab's setup and expected outcome\nbefore running it. A local-only alternative answers a narrower question: reflecting\nbytes or updating an in-memory model does not establish broker delivery, database\ndurability, or a radio connection. Keep those observations separate in your notes.",
+      "The installed echo consumer is now the starting point. Follow its startup and first byte exchange next, keeping these verified locations fixed."
+    ],
+    "entry": [
+      "The first program is small enough to follow from startup to byte exchange: it contains one server and one client, the client sends the first message, the server reflects the received bytes, and the client receives the reflected bytes and sends them again. The visible behavior is a ping-pong.",
+      "Read the two executables as separate processes. In `echoserver.cpp`, `main()` initializes the framework, chooses the server type and creates the object named `echoserver`. Its `listen()` call supplies the address, port and a callback that will report the attempt. This prepares listening work. It does not wait on the current stack for a client to send a greeting. The last line calls `start()`, allowing the runtime to advance the work and eventually report a listening result.",
+      "In another terminal, `echoclient.cpp` follows the corresponding sequence. Its `main()` initializes that process, creates `echoclient`, and calls `connect()` with the server's host and port. Its final `start()` lets the connecting work progress. These are two timelines, not two function calls inside one program. Start the server first so that a listener is available when the client attempts its connection. A refused connection is useful evidence about setup, but it is not evidence that the echo function is wrong."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+    "to": "manuscript/parts/part-02-the-snodec-architecture.md",
+    "exit": [
+      "The framework advances connections while the application supplies the endpoint choice, context factory, and protocol behavior.",
+      "A direct blocking loop gives a short request/reply exchange an easy-to-follow sequential form. Here, the operation is split across callbacks whose state must survive between invocations. That costs some local simplicity, but lets one event runtime advance several connections and reuse the context above different lower layers. The context and factory boundaries make the resulting state placement explicit."
+    ],
+    "entry": [
+      "The first part made SNode.C observable through a working echo program. This part turns those observations into the framework's core model.",
+      "The runtime mental model, layers in practice, and event processing now each have a chapter. They separate what keeps an operation alive, what can vary beneath a protocol, and what advances the work. The answers distinguish endpoint configuration, activation flows, connections, contexts, and the shared event runtime. Layer choices then show which of those responsibilities changes when a network family or connection variant changes. Part III applies that distinction to concrete endpoint families.",
+      "The Part II checkpoint in Chapter 6 gives accepted measurements one owner: two inputs share an order, and removing one observer leaves the other active. A separate queued-work lab makes callback deferral observable before later Parts combine model and transport."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-02-the-snodec-architecture.md",
+    "to": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "exit": [
+      "The runtime mental model, layers in practice, and event processing now each have a chapter. They separate what keeps an operation alive, what can vary beneath a protocol, and what advances the work. The answers distinguish endpoint configuration, activation flows, connections, contexts, and the shared event runtime. Layer choices then show which of those responsibilities changes when a network family or connection variant changes. Part III applies that distinction to concrete endpoint families.",
+      "The Part II checkpoint in Chapter 6 gives accepted measurements one owner: two inputs share an order, and removing one observer leaves the other active. A separate queued-work lab makes callback deferral observable before later Parts combine model and transport."
+    ],
+    "entry": [
+      "The echo pair supplies a first working example. We now separate the lifetimes behind that exchange before changing any protocol or network family.",
+      "The echo program introduced a public type, an activation path, a factory, and a context. This chapter asks how those pieces relate when the program has several peers, several operations, and lifetimes that no longer match the local variables in `main()`.",
+      "Memorizing names can work for the first small example, but it does not scale. A useful mental model tells you what kind of thing each part is, what job it has, and how control and data move through the system. Read SNode.C as an event-driven framework in which application code uses endpoint handles to register communication intent, the runtime advances that intent, and per-connection contexts express protocol behavior above selectable lower layers."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "to": "manuscript/chapters/05-layers-in-practice.md",
+    "exit": [
+      "The diagnostic identifies `echoserver` throughout and `conn=1` on the connection/context records. Read the differing message subjects as evidence of progress at distinct stages.",
+      "With those runtime objects distinguished, keep their lifetimes fixed while the next chapter changes the layers beneath the context."
+    ],
+    "entry": [
+      "The echo pair now has identifiable runtime objects: a handle configures an instance, a flow advances an activation, and a context serves a connection. Keep that picture fixed. The next question is what can change beneath the context while its byte-reflection behavior remains the same. Choosing IPv4 instead of a local Unix socket, or TLS instead of non-TLS handling, should lead us to a particular part of the composition rather than to a rewrite of the whole program.",
+      "We will follow one proposed change through four views. The C++ type selects the composition, its public header makes that type available to the compiler, the component supplies its installed build requirements, and runtime configuration supplies the endpoint and policy. A successful link confirms agreement among the first three; the running program is still needed to establish the fourth. Keeping those checks separate makes a long type name useful instead of intimidating.",
+      "The source tree, public headers, C++ names, and installed components expose related views of a layer choice. Their purposes differ: navigating implementation, including declarations, selecting a type, and linking an external program."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/05-layers-in-practice.md",
+    "to": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "exit": [
+      "For a measurement gateway, identify both the primary owner and the downstream effect of each change. A new endpoint family changes how input arrives; its context parses records. The accepted model owns ordering across inputs. HTTP or SSE can observe that state without becoming its authority. An observer subscription is another resource: remove it before destroying the object captured by its callback. The next chapter's model checkpoint makes that lifetime obligation observable alongside event-runtime reasoning.",
+      "The next step is to follow that work through the shared event loop."
+    ],
+    "entry": [
+      "The previous chapters separated runtime lifetimes from the layer choices beneath a context. Neither picture yet explains how two peers and a timer make progress in one process. To answer that, follow a single successful event-loop turn before reading the implementation. The question is practical: if one callback takes too long, which other work must wait?",
+      "Imagine that peer A has bytes ready, a connection retry timer is due, one application callback is already queued, and peer B has reached its read-timeout deadline. These are four reasons to do work, not four independent threads. The runtime must coordinate them while preserving the objects that each callback still uses. We will use this situation as a thought experiment; it describes responsibilities within a successful turn rather than promising an order among callbacks that happen to become ready together.",
+      "First comes the wait decision. The loop combines the caller's waiting bound with scheduled deadlines and descriptor observation. It should not sleep for a long interval when a timer already needs attention. Likewise, a ready descriptor gives it work without requiring an application-side blocking read loop. Waiting gathers evidence that progress is possible; it does not mean that a complete application message is available from peer A."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "to": "manuscript/parts/part-03-networking-foundations-in-snodec.md",
+    "exit": [
+      "`accept(...)` takes a measurement by value, assigns the next local sequence, stores it, and invokes subscribed listeners synchronously. Two inputs carrying sequences 900 and 2 become accepted states 1 and 2. Remove the first observer between calls, then accept input numbered 1: the remaining observer sees accepted state 3, and `current()` agrees. The removed observer retains only its earlier observations. Unsubscribe the remaining listener before its captured storage leaves scope.",
+      "In a gateway, protocol callbacks will parse and validate input before calling this shared owner. This model experiment executes acceptance and observer removal; it does not demonstrate event-loop scheduling, transport teardown, or persistence. The other lab observes actual deferred callbacks. Together they connect state ownership with the runtime rule: keep operations bounded and retain their dependencies until callbacks finish."
+    ],
+    "entry": [
+      "Part II established the runtime and layered vocabulary. This part puts that vocabulary under pressure by changing the network family.",
+      "IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP are not interchangeable spellings for the same idea. Each carries its own endpoint identity, deployment assumptions, and operating-system reality. After this tour, Part IV can ask which parts of a protocol can remain stable when the network family changes.",
+      "The Part III checkpoint chooses an endpoint for a local measurement producer by comparing the same byte exchange over loopback IP and a temporary Unix path. Bluetooth address exercises need no radio; the additional physical exchange is an equipped lab with explicit preparation."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-03-networking-foundations-in-snodec.md",
+    "to": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "exit": [
+      "IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, and Bluetooth L2CAP are not interchangeable spellings for the same idea. Each carries its own endpoint identity, deployment assumptions, and operating-system reality. After this tour, Part IV can ask which parts of a protocol can remain stable when the network family changes.",
+      "The Part III checkpoint chooses an endpoint for a local measurement producer by comparing the same byte exchange over loopback IP and a temporary Unix path. Bluetooth address exercises need no radio; the additional physical exchange is an equipped lab with explicit preparation."
+    ],
+    "entry": [
+      "Every connection begins with an address, but an address is not merely a string to be parsed.",
+      "The first concrete choice is the network family. An application may use IPv4, IPv6, Unix domain sockets, Bluetooth RFCOMM, or Bluetooth L2CAP. That choice changes what an endpoint *is*; the namespace or build component is only the visible consequence.",
+      "In SNode.C, addresses are part of the network layer. They are not incidental parameters passed into `listen(...)` and `connect(...)` and then forgotten. The address type tells the framework and the reader what kind of endpoint identity is being described."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "to": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "exit": [
+      "A same-user rule, a service-account rule, and a command-specific authorization rule are different application policies. The framework does not choose one merely because the peer is local. Tests for the credential query and socket-path handling protect transport facts; the application's trust policy needs its own tests.",
+      "The next chapter uses these endpoint identities to follow listening, connecting and the lifetime of the peer relationship that results."
+    ],
+    "entry": [
+      "A server or client handle gives application code access to an instance. Its activation flows use the addresses from Chapter 7 to listen or connect; a successful connection then has its own lifetime.",
+      "A server-side instance uses a local endpoint identity to listen and accept peers. A client-side instance uses a remote endpoint identity, and optionally a local one, to initiate a connection. A connection is the concrete peer relationship that appears when the listen or connect flow succeeds.",
+      "Figure \\ref{fig:server-client-path} follows that activation path. It starts with the configured handle, separates server-side and client-side flows, and then follows the accept/connect machinery to the concrete connection, factory, context, and protocol behavior."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "to": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "exit": [
+      "The following table summarizes the responsibility boundaries.",
+      "Before moving to Bluetooth, classify three events: an address cannot be bound, a TLS handshake fails, and a protocol context is replaced during upgrade. The first may produce no peer connection; the second can involve connection machinery without reaching protocol readiness; the third can detach a context while the peer connection continues. Choose diagnostics at the boundary that can distinguish those outcomes. That exercise is more useful than counting every callback as another \u201cconnection event.\u201d"
+    ],
+    "entry": [
+      "Bluetooth is local in a different sense from Unix-domain sockets: the peer is nearby, device-specific, and mediated by the platform Bluetooth stack.",
+      "Bluetooth uses device identity plus a family-specific service selector: an RFCOMM channel or an L2CAP PSM.",
+      "After IPv4, IPv6, and Unix domain sockets, Bluetooth is the final network-family variation before the focus moves upward to application protocol contexts."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "to": "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md",
+    "exit": [
+      "The local lesson is the conditional family surface. Chapter 27 gives the broader include/component matrix.",
+      "The Part III checkpoint compares two usable local producer endpoints before requiring radio equipment. Its thin drivers link the same EchoPair context and factory over IPv4 and Unix-domain streams. Send the same measurement-shaped bytes, then compare the actual peer and service identities. The Unix fixture owns a private directory: the server removes its socket path, the producer removes its own, and an unrelated file remains intact. Choosing a network family changes those responsibilities without yet adding parsing or acceptance to the measurement model."
+    ],
+    "entry": [
+      "The previous part showed that endpoint identity changes with the network family. This part asks how application protocol meaning can remain recognizable anyway.",
+      "The focus is `SocketContext`, `SocketContextFactory`, and the transfer of one protocol shape across several lower layers. The lesson is not that network families are irrelevant; it is that protocol behavior, context construction, network-family selection, and deployment policy become easier to reason about when each has a clear home. Part V then makes those choices visible through configuration and diagnostics.",
+      "The Part IV checkpoint keeps the line parser and factory fixed while transferring fragmented and coalesced commands between IPv4 and a private Unix path. Compare reconstructed replies and distinguish an unreachable endpoint from an invalid command. These framing rules prepare the measurement input; domain validation and acceptance remain separate."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md",
+    "to": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
+    "exit": [
+      "The focus is `SocketContext`, `SocketContextFactory`, and the transfer of one protocol shape across several lower layers. The lesson is not that network families are irrelevant; it is that protocol behavior, context construction, network-family selection, and deployment policy become easier to reason about when each has a clear home. Part V then makes those choices visible through configuration and diagnostics.",
+      "The Part IV checkpoint keeps the line parser and factory fixed while transferring fragmented and coalesced commands between IPv4 and a private Unix path. Compare reconstructed replies and distinguish an unreachable endpoint from an invalid command. These framing rules prepare the measurement input; domain validation and acceptance remain separate."
+    ],
+    "entry": [
+      "The next task is to turn incoming bytes into a conversation. An address can select a peer, but it cannot say whether `PING` is a complete command, whether more input is needed, or which response should follow. Those decisions belong in the per-connection context.",
+      "A `SocketContext` is the per-connection application protocol endpoint attached to a `SocketConnection`.",
+      "The context can send, read, close, set timeouts, and observe metrics through the connection. It expresses what the protocol does over that connection without becoming the transport object."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
+    "to": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "exit": [
+      "The ordinary `sendToPeer(...)` surface remains useful when connection failure is the intended response to a bounded-queue overflow. Chapter 16 explains that difference, the watermarks, and the lifetime of the immutable connection policy.",
+      "The line context needs its own receive buffer, but a later measurement context may also need a reference to a shared application model. Who supplies that reference, and how long must the model remain alive? Chapter 11 follows those questions through factory construction. The context's parsing behavior stays here; the next chapter explains how each newly arriving connection receives the dependencies that behavior needs."
+    ],
+    "entry": [
+      "A `SocketContext` owns per-connection protocol behavior; a `SocketContextFactory` defines how such contexts are created.",
+      "For the line protocol, creating a new context also creates a new receive buffer. For an application with a shared measurement model, creation must additionally supply access to that model without sharing the receive buffer. The same small interface serves both cases, but the dependency and lifetime decisions need to be explicit.",
+      "The stream factory interface is narrow. Its essential method is:"
+    ]
+  },
+  {
+    "from": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "to": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "exit": [
+      "Chapter 12 will show how the same protocol can be carried over different network families.",
+      "Keep the context's input buffer and the factory's dependencies fixed while changing only the outer endpoint selection. The next chapter performs that comparison with a runnable line server, so reuse is checked through returned bytes as well as through similar declarations."
+    ],
+    "entry": [
+      "The line protocol now gives us something concrete to transfer: a receive buffer, three commands, response rules, and a factory that creates one parser per connection. This chapter keeps those files fixed while changing the endpoint that carries their bytes.",
+      "Address identity, deployment, platform support, permissions, TLS and retry behavior still matter. The context and factory separation lets us ask which protocol decisions remain valid when those conditions change.",
+      "The transfer model keeps four questions apart:"
+    ]
+  },
+  {
+    "from": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "to": "manuscript/parts/part-05-configuration-and-operational-behavior.md",
+    "exit": [
+      "The goal is to keep the stable protocol core stable and the real family-specific differences visible.",
+      "Network-family transfer naturally makes configuration more visible. Changing the network family may change the selected handle type, instance name, local and remote endpoint values, factory arguments, TLS/legacy choice, retry policy, startup arguments, deployment files, and platform or permission requirements. Configuration is where that variation becomes explicit instead of leaking into protocol code."
+    ],
+    "entry": [
+      "Part IV separated protocol behavior from network-family selection. This part shows where many of those choices become visible in a real executable.",
+      "Configuration is treated as architecture, not as decoration: application-side handles, named instances, generated command lines, logging, diagnostics, and runtime introspection all make operational behavior observable. With that surface established, Part VI can discuss secure and robust communication without hiding policy inside arbitrary callbacks.",
+      "The checkpoint makes the echo role reproducible and diagnosable: observe source/file/CLI precedence, run the selected endpoint, and compare narrow logging overrides. Carry those named-role and diagnostic choices into MiniGateway as its interfaces accumulate."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-05-configuration-and-operational-behavior.md",
+    "to": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "exit": [
+      "Configuration is treated as architecture, not as decoration: application-side handles, named instances, generated command lines, logging, diagnostics, and runtime introspection all make operational behavior observable. With that surface established, Part VI can discuss secure and robust communication without hiding policy inside arbitrary callbacks.",
+      "The checkpoint makes the echo role reproducible and diagnosable: observe source/file/CLI precedence, run the selected endpoint, and compare narrow logging overrides. Carry those named-role and diagnostic choices into MiniGateway as its interfaces accumulate."
+    ],
+    "entry": [
+      "Configuration is where architectural choices become adjustable by the operator. The context still implements the protocol and the factory creates contexts, but the application must choose its communication roles, endpoint values, connection variants and enablement.",
+      "Through a `SocketServer` or `SocketClient` handle, the application configures an instance. Giving the instance a name registers it in the configuration hierarchy. Each `listen(...)` or `connect(...)` call then starts an activation flow for that instance.",
+      "Keep Chapter 4's runtime model beside this configuration story. The named instance supplies one shared settings tree; each explicit activation uses it. We will track `echoserver.local.port`: C++ supplies 8080, a deployment file selects 18091, and one command line selects 18092. The effective value is what startup consumes; a file assignment alone is neither a listening socket nor proof of successful activation."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "to": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "exit": [
+      "Configuration should expose variation; it should not replace application design.",
+      "One final distinction prevents a subtle configuration mistake. A named instance is the address in the configuration tree; a returned `FlowHandle` is control over one activation. Starting the endpoint twice does not create two separately configurable instance names. Likewise, `terminateFlow()` ends that activation's pending work and recovery decisions, while `setOnDestroy(...)` observes the eventual release and unregistration of the shared instance. Configuration identity, flow termination, and connection closure are three different observations."
+    ],
+    "entry": [
+      "Configuration describes the system that should run. Diagnostics explain the system that did run: which roles became active, which connections existed, which protocol decisions were made, and where progress stopped.",
+      "A client may exist before connecting, TLS may still be negotiating on an established connection, and HTTP upgrade may replace a context without ending the peer connection. A useful record identifies the boundary it describes. Semantic logging records origin, boundary, component and optional runtime identity alongside severity and message. These connect the configuration from Chapter 13 to observed lifetimes.",
+      "Runtime visibility is broader than logging. A useful investigation combines several kinds of evidence:"
+    ]
+  },
+  {
+    "from": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "to": "manuscript/parts/part-06-secure-and-robust-communication.md",
+    "exit": [
+      "The effective configuration is the companion artifact for this reading. Record the selected endpoint, limits, retry policy, and log policy along with the observed sequence. A short event history plus the exact configuration is usually a better bug report than an unbounded payload dump.",
+      "**Part V checkpoint \u2014 make the role reproducible and diagnosable.** Use the public lab to repeat the echo precedence experiment with an unused loopback port. Run that endpoint first at global `Error`, then with component `echo=info` and instance `echoserver=debug` overrides. Both runs must echo the same bytes; only the scoped run reveals the listening and context records. Reject port 70000 and locate `--port` through local help. Keep the selected configuration with the short event history. These startup observations do not test runtime reconfiguration."
+    ],
+    "entry": [
+      "The configuration and diagnostic model from Part V gives the reader the vocabulary needed for connection behavior over time. This part adds TLS, timeouts, retry, reconnect, shutdown, termination, and failure visibility.",
+      "Security and robustness are not treated as scattered flags. They are design responsibilities attached to the layer and role that can honestly own them. Part VII then carries the same discipline into HTTP and web-facing protocols.",
+      "The checkpoint distinguishes trusted identity, failed activation and recovery after peer loss using local, bounded experiments. Carry those observations into MiniGateway's uplinks: secure readiness and a restored connection leave authorization and uncertain delivery as separate decisions."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-06-secure-and-robust-communication.md",
+    "to": "manuscript/chapters/15-tls-across-the-framework.md",
+    "exit": [
+      "Security and robustness are not treated as scattered flags. They are design responsibilities attached to the layer and role that can honestly own them. Part VII then carries the same discipline into HTTP and web-facing protocols.",
+      "The checkpoint distinguishes trusted identity, failed activation and recovery after peer loss using local, bounded experiments. Carry those observations into MiniGateway's uplinks: secure readiness and a restored connection leave authorization and uncertain delivery as separate decisions."
+    ],
+    "entry": [
+      "The diagnostic chapter separated a successful transport connection from later protocol readiness. TLS makes that distinction operational: a peer can be reached while trust or identity checks still prevent the application conversation. Follow those observations while configuring the secure stream.",
+      "TLS is a connection-layer specialization with operational consequences. It does not introduce a second application model; it changes how a secure stream is established, verified, diagnosed, and shut down.",
+      "Identity, trust, handshake timing and close-notify belong to secure connection handling and its configuration. They should not spread through the protocol context merely because encryption is involved."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/15-tls-across-the-framework.md",
+    "to": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
+    "exit": [
+      "That distinction will matter again in the deployment chapters. A binary may be linked with TLS support and still fail as a secure service if the surrounding filesystem, permissions, and trust material are wrong. TLS-capable linking is not the same as TLS deployment.",
+      "Next, distinguish how long those connection phases may wait and when a failed attempt or lost peer should trigger recovery."
+    ],
+    "entry": [
+      "Reliable communication includes more than establishing a connection; it also means deciding what happens when establishment, operation, shutdown, or recovery does not complete as expected.",
+      "Communication is not a single action. It unfolds over time. Constructing an endpoint handle with a name registers a named instance. An explicit call may then activate a flow for that instance. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client flow may establish a replacement connection. A failed activation attempt may be retried. An activation flow may be stopped.",
+      "Timeouts bound an in-progress phase: reading, writing, connecting, TLS initialization/shutdown or protocol waiting. Retry applies after a failed listen/connect attempt; reconnect applies after an established client connection ends. Shutdown may carry both transport and protocol meaning. Stopping a flow can be intentional during disablement, teardown or an explicit decision to end recovery; it need not signal failure."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
+    "to": "manuscript/parts/part-07-web-protocols-and-web-applications.md",
+    "exit": [
+      "Failure handling without visibility is difficult to operate. Retry without visibility is especially dangerous because it can turn a clear failure into a quiet loop.",
+      "The Part VI checkpoint separates secure identity from recovery: first test trust and name against a local certificate fixture, then observe a controlled peer's availability changes. Record the failed attempts before establishment and the fresh context after reconnect. A new stream cannot settle an earlier command's delivery."
+    ],
+    "entry": [
+      "Part VI dealt with connection behavior before web semantics entered the picture. This part raises the model into HTTP, Express-like routing, Server-Sent Events, WebSocket upgrade, and WebSocket subprotocols.",
+      "The web stack is presented as a sequence of protocol surfaces built on lower connection machinery, not as one monolithic abstraction. Part VIII then shifts from web-facing interaction to MQTT and message-oriented IoT systems.",
+      "The checkpoint follows two accepted measurements through POST responses and independent SSE observers, then checks WebSocket negotiation and message behavior separately. These are the web-facing pieces of MiniGateway: shared state, observation lifetime and explicit protocol contracts."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-07-web-protocols-and-web-applications.md",
+    "to": "manuscript/chapters/17-the-http-layer.md",
+    "exit": [
+      "The web stack is presented as a sequence of protocol surfaces built on lower connection machinery, not as one monolithic abstraction. Part VIII then shifts from web-facing interaction to MQTT and message-oriented IoT systems.",
+      "The checkpoint follows two accepted measurements through POST responses and independent SSE observers, then checks WebSocket negotiation and message behavior separately. These are the web-facing pieces of MiniGateway: shared state, observation lifetime and explicit protocol contracts."
+    ],
+    "entry": [
+      "The line protocol already gave bytes command meaning. HTTP now gives the application a standard request/response vocabulary, with parsing and message boundaries handled by the framework\u2019s HTTP layer.",
+      "A request callback runs only after the lower connection and HTTP parser have made the request available. This ordering gives the chapter a practical question: when an application handler never runs, did the peer fail to connect, did HTTP reject its input, or did the application fail after receiving a valid request? The layer boundaries distinguish those observations.",
+      "HTTP contexts and factories build on named instances, activation flows and stream connections. The network family and legacy-or-TLS connection variant remain in place:"
+    ]
+  },
+  {
+    "from": "manuscript/chapters/17-the-http-layer.md",
+    "to": "manuscript/chapters/18-the-express-like-framework.md",
+    "exit": [
+      "It should not include a lower socket header merely because HTTP is carried by that socket stack. Chapter 27 consolidates the complete source/header and component mapping.\n:::",
+      "Chapter 18 builds routing and middleware on this request-ready boundary. Use the back-matter protocol references for HTTP\u2019s wire rules; the immediate milestone is locating a failure before or after one application handler."
+    ],
+    "entry": [
+      "HTTP messages are no longer handled only by an HTTP request-ready callback; the Express-like layer organizes them through routers, routes, middleware chains, request/response facades, and explicit continuation.",
+      "HTTP provides message meaning; Express organizes application handling above it.",
+      "Follow one request through the complete local fixture before reading the class composition. The application mounts a router under `/api`. Both the application and router add middleware, and the router supplies a `/status` handler. The same fixture also provides a deliberately blocked path."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/18-the-express-like-framework.md",
+    "to": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
+    "exit": [
+      "It selects the Express layer together with the IPv4 legacy stream connection. The source-side and build-side names rhyme without being the same mechanism. Chapter 27 gives the source-derived matrix for the broader set of components and headers.\n:::",
+      "Chapter 19 extends this routing model to a long-lived, one-way event response. Its observer lifetime needs more than the completed-response examples here."
+    ],
+    "entry": [
+      "Routing, middleware, and request/response facades stay inside the HTTP world, but Server-Sent Events change the temporal shape of one response: a route may start a response stream and keep it open while the server sends event-stream records over time.",
+      "Here, \u201creal-time\u201d means live-update HTTP. It does not mean deterministic latency, hard real-time scheduling, or a replacement for the lower timing and failure model introduced earlier. SSE is a practical web mechanism for delivering server-side updates as they become available.",
+      "SSE fits server-to-client updates that do not require a bidirectional messaging protocol."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
+    "to": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "exit": [
+      "Server-side SSE remains an HTTP or Express route that validates the request and streams `text/event-stream` response fragments. Chapter 27 summarizes the broader component/header mapping.\n:::",
+      "The response lifetime and subscription lifetime now have an explicit relationship. The next chapter changes the conversation to bidirectional WebSocket messages, while retaining the need to distinguish connection progress from application delivery."
+    ],
+    "entry": [
+      "HTTP can remain open as a one-way event stream; it can also negotiate an upgrade. After a successful WebSocket upgrade, the same lower connection no longer behaves as ordinary request/response HTTP. The connection continues as bidirectional, message-oriented communication.",
+      "This makes WebSocket different from both ordinary HTTP and Server-Sent Events. Figure \\ref{fig:web-protocol-layer-structure} places these ideas in the relationship used in this part of the book: HTTP request/response is the common web-protocol foundation; Server-Sent Events and WebSocket are dependent protocol shapes inside the same web protocol layer; and the Express-like application structure uses that layer to organize application-facing endpoints.",
+      "Upgrade does not mean that the lower connection disappears. The network family, stream transport, TLS state if present, connection identity, counters, runtime lifecycle, and diagnostic surface remain part of the same connection. The protocol context interpreting its bytes changes."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "to": "manuscript/parts/part-08-iot-and-message-oriented-systems.md",
+    "exit": [
+      "WebSocket crosses HTTP negotiation, upgraded socket context, framing, and optional subprotocol selection. The local rule is therefore to include the highest public header for the WebSocket abstraction directly named by the file and link the matching WebSocket component surface. Chapter 27 gives the consolidated component/header matrix, including the MQTT-over-WebSocket adapters.",
+      "The Part VII checkpoint first observes the SSE example's accepted measurement through POST results and two event streams, then removes one observer while the other continues. Its separate WebSocket exchange checks negotiation and message behavior; an echo is not a second owner of measurement state."
+    ],
+    "entry": [
+      "The web chapters ended with upgraded and long-lived communication. This part introduces MQTT and then places it beside WebSocket and HTTP as one surface in larger IoT designs.",
+      "Native MQTT, MQTT over WebSocket, and multi-protocol systems are treated as choices about who talks to whom, through which surface, and for what purpose. Part IX then adds durable application state and reads complete applications as systems rather than isolated protocol examples.",
+      "The checkpoint observes a publication at an independent broker subscriber, then checks that local gateway state remains observable when MQTT is unavailable. Keep session, subscription, delivery and application acceptance separate as these roles join the running project."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-08-iot-and-message-oriented-systems.md",
+    "to": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "exit": [
+      "Native MQTT, MQTT over WebSocket, and multi-protocol systems are treated as choices about who talks to whom, through which surface, and for what purpose. Part IX then adds durable application state and reads complete applications as systems rather than isolated protocol examples.",
+      "The checkpoint observes a publication at an independent broker subscriber, then checks that local gateway state remains observable when MQTT is unavailable. Keep session, subscription, delivery and application acceptance separate as these roles join the running project."
+    ],
+    "entry": [
+      "MQTT changes the unit of communication. The application is no longer mainly handling requests, routes, event streams, or upgraded message frames; it is exchanging broker-mediated publications and subscriptions.",
+      "MQTT is not part of the web stack. It has its own packet vocabulary, session behavior, topic model, keep-alive timing, publish flow, and client/server sides. But the architectural discipline does not change.",
+      "Consider two applications and a broker. A sensor publisher reports `23.5` on a value topic; a subscriber wants to observe that exact topic and payload. They do not call each other's callbacks. Each establishes its own communication with the broker, which receives publications and decides which subscriptions match. The first useful diagram is therefore a conversation among those actors, not a list of framework classes."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "to": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "exit": [
+      "This is a component dependency, not MQTT payload identity: sessions, topics and control packets define the protocol. Applications may choose JSON for structured payloads without making it mandatory MQTT meaning.\n:::",
+      "We can now distinguish transport establishment from session acceptance, subscription acceptance and subscriber receipt. Chapter 22 keeps that MQTT conversation and changes the path beneath it to WebSocket, adding observable steps before MQTT can begin."
+    ],
+    "entry": [
+      "MQTT over WebSocket combines the HTTP-upgrade and subprotocol path from Chapter 20 with the packet, session, topic, keep-alive and publish-flow semantics from Chapter 21. HTTP negotiates the upgrade; WebSocket carries MQTT packet bytes in binary messages. The MQTT layer interprets those bytes after the adapter delivers them through `MqttContext`.",
+      "Put the two paths side by side before inspecting the adapter. Native: TCP connection \u2192 MQTT CONNECT \u2192 accepted CONNACK \u2192 subscription/publication \u2192 subscriber receipt. Composed: TCP connection \u2192 HTTP Upgrade \u2192 WebSocket `mqtt` selection \u2192 binary MQTT CONNECT \u2192 accepted CONNACK \u2192 subscription/publication \u2192 subscriber receipt. The MQTT milestones from the previous chapter remain; the composed path adds prerequisites before they can occur.",
+      "At the first step, a refused connection points to the endpoint or lower connection setup on either path. Native MQTT can then send its packet bytes directly. On the composed path, an HTTP response other than the required upgrade result must be interpreted before expecting MQTT packets. A successful TCP connection with a rejected upgrade is therefore a useful partial result, not an MQTT session failure."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "to": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
+    "exit": [
+      "Chapter 27 gives the consolidated source-derived component/header matrix.\n:::",
+      "Chapter 23 moves from this composed connection to systems with several independent protocol boundaries. A gateway may share domain state across them without making their negotiation, timing or recovery policies identical."
+    ],
+    "entry": [
+      "A whole IoT system rarely has only one conversation. Devices, dashboards, brokers, local tools, databases, and administration surfaces often need different protocol shapes in the same design.",
+      "Start by asking which boundary needs a conversation and who consumes it, then choose the protocol. Multi-protocol design requires that ordering, not every protocol everywhere.",
+      "IoT architecture is not defined by sensors alone. Sensors, boards, radio modules, and local devices matter, but they do not define the communication architecture by themselves. The architecture is defined by the points where information crosses from device-near code to local services, from local services to integration infrastructure, from integration infrastructure to user interfaces, and from live state into persistent or external systems."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
+    "to": "manuscript/parts/part-09-persistence-and-full-systems.md",
+    "exit": [
+      "This exercise is the reading milestone for the chapter. A useful boundary map explains partial failure and ownership as well as the successful path. Chapter 24 develops the persistence decision, and the capstone later makes the shared measurement model concrete.",
+      "For the gateway developed later, follow one measurement through those boundaries before adding another protocol. The input adapter validates its representation, the model accepts a new local state, and each output adapter projects that accepted state into its own protocol. The MQTT input topic must remain distinct from the output topic unless the application has an explicit origin rule. The SSE event identifier describes the model's accepted sequence; storage and broker acknowledgement have separate outcomes. Those distinctions become operationally important as soon as one output is unavailable while another remains healthy."
+    ],
+    "entry": [
+      "Part VIII widened the communication picture from one stack to several cooperating roles. This part adds the state that survives individual exchanges and then studies complete executable systems.",
+      "MariaDB-backed persistence leads to reading complete applications in `src/apps`, then to a separate chapter on system composition and MQTTSuite. This order distinguishes an executable\u2019s assembly from responsibilities shared across processes. Part X then turns to the build, installation, and maintenance surfaces that make those systems reproducible.",
+      "The checkpoint reads a committed measurement after the database client restarts, then contrasts the gateway\u2019s transient state. Use those observations to separate broker delivery, raw storage and projection when tracing a publication through the worked system."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-09-persistence-and-full-systems.md",
+    "to": "manuscript/chapters/24-database-support-and-application-state.md",
+    "exit": [
+      "MariaDB-backed persistence leads to reading complete applications in `src/apps`, then to a separate chapter on system composition and MQTTSuite. This order distinguishes an executable\u2019s assembly from responsibilities shared across processes. Part X then turns to the build, installation, and maintenance surfaces that make those systems reproducible.",
+      "The checkpoint reads a committed measurement after the database client restarts, then contrasts the gateway\u2019s transient state. Use those observations to separate broker delivery, raw storage and projection when tracing a publication through the worked system."
+    ],
+    "entry": [
+      "Persistence answers a question that protocols alone cannot answer: which information should survive after a connection, request, message, or process has ended?",
+      "A protocol boundary asks how information moves; persistence asks what remains afterward. The application must choose memory or durable storage, when to start database work, how results return to its event-driven roles, and what happens when storage is unavailable. A protocol event receives domain meaning before it causes an optional persistence decision.",
+      "Figure \\ref{fig:persistence-boundary} separates transient connections, contexts and application interpretation from explicitly chosen durable work. Queues and client memory remain on the transient side; crossing into database work does not make submission a commit. The MariaDB client, connection and command API implement that work after the application decides what matters."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/24-database-support-and-application-state.md",
+    "to": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "exit": [
+      "Use isolated state, known input, and explicit cleanup when testing a particular database, schema, credential set, or transaction sequence.",
+      "Receiving, accepting and committing now have separate witnesses. The next chapter follows complete applications to see where their build targets and entry points assemble those responsibilities, so that reading `main()` does not become a search for every implementation detail in one file."
+    ],
+    "entry": [
+      "The database chapter separated receiving a value from accepting it and making it durable. We can now read an entire application without expecting its entry point to implement every one of those responsibilities. The task is to discover what the executable assembles, where each operation is implemented, and which observable result would show that the assembled program works.",
+      "Choose one program and keep one question in view. For echo, ask how the selected server returns a peer's bytes. Begin with the build target to identify the source files and direct components. Then find the composition root: the place that constructs application dependencies and connects them to framework objects. Follow its public includes and linked components before tracing `main()` into configuration, activation and runtime start. Finally find the callback that implements the byte contract and the test that observes it.",
+      "This order limits how much source must be understood at once. A generated family selection matters to reaching the peer, while the context's receive function matters to reflection. A shared model passed into a factory matters to state lifetime, while an install rule matters to finding the executable later. Keeping a written prediction beside each step prevents an interesting implementation file from becoming a detour unrelated to the behavior being read."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "to": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
+    "exit": [
+      "When borrowing from an in-tree application, separate three things in the reading notes: a public API shape, the example's selected policy, and an outcome actually tested. The TLS echo source is a useful case: it exposes the pre-handshake callback, but its commented hostname-checking statements do not execute. The same distinction applies to disabled roles, optional modules, and configured retry policy. A source example is strongest when it gives the reader a path to verify behavior, rather than when every nearby comment is treated as a runtime guarantee.",
+      "We have followed one executable from target selection to an externally observable contract. The next chapter applies the same discipline between executables: a broker, bridge or store has its own entry point and tests, while their cooperation adds delivery, compatibility and recovery questions that no single `main()` can answer."
+    ],
+    "entry": [
+      "The preceding chapter followed one executable from its build target through assembly to an observable result. Now let a publisher, broker and storage subscriber run separately. Each can start and fail independently, yet a user asks one question: did the reported measurement reach the intended destination and become durable? Answering it requires following the actors between applications as carefully as we followed callbacks within one.",
+      "A SNode.C system may keep several responsibilities in one executable or distribute them across processes and hosts. The choice matters because a function call inside one lifetime becomes a message exchange between separately operated programs. A broker accepting a publication does not make a storage process available; a storage process receiving it does not establish that a database commit succeeded. MQTTSuite supplies concrete broker, integration, bridge, command-line and store programs with which to reason about these distinctions.",
+      "A larger application may still have one main role, one deployment boundary, and one dominant operational shape. A system introduces a constellation of concerns around the running process. Figure \\ref{fig:application-system-role-constellation} shows the application as a system role rather than as an isolated program: protocol-facing boundaries, configuration, operational visibility, and deployment identity all meet at the running application process."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
+    "to": "manuscript/parts/part-10-building-porting-and-maintaining.md",
+    "exit": [
+      "When the destination broker is unavailable, name the missing observation precisely. The first subscriber may still receive, while the second cannot yet prove forwarding. When the database fails, a store receive diagnostic can still be true while neither write succeeds. This way of reading the trace gives operators a useful statement of degraded behavior instead of a single ambiguous \u201csystem down\u201d flag. It also identifies which process owns the next recovery action without giving that process authority over another process's state.",
+      "Return to the accepted-state distinction with the equipped checkpoint in the public solutions. Observe a committed measurement after a database client restarts, then compare the gateway's in-memory restart. Use those observations to classify the suite trace: process recovery, broker delivery, raw insertion and projection insertion have different witnesses. The unequipped publication lab isolates the broker-distribution responsibility; it cannot substitute for the database result. Together the two experiments prepare the deployment questions that follow: which executable must exist, which component it consumes, and which external services its contract requires."
+    ],
+    "entry": [
+      "Part IX moved from durable state to complete applications and then to cooperating processes. This part asks how those systems remain trustworthy after they leave the source tree.",
+      "CMake components, public headers, install surfaces, package dependencies, Linux/OpenWrt deployment, testing, debugging, and benchmarking are treated as part of the same architectural story. Part XI then uses the accumulated material to build MiniGateway as a complete guided system.",
+      "The checkpoint rebuilds EchoPair as an external consumer, installs it privately, separates a wrong endpoint from a build failure, and records a bounded latency measurement. Keep the installation, operating conditions and limits with each result."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-10-building-porting-and-maintaining.md",
+    "to": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "exit": [
+      "CMake components, public headers, install surfaces, package dependencies, Linux/OpenWrt deployment, testing, debugging, and benchmarking are treated as part of the same architectural story. Part XI then uses the accumulated material to build MiniGateway as a complete guided system.",
+      "The checkpoint rebuilds EchoPair as an external consumer, installs it privately, separates a wrong endpoint from a build failure, and records a bounded latency measurement. Keep the installation, operating conditions and limits with each result."
+    ],
+    "entry": [
+      "The system chapter assigned work to cooperating executables. Each executable now needs a reproducible way to consume the framework it actually uses. Start with the echo server: its source names an IPv4 legacy stream server, so the immediate build question is which component makes that public type usable. The answer should not require the application to repeat the framework's complete dependency graph.",
+      "This is an excerpt from a consumer build, after its project and language-standard setup. One requested component locates the composed stream implementation; the imported target carries its declared include and link requirements. Why is that one component enough, and where do the lower dependencies come from? Follow the target's public links: it combines the IPv4 stream branch with legacy stream handling, and those branches reach shared socket and runtime support.",
+      "The application still includes the public header for the type it names and supplies its own source files. It does not locate each lower library manually. If discovery fails, first check the installed prefix and requested component. If compilation fails, inspect the named public abstraction and its header. These are different failures with different evidence, even though both appear during a build."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "to": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
+    "exit": [
+      "Next inspect the link interface of `snodec::net-in-stream-legacy` in the installed target files. Follow its dependencies to the stream and network-family targets without copying that whole chain into the application. The dependency graph above is useful precisely because the component maintains this chain for its consumers.",
+      "The consumer can now find and link its declared components. The next chapter checks where their installed artifacts must live when the executable leaves the build tree."
+    ],
+    "entry": [
+      "Deployment is where build decisions meet the operating system. Linking produces a binary; running a service requires its libraries, modules, configuration, supervision, writable state and application resources to exist with the correct ownership.",
+      "The figure goes beyond compilation: a component acquires an install location and package dependency metadata, then joins a service definition, configuration and writable state.",
+      "General-purpose Linux workstations, servers, virtual machines and Debian-like SBCs provide the first rehearsal: build, install, package, configure and supervise. Even here the executable may need protocol extensions, TLS material, database access or web assets."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
+    "to": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
+    "exit": [
+      "For MiniGateway, keep liveness and readiness distinct. `/health` demonstrates a responsive HTTP role. It does not query broker acceptance, database durability, or the freshness of measurements. A supervisor can use a liveness observation without pretending it establishes those wider application guarantees.",
+      "The next chapter turns those deployment observations into tests that distinguish package failures, wrong endpoints and application behavior."
+    ],
+    "entry": [
+      "The deployed program from the preceding chapter can fail even when its unit tests pass. A parser test may prove that a byte sequence is decoded correctly while an external consumer cannot find the installed component. Rebuilding that parser will not repair the package path. First identify whether the failure happens during discovery, compilation, startup or an actual exchange.",
+      "A second failure is more deceptive: the build succeeds and an HTTP request returns a plausible response, but another process owns the port. The observation belongs to that process, not to the program being tested. Confirm the endpoint and instance identity before interpreting the response. Then retain the request and expected result so that a repeated run asks the same question.",
+      "A third mistake turns a correct local latency measurement into a capacity claim. One sequential client on loopback does not exercise concurrent clients, remote links or a deployment's resource constraints. This book reports no performance figures. It uses SNode.C to teach layered network programming; this section teaches how to measure and interpret a workload, not what capacity to expect."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
+    "to": "manuscript/parts/part-11-building-and-evaluating-minigateway.md",
+    "exit": [
+      "A benchmark locates a regression in a workload; profiling locates cost in parsing, routing, serialization, TLS, logging, allocation, topic matching, database work, dispatch or application callbacks. Interpret both using the affected boundary.",
+      "Carry that distinction into the capstone: build and install its components, then observe each application contract before interpreting diagnostics or timing."
+    ],
+    "entry": [
+      "The previous parts supplied the pieces: network families, protocol layers, configuration, diagnostics, persistence, deployment, testing, and system-level vocabulary. This part combines those pieces into one deliberately small application.",
+      "MiniGateway combines web administration, SSE observation, MQTT integration, and shared application state using the component and deployment decisions just established. The final checkpoint exercises mixed inputs and observer lifetimes before asking which responsibilities need independent operation.",
+      "Chapter 30 builds MiniGateway around a shared measurement model, a web role, and an MQTT integration role. Chapter 31 then extends that system as MiniGateway Extended by adding a Unix-domain socket input role without disturbing the existing HTTP, SSE, MQTT, or model boundaries. Chapter 32 then uses the completed system to examine architectural choices and their costs."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-11-building-and-evaluating-minigateway.md",
+    "to": "manuscript/chapters/30-building-minigateway.md",
+    "exit": [
+      "MiniGateway combines web administration, SSE observation, MQTT integration, and shared application state using the component and deployment decisions just established. The final checkpoint exercises mixed inputs and observer lifetimes before asking which responsibilities need independent operation.",
+      "Chapter 30 builds MiniGateway around a shared measurement model, a web role, and an MQTT integration role. Chapter 31 then extends that system as MiniGateway Extended by adding a Unix-domain socket input role without disturbing the existing HTTP, SSE, MQTT, or model boundaries. Chapter 32 then uses the completed system to examine architectural choices and their costs."
+    ],
+    "entry": [
+      "Part X separated build, installation and runtime evidence. MiniGateway now uses those habits to assemble one accepted-state model with several protocol participants; begin by observing its behavior, then read the files in dependency order.",
+      "MiniGateway keeps the latest environmental measurement in memory. A measurement contains temperature, humidity, voltage, a sequence number, and an internal timestamp. The printed JSON codec exposes the first four values; it does not serialize the timestamp. Whenever a new measurement enters the application, MiniGateway performs one internal state transition and then lets the outward-facing roles observe the accepted state.",
+      "The first role is an HTTP/Express role. It is the browser-friendly and command-line-friendly observation surface. It exposes four paths:"
+    ]
+  },
+  {
+    "from": "manuscript/chapters/30-building-minigateway.md",
+    "to": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "exit": [
+      "Use a separate observer to check MQTT output when a broker is available. In its absence, finish the HTTP and SSE checks and record the broker scenario as unexecuted.",
+      "The model and its current observers now have explicit contracts. The next chapter adds local input while preserving that same acceptance owner and those existing observations."
+    ],
+    "entry": [
+      "MiniGateway already contains one shared `MeasurementModel`, one web role, and one MQTT role. MiniGateway Extended adds a Unix-domain socket input around that structure:",
+      "The new concern is local measurement injection through a Unix-domain stream socket. That concern belongs to a new socket-server role. It does not belong in the HTTP route code, the SSE response path, or the MQTT client context.",
+      "Figure \\ref{fig:minigateway-extended-network-role-architecture} shows HTTP simulation, MQTT subscription, and Unix-domain input converging on `MeasurementModel`. HTTP status, SSE events, and MQTT publication expose accepted state. The arrows describe acceptance and observation, not guaranteed delivery or execution threads. `MeasurementJsonCodec` and `Measurement` are application support types alongside the model, not additional network roles or protocol dependencies of the model."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "to": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+    "exit": [
+      "The example does not add authentication, persistence, systemd socket activation, or a production topic namespace. Each would need its own policy and tests; adding the local input supplies none of those guarantees.",
+      "A role can be independently understandable without being independently restartable: these roles still share one process and one in-memory model. Moving the local input into another service would introduce a communication and recovery contract between that service and the gateway. That cost is justified by different privilege or restart requirements, not by the number of source files."
+    ],
+    "entry": [
+      "The reader has now built and extended MiniGateway after studying its underlying runtime and protocols. The harder task is deciding which of those choices should survive when requirements change: whether state must outlive the process, whether a peer needs a different trust boundary, or whether two roles need independent operation.",
+      "A category mistake places a concern where its lifetime or policy cannot be owned: for example, global ordering in a request callback or service-supervisor policy in per-connection code.",
+      "Most design choices in this book reduce to five questions:"
+    ]
+  },
+  {
+    "from": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+    "to": "manuscript/parts/part-13-epilogue.md",
+    "exit": [
+      "The current flow API provides another concrete boundary test. Two explicit connect calls create flows with independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate instances. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.",
+      "The epilogue gathers the principles behind these decisions. Appendix A then applies the same judgment to framework extension, following a public type inward while keeping responsibility, lifetime and operational consequences explicit."
+    ],
+    "entry": [
+      "The MiniGateway chapters close the construction arc: the same vocabulary used for small examples can describe an application that combines web observation, MQTT integration, local state, configuration, diagnostics, and extension.",
+      "The final design chapter then names the judgment behind that construction. The epilogue gathers both arcs into the book's final point. SNode.C is not primarily a shortcut for opening sockets; it is a way of keeping network-system architecture visible while applications grow from simple connections to protocols, protocols to roles, roles to applications, and applications to deployable systems."
+    ]
+  },
+  {
+    "from": "manuscript/parts/part-13-epilogue.md",
+    "to": "manuscript/chapters/epilogue.md",
+    "exit": [
+      "The MiniGateway chapters close the construction arc: the same vocabulary used for small examples can describe an application that combines web observation, MQTT integration, local state, configuration, diagnostics, and extension.",
+      "The final design chapter then names the judgment behind that construction. The epilogue gathers both arcs into the book's final point. SNode.C is not primarily a shortcut for opening sockets; it is a way of keeping network-system architecture visible while applications grow from simple connections to protocols, protocols to roles, roles to applications, and applications to deployable systems."
+    ],
+    "entry": [
+      "The word layered can be used lazily. In SNode.C, it is meant operationally.",
+      "Network families, stream transport, TLS or legacy connection handling, protocol layers, application roles, configuration, diagnostics, build targets, packages, and deployment shape all have their own responsibilities.",
+      "The important lesson is not that every layer must be visible to every programmer at every moment. The lesson is that the architecture remains understandable because the layers have not been erased prematurely."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/epilogue.md",
+    "to": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+    "exit": [
+      "Networking does not become trivial with SNode.C. Protocols, timing, failures, deployment, security, diagnostics, and system evolution remain real engineering problems. What the framework offers is that a network system can stay understandable as it grows, as long as its layers and boundaries stay visible. Place behavior where the right boundary can own it, and keep that boundary visible in code, configuration, diagnostics, build, deployment, and tests.",
+      "Above all: do not hide meaning too early."
+    ],
+    "entry": [
+      "After the echo pair, use this appendix to follow one public type into the machinery that made it work. After the main book, use the same route to evaluate an extension. In either case, begin with an observable application question rather than an inventory of internal classes.",
+      "The first question is concrete: where did the server's public type obtain the machinery that accepted a connection and asked the echo factory for a context? Answering it means following one working path inward. The named instance, its activation flow, and the later peer connection must remain distinguishable as that path crosses files.",
+      "Read only as far inward as the question requires. The main chapters develop the runtime, protocol, configuration and deployment concepts in sequence; return to those explanations when a source path introduces a concept you have not yet studied."
+    ]
+  },
+  {
+    "from": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+    "to": "manuscript/backmatter/backmatter.md",
+    "exit": [
+      "The receiver derives from `EventReceiver`, tracks enablement and suspension, attaches to a descriptor, and has timeout and signal behavior. It implements reactions such as `dispatchEvent()`, `timeoutEvent()`, and `signalEvent(int)`. Publishers decide who is observed; receivers define what happens when that observation produces work.",
+      "Socket acceptors, connectors, readers, and writers specialize this pattern. Treat them as runtime participants with observation, timeout, and cleanup state, rather than anonymous callbacks. Disabling observation and destroying the participant are different lifecycle steps; coordinated cleanup must respect any work still using it."
+    ],
+    "entry": []
+  },
+  {
+    "from": "manuscript/backmatter/backmatter.md",
+    "to": "manuscript/backmatter/further-reading.md",
+    "exit": [],
+    "entry": [
+      "The book is intentionally focused on SNode.C. The references below give stable background for readers who want to go deeper into the standards, protocols, tools, and systems context that appear throughout the chapters.",
+      "The online tool manuals follow their current releases. Compare their option descriptions with the versions installed for an exercise. Chapter 28 records the inspected OpenWrt feed revision separately because a feed recipe, an SDK and the framework source have independent version histories.",
+      "For the Bluetooth preparation in Chapter 9, consult the BlueZ project's\n[`bluetoothctl` manual](https://github.com/bluez/bluez/blob/master/doc/bluetoothctl.rst),\n[Adapter API](https://github.com/bluez/bluez/blob/master/doc/org.bluez.Adapter.rst), and\n[Device API](https://github.com/bluez/bluez/blob/master/doc/org.bluez.Device.rst). These\ncover controller state, discovery, pairing and trust; they do not define the\napplication protocol implemented by a SNode.C context."
+    ]
+  },
+  {
+    "from": "manuscript/backmatter/further-reading.md",
+    "to": "manuscript/backmatter/index.md",
+    "exit": [
+      "For the Bluetooth preparation in Chapter 9, consult the BlueZ project's\n[`bluetoothctl` manual](https://github.com/bluez/bluez/blob/master/doc/bluetoothctl.rst),\n[Adapter API](https://github.com/bluez/bluez/blob/master/doc/org.bluez.Adapter.rst), and\n[Device API](https://github.com/bluez/bluez/blob/master/doc/org.bluez.Device.rst). These\ncover controller state, discovery, pairing and trust; they do not define the\napplication protocol implemented by a SNode.C context.",
+      "Use the chapter\u2019s public solution beside each experiment; compare its stated observation before consulting a broader reference."
+    ],
+    "entry": []
+  }
+]
