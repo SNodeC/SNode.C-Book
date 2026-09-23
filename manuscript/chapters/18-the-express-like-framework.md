@@ -110,22 +110,7 @@ class WebAppT
 
 This composition explains how HTTP request handling becomes Express-like application flow.
 
-| Type | Function |
-|---|---|
-| `Router` | route tree and middleware structure |
-| `WebApp` | router-shaped application plus runtime-facing lifecycle |
-| `ServerT` | concrete HTTP server type underneath |
-| `WebAppT<ServerT>` | combined Express-like application surface and HTTP server handle |
-
-`WebApp` also exposes runtime-facing lifecycle operations such as:
-
-- `init(...)`,
-- `start(...)`,
-- `stop()`,
-- `tick(...)`,
-- `free()`,
-- `state()`,
-- `reconfigure()` while the runtime is running, with the configuration boundaries from Chapter 13.
+The type and lifecycle inventory appears in the Routing API reference box below.
 
 `WebAppT<ServerT>` is the joining point. It inherits the router-shaped `WebApp` surface and the concrete HTTP server type. When the HTTP server reports a ready request, `WebAppT` wraps that request/response pair in a `Controller` and dispatches it into the root route.
 
@@ -158,15 +143,7 @@ The `Controller` is the dispatch-time object that carries the Express request/re
 
 `Router` composes handlers, middleware and mounted routers. A route connects request properties to application behavior; a mounted router groups related paths, and middleware supplies shared behavior without copying it into every handler.
 
-At this layer, route matching is part of application correctness. The router exposes policy controls such as:
-
-| Policy | Question |
-|---|---|
-| strict routing | Are `/x` and `/x/` distinct? |
-| case-insensitive routing | Should route matching ignore case? |
-| merge params | Should mounted routers receive parent params? |
-
-These policies belong to the router. They are not socket concerns and not generic HTTP parsing concerns. They are web-application routing concerns.
+At this layer, route matching is part of application correctness. Strict routing, case-insensitive routing and parameter merging belong to the router; the reference box below summarizes their choices. They are web-application decisions above socket handling and HTTP parsing.
 
 `merge params` is a good example. It decides how parameter information moves through nested router structures. That is meaningful only once the application has routers and mount points.
 
@@ -222,6 +199,29 @@ The Express module includes JSON middleware when the required `nlohmann_json` de
 Bind/listen activation, TLS setup, HTTP parsing, timeout boundaries and shutdown still belong to the underlying runtime. Routing organizes the application work above those responsibilities.
 
 ::: {.snodec-note title="Routing API reference"}
+| Type | Function |
+|---|---|
+| `Router` | route tree and middleware structure |
+| `WebApp` | router-shaped application plus runtime-facing lifecycle |
+| `ServerT` | concrete HTTP server type underneath |
+| `WebAppT<ServerT>` | combined Express-like application surface and HTTP server handle |
+
+`WebApp` also exposes runtime-facing lifecycle operations such as:
+
+- `init(...)`,
+- `start(...)`,
+- `stop()`,
+- `tick(...)`,
+- `free()`,
+- `state()`,
+- `reconfigure()` while the runtime is running, with the configuration boundaries from Chapter 13.
+
+| Policy | Question |
+|---|---|
+| strict routing | Are `/x` and `/x/` distinct? |
+| case-insensitive routing | Should route matching ignore case? |
+| merge params | Should mounted routers receive parent params? |
+
 | Need | Surface |
 |---|---|
 | Mount or match | `use`, `all`, `get`, `put`, `post`, `del`, `connect`, `options`, `trace`, `patch`, `head` |

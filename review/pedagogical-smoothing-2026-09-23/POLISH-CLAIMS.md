@@ -88,3 +88,14 @@ sections 3.1, 3.3–3.9, 3.12–3.13 and 4.7. The implementation-specific ping
 schedule and optional loop-prevention extension are named explicitly. This is
 source inspection, not an interoperability or conformance certification.
 All 16 smoothing groups pass; total 110,668 tokens, no cap waiver.
+
+## P6 — consolidate the routing reference
+
+The type table, WebApp lifecycle list and routing-policy table now sit beside
+the existing method/facade inventory inside the Routing API reference box.
+Only the HTTP/Express comparison table remains outside. The moved technical
+content is unchanged; the connecting prose still places route matching above
+HTTP parsing and sockets. Composition and lifecycle declarations:
+`src/express/WebApp.h:58`, `src/express/WebAppT.h:62`;
+router controls: `src/express/Router.h`. No code listing changed.
+All 16 smoothing assertion groups pass, with every chapter floor preserved.
