@@ -2327,3 +2327,22 @@ review from the preceding task is preserved separately. Stop evidence is in
 `pedagogical-smoothing-2026-09-23/POLISH-REPORT.md`, the polish start/end
 freeze records and `polish-freeze-comparison.json`. This stop does not waive
 the freeze or authorize automatic resumption.
+
+### Follow-up 12 — authorized resumption from 9172e99
+
+The author resumes all nine items and the evidence/push from `9172e99`.
+`FOLLOWUP-12.md` is already installed and stays unchanged. The earlier stop
+report is renamed `POLISH-REPORT-entry-stop.md` and remains historical.
+The author's untracked `porting/` directory is outside source authority:
+do not read, move, exclude through Git configuration, or modify it. Compare
+HEAD, porcelain status with only `?? porting/` removed, the binary HEAD-diff
+digest, and untracked nonignored files outside `porting/` to R2. Every other
+difference still stops the run. The filtered entry record equals R2.
+
+For source alignment and source inspection, the author explicitly authorizes
+a fresh public clone in `build/polish-07ca9a29-public`, detached at
+`07ca9a2936ee72582df7d159cb06666fe23e30f8`. No checker alteration or author-tree
+mutation is authorized. Complete P1–P9 in order with one commit per item,
+then the evidence commit. No companion changes or additional review items.
+The matrix is a register-row assessment (32 rows including the new verification
+register row), distinct from the historical chapter-score matrix.

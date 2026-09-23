@@ -93,9 +93,9 @@ When the server-side instance succeeds in listening, peers can be accepted.
 
 Each accepted peer becomes a concrete `SocketConnection`.
 
-That connection represents one peer relationship under the server-side role, not the server itself.
+That connection represents one peer relationship under the instance of the server, not the server itself.
 
-Connection callbacks receive a `SocketConnection*` and can inspect addresses, metrics, timing, and role-level policy. Context callbacks instead implement the protocol. The callback section below distinguishes the stages in detail.
+Connection callbacks receive a `SocketConnection*` and can inspect addresses, metrics, timing, and instance configuration. Context callbacks instead implement the protocol. The callback section below distinguishes the stages in detail.
 
 \index{SocketClient@\texttt{SocketClient}}
 \index{connect()@\texttt{connect()}}
@@ -112,13 +112,13 @@ Client connection callbacks have the same surface as the server callbacks, but t
 \index{retry}
 \index{reconnect}
 
-Both roles carry configuration and a context factory, participate in the runtime, and expose connection callbacks. The differences are also real:
+Both handles carry configuration and a context factory, participate in the runtime, and expose connection callbacks. The differences are also real:
 
 | Aspect | Server-side instance | Client-side instance |
 |---|---|---|
 | Outer intention | listen | connect |
 | Peer creation | accepts peers | initiates connection attempts |
-| Common long-term shape | one role, many accepted connections | one role, potentially many attempts or reconnect episodes |
+| Common long-term shape | one instance, many accepted connections | one instance, potentially many attempts or reconnect episodes |
 | Retry focus | listening retry | connect retry and reconnect |
 | Primary address concern | local bind address | remote peer address, optional local bind address |
 
@@ -257,7 +257,7 @@ SNode.C has several callback layers, each reporting a different kind of event.
 
 | Callback type | Receives | Meaning |
 |---|---|---|
-| listen/connect status callback | `SocketAddress`, `State` | outer role status |
+| listen/connect status callback | `SocketAddress`, `State` | listen/connect attempt status |
 | connection lifecycle callback | `SocketConnection*` | lifecycle of one connection |
 | context callback | context method call | protocol behavior on that connection |
 
@@ -272,7 +272,7 @@ core::socket::State
 
 The address identifies the relevant endpoint.
 
-The state describes the role-level outcome.
+The state describes the listen/connect attempt outcome.
 
 This is different from a connection lifecycle callback. A status callback may tell us whether listening or connecting succeeded, failed, was disabled, or should not be retried. It does not by itself represent protocol behavior.
 
@@ -287,7 +287,7 @@ Its principal values include:
 
 It also carries explanatory information through functions such as `what()` and `where()`.
 
-`NO_RETRY` is especially revealing. It shows that the state object can carry more than “success” or “failure.” It can also express control information that affects retry behavior. That fits the broader theme of the chapter: retry is role-level operational behavior, not protocol-context behavior.
+`NO_RETRY` is especially revealing. It shows that the state object can carry more than “success” or “failure.” It can also express control information that affects retry behavior. That fits the broader theme of the chapter: retry is activation-flow recovery behavior, not protocol-context behavior.
 
 Instance callbacks inspect a concrete peer; status callbacks describe the activation attempt; context callbacks supply its application behavior. Use that distinction when deciding where diagnostics belong.
 
@@ -326,7 +326,7 @@ The same separation explains coordinated shutdown: reader and writer notificatio
 \index{SocketContextFactory@\texttt{SocketContextFactory}}
 \index{context construction}
 
-The factory keeps a construction decision close to the role while applying it to each new connection. An alternative framework could accept a construction callback or a fixed context type directly. Those forms can express the same separation; SNode.C makes the factory an explicit object, which can also carry dependencies needed by newly created contexts. Chapter 11 examines what that object should retain and what must remain per connection.
+The factory keeps a construction decision close to the endpoint handle while applying it to each new connection. An alternative framework could accept a construction callback or a fixed context type directly. Those forms can express the same separation; SNode.C makes the factory an explicit object, which can also carry dependencies needed by newly created contexts. Chapter 11 examines what that object should retain and what must remain per connection.
 
 The important test is state isolation. Two peers must not share an unfinished input buffer merely because the factory is shared. Conversely, two contexts may deliberately refer to one application model when that model represents a fact shared by the whole service. Factory lifetime and protocol-state lifetime answer different questions.
 
@@ -342,7 +342,7 @@ The following table summarizes the responsibility boundaries.
 | data movement to and from the peer | `SocketConnection`, usually used through context methods |
 | protocol behavior | `SocketContext` |
 | creation of per-connection protocol endpoint | `SocketContextFactory` |
-| role-level status | listen/connect status callback |
+| listen/connect attempt status | listen/connect status callback |
 | connection lifecycle observation | instance lifecycle callback |
 | protocol lifecycle reaction | context callback |
 

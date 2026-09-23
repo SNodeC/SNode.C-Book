@@ -27,7 +27,7 @@ MiniGateway already contains one shared `MeasurementModel`, one web role, and on
 Do not hide a new input path inside an unrelated callback merely because that callback is already available. A convenient callback is not necessarily the right architectural boundary.
 :::
 
-The new concern is local measurement injection through a Unix-domain stream socket. That concern belongs to a new socket-server role. It does not belong in the HTTP route code, the SSE response path, or the MQTT client context.
+The new concern is local measurement injection through a Unix-domain stream socket. That concern belongs to a new local-input role. It does not belong in the HTTP route code, the SSE response path, or the MQTT client context.
 
 Figure \ref{fig:minigateway-extended-network-role-architecture} shows HTTP simulation, MQTT subscription, and Unix-domain input converging on `MeasurementModel`. HTTP status, SSE events, and MQTT publication expose accepted state. The arrows describe acceptance and observation, not guaranteed delivery or execution threads. `MeasurementJsonCodec` and `Measurement` are application support types alongside the model, not additional network roles or protocol dependencies of the model.
 
@@ -183,7 +183,7 @@ The new role receives the same `MeasurementModel`, so its accepted measurements 
 
 ### The server and its context factory
 
-The server startup files play the same role for Unix-domain input that `MiniGatewayMqttClient.*` plays for the MQTT uplink role. They hide the concrete SNode.C server-template spelling behind a small book-friendly function.
+The server startup files perform the same startup work for Unix-domain input that `MiniGatewayMqttClient.*` plays for the MQTT uplink role. They hide the concrete SNode.C server-template spelling behind a small book-friendly function.
 
 \Needspace{9\baselineskip}
 

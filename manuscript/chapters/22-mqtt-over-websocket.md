@@ -44,7 +44,7 @@ Figure \ref{fig:native-mqtt-vs-mqtt-over-websocket} shows the distinction. Nativ
 | Concern | Native MQTT | MQTT over WebSocket |
 |---|---|---|
 | carrier | stream connection | WebSocket connection after HTTP upgrade |
-| endpoint composition | stream `SocketContext` plus `MqttContext` | WebSocket subprotocol role plus `MqttContext` |
+| endpoint composition | stream `SocketContext` plus `MqttContext` | WebSocket subprotocol type plus `MqttContext` |
 | HTTP layer | absent | used for upgrade negotiation |
 | WebSocket layer | absent | present and still meaningful |
 | MQTT semantics | sessions, packets, topics, keep-alive, publish flow | same MQTT semantics |
@@ -74,12 +74,12 @@ The adapter inherits WebSocket callbacks from one base and presents receive, sen
 
 | Part | Meaning |
 |---|---|
-| `WSSubProtocolRoleT` | server-side or client-side WebSocket subprotocol role |
+| `WSSubProtocolRoleT` | server-side or client-side WebSocket subprotocol type |
 | `MqttContext` | MQTT-facing receive/send/end/close bridge |
 | `SubProtocol<WSSubProtocolRoleT>` | MQTT protocol behavior carried over a WebSocket subprotocol |
 | `OnReceivedFromPeerEvent` | scheduling hook that feeds buffered WebSocket payload into MQTT receive processing |
 
-The role parameter selects the server or client WebSocket surface. MQTT sees either carrier through `MqttContext`, rather than embedding WebSocket-specific behavior in the protocol object.
+The `WSSubProtocolRoleT` template parameter selects the server or client WebSocket surface. MQTT sees either carrier through `MqttContext`, rather than embedding WebSocket-specific behavior in the protocol object.
 
 WebSocket is a message-oriented carrier. MQTT is a byte-oriented packet protocol. The adapter has to bridge those two views.
 
@@ -91,7 +91,7 @@ The adapter owns an `OnReceivedFromPeerEvent` that schedules processing after pa
 
 In the other direction, `MqttContext::send(...)` maps to WebSocket message output, `end()` requests a close handshake, and `close()` requests protocol-error closure. The stable MQTT-facing surface therefore preserves different normal and error endings.
 
-The generic MQTT WebSocket subprotocol type is specialized through simple role aliases.
+The generic MQTT WebSocket subprotocol type is specialized through simple server/client aliases.
 
 On the server side:
 
@@ -105,7 +105,7 @@ On the client side:
 using SubProtocol = iot::mqtt::SubProtocol<web::websocket::client::SubProtocol>;
 ```
 
-The aliases bind the shared adapter to the corresponding WebSocket role; neither duplicates the bridge logic.
+The aliases bind the shared adapter to the corresponding WebSocket implementation; neither duplicates the bridge logic.
 
 \index{layer responsibility}
 \index{protocol composition}
@@ -118,7 +118,7 @@ Use the ownership map when a composed connection fails:
 | TLS, if used | secure connection handling |
 | HTTP | upgrade negotiation |
 | WebSocket | upgraded bidirectional message carrier, framing, binary payload delivery, and control behavior |
-| WebSocket subprotocol role | selected protocol surface above WebSocket |
+| WebSocket subprotocol type | selected protocol surface above WebSocket |
 | MQTT | packet, session, topic, keep-alive, and publish-flow semantics |
 
 ### Follow one binary payload across the adapter
@@ -177,15 +177,15 @@ The build structure mirrors the architectural structure.
 
 | Artifact | Meaning |
 |---|---|
-| `mqtt-server` | native / broker-oriented server MQTT role |
-| `mqtt-client` | native client MQTT role |
+| `mqtt-server` | native / broker-oriented server MQTT implementation |
+| `mqtt-client` | native client MQTT implementation |
 | `mqtt-server-websocket` | server-side MQTT WebSocket subprotocol |
 | `mqtt-client-websocket` | client-side MQTT WebSocket subprotocol |
 
 \index{MQTT over WebSocket!component selection}
 \index{linking strategy}
 
-Reuse the MQTT role from Chapter 21 when selecting the WebSocket carrier. The MQTT role remains an MQTT role; the WebSocket-carried variant adds the WebSocket subprotocol component that lets MQTT packets travel through an HTTP/WebSocket upgrade path.
+Reuse the MQTT protocol object from Chapter 21 when selecting the WebSocket carrier. The MQTT protocol object keeps its session and packet behavior; the WebSocket-carried variant adds the WebSocket subprotocol component that lets MQTT packets travel through an HTTP/WebSocket upgrade path.
 
 A compact client-side build fragment therefore looks like this:
 
@@ -197,7 +197,7 @@ target_link_libraries(gateway
         snodec::websocket-client)
 ```
 
-The three client components supply the MQTT role, its WebSocket adapter, and the WebSocket carrier. The corresponding server-side components are:
+The three client components supply the MQTT implementation, its WebSocket adapter, and the WebSocket carrier. The corresponding server-side components are:
 
 ```cmake
 target_link_libraries(gateway
@@ -209,7 +209,7 @@ target_link_libraries(gateway
 
 These are partial link fragments. A runnable application also needs its concrete HTTP stream connection, upgrade entry point, and selectable MQTT subprotocol factory. Linking an adapter library does not by itself create or register that application-specific factory.
 
-Native MQTT files include the MQTT headers they directly use. MQTT-over-WebSocket files include the WebSocket-carried MQTT abstraction they directly name. The component table above separates native roles from their WebSocket adapters.
+Native MQTT files include the MQTT headers they directly use. MQTT-over-WebSocket files include the WebSocket-carried MQTT abstraction they directly name. The component table above separates native implementations from their WebSocket adapters.
 
 Chapter 27 gives the consolidated source-derived component/header matrix.
 :::
@@ -219,7 +219,7 @@ Chapter 23 moves from this composed connection to systems with several independe
 ::: {.snodec-remember title="What to remember"}
 - HTTP negotiation, WebSocket selection and MQTT session acceptance are separate steps.
 - Binary message callbacks buffer bytes; a scheduled event feeds MQTT parsing.
-- Server and client aliases share the adapter while keeping carrier roles explicit.
+- Server and client aliases share the adapter while keeping the server/client side explicit.
 - MQTT send, normal end and error close map to distinct WebSocket actions.
 - Linking adapter components does not create the selectable application factory.
 :::
@@ -227,7 +227,7 @@ Chapter 23 moves from this composed connection to systems with several independe
 ::: {.snodec-exercise title="Exercises"}
 1. **Review (O1).** Follow fragmented binary input through `data`, `buffer`, `cursor`, `size` and the scheduled event.
 2. **Review (O1, O3).** Distinguish the HTTP upgrade factory, MQTT subprotocol factory and MQTT protocol object. What does linking alone leave undone?
-3. **Lab (O1, O2).** Run the binary adapter lab. Expect HTTP 101, `mqtt` selection and binary CONNECT; fragmented binary CONNACK must enable the role’s subscription/publication and command reception.
+3. **Lab (O1, O2).** Run the binary adapter lab. Expect HTTP 101, `mqtt` selection and binary CONNECT; fragmented binary CONNACK must enable the client’s subscription/publication and command reception.
 4. **Lab (O2, O3).** Send the same CONNACK bytes as text. Expect a wrong-opcode diagnostic and protocol-error close 1002, rather than treating text as a valid carrier choice.
 5. **Design (O3).** An upgraded connection never produces MQTT session acceptance. Order your observations across framing, adapter scheduling, packet parsing and broker policy.
 

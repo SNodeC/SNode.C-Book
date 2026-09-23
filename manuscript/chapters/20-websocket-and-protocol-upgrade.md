@@ -63,7 +63,7 @@ class SocketContextUpgrade
 
 Its bases retain the HTTP upgrade side and expose the WebSocket/subprotocol surface. `RequestT` and `ResponseT` describe negotiation; `SubProtocolT` describes the carried protocol.
 
-| Base / role | Meaning |
+| Base / side | Meaning |
 |---|---|
 | HTTP `SocketContextUpgrade` | keeps the transition connected to HTTP upgrade |
 | `SubProtocolContext` | gives the upgraded connection its WebSocket/subprotocol surface |
@@ -108,7 +108,7 @@ Chapter 17 showed the compact server-side `res->upgrade(...)` and client-side `r
 
 \index{WebSocket!module structure}
 
-The build/module split mirrors the architectural split: shared WebSocket mechanics are separate from the server-side and client-side HTTP upgrade roles.
+The build/module split mirrors the architectural split: shared WebSocket mechanics are separate from the server-side and client-side HTTP upgrade implementations.
 
 | Module | Meaning |
 |---|---|
@@ -116,7 +116,7 @@ The build/module split mirrors the architectural split: shared WebSocket mechani
 | `websocket-server` | server-side HTTP upgrade integration and subprotocol selection |
 | `websocket-client` | client-side HTTP upgrade integration and subprotocol selection |
 
-The shared layer contains receivers/transmitters, upgrade contexts and subprotocol factories/selectors; role modules connect those mechanics to the corresponding HTTP side.
+The shared layer contains receivers/transmitters, upgrade contexts and subprotocol factories/selectors; server/client modules connect those mechanics to the corresponding HTTP side.
 
 ### Subprotocols as the next semantic layer
 
@@ -151,7 +151,7 @@ shared WebSocket subprotocol directory:
   ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/snode.c/web/http/upgrade/websocket
 ```
 
-The dynamic module contract is role-specific:
+The dynamic module contract depends on the server/client side:
 
 ```text
 server-side module:
@@ -190,7 +190,7 @@ target_link_libraries(my_ws_server PRIVATE
 )
 ```
 
-The client side mirrors the role:
+The client side mirrors the server side:
 
 ```cmake
 add_library(my-echo-client STATIC Echo.cpp EchoFactory.cpp)
@@ -204,7 +204,7 @@ target_link_libraries(my_ws_client PRIVATE
 )
 ```
 
-The exact target names are application choices; the contract is the name-to-factory resolution. A WebSocket subprotocol name must resolve to a factory on the correct role side. Dynamic deployment provides that factory through a correctly named module. Linked deployment provides it through linked and retained registration code. A missing HTTP-upgrade module prevents the connection from becoming WebSocket; a missing subprotocol factory means that WebSocket exists, but the requested application protocol cannot be instantiated.
+The exact target names are application choices; the contract is the name-to-factory resolution. A WebSocket subprotocol name must resolve to a factory on the correct server/client side. Dynamic deployment provides that factory through a correctly named module. Linked deployment provides it through linked and retained registration code. A missing HTTP-upgrade module prevents the connection from becoming WebSocket; a missing subprotocol factory means that WebSocket exists, but the requested application protocol cannot be instantiated.
 
 ### A compact WebSocket subprotocol
 
@@ -319,7 +319,7 @@ private:
 };
 ```
 
-The factories make the subprotocol selectable by name and let the WebSocket upgrade layer create protocol instances without knowing the concrete C++ type in advance. The exported symbol is role-specific:
+The factories make the subprotocol selectable by name and let the WebSocket upgrade layer create protocol instances without knowing the concrete C++ type in advance. The exported symbol depends on the server/client side:
 
 ```cpp
 extern "C" web::websocket::SubProtocolFactory<web::websocket::server::SubProtocol>*
@@ -333,7 +333,7 @@ echoClientSubProtocolFactory() {
 }
 ```
 
-The base subprotocol and factory shape belongs to the shared WebSocket component, while each concrete role module links the corresponding role component:
+The base subprotocol and factory shape belongs to the shared WebSocket component, while each concrete server/client module links the corresponding server/client component:
 
 ```cmake
 target_link_libraries(echo-server PRIVATE snodec::websocket-server)
@@ -397,7 +397,7 @@ The Part VII checkpoint first observes the SSE example's accepted measurement th
 - The HTTP upgrade name and WebSocket subprotocol name select different factories.
 - Frames carry messages and control signals; echo must preserve message type and counted payload bytes.
 - Receiver frame, message and fragment limits protect different dimensions; snapshots do not change retroactively.
-- Verify upgrade acceptance, selected subprotocol and actual message behavior separately, with matching role modules or retained linked registration.
+- Verify upgrade acceptance, selected subprotocol and actual message behavior separately, with matching server/client modules or retained linked registration.
 :::
 
 ::: {.snodec-exercise title="Exercises"}

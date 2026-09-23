@@ -44,7 +44,7 @@ A small monitoring system can be described by its consumers and state boundaries
 
 These are role names, not necessarily executable names. Some roles may be routes inside one application. Some may be instances. Some may be service-level responsibilities. Some roles are nested inside others: an SSE route may belong to a web role, while still being useful as a named observation boundary.
 
-The role `database-state` is intentionally different from `admin-http` or `mqtt-ingest`. It is not the same kind of communication role as a socket server or client. It names the persistence boundary that owns durable application state.
+The role `database-state` is intentionally different from `admin-http` or `mqtt-ingest`. It is not the same kind of runtime object as a socket server or client handle. It names the persistence boundary that owns durable application state.
 
 Use these names consistently across code, configuration, logs and operation. Where a responsibility is realized by a communication instance, its name locates configuration, connection activity and failure. `mqtt-ingest` reconnecting and `admin-http` answering are independent observations.
 
@@ -246,7 +246,7 @@ The naming matrix makes the alternatives concrete:
 
 The exact available instances depend on the build configuration and enabled roles. The naming pattern is the lesson.
 
-The names encode three dimensions: address family (`IPv4`, `IPv6`, or Unix-domain), protocol role (`MQTT` or `HTTP`), and security mode (`legacy`/plain or TLS).
+The names encode three dimensions: address family (`IPv4`, `IPv6`, or Unix-domain), protocol (`MQTT` or `HTTP`), and security mode (`legacy`/plain or TLS).
 
 Constructing an endpoint handle with a name registers its instance in the configuration hierarchy; activating it creates a separate flow. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
 

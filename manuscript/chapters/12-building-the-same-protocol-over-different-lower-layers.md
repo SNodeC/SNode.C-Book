@@ -144,7 +144,7 @@ The protocol behavior lives in one context type:
 EchoSocketContext::EchoSocketContext(SocketConnection* socketConnection, Role role)
 ```
 
-The role is stored in the context.
+The server/client selector is stored in the context.
 
 When the connection becomes ready, the client side starts the exchange:
 
@@ -166,7 +166,7 @@ if (chunklen > 0) {
 return chunklen;
 ```
 
-The factories then create role-specific contexts:
+The factories then create side-specific contexts:
 
 ```cpp
 return new EchoSocketContext(socketConnection, EchoSocketContext::Role::SERVER);
@@ -191,7 +191,7 @@ Can the protocol conversation stay honest when the network family changes, or ha
 
 ### A worked transfer: the line server over IPv4 and Unix sockets
 
-Changing the network family changes the public role header and the linked component when application code directly names that stream type. The protocol context can remain stable, but the source/build front door follows the selected network family and connection mode.
+Changing the network family changes the public type header and the linked component when application code directly names that stream type. The protocol context can remain stable, but the source/build front door follows the selected network family and connection mode.
 
 | Network family / connection variant | Public include | Matching component |
 |---|---|---|
@@ -326,12 +326,12 @@ A command-sink endpoint may receive:
 Role::CommandSink
 ```
 
-These are construction-time choices. The factory supplies the role; interpreting its protocol belongs in the resulting context.
+These are construction-time choices. The factory supplies the construction-time selection; interpreting its protocol belongs in the resulting context.
 
 \index{preconfigured factories}
 \index{application roles}
 
-Chapter 11 explained that server and client constructors can forward an argument pack into the factory constructor. That makes it possible to preconfigure factories with stable role and dependency information. This matters for network-family transfer because the same mechanism can create role-specific endpoints over different network families.
+Chapter 11 explained that server and client constructors can forward an argument pack into the factory constructor. That makes it possible to preconfigure factories with stable application-purpose and dependency information. This matters for network-family transfer because the same mechanism can create role-specific endpoints over different network families.
 
 Examples include:
 

@@ -227,7 +227,7 @@ Closure also has protocol meaning. `QUIT` closes because the peer requested the 
 
 The runnable server also queues an overlong-line diagnostic before closing. Immediate closure need not deliver that queued message; the framing test requires closure before command interpretation, not receipt of the diagnostic.
 
-The complete runnable server and client version of this line protocol is included in `companion/examples/LineProtocol-Server` and `companion/examples/LineProtocol-Client`. Those source trees use the same public IPv4 legacy stream front-door roles as the Chapter 3 echo pair, but they replace byte reflection with command parsing, response writing, and protocol-driven closure.
+The complete runnable server and client version of this line protocol is included in `companion/examples/LineProtocol-Server` and `companion/examples/LineProtocol-Client`. Those source trees use the same public IPv4 legacy stream server/client types as the Chapter 3 echo pair, but they replace byte reflection with command parsing, response writing, and protocol-driven closure.
 
 Use that runnable server to test the framing rule from a separate peer. First read the `READY` line, then compare these inputs on fresh connections:
 

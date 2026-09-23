@@ -82,7 +82,7 @@ The word *component* appears in two related senses.
 
 At the CMake package level, a component is a selectable install/package component. At the architecture level, a component is a named framework piece represented by a target. SNode.C tries to keep these meanings aligned, but they are not literally the same concept in CMake semantics.
 
-A name locates a layer, role or composition. `net-in-stream-tls` selects IPv4, stream transport and TLS connection handling; `mqtt-client-websocket` selects an MQTT client carried by WebSocket. The name is part of the public build interface.
+A name locates a layer, server/client side or composition. `net-in-stream-tls` selects IPv4, stream transport and TLS connection handling; `mqtt-client-websocket` selects an MQTT client carried by WebSocket. The name is part of the public build interface.
 
 \index{components!libraries}
 \index{layered architecture!libraries}
@@ -132,12 +132,12 @@ The corresponding component-side stack is not textually identical, but it rhymes
 
 `snodec::http-server-express-legacy-in`, carrying its base Express/HTTP server side and the selected `snodec::net-in-stream-legacy` stream component.
 
-Headers expose declarations, aliases, templates, inline helpers, and source-facing public roles. Components expose compiled libraries, exported targets, usage requirements, and transitive link dependencies. They are two public contracts for the same stack, not one mechanism repeated twice.
+Headers expose declarations, aliases, templates, inline helpers, and source-facing public types. Components expose compiled libraries, exported targets, usage requirements, and transitive link dependencies. They are two public contracts for the same stack, not one mechanism repeated twice.
 
 \index{component/header matrix}
 \index{public surface}
 
-The following matrix is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a role, and the component target or targets it would normally link when it needs the corresponding compiled surface.
+The following matrix is intentionally selective. It is not a generated ABI manifest and not a complete list of every installed header. It lists the public header front an application would normally include when it directly names a public type, and the component target or targets it would normally link when it needs the corresponding compiled surface.
 
 In the source tree, examples and framework code include headers relative to the SNode.C source include root, for example `<express/legacy/in/WebApp.h>`. Installed consumers use the same public header shape below the installed `include/snode.c` prefix.
 

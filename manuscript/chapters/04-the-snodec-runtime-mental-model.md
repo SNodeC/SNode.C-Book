@@ -101,7 +101,7 @@ A named instance adds a useful way to identify these relationships. The name `ec
 \index{peer relationship}
 
 
-A connection is the concrete communication relationship to a peer. In the stream-oriented parts of SNode.C, that role is represented by `SocketConnection` and its specializations. A connection exposes peer-oriented operations and observable state: local and remote addresses, send and read operations, shutdown and close operations, timeout handling, byte counters, and online timing. That tells us something important about the framework: SNode.C treats a connection as a visible runtime object with lifecycle and measurable behavior, not as an implementation detail hidden behind the protocol code.
+A connection is the concrete communication relationship to a peer. In the stream-oriented parts of SNode.C, that relationship is represented by `SocketConnection` and its specializations. A connection exposes peer-oriented operations and observable state: local and remote addresses, send and read operations, shutdown and close operations, timeout handling, byte counters, and online timing. That tells us something important about the framework: SNode.C treats a connection as a visible runtime object with lifecycle and measurable behavior, not as an implementation detail hidden behind the protocol code.
 
 This is also why connection-level callbacks and context-level callbacks must not be confused. Connection callbacks observe or adapt connection-level events. Context methods implement application protocol behavior for the connection.
 
@@ -145,7 +145,7 @@ This also explains why a factory is useful even when its construction function c
 \index{protocol flow}
 \index{lifetime}
 \index{handle}
-\index{roles}
+\index{instances}
 \index{connection}
 \index{context}
 

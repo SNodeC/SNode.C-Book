@@ -3,7 +3,7 @@
 ::: {.snodec-objectives title="Learning objectives"}
 - **O1.** Trace a named instance’s value through C++ defaults, file assignments and command-line overrides.
 - **O2.** Diagnose a configuration error and distinguish parsed values from existing runtime activity.
-- **O3.** Decide which communication roles need independent configuration and lifecycle control.
+- **O3.** Decide which application roles need independent configuration and lifecycle control.
 :::
 
 ### Configuration principles {#configuration-philosophy-in-snodec}
@@ -12,7 +12,7 @@
 \index{configuration philosophy}
 \index{instance!configuration}
 
-Configuration is where architectural choices become adjustable by the operator. The context still implements the protocol and the factory creates contexts, but the application must choose its communication roles, endpoint values, connection variants and enablement.
+Configuration is where architectural choices become adjustable by the operator. The context still implements the protocol and the factory creates contexts, but the application must choose its application roles, endpoint values, connection variants and enablement.
 
 Through a `SocketServer` or `SocketClient` handle, the application configures an instance. Giving the instance a name registers it in the configuration hierarchy. Each `listen(...)` or `connect(...)` call then starts an activation flow for that instance.
 
@@ -196,7 +196,7 @@ For TLS instances, it may also mean that required TLS-related configuration is a
 
 Missing required values lead back to the corresponding scope: a server’s `local` port, a client’s `remote` host, or a TLS setting. SNode.C uses CLI11 to implement parsing, grouping, help and persistent/nonpersistent option classification.
 
-An external option is a promise to operators. Naming a role makes its endpoint and policy visible, but also makes those names part of configuration files, service definitions, and diagnostic procedures. Expose choices that deployments need to own; keep an internal helper’s construction detail in code when changing it independently would violate the application’s assumptions.
+An external option is a promise to operators. Naming an instance makes its endpoint and settings visible, but also makes those names part of configuration files, service definitions, and diagnostic procedures. Expose choices that deployments need to own; keep an internal helper’s construction detail in code when changing it independently would violate the application’s assumptions.
 
 Startup-only configuration has a useful cost model: one validated process begins with one intended deployment shape. Runtime reconfiguration can avoid a full restart, but requires a policy for partial failure, existing connections, and future activation. The framework supplies the parsing operation. It cannot decide those application consequences from an option name.
 
@@ -339,7 +339,7 @@ Representative concerns include:
 - exponential backoff,
 - jitter,
 - retry limit,
-- role- or family-specific socket options.
+- instance- or family-specific socket options.
 
 The exact set depends on the concrete instance.
 
@@ -453,7 +453,7 @@ The operation reparses the existing root hierarchy using the original arguments 
 | changed endpoint values | future code can consume them; existing sockets are not restarted |
 | changed logging or daemonization options | parsed values do not replace bootstrap side effects or frozen logging policy |
 
-A successful reparse is therefore only one step in a live configuration change. The application still decides whether to end a flow, let a connection drain, construct a replacement role, or defer the new setting until a later activation. A deployment file alone cannot specify the correct lifetime transition. When configuration must change atomically, validating a replacement before a controlled process restart can be clearer than editing the live tree.
+A successful reparse is therefore only one step in a live configuration change. The application still decides whether to end a flow, let a connection drain, construct a replacement endpoint handle, or defer the new setting until a later activation. A deployment file alone cannot specify the correct lifetime transition. When configuration must change atomically, validating a replacement before a controlled process restart can be clearer than editing the live tree.
 
 In a configuration file, the same hierarchy becomes a dotted key:
 
@@ -463,7 +463,7 @@ uplink.remote.host = "localhost"
 uplink.remote.port = 8080
 ```
 
-Here `echoserver` names a server and `uplink` a separate client. Each dotted key must name a role and section that this executable actually creates.
+Here `echoserver` names a server and `uplink` a separate client. Each dotted key must name an instance and section that this executable actually creates.
 
 ### Observe precedence with the echo server
 
@@ -561,7 +561,7 @@ snodec-control --target ./minigateway \
   --check-required --print-run-command
 ```
 
-The last command is a preview, not a connection attempt. Use the discovered option names for the actual application. A bare name is convenient only when it is unambiguous; full keys preserve the named role and section.
+The last command is a preview, not a connection attempt. Use the discovered option names for the actual application. A bare name is convenient only when it is unambiguous; full keys preserve the named instance and section.
 
 `--materialize` writes a tool-produced editable configuration. `--save-config` asks the target to write its canonical configuration. `--check-required` is a local preflight check, not a replacement for the target's final validation. `--run` starts the target with the selected configuration; it does not turn the tool into an in-process runtime control API.
 

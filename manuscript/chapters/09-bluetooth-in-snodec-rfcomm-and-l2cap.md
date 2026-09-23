@@ -94,7 +94,7 @@ The service selector starts at zero:
 | RFCOMM | empty configured device, channel `0` |
 | L2CAP | empty configured device, PSM `0` |
 
-### Configuring local and remote Bluetooth roles
+### Configuring local and remote Bluetooth addresses
 
 \index{Bluetooth!server/client use}
 \index{listen()@\texttt{listen()}}
@@ -236,7 +236,7 @@ A device-near application may combine Bluetooth input, Unix-domain local helpers
 \index{net::rc::stream::legacy@\texttt{net::rc::stream::legacy}}
 \index{net::l2::stream::legacy@\texttt{net::l2::stream::legacy}}
 
-Bluetooth stream roles follow the same source/build rule, but only when the required Bluetooth development support is present. RFCOMM uses the `rc` family fragment:
+Bluetooth stream types follow the same source/build rule, but only when the required Bluetooth development support is present. RFCOMM uses the `rc` family fragment:
 
 ```cpp
 #include <net/rc/stream/legacy/SocketServer.h>

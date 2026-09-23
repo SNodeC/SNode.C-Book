@@ -109,7 +109,7 @@ When a trace reaches HTTP, WebSocket, MQTT, routing, or database support, ask wh
 
 For the basic type/header/component comparison, return to the source-reading introduction in Chapter 4. Here, apply that distinction while navigating the implementation.
 
-Read a public header first for the class's role, base, aliases, dependencies, and methods. A front-door header such as `net/in/stream/legacy/SocketServer.h` selects a concrete role and exports or composes its lower public pieces. Read the nearby CMake file for targets, links, optional dependencies, installed headers and components; then read implementation behavior and return to the header to confirm the public boundary.
+Read a public header first for the class's purpose, base, aliases, dependencies, and methods. A front-door header such as `net/in/stream/legacy/SocketServer.h` selects a concrete server type and exports or composes its lower public pieces. Read the nearby CMake file for targets, links, optional dependencies, installed headers and components; then read implementation behavior and return to the header to confirm the public boundary.
 
 ::: {.snodec-note title="Build-reading habit"}
 When you do not know where an executable, library, or component comes from, read its nearest `CMakeLists.txt` before searching the whole tree.
@@ -130,9 +130,9 @@ Use these reading questions together:
 |---|---|
 | Server/client | Which family, transport, connection mode, physical socket and configuration type? Which activation overload and factory? Where does the flow enter the runtime? |
 | Context | Which base, connection pointer and lifecycle overrides? Does `onConnected()` initiate behavior? How does `onReceivedFromPeer()` consume data, send replies, set timeouts or close? |
-| Factory | Which context is created? Which role, configuration or shared state enters its constructor? Which ownership relationship begins here? |
+| Factory | Which context is created? Which application purpose, configuration or shared state enters its constructor? Which ownership relationship begins here? |
 
-In Chapter 3, a role enum lets one echo context serve server and client behavior. Separate context classes can also be valid. The useful distinction is per-connection protocol state versus state spread through unrelated code. The factory connects that application behavior to framework-managed connection lifetime; it is not the entire application.
+In Chapter 3, the `Role` enum lets one echo context serve server and client behavior. Separate context classes can also be valid. The useful distinction is per-connection protocol state versus state spread through unrelated code. The factory connects that application behavior to framework-managed connection lifetime; it is not the entire application.
 
 Variant-heavy code calls for comparison: first identify the shared structure, then the changes required by family or connection mode. RFCOMM and L2CAP keep a comparable reading path but different addressing and deployment assumptions. Do not learn every variant from zero or assume their operational requirements are identical.
 
@@ -263,7 +263,7 @@ For a new option, also state when its value takes effect. The current `SNodeC::r
 
 As Chapter 27 showed, reusable extensions need truthful public include and component surfaces. Names such as `mqtt-client-websocket`, `http-server-express-legacy-in`, or `net-in-stream-tls` describe a responsibility more accurately than `misc-network-stuff`, `common-utils2`, or `app-helper`.
 
-The target should say what architectural role the component plays and own its dependencies directly. The public header should say what source-facing abstraction the extension exposes. A component that needs HTTP or a selected stream connection should declare that fact; a public front-door header should include or export the lower public declarations needed by the abstraction. A consumer should not have to know private implementation dependencies or private header order.
+The target should say which architectural function the component supplies and own its dependencies directly. The public header should say what source-facing abstraction the extension exposes. A component that needs HTTP or a selected stream connection should declare that fact; a public front-door header should include or export the lower public declarations needed by the abstraction. A consumer should not have to know private implementation dependencies or private header order.
 
 For a framework-level extension, check the public front-door header, target name, dependency visibility, exported target, package component, optional dependency behavior, and installed runtime layout. Ignoring these may leave a component that compiles in-tree but fails in the installed framework. An external consumer test must use the public headers and exported targets without private header ordering or accidental source-tree include paths.
 

@@ -29,9 +29,9 @@ Communication is not a single action. It unfolds over time. Constructing an endp
 | retry | Should a failed activation attempt be tried again? | server/client flow controller |
 | reconnect | Should a client flow establish another connection after disconnect? | client flow controller |
 | failure state | What kind of outcome happened? | status/state model |
-| disablement | Is this role intentionally inactive? | configuration/instance |
+| disablement | Is this instance intentionally inactive? | configuration/instance |
 | shutdown | How should an active connection end? | connection, TLS, or protocol |
-| termination / stop | Should role-level flow end instead of scheduling more work? | flow controller / runtime lifecycle |
+| termination / stop | Should this activation flow end instead of scheduling more work? | flow controller / runtime lifecycle |
 
 Timeouts bound an in-progress phase: reading, writing, connecting, TLS initialization/shutdown or protocol waiting. Retry applies after a failed listen/connect attempt; reconnect applies after an established client connection ends. Shutdown may carry both transport and protocol meaning. Stopping a flow can be intentional during disablement, teardown or an explicit decision to end recovery; it need not signal failure.
 
@@ -198,7 +198,7 @@ Scaling spaces repeated attempts farther apart. `retry-limit` caps that delay gr
 
 Jitter adds controlled variation to retry timing.
 
-That matters when many roles or many processes may retry around the same time. Without jitter, repeated retry behavior can become synchronized. With jitter, the retry pattern becomes less rigid.
+That matters when many client flows or many processes may retry around the same time. Without jitter, repeated retry behavior can become synchronized. With jitter, the retry pattern becomes less rigid.
 
 The client starts the initial attempt with a retry counter of zero. A positive `retry-tries` value bounds the subsequent automatic retries; zero removes that count bound. With `retry-tries=1`, the failed initial attempt may therefore be followed by one retry, subject to the other enablement and state checks.
 
@@ -206,7 +206,7 @@ This answers a different question from `retry-limit`, which caps delay growth be
 
 Fatal failure does not automatically answer the retry question.
 
-A fatal state describes severity. Retry-on-fatal describes policy. Some deployments may want a role to stop after a fatal failure. Others may want delayed reattempts even after fatal outcomes.
+A fatal state describes severity. Retry-on-fatal describes policy. Some deployments may want an activation flow to stop after a fatal failure. Others may want delayed reattempts even after fatal outcomes.
 
 The framework separates the failure category from the retry policy. That separation keeps behavior configurable instead of hard-coded.
 
@@ -227,7 +227,7 @@ Failure handling is easier to understand when the state vocabulary is explicit.
 | State | Meaning |
 |---|---|
 | `OK` | operation succeeded |
-| `DISABLED` | role is intentionally inactive |
+| `DISABLED` | instance is intentionally inactive |
 | `ERROR` | recoverable failure or ordinary error |
 | `FATAL` | severe failure |
 | `NO_RETRY` | retry-control flag attached to a state |
@@ -244,12 +244,12 @@ Failure can occur at many points in the lifecycle.
 | connected operation | read timeout, write timeout, peer close |
 | shutdown | socket or TLS shutdown timeout |
 | after disconnect | reconnect decision or reconnect failure |
-| termination | role-level flow is stopped instead of continued |
+| termination | the activation flow is stopped instead of continued |
 
 \index{flow controllers}
-\index{role-level ownership}
+\index{flow-controller ownership}
 
-Diagnose the phase and its policy together. The flow controller owns role-level timers, retry/reconnect enablement and flow termination; connections and contexts own peer relationships and protocol-meaningful waiting. Putting recovery into every context duplicates outer policy. Making the outer role interpret protocol state crosses the boundary in the other direction.
+Diagnose the phase and its policy together. The flow controller owns activation-flow timers, retry/reconnect enablement and flow termination; connections and contexts own peer relationships and protocol-meaningful waiting. Putting recovery into every context duplicates outer policy. Making the flow controller interpret protocol state crosses the boundary in the other direction.
 
 ### Output pressure and bounded write-buffer policy
 
@@ -351,7 +351,7 @@ The Part VI checkpoint separates secure identity from recovery: first test trust
 ::: {.snodec-remember title="What to remember"}
 - Timeout, retry, reconnect, shutdown, disablement, and failure state are related but distinct concepts.
 - Retry belongs to failed listen/connect activation attempts; reconnect belongs to client lifecycle after an established connection ended.
-- Retry policy is role-level behavior controlled by retry, retry timeout, retry base, retry limit, retry jitter, retry tries, and retry-on-fatal settings.
+- Retry policy is activation-flow behavior controlled by retry, retry timeout, retry base, retry limit, retry jitter, retry tries, and retry-on-fatal settings.
 - `NO_RETRY` is retry-control information attached to a state; it does not replace `ERROR`, `FATAL`, or another reported outcome.
 - `DISABLED` means intentional non-participation, not failure.
 :::

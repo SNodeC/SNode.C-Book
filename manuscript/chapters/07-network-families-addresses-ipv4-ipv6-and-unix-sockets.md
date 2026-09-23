@@ -1,7 +1,7 @@
 ## Network Families: Addresses, IPv4/IPv6, and Unix Sockets {#network-families-addresses-ipv4-ipv6-and-unix-sockets}
 
 ::: {.snodec-objectives title="Learning objectives"}
-- **O1.** Explain how family and local/remote role change an address's meaning, including defaults.
+- **O1.** Explain how family and local/remote use change an address's meaning, including defaults.
 - **O2.** Compare observed IPv4 and IPv6 endpoints while holding protocol behavior fixed.
 - **O3.** Choose a local producer endpoint and justify path ownership, cleanup, and authorization.
 :::
@@ -44,9 +44,9 @@ A server usually starts with a local bind identity. It may bind to a specific in
 
 A client usually starts with a remote peer identity. It may connect to a host and port, a Unix-domain path, a Bluetooth device and channel, or a Bluetooth device and PSM.
 
-But the distinction is not absolute. A client may also have a local-side address. A server may later observe the remote addresses of connected peers. The same address class can therefore appear in different roles.
+But the distinction is not absolute. A client may also have a local-side address. A server may later observe the remote addresses of connected peers. The same address class can therefore serve different address purposes.
 
-This is one reason address semantics deserve careful treatment. A value such as `0`, `""`, or `00:00:00:00:00:00` is not meaningful by itself. It becomes meaningful in a family and in a role.
+This is one reason address semantics deserve careful treatment. A value such as `0`, `""`, or `00:00:00:00:00:00` is not meaningful by itself. It becomes meaningful in a network family and a local or remote use.
 
 \index{endpoint identity}
 \index{network family}
@@ -222,7 +222,7 @@ This helps when changing network families: a port assignment cannot simply becom
 
 All concrete classes render their addresses for startup logging, callbacks and diagnostics. Compare the requested identity with the actual endpoint before attributing a failure to the protocol.
 
-Try classifying three values before using them: `0.0.0.0:0` for a local IPv4 bind, `127.0.0.1:8080` for a remote IPv4 peer, and `/tmp/snodec.sock` for a local pathname service. The first asks the operating system to select a port; the second names a destination in the current host's loopback network; the third depends on the local filesystem namespace. None of those meanings comes from the text alone without its family and local/remote role.
+Try classifying three values before using them: `0.0.0.0:0` for a local IPv4 bind, `127.0.0.1:8080` for a remote IPv4 peer, and `/tmp/snodec.sock` for a local pathname service. The first asks the operating system to select a port; the second names a destination in the current host's loopback network; the third depends on the local filesystem namespace. None of those meanings comes from the text alone without its family and local/remote use.
 
 Chapter 8 adds a useful observation: compare the requested bind address with the actual local address on an established connection. A broad configuration can produce a concrete endpoint. That is why logging only the configured value can leave a connection problem unexplained.
 
@@ -305,11 +305,11 @@ When comparing the two families, ask: does the same protocol produce the same by
 
 If the application protocol is written in a `SocketContext`, it does not automatically become an “IPv4 protocol” or an “IPv6 protocol.” It is application behavior carried over a network family. The same context class can often be reused when the protocol behavior does not inspect or depend on family-specific address details.
 
-IPv4 and IPv6 roles can participate in the same event runtime. Giving them separate instance names makes their configuration and diagnostics distinguishable even when they use one factory/context design. That is useful for a service that deliberately exposes two family-specific listeners: shared protocol behavior does not require one shared listening policy or one ambiguous operational name.
+IPv4 and IPv6 instances can participate in the same event runtime. Giving them separate instance names makes their configuration and diagnostics distinguishable even when they use one factory/context design. That is useful for a service that deliberately exposes two family-specific listeners: shared protocol behavior does not require one shared listening policy or one ambiguous operational name.
 
 Status callbacks report activation attempts; connection callbacks observe peers; context methods implement protocol behavior. Chapter 8 develops those distinctions.
 
-The first useful comparison is an observed exchange. Run the same context once over an IPv4 loopback endpoint and once over an IPv6 loopback endpoint. The payload and context callbacks should remain the same; the address type, formatted endpoint, and operating-system family differ. A successful IPv4 run does not establish IPv6 availability, and an IPv6 wildcard listener should not be assumed to replace a separately configured IPv4 role on every platform. The family-specific component tests keep those exchanges separate for exactly this reason.
+The first useful comparison is an observed exchange. Run the same context once over an IPv4 loopback endpoint and once over an IPv6 loopback endpoint. The payload and context callbacks should remain the same; the address type, formatted endpoint, and operating-system family differ. A successful IPv4 run does not establish IPv6 availability, and an IPv6 wildcard listener should not be assumed to replace a separately configured IPv4 listener on every platform. The family-specific component tests keep those exchanges separate for exactly this reason.
 
 \index{address family}
 \index{wildcard form}
@@ -382,7 +382,7 @@ client.connect("::1", 8080, onStatus);
 \index{net::in::stream::legacy@\texttt{net::in::stream::legacy}}
 \index{net::in6::stream::legacy@\texttt{net::in6::stream::legacy}}
 
-IPv4 and IPv6 are the simplest place to see the source/build pairing. A file that directly names an IPv4 legacy stream role uses the IPv4 public role headers:
+IPv4 and IPv6 are the simplest place to see the source/build pairing. A file that directly names an IPv4 legacy stream type uses the IPv4 public type headers:
 
 ```cpp
 #include <net/in/stream/legacy/SocketServer.h>
@@ -413,12 +413,12 @@ The local point is the family selection. Chapter 27 gives the consolidated inclu
 
 This chapter focuses on stream Unix domain sockets. It builds on the context/factory separation and event-loop execution established in Chapters 3, 4 and 6 while endpoint identity changes. Chapter 8 develops connection lifetimes in detail.
 
-The SNode.C build also contains a `net-un-dgram` component, but datagram communication introduces a different communication shape and should not distract from the stream-based role model being developed in Chapters 7, 8 and 9.
+The SNode.C build also contains a `net-un-dgram` component, but datagram communication introduces a different communication shape and should not distract from the stream-based connection model being developed in Chapters 7, 8 and 9.
 
 \index{net::un::stream::legacy@\texttt{net::un::stream::legacy}}
 \index{public headers}
 
-Unix-domain legacy stream roles use the `un` family fragment on both public surfaces. Source files that directly name those roles include:
+Unix-domain legacy stream types use the `un` family fragment on both public surfaces. Source files that directly name those public types include:
 
 ```cpp
 #include <net/un/stream/legacy/SocketServer.h>

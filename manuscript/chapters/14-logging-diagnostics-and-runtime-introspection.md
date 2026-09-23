@@ -315,7 +315,7 @@ Payloads, headers, cookies, credentials and configuration can expose sensitive d
 
 A connection attempt, an established transport, an attached context, and a protocol session are related events, but they are not synonyms.
 
-When a client retries, the named role can remain the same while the attempt changes. When HTTP upgrades to WebSocket, the context changes while the peer connection continues. When MQTT resumes or establishes a session, protocol meaning is added above the transport. Diagnostic wording should preserve these distinctions rather than report each transition as another undifferentiated connection.
+When a client retries, the named instance can remain the same while the attempt changes. When HTTP upgrades to WebSocket, the context changes while the peer connection continues. When MQTT resumes or establishes a session, protocol meaning is added above the transport. Diagnostic wording should preserve these distinctions rather than report each transition as another undifferentiated connection.
 
 Not every run reaches an established transport or protocol session. An endpoint can fail before a connection exists, and an intentional context switch is not necessarily a network failure.
 
@@ -323,7 +323,7 @@ Counters need the same care. Cumulative queued bytes differ from pending queue l
 
 The effective configuration is the companion artifact for this reading. Record the selected endpoint, limits, retry policy, and log policy along with the observed sequence. A short event history plus the exact configuration is usually a better bug report than an unbounded payload dump.
 
-**Part V checkpoint — make the role reproducible and diagnosable.** Use the public lab to repeat the echo precedence experiment with an unused loopback port. Run that endpoint first at global `Error`, then with component `echo=info` and instance `echoserver=debug` overrides. Both runs must echo the same bytes; only the scoped run reveals the listening and context records. Reject port 70000 and locate `--port` through local help. Keep the selected configuration with the short event history. These startup observations do not test runtime reconfiguration.
+**Part V checkpoint — make the instance reproducible and diagnosable.** Use the public lab to repeat the echo precedence experiment with an unused loopback port. Run that endpoint first at global `Error`, then with component `echo=info` and instance `echoserver=debug` overrides. Both runs must echo the same bytes; only the scoped run reveals the listening and context records. Reject port 70000 and locate `--port` through local help. Keep the selected configuration with the short event history. These startup observations do not test runtime reconfiguration.
 
 ::: {.snodec-remember title="What to remember"}
 - Semantic logging records origin, boundary, component, and optional runtime identity separately from the message.

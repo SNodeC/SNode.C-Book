@@ -11,7 +11,7 @@
 - **O3.** Decide which guarantees require persistence, delivery evidence, or a different topic policy.
 :::
 
-### One model, several communication roles
+### One model, several application roles
 
 Part X separated build, installation and runtime evidence. MiniGateway now uses those habits to assemble one accepted-state model with several protocol participants; begin by observing its behavior, then read the files in dependency order.
 

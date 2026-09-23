@@ -26,8 +26,8 @@ HTTP contexts and factories build on named instances, activation flows and strea
 | network family | IPv4, IPv6, Unix domain, RFCOMM where supported | still present |
 | connection handling | legacy or TLS stream connection | still legacy or TLS underneath |
 | application-facing unit | bytes or custom stream protocol data | HTTP request and response |
-| context role | custom protocol endpoint | HTTP-aware protocol endpoint |
-| factory role | creates stream contexts | creates HTTP contexts |
+| context behavior | custom protocol endpoint | HTTP-aware protocol endpoint |
+| factory construction | creates stream contexts | creates HTTP contexts |
 | configuration | instance / local / remote / socket / TLS | same base plus HTTP-specific configuration where needed |
 | diagnostics | connection lifecycle, counters, timing, and failure behavior | same plus HTTP parsing and request/response meaning |
 | extension point | protocol code in the context | routing, SSE, WebSocket upgrade, higher web layers |
@@ -102,7 +102,7 @@ The client side has to manage the relationship between a client connection and o
 
 That is why the HTTP client vocabulary contains:
 
-| Concept | Role |
+| Concept | Function |
 |---|---|
 | `MasterRequest` | client-side coordination object associated with the HTTP connection |
 | `Request` | concrete HTTP request |
@@ -209,7 +209,7 @@ The complete programs for this HTTP-upgrade example are `HttpUpgrade-Server` and
 
 Ordinary components require their headers, linked libraries and runtime loader access. HTTP upgrade additionally resolves a runtime selection key.
 
-SNode.C can resolve an HTTP upgrade factory through a linked registration path or by loading a role-specific shared object at runtime. The common dynamic deployment contract is compact:
+SNode.C can resolve an HTTP upgrade factory through a linked registration path or by loading a server-side or client-side shared object at runtime. The common dynamic deployment contract is compact:
 
 ```text
 HTTP upgrade directory:
@@ -238,7 +238,7 @@ websocketServerSocketContextUpgradeFactory
 websocketClientSocketContextUpgradeFactory
 ```
 
-A linked deployment uses the same upgrade name but resolves it through the selector's linked-factory cache instead of opening the shared object later. For an application that uses the installed WebSocket upgrade components, the build-time shape is to link the HTTP role and the matching WebSocket upgrade role into the executable or into an application-loaded library:
+A linked deployment uses the same upgrade name but resolves it through the selector's linked-factory cache instead of opening the shared object later. For an application that uses the installed WebSocket upgrade components, the build-time shape is to link the HTTP component and the matching WebSocket upgrade component into the executable or into an application-loaded library:
 
 ```cmake
 target_link_libraries(my_ws_server PRIVATE

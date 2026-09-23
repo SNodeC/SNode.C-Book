@@ -335,7 +335,7 @@ Finally, repeat the invalid-port experiment from the Linux exercise, inspect the
 \index{deployment!ABI compatibility}
 \index{snodec-control@\texttt{snodec-control}}
 
-A deployment of SNode.C 2.0 must use a coherent set of rebuilt C++ artifacts. Applications and runtime-loaded extensions compiled against 1.x must not be mixed with the new shared libraries. The source-level continuity of a role name or include path is not an ABI guarantee. Rebuild the application, its protocol modules, and the libraries that derive from affected public classes as one installation set.
+A deployment of SNode.C 2.0 must use a coherent set of rebuilt C++ artifacts. Applications and runtime-loaded extensions compiled against 1.x must not be mixed with the new shared libraries. The source-level continuity of a public type name or include path is not an ABI guarantee. Rebuild the application, its protocol modules, and the libraries that derive from affected public classes as one installation set.
 
 Inspect that installed set in the environment in which it will run. The staged installed-consumer and external echo checks from Chapter 29 provide useful package evidence, but they do not exercise a particular service account, router image, certificate directory, or database installation. Those remain deployment checks.
 

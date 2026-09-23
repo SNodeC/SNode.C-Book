@@ -32,7 +32,7 @@ net::in::stream::legacy::SocketServer
 #include <net/in/stream/legacy/SocketServer.h>
 ```
 
-The type selects a role; its public header supplies the declaration. Include the highest public role directly named by the source, rather than every lower implementation header.
+The type selects a server or client side; its public header supplies the declaration. Include the highest public type directly named by the source, rather than every lower implementation header.
 
 \index{component names}
 \index{public include paths}
@@ -48,7 +48,7 @@ Read this as network-facing code, IPv4 family, stream transport, non-TLS connect
 net::rc::stream::tls::SocketServer<MyFactory>
 ```
 
-Here the family is Bluetooth RFCOMM, connection handling is TLS, and the role is a server. The factory still supplies per-connection contexts.
+Here the family is Bluetooth RFCOMM, connection handling is TLS, and the selected type is a server. The factory still supplies per-connection contexts.
 
 ::: {.snodec-rule title="Layer-reading rule"}
 Read a SNode.C communication type as a stack description before reading it as an isolated API name.
@@ -59,7 +59,7 @@ Read a SNode.C communication type as a stack description before reading it as an
 #include <net/in/stream/legacy/SocketClient.h>
 ```
 
-These role headers share the `net-in-stream-legacy` component. Selecting IPv6 and TLS instead yields `net-in6-stream-tls`; spelling alone supplies neither endpoint configuration nor security policy.
+These public type headers share the `net-in-stream-legacy` component. Selecting IPv6 and TLS instead yields `net-in6-stream-tls`; spelling alone supplies neither endpoint configuration nor security policy.
 
 ::: {.snodec-note title="Reading habit"}
 When a SNode.C name feels long, do not shorten it mentally too early. First ask which decisions it records.
@@ -158,7 +158,7 @@ TLS changes handshakes, certificate material, peer validation, SNI or hostname c
 
 A transport connection, completed handshake, and accepted peer identity are distinct observations. Chapter 15 examines those obligations and their callback timing.
 
-Core variants are `core-socket-stream-legacy` and `core-socket-stream-tls`. Concrete components combine family and variant: `net-in-stream-legacy`, `net-in-stream-tls`, `net-in6-stream-legacy`, `net-in6-stream-tls`, `net-un-stream-legacy`, and `net-un-stream-tls`. Public role headers follow the same structure:
+Core variants are `core-socket-stream-legacy` and `core-socket-stream-tls`. Concrete components combine family and variant: `net-in-stream-legacy`, `net-in-stream-tls`, `net-in6-stream-legacy`, `net-in6-stream-tls`, `net-un-stream-legacy`, and `net-un-stream-tls`. Public type headers follow the same structure:
 
 ```cpp
 #include <net/in/stream/legacy/SocketServer.h>
@@ -167,7 +167,7 @@ Core variants are `core-socket-stream-legacy` and `core-socket-stream-tls`. Conc
 #include <net/un/stream/legacy/SocketServer.h>
 ```
 
-Include the role the source file names, not the whole lower socket stack manually. Bluetooth uses `net-rc-stream-legacy`, `net-rc-stream-tls`, `net-l2-stream-legacy`, and `net-l2-stream-tls` where support and build options make those components available. Read each as family, stream transport, and non-TLS or TLS connection handling; check availability separately from interpreting the name.
+Include the public header for the type the source file names, not the whole lower socket stack manually. Bluetooth uses `net-rc-stream-legacy`, `net-rc-stream-tls`, `net-l2-stream-legacy`, and `net-l2-stream-tls` where support and build options make those components available. Read each as family, stream transport, and non-TLS or TLS connection handling; check availability separately from interpreting the name.
 
 Next hold IPv4 and echo fixed while selecting TLS. The server type and include path choose the TLS connection variant, and the installed component must agree. That selection does not provide a certificate, private key or trust decision by itself. An echo function can be unchanged while connection establishment now fails because the security configuration is incomplete. That is the expected consequence of assigning security to a distinct part of the program: the failure can occur before the context has any application bytes to reflect.
 
@@ -206,7 +206,7 @@ Use these three experiments as a reading method. First state the intended behavi
 \index{component architecture}
 
 
-Use the first echo pair to check a proposed layer change. Keep the context and factory fixed, then compare the public role header, type alias, and component for these two selections:
+Use the first echo pair to check a proposed layer change. Keep the context and factory fixed, then compare the public type header, type alias, and component for these two selections:
 
 | Selection | Public server header | Component |
 |---|---|---|

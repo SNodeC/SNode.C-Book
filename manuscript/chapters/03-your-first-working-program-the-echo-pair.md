@@ -48,7 +48,7 @@ The first two files define the application behavior, and the last two files defi
 \index{context}
 
 
-Before writing code, it helps to name the three roles.
+Before writing code, it helps to name the three participating objects.
 
 
 \index{instances}
@@ -67,7 +67,7 @@ net::in::stream::legacy::SocketClient<...>
 
 The `net::in` part means IPv4. The `stream` part means connection-oriented stream communication. The `legacy` part means the non-TLS stream connection variant.
 
-The server-side role listens. The client-side role connects. Neither one contains the echo protocol directly.
+The server handle starts listening. The client handle starts connecting. Neither one contains the echo protocol directly.
 
 
 \index{factory}
@@ -163,7 +163,7 @@ The constructor receives a `core::socket::stream::SocketConnection*`. The connec
 
 The factories implement `create(...)`. They are small because their job is small: create the correct context object for a new connection.
 
-The `Role` enum lets one context class serve both sides. The server and client share the same echo behavior, but the client must send the first message. The role tells the context whether it should initiate the ping-pong when the connection becomes active.
+The `Role` enum lets one context class serve both sides. The server and client share the same echo behavior, but the client must send the first message. The enum value tells the context whether it should initiate the ping-pong when the connection becomes active.
 
 The `onSignal(...)` override is included because it belongs to the context interface used by the repository echo example. Signal handling is not the conceptual focus of this chapter.
 
@@ -446,7 +446,7 @@ This build file imports the installed SNode.C package and requests the component
 find_package(snodec 2.0.0 REQUIRED COMPONENTS net-in-stream-legacy)
 ```
 
-The context library links publicly to `snodec::net-in-stream-legacy` because its public header derives from SNode.C stream-context types. The two executables then link to the context library. The source-side and build-side selections now agree: the application includes `<net/in/stream/legacy/SocketServer.h>` or `<net/in/stream/legacy/SocketClient.h>` for the concrete C++ role, and the CMake target links `snodec::net-in-stream-legacy` for the corresponding binary surface.
+The context library links publicly to `snodec::net-in-stream-legacy` because its public header derives from SNode.C stream-context types. The two executables then link to the context library. The source-side and build-side selections now agree: the application includes `<net/in/stream/legacy/SocketServer.h>` or `<net/in/stream/legacy/SocketClient.h>` for the concrete public C++ type, and the CMake target links `snodec::net-in-stream-legacy` for the corresponding binary surface.
 
 
 If SNode.C was installed into the local prefix from Chapter 2, configure the playground like this:

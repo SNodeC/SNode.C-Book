@@ -65,7 +65,7 @@ For each abstraction, this book explains why it exists, shows its use in a worki
 
 ### Where SNode.C fits: two echo servers
 
-SNode.C is not trying to replace every C++ networking approach. It is most useful when an application needs explicit communication roles, layered protocol structure, runtime-visible configuration, diagnostics, and several transport or protocol surfaces within one architectural model.
+SNode.C is not trying to replace every C++ networking approach. It is most useful when an application needs explicit application roles, layered protocol structure, runtime-visible configuration, diagnostics, and several transport or protocol surfaces within one architectural model.
 
 
 Direct POSIX sockets give explicit operating-system control. Standalone Asio and Boost.Asio provide asynchronous I/O primitives with broad platform support; focused web frameworks offer a shorter route to an HTTP service. SNode.C supplies a more prescribed combination of protocol layers, endpoint configuration, and diagnostics. The best fit depends on which responsibilities the application wants to assemble itself.

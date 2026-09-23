@@ -87,12 +87,12 @@ A useful contrast is:
 |---|---|
 | choosing the context type | protocol message handling |
 | passing stable dependencies | read/write behavior |
-| setting role-specific constructor arguments | retry or reconnect policy |
+| setting side-specific constructor arguments | retry or reconnect policy |
 | creating one fresh context | global orchestration |
 | keeping construction readable | service-location dumping ground |
 | making construction-time choices | mid-protocol state transitions |
 
-Factories may need several arguments, select a context type, or carry role information. Their complexity should remain construction complexity.
+Factories may need several arguments, select a context type, or carry server/client selection information. Their complexity should remain construction complexity.
 
 A factory can legitimately choose which concrete context type to create. For many simple applications, there is exactly one concrete context type.
 
@@ -110,7 +110,7 @@ It becomes problematic only when the factory starts performing protocol behavior
 
 A context may need stable dependencies at construction time. Examples include:
 
-- a role indicator,
+- a server/client indicator,
 - immutable protocol configuration,
 - a shared service interface,
 - a parser helper,
@@ -119,15 +119,15 @@ A context may need stable dependencies at construction time. Examples include:
 
 The factory can hold stable dependencies and pass them to each new context. Each dependency should answer a specific protocol need rather than provide hidden access to the entire application.
 
-A factory is often a good place to make role-specific construction decisions.
+A factory is often a good place to make side-specific construction decisions.
 
-For example, a protocol may use the same context class on both sides but pass a role value:
+For example, a protocol may use the same context class on both sides but pass a server/client selector:
 
 ```cpp
 enum class Role { Server, Client };
 ```
 
-Then the factory can make the role explicit. In schematic form:
+Then the factory can make the selected side explicit. In schematic form:
 
 ```cpp
 SocketContext* create(SocketConnection* connection) override {
@@ -143,7 +143,7 @@ SocketContext* create(SocketConnection* connection) override {
 }
 ```
 
-The role decision is visible at construction; neither factory executes the conversation.
+The server/client selection is visible at construction; neither factory executes the conversation.
 
 ### Responsibilities that should stay out of the factory
 
@@ -160,7 +160,7 @@ Connection-local protocol state belongs in the context. Application-level shared
 
 The factory should not become the place where large mutable protocol state is accumulated simply because it is convenient.
 
-Factory state should usually be stable construction state, not evolving per-message protocol state. A role value, a configuration object, or a service reference can be construction state. A partially parsed message, peer conversation phase, or connection-local protocol buffer belongs in the context.
+Factory state should usually be stable construction state, not evolving per-message protocol state. A server/client selector, a configuration object, or a service reference can be construction state. A partially parsed message, peer conversation phase, or connection-local protocol buffer belongs in the context.
 
 ### Passing shared application state
 
@@ -211,7 +211,7 @@ There is more than one correct factory shape. The right design depends on what n
 
 | Pattern | Use when |
 |---|---|
-| separate server/client factories | the role distinction should be visible and simple |
+| separate server/client factories | the server/client distinction should be visible and simple |
 | parameterized factory | the context type is the same and only stable constructor data differs |
 | context-type-selecting factory | a small, explicit selection among endpoint types is needed |
 | preconfigured role factory | application responsibilities should be fixed at handle construction |
@@ -220,13 +220,13 @@ There is more than one correct factory shape. The right design depends on what n
 The selection should remain a construction-time decision, not protocol execution.
 :::
 
-Separate server-side and client-side factories can be useful when the two roles should be visible. This is especially clear when both sides use the same context type but receive different role arguments. The benefit is readability.
+Separate server-side and client-side factories can be useful when the two sides should be visible. This is especially clear when both sides use the same context type but receive different selector arguments. The benefit is readability.
 
 Small duplication is often acceptable when it makes the two protocol sides clearer.
 
 A single reusable factory type may also be appropriate.
 
-For example, the role or configuration object may be a constructor argument of the factory itself. In schematic form:
+For example, the selector or configuration object may be a constructor argument of the factory itself. In schematic form:
 
 ```cpp
 class EchoSocketContextFactory : public SocketContextFactory {
@@ -248,7 +248,7 @@ This can be a clean design when the factory remains easy to read and the variati
 
 Preconfigured factories allow the same framework mechanism to create contexts for different application roles without changing the surrounding server/client machinery.
 
-A server/client handle can pass stable role and dependency information into the factory constructor. The factory can then use that information whenever it creates a context for a new connection.
+A server/client handle can pass stable application-purpose and dependency information into the factory constructor. The factory can then use that information whenever it creates a context for a new connection.
 
 This can be used for server-side versus client-side contexts, but also for application roles:
 

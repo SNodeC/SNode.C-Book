@@ -110,21 +110,21 @@ The native context retains the network family, legacy or TLS connection variant,
 \index{MQTT!client side}
 \index{broker role}
 
-The MQTT module separates shared protocol infrastructure from role-specific behavior.
+The MQTT module separates shared protocol infrastructure from server/client behavior.
 
 A useful module view is:
 
 | Module/library | Meaning |
 |---|---|
 | `mqtt` | shared MQTT protocol core |
-| `mqtt-server` | server/broker-oriented role layer |
+| `mqtt-server` | server/broker-oriented implementation layer |
 | `mqtt-client` | client-side layer |
 | `mqtt-server-websocket` | server-side MQTT WebSocket subprotocol |
 | `mqtt-client-websocket` | client-side MQTT WebSocket subprotocol |
 
 A named instance supplies configuration for its activation flows. Each resulting connection receives an MQTT-aware context and protocol object. Broker or session state may deliberately outlive that one connection; do not place it in a short-lived receive buffer merely because both are called state.
 
-The server-side MQTT role derives from the shared MQTT protocol object and connects it to broker-oriented behavior, rather than acting as a listener that only parses MQTT bytes.
+The server-side MQTT class derives from the shared MQTT protocol object and connects it to broker-oriented behavior, rather than acting as a listener that only parses MQTT bytes.
 
 It handles concerns such as:
 
@@ -214,7 +214,7 @@ private:
 };
 ```
 
-The example deliberately omits the concrete lower connection setup. That setup decides how the MQTT role is attached to a stream or to another carrier. The MQTT role itself shows the protocol behavior: it sends `CONNECT`, waits for `CONNACK`, subscribes, publishes, handles incoming publishes, and sends `DISCONNECT` during shutdown. The complete companion role example is named `MQTT-ClientRole`.
+The example deliberately omits the concrete lower connection setup. That setup decides how the MQTT object is attached to a stream or to another carrier. The MQTT object itself shows the protocol behavior: it sends `CONNECT`, waits for `CONNACK`, subscribes, publishes, handles incoming publishes, and sends `DISCONNECT` during shutdown. The complete companion client example is named `MQTT-ClientRole`.
 
 The current implementation is an MQTT 3.1.1 path. Read the `sendConnect(...)` arguments with that version in mind: the optional loop-prevention argument changes the protocol-level byte using a private extension. It is not a portable subscription setting. The compact client leaves it disabled. Also distinguish socket readiness from MQTT acceptance. The client implementation handles CONNACK before delivering the successful application callback, so a connected socket alone is not evidence that the broker accepted the MQTT session or a later subscription.
 
@@ -222,7 +222,7 @@ The current implementation is an MQTT 3.1.1 path. Read the `sendConnect(...)` ar
 
 The compact client sends its subscription and first publication from the accepted-CONNACK callback. That establishes ordering after session acceptance; it does not wait for a subscription acknowledgement before publishing. Its command subscription and telemetry publication also use different topic paths. A successful call to `sendPublish(...)` is not proof that a command subscriber received anything.
 
-Use an independently observable peer when integrating the role with a broker. Record these milestones separately:
+Use an independently observable peer when integrating the client with a broker. Record these milestones separately:
 
 | Milestone | Evidence to retain |
 |---|---|
@@ -247,7 +247,7 @@ If the command callback runs but the telemetry observer receives nothing, follow
 \index{MQTT!WebSocket subprotocol}
 \index{WebSocket!subprotocols}
 
-The WebSocket carrier substitutes a subprotocol role for the native stream context. The MQTT-facing bridge remains the same; keep carrier selection separate from session and topic policy.
+The WebSocket carrier substitutes a subprotocol object for the native stream context. The MQTT-facing bridge remains the same; keep carrier selection separate from session and topic policy.
 
 \index{MQTT!public surface}
 \index{iot::mqtt@\texttt{iot::mqtt}}
@@ -267,7 +267,7 @@ Diagnose MQTT problems at the owning boundary:
 - broker distribution,
 - WebSocket subprotocol selection when MQTT is carried over WebSocket.
 
-Chapter 23 uses these observations when assigning protocol roles in a larger IoT system.
+Chapter 23 uses these observations when assigning application responsibilities in a larger IoT system.
 
 ::: {.snodec-note title="Build note"}
 The corresponding native MQTT client component is:
@@ -284,7 +284,7 @@ MQTT code includes the MQTT abstraction it directly names. A client-side MQTT pr
 #include <iot/mqtt/client/Mqtt.h>
 ```
 
-Shared support remains below `<iot/mqtt/...>` for topics, packets, socket-context bridging, and protocol support. The build-side components distinguish shared support, native roles, and WebSocket-carried compositions; Chapter 27 collects those mappings in one source-derived table.
+Shared support remains below `<iot/mqtt/...>` for topics, packets, socket-context bridging, and protocol support. The build-side components distinguish shared support, native server/client implementations, and WebSocket-carried compositions; Chapter 27 collects those mappings in one source-derived table.
 
 \index{JSON dependency}
 \index{MQTT!component identity}
@@ -305,7 +305,7 @@ We can now distinguish transport establishment from session acceptance, subscrip
 :::
 
 ::: {.snodec-exercise title="Exercises"}
-1. **Review (O1).** Trace one received control packet from its carrier through the deserializer to its MQTT role.
+1. **Review (O1).** Trace one received control packet from its carrier through the deserializer to its MQTT object.
 2. **Review (O1, O3).** Why do CONNECT, CONNACK, SUBACK and subscriber receipt answer different questions? What can a QoS 0 publisher know?
 3. **Lab (O1, O2).** Run the local packet-peer lab. Expect CONNECT first, no subscription before CONNACK, then the canonical subscription, telemetry and received command.
 4. **Lab (O2, O3).** Run the equipped broker lab using its disposable local fixture. Expect granted SUBACK and an independent subscriber’s exact topic/payload, then a command received by the client.

@@ -110,7 +110,7 @@ class WebAppT
 
 This composition explains how HTTP request handling becomes Express-like application flow.
 
-| Type | Role |
+| Type | Function |
 |---|---|
 | `Router` | route tree and middleware structure |
 | `WebApp` | router-shaped application plus runtime-facing lifecycle |
@@ -183,7 +183,7 @@ An application handler typically answers a matched request. Middleware may inspe
 \index{dispatcher}
 \index{routing dispatch}
 
-The user-facing API is built on internal dispatcher roles.
+The user-facing API is built on internal dispatcher types.
 
 The dispatchers encode the fact that application callbacks, middleware callbacks, and mounted routers have different control-flow meanings.
 

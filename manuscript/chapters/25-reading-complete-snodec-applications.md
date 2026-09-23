@@ -213,7 +213,7 @@ Read the pair together to compare the client’s method, path, content type, and
 
 The legacy web app provides the `GET` form and `POST` body handling. The TLS web app reuses that application behavior on a TLS-capable endpoint.
 
-The source structure is useful because it shows two related application roles in one file: `express::legacy::in::WebApp` for the legacy HTTP endpoint and `express::tls::in::WebApp` for the TLS HTTP endpoint.
+The source structure is useful because it shows two related HTTP application instances in one file: `express::legacy::in::WebApp` for the legacy HTTP endpoint and `express::tls::in::WebApp` for the TLS HTTP endpoint.
 
 When borrowing this shape, separate the reused route behavior from the TLS deployment policy. The fact that both variants register the same handlers says nothing about which peer identities the TLS endpoint verifies.
 
@@ -278,11 +278,11 @@ For each, record the build target, feature guards, entry point, runtime initiali
 
 Apply this method to `jsonclient`: write down network family and connection variant, HTTP method/path, body content type, success and parse-error callbacks, then inspect the matching server route. A disagreement is an application-contract question even when both binaries compile.
 
-Separate executables generated for each network family and server/client side make a different packaging choice from one program with several runtime roles.
+Separate executables generated for each network family and server/client side make a different packaging choice from one program with several active instances.
 
-The echo family makes variants explicit: separate generated targets expose variants clearly but increase the set of binaries to package and test. A combined executable can activate several network families together and share application state, at the cost of a larger option surface and shared process lifecycle. Choose according to whether deployments need independent variants or simultaneous roles.
+The echo family makes variants explicit: separate generated targets expose variants clearly but increase the set of binaries to package and test. A combined executable can activate several network families together and share application state, at the cost of a larger option surface and shared process lifecycle. Choose according to whether deployments need independent variants or simultaneous application services.
 
-When borrowing from an in-tree application, separate three things in the reading notes: a public API shape, the example's selected policy, and an outcome actually tested. The TLS echo source is a useful case: it exposes the pre-handshake callback, but its commented hostname-checking statements do not execute. The same distinction applies to disabled roles, optional modules, and configured retry policy. A source example is strongest when it gives the reader a path to verify behavior, rather than when every nearby comment is treated as a runtime guarantee.
+When borrowing from an in-tree application, separate three things in the reading notes: a public API shape, the example's selected policy, and an outcome actually tested. The TLS echo source is a useful case: it exposes the pre-handshake callback, but its commented hostname-checking statements do not execute. The same distinction applies to disabled instances, optional modules, and configured retry policy. A source example is strongest when it gives the reader a path to verify behavior, rather than when every nearby comment is treated as a runtime guarantee.
 
 We have followed one executable from target selection to an externally observable contract. The next chapter applies the same discipline between executables: a broker, bridge or store has its own entry point and tests, while their cooperation adds delivery, compatibility and recovery questions that no single `main()` can answer.
 
