@@ -1,0 +1,96 @@
+{
+  "source": "/home/voc/projects/snodec/snode.c",
+  "head": "07ca9a2936ee72582df7d159cb06666fe23e30f8",
+  "status_porcelain_v1": "?? porting/\n",
+  "diff_head_binary_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "untracked_nonignored_sha256": [
+    {
+      "path": "porting/API_CONTRACT.md",
+      "sha256": "d8c402931919031d962b111a9379245a6ca3c83da37f23272fe31b507a683822"
+    },
+    {
+      "path": "porting/AUDIT.md",
+      "sha256": "d3d061e6181a0350ded0d8e420a7013b537524a5f4f9cbbd267dfb3b79757811"
+    },
+    {
+      "path": "porting/PLATFORM_DEPENDENCIES.md",
+      "sha256": "50fb7735f9ecc84afeb4dc75a6229d0716c157e96f7999ab3cb0046f1b1fb6dc"
+    },
+    {
+      "path": "porting/README.md",
+      "sha256": "17e68cd0f7363f33ce6720a1b613aff5aa34b8088bf1025885da566e91737f2e"
+    },
+    {
+      "path": "porting/SYSCALL_INVENTORY.md",
+      "sha256": "06cfe9582817562625ee6abe106c467f3a52d7c6d682ae2b58e4235e75aa42f0"
+    },
+    {
+      "path": "porting/inventory/api-proposals.tsv",
+      "sha256": "4427cd96f8d844b60719f7d423b66e8898ba18a2a8766e50a7f0b5381ef40a33"
+    },
+    {
+      "path": "porting/inventory/apis.tsv",
+      "sha256": "cf07f1338df44894da4fa31211782d0333ffcb70398f54421cb425744d93c7fc"
+    },
+    {
+      "path": "porting/inventory/build-and-script-sites.tsv",
+      "sha256": "d74e0775ba67566644b4afd37a838e6321f32c859a0bf154dc5e70e8fa7ed473"
+    },
+    {
+      "path": "porting/inventory/excluded-homonyms.tsv",
+      "sha256": "03092a7cad1cee5cfa14aa10d5ac9d845c7ec8f4d3cb5be3b8d3960ff00834ec"
+    },
+    {
+      "path": "porting/inventory/file-manifest.tsv",
+      "sha256": "954e61740223fc51f0b64d561fdbbee6748c5e7c8df3b336184cabf7e4aa21f2"
+    },
+    {
+      "path": "porting/inventory/includes.tsv",
+      "sha256": "0242960fd55dc5c5ac4974148fb981903523a2666a60f0bf8c991bfb28f3d430"
+    },
+    {
+      "path": "porting/inventory/indirect-os-operations.tsv",
+      "sha256": "dd397aa9c1053e68e67e5c40c99e1db0127305a69db92aa1a16f6a20e15a40e7"
+    },
+    {
+      "path": "porting/inventory/lexical-symbols.tsv",
+      "sha256": "6aece68acb5085df4890a43bbb583056492ae7221c2b06809ceebb19400eaafe"
+    },
+    {
+      "path": "porting/inventory/libc-crosscheck-provenance.json",
+      "sha256": "0cdfd73e8a0209848e55f9fbc288d90b2c06bb0dd4ba60e7d4c2079029f1d8fe"
+    },
+    {
+      "path": "porting/inventory/libc-symbol-crosscheck.tsv",
+      "sha256": "958db1a67154d5909c8fde9d6a199b2994b4366ee48ac0295604635c6225d3d5"
+    },
+    {
+      "path": "porting/inventory/occurrences.tsv",
+      "sha256": "65fd6f79cc7bb2093adfeefb300f140aecb85221bf8e7ef1a3bc4320434380b0"
+    },
+    {
+      "path": "porting/inventory/platform-identifiers.tsv",
+      "sha256": "9bb35010645654c5abde878d208a270c4e5cc6c652c82865bca74a53eade3f03"
+    },
+    {
+      "path": "porting/inventory/preprocessor-conditions.tsv",
+      "sha256": "5e3a9c630f902d61ffe0bfe652c19e9cc55a83c12cd20986fa5a075d8de81772"
+    },
+    {
+      "path": "porting/inventory/provenance.json",
+      "sha256": "9379edcd1dd4450e5e403caa5ead8fa9cd1cb815396a43081745c2b3ee6d8c54"
+    },
+    {
+      "path": "porting/tools/api_catalog.py",
+      "sha256": "e69094c479e69baeabe005a85e7749aa422d8af49473972f473a70d35b5ff07d"
+    },
+    {
+      "path": "porting/tools/api_proposals.py",
+      "sha256": "80a6b57361c3045eb59a5c4288e58c619105aaf519f7a69607893557f2458bee"
+    },
+    {
+      "path": "porting/tools/inventory.py",
+      "sha256": "a88c2f34318b19114f0e849be7e36eaa45ebd7cb6b784de43ec3f4c042aa1469"
+    }
+  ]
+}

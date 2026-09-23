@@ -1,0 +1,20 @@
+{
+  "baseline": "framework-freeze-R2.json",
+  "start": "framework-freeze-polish-start.json",
+  "matches_R2": false,
+  "differing_fields": [
+    "status_porcelain_v1",
+    "untracked_nonignored_sha256"
+  ],
+  "untracked_file_count": 22,
+  "instruction_sha256": "61be0b0d60717b06ee4d366bb4d6ac516cb493878bab0a35495d228473fabd0d",
+  "decision": "STOP before P1: Follow-up 12 section 0 and PROMPT section 14",
+  "end": "framework-freeze-polish-end.json",
+  "end_matches_R2": false,
+  "end_matches_start": true,
+  "end_differing_fields_from_R2": [
+    "status_porcelain_v1",
+    "untracked_nonignored_sha256"
+  ],
+  "end_untracked_file_count": 22
+}

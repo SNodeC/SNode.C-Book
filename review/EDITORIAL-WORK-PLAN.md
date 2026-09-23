@@ -2299,3 +2299,31 @@ P4/P5 committed as `6683818`. Read all 55 consecutive manifest pairs, including 
 ### Follow-up 11 — completed P7 exit
 
 P6 is `6b7d7c0`; P7 is `c1db599`. R2 and P0b-resume through P7 are complete on public 07ca9a29. Final raw tokens: 110,177; must 107,338, wish 112,338, ceiling 115,000. Every unit and group meets its floor/cap without waiver. P7 passes 66/66 labs and all smoke/lifetime/static/checker suites. The source package now includes the two active chapter registries; its extracted hygiene check is required final evidence. Framework freeze matches R2. All 16 smoothing assertion groups pass, with mutation regressions. Full evidence, qualifications, phase commits, chapter ledger and self-assessment are in `pedagogical-smoothing-2026-09-23/REPORT.md`. Earlier progress entries are historical. No merge; push only the work branch.
+
+### Follow-up 12 — final polish authorized; stopped at entry
+
+The author instruction is preserved verbatim in
+`pedagogical-smoothing-2026-09-23/FOLLOWUP-12.md`. It adds only P1–P9
+to the governing PROMPT.md, FOLLOWUP-01 and FOLLOWUP-11: terminology,
+the Ch8 table, Ch2 commands, Ch13 running value, MQTT fundamentals/diagram,
+Ch18 reference placement, Ch23/26 concrete wording, verification phrasing,
+and publisher proposal consistency, followed by the specified evidence.
+No companion or structural changes are authorized. The hard ceiling is
+115,000 tokens, with an aim of 112,500 or less; chapter floors and the
+specified cap/waiver rules remain in force. One commit per item in order,
+then evidence, and push without merge are the requested completion sequence.
+
+Entry is the requested `9b82ea4668f96e2b577b2c474a337e02fbb61ae0` on
+`book/pedagogical-smoothing-2026-09-23`. The required P0a-method capture
+does not match `framework-freeze-R2.json`: HEAD and the tracked binary-diff
+digest are unchanged, but there are 22 untracked, non-ignored files under
+`porting/` in the author's framework tree. Follow-up 12 §0 and PROMPT.md §14
+therefore stop this run before P1. No manuscript, companion, framework or
+structure change; no re-pin or investigation of framework behavior.
+
+P1–P9 and their checks remain unstarted. No new matrix cells are certified.
+The previous completed P7 report remains historical. The untracked publisher
+review from the preceding task is preserved separately. Stop evidence is in
+`pedagogical-smoothing-2026-09-23/POLISH-REPORT.md`, the polish start/end
+freeze records and `polish-freeze-comparison.json`. This stop does not waive
+the freeze or authorize automatic resumption.
