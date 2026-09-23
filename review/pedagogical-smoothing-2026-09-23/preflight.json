@@ -1,0 +1,15 @@
+{
+  "review_baseline": "c7b76c108db43de7326a1a63756cf02eed3dbb31",
+  "starting_tip": "a5e51a204d79caef8c288d5e7b7cec2b8e87d09f",
+  "commits_since_baseline": [
+    "a5e51a204d79caef8c288d5e7b7cec2b8e87d09f Prompt"
+  ],
+  "changed_paths_since_baseline": [
+    "review/pedagogical-smoothing-2026-09-23/PROMPT.md"
+  ],
+  "unexpected_drift": [],
+  "entry_book_status": "clean",
+  "prompt_sha256": "c34bbab40ac13289e993af8504344f8d1435e1ec5ca87d4fb7ad6dfac8020155",
+  "framework_freeze": "framework-freeze-P0a.json",
+  "work_branch": "book/pedagogical-smoothing-2026-09-23"
+}

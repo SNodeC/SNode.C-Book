@@ -2,6 +2,16 @@
 
 ## Active work plan
 
+The active scope is **Author scope revision — pedagogical smoothing, 2026-09-23**
+in `review/EDITORIAL-WORK-PLAN.md`, governed by the installed specification
+`review/pedagogical-smoothing-2026-09-23/PROMPT.md`. Execute its autonomous P0a–P7
+gates on `book/pedagogical-smoothing-2026-09-23`. This pass supersedes conflicting
+earlier one-phase-per-session, structure-freeze and 105,000-token stretch rules:
+the new must/wish/ceiling are 107,338 / 112,338 / 115,000 tokens, and the two
+specified chapter splits are approved. The old proposal-readiness phase checkers
+and evidence remain historical. Freeze the author's framework working tree,
+treat it as read-only, and obey the new specification's stop conditions.
+
 Before manuscript refinement, read `review/EDITORIAL-WORK-PLAN.md`. It is the
 persistent authority for the agreed remaining work, acceptance criteria, and
 progress. The user does not need to repeat it in later conversations.

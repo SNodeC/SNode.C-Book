@@ -1,0 +1,6 @@
+PASS: clean book tree at entry.
+PASS: review baseline is an ancestor of starting tip.
+PASS: only drift is the PROMPT.md installation commit.
+PASS: installed prompt SHA-256 preserved: c34bbab40ac13289e993af8504344f8d1435e1ec5ca87d4fb7ad6dfac8020155
+PASS: authoritative framework exists; read-only freeze recorded.
+PASS: scope installed in AGENTS.md and work plan; no manuscript or companion edit.

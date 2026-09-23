@@ -1879,3 +1879,40 @@ Commit: `proposal-readiness: phase 6 — refresh final proposal and dated author
 The explicit author-supply items still limit the submission's market evidence and
 prevent a delivery commitment; completing the phase does not assert publisher
 acceptance or fill those items by inference.
+
+
+## Author scope revision — pedagogical smoothing, 2026-09-23
+
+Active specification: `review/pedagogical-smoothing-2026-09-23/PROMPT.md`, read
+in full and retained byte-for-byte as installed by the author. SHA-256:
+`c34bbab40ac13289e993af8504344f8d1435e1ec5ca87d4fb7ad6dfac8020155`.
+The current author instruction authorizes one autonomous run through P0a, P−1,
+P0b, P1, P2, P3, P4+P5, P6 and P7, with separate unsquashed gate commits and no
+approval questions. Stop only under §14, report the reached state, and push only
+`book/pedagogical-smoothing-2026-09-23` to origin whether completed or stopped.
+Do not merge or push the source branch.
+
+The new must/wish/hard-ceiling budget is **107,338 / 112,338 / 115,000** raw
+whitespace tokens. Chapter floors/caps and waiver rules follow §§4/6. The two
+specified splits are approved (32 numbered chapters plus Appendix A). Canonical
+vocabulary, prose growth tied to ranked rows, per-chapter teaching apparatus,
+all preserved anchors, 20-rule cap, listing/index/figure preservation, and the
+P0a–P7 verification gates follow this specification. This replaces the former
+105,000 stretch target, structure freeze, one-phase-per-session execution and
+proposal-readiness phase checkers as active gates. Historical records stay intact.
+No code or substantive technical teaching may be removed merely to meet a budget.
+The Markdown manifest remains authoritative. The framework working tree at
+`/home/voc/projects/snodec/snode.c`, including uncommitted files, is read-only;
+record and compare its freeze at P0a, before the first P3 API check, and P7.
+Repository/source facts prevail over a conflicting prompt example, with the
+conflict recorded instead of changing the underlying technical claim.
+
+P0a preflight: the book entered clean at `a5e51a204d79caef8c288d5e7b7cec2b8e87d09f`.
+The only drift from `c7b76c108db43de7326a1a63756cf02eed3dbb31` is the
+commit installing this prompt; no other drift exists. New branch created at that
+tip. Evidence: `review/pedagogical-smoothing-2026-09-23/preflight.json`,
+`P0a-checks.log`, `framework-freeze-P0a.json`, and `framework-untracked-P0a.sha256`.
+The framework freeze includes HEAD, porcelain status, the binary HEAD-diff digest
+and a sorted content-hash list of every untracked non-ignored file. No manuscript
+or companion text changed in P0a. Next: the exact P−1 C++20 target declarations,
+then all entry checks before any pedagogical edits.
