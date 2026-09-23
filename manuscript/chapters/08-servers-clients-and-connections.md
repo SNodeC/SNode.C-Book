@@ -27,16 +27,13 @@ An instance supplies the shared configuration under which connections appear; it
 \index{instance}
 \index{connection}
 
-Start with a responsibility map rather than a class hierarchy.
+Use Chapter 4's runtime terminology here rather than a second taxonomy. Follow one peer before considering several flows or recovery: the server registers listening work, the runtime makes the listener ready, and the client attempts the selected endpoint. Listening readiness establishes that new peers may be accepted; it is not yet an application exchange.
 
-| Concept | Typical C++ representation | Responsibility |
-|---|---|---|
-| Application-side handle | `SocketServer` / `SocketClient` object visible in user code | configure the instance and start flows |
-| Instance | server-side or client-side instance | participate in runtime and flow-controller progress |
-| Activation flow | returned `ClientFlowController` / `ServerFlowController` shared handle | control one explicit connect/listen call and its automatic recovery |
-| Connection | `SocketConnection` | represent one concrete peer relationship |
-| Factory | `SocketContextFactory` | create a per-connection context |
-| Context | `SocketContext` | implement protocol behavior for one connection |
+When this peer is accepted, the framework creates the connection machinery and asks the configured factory for its context. The context can now react to attachment. Its partial input and protocol decisions belong to this peer relationship. The server's named instance still supplies configuration for the listener and later peers; the accepted connection does not turn that instance into a new object for each message.
+
+Next the peer sends bytes. Readiness leads to receive handling, where the context consumes available input and may queue a reply. Those actions occupy different points in the timeline: bytes available, bytes processed and reply observed by the peer. A queued reply is not proof of receipt. The useful echo test waits for the exact response instead of inferring delivery from the callback's return.
+
+Finally the peer closes. That connection and its attached context must finish their lifecycle without erasing another peer's protocol state. The listener may remain available for the next peer. Conversely, intentionally stopping the listening flow need not close this already accepted connection. This single-peer path is the reference against which retry, reconnect and the connection/context callback distinctions below should be read.
 
 The `SocketServer`/`SocketClient` handle exposes the shared configuration and callbacks of an instance. Each explicit `listen(...)` or `connect(...)` starts a separate flow and returns its controller. A flow can make several automatic attempts over time; the instance can also have several explicit flows. Neither count is the same as the number of established connections.
 
@@ -65,7 +62,7 @@ net::rc::stream::tls::SocketServer<MyFactory>
 net::l2::stream::legacy::SocketClient<MyFactory>
 ```
 
-The local handle exposes the shared configuration of the role. Active work retains endpoint state through the runtime, so its lifetime is not simply the scope of a local variable in `main()`. The protocol endpoint is the context; the peer relationship is the connection.
+The local handle exposes the shared configuration of the instance. Active work retains endpoint state through the runtime, so its lifetime is not simply the scope of a local variable in `main()`. The protocol endpoint is the context; the peer relationship is the connection.
 
 The returned handle lets application code name a particular operation:
 

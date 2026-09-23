@@ -51,8 +51,9 @@ No fetch, build or edit occurs in the author's framework tree.
 | P0b-R2-resume | `77226ab` | All 13 groups pass, including 62/62 labs; P0b-R2-resume-results.json |
 | P1 | `c603b8f` | Snapshot reread notes in [P1-context-review-notes.md](P1-context-review-notes.md) |
 | P2 | `9df7d00` | 32 chapters + A; all 62 labs pass; P2-registry-review.md |
-| P3 | this content gate commit | 33 apparatus units; 66/66 labs; P3-gate-notes.md |
-| P4–P7 | pending | Tier 2/3, seams and final verification |
+| P3 | `0deb8b3` | 33 apparatus units; 66/66 labs; P3-gate-notes.md |
+| P4/P5 | this tier gate commit | 109,970 tokens; P4-P5-api-review.md and P5-core-mechanism-review.md |
+| P6/P7 | pending | Seams and full exit verification |
 
 Static entry checks pass: chapter references, source alignment (zero errors,
 31 chapter/appendix records, 37 complete listings), source hygiene, metrics,

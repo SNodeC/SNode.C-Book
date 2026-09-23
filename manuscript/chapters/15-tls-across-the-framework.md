@@ -10,6 +10,8 @@
 \index{secure communication}
 \index{connection layer}
 
+The diagnostic chapter separated a successful transport connection from later protocol readiness. TLS makes that distinction operational: a peer can be reached while trust or identity checks still prevent the application conversation. Follow those observations while configuring the secure stream.
+
 TLS is a connection-layer specialization with operational consequences. It does not introduce a second application model; it changes how a secure stream is established, verified, diagnosed, and shut down.
 
 Identity, trust, handshake timing and close-notify belong to secure connection handling and its configuration. They should not spread through the protocol context merely because encryption is involved.
@@ -44,6 +46,24 @@ Figure \ref{fig:tls-connection-layer-specialization} locates this specialization
 | configuration | `local` / `remote` / `socket` / `server` / `connection` | ordinary sections plus `tls` |
 | context behavior | protocol endpoint | often unchanged after secure readiness |
 | diagnostics | lifecycle, counters, errors | lifecycle, counters, errors plus TLS-specific handshake, trust, and shutdown diagnostics |
+
+::: {.snodec-note title="Configured TLS: certificate, trust and identity"}
+The secure-echo lab supplies a temporary certificate for `sensor.example` and its private key. Its server options have this shape; use the lab's generated paths:
+
+```sh
+./tls-echo echoserver local --host=127.0.0.1 --port=18095 \
+  tls --cert=cert.pem --cert-key=key.pem
+```
+
+The Python peer in `companion/exercises/ch15/tls.py` keeps trust and expected identity explicit. These are excerpts from its setup and wrapping step:
+
+```python
+context = ssl.create_default_context(cafile=str(cert))
+context.wrap_socket(peer, server_hostname='sensor.example')
+```
+
+The certificate file supplies the trusted certificate for this disposable test. The expected hostname is checked against that identity even though the connection uses loopback. The lab then checks exact bytes and reciprocal TLS shutdown; choosing a TLS header alone establishes none of those outcomes.
+:::
 
 ### The TLS wrapper shape in code
 

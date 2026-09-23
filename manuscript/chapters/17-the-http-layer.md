@@ -300,12 +300,11 @@ The current framework provides executable counterparts in `InetHttpServerMalform
 
 This is also a design choice. A byte or field limit belongs in parser policy because rejected input must not reach ordinary application handling. A rule about which authenticated user may request a resource belongs in application handling, after a valid request exists. Increasing a parser limit cannot repair an authorization decision, and adding middleware cannot bound memory already consumed before middleware is called.
 
-Chapter 18 builds routing and middleware on this request-ready boundary. Use the back-matter protocol references for HTTP’s wire rules; the immediate milestone is locating a failure before or after one application handler.
-
 \index{web::http@\texttt{web::http}}
 \index{HTTP components}
 \index{public headers}
 
+::: {.snodec-note title="Build note"}
 HTTP code includes the HTTP abstraction it directly names. An IPv4 legacy HTTP server uses:
 
 ```cpp
@@ -319,6 +318,9 @@ and the matching client side uses:
 ```
 
 It should not include a lower socket header merely because HTTP is carried by that socket stack. Chapter 27 consolidates the complete source/header and component mapping.
+:::
+
+Chapter 18 builds routing and middleware on this request-ready boundary. Use the back-matter protocol references for HTTP’s wire rules; the immediate milestone is locating a failure before or after one application handler.
 
 ::: {.snodec-remember title="What to remember"}
 - The HTTP parser establishes message completeness before invoking ordinary application handling.

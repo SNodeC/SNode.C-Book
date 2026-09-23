@@ -34,7 +34,7 @@ The interface receives a `SocketConnection*` and returns a `SocketContext*`. The
 \index{SocketConnection@\texttt{SocketConnection}!context attachment}
 \index{SocketContextFactory@\texttt{SocketContextFactory}!create}
 
-The pinned stream-connection source in `src/core/socket/stream/SocketConnection.cpp` shows the same boundary in compact form. The connection asks the factory to create a context for `this` connection, attaches the result when creation succeeds, and closes the connection if no context can be created:
+The stream-connection source in `src/core/socket/stream/SocketConnection.cpp` shows the same boundary in compact form. The connection asks the factory to create a context for `this` connection, attaches the result when creation succeeds, and closes the connection if no context can be created:
 
 ```cpp
 void SocketConnection::setSocketContext(

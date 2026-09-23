@@ -444,6 +444,8 @@ The compact program uses the public application logger for its own observations.
 
 Use isolated state, known input, and explicit cleanup when testing a particular database, schema, credential set, or transaction sequence.
 
+Receiving, accepting and committing now have separate witnesses. The next chapter follows complete applications to see where their build targets and entry points assemble those responsibilities, so that reading `main()` does not become a search for every implementation detail in one file.
+
 ::: {.snodec-remember title="What to remember"}
 - Database state outlives the client; connection and submission alone establish no commit.
 - Chained operations share a sequence; new asynchronous calls inside callbacks join the queue later.

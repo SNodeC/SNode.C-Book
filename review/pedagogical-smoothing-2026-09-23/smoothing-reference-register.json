@@ -200,17 +200,6 @@
       "line": 32
     },
     {
-      "file": "manuscript/frontmatter/preface.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
-      "source_ids": [
-        "R363"
-      ],
-      "line": 36
-    },
-    {
       "file": "manuscript/frontmatter/how-to-read-this-book.md",
       "text": "Chapter 27",
       "targets": [
@@ -933,6 +922,15 @@
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+      "text": "Chapter 4",
+      "targets": [
+        "the-snodec-runtime-mental-model"
+      ],
+      "source_ids": [],
+      "line": 30
+    },
+    {
+      "file": "manuscript/chapters/08-servers-clients-and-connections.md",
       "text": "Chapter 7",
       "targets": [
         "socket-addresses-and-address-semantics"
@@ -940,7 +938,7 @@
       "source_ids": [
         "R110"
       ],
-      "line": 108
+      "line": 105
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -951,7 +949,7 @@
       "source_ids": [
         "R111"
       ],
-      "line": 164
+      "line": 161
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -962,7 +960,7 @@
       "source_ids": [
         "R113"
       ],
-      "line": 220
+      "line": 217
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -973,7 +971,7 @@
       "source_ids": [
         "R115"
       ],
-      "line": 299
+      "line": 296
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -984,7 +982,7 @@
       "source_ids": [
         "R117"
       ],
-      "line": 325
+      "line": 322
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -995,7 +993,7 @@
       "source_ids": [
         "R118"
       ],
-      "line": 325
+      "line": 322
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -1006,7 +1004,7 @@
       "source_ids": [
         "R119"
       ],
-      "line": 332
+      "line": 329
     },
     {
       "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
@@ -1330,7 +1328,7 @@
       "source_ids": [
         "R194"
       ],
-      "line": 237
+      "line": 233
     },
     {
       "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
@@ -1341,7 +1339,7 @@
       "source_ids": [
         "R195"
       ],
-      "line": 311
+      "line": 307
     },
     {
       "file": "manuscript/chapters/15-tls-across-the-framework.md",
@@ -1352,7 +1350,7 @@
       "source_ids": [
         "R196"
       ],
-      "line": 82
+      "line": 102
     },
     {
       "file": "manuscript/chapters/15-tls-across-the-framework.md",
@@ -1363,7 +1361,7 @@
       "source_ids": [
         "R197"
       ],
-      "line": 83
+      "line": 103
     },
     {
       "file": "manuscript/chapters/15-tls-across-the-framework.md",
@@ -1375,7 +1373,7 @@
       "source_ids": [
         "R198"
       ],
-      "line": 106
+      "line": 126
     },
     {
       "file": "manuscript/chapters/15-tls-across-the-framework.md",
@@ -1386,7 +1384,7 @@
       "source_ids": [
         "R199"
       ],
-      "line": 151
+      "line": 171
     },
     {
       "file": "manuscript/chapters/15-tls-across-the-framework.md",
@@ -1397,7 +1395,7 @@
       "source_ids": [
         "R200"
       ],
-      "line": 211
+      "line": 231
     },
     {
       "file": "manuscript/chapters/15-tls-across-the-framework.md",
@@ -1408,7 +1406,7 @@
       "source_ids": [
         "R201"
       ],
-      "line": 215
+      "line": 235
     },
     {
       "file": "manuscript/chapters/15-tls-across-the-framework.md",
@@ -1419,7 +1417,7 @@
       "source_ids": [
         "R202"
       ],
-      "line": 230
+      "line": 250
     },
     {
       "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
@@ -1441,7 +1439,7 @@
       "source_ids": [
         "R205"
       ],
-      "line": 245
+      "line": 273
     },
     {
       "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
@@ -1452,7 +1450,7 @@
       "source_ids": [
         "R206"
       ],
-      "line": 254
+      "line": 282
     },
     {
       "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
@@ -1463,7 +1461,7 @@
       "source_ids": [
         "R207"
       ],
-      "line": 277
+      "line": 305
     },
     {
       "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
@@ -1474,7 +1472,7 @@
       "source_ids": [
         "R208"
       ],
-      "line": 284
+      "line": 312
     },
     {
       "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
@@ -1485,7 +1483,7 @@
       "source_ids": [
         "R209"
       ],
-      "line": 307
+      "line": 335
     },
     {
       "file": "manuscript/chapters/17-the-http-layer.md",
@@ -1557,17 +1555,6 @@
     },
     {
       "file": "manuscript/chapters/17-the-http-layer.md",
-      "text": "Chapter 18",
-      "targets": [
-        "the-express-like-framework"
-      ],
-      "source_ids": [
-        "R219"
-      ],
-      "line": 303
-    },
-    {
-      "file": "manuscript/chapters/17-the-http-layer.md",
       "text": "Chapter 27",
       "targets": [
         "cmake-components-and-linking-strategy"
@@ -1575,7 +1562,18 @@
       "source_ids": [
         "R220"
       ],
-      "line": 321
+      "line": 320
+    },
+    {
+      "file": "manuscript/chapters/17-the-http-layer.md",
+      "text": "Chapter 18",
+      "targets": [
+        "the-express-like-framework"
+      ],
+      "source_ids": [
+        "R219"
+      ],
+      "line": 323
     },
     {
       "file": "manuscript/chapters/18-the-express-like-framework.md",
@@ -1696,7 +1694,7 @@
       "source_ids": [
         "R237"
       ],
-      "line": 431
+      "line": 432
     },
     {
       "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
@@ -1872,7 +1870,7 @@
       "source_ids": [
         "R267"
       ],
-      "line": 116
+      "line": 126
     },
     {
       "file": "manuscript/chapters/22-mqtt-over-websocket.md",
@@ -1883,7 +1881,7 @@
       "source_ids": [
         "R268"
       ],
-      "line": 135
+      "line": 145
     },
     {
       "file": "manuscript/chapters/22-mqtt-over-websocket.md",
@@ -1892,7 +1890,7 @@
         "designing-iot-systems-with-multiple-protocols"
       ],
       "source_ids": [],
-      "line": 137
+      "line": 147
     },
     {
       "file": "manuscript/chapters/22-mqtt-over-websocket.md",
@@ -1903,18 +1901,7 @@
       "source_ids": [
         "R270"
       ],
-      "line": 156
-    },
-    {
-      "file": "manuscript/chapters/22-mqtt-over-websocket.md",
-      "text": "Chapter 23",
-      "targets": [
-        "designing-iot-systems-with-multiple-protocols"
-      ],
-      "source_ids": [
-        "R272"
-      ],
-      "line": 198
+      "line": 188
     },
     {
       "file": "manuscript/chapters/22-mqtt-over-websocket.md",
@@ -1925,7 +1912,18 @@
       "source_ids": [
         "R273"
       ],
-      "line": 205
+      "line": 214
+    },
+    {
+      "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+      "text": "Chapter 23",
+      "targets": [
+        "designing-iot-systems-with-multiple-protocols"
+      ],
+      "source_ids": [
+        "R272"
+      ],
+      "line": 217
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1936,7 +1934,7 @@
       "source_ids": [
         "R274"
       ],
-      "line": 157
+      "line": 167
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1949,7 +1947,7 @@
         "R275",
         "R276"
       ],
-      "line": 194
+      "line": 204
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1960,7 +1958,7 @@
       "source_ids": [
         "R277"
       ],
-      "line": 198
+      "line": 208
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1971,7 +1969,7 @@
       "source_ids": [
         "R278"
       ],
-      "line": 230
+      "line": 240
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1982,7 +1980,7 @@
       "source_ids": [
         "R279"
       ],
-      "line": 253
+      "line": 263
     },
     {
       "file": "manuscript/chapters/24-database-support-and-application-state.md",
@@ -2273,6 +2271,24 @@
     },
     {
       "file": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [],
+      "line": 278
+    },
+    {
+      "file": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [],
+      "line": 286
+    },
+    {
+      "file": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
       "text": "Chapter 29",
       "targets": [
         "testing-debugging-and-benchmarking"
@@ -2291,7 +2307,7 @@
       "source_ids": [
         "R324"
       ],
-      "line": 35
+      "line": 43
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2303,7 +2319,7 @@
       "source_ids": [
         "R325"
       ],
-      "line": 119
+      "line": 125
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2314,7 +2330,7 @@
       "source_ids": [
         "R326"
       ],
-      "line": 123
+      "line": 129
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2327,7 +2343,7 @@
       "source_ids": [
         "R328"
       ],
-      "line": 150
+      "line": 156
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2338,7 +2354,7 @@
       "source_ids": [
         "R329"
       ],
-      "line": 166
+      "line": 172
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2349,7 +2365,7 @@
       "source_ids": [
         "R333"
       ],
-      "line": 287
+      "line": 293
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2360,7 +2376,7 @@
       "source_ids": [
         "R334"
       ],
-      "line": 295
+      "line": 301
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2371,7 +2387,7 @@
       "source_ids": [
         "R335"
       ],
-      "line": 347
+      "line": 353
     },
     {
       "file": "manuscript/parts/part-11-building-and-evaluating-minigateway.md",

@@ -2286,3 +2286,7 @@ P1 committed as `c603b8f`. P2 splits, topic-based references, ordered source rec
 P2 committed as `9df7d00`. Tier 1 work and all four split-chapter apparatus sets are complete. The framework freeze remains identical to R2. All 33 apparatus units, source alignment (37 exact listings), references, hygiene, companion build and 66/66 labs pass. No test assertion or timeout changed. Fresh total: 108,701 tokens. Evidence: `pedagogical-smoothing-2026-09-23/P3-gate-notes.md`, API review, apparatus JSON, build and lab logs/XML. Next: P4 and P5, then seams and full exit gate.
 
 Author clarification during P3: explicitly approved the 67-line complete CMake listing adjustment. Seven blank separator lines were removed from canonical source and printed copy; all statements are unchanged and the exact-listing and build checks pass.
+
+### Follow-up 11 — P4/P5 gate
+
+P3 committed as `0deb8b3`. Tier 2 and tier 3 work complete, including both optional rows because the pre-P5 projection was below 113,500. Core-mechanism sweep covers all 33 units. Fresh total 109,970; source alignment, references, hygiene, checker regressions and eight affected labs pass. The new retry setter excerpt compiles against the R2 installation in an isolated consumer copy. No companion application/driver/assertion/timeout changes. Evidence: `pedagogical-smoothing-2026-09-23/P4-P5-api-review.md`, `P5-core-mechanism-review.md`, phase metrics and logs. Next: every consecutive seam, then P7.

@@ -27,7 +27,7 @@ Runtime visibility is broader than logging. A useful investigation combines seve
 | counters and timing | How much work passed through a boundary, and over what interval? |
 | an external observation | What did the peer, operating system, or service supervisor actually observe? |
 
-Locate a failed request at its actual boundary: disabled instance, endpoint, TLS, parser, routing, or shutdown. Correlate semantic records with effective configuration, packet inspection and a reproducing test. Figure \ref{fig:logging-diagnostic-visibility-map} separates scope, event, filtering and output; application-origin protocol meaning can coexist with framework-origin context-lifecycle records.
+Begin with effective configuration to identify the intended endpoint and whether it is enabled. Then follow lifecycle records to see whether a connection and context appeared. If they did, inspect protocol rejection or handler output next; if they did not, start with activation or TLS evidence. Finally reproduce the failure with a controlled peer so that a plausible diagnostic is tied to an observed result. Figure \ref{fig:logging-diagnostic-visibility-map} separates scope, event, filtering and output; application-origin protocol meaning can coexist with framework-origin context-lifecycle records.
 
 ![Semantic logging in SNode.C: origin, boundary, component, and optional identity describe a scope; severity and event data describe an occurrence; startup policy selects records for text or JSON output.](assets/figures/pdf/fig-14-logging-diagnostic-visibility-map.pdf){#fig:logging-diagnostic-visibility-map width=90% latex-placement="tbp"}
 
@@ -46,15 +46,6 @@ New application code enters through one public header:
 
 `snode::log` provides a copyable logger value without exposing backend record machinery.
 
-The main construction functions serve different purposes:
-
-| Function | Appropriate use |
-|---|---|
-| `application(component, identity)` | application-owned process or component diagnostics |
-| `framework(component, boundary, identity)` | framework-owned diagnostics with an explicit boundary |
-| `forConnection(connection, ...)` | a scope derived from a live connection's instance name and connection identifier |
-| `makeLogger(scope)` | a deliberately constructed origin, boundary, component, and identity |
-
 An application logger defaults to component `app`, application origin and application boundary; a framework logger defaults to component `framework` and system boundary. Larger applications can name diagnostic responsibilities explicitly:
 
 ```cpp
@@ -65,7 +56,16 @@ measurementLog.info("Measurement service initialized");
 mqttLog.debug("Preparing the MQTT application role");
 ```
 
-These are application-defined diagnostic names, not CMake components or handshake claims. Existing consumers retain lower-level headers and `SemanticLog.h`; new application code uses the public facade.
+These are application-defined diagnostic names, not CMake component names. In this example, measurement acceptance is application work, so `application()` is the appropriate constructor. Framework internals use `framework()` to speak for their own behavior. When the measurement came through a live connection, `forConnection()` can copy that identity; use `makeLogger()` only when deliberately assembling the scope fields. The table summarizes those choices.
+
+The main construction functions serve different purposes:
+
+| Function | Appropriate use |
+|---|---|
+| `application(component, identity)` | application-owned process or component diagnostics |
+| `framework(component, boundary, identity)` | framework-owned diagnostics with an explicit boundary |
+| `forConnection(connection, ...)` | a scope derived from a live connection's instance name and connection identifier |
+| `makeLogger(scope)` | a deliberately constructed origin, boundary, component, and identity |
 
 \index{logging!origin}
 \index{logging!boundary}
@@ -76,19 +76,15 @@ These are application-defined diagnostic names, not CMake components or handshak
 
 This is not the same division as low-level versus high-level code. An application protocol context can be close to a connection and still speak for the application. An HTTP parser can operate above the raw stream and still speak for the framework.
 
-Origin can filter application detail independently from framework detail.
-
 The public vocabulary distinguishes six responsibility boundaries: `Application`, `Configuration`, `Instance`, `Connection`, `Context`, and `System`.
 
 An instance on the client side and one successful peer connection are different boundaries. Retry policy belongs to the instance and is applied by each activation flow. A peer's lifetime belongs to the connection. The interpretation of received protocol data belongs to the context or other protocol-owning object. Configuration discovery and validation have their own boundary, even though they happen within the same executable.
 
-Boundary identifies responsibility; severity identifies importance.
+Use stable component names such as `gateway.measurements` to group related records.
 
-Components group related records. Prefer a stable responsibility such as `gateway.measurements` to a temporary callback’s name.
+Component names are exact policy keys; dots imply neither wildcards nor inheritance.
 
-Component names are exact policy keys. They should not be treated as an undocumented wildcard language or as an inheritance tree inferred from dots in the name.
-
-`Identity` can carry an instance name, a server/client side, and a connection identifier. These fields are optional because not every event has all three identities.
+`Identity` can carry an optional instance name, server/client side and connection identifier.
 
 Startup has no peer connection. A named client can fail before an established connection exists. A context can have instance and connection identity without having an independently assigned server/client side. Omitting a fact that is not available is better than inventing one.
 
@@ -107,7 +103,7 @@ auto log = snode::log::makeLogger(std::move(scope));
 log.debug("Measurement context configured");
 ```
 
-This constructs a scope. Derive connection identity from a live connection when available; do not invent it.
+Derive available connection identity from the live connection.
 
 \index{forConnection()@\texttt{forConnection()}}
 \index{SocketContext!logging}
@@ -183,7 +179,7 @@ log.event(snode::log::Level::Info,
           sequence);
 ```
 
-The application-defined name `measurement.accepted` lets a collector classify the event independently of English wording. Name an observed fact: queuing publication does not establish successful delivery.
+`measurement.accepted` permits classification independently of wording. Name observed facts: queuing publication does not establish delivery.
 
 A system error should carry the error from the failing operation, not whichever `errno` happens to be visible later.
 
@@ -226,9 +222,9 @@ A normal SNode.C application exposes this policy through its existing root confi
 
 The MQTT role still needs endpoint configuration; logging options do not supply it.
 
-The corresponding override options are `--log-origin-level`, `--log-boundary-level`, `--log-component-level`, and `--log-instance-level`. Their values use `name=level` pairs; lists can contain comma-separated pairs. Named levels are suitable for these scoped pairs. The global `--log-level` option is a separate case in the recorded startup path: use its numeric form (`0` off, `1` critical, `2` error, `3` warn, `4` info, `5` debug, `6` trace). Although the validator recognizes names, the current initialization path can attempt integer conversion before that normalization has taken effect. The examples use the numeric spelling so the demonstrated commands reach runtime bootstrap.
+The scoped options are `--log-origin-level`, `--log-boundary-level`, `--log-component-level`, and `--log-instance-level`. Their values use `name=level` pairs; lists can contain comma-separated pairs. Named levels are suitable for these scoped pairs. Use numeric global `--log-level` values (`0` off, `1` critical, `2` error, `3` warn, `4` info, `5` debug, `6` trace). Startup can convert the global value before named-level normalization; numeric spelling avoids that ordering issue.
 
-Change the narrowest useful scope. Global trace output can obscure a connection and change timing.
+Use the narrowest scope; global trace can obscure relevant records and change timing.
 
 Standalone logger programs can call `configure(Settings)` for thresholds, output format, color, quiet mode, files and semantic overrides. A normal SNode.C service instead gets its policy through `core::SNodeC::init(...)` and runtime bootstrap. Do not overlay an unrelated `configure(Settings)` and expect merging: it initializes and freezes its own policy, not a live per-record adjustment.
 

@@ -1,0 +1,18 @@
+[
+  {
+    "file": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
+    "text": "Chapter 2",
+    "targets": [
+      "preparing-your-environment"
+    ],
+    "context": "e |\n|---|---|\n| Source selection | The prepared source matches the setup verified in Chapter 2 |\n| Version and library names | Package version, SONAME major and installed filenames match the 2.0 build |\n| Component grap"
+  },
+  {
+    "file": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
+    "text": "Chapter 2",
+    "targets": [
+      "preparing-your-environment"
+    ],
+    "context": "onfiguration directories exist on the target |\n\nUse the framework source prepared in Chapter 2 for the SDK package. Compare the prepared files with that input before accepting the build. Do not point the consumer\u2019s `sno"
+  }
+]

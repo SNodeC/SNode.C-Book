@@ -101,6 +101,34 @@ Retry belongs to failed connection attempts. Reconnect belongs to established co
 \index{reconnect timer}
 \index{SocketClient@\texttt{SocketClient}!retry and reconnect}
 
+Choose the application policy before reading the controller internals. With the named EchoPair client `client` already constructed, the following excerpt selects one automatic retry after a failed initial attempt and disables reconnect after a successful connection ends:
+
+```cpp
+auto* config = client.getConfig();
+config->setRetry(true);
+config->setRetryOnFatal(false);
+config->setRetryTimeout(0.2);
+config->setRetryTries(1);
+config->setRetryBase(1.0);
+config->setRetryLimit(1);
+config->setRetryJitter(0.0);
+config->setReconnect(false);
+config->setReconnectTime(0.2);
+```
+
+The corresponding command-line settings belong to the named instance's `socket` section:
+
+```sh
+./echoclient echoclient remote --host=127.0.0.1 --port=18094 \
+  socket --retry=true --retry-on-fatal=false --retry-timeout=.2 \
+  --retry-tries=1 --retry-base=1 --retry-limit=1 --retry-jitter=0 \
+  --reconnect=false --reconnect-time=.2
+```
+
+Set these C++ defaults before activation and then let startup configuration select the effective values. Retaining a flow handle does not create another configuration tree; independent destinations still require separate instances.
+
+These settings describe recovery, not a guarantee that the peer will appear. A retry count of zero removes the count bound; the delay limit caps growth before jitter rather than limiting the number of attempts. The unchanged recovery lab uses a controlled unavailable peer to observe the initial failure and one retry, with no context attachment. Its restart experiment enables reconnect and allows more retries, then observes a new connection identity and fresh greeting after the server returns. That is why the internal paths below use separate timers while continuing the same flow.
+
 The client-side stream source in `src/core/socket/stream/SocketClient.h` keeps both decisions inside the particular flow passed to `realConnect(...)`. The following excerpts are abridged: they omit logging and surrounding state checks while retaining the important ownership and dispatch calls.
 
 After a disconnect, the reconnect timer retains that same flow:

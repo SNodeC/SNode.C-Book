@@ -245,7 +245,7 @@ That distinction also prevents a false generalization. Unix domain sockets, RFCO
 \index{IPv6}
 \index{network families}
 
-Use the comparison to hold protocol behavior fixed while changing the endpoint family. A successful exchange on each loopback address will test that claim more directly than two similar type names. A failure on one family will then be a reason to inspect that family's binding and reachability, before changing the shared protocol.
+Compare the IPv4 and IPv6 echo selections below while holding the factory and protocol behavior fixed. A successful exchange on each loopback address will test that claim more directly than two similar type names. A failure on one family will then be a reason to inspect that family's binding and reachability, before changing the shared protocol.
 
 \index{IPv4!shared model}
 \index{IPv6!shared model}

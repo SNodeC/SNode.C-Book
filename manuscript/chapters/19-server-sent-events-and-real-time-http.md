@@ -422,6 +422,7 @@ Start `sse-server legacy local --host=127.0.0.1 --port=8080`. Keep `curl -N -H '
 \index{EventSource@\texttt{EventSource}!public surface}
 
 
+::: {.snodec-note title="Build note"}
 Client-side EventSource code includes the EventSource abstraction it names. For the IPv4 legacy wrapper, that front door is:
 
 ```cpp
@@ -429,6 +430,9 @@ Client-side EventSource code includes the EventSource abstraction it names. For 
 ```
 
 Server-side SSE remains an HTTP or Express route that validates the request and streams `text/event-stream` response fragments. Chapter 27 summarizes the broader component/header mapping.
+:::
+
+The response lifetime and subscription lifetime now have an explicit relationship. The next chapter changes the conversation to bidirectional WebSocket messages, while retaining the need to distinguish connection progress from application delivery.
 
 ::: {.snodec-remember title="What to remember"}
 - One HTTP response can carry many server-to-client events; a blank line ends a record.

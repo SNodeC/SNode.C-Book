@@ -71,6 +71,16 @@ The administration role configures, controls, and inspects the system. It may in
 
 This role is often operator-facing. It should be explicit because administration errors can affect the whole system. A system that hides administration behind an accidental data path is harder to reason about and harder to secure operationally.
 
+### Worked change: separate the device input from its observers
+
+\index{IoT!worked protocol decision}
+
+Begin with one device that posts measurements to an HTTP handler. The handler parses the body, assigns a sequence, saves a latest-value variable and constructs the browser response. That arrangement can serve one producer, but adding an MQTT producer would tempt its callback to repeat the same state update. Two entry points would then decide ordering independently.
+
+Keep the HTTP handler as an adapter and move the accepted-state decision into one model. The HTTP handler and MQTT subscriber each validate their own input before calling that model. The browser's status route and SSE response observe the model's accepted value; neither assigns another sequence. Now a broker outage can prevent MQTT input without making an HTTP-produced value cease to be the current accepted measurement.
+
+The verdict follows from the actors' different conversations. HTTP serves requests, MQTT receives brokered publications, and the model orders accepted measurements. The consequence is a lifetime obligation: both adapters and every observer need access to the same valid model, with subscriptions removed before captured response state dies. Test one accepted value through each input and compare the observed order, then disconnect the MQTT path and verify the declared HTTP behavior. That establishes this design choice without claiming durable storage or automatic replay.
+
 ### Choosing protocol families from boundary needs
 
 \index{protocol family selection}

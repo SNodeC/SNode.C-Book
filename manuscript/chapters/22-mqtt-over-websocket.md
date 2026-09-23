@@ -17,6 +17,16 @@
 
 MQTT over WebSocket combines the HTTP-upgrade and subprotocol path from Chapter 20 with the packet, session, topic, keep-alive and publish-flow semantics from Chapter 21. HTTP negotiates the upgrade; WebSocket carries MQTT packet bytes in binary messages. The MQTT layer interprets those bytes after the adapter delivers them through `MqttContext`.
 
+Put the two paths side by side before inspecting the adapter. Native: TCP connection → MQTT CONNECT → accepted CONNACK → subscription/publication → subscriber receipt. Composed: TCP connection → HTTP Upgrade → WebSocket `mqtt` selection → binary MQTT CONNECT → accepted CONNACK → subscription/publication → subscriber receipt. The MQTT milestones from the previous chapter remain; the composed path adds prerequisites before they can occur.
+
+At the first step, a refused connection points to the endpoint or lower connection setup on either path. Native MQTT can then send its packet bytes directly. On the composed path, an HTTP response other than the required upgrade result must be interpreted before expecting MQTT packets. A successful TCP connection with a rejected upgrade is therefore a useful partial result, not an MQTT session failure.
+
+After upgrade, check the selected subprotocol and the available factory. HTTP 101 does not by itself identify the intended MQTT application object. Once the subprotocol is selected, binary message callbacks supply bytes to the adapter. The adapter buffers them and schedules MQTT receive processing. Wrong message type or broken framing can stop the exchange before the MQTT parser receives a valid control packet.
+
+Only afterward does CONNACK establish the MQTT session result. A malformed MQTT packet remains a protocol failure even when every WebSocket step succeeded. Likewise, an accepted session leaves subscription and subscriber receipt to observe separately. Keep the original topic and payload in the final check so the comparison tests the same MQTT conversation on both paths.
+
+This trace explains the cost of composition without treating it as a defect. WebSocket can satisfy an integration requirement while introducing more independently observable failure points. The native path avoids those added steps when both peers can use it. Choose the path for the deployment, then retain enough evidence to identify the first unmet condition instead of reducing the whole sequence to one “connected” flag.
+
 \index{protocol composition}
 \index{composed protocol}
 
@@ -60,7 +70,7 @@ class SubProtocol
 };
 ```
 
-The two bases identify the adapter’s responsibilities. The WebSocket role supplies the upgraded carrier surface. `MqttContext` supplies the MQTT-facing receive/send/end/close bridge. The combined type becomes an MQTT-over-WebSocket endpoint.
+The adapter inherits WebSocket callbacks from one base and presents receive, send, end and close operations to MQTT through `MqttContext`. It collects binary message bytes on the WebSocket side and supplies them to the MQTT parser. Each side retains its own framing and shutdown meaning.
 
 | Part | Meaning |
 |---|---|
@@ -141,6 +151,28 @@ The public labs in `companion/exercises/ch22/` attach the unchanged client side 
 \index{build artifacts}
 \index{component selection}
 
+\index{MQTT over WebSocket!diagnostics}
+\index{stack diagnostics}
+
+Locate the first failed observation, then assign its owner:
+
+| Observation | Boundary to inspect |
+|---|---|
+| cannot connect | endpoint, transport, TLS or configuration |
+| upgrade rejected | HTTP/WebSocket upgrade |
+| subprotocol not selected | WebSocket negotiation and factory availability |
+| text payload or frame error | WebSocket message type or frame validation |
+| payload never reaches `recv()` | adapter buffer and scheduled receive event |
+| malformed packet | MQTT parsing |
+| session or keep-alive failure | MQTT lifecycle and protocol liveness |
+| shutdown stalls | the close/termination boundary currently outstanding |
+
+Transport/TLS timing, upgrade timing, WebSocket control/close and MQTT keep-alive have different owners. Apply the diagnostics and failure vocabulary already established instead of reducing the whole connection to one online/offline flag.
+
+\index{MQTT!public surface}
+\index{MQTT over WebSocket!public surface}
+
+::: {.snodec-note title="Build note"}
 The build structure mirrors the architectural structure.
 
 | Artifact | Meaning |
@@ -177,32 +209,12 @@ target_link_libraries(gateway
 
 These are partial link fragments. A runnable application also needs its concrete HTTP stream connection, upgrade entry point, and selectable MQTT subprotocol factory. Linking an adapter library does not by itself create or register that application-specific factory.
 
-\index{MQTT over WebSocket!diagnostics}
-\index{stack diagnostics}
-
-Locate the first failed observation, then assign its owner:
-
-| Observation | Boundary to inspect |
-|---|---|
-| cannot connect | endpoint, transport, TLS or configuration |
-| upgrade rejected | HTTP/WebSocket upgrade |
-| subprotocol not selected | WebSocket negotiation and factory availability |
-| text payload or frame error | WebSocket message type or frame validation |
-| payload never reaches `recv()` | adapter buffer and scheduled receive event |
-| malformed packet | MQTT parsing |
-| session or keep-alive failure | MQTT lifecycle and protocol liveness |
-| shutdown stalls | the close/termination boundary currently outstanding |
-
-Transport/TLS timing, upgrade timing, WebSocket control/close and MQTT keep-alive have different owners. Apply the diagnostics and failure vocabulary already established instead of reducing the whole connection to one online/offline flag.
-
-Chapter 23 moves from this composed connection to systems with several independent protocol boundaries. A gateway may share domain state across them without making their negotiation, timing or recovery policies identical.
-
-\index{MQTT!public surface}
-\index{MQTT over WebSocket!public surface}
-
 Native MQTT files include the MQTT headers they directly use. MQTT-over-WebSocket files include the WebSocket-carried MQTT abstraction they directly name. The component table above separates native roles from their WebSocket adapters.
 
 Chapter 27 gives the consolidated source-derived component/header matrix.
+:::
+
+Chapter 23 moves from this composed connection to systems with several independent protocol boundaries. A gateway may share domain state across them without making their negotiation, timing or recovery policies identical.
 
 ::: {.snodec-remember title="What to remember"}
 - HTTP negotiation, WebSocket selection and MQTT session acceptance are separate steps.

@@ -21,7 +21,7 @@
 \index{example code}
 \index{framework code}
 
-The echo pair works; the next task is to read the framework structure it exercised.
+After the echo pair, use this appendix to follow one public type into the machinery that made it work. After the main book, use the same route to evaluate an extension. In either case, begin with an observable application question rather than an inventory of internal classes.
 
 The first question is concrete: where did the server's public type obtain the machinery that accepted a connection and asked the echo factory for a context? Answering it means following one working path inward. The named instance, its activation flow, and the later peer connection must remain distinguishable as that path crosses files.
 
@@ -29,7 +29,7 @@ The first question is concrete: where did the server's public type obtain the ma
 Do not read SNode.C as a pile of files. Read it as a set of layers, roles, and recurring boundaries.
 :::
 
-This appendix develops a source-reading strategy using the runtime, protocol, configuration, and deployment concepts already taught on the main path. Use it when a public interface leads to a question about implementation or extension.
+Read only as far inward as the question requires. The main chapters develop the runtime, protocol, configuration and deployment concepts in sequence; return to those explanations when a source path introduces a concept you have not yet studied.
 
 The top-level `CMakeLists.txt` prepares helper modules and delegates into `src`. It enables tests through `SNODEC_BUILD_TESTS` and includes packaging support. `src/CMakeLists.txt` defines compiler requirements and options, configures diagnostics and optional instrumentation, and adds the framework regions:
 

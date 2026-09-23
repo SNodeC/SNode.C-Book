@@ -1,0 +1,106 @@
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 29
+    Start 29: exercise-ch15-trust-identity
+
+29: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/tls.py" "policy" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch15/tls-policy-lab" "/usr/bin/openssl"
+29: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch15
+29: Test timeout computed to be: 60
+29: PASS: trusted matching name; early SSL is null; ready=1
+29: PASS: trusted wrong name; early SSL is null; ready=0
+29: PASS: untrusted matching name; early SSL is null; ready=0
+1/8 Test #29: exercise-ch15-trust-identity .......   Passed    0.36 sec
+test 30
+    Start 30: exercise-ch15-secure-echo
+
+30: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/tls.py" "echo" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch15/tls-echo" "/usr/bin/openssl"
+30: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch15
+30: Test timeout computed to be: 60
+30: PASS: trusted sensor.example; exact binary echo; reciprocal close_notify
+2/8 Test #30: exercise-ch15-secure-echo ..........   Passed    0.20 sec
+test 31
+    Start 31: exercise-ch16-bounded-retry
+
+31: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch16/recovery.py" "retry" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/examples/EchoPair/echoclient"
+31: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch16
+31: Test timeout computed to be: 80
+31: PASS: initial attempt plus one retry; two error statuses; no context attachment; natural exit
+31: {"v": 1, "ts": "2026-09-23T18:31:13.934Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:43163 (127.0.0.1): Connection refused [111]"}
+31: {"v": 1, "ts": "2026-09-23T18:31:14.135Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:43163 (127.0.0.1): Connection refused [111]"}
+3/8 Test #31: exercise-ch16-bounded-retry ........   Passed    0.27 sec
+test 32
+    Start 32: exercise-ch16-part-checkpoint
+
+32: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch16/recovery.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/examples/EchoPair/echoclient" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch15/tls-policy-lab"
+32: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch16
+32: Test timeout computed to be: 80
+32: PASS: trusted matching name; early SSL is null; ready=1
+32: PASS: trusted wrong name; early SSL is null; ready=0
+32: PASS: untrusted matching name; early SSL is null; ready=0
+32: PASS: retry before first attachment; peer stop/restart; two connection identities; fresh greeting and exact echo
+32: {"v": 1, "ts": "2026-09-23T18:31:14.547Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:33455 (127.0.0.1): Connection refused [111]"}
+32: {"v": 1, "ts": "2026-09-23T18:31:14.749Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context attached"}
+32: {"v": 1, "ts": "2026-09-23T18:31:14.781Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context detached: connection close"}
+32: {"v": 1, "ts": "2026-09-23T18:31:14.781Z", "level": "debug", "origin": "framework", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Context detached for connection close"}
+32: {"v": 1, "ts": "2026-09-23T18:31:14.982Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:33455 (127.0.0.1): Connection refused [111]"}
+32: {"v": 1, "ts": "2026-09-23T18:31:15.184Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "2", "message": "Echo context attached"}
+4/8 Test #32: exercise-ch16-part-checkpoint ......   Passed    1.08 sec
+test 43
+    Start 43: exercise-ch22-binary
+
+43: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/adapter.py" "binary" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch22/mqtt-ws-lab"
+43: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch22
+43: Test timeout computed to be: 40
+43: PASS: HTTP 101, mqtt selection and binary MQTT CONNECT observed
+43: PASS: fragmented binary CONNACK admits MQTT flow; binary command reaches canonical role
+5/8 Test #43: exercise-ch22-binary ...............   Passed    0.18 sec
+test 44
+    Start 44: exercise-ch22-text
+
+44: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/adapter.py" "text" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch22/mqtt-ws-lab"
+44: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch22
+44: Test timeout computed to be: 40
+44: PASS: HTTP 101, mqtt selection and binary MQTT CONNECT observed
+44: PASS: same packet bytes in text trigger protocol-error close 1002
+6/8 Test #44: exercise-ch22-text .................   Passed    0.07 sec
+test 45
+    Start 45: exercise-ch23-unavailable-output
+
+45: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/../ch30/solution.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/examples/MiniGateway/minigateway"
+45: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch23
+45: Test timeout computed to be: 60
+45: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+7/8 Test #45: exercise-ch23-unavailable-output ...   Passed    0.14 sec
+test 46
+    Start 46: exercise-ch23-part-checkpoint
+
+46: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/../ch21/mqtt.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch21/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch21/mqtt-broker-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/examples/MiniGateway/minigateway"
+46: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P3/companion/exercises/ch23
+46: Test timeout computed to be: 60
+46: PASS: observer session accepted by CONNACK
+46: PASS: subscriber receives SUBACK granting QoS 0
+46: PASS: independent subscriber receives exact topic sensors/temperature/value and payload 23.5
+46: PASS: broker routes command to canonical client role
+46: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+46: PASS: Part VIII checkpoint: broker-delivery evidence and separate HTTP/status/SSE acceptance with unavailable MQTT; see README boundary map
+8/8 Test #46: exercise-ch23-part-checkpoint ......   Passed    0.35 sec
+
+The following tests passed:
+	exercise-ch15-trust-identity
+	exercise-ch15-secure-echo
+	exercise-ch16-bounded-retry
+	exercise-ch16-part-checkpoint
+	exercise-ch22-binary
+	exercise-ch22-text
+	exercise-ch23-unavailable-output
+	exercise-ch23-part-checkpoint
+
+100% tests passed, 0 tests failed out of 8
+
+Total Test time (real) =   2.66 sec
