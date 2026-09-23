@@ -1,0 +1,83 @@
+{
+  "framework-tests": {
+    "total": 184,
+    "passed": 184,
+    "failed": 0,
+    "skipped": 0,
+    "failures": [],
+    "internal_skip_messages": []
+  },
+  "external-echo-tests": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "failures": [],
+    "internal_skip_messages": []
+  },
+  "labs": {
+    "total": 62,
+    "passed": 50,
+    "failed": 12,
+    "skipped": 0,
+    "failures": [
+      "exercise-ch01",
+      "exercise-ch01-independent-peers",
+      "exercise-ch07-independent-peers",
+      "exercise-ch11-part-checkpoint",
+      "exercise-ch11-endpoint-failure",
+      "exercise-ch13-part-checkpoint",
+      "exercise-ch14-secure-echo",
+      "exercise-ch16-framing",
+      "exercise-ch17-order",
+      "exercise-ch24-composition",
+      "exercise-ch26-lifecycle",
+      "exercise-ch27-diagnosis"
+    ],
+    "internal_skip_messages": []
+  },
+  "framework-configure": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "framework-build": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "framework-inventory": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "framework-install": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "external-echo-configure": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "external-echo-build": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "companion-build": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "lab-inventory": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "teaching-smoke": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "behavior-smoke": {
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "lifetime-tests": {
+    "exit_code": 0,
+    "status": "passed"
+  }
+}

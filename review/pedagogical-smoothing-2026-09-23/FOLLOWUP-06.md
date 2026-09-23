@@ -1,0 +1,1 @@
+So we can resume - be prepared SNode.Cs head changed but thats accepted. Locally all SNode.C tests now succeed and also all log messages are drained before the main snode.c thread terminates. Thus no longer timeouts must be required anymore. Check this before continuing book refinement! Stop and report all, SNode.C tests and labs!

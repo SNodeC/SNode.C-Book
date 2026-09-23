@@ -2059,3 +2059,33 @@ or manuscript files changed in this revert; the incomplete P1 vocabulary work
 and its untracked metrics remain uncommitted. Historical logs remain evidence
 of the earlier runs, not certification of the restored tests. No runtime tests
 or package rebuild were run for this revert.
+
+### Follow-up 06 — verify the accepted framework change, then stop
+
+The author accepts framework HEAD drift and requests verification before further
+book refinement, followed by a full report and a stop. The verbatim instruction
+is in FOLLOWUP-06.md. This session is verification only, not a resumption of P1.
+The author tree entered clean at 9746d1862b30a5104d3590aaa4ed79752ba9aa6a
+("Drain asynchronous logs during shutdown"). The previous freeze difference is
+authorized. Record a fresh before/after freeze for this check; leave the earlier
+freeze and source-baseline records historical until an explicit resumed
+reconciliation. No framework edits and no test adaptations or timeout increases.
+
+Build a verified archive of all 1,448 source files under the book build directory,
+install to a fresh prefix, and run the complete framework CTests, external echo
+checks, all 62 public labs and existing smoke/lifetime suites. Preserve all
+manuscript edits exactly. Evidence is collected under
+`review/pedagogical-smoothing-2026-09-23/shutdown-recheck-9746d186/`.
+
+Follow-up 06 result: verification complete, refinement stopped as requested.
+Fresh 9746d186 build/install passes; framework 184/184 and external echo 4/4
+pass, with zero skips. All 62 public labs execute: 50 pass, 12 fail on the
+original five-second SIGINT shutdown grace. Teaching, behavior and lifetime
+suites pass. The new 4,096-record drain regression and both previously failing
+framework tests pass. A separate reproduction records STOPPING/SIGINT while
+main remains in epoll_pwait, before free()/Logger::shutdown. No test/timeouts or
+framework/manuscript files changed. Before/after freezes match. Full results,
+all 250 test names and diagnosis: shutdown-recheck-9746d186/REPORT.md,
+all-tests.md, summary.json and sigint-backtrace.log under this pass's review
+folder. Current book pin stays 8b8da56; the accepted new source needs formal
+reconciliation when refinement is explicitly resumed. No continuation now.

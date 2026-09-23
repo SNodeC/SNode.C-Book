@@ -1,0 +1,1973 @@
+COMMAND: ["ctest", "--test-dir", "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples", "--show-only=json-v1"]
+SOURCE: 9746d1862b30a5104d3590aaa4ed79752ba9aa6a
+PREFIX: /home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/install-gcc
+{
+  "backtraceGraph" : 
+  {
+    "commands" : 
+    [
+      "add_test"
+    ],
+    "files" : 
+    [
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch02/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch04/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch05/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch08/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch09/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch10/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch11/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch12/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch16/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch17/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch18/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch19/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch20/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch25/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch28/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch29/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/ch30/CMakeLists.txt",
+      "/home/voc/projects/snodec/publications/book/companion/exercises/appendix-a/CMakeLists.txt"
+    ],
+    "nodes" : 
+    [
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 2,
+        "parent" : 0
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 6,
+        "parent" : 2
+      },
+      {
+        "file" : 1
+      },
+      {
+        "command" : 0,
+        "file" : 1,
+        "line" : 4,
+        "parent" : 4
+      },
+      {
+        "file" : 1
+      },
+      {
+        "command" : 0,
+        "file" : 1,
+        "line" : 4,
+        "parent" : 6
+      },
+      {
+        "file" : 2
+      },
+      {
+        "command" : 0,
+        "file" : 2,
+        "line" : 5,
+        "parent" : 8
+      },
+      {
+        "file" : 2
+      },
+      {
+        "command" : 0,
+        "file" : 2,
+        "line" : 9,
+        "parent" : 10
+      },
+      {
+        "file" : 3
+      },
+      {
+        "command" : 0,
+        "file" : 3,
+        "line" : 3,
+        "parent" : 12
+      },
+      {
+        "file" : 3
+      },
+      {
+        "command" : 0,
+        "file" : 3,
+        "line" : 4,
+        "parent" : 14
+      },
+      {
+        "file" : 4
+      },
+      {
+        "command" : 0,
+        "file" : 4,
+        "line" : 6,
+        "parent" : 16
+      },
+      {
+        "file" : 4
+      },
+      {
+        "command" : 0,
+        "file" : 4,
+        "line" : 7,
+        "parent" : 18
+      },
+      {
+        "file" : 5
+      },
+      {
+        "command" : 0,
+        "file" : 5,
+        "line" : 10,
+        "parent" : 20
+      },
+      {
+        "file" : 5
+      },
+      {
+        "command" : 0,
+        "file" : 5,
+        "line" : 12,
+        "parent" : 22
+      },
+      {
+        "file" : 6
+      },
+      {
+        "command" : 0,
+        "file" : 6,
+        "line" : 2,
+        "parent" : 24
+      },
+      {
+        "file" : 6
+      },
+      {
+        "command" : 0,
+        "file" : 6,
+        "line" : 4,
+        "parent" : 26
+      },
+      {
+        "file" : 7
+      },
+      {
+        "command" : 0,
+        "file" : 7,
+        "line" : 13,
+        "parent" : 28
+      },
+      {
+        "file" : 7
+      },
+      {
+        "command" : 0,
+        "file" : 7,
+        "line" : 14,
+        "parent" : 30
+      },
+      {
+        "file" : 8
+      },
+      {
+        "command" : 0,
+        "file" : 8,
+        "line" : 3,
+        "parent" : 32
+      },
+      {
+        "file" : 8
+      },
+      {
+        "command" : 0,
+        "file" : 8,
+        "line" : 3,
+        "parent" : 34
+      },
+      {
+        "file" : 9
+      },
+      {
+        "command" : 0,
+        "file" : 9,
+        "line" : 8,
+        "parent" : 36
+      },
+      {
+        "file" : 9
+      },
+      {
+        "command" : 0,
+        "file" : 9,
+        "line" : 10,
+        "parent" : 38
+      },
+      {
+        "file" : 10
+      },
+      {
+        "command" : 0,
+        "file" : 10,
+        "line" : 15,
+        "parent" : 40
+      },
+      {
+        "file" : 10
+      },
+      {
+        "command" : 0,
+        "file" : 10,
+        "line" : 17,
+        "parent" : 42
+      },
+      {
+        "file" : 11
+      },
+      {
+        "command" : 0,
+        "file" : 11,
+        "line" : 4,
+        "parent" : 44
+      },
+      {
+        "file" : 11
+      },
+      {
+        "command" : 0,
+        "file" : 11,
+        "line" : 4,
+        "parent" : 46
+      },
+      {
+        "file" : 12
+      },
+      {
+        "command" : 0,
+        "file" : 12,
+        "line" : 2,
+        "parent" : 48
+      },
+      {
+        "file" : 12
+      },
+      {
+        "command" : 0,
+        "file" : 12,
+        "line" : 4,
+        "parent" : 50
+      },
+      {
+        "file" : 13
+      },
+      {
+        "command" : 0,
+        "file" : 13,
+        "line" : 17,
+        "parent" : 52
+      },
+      {
+        "file" : 13
+      },
+      {
+        "command" : 0,
+        "file" : 13,
+        "line" : 19,
+        "parent" : 54
+      },
+      {
+        "file" : 14
+      },
+      {
+        "command" : 0,
+        "file" : 14,
+        "line" : 2,
+        "parent" : 56
+      },
+      {
+        "file" : 14
+      },
+      {
+        "command" : 0,
+        "file" : 14,
+        "line" : 4,
+        "parent" : 58
+      },
+      {
+        "file" : 15
+      },
+      {
+        "command" : 0,
+        "file" : 15,
+        "line" : 3,
+        "parent" : 60
+      },
+      {
+        "file" : 15
+      },
+      {
+        "command" : 0,
+        "file" : 15,
+        "line" : 3,
+        "parent" : 62
+      },
+      {
+        "file" : 16
+      },
+      {
+        "command" : 0,
+        "file" : 16,
+        "line" : 7,
+        "parent" : 64
+      },
+      {
+        "file" : 16
+      },
+      {
+        "command" : 0,
+        "file" : 16,
+        "line" : 7,
+        "parent" : 66
+      },
+      {
+        "file" : 17
+      },
+      {
+        "command" : 0,
+        "file" : 17,
+        "line" : 2,
+        "parent" : 68
+      },
+      {
+        "file" : 17
+      },
+      {
+        "command" : 0,
+        "file" : 17,
+        "line" : 6,
+        "parent" : 70
+      },
+      {
+        "file" : 18
+      },
+      {
+        "command" : 0,
+        "file" : 18,
+        "line" : 20,
+        "parent" : 72
+      },
+      {
+        "file" : 18
+      },
+      {
+        "command" : 0,
+        "file" : 18,
+        "line" : 22,
+        "parent" : 74
+      },
+      {
+        "file" : 19
+      },
+      {
+        "command" : 0,
+        "file" : 19,
+        "line" : 12,
+        "parent" : 76
+      },
+      {
+        "file" : 19
+      },
+      {
+        "command" : 0,
+        "file" : 19,
+        "line" : 12,
+        "parent" : 78
+      },
+      {
+        "file" : 20
+      },
+      {
+        "command" : 0,
+        "file" : 20,
+        "line" : 15,
+        "parent" : 80
+      },
+      {
+        "file" : 20
+      },
+      {
+        "command" : 0,
+        "file" : 20,
+        "line" : 15,
+        "parent" : 82
+      },
+      {
+        "file" : 21
+      },
+      {
+        "command" : 0,
+        "file" : 21,
+        "line" : 2,
+        "parent" : 84
+      },
+      {
+        "file" : 21
+      },
+      {
+        "command" : 0,
+        "file" : 21,
+        "line" : 4,
+        "parent" : 86
+      },
+      {
+        "file" : 22
+      },
+      {
+        "command" : 0,
+        "file" : 22,
+        "line" : 20,
+        "parent" : 88
+      },
+      {
+        "file" : 22
+      },
+      {
+        "command" : 0,
+        "file" : 22,
+        "line" : 20,
+        "parent" : 90
+      },
+      {
+        "file" : 23
+      },
+      {
+        "command" : 0,
+        "file" : 23,
+        "line" : 2,
+        "parent" : 92
+      },
+      {
+        "file" : 23
+      },
+      {
+        "command" : 0,
+        "file" : 23,
+        "line" : 5,
+        "parent" : 94
+      },
+      {
+        "file" : 24
+      },
+      {
+        "command" : 0,
+        "file" : 24,
+        "line" : 4,
+        "parent" : 96
+      },
+      {
+        "file" : 24
+      },
+      {
+        "command" : 0,
+        "file" : 24,
+        "line" : 4,
+        "parent" : 98
+      },
+      {
+        "file" : 25
+      },
+      {
+        "command" : 0,
+        "file" : 25,
+        "line" : 3,
+        "parent" : 100
+      },
+      {
+        "file" : 25
+      },
+      {
+        "command" : 0,
+        "file" : 25,
+        "line" : 3,
+        "parent" : 102
+      },
+      {
+        "file" : 26
+      },
+      {
+        "command" : 0,
+        "file" : 26,
+        "line" : 3,
+        "parent" : 104
+      },
+      {
+        "file" : 26
+      },
+      {
+        "command" : 0,
+        "file" : 26,
+        "line" : 3,
+        "parent" : 106
+      },
+      {
+        "file" : 27
+      },
+      {
+        "command" : 0,
+        "file" : 27,
+        "line" : 2,
+        "parent" : 108
+      },
+      {
+        "file" : 27
+      },
+      {
+        "command" : 0,
+        "file" : 27,
+        "line" : 13,
+        "parent" : 110
+      },
+      {
+        "file" : 28
+      },
+      {
+        "command" : 0,
+        "file" : 28,
+        "line" : 3,
+        "parent" : 112
+      },
+      {
+        "file" : 28
+      },
+      {
+        "command" : 0,
+        "file" : 28,
+        "line" : 3,
+        "parent" : 114
+      },
+      {
+        "file" : 29
+      },
+      {
+        "command" : 0,
+        "file" : 29,
+        "line" : 6,
+        "parent" : 116
+      },
+      {
+        "file" : 29
+      },
+      {
+        "command" : 0,
+        "file" : 29,
+        "line" : 11,
+        "parent" : 118
+      },
+      {
+        "file" : 30
+      },
+      {
+        "command" : 0,
+        "file" : 30,
+        "line" : 3,
+        "parent" : 120
+      },
+      {
+        "file" : 30
+      },
+      {
+        "command" : 0,
+        "file" : 30,
+        "line" : 5,
+        "parent" : 122
+      }
+    ]
+  },
+  "kind" : "ctestInfo",
+  "tests" : 
+  [
+    {
+      "backtrace" : 1,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/solution.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/Comparison-AsioEcho/asio-echo"
+      ],
+      "name" : "exercise-ch01",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch01"
+        }
+      ]
+    },
+    {
+      "backtrace" : 3,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/independent-peers.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/Comparison-AsioEcho/asio-echo"
+      ],
+      "name" : "exercise-ch01-independent-peers",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch01"
+        }
+      ]
+    },
+    {
+      "backtrace" : 5,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch02/solution.py",
+        "consumer"
+      ],
+      "name" : "exercise-ch02-consumer",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 180.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch02"
+        }
+      ]
+    },
+    {
+      "backtrace" : 7,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch02/solution.py",
+        "component"
+      ],
+      "name" : "exercise-ch02-component",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 180.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch02"
+        }
+      ]
+    },
+    {
+      "backtrace" : 9,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/solution.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch03/greeting-client"
+      ],
+      "name" : "exercise-ch03",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch03"
+        }
+      ]
+    },
+    {
+      "backtrace" : 11,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/occupied-port.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver"
+      ],
+      "name" : "exercise-ch03-occupied-port",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch03"
+        }
+      ]
+    },
+    {
+      "backtrace" : 13,
+      "command" : 
+      [
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch30/model-instances"
+      ],
+      "name" : "exercise-ch04-model-instances",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch04"
+        }
+      ]
+    },
+    {
+      "backtrace" : 15,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch04/../ch01/independent-peers.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver"
+      ],
+      "name" : "exercise-ch04-independent-peers",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch04"
+        }
+      ]
+    },
+    {
+      "backtrace" : 17,
+      "command" : 
+      [
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch05/deferred-work"
+      ],
+      "name" : "exercise-ch05-deferred-work",
+      "properties" : 
+      [
+        {
+          "name" : "ENVIRONMENT",
+          "value" : 
+          [
+            "XDG_CONFIG_HOME=/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch05/config"
+          ]
+        },
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch05"
+        }
+      ]
+    },
+    {
+      "backtrace" : 19,
+      "command" : 
+      [
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch30/model-ownership"
+      ],
+      "name" : "exercise-ch05-model-checkpoint",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 10.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch05"
+        }
+      ]
+    },
+    {
+      "backtrace" : 21,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py",
+        "ipv4",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch06/endpoint-in",
+        "ipv6",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch06/endpoint-in6"
+      ],
+      "name" : "exercise-ch06-ip-families",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch06"
+        }
+      ]
+    },
+    {
+      "backtrace" : 23,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py",
+        "unix",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch06/endpoint-un"
+      ],
+      "name" : "exercise-ch06-unix-path",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch06"
+        }
+      ]
+    },
+    {
+      "backtrace" : 25,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/../ch01/independent-peers.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver"
+      ],
+      "name" : "exercise-ch07-independent-peers",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch07"
+        }
+      ]
+    },
+    {
+      "backtrace" : 27,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/../ch03/occupied-port.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver"
+      ],
+      "name" : "exercise-ch07-occupied-endpoint",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch07"
+        }
+      ]
+    },
+    {
+      "backtrace" : 29,
+      "command" : 
+      [
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch08/bluetooth-selectors"
+      ],
+      "name" : "exercise-ch08-selectors",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch08"
+        }
+      ]
+    },
+    {
+      "backtrace" : 31,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch08/../ch06/families.py",
+        "ipv4",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch06/endpoint-in",
+        "unix",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch06/endpoint-un"
+      ],
+      "name" : "exercise-ch08-part-checkpoint",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch08"
+        }
+      ]
+    },
+    {
+      "backtrace" : 33,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch09/protocol.py",
+        "framing",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/LineProtocol-Server/line-protocol-server"
+      ],
+      "name" : "exercise-ch09-framing",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch09"
+        }
+      ]
+    },
+    {
+      "backtrace" : 35,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch09/protocol.py",
+        "limits",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/LineProtocol-Server/line-protocol-server"
+      ],
+      "name" : "exercise-ch09-limits",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch09"
+        }
+      ]
+    },
+    {
+      "backtrace" : 37,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch10/../ch09/protocol.py",
+        "isolation",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/LineProtocol-Server/line-protocol-server"
+      ],
+      "name" : "exercise-ch10-isolation",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch10"
+        }
+      ]
+    },
+    {
+      "backtrace" : 39,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch10/../ch09/protocol.py",
+        "refusal",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch10/line-refusal"
+      ],
+      "name" : "exercise-ch10-refusal",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch10"
+        }
+      ]
+    },
+    {
+      "backtrace" : 41,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch11/../ch09/protocol.py",
+        "transfer",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/LineProtocol-Server/line-protocol-server",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch11/line-unix"
+      ],
+      "name" : "exercise-ch11-part-checkpoint",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch11"
+        }
+      ]
+    },
+    {
+      "backtrace" : 43,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch11/../ch09/protocol.py",
+        "endpoint-failure",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch11/line-unix"
+      ],
+      "name" : "exercise-ch11-endpoint-failure",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch11"
+        }
+      ]
+    },
+    {
+      "backtrace" : 45,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch12/configuration.py",
+        "precedence",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver"
+      ],
+      "name" : "exercise-ch12-precedence",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch12"
+        }
+      ]
+    },
+    {
+      "backtrace" : 47,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch12/configuration.py",
+        "discovery",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver"
+      ],
+      "name" : "exercise-ch12-discovery",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch12"
+        }
+      ]
+    },
+    {
+      "backtrace" : 49,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/records.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/SemanticLogging/semantic-logging"
+      ],
+      "name" : "exercise-ch13-records",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch13"
+        }
+      ]
+    },
+    {
+      "backtrace" : 51,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py",
+        "checkpoint",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver"
+      ],
+      "name" : "exercise-ch13-part-checkpoint",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch13"
+        }
+      ]
+    },
+    {
+      "backtrace" : 53,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py",
+        "policy",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch14/tls-policy-lab",
+        "/usr/bin/openssl"
+      ],
+      "name" : "exercise-ch14-trust-identity",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch14"
+        }
+      ]
+    },
+    {
+      "backtrace" : 55,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py",
+        "echo",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch14/tls-echo",
+        "/usr/bin/openssl"
+      ],
+      "name" : "exercise-ch14-secure-echo",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch14"
+        }
+      ]
+    },
+    {
+      "backtrace" : 57,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/recovery.py",
+        "retry",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoclient"
+      ],
+      "name" : "exercise-ch15-bounded-retry",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 80.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch15"
+        }
+      ]
+    },
+    {
+      "backtrace" : 59,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/recovery.py",
+        "checkpoint",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoclient",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch14/tls-policy-lab"
+      ],
+      "name" : "exercise-ch15-part-checkpoint",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 80.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch15"
+        }
+      ]
+    },
+    {
+      "backtrace" : 61,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch16/../ch17/dispatch.py",
+        "framing",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch17/dispatch-lab"
+      ],
+      "name" : "exercise-ch16-framing",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch16"
+        }
+      ]
+    },
+    {
+      "backtrace" : 63,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch16/../ch17/dispatch.py",
+        "limits",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch17/dispatch-lab"
+      ],
+      "name" : "exercise-ch16-limits",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch16"
+        }
+      ]
+    },
+    {
+      "backtrace" : 65,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch17/dispatch.py",
+        "order",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch17/dispatch-lab"
+      ],
+      "name" : "exercise-ch17-order",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch17"
+        }
+      ]
+    },
+    {
+      "backtrace" : 67,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch17/dispatch.py",
+        "stop",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch17/dispatch-lab"
+      ],
+      "name" : "exercise-ch17-stop",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch17"
+        }
+      ]
+    },
+    {
+      "backtrace" : 69,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch18/solution.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/SSE-Server/sse-server"
+      ],
+      "name" : "exercise-ch18",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch18"
+        }
+      ]
+    },
+    {
+      "backtrace" : 71,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch18/observers.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/SSE-Server/sse-server"
+      ],
+      "name" : "exercise-ch18-observers",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch18"
+        }
+      ]
+    },
+    {
+      "backtrace" : 73,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch19/solution.py",
+        "negotiation",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch19/ws-lab-server",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch19/ws-lab-client"
+      ],
+      "name" : "exercise-ch19-negotiation",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch19"
+        }
+      ]
+    },
+    {
+      "backtrace" : 75,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch19/solution.py",
+        "checkpoint",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch19/ws-lab-server",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/SSE-Server/sse-server"
+      ],
+      "name" : "exercise-ch19-part-checkpoint",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch19"
+        }
+      ]
+    },
+    {
+      "backtrace" : 77,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch20/mqtt.py",
+        "wire",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch20/mqtt-role-lab",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch20/mqtt-broker-lab"
+      ],
+      "name" : "exercise-ch20-wire",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch20"
+        }
+      ]
+    },
+    {
+      "backtrace" : 79,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch20/mqtt.py",
+        "delivery",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch20/mqtt-role-lab",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch20/mqtt-broker-lab"
+      ],
+      "name" : "exercise-ch20-delivery",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch20"
+        }
+      ]
+    },
+    {
+      "backtrace" : 81,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py",
+        "binary",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch21/mqtt-ws-lab"
+      ],
+      "name" : "exercise-ch21-binary",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch21"
+        }
+      ]
+    },
+    {
+      "backtrace" : 83,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py",
+        "text",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch21/mqtt-ws-lab"
+      ],
+      "name" : "exercise-ch21-text",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch21"
+        }
+      ]
+    },
+    {
+      "backtrace" : 85,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/../ch28/solution.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/MiniGateway/minigateway"
+      ],
+      "name" : "exercise-ch22-unavailable-output",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch22"
+        }
+      ]
+    },
+    {
+      "backtrace" : 87,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/../ch20/mqtt.py",
+        "checkpoint",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch20/mqtt-role-lab",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch20/mqtt-broker-lab",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/MiniGateway/minigateway"
+      ],
+      "name" : "exercise-ch22-part-checkpoint",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch22"
+        }
+      ]
+    },
+    {
+      "backtrace" : 89,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py",
+        "durable",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch23/persistence-lab"
+      ],
+      "name" : "exercise-ch23-durable",
+      "properties" : 
+      [
+        {
+          "name" : "LABELS",
+          "value" : 
+          [
+            "equipped"
+          ]
+        },
+        {
+          "name" : "TIMEOUT",
+          "value" : 90.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch23"
+        }
+      ]
+    },
+    {
+      "backtrace" : 91,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py",
+        "error",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch23/persistence-lab"
+      ],
+      "name" : "exercise-ch23-error",
+      "properties" : 
+      [
+        {
+          "name" : "LABELS",
+          "value" : 
+          [
+            "equipped"
+          ]
+        },
+        {
+          "name" : "TIMEOUT",
+          "value" : 90.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch23"
+        }
+      ]
+    },
+    {
+      "backtrace" : 93,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch17/dispatch.py",
+        "framing",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch17/dispatch-lab"
+      ],
+      "name" : "exercise-ch24-composition",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 30.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch24"
+        }
+      ]
+    },
+    {
+      "backtrace" : 95,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py",
+        "checkpoint",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch23/persistence-lab",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/MiniGateway/minigateway"
+      ],
+      "name" : "exercise-ch24-part-checkpoint",
+      "properties" : 
+      [
+        {
+          "name" : "LABELS",
+          "value" : 
+          [
+            "equipped"
+          ]
+        },
+        {
+          "name" : "TIMEOUT",
+          "value" : 120.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch24"
+        }
+      ]
+    },
+    {
+      "backtrace" : 97,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch25/../ch02/solution.py",
+        "consumer"
+      ],
+      "name" : "exercise-ch25-consumer",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 180.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch25"
+        }
+      ]
+    },
+    {
+      "backtrace" : 99,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch25/../ch02/solution.py",
+        "component"
+      ],
+      "name" : "exercise-ch25-component",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 180.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch25"
+        }
+      ]
+    },
+    {
+      "backtrace" : 101,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py",
+        "lifecycle"
+      ],
+      "name" : "exercise-ch26-lifecycle",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 180.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch26"
+        }
+      ]
+    },
+    {
+      "backtrace" : 103,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py",
+        "configuration"
+      ],
+      "name" : "exercise-ch26-configuration",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 180.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch26"
+        }
+      ]
+    },
+    {
+      "backtrace" : 105,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py",
+        "diagnosis"
+      ],
+      "name" : "exercise-ch27-diagnosis",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 300.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch27"
+        }
+      ]
+    },
+    {
+      "backtrace" : 107,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py",
+        "checkpoint"
+      ],
+      "name" : "exercise-ch27-checkpoint",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 300.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch27"
+        }
+      ]
+    },
+    {
+      "backtrace" : 109,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch28/solution.py",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/MiniGateway/minigateway"
+      ],
+      "name" : "exercise-ch28",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch28"
+        }
+      ]
+    },
+    {
+      "backtrace" : 111,
+      "command" : 
+      [
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch28/measurement-validation"
+      ],
+      "name" : "exercise-ch28-validation",
+      "properties" : 
+      [
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch28"
+        }
+      ]
+    },
+    {
+      "backtrace" : 113,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch29/gateway.py",
+        "framing",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/MiniGateway-Extended/minigateway-extended"
+      ],
+      "name" : "exercise-ch29-framing",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch29"
+        }
+      ]
+    },
+    {
+      "backtrace" : 115,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/ch29/gateway.py",
+        "mixed",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/MiniGateway-Extended/minigateway-extended"
+      ],
+      "name" : "exercise-ch29-mixed",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch29"
+        }
+      ]
+    },
+    {
+      "backtrace" : 117,
+      "command" : 
+      [
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch30/model-ownership"
+      ],
+      "name" : "exercise-ch30",
+      "properties" : 
+      [
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch30"
+        }
+      ]
+    },
+    {
+      "backtrace" : 119,
+      "command" : 
+      [
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch30/model-instances"
+      ],
+      "name" : "exercise-ch30-model-instances",
+      "properties" : 
+      [
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch30"
+        }
+      ]
+    },
+    {
+      "backtrace" : 121,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/appendix-a/../ch02/solution.py",
+        "consumer"
+      ],
+      "name" : "exercise-appendix-a-source-consumer",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 180.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/appendix-a"
+        }
+      ]
+    },
+    {
+      "backtrace" : 123,
+      "command" : 
+      [
+        "/usr/bin/python3",
+        "/home/voc/projects/snodec/publications/book/companion/exercises/appendix-a/../ch09/protocol.py",
+        "transfer",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/LineProtocol-Server/line-protocol-server",
+        "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/ch11/line-unix"
+      ],
+      "name" : "exercise-appendix-a-carrier-extension",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 40.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/exercises/appendix-a"
+        }
+      ]
+    }
+  ],
+  "version" : 
+  {
+    "major" : 1,
+    "minor" : 0
+  }
+}

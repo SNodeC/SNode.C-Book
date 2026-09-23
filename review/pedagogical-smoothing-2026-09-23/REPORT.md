@@ -1,11 +1,15 @@
 # Pedagogical smoothing — paused pending framework repair
 
-Current author instruction: FOLLOWUP-05.md supersedes continuation. The shutdown
-and asynchronous-log test adaptations have been reverted; SNode.C must be fixed
-before further work. All 33 affected paths match fa62fa1 exactly. The P−1 C++20
-fix remains. See test-revert-verification.json. No runtime tests were rerun.
-P1 vocabulary edits are incomplete and uncommitted; this revert preserves them.
-The results below describe historical executions, including the reverted drivers.
+Current author instruction: FOLLOWUP-06.md accepts clean framework 9746d186 and
+requests full verification followed by a stop. Verification is complete: framework
+**184/184 PASS**, external echo **4/4 PASS**, public labs **50/62 PASS, 12 SIGINT
+shutdown failures**, and teaching/behavior/lifetime suites PASS. No skips.
+The new log-drain regression passes; a separate hang remains before the drain call.
+All original timeouts and tests are unchanged. No manuscript refinement resumed.
+See [the full recheck report](shutdown-recheck-9746d186/REPORT.md) and
+[all individual test results](shutdown-recheck-9746d186/all-tests.md).
+P1 vocabulary edits remain incomplete and uncommitted. Earlier results below
+are historical; the recorded book source pin remains 8b8da56.
 
 Active branch: `book/pedagogical-smoothing-2026-09-23`. Date: 2026-09-23.
 PROMPT.md is unchanged; FOLLOWUP-01.md authorizes the public re-baseline and

@@ -1,0 +1,16 @@
+[
+  {
+    "trial": 0,
+    "echo_passed": true,
+    "sigint_timeout_seconds": 5,
+    "gdb_exit": 0,
+    "command": [
+      "/home/voc/projects/snodec/publications/book/build/shutdown-recheck-9746d186/examples/companion/examples/EchoPair/echoserver",
+      "--log-level=0",
+      "echoserver",
+      "local",
+      "--host=127.0.0.1",
+      "--port=42643"
+    ]
+  }
+]
