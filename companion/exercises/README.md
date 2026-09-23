@@ -20,11 +20,11 @@ cmake --build build/labs --parallel 2
 ctest --test-dir build/labs --output-on-failure
 ```
 
-Each chapter README gives a focused build target and test command. Chapters 1, 18 and 28 labs build the canonical companion programs, then use Python's standard
+Each chapter README gives a focused build target and test command. Chapters 1, 19 and 30 labs build the canonical companion programs, then use Python's standard
 library to make observations at their public socket/HTTP interfaces. The environment labs build EchoPair as an independent installed-package consumer
 and diagnose an intentionally missing component in a temporary copy. Chapter 3
 adds a client with a changed greeting while inheriting the existing reflection
-behavior, then checks independent measurement peers for the Part I checkpoint. Chapter 28 also isolates JSON validation before acceptance; Chapter 30 compiles
+behavior, then checks independent measurement peers for the Part I checkpoint. Chapter 30 also isolates JSON validation before acceptance; Chapter 32 compiles
 the canonical `MeasurementModel.cpp` into two ownership experiments. There is only one implementation of each reused algorithm.
 
 The architecture labs reuse the existing measurement-model experiments and EchoPair

@@ -1,6 +1,6 @@
 # MiniGateway
 
-Guided-project application used by Chapter 28.
+Guided-project application used by Chapter 30.
 
 This example composes one small SNode.C application from several roles:
 
@@ -27,7 +27,7 @@ deployment prefix.
 
 Exercising MQTT input and output requires a broker reachable through the configured
 client settings. The HTTP and SSE checks can run while that broker is unavailable.
-Chapter 28 distinguishes those local checks from the broker-dependent scenario.
+Chapter 30 distinguishes those local checks from the broker-dependent scenario.
 
 The simulation endpoint uses `POST /simulate`. The teaching SSE route accepts the
 explicit `Accept: text/event-stream` value (case-insensitively), rather than general

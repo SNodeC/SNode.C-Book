@@ -15,17 +15,6 @@ application model to each context, the application must retain that model throug
 the last use. The independent-peer lab below tests peer isolation, not cancellation
 of the listening flow; those are different observations.
 
-## 2. Review (O2)
-
-Read `net::rc::stream::tls::SocketServer<MyFactory>` as a Bluetooth RFCOMM stream
-server with TLS connection handling and a factory creating per-peer contexts.
-Its public header is `<net/rc/stream/tls/SocketServer.h>` and its corresponding
-component is `net-rc-stream-tls`. Availability depends on the enabled framework
-components and build dependencies. The type name does not supply Bluetooth
-hardware, permissions, pairing, a selected channel, certificates, or trust policy.
-It also does not specify the application protocol implemented by the factory's
-contexts. Selecting this type alone does not demonstrate a radio or TLS exchange.
-
 ## 3. Lab (O3)
 
 Use the common configuration in [the exercise guide](../README.md), then:
@@ -35,7 +24,7 @@ cmake --build build/labs --target ch04-lab
 ctest --test-dir build/labs -R '^exercise-ch04-model-instances$' --output-on-failure -V
 ```
 
-This reuses `companion/exercises/ch30/model-instances.cpp` as a focused early
+This reuses `companion/exercises/ch32/model-instances.cpp` as a focused early
 experiment; no later chapter is a prerequisite. It compiles the canonical
 `companion/examples/MiniGateway/MeasurementModel.cpp` and uses the public
 `accept(...)` and `current()` interface. Two references representing input paths
@@ -68,21 +57,5 @@ both peers. It does not stop the listening flow or destroy the application model
 so neither of those operations is established by this run. It also does not say
 that stream reads preserve the boundaries of the peer's writes.
 
-## 5. Design (O1, O2, O3)
 
-Use separate configured endpoints for the IP and local Unix input. Select the Unix
-public role header/type and matching `net-un-stream-legacy` component where the
-non-TLS variant meets the local policy. Give the Unix endpoint a socket identity
-and permissions appropriate to its deployment; an IP address/port is not a path.
-
-Keep partial-record buffers in each input's context. A factory supplies the
-appropriate context for each accepted peer and gives it access to the one shared
-application model. Parse and validate before accepting a measurement. The model
-assigns ordering across both inputs; neither context keeps a competing global
-sequence. Output observers consume already accepted state.
-
-Construct the model so it survives all contexts and observers that reference it.
-Remove each observer subscription before its captured response or other state is
-destroyed. Shutting down one listening flow should have an explicit policy for
-already accepted peers, rather than relying on local wrapper destruction. Compare
-the resulting address, lifecycle, and protocol obligations separately.
+TODO(P3-apparatus)

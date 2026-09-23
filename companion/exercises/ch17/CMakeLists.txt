@@ -1,10 +1,6 @@
-find_package(snodec REQUIRED COMPONENTS http-server-express-legacy-in)
-add_executable(dispatch-lab dispatch.cpp)
-target_compile_features(dispatch-lab PRIVATE cxx_std_20)
-target_link_libraries(dispatch-lab PRIVATE snodec::http-server-express-legacy-in)
 add_custom_target(ch17-lab DEPENDS dispatch-lab)
-foreach(mode IN ITEMS order stop)
+foreach(mode IN ITEMS framing limits)
   add_test(NAME exercise-ch17-${mode} COMMAND "${Python3_EXECUTABLE}"
-    "${CMAKE_CURRENT_SOURCE_DIR}/dispatch.py" ${mode} $<TARGET_FILE:dispatch-lab>)
+    "${CMAKE_CURRENT_SOURCE_DIR}/../ch18/dispatch.py" ${mode} $<TARGET_FILE:dispatch-lab>)
   set_tests_properties(exercise-ch17-${mode} PROPERTIES TIMEOUT 30)
 endforeach()

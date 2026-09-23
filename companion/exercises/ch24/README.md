@@ -2,101 +2,97 @@
 
 ## 1. Review (O1)
 
-In-tree targets use local names; installed consumers resolve exported `snodec::`
-targets and installed public headers. Source includes identify directly named C++
-abstractions. The link line selects components such as the protocol/application
-layer and concrete carrier. Their targets propagate the deeper dependency graph.
-Copying every internal dependency into an application's link list makes the
-application responsible for implementation details it does not own.
+A connection, pending sequence and cached measurement live in the client process.
+A committed InnoDB row belongs to the database and survives that client. A cache
+may represent a durable fact, but only a declared synchronization/recovery policy
+connects the two. Connection establishment and command submission establish no
+commit. Report acceptance according to the promised boundary, not the first
+successful callback encountered.
 
 ## 2. Review (O2, O3)
 
-MQTTBroker owns brokerage and related administration/observation boundaries.
-MQTTIntegrator subscribes, applies mapping semantics and republishes. MQTTBridge
-owns broker connections, selected traffic movement and loop policy. MQTTStore
-owns raw-envelope and optional typed-projection storage. A tool can host several
-configured instances; a system role need not be a socket instance.
+Chaining appends commands to the returned sequence. An asynchronous call inside a
+callback creates another sequence queued behind the current one. If commit is
+already chained, rollback queued from the insert error callback does not jump in
+front of it. Command-level SQL errors can leave the connection usable and allow
+the remaining sequence to advance. Enqueue a dependent commit or rollback only
+after observing the required result, with transaction ownership preventing
+unrelated work from interleaving on that connection.
 
-Separate executables allow independent restart, but require agreed topic/payload
-contracts and recovery rules. Specify which state survives, who owns it and how a
-replacement obtains it. MQTTStore submits raw and projection writes separately;
-projection is not gated by the raw insert's success callback. Observe each result
-and each independent row. A successful subscription or broker delivery establishes
-neither raw storage nor projection, and one insert's error need not imply the
-other failed. Do not label the pair an atomic transaction without that contract.
+`affectedRows` and `fieldCount` instead read metadata already available from the
+completed operation. Called inside its callback, they observe that operation
+before later SQL advances. These callback-shaped metadata reads are not arbitrary
+blocking database queries. Recovery also needs a way to resolve an uncertain write;
+reconnecting alone cannot decide whether replay would duplicate it.
 
-## 3. Lab (O1)
+## 3. Lab (O1, O2)
 
-Use [the common configuration](../README.md), then inspect the public route fixture
-at `../ch17/CMakeLists.txt` and `../ch17/dispatch.cpp`. Its single imported Express
-carrier component supplies the public protocol and concrete carrier; initialization,
-middleware/routes, listener activation and runtime start form its composition root.
-Find the handlers that append `app-before`, `router-before` and `handler`.
+**Equipped database lab.** In addition to the common installed SNode.C setup, install
+MariaDB server and client tools. On Debian/Ubuntu the packages are `mariadb-server`
+and `mariadb-client`; the lab finds `mariadbd`, `mariadb-install-db` and `mariadb`.
+Run as an ordinary user. No existing service, administrative password or network
+listener is used. Missing tools fail explicitly rather than silently skipping.
 
 ```sh
 cmake --build build/labs --target ch24-lab
-ctest --test-dir build/labs -R '^exercise-ch24-composition$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch24-durable$' --output-on-failure -V
 ```
 
-This reuses the earlier public HTTP framing observer unchanged. A request missing
-its final blank line produces neither a response nor an application marker during
-200 ms. Completing it produces HTTP 200 and the expected handler order. Relate the
-observation to the build/entry-point trace: the application registers behavior,
-while the installed parser admits the completed request. This is a local reading
-and execution exercise; it does not execute every program in `src/apps`.
+CMake derives the fixture from the unchanged `MariaDB-Minimal/main.cpp`. Only the
+private connection details and selected SQL statement vary; its command chain,
+metadata and result/error callbacks remain the printed example. The generated
+program refuses to run without `BOOK_DB_SOCKET` and `BOOK_DB_SQL`. The runner sets
+these only around its child process, using its own newly initialized database.
 
-## 4. Lab (O2, O3): Part IX checkpoint
+`database.py` initializes a private temporary data directory, starts MariaDB with
+networking disabled, waits for a successful query and creates the `book` schema
+and InnoDB `measurements` table. The Unix socket lives inside the private directory.
+The fresh server's root account has no password; directory isolation and disabled
+networking confine this fixture. It is not a deployment credential policy.
 
-**Equipped database checkpoint.** Use the private MariaDB setup in
-`../ch23/README.md`, then:
+The observer confirms autocommit and InnoDB flush-on-commit are enabled, and the
+initial row count is zero. The canonical insert must report one affected row and
+`temperature = 23.5`. After stopping that client, an independent MariaDB CLI query
+must return the same row. Restart the generated client with `DO 0` instead of the
+insert: its unchanged query must read the existing row, and the independent count
+must remain one. The write was committed by the server's autocommit mode; the test
+does not exercise the chapter's explicit transaction sketch or crash recovery.
+
+Before initialization the lab requires at least 512 MiB free temporary space.
+Its fixture uses an 8 MiB InnoDB redo log and a 32 MiB buffer pool. Setup, readiness,
+queries and shutdown have time bounds. The private SQL `SHUTDOWN` command stops the
+server before directory removal; if shutdown fails, live state is retained and
+its path reported. No schema, user or file in an existing database is modified.
+
+## 4. Lab (O2, O3)
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch24-part-checkpoint$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch24-error$' --output-on-failure -V
 ```
 
-First the canonical MariaDB client commits a measurement in the disposable schema,
-then exits. An independent CLI and a restarted client read that row without a
-second insert. The checkpoint then runs the existing MiniGateway outage/restart
-observer: two accepted HTTP measurements agree with status and SSE despite refused
-MQTT, but the restarted gateway begins at sequence zero. These are separate
-experiments, not a database-enabled gateway or an executed MQTTStore deployment.
+A new disposable database starts empty. Replace only the fixture statement with
+an insert into `book.no_such_table`. Expect error 1146, then `measurement query
+complete` from the still-chained query. The independent observer must see zero
+rows. This tests a command-level SQL error with a usable connection, not a dropped
+connection, rollback or a transaction that was already committed.
 
-Apply the difference to the chapter's publication trace:
+Without database server tools, the local alternative is the public gateway outage
+observation (`exercise-ch23-unavailable-output`). It shows accepted in-memory state
+and restart reset, but supplies no durable-state evidence and cannot substitute
+for the equipped database exit check. To run local alternatives without the equipped
+labs, use `ctest --test-dir build/labs -LE equipped --output-on-failure`.
 
-| Outcome | Required observation | What it does not establish |
-| --- | --- | --- |
-| broker delivery | independent subscriber's topic/payload | storage or actuator completion |
-| bridge forwarding | selected destination subscriber receives the intended topic/payload | transformation or durable storage |
-| mapping | selected input and expected transformed output | bridge topology or database commit |
-| raw storage | successful raw insert and independent envelope query | successful typed projection |
-| typed projection | its own successful insert and independent typed-row query | atomicity with the raw insert |
-| client restart | the committed measurement can be read afterward | database crash recovery or every durability configuration |
-| gateway acceptance | HTTP/status/SSE share one sequence/value | persistence or MQTT delivery |
-| gateway restart | sequence returns to zero | loss of a separately committed database row |
+## 5. Design (O1, O3)
 
-The raw/projection entries are the expected architectural discussion, not claims
-that this checkpoint ran MQTTStore. Trace its two call sites and callbacks in the
-suite before designing a deployment test. Preserve the original payload alongside
-chosen projections when that is the declared storage contract.
+One service owns the database client and transaction lifetime. The input handler
+validates a measurement; a domain operation assigns its stable identity. If success
+promises durability, send that success only after the required commit callback.
+Choose a finite pending-work limit and reject, coalesce or apply upstream feedback
+at that limit; event integration does not supply an unlimited safe queue.
 
-The no-database alternative is `exercise-ch22-unavailable-output`, which verifies
-only the in-memory half. It does not replace the equipped checkpoint. The suite's
-unique-topic, ten-publication exercise additionally needs configured brokers and
-MQTTStore; it is not silently inferred from these component observations.
-
-## 5. Design (O1, O2, O3)
-
-Keep broker delivery, integration transformation, bridge forwarding and storage as
-separate responsibilities. Name each process, topic contract, endpoint, state owner
-and operator observation. When a destination fails, decide whether other roles
-continue and whether messages are boundedly buffered, dropped or retried. Reconnect
-does not decide replay correctness. Use origin policy or distinct input/output
-paths to prevent loops; the private MQTT CONNECT option is not a universal broker
-interoperability mechanism.
-
-For storage, decide whether raw and projected rows must be atomic. If they must,
-a separate queue of inserts is insufficient; define transaction ownership and
-failure recovery before promising that outcome. If independent outcomes are allowed,
-report each honestly. A health handler running establishes local progress, not
-readiness of every downstream service. Account for independent upgrades and old/new
-payload compatibility when splitting processes.
+Use an idempotency key and a queryable outcome to resolve an interrupted write
+before replay. Serialize work sharing a transaction connection; decide commit or
+rollback from observed results. Stop accepting new work during shutdown, then
+finish or report pending operations according to the contract. A healthy HTTP
+handler can report database degradation truthfully without claiming storage success.
+The local labs do not implement a production transaction/retry service.

@@ -11,7 +11,7 @@ The book is intentionally focused on SNode.C. The references below give stable b
 - ISO/IEC 14882, *Programming Languages — C++*. The language standard is the authoritative reference for C++ itself.
 - Bjarne Stroustrup, *The C++ Programming Language*. A broad reference for the language and its design vocabulary.
 - Scott Meyers, *Effective Modern C++*. A compact guide to many C++11/14 idioms that remain relevant in framework and application code.
-- [CMake build-system documentation](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html), especially the manuals for `cmake-buildsystem(7)`, `cmake-packages(7)`, `cmake(1)`, and `cmake-presets(7)`. These are useful when reading Chapter 25, the installed package exports, and the example build files.
+- [CMake build-system documentation](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html), especially the manuals for `cmake-buildsystem(7)`, `cmake-packages(7)`, `cmake(1)`, and `cmake-presets(7)`. These are useful when reading Chapter 27, the installed package exports, and the example build files.
 - CMake package configuration examples and the [link-interface reference](https://cmake.org/cmake/help/latest/command/target_link_libraries.html), alongside the documentation for `find_package`, imported targets, `install(EXPORT)`, and generated config files. These are useful background for understanding how a framework becomes consumable outside its own source tree.
 
 ### POSIX, Linux, and network programming {.unnumbered}
@@ -29,7 +29,7 @@ The book is intentionally focused on SNode.C. The references below give stable b
 
 - [RFC 9110, *HTTP Semantics*](https://www.rfc-editor.org/rfc/rfc9110.html).
 - [RFC 9112, *HTTP/1.1*](https://www.rfc-editor.org/rfc/rfc9112.html).
-- [WHATWG HTML Living Standard, server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html), including the `EventSource` interface. This is protocol background; the compact route in Chapter 18 implements a deliberately narrower Accept policy.
+- [WHATWG HTML Living Standard, server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html), including the `EventSource` interface. This is protocol background; the compact route in Chapter 19 implements a deliberately narrower Accept policy.
 - [RFC 6455, *The WebSocket Protocol*](https://www.rfc-editor.org/rfc/rfc6455.html).
 
 ### MQTT and messaging systems {.unnumbered}
@@ -58,9 +58,9 @@ The book is intentionally focused on SNode.C. The references below give stable b
 - The SNode.C repository is the authoritative source for framework development beyond the version discussed in this book. This edition covers the SNode.C\textsubscript{\texttt{2.0.0}} public commit recorded in `source-baseline/SOURCE-VERSION.md` and its content manifest. A framework source reference establishes implementation behavior; a protocol standard establishes the external contract, and the two should be read together.
 - The companion source trees under `companion/examples/` are the authoritative sources for the book's compact examples, MiniGateway, and MiniGateway Extended. Public review answers, lab commands, expected observations, and design discussions are in `companion/exercises/`, in the directory for each numbered chapter and `appendix-a/`. The shared README describes prerequisites and equipped labs. Try each exercise before consulting its solution; a local observation does not certify a deployment.
 
-The online tool manuals follow their current releases. Compare their option descriptions with the versions installed for an exercise. Chapter 26 records the inspected OpenWrt feed revision separately because a feed recipe, an SDK and the framework source have independent version histories.
+The online tool manuals follow their current releases. Compare their option descriptions with the versions installed for an exercise. Chapter 28 records the inspected OpenWrt feed revision separately because a feed recipe, an SDK and the framework source have independent version histories.
 
-For the Bluetooth preparation in Chapter 8, consult the BlueZ project's
+For the Bluetooth preparation in Chapter 9, consult the BlueZ project's
 [`bluetoothctl` manual](https://github.com/bluez/bluez/blob/master/doc/bluetoothctl.rst),
 [Adapter API](https://github.com/bluez/bluez/blob/master/doc/org.bluez.Adapter.rst), and
 [Device API](https://github.com/bluez/bluez/blob/master/doc/org.bluez.Device.rst). These

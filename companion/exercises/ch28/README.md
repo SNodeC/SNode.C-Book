@@ -1,76 +1,86 @@
 # Chapter 28 — solutions and discussion
 
-## 1. Review (O1)
+## 1. Review (O1, O3)
 
-`MiniGatewayMqtt` decodes the incoming measurement using `MeasurementJsonCodec`,
-then calls the shared `MeasurementModel::accept(...)`. The model overwrites the
-incoming sequence with its next local value, stores the measurement, and notifies
-subscribers. SSE writes that accepted state; the MQTT integration publishes it
-through connected protocol objects. Neither output assigns a second sequence.
-`main()` owns the model and keeps it alive while the roles run.
+Startup shows that the immediate executable dependencies were found. A later
+WebSocket upgrade can still fail because a selected module is absent, its directory
+is wrong, its dependent libraries cannot be loaded, or permissions prevent access.
+Record the intended module name, installed file, loader search configuration and
+runtime diagnostic, then exercise HTTP negotiation and the selected subprotocol.
+Installing an unrelated library or adding an in-tree path hides the package defect.
 
-## 2. Review (O1)
+## 2. Review (O2, O3)
 
-Parsing is the admission step. Call the model only after the codec has supplied
-a valid measurement; otherwise invalid input could consume a sequence or notify
-observers. The codec translates representation and validates required finite
-values. The shared model knows the order of all accepted inputs, so it alone
-assigns the local sequence. HTTP, SSE, and MQTT use the same representation
-without each acquiring its own acceptance policy.
+A foreground-process supervisor observes the process it starts. Self-daemonization
+can separate that process from the worker the supervisor is meant to manage.
+Restart policy, identity and logging therefore belong to an explicit service model.
+Active status establishes process state; an exact echo establishes the listener's
+behavior. MiniGateway's liveness response shows a working HTTP handler, while
+readiness depends on whatever broker, persistence or freshness promises the
+application declares. A restart needs a new process and a repeated exchange.
 
-## 3. Lab (O2)
+## 3. Lab (O1, O2)
 
-After the common configuration in [the exercise guide](../README.md):
+Use [the common configuration](../README.md), including `SNODEC_PREFIX`, CMake and
+a C++ compiler. No service-manager session or root access is required.
 
 ```sh
 cmake --build build/labs --target ch28-lab
-ctest --test-dir build/labs -R '^exercise-ch28$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch28-lifecycle$' --output-on-failure -V
 ```
 
-The target builds the canonical MiniGateway. `solution.py` reserves a loopback
-endpoint without listening and configures it as the MQTT remote, so no broker can
-silently satisfy the experiment. HTTP uses a separate port. Expect `/health` to
-answer, initial status sequence 0, two simulated measurements with sequences 1 and
-2, and identical JSON on the POST response, `/status`, and each SSE event. The
-solution restarts the process and expects sequence 0 again. One PASS line reports
-these observations.
+`installed.py` builds the unchanged EchoPair source as a fresh Release consumer,
+checks `snodec_DIR`, and installs the two applications into a temporary prefix.
+It disables CMake package-registry shortcuts. The application's install RPATH lists
+the actual selected framework library directories. On Linux, the lab selects
+`DT_RPATH` with `--disable-new-dtags` so this private search policy also reaches
+transitive dependencies such as the event-loop library; `DT_RUNPATH` on the
+executable alone would apply only to its direct dependencies. The framework itself
+stays in its existing prefix. This is a local installed-layout test, not a relocatable
+framework package or a cross-compilation test.
 
-Working HTTP shows the web role is usable while MQTT cannot connect; it says
-nothing about CONNACK, subscription acknowledgement, or broker delivery. The
-existing model is in memory, so restart discards both current state and ordering.
-No broker is required or exercised by this lab.
+The runtime observer clears `LD_LIBRARY_PATH` and `LD_PRELOAD`, then writes a
+private foreground configuration using a selected loopback port. Expect exact
+binary echo, normal shutdown and connection refusal afterward. A second process
+must have a different identity and repeat the exchange at the same configured
+endpoint. Temporary configuration, logs, build and installation are removed after
+the processes stop. No host service unit is installed or changed.
 
-## 4. Lab (O1)
+To extend this to supervision, perform the chapter's systemd user-unit rehearsal
+only in a session with that manager available. Observe start, new process identity
+after restart, exact exchange, shutdown and inactive status. These are additional
+service observations; the portable process lab does not claim to have run systemd.
 
-Use the same build target, then run:
+## 4. Lab (O2, O3)
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch28-validation$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch28-configuration$' --output-on-failure -V
 ```
 
-`validation.cpp` compiles the canonical model and JSON codec directly, without
-copying their implementation. It accepts one valid measurement carrying producer
-sequence 900, then tries malformed JSON, an object missing required fields, and
-an in-memory JSON object with infinite temperature. Infinity is not a legal JSON
-wire value; constructing the object directly tests the codec's finite-value guard.
-Each rejected input must leave serialized state and notification count unchanged.
-The next valid input must receive local sequence 2 and produce notification 2.
-Expect one PASS line. This isolates validation-before-acceptance; it does not run
-an MQTT broker or verify MQTT error reporting.
+The same private installed consumer first receives `not-a-port` in its configuration.
+Expect configuration status 2, a port diagnostic and no listening message. Restore
+a numeric loopback port and require the exact echo and shutdown refusal. The
+application binary is unchanged: this isolates configuration recovery from build
+or protocol repair. It does not exercise a supervisor's restart throttling.
 
-## 5. Design (O3)
+Service-account permissions, log rotation, protected certificates and database
+resources need their own deployment checks. The chapter's OpenWrt path is an
+**equipped extension** requiring a matching SDK, ported recipe and disposable
+target. The local installation/recovery lab is an alternative observation, not
+evidence that the target package or `procd` service works.
 
-Durable acceptance order belongs with durable accepted state. Put the sequence
-advance and state update in one persistence transaction before notifying outputs;
-do not add independent HTTP and MQTT counters. Define recovery after a committed
-state whose publication was interrupted, and decide whether consumers need
-idempotency keys. The in-memory model alone cannot supply those guarantees.
+## 5. Design (O1, O3)
 
-Overlapping MQTT input/output topics need an application-level origin contract:
-carry stable gateway identity plus an event identity and reject already-originated
-input before it becomes a fresh acceptance. Decide the retention and restart
-behavior of deduplication state. Alternatively keep the disjoint topic policy and
-reject overlapping configuration. Do not enable the example's private protocol-bit
-option as if it were a standard MQTT 5 No Local subscription setting. These are
-design discussions; neither persistence nor origin filtering is implemented by
-the supplied lab.
+Record release, target CPU/C library/ABI, SDK and prepared source, then review the
+recipe's component dependencies and consumer toolchain. Inspect package contents,
+shared-library names and target architecture before installation. Distinguish
+read-only binaries/modules/assets from configuration and writable state; define
+the management group and service identity, protecting private keys separately.
+
+Let `procd` own the foreground process and bounded restart policy. Test loopback
+through the chapter's controlled peer or SSH tunnel: exact exchange after start
+and restart, refusal after stop, visible invalid-configuration failure and recovery.
+Enable boot startup only after those checks, then verify a reboot. Keep package
+repository signing and update trust with the deployment plan. Desktop success,
+configuration preview and a process-status line cannot substitute for these
+observations. No SDK build or target deployment is claimed by the public local labs.

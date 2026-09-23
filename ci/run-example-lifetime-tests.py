@@ -22,7 +22,7 @@ import tempfile
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'companion/exercises/ch19'))
+sys.path.insert(0, str(ROOT / 'companion/exercises/ch20'))
 from wire import echo_exchange
 spec = importlib.util.spec_from_file_location('book_smoke', ROOT / 'ci/run-behavior-smoke-tests.py')
 smoke = importlib.util.module_from_spec(spec)

@@ -2,77 +2,72 @@
 
 ## 1. Review (O1)
 
-Change the public server header, namespace in the server alias, default listen
-argument, and linked CMake component. Keep the line context implementation/header
-and its factory unchanged. The callback names `LineProtocolServer::SocketAddress`,
-so selecting the alias also selects its address type. Runtime CLI values choose
-the actual loopback endpoint or private path without entering the parser.
+The factory returns a newly created endpoint for the supplied connection. The
+connection attaches and manages it; the factory does not retain a second owner or
+manually delete it later. A replacement context is another fresh endpoint, not a
+singleton shared by multiple peers. Detachment ends that context's responsibility,
+possibly while the underlying connection continues with a different protocol.
 
-The lab's CMake file applies those exact carrier substitutions to the canonical
-entry point in the build directory. Its dependency on the original `main.cpp`
-triggers reconfiguration after changes. It compiles the original context source
-and includes the original factory, maintaining one protocol implementation.
+Returning `nullptr` gives the connection no protocol endpoint and closes that
+connection. There is no ready-context callback to run for a nonexistent context.
+An established socket alone therefore does not guarantee protocol readiness.
 
 ## 2. Review (O3)
 
-Unix peer credentials describe local process identity under the platform's query.
-An IP address is not a replacement user identity. Choose network authentication,
-trust and authorization explicitly before exposing the same command parser over
-IP. TLS authentication also needs certificate/name policy and an authorization
-rule; encryption alone does not grant permission for every command. If protocol
-meaning or conversation changes, distinct contexts may be clearer than carrier
-conditionals in one class.
+A copied immutable parser limit isolates each context from later changes to the
+original setting. A reference to one application model avoids duplicate accepted
+state, but the model must outlive all users, including callbacks and observers.
+Shared ownership can permit independent retention of a service; avoid cycles and
+release subscriptions before their captured state expires. Reference counting does
+not make concurrent mutation safe. Construction chooses these relationships; the
+factory should not become an unrestricted route to unrelated application services.
 
-## 3. Lab (O1, O2): Part IV checkpoint
+## 3. Lab (O2)
 
-Use [the common configuration](../README.md), then:
+Use [the common configuration](../README.md):
 
 ```sh
 cmake --build build/labs --target ch11-lab
-ctest --test-dir build/labs -R '^exercise-ch11-part-checkpoint$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch11-isolation$' --output-on-failure -V
 ```
 
-The canonical IPv4 server and generated Unix entry point use the same context and
-factory sources. The bounded fixture runs the framing sequence at every two-piece
-split and as one write on each carrier. It verifies `READY`, reconstructed `PONG`,
-`OK` and unknown-command replies, empty/CRLF behavior, no premature response to
-`PI` during a quiet interval, and closure after `QUIT`. Finally it compares the
-recorded reply lists between carriers. Expect two framing PASS lines and one
-Part IV checkpoint PASS. The Unix service path must be gone after shutdown, before
-the fixture removes its private directory.
+This runs the canonical line server and factory. Two peers first receive `READY`.
+One sends `PI` without a delimiter, while the other sends `STATUS` and receives
+`OK`. Close the partial peer and open a replacement through the same listener.
+Its `NG` must produce `ERR unknown command`, not complete the old peer's `PING`.
+Then both the replacement and surviving peer answer `PING` normally. Expect a PASS
+for independent pending buffers, fresh replacement state and surviving progress.
 
-Application write boundaries are varied; kernel callback segmentation is not
-controlled or certified. This checkpoint establishes a transferable line-framing
-conversation. A measurement record still needs CSV parsing, validation and the
-shared model's acceptance in the later extension. It does not certify Bluetooth,
-TLS authentication, or deployment access policy. The lab needs only installed IPv4
-and Unix legacy stream components and Python 3; no broker, database or radio.
+This observes context-local parsing through peer behavior. It does not count
+allocations or inspect object addresses. It also does not demonstrate persistence
+of a shared model: this line protocol has no such model. The earlier model checkpoint
+supplies the separate accepted-state observation.
 
-## 4. Lab (O2, O3)
+## 4. Lab (O1)
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch11-endpoint-failure$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch11-refusal$' --output-on-failure -V
 ```
 
-Start the Unix listener in a private directory and establish a valid peer. A second
-client uses a nonexistent pathname there and must fail with `FileNotFoundError`
-before any protocol greeting. The valid peer then sends `BOGUS`, receives
-`ERR unknown command`, and can still send `PING` and receive `PONG`. Expect one
-PASS distinguishing endpoint failure from command rejection. Server-owned cleanup
-is checked after bounded shutdown. Do not "repair" this failed endpoint by changing
-the parser or weakening path permissions.
+`refusal.cpp` is a test-only construction policy: refuse the first creation by
+returning `nullptr`, then delegate to the unchanged canonical factory. It neither
+parses bytes nor deletes the supplied connection. The first peer must see closure
+without `READY`; the second must see `READY` and a `PONG` reply. Expect the PASS
+line distinguishing refusal from later successful creation. A parser rejection
+would require a created, attached context to interpret input; this failure precedes
+that stage. The procedure uses the common bounded process/configuration harness.
 
 ## 5. Design (O1, O3)
 
-Keep framing, record validation and the shared model interface explicit. The local
-helper and network input may share a parser if their message meanings agree, while
-outer configuration chooses path versus host/port and legacy versus TLS components.
-Factories supply stable limits, roles and required services; each connection still
-gets its own unfinished record.
+Give each role a factory configured with its own immutable parser limit and an
+explicit reference to the same application-owned measurement model. Each context
+gets a fresh parser/buffer and a copied limit; all valid inputs reach the one model.
+Place the model in a scope enclosing runtime execution and shut down contexts and
+subscriptions before destroying it. Shared service ownership is an alternative only
+if independent retention is needed, with cycles and thread access addressed.
 
-Choose local path ownership/permissions and any credential policy independently
-from network certificate/name verification and authorization. Inactivity, command
-deadlines and slow-peer policy may need different deployment values without changing
-framing. If the authenticated conversation differs, use separate contexts around a
-shared parser rather than hiding trust transitions in carrier-dependent branches.
-The model remains the single owner of accepted state across both inputs.
+A factory can select a role or context type from stable configuration. Authentication
+messages and their state transitions belong in the context, using a deliberately
+supplied authentication service if needed. Retry/reconnect policy remains with the
+role/flow machinery. None of these responsibilities requires a factory to become
+a protocol endpoint or global service locator.

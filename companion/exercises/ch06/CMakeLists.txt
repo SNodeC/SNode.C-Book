@@ -1,14 +1,11 @@
-find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy net-in6-stream-legacy net-un-stream-legacy)
-foreach(family IN ITEMS in in6 un)
-  add_executable(endpoint-${family} family-server.cpp)
-  target_compile_features(endpoint-${family} PRIVATE cxx_std_20)
-  target_compile_definitions(endpoint-${family} PRIVATE LAB_FAMILY=${family}
-    LAB_HEADER="net/${family}/stream/legacy/SocketServer.h")
-  target_link_libraries(endpoint-${family} PRIVATE echosocketcontext snodec::net-${family}-stream-legacy)
-endforeach()
-add_custom_target(ch06-lab DEPENDS endpoint-in endpoint-in6 endpoint-un)
-add_test(NAME exercise-ch06-ip-families COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/families.py"
-  ipv4 $<TARGET_FILE:endpoint-in> ipv6 $<TARGET_FILE:endpoint-in6>)
-add_test(NAME exercise-ch06-unix-path COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/families.py"
-  unix $<TARGET_FILE:endpoint-un>)
-set_tests_properties(exercise-ch06-ip-families exercise-ch06-unix-path PROPERTIES TIMEOUT 40)
+find_package(snodec REQUIRED COMPONENTS core)
+add_executable(deferred-work deferred-work.cpp)
+target_compile_features(deferred-work PRIVATE cxx_std_20)
+target_link_libraries(deferred-work PRIVATE snodec::core)
+add_custom_target(ch06-lab DEPENDS deferred-work model-ownership)
+add_test(NAME exercise-ch06-deferred-work COMMAND deferred-work)
+add_test(NAME exercise-ch06-model-checkpoint COMMAND $<TARGET_FILE:model-ownership>)
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/config")
+set_tests_properties(exercise-ch06-deferred-work PROPERTIES
+  ENVIRONMENT "XDG_CONFIG_HOME=${CMAKE_CURRENT_BINARY_DIR}/config" TIMEOUT 10)
+set_tests_properties(exercise-ch06-model-checkpoint PROPERTIES TIMEOUT 10)

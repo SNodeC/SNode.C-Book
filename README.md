@@ -5,7 +5,7 @@
 
 **Building Multi-Protocol Applications in Modern C++**
 
-This repository contains a teaching book for an advanced student or C++ developer learning layered, event-driven network programming with SNode.C. With the stated C++ and tool prerequisites, a reader can work through the explanations, examples, and public sample solutions without a lecturer. The approved structure has 30 chapters in 11 Parts, followed by a closing essay and an optional contributor appendix.
+This repository contains a teaching book for an advanced student or C++ developer learning layered, event-driven network programming with SNode.C. With the stated C++ and tool prerequisites, a reader can work through the explanations, examples, and public sample solutions without a lecturer. The approved structure has 32 chapters in 11 Parts, followed by a closing essay and an optional contributor appendix.
 
 The central idea is that communication software becomes easier to build, extend, test, and deploy when the important boundaries remain visible:
 
@@ -37,7 +37,7 @@ The book is written for experienced C++ developers, advanced students, and syste
 - `companion/examples/` — complete source trees for compact chapter examples and the guided MiniGateway project.
 - `review/verification/` — non-manuscript verification notes for source/package checks, including the machine-readable SNode.C source baseline.
 
-The current manuscript contains all planned front matter, chapters, an epilogue, and back matter. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `companion/examples/` in source trees named `HttpUpgrade-Server`, `HttpUpgrade-Client`, `SSE-Server`, `SSE-EventSource-Client`, `WebSocket-Echo-ServerSubprotocol`, `WebSocket-Echo-ClientSubprotocol`, `LineProtocol-Server`, `LineProtocol-Client`, `MQTT-ClientRole`, and `MariaDB-Minimal`. Chapters 28 and 29 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
+The current manuscript contains all planned front matter, chapters, an epilogue, and back matter. The printed chapters refer to compact examples as electronic companion material. In this source package, that companion material is stored below `companion/examples/` in source trees named `HttpUpgrade-Server`, `HttpUpgrade-Client`, `SSE-Server`, `SSE-EventSource-Client`, `WebSocket-Echo-ServerSubprotocol`, `WebSocket-Echo-ClientSubprotocol`, `LineProtocol-Server`, `LineProtocol-Client`, `MQTT-ClientRole`, and `MariaDB-Minimal`. Chapters 30 and 31 contain the larger MiniGateway guided project. The source trees used by those final chapters are:
 
 ```text
 companion/examples/MiniGateway
@@ -57,13 +57,13 @@ The manuscript is not intended to describe arbitrary future states of the SNode.
 
 The compact source trees in `companion/examples/` are intended to be complete buildable versions of the shorter manuscript fragments. The printed book should refer to them as electronic companion material rather than as printed-book contents. They are teaching examples, not replacements for the source snippets in the chapters. The directory `companion/examples/` also contains an aggregate CMake project that configures, builds, and installs/deploys all companion examples together.
 
-`companion/examples/MiniGateway` is the authoritative source tree for Chapter 28. `companion/examples/MiniGateway-Extended` is the authoritative source tree for Chapter 29. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
+`companion/examples/MiniGateway` is the authoritative source tree for Chapter 30. `companion/examples/MiniGateway-Extended` is the authoritative source tree for Chapter 31. The chapter listings are explanatory copies of those files and should be updated from the source trees whenever the examples change.
 
 MiniGateway and MiniGateway Extended are buildable external SNode.C consumer examples checked against the SNode.C source snapshot recorded in `source-baseline/SOURCE-VERSION.md`. If a chapter listing and its corresponding example source tree ever disagree, the example source tree is the source of truth and the chapter should be corrected.
 
 The package preserves author-confirmed local verification as historical evidence in `review/verification/history/`. It does not relabel old results as current 2.0 verification. The current verification notes describe the source/listing checks, framework CTest run, GCC/Clang companion builds, and selected application smoke tests. Actual results belong to the specific GitHub Actions run, including any failures or skips. No full MQTT/MariaDB/OpenWrt integration claim follows from a selected HTTP/SSE smoke test.
 
-The migration adds `EchoPair` (Chapter 3) and `SemanticLogging` (Chapter 13). Complete printed code blocks carrying a `snodec-source` marker are checked against their companion source files by `ci/check-source-alignment.py`. Unmarked illustrative or abridged excerpts remain explanatory material, not separately certified executables.
+The migration adds `EchoPair` (Chapter 3) and `SemanticLogging` (Chapter 14). Complete printed code blocks carrying a `snodec-source` marker are checked against their companion source files by `ci/check-source-alignment.py`. Unmarked illustrative or abridged excerpts remain explanatory material, not separately certified executables.
 
 
 ## Heading convention

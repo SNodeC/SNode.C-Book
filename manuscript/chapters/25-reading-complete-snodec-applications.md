@@ -1,0 +1,288 @@
+## Reading Complete SNode.C Applications {#reading-complete-snodec-applications}
+
+::: {.snodec-objectives title="Learning objectives"}
+- **O1.** Trace a build target through its composition root to an observable application contract.
+TODO(P3-apparatus)
+:::
+
+[]{#snodec-in-larger-systems}
+
+### Reading complete applications {#learning-from-the-applications-in-src-apps}
+
+\index{src/apps@\texttt{src/apps}}
+\index{example applications}
+\index{application structure}
+
+Executable applications are where runtime setup, selected components, application objects, instances, callbacks, routes, persistence and installable targets meet. Start with the build target: its public includes, linked components and optional dependencies establish what the entry point can assemble.
+
+\index{src/apps@\texttt{src/apps}!study material}
+
+The applications in `src/apps` should not all be read in the same way. Some are application shells, some are focused examples, some are utility programs, and some are test or demonstration targets. Some demonstrate a protocol family. Some demonstrate a build pattern. They are not all production templates.
+
+The top-level app build also contains other targets, such as `configtest`, `warema-jalousien`, and a conditional `testregex`. Those are useful in their own contexts, but they are not needed for the main teaching path here.
+
+### Build targets as the first architectural reading layer
+
+\index{build targets}
+\index{application targets}
+\index{linked components}
+
+Read the executable target, linked components, feature guards and install rule before opening the entry point. The top-level `src/apps/CMakeLists.txt` is an in-source-tree build file.
+
+In-tree applications link local targets; installed consumers use `snodec::...` imported targets. The paired build fragments below show the same public selections in both contexts.
+
+A simplified view of the selected application targets is:
+
+| Application target | In-tree target shape visible in `src/apps` | What it teaches |
+|---|---|---|
+| `snode.c` | `http-server-express` + `net-in-stream-legacy` | web application shell over IPv4 legacy stream |
+| `express-compat-server` | `http-server-express` + `net-in-stream-legacy` | Express-style compatibility behavior |
+| `testpost` | `http-server-express` + `net-in-stream-legacy` + `net-in-stream-tls` | HTTP POST handling and legacy/TLS application composition |
+| `jsonserver` | `http-server-express` + `net-in-stream-legacy`, built when JSON support is available | JSON-capable HTTP server example |
+| `jsonclient` | `http-client` + `net-in-stream-legacy` | outgoing HTTP request/response example |
+| `testpipe` | `core` | pipe event behavior inside the runtime |
+| `database/testmariadb` | `db-mariadb`, built when MariaDB support is available | MariaDB API and persistence demonstration |
+| echo family | `echosocketcontext` + generated `net-...-stream-...` combinations | one protocol model across network families and connection variants |
+
+Link lines select direct application-facing components, not every implementation dependency. Include blocks likewise name the public abstractions the source directly uses. For a high-level protocol application, the direct choices are usually its protocol/application component and composed stream implementation.
+
+Consider this in-tree build fragment:
+
+```cmake
+add_executable(snode.c main.cpp)
+
+target_link_libraries(
+    snode.c
+    PUBLIC
+        http-server-express
+        net-in-stream-legacy
+)
+```
+
+It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream implementation. The equivalent external form uses exported `snodec::...` targets:
+
+```cmake
+find_package(snodec REQUIRED
+    COMPONENTS
+        http-server-express
+        net-in-stream-legacy
+)
+
+add_executable(my-ipv4-legacy-webapp
+    main.cpp
+)
+
+target_link_libraries(my-ipv4-legacy-webapp
+    PRIVATE
+        snodec::http-server-express
+        snodec::net-in-stream-legacy
+)
+```
+
+The `snodec::...` prefix identifies exported targets, not another dependency step. Those targets propagate their declared dependencies.
+
+The direct link line is short, but the component-owned dependency graph is deeper. For this example, the public component-dependency graph expands into the following teaching view. System libraries and non-SNode.C implementation details are intentionally not expanded; some are only shown as named leaf dependencies.
+
+```text
+my-ipv4-legacy-webapp
+|-- snodec::http-server-express
+|   |-- snodec::http-server
+|   |   `-- snodec::http
+|   |       |-- snodec::core-socket-stream
+|   |       |   `-- snodec::core-socket
+|   |       |       `-- snodec::core
+|   |       |           `-- snodec::utils
+|   |       |               `-- snodec::logger
+|   |       `-- libmagic, if available
+|   `-- nlohmann-json support
+`-- snodec::net-in-stream-legacy
+    |-- snodec::net-in-stream
+    |   `-- snodec::net-in-phy-stream
+    |       `-- snodec::net-in-phy
+    |           `-- snodec::net-in
+    |               `-- snodec::net
+    |                   `-- snodec::core-socket
+    |                       `-- snodec::core
+    |                           `-- snodec::utils
+    |                               `-- snodec::logger
+    `-- snodec::core-socket-stream-legacy
+        `-- snodec::core-socket-stream
+            `-- snodec::core-socket
+                `-- snodec::core
+                    `-- snodec::utils
+                        `-- snodec::logger
+```
+
+The two branches are the application's direct decisions. The HTTP branch supplies protocol/application support, including lower context/runtime dependencies, optional `libmagic` and the Express layer's JSON requirement. The stream branch composes IPv4, stream transport, physical network support and legacy stream operation. Their internal dependencies can overlap without requiring the application to list them again.
+
+This is a teaching view of the component graph, not a linker command. Detailed component rules belong in Chapter 27; here use the graph to locate each application's choices.
+
+Conditional target creation also controls which applications exist; install rules determine the deployment-facing set.
+
+For example, the JSON server target is only built when JSON support is available:
+
+```cmake
+if(NLOHMANN_JSON_FOUND)
+    add_executable(jsonserver jsonserver.cpp)
+    target_link_libraries(
+        jsonserver
+        PRIVATE
+            http-server-express
+            net-in-stream-legacy
+    )
+endif()
+```
+
+Without JSON support that target is absent; the database target is likewise conditional on MariaDB. Availability is part of application shape.
+
+Read includes beside link lines. An Express file includes the public abstraction it names; a file that also constructs an MQTT client needs that client's matching headers and components. Source and build describe the same application from different sides.
+
+\index{include blocks}
+\index{link lines}
+
+### Entry points as assembly points
+
+\index{entry point}
+\index{assembly point}
+\index{snode.c@\texttt{snode.c}}
+
+The entry point wires the selected objects, callbacks, configuration, activation and runtime together. Find initialization, application objects, registered middleware/routes or factories, listen/connect actions, diagnostic callbacks and runtime start.
+
+The `snode.c` application is a good example. Here, `snode.c` refers to the application target in `src/apps`, not to the entire framework.
+
+A compact teaching shape of its structure is:
+
+```cpp
+int main(int argc, char* argv[]) {
+    core::SNodeC::init(argc, argv);
+
+    const express::legacy::in::WebApp app;
+
+    app.use(express::middleware::VerboseRequest());
+
+    app.get("/health", [] APPLICATION(req, res) {
+        res->json({{"ok", true}});
+    });
+
+    app.listen(8080, /* state callback */);
+
+    return core::SNodeC::start();
+}
+```
+
+The real file adds nested routers, JSON responses, SSE, timer-driven output and listen-state handling. The assembly sequence remains initialization, application object, behavior registration, activation and runtime start. Chapter 13's configuration surfaces and Chapter 14's state/log observations become concrete at these points.
+
+`express-compat-server` selects the same HTTP/Express and IPv4 legacy components but serves compatibility and behavior comparison. Follow one route through `snode.c`, then compare policy; equal link composition does not imply equal application behavior.
+
+### Application families and focused examples
+
+\index{application families}
+\index{echo examples}
+\index{JSON examples}
+\index{testpost@\texttt{testpost}}
+\index{testpipe@\texttt{testpipe}}
+\index{testmariadb@\texttt{testmariadb}}
+
+Chapter 3 introduced `EchoSocketContext` through the deliberately simplified `echoserver` and `echoclient` pair over IPv4, stream transport, and legacy connection handling.
+
+The repository echo family generalizes the same idea. The full echo application structure uses a shared echo protocol model, generated server executables, generated client executables, several network families, legacy and TLS stream modes, and compile definitions for the selected combination.
+
+Compare one generated target’s compile definitions with the common source. The selection should change the composed stream handle aliases without introducing another echo parser.
+
+The build includes IPv4, IPv6, and Unix-domain variants by default. Bluetooth L2CAP and RFCOMM echo variants are added only when BlueZ support is available. That conditionality matters because it is part of the application shape: not every generated executable exists in every build.
+
+The JSON examples are useful because they show a clean server/client split.
+
+| Program | HTTP surface | Application handling |
+|---|---|---|
+| `jsonserver` | Express legacy `WebApp`, `POST /index.html` route | `JsonMiddleware`, JSON attributes, response |
+| `jsonclient` | HTTP legacy client, `MasterRequest`, `POST /index.html` request | `application/json` body, response or parse-error callbacks |
+
+Read the pair together to compare the client’s method, path, content type, and body with the server’s route and JSON middleware. It also shows optional feature availability: the server target depends on JSON support being present, while the client demonstrates an outgoing HTTP request shape.
+
+`testpost` is a focused HTTP POST example that links both legacy and TLS stream support.
+
+The legacy web app provides the `GET` form and `POST` body handling. The TLS web app reuses that application behavior on a TLS-capable endpoint.
+
+The source structure is useful because it shows two related application roles in one file: `express::legacy::in::WebApp` for the legacy HTTP endpoint and `express::tls::in::WebApp` for the TLS HTTP endpoint.
+
+When borrowing this shape, separate the reused route behavior from the TLS deployment policy. The fact that both variants register the same handlers says nothing about which peer identities the TLS endpoint verifies.
+
+`testpipe` is useful because it does not depend on HTTP, MQTT, WebSocket, or database support. It links only against the core layer. That makes it a small example of runtime-managed utility behavior.
+
+`testpipe` shows the core runtime, a `Pipe`, `PipeSink` callbacks, `PipeSource::send`, and runtime start without involving a network protocol.
+
+A simplified excerpt captures the idea:
+
+```cpp
+core::SNodeC::init(argc, argv);
+
+const core::pipe::Pipe pipe(
+    [](core::pipe::PipeSource& source,
+       core::pipe::PipeSink& sink) {
+        sink.setOnData([&source](const char* chunk, std::size_t len) {
+            source.send(chunk, len);
+        });
+
+        sink.setOnEof([]() {
+            snode::log::application().trace() << "Pipe EOF";
+        });
+
+        source.send("Hello World!");
+    },
+    [](int errnum) {
+        snode::log::application().systemError(snode::log::Level::Error, errnum) << "Pipe not created";
+    });
+
+return core::SNodeC::start();
+```
+
+The pipe example uses runtime-managed callbacks without a network protocol. The database demonstration is another distinct application shape: `src/apps/database/testmariadb` exercises the persistence API from Chapter 24.
+
+It is built only when MariaDB support is available. Its build shape is compact:
+
+```cmake
+if(LIBMARIADB_FOUND)
+    add_executable(testmariadb testmariadb.cpp)
+    target_link_libraries(testmariadb PRIVATE db-mariadb)
+endif()
+```
+
+The MariaDB demonstration combines configuration, connection details, state/result/error callbacks, `exec`, `query`, affected-row and field-count metadata, sequences, transactions and timers. It need not link HTTP, MQTT or WebSocket, and remains an API demonstration rather than a production persistence architecture.
+
+### Read applications beside consumer examples and tests
+
+The current source tree gives an application reader three complementary views. `src/apps` shows how framework developers assemble applications inside the repository. `examples/echo` shows a standalone CMake consumer of an installed SNode.C package. `tests/` records selected behaviors and architectural restrictions as executable checks.
+
+These views should not be collapsed. An in-tree application can use the repository's build context; an installed consumer must depend on exported targets and installed headers. A component test can use controlled peers or test-only access that does not belong in application code. Reading all three makes the distinction visible rather than relying on an example's directory name as proof of public API status.
+
+A useful route is to read an application's entry point, inspect its include and link surfaces, and then locate the test boundary that would catch a regression in the behavior being studied. For a stream application, that may be a payload-reconstruction or disconnect-lifecycle test. For an HTTP application, it may be a parser, middleware, or installed-module check. Chapter 29 develops that test taxonomy in detail.
+
+The repository also contains design notes under `docs/` and operational tooling under `src/tools/`. Those are useful companions to source reading, but a historical migration report should not override the current header or implementation. The current public logging entry point is `<Log.h>`; the source excerpts in this chapter use that surface rather than a removed macro interface.
+
+\index{application reading workflow}
+\index{composition depth}
+
+Choose the next example by the behavior you need to understand. For callback progress without a network protocol, read `testpipe`; for request/response agreement, compare `jsonclient` and `jsonserver`; for network-family reuse, compare generated echo targets.
+
+For each, record the build target, feature guards, entry point, runtime initialization, objects and configured instances, registered behavior, activation and observations. Ask whether build and source agree.
+
+Apply this method to `jsonclient`: write down network family and connection variant, HTTP method/path, body content type, success and parse-error callbacks, then inspect the matching server route. A disagreement is an application-contract question even when both binaries compile.
+
+Separate executables generated for each network family and server/client side make a different packaging choice from one program with several runtime roles.
+
+The echo family makes variants explicit: separate generated targets expose variants clearly but increase the set of binaries to package and test. A combined executable can activate several network families together and share application state, at the cost of a larger option surface and shared process lifecycle. Choose according to whether deployments need independent variants or simultaneous roles.
+
+When borrowing from an in-tree application, separate three things in the reading notes: a public API shape, the example's selected policy, and an outcome actually tested. The TLS echo source is a useful case: it exposes the pre-handshake callback, but its commented hostname-checking statements do not execute. The same distinction applies to disabled roles, optional modules, and configured retry policy. A source example is strongest when it gives the reader a path to verify behavior, rather than when every nearby comment is treated as a runtime guarantee.
+
+::: {.snodec-remember title="What to remember"}
+- Direct includes and component targets describe application choices; transitive dependencies belong to components.
+:::
+
+::: {.snodec-exercise title="Exercises"}
+1. **Review (O1).** Compare the in-tree and installed application targets. Why do public includes and direct link components differ from the full dependency graph?
+3. **Lab (O1).** Trace the companion HTTP route fixture from its CMake target to initialization, route registration and runtime start. Run the composition lab: incomplete headers stay quiet, then completion reaches the expected handler chain.
+TODO(P3-apparatus)
+
+Public solutions and bounded lab commands: `companion/exercises/ch25/README.md`.
+:::

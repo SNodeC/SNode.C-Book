@@ -2,20 +2,21 @@
 
 ## 1. Review (O1)
 
-An SSE event ID describes an already accepted measurement; letting it assign order
-would make one observer authoritative over other outputs. A producer's number
-orders that producer's samples, not all gateway inputs. Keep a distinct
-`sensorSampleNumber` together with sensor identity if provenance matters. The model
-then assigns its own acceptance sequence after parsing, preserving both facts
-without making them compete. In the supplied model that sequence is process-local.
+`MiniGatewayMqtt` decodes the incoming measurement using `MeasurementJsonCodec`,
+then calls the shared `MeasurementModel::accept(...)`. The model overwrites the
+incoming sequence with its next local value, stores the measurement, and notifies
+subscribers. SSE writes that accepted state; the MQTT integration publishes it
+through connected protocol objects. Neither output assigns a second sequence.
+`main()` owns the model and keeps it alive while the roles run.
 
-## 2. Review (O3)
+## 2. Review (O1)
 
-Two flow handles can represent independent attempts and cancellation under one
-endpoint policy. Use separate endpoint roles when destinations, credentials,
-configuration identity, or operational ownership differ. Counting connections
-alone does not settle this choice: ask which settings and lifetime decisions
-must be independently owned.
+Parsing is the admission step. Call the model only after the codec has supplied
+a valid measurement; otherwise invalid input could consume a sequence or notify
+observers. The codec translates representation and validates required finite
+values. The shared model knows the order of all accepted inputs, so it alone
+assigns the local sequence. HTTP, SSE, and MQTT use the same representation
+without each acquiring its own acceptance policy.
 
 ## 3. Lab (O2)
 
@@ -26,64 +27,50 @@ cmake --build build/labs --target ch30-lab
 ctest --test-dir build/labs -R '^exercise-ch30$' --output-on-failure -V
 ```
 
-`model-ownership.cpp` compiles and uses the same `MeasurementModel.cpp` printed in
-Chapter 28. It creates two observers, accepts input with sequences 900 and 2,
-removes the first observer, then accepts input with sequence 1. Expect model order
-1, 2, 3; the detached observer sees only 1, 2, and the remaining observer sees all
-three. The returned and current measurement must both have sequence 3. Explicit
-checks remain active even in a release build. The experiment removes the second
-subscription before the captured vectors leave scope.
+The target builds the canonical MiniGateway. `solution.py` reserves a loopback
+endpoint without listening and configures it as the MQTT remote, so no broker can
+silently satisfy the experiment. HTTP uses a separate port. Expect `/health` to
+answer, initial status sequence 0, two simulated measurements with sequences 1 and
+2, and identical JSON on the POST response, `/status`, and each SSE event. The
+solution restarts the process and expects sequence 0 again. One PASS line reports
+these observations.
 
-This isolates acceptance and observer ownership from transport. It does not test
-HTTP teardown or persistence; those are different boundaries.
+Working HTTP shows the web role is usable while MQTT cannot connect; it says
+nothing about CONNACK, subscription acknowledgement, or broker delivery. The
+existing model is in memory, so restart discards both current state and ordering.
+No broker is required or exercised by this lab.
 
-## 4. Lab (O1, O2)
+## 4. Lab (O1)
 
 Use the same build target, then run:
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch30-model-instances$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch30-validation$' --output-on-failure -V
 ```
 
-`model-instances.cpp` compiles the canonical model. Two references representing
-input paths share one model and receive sequences 1 and 2. Two separate model
-instances each receive sequence 1. Expect one PASS line describing both results.
-Sharing a class definition does not share its state: the owner must be the same
-instance if acceptance order is to be common. The lab has no transport dependency
-and makes no claim about interprocess ordering or persistence.
-
-**Part XI checkpoint.** Build the shared targets and run the integrated set:
-
-```sh
-cmake --build build/labs --target part-xi-checkpoint
-ctest --test-dir build/labs -R '^exercise-ch(28|29|30)($|-)' --output-on-failure -V
-```
-
-The six tests reuse the public MiniGateway, extended-input, JSON-validation and
-model experiments. No extra application or checkpoint implementation is needed.
-The [extended-input solution](../ch29/README.md) specifies the observations:
-HTTP and Unix input share one acceptance order while MQTT is unavailable;
-malformed CSV changes neither state nor that order; an observer can disconnect
-while the other continues; reconnect gives the current state, not missed-event
-replay; restart resets the in-memory sequence. Contrast these observations with
-the independent model instances tested above. Record the expected and observed
-results, then use the decision tables for the following design problem. Actual
-MQTT delivery remains a separate equipped subscriber observation described in the
-extended-input solution.
+`validation.cpp` compiles the canonical model and JSON codec directly, without
+copying their implementation. It accepts one valid measurement carrying producer
+sequence 900, then tries malformed JSON, an object missing required fields, and
+an in-memory JSON object with infinite temperature. Infinity is not a legal JSON
+wire value; constructing the object directly tests the codec's finite-value guard.
+Each rejected input must leave serialized state and notification count unchanged.
+The next valid input must receive local sequence 2 and produce notification 2.
+Expect one PASS line. This isolates validation-before-acceptance; it does not run
+an MQTT broker or verify MQTT error reporting.
 
 ## 5. Design (O3)
 
-Use a separate collector process for privileged device access and independent
-restarts. Leave HTTP/MQTT and the shared model in the unprivileged gateway. A
-Unix-domain endpoint is a plausible local contract: select a filesystem path,
-restrict ownership/permissions, and define bounded newline-delimited records or
-length-prefixed frames. Validate the record before calling the model.
+Durable acceptance order belongs with durable accepted state. Put the sequence
+advance and state update in one persistence transaction before notifying outputs;
+do not add independent HTTP and MQTT counters. Define recovery after a committed
+state whose publication was interrupted, and decide whether consumers need
+idempotency keys. The in-memory model alone cannot supply those guarantees.
 
-Specify what happens if either process restarts: reconnect with bounded retry,
-choose whether the collector buffers or drops samples, bound any buffer, and carry
-producer identity/sample identity if replay needs deduplication. A disconnected
-collector should produce an observable degraded input state, not reset other
-roles. Collector diagnostics own device errors; gateway diagnostics own validation
-and acceptance; the service manager owns restart policy. The additional process
-costs deployment and recovery work, but here the privilege and restart requirements
-justify it. If those requirements disappear, keeping one process may be simpler.
+Overlapping MQTT input/output topics need an application-level origin contract:
+carry stable gateway identity plus an event identity and reject already-originated
+input before it becomes a fresh acceptance. Decide the retention and restart
+behavior of deduplication state. Alternatively keep the disjoint topic policy and
+reject overlapping configuration. Do not enable the example's private protocol-bit
+option as if it were a standard MQTT 5 No Local subscription setting. These are
+design discussions; neither persistence nor origin filtering is implemented by
+the supplied lab.

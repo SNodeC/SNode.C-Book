@@ -16,7 +16,7 @@ A role is a design responsibility in a system, such as a web interface or MQTT u
 
 The word layer is also used deliberately. A layer is not decoration in the diagrams. It marks a boundary where one kind of responsibility should not silently collapse into another.
 
-An endpoint handle and a flow handle are different objects. The endpoint handle configures an instance, which may be named or anonymous. A flow handle is the shared controller returned by one explicit `listen(...)` or `connect(...)` call. Several flows can use the same endpoint configuration. Chapters 4, 7 and 15 develop the distinction where it affects lifetime, activation, and recovery.
+An endpoint handle and a flow handle are different objects. The endpoint handle configures an instance, which may be named or anonymous. A flow handle is the shared controller returned by one explicit `listen(...)` or `connect(...)` call. Several flows can use the same endpoint configuration. Chapters 4, 8 and 16 develop the distinction where it affects lifetime, activation, and recovery.
 
 ### Vocabulary for the examples
 

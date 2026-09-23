@@ -1,7 +1,7 @@
 # LineProtocol-Server
 
 This compact example is the runnable server counterpart to the line-command
-`SocketContext` introduced in Chapter 9.
+`SocketContext` introduced in Chapter 10.
 
 It listens on IPv4 TCP port `8090` using the legacy stream stack:
 

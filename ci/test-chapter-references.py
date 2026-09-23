@@ -22,7 +22,7 @@ class ChapterReferences(unittest.TestCase):
         files = ['README.md', 'STRUCTURE.md', 'manuscript/book-files.txt']
         files += (ROOT / 'manuscript/book-files.txt').read_text().splitlines()
         files += [str(p.relative_to(ROOT)) for p in (ROOT / 'companion').rglob('*.md')]
-        files += [str(REVIEW / name) for name in ['phase-5a-approved-structure.json', 'phase-5a-reference-register.json']]
+        files += [str(REVIEW / name) for name in ['smoothing-structure.json', 'smoothing-reference-register.json']]
         for name in files:
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -33,12 +33,12 @@ class ChapterReferences(unittest.TestCase):
             return MODULE['check'](self.root)
 
     def test_current_structure(self):
-        register = self.root / REVIEW / 'phase-5a-reference-register.json'
+        register = self.root / REVIEW / 'smoothing-reference-register.json'
         data = json.loads(register.read_text())
         self.assertEqual(self.check(), len(data['references']))
 
     def test_missing_migration_identity(self):
-        register = self.root / REVIEW / 'phase-5a-reference-register.json'
+        register = self.root / REVIEW / 'smoothing-reference-register.json'
         data = json.loads(register.read_text())
         data['migration_dispositions'].pop()
         register.write_text(json.dumps(data))
@@ -47,11 +47,11 @@ class ChapterReferences(unittest.TestCase):
 
     def test_valid_but_wrong_number_even_if_label_is_registered(self):
         path = self.root / 'README.md'
-        path.write_text(path.read_text().replace('Chapter 28', 'Chapter 27', 1))
-        register = self.root / REVIEW / 'phase-5a-reference-register.json'
+        path.write_text(path.read_text().replace('Chapter 30', 'Chapter 29', 1))
+        register = self.root / REVIEW / 'smoothing-reference-register.json'
         data = json.loads(register.read_text())
-        ref = next(r for r in data['references'] if r['file'] == 'README.md' and r['text'] == 'Chapter 28')
-        ref['text'] = 'Chapter 27'  # A mechanically updated label is insufficient.
+        ref = next(r for r in data['references'] if r['file'] == 'README.md' and r['text'] == 'Chapter 30')
+        ref['text'] = 'Chapter 29'  # A mechanically updated label is insufficient.
         register.write_text(json.dumps(data))
         with self.assertRaisesRegex(AssertionError, 'wrong topic'):
             self.check()
@@ -73,7 +73,7 @@ class ChapterReferences(unittest.TestCase):
             self.check()
 
     def test_missing_topic_anchor(self):
-        path = self.root / 'manuscript/chapters/04-the-mental-model-and-layers-in-practice.md'
+        path = self.root / 'manuscript/chapters/05-layers-in-practice.md'
         path.write_text(path.read_text().replace('{#reading-public-types-and-components}', ''))
         with self.assertRaisesRegex(AssertionError, 'Missing/ambiguous topic'):
             self.check()

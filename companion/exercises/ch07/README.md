@@ -2,75 +2,87 @@
 
 ## 1. Review (O1)
 
-Each explicit connect returns its own controller, but both flows use the endpoint's
-shared configuration. `terminateFlow()` ends the selected operation's pending
-attempts/recovery. Dropping a shared handle releases one reference; it is not a
-termination request. An established connection has a separate close operation.
-Destruction/unregistration of the shared endpoint configuration is another event.
-Use separately configured endpoints for independent destinations, rather than
-assuming address-taking overloads create immutable per-flow configuration.
+For a local IPv4 bind, `0.0.0.0` permits all local IPv4 interfaces and port zero
+asks the operating system for a port. A remote client still needs a reachable
+address and the actual chosen port. Loopback narrows exposure to this host.
+An empty Unix path is not a request to listen on every pathname; choose a concrete
+rendezvous name and its owning directory. A Bluetooth selector of zero is initial
+configuration, not evidence that the desired service exists. Select the matching
+family and service and supply the peer's device identity. The Bluetooth address
+lab also distinguishes an empty configured device string from an explicit wildcard.
 
-`setOnFlowTerminated` reports termination, while `setOnFlowCompleted` follows final
-controller release. Retaining a controller can delay completion. Capture stable
-identifiers by value rather than creating a callback/owner reference cycle.
+## 2. Review (O3)
 
-## 2. Review (O2)
+`Unsupported` supplies no successful credential observation. Do not interpret the
+remaining fields as a verified user or group. A reachable socket path establishes
+reachability, not permission to perform every application operation. Choose a
+policy: refuse operations requiring credentials, or use another explicitly defined
+authentication mechanism. A successful credential query would still need a rule
+mapping the observed identity to the requested operation. Directory permissions
+and application authorization answer different questions.
 
-A failed bind belongs to activation status and may produce no connection. A TLS
-handshake failure requires transport/handshake observations; `onConnect` and
-`onConnected` do not denote the same readiness stage. At final disconnect, copy
-addresses, counters, duration, or identifiers while the borrowed connection pointer
-is valid. Do not retain it for later reporting, and do not call the former context:
-its detachment/destruction can precede the outer disconnect callback. Application
-protocol responses belong in the context rather than in these diagnostic hooks.
+## 3. Lab (O1, O2)
 
-## 3. Lab (O3)
-
-After [the common configuration](../README.md):
+Use [the common configuration](../README.md), then:
 
 ```sh
 cmake --build build/labs --target ch07-lab
-ctest --test-dir build/labs -R '^exercise-ch07-independent-peers$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch07-ip-families$' --output-on-failure -V
 ```
 
-This deliberately reuses the existing independent-peer fixture and canonical
-EchoPair. The active peer sends `other`, a NUL byte, and `peer`, then receives all
-ten bytes unchanged while a second peer is idle. After that idle peer closes, the
-first peer sends and receives `still here`. Expect a PASS covering both exchanges.
+The three thin `family-server.cpp` targets choose a public family header/type and
+component at compilation. They link the existing `echosocketcontext` library;
+there is no second echo protocol or measurement parser. `families.py` binds only
+loopback and uses the common process harness with isolated configuration and a
+bounded lifetime. It sends `900,23.5`, `2,24.0`, and invalid binary input as one byte
+sequence and requires the exact bytes back. Neither input sequence becomes an
+accepted model sequence.
 
-The observations support independent progress and closure of these two peer
-relationships. They do not exercise stopping the listener, partial-record parsing,
-reconnection, or shared model ordering. A future parser needs separate receive
-buffers even though every context uses the same factory; only accepted application
-state should be deliberately shared.
+Expect one PASS for IPv4 and one for IPv6, with producer and service identities.
+The producer's local endpoint must agree with the server's remote observation;
+the service endpoint must agree with the server's local observation. A rendered host may be `localhost`; the fixture resolves it within the selected
+family and compares the resulting host/port with the socket observation. The producer
+has an automatically chosen local port. Each server uses the separate loopback
+endpoint supplied to its configuration. The socket family is explicit at both
+ends: this experiment does not establish IPv4-mapped or dual-stack behavior.
 
-## 4. Lab (O2)
+IPv6 loopback must be enabled on the lab host. An unavailable family fails this
+exercise rather than silently substituting IPv4. The script chooses an unused
+port before starting the server; an intervening external bind can still produce
+an endpoint conflict, which is reported as a failure. Rerun after resolving that
+conflict. No DNS service, broker, or radio is needed.
+
+## 4. Lab (O3)
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch07-occupied-endpoint$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch07-unix-path$' --output-on-failure -V
 ```
 
-The existing occupied-port fixture starts the canonical server and establishes a
-peer. A second server then attempts the same endpoint. Expect an `Address already
-in use` diagnostic, followed by unchanged `original owner` bytes from the first
-server. The test keeps the first listener alive while observing the second failure;
-it does not mistake a failed activation for a broken echo protocol.
+The same driver/context and peer script use a private temporary directory. The
+service binds `service.sock`; the Python producer explicitly binds `producer.sock`.
+Expect matching local/remote identities in opposite directions and an exact
+measurement-byte reply. After the producer closes, it removes its own bind path.
+After graceful server shutdown, its service path must be absent. The sentinel
+`keep.txt` must still contain `unrelated file` before the temporary directory is
+removed by the fixture. Expect one Unix PASS line.
 
-Both processes use isolated configuration and bounded shutdown through the common
-harness. The local diagnostic is part of this Linux fixture. No claim is made about
-successful automatic recovery after the original owner later exits.
+Those checks distinguish endpoint cleanup from fixture cleanup: the directory
+manager is not allowed to hide a surviving server-owned path. This run does not
+exercise permission denial, stale paths, abstract addresses, or the credential
+query. Those remain separate behaviors; do not infer an authorization policy from
+successful byte transport.
 
 ## 5. Design (O1, O2, O3)
 
-Give the two destinations separate named endpoint configurations and retain the
-flow handles needed to control their recovery independently. The role/flow machinery
-owns retry and reconnect policy. Each peer episode owns its connection counters
-and context; each context owns its unfinished measurement record. A new episode
-must not inherit an unrelated peer's half-read record.
+A pathname socket fits a deliberately local helper with a controlled runtime
+directory and explicit access/cleanup ownership. Give both processes access to the
+same namespace and use a credential or protocol policy appropriate to the commands.
+Loopback IP may fit existing network tools and a later move to another host; make
+the future routing, authentication, encryption, and exposure policy explicit.
+Moving from loopback to a network interface is a deployment change even if the
+context code stays identical.
 
-Pass one application model through the factories, with a lifetime that covers all
-contexts and observers that use it. Parsing and validation precede acceptance;
-reconnection does not create another global sequence owner. Copy diagnostics at
-disconnect into independently owned values and release subscriptions before their
-captured state dies. A protocol upgrade may replace a context without replacing
-the connection, so count attempts, connections, and contexts separately.
+For either choice, separate the producer's own endpoint from the service it seeks,
+record actual identities after connection, and keep framing and measurement
+validation in the protocol layer. Byte reflection establishes the carrier;
+application acceptance still belongs to the shared model developed earlier.

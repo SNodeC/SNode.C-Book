@@ -1,6 +1,6 @@
 # SSE-Server
 
-Compact server-side Server-Sent Events example used by Chapter 18.
+Compact server-side Server-Sent Events example used by Chapter 19.
 
 It exposes `/events`, rejects requests that do not accept `text/event-stream`,
 sends the event-stream response header, and then writes event records as response

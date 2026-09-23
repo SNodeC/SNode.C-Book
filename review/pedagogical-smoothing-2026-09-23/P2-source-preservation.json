@@ -1,0 +1,10 @@
+{
+  "all_framework_anchors_preserved_exactly": true,
+  "anchor_count": 107,
+  "framework_manifest_unchanged": true,
+  "reviewed_tree_sha256_unchanged": true,
+  "listing_changes_deferred_to_P3": {
+    "new_ch18": "add dispatch.cpp marked listing",
+    "new_ch31": "replace marked MeasurementInputSocketContext.cpp with explained excerpts"
+  }
+}

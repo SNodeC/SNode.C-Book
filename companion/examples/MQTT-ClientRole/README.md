@@ -1,6 +1,6 @@
 # MQTT-ClientRole
 
-Compact MQTT client role example used by Chapter 20.
+Compact MQTT client role example used by Chapter 21.
 
 This source tree intentionally builds a library, not a standalone executable. It
 shows the MQTT protocol role that is later attached to a concrete lower

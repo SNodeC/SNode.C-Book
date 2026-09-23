@@ -10,7 +10,7 @@ Parts V and VI explain operational behavior: configuration, diagnostics, TLS, ti
 
 Parts VII and VIII apply the lower model to web and messaging protocols: HTTP, the Express-like layer, Server-Sent Events, WebSocket, MQTT, and MQTT over WebSocket.
 
-Parts IX and X widen the view to persistence, larger applications, MQTTSuite, components, linking, deployment, and testing. Chapter 25 is the central place for component, public-header, and linking information; protocol chapters only keep the local details that matter for understanding the chapter itself.
+Parts IX and X widen the view to persistence, larger applications, MQTTSuite, components, linking, deployment, and testing. Chapter 27 is the central place for component, public-header, and linking information; protocol chapters only keep the local details that matter for understanding the chapter itself.
 
 Part XI brings the material together. The MiniGateway chapters first combine the earlier concepts in a guided application that is larger than the introductory examples. The final design chapter steps back from that application and discusses judgment explicitly. Appendix A follows the epilogue as an optional path into source navigation and framework extension.
 
@@ -18,7 +18,7 @@ Keep the source tree open as you follow this learning path. When a chapter names
 
 Two shortcuts are useful once the introductory echo pair and its ownership model are familiar:
 
-- To build a web-and-MQTT gateway, keep the same foundation, then read Chapters 16–23 before MiniGateway in Chapters 28 and 29. Chapters 24, 25, 26, 27 and 30 supply the process, build, operational, testing, and design decisions needed to take that example further. This route suits a practical prototype, but it still depends on the earlier ownership and configuration model.
-- To maintain or extend the framework, use Appendix A's source-reading workflow, read Chapters 4–15 closely, and follow the protocol chapters relevant to the change. Chapters 24, 25 and 27 and Appendix A connect the source tree, public components, tests, and extension boundary. The checkpoint is an explanation of who else consumes the behavior you plan to change.
+- To build a web-and-MQTT gateway, keep the same foundation, then read Chapters 17, 18, 19, 20, 21, 22, 23 and 24 before MiniGateway in Chapters 30 and 31. Chapters 26, 27, 28, 29 and 32 supply the process, build, operational, testing, and design decisions needed to take that example further. This route suits a practical prototype, but it still depends on the earlier ownership and configuration model.
+- To maintain or extend the framework, use Appendix A's source-reading workflow, read Chapters 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 and 16 closely, and follow the protocol chapters relevant to the change. Chapters 25, 27 and 29 and Appendix A connect the source tree, public components, tests, and extension boundary. The checkpoint is an explanation of who else consumes the behavior you plan to change.
 
 For a first practical milestone, complete the echo pair and its Part I checkpoint: reflect measurement-shaped bytes and distinguish transport from acceptance. For the web milestone, build the SSE companions and observe an event with a separate client. For the integration milestone, follow a measurement from MiniGateway input through the model to HTTP and SSE observation. The intervening architectural chapters give names to the decisions those exercises expose. Reading a table of roles is useful; being able to locate those roles in a running example is the stronger check of understanding.

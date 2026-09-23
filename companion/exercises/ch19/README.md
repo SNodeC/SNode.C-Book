@@ -2,83 +2,76 @@
 
 ## 1. Review (O1)
 
-The HTTP upgrade name `websocket` selects a socket-context upgrade factory. The
-subprotocol name `echo` selects application message behavior within that carrier.
-Both names must resolve on the relevant role side. Upgrade keeps the underlying
-connection, peer identity, TLS state where present and runtime lifecycle; it
-changes the protocol context interpreting subsequent bytes. A missing upgrade
-factory and a missing subprotocol factory are different selection failures.
+The publisher stores a listener whose shared response pointer keeps the facade
+alive. The HTTP context's disconnect callback captures the publisher and one list
+iterator, then removes that listener. Removing it releases the response reference.
+The callback does not capture another owning response pointer. The publisher
+outlives the event loop, and list insertion/removal does not invalidate other
+subscription iterators. Publication does not mutate that list.
 
-## 2. Review (O2, O3)
+Cleanup must follow disconnect, even if the source is quiet; waiting for the next
+measurement would retain obsolete responses indefinitely. A silent network failure
+still needs detection by the transport or timeout policy. An SSE blank line ends a
+record, and EventSource dispatches its parsed fields as a typed `MessageEvent`.
 
-Text and binary messages can contain identical bytes with different meaning.
-Counted byte ranges preserve embedded NUL, and the typed send overload preserves
-the opcode. Echo reconstructs a message and need not repeat its original frame
-boundaries. A finite frame limit alone cannot bound a many-frame message;
-accumulated bytes and fragment count need distinct bounds. Resource rejection
-uses close 1009, while content validation and authorization remain application
-responsibilities. Receive-policy snapshots do not set output fragmentation policy.
+## 2. Review (O1)
 
-## 3. Lab (O1, O2)
+A blank line terminates an SSE record. The parser accumulates fields before
+emitting a `MessageEvent`: `event` selects its type, `id` supplies its event ID,
+and `data` supplies the payload. An ID can be remembered for reconnect, but it
+neither acknowledges delivery nor makes the server retain history. The example
+uses `measurement` events whose JSON sequence matches the event ID.
 
-Use [the common lab configuration](../README.md), then:
+## 3. Lab (O2)
+
+After the common configuration in [the exercise guide](../README.md):
 
 ```sh
 cmake --build build/labs --target ch19-lab
-ctest --test-dir build/labs -R '^exercise-ch19-negotiation$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch19$' --output-on-failure -V
 ```
 
-CMake derives lab entry points from `HttpUpgrade-Server` and `HttpUpgrade-Client`:
-it adds the relevant echo-factory header and an explicit selector `link("echo", ...)`
-call on each role side. It compiles the canonical echo subprotocol sources without
-editing them. This exercises the linked-factory path described in the chapter;
-no installation into the framework prefix is required. The original example
-executables still support the separately documented dynamic module deployment.
+The target builds both SSE programs. `solution.py` uses a controlled HTTP peer so
+it can compare exact JSON and event IDs. It rejects the parameterized Accept value
+with 406, reads the initial measurement, and checks two POST results against the
+next events. It disconnects and opens a new stream with the older `Last-Event-ID`.
+The first event is the current measurement, not the intervening history. Expect
+one PASS line describing all three checks.
 
-The canonical client must receive `hello` and close. An independent request then
-asks for `unavailable-lab-protocol`. Expect no accepted upgrade and no additional
-echo attachment; the fixture prints the returned status (404 in the local run).
-It does not assume every subprotocol rejection must have that same status.
-Success of an HTTP request alone is insufficient evidence of a selected subprotocol.
+For manual observation, run the server and the curl commands printed in the
+chapter. The initial server sequence is 1; the two simulations produce 2 and 3.
+These observations check response behavior and reconnect output. They do not
+measure retained allocations or establish acknowledgement of earlier events.
+The explicit disconnect-to-unsubscribe path explains idle cleanup.
 
-## 4. Lab (O1, O2, O3): Part VII checkpoint
+## 4. Lab (O2)
+
+Use the same build target, then run:
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch19-part-checkpoint$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch19-observers$' --output-on-failure -V
 ```
 
-The checkpoint first reuses the public SSE observer solution. Two observers see
-the same initial snapshot and first accepted POST result. After one disconnects,
-a second POST must advance the sequence and reach the remaining observer. Each
-POST's status is 200, and its JSON equals the event JSON and ID. This example has
-no separate `/status` resource; POST results and stream snapshots expose its
-accepted measurement. These wire observations do not measure memory reclamation.
-The explicit unsubscribe path explains the independent observer lifetimes.
+`observers.py` opens two streams and consumes each initial snapshot. One simulation
+must produce identical JSON and IDs for both. It closes one stream, simulates
+again, and requires the remaining stream to receive the next accepted sequence.
+Expect one PASS line. For a manual run, use two `curl -N` observers and stop one
+with Ctrl-C before the second POST. Closing an observation path does not own the
+other observer's lifetime or the shared measurement. The wire observations do
+not measure memory reclamation; the disconnect-to-unsubscribe code explains that
+separate ownership fact.
 
-A separate WebSocket connection then checks HTTP 101, the selected `echo` name and
-the accept-key response, followed by exact message types and bytes: text, binary
-with NUL/non-UTF8 bytes, empty text and binary, sequential messages and a longer
-binary message. Fragmented text and binary each include an interleaved ping whose
-pong must match. Finally, close code 1000 is returned and the stream ends.
-`wire.py` holds this independent observer once; the repository lifetime check
-imports the same assertions for its dynamically deployed examples.
+## 5. Design (O3)
 
-The checkpoint distinguishes shared accepted SSE state from WebSocket's echo
-contract. Echo is not another measurement model, and neither a selected protocol
-nor restored connectivity establishes delivery of earlier state changes. The
-fixtures use local peers, isolated configuration and bounded waits. They do not
-exercise all invalid-frame/resource-limit cases, authentication or deployment TLS.
+One bounded policy is to retain at most 600 accepted events for at most ten minutes,
+whichever limit is reached first. Apply a finite per-observer output queue and
+disconnect a peer that cannot keep up; do not block the model's acceptance path.
+On reconnect, replay only if the supplied ID is still in that bounded history.
+Otherwise signal a gap and provide a current snapshot so the dashboard can restart
+its view. Define that gap contract before implementing it.
 
-## 5. Design (O1, O3)
-
-SSE plus POST separates one-way accepted-state observation from explicit commands.
-A WebSocket subprotocol fits an ongoing bidirectional message conversation, but
-needs a message schema, validation, correlation and recovery contract. State who
-owns accepted data in either design; observers must not become competing stores.
-
-Choose finite frame, assembled-message and fragment limits for untrusted input,
-plus separate output bounds and slow-peer policy. If commands may be replayed,
-define idempotency or operation identifiers and acknowledgment semantics. For SSE,
-bound history and define a gap response for expired event IDs. Select linked or
-dynamic factories according to deployment needs, retaining the same role/name
-contract, and keep TLS identity and application authorization explicit.
+Show stream state and the time/ID of the last accepted update separately. A healthy
+but quiet stream should not look like a known disconnection; an old displayed
+measurement should remain visibly old. Event IDs identify continuity positions,
+not proof that the user saw every update. Other bounds can be valid if justified
+by source rate, memory budget, and the cost of losing intermediate samples.

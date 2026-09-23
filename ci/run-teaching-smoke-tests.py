@@ -63,7 +63,7 @@ def running(name: str, args: list[str], env: dict[str, str]):
 
 def logging_check(env: dict[str, str]) -> None:
     import runpy
-    observe = runpy.run_path(str(ROOT / 'companion/exercises/ch13/records.py'))['observe']
+    observe = runpy.run_path(str(ROOT / 'companion/exercises/ch14/records.py'))['observe']
     output = observe(executable("semantic-logging"), env)
     (LOGS / "semantic-logging.jsonl").write_text(output)
 

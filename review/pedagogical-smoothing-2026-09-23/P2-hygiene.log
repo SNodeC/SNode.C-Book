@@ -1,0 +1,20 @@
+manuscript/chapters/25-reading-complete-snodec-applications.md:5:TODO(P3-apparatus)
+manuscript/chapters/25-reading-complete-snodec-applications.md:285:TODO(P3-apparatus)
+manuscript/chapters/04-the-snodec-runtime-mental-model.md:6:TODO(P3-apparatus)
+manuscript/chapters/04-the-snodec-runtime-mental-model.md:204:TODO(P3-apparatus)
+manuscript/chapters/26-from-applications-to-systems-mqttsuite.md:6:TODO(P3-apparatus)
+manuscript/chapters/26-from-applications-to-systems-mqttsuite.md:354:TODO(P3-apparatus)
+manuscript/chapters/05-layers-in-practice.md:5:TODO(P3-apparatus)
+manuscript/chapters/05-layers-in-practice.md:224:TODO(P3-apparatus)
+companion/exercises/ch05/README.md:33:TODO(P3-apparatus)
+companion/exercises/ch05/CMakeLists.txt:1:# TODO(P3-apparatus): layer-comparison and component-observation labs.
+companion/exercises/ch26/README.md:75:TODO(P3-apparatus)
+companion/exercises/ch25/README.md:33:TODO(P3-apparatus)
+companion/exercises/ch04/README.md:61:TODO(P3-apparatus)
+ERROR: found forbidden pattern: authoring markers
+Chapter references passed: 32 chapters + Appendix A, 56 stable topics, 300 current references, 374 old-reference dispositions.
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.148s
+
+OK

@@ -261,7 +261,7 @@ Classify an option before adding it: build-time composition, runtime role choice
 
 For a new option, also state when its value takes effect. The current `SNodeC::reconfigure()` facade can reparse registered configuration while the loop is running, but it does not replace policy already captured by an active connection, restart listeners, or repeat logging bootstrap. An extension that promises live changes must identify its consumer of the new value and its failure policy; merely adding an option to the tree does not implement that promise. `SNodeCReconfigureTest` provides the existing regression boundary for parsing and lifecycle behavior.
 
-As Chapter 25 showed, reusable extensions need truthful public include and component surfaces. Names such as `mqtt-client-websocket`, `http-server-express-legacy-in`, or `net-in-stream-tls` describe a responsibility more accurately than `misc-network-stuff`, `common-utils2`, or `app-helper`.
+As Chapter 27 showed, reusable extensions need truthful public include and component surfaces. Names such as `mqtt-client-websocket`, `http-server-express-legacy-in`, or `net-in-stream-tls` describe a responsibility more accurately than `misc-network-stuff`, `common-utils2`, or `app-helper`.
 
 The target should say what architectural role the component plays and own its dependencies directly. The public header should say what source-facing abstraction the extension exposes. A component that needs HTTP or a selected stream connection should declare that fact; a public front-door header should include or export the lower public declarations needed by the abstraction. A consumer should not have to know private implementation dependencies or private header order.
 
@@ -285,19 +285,19 @@ Examples name the event and consequence:
 
 The semantic logger now carries the origin, boundary, component, and optional runtime identity explicitly. A new application feature should use the public `<Log.h>` facade or an appropriate inherited context helper instead of rebuilding that identity inside every English message. Framework-owned helpers may be private; their names do not make them extension APIs.
 
-Keep the event claim as precise as the control path. Queue admission is not delivery, a connection attempt is not an established session, and a context switch is not necessarily a peer disconnect. Chapter 13 explains how those distinctions survive text and JSON output. An extension should preserve them when it adds its own diagnostics.
+Keep the event claim as precise as the control path. Queue admission is not delivery, a connection attempt is not an established session, and a context switch is not necessarily a peer disconnect. Chapter 14 explains how those distinctions survive text and JSON output. An extension should preserve them when it adds its own diagnostics.
 
 Failure policy should be deliberate. A low-level socket may detect closure, a failed write or a timeout; the role owning the affected responsibility usually chooses retry, reconnect, disablement, shutdown or degraded behavior. The detection site is not automatically the policy owner.
 
 If the extension introduces an output buffer, it needs a bounded policy. If it introduces a retry loop, it needs a limit, backoff, or operator-visible state. If it introduces persistence, it needs a degraded mode when durable state is unavailable. If it introduces live observers, it needs a policy for slow observers.
 
-For output-producing extensions, use the result-returning queue API when the application needs to choose a recovery policy. `WouldExceedLimit` must not be interpreted as a partially accepted message, and `Queued` must not be interpreted as acknowledged delivery. The bounded-output and shutdown contracts from Chapter 15 should remain intact as the application grows.
+For output-producing extensions, use the result-returning queue API when the application needs to choose a recovery policy. `WouldExceedLimit` must not be interpreted as a partially accepted message, and `Queued` must not be interpreted as acknowledged delivery. The bounded-output and shutdown contracts from Chapter 16 should remain intact as the application grows.
 
 ### Tests and review before extension
 
 \index{testing!extension}
 
-Chapter 27 used one question that should follow every extension: which SNode.C boundary does this test protect?
+Chapter 29 used one question that should follow every extension: which SNode.C boundary does this test protect?
 
 A new `SocketContext` needs tests for protocol endpoint behavior; middleware needs request/response tests; a WebSocket subprotocol needs upgrade, frame/message, close, and invalid-input tests; MQTT application behavior needs session, topic, publish, and reconnect tests; a build component needs an installed-consumer test, including a test that includes its public front-door header. The extension is complete only when its boundary can be tested, debugged, and explained.
 
@@ -315,7 +315,7 @@ The table selects a starting point, not a claim that one test layer is sufficien
 
 Before editing, name the changed concern, its owner and scope, the layer it must not pollute, and the configuration, diagnostics, failure policy, tests, packaging and deployment consequences. Ask what the design makes easier or harder to change next.
 
-Use the questions as an exercise on the Chapter 29 parser: suppose the local producer needs its own sample number retained alongside the gateway sequence. Identify the domain field, CSV and JSON representation changes, accepted-state behavior, and observer assertions before editing. Then compare this with adding a second input network family. The first changes the shared application contract; the second can preserve it. A useful answer names both the files that must change and the existing behavior that the tests must continue to protect.
+Use the questions as an exercise on the Chapter 31 parser: suppose the local producer needs its own sample number retained alongside the gateway sequence. Identify the domain field, CSV and JSON representation changes, accepted-state behavior, and observer assertions before editing. Then compare this with adding a second input network family. The first changes the shared application contract; the second can preserve it. A useful answer names both the files that must change and the existing behavior that the tests must continue to protect.
 
 For a flow-related extension, preserve the current invariant explicitly: one public activation call creates one controller, automatic recovery stays within that controller, and termination does not restart it. The shared endpoint configuration and connection identity allocation remain shared across its flows. Test cancellation of one flow beside a surviving sibling, and distinguish termination from final controller destruction. The current `InetPerCallFlowTest` is the relevant composed regression boundary; an old singleton-controller sketch would be the wrong foundation for this extension.
 

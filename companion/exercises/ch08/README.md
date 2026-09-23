@@ -2,124 +2,75 @@
 
 ## 1. Review (O1)
 
-The device address identifies the peer, while the selected service is specific to
-the Bluetooth family. Channel 16 names an RFCOMM service; an L2CAP PSM names an
-L2CAP service. Changing `rc` to `l2` does not create a corresponding listener or
-convert its protocol. Discover or configure the actual service, match its family
-and selector, then decide whether the same byte protocol can be reused.
+Each explicit connect returns its own controller, but both flows use the endpoint's
+shared configuration. `terminateFlow()` ends the selected operation's pending
+attempts/recovery. Dropping a shared handle releases one reference; it is not a
+termination request. An established connection has a separate close operation.
+Destruction/unregistration of the shared endpoint configuration is another event.
+Use separately configured endpoints for independent destinations, rather than
+assuming address-taking overloads create immutable per-flow configuration.
+
+`setOnFlowTerminated` reports termination, while `setOnFlowCompleted` follows final
+controller release. Retaining a controller can delay completion. Capture stable
+identifiers by value rather than creating a callback/owner reference cycle.
 
 ## 2. Review (O2)
 
-First check that the installed public components and development dependencies are
-available. Then inspect the selected controller, power/radio-blocking state,
-compatible peer hardware and Bluetooth Classic service. Inspect the device
-relationship and any pairing/authorization required by the service policy. Start
-the intended peer application and verify its local device/selector. Observe
-activation status before debugging application framing. A paired device and a
-built program do not establish that this particular service is listening.
+A failed bind belongs to activation status and may produce no connection. A TLS
+handshake failure requires transport/handshake observations; `onConnect` and
+`onConnected` do not denote the same readiness stage. At final disconnect, copy
+addresses, counters, duration, or identifiers while the borrowed connection pointer
+is valid. Do not retain it for later reporting, and do not call the former context:
+its detachment/destruction can precede the outer disconnect callback. Application
+protocol responses belong in the context rather than in these diagnostic hooks.
 
-## 3. Lab (O1)
+## 3. Lab (O3)
 
 After [the common configuration](../README.md):
 
 ```sh
 cmake --build build/labs --target ch08-lab
-ctest --test-dir build/labs -R '^exercise-ch08-selectors$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch08-independent-peers$' --output-on-failure -V
 ```
 
-This hardware-independent lab requires the installed RFCOMM/L2CAP legacy stream
-components and Bluetooth development support (BlueZ headers/libraries on Linux).
-It opens no radio socket. The public address classes initially expose an empty
-configured device string and zero selectors. The solution then sets one device
-address with RFCOMM channel 16 and L2CAP PSM `0x1001`, initializes both address
-objects, and checks that their getters retain those choices. Expect default-field
-output, two rendered addresses, and a PASS naming channel 16 and PSM 4097.
+This deliberately reuses the existing independent-peer fixture and canonical
+EchoPair. The active peer sends `other`, a NUL byte, and `peer`, then receives all
+ten bytes unchanged while a second peer is idle. After that idle peer closes, the
+first peer sends and receives `still here`. Expect a PASS covering both exchanges.
 
-An explicit all-zero device address denotes a wildcard; it is not the initial
-configured string returned by `getBtAddress()`. Nor is either form a discovered
-remote service. The assertions test public field behavior and representation;
-they do not establish controller availability, pairing, binding or delivery.
+The observations support independent progress and closure of these two peer
+relationships. They do not exercise stopping the listener, partial-record parsing,
+reconnection, or shared model ordering. A future parser needs separate receive
+buffers even though every context uses the same factory; only accepted application
+state should be deliberately shared.
 
-### Optional equipped extension: physical RFCOMM exchange
-
-This additional observation requires two Linux hosts with compatible enabled
-Bluetooth Classic controllers, radio range, appropriate permissions, matching
-service policy, and any required pairing/authorization. Follow the chapter's
-controller/preparation sequence first. Do not run against an unrelated device.
-The `endpoint-rc` and `endpoint-l2` drivers are built by `ch08-lab`; each reuses
-`family-server.cpp` and the canonical EchoPair context. The commands below exercise
-RFCOMM only; they do not certify L2CAP.
-
-On the server host, choose an available channel (16 below) and bind the intended
-adapter address. Use a private configuration directory for this run:
+## 4. Lab (O2)
 
 ```sh
-lab_config=$(mktemp -d)
-XDG_CONFIG_HOME="$lab_config" build/labs/companion/exercises/ch08/endpoint-rc \
-  endpoint local --host="$LOCAL_BT_ADDRESS" --channel=16
-rm -r "$lab_config"
+ctest --test-dir build/labs -R '^exercise-ch08-occupied-endpoint$' --output-on-failure -V
 ```
 
-Set `LOCAL_BT_ADDRESS` to that host's controller address before running. Wait for
-`BOUND`, then from the prepared peer host set `PEER_BT_ADDRESS` to the server's
-controller address and run:
+The existing occupied-port fixture starts the canonical server and establishes a
+peer. A second server then attempts the same endpoint. Expect an `Address already
+in use` diagnostic, followed by unchanged `original owner` bytes from the first
+server. The test keeps the first listener alive while observing the second failure;
+it does not mistake a failed activation for a broken echo protocol.
 
-```sh
-python3 - "$PEER_BT_ADDRESS" <<'PY'
-import socket, sys
-payload = b'900,23.5\n'
-with socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM) as peer:
-    peer.settimeout(10)
-    peer.connect((sys.argv[1], 16))
-    peer.sendall(payload)
-    reply = b''
-    while len(reply) < len(payload):
-        part = peer.recv(len(payload) - len(reply))
-        if not part:
-            raise RuntimeError('EOF before complete echo')
-        reply += part
-    assert reply == payload
-    print('PASS: physical RFCOMM exact byte exchange')
-PY
-```
+Both processes use isolated configuration and bounded shutdown through the common
+harness. The local diagnostic is part of this Linux fixture. No claim is made about
+successful automatic recovery after the original owner later exits.
 
-Stop the server with Ctrl-C after the exchange. Expected evidence is `BOUND`, an
-actual connection identity, and an exact reply, not merely a “paired” indication.
-The server driver compiles in ordinary CI, but this physical observation requires
-an equipped run. If hardware is unavailable, complete the selector lab and local
-checkpoint; explicitly leave radio delivery unverified. The lab sends no model
-acceptance command and implements no measurement parser.
+## 5. Design (O1, O2, O3)
 
-## 4. Lab (O3): Part III checkpoint
+Give the two destinations separate named endpoint configurations and retain the
+flow handles needed to control their recovery independently. The role/flow machinery
+owns retry and reconnect policy. Each peer episode owns its connection counters
+and context; each context owns its unfinished measurement record. A new episode
+must not inherit an unrelated peer's half-read record.
 
-```sh
-ctest --test-dir build/labs -R '^exercise-ch08-part-checkpoint$' --output-on-failure -V
-```
-
-The same bounded fixture runs the canonical byte protocol first over IPv4 loopback
-and then through a private Unix path. It sends identical measurement-shaped bytes,
-including invalid binary input, and requires an exact reply in both cases. Actual
-producer/service identities must agree with the server's observations in opposite
-directions. On Unix, the producer removes its own path, the server removes its
-service path during shutdown, and an unrelated file survives. These checks occur
-before the temporary directory is removed. Expect one PASS per carrier.
-
-A local helper with controlled directory access may favor a Unix path; existing
-network tools or a future remote producer may favor IP. Name the corresponding
-exposure, identity, namespace, and cleanup obligations. Echoing sequence 900 does
-not assign accepted sequence 1: transport still precedes framing, validation, and
-the shared model's acceptance. This checkpoint makes no Bluetooth-delivery claim.
-
-## 5. Design (O2, O3)
-
-A BLE advertisement does not establish an RFCOMM or L2CAP stream service of the
-kind used here. Obtain the sensor's actual service/protocol description and a
-compatible supported input adapter before choosing a transport. The local helper
-is already a pathname-stream candidate, but still needs endpoint access policy,
-framing and validation. Translate valid records into the same shared model rather
-than treating each carrier as another owner of accepted state.
-
-Keep device preparation, byte delivery, protocol decoding, and domain acceptance
-as separate observations. If an adapter is needed, its design must define data
-conversion and failure behavior; changing a namespace is insufficient. No radio
-availability can be inferred from the local checkpoint.
+Pass one application model through the factories, with a lifetime that covers all
+contexts and observers that use it. Parsing and validation precede acceptance;
+reconnection does not create another global sequence owner. Copy diagnostics at
+disconnect into independently owned values and release subscriptions before their
+captured state dies. A protocol upgrade may replace a context without replacing
+the connection, so count attempts, connections, and contexts separately.

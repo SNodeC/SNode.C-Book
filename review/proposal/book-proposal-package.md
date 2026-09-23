@@ -10,8 +10,8 @@ A working socket example is only the beginning: a learner must also understand w
 | Subtitle | Building Multi-Protocol Applications in Modern C++ |
 | Author | Volker Christian |
 | Format | Teaching book for independent study; modern C++, Linux-oriented examples |
-| Available material | 30 chapters in 11 Parts, contributor appendix, epilogue, reference material and index; complete companion sources and public solutions |
-| Current extent | 100,338 whitespace tokens, including 8,151 fenced tokens; 310 pages in the supplied A4 manuscript PDF |
+| Available material | 32 chapters in 11 Parts, contributor appendix, epilogue, reference material and index; complete companion sources and public solutions |
+| Current extent | 100,916 whitespace tokens, including 8,144 fenced tokens; pages pending PDF rebuild |
 | Length ceiling | At most 115,000 words; the 105,000 stretch target is also met |
 | **Source baseline** | SNode.C project version `2.0.0`, public commit `07ca9a2936ee72582df7d159cb06666fe23e30f8`, verified by its file manifest. |
 
@@ -29,9 +29,9 @@ Makers, scientists, and interdisciplinary teams with the same prerequisites may 
 
 Read the book in order. Parts I–II establish a working echo pair and the runtime model behind it: measurement-shaped bytes lead to a shared acceptance order and independent observers. Parts III–IV vary the communication family and carry a framed line protocol across IP and Unix sockets. Parts V–VI make named roles configurable, diagnosable, secure, and resilient. Parts VII–IX add web observation, broker delivery, and persistence while distinguishing each from application acceptance. Part X develops build, deployment, and testing practice. Part XI assembles MiniGateway, extends it with a Unix-domain input, and uses the resulting system to judge where future responsibilities belong. Appendix A serves readers who want to trace or extend the framework itself.
 
-Each Part ends with a checkpoint the reader can run and verify. The final integration in Chapters 28–30 combines HTTP and Unix inputs, malformed-input rejection, SSE observer lifetimes, unavailable MQTT, and restart behavior. Every numbered chapter and Appendix A opens with observable objectives and closes with a short recap, two review questions, two labs with expected outcomes, and one design problem. Public solutions map every exercise to its objectives. The epilogue remains a closing essay.
+Each Part ends with a checkpoint the reader can run and verify. The final integration in Chapters 30–32 combines HTTP and Unix inputs, malformed-input rejection, SSE observer lifetimes, unavailable MQTT, and restart behavior. After the P3 apparatus gate, every numbered chapter and Appendix A opens with observable objectives and closes with a short recap, two review questions, two labs with expected outcomes, and one design problem. Public solutions map every exercise to its objectives. The epilogue remains a closing essay.
 
-One optional shortcut is **web and MQTT gateway first**: after Chapters 1–5, study Chapters 12–13 and 16–23, then 25 and 28. Use the local HTTP/SSE lab before adding a broker; return to the family, framing, security, and deployment chapters before adapting the gateway for use beyond the lab. The main learning path remains cumulative.
+One optional shortcut is **web and MQTT gateway first**: after Chapters 1–6, study Chapters 13–14 and 17–24, then 27 and 30. Use the local HTTP/SSE lab before adding a broker; return to the family, framing, security, and deployment chapters before adapting the gateway for use beyond the lab. The main learning path remains cumulative.
 
 # Comparable titles
 
@@ -47,26 +47,26 @@ These books locate the proposal on the specialist programming shelf. The distinc
 
 ## Part plan
 
-These estimates come from the supplied 310-page A4 manuscript build of 23 September 2026. They include Part opening pages and 14 physical pages of preliminary matter. The 30-chapter structure and contributor appendix are implemented. Publisher trim and typesetting will change the printed extent; these are measured working-layout pages, not a promised commercial format.
+The 32-chapter structure and contributor appendix are implemented. Word counts come from the current Markdown manifest. All page counts are pending PDF rebuild; publisher trim and typesetting will also change the printed extent.
 
 | Part | Chapters | Pages |
 |--------------------------------------------------------|-------------:|------:|
-| Preliminary matter | — | 14 |
-| I. Getting Oriented | 1–3 | 22 |
-| II. The SNode.C Architecture | 4–5 | 18 |
-| III. Networking Foundations in SNode.C | 6–8 | 27 |
-| IV. From Raw Connections to Application Protocols | 9–11 | 23 |
-| V. Configuration and Operational Behavior | 12–13 | 21 |
-| VI. Secure and Robust Communication | 14–15 | 16 |
-| VII. Web Protocols and Web Applications | 16–19 | 32 |
-| VIII. IoT and Message-Oriented Systems | 20–22 | 19 |
-| IX. Persistence and Full Systems | 23–24 | 25 |
-| X. Building, Porting, and Maintaining | 25–27 | 32 |
-| XI. Building and Evaluating MiniGateway | 28–30 | 37 |
-| Epilogue — What to Take Away from SNode.C | — | 4 |
-| Appendix A. Reading and Extending the Framework | A | 9 |
-| Reference Material | — | 11 |
-| **Total supplied manuscript** | **30 numbered chapters + appendix** | **310** |
+| Preliminary matter | — | pending PDF rebuild |
+| I. Getting Oriented | 1–3 | pending PDF rebuild |
+| II. The SNode.C Architecture | 4–6 | pending PDF rebuild |
+| III. Networking Foundations in SNode.C | 7–9 | pending PDF rebuild |
+| IV. From Raw Connections to Application Protocols | 10–12 | pending PDF rebuild |
+| V. Configuration and Operational Behavior | 13–14 | pending PDF rebuild |
+| VI. Secure and Robust Communication | 15–16 | pending PDF rebuild |
+| VII. Web Protocols and Web Applications | 17–20 | pending PDF rebuild |
+| VIII. IoT and Message-Oriented Systems | 21–23 | pending PDF rebuild |
+| IX. Persistence and Full Systems | 24–26 | pending PDF rebuild |
+| X. Building, Porting, and Maintaining | 27–29 | pending PDF rebuild |
+| XI. Building and Evaluating MiniGateway | 30–32 | pending PDF rebuild |
+| Epilogue — What to Take Away from SNode.C | — | pending PDF rebuild |
+| Appendix A. Reading and Extending the Framework | A | pending PDF rebuild |
+| Reference Material | — | pending PDF rebuild |
+| **Total supplied manuscript** | **32 numbered chapters + appendix** | pending PDF rebuild |
 
 ## Chapter plan
 
@@ -75,52 +75,53 @@ These estimates come from the supplied 310-page A4 manuscript build of 23 Septem
 | 1 | Why SNode.C Exists |
 | 2 | Preparing Your Environment |
 | 3 | Your First Working Program: The Echo Pair |
-| 4 | The Mental Model and Layers in Practice |
-| 5 | Core Runtime and Event Processing |
-| 6 | Network Families: Addresses, IPv4/IPv6, and Unix Sockets |
-| 7 | Servers, Clients, and Connections |
-| 8 | Bluetooth in SNode.C: RFCOMM and L2CAP |
-| 9 | Writing `SocketContext` Classes Well |
-| 10 | Writing `SocketContextFactory` Classes Well |
-| 11 | Building the Same Protocol over Different Lower Layers |
-| 12 | Configuring Applications and Named Instances |
-| 13 | Logging, Diagnostics, and Runtime Introspection |
-| 14 | TLS Across the Framework |
-| 15 | Timeouts, Retries, and Failure Modes |
-| 16 | The HTTP Layer |
-| 17 | The Express-Like Framework |
-| 18 | Server-Sent Events and Real-Time HTTP |
-| 19 | WebSocket and Protocol Upgrade |
-| 20 | MQTT Support in SNode.C |
-| 21 | MQTT over WebSocket |
-| 22 | Designing IoT Systems with Multiple Protocols |
-| 23 | Database Support and Application State |
-| 24 | SNode.C in Larger Systems |
-| 25 | CMake Components, Public Headers, and Linking Strategy |
-| 26 | Deployment on Linux and OpenWrt |
-| 27 | Testing, Debugging, and Benchmarking |
-| 28 | Building MiniGateway |
-| 29 | Extending MiniGateway with a New Network Role |
-| 30 | Architectural Judgment: Choosing the Right Layer and Boundary |
-| A | Reading and Extending the Framework |
+| 4 | The SNode.C Runtime Mental Model |
+| 5 | Layers in Practice |
+| 6 | Core Runtime and Event Processing |
+| 7 | Network Families: Addresses, IPv4/IPv6, and Unix Sockets |
+| 8 | Servers, Clients, and Connections |
+| 9 | Bluetooth in SNode.C: RFCOMM and L2CAP |
+| 10 | Writing `SocketContext` Classes Well |
+| 11 | Writing `SocketContextFactory` Classes Well |
+| 12 | Building the Same Protocol over Different Lower Layers |
+| 13 | Configuring Applications and Named Instances |
+| 14 | Logging, Diagnostics, and Runtime Introspection |
+| 15 | TLS Across the Framework |
+| 16 | Timeouts, Retries, and Failure Modes |
+| 17 | The HTTP Layer |
+| 18 | The Express-Like Framework |
+| 19 | Server-Sent Events and Real-Time HTTP |
+| 20 | WebSocket and Protocol Upgrade |
+| 21 | MQTT Support in SNode.C |
+| 22 | MQTT over WebSocket |
+| 23 | Designing IoT Systems with Multiple Protocols |
+| 24 | Database Support and Application State |
+| 25 | Reading Complete SNode.C Applications |
+| 26 | From Applications to Systems: MQTTSuite |
+| 27 | CMake Components, Public Headers, and Linking Strategy |
+| 28 | Deployment on Linux and OpenWrt |
+| 29 | Testing, Debugging, and Benchmarking |
+| 30 | Building MiniGateway |
+| 31 | Extending MiniGateway with a New Network Role |
+| 32 | Architectural Judgment: Choosing the Right Layer and Boundary |
 
 ## Selected samples
 
-Chapters 1, 3, 18, 28, and 30 demonstrate the opening explanation, first complete program, long-lived HTTP behavior, integrated construction, and architectural judgment. Each has three learning objectives and five exercises with public solutions. The accompanying sample guide explains what to assess in each chapter; the full manuscript supplies their context.
+Chapters 1, 3, 19, 30, and 32 demonstrate the opening explanation, first complete program, long-lived HTTP behavior, integrated construction, and architectural judgment. Each has three learning objectives and five exercises with public solutions. The accompanying sample guide explains what to assess in each chapter; the full manuscript supplies their context.
 
 # Revision plan
 
-The complete manuscript is available for acquisition assessment. Condensation, the consolidated structure, and the teaching apparatus are complete across all chapters and Appendix A. The remaining work is publisher-directed technical review, copy-editing, permissions, and production, together with the outstanding author evidence and delivery commitments below. Technical depth, complete code listings, cumulative explanations, and MiniGateway remain central.
+The manuscript is undergoing the authorized pedagogical-smoothing pass. The 32-chapter structure is implemented; four split chapters complete their apparatus at P3, and the content and continuity gates remain in progress. Publisher-directed technical review, copy-editing, permissions and production follow this pass, together with the outstanding author evidence and delivery commitments below. Technical depth, complete code listings, cumulative explanations, and MiniGateway remain central.
 
 | Requirement | Completed in the supplied material | Maintain through final production |
 |--------------------|----------------------------------------|----------------------------------------|
-| Length | 100,338 total whitespace tokens, including 8,151 fenced tokens | At most 115,000; stretch 105,000; retain complete code listings |
+| Length | 100,916 total whitespace tokens, including 8,144 fenced tokens | At least 107,338; wish 112,338; ceiling 115,000; retain complete code listings |
 | Section density | 252 chapter subheadings; average 334.87 prose words per section | At most 550 subheadings; average at least 250 |
-| Teaching pattern | 30 chapters and Appendix A: 93 objectives, 155 mapped exercises, public answers and lab solutions | 3–5 objectives, recap of at most five bullets, all three exercise tiers and full objective coverage |
+| Teaching pattern | 32 chapters and Appendix A: 99 objectives, 165 mapped exercises planned, public answers and lab solutions | 3–5 objectives, recap of at most five bullets, all three exercise tiers and full objective coverage |
 | Applied principles | 20 rule boxes; zero closing-perspective sections or flagged authoring notes | At most 20 applicable rules; preserve concise recaps and clean reader text |
 | Explanatory blocks | 45 text fences | At most 250; retain useful explanations and technical qualifications |
-| Learning progression | 11 runnable Part checkpoints; earlier measurement milestones lead to Chapters 28–30 | Preserve the cumulative path and the epilogue's closing-essay role |
-| Companion and production | Earlier source: companion compilation and 62 local lab passes; current public pin: runtime revalidation pending; complete listings match their sources | Rebuild and rerun affected examples after technical edits; refresh page estimates at publisher typesetting |
+| Learning progression | 11 runnable Part checkpoints; earlier measurement milestones lead to Chapters 30–32 | Preserve the cumulative path and the epilogue's closing-essay role |
+| Companion and production | Public 07ca9a29: fresh framework build, 185 framework tests, 62 public labs and smoke/lifetime suites pass at the R2 gate; complete listings match their sources | Rebuild and rerun affected examples after technical edits; refresh page estimates at publisher typesetting |
 
 **[AUTHOR TO SUPPLY]** Weeks to final manuscript after acceptance and hours per week available for revisions; agree the delivery schedule with the publisher before promising a date.
 

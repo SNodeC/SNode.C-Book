@@ -1,6 +1,6 @@
 # SemanticLogging
 
-Complete logging-only Chapter 13 example. It uses `<Log.h>` and the public
+Complete logging-only Chapter 14 example. It uses `<Log.h>` and the public
 `snode::log::configure(Settings)` startup path, without starting SNode.C's runtime.
 
 ```sh

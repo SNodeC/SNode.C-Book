@@ -2,85 +2,69 @@
 
 ## 1. Review (O1)
 
-A wrong address string belongs at the address-value boundary. Fragmented HTTP input
-needs parser pending/accept/reject checks plus a real exchange where relevant.
-An unexpectedly retained context needs the ownership transition and a bounded
-lifetime observation. A missing installed module needs a genuine installed-path
-negotiation, not another source include path. Register the smallest reproduction
-that would have failed before the repair, then check the composed public behavior.
+A header exposes a C++ abstraction. A supported component request tells the
+installed package which public selection to load. An exported target may also be
+loaded as a dependency without being a supported request name. The logging example
+requests `core` and links the loaded `snodec::logger`; it does not invent a `logger`
+request. Header presence alone cannot validate a component name or its export.
 
 ## 2. Review (O1, O3)
 
-An ASan loader error means instrumentation did not start correctly; it is not a
-protocol result. A skipped socket test did not execute its intended exchange.
-A passing timing run checks the declared payload exchanges and reports that
-client's workload timing. It supplies neither production capacity nor protocol
-certification, crash recovery or target-deployment evidence. Record environment,
-selection, counts and limits rather than collapsing these outcomes into “green”.
+PUBLIC requirements serve the target and consumers; PRIVATE requirements serve
+the target; INTERFACE requirements serve consumers. A static library has no final
+executable link of its own, so a private implementation dependency can still be
+needed when the consumer links. Keep compile usage requirements distinct from
+that final-link responsibility. Declare a dependency at the component that needs
+it instead of making every application repeat the transitive graph.
 
 ## 3. Lab (O1, O2)
 
-Use [the common configuration](../README.md) with `SNODEC_PREFIX` and the C++ build
-tools available during CTest.
+Use [the common configuration](../README.md) with `SNODEC_PREFIX` naming the actual
+installed framework. CMake and a C++ compiler must remain available during CTest:
+this exercise performs a fresh external build.
 
 ```sh
 cmake --build build/labs --target ch27-lab
-ctest --test-dir build/labs -R '^exercise-ch27-diagnosis$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch27-consumer$' --output-on-failure -V
 ```
 
-The driver first reuses the missing-component experiment from `../ch02/solution.py`:
-configuration fails before an application exists, then restoration builds and runs.
-Next `../ch26/installed.py` independently builds and installs the canonical consumer.
-The correct configured endpoint echoes. A separate local socket reserves a port
-without listening; connection to that wrong endpoint must be refused. This avoids
-accidentally contacting an unrelated service. The installed application's build
-and correct exchange remain successful. Record the two failures at their different
-boundaries; changing CMake cannot repair a peer's wrong address.
+This deliberately repeats the environment lab while reading the consumer's
+component ownership. It reuses `../ch02/solution.py` without another implementation.
+Inspect `../../examples/EchoPair/CMakeLists.txt` and the selected installation's
+`INTERFACE_LINK_LIBRARIES` entries. The public request is `net-in-stream-legacy`;
+the shared echo context carries it to both executables. Follow the installed
+network and stream dependencies without copying them into the consumer.
 
-## 4. Lab (O1, O2, O3): Part X checkpoint
+Expect `snodec_DIR` to be inside the requested prefix, a successful independent
+build, then exact reflection of `environment-ready`. The observer accumulates the
+whole response. That establishes a selected installed consumer, not every component
+combination or a packaged service.
+
+## 4. Lab (O2, O3)
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch27-checkpoint$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch27-component$' --output-on-failure -V
 ```
 
-The checkpoint repeats component diagnosis, a fresh external Release build,
-private installation, exact echo and wrong-endpoint refusal. It then runs
-`roundtrip.py`, the chapter's complete Python listing, with only the fixed endpoint
-substituted by the fixture's private port. Source alignment checks the public file
-against the printed listing. There is one calculation of the sample count,
-median and nearest-rank p95. The driver checks output shape and correctness, with
-no machine-specific speed threshold.
-
-Expect twenty warm-up exchanges followed by `samples=200 bytes=256 connections=1`,
-a positive median and a p95 at least as large. Every reply must match all 256 bytes;
-short reads are accumulated and timeouts fail the experiment. The process runs
-without loader overrides; the server logs at Info in JSON to a temporary file.
-The CMake transcript records the compiler and selected installation, and the
-measurement records the platform, build type, endpoint, logging and warm-up count.
-
-For comparison across runs, also record the CPU, selected multiplexer, operating
-conditions and source contents as the chapter requests. Preserve the output sink,
-binary and workload while changing one chosen condition. A single result from
-this local checkpoint is a diagnostic observation, not a performance baseline.
-The 190th sorted sample gives the small-sample p95; the reciprocal of a round-trip
-time is not server capacity. Connection establishment, TLS, concurrency, slow peers,
-proxy behavior and persistent state remain outside this measurement.
-
-You can run the unchanged listing manually against the chapter's installed server
-at `127.0.0.1:18093`. The public driver avoids that fixed port for automated labs.
+The reused lab copies EchoPair into a temporary directory and changes its component
+to `net-in-stream-missing`. Configuration must fail naming that component before
+an executable exists. The lab restores the canonical CMake text, configures and
+builds it, then repeats the successful exchange. The installed framework and
+original companion sources are unchanged. The error belongs to package discovery,
+not the socket endpoint or the protocol.
 
 ## 5. Design (O1, O3)
 
-Define what remains observable when one subscriber stops reading: accepted state,
-other subscribers' progress, bounded queued bytes and the declared slow-peer
-policy. Use a controlled slow peer and an independent healthy observer. State the
-message size/rate, connection count, duration, logging and platform before measuring.
-Track complete delivered records, latency distribution, queue/memory growth and
-recovery after removing pressure. Bound the test and clean up every peer.
+A TLS IPv4 web administrator can name `<express/tls/in/WebApp.h>` and select the
+concrete `http-server-express-tls-in` component. That component owns Express/HTTP
+and the TLS carrier; the application should not reproduce their lower graph. A
+source that directly names a MariaDB client adds its public header and `db-mariadb`
+selection when that feature is enabled. An absent database dependency must be an
+explicit build/configuration decision, not a mysterious runtime feature loss.
 
-A regression asserts the public invariant and failure policy; a benchmark measures
-a declared workload. Do not merely sleep and assume a callback happened. Profile
-an observed regression to locate cost. Add installed-module, service-user, TLS,
-proxy or OpenWrt checks only for deployments that introduce those boundaries, and
-report absent equipment as untested. The loopback echo checkpoint cannot establish
-those production properties.
+Place implementation-only dependencies privately and propagate usage requirements
+needed by public headers. Record compiled defaults separately from instance options
+and policy already captured by running flows. Rebuild ABI-dependent applications
+and protocol modules together against the selected installation. Check both package
+configuration and an installed consumer; neither a header inventory nor an in-tree
+build establishes the whole contract.

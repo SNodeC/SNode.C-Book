@@ -2,78 +2,124 @@
 
 ## 1. Review (O1)
 
-The two bytes have moved from the connection into the context's receive buffer.
-The returned count accounts for that consumption, although the newline needed to
-complete `PING` has not arrived. A completed-command counter is a separate protocol
-observation. Queuing a reply would still not establish peer receipt or application
-processing. Context attachment and detachment define the parser's lifetime; they
-need not coincide with the entire connection lifetime during a context switch.
+The device address identifies the peer, while the selected service is specific to
+the Bluetooth family. Channel 16 names an RFCOMM service; an L2CAP PSM names an
+L2CAP service. Changing `rc` to `l2` does not create a corresponding listener or
+convert its protocol. Discover or configure the actual service, match its family
+and selector, then decide whether the same byte protocol can be reused.
 
-## 2. Review (O3)
+## 2. Review (O2)
 
-An inactivity timeout may keep being refreshed without a command ever completing.
-A command deadline needs a policy tied to protocol progress. Queue admission failure
-requires an explicit choice: defer within a bounded application policy, reject the
-operation, or close according to protocol semantics. Do not announce success for
-bytes that were not admitted or defeat the limit with an unbounded shadow queue.
-Shared connection machinery still owns transport buffering and descriptor lifetime.
+First check that the installed public components and development dependencies are
+available. Then inspect the selected controller, power/radio-blocking state,
+compatible peer hardware and Bluetooth Classic service. Inspect the device
+relationship and any pairing/authorization required by the service policy. Start
+the intended peer application and verify its local device/selector. Observe
+activation status before debugging application framing. A paired device and a
+built program do not establish that this particular service is listening.
 
-## 3. Lab (O1, O2)
+## 3. Lab (O1)
 
-Use [the common configuration](../README.md), then:
+After [the common configuration](../README.md):
 
 ```sh
 cmake --build build/labs --target ch09-lab
-ctest --test-dir build/labs -R '^exercise-ch09-framing$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch09-selectors$' --output-on-failure -V
 ```
 
-The fixture runs the unchanged `LineProtocol-Server` on loopback with a temporary
-configuration and bounded process lifetime. On fresh connections it sends
-`PING\nSTATUS\nBOGUS\n\nPING\r\n` at every possible two-piece split, including one
-coalesced send. Every case must yield exactly `PONG\nOK\nERR unknown command\nPONG\n`,
-then close after `QUIT`. A separate case sends only `PI`, checks a bounded quiet
-interval, and then supplies `NG\nSTATUS\n`; expect `PONG\nOK\n`. The PASS line reports
-the number of tested segmentations and the command/closure observations.
+This hardware-independent lab requires the installed RFCOMM/L2CAP legacy stream
+components and Bluetooth development support (BlueZ headers/libraries on Linux).
+It opens no radio socket. The public address classes initially expose an empty
+configured device string and zero selectors. The solution then sets one device
+address with RFCOMM channel 16 and L2CAP PSM `0x1001`, initializes both address
+objects, and checks that their getters retain those choices. Expect default-field
+output, two rendered addresses, and a PASS naming channel 16 and PSM 4097.
 
-Writes do not force receive-callback boundaries. The cases vary application writes
-and compare visible results; they do not claim to exercise every possible network
-schedule. The quiet interval catches an early response in this run, while the code
-review explains the delimiter invariant. The empty line produces no response;
-CRLF removes the trailing carriage return before command dispatch. The example
-models command framing, not MiniGateway CSV validation or accepted state.
+An explicit all-zero device address denotes a wildcard; it is not the initial
+configured string returned by `getBtAddress()`. Nor is either form a discovered
+remote service. The assertions test public field behavior and representation;
+they do not establish controller availability, pairing, binding or delivery.
 
-## 4. Lab (O2)
+### Optional equipped extension: physical RFCOMM exchange
+
+This additional observation requires two Linux hosts with compatible enabled
+Bluetooth Classic controllers, radio range, appropriate permissions, matching
+service policy, and any required pairing/authorization. Follow the chapter's
+controller/preparation sequence first. Do not run against an unrelated device.
+The `endpoint-rc` and `endpoint-l2` drivers are built by `ch09-lab`; each reuses
+`family-server.cpp` and the canonical EchoPair context. The commands below exercise
+RFCOMM only; they do not certify L2CAP.
+
+On the server host, choose an available channel (16 below) and bind the intended
+adapter address. Use a private configuration directory for this run:
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch09-limits$' --output-on-failure -V
+lab_config=$(mktemp -d)
+XDG_CONFIG_HOME="$lab_config" build/labs/companion/exercises/ch09/endpoint-rc \
+  endpoint local --host="$LOCAL_BT_ADDRESS" --channel=16
+rm -r "$lab_config"
 ```
 
-Expect unknown-command replies for 4096 `x` bytes plus newline, and for 4095 `x`
-bytes plus CRLF. Both connections must still answer a later `PING`. For an overlong
-case, send 4096 non-delimiter bytes, observe a quiet interval, then send the 4097th
-byte either alone or with a newline. The runnable server queues `ERR line too long`
-and immediately closes before interpreting that command. Immediate closure need
-not flush queued output: require closure, allowing only a prefix of that diagnostic
-(including no bytes), never an unknown-command response. The abridged printed
-context closes without that diagnostic; both preserve the same admission boundary.
+Set `LOCAL_BT_ADDRESS` to that host's controller address before running. Wait for
+`BOUND`, then from the prepared peer host set `PEER_BT_ADDRESS` to the server's
+controller address and run:
 
-The limit counts bytes preceding newline, including an optional carriage return.
-Checking only the unfinished suffix would wrongly admit an overlong complete line;
-checking the delimiter position protects both forms. Expect a PASS naming the
-4096/4097 boundary. These tests cover framing length, not output-queue saturation
-or a deadline policy; those remain separate observations.
+```sh
+python3 - "$PEER_BT_ADDRESS" <<'PY'
+import socket, sys
+payload = b'900,23.5\n'
+with socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM) as peer:
+    peer.settimeout(10)
+    peer.connect((sys.argv[1], 16))
+    peer.sendall(payload)
+    reply = b''
+    while len(reply) < len(payload):
+        part = peer.recv(len(payload) - len(reply))
+        if not part:
+            raise RuntimeError('EOF before complete echo')
+        reply += part
+    assert reply == payload
+    print('PASS: physical RFCOMM exact byte exchange')
+PY
+```
 
-## 5. Design (O1, O3)
+Stop the server with Ctrl-C after the exchange. Expected evidence is `BOUND`, an
+actual connection identity, and an exact reply, not merely a “paired” indication.
+The server driver compiles in ordinary CI, but this physical observation requires
+an equipped run. If hardware is unavailable, complete the selector lab and local
+checkpoint; explicitly leave radio delivery unverified. The lab sends no model
+acceptance command and implements no measurement parser.
 
-The context owns its unfinished record, parser phase and completed-command count.
-It can copy an immutable parsing limit at construction. One application model owns
-accepted measurements, reached through an explicit dependency supplied by the
-factory. A completed line still requires parsing and validation before acceptance;
-producer sequence numbers do not become the accepted model's sequence owner.
+## 4. Lab (O3): Part III checkpoint
 
-Define a command deadline separately from inactivity and a bounded response to
-output admission failure. Connection queues remain in the framework. Teardown
-releases parser state and any subscriptions before captured application state dies.
-A model reference is valid only while the application-owned model outlives every
-context and observer using it. The lab intentionally stops before implementing
-this later measurement adapter.
+```sh
+ctest --test-dir build/labs -R '^exercise-ch09-part-checkpoint$' --output-on-failure -V
+```
+
+The same bounded fixture runs the canonical byte protocol first over IPv4 loopback
+and then through a private Unix path. It sends identical measurement-shaped bytes,
+including invalid binary input, and requires an exact reply in both cases. Actual
+producer/service identities must agree with the server's observations in opposite
+directions. On Unix, the producer removes its own path, the server removes its
+service path during shutdown, and an unrelated file survives. These checks occur
+before the temporary directory is removed. Expect one PASS per carrier.
+
+A local helper with controlled directory access may favor a Unix path; existing
+network tools or a future remote producer may favor IP. Name the corresponding
+exposure, identity, namespace, and cleanup obligations. Echoing sequence 900 does
+not assign accepted sequence 1: transport still precedes framing, validation, and
+the shared model's acceptance. This checkpoint makes no Bluetooth-delivery claim.
+
+## 5. Design (O2, O3)
+
+A BLE advertisement does not establish an RFCOMM or L2CAP stream service of the
+kind used here. Obtain the sensor's actual service/protocol description and a
+compatible supported input adapter before choosing a transport. The local helper
+is already a pathname-stream candidate, but still needs endpoint access policy,
+framing and validation. Translate valid records into the same shared model rather
+than treating each carrier as another owner of accepted state.
+
+Keep device preparation, byte delivery, protocol decoding, and domain acceptance
+as separate observations. If an adapter is needed, its design must define data
+conversion and failure behavior; changing a namespace is insufficient. No radio
+availability can be inferred from the local checkpoint.

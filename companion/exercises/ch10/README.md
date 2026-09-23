@@ -2,72 +2,78 @@
 
 ## 1. Review (O1)
 
-The factory returns a newly created endpoint for the supplied connection. The
-connection attaches and manages it; the factory does not retain a second owner or
-manually delete it later. A replacement context is another fresh endpoint, not a
-singleton shared by multiple peers. Detachment ends that context's responsibility,
-possibly while the underlying connection continues with a different protocol.
-
-Returning `nullptr` gives the connection no protocol endpoint and closes that
-connection. There is no ready-context callback to run for a nonexistent context.
-An established socket alone therefore does not guarantee protocol readiness.
+The two bytes have moved from the connection into the context's receive buffer.
+The returned count accounts for that consumption, although the newline needed to
+complete `PING` has not arrived. A completed-command counter is a separate protocol
+observation. Queuing a reply would still not establish peer receipt or application
+processing. Context attachment and detachment define the parser's lifetime; they
+need not coincide with the entire connection lifetime during a context switch.
 
 ## 2. Review (O3)
 
-A copied immutable parser limit isolates each context from later changes to the
-original setting. A reference to one application model avoids duplicate accepted
-state, but the model must outlive all users, including callbacks and observers.
-Shared ownership can permit independent retention of a service; avoid cycles and
-release subscriptions before their captured state expires. Reference counting does
-not make concurrent mutation safe. Construction chooses these relationships; the
-factory should not become an unrestricted route to unrelated application services.
+An inactivity timeout may keep being refreshed without a command ever completing.
+A command deadline needs a policy tied to protocol progress. Queue admission failure
+requires an explicit choice: defer within a bounded application policy, reject the
+operation, or close according to protocol semantics. Do not announce success for
+bytes that were not admitted or defeat the limit with an unbounded shadow queue.
+Shared connection machinery still owns transport buffering and descriptor lifetime.
 
-## 3. Lab (O2)
+## 3. Lab (O1, O2)
 
-Use [the common configuration](../README.md):
+Use [the common configuration](../README.md), then:
 
 ```sh
 cmake --build build/labs --target ch10-lab
-ctest --test-dir build/labs -R '^exercise-ch10-isolation$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch10-framing$' --output-on-failure -V
 ```
 
-This runs the canonical line server and factory. Two peers first receive `READY`.
-One sends `PI` without a delimiter, while the other sends `STATUS` and receives
-`OK`. Close the partial peer and open a replacement through the same listener.
-Its `NG` must produce `ERR unknown command`, not complete the old peer's `PING`.
-Then both the replacement and surviving peer answer `PING` normally. Expect a PASS
-for independent pending buffers, fresh replacement state and surviving progress.
+The fixture runs the unchanged `LineProtocol-Server` on loopback with a temporary
+configuration and bounded process lifetime. On fresh connections it sends
+`PING\nSTATUS\nBOGUS\n\nPING\r\n` at every possible two-piece split, including one
+coalesced send. Every case must yield exactly `PONG\nOK\nERR unknown command\nPONG\n`,
+then close after `QUIT`. A separate case sends only `PI`, checks a bounded quiet
+interval, and then supplies `NG\nSTATUS\n`; expect `PONG\nOK\n`. The PASS line reports
+the number of tested segmentations and the command/closure observations.
 
-This observes context-local parsing through peer behavior. It does not count
-allocations or inspect object addresses. It also does not demonstrate persistence
-of a shared model: this line protocol has no such model. The earlier model checkpoint
-supplies the separate accepted-state observation.
+Writes do not force receive-callback boundaries. The cases vary application writes
+and compare visible results; they do not claim to exercise every possible network
+schedule. The quiet interval catches an early response in this run, while the code
+review explains the delimiter invariant. The empty line produces no response;
+CRLF removes the trailing carriage return before command dispatch. The example
+models command framing, not MiniGateway CSV validation or accepted state.
 
-## 4. Lab (O1)
+## 4. Lab (O2)
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch10-refusal$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch10-limits$' --output-on-failure -V
 ```
 
-`refusal.cpp` is a test-only construction policy: refuse the first creation by
-returning `nullptr`, then delegate to the unchanged canonical factory. It neither
-parses bytes nor deletes the supplied connection. The first peer must see closure
-without `READY`; the second must see `READY` and a `PONG` reply. Expect the PASS
-line distinguishing refusal from later successful creation. A parser rejection
-would require a created, attached context to interpret input; this failure precedes
-that stage. The procedure uses the common bounded process/configuration harness.
+Expect unknown-command replies for 4096 `x` bytes plus newline, and for 4095 `x`
+bytes plus CRLF. Both connections must still answer a later `PING`. For an overlong
+case, send 4096 non-delimiter bytes, observe a quiet interval, then send the 4097th
+byte either alone or with a newline. The runnable server queues `ERR line too long`
+and immediately closes before interpreting that command. Immediate closure need
+not flush queued output: require closure, allowing only a prefix of that diagnostic
+(including no bytes), never an unknown-command response. The abridged printed
+context closes without that diagnostic; both preserve the same admission boundary.
+
+The limit counts bytes preceding newline, including an optional carriage return.
+Checking only the unfinished suffix would wrongly admit an overlong complete line;
+checking the delimiter position protects both forms. Expect a PASS naming the
+4096/4097 boundary. These tests cover framing length, not output-queue saturation
+or a deadline policy; those remain separate observations.
 
 ## 5. Design (O1, O3)
 
-Give each role a factory configured with its own immutable parser limit and an
-explicit reference to the same application-owned measurement model. Each context
-gets a fresh parser/buffer and a copied limit; all valid inputs reach the one model.
-Place the model in a scope enclosing runtime execution and shut down contexts and
-subscriptions before destroying it. Shared service ownership is an alternative only
-if independent retention is needed, with cycles and thread access addressed.
+The context owns its unfinished record, parser phase and completed-command count.
+It can copy an immutable parsing limit at construction. One application model owns
+accepted measurements, reached through an explicit dependency supplied by the
+factory. A completed line still requires parsing and validation before acceptance;
+producer sequence numbers do not become the accepted model's sequence owner.
 
-A factory can select a role or context type from stable configuration. Authentication
-messages and their state transitions belong in the context, using a deliberately
-supplied authentication service if needed. Retry/reconnect policy remains with the
-role/flow machinery. None of these responsibilities requires a factory to become
-a protocol endpoint or global service locator.
+Define a command deadline separately from inactivity and a bounded response to
+output admission failure. Connection queues remain in the framework. Teardown
+releases parser state and any subscriptions before captured application state dies.
+A model reference is valid only while the application-owned model outlives every
+context and observer using it. The lab intentionally stops before implementing
+this later measurement adapter.

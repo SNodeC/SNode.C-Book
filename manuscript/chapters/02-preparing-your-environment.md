@@ -242,7 +242,7 @@ The first chapters do not require many CMake options.
 
 Build selection and runtime diagnostic policy are different choices. The build selects applications, tests, and optional instrumentation. A normal SNode.C application selects its semantic logging policy through the root configuration, for example with `--log-level=5`.
 
-Keep useful lifecycle output enabled while working through the first examples. Chapter 13 explains the semantic logging API and its scoped thresholds; raising diagnostic detail does not require rebuilding the framework with an old macro-logging switch.
+Keep useful lifecycle output enabled while working through the first examples. Chapter 14 explains the semantic logging API and its scoped thresholds; raising diagnostic detail does not require rebuilding the framework with an old macro-logging switch.
 
 ::: {.snodec-warning title="Early diagnostic warning"}
 Do not make the first examples silent before you understand what they are doing.
@@ -271,7 +271,7 @@ cmake --build snode.c-tests --parallel 8
 ctest --test-dir snode.c-tests --output-on-failure
 ```
 
-Keep an instrumented build in a separate directory. Turning on AddressSanitizer is a compiler/linker choice, not a runtime logging level. Chapter 27 explains the test categories and how to interpret passes, failures, and skipped tests.
+Keep an instrumented build in a separate directory. Turning on AddressSanitizer is a compiler/linker choice, not a runtime logging level. Chapter 29 explains the test categories and how to interpret passes, failures, and skipped tests.
 
 The logger backend is fetched as an implementation dependency during configuration. An offline build therefore needs the relevant dependency sources or CMake fetch cache already available. Application code still includes `<Log.h>` rather than depending directly on the backend's headers.
 
@@ -324,7 +324,7 @@ The first time you run such an example, pay attention to the output. You are not
 
 Use the first run to distinguish three observations: the listener reports readiness, the client establishes a connection, and the contexts exchange bytes. A build success proves none of those runtime facts. If only the first observation appears, inspect the client's destination and diagnostics before changing the echo context.
 
-Keep `--log-level=5` for the short teaching run so payload diagnostics are visible, then stop the pair. Later, Chapter 13 separates framework and application scopes so diagnostic volume can be reduced deliberately. The useful habit is to retain evidence of the boundary under investigation, rather than treating either silence or maximum verbosity as a permanent policy.
+Keep `--log-level=5` for the short teaching run so payload diagnostics are visible, then stop the pair. Later, Chapter 14 separates framework and application scopes so diagnostic volume can be reduced deliberately. The useful habit is to retain evidence of the boundary under investigation, rather than treating either silence or maximum verbosity as a permanent policy.
 
 ### Build against the installed public components
 

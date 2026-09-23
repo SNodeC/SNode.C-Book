@@ -1,6 +1,6 @@
 # HttpUpgrade-Client
 
-Compact client-side HTTP upgrade example used by Chapter 16.
+Compact client-side HTTP upgrade example used by Chapter 17.
 
 The client prepares an HTTP request, names the requested upgrade protocol as
 `websocket`, and installs the WebSocket client upgrade factory through the linked

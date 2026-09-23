@@ -1,86 +1,83 @@
 # Chapter 15 — solutions and discussion
 
-## 1. Review (O1, O2)
+## 1. Review (O1)
 
-A refused initial connection is a failed activation; retry may schedule another
-attempt within that activation flow. Loss after context attachment ends an
-established peer episode; enabled client reconnect can initiate a new connection.
-An activation status alone is insufficient evidence of protocol readiness, especially
-with TLS. Observe context attachment and the conversation too. `DISABLED` records
-intentional non-participation. `ERROR | NO_RETRY` still reports an error, with a
-separate indication that this path will not retry. Terminating one activation's
-recovery does not close an already established connection or stop sibling flows.
+The wrapper's include, alias and linked component select TLS stream handling.
+The registered instance, context factory and EchoPair byte-reflection context can
+remain unchanged. The carrier still determines the endpoint and reachability;
+TLS adds secure setup, trust/name policy, shutdown and diagnostics. A protocol
+that interprets certificates or requires mutual authentication has additional
+application policy, so unchanged context code is a conditional result.
 
-## 2. Review (O1, O3)
+## 2. Review (O2, O3)
 
-Inactivity measures absence of input; repeated partial commands are activity.
-An absolute command deadline measures time to semantic completion and must not
-restart merely because another fragment arrives. The line protocol's byte limit
-bounds stored input but is not that deadline. Likewise, a successful queue admission
-means local ownership of bytes, not remote execution. Backpressure, timeout,
-transport failure and protocol rejection should remain distinguishable. A replay
-after uncertain delivery can duplicate an operation even when the new stream works.
+A certificate can chain to a trusted authority yet name another service. Configure
+trust and the expected name separately. SNI selects a server identity; sending it
+does not itself require verification of that identity. In the early connection
+callback, the SSL context is available but the per-connection SSL object is not.
+Apply the expected-name policy before the handshake. Shared SSL-context policy
+must suit all connections using it; endpoints with different identity policies
+need appropriately separate configuration. Secure readiness follows successful
+setup and verification. It still does not authorize an application operation.
 
-## 3. Lab (O1, O2)
+## 3. Lab (O2, O3)
 
-Use [the common build configuration](../README.md), then:
+Use [the common build configuration](../README.md) with installed TLS components,
+Python TLS support and the OpenSSL command-line tool, then:
 
 ```sh
 cmake --build build/labs --target ch15-lab
-ctest --test-dir build/labs -R '^exercise-ch15-bounded-retry$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch15-trust-identity$' --output-on-failure -V
 ```
 
-The public `recovery.py` solution reserves a loopback endpoint by binding without
-listening, then runs canonical EchoPair's client there. Retry is enabled with
-`--retry-tries=1 --retry-timeout=.2 --retry-base=1 --retry-jitter=0`; reconnect is
-disabled. Expect two application error records, no `Echo context attached` record,
-and natural successful process exit after the recovery budget is exhausted. One
-retry is additional to the initial attempt. A process exit code describes the
-program's completion, not success of either connection attempt; the error records
-supply those outcomes. The socket reservation prevents another listener from
-silently turning this experiment into a success case.
+The solution compiles `tls-runtime.cpp` and runs `run-tls.py` through `tls.py`,
+all in this companion directory; the verification policy has one implementation.
+The fixture creates three temporary self-signed certificate identities, supplies
+an explicit trust file and uses an independent Python TLS server. Expect:
 
-## 4. Lab (O1, O2, O3): Part VI checkpoint
+| Peer certificate | Explicit trust | Expected name | Secure readiness |
+| --- | --- | --- | --- |
+| sensor.example | sensor.example | sensor.example | yes |
+| wrong.example | wrong.example | sensor.example | no |
+| sensor.example | unrelated.example | sensor.example | no |
+
+Each case reports `early_ssl_null=1`; readiness is 1 only in the first case. The
+second case isolates a wrong expected name despite trust, while the third isolates
+missing trust despite a matching name. These are local identity observations, not
+a production certificate provisioning or authorization procedure. Keys and isolated
+configuration are removed with the temporary directory. The test has a 60-second
+outer limit and bounded subprocess/socket waits.
+
+## 4. Lab (O1, O3)
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch15-part-checkpoint$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch15-secure-echo$' --output-on-failure -V
 ```
 
-First, the solution runs the same TLS trust/name fixture as the previous chapter:
-trusted/matching succeeds, trusted/wrong-name fails, untrusted/matching fails.
-Next, a controlled independent TCP peer tests recovery using unchanged EchoPair.
-These are separate observations; the recovery half uses the legacy stream wrapper
-and does not claim to repeat the complete TLS lifecycle during reconnect.
+CMake derives `tls-main.cpp` from canonical EchoPair by changing only the server
+include and namespace from legacy to TLS. It links the unchanged EchoPair context
+and the TLS component. Inspect that generated file under the chapter's build
+directory to compare the wrapper selection; there is no second echo algorithm.
 
-The peer initially reserves its port without listening. The client must report a
-failed attempt before any context attachment. The peer then listens; the first
-connection must deliver EchoPair's greeting. Closing that peer and listener causes
-a subsequent failed activation. After the listener restarts, expect another greeting,
-a second distinct connection identifier and a byte-for-byte `recovered` response.
-The fixture prints the observed error, attachment and detachment records. Instance
-identity persists; peer-episode identity changes. Bounded waits and a finite retry
-budget prevent an unavailable peer from leaving an unbounded test.
+The public Python solution creates a temporary `sensor.example` certificate and
+key, supplies them through the server's TLS configuration and trusts that
+certificate in an independent client. Expect the payload `part-vi\x00secure-echo\xff`
+to return byte for byte. The client's `unwrap()` must complete, observing the
+reciprocal TLS close-notify rather than treating TCP EOF as a clean TLS shutdown.
+This observes one cooperative shutdown; it does not exercise a stalled peer,
+forced termination or every concurrent shutdown path. Temporary keys stay local.
 
-Reconnect is enabled at a short delay; retry handles failed attempts while the
-listener is unavailable. The experiment distinguishes these by whether an
-established connection preceded the failure, not by guessing from elapsed time.
-The restored echo shows the new stream works; it does not establish delivery of
-any request sent on the old stream. No automatic application replay is implemented
-or claimed. Carry the same distinction into MiniGateway's uplink diagnostics.
+## 5. Design (O1, O2, O3)
 
-## 5. Design (O2, O3)
+With service TLS, give the service certificate/key ownership and an explicit
+expected-peer policy where it acts as a client. With proxy termination, decide
+whether the proxy-to-service hop is trusted or separately secured, and how any
+forwarded identity is authenticated. Never treat a user-supplied identity header as
+a verified certificate identity. Include renewal, key access, handshake and shutdown
+timeouts, and logs that distinguish the failed boundary without exposing secrets.
 
-Choose a finite retry budget for a one-shot operation, or explain why an always-on
-uplink should continue under a capped, jittered delay with observable failure.
-Jitter reduces synchronized attempts; it does not change the error's meaning.
-State whether fatal conditions are eligible and expose intentional disablement.
-Bound local queues and define refusal behavior; accepted bytes still need whatever
-acknowledgment the application requires. Use an absolute deadline for a complete
-command if steady incomplete traffic must not keep it alive indefinitely.
-
-For a state-changing command, choose no automatic replay after uncertain delivery,
-or use a stable operation identifier with a receiver-side deduplication contract.
-An idempotent operation can permit retry, but only if repeating it has the intended
-semantics. Define the identifier's lifetime, acknowledgment and retention policy;
-reconnect and a new context alone cannot supply them. Test the policy separately
-from the local recovery experiment above.
+Both choices can be reasonable: service TLS keeps identity at the endpoint;
+a proxy can centralize certificate operations but adds a trusted intermediary.
+Map verified identity to application permissions separately. A Unix pathname's
+access policy or Bluetooth pairing can restrict reachability without replacing
+these identity and authorization decisions.

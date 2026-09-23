@@ -6,9 +6,9 @@ set(SAMPLE_INTRO "${CMAKE_CURRENT_SOURCE_DIR}/sample-chapters.md")
 set(PROPOSAL_SAMPLE_CHAPTERS
     "${MANUSCRIPT_DIR}/chapters/01-why-snodec-exists.md"
     "${MANUSCRIPT_DIR}/chapters/03-your-first-working-program-the-echo-pair.md"
-    "${MANUSCRIPT_DIR}/chapters/18-server-sent-events-and-real-time-http.md"
-    "${MANUSCRIPT_DIR}/chapters/28-building-minigateway.md"
-    "${MANUSCRIPT_DIR}/chapters/30-architectural-judgment-choosing-the-right-layer-and-boundary.md")
+    "${MANUSCRIPT_DIR}/chapters/19-server-sent-events-and-real-time-http.md"
+    "${MANUSCRIPT_DIR}/chapters/30-building-minigateway.md"
+    "${MANUSCRIPT_DIR}/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md")
 
 snodec_add_pandoc_pdf_target_with_division(
   proposal

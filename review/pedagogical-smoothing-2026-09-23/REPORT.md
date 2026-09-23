@@ -49,8 +49,9 @@ No fetch, build or edit occurs in the author's framework tree.
 | R2 R3 claim review | `cfd65ab` | [R2-claim-review.md](R2-claim-review.md); only manuscript Ch5:89 changed |
 | R2 evidence | `2be416b` | [R2-build/results.json](R2-build/results.json), [R2-entry-results.json](R2-entry-results.json) |
 | P0b-R2-resume | `77226ab` | All 13 groups pass, including 62/62 labs; P0b-R2-resume-results.json |
-| P1 | this vocabulary gate commit | Snapshot reread notes in [P1-context-review-notes.md](P1-context-review-notes.md) |
-| P2–P7 | not started | Entry gate must pass first |
+| P1 | `c603b8f` | Snapshot reread notes in [P1-context-review-notes.md](P1-context-review-notes.md) |
+| P2 | this mechanical gate commit | 32 chapters + A; all 62 labs pass; P2-registry-review.md |
+| P3–P7 | pending | Teaching revisions follow the passing P2 gate |
 
 Static entry checks pass: chapter references, source alignment (zero errors,
 31 chapter/appendix records, 37 complete listings), source hygiene, metrics,

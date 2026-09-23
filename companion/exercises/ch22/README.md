@@ -1,24 +1,23 @@
 # Chapter 22 — solutions and discussion
 
-## 1. Review (O1, O3)
+## 1. Review (O1)
 
-A boundary role names a system conversation: device exchange, integration,
-observation, local control or administration. A configured SNode.C instance supplies
-concrete runtime configuration for a communication role. The design labels do not
-force one class or one process each. Closely related roles can share one event loop
-and model; a blocking callback or process failure then affects them together.
-Separate processes allow independent permissions and restart, but add serialization,
-identity, ordering and unavailable-peer decisions.
+Message-data callbacks append bytes to `data`. At message end the adapter appends
+that collection to `buffer`, adds to `size`, clears `data` and schedules the receive
+event. `recv` copies at most the requested count, advances `cursor` and reduces
+`size`. The event invokes MQTT receive processing and reschedules while unread
+bytes remain; when exhausted it clears the buffer and resets the cursor. Callback
+segmentation must not change packet meaning. WebSocket message boundaries are not
+MQTT packet boundaries, and parsing remains the MQTT object's responsibility.
 
-## 2. Review (O1, O2)
+## 2. Review (O1, O3)
 
-One model accepts the measurement. MQTT and SSE project it for different consumers;
-neither becomes a competing owner of accepted state. HTTP success, an SSE sequence,
-storage completion and broker/subscriber acknowledgement describe different facts.
-If acceptance promises only memory state, storage failure can be reported alongside
-that accepted fact. If it promises durability, acceptance cannot be reported before
-the storage boundary completes. Merely adding a database protocol changes neither
-contract automatically.
+The HTTP upgrade selector resolves `websocket`; the WebSocket selector resolves
+`mqtt`; that factory creates an adapter and the application's MQTT role. Linking
+an adapter component supplies its code, but does not register an application-specific
+factory automatically. The concrete HTTP carrier, upgrade entry point and matching
+role registration must all exist. The generic adapter is shared by server/client
+aliases; MQTT sees the stable `MqttContext` surface behind either role.
 
 ## 3. Lab (O1, O2)
 
@@ -26,59 +25,48 @@ Use [the common lab configuration](../README.md), then:
 
 ```sh
 cmake --build build/labs --target ch22-lab
-ctest --test-dir build/labs -R '^exercise-ch22-unavailable-output$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch22-binary$' --output-on-failure -V
 ```
 
-This reuses the public MiniGateway outage solution. A reserved, non-listening local
-port refuses MQTT while HTTP remains reachable. Two POSTs must produce sequences
-1 and 2, with matching JSON in the response, `/status` and SSE stream. On process
-restart, sequence returns to zero. No broker is needed for this observation.
-The result is accepted in-memory state and live observation, not MQTT delivery or
-durability. The lab does not change the gateway or implement another state model.
+CMake derives an entry point from canonical `HttpUpgrade-Client`: request `mqtt`
+and retain an explicit linked MQTT factory. `factory.cpp` attaches the unchanged
+`SensorClient` to the installed `mqtt-client-websocket` adapter. It supplies no new
+MQTT parser or WebSocket adapter. The context owns the protocol role for this
+connection; session files are confined to a temporary working directory.
 
-## 4. Lab (O1, O2, O3): Part VIII checkpoint
+The bounded Python peer verifies the requested name, returns HTTP 101 with the
+matching accept key and selected `mqtt`, then decodes the client's masked binary
+CONNECT. It sends CONNACK split into a binary start frame and a continuation frame.
+Expect the role's command SUBSCRIBE and telemetry PUBLISH. Return SUBACK, then a
+binary command: the canonical client must log that exact command.
 
-**Equipped broker checkpoint using the disposable local fixture.** The preceding
-lab remains its no-broker alternative observation. Build with installed MQTT server
-support, then:
+This tests framing-to-MQTT receive scheduling through the installed adapter. The
+peer is deliberately a controlled protocol fixture, not a broker: successful
+subscription/publication exchanges here are not independent subscriber delivery.
+The local broker lab supplies that separate observation. TLS, all segmentation
+patterns, malformed-packet cases, overload and reconnect are not exercised here.
+
+## 4. Lab (O2, O3)
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch22-part-checkpoint$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch22-text$' --output-on-failure -V
 ```
 
-First the unchanged MQTT client role exchanges through the local broker with an
-independent subscriber. Require CONNACK, granted SUBACK, exact received telemetry
-and the return command, in that order of observations. The fixture then stops the
-broker and runs the separate gateway outage observation above. It does not claim
-that the gateway was connected to that earlier broker or that a live disconnect
-was tested. Compare evidence across the two experiments:
-
-| Boundary | Owner | Evidence | What remains unproved |
-| --- | --- | --- | --- |
-| native carrier | stream connection/context | accepted local peer and received CONNECT | MQTT session acceptance |
-| session | MQTT role and broker | successful CONNACK | granted subscription or delivery |
-| subscription | broker/session | SUBACK granting QoS 0 | application processing of future publications |
-| telemetry delivery | broker plus independent subscriber | exact topic and `23.5` payload | persistence or QoS 1/2 recovery |
-| command delivery | canonical MQTT client role | command topic/payload in callback log | actuator completion |
-| gateway acceptance | MeasurementModel | POST and `/status` agree on sequence/value | persistence or MQTT delivery |
-| observation | HTTP/SSE adapter | event matches accepted measurement | durable history or replay |
-| unavailable output | gateway MQTT role | refused endpoint while web observations pass | recovery/replay after reconnection |
-
-Use this map as the expected discussion answer; add actual ports and observed
-payloads from your run. The private port/session environment prevents overlap
-between fixtures. All processes and sockets have time bounds and cleanup.
+Repeat the successful HTTP upgrade and binary CONNECT observation, but send the
+same CONNACK bytes in a text message. Expect `Wrong Opcode: 1 (TEXT)` and close code
+1002. The peer returns the close frame to complete closing. MQTT packet bytes do
+not make the wrong WebSocket message type valid. The test checks the requested
+error closure; it does not infer every later parser action from that one result.
 
 ## 5. Design (O3)
 
-A field adapter may use Bluetooth or a custom stream while same-host control uses
-Unix sockets. MQTT can carry brokered telemetry; HTTP can manage the service; SSE
-can observe accepted state without making observation a control channel. Use a
-WebSocket path when bidirectional interaction or access constraints justify it.
+First separate lower connection/TLS readiness, HTTP 101 and selected subprotocol
+from MQTT acceptance. Inspect message type and frame validation, then buffer
+arrival, message end, scheduled receive and packet parsing. Finally examine the
+broker's MQTT acceptance policy and response. Record each observed milestone,
+rather than attributing a missing CONNACK to a generic connection failure.
 
-Separate an adapter process when permissions, blocking hardware access or restart
-policy warrant it. Define message identity and ordering at the new boundary.
-Configure and diagnose each role independently: a reconnecting broker client need
-not make a healthy local administration surface report failure. Conversely, a
-broken administration bind should fail visibly. During storage failure, report
-memory acceptance only if that is the contract; never label it durable success.
-Use distinct MQTT input/output topics or an explicit origin rule to avoid feedback.
+Keep keep-alive, WebSocket control/close and lower timeouts distinct. Test a valid
+binary packet before malformed input, and compare packet bytes across callback
+segmentation. A protocol-level failure should not prompt changes to unrelated
+routing or a second parser in the application.

@@ -12,21 +12,21 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-REVIEW = Path('review/proposal-readiness-2026-09-22')
+REVIEW = Path('review/pedagogical-smoothing-2026-09-23')
 REFERENCE = re.compile(
     r'\bChapters?\s+\d+(?:(?:\s*(?:--?|[–—]|through|to|,\s*(?:(?:and|then)\s+)?|and)\s*)\d+)*'
     r'|\bAppendix A|\b(?:[Tt]he )?section “[^”]+”|\b(?:[Tt]he )?source-reading introduction', re.I)
 
 
 def check(root=ROOT):
-    plan = json.loads((root / REVIEW / 'phase-5a-approved-structure.json').read_text())
-    register = json.loads((root / REVIEW / 'phase-5a-reference-register.json').read_text())
+    plan = json.loads((root / REVIEW / 'smoothing-structure.json').read_text())
+    register = json.loads((root / REVIEW / 'smoothing-reference-register.json').read_text())
     manifest = (root / 'manuscript/book-files.txt').read_text().splitlines()
     chapters = [p for p in manifest if re.match(r'manuscript/chapters/(?:\d\d-|appendix-)', p)]
     assert chapters == [r['path'] for r in plan['chapters']], 'Approved chapter order differs'
     assert len(manifest) == len(set(manifest)), 'Duplicate manuscript input'
-    assert sorted(n for row in plan['chapters'] for n in row['old']) == list(range(1, 39))
-    assert [r['new'] for r in plan['chapters']] == list(map(str, range(1, 31))) + ['A']
+    assert sorted(n for row in plan['chapters'] for n in row['old']) == sorted(list(map(str, range(1, 31))) + ['4', '24', 'A'])
+    assert [r['new'] for r in plan['chapters']] == list(map(str, range(1, 33))) + ['A']
     actual_chapters = {str(p.relative_to(root)) for p in (root / 'manuscript/chapters').glob('*.md')}
     assert actual_chapters == {p for p in manifest if '/chapters/' in p}, 'Unlisted or missing chapter'
     assert len([p for p in manifest if '/parts/' in p]) == 12, 'Eleven Parts plus epilogue opener required'
@@ -50,7 +50,7 @@ def check(root=ROOT):
         assert anchors[anchor] == [topic['path']], f'Missing/ambiguous topic: {anchor}'
         assert owners[topic['path']] == topic['chapter'], f'Topic in wrong chapter: {anchor}'
         approved = plan['old_to_new'][str(topic['old_chapter'])]
-        assert topic['chapter'] == approved or (anchor == 'reading-public-types-and-components' and topic['chapter'] == '4')
+        assert topic['chapter'] in approved
     paths = ['README.md', 'STRUCTURE.md'] + manifest
     paths += sorted(str(p.relative_to(root)) for p in (root / 'companion').rglob('*.md'))
     expected = defaultdict(list)
@@ -75,7 +75,7 @@ def check(root=ROOT):
             elif label.lower() == 'appendix a':
                 assert destinations == {'A'}, f'{where}: wrong appendix topic'
             elif 'source-reading introduction' in label.lower():
-                assert destinations == {'4'}, f'{where}: main-path orientation moved out of reach'
+                assert destinations == {'5'}, f'{where}: main-path orientation moved out of reach'
             else:
                 assert len(ref['targets']) == 1, f'{where}: ambiguous section target'
                 anchor = ref['targets'][0]
@@ -85,7 +85,7 @@ def check(root=ROOT):
     dispositions = register['migration_dispositions']
     assert Counter(r['id'] for r in dispositions) == Counter(f'R{i:03}' for i in range(1, 375))
     assert all(r['evidence'] for r in dispositions)
-    print(f'Chapter references passed: 30 chapters + Appendix A, {len(plan["topic_anchors"])} stable topics, '
+    print(f'Chapter references passed: 32 chapters + Appendix A, {len(plan["topic_anchors"])} stable topics, '
           f'{checked} current references, 374 old-reference dispositions.')
     return checked
 

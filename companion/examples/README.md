@@ -8,7 +8,7 @@ Use the exact 2.0.0 source snapshot in `source-baseline/SOURCE-VERSION.md`.
 The historical 1.x author-verification notes are not current-snapshot test results.
 
 `EchoPair` supplies the complete Chapter 3 files. `SemanticLogging` supplies the
-complete Chapter 13 public-API example. The selected book smoke tests check both
+complete Chapter 14 public-API example. The selected book smoke tests check both
 with deterministic observations; inspect the specific CI run for actual results.
 
 ## Compact examples
@@ -57,7 +57,7 @@ matching server/client subprotocol modules. Deploy both subprotocol modules befo
 running `HttpUpgrade-Server` and `HttpUpgrade-Client` as a complete echo check.
 
 The line-protocol examples are the complete runnable server/client version of
-the Chapter 9 worked `SocketContext`. Start `line-protocol-server`, then run
+the Chapter 10 worked `SocketContext`. Start `line-protocol-server`, then run
 `line-protocol-client`. The client waits for `READY`, sends `PING`, `STATUS`,
 an intentionally unknown command, and then `QUIT`.
 
@@ -75,7 +75,7 @@ companion/examples/MiniGateway
 companion/examples/MiniGateway-Extended
 ```
 
-These are the source-of-truth examples for Chapters 28 and 29. They are included
+These are the source-of-truth examples for Chapters 30 and 31. They are included
 in the aggregate build as `minigateway` and `minigateway-extended`; their
 individual deployment targets are `deploy-minigateway` and
 `deploy-minigateway-extended`.

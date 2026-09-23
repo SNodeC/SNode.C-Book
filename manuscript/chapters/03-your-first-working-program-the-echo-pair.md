@@ -25,7 +25,7 @@ The framework echo application under `src/apps/echo` combines one shared model w
 Here `legacy` has the same meaning introduced in Chapter 2: it denotes the non-TLS stream connection variant. It does not mean that the component is obsolete.
 
 
-The framework also provides `examples/echo`, an installed-consumer project with configuration discovery and deterministic external-peer tests. Return to that broader example in Chapter 27. Here the host and port remain visible in the entry points.
+The framework also provides `examples/echo`, an installed-consumer project with configuration discovery and deterministic external-peer tests. Return to that broader example in Chapter 29. Here the host and port remain visible in the entry points.
 
 
 The teaching version consists of four source files:
@@ -227,7 +227,7 @@ core::socket::stream::SocketContext* EchoClientSocketContextFactory::create(
 
 `onConnected()` marks attachment of this protocol context to the ready connection. Only the client sends an initial message. If the server also sent immediately, the example would no longer show the client-initiated communication pattern clearly.
 
-`onReceivedFromPeer()` reads available bytes into a local buffer. If bytes were read, the context can log them at debug level and sends the same bytes back. The semantic log scope belongs to the context; Chapter 13 explains its identity and filtering. The return value tells the framework how many bytes were consumed.
+`onReceivedFromPeer()` reads available bytes into a local buffer. If bytes were read, the context can log them at debug level and sends the same bytes back. The semantic log scope belongs to the context; Chapter 14 explains its identity and filtering. The return value tells the framework how many bytes were consumed.
 
 The factories allocate the concrete context. The framework owns the surrounding connection machinery; the user supplies the protocol object that belongs to a connection.
 
@@ -309,7 +309,7 @@ The named server configuration already exists. `listen(...)` sets the shown defa
 :::
 
 
-The current `listen(...)` call also returns a flow handle. The echo server deliberately does not retain it: the runtime callbacks keep the listening operation alive. Ignoring that return value does not stop the server. A program that needs to stop one listening flow later can retain the handle; Chapters 7 and 15 explain that control without making the first example manage a lifecycle it does not need.
+The current `listen(...)` call also returns a flow handle. The echo server deliberately does not retain it: the runtime callbacks keep the listening operation alive. Ignoring that return value does not stop the server. A program that needs to stop one listening flow later can retain the handle; Chapters 8 and 16 explain that control without making the first example manage a lifecycle it does not need.
 
 
 \index{client application}

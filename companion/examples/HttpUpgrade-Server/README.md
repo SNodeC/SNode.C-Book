@@ -1,6 +1,6 @@
 # HttpUpgrade-Server
 
-Compact server-side HTTP upgrade example used by Chapter 16.
+Compact server-side HTTP upgrade example used by Chapter 17.
 
 It shows the HTTP/Express boundary only: a route receives an HTTP request and calls
 `res->upgrade(...)`. The example links the WebSocket server upgrade factory at

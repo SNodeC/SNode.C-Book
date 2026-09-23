@@ -83,8 +83,8 @@ cmake --build build/labs --target appendix-a-lab
 ctest --test-dir build/labs -R '^exercise-appendix-a-carrier-extension$' --output-on-failure -V
 ```
 
-This reuses the existing carrier experiment in `../ch11/CMakeLists.txt` and the
-independent peer driver in `../ch09/protocol.py`. CMake applies the worked edits to
+This reuses the existing carrier experiment in `../ch12/CMakeLists.txt` and the
+independent peer driver in `../ch10/protocol.py`. CMake applies the worked edits to
 the canonical line-server entry point in the build directory:
 
 | Selection | IPv4 consumer | Unix-domain extension |
@@ -94,7 +94,7 @@ the canonical line-server entry point in the build directory:
 | Default listen argument | Port 8090 | A Unix socket pathname |
 | Exported component | `snodec::net-in-stream-legacy` | `snodec::net-un-stream-legacy` |
 
-Inspect the generated `unix-main.cpp` under `build/labs/companion/exercises/ch11/`.
+Inspect the generated `unix-main.cpp` under `build/labs/companion/exercises/ch12/`.
 Both targets compile the same `LineCommandServerContext.cpp` and include the same
 factory; there is no copied parser or new framework layer. The canonical entry
 point is a CMake reconfiguration dependency. The runtime fixture overrides the

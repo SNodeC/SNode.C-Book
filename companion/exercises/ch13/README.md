@@ -2,23 +2,26 @@
 
 ## 1. Review (O1)
 
-An accepted application record belongs to application origin and the context (or
-other protocol owner) boundary. A transport attachment belongs to framework origin
-and the connection boundary. Both can carry the actual instance and connection
-identifier; a context need not have a separate server/client role field. Do not
-invent an identifier before a peer exists. A logger owns its identity strings,
-but deriving identity from a live connection does not extend that connection's
-ownership. HTTP context replacement can keep the connection identifier while
-changing the protocol responsibility.
+An accepted peer's address is an observation on that connection, not an option
+for choosing the listener's peer. The listener binds its `local` endpoint.
+For the schematic name `echo`, the corresponding views are
+`echoServer.getConfig()->Local::setPort(8080)`, `echoserver echo local --port=8080`,
+and `echo.local.port = 8080`. The complete EchoPair uses the instance name
+`echoserver`, so its actual key is `echoserver.local.port`.
+A client separately exposes `remote`; writing that key into a server's file
+cannot create a client role.
 
-## 2. Review (O2, O3)
+## 2. Review (O2)
 
-The component's `Debug` threshold applies unless a matching instance override is
-more specific. These are ordered choices, not successive minimum filters.
-Disabling trace skips logger formatting, but C++ still evaluates call arguments.
-Guard expensive diagnostic-only work with `enabled(...)`; keep required state
-transitions outside that guard. Neither disabled logging nor semantic fields
-redact an emitted application message. Decide which content is safe separately.
+`true` establishes successful parsing and final validation. It does not restart a
+listener, reconnect peers, change a captured connection policy, or replace frozen
+bootstrap logging/daemonization. Reconfiguration must be deliberately called from
+the event-loop thread while running; a file edit alone does nothing. Original CLI
+values still override the file. `false` can mean the lifecycle forbids the call or
+that parsing/validation failed; changed values are not guaranteed to roll back.
+Plan how old activity ends and future activation consumes the new values. If an
+atomic deployment transition is required, validate replacement configuration and
+consider a controlled restart.
 
 ## 3. Lab (O1, O2)
 
@@ -26,62 +29,47 @@ Use [the common build configuration](../README.md), then:
 
 ```sh
 cmake --build build/labs --target ch13-lab
-ctest --test-dir build/labs -R '^exercise-ch13-records$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch13-precedence$' --output-on-failure -V
 ```
 
-The public `records.py` solution runs the canonical `semantic-logging` executable.
-Expect four JSON records with levels info, info, debug and warn. Each has application
-origin/boundary, component `gateway.measurements` and instance `measurement-input`.
-The debug record survives the global Info threshold because of the component
-override. The second record's event is `measurement.accepted`; the fourth carries
-an explicit error and states that no file operation occurred. No connection or role
-identity appears. Timestamps are intentionally not compared.
+The solution `configuration.py` runs the canonical `echoserver` in a temporary
+configuration home. It writes a file containing port 18091, then inspects source
+only, source plus file, and source plus file plus CLI port 18092. It distinguishes
+commented defaults from active assignments. Expect `[8080, 18091, 18092]`, status 2
+for each display action, and an unchanged file. No listener starts during these
+inspection actions. The source default is the actual canonical listen argument;
+no replacement program or duplicate configuration parser is introduced.
 
-This program demonstrates the standalone `configure(Settings)` path, not a running
-service's bootstrap or runtime reconfiguration. The same public observation is
-reused by the teaching smoke check so there is one authority for this contract.
+To repeat manually, use the three `--show-config` commands in the chapter with
+your built binary and a private file. Do not treat display status 2 as a bind
+failure or assume a one-run override writes the file. The fixture's inspection
+parser reads this one observed port key; it is not a general metadata consumer.
 
-## 4. Lab (O1, O2, O3): Part V checkpoint
+## 4. Lab (O1, O2)
 
 ```sh
-ctest --test-dir build/labs -R '^exercise-ch13-part-checkpoint$' --output-on-failure -V
+ctest --test-dir build/labs -R '^exercise-ch13-discovery$' --output-on-failure -V
 ```
 
-The shared configuration fixture repeats the source/file/CLI experiment, with a
-fresh unused loopback port as the CLI winner. It checks local help and rejection
-of 70000 before starting a listener. The private file remains at 18091.
+Follow `--help`, `echoserver --help`, and `echoserver local --help` on the actual
+binary. The fixture checks that they reveal the instance, local section, and
+`--port` respectively. Port 70000 must yield a validation error naming `--port`
+and the supported range ending at 65535, with no listening record. The error does
+not itself print the entire instance/section path: the invocation and local help
+identify that scope. This is invalid-value rejection before activation, not a
+claim about missing-value wording or a live failed bind.
 
-It then starts EchoPair twice on the selected loopback endpoint. Both runs exchange
-`part-v-checkpoint` unchanged. Global `--log-level=2 --log-format=json` suppresses
-normal records. Adding `--log-component-level=echo=info` and
-`--log-instance-level=echoserver=debug` exposes the application listening record
-with that port and an application-origin context debug record with actual instance
-and connection identity. The fixture checks those semantic facts and prints the
-observed records. It does not require incidental ordering, timestamps or a fixed
-connection identifier. The application `echo` logger has no instance field, which
-is why its component override and the context's instance override are both used.
+## 5. Design (O2, O3)
 
-The invalid-value diagnostic names `--port`; help and the command's `echoserver local`
-path locate its owning scope. An actual echo response establishes that the selected
-endpoint ran. Suppressed records alone would not establish inactivity. The fixtures
-use isolated configuration, bounded processes and loopback; no broker, database,
-TLS fixture or hardware is needed. This checkpoint verifies startup selection and
-logging attribution, not runtime reparse, reload rollback or live listener replacement.
-Carry this discipline into the named MiniGateway inputs and uplinks later.
+Construct two named endpoints such as `primary-uplink` and `backup-uplink` so each
+owns independent remote configuration. Two activation handles from one endpoint
+still share that endpoint's settings. Give the administrative listener a stable
+name and disable it in deployments that do not use it. Disabling at activation is
+different from closing established peers or terminating existing flows later.
 
-## 5. Design (O3)
-
-Record `publish.submitted` only after local admission, with a message that says it
-was queued. Record failure at the attempt or connection boundary that observed it,
-using an actual connection identifier only when available. Delivery needs its own
-protocol-level acknowledgment or application receipt; do not infer it from a send
-queue or transport connection. A retry can retain the instance name while changing
-the peer episode. HTTP upgrades similarly change context without requiring a new
-transport identity.
-
-Use component, instance, message size, correlation identifier and failure reason
-where safe. Avoid credentials and unnecessary payload content. Capture a supplied
-error immediately and preserve its category; protocol rejection need not have a
-system error. Keep a short history and the effective endpoint/retry/log policy
-rather than enabling an unbounded confidential dump. Logging must not change the
-protocol's acceptance or retry decisions.
+Choose which deployment changes can wait for future activations. For changes that
+must replace running listeners, stop/release the relevant activity explicitly and
+handle failure before advertising success. Retain old configuration and event
+history for diagnosis; a failed reparse is not atomic rollback. A validated restart
+may be simpler than promising seamless replacement. Renaming an instance also
+requires updating files, commands and operational procedures that address it.
