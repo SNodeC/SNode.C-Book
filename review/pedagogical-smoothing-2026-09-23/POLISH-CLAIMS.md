@@ -99,3 +99,26 @@ HTTP parsing and sockets. Composition and lifecycle declarations:
 `src/express/WebApp.h:58`, `src/express/WebAppT.h:62`;
 router controls: `src/express/Router.h`. No code listing changed.
 All 16 smoothing assertion groups pass, with every chapter floor preserved.
+
+## P7 — a different multi-protocol decision
+
+Ch23 now compares a remote-only broker with a local broker and a forwarding
+client for a field device whose WAN is intermittent. Requirement, options,
+decision, consequence and test are explicit. This is a proposed design exercise,
+not a claim that MiniGateway or an unchanged lab already supplies forwarding
+or durable buffering. The local link remains available in the scenario.
+
+The effective-QoS queue and reconnect statements are supported by
+`src/iot/mqtt/server/broker/Session.cpp:77`, `:94`, `:107`;
+`src/iot/mqtt/server/Mqtt.cpp:184`, `:195`, `:214`;
+`src/iot/mqtt/server/broker/Broker.cpp:176`. QoS 1 acknowledgement and possible
+retransmission use `src/iot/mqtt/Mqtt.cpp:200`, `:257`, `:333`, `:365`.
+The worked case separately exposes loss between local receipt and forwarding;
+it promises neither a durable archive nor an application result from PUBACK.
+
+Ch23/26 abstraction edits name the gateway process, operator, device, browser,
+broker, bridge or database while retaining the existing deployment tradeoffs.
+They add no framework API behavior. Headers, code, tables, immutable anchors
+and figure filenames are not prose sentences. Their spellings are excluded from
+sentence analysis; visible captions remain included. No abstract-noun sentence
+exception is needed. All 16 smoothing groups pass; total 110,762 tokens.

@@ -27,7 +27,7 @@ IoT architecture is not defined by sensors alone. Sensors, boards, radio modules
 
 Scientific and environmental data-collection systems are typical examples of this shape. Instruments or field nodes produce measurements, local services buffer or pre-process them, gateways forward them, MQTT may carry integration traffic, HTTP or SSE surfaces may expose observation and status, persistence stores long-running data, and a management HTTP instance may provide configuration or operational control. The domain may be biology, environmental monitoring, lab instrumentation, field sensing, or another measurement area; the architectural question remains how to keep the boundaries explicit.
 
-Figure \ref{fig:iot-boundary-constellation} shows an IoT system as a constellation of boundaries rather than as a single protocol chain. Field devices, browser/operator surfaces, persistent state, and external services all meet at the application or gateway process. The diagram frames boundary placement, not executable topology: one process may own several boundaries, and one boundary may be realized by more than one deployable part. The important design question is where each boundary belongs and which protocol surface is appropriate for that boundary.
+Figure \ref{fig:iot-boundary-constellation} shows an IoT system as a constellation of boundaries rather than as a single protocol chain. Field devices, browser/operator surfaces, persistent state, and external services all meet at the application or gateway process. The diagram locates exchanges without prescribing executable topology: a gateway process may talk to devices and browsers, while several cooperating programs may implement its connection to an external service. Decide which process receives each exchange and which protocol its device, browser or service peer can use.
 
 ![An IoT system with protocol and state boundaries around an application or gateway process. Bidirectional arrows denote possible exchanges across each boundary; they are not one sequential data path.](assets/figures/pdf/fig-08-iot-boundary-constellation.pdf){#fig:iot-boundary-constellation width=90% latex-placement="tbp"}
 
@@ -71,15 +71,19 @@ The administration role configures, controls, and inspects the system. It may in
 
 This role is often operator-facing. It should be explicit because administration errors can affect the whole system. A system that hides administration behind an accidental data path is harder to reason about and harder to secure operationally.
 
-### Worked change: separate the device input from its observers
+### Worked change: keep the broker near an intermittent device
 
 \index{IoT!worked protocol decision}
 
-Begin with one device that posts measurements to an HTTP handler. The handler parses the body, assigns a sequence, saves a latest-value variable and constructs the browser response. That arrangement can serve one producer, but adding an MQTT producer would tempt its callback to repeat the same state update. Two entry points would then decide ordering independently.
+**Requirement.** A field device must keep reporting to a nearby operator during a WAN outage. A remote subscriber also needs the measurements after connectivity returns. The device's local link is available throughout this scenario; process crashes and power loss require a separate storage decision.
 
-Keep the HTTP handler as an adapter and move the accepted-state decision into one model. The HTTP handler and MQTT subscriber each validate their own input before calling that model. The browser's status route and SSE response observe the model's accepted value; neither assigns another sequence. Now a broker outage can prevent MQTT input without making an HTTP-produced value cease to be the current accepted measurement.
+**Options.** A remote-only broker makes every delivery depend on the WAN. A local broker keeps local subscribers reachable, while a separate forwarding client carries selected topics to the remote broker. Neither placement alone supplies an application archive.
 
-The verdict follows from the actors' different conversations. HTTP serves requests, MQTT receives brokered publications, and the model orders accepted measurements. The consequence is a lifetime obligation: both adapters and every observer need access to the same valid model, with subscriptions removed before captured response state dies. Test one accepted value through each input and compare the observed order, then disconnect the MQTT path and verify the declared HTTP behavior. That establishes this design choice without claiming durable storage or automatic replay.
+**Decision.** Choose the local broker and QoS 1 for both the device publication and the forwarding client's subscription. Give that subscriber a stable identifier and a persistent session. Have the operator's HTTP handler report local receipt and remote receipt separately. This is a proposed deployment, not a change to the chapter's companion lab.
+
+**Consequence.** The local broker can queue effective QoS 1 publications while that subscriber is disconnected. PUBACK from the local broker confirms that MQTT hop; the remote subscriber must independently report receipt. Repeated delivery is possible, so the remote application needs duplicate-safe processing. The forwarding client must also define what happens if it receives locally but loses its remote connection before forwarding.
+
+**Test.** Disconnect the WAN, publish uniquely labelled samples and check the local operator view. Reconnect with the same session, compare exact remote payloads and exercise duplicates. Then interrupt forwarding after local receipt: use the result to decide whether that client needs durable buffering and an application acknowledgement.
 
 ### Choosing protocol families from boundary needs
 
@@ -199,11 +203,11 @@ Within one process, adapters can use the same model and one event-loop lifetime.
 
 \index{configuration!role map}
 
-In a multi-protocol system, configuration becomes a map of roles and boundaries. It can express which roles exist, which roles are enabled, which protocol family each role uses, which endpoints each role binds or connects to, which TLS material belongs to which role, which MQTT peers or brokers are used, which web interfaces are exposed, which retry or reconnect policies apply, and which local-control sockets exist.
+In a multi-protocol system, configuration becomes a map of roles and boundaries. For the operator, it identifies enabled device adapters and services, their protocols and listening or remote addresses, and the TLS material each uses. It also names the MQTT broker, exposed web interfaces, retry and reconnect settings, and local-control sockets.
 
 This connects directly to Chapter 13's named instances, role visibility, and structured configuration model. In this chapter, those ideas become configuration as a system boundary map.
 
-For each instance, name its boundary, protocol, endpoint, failure policy and observation surface. The configuration tells operators which system is actually running.
+For each instance, tell the operator which device or service it reaches, its protocol and address, how it recovers, and where to inspect its current state. The configuration tells operators which system is actually running.
 
 More boundaries mean more possible failure points. That makes observability part of the architecture. Chapter 14's diagnostic rule becomes more important here: visibility should preserve the boundary at which a fact belongs.
 
@@ -239,7 +243,7 @@ A single global choice between retrying forever and failing fast is too crude. C
 
 This connects to Chapter 16's vocabulary of timeout, retry, reconnect, disablement, shutdown, and failure state; this chapter applies that separation per boundary.
 
-A retry policy that is sensible for an MQTT integration client may be actively misleading for a local administration endpoint. The role that owns the boundary should also own its failure policy. Timeouts, retries, reconnects, disablement, shutdown, and degraded state should be chosen for the boundary, not imposed globally.
+A retry policy that is sensible for an MQTT integration client may be actively misleading for a local administration endpoint. The gateway process that connects to the broker should decide how its MQTT client recovers. Timeouts, retries, reconnects, disablement, shutdown, and degraded state should be chosen for the boundary, not imposed globally.
 
 A practical recipe for multi-protocol IoT design is:
 

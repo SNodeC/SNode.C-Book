@@ -42,7 +42,7 @@ A small monitoring system can be described by its consumers and state boundaries
 | `local-control` | operator tool on the same host |
 | `database-state` | persistence of accepted application state |
 
-These are role names, not necessarily executable names. Some roles may be routes inside one application. Some may be instances. Some may be service-level responsibilities. Some roles are nested inside others: an SSE route may belong to a web role, while still being useful as a named observation boundary.
+These are role names, not necessarily executable names. Some roles may be routes inside one application. Some may be instances. Some may be service-level responsibilities. A gateway process can also group related services: its HTTP handler may supply an SSE route that operators name separately when diagnosing dashboard updates.
 
 The role `database-state` is intentionally different from `admin-http` or `mqtt-ingest`. It is not the same kind of runtime object as a socket server or client handle. It names the persistence boundary that owns durable application state.
 
@@ -71,7 +71,7 @@ Read each row against the intended deployment. Independent restart is useful onl
 \index{network-facing boundary}
 \index{upgraded boundary}
 
-For each boundary, identify its consumers, reachability, security, state ownership, failure policy and independent observations.
+For each exchange, identify the device or process receiving it, who may connect, and how access is secured. Name the program holding the data, explain what it does on failure, and give the operator a separate way to check each result.
 
 Chapter 23 placed protocols at boundaries. At system scale, add ownership of the contract: which executable implements each side, who controls its configuration, and whether the two sides can be upgraded independently. A topic name or HTTP route may become a compatibility commitment once another deployed process depends on it.
 
@@ -358,7 +358,7 @@ Return to the accepted-state distinction with the equipped checkpoint in the pub
 2. **Review (O3).** Follow the worked publication trace. Name the owning process and what the publisher, each subscriber and each database observation establishes.
 3. **Lab (O1, O2).** Run the equipped Part IX checkpoint. Compare a committed measurement after database-client restart with the gateway’s in-memory restart; apply the outcome map to raw and projection writes.
 4. **Lab (O2, O3).** Run the local broker-mediated publication experiment. Attribute publisher submission, subscription acceptance and exact subscriber receipt to the responsible participant. This run requires no external broker or database.
-5. **Design (O1, O2, O3).** Make one destination unavailable in the publication trace. Specify process responsibilities, compatibility, origin/loop policy, state owners and the evidence required before reporting delivery or persistence.
+5. **Design (O1, O2, O3).** Make one destination unavailable in the publication trace. Specify what the broker, bridge and database each do, how their messages remain compatible and how the bridge prevents loops. Identify the stored data and the evidence required before reporting delivery or persistence.
 
 Public solutions and bounded lab commands: `companion/exercises/ch26/README.md`.
 :::
