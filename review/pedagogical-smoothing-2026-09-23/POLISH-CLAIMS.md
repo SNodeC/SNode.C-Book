@@ -62,3 +62,29 @@ precedence experiment in `companion/exercises/ch13/` supplies the same three
 values; it was inspected, not rerun. The C++ defaults, file/CLI precedence,
 inspection and write distinction are preserved rather than newly inferred.
 All 16 smoothing assertion groups pass; total 110,372 tokens.
+
+## P5 — MQTT fundamentals before the class inventory
+
+The new sequence depicts successful MQTT negotiation for **both** clients,
+subscription acceptance, then one QoS 0 publication through the broker. It does
+not depict an application acknowledgement. The TikZ figure built through the
+existing `figures` target and its raster preview was visually inspected: all
+three actors, eight arrows and packet labels are legible without overlap.
+
+| Changed statement | Frozen source evidence |
+|---|---|
+| MQTT 3.1.1 and optional private protocol-level bit | `src/iot/mqtt/packets/Connect.cpp:67`; `src/iot/mqtt/server/Mqtt.cpp:267`; the private extension is explicitly distinguished from standard negotiation |
+| CONNECT/CONNACK and subscription exchange | `src/iot/mqtt/client/Mqtt.cpp:223`; `src/iot/mqtt/server/Mqtt.cpp:170`; `src/iot/mqtt/server/broker/Broker.cpp:213` |
+| Concrete topic versus single/multi-level filter | `src/iot/mqtt/server/broker/SubscriptionTree.cpp:198`, `:220`, `:225`; `src/iot/mqtt/server/broker/RetainTree.cpp:200`, `:204` |
+| QoS 0/1/2 acknowledgements, duplicate suppression and QoS 2 release | `src/iot/mqtt/Mqtt.h:118`; `src/iot/mqtt/Mqtt.cpp:257`, `:306`, `:365`, `:379`, `:396`, `:427` |
+| Separate forwarded publication and effective QoS | `src/iot/mqtt/server/broker/Session.cpp:77`; `src/iot/mqtt/server/broker/Broker.cpp:213` |
+| Retained value, new subscription and deletion by empty payload | `src/iot/mqtt/server/broker/RetainTree.cpp:73`, `:135`; `src/iot/mqtt/server/broker/Broker.cpp:218` |
+| Periodic PINGREQ, PINGRESP, positive receive watchdog and packet restart | `src/iot/mqtt/client/Mqtt.cpp:236`; `src/iot/mqtt/server/Mqtt.cpp:388`; `src/iot/mqtt/Mqtt.cpp:176`, `:215` |
+| Clean versus persistent sessions and offline QoS 1/2 queue | `src/iot/mqtt/server/Mqtt.cpp:170`, `:214`; `src/iot/mqtt/server/broker/Session.cpp:94` |
+| Optional disk storage at construction/destruction, not per-message durability | `src/iot/mqtt/server/broker/Broker.cpp:60`, `:112`; no database-commit promise follows from packet acknowledgements |
+
+Protocol vocabulary was cross-checked against [OASIS MQTT 3.1.1](https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html),
+sections 3.1, 3.3–3.9, 3.12–3.13 and 4.7. The implementation-specific ping
+schedule and optional loop-prevention extension are named explicitly. This is
+source inspection, not an interoperability or conformance certification.
+All 16 smoothing groups pass; total 110,668 tokens, no cap waiver.

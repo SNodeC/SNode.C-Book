@@ -1,0 +1,26 @@
+\documentclass[tikz,border=0pt]{standalone}
+\input{snodec-figure-style.tex}
+\usetikzlibrary{arrows.meta}
+\begin{document}
+\begin{tikzpicture}[snodec diagram,
+  participant/.style={draw=snodecBlue,fill=snodecBlueSoft,rounded corners=2mm,
+    minimum width=30mm,minimum height=9mm,font=\sffamily\small\bfseries},
+  packet/.style={snodec main arrow,draw=snodecBlue},
+  label/.style={midway,above,font=\sffamily\footnotesize,align=center}]
+\node[participant] at (-55mm,0) {Subscriber};
+\node[participant] at (0,0) {Broker};
+\node[participant] at (55mm,0) {Publisher};
+\foreach \x in {-55,0,55} {
+  \draw[draw=snodecBlue!40,dashed] (\x mm,-5mm) -- (\x mm,-106mm);
+}
+\draw[packet] (-55mm,-16mm) -- node[label] {CONNECT} (0,-16mm);
+\draw[packet] (0,-28mm) -- node[label] {CONNACK} (-55mm,-28mm);
+\draw[packet] (55mm,-40mm) -- node[label] {CONNECT} (0,-40mm);
+\draw[packet] (0,-52mm) -- node[label] {CONNACK} (55mm,-52mm);
+\draw[packet] (-55mm,-64mm) -- node[label] {SUBSCRIBE} (0,-64mm);
+\draw[packet] (0,-76mm) -- node[label] {SUBACK} (-55mm,-76mm);
+\draw[packet] (55mm,-88mm) -- node[label] {PUBLISH (QoS 0)} (0,-88mm);
+\draw[packet] (0,-100mm) -- node[label] {PUBLISH (QoS 0)} (-55mm,-100mm);
+\snodecApplyFixedCanvas
+\end{tikzpicture}
+\end{document}
