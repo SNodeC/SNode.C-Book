@@ -34,3 +34,15 @@ and `:298`; reconnect control is declared in
 `src/core/socket/stream/ClientFlowController.h:79`. The connection callback
 wrappers are in `src/core/socket/stream/SocketServer.h:126` and `:136`. These
 confirm the retained distinctions; the removed rows repeat Ch4's taxonomy.
+
+## P3 — Ch2 command route
+
+The seven steps use the same commands and variable names as the later chapter
+sections, including a copied external EchoPair and inspection of `snodec_DIR`.
+The installed consumer's public requirement is unchanged:
+`companion/examples/EchoPair/CMakeLists.txt:9` requests SNode.C 2.0.0 and
+`net-in-stream-legacy`; the framework alias is
+`src/net/in/stream/legacy/SocketServer.h:68`. The framework's build root is
+`CMakeLists.txt:1`; package exports are declared in `src/CMakeLists.txt`.
+This is shell/build guidance, not a new runtime claim. Ch2 is 3,248 tokens,
+within 3,006–3,250; total 110,313. No cap waiver is needed.

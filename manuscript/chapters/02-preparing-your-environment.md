@@ -16,7 +16,15 @@
 Before the architecture can become interesting, the toolchain must be boring. The examples in this book should build, run, and fail in understandable ways, so the first practical task is to keep the source tree, build tree, install prefix, and later playground project separate.
 
 ::: {.snodec-note title="Shortest path to Chapter 3"}
-Follow the commands below in this order: obtain the book package and framework source; configure an out-of-tree build; build; install into the chosen prefix; verify that CMake finds that installed package; build the external EchoPair; then continue to its server and client run in Chapter 3. Use the same prefix throughout. Optional Bluetooth and database equipment can wait until the corresponding labs. If a step fails, resolve it before moving to the next location: a successful framework build alone does not prove that the consumer selected that installation.
+1. Obtain the book and pinned framework: `mkdir -p ~/projects`, `cd ~/projects`, `git clone https://github.com/SNodeC/SNode.C-Book`, then `export SNODEC_BOOK_SOURCE="$HOME/projects/SNode.C-Book"`. Run `git clone https://github.com/SNodeC/snode.c.git`, `cd snode.c`, and `git checkout --detach 07ca9a2936ee72582df7d159cb06666fe23e30f8`.
+2. Configure outside the source: `cd ~/projects`, then `cmake -S snode.c -B snode.c-build -DCMAKE_INSTALL_PREFIX="$HOME/.local/snodec"`.
+3. Build: `cmake --build snode.c-build -j$(nproc)`.
+4. Install into that prefix: `cmake --install snode.c-build`.
+5. Verify package discovery through an external consumer: `cp -r "$SNODEC_BOOK_SOURCE/companion/examples/EchoPair" ~/projects/snodec-playground`, then `cmake -S snodec-playground -B snodec-playground-build -DCMAKE_PREFIX_PATH="$HOME/.local/snodec"` and `cmake -LA -N snodec-playground-build | grep '^snodec_DIR:'`.
+6. Build EchoPair: `cmake --build snodec-playground-build -j$(nproc)`.
+7. Continue to Chapter 3's two-terminal run: `cd ~/projects/snodec-playground-build`.
+
+Resolve a failing step before moving to the next.
 :::
 
 This is more than tidiness. SNode.C is a real C++ framework with a core runtime, network-family components, stream transports, legacy and TLS connection variants, higher protocol layers, example applications, generated CMake targets, installable package components, and optional support for technologies such as Bluetooth and MariaDB.
@@ -129,7 +137,15 @@ These tools are not required for the first echo example. They are mentioned here
 
 SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the SNode.C\textsubscript{\texttt{2.0.0}} baseline used for this edition. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
 
-First obtain this edition's electronic source package from the [SNode.C Book repository](https://github.com/SNodeC/SNode.C-Book) or its edition download. The commands below assume that the package is available at `~/projects/SNode.C-Book`. Point the shell variable at the actual location if yours differs:
+Obtain this edition's electronic source package from the [SNode.C Book repository](https://github.com/SNodeC/SNode.C-Book) or its edition download. For a new checkout:
+
+```sh
+mkdir -p ~/projects
+cd ~/projects
+git clone https://github.com/SNodeC/SNode.C-Book
+```
+
+If the package is already present, skip cloning it. Point the variable at its location:
 
 ```sh
 export SNODEC_BOOK_SOURCE="$HOME/projects/SNode.C-Book"
@@ -371,7 +387,19 @@ snodec-playground/
   echoclient.cpp
 ```
 
-Do not worry yet about writing all of this. Chapter 3 introduces the first concrete program. The point here is only to prepare a place where an external application can live.
+Copy the supplied EchoPair into a new playground, configure against the chosen installation, and inspect the discovered package before building:
+
+```sh
+cd ~/projects
+cp -r "$SNODEC_BOOK_SOURCE/companion/examples/EchoPair" ~/projects/snodec-playground
+cmake -S snodec-playground -B snodec-playground-build \
+  -DCMAKE_PREFIX_PATH="$HOME/.local/snodec"
+cmake -LA -N snodec-playground-build | grep '^snodec_DIR:'
+cmake --build snodec-playground-build -j$(nproc)
+cd ~/projects/snodec-playground-build
+```
+
+Chapter 3 explains these files and starts the two executables.
 
 \index{components}
 \index{public headers}
