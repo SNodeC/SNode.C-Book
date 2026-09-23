@@ -1,6 +1,7 @@
 find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy net-in6-stream-legacy net-un-stream-legacy)
 foreach(family IN ITEMS in in6 un)
   add_executable(endpoint-${family} family-server.cpp)
+  target_compile_features(endpoint-${family} PRIVATE cxx_std_20)
   target_compile_definitions(endpoint-${family} PRIVATE LAB_FAMILY=${family}
     LAB_HEADER="net/${family}/stream/legacy/SocketServer.h")
   target_link_libraries(endpoint-${family} PRIVATE echosocketcontext snodec::net-${family}-stream-legacy)

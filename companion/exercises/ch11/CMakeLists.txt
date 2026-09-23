@@ -8,6 +8,7 @@ string(REPLACE "net::in::stream::legacy" "net::un::stream::legacy" unix_main "${
 string(REPLACE "        8090," "        \"/tmp/line-transfer.sock\"," unix_main "${unix_main}")
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/unix-main.cpp" "${unix_main}")
 add_executable(line-unix "${CMAKE_CURRENT_BINARY_DIR}/unix-main.cpp" "${line_source}/LineCommandServerContext.cpp")
+target_compile_features(line-unix PRIVATE cxx_std_20)
 target_include_directories(line-unix PRIVATE "${line_source}")
 target_link_libraries(line-unix PRIVATE snodec::net-un-stream-legacy)
 add_custom_target(ch11-lab DEPENDS line-unix line-protocol-server)

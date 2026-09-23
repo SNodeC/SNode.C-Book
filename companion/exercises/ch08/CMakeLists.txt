@@ -4,6 +4,7 @@ target_compile_features(bluetooth-selectors PRIVATE cxx_std_20)
 target_link_libraries(bluetooth-selectors PRIVATE snodec::net-rc-stream-legacy snodec::net-l2-stream-legacy)
 foreach(family IN ITEMS rc l2)
   add_executable(endpoint-${family} ../ch06/family-server.cpp)
+  target_compile_features(endpoint-${family} PRIVATE cxx_std_20)
   target_compile_definitions(endpoint-${family} PRIVATE LAB_FAMILY=${family}
     LAB_HEADER="net/${family}/stream/legacy/SocketServer.h")
   target_link_libraries(endpoint-${family} PRIVATE echosocketcontext snodec::net-${family}-stream-legacy)

@@ -1,6 +1,7 @@
 find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy)
 set(line_source "${CMAKE_CURRENT_SOURCE_DIR}/../../examples/LineProtocol-Server")
 add_executable(line-refusal refusal.cpp "${line_source}/LineCommandServerContext.cpp")
+target_compile_features(line-refusal PRIVATE cxx_std_20)
 target_include_directories(line-refusal PRIVATE "${line_source}")
 target_link_libraries(line-refusal PRIVATE snodec::net-in-stream-legacy)
 add_custom_target(ch10-lab DEPENDS line-refusal line-protocol-server)
