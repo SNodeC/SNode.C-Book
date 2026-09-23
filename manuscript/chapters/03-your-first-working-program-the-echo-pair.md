@@ -300,9 +300,9 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-The SNode.C include is the public front-door header for the concrete server side used here: IPv4, stream transport, non-TLS `legacy` connection handling, and server-side behavior. The application does not manually include every lower `core/socket/...` header that participates in that composition. It includes the highest public header for the abstraction it directly names.
+The SNode.C include is the public front-door header for the concrete endpoint handle type used here: IPv4, stream transport, non-TLS `legacy` connection handling, and server-side behavior. The application does not manually include every lower `core/socket/...` header that participates in that composition. It includes the highest public header for the abstraction it directly names.
 
-`core::SNodeC::init(argc, argv)` initializes the runtime before the named handle creates its configuration. The type alias selects IPv4, stream transport, non-TLS connection handling, and the echo context factory. The name `echoserver` identifies the endpoint in configuration and logs.
+`core::SNodeC::init(argc, argv)` initializes the runtime before the named handle creates its configuration. The type alias selects IPv4, stream transport, non-TLS connection handling, and the echo context factory. The name `echoserver` identifies the named instance in configuration and logs.
 
 ::: {.snodec-rule title="Runtime registration rule"}
 The named server configuration already exists. `listen(...)` sets the shown defaults and registers a listening flow; the runtime machinery advances that flow after `core::SNodeC::start()` is called.
@@ -491,7 +491,7 @@ The lifecycle and payload diagnostics connect each callback to an observable eve
 Stop the example with `Ctrl-C`.
 
 
-The first example is meant to connect source code to runtime behavior. When you see a log line from `onConnected()`, it corresponds to the lifecycle callback. When you see the reflected message, it corresponds to `onReceivedFromPeer()`. When the callback passed to `listen(...)` or `connect(...)` logs a state, it reports the listen or connect result for the configured communication role.
+The first example is meant to connect source code to runtime behavior. When you see a log line from `onConnected()`, it corresponds to the lifecycle callback. When you see the reflected message, it corresponds to `onReceivedFromPeer()`. When the callback passed to `listen(...)` or `connect(...)` logs a state, it reports the attempt result for the activation flow.
 
 Keep these observations separate. A listen result establishes that the server reached its listening state; it does not establish that a peer sent data. A context's payload diagnostic establishes that bytes reached application behavior; it does not establish a message boundary for a protocol built on that stream.
 

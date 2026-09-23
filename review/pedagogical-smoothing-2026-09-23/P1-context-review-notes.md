@@ -1,10 +1,10 @@
-# P1 contextual reread — pending entry gate
+# P1 contextual reread — completed
 
 Read the a2ecd9c manuscript diff in context, including front matter, Part openers,
-objectives, recaps and exercises. These are review notes; no P1 gate is claimed.
+objectives, recaps and exercises. All listed corrections were applied after the passing R2 and P0b resume gates.
 The snapshot remains the basis; no wholesale reversion is planned.
 
-Corrections identified for P1 after the R2 entry gate:
+Corrections applied after contextual review:
 
 - Ch3 public server header names a handle type; avoid “concrete server side”.
 - Ch4 instances do not independently register intent: handles initiate flows;
@@ -28,6 +28,10 @@ Corrections identified for P1 after the R2 entry gate:
   Existing lower-family topic/figure/file IDs are preserved, not prose vocabulary.
 
 System-design uses of role in factories, MiniGateway and MQTTSuite can remain.
-Literal framework/API names remain literal. Each remaining context-dependent
-term still needs its final disposition and count; pending changes require fresh
-metrics, source alignment, references and hygiene before a P1 commit.
+Literal framework/API names remain literal. Survivors and counts are recorded in terminology-allowlist.md and
+terminology-counts.md. Fresh metrics and all three required P1 checks pass.
+
+Source precision: HTTP server policy is a const member of the per-connection
+context (src/web/http/server/SocketContext.h:104, constructor in .cpp:70).
+SocketConnection.hpp:361–379 attaches and replaces contexts; the context does not
+own that connection. No C++ code or companion driver changed in P1.

@@ -222,7 +222,7 @@ The selection should remain a construction-time decision, not protocol execution
 
 Separate server-side and client-side factories can be useful when the two roles should be visible. This is especially clear when both sides use the same context type but receive different role arguments. The benefit is readability.
 
-Small duplication is often acceptable when it makes the communication roles clearer.
+Small duplication is often acceptable when it makes the two protocol sides clearer.
 
 A single reusable factory type may also be appropriate.
 
@@ -246,7 +246,7 @@ private:
 
 This can be a clean design when the factory remains easy to read and the variation is stable. The factory is still only expressing a creation decision.
 
-Preconfigured factories allow the same framework mechanism to create different communication roles without changing the surrounding server/client machinery.
+Preconfigured factories allow the same framework mechanism to create contexts for different application roles without changing the surrounding server/client machinery.
 
 A server/client handle can pass stable role and dependency information into the factory constructor. The factory can then use that information whenever it creates a context for a new connection.
 

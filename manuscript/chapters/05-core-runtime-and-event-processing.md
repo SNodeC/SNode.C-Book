@@ -82,7 +82,7 @@ if (tickStatus == TickStatus::SUCCESS) {
 \index{TickStatus@\texttt{TickStatus}}
 \index{event loop!tick cycle}
 
-The public facade provides `init(int argc, char* argv[])`, `start(const utils::Timeval& timeOut = {LONG_MAX, 0})`, `reconfigure()`, `stop()`, `tick(const utils::Timeval& timeOut = 0)`, `free()`, and `state()`. Runtime progress is explicit: initialize, register communication roles, then start processing. Constructing a server does not create an independent event loop.
+The public facade provides `init(int argc, char* argv[])`, `start(const utils::Timeval& timeOut = {LONG_MAX, 0})`, `reconfigure()`, `stop()`, `tick(const utils::Timeval& timeOut = 0)`, `free()`, and `state()`. Runtime progress is explicit: initialize, register activation flows, then start processing. Constructing a server does not create an independent event loop.
 
 For most applications, `start()` owns that progression until stopped, left without observed work, or given a terminating tick result. Its `timeOut` argument bounds a multiplexer wait within an iteration, not the application's total running time. The multiplexer takes the earlier of that bound and its next scheduled timeout, then can continue with another iteration. A service deadline needs its own timer or application policy.
 

@@ -2224,3 +2224,12 @@ P0b-R2-resume passes all thirteen check groups, including 62/62 labs against
 the fresh R2 installation and package/extracted hygiene. Logs are named
 P0b-R2-resume-*; old P0b and P0b-resume records are untouched. Fresh metrics
 are metrics-before-R2-resume.json: 100,777 tokens. P1 can now be completed.
+
+P1 completed from a2ecd9c after contextual reread. Corrected handle/instance/flow
+precision, per-connection context ownership and network-family versus connection-
+variant wording. Retained only system-design context-dependent roles; every
+carrier use is in the MQTT chapters, glossary or two preserved IDs. Evidence:
+P1-context-review-notes.md, terminology-counts.md, terminology-allowlist.md,
+metrics-after-P1.json and P1-{references,source-alignment,hygiene}.log. Fresh
+count 100,780; all three checks pass. No companion/CI test/assertion/timeout
+changes and no production-code changes. Next is the mechanical P2 split.

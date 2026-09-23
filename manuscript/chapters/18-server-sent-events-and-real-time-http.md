@@ -61,7 +61,7 @@ SSE begins with one HTTP request and keeps its response open. The client can sti
 | client side | built-in `EventSource` abstraction on top of an HTTP client |
 | server side | HTTP/Express endpoint that keeps a response open and writes event-stream records |
 
-SNode.C exposes the client-side `EventSource` facility explicitly. Server-side SSE is a route or HTTP handler that keeps the response open and writes data in event-stream format, not a different server instance type or a symmetric server-side `EventSource` abstraction.
+SNode.C exposes the client-side `EventSource` facility explicitly. Server-side SSE is a route or HTTP handler that keeps the response open and writes data in event-stream format, not a different server abstraction or a symmetric server-side `EventSource` abstraction.
 
 
 A server-side event-stream record may contain fields such as:

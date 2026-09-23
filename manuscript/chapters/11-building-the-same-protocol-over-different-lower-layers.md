@@ -329,7 +329,7 @@ Role::CommandSink
 These are construction-time choices. The factory supplies the role; interpreting its protocol belongs in the resulting context.
 
 \index{preconfigured factories}
-\index{instances}
+\index{application roles}
 
 Chapter 10 explained that server and client constructors can forward an argument pack into the factory constructor. That makes it possible to preconfigure factories with stable role and dependency information. This matters for network-family transfer because the same mechanism can create role-specific endpoints over different network families.
 

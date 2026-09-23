@@ -19,7 +19,7 @@
   commits and the unfinished P1 snapshot. A fresh public clone confirms the pin.
   The 1,448-file manifest and three prescribed anchors are updated; one local
   dispatch-condition claim is corrected. Fresh build/runtime verification passes: framework 185/185, external Echo
-  4/4, labs 62/62, and all smoke/lifetime suites. P1 remains ungated, and P2–P7 have not started.
+  4/4, labs 62/62, and all smoke/lifetime suites. P1 is complete at 100,780 tokens; P2–P7 remain.
 
 ## Governing scope and source
 
@@ -48,8 +48,8 @@ No fetch, build or edit occurs in the author's framework tree.
 | R2 R2 anchors | `69ac502` | [R2-anchor-review.md](R2-anchor-review.md); all anchors verified |
 | R2 R3 claim review | `cfd65ab` | [R2-claim-review.md](R2-claim-review.md); only manuscript Ch5:89 changed |
 | R2 evidence | `2be416b` | [R2-build/results.json](R2-build/results.json), [R2-entry-results.json](R2-entry-results.json) |
-| P0b-R2-resume | this entry commit | All 13 groups pass, including 62/62 labs; P0b-R2-resume-results.json |
-| P1 | pending | Snapshot reread notes in [P1-context-review-notes.md](P1-context-review-notes.md) |
+| P0b-R2-resume | `77226ab` | All 13 groups pass, including 62/62 labs; P0b-R2-resume-results.json |
+| P1 | this vocabulary gate commit | Snapshot reread notes in [P1-context-review-notes.md](P1-context-review-notes.md) |
 | P2–P7 | not started | Entry gate must pass first |
 
 Static entry checks pass: chapter references, source alignment (zero errors,
@@ -65,7 +65,11 @@ The absolute must/wish/ceiling remain **107,338 / 112,338 / 115,000** tokens.
 The original review baseline is **100,338**. Snapshot vocabulary work counts
 against the final total. No floor or cap waiver exists; check-smoothing.py has
 not yet been created or run. No chapter assessment or apparatus completion is
-claimed. D1–D6, P1 completion and P2–P7 remain pending.
+claimed. D1–D6 content/structure work and P2–P7 remain pending.
+
+P1 counts compare c7b76c1 with the fresh manuscript in terminology-counts.md.
+The complete carrier inventory and design-role survivors are in
+terminology-allowlist.md. References, alignment and hygiene all pass.
 
 Production-code changes: +0/−0. Existing tests/drivers and timeouts: +0/−0.
 New review orchestration is evidence support, not application implementation.

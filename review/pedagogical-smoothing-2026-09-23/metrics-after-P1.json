@@ -12,8 +12,8 @@
     "manual_references": "Literal Chapter followed by an integer outside code fences; source line and matched text recorded, including self-references. Ranges/plural Chapters require editorial review."
   },
   "totals": {
-    "total_words": 100771,
-    "prose_words": 92627,
+    "total_words": 100780,
+    "prose_words": 92636,
     "code_words": 8144,
     "code_content_words": 7444,
     "fence_marker_words": 700,
@@ -47,11 +47,11 @@
       "text": 45
     },
     "chapter_headings_level_3_and_deeper": 252,
-    "chapter_section_prose_words": 84386,
-    "average_chapter_section_prose_words": 334.87,
+    "chapter_section_prose_words": 84389,
+    "average_chapter_section_prose_words": 334.88,
     "closing_perspective_sections": 0,
     "term_occurrence_counts": {
-      "role": 341,
+      "role": 314,
       "boundary/boundaries": 346,
       "visible": 94,
       "is not a": 51,
@@ -63,8 +63,8 @@
   "requested_baseline_comparison": {
     "total_words": {
       "expected": 151922,
-      "actual": 100771,
-      "delta": -51151
+      "actual": 100780,
+      "delta": -51142
     },
     "chapter_headings_level_3_and_deeper": {
       "expected": 1020,
@@ -308,8 +308,8 @@
       ]
     },
     "manuscript/frontmatter/conventions.md": {
-      "total_words": 952,
-      "prose_words": 952,
+      "total_words": 955,
+      "prose_words": 955,
       "code_words": 0,
       "code_content_words": 0,
       "fence_marker_words": 0,
@@ -842,8 +842,8 @@
       ]
     },
     "manuscript/chapters/03-your-first-working-program-the-echo-pair.md": {
-      "total_words": 2566,
-      "prose_words": 2024,
+      "total_words": 2565,
+      "prose_words": 2023,
       "code_words": 542,
       "code_content_words": 512,
       "fence_marker_words": 30,
@@ -856,8 +856,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 1929,
-      "average_section_prose_words": 321.5,
+      "section_prose_words": 1928,
+      "average_section_prose_words": 321.33,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 1,
@@ -906,10 +906,6 @@
           },
           {
             "line": 447,
-            "match": "role"
-          },
-          {
-            "line": 494,
             "match": "role"
           }
         ],
@@ -1061,8 +1057,8 @@
       ]
     },
     "manuscript/chapters/04-the-mental-model-and-layers-in-practice.md": {
-      "total_words": 4034,
-      "prose_words": 3986,
+      "total_words": 4042,
+      "prose_words": 3994,
       "code_words": 48,
       "code_content_words": 26,
       "fence_marker_words": 22,
@@ -1075,8 +1071,8 @@
         "6": 0
       },
       "section_count": 13,
-      "section_prose_words": 3825,
-      "average_section_prose_words": 294.23,
+      "section_prose_words": 3833,
+      "average_section_prose_words": 294.85,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 4,
@@ -1106,22 +1102,6 @@
         "role": [
           {
             "line": 83,
-            "match": "role"
-          },
-          {
-            "line": 98,
-            "match": "role"
-          },
-          {
-            "line": 107,
-            "match": "role"
-          },
-          {
-            "line": 133,
-            "match": "role"
-          },
-          {
-            "line": 135,
             "match": "role"
           },
           {
@@ -1250,8 +1230,8 @@
       ]
     },
     "manuscript/chapters/05-core-runtime-and-event-processing.md": {
-      "total_words": 2978,
-      "prose_words": 2903,
+      "total_words": 2984,
+      "prose_words": 2909,
       "code_words": 75,
       "code_content_words": 65,
       "fence_marker_words": 10,
@@ -1264,8 +1244,8 @@
         "6": 0
       },
       "section_count": 10,
-      "section_prose_words": 2776,
-      "average_section_prose_words": 277.6,
+      "section_prose_words": 2782,
+      "average_section_prose_words": 278.2,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -1579,8 +1559,8 @@
       ]
     },
     "manuscript/chapters/07-servers-clients-and-connections.md": {
-      "total_words": 3063,
-      "prose_words": 3011,
+      "total_words": 3049,
+      "prose_words": 2997,
       "code_words": 52,
       "code_content_words": 36,
       "fence_marker_words": 16,
@@ -1593,8 +1573,8 @@
         "6": 0
       },
       "section_count": 9,
-      "section_prose_words": 2902,
-      "average_section_prose_words": 322.44,
+      "section_prose_words": 2888,
+      "average_section_prose_words": 320.89,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 2,
@@ -1623,18 +1603,6 @@
       "term_occurrences": {
         "role": [
           {
-            "line": 34,
-            "match": "role"
-          },
-          {
-            "line": 49,
-            "match": "role"
-          },
-          {
-            "line": 49,
-            "match": "role"
-          },
-          {
             "line": 68,
             "match": "role"
           },
@@ -1655,18 +1623,6 @@
             "match": "role"
           },
           {
-            "line": 132,
-            "match": "role"
-          },
-          {
-            "line": 132,
-            "match": "role"
-          },
-          {
-            "line": 246,
-            "match": "role"
-          },
-          {
             "line": 263,
             "match": "role"
           },
@@ -1680,10 +1636,6 @@
           },
           {
             "line": 332,
-            "match": "role"
-          },
-          {
-            "line": 340,
             "match": "role"
           },
           {
@@ -1915,8 +1867,8 @@
       "manual_chapter_references": []
     },
     "manuscript/chapters/09-writing-socketcontext-classes-well.md": {
-      "total_words": 3088,
-      "prose_words": 2912,
+      "total_words": 3087,
+      "prose_words": 2911,
       "code_words": 176,
       "code_content_words": 170,
       "fence_marker_words": 6,
@@ -1929,8 +1881,8 @@
         "6": 0
       },
       "section_count": 8,
-      "section_prose_words": 2765,
-      "average_section_prose_words": 345.62,
+      "section_prose_words": 2764,
+      "average_section_prose_words": 345.5,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -2026,8 +1978,8 @@
       ]
     },
     "manuscript/chapters/10-writing-socketcontextfactory-classes-well.md": {
-      "total_words": 2256,
-      "prose_words": 2120,
+      "total_words": 2259,
+      "prose_words": 2123,
       "code_words": 136,
       "code_content_words": 116,
       "fence_marker_words": 20,
@@ -2040,8 +1992,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 1961,
-      "average_section_prose_words": 326.83,
+      "section_prose_words": 1964,
+      "average_section_prose_words": 327.33,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 1,
@@ -2167,8 +2119,8 @@
       ]
     },
     "manuscript/chapters/11-building-the-same-protocol-over-different-lower-layers.md": {
-      "total_words": 2580,
-      "prose_words": 2387,
+      "total_words": 2581,
+      "prose_words": 2388,
       "code_words": 193,
       "code_content_words": 159,
       "fence_marker_words": 34,
@@ -2181,8 +2133,8 @@
         "6": 0
       },
       "section_count": 7,
-      "section_prose_words": 2210,
-      "average_section_prose_words": 315.71,
+      "section_prose_words": 2211,
+      "average_section_prose_words": 315.86,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 2,
@@ -2374,8 +2326,8 @@
       "manual_chapter_references": []
     },
     "manuscript/chapters/12-configuring-applications-and-named-instances.md": {
-      "total_words": 4262,
-      "prose_words": 4013,
+      "total_words": 4259,
+      "prose_words": 4010,
       "code_words": 249,
       "code_content_words": 197,
       "fence_marker_words": 52,
@@ -2388,8 +2340,8 @@
         "6": 0
       },
       "section_count": 10,
-      "section_prose_words": 3902,
-      "average_section_prose_words": 390.2,
+      "section_prose_words": 3899,
+      "average_section_prose_words": 389.9,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -2421,79 +2373,11 @@
       "term_occurrences": {
         "role": [
           {
-            "line": 13,
-            "match": "role"
-          },
-          {
-            "line": 20,
-            "match": "role"
-          },
-          {
-            "line": 24,
-            "match": "role"
-          },
-          {
-            "line": 25,
-            "match": "role"
-          },
-          {
-            "line": 113,
-            "match": "role"
-          },
-          {
-            "line": 127,
-            "match": "role"
-          },
-          {
-            "line": 141,
-            "match": "role"
-          },
-          {
-            "line": 143,
-            "match": "role"
-          },
-          {
-            "line": 143,
-            "match": "role"
-          },
-          {
-            "line": 145,
-            "match": "role"
-          },
-          {
             "line": 205,
             "match": "role"
           },
           {
-            "line": 243,
-            "match": "role"
-          },
-          {
-            "line": 253,
-            "match": "role"
-          },
-          {
-            "line": 255,
-            "match": "role"
-          },
-          {
-            "line": 267,
-            "match": "role"
-          },
-          {
-            "line": 299,
-            "match": "role"
-          },
-          {
-            "line": 301,
-            "match": "role"
-          },
-          {
             "line": 344,
-            "match": "role"
-          },
-          {
-            "line": 348,
             "match": "role"
           },
           {
@@ -2964,8 +2848,8 @@
       ]
     },
     "manuscript/chapters/15-timeouts-retries-and-failure-modes.md": {
-      "total_words": 2991,
-      "prose_words": 2923,
+      "total_words": 2993,
+      "prose_words": 2925,
       "code_words": 68,
       "code_content_words": 62,
       "fence_marker_words": 6,
@@ -2978,8 +2862,8 @@
         "6": 0
       },
       "section_count": 8,
-      "section_prose_words": 2717,
-      "average_section_prose_words": 339.62,
+      "section_prose_words": 2716,
+      "average_section_prose_words": 339.5,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 1,
@@ -3192,8 +3076,8 @@
       "manual_chapter_references": []
     },
     "manuscript/chapters/16-the-http-layer.md": {
-      "total_words": 2470,
-      "prose_words": 2304,
+      "total_words": 2473,
+      "prose_words": 2307,
       "code_words": 166,
       "code_content_words": 144,
       "fence_marker_words": 22,
@@ -3206,8 +3090,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 2208,
-      "average_section_prose_words": 368.0,
+      "section_prose_words": 2211,
+      "average_section_prose_words": 368.5,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -3485,8 +3369,8 @@
       ]
     },
     "manuscript/chapters/18-server-sent-events-and-real-time-http.md": {
-      "total_words": 3269,
-      "prose_words": 2898,
+      "total_words": 3268,
+      "prose_words": 2897,
       "code_words": 371,
       "code_content_words": 359,
       "fence_marker_words": 12,
@@ -3499,8 +3383,8 @@
         "6": 0
       },
       "section_count": 7,
-      "section_prose_words": 2786,
-      "average_section_prose_words": 398.0,
+      "section_prose_words": 2785,
+      "average_section_prose_words": 397.86,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -4957,8 +4841,8 @@
       ]
     },
     "manuscript/chapters/24-snodec-in-larger-systems.md": {
-      "total_words": 5601,
-      "prose_words": 5339,
+      "total_words": 5604,
+      "prose_words": 5342,
       "code_words": 262,
       "code_content_words": 246,
       "fence_marker_words": 16,
@@ -4971,8 +4855,8 @@
         "6": 0
       },
       "section_count": 17,
-      "section_prose_words": 5184,
-      "average_section_prose_words": 304.94,
+      "section_prose_words": 5187,
+      "average_section_prose_words": 305.12,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 0,
@@ -5475,8 +5359,8 @@
       "manual_chapter_references": []
     },
     "manuscript/chapters/25-cmake-components-and-linking-strategy.md": {
-      "total_words": 3922,
-      "prose_words": 3421,
+      "total_words": 3920,
+      "prose_words": 3419,
       "code_words": 501,
       "code_content_words": 481,
       "fence_marker_words": 20,
@@ -5489,8 +5373,8 @@
         "6": 0
       },
       "section_count": 10,
-      "section_prose_words": 3299,
-      "average_section_prose_words": 329.9,
+      "section_prose_words": 3297,
+      "average_section_prose_words": 329.7,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 1,
@@ -6285,6 +6169,10 @@
             "match": "role"
           },
           {
+            "line": 69,
+            "match": "role"
+          },
+          {
             "line": 150,
             "match": "role"
           },
@@ -6298,6 +6186,10 @@
           },
           {
             "line": 189,
+            "match": "role"
+          },
+          {
+            "line": 193,
             "match": "role"
           },
           {
@@ -6376,8 +6268,8 @@
       "manual_chapter_references": []
     },
     "manuscript/chapters/30-architectural-judgment-choosing-the-right-layer-and-boundary.md": {
-      "total_words": 1844,
-      "prose_words": 1826,
+      "total_words": 1846,
+      "prose_words": 1828,
       "code_words": 18,
       "code_content_words": 16,
       "fence_marker_words": 2,
@@ -6390,8 +6282,8 @@
         "6": 0
       },
       "section_count": 6,
-      "section_prose_words": 1716,
-      "average_section_prose_words": 286.0,
+      "section_prose_words": 1718,
+      "average_section_prose_words": 286.33,
       "callout_counts_by_class": {
         "snodec-remember": 1,
         "snodec-rule": 3,

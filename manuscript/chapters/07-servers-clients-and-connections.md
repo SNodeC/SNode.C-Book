@@ -31,7 +31,7 @@ Start with a responsibility map rather than a class hierarchy.
 
 | Concept | Typical C++ representation | Responsibility |
 |---|---|---|
-| Application-side handle | `SocketServer` / `SocketClient` object visible in user code | configure and register the role |
+| Application-side handle | `SocketServer` / `SocketClient` object visible in user code | configure the instance and start flows |
 | Instance | server-side or client-side instance | participate in runtime and flow-controller progress |
 | Activation flow | returned `ClientFlowController` / `ServerFlowController` shared handle | control one explicit connect/listen call and its automatic recovery |
 | Connection | `SocketConnection` | represent one concrete peer relationship |
@@ -46,7 +46,7 @@ The context is the application protocol endpoint attached to that connection. It
 
 Test the distinction with a server that accepts two clients. It still has one instance, but each client needs its own connection and protocol state. Stop accepting new peers and those two existing connections need not end. A single object count cannot describe all three facts.
 
-Configuration belongs naturally to the instance, because configuration describes how the communication role should behave over time. Addresses appear at registration and later on connections, because they describe endpoint identity. Retry and reconnect behavior belongs to the instance and its flow-controller machinery, because it concerns how the role should keep trying or resume later. Protocol behavior belongs to the context, because it is relative to one concrete peer relationship.
+Configuration belongs naturally to the instance, because its settings apply across activation flows. Addresses appear at registration and later on connections, because they describe endpoint identity. Retry and reconnect behavior belongs to the instance and its flow-controller machinery, because that machinery applies shared policy to each flow. Protocol behavior belongs to the context, because it is relative to one concrete peer relationship.
 
 ### Handles and independent activation flows
 
@@ -77,7 +77,7 @@ first->terminateFlow();
 
 This is an API sketch using an existing client and status callback. The first call's pending attempts and recovery are terminated; the second call has its own controller. An established connection is a separate object and must be closed through the connection API when that is the application's intention. Dropping `first` without calling `terminateFlow()` would release only the application's reference.
 
-The configuration remains shared. Address-taking overloads update that endpoint configuration; they do not create immutable per-call destination snapshots. Use separate named instances when two destinations need independent configuration. Flow independence is a control boundary, not a second configuration system.
+The configuration remains shared. Address-taking overloads update that endpoint configuration; they do not create immutable per-call destination snapshots. Use separate instances when two destinations need independent configuration. Flow independence is a control boundary, not a second configuration system.
 
 There are also two different end observations. `setOnFlowTerminated(...)` reports termination of one flow. `setOnFlowCompleted(...)` runs when that controller is finally released, which can be delayed by a retained handle. The endpoint's `setOnDestroy(...)` callback instead follows destruction and unregistration of the shared configuration. Capture identifiers by value in these callbacks; capturing the object that owns the callback can create a lifetime cycle.
 
@@ -129,7 +129,7 @@ Both roles carry configuration and a context factory, participate in the runtime
 Retry and reconnect are behavior of the configured instance and its flow-controller machinery; they are not responsibilities of the per-connection protocol context.
 :::
 
-The context may react to a connection while it exists. It may send application data, parse incoming data, close the connection, or keep protocol-side state. But it should not be responsible for recreating the whole communication role after a connection ends. That responsibility belongs to the role and its runtime machinery.
+The context may react to a connection while it exists. It may send application data, parse incoming data, close the connection, or keep protocol-side state. Reconnecting after a connection ends belongs to the client flow and its runtime machinery, using the instance’s shared policy.
 
 ### The connection’s endpoint and data surface
 
@@ -243,7 +243,7 @@ getConnectionName()
 
 The instance name connects configuration and runtime diagnostics.
 
-The connection name identifies a concrete peer relationship under that role.
+The connection name identifies a concrete peer relationship under that instance.
 
 This distinction helps logs and diagnostics, especially for servers that accept many peers over time.
 
@@ -337,7 +337,7 @@ The following table summarizes the responsibility boundaries.
 
 | Concern | Belongs primarily to |
 |---|---|
-| naming and configuration of the role | instance / handle configuration |
+| naming and configuration of the instance | instance / handle configuration |
 | listen or connect intent | instance |
 | retry and reconnect policy | instance and flow-controller machinery |
 | concrete peer relationship | `SocketConnection` |

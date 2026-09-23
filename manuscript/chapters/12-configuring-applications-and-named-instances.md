@@ -10,20 +10,20 @@
 
 \index{configuration}
 \index{configuration philosophy}
-\index{configured communication role}
+\index{instance!configuration}
 
 Configuration is where architectural choices become adjustable by the operator. The context still implements the protocol and the factory creates contexts, but the application must choose its communication roles, endpoint values, connection variants and enablement.
 
 Through a `SocketServer` or `SocketClient` handle, the application configures an instance. Giving the instance a name registers it in the configuration hierarchy. Each `listen(...)` or `connect(...)` call then starts an activation flow for that instance.
 
 \index{configuration!architecture}
-\index{configured communication role}
+\index{instance!configuration}
 
 | Part | Meaning |
 |---|---|
-| instance identity | which role is being configured |
-| role identity | server-side or client-side behavior |
-| network-family shape | IPv4, IPv6, Unix domain sockets, RFCOMM, L2CAP, and connection variant |
+| instance identity | which instance is being configured |
+| server/client side | listening or connecting behavior |
+| network family and connection variant | IPv4, IPv6, Unix domain sockets, RFCOMM or L2CAP; separately, legacy or TLS |
 | endpoint values | host, port, path, channel, PSM, or related local/remote values |
 | section structure | scoped areas such as `local`, `remote`, `connection`, `socket`, `server`, and `tls` |
 | operational state | enabled or disabled, persistent or run-specific options |
@@ -71,13 +71,13 @@ fill the handle’s configuration before starting an activation. Source defaults
 
 Command-line configuration gives an already compiled application a way to be shaped at startup. That is especially important for named instances.
 
-A named instance on the server side such as:
+Constructing an endpoint handle with a name:
 
 ```cpp
 EchoServer echoServer("echo");
 ```
 
-appears in the command-line hierarchy as application, instance, section, and option.
+creates a named instance in the command-line hierarchy: application, instance, section, and option.
 
 A user can ask for help at different levels:
 
@@ -103,18 +103,18 @@ uplink.remote.host = "localhost"
 uplink.remote.port = 8080
 ```
 
-Here `echo` is a named server and `uplink` is a separate named client in an application that creates both. A server does not acquire a client’s `remote` section merely because that key is written in a file. The file can configure the roles the executable actually exposes.
+Here `echo` is a named instance on the server side and `uplink` is a separate named instance on the client side in an application that creates both. A server does not acquire a client’s `remote` section merely because that key is written in a file. The file can configure the named instances the executable actually exposes.
 
 \index{configuration!precedence}
 \index{startup boundary}
 
 Command-line values override configuration-file values, which override C++ defaults. Thus deployment can change a source default and a single invocation can override the deployment.
 
-External configuration can address the named roles present in the hierarchy when parsing occurs. Startup parsing therefore sees the roles constructed before startup. A role created later begins with the values supplied by application logic.
+External configuration can address the named instances present in the hierarchy when parsing occurs. Startup parsing therefore sees the instances constructed before startup. An instance created later begins with the values supplied by application logic.
 
-A deliberate runtime reparse can include roles registered later. It changes configuration values, not existing activity; the section “Application and instance configuration” develops its lifecycle and failure consequences.
+A deliberate runtime reparse can include named instances registered later. It changes configuration values, not existing activity; the section “Application and instance configuration” develops its lifecycle and failure consequences.
 
-The current per-call flow model makes the configuration boundary particularly important. An endpoint exposes one shared configuration object. Each explicit activation receives its own controller, but that controller does not freeze a private copy of the endpoint settings. An address-taking `connect(...)` overload updates the endpoint's remote configuration before starting its flow. Use separate named instances for destinations that need independent configuration; retaining two flow handles is not a substitute for that separation.
+The current per-call flow model makes the configuration boundary particularly important. An endpoint exposes one shared configuration object. Each explicit activation receives its own controller, but that controller does not freeze a private copy of the endpoint settings. An address-taking `connect(...)` overload updates the endpoint's remote configuration before starting its flow. Use separate instances for destinations that need independent configuration; name them when operators need separate control; retaining two flow handles is not a substitute for that separation.
 
 ### Named instances as configuration addresses
 
@@ -124,13 +124,13 @@ The current per-call flow model makes the configuration boundary particularly im
 
 An anonymous instance remains internal to application code; a named one becomes independently addressable through help, CLI overrides and file keys.
 
-For example, an application may need to fetch data from a known remote resource as part of its own internal behavior. If that communication role should not be configured, disabled, persisted, or inspected independently, an anonymous client is often the clearer choice.
+For example, an application may need to fetch data from a known remote resource as part of its own internal behavior. If that instance should not be configured, disabled, persisted, or inspected independently, an anonymous client is often the clearer choice.
 
 Anonymous servers can also make sense, but the case is narrower.
 
 They are reasonable for temporary local test servers, embedded loopback-only services, or helper servers whose endpoint is fixed by the surrounding program.
 
-Externally operated server roles are usually better expressed as named instances, because servers often need deployment-facing control over bind address, port, path, channel, enablement, and persistent configuration.
+Externally operated servers usually benefit from named instances, because servers often need deployment-facing control over bind address, port, path, channel, enablement, and persistent configuration.
 
 A name such as:
 
@@ -138,11 +138,11 @@ A name such as:
 EchoServer echoServer("echo");
 ```
 
-gives the role the external address `echo`. Choose names that remain useful in deployment files and operational procedures.
+gives the instance the external address `echo`. Choose names that remain useful in deployment files and operational procedures.
 
-A named role can remain in the application while being disabled for a deployment, test, or diagnostic run. Its configuration stays inspectable, but the role is removed from the required startup path.
+A named instance can remain in the application while being disabled for a deployment, test, or diagnostic run. Its configuration stays inspectable, but the instance is removed from the required startup path.
 
-At activation, disablement lets the framework report an intentionally inactive role. Setting that value later is not a command to close established peers or cancel every flow. Those actions have their own lifecycle controls; a runtime reparse does not merge them into one operation.
+At activation, disablement lets the framework report an intentionally inactive instance. Setting that value later is not a command to close established peers or cancel every flow. Those actions have their own lifecycle controls; a runtime reparse does not merge them into one operation.
 
 \index{configuration sections}
 \index{section hierarchy}
@@ -171,7 +171,7 @@ uplink.remote.port = 8080
 \index{persistent options}
 \index{generated configuration}
 
-The detailed section catalogue below gives representative options and the differences between server and client roles. Discovery, persistence and inspection all use these same scopes.
+The detailed section catalogue below gives representative options and the differences between the server and client sides. Discovery, persistence and inspection all use these same scopes.
 
 \index{listen()@\texttt{listen()}!parameterless}
 \index{connect()@\texttt{connect()}!parameterless}
@@ -236,11 +236,11 @@ It contains concerns that are not specific to one network endpoint. Examples inc
 - daemonization,
 - user and group selection for daemonized runs.
 
-These options form the operational envelope in which all configured communication roles live.
+These options form the operational envelope in which all instances operate.
 
 They answer questions about the process as a program, not about a particular server port, peer address, Unix-domain path, Bluetooth channel, or TLS certificate used by one instance.
 
-Instance scope belongs to one named instance. A server listens and accepts; a client connects. Their role identity appears in help, and their endpoint sections reflect that difference.
+Instance scope belongs to one named instance. A server listens and accepts; a client connects. Their server/client side appears in help, and their endpoint sections reflect that difference.
 
 It contains concerns such as:
 
@@ -250,9 +250,9 @@ It contains concerns such as:
 - configurability,
 - and the set of sections that configure the instance.
 
-The server/client object in application code is the handle. In the configuration model, a named instance is the externally addressable configuration identity of the communication role that the handle configures and registers.
+The server/client object in application code is the handle. In the configuration model, a named instance has an externally addressable configuration identity created through that handle.
 
-That distinction matters. The configuration system gives a communication role an operational address instead of merely decorating a local C++ variable.
+That distinction matters. The configuration system gives an instance an operational address instead of merely decorating a local C++ variable.
 
 Section scope belongs to one aspect of one instance.
 
@@ -264,7 +264,7 @@ This is also a useful discovery exercise: start with a named instance’s help, 
 \index{operational envelope}
 
 \index{instance configuration}
-\index{configured communication role}
+\index{instance!configuration}
 \index{required options}
 
 Consider the operational name in this declaration:
@@ -296,9 +296,9 @@ Treat such a rename as an application-interface change, even when the C++ progra
 | `server` | listen and accept behavior |
 | `tls` | TLS connection-layer configuration |
 
-The available sections depend on the concrete role and layer combination. Use the relevant scope’s help to discover the actual options.
+The available sections depend on the server/client side and layer combination. Use the relevant scope’s help to discover the actual options.
 
-The `local` section describes the local side of the communication role.
+The `local` section describes the local endpoint of the instance.
 
 For a server, it is usually the most important endpoint section because it describes where the server binds or listens.
 
@@ -345,7 +345,7 @@ Representative concerns include:
 
 The exact set depends on the concrete instance.
 
-The section groups behavior that is closer to the socket and flow-control machinery than to the application protocol. A retry timeout, for example, is not part of an echo protocol. It belongs to the machinery that tries to establish or maintain a communication role.
+The section groups behavior that is closer to the socket and flow-control machinery than to the application protocol. A retry timeout, for example, is not part of an echo protocol. It belongs to the machinery that advances an activation flow.
 
 The `server` section controls listening and acceptance:
 
@@ -418,7 +418,7 @@ Together with `--show-config` and `--write-config`, the command line becomes a w
 
 Missing required values are reported at the scope that owns them.
 
-A schematic server-side session shows the idea. Here the executable is `echoserver` and the named server instance is `echo`; the exact diagnostic wording depends on the target application:
+A schematic server-side session shows the idea. Here the executable is `echoserver` and the named instance is `echo`; the exact diagnostic wording depends on the target application:
 
 ```sh
 $ echoserver

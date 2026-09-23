@@ -13,7 +13,7 @@
 
 ### The build structure as architecture
 
-Part IX assembled applications into systems. Those systems must now be built, linked, installed and consumed. CMake records their component choices; public headers expose the C++ abstractions an application can name. Read the two together to distinguish runtime infrastructure, protocol layers, composed stream connections, optional features and application targets.
+Part IX assembled applications into systems. Those systems must now be built, linked, installed and consumed. CMake records their component choices; public headers expose the C++ abstractions an application can name. Read the two together to distinguish runtime infrastructure, protocol layers, composed stream implementations, optional features and application targets.
 
 \index{build structure}
 \index{architecture!build structure}
@@ -181,7 +181,7 @@ logger
                 `-- mqtt-client-websocket, shared path
 ```
 
-Follow the shared paths rather than treating the drawing as one stack. `websocket` reaches `utils`, its server side also reaches HTTP, and MQTT-over-WebSocket joins MQTT and WebSocket roles. HTTP, MQTT, database and composed stream connections attach to different parts of the shared runtime surface.
+Follow the shared paths rather than treating the drawing as one stack. `websocket` reaches `utils`, its server side also reaches HTTP, and MQTT-over-WebSocket joins MQTT and WebSocket roles. HTTP, MQTT, database and composed stream implementations attach to different parts of the shared runtime surface.
 
 ### Public header hierarchy mirrors the component hierarchy
 
@@ -220,18 +220,18 @@ In the source tree, examples and framework code include headers relative to the 
 | IPv6 legacy stream socket | `<net/in6/stream/legacy/SocketServer.h>` / `<net/in6/stream/legacy/SocketClient.h>` | `snodec::net-in6-stream-legacy` | IPv6 stream sockets over the unencrypted legacy stream layer. |
 | Unix-domain legacy stream socket | `<net/un/stream/legacy/SocketServer.h>` / `<net/un/stream/legacy/SocketClient.h>` | `snodec::net-un-stream-legacy` | Local stream sockets over the legacy stream layer. |
 | Unix-domain datagram socket | `<net/un/dgram/Socket.h>` | `snodec::net-un-dgram` | Local datagram socket surface. |
-| HTTP server/client side | `<web/http/legacy/in/Server.h>` / `<web/http/legacy/in/Client.h>` | `snodec::http-server` or `snodec::http-client`, plus the selected composed stream component when the source directly names one | Raw HTTP implementation over a composed stream connection. Unlike Express, raw HTTP does not use a separate concrete Express stream target. |
-| EventSource client | `<web/http/legacy/in/EventSource.h>` | `snodec::http-client`, plus the selected composed stream component when needed | SSE client side over the selected HTTP client connection. Server-side SSE is ordinary HTTP response streaming, not a separate component. |
+| HTTP server/client side | `<web/http/legacy/in/Server.h>` / `<web/http/legacy/in/Client.h>` | `snodec::http-server` or `snodec::http-client`, plus the selected composed stream component when the source directly names one | Raw HTTP implementation over a composed stream stack. Unlike Express, raw HTTP does not use a separate concrete Express stream target. |
+| EventSource client | `<web/http/legacy/in/EventSource.h>` | `snodec::http-client`, plus the selected composed stream component when needed | SSE client implementation over the selected HTTP stream stack. Server-side SSE is ordinary HTTP response streaming, not a separate component. |
 | Express base layer | `<express/WebApp.h>` and other base Express headers | `snodec::http-server-express` | Express-like routing and middleware layer above the HTTP server surface. |
 | Express IPv4 legacy WebApp | `<express/legacy/in/WebApp.h>` | `snodec::http-server-express-legacy-in` | Express-like server over IPv4 legacy stream. The concrete target owns both the stream selection and the Express base layer. |
 | Express IPv4 TLS WebApp | `<express/tls/in/WebApp.h>` | `snodec::http-server-express-tls-in` | Express-like server over IPv4 TLS stream. |
-| WebSocket base | `<web/websocket/SubProtocolFactory.h>` and related base WebSocket headers | `snodec::websocket` | Shared WebSocket/subprotocol machinery. This alone is not a concrete server or client side. |
+| WebSocket base | `<web/websocket/SubProtocolFactory.h>` and related base WebSocket headers | `snodec::websocket` | Shared WebSocket/subprotocol machinery. This alone is not a concrete server or client implementation. |
 | WebSocket server/client side | `<web/websocket/server/SubProtocol.h>` / `<web/websocket/client/SubProtocol.h>` | `snodec::websocket-server` or `snodec::websocket-client` | Server-side or client-side WebSocket upgrade/subprotocol support. |
 | MQTT shared layer | `<iot/mqtt/Mqtt.h>` / `<iot/mqtt/Topic.h>` | `snodec::mqtt` | Shared MQTT packet/session/protocol machinery. This component is available only when the MQTT dependency gate is satisfied. |
-| MQTT native client | `<iot/mqtt/client/Mqtt.h>` | `snodec::mqtt-client` | Native MQTT client side. |
-| MQTT native server | `<iot/mqtt/server/Mqtt.h>` | `snodec::mqtt-server` | Native MQTT server side. |
-| MQTT-over-WebSocket client | `<iot/mqtt/client/SubProtocol.h>` plus the MQTT client side header directly named by the application | `snodec::mqtt-client-websocket` | MQTT client side carried through a WebSocket subprotocol. |
-| MQTT-over-WebSocket server | `<iot/mqtt/server/SubProtocol.h>` plus the MQTT server side header directly named by the application | `snodec::mqtt-server-websocket` | MQTT server side carried through a WebSocket subprotocol. |
+| MQTT native client | `<iot/mqtt/client/Mqtt.h>` | `snodec::mqtt-client` | Native MQTT client implementation. |
+| MQTT native server | `<iot/mqtt/server/Mqtt.h>` | `snodec::mqtt-server` | Native MQTT server implementation. |
+| MQTT-over-WebSocket client | `<iot/mqtt/client/SubProtocol.h>` plus the MQTT client header directly named by the application | `snodec::mqtt-client-websocket` | MQTT client implementation carried through a WebSocket subprotocol. |
+| MQTT-over-WebSocket server | `<iot/mqtt/server/SubProtocol.h>` plus the MQTT server header directly named by the application | `snodec::mqtt-server-websocket` | MQTT server implementation carried through a WebSocket subprotocol. |
 | MariaDB application state | `<database/mariadb/MariaDBClient.h>` | `snodec::db-mariadb` | MariaDB persistence boundary for application state. This component is available only when the MariaDB client library is found. |
 
 ### Namespaced targets are the consumer-facing interface
@@ -259,7 +259,7 @@ target_link_libraries(myapp
 )
 ```
 
-This selects Express-like HTTP over an IPv4 legacy stream connection. Include a lower socket header only if the source directly names that socket abstraction.
+This selects Express-like HTTP over an IPv4 legacy stream implementation. Include a lower socket header only if the source directly names that socket abstraction.
 
 \index{PUBLIC@\texttt{PUBLIC}}
 \index{PRIVATE@\texttt{PRIVATE}}
@@ -276,7 +276,7 @@ The central rule is simple:
 The target that needs a dependency should declare it. The source file that names an abstraction should include the public header that owns that abstraction.
 :::
 
-Select the protocol/application component, composed stream connection and features directly used by the application. The selected targets propagate their dependencies.
+Select the protocol/application component, composed stream implementation and features directly used by the application. The selected targets propagate their dependencies.
 
 ::: {.snodec-checklist title="Package-boundary checklist"}
 - Does the component declare its own dependencies?
@@ -285,7 +285,7 @@ Select the protocol/application component, composed stream connection and featur
 - Does the package export match the architecture?
 :::
 
-Two mistakes violate this ownership: omitting a required stream component, and manually repeating every lower dependency or header. The concrete `http-server-express-legacy-in` target avoids both by owning the IPv4 legacy stream connection and Express base composition.
+Two mistakes violate this ownership: omitting a required stream component, and manually repeating every lower dependency or header. The concrete `http-server-express-legacy-in` target avoids both by owning the IPv4 legacy stream composition and Express base composition.
 
 ### Core, network, and transport composition
 

@@ -375,7 +375,7 @@ The ordinary `sendToPeer(...)` surface remains useful when connection failure is
 The line context needs its own receive buffer, but a later measurement context may also need a reference to a shared application model. Who supplies that reference, and how long must the model remain alive? Chapter 10 follows those questions through factory construction. The context's parsing behavior stays here; the next chapter explains how each newly arriving connection receives the dependencies that behavior needs.
 
 ::: {.snodec-remember title="What to remember"}
-- The context implements protocol behavior; it does not own the server/client side or reimplement the connection.
+- The context implements protocol behavior; it does not control activation flows or reimplement the connection.
 - Context code should be event-oriented: lifecycle, input, signals, read errors, and write errors are separate responsibilities.
 - `onReceivedFromPeer()` should consume input intentionally and report its byte progress; buffered partial input is not the same as a completed protocol message.
 - Protocol state should be explicit, connection-local when possible, and named in protocol terms.

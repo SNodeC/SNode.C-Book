@@ -18,13 +18,13 @@ The echo pair supplies a first working example. We now connect its lifetimes to 
 
 The echo program introduced a public type, an activation path, a factory, and a context. This chapter asks how those pieces relate when the program has several peers, several operations, and lifetimes that no longer match the local variables in `main()`.
 
-Memorizing names can work for the first small example, but it does not scale. A useful mental model tells you what kind of thing each part is, what job it has, and how control and data move through the system. Read SNode.C as an event-driven framework in which instances register communication intent, the runtime advances that intent, and per-connection contexts express protocol behavior above selectable lower layers.
+Memorizing names can work for the first small example, but it does not scale. A useful mental model tells you what kind of thing each part is, what job it has, and how control and data move through the system. Read SNode.C as an event-driven framework in which application code uses endpoint handles to register communication intent, the runtime advances that intent, and per-connection contexts express protocol behavior above selectable lower layers.
 
 As shown in Figure \ref{fig:snodec-runtime-model}, application code uses a visible handle to configure an instance and start an activation flow. The runtime advances that flow; a concrete connection can appear; the factory creates a context; and the context expresses protocol behavior for that peer.
 
 ![From endpoint configuration through activation to per-connection behavior. Arrows show the creation and use path, not a chain of exclusive ownership or nested lifetimes.](assets/figures/pdf/fig-02-runtime-instance-connection-context.pdf){#fig:snodec-runtime-model width=82% latex-placement="tbp"}
 
-The figure keeps the instance separate from each explicit activation. One endpoint can have several flows, and a listening flow can end while a connection it accepted continues. The factory is shared by the instance and used when a connection needs a context; its position in the drawing does not make it a child owned by each connection.
+The figure keeps the instance separate from each explicit activation. One instance can have several flows, and a listening flow can end while a connection it accepted continues. The factory is shared by the instance and used when a connection needs a context; its position in the drawing does not make it a child owned by each connection.
 
 \index{runtime}
 \index{core::SNodeC@\texttt{core::SNodeC}}
@@ -95,7 +95,7 @@ For stream communication, a user context derives from `core::socket::stream::Soc
 The derived class supplies protocol behavior through lifecycle methods such as `onConnected()` and `onDisconnected()` and through protocol-specific receive handling.
 
 ::: {.snodec-rule title="Instance/context boundary"}
-The instance is the runtime-facing communication role; the context expresses protocol behavior for a concrete connection.
+The instance supplies configuration and runtime identity; the context expresses protocol behavior for a concrete connection.
 :::
 
 
@@ -104,11 +104,11 @@ The instance is the runtime-facing communication role; the context expresses pro
 \index{context construction}
 
 
-A `SocketContextFactory` creates contexts because a context belongs to a connection, and connections appear dynamically. A server may accept many peers over time; each peer needs its own protocol endpoint object. The indirection connects a longer-lived communication role to shorter-lived per-connection protocol state.
+A `SocketContextFactory` creates contexts because a context belongs to a connection, and connections appear dynamically. A server may accept many peers over time; each peer needs its own protocol endpoint object. The indirection connects a longer-lived instance to shorter-lived per-connection protocol state.
 
 
 
-A server instance can produce many connections over time; a client can lose a connection and reconnect. Each connection therefore has its own protocol state. A context should not be used as a global protocol singleton.
+An instance on the server side can produce many connections over time; a client can lose a connection and reconnect. Each connection therefore has its own protocol state. A context should not be used as a global protocol singleton.
 
 The running measurement example adds another lifetime. A peer context may hold a partial record while bytes arrive. Once a value is parsed, an application model shared by the input contexts can assign its acceptance order. Construct that model outside the per-peer factory and keep it alive through every callback that uses it. Creating a model in each context would restart the sequence for each peer.
 
@@ -130,9 +130,9 @@ A stream application starts by preparing the framework runtime:
 core::SNodeC::init(argc, argv);
 ```
 
-Create the server or client handles next. A small example may use one of each; a larger application may configure an HTTP server, an MQTT client, and a WebSocket bridge. Each handle exposes configuration and registers operations for its role.
+Create the server or client handles next. A small example may use one of each; a larger application may configure an HTTP server, an MQTT client, and a WebSocket bridge. Each handle exposes configuration and registers activation flows for its instance.
 
-A server calls `listen(...)`; a client calls `connect(...)`. They set addresses, callbacks, backlog or peer information where appropriate and enter the flow-controller path. The application asks the runtime to advance the role instead of performing the whole network interaction on this stack. It then enters event processing:
+A server calls `listen(...)`; a client calls `connect(...)`. They set addresses, callbacks, backlog or peer information where appropriate and enter the flow-controller path. The application asks the runtime to advance the flow instead of performing the whole network interaction on this stack. It then enters event processing:
 
 ```cpp
 core::SNodeC::start();

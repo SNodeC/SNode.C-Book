@@ -43,7 +43,7 @@ A simplified view of the selected application targets is:
 | `database/testmariadb` | `db-mariadb`, built when MariaDB support is available | MariaDB API and persistence demonstration |
 | echo family | `echosocketcontext` + generated `net-...-stream-...` combinations | one protocol model across network families and connection variants |
 
-Link lines select direct application-facing components, not every implementation dependency. Include blocks likewise name the public abstractions the source directly uses. For a high-level protocol application, the direct choices are usually its protocol/application component and composed stream connection.
+Link lines select direct application-facing components, not every implementation dependency. Include blocks likewise name the public abstractions the source directly uses. For a high-level protocol application, the direct choices are usually its protocol/application component and composed stream implementation.
 
 Consider this in-tree build fragment:
 
@@ -58,7 +58,7 @@ target_link_libraries(
 )
 ```
 
-It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream connection. The equivalent external form uses exported `snodec::...` targets:
+It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream implementation. The equivalent external form uses exported `snodec::...` targets:
 
 ```cmake
 find_package(snodec REQUIRED
@@ -186,7 +186,7 @@ Chapter 3 introduced `EchoSocketContext` through the deliberately simplified `ec
 
 The repository echo family generalizes the same idea. The full echo application structure uses a shared echo protocol model, generated server executables, generated client executables, several network families, legacy and TLS stream modes, and compile definitions for the selected combination.
 
-Compare one generated target’s compile definitions with the common source. The selection should change the composed stream connection aliases without introducing another echo parser.
+Compare one generated target’s compile definitions with the common source. The selection should change the composed stream handle aliases without introducing another echo parser.
 
 The build includes IPv4, IPv6, and Unix-domain variants by default. Bluetooth L2CAP and RFCOMM echo variants are added only when BlueZ support is available. That conditionality matters because it is part of the application shape: not every generated executable exists in every build.
 
@@ -518,7 +518,7 @@ The exact available instances depend on the build configuration and enabled role
 
 The names encode three dimensions: address family (`IPv4`, `IPv6`, or Unix-domain), protocol role (`MQTT` or `HTTP`), and security mode (`legacy`/plain or TLS).
 
-Constructing a named instance registers that name in the configuration hierarchy; activating it creates a separate flow. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
+Constructing an endpoint handle with a name registers its instance in the configuration hierarchy; activating it creates a separate flow. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
 
 ### Integration and topology: MQTTIntegrator and MQTTBridge
 

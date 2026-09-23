@@ -66,7 +66,7 @@ The listings below show the changed integration and new input code. Reuse the un
 
 ### Build target and composition root
 
-The extended target adds the Unix-domain stream component and measurement-input sources. Its dependency set now declares the new server side alongside HTTP and MQTT.
+The extended target adds the Unix-domain stream component and measurement-input sources. Its dependency set now declares the new measurement-input role alongside HTTP and MQTT.
 
 \Needspace{9\baselineskip}
 
@@ -190,7 +190,7 @@ The new role receives the same `MeasurementModel`, so its accepted measurements 
 
 ### The server and its context factory
 
-The server startup files play the same role for Unix-domain input that `MiniGatewayMqttClient.*` plays for the MQTT client side. They hide the concrete SNode.C server-template spelling behind a small book-friendly function.
+The server startup files play the same role for Unix-domain input that `MiniGatewayMqttClient.*` plays for the MQTT uplink role. They hide the concrete SNode.C server-template spelling behind a small book-friendly function.
 
 \Needspace{9\baselineskip}
 
@@ -555,7 +555,7 @@ Now send `21.5,43.0,3.72,9000` followed by a newline. The observed sequence shou
 
 An injection needs an independent observation: compare the SSE or MQTT payload with `/status`. A successful write alone gives no acceptance acknowledgement.
 
-When the test fails, diagnose the boundary that owns the failure. If the Unix-domain socket file is missing, inspect the `measurement-input` server side. If the line is rejected, inspect the CSV parser and warning log. If `/status` changes but SSE does not, inspect the live web observer path. If SSE works but MQTT output does not, inspect the MQTT connection and broker state.
+When the test fails, diagnose the boundary that owns the failure. If the Unix-domain socket file is missing, inspect the `measurement-input` named instance. If the line is rejected, inspect the CSV parser and warning log. If `/status` changes but SSE does not, inspect the live web observer path. If SSE works but MQTT output does not, inspect the MQTT connection and broker state.
 
 ### Deployment and independent lifetimes
 

@@ -14,7 +14,7 @@
 
 MQTT changes the unit of communication. The application is no longer mainly handling requests, routes, event streams, or upgraded message frames; it is exchanging broker-mediated publications and subscriptions.
 
-MQTT is not part of the web stack. It has its own packet vocabulary, session behavior, topic model, keep-alive timing, publish flow, and client/server roles. But the architectural discipline does not change.
+MQTT is not part of the web stack. It has its own packet vocabulary, session behavior, topic model, keep-alive timing, publish flow, and client/server sides. But the architectural discipline does not change.
 
 Native MQTT combines a stream `SocketContext` with `MqttContext`; MQTT over WebSocket combines a WebSocket subprotocol role with the same MQTT-facing bridge. The former carries MQTT directly over a stream, while the latter adds HTTP upgrade and WebSocket framing. Chapter 21 develops that carrier choice.
 
@@ -28,7 +28,7 @@ Native MQTT combines a stream `SocketContext` with `MqttContext`; MQTT over WebS
 \index{MQTT!topics}
 \index{MQTT!sessions}
 
-The shared MQTT module supplies packet structure, deserialization, sessions and topics. Server and client roles specialize that foundation:
+The shared MQTT module supplies packet structure, deserialization, sessions and topics. Server and client implementations specialize that foundation:
 
 | Shared concern | Meaning |
 |---|---|

@@ -186,7 +186,7 @@ app.get("/ws", [](const std::shared_ptr<Request>& req, const std::shared_ptr<Res
 });
 ```
 
-The HTTP route is still visible at the boundary. After a successful upgrade, the selected upgraded socket context owns the connection. The route does not become the message loop of the upgraded protocol.
+The HTTP route is still visible at the boundary. After a successful upgrade, the selected upgraded socket context implements protocol behavior on the connection. The route does not become the message loop of the upgraded protocol.
 
 On the client side, the HTTP client prepares an upgrade request and names the target upgrade protocol. For WebSocket that target name is `websocket`:
 
@@ -269,7 +269,7 @@ The options bound start-line bytes, header-line bytes, the complete header secti
 
 Start-line and header-line limits include their wire terminators. The total header-byte limit includes the terminating empty line and is applied separately to a chunked trailer section. Field-count limits also apply separately to headers and trailers. Body limits count decoded entity bytes, not chunk framing.
 
-HTTP server instances additionally snapshot `HttpServerPolicy`: `maximum-pending-requests`, `allow-chunked-transfer`, and `allow-pipelining`. Pending requests include the request currently delivered to application middleware until its response completes. A zero pending-request maximum is unlimited; chunked transfer and pipelining are allowed by default.
+HTTP server contexts additionally snapshot `HttpServerPolicy`: `maximum-pending-requests`, `allow-chunked-transfer`, and `allow-pipelining`. Pending requests include the request currently delivered to application middleware until its response completes. A zero pending-request maximum is unlimited; chunked transfer and pipelining are allowed by default.
 
 These checks belong before or within protocol processing. Valid admitted requests still use the normal Express middleware path; the limits do not create a second application-admission callback. With pipelining disabled, an additional buffered request is not delivered while the first is outstanding, and the connection closes after the current response according to that policy.
 

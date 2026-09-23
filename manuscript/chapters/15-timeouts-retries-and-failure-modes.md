@@ -13,7 +13,7 @@
 
 Reliable communication includes more than establishing a connection; it also means deciding what happens when establishment, operation, shutdown, or recovery does not complete as expected.
 
-Communication is not a single action. It unfolds over time. Constructing an endpoint handle with a name registers a named instance. An explicit call may then activate a flow for that instance. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client instance may reconnect. A failed activation attempt may be retried. An activation flow may be stopped.
+Communication is not a single action. It unfolds over time. Constructing an endpoint handle with a name registers a named instance. An explicit call may then activate a flow for that instance. A connection may be established below that instance. A peer may become ready. A protocol context may exchange data. A write may stall. A read may time out. A connection may close. A client flow may establish a replacement connection. A failed activation attempt may be retried. An activation flow may be stopped.
 
 ### The time-and-failure map
 
@@ -27,7 +27,7 @@ Communication is not a single action. It unfolds over time. Constructing an endp
 |---|---|---|
 | timeout | How long may this phase wait? | connection, context, TLS, connect attempt, or protocol logic |
 | retry | Should a failed activation attempt be tried again? | server/client flow controller |
-| reconnect | Should a client instance restore a relationship after disconnect? | client flow controller |
+| reconnect | Should a client flow establish another connection after disconnect? | client flow controller |
 | failure state | What kind of outcome happened? | status/state model |
 | disablement | Is this role intentionally inactive? | configuration/instance |
 | shutdown | How should an active connection end? | connection, TLS, or protocol |
@@ -63,7 +63,7 @@ A useful map is:
 
 An inactivity bound cannot substitute for a protocol response deadline. A connect timeout ends the current attempt; retry policy decides whether another attempt should follow its reported failure.
 
-Retry timing policy comes from the registered server or client instance. Each activation flow owns the timer and attempt state that apply that policy.
+Retry timing policy comes from the instance’s shared configuration. Each activation flow owns the timer and attempt state that apply that policy.
 
 For a server, that may mean retrying listen activation. For a client, that may mean retrying connect activation. This is activation behavior, but two explicit activations of the same instance retain separate controllers. Stopping one flow must not cancel the other. Neither timer belongs inside a peer's protocol context.
 
@@ -141,7 +141,7 @@ Server retry checks enablement, stopped-flow state, classified failure, retry-on
 | Instance kind | Retry focus | Reconnect focus |
 |---|---|---|
 | server | retry listen activation | normally not applicable |
-| client | retry connect activation | restore client side after disconnect |
+| client | retry connect activation | establish a new connection after disconnect |
 
 ### Retry timing policy
 
