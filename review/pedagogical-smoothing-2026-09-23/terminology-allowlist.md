@@ -1,56 +1,56 @@
-# Terminology allowlist — P1
+# Terminology allowlist — final P7 inventory
 
-Every remaining carrier use is listed below, including capitalization, plurals
-and preserved anchor IDs. Paths follow P2; line numbers record the P1 gate.
-No carrier use outside these locations is permitted.
+P1 inventory is preserved in terminology-allowlist-P1.md. Every remaining carrier occurrence follows; case, plurals and immutable IDs are included. No other learner use is permitted.
 
-| Location | Use | Reason |
+| File:line | Exact line | Reason |
 |---|---|---|
-| manuscript/frontmatter/conventions.md:37 | `/ **Carrier** / In the MQTT chapters only, the` | Canonical glossary entry |
-| manuscript/chapters/15-tls-across-the-framework.md:193 | `and protocol decisions {#carrier-and-protocol-decisions}` | Preserved heading ID |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:4 | `ckets, session state and carrier contexts divide responsibilities.` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:6 | `- **O3.** Choose carrier and delivery evidence for a broker` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:19 | `Chapter 21 develops that carrier choice.` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:36 | ` protocol object and the carrier underneath /` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:45 | `### `Mqtt` and its carriers` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:53 | `nt, it is connected to a carrier through `MqttContext` and either a` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:96 | ` protocol object and the carrier underneath /` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:99 | `ocol object to whichever carrier is used underneath, letting it rea` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:211 | `o a stream or to another carrier. The MQTT role itself shows the pr` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:231 | `/ carrier established / connection identity ` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:246 | `The WebSocket carrier substitutes a subprotocol role for` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:246 | `e remains the same; keep carrier selection separate from session an` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:284 | `to a native or WebSocket carrier.` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/21-mqtt-support-in-snodec.md:292 | ` control packet from its carrier through the deserializer to its MQ` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:11 | `\index{WebSocket!MQTT carrier}` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:25 | `n diagnostic cost of the carrier composition, and the reason to kee` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:30 | `frames. The point is the carrier contrast, not a split in MQTT sema` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:32 | `antics but use different carrier paths.](assets/figures/pdf/fig-07-` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:36 | `/ carrier / stream connection / WebSocket co` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:43 | `astructure requires that carrier, but adds upgrade configuration, s` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:63 | `le supplies the upgraded carrier surface. `MqttContext` supplies th` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:72 | `urface. MQTT sees either carrier through `MqttContext`, rather than` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:74 | `et is a message-oriented carrier. MQTT is a byte-oriented packet pr` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:110 | `ed bidirectional message carrier, framing, binary payload delivery,` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:156 | ` selecting the WebSocket carrier. The MQTT role remains an MQTT rol` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:168 | `apter, and the WebSocket carrier. The corresponding server-side com` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:210 | `he adapter while keeping carrier roles explicit.` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/22-mqtt-over-websocket.md:219 | `treating text as a valid carrier choice.` | MQTT native-stream versus WebSocket comparison |
-| manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md:133 | ` boundary {#choosing-the-carrier-at-each-boundary}` | Preserved heading ID |
+| manuscript/frontmatter/conventions.md:35 | / **Carrier** / In the MQTT chapters only, the native stream or WebSocket path beneath MQTT. This is the book's name for that comparison, not a framework API type. / | Canonical glossary entry |
+| manuscript/chapters/15-tls-across-the-framework.md:213 | ### Network family and protocol decisions {#carrier-and-protocol-decisions} | Preserved anchor ID |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:4 | - **O1.** Explain how MQTT packets, session state and carrier contexts divide responsibilities. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:6 | - **O3.** Choose carrier and delivery evidence for a brokered telemetry boundary. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:35 | This chapter uses **carrier** for the path beneath MQTT: either a native stream or WebSocket. It is a book term for that comparison, not a framework type. The native path supplies MQTT bytes over the stream connection. The WebSocket path first establishes its lower connection, upgrades HTTP and selects the WebSocket subprotocol. Those additional steps change how MQTT reaches its peer; CONNECT, subscription results and subscriber receipt still answer MQTT-level questions afterward. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:37 | We can now place the classes. The protocol object handles MQTT packet meaning. Its context bridge connects that object to the chosen carrier. Session and topic objects give names to protocol state and addressing within the broker conversation. A stream context or a WebSocket subprotocol supplies the corresponding integration below it. These are explanations of the exchange just traced, rather than prerequisites to memorizing packet names. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:58 | / MqttContext / bridge between the MQTT protocol object and the carrier underneath / | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:67 | ### Mqtt and its carriers | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:75 | It is the protocol object, not a socket callback and not the complete endpoint by itself. It owns MQTT-level lifecycle, packet delivery, session setup, publish acknowledgement flow, packet identifiers, keep-alive state, and distribution hooks. To become a concrete endpoint, it is connected to a carrier through MqttContext and either a native stream SocketContext or a WebSocket SubProtocol. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:105 | MqttContext bridges the protocol object to whichever carrier is used underneath, letting it read, write, end, or close without replacing the lower socket context. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:217 | The example deliberately omits the concrete lower connection setup. That setup decides how the MQTT role is attached to a stream or to another carrier. The MQTT role itself shows the protocol behavior: it sends CONNECT, waits for CONNACK, subscribes, publishes, handles incoming publishes, and sends DISCONNECT during shutdown. The complete companion role example is named MQTT-ClientRole. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:229 | / carrier established / connection identity and endpoint / | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:250 | The WebSocket carrier substitutes a subprotocol role for the native stream context. The MQTT-facing bridge remains the same; keep carrier selection separate from session and topic policy. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:250 | The WebSocket carrier substitutes a subprotocol role for the native stream context. The MQTT-facing bridge remains the same; keep carrier selection separate from session and topic policy. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:300 | - Mqtt owns protocol meaning; MqttContext connects it to a native or WebSocket carrier. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/21-mqtt-support-in-snodec.md:308 | 1. **Review (O1).** Trace one received control packet from its carrier through the deserializer to its MQTT role. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:11 | \index{WebSocket!MQTT carrier} | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:35 | Each successful step leaves later steps unproven. This is the main diagnostic cost of the carrier composition, and the reason to keep its boundaries visible in both logs and tests. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:40 | Figure \ref{fig:native-mqtt-vs-mqtt-over-websocket} shows the distinction. Native MQTT writes MQTT packets directly to a stream or TLS stream. MQTT over WebSocket reaches the same MQTT packet and session semantics through an HTTP upgrade path and WebSocket frames. The point is the carrier contrast, not a split in MQTT semantics. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:42 | ![Native MQTT and MQTT over WebSocket share MQTT protocol semantics but use different carrier paths.](assets/figures/pdf/fig-07-native-mqtt-vs-mqtt-over-websocket.pdf){#fig:native-mqtt-vs-mqtt-over-websocket width=90% latex-placement="tbp"} | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:46 | / carrier / stream connection / WebSocket connection after HTTP upgrade / | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:53 | A native client avoids HTTP upgrade and WebSocket framing when both endpoints can use the native service directly. A WebSocket path is useful when a browser-facing or existing HTTP infrastructure requires that carrier, but adds upgrade configuration, subprotocol selection, and another framing boundary. Sharing MQTT semantics does not make those operating costs identical. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:82 | The role parameter selects the server or client WebSocket surface. MQTT sees either carrier through MqttContext, rather than embedding WebSocket-specific behavior in the protocol object. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:84 | WebSocket is a message-oriented carrier. MQTT is a byte-oriented packet protocol. The adapter has to bridge those two views. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:120 | / WebSocket / upgraded bidirectional message carrier, framing, binary payload delivery, and control behavior / | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:188 | Reuse the MQTT role from Chapter 21 when selecting the WebSocket carrier. The MQTT role remains an MQTT role; the WebSocket-carried variant adds the WebSocket subprotocol component that lets MQTT packets travel through an HTTP/WebSocket upgrade path. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:200 | The three client components supply the MQTT role, its WebSocket adapter, and the WebSocket carrier. The corresponding server-side components are: | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:222 | - Server and client aliases share the adapter while keeping carrier roles explicit. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/22-mqtt-over-websocket.md:231 | 4. **Lab (O2, O3).** Send the same CONNACK bytes as text. Expect a wrong-opcode diagnostic and protocol-error close 1002, rather than treating text as a valid carrier choice. | MQTT stream/WebSocket comparison |
+| manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md:143 | ### Choosing the connection at each boundary {#choosing-the-carrier-at-each-boundary} | Preserved anchor ID |
 
-## Context-dependent survivors
+## Other immutable vocabulary identifiers
 
-All remaining uses mean system-design responsibilities:
+- manuscript/chapters/04-the-snodec-runtime-mental-model.md:68: `#configured-endpoints-and-activation-flows` is the preserved topic ID; the heading uses canonical wording.
+- manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md:14: `#from-configured-roles-to-visible-runtime-behavior` is the preserved topic ID; the heading uses canonical wording.
 
-- manuscript/chapters/01-why-snodec-exists.md:54: SNode.C is not trying to replace every C++ networking approach. It is most useful when an application needs explicit communication roles, layered protocol structure, runtime-visible configuration, diagnostics, and several transport or protocol surfaces within one architectural model.
+The preserved lower-family spellings are `{#the-lower-family-transfer-model}`, `{#designing-for-lower-family-transfer}`, `fig:snodec-lower-family-transfer` (definition/reference), and `assets/figures/pdf/fig-04-lower-family-transfer-model.pdf` in Chapter 12. They are reference identities, not prose terminology.
+
+## Context-dependent terms
+
+Each prose survivor below was read in context and means a system-design responsibility. The Ch21 client-role spelling occurs only in an immutable heading ID. There are no server-instance or client-instance survivors. Exact protocol API names retain their spelling.
+
+- manuscript/chapters/01-why-snodec-exists.md:68: SNode.C is not trying to replace every C++ networking approach. It is most useful when an application needs explicit communication roles, layered protocol structure, runtime-visible configuration, diagnostics, and several transport or protocol surfaces within one architectural model.
 - manuscript/chapters/13-configuring-applications-and-named-instances.md:6: - **O3.** Decide which communication roles need independent configuration and lifecycle control.
 - manuscript/chapters/13-configuring-applications-and-named-instances.md:15: Configuration is where architectural choices become adjustable by the operator. The context still implements the protocol and the factory creates contexts, but the application must choose its communication roles, endpoint values, connection variants and enablement.
-- manuscript/chapters/25-reading-complete-snodec-applications.md:315: The role `database-state` is intentionally different from `admin-http` or `mqtt-ingest`. It is not the same kind of communication role as a socket server or client. It names the persistence boundary that owns durable application state.
+- manuscript/chapters/21-mqtt-support-in-snodec.md:161: ### A compact MQTT client {#a-compact-mqtt-client-role}
+- manuscript/chapters/26-from-applications-to-systems-mqttsuite.md:47: The role `database-state` is intentionally different from `admin-http` or `mqtt-ingest`. It is not the same kind of communication role as a socket server or client. It names the persistence boundary that owns durable application state.
 - manuscript/chapters/30-building-minigateway.md:14: ### One model, several communication roles
-- manuscript/chapters/30-building-minigateway.md:1235: - an MQTT client role for measurement input and output;
+- manuscript/chapters/30-building-minigateway.md:1275: - an MQTT client role for measurement input and output;
 - manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:30: The new concern is local measurement injection through a Unix-domain stream socket. That concern belongs to a new socket-server role. It does not belong in the HTTP route code, the SSE response path, or the MQTT client context.
-
-No server-instance or client-instance forms remain. Exact `Role` API names and
-role enum values retain their spelling; these name protocol-side choices in code.
-Stable heading IDs, figure IDs and historical filenames containing lower-family
-wording remain resolvable and are not renamed for a vocabulary count.

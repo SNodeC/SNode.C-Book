@@ -14,7 +14,7 @@ Read these samples in the order below. Chapter numbers refer to the complete man
 | 30. Building MiniGateway | Source assembly around one shared model, with complete listings and HTTP/SSE/MQTT roles | Observe local state without a broker and reject invalid measurements before acceptance |
 | 32. Architectural Judgment: Choosing the Right Layer and Boundary | Decision tables applied to ownership, lifetime, and operational requirements | Compare shared and separate model instances; run the integrated HTTP/Unix/SSE checkpoint, then justify a privileged collector's process boundary |
 
-Each sample opens with three observable objectives and closes with a recap and five mapped exercises: two review questions, two labs, and one design problem. Public conceptual answers, lab commands with expected outcomes, and design discussions accompany the source under `companion/exercises/`. Try the exercises before consulting their solutions. The four newly split chapters complete this teaching pattern at the P3 gate. The epilogue is a closing essay.
+Each sample opens with three observable objectives and closes with a recap and five mapped exercises: two review questions, two labs, and one design problem. Public conceptual answers, lab commands with expected outcomes, and design discussions accompany the source under `companion/exercises/`. Try the exercises before consulting their solutions. The four newly split chapters follow the same teaching pattern. The epilogue is a closing essay.
 
 ```{=latex}
 \AddToHook{cmd/subsection/before}{\clearpage}

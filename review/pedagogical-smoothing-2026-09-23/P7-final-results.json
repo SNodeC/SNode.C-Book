@@ -1,0 +1,78 @@
+{
+  "source_commit": "07ca9a2936ee72582df7d159cb06666fe23e30f8",
+  "installation": "build/rebaseline-R2-07ca9a29-followup11/install-gcc",
+  "initial_attempt": "P7-R2-results.json",
+  "resolved_failure": "Extracted package lacked the two active reference registries; replace historical packaging paths and rerun package/extracted hygiene. No assertions changed.",
+  "checks": {
+    "metrics": {
+      "exit_code": 0,
+      "log": "metrics-after-final.json"
+    },
+    "references": {
+      "exit_code": 0,
+      "log": "P7-references-final.log"
+    },
+    "source-alignment": {
+      "exit_code": 0,
+      "log": "P7-source-alignment-final.log"
+    },
+    "hygiene": {
+      "exit_code": 0,
+      "log": "P7-hygiene-final.log"
+    },
+    "companion": {
+      "exit_code": 0,
+      "log": "P7-R2-companion.log"
+    },
+    "package": {
+      "exit_code": 0,
+      "log": "P7-package-final.log"
+    },
+    "test-chapter-references": {
+      "exit_code": 0,
+      "log": "P7-test-references-final.log"
+    },
+    "test-manuscript-metrics": {
+      "exit_code": 0,
+      "log": "P7-test-metrics-final.log"
+    },
+    "labs": {
+      "exit_code": 0,
+      "log": "P7-R2-labs.log"
+    },
+    "teaching": {
+      "exit_code": 0,
+      "log": "P7-R2-teaching.log"
+    },
+    "behavior": {
+      "exit_code": 0,
+      "log": "P7-R2-behavior.log"
+    },
+    "lifetime": {
+      "exit_code": 0,
+      "log": "P7-R2-lifetime.log"
+    },
+    "extracted-hygiene": {
+      "exit_code": 0,
+      "log": "P7-extracted-hygiene-final.log"
+    },
+    "smoothing": {
+      "exit_code": 0,
+      "log": "P7-smoothing.log"
+    },
+    "test-smoothing": {
+      "exit_code": 0,
+      "log": "P7-test-smoothing.log"
+    },
+    "framework-freeze": {
+      "exit_code": 0,
+      "log": "P7-freeze-check.log"
+    }
+  },
+  "tokens": 110177,
+  "labs_passed": 66,
+  "labs_total": 66,
+  "waivers": [],
+  "prompt_unchanged": true,
+  "archive_sha256": "d6ef9280eb1fefc373eb1c9c5e2e445cd089aeacddb599be69c77dff4f5b031a"
+}

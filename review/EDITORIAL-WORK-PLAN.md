@@ -440,41 +440,41 @@ instruction remains in force; establish that separate scope when requested.
 The 32-chapter structure below supersedes the historical ledger that follows.
 Progress and evidence are maintained in the current pass’s chapter-ledger.md.
 
-| New | Pre-split | Chapter | Tokens at P2 | Floor | Cap | State |
-|---:|---|---|---:|---:|---:|---|
-| 1 | 1 | Why SNode.C Exists | 1820 | 2400 | 2670 | P2 mechanical; content pending |
-| 2 | 2 | Preparing Your Environment | 2952 | 3006 | 3250 | P2 mechanical; content pending |
-| 3 | 3 | Your First Working Program: The Echo Pair | 2565 | 3000 | 3270 | P2 mechanical; content pending |
-| 4 | 4 | The SNode.C Runtime Mental Model | 2121 | 2700 | 3050 | P2 mechanical; content pending |
-| 5 | 4 | Layers in Practice | 1952 | 2875 | 3325 | P2 mechanical; content pending |
-| 6 | 5 | Core Runtime and Event Processing | 2984 | 3500 | 3850 | P2 mechanical; content pending |
-| 7 | 6 | Network Families: Addresses, IPv4/IPv6, and Unix Sockets | 4183 | 4175 | 4250 | P2 mechanical; content pending |
-| 8 | 7 | Servers, Clients, and Connections | 3049 | 3150 | 3334 | P2 mechanical; content pending |
-| 9 | 8 | Bluetooth in SNode.C: RFCOMM and L2CAP | 2173 | 2120 | 2220 | P2 mechanical; content pending |
-| 10 | 9 | Writing `SocketContext` Classes Well | 3087 | 3040 | 3140 | P2 mechanical; content pending |
-| 11 | 10 | Writing `SocketContextFactory` Classes Well | 2259 | 2215 | 2315 | P2 mechanical; content pending |
-| 12 | 11 | Building the Same Protocol over Different Lower Layers | 2581 | 2505 | 2605 | P2 mechanical; content pending |
-| 13 | 12 | Configuring Applications and Named Instances | 4262 | 4300 | 4673 | P2 mechanical; content pending |
-| 14 | 13 | Logging, Diagnostics, and Runtime Introspection | 2820 | 2650 | 2800 | P2 mechanical; content pending |
-| 15 | 14 | TLS Across the Framework | 2578 | 2700 | 2900 | P2 mechanical; content pending |
-| 16 | 15 | Timeouts, Retries, and Failure Modes | 2993 | 3200 | 3390 | P2 mechanical; content pending |
-| 17 | 16 | The HTTP Layer | 2473 | 2450 | 2600 | P2 mechanical; content pending |
-| 18 | 17 | The Express-Like Framework | 2062 | 2050 | 2315 | P2 mechanical; content pending |
-| 19 | 18 | Server-Sent Events and Real-Time HTTP | 3268 | 3220 | 3370 | P2 mechanical; content pending |
-| 20 | 19 | WebSocket and Protocol Upgrade | 3001 | 2950 | 3100 | P2 mechanical; content pending |
-| 21 | 20 | MQTT Support in SNode.C | 2007 | 3000 | 3405 | P2 mechanical; content pending |
-| 22 | 21 | MQTT over WebSocket | 1783 | 2100 | 2282 | P2 mechanical; content pending |
-| 23 | 22 | Designing IoT Systems with Multiple Protocols | 2923 | 3100 | 3222 | P2 mechanical; content pending |
-| 24 | 23 | Database Support and Application State | 3815 | 3826 | 3926 | P2 mechanical; content pending |
-| 25 | 24 | Reading Complete SNode.C Applications | 2098 | 2450 | 2600 | P2 mechanical; content pending |
-| 26 | 24 | From Applications to Systems: MQTTSuite | 3540 | 3750 | 3941 | P2 mechanical; content pending |
-| 27 | 25 | CMake Components, Public Headers, and Linking Strategy | 3920 | 3700 | 4000 | P2 mechanical; content pending |
-| 28 | 26 | Deployment on Linux and OpenWrt | 3588 | 3546 | 3646 | P2 mechanical; content pending |
-| 29 | 27 | Testing, Debugging, and Benchmarking | 4166 | 4300 | 4500 | P2 mechanical; content pending |
-| 30 | 28 | Building MiniGateway | 3815 | 4400 | 4618 | P2 mechanical; content pending |
-| 31 | 29 | Extending MiniGateway with a New Network Role | 2541 | 2650 | 2841 | P2 mechanical; content pending |
-| 32 | 30 | Architectural Judgment: Choosing the Right Layer and Boundary | 1846 | 3100 | 3350 | P2 mechanical; content pending |
-| A | A | Reading and Extending the Framework | 3695 | 3900 | 3994 | P2 mechanical; content pending |
+| New | Old | Before | After | Floor | Cap | Rows | Change and dimension evidence | Remaining qualification |
+|---|---|---:|---:|---:|---:|---|---|---|
+| 1 | 1 | 1,821 | 2,402 | 2,400 | 2,670 | 2, 25, 18, 1, 15, 27 | Problem runway precedes terminology; Asio comparison points ahead. E/G: `manuscript/chapters/01-why-snodec-exists.md:14` | No runtime capacity claim. |
+| 2 | 2 | 3,006 | 3,194 | 3,006 | 3,250 | 5, 18, 1, 15, 27 | Setup route first; one source sidebar contains pin and alignment. G/L: `manuscript/chapters/02-preparing-your-environment.md:18` | Compiler/package prerequisites remain substantial. |
+| 3 | 3 | 2,568 | 3,001 | 3,000 | 3,270 | 2, 25, 16, 1, 15, 27 | Chronological echo trace before file walkthrough and vocabulary. E/G/T: `manuscript/chapters/03-your-first-working-program-the-echo-pair.md:21` | Full C++ files intentionally retain identifiers. |
+| 4 | 4a | 1,992 | 2,908 | 2,700 | 3,050 | 3, 2, 16, 1, 15, 27 | Runtime taxonomy separated; lifetimes, examples and log checkpoint. S/G/C: `manuscript/chapters/04-the-snodec-runtime-mental-model.md:13` | Flow versus connection still needs deliberate practice. |
+| 5 | 4b | 2,083 | 2,882 | 2,875 | 3,325 | 3, 2, 1, 15, 27 | Layer changes spaced through concrete comparisons and build observations. S/G: `manuscript/chapters/05-layers-in-practice.md:9` | TLS security details explicitly deferred to Ch15. |
+| 6 | 5 | 2,983 | 3,502 | 3,500 | 3,850 | 4, 28, 18, 1, 15, 27 | Wait/dispatch/work/timeout/cleanup model precedes source; model interface printed. G/E/C: `manuscript/chapters/06-core-runtime-and-event-processing.md:18` | Runtime source remains identifier-rich. |
+| 7 | 6 | 4,175 | 4,206 | 4,175 | 4,250 | 26, 1, 15, 27 | Comparison is introduced before use; preserved address treatment. S: `manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:254` | Bluetooth/device behavior is conditional on equipment. |
+| 8 | 7 | 3,084 | 3,184 | 3,150 | 3,334 | 31, 16, 1, 15, 27 | Single-peer timeline replaces repeated runtime taxonomy. T/C: `manuscript/chapters/08-servers-clients-and-connections.md:15` | Callback layers require careful reading. |
+| 9 | 8 | 2,170 | 2,173 | 2,120 | 2,220 | 1, 15, 1, 15, 27 | Canonical vocabulary and surrounding seams; structure preserved. L/C: `manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md:6` | No Bluetooth hardware certification. |
+| 10 | 9 | 3,089 | 3,087 | 3,040 | 3,140 | 1, 15, 1, 15, 27 | Context/connection wording checked in place; source-close reference model preserved. L/C: `manuscript/chapters/10-writing-socketcontext-classes-well.md:1` | No replacement treatment. |
+| 11 | 10 | 2,265 | 2,258 | 2,215 | 2,315 | 1, 15, 1, 15, 27 | Factory/object wording checked; lifetime treatment preserved. L/C: `manuscript/chapters/11-writing-socketcontextfactory-classes-well.md:1` | Shared state ownership remains explicit. |
+| 12 | 11 | 2,555 | 2,581 | 2,505 | 2,605 | 1, 15, 1, 15, 27 | Network-family and connection-variant distinctions normalized. L: `manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md:292` | Old anchor/figure IDs intentionally preserved. |
+| 13 | 12 | 4,273 | 4,475 | 4,300 | 4,673 | 10, 16, 1, 15, 27 | One running port/configuration example; duplicate taxonomy removed. G/C: `manuscript/chapters/13-configuring-applications-and-named-instances.md:22` | Full configuration vocabulary remains. |
+| 14 | 13 | 2,698 | 2,793 | 2,650 | 2,800 | 20, 18, 1, 15, 27 | Logging wording simplified; construction precedes inventory; migration voice removed. X/L: `manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md:59` | Reference API table retains density. |
+| 15 | 14 | 2,579 | 2,754 | 2,700 | 2,900 | 24, 15, 1, 15, 27 | Trust/identity distinction and application setup now visible before lab. T/C: `manuscript/chapters/15-tls-across-the-framework.md:50` | Local certificate fixtures are not deployment certification. |
+| 16 | 15 | 2,990 | 3,200 | 3,200 | 3,390 | 14, 1, 15, 27 | Application setters and CLI before internal recovery model. T: `manuscript/chapters/16-timeouts-retries-and-failure-modes.md:108` | Identifier increase is the requested compilable example. |
+| 17 | 16 | 2,471 | 2,478 | 2,450 | 2,600 | 17, 1, 15, 27 | Build housekeeping boxed; prose transition into Express. S: `manuscript/chapters/17-the-http-layer.md:307` | Protocol reference treatment preserved. |
+| 18 | 17 | 2,065 | 2,218 | 2,050 | 2,315 | 7, 16, 17, 1, 15, 27 | Complete dispatch followed by request trace; reference inventory follows mechanism. T/D/G: `manuscript/chapters/18-the-express-like-framework.md:23` | Identifier density increases for concrete routing explanation. |
+| 19 | 18 | 3,269 | 3,305 | 3,220 | 3,370 | 17, 1, 15, 27 | Build note followed by an SSE-to-WebSocket transition. S: `manuscript/chapters/19-server-sent-events-and-real-time-http.md:425` | Long-lived response reference model preserved. |
+| 20 | 19 | 3,000 | 3,001 | 2,950 | 3,100 | 1, 15, 1, 15, 27 | Terminology/seams checked; upgrade mechanism preserved. L/C: `manuscript/chapters/20-websocket-and-protocol-upgrade.md:21` | Negotiated protocol lifetime remains a key distinction. |
+| 21 | 20 | 2,005 | 3,015 | 3,000 | 3,405 | 8, 17, 19, 1, 15, 27 | Conversation precedes class inventory; five distinct outcomes and carrier definition. D/E/G: `manuscript/chapters/21-mqtt-support-in-snodec.md:5` | Local broker evidence is not fleet-scale evidence. |
+| 22 | 21 | 1,782 | 2,119 | 2,100 | 2,282 | 30, 17, 19, 1, 15, 27 | Native/composed traces separate failure evidence; Build note and transition. T/X: `manuscript/chapters/22-mqtt-over-websocket.md:20` | Layer tables retained as references after explanation. |
+| 23 | 22 | 2,922 | 3,141 | 3,100 | 3,222 | 29, 19, 1, 15, 27 | Concrete before/after HTTP/MQTT adapter decision grounds system design. T/X: `manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md:26` | Design vocabulary remains frequent; see diagnostic review. |
+| 24 | 23 | 3,826 | 3,857 | 3,826 | 3,926 | 15, 1, 15, 27 | Persistence conclusion leads to reading complete applications. C: `manuscript/chapters/24-database-support-and-application-state.md:13` | Local restart lab does not certify production durability. |
+| 25 | 24a | 2,018 | 2,560 | 2,450 | 2,600 | 6, 15, 1, 15, 27 | Target-to-contract reading cycle; incidental inventory removed; final apparatus. S/E: `manuscript/chapters/25-reading-complete-snodec-applications.md:4` | Application catalog intentionally not expanded. |
+| 26 | 24b | 3,573 | 3,843 | 3,750 | 3,941 | 6, 15, 18, 19, 1, 15, 27 | Process-oriented publication trace, evidence limits and Part IX checkpoint. S/E/C: `manuscript/chapters/26-from-applications-to-systems-mqttsuite.md:6` | MQTTSuite deployment itself was not run. |
+| 27 | 25 | 3,903 | 3,748 | 3,700 | 4,000 | 9, 19, 1, 15, 27 | Minimal consumer first; 15-line consumer graph replaces build inventory. T/E/G: `manuscript/chapters/27-cmake-components-and-linking-strategy.md:19` | Installed component contracts remain source-specific. |
+| 28 | 26 | 3,596 | 3,586 | 3,546 | 3,646 | 15, 1, 15, 27 | Operational handoff to testing; provenance phrase removed locally. C/L: `manuscript/chapters/28-deployment-on-linux-and-openwrt.md:340` | No OpenWrt device deployment certification. |
+| 29 | 27 | 4,169 | 4,360 | 4,300 | 4,500 | 21, 22, 18, 1, 15, 27 | Problem-first entry and explicit measurement stance. E/D: `manuscript/chapters/29-testing-debugging-and-benchmarking.md:20` | No performance capacity figures or claims. |
+| 30 | 28 | 3,818 | 4,587 | 4,400 | 4,618 | 11, 15, 1, 15, 27 | Every complete listing separated by interpretation; capstone ownership unchanged. T: `manuscript/chapters/30-building-minigateway.md:473` | Listing interpretation is concise by design. |
+| 31 | 29 | 2,541 | 2,834 | 2,650 | 2,841 | 12, 1, 15, 27 | 147-line marked source becomes three explained excerpts; full companion preserved. T: `manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:338` | CMake blank-line formatting approved by author. |
+| 32 | 30 | 1,850 | 3,108 | 3,100 | 3,350 | 13, 1, 15, 27 | Three added worked decisions apply the five questions and state consequences. D: `manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md:38` | Verdicts depend on the stated requirements. |
+| A | A | 3,694 | 3,968 | 3,900 | 3,994 | 23, 4, 1, 15, 27 | Flexible entry and relocated descriptor-population source reading. E/C: `manuscript/chapters/appendix-a-reading-and-extending-the-framework.md:322` | Source-reading detail intentionally dense. |
 
 ### Historical ledger — before pedagogical smoothing
 
@@ -2294,3 +2294,8 @@ P3 committed as `0deb8b3`. Tier 2 and tier 3 work complete, including both optio
 ### Follow-up 11 — P6 seam gate
 
 P4/P5 committed as `6683818`. Read all 55 consecutive manifest pairs, including Part openers, Epilogue and Appendix A; local handoffs are recorded in `pedagogical-smoothing-2026-09-23/seam-log.md` with final snapshots. References, source alignment and hygiene pass. Fresh total: 110,177. All 33 unit floors and caps are met without waivers. P7 full exit checks, diagnostic checker, final accounting and report remain.
+
+
+### Follow-up 11 — completed P7 exit
+
+P6 is `6b7d7c0`. R2 and P0b-resume through P7 are complete on public 07ca9a29. Final raw tokens: 110,177; must 107,338, wish 112,338, ceiling 115,000. Every unit and group meets its floor/cap without waiver. P7 passes 66/66 labs and all smoke/lifetime/static/checker suites. The source package now includes the two active chapter registries; its extracted hygiene check is required final evidence. Framework freeze matches R2. All 16 smoothing assertion groups pass, with mutation regressions. Full evidence, qualifications, phase commits, chapter ledger and self-assessment are in `pedagogical-smoothing-2026-09-23/REPORT.md`. Earlier progress entries are historical. No merge; push only the work branch.

@@ -15,7 +15,7 @@ if tag == 'P0b':
     raise SystemExit('Original P0b evidence is historical; use P0b-resume.')
 suffix = '-resume' if tag == 'P0b-resume' else ''
 label = 'P0b' if suffix else tag
-build = root/'build/rebaseline-R2-07ca9a29-followup11/examples'
+build = root/'build/rebaseline-R2-07ca9a29-followup11/examples-P7'
 prefix = root/'build/rebaseline-R2-07ca9a29-followup11/install-gcc'
 env = os.environ | {
     'SNODEC_PREFIX':str(prefix), 'BOOK_EXAMPLES_BUILD_DIR':str(build),

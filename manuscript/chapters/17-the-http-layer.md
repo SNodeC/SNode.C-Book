@@ -44,7 +44,7 @@ The generic HTTP server wrapper has a simple shape:
 web::http::server::Server<LowerSocketServerT>
 ```
 
-The lower server template supplies the handle shape and the registered server-instance machinery. The HTTP wrapper supplies the HTTP context factory and the request-ready callback shape.
+The lower server template supplies the handle shape and the instance registration machinery. The HTTP wrapper supplies the HTTP context factory and the request-ready callback shape.
 
 In simplified form:
 

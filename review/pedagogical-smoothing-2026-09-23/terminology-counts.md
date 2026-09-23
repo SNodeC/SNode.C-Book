@@ -43,3 +43,43 @@ inventoried separately, including preserved IDs.
 
 Fresh raw token total: 100,780; review baseline 100,338.
 Source: metrics-after-P1.json. Absolute must/wish/ceiling: 107,338 / 112,338 / 115,000.
+
+## Final P7 comparison
+
+Counts below exclude preserved IDs, figure paths and LaTeX figure references. The P1 measurement above remains unchanged.
+
+| Term | c7b76c1 | P7 |
+|---|---:|---:|
+| endpoint handle | 5 | 19 |
+| instance | 198 | 303 |
+| named instance | 17 | 46 |
+| anonymous instance | 2 | 3 |
+| flow | 174 | 202 |
+| flow handle | 9 | 13 |
+| connection | 688 | 788 |
+| context | 546 | 590 |
+| factory | 199 | 219 |
+| network family | 18 | 159 |
+| transport form | 9 | 10 |
+| connection variant | 13 | 24 |
+| carrier | 141 | 28 |
+| role | 644 | 468 |
+| acceptance | 65 | 95 |
+| accepted state | 21 | 34 |
+| configured role | 31 | 0 |
+| registered instance | 20 | 0 |
+| configuration instance | 4 | 0 |
+| runtime-visible role | 4 | 0 |
+| endpoint role | 6 | 0 |
+| configured endpoint | 7 | 0 |
+| named endpoint | 10 | 0 |
+| lower family | 66 | 0 |
+| communication family | 14 | 0 |
+| lower communication family | 6 | 0 |
+| peer episode | 11 | 0 |
+| connection episode | 5 | 0 |
+| communication role | 32 | 5 |
+| server instance | 8 | 0 |
+| client instance | 8 | 0 |
+| server role | 17 | 1 |
+| client role | 38 | 1 |

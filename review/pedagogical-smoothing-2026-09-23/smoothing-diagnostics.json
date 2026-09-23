@@ -1,0 +1,4177 @@
+{
+  "baseline": "c7b76c1",
+  "definition": "Assert PROMPT \u00a712 against raw manifest inputs; emit reproducible diagnostics.\n\nOptional waiver files contain a fenced JSON list with chapter, reason, rows,\ncompletion_evidence, and recovery_chapters (floors only). No waiver is in use.\nDiagnostic identifiers are unique monospace C++-like spellings per 1,000 prose\nwords, not a claim that every spelling is new to the reader. Split baseline\nunits use the approved headings; their apparatus remains in its original half.\n",
+  "chapters": [
+    {
+      "chapter": "1",
+      "old": "1",
+      "path": "manuscript/chapters/01-why-snodec-exists.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 5.52,
+        "identifier_spellings": [
+          "EchoPair",
+          "EchoSocketContext",
+          "Session",
+          "SocketServer",
+          "asio::io_context::run()",
+          "core::SNodeC::start()",
+          "onReceivedFromPeer()",
+          "tcp::acceptor"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 509,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 1,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 6
+        },
+        "fenced_tokens": 97,
+        "last_three_blocks_before_recap": [
+          "Chapter 3 makes this pattern executable; Chapter 4 names it more formally.",
+          "The echo pair exposes server and client creation, context construction, callback flow, data input and output, runtime startup, and the boundary between framework logic and application logic with very little distraction.",
+          "Keep the measurement example from the opening in mind. Adding another input should force a decision about addressing and parsing; it should not quietly create a second authority for measurement ordering. That is the kind of judgment the later chapters will make concrete. First, the framework must be built and its smallest communication path made observable."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 3.94,
+        "identifier_spellings": [
+          "EchoPair",
+          "EchoSocketContext",
+          "Session",
+          "SocketServer",
+          "asio::io_context::run()",
+          "core::SNodeC::start()",
+          "onReceivedFromPeer()",
+          "tcp::acceptor"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 1151,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 1,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 4
+        },
+        "fenced_tokens": 97,
+        "last_three_blocks_before_recap": [
+          "Chapter 3 makes this pattern executable; Chapter 4 names it more formally.",
+          "The echo pair exposes server and client creation, context construction, callback flow, data input and output, runtime startup, and the boundary between framework logic and application logic with very little distraction.",
+          "Keep the measurement example from the opening in mind. Adding another input should force a decision about addressing and parsing; it should not quietly create a second authority for measurement ordering. That is the kind of judgment the later chapters will make concrete. First, the framework must be built and its smallest communication path made observable."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "2",
+      "old": "2",
+      "path": "manuscript/chapters/02-preparing-your-environment.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 4.91,
+        "identifier_spellings": [
+          "OFF",
+          "ON",
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "SNODEC_ENABLE_ASAN",
+          "in",
+          "legacy",
+          "master",
+          "net",
+          "snodec_DIR",
+          "src",
+          "sudo"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "src"
+        ],
+        "prose_words_before_first_nonprose_block": 195,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 0
+        },
+        "fenced_tokens": 251,
+        "last_three_blocks_before_recap": [
+          "The first echo labs need the installed framework, CMake, a C++ compiler, Python 3,\nand loopback sockets. The Chapter 1 comparison additionally needs standalone Asio\nheaders (`libasio-dev` on Debian-style systems). Later experiments introduce\noptional services and equipment. Development headers let a target compile; they\ndo not start a service or provide a radio.",
+          "| Dependency | Where it is needed | Local observation before the equipped run |\n|---|---|---|\n| MQTT broker | Parts VIII and IX: publish/subscribe and MQTTSuite integration | Inspect a generated CONNECT packet with a controlled peer; delivery through a broker still needs a broker run. |\n| MariaDB server and test database | Part IX: persistence | Exercise the in-memory model; persistence and reconnection need the database. |\n| Local TLS certificate/key fixture | Part VI; secure variants in Parts VII\u2013VIII | Use a loopback TLS peer and local trust configuration; no public certificate is needed. |\n| Bluetooth adapter and compatible peer | Part III: RFCOMM/L2CAP exchange | Inspect address/service selection without hardware; actual radio exchange needs both peers. |",
+          "Broker-, database-, and hardware-dependent experiments are **equipped labs**.\nThey may use services on the same machine; \u201cequipped\u201d describes an additional\nprerequisite, not a remote deployment. Check the lab's setup and expected outcome\nbefore running it. A local-only alternative answers a narrower question: reflecting\nbytes or updating an in-memory model does not establish broker delivery, database\ndurability, or a radio connection. Keep those observations separate in your notes."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 4.55,
+        "identifier_spellings": [
+          "OFF",
+          "ON",
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "SNODEC_ENABLE_ASAN",
+          "in",
+          "legacy",
+          "master",
+          "net",
+          "snodec_DIR",
+          "src",
+          "sudo"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 44,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 0
+        },
+        "fenced_tokens": 245,
+        "last_three_blocks_before_recap": [
+          "| Dependency | Where it is needed | Local observation before the equipped run |\n|---|---|---|\n| MQTT broker | Parts VIII and IX: publish/subscribe and MQTTSuite integration | Inspect a generated CONNECT packet with a controlled peer; delivery through a broker still needs a broker run. |\n| MariaDB server and test database | Part IX: persistence | Exercise the in-memory model; persistence and reconnection need the database. |\n| Local TLS certificate/key fixture | Part VI; secure variants in Parts VII\u2013VIII | Use a loopback TLS peer and local trust configuration; no public certificate is needed. |\n| Bluetooth adapter and compatible peer | Part III: RFCOMM/L2CAP exchange | Inspect address/service selection without hardware; actual radio exchange needs both peers. |",
+          "Broker-, database-, and hardware-dependent experiments are **equipped labs**.\nThey may use services on the same machine; \u201cequipped\u201d describes an additional\nprerequisite, not a remote deployment. Check the lab's setup and expected outcome\nbefore running it. A local-only alternative answers a narrower question: reflecting\nbytes or updating an in-memory model does not establish broker delivery, database\ndurability, or a radio connection. Keep those observations separate in your notes.",
+          "The installed echo consumer is now the starting point. Follow its startup and first byte exchange next, keeping these verified locations fixed."
+        ]
+      },
+      "fenced_token_delta": -6
+    },
+    {
+      "chapter": "3",
+      "old": "3",
+      "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 12.22,
+        "identifier_spellings": [
+          "CMAKE_PREFIX_PATH",
+          "EchoPair",
+          "EchoSocketContext",
+          "Role",
+          "SocketClient",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "accept()",
+          "core::SNodeC::start()",
+          "core::socket::stream::SocketContext",
+          "echoserver",
+          "legacy",
+          "localhost",
+          "main()",
+          "net::in",
+          "new",
+          "onConnected()",
+          "onReceivedFromPeer()",
+          "recv()",
+          "stream"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "EchoPair",
+          "SocketClient",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "legacy",
+          "main()",
+          "net::in",
+          "stream"
+        ],
+        "prose_words_before_first_nonprose_block": 206,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 1,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 13
+        },
+        "fenced_tokens": 542,
+        "last_three_blocks_before_recap": [
+          "If you have written direct POSIX socket code before, this example may look unusual. There is no explicit `accept()` loop in `main()`. There is no blocking `recv()` loop in the application entry point.",
+          "The framework advances connections while the application supplies the endpoint choice, context factory, and protocol behavior.",
+          "A direct blocking loop gives a short request/reply exchange an easy-to-follow sequential form. Here, the operation is split across callbacks whose state must survive between invocations. That costs some local simplicity, but lets one event runtime advance several connections and reuse the context above different lower layers. The context and factory boundaries make the resulting state placement explicit."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 12.08,
+        "identifier_spellings": [
+          "CMAKE_PREFIX_PATH",
+          "EchoPair",
+          "EchoSocketContext",
+          "Role",
+          "SocketClient",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "accept()",
+          "connect()",
+          "core::SNodeC::start()",
+          "core::socket::stream::SocketContext",
+          "echoclient",
+          "echoserver",
+          "legacy",
+          "listen()",
+          "localhost",
+          "main()",
+          "net::in",
+          "new",
+          "onConnected()",
+          "onReceivedFromPeer()",
+          "recv()",
+          "sendToPeer()",
+          "start()",
+          "stream"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "connect()",
+          "echoclient",
+          "echoserver",
+          "listen()",
+          "main()",
+          "onConnected()",
+          "onReceivedFromPeer()",
+          "sendToPeer()",
+          "start()"
+        ],
+        "prose_words_before_first_nonprose_block": 491,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 6
+        },
+        "fenced_tokens": 542,
+        "last_three_blocks_before_recap": [
+          "If you have written direct POSIX socket code before, this example may look unusual. There is no explicit `accept()` loop in `main()`. There is no blocking `recv()` loop in the application entry point.",
+          "The framework advances connections while the application supplies the endpoint choice, context factory, and protocol behavior.",
+          "A direct blocking loop gives a short request/reply exchange an easy-to-follow sequential form. Here, the operation is split across callbacks whose state must survive between invocations. That costs some local simplicity, but lets one event runtime advance several connections and reuse the context above different lower layers. The context and factory boundaries make the resulting state placement explicit."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "4",
+      "old": "4",
+      "path": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 8.36,
+        "identifier_spellings": [
+          "MeasurementModel",
+          "SocketClient",
+          "SocketConnection",
+          "SocketContextFactory",
+          "SocketServer",
+          "core::SNodeC",
+          "core::SNodeC::start()",
+          "core::socket::stream::SocketContext",
+          "echoclient",
+          "echoserver",
+          "free()",
+          "main()",
+          "onConnected()",
+          "onDisconnected()",
+          "state()",
+          "stop()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "core::SNodeC",
+          "core::SNodeC::start()",
+          "free()",
+          "main()",
+          "state()",
+          "stop()"
+        ],
+        "prose_words_before_first_nonprose_block": 175,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 6,
+          "server instance": 1,
+          "client instance": 1,
+          "role": 20
+        },
+        "fenced_tokens": 15,
+        "last_three_blocks_before_recap": [
+          "Connection-level callbacks observe, measure, supervise, or adapt the connection. Context lifecycle methods implement the protocol endpoint's response to lifecycle and incoming data. Putting protocol state in instance-level callbacks loses the per-peer shape; burying all supervision inside contexts makes endpoint policy harder to observe and configure.",
+          "The connection and context expose total sent, queued, read, and processed bytes, online-since time, and online duration. These quantities support diagnostics and backpressure reasoning. Read the counter appropriate to the question: queued output and bytes already sent describe different stages.",
+          "A reconnect creates another peer episode; an HTTP upgrade can replace a protocol context within the same connection. When a subsystem changes, locate its configured endpoint, flow, connection, factory, and current context before assuming that familiar names imply unchanged lifetimes. The following public-name reading connects these objects to layer choices; Chapter 5 subsequently opens their event runtime from the inside."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 6.54,
+        "identifier_spellings": [
+          "MeasurementModel",
+          "SocketClient",
+          "SocketConnection",
+          "SocketContextFactory",
+          "SocketServer",
+          "connect()",
+          "core::SNodeC",
+          "core::SNodeC::start()",
+          "core::socket::stream::SocketContext",
+          "echoclient",
+          "echoserver",
+          "free()",
+          "main()",
+          "onConnected()",
+          "onDisconnected()",
+          "state()",
+          "stop()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "main()"
+        ],
+        "prose_words_before_first_nonprose_block": 181,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 2
+        },
+        "fenced_tokens": 30,
+        "last_three_blocks_before_recap": [
+          "```text\nechoserver: listening on '127.0.0.1:45747'\ntransport connected\nEcho context attached\nData to reflect: hello-runtime\n```",
+          "The diagnostic identifies `echoserver` throughout and `conn=1` on the connection/context records. Read the differing message subjects as evidence of progress at distinct stages.",
+          "With those runtime objects distinguished, keep their lifetimes fixed while the next chapter changes the layers beneath the context."
+        ]
+      },
+      "fenced_token_delta": 15
+    },
+    {
+      "chapter": "5",
+      "old": "4",
+      "path": "manuscript/chapters/05-layers-in-practice.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 9.49,
+        "identifier_spellings": [
+          "SocketContext",
+          "http",
+          "legacy",
+          "mqtt",
+          "net::in",
+          "net::in6",
+          "net::in6::stream",
+          "net::in::stream",
+          "net::in::stream::legacy",
+          "net::l2",
+          "net::l2::stream",
+          "net::rc",
+          "net::rc::stream",
+          "net::un",
+          "net::un::stream",
+          "stream",
+          "tls"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "legacy",
+          "net::in::stream::legacy",
+          "stream",
+          "tls"
+        ],
+        "prose_words_before_first_nonprose_block": 32,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 9
+        },
+        "fenced_tokens": 33,
+        "last_three_blocks_before_recap": [
+          "RFCOMM and L2CAP exercise this same model near devices. IoT and machine-to-machine systems may combine device communication, network transport, web interfaces, message integration, and deployment constraints. Treat Bluetooth as a lower family with concrete discovery, pairing, permissions, and hardware requirements, rather than as an exception to the architecture.",
+          "Two mistakes obscure this model: collapsing all communication into one responsibility, and imagining perfectly sealed layers. TLS changes timing and configuration; protocol buffering affects backpressure; moving to a Unix path changes security assumptions. Layers isolate concerns enough to reason locally while preserving those cross-layer consequences.",
+          "For a measurement gateway, identify both the primary owner and the downstream effect of each change. A new endpoint family changes how input arrives; its context parses records. The accepted model owns ordering across inputs. HTTP or SSE can observe that state without becoming its authority. An observer subscription is another resource: remove it before destroying the object captured by its callback. The next chapter's model checkpoint makes that lifetime obligation observable alongside event-runtime reasoning."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 6.51,
+        "identifier_spellings": [
+          "SocketContext",
+          "http",
+          "legacy",
+          "mqtt",
+          "net::in",
+          "net::in6",
+          "net::in6::stream",
+          "net::in::stream",
+          "net::in::stream::legacy",
+          "net::l2",
+          "net::l2::stream",
+          "net::rc",
+          "net::rc::stream",
+          "net::un",
+          "net::un::stream",
+          "stream",
+          "tls"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "net::in::stream::legacy"
+        ],
+        "prose_words_before_first_nonprose_block": 182,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 7
+        },
+        "fenced_tokens": 33,
+        "last_three_blocks_before_recap": [
+          "Two mistakes obscure this model: collapsing all communication into one responsibility, and imagining perfectly sealed layers. TLS changes timing and configuration; protocol buffering affects backpressure; moving to a Unix path changes security assumptions. Layers isolate concerns enough to reason locally while preserving those cross-layer consequences.",
+          "For a measurement gateway, identify both the primary owner and the downstream effect of each change. A new endpoint family changes how input arrives; its context parses records. The accepted model owns ordering across inputs. HTTP or SSE can observe that state without becoming its authority. An observer subscription is another resource: remove it before destroying the object captured by its callback. The next chapter's model checkpoint makes that lifetime obligation observable alongside event-runtime reasoning.",
+          "The next step is to follow that work through the shared event loop."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "6",
+      "old": "5",
+      "path": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 21.42,
+        "identifier_spellings": [
+          "DescriptorEventPublisher",
+          "DescriptorEventReceiver",
+          "EX",
+          "Event",
+          "Event::span()",
+          "EventLoop",
+          "EventMultiplexer::tick()",
+          "EventQueue",
+          "EventReceiver",
+          "INITIALIZED",
+          "INTERRUPTED",
+          "LOADED",
+          "NOOBSERVER",
+          "RD",
+          "RUNNING",
+          "SNodeC",
+          "STOPPING",
+          "SUCCESS",
+          "ShutdownContext",
+          "ShutdownReason::NoObserver",
+          "ShutdownReason::Requested",
+          "ShutdownReason::Signal",
+          "SocketClient",
+          "SocketConnectionT",
+          "SocketServer",
+          "TRACE",
+          "TickStatus",
+          "TimerEventPublisher",
+          "WR",
+          "bool",
+          "cancel()",
+          "close_notify",
+          "core::EventLoop",
+          "core::EventMultiplexer",
+          "core::SNodeC",
+          "core::Timer",
+          "core::timer::Timer",
+          "current()",
+          "dispatchEvent()",
+          "epoll",
+          "false",
+          "free()",
+          "init()",
+          "poll",
+          "reconfigure()",
+          "relax()",
+          "restart()",
+          "select",
+          "span()",
+          "start()",
+          "state()",
+          "stop()",
+          "tick()",
+          "timeOut",
+          "timeoutEvent()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "INITIALIZED",
+          "RUNNING",
+          "STOPPING",
+          "core::EventLoop",
+          "core::EventMultiplexer",
+          "core::SNodeC",
+          "free()",
+          "init()",
+          "reconfigure()",
+          "start()",
+          "state()",
+          "stop()",
+          "tick()",
+          "timeOut"
+        ],
+        "prose_words_before_first_nonprose_block": 45,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 2,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 7
+        },
+        "fenced_tokens": 75,
+        "last_three_blocks_before_recap": [
+          "The byte-transport checkpoint returned even an invalid measurement unchanged. We can now isolate the next responsibility: accepted state needs one owner, with observers whose lifetimes are explicit. The public solution compiles the canonical `MeasurementModel.cpp` directly; no HTTP, MQTT, or socket parser is needed to see this contract.",
+          "`accept(...)` takes a measurement by value, assigns the next local sequence, stores it, and invokes subscribed listeners synchronously. Two inputs carrying sequences 900 and 2 become accepted states 1 and 2. Remove the first observer between calls, then accept input numbered 1: the remaining observer sees accepted state 3, and `current()` agrees. The removed observer retains only its earlier observations. Unsubscribe the remaining listener before its captured storage leaves scope.",
+          "In a gateway, protocol callbacks will parse and validate input before calling this shared owner. This model experiment executes acceptance and observer removal; it does not demonstrate event-loop scheduling, transport teardown, or persistence. The other lab observes actual deferred callbacks. Together they connect state ownership with the runtime rule: keep operations bounded and retain their dependencies until callbacks finish."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 17.25,
+        "identifier_spellings": [
+          "EX",
+          "Event",
+          "Event::span()",
+          "EventLoop",
+          "EventMultiplexer::tick()",
+          "EventQueue",
+          "EventReceiver",
+          "INITIALIZED",
+          "INTERRUPTED",
+          "LOADED",
+          "NOOBSERVER",
+          "RD",
+          "RUNNING",
+          "SNodeC",
+          "STOPPING",
+          "SUCCESS",
+          "ShutdownContext",
+          "ShutdownReason::NoObserver",
+          "ShutdownReason::Requested",
+          "ShutdownReason::Signal",
+          "SocketClient",
+          "SocketConnectionT",
+          "SocketServer",
+          "Subscription",
+          "TRACE",
+          "TickStatus",
+          "TimerEventPublisher",
+          "WR",
+          "bool",
+          "cancel()",
+          "close_notify",
+          "core::EventLoop",
+          "core::EventMultiplexer",
+          "core::SNodeC",
+          "core::Timer",
+          "core::timer::Timer",
+          "current()",
+          "epoll",
+          "false",
+          "free()",
+          "init()",
+          "poll",
+          "reconfigure()",
+          "relax()",
+          "restart()",
+          "select",
+          "span()",
+          "start()",
+          "state()",
+          "stop()",
+          "subscribe()",
+          "tick()",
+          "timeOut"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 684,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 4
+        },
+        "fenced_tokens": 89,
+        "last_three_blocks_before_recap": [
+          "Read the four operations as observation, acceptance, subscription and explicit removal. The protocol that eventually supplies a measurement is absent from this interface, so it cannot become a second place that orders accepted state.",
+          "`accept(...)` takes a measurement by value, assigns the next local sequence, stores it, and invokes subscribed listeners synchronously. Two inputs carrying sequences 900 and 2 become accepted states 1 and 2. Remove the first observer between calls, then accept input numbered 1: the remaining observer sees accepted state 3, and `current()` agrees. The removed observer retains only its earlier observations. Unsubscribe the remaining listener before its captured storage leaves scope.",
+          "In a gateway, protocol callbacks will parse and validate input before calling this shared owner. This model experiment executes acceptance and observer removal; it does not demonstrate event-loop scheduling, transport teardown, or persistence. The other lab observes actual deferred callbacks. Together they connect state ownership with the runtime rule: keep operations bounded and retain their dependencies until callbacks finish."
+        ]
+      },
+      "fenced_token_delta": 14
+    },
+    {
+      "chapter": "7",
+      "old": "6",
+      "path": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 7.14,
+        "identifier_spellings": [
+          "Error",
+          "Hints",
+          "LocalClient",
+          "LocalServer",
+          "SocketContext",
+          "UnixPhysicalSocketPathSafetyTest",
+          "Unsupported",
+          "fd",
+          "getBtAddress()",
+          "getSunPath()",
+          "getpeereid()",
+          "init()",
+          "legacy",
+          "net::in",
+          "net::in6",
+          "net::in6::SocketAddress",
+          "net::in::SocketAddress",
+          "net::l2::SocketAddress",
+          "net::rc::SocketAddress",
+          "net::un",
+          "net::un::SocketAddress",
+          "setSunPath()",
+          "tls",
+          "toString()",
+          "un",
+          "useNext()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "net::in6::SocketAddress",
+          "net::in::SocketAddress",
+          "net::rc::SocketAddress",
+          "net::un::SocketAddress"
+        ],
+        "prose_words_before_first_nonprose_block": 117,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 10
+        },
+        "fenced_tokens": 216,
+        "last_three_blocks_before_recap": [
+          "Here `fd` is an already available connected Unix-domain socket descriptor. The function does not open a connection or authenticate an application protocol. A successful result provides peer user and group facts; the optional process identifier is available on Linux and is not supplied by the `getpeereid()` path used on supported BSD/macOS targets.",
+          "Check the status before using the fields. `Unsupported` means that the platform query is unavailable. `Error` means that the query failed and the result carries an error number. Neither case should be read as a successful credential check with default-valued identifiers.",
+          "A same-user rule, a service-account rule, and a command-specific authorization rule are different application policies. The framework does not choose one merely because the peer is local. Tests for the credential query and socket-path handling protect transport facts; the application's trust policy needs its own tests."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 7.08,
+        "identifier_spellings": [
+          "Error",
+          "Hints",
+          "LocalClient",
+          "LocalServer",
+          "SocketContext",
+          "UnixPhysicalSocketPathSafetyTest",
+          "Unsupported",
+          "fd",
+          "getBtAddress()",
+          "getSunPath()",
+          "getpeereid()",
+          "init()",
+          "legacy",
+          "net::in",
+          "net::in6",
+          "net::in6::SocketAddress",
+          "net::in::SocketAddress",
+          "net::l2::SocketAddress",
+          "net::rc::SocketAddress",
+          "net::un",
+          "net::un::SocketAddress",
+          "setSunPath()",
+          "tls",
+          "toString()",
+          "un",
+          "useNext()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "net::in6::SocketAddress",
+          "net::in::SocketAddress",
+          "net::rc::SocketAddress",
+          "net::un::SocketAddress"
+        ],
+        "prose_words_before_first_nonprose_block": 117,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 10
+        },
+        "fenced_tokens": 216,
+        "last_three_blocks_before_recap": [
+          "Check the status before using the fields. `Unsupported` means that the platform query is unavailable. `Error` means that the query failed and the result carries an error number. Neither case should be read as a successful credential check with default-valued identifiers.",
+          "A same-user rule, a service-account rule, and a command-specific authorization rule are different application policies. The framework does not choose one merely because the peer is local. Tests for the credential query and socket-path handling protect transport facts; the application's trust policy needs its own tests.",
+          "The next chapter uses these endpoint identities to follow listening, connecting and the lifetime of the peer relationship that results."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "8",
+      "old": "7",
+      "path": "manuscript/chapters/08-servers-clients-and-connections.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 15.5,
+        "identifier_spellings": [
+          "ClientFlowController",
+          "ConnectionClose",
+          "ContextSwitch",
+          "DISABLED",
+          "ERROR",
+          "FATAL",
+          "NO_RETRY",
+          "OK",
+          "ServerFlowController",
+          "SocketAddress",
+          "SocketClient",
+          "SocketConnection",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "State",
+          "close()",
+          "core::socket::State",
+          "first",
+          "getBindAddress()",
+          "getConnectionName()",
+          "getFd()",
+          "getInstanceName()",
+          "getLocalAddress()",
+          "getOnlineDuration()",
+          "getOnlineSince()",
+          "getRemoteAddress()",
+          "getSocketContext()",
+          "getTotalProcessed()",
+          "getTotalQueued()",
+          "getTotalRead()",
+          "getTotalSent()",
+          "main()",
+          "onConnect",
+          "onConnected",
+          "onDisconnect",
+          "shutdownRead()",
+          "shutdownWrite()",
+          "streamEof()",
+          "terminateFlow()",
+          "what()",
+          "where()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "ClientFlowController",
+          "ServerFlowController",
+          "SocketClient",
+          "SocketConnection",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer"
+        ],
+        "prose_words_before_first_nonprose_block": 114,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "policy",
+              "role",
+              "observation"
+            ],
+            "passage": "| Concern | Belongs primarily to |\n|---|---|\n| naming and configuration of the role | instance / handle configuration |\n| listen or connect intent | registered instance |\n| retry and reconnect policy | instance and flow-controller machinery |\n| concrete peer relationship | `SocketConnection` |\n| local, bind, and remote endpoint views | `SocketConnection` |\n| data movement to and from the peer | `SocketConnection`, usually used through context methods |\n| protocol behavior | `SocketContext` |\n| creation of per-connection protocol endpoint | `SocketContextFactory` |\n| role-level status | listen/connect status callback |\n| connection lifecycle observation | instance lifecycle callback |\n| protocol lifecycle reaction | context callback |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 2,
+          "server instance": 0,
+          "client instance": 2,
+          "role": 29
+        },
+        "fenced_tokens": 52,
+        "last_three_blocks_before_recap": [
+          "The following table summarizes the responsibility boundaries.",
+          "| Concern | Belongs primarily to |\n|---|---|\n| naming and configuration of the role | instance / handle configuration |\n| listen or connect intent | registered instance |\n| retry and reconnect policy | instance and flow-controller machinery |\n| concrete peer relationship | `SocketConnection` |\n| local, bind, and remote endpoint views | `SocketConnection` |\n| data movement to and from the peer | `SocketConnection`, usually used through context methods |\n| protocol behavior | `SocketContext` |\n| creation of per-connection protocol endpoint | `SocketContextFactory` |\n| role-level status | listen/connect status callback |\n| connection lifecycle observation | instance lifecycle callback |\n| protocol lifecycle reaction | context callback |",
+          "Before moving to Bluetooth, classify three events: an address cannot be bound, a TLS handshake fails, and a protocol context is replaced during upgrade. The first may produce no peer connection; the second can involve connection machinery without reaching protocol readiness; the third can detach a context while the peer connection continues. Choose diagnostics at the boundary that can distinguish those outcomes. That exercise is more useful than counting every callback as another \u201cconnection event.\u201d"
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 14.22,
+        "identifier_spellings": [
+          "ConnectionClose",
+          "ContextSwitch",
+          "DISABLED",
+          "ERROR",
+          "FATAL",
+          "NO_RETRY",
+          "OK",
+          "SocketAddress",
+          "SocketClient",
+          "SocketConnection",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "State",
+          "close()",
+          "core::socket::State",
+          "first",
+          "getBindAddress()",
+          "getConnectionName()",
+          "getFd()",
+          "getInstanceName()",
+          "getLocalAddress()",
+          "getOnlineDuration()",
+          "getOnlineSince()",
+          "getRemoteAddress()",
+          "getSocketContext()",
+          "getTotalProcessed()",
+          "getTotalQueued()",
+          "getTotalRead()",
+          "getTotalSent()",
+          "main()",
+          "onConnect",
+          "onConnected",
+          "onDisconnect",
+          "shutdownRead()",
+          "shutdownWrite()",
+          "streamEof()",
+          "terminateFlow()",
+          "what()",
+          "where()"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 111,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "policy",
+              "role",
+              "observation"
+            ],
+            "passage": "| Concern | Belongs primarily to |\n|---|---|\n| naming and configuration of the instance | instance / handle configuration |\n| listen or connect intent | instance |\n| retry and reconnect policy | instance and flow-controller machinery |\n| concrete peer relationship | `SocketConnection` |\n| local, bind, and remote endpoint views | `SocketConnection` |\n| data movement to and from the peer | `SocketConnection`, usually used through context methods |\n| protocol behavior | `SocketContext` |\n| creation of per-connection protocol endpoint | `SocketContextFactory` |\n| role-level status | listen/connect status callback |\n| connection lifecycle observation | instance lifecycle callback |\n| protocol lifecycle reaction | context callback |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 10
+        },
+        "fenced_tokens": 52,
+        "last_three_blocks_before_recap": [
+          "The following table summarizes the responsibility boundaries.",
+          "| Concern | Belongs primarily to |\n|---|---|\n| naming and configuration of the instance | instance / handle configuration |\n| listen or connect intent | instance |\n| retry and reconnect policy | instance and flow-controller machinery |\n| concrete peer relationship | `SocketConnection` |\n| local, bind, and remote endpoint views | `SocketConnection` |\n| data movement to and from the peer | `SocketConnection`, usually used through context methods |\n| protocol behavior | `SocketContext` |\n| creation of per-connection protocol endpoint | `SocketContextFactory` |\n| role-level status | listen/connect status callback |\n| connection lifecycle observation | instance lifecycle callback |\n| protocol lifecycle reaction | context callback |",
+          "Before moving to Bluetooth, classify three events: an address cannot be bound, a TLS handshake fails, and a protocol context is replaced during upgrade. The first may produce no peer connection; the second can involve connection machinery without reaching protocol readiness; the third can detach a context while the peer connection continues. Choose diagnostics at the boundary that can distinguish those outcomes. That exercise is more useful than counting every callback as another \u201cconnection event.\u201d"
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "9",
+      "old": "8",
+      "path": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 10.48,
+        "identifier_spellings": [
+          "PEER",
+          "SocketClient",
+          "SocketContext",
+          "SocketServer",
+          "bluetoothctl",
+          "getBtAddress()",
+          "getChannel()",
+          "getPsm()",
+          "l2",
+          "legacy",
+          "net::l2",
+          "net::l2::SocketAddress",
+          "net::rc",
+          "net::rc::SocketAddress",
+          "pair",
+          "rc",
+          "tls",
+          "toString()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SocketClient",
+          "SocketServer",
+          "l2",
+          "net::l2",
+          "net::l2::SocketAddress",
+          "net::rc",
+          "net::rc::SocketAddress",
+          "rc"
+        ],
+        "prose_words_before_first_nonprose_block": 121,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 4
+        },
+        "fenced_tokens": 111,
+        "last_three_blocks_before_recap": [
+          "`net-l2-stream-legacy`.",
+          "The local lesson is the conditional family surface. Chapter 25 gives the broader include/component matrix.",
+          "The Part III checkpoint compares two usable local producer endpoints before requiring radio equipment. Its thin drivers link the same EchoPair context and factory over IPv4 and Unix-domain streams. Send the same measurement-shaped bytes, then compare the actual peer and service identities. The Unix fixture owns a private directory: the server removes its socket path, the producer removes its own, and an unrelated file remains intact. Choosing a carrier changes those responsibilities without yet adding parsing or acceptance to the measurement model."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 10.47,
+        "identifier_spellings": [
+          "PEER",
+          "SocketClient",
+          "SocketContext",
+          "SocketServer",
+          "bluetoothctl",
+          "getBtAddress()",
+          "getChannel()",
+          "getPsm()",
+          "l2",
+          "legacy",
+          "net::l2",
+          "net::l2::SocketAddress",
+          "net::rc",
+          "net::rc::SocketAddress",
+          "pair",
+          "rc",
+          "tls",
+          "toString()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SocketClient",
+          "SocketServer",
+          "l2",
+          "net::l2",
+          "net::l2::SocketAddress",
+          "net::rc",
+          "net::rc::SocketAddress",
+          "rc"
+        ],
+        "prose_words_before_first_nonprose_block": 121,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 2
+        },
+        "fenced_tokens": 111,
+        "last_three_blocks_before_recap": [
+          "`net-l2-stream-legacy`.",
+          "The local lesson is the conditional family surface. Chapter 27 gives the broader include/component matrix.",
+          "The Part III checkpoint compares two usable local producer endpoints before requiring radio equipment. Its thin drivers link the same EchoPair context and factory over IPv4 and Unix-domain streams. Send the same measurement-shaped bytes, then compare the actual peer and service identities. The Unix fixture owns a private directory: the server removes its socket path, the producer removes its own, and an unrelated file remains intact. Choosing a network family changes those responsibilities without yet adding parsing or acceptance to the measurement model."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "10",
+      "old": "9",
+      "path": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 13.08,
+        "identifier_spellings": [
+          "OK",
+          "PI",
+          "PING",
+          "PONG",
+          "QUIT",
+          "QueueResult",
+          "READY",
+          "STATUS",
+          "SocketConnection",
+          "SocketContext",
+          "SocketContextFactory",
+          "chunkLen",
+          "close()",
+          "core::socket::SocketContext",
+          "core::socket::stream::SocketContext",
+          "false",
+          "frameworkLog()",
+          "getDetachReason()",
+          "getOnlineDuration()",
+          "getOnlineSince()",
+          "getSocketConnection()",
+          "getTotalProcessed()",
+          "getTotalQueued()",
+          "getTotalRead()",
+          "getTotalSent()",
+          "line",
+          "log()",
+          "onConnected()",
+          "onDisconnected()",
+          "onReceivedFromPeer()",
+          "receiveBuffer",
+          "shutdownRead()",
+          "shutdownWrite()",
+          "streamEof()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "PING",
+          "SocketConnection",
+          "SocketContext",
+          "SocketContextFactory",
+          "core::socket::SocketContext",
+          "core::socket::stream::SocketContext"
+        ],
+        "prose_words_before_first_nonprose_block": 56,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 2
+        },
+        "fenced_tokens": 176,
+        "last_three_blocks_before_recap": [
+          "This adds a decision point for protocol code without transferring queue mechanics into the protocol. A context can choose to defer or reject an application operation when admission fails. It should not report success for bytes that were not accepted, nor build an unbounded shadow queue that defeats the connection's limit.",
+          "The ordinary `sendToPeer(...)` surface remains useful when connection failure is the intended response to a bounded-queue overflow. Chapter 15 explains that difference, the watermarks, and the lifetime of the immutable connection policy.",
+          "The line context needs its own receive buffer, but a later measurement context may also need a reference to a shared application model. Who supplies that reference, and how long must the model remain alive? Chapter 10 follows those questions through factory construction. The context's parsing behavior stays here; the next chapter explains how each newly arriving connection receives the dependencies that behavior needs."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 13.08,
+        "identifier_spellings": [
+          "OK",
+          "PI",
+          "PING",
+          "PONG",
+          "QUIT",
+          "QueueResult",
+          "READY",
+          "STATUS",
+          "SocketConnection",
+          "SocketContext",
+          "SocketContextFactory",
+          "chunkLen",
+          "close()",
+          "core::socket::SocketContext",
+          "core::socket::stream::SocketContext",
+          "false",
+          "frameworkLog()",
+          "getDetachReason()",
+          "getOnlineDuration()",
+          "getOnlineSince()",
+          "getSocketConnection()",
+          "getTotalProcessed()",
+          "getTotalQueued()",
+          "getTotalRead()",
+          "getTotalSent()",
+          "line",
+          "log()",
+          "onConnected()",
+          "onDisconnected()",
+          "onReceivedFromPeer()",
+          "receiveBuffer",
+          "shutdownRead()",
+          "shutdownWrite()",
+          "streamEof()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "PING",
+          "SocketConnection",
+          "SocketContext",
+          "SocketContextFactory",
+          "core::socket::SocketContext",
+          "core::socket::stream::SocketContext"
+        ],
+        "prose_words_before_first_nonprose_block": 56,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 1
+        },
+        "fenced_tokens": 176,
+        "last_three_blocks_before_recap": [
+          "This adds a decision point for protocol code without transferring queue mechanics into the protocol. A context can choose to defer or reject an application operation when admission fails. It should not report success for bytes that were not accepted, nor build an unbounded shadow queue that defeats the connection's limit.",
+          "The ordinary `sendToPeer(...)` surface remains useful when connection failure is the intended response to a bounded-queue overflow. Chapter 16 explains that difference, the watermarks, and the lifetime of the immutable connection policy.",
+          "The line context needs its own receive buffer, but a later measurement context may also need a reference to a shared application model. Who supplies that reference, and how long must the model remain alive? Chapter 11 follows those questions through factory construction. The context's parsing behavior stays here; the next chapter explains how each newly arriving connection receives the dependencies that behavior needs."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "11",
+      "old": "10",
+      "path": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 4.39,
+        "identifier_spellings": [
+          "SocketClient",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "main()",
+          "new",
+          "nullptr",
+          "this"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SocketContext",
+          "SocketContextFactory",
+          "this"
+        ],
+        "prose_words_before_first_nonprose_block": 76,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "role",
+              "roles"
+            ],
+            "passage": "| Pattern | Use when |\n|---|---|\n| separate server/client factories | the role distinction should be visible and simple |\n| parameterized factory | the context type is the same and only stable constructor data differs |\n| context-type-selecting factory | a small, explicit selection among endpoint types is needed |\n| preconfigured role factory | higher-level endpoint roles should be fixed at handle construction |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 2,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 19
+        },
+        "fenced_tokens": 136,
+        "last_three_blocks_before_recap": [
+          "The failure path also has a contract: returning `nullptr` from `create(...)` causes the connection to close, as the source anchor shows. A test factory that deliberately refuses one connection can exercise that outcome. It should observe closure at the peer boundary and no protocol-ready context callback for the refused context; it should not manually delete a connection supplied by the framework.",
+          "Chapter 11 will show how the same protocol can be carried over different lower families.",
+          "Keep the context's input buffer and the factory's dependencies fixed while changing only the outer endpoint selection. The next chapter performs that comparison with a runnable line server, so reuse is checked through returned bytes as well as through similar declarations."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 4.41,
+        "identifier_spellings": [
+          "SocketClient",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "main()",
+          "new",
+          "nullptr",
+          "this"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SocketContext",
+          "SocketContextFactory",
+          "this"
+        ],
+        "prose_words_before_first_nonprose_block": 76,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 16
+        },
+        "fenced_tokens": 136,
+        "last_three_blocks_before_recap": [
+          "The failure path also has a contract: returning `nullptr` from `create(...)` causes the connection to close, as the source anchor shows. A test factory that deliberately refuses one connection can exercise that outcome. It should observe closure at the peer boundary and no protocol-ready context callback for the refused context; it should not manually delete a connection supplied by the framework.",
+          "Chapter 12 will show how the same protocol can be carried over different network families.",
+          "Keep the context's input buffer and the factory's dependencies fixed while changing only the outer endpoint selection. The next chapter performs that comparison with a runnable line server, so reuse is checked through returned bytes as well as through similar declarations."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "12",
+      "old": "11",
+      "path": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 7.75,
+        "identifier_spellings": [
+          "LineProtocolServer",
+          "LineProtocolServer::SocketAddress",
+          "READY",
+          "SNODEC_TRANSFER",
+          "SocketAddress",
+          "SocketContext",
+          "SocketContextFactory",
+          "lineprotocolserver",
+          "net::in",
+          "net::in6",
+          "net::in::stream::legacy",
+          "net::l2",
+          "net::rc",
+          "net::un",
+          "net::un::stream::legacy",
+          "unix"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SocketAddress",
+          "SocketContext",
+          "SocketContextFactory"
+        ],
+        "prose_words_before_first_nonprose_block": 76,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "carrier",
+              "role",
+              "carrier"
+            ],
+            "passage": "Changing the lower carrier changes the public role header and the linked component when application code directly names that carrier."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 11
+        },
+        "fenced_tokens": 193,
+        "last_three_blocks_before_recap": [
+          "The goal is to keep the stable protocol core stable and the real family-specific differences visible.",
+          "\\index{configuration!lower-family transfer}",
+          "Lower-family transfer naturally makes configuration more visible. Changing the carrier may change the selected handle type, registered instance name, local and remote endpoint values, factory arguments, TLS/legacy choice, retry policy, startup arguments, deployment files, and platform or permission requirements. Configuration is where that variation becomes explicit instead of leaking into protocol code."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 7.67,
+        "identifier_spellings": [
+          "LineProtocolServer",
+          "LineProtocolServer::SocketAddress",
+          "READY",
+          "SNODEC_TRANSFER",
+          "SocketAddress",
+          "SocketContext",
+          "SocketContextFactory",
+          "lineprotocolserver",
+          "net::in",
+          "net::in6",
+          "net::in::stream::legacy",
+          "net::l2",
+          "net::rc",
+          "net::un",
+          "net::un::stream::legacy",
+          "unix"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SocketAddress",
+          "SocketContext",
+          "SocketContextFactory"
+        ],
+        "prose_words_before_first_nonprose_block": 76,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 9
+        },
+        "fenced_tokens": 193,
+        "last_three_blocks_before_recap": [
+          "The goal is to keep the stable protocol core stable and the real family-specific differences visible.",
+          "\\index{configuration!network-family transfer}",
+          "Network-family transfer naturally makes configuration more visible. Changing the network family may change the selected handle type, instance name, local and remote endpoint values, factory arguments, TLS/legacy choice, retry policy, startup arguments, deployment files, and platform or permission requirements. Configuration is where that variation becomes explicit instead of leaking into protocol code."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "13",
+      "old": "12",
+      "path": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 8.06,
+        "identifier_spellings": [
+          "FlowHandle",
+          "RUNNING",
+          "SNODEC_CONTROL_BUILD_TESTS",
+          "SNODEC_CONTROL_BUILD_TUI",
+          "SocketClient",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "active",
+          "complete",
+          "connection",
+          "core::SNodeC::reconfigure()",
+          "echo",
+          "echoServer",
+          "echoserver",
+          "express::WebApp::reconfigure()",
+          "false",
+          "getConfig()",
+          "local",
+          "port",
+          "reconfigure()",
+          "remote",
+          "required",
+          "server",
+          "socket",
+          "standard",
+          "terminateFlow()",
+          "tls",
+          "true",
+          "uplink"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SocketClient",
+          "SocketServer",
+          "connection",
+          "getConfig()",
+          "local",
+          "remote",
+          "server",
+          "socket",
+          "tls"
+        ],
+        "prose_words_before_first_nonprose_block": 72,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 13,
+          "server instance": 2,
+          "client instance": 1,
+          "role": 39
+        },
+        "fenced_tokens": 250,
+        "last_three_blocks_before_recap": [
+          "The construction boundary still belongs in `SocketContextFactory`.",
+          "Configuration should expose variation; it should not replace application design.",
+          "One final distinction prevents a subtle configuration mistake. A named endpoint is the address in the configuration tree; a returned `FlowHandle` is control over one activation. Starting the endpoint twice does not create two separately configurable instance names. Likewise, `terminateFlow()` ends that activation's pending work and recovery decisions, while `setOnDestroy(...)` observes the eventual release and unregistration of the shared configuration instance. Configuration identity, flow termination, and connection closure are three different observations."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 7.38,
+        "identifier_spellings": [
+          "FlowHandle",
+          "RUNNING",
+          "SNODEC_CONTROL_BUILD_TESTS",
+          "SNODEC_CONTROL_BUILD_TUI",
+          "SocketClient",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "active",
+          "complete",
+          "connection",
+          "core::SNodeC::reconfigure()",
+          "echoServer",
+          "echoserver",
+          "express::WebApp::reconfigure()",
+          "false",
+          "getConfig()",
+          "local",
+          "port",
+          "reconfigure()",
+          "remote",
+          "required",
+          "server",
+          "socket",
+          "standard",
+          "terminateFlow()",
+          "tls",
+          "true",
+          "uplink"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SocketClient",
+          "SocketServer",
+          "echoserver",
+          "getConfig()",
+          "uplink"
+        ],
+        "prose_words_before_first_nonprose_block": 177,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 1,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 6
+        },
+        "fenced_tokens": 249,
+        "last_three_blocks_before_recap": [
+          "The construction boundary still belongs in `SocketContextFactory`.",
+          "Configuration should expose variation; it should not replace application design.",
+          "One final distinction prevents a subtle configuration mistake. A named instance is the address in the configuration tree; a returned `FlowHandle` is control over one activation. Starting the endpoint twice does not create two separately configurable instance names. Likewise, `terminateFlow()` ends that activation's pending work and recovery decisions, while `setOnDestroy(...)` observes the eventual release and unregistration of the shared instance. Configuration identity, flow termination, and connection closure are three different observations."
+        ]
+      },
+      "fenced_token_delta": -1
+    },
+    {
+      "chapter": "14",
+      "old": "13",
+      "path": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 19.73,
+        "identifier_spellings": [
+          "Application",
+          "Configuration",
+          "Connection",
+          "Context",
+          "Critical",
+          "Debug",
+          "Error",
+          "Identity",
+          "Info",
+          "Instance",
+          "Level",
+          "Level::Warning",
+          "MeasurementContext",
+          "Message",
+          "Off",
+          "Origin::Application",
+          "Origin::Framework",
+          "Scope",
+          "SemanticLogging",
+          "System",
+          "Trace",
+          "Warning",
+          "app",
+          "buildDiagnosticSummary",
+          "critical",
+          "debug",
+          "errno",
+          "error",
+          "framework",
+          "frameworkLog()",
+          "getConnectionId()",
+          "getInstanceName()",
+          "info",
+          "log()",
+          "reconfigure()",
+          "snode::log",
+          "snode::log::Logger",
+          "std::error_code",
+          "std::format",
+          "std::invalid_argument",
+          "std::string_view",
+          "trace",
+          "warn"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "app",
+          "framework",
+          "snode::log"
+        ],
+        "prose_words_before_first_nonprose_block": 103,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "| Function | Appropriate use |\n|---|---|\n| `application(component, identity)` | application-owned process or component diagnostics |\n| `framework(component, boundary, identity)` | framework-owned diagnostics with an explicit boundary |\n| `forConnection(connection, ...)` | a scope derived from a live connection's instance name and connection identifier |\n| `makeLogger(scope)` | a deliberately constructed origin, boundary, component, and identity |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 10
+        },
+        "fenced_tokens": 217,
+        "last_three_blocks_before_recap": [
+          "Counters need the same care. Cumulative queued bytes differ from pending queue length; read bytes differ from processed bytes. Context counters cover that context\u2019s period of responsibility; connection counters cover the broader peer episode.",
+          "The effective configuration is the companion artifact for this reading. Record the selected endpoint, limits, retry policy, and log policy along with the observed sequence. A short event history plus the exact configuration is usually a better bug report than an unbounded payload dump.",
+          "**Part V checkpoint \u2014 make the role reproducible and diagnosable.** Use the public lab to repeat the echo precedence experiment with an unused loopback port. Run that endpoint first at global `Error`, then with component `echo=info` and instance `echoserver=debug` overrides. Both runs must echo the same bytes; only the scoped run reveals the listening and context records. Reject port 70000 and locate `--port` through local help. Keep the selected configuration with the short event history. These startup observations do not test runtime reconfiguration."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 21.11,
+        "identifier_spellings": [
+          "Application",
+          "Configuration",
+          "Connection",
+          "Context",
+          "Critical",
+          "Debug",
+          "Error",
+          "Identity",
+          "Info",
+          "Instance",
+          "Level",
+          "Level::Warning",
+          "MeasurementContext",
+          "Message",
+          "Off",
+          "Origin::Application",
+          "Origin::Framework",
+          "Scope",
+          "SemanticLogging",
+          "System",
+          "Trace",
+          "Warning",
+          "app",
+          "application()",
+          "buildDiagnosticSummary",
+          "critical",
+          "debug",
+          "errno",
+          "error",
+          "forConnection()",
+          "framework",
+          "framework()",
+          "frameworkLog()",
+          "getConnectionId()",
+          "getInstanceName()",
+          "info",
+          "log()",
+          "makeLogger()",
+          "reconfigure()",
+          "snode::log",
+          "snode::log::Logger",
+          "start()",
+          "std::error_code",
+          "std::format",
+          "std::invalid_argument",
+          "std::string_view",
+          "trace",
+          "warn"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "app",
+          "application()",
+          "framework",
+          "framework()",
+          "snode::log"
+        ],
+        "prose_words_before_first_nonprose_block": 103,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "| Function | Appropriate use |\n|---|---|\n| `application(component, identity)` | application-owned process or component diagnostics |\n| `framework(component, boundary, identity)` | framework-owned diagnostics with an explicit boundary |\n| `forConnection(connection, ...)` | a scope derived from a live connection's instance name and connection identifier |\n| `makeLogger(scope)` | a deliberately constructed origin, boundary, component, and identity |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 6
+        },
+        "fenced_tokens": 217,
+        "last_three_blocks_before_recap": [
+          "Counters need the same care. Cumulative queued bytes differ from pending queue length; read bytes differ from processed bytes. Context counters cover that context\u2019s period of responsibility; connection counters cover the full connection lifetime.",
+          "The effective configuration is the companion artifact for this reading. Record the selected endpoint, limits, retry policy, and log policy along with the observed sequence. A short event history plus the exact configuration is usually a better bug report than an unbounded payload dump.",
+          "**Part V checkpoint \u2014 make the role reproducible and diagnosable.** Use the public lab to repeat the echo precedence experiment with an unused loopback port. Run that endpoint first at global `Error`, then with component `echo=info` and instance `echoserver=debug` overrides. Both runs must echo the same bytes; only the scoped run reveals the listening and context records. Reject port 70000 and locate `--port` through local help. Keep the selected configuration with the short event history. These startup observations do not test runtime reconfiguration."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "15",
+      "old": "14",
+      "path": "manuscript/chapters/15-tls-across-the-framework.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 9.83,
+        "identifier_spellings": [
+          "SSL",
+          "SSL_CTX",
+          "STOPPING",
+          "SocketAcceptor",
+          "SocketClient",
+          "SocketConnection",
+          "SocketConnector",
+          "SocketContextFactoryT",
+          "close_notify",
+          "connection",
+          "errno",
+          "false",
+          "getSSL()",
+          "local",
+          "net::in::stream::SocketServer",
+          "onConnect",
+          "onConnected",
+          "onConnected()",
+          "remote",
+          "server",
+          "socket",
+          "tls"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "connection",
+          "local",
+          "remote",
+          "server",
+          "socket",
+          "tls"
+        ],
+        "prose_words_before_first_nonprose_block": 186,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "role",
+              "role",
+              "role"
+            ],
+            "passage": "| Concern | Legacy stream | TLS stream |\n|---|---|---|\n| handle | selects a lower-family stream role | selects a lower-family TLS stream role |\n| registered instance | same runtime-visible role model | same runtime-visible role model |\n| lower family | IPv4, IPv6, Unix domain sockets, Bluetooth, etc."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 6
+        },
+        "fenced_tokens": 71,
+        "last_three_blocks_before_recap": [
+          "\\index{TLS!deployment responsibility}",
+          "TLS-capable components make secure connection handling possible; they do not by themselves complete a secure deployment. Certificate files, private-key permissions, trust anchors, SNI policy, and diagnostics still belong to the deployed role and its configuration.",
+          "That distinction will matter again in the deployment chapters. A binary may be linked with TLS support and still fail as a secure service if the surrounding filesystem, permissions, and trust material are wrong. TLS-capable linking is not the same as TLS deployment."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 9.19,
+        "identifier_spellings": [
+          "SSL",
+          "SSL_CTX",
+          "STOPPING",
+          "SocketAcceptor",
+          "SocketClient",
+          "SocketConnection",
+          "SocketConnector",
+          "SocketContextFactoryT",
+          "close_notify",
+          "connection",
+          "errno",
+          "false",
+          "getSSL()",
+          "local",
+          "net::in::stream::SocketServer",
+          "onConnect",
+          "onConnected",
+          "onConnected()",
+          "remote",
+          "server",
+          "socket",
+          "tls"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "connection",
+          "local",
+          "remote",
+          "server",
+          "socket",
+          "tls"
+        ],
+        "prose_words_before_first_nonprose_block": 225,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 1
+        },
+        "fenced_tokens": 89,
+        "last_three_blocks_before_recap": [
+          "TLS-capable components make secure connection handling possible; they do not by themselves complete a secure deployment. Certificate files, private-key permissions, trust anchors, SNI policy, and diagnostics still belong to the deployed role and its configuration.",
+          "That distinction will matter again in the deployment chapters. A binary may be linked with TLS support and still fail as a secure service if the surrounding filesystem, permissions, and trust material are wrong. TLS-capable linking is not the same as TLS deployment.",
+          "Next, distinguish how long those connection phases may wait and when a failed attempt or lost peer should trigger recovery."
+        ]
+      },
+      "fenced_token_delta": 18
+    },
+    {
+      "chapter": "16",
+      "old": "15",
+      "path": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 5.36,
+        "identifier_spellings": [
+          "Closed",
+          "DISABLED",
+          "ERROR",
+          "FATAL",
+          "NO_RETRY",
+          "OK",
+          "PING",
+          "Queued",
+          "ShutdownInProgress",
+          "WouldExceedLimit",
+          "connection",
+          "core::pipe::Source",
+          "core::socket::stream::QueueResult",
+          "flow"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 104,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 3,
+          "role": 18
+        },
+        "fenced_tokens": 68,
+        "last_three_blocks_before_recap": [
+          "- configuration visibility for intended retry, reconnect, and timeout behavior,\n- status callbacks for activation outcomes and reported state,\n- ordinary logs for lifecycle events,\n- typed system errors and TLS-specific error evidence for the failing semantic boundary,\n- scoped debug/trace records for timing and retry decisions,\n- connection counters and durations as evidence from one peer episode,\n- and context-level protocol logs for protocol meaning.",
+          "Failure handling without visibility is difficult to operate. Retry without visibility is especially dangerous because it can turn a clear failure into a quiet loop.",
+          "The Part VI checkpoint separates secure identity from recovery: first test trust and name against a local certificate fixture, then observe a controlled peer's availability changes. Record the failed attempts before establishment and the fresh context after reconnect. A new stream cannot settle an earlier command's delivery."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 5.74,
+        "identifier_spellings": [
+          "Closed",
+          "DISABLED",
+          "ERROR",
+          "FATAL",
+          "NO_RETRY",
+          "OK",
+          "PING",
+          "Queued",
+          "ShutdownInProgress",
+          "WouldExceedLimit",
+          "client",
+          "connection",
+          "core::pipe::Source",
+          "core::socket::stream::QueueResult",
+          "flow",
+          "socket"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 110,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 13
+        },
+        "fenced_tokens": 103,
+        "last_three_blocks_before_recap": [
+          "- configuration visibility for intended retry, reconnect, and timeout behavior,\n- status callbacks for activation outcomes and reported state,\n- ordinary logs for lifecycle events,\n- typed system errors and TLS-specific error evidence for the failing semantic boundary,\n- scoped debug/trace records for timing and retry decisions,\n- connection counters and durations as evidence from one connection,\n- and context-level protocol logs for protocol meaning.",
+          "Failure handling without visibility is difficult to operate. Retry without visibility is especially dangerous because it can turn a clear failure into a quiet loop.",
+          "The Part VI checkpoint separates secure identity from recovery: first test trust and name against a local certificate fixture, then observe a controlled peer's availability changes. Record the failed attempts before establishment and the fresh context after reconnect. A new stream cannot settle an earlier command's delivery."
+        ]
+      },
+      "fenced_token_delta": 35
+    },
+    {
+      "chapter": "17",
+      "old": "16",
+      "path": "manuscript/chapters/17-the-http-layer.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 11.15,
+        "identifier_spellings": [
+          "ConfigHTTP",
+          "ConfigHttpClient",
+          "ConfigHttpParser",
+          "ConfigHttpServer",
+          "HttpServerPolicy",
+          "InetExpressHttpParserLimitTest",
+          "InetHttpServerMalformedRequestBehaviorTest",
+          "InetHttpServerRequestPolicyTest",
+          "MasterRequest",
+          "ParserLimits",
+          "Request",
+          "Response",
+          "SocketClientT",
+          "SocketContextFactory",
+          "SocketServerT",
+          "core::file::FileReader",
+          "core::pipe::Source",
+          "http",
+          "nullptr",
+          "openat()",
+          "web::http::client::SocketContextFactory",
+          "web::http::server::SocketContextFactory",
+          "websocket"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "Request",
+          "Response",
+          "SocketServerT",
+          "web::http::server::SocketContextFactory"
+        ],
+        "prose_words_before_first_nonprose_block": 108,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 2,
+          "client instance": 0,
+          "role": 7
+        },
+        "fenced_tokens": 166,
+        "last_three_blocks_before_recap": [
+          "and the matching client role uses:",
+          "```cpp\n#include <web/http/legacy/in/Client.h>\n```",
+          "It should not include a lower socket header merely because HTTP is carried by that socket stack. Chapter 25 consolidates the complete source/header and component mapping."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 11.12,
+        "identifier_spellings": [
+          "ConfigHTTP",
+          "ConfigHttpClient",
+          "ConfigHttpParser",
+          "ConfigHttpServer",
+          "HttpServerPolicy",
+          "InetExpressHttpParserLimitTest",
+          "InetHttpServerMalformedRequestBehaviorTest",
+          "InetHttpServerRequestPolicyTest",
+          "MasterRequest",
+          "ParserLimits",
+          "Request",
+          "Response",
+          "SocketClientT",
+          "SocketContextFactory",
+          "SocketServerT",
+          "core::file::FileReader",
+          "core::pipe::Source",
+          "http",
+          "nullptr",
+          "openat()",
+          "web::http::client::SocketContextFactory",
+          "web::http::server::SocketContextFactory",
+          "websocket"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "Request",
+          "Response",
+          "SocketServerT",
+          "web::http::server::SocketContextFactory"
+        ],
+        "prose_words_before_first_nonprose_block": 109,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 6
+        },
+        "fenced_tokens": 166,
+        "last_three_blocks_before_recap": [
+          "```cpp\n#include <web/http/legacy/in/Client.h>\n```",
+          "It should not include a lower socket header merely because HTTP is carried by that socket stack. Chapter 27 consolidates the complete source/header and component mapping.\n:::",
+          "Chapter 18 builds routing and middleware on this request-ready boundary. Use the back-matter protocol references for HTTP\u2019s wire rules; the immediate milestone is locating a failure before or after one application handler."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "18",
+      "old": "17",
+      "path": "manuscript/chapters/18-the-express-like-framework.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 26.2,
+        "identifier_spellings": [
+          "ApplicationDispatcher",
+          "BasicAuthentication",
+          "Controller",
+          "JsonMiddleware",
+          "MiddlewareDispatcher",
+          "Next",
+          "Request",
+          "Response",
+          "Router",
+          "RouterDispatcher",
+          "SNODEC_BUILD",
+          "ServerT",
+          "StaticMiddleware",
+          "VHost",
+          "VerboseRequest",
+          "WebApp",
+          "WebAppT",
+          "append",
+          "attachment",
+          "baseUrl",
+          "clearCookie",
+          "cookie",
+          "download",
+          "end",
+          "file",
+          "free()",
+          "handler",
+          "json",
+          "location",
+          "next",
+          "next()",
+          "nlohmann_json",
+          "originalPath",
+          "originalUrl",
+          "params",
+          "path",
+          "reconfigure()",
+          "redirect",
+          "send",
+          "sendFile",
+          "set",
+          "state()",
+          "status",
+          "stop()",
+          "type",
+          "upgrade"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "Controller",
+          "Router",
+          "ServerT",
+          "WebApp",
+          "WebAppT",
+          "free()",
+          "next()",
+          "reconfigure()",
+          "state()",
+          "stop()"
+        ],
+        "prose_words_before_first_nonprose_block": 102,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 1,
+          "server instance": 1,
+          "client instance": 0,
+          "role": 4
+        },
+        "fenced_tokens": 66,
+        "last_three_blocks_before_recap": [
+          "The corresponding carrier component is:",
+          "```text\nhttp-server-express-legacy-in\n```",
+          "It selects the Express layer together with the IPv4 legacy stream carrier. The source-side and build-side names rhyme without being the same mechanism. Chapter 25 gives the source-derived matrix for the broader set of components and headers."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 32.11,
+        "identifier_spellings": [
+          "ApplicationDispatcher",
+          "BasicAuthentication",
+          "Controller",
+          "JsonMiddleware",
+          "MiddlewareDispatcher",
+          "Next",
+          "Request",
+          "Response",
+          "Router",
+          "RouterDispatcher",
+          "SNODEC_BUILD",
+          "ServerT",
+          "StaticMiddleware",
+          "VHost",
+          "VerboseRequest",
+          "WebApp",
+          "WebAppT",
+          "all",
+          "append",
+          "attachment",
+          "baseUrl",
+          "clearCookie",
+          "connect",
+          "cookie",
+          "del",
+          "download",
+          "end",
+          "file",
+          "free()",
+          "get",
+          "handler",
+          "head",
+          "json",
+          "location",
+          "next",
+          "next()",
+          "nlohmann_json",
+          "options",
+          "originalPath",
+          "originalUrl",
+          "param",
+          "params",
+          "patch",
+          "path",
+          "post",
+          "put",
+          "reconfigure()",
+          "redirect",
+          "send",
+          "sendFile",
+          "set",
+          "state()",
+          "status",
+          "stop()",
+          "trace",
+          "type",
+          "use"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "Controller",
+          "handler",
+          "next()"
+        ],
+        "prose_words_before_first_nonprose_block": 84,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 2
+        },
+        "fenced_tokens": 200,
+        "last_three_blocks_before_recap": [
+          "```text\nhttp-server-express-legacy-in\n```",
+          "It selects the Express layer together with the IPv4 legacy stream connection. The source-side and build-side names rhyme without being the same mechanism. Chapter 27 gives the source-derived matrix for the broader set of components and headers.\n:::",
+          "Chapter 19 extends this routing model to a long-lived, one-way event response. Its observer lifetime needs more than the completed-response examples here."
+        ]
+      },
+      "fenced_token_delta": 134
+    },
+    {
+      "chapter": "19",
+      "old": "18",
+      "path": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 9.63,
+        "identifier_spellings": [
+          "Accept",
+          "CLOSED",
+          "CONNECTING",
+          "EventSource",
+          "Measurement",
+          "MessageEvent",
+          "OPEN",
+          "ReadyState",
+          "close()",
+          "core::pipe::Source",
+          "data",
+          "event",
+          "id",
+          "lastEventId",
+          "lastEventId()",
+          "main()",
+          "measurement",
+          "measurements",
+          "origin",
+          "readyState()",
+          "retry",
+          "retry()",
+          "sendHeader()",
+          "std::list",
+          "type"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "MessageEvent"
+        ],
+        "prose_words_before_first_nonprose_block": 163,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 1,
+          "client instance": 0,
+          "role": 0
+        },
+        "fenced_tokens": 371,
+        "last_three_blocks_before_recap": [
+          "Client-side EventSource code includes the EventSource abstraction it names. For the IPv4 legacy wrapper, that front door is:",
+          "```cpp\n#include <web/http/legacy/in/EventSource.h>\n```",
+          "Server-side SSE remains an HTTP or Express route that validates the request and streams `text/event-stream` response fragments. Chapter 25 summarizes the broader component/header mapping."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 9.5,
+        "identifier_spellings": [
+          "Accept",
+          "CLOSED",
+          "CONNECTING",
+          "EventSource",
+          "Measurement",
+          "MessageEvent",
+          "OPEN",
+          "ReadyState",
+          "close()",
+          "core::pipe::Source",
+          "data",
+          "event",
+          "id",
+          "lastEventId",
+          "lastEventId()",
+          "main()",
+          "measurement",
+          "measurements",
+          "origin",
+          "readyState()",
+          "retry",
+          "retry()",
+          "sendHeader()",
+          "std::list",
+          "type"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "MessageEvent"
+        ],
+        "prose_words_before_first_nonprose_block": 163,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 0
+        },
+        "fenced_tokens": 371,
+        "last_three_blocks_before_recap": [
+          "```cpp\n#include <web/http/legacy/in/EventSource.h>\n```",
+          "Server-side SSE remains an HTTP or Express route that validates the request and streams `text/event-stream` response fragments. Chapter 27 summarizes the broader component/header mapping.\n:::",
+          "The response lifetime and subscription lifetime now have an explicit relationship. The next chapter changes the conversation to bidirectional WebSocket messages, while retaining the need to distinguish connection progress from application delivery."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "20",
+      "old": "19",
+      "path": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 6.29,
+        "identifier_spellings": [
+          "Request",
+          "RequestT",
+          "Response",
+          "ResponseT",
+          "SocketContextUpgrade",
+          "SubProtocol",
+          "SubProtocolContext",
+          "SubProtocolFactory",
+          "SubProtocolFactorySelector",
+          "SubProtocolT",
+          "echo",
+          "hello",
+          "onMessageEnd()",
+          "std::string",
+          "websocket"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 98,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 9
+        },
+        "fenced_tokens": 362,
+        "last_three_blocks_before_recap": [
+          "\\index{WebSocket!public surface}\n\\index{web::websocket@\\texttt{web::websocket}}",
+          "WebSocket crosses HTTP negotiation, upgraded socket context, framing, and optional subprotocol selection. The local rule is therefore to include the highest public header for the WebSocket abstraction directly named by the file and link the matching WebSocket component surface. Chapter 25 gives the consolidated component/header matrix, including the MQTT-over-WebSocket adapters.",
+          "The Part VII checkpoint first observes the SSE example's accepted measurement through POST results and two event streams, then removes one observer while the other continues. Its separate WebSocket exchange checks negotiation and message behavior; an echo is not a second owner of measurement state."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 6.29,
+        "identifier_spellings": [
+          "Request",
+          "RequestT",
+          "Response",
+          "ResponseT",
+          "SocketContextUpgrade",
+          "SubProtocol",
+          "SubProtocolContext",
+          "SubProtocolFactory",
+          "SubProtocolFactorySelector",
+          "SubProtocolT",
+          "echo",
+          "hello",
+          "onMessageEnd()",
+          "std::string",
+          "websocket"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 97,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 9
+        },
+        "fenced_tokens": 362,
+        "last_three_blocks_before_recap": [
+          "\\index{WebSocket!public surface}\n\\index{web::websocket@\\texttt{web::websocket}}",
+          "WebSocket crosses HTTP negotiation, upgraded socket context, framing, and optional subprotocol selection. The local rule is therefore to include the highest public header for the WebSocket abstraction directly named by the file and link the matching WebSocket component surface. Chapter 27 gives the consolidated component/header matrix, including the MQTT-over-WebSocket adapters.",
+          "The Part VII checkpoint first observes the SSE example's accepted measurement through POST results and two event streams, then removes one observer while the other continues. Its separate WebSocket exchange checks negotiation and message behavior; an echo is not a second owner of measurement state."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "21",
+      "old": "20",
+      "path": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 18.28,
+        "identifier_spellings": [
+          "CONNACK",
+          "CONNECT",
+          "ControlPacket",
+          "ControlPacketDeserializer",
+          "DISCONNECT",
+          "FixedHeader",
+          "Mqtt",
+          "MqttContext",
+          "PINGREQ",
+          "PINGRESP",
+          "SUBACK",
+          "SUBSCRIBE",
+          "Session",
+          "SocketContext",
+          "SubProtocol",
+          "Topic",
+          "UNSUBACK",
+          "UNSUBSCRIBE",
+          "iot::mqtt::Mqtt",
+          "mqtt",
+          "onPuback",
+          "onPubcomp",
+          "onPublish",
+          "onPubrec",
+          "onPubrel",
+          "sendPuback",
+          "sendPubcomp",
+          "sendPublish",
+          "sendPubrec",
+          "sendPubrel"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "ControlPacket",
+          "ControlPacketDeserializer",
+          "FixedHeader",
+          "Mqtt",
+          "MqttContext",
+          "Session",
+          "SocketContext",
+          "SubProtocol",
+          "Topic",
+          "iot::mqtt::Mqtt"
+        ],
+        "prose_words_before_first_nonprose_block": 122,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "role",
+              "role"
+            ],
+            "passage": "\\index{MQTT!server role}\n\\index{MQTT!client role}\n\\index{broker role}"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 1,
+          "client instance": 0,
+          "role": 20
+        },
+        "fenced_tokens": 127,
+        "last_three_blocks_before_recap": [
+          "Diagnose MQTT problems at the owning boundary:",
+          "- lower endpoint selection,\n- TLS configuration,\n- stream lifecycle,\n- retry or reconnect behavior,\n- MQTT session state,\n- keep-alive behavior,\n- packet deserialization,\n- publish and acknowledgement flow,\n- broker distribution,\n- WebSocket subprotocol selection when MQTT is carried over WebSocket.",
+          "Chapter 22 uses these observations when assigning protocol roles in a larger IoT system."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 11.32,
+        "identifier_spellings": [
+          "CONNACK",
+          "CONNECT",
+          "ControlPacket",
+          "ControlPacketDeserializer",
+          "DISCONNECT",
+          "FixedHeader",
+          "Mqtt",
+          "MqttContext",
+          "PINGREQ",
+          "PINGRESP",
+          "SUBACK",
+          "SUBSCRIBE",
+          "Session",
+          "SocketContext",
+          "SubProtocol",
+          "Topic",
+          "UNSUBACK",
+          "UNSUBSCRIBE",
+          "iot::mqtt::Mqtt",
+          "mqtt",
+          "onPuback",
+          "onPubcomp",
+          "onPublish",
+          "onPubrec",
+          "onPubrel",
+          "sendPuback",
+          "sendPubcomp",
+          "sendPublish",
+          "sendPubrec",
+          "sendPubrel"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 956,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 12
+        },
+        "fenced_tokens": 127,
+        "last_three_blocks_before_recap": [
+          "In the current SNode.C build, the MQTT component is enabled when `nlohmann_json >= 3.11` is found; otherwise CMake emits a warning and does not add the MQTT targets.",
+          "This is a component dependency, not MQTT payload identity: sessions, topics and control packets define the protocol. Applications may choose JSON for structured payloads without making it mandatory MQTT meaning.\n:::",
+          "We can now distinguish transport establishment from session acceptance, subscription acceptance and subscriber receipt. Chapter 22 keeps that MQTT conversation and changes the path beneath it to WebSocket, adding observable steps before MQTT can begin."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "22",
+      "old": "21",
+      "path": "manuscript/chapters/22-mqtt-over-websocket.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 10.85,
+        "identifier_spellings": [
+          "MqttContext",
+          "OnReceivedFromPeerEvent",
+          "SocketContext",
+          "WSSubProtocolRoleT",
+          "book",
+          "buffer",
+          "close()",
+          "cursor",
+          "data",
+          "end()",
+          "mqtt",
+          "onMessageData",
+          "onMessageEnd",
+          "onMessageStart",
+          "recv()",
+          "size"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "MqttContext",
+          "SocketContext"
+        ],
+        "prose_words_before_first_nonprose_block": 173,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "carrier",
+              "role",
+              "surface"
+            ],
+            "passage": "| Concern | Native MQTT | MQTT over WebSocket |\n|---|---|---|\n| carrier | stream connection | WebSocket connection after HTTP upgrade |\n| endpoint composition | stream `SocketContext` plus `MqttContext` | WebSocket subprotocol role plus `MqttContext` |\n| HTTP layer | absent | used for upgrade negotiation |\n| WebSocket layer | absent | present and still meaningful |\n| MQTT semantics | sessions, packets, topics, keep-alive, publish flow | same MQTT semantics |\n| failure surface | stream and MQTT layers | HTTP upgrade, WebSocket, subprotocol, and MQTT layers |"
+          },
+          {
+            "nouns": [
+              "role",
+              "carrier",
+              "surface"
+            ],
+            "passage": "The WebSocket role supplies the upgraded carrier surface."
+          },
+          {
+            "nouns": [
+              "carrier",
+              "role",
+              "surface"
+            ],
+            "passage": "| Layer | Responsibility |\n|---|---|\n| lower family / stream | peer communication path |\n| TLS, if used | secure connection handling |\n| HTTP | upgrade negotiation |\n| WebSocket | upgraded bidirectional message carrier, framing, binary payload delivery, and control behavior |\n| WebSocket subprotocol role | selected protocol surface above WebSocket |\n| MQTT | packet, session, topic, keep-alive, and publish-flow semantics |"
+          },
+          {
+            "nouns": [
+              "Observation",
+              "Boundary",
+              "boundary"
+            ],
+            "passage": "| Observation | Boundary to inspect |\n|---|---|\n| cannot connect | endpoint, transport, TLS or configuration |\n| upgrade rejected | HTTP/WebSocket upgrade |\n| subprotocol not selected | WebSocket negotiation and factory availability |\n| text payload or frame error | WebSocket message type or frame validation |\n| payload never reaches `recv()` | adapter buffer and scheduled receive event |\n| malformed packet | MQTT parsing |\n| session or keep-alive failure | MQTT lifecycle and protocol liveness |\n| shutdown stalls | the close/termination boundary currently outstanding |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 16
+        },
+        "fenced_tokens": 66,
+        "last_three_blocks_before_recap": [
+          "\\index{MQTT!public surface}\n\\index{MQTT over WebSocket!public surface}",
+          "Native MQTT files include the MQTT headers they directly use. MQTT-over-WebSocket files include the WebSocket-carried MQTT abstraction they directly name. The component table above separates native roles from their WebSocket adapters.",
+          "Chapter 25 gives the consolidated source-derived component/header matrix."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 8.83,
+        "identifier_spellings": [
+          "MqttContext",
+          "OnReceivedFromPeerEvent",
+          "SocketContext",
+          "WSSubProtocolRoleT",
+          "book",
+          "buffer",
+          "close()",
+          "cursor",
+          "data",
+          "end()",
+          "mqtt",
+          "onMessageData",
+          "onMessageEnd",
+          "onMessageStart",
+          "recv()",
+          "size"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "MqttContext",
+          "mqtt"
+        ],
+        "prose_words_before_first_nonprose_block": 487,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "carrier",
+              "role",
+              "surface"
+            ],
+            "passage": "| Concern | Native MQTT | MQTT over WebSocket |\n|---|---|---|\n| carrier | stream connection | WebSocket connection after HTTP upgrade |\n| endpoint composition | stream `SocketContext` plus `MqttContext` | WebSocket subprotocol role plus `MqttContext` |\n| HTTP layer | absent | used for upgrade negotiation |\n| WebSocket layer | absent | present and still meaningful |\n| MQTT semantics | sessions, packets, topics, keep-alive, publish flow | same MQTT semantics |\n| failure surface | stream and MQTT layers | HTTP upgrade, WebSocket, subprotocol, and MQTT layers |"
+          },
+          {
+            "nouns": [
+              "carrier",
+              "role",
+              "surface"
+            ],
+            "passage": "| Layer | Responsibility |\n|---|---|\n| network family / stream | peer communication path |\n| TLS, if used | secure connection handling |\n| HTTP | upgrade negotiation |\n| WebSocket | upgraded bidirectional message carrier, framing, binary payload delivery, and control behavior |\n| WebSocket subprotocol role | selected protocol surface above WebSocket |\n| MQTT | packet, session, topic, keep-alive, and publish-flow semantics |"
+          },
+          {
+            "nouns": [
+              "Observation",
+              "Boundary",
+              "boundary"
+            ],
+            "passage": "| Observation | Boundary to inspect |\n|---|---|\n| cannot connect | endpoint, transport, TLS or configuration |\n| upgrade rejected | HTTP/WebSocket upgrade |\n| subprotocol not selected | WebSocket negotiation and factory availability |\n| text payload or frame error | WebSocket message type or frame validation |\n| payload never reaches `recv()` | adapter buffer and scheduled receive event |\n| malformed packet | MQTT parsing |\n| session or keep-alive failure | MQTT lifecycle and protocol liveness |\n| shutdown stalls | the close/termination boundary currently outstanding |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 13
+        },
+        "fenced_tokens": 66,
+        "last_three_blocks_before_recap": [
+          "Native MQTT files include the MQTT headers they directly use. MQTT-over-WebSocket files include the WebSocket-carried MQTT abstraction they directly name. The component table above separates native roles from their WebSocket adapters.",
+          "Chapter 27 gives the consolidated source-derived component/header matrix.\n:::",
+          "Chapter 23 moves from this composed connection to systems with several independent protocol boundaries. A gateway may share domain state across them without making their negotiation, timing or recovery policies identical."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "23",
+      "old": "22",
+      "path": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 0.0,
+        "identifier_spellings": [],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 274,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "boundary",
+              "boundary",
+              "roles"
+            ],
+            "passage": "\\index{IoT systems!boundary systems}\n\\index{boundary roles}"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "boundaries",
+              "boundary"
+            ],
+            "passage": "The diagram frames boundary placement, not executable topology: one process may own several boundaries, and one boundary may be realized by more than one deployable part."
+          },
+          {
+            "nouns": [
+              "boundary",
+              "surface",
+              "boundary"
+            ],
+            "passage": "The important design question is where each boundary belongs and which protocol surface is appropriate for that boundary."
+          },
+          {
+            "nouns": [
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "Bidirectional arrows denote possible exchanges across each boundary; they are not one sequential data path.](assets/figures/pdf/fig-08-iot-boundary-constellation.pdf){#fig:iot-boundary-constellation width=90% latex-placement=\"tbp\"}"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "Each connector in Figure \\ref{fig:iot-boundary-constellation} is a boundary, and each boundary may need a different protocol family."
+          },
+          {
+            "nouns": [
+              "role",
+              "role",
+              "role",
+              "observation",
+              "role",
+              "role"
+            ],
+            "passage": "\\index{device-facing role}\n\\index{local-control role}\n\\index{integration role}\n\\index{observation role}\n\\index{administration role}"
+          },
+          {
+            "nouns": [
+              "Boundary",
+              "role",
+              "role"
+            ],
+            "passage": "| Boundary role | Question |\n|---|---|\n| device-facing role | How does the system talk to device-near components?"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "surface",
+              "observation",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "| System boundary | Typical protocol family | Reason |\n|---|---|---|\n| device-near edge | Bluetooth RFCOMM/L2CAP, custom stream service | close to hardware or local device exchange |\n| local control | Unix domain sockets | same-host control, helper processes, local security |\n| integration spine | MQTT | brokered machine-to-machine messaging |\n| management surface | HTTP / Express-like layer | structured operator APIs and dashboards |\n| live observation | SSE | server-to-client updates |\n| interactive browser link | WebSocket | bidirectional live interaction |\n| bridge boundary | MQTT over WebSocket | MQTT semantics through a WebSocket path |\n| persistence boundary | database/client integration | durable state or external service state |"
+          },
+          {
+            "nouns": [
+              "observation",
+              "surface",
+              "surface"
+            ],
+            "passage": "\\index{SSE!observation surface}\n\\index{WebSocket!interaction surface}"
+          },
+          {
+            "nouns": [
+              "roles",
+              "roles",
+              "role",
+              "role",
+              "role",
+              "policies"
+            ],
+            "passage": "It can express which roles exist, which roles are enabled, which protocol family each role uses, which endpoints each role binds or connects to, which TLS material belongs to which role, which MQTT peers or brokers are used, which web interfaces are exposed, which retry or reconnect policies apply, and which local-control sockets exist."
+          },
+          {
+            "nouns": [
+              "role",
+              "boundary",
+              "policy",
+              "observation",
+              "surface"
+            ],
+            "passage": "For each configured role and registered instance, name its boundary, protocol, endpoint, failure policy and observation surface."
+          },
+          {
+            "nouns": [
+              "role",
+              "boundary",
+              "policy"
+            ],
+            "passage": "The role that owns the boundary should also own its failure policy."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 55
+        },
+        "fenced_tokens": 23,
+        "last_three_blocks_before_recap": [
+          "Repeat the question with persistence unavailable. If accepting a measurement means only updating memory, the application can expose that fact while reporting storage failure. If acceptance promises durability, it must not report the same success before the persistence boundary has completed. The protocol list has not changed; the application contract has.",
+          "This exercise is the reading milestone for the chapter. A useful boundary map explains partial failure and ownership as well as the successful path. Chapter 23 develops the persistence decision, and the capstone later makes the shared measurement model concrete.",
+          "For the gateway developed later, follow one measurement through those boundaries before adding another protocol. The input adapter validates its representation, the model accepts a new local state, and each output adapter projects that accepted state into its own protocol. The MQTT input topic must remain distinct from the output topic unless the application has an explicit origin rule. The SSE event identifier describes the model's accepted sequence; storage and broker acknowledgement have separate outcomes. Those distinctions become operationally important as soon as one output is unavailable while another remains healthy."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 0.0,
+        "identifier_spellings": [],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 274,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "boundary",
+              "boundary",
+              "roles"
+            ],
+            "passage": "\\index{IoT systems!boundary systems}\n\\index{boundary roles}"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "boundaries",
+              "boundary"
+            ],
+            "passage": "The diagram frames boundary placement, not executable topology: one process may own several boundaries, and one boundary may be realized by more than one deployable part."
+          },
+          {
+            "nouns": [
+              "boundary",
+              "surface",
+              "boundary"
+            ],
+            "passage": "The important design question is where each boundary belongs and which protocol surface is appropriate for that boundary."
+          },
+          {
+            "nouns": [
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "Bidirectional arrows denote possible exchanges across each boundary; they are not one sequential data path.](assets/figures/pdf/fig-08-iot-boundary-constellation.pdf){#fig:iot-boundary-constellation width=90% latex-placement=\"tbp\"}"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "Each connector in Figure \\ref{fig:iot-boundary-constellation} is a boundary, and each boundary may need a different protocol family."
+          },
+          {
+            "nouns": [
+              "role",
+              "role",
+              "role",
+              "observation",
+              "role",
+              "role"
+            ],
+            "passage": "\\index{device-facing role}\n\\index{local-control role}\n\\index{integration role}\n\\index{observation role}\n\\index{administration role}"
+          },
+          {
+            "nouns": [
+              "Boundary",
+              "role",
+              "role"
+            ],
+            "passage": "| Boundary role | Question |\n|---|---|\n| device-facing role | How does the system talk to device-near components?"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "surface",
+              "observation",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "| System boundary | Typical protocol family | Reason |\n|---|---|---|\n| device-near edge | Bluetooth RFCOMM/L2CAP, custom stream service | close to hardware or local device exchange |\n| local control | Unix domain sockets | same-host control, helper processes, local security |\n| integration spine | MQTT | brokered machine-to-machine messaging |\n| management surface | HTTP / Express-like layer | structured operator APIs and dashboards |\n| live observation | SSE | server-to-client updates |\n| interactive browser link | WebSocket | bidirectional live interaction |\n| bridge boundary | MQTT over WebSocket | MQTT semantics through a WebSocket path |\n| persistence boundary | database/client integration | durable state or external service state |"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "carrier",
+              "boundary"
+            ],
+            "passage": "### Choosing the connection at each boundary {#choosing-the-carrier-at-each-boundary}"
+          },
+          {
+            "nouns": [
+              "observation",
+              "surface",
+              "surface"
+            ],
+            "passage": "\\index{SSE!observation surface}\n\\index{WebSocket!interaction surface}"
+          },
+          {
+            "nouns": [
+              "roles",
+              "roles",
+              "role",
+              "role",
+              "role",
+              "policies"
+            ],
+            "passage": "It can express which roles exist, which roles are enabled, which protocol family each role uses, which endpoints each role binds or connects to, which TLS material belongs to which role, which MQTT peers or brokers are used, which web interfaces are exposed, which retry or reconnect policies apply, and which local-control sockets exist."
+          },
+          {
+            "nouns": [
+              "boundary",
+              "policy",
+              "observation",
+              "surface"
+            ],
+            "passage": "For each instance, name its boundary, protocol, endpoint, failure policy and observation surface."
+          },
+          {
+            "nouns": [
+              "role",
+              "boundary",
+              "policy"
+            ],
+            "passage": "The role that owns the boundary should also own its failure policy."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 53
+        },
+        "fenced_tokens": 23,
+        "last_three_blocks_before_recap": [
+          "Repeat the question with persistence unavailable. If accepting a measurement means only updating memory, the application can expose that fact while reporting storage failure. If acceptance promises durability, it must not report the same success before the persistence boundary has completed. The protocol list has not changed; the application contract has.",
+          "This exercise is the reading milestone for the chapter. A useful boundary map explains partial failure and ownership as well as the successful path. Chapter 24 develops the persistence decision, and the capstone later makes the shared measurement model concrete.",
+          "For the gateway developed later, follow one measurement through those boundaries before adding another protocol. The input adapter validates its representation, the model accepts a new local state, and each output adapter projects that accepted state into its own protocol. The MQTT input topic must remain distinct from the output topic unless the application has an explicit origin rule. The SSE event identifier describes the model's accepted sequence; storage and broker acknowledgement have separate outcomes. Those distinctions become operationally important as soon as one output is unavailable while another remains healthy."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "24",
+      "old": "23",
+      "path": "manuscript/chapters/24-database-support-and-application-state.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 5.61,
+        "identifier_spellings": [
+          "MariaDBClient",
+          "MariaDBCommandSequence",
+          "MariaDBConnection",
+          "MariaDBConnectionDetails",
+          "MariaDBLibrary",
+          "connectionName",
+          "database",
+          "database::mariadb::MariaDBClient",
+          "flags",
+          "hostname",
+          "libmariadb",
+          "main()",
+          "nullptr",
+          "password",
+          "port",
+          "socket",
+          "testmariadb",
+          "username"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 123,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "ownership",
+              "policy",
+              "policy",
+              "policy"
+            ],
+            "passage": "| Test app demonstrates | Production code should decide |\n|---|---|\n| API shape | ownership and lifetime of the database service |\n| command chaining | domain-level persistence workflow |\n| state callback | operational reporting policy |\n| transactions | transaction policy |\n| timers | scheduling policy |\n| direct values | secure configuration and secret handling |"
+          },
+          {
+            "nouns": [
+              "Ownership",
+              "ownership",
+              "ownership"
+            ],
+            "passage": "| Ownership | Fit |\n|---|---|\n| per request / per connection | rarely, only if isolated short work is intended |\n| application or service scope | often the clearest default for persistence ownership |\n| dedicated persistence component | good for multi-protocol systems |\n| shared global | risky unless ownership and shutdown are explicit |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 1,
+          "role": 8
+        },
+        "fenced_tokens": 366,
+        "last_three_blocks_before_recap": [
+          "The database boundary can now participate in semantic diagnostics as well as in the event loop. `MariaDBClient` accepts an optional instance-name argument after its connection details and state callback. That name gives the database connection a useful diagnostic identity; it does not create a socket server, an MQTT role, or a separate configuration hierarchy.",
+          "The compact program uses the public application logger for its own observations. Framework-owned database records and application decisions remain different evidence. A successful connection is not a successful transaction, and a queued command is not proof that durable state has changed. Preserve those distinctions when correlating database records with HTTP, SSE, or MQTT activity.",
+          "Use isolated state, known input, and explicit cleanup when testing a particular database, schema, credential set, or transaction sequence."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 5.56,
+        "identifier_spellings": [
+          "MariaDBClient",
+          "MariaDBCommandSequence",
+          "MariaDBConnection",
+          "MariaDBConnectionDetails",
+          "MariaDBLibrary",
+          "connectionName",
+          "database",
+          "database::mariadb::MariaDBClient",
+          "flags",
+          "hostname",
+          "libmariadb",
+          "main()",
+          "nullptr",
+          "password",
+          "port",
+          "socket",
+          "testmariadb",
+          "username"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 123,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "ownership",
+              "policy",
+              "policy",
+              "policy"
+            ],
+            "passage": "| Test app demonstrates | Production code should decide |\n|---|---|\n| API shape | ownership and lifetime of the database service |\n| command chaining | domain-level persistence workflow |\n| state callback | operational reporting policy |\n| transactions | transaction policy |\n| timers | scheduling policy |\n| direct values | secure configuration and secret handling |"
+          },
+          {
+            "nouns": [
+              "Ownership",
+              "ownership",
+              "ownership"
+            ],
+            "passage": "| Ownership | Fit |\n|---|---|\n| per request / per connection | rarely, only if isolated short work is intended |\n| application or service scope | often the clearest default for persistence ownership |\n| dedicated persistence component | good for multi-protocol systems |\n| shared global | risky unless ownership and shutdown are explicit |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 7
+        },
+        "fenced_tokens": 366,
+        "last_three_blocks_before_recap": [
+          "The compact program uses the public application logger for its own observations. Framework-owned database records and application decisions remain different evidence. A successful connection is not a successful transaction, and a queued command is not proof that durable state has changed. Preserve those distinctions when correlating database records with HTTP, SSE, or MQTT activity.",
+          "Use isolated state, known input, and explicit cleanup when testing a particular database, schema, credential set, or transaction sequence.",
+          "Receiving, accepting and committing now have separate witnesses. The next chapter follows complete applications to see where their build targets and entry points assemble those responsibilities, so that reading `main()` does not become a search for every implementation detail in one file."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "25",
+      "old": "24",
+      "path": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 13.64,
+        "identifier_spellings": [
+          "EchoSocketContext",
+          "GET",
+          "JsonMiddleware",
+          "MasterRequest",
+          "POST",
+          "Pipe",
+          "PipeSink",
+          "PipeSource::send",
+          "WebApp",
+          "configtest",
+          "core",
+          "echoclient",
+          "echoserver",
+          "echosocketcontext",
+          "exec",
+          "express::legacy::in::WebApp",
+          "express::tls::in::WebApp",
+          "jsonclient",
+          "jsonserver",
+          "libmagic",
+          "query",
+          "testpipe",
+          "testpost",
+          "testregex"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "configtest",
+          "core",
+          "echosocketcontext",
+          "jsonclient",
+          "jsonserver",
+          "testpipe",
+          "testpost",
+          "testregex"
+        ],
+        "prose_words_before_first_nonprose_block": 178,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "carrier",
+              "role",
+              "roles"
+            ],
+            "passage": "Separate generated carrier/role executables make a different packaging choice from one program with several runtime roles."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 6
+        },
+        "fenced_tokens": 206,
+        "last_three_blocks_before_recap": [
+          "Separate generated carrier/role executables make a different packaging choice from one program with several runtime roles.",
+          "The echo family makes variants explicit: separate generated targets expose variants clearly but increase the set of binaries to package and test. A combined executable can activate several carriers together and share application state, at the cost of a larger option surface and shared process lifecycle. Choose according to whether deployments need independent variants or simultaneous roles.",
+          "When borrowing from an in-tree application, separate three things in the reading notes: a public API shape, the example's selected policy, and an outcome actually tested. The TLS echo source is a useful case: it exposes the pre-handshake callback, but its commented hostname-checking statements do not execute. The same distinction applies to disabled roles, optional modules, and configured retry policy. A source example is strongest when it gives the reader a path to verify behavior, rather than when every nearby comment is treated as a runtime guarantee."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 10.73,
+        "identifier_spellings": [
+          "EchoSocketContext",
+          "GET",
+          "JsonMiddleware",
+          "MasterRequest",
+          "POST",
+          "Pipe",
+          "PipeSink",
+          "PipeSource::send",
+          "WebApp",
+          "core",
+          "echoclient",
+          "echoserver",
+          "echosocketcontext",
+          "exec",
+          "express::legacy::in::WebApp",
+          "express::tls::in::WebApp",
+          "jsonclient",
+          "jsonserver",
+          "libmagic",
+          "main()",
+          "query",
+          "testpipe",
+          "testpost"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "main()"
+        ],
+        "prose_words_before_first_nonprose_block": 354,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 4
+        },
+        "fenced_tokens": 206,
+        "last_three_blocks_before_recap": [
+          "The echo family makes variants explicit: separate generated targets expose variants clearly but increase the set of binaries to package and test. A combined executable can activate several network families together and share application state, at the cost of a larger option surface and shared process lifecycle. Choose according to whether deployments need independent variants or simultaneous roles.",
+          "When borrowing from an in-tree application, separate three things in the reading notes: a public API shape, the example's selected policy, and an outcome actually tested. The TLS echo source is a useful case: it exposes the pre-handshake callback, but its commented hostname-checking statements do not execute. The same distinction applies to disabled roles, optional modules, and configured retry policy. A source example is strongest when it gives the reader a path to verify behavior, rather than when every nearby comment is treated as a runtime guarantee.",
+          "We have followed one executable from target selection to an externally observable contract. The next chapter applies the same discipline between executables: a broker, bridge or store has its own entry point and tests, while their cooperation adds delivery, compatibility and recovery questions that no single `main()` can answer."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "26",
+      "old": "24",
+      "path": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 4.87,
+        "identifier_spellings": [
+          "HTTP",
+          "IPv4",
+          "IPv6",
+          "MQTT",
+          "MQTTBridge",
+          "MQTTBroker",
+          "MQTTCli",
+          "MQTTIntegrator",
+          "MQTTStore",
+          "legacy",
+          "lib",
+          "mqttbridge",
+          "mqttbroker",
+          "mqttcli",
+          "mqttintegrator",
+          "mqttstore"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 152,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "role",
+              "boundaries"
+            ],
+            "passage": "Figure \\ref{fig:application-system-role-constellation} shows the application as a system role rather than as an isolated program: protocol-facing boundaries, configuration, operational visibility, and deployment identity all meet at the running application process."
+          },
+          {
+            "nouns": [
+              "ownership",
+              "role",
+              "role"
+            ],
+            "passage": "They do not specify callback order or ownership.](assets/figures/pdf/fig-09-application-system-role-constellation.pdf){#fig:application-system-role-constellation width=90% latex-placement=\"tbp\"}"
+          },
+          {
+            "nouns": [
+              "role",
+              "role",
+              "surface"
+            ],
+            "passage": "The role belongs to the system design; the configured role belongs to the SNode.C configuration surface; the registered instance is what the runtime can observe and operate."
+          },
+          {
+            "nouns": [
+              "Role",
+              "observation",
+              "role"
+            ],
+            "passage": "| Role | Consumer or responsibility |\n|---|---|\n| `admin-http` | browser-facing administration |\n| `live-events` | observation stream, perhaps inside the web role |\n| `mqtt-ingest` | machine-message input from devices |\n| `bridge-client` | outgoing integration with an external platform |\n| `local-control` | operator tool on the same host |\n| `database-state` | persistence of accepted application state |"
+          },
+          {
+            "nouns": [
+              "roles",
+              "role",
+              "observation",
+              "boundary"
+            ],
+            "passage": "Some roles are nested inside others: an SSE route may belong to a web role, while still being useful as a named observation boundary."
+          },
+          {
+            "nouns": [
+              "roles",
+              "roles",
+              "roles",
+              "roles",
+              "role",
+              "boundaries",
+              "boundaries"
+            ],
+            "passage": "|\n|---|---|\n| the roles share one lifecycle | roles need independent restart |\n| deployment should remain simple | privileges differ between roles |\n| the roles are tightly coupled | scaling needs differ |\n| failure of one role reasonably means failure of the whole application | failure domains should be separated |\n| configuration should be managed as one unit | deployment boundaries should be explicit |\n| local communication inside one process is sufficient | process or host boundaries are part of the architecture |"
+          },
+          {
+            "nouns": [
+              "boundaries",
+              "boundaries",
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "\\index{system boundaries}\n\\index{protocol boundaries}\n\\index{local boundary}\n\\index{network-facing boundary}\n\\index{upgraded boundary}"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "ownership",
+              "policy",
+              "observations"
+            ],
+            "passage": "For each boundary, identify its consumers, reachability, security, state ownership, failure policy and independent observations."
+          },
+          {
+            "nouns": [
+              "role",
+              "surfaces",
+              "role",
+              "surface",
+              "observation",
+              "boundaries",
+              "role",
+              "role",
+              "role"
+            ],
+            "passage": "| Component | Primary role | Supporting surfaces | Architectural lesson |\n|---|---|---|---|\n| `MQTTBroker` / `mqttbroker` | central MQTT broker role | web/admin surface, live observation, MQTT-over-WebSocket entry point | one executable can host several related broker boundaries |\n| `MQTTIntegrator` / `mqttintegrator` | mapping-driven integration service | subscribes, maps/transforms, republishes | application semantics can live above MQTT core |\n| `MQTTBridge` / `mqttbridge` | broker-to-broker topology role | selected topic movement between broker connections | topology and selected traffic movement are separate from mapping |\n| `MQTTCli` / `mqttcli` | operational command-line role | access for testing and operation | the same protocol stack can become an operational tool |\n| `MQTTStore` / `mqttstore` | MQTT-to-MariaDB persistence role | raw envelope storage, optional typed-table projection | MQTT publishes can become durable and queryable state |\n| `mqtt-mapping` | shared mapping/admin support | used where mapping and administration belong | selected applications can share integration semantics without becoming the same application |"
+          },
+          {
+            "nouns": [
+              "surface",
+              "carriers",
+              "role"
+            ],
+            "passage": "| Build file | What it reveals |\n|---|---|\n| top-level `CMakeLists.txt` | suite structure |\n| `lib/CMakeLists.txt` | shared mapping support |\n| `mqttbroker/CMakeLists.txt` | broker and web/admin surface |\n| `mqttintegrator/CMakeLists.txt` | mapping integration and administration |\n| `mqttbridge/CMakeLists.txt` | bridge topology and optional carriers |\n| `mqttcli/CMakeLists.txt` | operational client tool |\n| `mqttstore/CMakeLists.txt` | persistence-facing MQTT client role |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 1,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 77
+        },
+        "fenced_tokens": 56,
+        "last_three_blocks_before_recap": [
+          "For the store, identify the raw insert and each matching projection insert, then locate their success and error callbacks. Write down what observation would establish each outcome. A database row, a projection row, and broker delivery are three separate facts.",
+          "A bounded deployment exercise can use a unique topic prefix and a fixed sequence of ten publications, with an independent subscriber and database query as observers. Stop one destination and predict which other observations should continue. Running that exercise requires configured broker and database services.",
+          "\\index{MQTTSuite!architectural reading}"
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 4.53,
+        "identifier_spellings": [
+          "HTTP",
+          "IPv4",
+          "IPv6",
+          "MQTT",
+          "MQTTBridge",
+          "MQTTBroker",
+          "MQTTCli",
+          "MQTTIntegrator",
+          "MQTTStore",
+          "legacy",
+          "lib",
+          "mqttbridge",
+          "mqttbroker",
+          "mqttcli",
+          "mqttintegrator",
+          "mqttstore"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 200,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "role",
+              "boundaries"
+            ],
+            "passage": "Figure \\ref{fig:application-system-role-constellation} shows the application as a system role rather than as an isolated program: protocol-facing boundaries, configuration, operational visibility, and deployment identity all meet at the running application process."
+          },
+          {
+            "nouns": [
+              "ownership",
+              "role",
+              "role"
+            ],
+            "passage": "They do not specify callback order or ownership.](assets/figures/pdf/fig-09-application-system-role-constellation.pdf){#fig:application-system-role-constellation width=90% latex-placement=\"tbp\"}"
+          },
+          {
+            "nouns": [
+              "Role",
+              "observation",
+              "role"
+            ],
+            "passage": "| Role | Consumer or responsibility |\n|---|---|\n| `admin-http` | browser-facing administration |\n| `live-events` | observation stream, perhaps inside the web role |\n| `mqtt-ingest` | machine-message input from devices |\n| `bridge-client` | outgoing integration with an external platform |\n| `local-control` | operator tool on the same host |\n| `database-state` | persistence of accepted application state |"
+          },
+          {
+            "nouns": [
+              "roles",
+              "role",
+              "observation",
+              "boundary"
+            ],
+            "passage": "Some roles are nested inside others: an SSE route may belong to a web role, while still being useful as a named observation boundary."
+          },
+          {
+            "nouns": [
+              "roles",
+              "roles",
+              "roles",
+              "roles",
+              "role",
+              "boundaries",
+              "boundaries"
+            ],
+            "passage": "|\n|---|---|\n| the roles share one lifecycle | roles need independent restart |\n| deployment should remain simple | privileges differ between roles |\n| the roles are tightly coupled | scaling needs differ |\n| failure of one role reasonably means failure of the whole application | failure domains should be separated |\n| configuration should be managed as one unit | deployment boundaries should be explicit |\n| local communication inside one process is sufficient | process or host boundaries are part of the architecture |"
+          },
+          {
+            "nouns": [
+              "boundaries",
+              "boundaries",
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "\\index{system boundaries}\n\\index{protocol boundaries}\n\\index{local boundary}\n\\index{network-facing boundary}\n\\index{upgraded boundary}"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "ownership",
+              "policy",
+              "observations"
+            ],
+            "passage": "For each boundary, identify its consumers, reachability, security, state ownership, failure policy and independent observations."
+          },
+          {
+            "nouns": [
+              "role",
+              "surfaces",
+              "role",
+              "surface",
+              "observation",
+              "boundaries",
+              "role",
+              "role",
+              "role"
+            ],
+            "passage": "| Component | Primary role | Supporting surfaces | Architectural lesson |\n|---|---|---|---|\n| `MQTTBroker` / `mqttbroker` | central MQTT broker role | web/admin surface, live observation, MQTT-over-WebSocket entry point | one executable can host several related broker boundaries |\n| `MQTTIntegrator` / `mqttintegrator` | mapping-driven integration service | subscribes, maps/transforms, republishes | application semantics can live above MQTT core |\n| `MQTTBridge` / `mqttbridge` | broker-to-broker topology role | selected topic movement between broker connections | topology and selected traffic movement are separate from mapping |\n| `MQTTCli` / `mqttcli` | operational command-line role | access for testing and operation | the same protocol stack can become an operational tool |\n| `MQTTStore` / `mqttstore` | MQTT-to-MariaDB persistence role | raw envelope storage, optional typed-table projection | MQTT publishes can become durable and queryable state |\n| `mqtt-mapping` | shared mapping/admin support | used where mapping and administration belong | selected applications can share integration semantics without becoming the same application |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 1,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 69
+        },
+        "fenced_tokens": 56,
+        "last_three_blocks_before_recap": [
+          "### Part IX checkpoint: recovery and durable evidence",
+          "Return to the accepted-state distinction with the equipped checkpoint in the public solutions. Observe a committed measurement after a database client restarts, then compare the gateway's in-memory restart. Use those observations to classify the suite trace: process recovery, broker delivery, raw insertion and projection insertion have different witnesses. The unequipped publication lab isolates the broker-distribution responsibility; it cannot substitute for the database result. Together the two experiments prepare the deployment questions that follow: which executable must exist, which component it consumes, and which external services its contract requires.",
+          "\\index{MQTTSuite!architectural reading}"
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "27",
+      "old": "25",
+      "path": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 14.95,
+        "identifier_spellings": [
+          "ACCEPTS_PER_TICK",
+          "ACCEPT_TIMEOUT",
+          "BACKLOG",
+          "BUILD_TESTING",
+          "CONNECT_TIMEOUT",
+          "INTERFACE",
+          "LD_PRELOAD",
+          "OFF",
+          "ON",
+          "PRIVATE",
+          "PUBLIC",
+          "READ_BLOCKSIZE",
+          "READ_TIMEOUT",
+          "RECONNECT",
+          "RECONNECT_TIME",
+          "RETRY",
+          "RETRY_BASE",
+          "RETRY_JITTER",
+          "RETRY_LIMIT",
+          "RETRY_ON_FATAL",
+          "RETRY_TIMEOUT",
+          "RETRY_TRIES",
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "SNODEC_ENABLE_ASAN",
+          "SNODEC_INTREE_BUILD",
+          "TERMINATE_TIMEOUT",
+          "TLS_INIT_TIMEOUT",
+          "WRITE_BLOCKSIZE",
+          "WRITE_TIMEOUT",
+          "core",
+          "epoll",
+          "http",
+          "libmagic",
+          "logger",
+          "mqtt",
+          "nlohmann_json",
+          "poll",
+          "select",
+          "snodec::core",
+          "snodec::logger",
+          "snodec::mqtt",
+          "snodec::websocket",
+          "src",
+          "target_link_libraries",
+          "utils",
+          "websocket"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SNODEC_INTREE_BUILD",
+          "src"
+        ],
+        "prose_words_before_first_nonprose_block": 198,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "carrier",
+              "role",
+              "carrier"
+            ],
+            "passage": "|\n| HTTP server/client role | `<web/http/legacy/in/Server.h>` / `<web/http/legacy/in/Client.h>` | `snodec::http-server` or `snodec::http-client`, plus the selected carrier component when the source directly names one | Raw HTTP role over a concrete carrier."
+          },
+          {
+            "nouns": [
+              "carrier",
+              "role",
+              "carrier"
+            ],
+            "passage": "|\n| EventSource client | `<web/http/legacy/in/EventSource.h>` | `snodec::http-client`, plus the selected carrier component when needed | SSE client role over the selected HTTP client carrier."
+          },
+          {
+            "nouns": [
+              "role",
+              "Role",
+              "surface"
+            ],
+            "passage": "|\n| WebSocket server/client role | `<web/websocket/server/SubProtocol.h>` / `<web/websocket/client/SubProtocol.h>` | `snodec::websocket-server` or `snodec::websocket-client` | Role-specific WebSocket upgrade/subprotocol surface."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 18
+        },
+        "fenced_tokens": 501,
+        "last_three_blocks_before_recap": [
+          "1. Identify the target name.\n2. Decide whether it is a framework component, concrete composition component, lower operational component, or application target.\n3. Identify the public headers used by the source files and the SNode.C abstractions directly named there.\n4. Read `target_link_libraries`.\n5. Separate `PUBLIC`, `PRIVATE`, and `INTERFACE` dependencies before opening C++ source files.\n6. Check whether the target has an installed/exported alias.\n7. Check whether it is listed as a supported component.\n8. Look for optional dependency gates around the target.\n9. Check header install destinations, library install destinations, and RPATH-related properties.\n10. For external use, translate local target names to `snodec::...`.\n11. Only then inspect implementation files if the public header and build shape are not enough.",
+          "Apply the method to a scratch copy of `companion/examples/EchoPair`. Its source names an IPv4 legacy stream server and client, and its package request selects `net-in-stream-legacy`. Configure and build it against the installation used in Chapter 2. Then change only the requested component to a deliberately nonexistent name such as `book-missing-component` and configure a fresh build directory. Configuration must fail before compilation. Restore the component and rebuild. This separates package discovery from C++ compilation: an installed header on disk does not make an unsupported component request valid.",
+          "Next inspect the link interface of `snodec::net-in-stream-legacy` in the installed target files. Follow its dependencies to the stream and network-family targets without copying that whole chain into the application. The dependency graph above is useful precisely because the component maintains this chain for its consumers."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 14.01,
+        "identifier_spellings": [
+          "ACCEPTS_PER_TICK",
+          "ACCEPT_TIMEOUT",
+          "BACKLOG",
+          "BUILD_TESTING",
+          "CONNECT_TIMEOUT",
+          "INTERFACE",
+          "LD_PRELOAD",
+          "OFF",
+          "ON",
+          "PRIVATE",
+          "PUBLIC",
+          "READ_BLOCKSIZE",
+          "READ_TIMEOUT",
+          "RECONNECT",
+          "RECONNECT_TIME",
+          "RETRY",
+          "RETRY_BASE",
+          "RETRY_JITTER",
+          "RETRY_LIMIT",
+          "RETRY_ON_FATAL",
+          "RETRY_TIMEOUT",
+          "RETRY_TRIES",
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "SNODEC_ENABLE_ASAN",
+          "SNODEC_INTREE_BUILD",
+          "TERMINATE_TIMEOUT",
+          "TLS_INIT_TIMEOUT",
+          "WRITE_BLOCKSIZE",
+          "WRITE_TIMEOUT",
+          "core",
+          "epoll",
+          "http",
+          "libmagic",
+          "logger",
+          "mqtt",
+          "nlohmann_json",
+          "poll",
+          "select",
+          "snodec::core",
+          "snodec::logger",
+          "snodec::mqtt",
+          "snodec::websocket",
+          "src",
+          "target_link_libraries",
+          "utils",
+          "websocket"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "src"
+        ],
+        "prose_words_before_first_nonprose_block": 62,
+        "abstract_noun_clusters": [],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 3
+        },
+        "fenced_tokens": 135,
+        "last_three_blocks_before_recap": [
+          "Apply the method to a scratch copy of `companion/examples/EchoPair`. Its source names an IPv4 legacy stream server and client, and its package request selects `net-in-stream-legacy`. Configure and build it against the installation used in Chapter 2. Then change only the requested component to a deliberately nonexistent name such as `book-missing-component` and configure a fresh build directory. Configuration must fail before compilation. Restore the component and rebuild. This separates package discovery from C++ compilation: an installed header on disk does not make an unsupported component request valid.",
+          "Next inspect the link interface of `snodec::net-in-stream-legacy` in the installed target files. Follow its dependencies to the stream and network-family targets without copying that whole chain into the application. The dependency graph above is useful precisely because the component maintains this chain for its consumers.",
+          "The consumer can now find and link its declared components. The next chapter checks where their installed artifacts must live when the executable leaves the build tree."
+        ]
+      },
+      "fenced_token_delta": -366
+    },
+    {
+      "chapter": "28",
+      "old": "26",
+      "path": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 6.1,
+        "identifier_spellings": [
+          "DT_RPATH",
+          "DT_RUNPATH",
+          "GROUP_NAME",
+          "HOME",
+          "LD_PRELOAD",
+          "OpenWRT",
+          "SNODEC_BOOK_SOURCE",
+          "XDG_CONFIG_HOME",
+          "apps",
+          "c9378fe95f7c015752c748fc4ab012b585d294d1",
+          "core",
+          "full",
+          "lib",
+          "logger",
+          "procd",
+          "snodec",
+          "snodec_DIR",
+          "src",
+          "utils"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "core",
+          "logger",
+          "src",
+          "utils"
+        ],
+        "prose_words_before_first_nonprose_block": 70,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "surface",
+              "policy",
+              "ownership"
+            ],
+            "passage": "| Recipe surface | Required evidence for the current source |\n|---|---|\n| Source selection | The archive or checkout matches the book's framework manifest, including any author changes beyond the reconstruction base |\n| Version and library names | Package version, SONAME major and installed filenames match the 2.0 build |\n| Component graph | Selected module recipes follow current targets; obsolete targets are removed rather than satisfied by old libraries |\n| Logger dependency | The current spdlog build dependency is supplied reproducibly by the SDK recipe; an undeclared configure-time download is not a package dependency policy |\n| Optional features | TLS, Bluetooth, database support and applications are selected deliberately rather than through the feed's broad `full` or `apps` package |\n| Consumer application | The book echo consumer is cross-compiled against the staged target installation and installed as `/usr/bin/echoserver` |\n| Runtime ownership | The configured management group and configuration directories exist on the target |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 9
+        },
+        "fenced_tokens": 213,
+        "last_three_blocks_before_recap": [
+          "1. Which executable or service role is being deployed?\n2. Which SNode.C components does it require?\n3. Which package components provide those libraries?\n4. Which runtime-loaded modules must be installed?\n5. Which external libraries are required?\n6. Which configuration file describes the role?\n7. Which paths are read-only, and which must be writable at runtime?\n8. Which user and group run the process?\n9. Which directories hold configuration, logs, and pid files?\n10. Which TLS or database resources are required?\n11. Which service manager owns lifecycle and restart policy?\n12. Which package manager installs or updates the service?\n13. Which repository or feed provides the packages?\n14. Which trust model protects package updates?\n:::",
+          "A deployment rehearsal should preserve the application's actual operating conditions. Run the installed executable under the intended service account, with its real configuration path and working directory, before putting a supervisor around it. Verify that named endpoint sections resolve as intended, the Unix-domain directory is writable where required, TLS material is readable where required, and the installed protocol modules can be found. Then stop the process normally and observe its cleanup before testing restart. A build-tree run under the developer's account leaves all of those deployment boundaries untested.",
+          "For MiniGateway, keep liveness and readiness distinct. `/health` demonstrates a responsive HTTP role. It does not query broker acceptance, database durability, or the freshness of measurements. A supervisor can use a liveness observation without pretending it establishes those wider application guarantees."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 6.12,
+        "identifier_spellings": [
+          "DT_RPATH",
+          "DT_RUNPATH",
+          "GROUP_NAME",
+          "HOME",
+          "LD_PRELOAD",
+          "OpenWRT",
+          "SNODEC_BOOK_SOURCE",
+          "XDG_CONFIG_HOME",
+          "apps",
+          "c9378fe95f7c015752c748fc4ab012b585d294d1",
+          "core",
+          "full",
+          "lib",
+          "logger",
+          "procd",
+          "snodec",
+          "snodec_DIR",
+          "src",
+          "utils"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "core",
+          "logger",
+          "src",
+          "utils"
+        ],
+        "prose_words_before_first_nonprose_block": 70,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "surface",
+              "policy",
+              "ownership"
+            ],
+            "passage": "| Recipe surface | Required evidence for the current source |\n|---|---|\n| Source selection | The prepared source matches the setup verified in Chapter 2 |\n| Version and library names | Package version, SONAME major and installed filenames match the 2.0 build |\n| Component graph | Selected module recipes follow current targets; obsolete targets are removed rather than satisfied by old libraries |\n| Logger dependency | The current spdlog build dependency is supplied reproducibly by the SDK recipe; an undeclared configure-time download is not a package dependency policy |\n| Optional features | TLS, Bluetooth, database support and applications are selected deliberately rather than through the feed's broad `full` or `apps` package |\n| Consumer application | The book echo consumer is cross-compiled against the staged target installation and installed as `/usr/bin/echoserver` |\n| Runtime ownership | The configured management group and configuration directories exist on the target |"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 9
+        },
+        "fenced_tokens": 213,
+        "last_three_blocks_before_recap": [
+          "A deployment rehearsal should preserve the application's actual operating conditions. Run the installed executable under the intended service account, with its real configuration path and working directory, before putting a supervisor around it. Verify that named instance sections resolve as intended, the Unix-domain directory is writable where required, TLS material is readable where required, and the installed protocol modules can be found. Then stop the process normally and observe its cleanup before testing restart. A build-tree run under the developer's account leaves all of those deployment boundaries untested.",
+          "For MiniGateway, keep liveness and readiness distinct. `/health` demonstrates a responsive HTTP role. It does not query broker acceptance, database durability, or the freshness of measurements. A supervisor can use a liveness observation without pretending it establishes those wider application guarantees.",
+          "The next chapter turns those deployment observations into tests that distinguish package failures, wrong endpoints and application behavior."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "29",
+      "old": "27",
+      "path": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 9.35,
+        "identifier_spellings": [
+          "BUILD_TESTING",
+          "Config::reconfigure()",
+          "HexDumpPresentationTest",
+          "HttpMessageParserTest",
+          "HttpMessagePresentationTest",
+          "HttpRequestFormatterRawWireTest",
+          "HttpResponseFormatterRawWireTest",
+          "Inet6LegacyServerClientFramedPayloadExchangeTest",
+          "InetLegacyServerClientFramedPayloadExchangeTest",
+          "RawWire",
+          "SKIP_RETURN_CODE",
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "SNODEC_ENABLE_ASAN",
+          "SNodeC::reconfigure()",
+          "SNodeCReconfigureTest",
+          "SemanticTerminalColorRoutingTest",
+          "SocketWriterResourcePolicyTest",
+          "StreamFrameworkShutdownTest",
+          "TLSFrameworkShutdownTest",
+          "TestResult",
+          "UnixLegacyServerClientFramedPayloadExchangeTest",
+          "core",
+          "error",
+          "eventsource",
+          "express",
+          "http",
+          "log",
+          "mqtt",
+          "net",
+          "procd",
+          "processResult()",
+          "utils",
+          "websocket"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS"
+        ],
+        "prose_words_before_first_nonprose_block": 88,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "ownership",
+              "policy",
+              "policy",
+              "surfaces"
+            ],
+            "passage": "| Layer | Typical evidence | Deliberate limit |\n|---|---|---|\n| unit | parsing, formatting, scope ownership, local lifecycle and policy state | does not by itself prove an operating-system transport exchange |\n| component | real runtime composition and selected protocol exchanges | does not certify every deployment or long-running workload |\n| source policy | architectural constraints in maintained source files | is not a substitute for runtime behavior or a security proof |\n| installed consumer | installed headers, libraries, package exports, and an external compile/run path | covers selected consumer surfaces, not every possible application |\n| external application | complete executable behavior against controlled peers | remains a bounded application-level check |"
+          },
+          {
+            "nouns": [
+              "policy",
+              "boundaries",
+              "surfaces",
+              "surfaces"
+            ],
+            "passage": "![The SNode.C test architecture: unit, component, and policy tests protect different contracts; installed-consumer and external-application checks protect the public use path; CI orchestrates the selected checks without replacing their boundaries.](assets/figures/pdf/fig-18-testing-confidence-surfaces.pdf){#fig:testing-confidence-surfaces width=90% latex-placement=\"hbp\"}"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 1
+        },
+        "fenced_tokens": 256,
+        "last_three_blocks_before_recap": [
+          "Benchmarking should separate average latency, tail latency, throughput, connection count, memory growth, CPU load, backpressure behavior, and recovery after overload.",
+          "In an event-driven model, one slow boundary can affect other connections if the application does not handle pressure correctly.",
+          "A benchmark locates a regression in a workload; profiling locates cost in parsing, routing, serialization, TLS, logging, allocation, topic matching, database work, dispatch or application callbacks. Interpret both using the affected boundary."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 8.88,
+        "identifier_spellings": [
+          "BUILD_TESTING",
+          "Config::reconfigure()",
+          "HexDumpPresentationTest",
+          "HttpMessageParserTest",
+          "HttpMessagePresentationTest",
+          "HttpRequestFormatterRawWireTest",
+          "HttpResponseFormatterRawWireTest",
+          "Inet6LegacyServerClientFramedPayloadExchangeTest",
+          "InetLegacyServerClientFramedPayloadExchangeTest",
+          "RawWire",
+          "SKIP_RETURN_CODE",
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "SNODEC_ENABLE_ASAN",
+          "SNodeC::reconfigure()",
+          "SNodeCReconfigureTest",
+          "SemanticTerminalColorRoutingTest",
+          "SocketWriterResourcePolicyTest",
+          "StreamFrameworkShutdownTest",
+          "TLSFrameworkShutdownTest",
+          "TestResult",
+          "UnixLegacyServerClientFramedPayloadExchangeTest",
+          "core",
+          "error",
+          "eventsource",
+          "express",
+          "http",
+          "log",
+          "mqtt",
+          "net",
+          "procd",
+          "processResult()",
+          "utils",
+          "websocket"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS"
+        ],
+        "prose_words_before_first_nonprose_block": 267,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "ownership",
+              "policy",
+              "policy",
+              "surfaces"
+            ],
+            "passage": "| Layer | Typical evidence | Deliberate limit |\n|---|---|---|\n| unit | parsing, formatting, scope ownership, local lifecycle and policy state | does not by itself prove an operating-system transport exchange |\n| component | real runtime composition and selected protocol exchanges | does not certify every deployment or long-running workload |\n| source policy | architectural constraints in maintained source files | is not a substitute for runtime behavior or a security proof |\n| installed consumer | installed headers, libraries, package exports, and an external compile/run path | covers selected consumer surfaces, not every possible application |\n| external application | complete executable behavior against controlled peers | remains a bounded application-level check |"
+          },
+          {
+            "nouns": [
+              "policy",
+              "boundaries",
+              "surfaces",
+              "surfaces"
+            ],
+            "passage": "![The SNode.C test architecture: unit, component, and policy tests protect different contracts; installed-consumer and external-application checks protect the public use path; CI orchestrates the selected checks without replacing their boundaries.](assets/figures/pdf/fig-18-testing-confidence-surfaces.pdf){#fig:testing-confidence-surfaces width=90% latex-placement=\"hbp\"}"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 1
+        },
+        "fenced_tokens": 256,
+        "last_three_blocks_before_recap": [
+          "In an event-driven model, one slow boundary can affect other connections if the application does not handle pressure correctly.",
+          "A benchmark locates a regression in a workload; profiling locates cost in parsing, routing, serialization, TLS, logging, allocation, topic matching, database work, dispatch or application callbacks. Interpret both using the affected boundary.",
+          "Carry that distinction into the capstone: build and install its components, then observe each application contract before interpreting diagnostics or timing."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "30",
+      "old": "28",
+      "path": "manuscript/chapters/30-building-minigateway.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 10.89,
+        "identifier_spellings": [
+          "CONNACK",
+          "CONNECT",
+          "Measurement",
+          "MeasurementJsonCodec",
+          "MeasurementModel",
+          "MiniGatewayMqtt",
+          "MiniGatewayMqttClient",
+          "MiniGatewayWeb",
+          "SUBACK",
+          "SocketStateReporter",
+          "connected",
+          "curl",
+          "false",
+          "iot::mqtt::SocketContext",
+          "main()",
+          "minigateway",
+          "web"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "curl"
+        ],
+        "prose_words_before_first_nonprose_block": 59,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "role",
+              "observation",
+              "role"
+            ],
+            "passage": "\\index{MiniGateway!application architecture}\n\\index{MQTT client role}\n\\index{HTTP administration role}\n\\index{SSE observation role}"
+          },
+          {
+            "nouns": [
+              "roles",
+              "policy",
+              "role"
+            ],
+            "passage": "`SocketStateReporter` gives both runtime roles the same diagnostic policy without putting it in either role."
+          }
+        ],
+        "context_terms": {
+          "communication role": 1,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 29
+        },
+        "fenced_tokens": 1971,
+        "last_three_blocks_before_recap": [
+          "| Experiment | Expected observation | What it does not establish |\n|---|---|---|\n| Start without a reachable MQTT broker, then call `/health` and `POST /simulate` | The web role can answer and the local sequence advances | Broker readiness or delivery |\n| Open `/events`, then simulate twice | Two accepted states with increasing local ids | Durable replay after reconnect |\n| Disconnect the observer while input is idle | The disconnect callback removes its model subscription | Detection of a silent network failure before a transport event or timeout |\n| Restart the process and read `/status` | The local sequence starts again at zero | Persistence across process lifetime |\n| Publish malformed measurement JSON through a broker | A warning and no accepted-state change | Full broker interoperability without running the broker scenario |",
+          "Use a separate observer to check MQTT output when a broker is available. In its absence, finish the HTTP and SSE checks and record the broker scenario as unexecuted.",
+          "\\Needspace{10\\baselineskip}"
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 7.3,
+        "identifier_spellings": [
+          "CONNACK",
+          "CONNECT",
+          "Measurement",
+          "MeasurementJsonCodec",
+          "MeasurementModel",
+          "MiniGatewayMqtt",
+          "MiniGatewayMqttClient",
+          "MiniGatewayWeb",
+          "SUBACK",
+          "SocketStateReporter",
+          "connected",
+          "curl",
+          "false",
+          "iot::mqtt::SocketContext",
+          "main()",
+          "minigateway",
+          "web"
+        ],
+        "identifier_spellings_in_first_400_words": [],
+        "prose_words_before_first_nonprose_block": 93,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "observation",
+              "role"
+            ],
+            "passage": "\\index{MiniGateway!application architecture}\n\\index{MQTT client side}\n\\index{HTTP administration role}\n\\index{SSE observation role}"
+          },
+          {
+            "nouns": [
+              "roles",
+              "policy",
+              "role"
+            ],
+            "passage": "`SocketStateReporter` gives both runtime roles the same diagnostic policy without putting it in either role."
+          }
+        ],
+        "context_terms": {
+          "communication role": 1,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 27
+        },
+        "fenced_tokens": 1971,
+        "last_three_blocks_before_recap": [
+          "Use a separate observer to check MQTT output when a broker is available. In its absence, finish the HTTP and SSE checks and record the broker scenario as unexecuted.",
+          "\\Needspace{10\\baselineskip}",
+          "The model and its current observers now have explicit contracts. The next chapter adds local input while preserving that same acceptance owner and those existing observations."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "31",
+      "old": "29",
+      "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 4.12,
+        "identifier_spellings": [
+          "Measurement",
+          "MeasurementJsonCodec",
+          "MeasurementModel",
+          "MeasurementUnixSocketContext",
+          "main()",
+          "nc"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "Measurement",
+          "MeasurementJsonCodec",
+          "MeasurementModel"
+        ],
+        "prose_words_before_first_nonprose_block": 23,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "observation",
+              "role",
+              "role"
+            ],
+            "passage": "| Area | MiniGateway | MiniGateway Extended |\n|---|---|---|\n| shared model | unchanged | unchanged |\n| web role | unchanged | unchanged |\n| SSE observation path | unchanged | unchanged |\n| MQTT role | unchanged | unchanged |\n| Unix-domain input role | absent | added |"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "role",
+              "role"
+            ],
+            "passage": "The JSON codec is a boundary utility, not a prerequisite for the CSV input.](assets/figures/pdf/fig-12-minigateway-extended-network-role-architecture.pdf){#fig:minigateway-extended-network-role-architecture width=100% latex-placement=\"tbp\"}"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 29
+        },
+        "fenced_tokens": 758,
+        "last_three_blocks_before_recap": [
+          "For a small local gateway, the Unix-domain socket input is a useful deployment boundary. It can be made visible only to local processes that have filesystem permission to write to the socket path, while HTTP and MQTT remain network-facing roles. That makes MiniGateway Extended a more realistic gateway shape than a single public input surface.",
+          "The example does not add authentication, persistence, systemd socket activation, or a production topic namespace. Each would need its own policy and tests; adding the local input supplies none of those guarantees.",
+          "A role can be independently understandable without being independently restartable: these roles still share one process and one in-memory model. Moving the local input into another service would introduce a communication and recovery contract between that service and the gateway. That cost is justified by different privilege or restart requirements, not by the number of source files."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 4.72,
+        "identifier_spellings": [
+          "Measurement",
+          "MeasurementJsonCodec",
+          "MeasurementModel",
+          "MeasurementUnixSocketContext",
+          "accept()",
+          "main()",
+          "nc",
+          "processLine()",
+          "splitCsvLine()"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "Measurement",
+          "MeasurementJsonCodec",
+          "MeasurementModel"
+        ],
+        "prose_words_before_first_nonprose_block": 23,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "observation",
+              "role",
+              "role"
+            ],
+            "passage": "| Area | MiniGateway | MiniGateway Extended |\n|---|---|---|\n| shared model | unchanged | unchanged |\n| web role | unchanged | unchanged |\n| SSE observation path | unchanged | unchanged |\n| MQTT role | unchanged | unchanged |\n| Unix-domain input role | absent | added |"
+          },
+          {
+            "nouns": [
+              "boundary",
+              "role",
+              "role"
+            ],
+            "passage": "The JSON codec is a boundary utility, not a prerequisite for the CSV input.](assets/figures/pdf/fig-12-minigateway-extended-network-role-architecture.pdf){#fig:minigateway-extended-network-role-architecture width=100% latex-placement=\"tbp\"}"
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 28
+        },
+        "fenced_tokens": 602,
+        "last_three_blocks_before_recap": [
+          "For a small local gateway, the Unix-domain socket input is a useful deployment boundary. It can be made visible only to local processes that have filesystem permission to write to the socket path, while HTTP and MQTT remain network-facing roles. That makes MiniGateway Extended a more realistic gateway shape than a single public input surface.",
+          "The example does not add authentication, persistence, systemd socket activation, or a production topic namespace. Each would need its own policy and tests; adding the local input supplies none of those guarantees.",
+          "A role can be independently understandable without being independently restartable: these roles still share one process and one in-memory model. Moving the local input into another service would introduce a communication and recovery contract between that service and the gateway. That cost is justified by different privilege or restart requirements, not by the number of source files."
+        ]
+      },
+      "fenced_token_delta": -156
+    },
+    {
+      "chapter": "32",
+      "old": "30",
+      "path": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 2.63,
+        "identifier_spellings": [
+          "MeasurementModel",
+          "POST",
+          "SocketContext",
+          "SocketContextFactory"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "MeasurementModel"
+        ],
+        "prose_words_before_first_nonprose_block": 98,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "owner",
+              "policy",
+              "observation",
+              "role",
+              "owner"
+            ],
+            "passage": "| Candidate owner | Why it is tempting | Cost |\n|---|---|---|\n| incoming MQTT payload | preserves producer-side numbering | each producer can define a different ordering rule |\n| HTTP simulation route | easy for the demonstration path | duplicates policy outside the real input paths |\n| Unix-domain input line | convenient for local tests and replay | lets a local tool compete with application state |\n| SSE response path | close to the browser-visible event id | turns an observation role into a state owner |\n| `MeasurementModel` | one rule for every accepted measurement | the input sequence becomes syntactic input, not authority |"
+          },
+          {
+            "nouns": [
+              "role",
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "\\index{role boundary}\n\\index{deployment boundary}\n\\index{process boundary}"
+          },
+          {
+            "nouns": [
+              "role",
+              "boundary",
+              "role",
+              "boundary"
+            ],
+            "passage": "\\index{MiniGateway Extended!role boundary}\n\\index{Unix domain sockets!role boundary}"
+          },
+          {
+            "nouns": [
+              "policy",
+              "policy",
+              "role"
+            ],
+            "passage": "| Shape | When it fits | Cost or constraint |\n|---|---|---|\n| add an HTTP `POST` route | producers already use HTTP and share its authentication policy | requires request parsing and web access policy for the input |\n| publish measurements through MQTT | producers already participate in the brokered system | local input depends on broker availability and topic permissions |\n| create a Unix-domain input role | local processes need a direct stream interface controlled by filesystem access | adds a socket path, framing rules, and a lower-family dependency |\n| use a separate collector service | device access needs different privileges or restart behavior | introduces another deployment unit and an interprocess recovery contract |"
+          },
+          {
+            "nouns": [
+              "role",
+              "observation",
+              "role",
+              "role"
+            ],
+            "passage": "With the Unix-domain role, later IPC framing changes stay there; web-observation changes stay in the web role; broker-topic changes stay in the MQTT role."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 25
+        },
+        "fenced_tokens": 18,
+        "last_three_blocks_before_recap": [
+          "Do not push meaning downward merely because a lower callback sees an event first. Do not push it upward merely because a global object can reach everything. Place the concern where its lifetime, audience, failure consequence, and diagnostic needs are all visible.",
+          "The current flow API provides another concrete boundary test. Two explicit connections can have independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate endpoint roles. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.",
+          "Appendix A applies this judgment to framework extension: new features should be added where their responsibility, lifetime, and operational consequences remain clear."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 1.44,
+        "identifier_spellings": [
+          "MeasurementModel",
+          "POST",
+          "SocketContext",
+          "SocketContextFactory"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "MeasurementModel"
+        ],
+        "prose_words_before_first_nonprose_block": 78,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "owner",
+              "policy",
+              "observation",
+              "role",
+              "owner"
+            ],
+            "passage": "| Candidate owner | Why it is tempting | Cost |\n|---|---|---|\n| incoming MQTT payload | preserves producer-side numbering | each producer can define a different ordering rule |\n| HTTP simulation route | easy for the demonstration path | duplicates policy outside the real input paths |\n| Unix-domain input line | convenient for local tests and replay | lets a local tool compete with application state |\n| SSE response path | close to the browser-visible event id | turns an observation role into a state owner |\n| `MeasurementModel` | one rule for every accepted measurement | the input sequence becomes syntactic input, not authority |"
+          },
+          {
+            "nouns": [
+              "role",
+              "boundary",
+              "boundary",
+              "boundary"
+            ],
+            "passage": "\\index{role boundary}\n\\index{deployment boundary}\n\\index{process boundary}"
+          },
+          {
+            "nouns": [
+              "role",
+              "boundary",
+              "role",
+              "boundary"
+            ],
+            "passage": "\\index{MiniGateway Extended!role boundary}\n\\index{Unix domain sockets!role boundary}"
+          },
+          {
+            "nouns": [
+              "policy",
+              "policy",
+              "role"
+            ],
+            "passage": "| Shape | When it fits | Cost or constraint |\n|---|---|---|\n| add an HTTP `POST` route | producers already use HTTP and share its authentication policy | requires request parsing and web access policy for the input |\n| publish measurements through MQTT | producers already participate in the brokered system | local input depends on broker availability and topic permissions |\n| create a Unix-domain input role | local processes need a direct stream interface controlled by filesystem access | adds a socket path, framing rules, and a network-family dependency |\n| use a separate collector service | device access needs different privileges or restart behavior | introduces another deployment unit and an interprocess recovery contract |"
+          },
+          {
+            "nouns": [
+              "role",
+              "observation",
+              "role",
+              "role"
+            ],
+            "passage": "With the Unix-domain role, later IPC framing changes stay there; web-observation changes stay in the web role; broker-topic changes stay in the MQTT role."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 21
+        },
+        "fenced_tokens": 18,
+        "last_three_blocks_before_recap": [
+          "Do not push meaning downward merely because a lower callback sees an event first. Do not push it upward merely because a global object can reach everything. Place the concern where its lifetime, audience, failure consequence, and diagnostic needs are all visible.",
+          "The current flow API provides another concrete boundary test. Two explicit connect calls create flows with independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate instances. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.",
+          "The epilogue gathers the principles behind these decisions. Appendix A then applies the same judgment to framework extension, following a public type inward while keeping responsibility, lifetime and operational consequences explicit."
+        ]
+      },
+      "fenced_token_delta": 0
+    },
+    {
+      "chapter": "A",
+      "old": "A",
+      "path": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+      "before": {
+        "identifier_density_per_1000_prose_words": 10.69,
+        "identifier_spellings": [
+          "InetPerCallFlowTest",
+          "MeasurementUnixSocketContext",
+          "MeasurementUnixSocketContextFactory",
+          "Queued",
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "SNodeC::reconfigure()",
+          "SNodeCReconfigureTest",
+          "SocketClient",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "WouldExceedLimit",
+          "core",
+          "core::SNodeC",
+          "error",
+          "failed",
+          "in",
+          "in6",
+          "iot::mqtt::SocketContext",
+          "l2",
+          "legacy",
+          "mqttcli",
+          "net",
+          "onConnected()",
+          "onReceivedFromPeer()",
+          "rc",
+          "sendConnect",
+          "sendDisconnect",
+          "sendPublish",
+          "sendSubscribe",
+          "src",
+          "stream",
+          "tls",
+          "un"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "core",
+          "net",
+          "src"
+        ],
+        "prose_words_before_first_nonprose_block": 68,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "boundary",
+              "surface",
+              "roles"
+            ],
+            "passage": "It does justify a separate application role, because the input boundary has a different peer identity, communication family, diagnostic surface, and future-change path from the web and MQTT roles."
+          },
+          {
+            "nouns": [
+              "role",
+              "policy",
+              "policy"
+            ],
+            "passage": "Classify an option before adding it: build-time composition, runtime role choice, protocol/session policy, or application/domain policy."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 23
+        },
+        "fenced_tokens": 75,
+        "last_three_blocks_before_recap": [
+          "Before editing, name the changed concern, its owner and scope, the layer it must not pollute, and the configuration, diagnostics, failure policy, tests, packaging and deployment consequences. Ask what the design makes easier or harder to change next.",
+          "Use the questions as an exercise on the Chapter 29 parser: suppose the local producer needs its own sample number retained alongside the gateway sequence. Identify the domain field, CSV and JSON representation changes, accepted-state behavior, and observer assertions before editing. Then compare this with adding a second input carrier. The first changes the shared application contract; the second can preserve it. A useful answer names both the files that must change and the existing behavior that the tests must continue to protect.",
+          "For a flow-related extension, preserve the current invariant explicitly: one public activation call creates one controller, automatic recovery stays within that controller, and termination does not restart it. The shared endpoint configuration and connection identity allocation remain shared across its flows. Test cancellation of one flow beside a surviving sibling, and distinguish termination from final controller destruction. The current `InetPerCallFlowTest` is the relevant composed regression boundary; an old singleton-controller sketch would be the wrong foundation for this extension."
+        ]
+      },
+      "after": {
+        "identifier_density_per_1000_prose_words": 11.28,
+        "identifier_spellings": [
+          "DescriptorEventPublisher",
+          "DescriptorEventReceiver",
+          "EventReceiver",
+          "InetPerCallFlowTest",
+          "MeasurementUnixSocketContext",
+          "MeasurementUnixSocketContextFactory",
+          "Queued",
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "SNodeC::reconfigure()",
+          "SNodeCReconfigureTest",
+          "SocketClient",
+          "SocketContext",
+          "SocketContextFactory",
+          "SocketServer",
+          "WouldExceedLimit",
+          "core",
+          "core::SNodeC",
+          "dispatchEvent()",
+          "error",
+          "failed",
+          "in",
+          "in6",
+          "iot::mqtt::SocketContext",
+          "l2",
+          "legacy",
+          "mqttcli",
+          "net",
+          "onConnected()",
+          "onReceivedFromPeer()",
+          "rc",
+          "sendConnect",
+          "sendDisconnect",
+          "sendPublish",
+          "sendSubscribe",
+          "src",
+          "stream",
+          "timeoutEvent()",
+          "tls",
+          "un"
+        ],
+        "identifier_spellings_in_first_400_words": [
+          "SNODEC_BUILD_APPS",
+          "SNODEC_BUILD_TESTS",
+          "net",
+          "src"
+        ],
+        "prose_words_before_first_nonprose_block": 100,
+        "abstract_noun_clusters": [
+          {
+            "nouns": [
+              "role",
+              "boundary",
+              "surface",
+              "roles"
+            ],
+            "passage": "It does justify a separate application role, because the input boundary has a different peer identity, network family, diagnostic surface, and future-change path from the web and MQTT roles."
+          },
+          {
+            "nouns": [
+              "role",
+              "policy",
+              "policy"
+            ],
+            "passage": "Classify an option before adding it: build-time composition, runtime role choice, protocol/session policy, or application/domain policy."
+          }
+        ],
+        "context_terms": {
+          "communication role": 0,
+          "server instance": 0,
+          "client instance": 0,
+          "role": 22
+        },
+        "fenced_tokens": 75,
+        "last_three_blocks_before_recap": [
+          "The receiver derives from `EventReceiver`, tracks enablement and suspension, attaches to a descriptor, and has timeout and signal behavior. It implements reactions such as `dispatchEvent()`, `timeoutEvent()`, and `signalEvent(int)`. Publishers decide who is observed; receivers define what happens when that observation produces work.",
+          "| Runtime object | Main responsibility | Simple mental rule |\n|---|---|---|\n| `DescriptorEventPublisher` | Manages the observed population for a descriptor channel | Decides *who is being observed* |\n| `DescriptorEventReceiver` | Defines behavior for one observed descriptor participant | Decides *what happens when observation produces work* |",
+          "Socket acceptors, connectors, readers, and writers specialize this pattern. Treat them as runtime participants with observation, timeout, and cleanup state, rather than anonymous callbacks. Disabling observation and destroying the participant are different lifecycle steps; coordinated cleanup must respect any work still using it."
+        ]
+      },
+      "fenced_token_delta": 0
+    }
+  ]
+}

@@ -289,7 +289,7 @@ A protocol may still inspect network-family data for logging, diagnostics, autho
 
 Keep the frame accumulator, parser state and pending request with the connection. They should change at explicit lifecycle and input points, independently of the outer endpoint’s setup.
 
-The lower-family-specific setup belongs outside the protocol core.
+The network-family-specific setup belongs outside the protocol core.
 
 This includes:
 

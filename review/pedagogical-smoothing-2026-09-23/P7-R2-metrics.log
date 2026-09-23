@@ -1,0 +1,7228 @@
+COMMAND: python3 ci/manuscript-metrics.py
+SNODEC_PREFIX=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc
+BOOK_EXAMPLES_BUILD_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P7
+BOOK_BUILD_DIR=build/rebaseline-R2-07ca9a29-followup11/book
+TMPDIR=/tmp
+LD_LIBRARY_PATH=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/web/http/upgrade:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/snode.c/web/http/upgrade/websocket
+{
+  "schema_version": 1,
+  "manifest": "manuscript/book-files.txt",
+  "file_count": 56,
+  "definitions": {
+    "words": "Python str.split whitespace tokens in raw UTF-8 manuscript inputs, including markup.",
+    "partition": "prose_words + code_words = total_words. code_words includes opening/closing fence lines; code_content_words excludes them.",
+    "structure": "ATX headings and fenced Div classes outside backtick/tilde code fences; languages preserve source labels. No Markdown rendering.",
+    "sections": "Each chapter heading at level 3–6 starts a non-overlapping section. Count non-code body tokens until the next heading; exclude heading lines and chapter preambles. Empty parent sections count. Chapters include the epilogue.",
+    "phrases": "Case-insensitive whole words outside code fences; whitespace may span lines. Singular role and exact visible; boundary and boundaries combined. Raw inline markup remains.",
+    "forbidden": "Nine non-overlapping guards cover the five named examples and seven guard phrases; hit locations are source line numbers. Similar phrasing still needs editorial review.",
+    "manual_references": "Literal Chapter followed by an integer outside code fences; source line and matched text recorded, including self-references. Ranges/plural Chapters require editorial review."
+  },
+  "totals": {
+    "total_words": 110177,
+    "prose_words": 102339,
+    "code_words": 7838,
+    "code_content_words": 7118,
+    "fence_marker_words": 720,
+    "forbidden_phrase_hit_count": 0,
+    "heading_counts_by_level": {
+      "1": 12,
+      "2": 40,
+      "3": 272,
+      "4": 0,
+      "5": 0,
+      "6": 0
+    },
+    "callout_counts_by_class": {
+      "snodec-checklist": 2,
+      "snodec-exercise": 33,
+      "snodec-note": 16,
+      "snodec-objectives": 33,
+      "snodec-remember": 33,
+      "snodec-rule": 20,
+      "snodec-warning": 10
+    },
+    "fenced_blocks_by_language": {
+      "=latex": 10,
+      "cmake": 24,
+      "cpp": 204,
+      "ini": 9,
+      "markdown": 1,
+      "python": 3,
+      "sh": 61,
+      "sql": 1,
+      "text": 46
+    },
+    "chapter_headings_level_3_and_deeper": 259,
+    "chapter_section_prose_words": 94025,
+    "average_chapter_section_prose_words": 363.03,
+    "closing_perspective_sections": 0,
+    "term_occurrence_counts": {
+      "role": 309,
+      "boundary/boundaries": 344,
+      "visible": 92,
+      "is not a": 51,
+      "does not prove": 2,
+      "does not by itself": 5
+    },
+    "manual_chapter_reference_count": 200
+  },
+  "requested_baseline_comparison": {
+    "total_words": {
+      "expected": 151922,
+      "actual": 110177,
+      "delta": -41745
+    },
+    "chapter_headings_level_3_and_deeper": {
+      "expected": 1020,
+      "actual": 259,
+      "delta": -761
+    },
+    "closing_perspective_sections": {
+      "expected": 15,
+      "actual": 0,
+      "delta": -15
+    },
+    "snodec-remember": {
+      "expected": 38,
+      "actual": 33,
+      "delta": -5
+    },
+    "snodec-rule": {
+      "expected": 30,
+      "actual": 20,
+      "delta": -10
+    },
+    "text_fences": {
+      "expected": 478,
+      "actual": 46,
+      "delta": -432
+    },
+    "cpp_fences": {
+      "expected": 205,
+      "actual": 204,
+      "delta": -1
+    },
+    "snodec-exercise": {
+      "expected": 0,
+      "actual": 33,
+      "delta": 33
+    }
+  },
+  "files": {
+    "manuscript/frontmatter/frontmatter.md": {
+      "total_words": 3,
+      "prose_words": 0,
+      "code_words": 3,
+      "code_content_words": 1,
+      "fence_marker_words": 2,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {
+        "=latex": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/frontmatter/preface.md": {
+      "total_words": 612,
+      "prose_words": 612,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 3,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 3,
+      "section_prose_words": 427,
+      "average_section_prose_words": 142.33,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 5,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 5,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [
+          {
+            "line": 5,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 34,
+            "match": "is not a"
+          },
+          {
+            "line": 34,
+            "match": "is not a"
+          },
+          {
+            "line": 40,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 32,
+          "match": "Chapter 2"
+        }
+      ]
+    },
+    "manuscript/frontmatter/how-to-read-this-book.md": {
+      "total_words": 575,
+      "prose_words": 575,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 5,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 22,
+            "match": "boundary"
+          }
+        ],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 13,
+          "match": "Chapter 27"
+        }
+      ]
+    },
+    "manuscript/frontmatter/conventions.md": {
+      "total_words": 823,
+      "prose_words": 823,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 1,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 1,
+      "section_prose_words": 508,
+      "average_section_prose_words": 508.0,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 13,
+            "match": "role"
+          },
+          {
+            "line": 36,
+            "match": "Role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 7,
+            "match": "boundary"
+          },
+          {
+            "line": 9,
+            "match": "boundary"
+          },
+          {
+            "line": 15,
+            "match": "boundary"
+          }
+        ],
+        "visible": [],
+        "is not a": [
+          {
+            "line": 26,
+            "match": "is not a"
+          },
+          {
+            "line": 27,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 11,
+          "match": "Chapter 2"
+        }
+      ]
+    },
+    "manuscript/frontmatter/author-note.md": {
+      "total_words": 174,
+      "prose_words": 174,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/frontmatter/acknowledgements.md": {
+      "total_words": 101,
+      "prose_words": 101,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [
+          {
+            "line": 5,
+            "match": "boundary"
+          }
+        ],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/frontmatter/mainmatter.md": {
+      "total_words": 3,
+      "prose_words": 0,
+      "code_words": 3,
+      "code_content_words": 1,
+      "fence_marker_words": 2,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {
+        "=latex": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/parts/part-01-getting-oriented.md": {
+      "total_words": 117,
+      "prose_words": 117,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 7,
+          "match": "Chapter 3"
+        }
+      ]
+    },
+    "manuscript/chapters/01-why-snodec-exists.md": {
+      "total_words": 2402,
+      "prose_words": 2305,
+      "code_words": 97,
+      "code_content_words": 85,
+      "fence_marker_words": 12,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 4,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 4,
+      "section_prose_words": 2223,
+      "average_section_prose_words": 555.75,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "=latex": 3,
+        "cpp": 2
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 153,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 42,
+            "match": "boundaries"
+          },
+          {
+            "line": 149,
+            "match": "boundary"
+          },
+          {
+            "line": 150,
+            "match": "boundaries"
+          },
+          {
+            "line": 182,
+            "match": "boundary"
+          },
+          {
+            "line": 197,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [
+          {
+            "line": 39,
+            "match": "visible"
+          },
+          {
+            "line": 68,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 57,
+          "match": "Chapter 5"
+        },
+        {
+          "line": 73,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 73,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 140,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 140,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 179,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 179,
+          "match": "Chapter 4"
+        },
+        {
+          "line": 197,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 198,
+          "match": "Chapter 2"
+        }
+      ]
+    },
+    "manuscript/chapters/02-preparing-your-environment.md": {
+      "total_words": 3194,
+      "prose_words": 2949,
+      "code_words": 245,
+      "code_content_words": 191,
+      "fence_marker_words": 54,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 8,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 8,
+      "section_prose_words": 2846,
+      "average_section_prose_words": 355.75,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 2,
+        "snodec-warning": 1,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 2,
+        "cpp": 1,
+        "sh": 17,
+        "text": 7
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [
+          {
+            "line": 342,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 328,
+            "match": "visible"
+          },
+          {
+            "line": 338,
+            "match": "visible"
+          },
+          {
+            "line": 342,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 26,
+            "match": "is not a"
+          },
+          {
+            "line": 70,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [
+          {
+            "line": 19,
+            "match": "does not prove"
+          }
+        ],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 18,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 19,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 260,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 289,
+          "match": "Chapter 29"
+        },
+        {
+          "line": 328,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 342,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 374,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 421,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 428,
+          "match": "Chapter 1"
+        }
+      ]
+    },
+    "manuscript/chapters/03-your-first-working-program-the-echo-pair.md": {
+      "total_words": 3001,
+      "prose_words": 2459,
+      "code_words": 542,
+      "code_content_words": 512,
+      "fence_marker_words": 30,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 7,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 7,
+      "section_prose_words": 2356,
+      "average_section_prose_words": 336.57,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 1,
+        "snodec-note": 1,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 2,
+        "cpp": 5,
+        "sh": 3,
+        "text": 5
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 70,
+            "match": "role"
+          },
+          {
+            "line": 70,
+            "match": "role"
+          },
+          {
+            "line": 166,
+            "match": "Role"
+          },
+          {
+            "line": 166,
+            "match": "role"
+          },
+          {
+            "line": 449,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 236,
+            "match": "boundary"
+          },
+          {
+            "line": 240,
+            "match": "boundary"
+          },
+          {
+            "line": 498,
+            "match": "boundary"
+          },
+          {
+            "line": 523,
+            "match": "boundaries"
+          },
+          {
+            "line": 530,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [
+          {
+            "line": 17,
+            "match": "visible"
+          },
+          {
+            "line": 59,
+            "match": "visible"
+          },
+          {
+            "line": 61,
+            "match": "visible"
+          },
+          {
+            "line": 100,
+            "match": "visible"
+          },
+          {
+            "line": 462,
+            "match": "visible"
+          },
+          {
+            "line": 513,
+            "match": "visible"
+          },
+          {
+            "line": 519,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 237,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 59,
+          "match": "Chapter 4"
+        },
+        {
+          "line": 232,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 381,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 443,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 452,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 510,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 513,
+          "match": "Chapter 29"
+        }
+      ]
+    },
+    "manuscript/parts/part-02-the-snodec-architecture.md": {
+      "total_words": 138,
+      "prose_words": 138,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 7,
+          "match": "Chapter 6"
+        }
+      ]
+    },
+    "manuscript/chapters/04-the-snodec-runtime-mental-model.md": {
+      "total_words": 2908,
+      "prose_words": 2878,
+      "code_words": 30,
+      "code_content_words": 20,
+      "fence_marker_words": 10,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 5,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 5,
+      "section_prose_words": 2773,
+      "average_section_prose_words": 554.6,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 3,
+        "snodec-note": 1,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 4,
+        "text": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 104,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 88,
+            "match": "boundary"
+          },
+          {
+            "line": 118,
+            "match": "boundary"
+          },
+          {
+            "line": 235,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 25,
+            "match": "visible"
+          },
+          {
+            "line": 76,
+            "match": "visible"
+          },
+          {
+            "line": 80,
+            "match": "visible"
+          },
+          {
+            "line": 104,
+            "match": "visible"
+          },
+          {
+            "line": 203,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 86,
+            "match": "is not a"
+          },
+          {
+            "line": 90,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 88,
+          "match": "Chapter 11"
+        },
+        {
+          "line": 215,
+          "match": "Chapter 6"
+        }
+      ]
+    },
+    "manuscript/chapters/05-layers-in-practice.md": {
+      "total_words": 2882,
+      "prose_words": 2849,
+      "code_words": 33,
+      "code_content_words": 19,
+      "fence_marker_words": 14,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 8,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 8,
+      "section_prose_words": 2746,
+      "average_section_prose_words": 343.25,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 1,
+        "snodec-note": 2,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 7
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 35,
+            "match": "role"
+          },
+          {
+            "line": 35,
+            "match": "role"
+          },
+          {
+            "line": 51,
+            "match": "role"
+          },
+          {
+            "line": 62,
+            "match": "role"
+          },
+          {
+            "line": 161,
+            "match": "role"
+          },
+          {
+            "line": 170,
+            "match": "role"
+          },
+          {
+            "line": 209,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 94,
+            "match": "boundaries"
+          },
+          {
+            "line": 144,
+            "match": "boundary"
+          },
+          {
+            "line": 195,
+            "match": "boundaries"
+          },
+          {
+            "line": 228,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [
+          {
+            "line": 126,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 174,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 129,
+          "match": "Chapter 7"
+        },
+        {
+          "line": 159,
+          "match": "Chapter 15"
+        },
+        {
+          "line": 181,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 218,
+          "match": "Chapter 15"
+        },
+        {
+          "line": 218,
+          "match": "Chapter 27"
+        }
+      ]
+    },
+    "manuscript/chapters/06-core-runtime-and-event-processing.md": {
+      "total_words": 3502,
+      "prose_words": 3413,
+      "code_words": 89,
+      "code_content_words": 77,
+      "fence_marker_words": 12,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 9,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 9,
+      "section_prose_words": 3290,
+      "average_section_prose_words": 365.56,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 1,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 6
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [
+          {
+            "line": 154,
+            "match": "boundary"
+          },
+          {
+            "line": 159,
+            "match": "boundary"
+          },
+          {
+            "line": 281,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 139,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 182,
+            "match": "is not a"
+          },
+          {
+            "line": 186,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 122,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 131,
+          "match": "Chapter 26"
+        },
+        {
+          "line": 139,
+          "match": "Chapter 4"
+        },
+        {
+          "line": 221,
+          "match": "Chapter 4"
+        }
+      ]
+    },
+    "manuscript/parts/part-03-networking-foundations-in-snodec.md": {
+      "total_words": 117,
+      "prose_words": 117,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md": {
+      "total_words": 4206,
+      "prose_words": 3990,
+      "code_words": 216,
+      "code_content_words": 154,
+      "fence_marker_words": 62,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 12,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 12,
+      "section_prose_words": 3869,
+      "average_section_prose_words": 322.42,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 1,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 31
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 4,
+            "match": "role"
+          },
+          {
+            "line": 49,
+            "match": "role"
+          },
+          {
+            "line": 225,
+            "match": "role"
+          },
+          {
+            "line": 312,
+            "match": "role"
+          },
+          {
+            "line": 385,
+            "match": "role"
+          },
+          {
+            "line": 385,
+            "match": "role"
+          },
+          {
+            "line": 416,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 113,
+            "match": "boundary"
+          },
+          {
+            "line": 468,
+            "match": "boundaries"
+          },
+          {
+            "line": 532,
+            "match": "boundary"
+          },
+          {
+            "line": 568,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 17,
+            "match": "visible"
+          },
+          {
+            "line": 32,
+            "match": "visible"
+          },
+          {
+            "line": 283,
+            "match": "visible"
+          },
+          {
+            "line": 489,
+            "match": "visible"
+          },
+          {
+            "line": 507,
+            "match": "visible"
+          },
+          {
+            "line": 522,
+            "match": "visible"
+          },
+          {
+            "line": 530,
+            "match": "visible"
+          },
+          {
+            "line": 599,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 287,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": [
+          {
+            "line": 575,
+            "match": "does not by itself"
+          }
+        ]
+      },
+      "manual_chapter_references": [
+        {
+          "line": 38,
+          "match": "Chapter 5"
+        },
+        {
+          "line": 227,
+          "match": "Chapter 8"
+        },
+        {
+          "line": 287,
+          "match": "Chapter 8"
+        },
+        {
+          "line": 310,
+          "match": "Chapter 8"
+        },
+        {
+          "line": 407,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 414,
+          "match": "Chapter 8"
+        },
+        {
+          "line": 432,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 528,
+          "match": "Chapter 8"
+        },
+        {
+          "line": 545,
+          "match": "Chapter 5"
+        }
+      ]
+    },
+    "manuscript/chapters/08-servers-clients-and-connections.md": {
+      "total_words": 3184,
+      "prose_words": 3132,
+      "code_words": 52,
+      "code_content_words": 36,
+      "fence_marker_words": 16,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 9,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 9,
+      "section_prose_words": 3023,
+      "average_section_prose_words": 335.89,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 2,
+        "snodec-note": 0,
+        "snodec-warning": 1,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 8
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 96,
+            "match": "role"
+          },
+          {
+            "line": 98,
+            "match": "role"
+          },
+          {
+            "line": 121,
+            "match": "role"
+          },
+          {
+            "line": 121,
+            "match": "role"
+          },
+          {
+            "line": 260,
+            "match": "role"
+          },
+          {
+            "line": 275,
+            "match": "role"
+          },
+          {
+            "line": 290,
+            "match": "role"
+          },
+          {
+            "line": 329,
+            "match": "role"
+          },
+          {
+            "line": 345,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 77,
+            "match": "boundary"
+          },
+          {
+            "line": 333,
+            "match": "boundaries"
+          },
+          {
+            "line": 349,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 52,
+            "match": "visible"
+          },
+          {
+            "line": 181,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 306,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": [
+          {
+            "line": 277,
+            "match": "does not by itself"
+          }
+        ]
+      },
+      "manual_chapter_references": [
+        {
+          "line": 15,
+          "match": "Chapter 7"
+        },
+        {
+          "line": 30,
+          "match": "Chapter 4"
+        },
+        {
+          "line": 105,
+          "match": "Chapter 7"
+        },
+        {
+          "line": 161,
+          "match": "Chapter 7"
+        },
+        {
+          "line": 217,
+          "match": "Chapter 6"
+        },
+        {
+          "line": 296,
+          "match": "Chapter 15"
+        },
+        {
+          "line": 322,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 322,
+          "match": "Chapter 29"
+        },
+        {
+          "line": 329,
+          "match": "Chapter 11"
+        }
+      ]
+    },
+    "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md": {
+      "total_words": 2173,
+      "prose_words": 2062,
+      "code_words": 111,
+      "code_content_words": 79,
+      "fence_marker_words": 32,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 5,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 5,
+      "section_prose_words": 1969,
+      "average_section_prose_words": 393.8,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 14,
+        "text": 2
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [
+          {
+            "line": 44,
+            "match": "visible"
+          },
+          {
+            "line": 50,
+            "match": "visible"
+          },
+          {
+            "line": 172,
+            "match": "visible"
+          },
+          {
+            "line": 177,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 88,
+          "match": "Chapter 7"
+        },
+        {
+          "line": 159,
+          "match": "Chapter 8"
+        },
+        {
+          "line": 217,
+          "match": "Chapter 5"
+        },
+        {
+          "line": 230,
+          "match": "Chapter 12"
+        },
+        {
+          "line": 261,
+          "match": "Chapter 27"
+        }
+      ]
+    },
+    "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md": {
+      "total_words": 138,
+      "prose_words": 138,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [
+          {
+            "line": 5,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/10-writing-socketcontext-classes-well.md": {
+      "total_words": 3087,
+      "prose_words": 2911,
+      "code_words": 176,
+      "code_content_words": 170,
+      "fence_marker_words": 6,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 8,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 8,
+      "section_prose_words": 2764,
+      "average_section_prose_words": 345.5,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 1,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 3
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [
+          {
+            "line": 251,
+            "match": "boundary"
+          },
+          {
+            "line": 259,
+            "match": "boundary"
+          },
+          {
+            "line": 324,
+            "match": "boundary"
+          },
+          {
+            "line": 388,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [
+          {
+            "line": 226,
+            "match": "visible"
+          },
+          {
+            "line": 257,
+            "match": "visible"
+          },
+          {
+            "line": 259,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 128,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 230,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 259,
+          "match": "Chapter 11"
+        },
+        {
+          "line": 283,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 344,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 373,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 375,
+          "match": "Chapter 11"
+        }
+      ]
+    },
+    "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md": {
+      "total_words": 2258,
+      "prose_words": 2122,
+      "code_words": 136,
+      "code_content_words": 116,
+      "fence_marker_words": 20,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 6,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 6,
+      "section_prose_words": 1963,
+      "average_section_prose_words": 327.17,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 1,
+        "snodec-note": 0,
+        "snodec-warning": 1,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 10
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 90,
+            "match": "role"
+          },
+          {
+            "line": 95,
+            "match": "role"
+          },
+          {
+            "line": 113,
+            "match": "role"
+          },
+          {
+            "line": 122,
+            "match": "role"
+          },
+          {
+            "line": 124,
+            "match": "role"
+          },
+          {
+            "line": 130,
+            "match": "role"
+          },
+          {
+            "line": 146,
+            "match": "role"
+          },
+          {
+            "line": 163,
+            "match": "role"
+          },
+          {
+            "line": 214,
+            "match": "role"
+          },
+          {
+            "line": 217,
+            "match": "role"
+          },
+          {
+            "line": 223,
+            "match": "role"
+          },
+          {
+            "line": 229,
+            "match": "role"
+          },
+          {
+            "line": 251,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 37,
+            "match": "boundary"
+          },
+          {
+            "line": 280,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 146,
+            "match": "visible"
+          },
+          {
+            "line": 214,
+            "match": "visible"
+          },
+          {
+            "line": 223,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 77,
+            "match": "is not a"
+          },
+          {
+            "line": 77,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 282,
+          "match": "Chapter 12"
+        }
+      ]
+    },
+    "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md": {
+      "total_words": 2581,
+      "prose_words": 2388,
+      "code_words": 193,
+      "code_content_words": 159,
+      "fence_marker_words": 34,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 7,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 7,
+      "section_prose_words": 2211,
+      "average_section_prose_words": 315.86,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 2,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 12,
+        "python": 1,
+        "sh": 4
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 147,
+            "match": "role"
+          },
+          {
+            "line": 169,
+            "match": "role"
+          },
+          {
+            "line": 194,
+            "match": "role"
+          },
+          {
+            "line": 329,
+            "match": "role"
+          },
+          {
+            "line": 334,
+            "match": "role"
+          },
+          {
+            "line": 334,
+            "match": "role"
+          },
+          {
+            "line": 378,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 34,
+            "match": "boundary"
+          },
+          {
+            "line": 139,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 95,
+            "match": "visible"
+          },
+          {
+            "line": 303,
+            "match": "visible"
+          },
+          {
+            "line": 383,
+            "match": "visible"
+          },
+          {
+            "line": 387,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 249,
+            "match": "is not a"
+          },
+          {
+            "line": 365,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 203,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 205,
+          "match": "Chapter 10"
+        },
+        {
+          "line": 205,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 249,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 277,
+          "match": "Chapter 10"
+        },
+        {
+          "line": 334,
+          "match": "Chapter 11"
+        }
+      ]
+    },
+    "manuscript/parts/part-05-configuration-and-operational-behavior.md": {
+      "total_words": 103,
+      "prose_words": 103,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 7,
+            "match": "role"
+          },
+          {
+            "line": 7,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [],
+        "visible": [
+          {
+            "line": 3,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/13-configuring-applications-and-named-instances.md": {
+      "total_words": 4475,
+      "prose_words": 4226,
+      "code_words": 249,
+      "code_content_words": 197,
+      "fence_marker_words": 52,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 10,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 10,
+      "section_prose_words": 4115,
+      "average_section_prose_words": 411.5,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 13,
+        "ini": 6,
+        "sh": 6,
+        "text": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 199,
+            "match": "role"
+          },
+          {
+            "line": 342,
+            "match": "role"
+          },
+          {
+            "line": 456,
+            "match": "role"
+          },
+          {
+            "line": 466,
+            "match": "role"
+          },
+          {
+            "line": 564,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 101,
+            "match": "boundary"
+          },
+          {
+            "line": 109,
+            "match": "boundary"
+          },
+          {
+            "line": 371,
+            "match": "boundary"
+          },
+          {
+            "line": 570,
+            "match": "boundary"
+          },
+          {
+            "line": 615,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 199,
+            "match": "visible"
+          },
+          {
+            "line": 389,
+            "match": "visible"
+          },
+          {
+            "line": 574,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 109,
+            "match": "is not a"
+          },
+          {
+            "line": 139,
+            "match": "is not a"
+          },
+          {
+            "line": 367,
+            "match": "is not a"
+          },
+          {
+            "line": 483,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 22,
+          "match": "Chapter 4"
+        },
+        {
+          "line": 371,
+          "match": "Chapter 15"
+        },
+        {
+          "line": 440,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 470,
+          "match": "Chapter 3"
+        }
+      ]
+    },
+    "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md": {
+      "total_words": 2793,
+      "prose_words": 2576,
+      "code_words": 217,
+      "code_content_words": 191,
+      "fence_marker_words": 26,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 7,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 7,
+      "section_prose_words": 2478,
+      "average_section_prose_words": 354.0,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 1,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 12,
+        "sh": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 155,
+            "match": "role"
+          },
+          {
+            "line": 223,
+            "match": "role"
+          },
+          {
+            "line": 318,
+            "match": "role"
+          },
+          {
+            "line": 326,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 18,
+            "match": "boundary"
+          },
+          {
+            "line": 18,
+            "match": "boundary"
+          },
+          {
+            "line": 27,
+            "match": "boundary"
+          },
+          {
+            "line": 32,
+            "match": "boundary"
+          },
+          {
+            "line": 49,
+            "match": "boundary"
+          },
+          {
+            "line": 49,
+            "match": "boundary"
+          },
+          {
+            "line": 66,
+            "match": "boundary"
+          },
+          {
+            "line": 66,
+            "match": "boundary"
+          },
+          {
+            "line": 68,
+            "match": "boundary"
+          },
+          {
+            "line": 71,
+            "match": "boundary"
+          },
+          {
+            "line": 79,
+            "match": "boundaries"
+          },
+          {
+            "line": 81,
+            "match": "boundaries"
+          },
+          {
+            "line": 81,
+            "match": "boundary"
+          },
+          {
+            "line": 135,
+            "match": "boundary"
+          },
+          {
+            "line": 135,
+            "match": "boundary"
+          },
+          {
+            "line": 210,
+            "match": "boundary"
+          },
+          {
+            "line": 225,
+            "match": "boundary"
+          },
+          {
+            "line": 277,
+            "match": "boundary"
+          },
+          {
+            "line": 329,
+            "match": "boundary"
+          },
+          {
+            "line": 331,
+            "match": "boundary"
+          },
+          {
+            "line": 333,
+            "match": "boundary"
+          },
+          {
+            "line": 339,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 14,
+            "match": "visible"
+          },
+          {
+            "line": 14,
+            "match": "visible"
+          },
+          {
+            "line": 184,
+            "match": "visible"
+          },
+          {
+            "line": 231,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 18,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 233,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 307,
+          "match": "Chapter 29"
+        }
+      ]
+    },
+    "manuscript/parts/part-06-secure-and-robust-communication.md": {
+      "total_words": 108,
+      "prose_words": 108,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 5,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/15-tls-across-the-framework.md": {
+      "total_words": 2754,
+      "prose_words": 2665,
+      "code_words": 89,
+      "code_content_words": 77,
+      "fence_marker_words": 12,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 8,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 8,
+      "section_prose_words": 2452,
+      "average_section_prose_words": 306.5,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 1,
+        "snodec-note": 1,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 3,
+        "python": 1,
+        "sh": 2
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 262,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 115,
+            "match": "boundary"
+          },
+          {
+            "line": 152,
+            "match": "boundary"
+          },
+          {
+            "line": 189,
+            "match": "Boundary"
+          },
+          {
+            "line": 217,
+            "match": "boundary"
+          },
+          {
+            "line": 244,
+            "match": "boundary"
+          },
+          {
+            "line": 252,
+            "match": "boundary"
+          },
+          {
+            "line": 252,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 217,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 73,
+            "match": "is not a"
+          },
+          {
+            "line": 167,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 102,
+          "match": "Chapter 11"
+        },
+        {
+          "line": 103,
+          "match": "Chapter 10"
+        },
+        {
+          "line": 126,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 171,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 231,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 235,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 250,
+          "match": "Chapter 12"
+        }
+      ]
+    },
+    "manuscript/chapters/16-timeouts-retries-and-failure-modes.md": {
+      "total_words": 3200,
+      "prose_words": 3097,
+      "code_words": 103,
+      "code_content_words": 93,
+      "fence_marker_words": 10,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 8,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 8,
+      "section_prose_words": 2888,
+      "average_section_prose_words": 361.0,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 1,
+        "snodec-note": 0,
+        "snodec-warning": 1,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 3,
+        "sh": 2
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 32,
+            "match": "role"
+          },
+          {
+            "line": 34,
+            "match": "role"
+          },
+          {
+            "line": 181,
+            "match": "role"
+          },
+          {
+            "line": 209,
+            "match": "role"
+          },
+          {
+            "line": 230,
+            "match": "role"
+          },
+          {
+            "line": 235,
+            "match": "role"
+          },
+          {
+            "line": 235,
+            "match": "role"
+          },
+          {
+            "line": 247,
+            "match": "role"
+          },
+          {
+            "line": 250,
+            "match": "role"
+          },
+          {
+            "line": 252,
+            "match": "role"
+          },
+          {
+            "line": 252,
+            "match": "role"
+          },
+          {
+            "line": 305,
+            "match": "role"
+          },
+          {
+            "line": 354,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 4,
+            "match": "boundaries"
+          },
+          {
+            "line": 252,
+            "match": "boundary"
+          },
+          {
+            "line": 295,
+            "match": "boundary"
+          },
+          {
+            "line": 326,
+            "match": "boundary"
+          },
+          {
+            "line": 342,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 194,
+            "match": "visible"
+          },
+          {
+            "line": 205,
+            "match": "visible"
+          },
+          {
+            "line": 337,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 16,
+            "match": "is not a"
+          },
+          {
+            "line": 70,
+            "match": "is not a"
+          },
+          {
+            "line": 165,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 70,
+          "match": "Chapter 15"
+        },
+        {
+          "line": 273,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 282,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 305,
+          "match": "Chapter 29"
+        },
+        {
+          "line": 312,
+          "match": "Chapter 10"
+        },
+        {
+          "line": 335,
+          "match": "Chapter 14"
+        }
+      ]
+    },
+    "manuscript/parts/part-07-web-protocols-and-web-applications.md": {
+      "total_words": 104,
+      "prose_words": 104,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/17-the-http-layer.md": {
+      "total_words": 2478,
+      "prose_words": 2312,
+      "code_words": 166,
+      "code_content_words": 144,
+      "fence_marker_words": 22,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 6,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 6,
+      "section_prose_words": 2216,
+      "average_section_prose_words": 369.33,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 1,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 1,
+        "cpp": 8,
+        "text": 2
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 29,
+            "match": "role"
+          },
+          {
+            "line": 30,
+            "match": "role"
+          },
+          {
+            "line": 105,
+            "match": "Role"
+          },
+          {
+            "line": 212,
+            "match": "role"
+          },
+          {
+            "line": 241,
+            "match": "role"
+          },
+          {
+            "line": 241,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 6,
+            "match": "boundaries"
+          },
+          {
+            "line": 15,
+            "match": "boundaries"
+          },
+          {
+            "line": 17,
+            "match": "boundaries"
+          },
+          {
+            "line": 74,
+            "match": "boundary"
+          },
+          {
+            "line": 134,
+            "match": "boundaries"
+          },
+          {
+            "line": 160,
+            "match": "boundary"
+          },
+          {
+            "line": 162,
+            "match": "boundary"
+          },
+          {
+            "line": 164,
+            "match": "boundary"
+          },
+          {
+            "line": 189,
+            "match": "boundary"
+          },
+          {
+            "line": 256,
+            "match": "boundary"
+          },
+          {
+            "line": 276,
+            "match": "boundary"
+          },
+          {
+            "line": 278,
+            "match": "boundary"
+          },
+          {
+            "line": 299,
+            "match": "boundary"
+          },
+          {
+            "line": 323,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 62,
+            "match": "visible"
+          },
+          {
+            "line": 63,
+            "match": "visible"
+          },
+          {
+            "line": 189,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 113,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 258,
+          "match": "Chapter 19"
+        },
+        {
+          "line": 276,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 276,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 299,
+          "match": "Chapter 29"
+        },
+        {
+          "line": 320,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 323,
+          "match": "Chapter 18"
+        }
+      ]
+    },
+    "manuscript/chapters/18-the-express-like-framework.md": {
+      "total_words": 2218,
+      "prose_words": 2018,
+      "code_words": 200,
+      "code_content_words": 182,
+      "fence_marker_words": 18,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 5,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 5,
+      "section_prose_words": 1933,
+      "average_section_prose_words": 386.6,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 2,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 7,
+        "sh": 1,
+        "text": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 113,
+            "match": "Role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 128,
+            "match": "boundaries"
+          },
+          {
+            "line": 222,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [
+          {
+            "line": 90,
+            "match": "visible"
+          },
+          {
+            "line": 181,
+            "match": "visible"
+          },
+          {
+            "line": 260,
+            "match": "visible"
+          },
+          {
+            "line": 260,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 68,
+            "match": "is not a"
+          },
+          {
+            "line": 292,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 128,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 245,
+          "match": "Chapter 29"
+        },
+        {
+          "line": 284,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 287,
+          "match": "Chapter 19"
+        }
+      ]
+    },
+    "manuscript/chapters/19-server-sent-events-and-real-time-http.md": {
+      "total_words": 3305,
+      "prose_words": 2934,
+      "code_words": 371,
+      "code_content_words": 359,
+      "fence_marker_words": 12,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 7,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 7,
+      "section_prose_words": 2822,
+      "average_section_prose_words": 403.14,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 1,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 3,
+        "text": 3
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [
+          {
+            "line": 76,
+            "match": "boundary"
+          },
+          {
+            "line": 359,
+            "match": "boundary"
+          },
+          {
+            "line": 363,
+            "match": "boundary"
+          },
+          {
+            "line": 403,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 205,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 209,
+            "match": "is not a"
+          },
+          {
+            "line": 279,
+            "match": "is not a"
+          },
+          {
+            "line": 381,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 44,
+          "match": "Chapter 20"
+        },
+        {
+          "line": 359,
+          "match": "Chapter 17"
+        },
+        {
+          "line": 363,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 376,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 410,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 410,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 432,
+          "match": "Chapter 27"
+        }
+      ]
+    },
+    "manuscript/chapters/20-websocket-and-protocol-upgrade.md": {
+      "total_words": 3001,
+      "prose_words": 2639,
+      "code_words": 362,
+      "code_content_words": 342,
+      "fence_marker_words": 20,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 7,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 7,
+      "section_prose_words": 2543,
+      "average_section_prose_words": 363.29,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 3,
+        "cpp": 4,
+        "text": 3
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 66,
+            "match": "role"
+          },
+          {
+            "line": 119,
+            "match": "role"
+          },
+          {
+            "line": 154,
+            "match": "role"
+          },
+          {
+            "line": 193,
+            "match": "role"
+          },
+          {
+            "line": 207,
+            "match": "role"
+          },
+          {
+            "line": 322,
+            "match": "role"
+          },
+          {
+            "line": 336,
+            "match": "role"
+          },
+          {
+            "line": 336,
+            "match": "role"
+          },
+          {
+            "line": 400,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 31,
+            "match": "Boundary"
+          },
+          {
+            "line": 40,
+            "match": "boundary"
+          },
+          {
+            "line": 42,
+            "match": "boundary"
+          },
+          {
+            "line": 45,
+            "match": "boundary"
+          },
+          {
+            "line": 49,
+            "match": "boundary"
+          },
+          {
+            "line": 107,
+            "match": "boundary"
+          },
+          {
+            "line": 131,
+            "match": "boundary"
+          },
+          {
+            "line": 142,
+            "match": "boundary"
+          },
+          {
+            "line": 142,
+            "match": "boundary"
+          },
+          {
+            "line": 357,
+            "match": "boundaries"
+          },
+          {
+            "line": 357,
+            "match": "boundary"
+          },
+          {
+            "line": 359,
+            "match": "Boundary"
+          },
+          {
+            "line": 367,
+            "match": "boundary"
+          },
+          {
+            "line": 369,
+            "match": "boundaries"
+          },
+          {
+            "line": 379,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 373,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 393,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 29,
+          "match": "Chapter 19"
+        },
+        {
+          "line": 42,
+          "match": "Chapter 17"
+        },
+        {
+          "line": 107,
+          "match": "Chapter 17"
+        },
+        {
+          "line": 142,
+          "match": "Chapter 17"
+        },
+        {
+          "line": 369,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 369,
+          "match": "Chapter 29"
+        },
+        {
+          "line": 384,
+          "match": "Chapter 22"
+        },
+        {
+          "line": 391,
+          "match": "Chapter 27"
+        }
+      ]
+    },
+    "manuscript/parts/part-08-iot-and-message-oriented-systems.md": {
+      "total_words": 112,
+      "prose_words": 112,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/21-mqtt-support-in-snodec.md": {
+      "total_words": 3015,
+      "prose_words": 2888,
+      "code_words": 127,
+      "code_content_words": 121,
+      "fence_marker_words": 6,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 5,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 5,
+      "section_prose_words": 2808,
+      "average_section_prose_words": 561.6,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 1,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 1,
+        "cpp": 2
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 111,
+            "match": "role"
+          },
+          {
+            "line": 113,
+            "match": "role"
+          },
+          {
+            "line": 120,
+            "match": "role"
+          },
+          {
+            "line": 127,
+            "match": "role"
+          },
+          {
+            "line": 161,
+            "match": "role"
+          },
+          {
+            "line": 217,
+            "match": "role"
+          },
+          {
+            "line": 217,
+            "match": "role"
+          },
+          {
+            "line": 217,
+            "match": "role"
+          },
+          {
+            "line": 225,
+            "match": "role"
+          },
+          {
+            "line": 250,
+            "match": "role"
+          },
+          {
+            "line": 308,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 6,
+            "match": "boundary"
+          },
+          {
+            "line": 245,
+            "match": "boundaries"
+          },
+          {
+            "line": 257,
+            "match": "boundary"
+          }
+        ],
+        "visible": [],
+        "is not a": [
+          {
+            "line": 219,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 95,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 237,
+          "match": "Chapter 26"
+        },
+        {
+          "line": 270,
+          "match": "Chapter 23"
+        },
+        {
+          "line": 287,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 297,
+          "match": "Chapter 22"
+        }
+      ]
+    },
+    "manuscript/chapters/22-mqtt-over-websocket.md": {
+      "total_words": 2119,
+      "prose_words": 2053,
+      "code_words": 66,
+      "code_content_words": 54,
+      "fence_marker_words": 12,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 4,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 4,
+      "section_prose_words": 1974,
+      "average_section_prose_words": 493.5,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 1,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 2,
+        "cpp": 3,
+        "text": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 47,
+            "match": "role"
+          },
+          {
+            "line": 77,
+            "match": "role"
+          },
+          {
+            "line": 82,
+            "match": "role"
+          },
+          {
+            "line": 94,
+            "match": "role"
+          },
+          {
+            "line": 108,
+            "match": "role"
+          },
+          {
+            "line": 121,
+            "match": "role"
+          },
+          {
+            "line": 180,
+            "match": "role"
+          },
+          {
+            "line": 181,
+            "match": "role"
+          },
+          {
+            "line": 188,
+            "match": "role"
+          },
+          {
+            "line": 188,
+            "match": "role"
+          },
+          {
+            "line": 188,
+            "match": "role"
+          },
+          {
+            "line": 200,
+            "match": "role"
+          },
+          {
+            "line": 230,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 35,
+            "match": "boundaries"
+          },
+          {
+            "line": 53,
+            "match": "boundary"
+          },
+          {
+            "line": 86,
+            "match": "boundaries"
+          },
+          {
+            "line": 86,
+            "match": "boundaries"
+          },
+          {
+            "line": 138,
+            "match": "boundary"
+          },
+          {
+            "line": 145,
+            "match": "boundary"
+          },
+          {
+            "line": 159,
+            "match": "Boundary"
+          },
+          {
+            "line": 168,
+            "match": "boundary"
+          },
+          {
+            "line": 217,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [
+          {
+            "line": 35,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": [
+          {
+            "line": 24,
+            "match": "does not by itself"
+          },
+          {
+            "line": 210,
+            "match": "does not by itself"
+          }
+        ]
+      },
+      "manual_chapter_references": [
+        {
+          "line": 18,
+          "match": "Chapter 20"
+        },
+        {
+          "line": 18,
+          "match": "Chapter 21"
+        },
+        {
+          "line": 126,
+          "match": "Chapter 21"
+        },
+        {
+          "line": 145,
+          "match": "Chapter 6"
+        },
+        {
+          "line": 147,
+          "match": "Chapter 23"
+        },
+        {
+          "line": 188,
+          "match": "Chapter 21"
+        },
+        {
+          "line": 214,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 217,
+          "match": "Chapter 23"
+        }
+      ]
+    },
+    "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md": {
+      "total_words": 3141,
+      "prose_words": 3118,
+      "code_words": 23,
+      "code_content_words": 21,
+      "fence_marker_words": 2,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 9,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 9,
+      "section_prose_words": 2996,
+      "average_section_prose_words": 332.89,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "text": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 36,
+            "match": "role"
+          },
+          {
+            "line": 37,
+            "match": "role"
+          },
+          {
+            "line": 38,
+            "match": "role"
+          },
+          {
+            "line": 39,
+            "match": "role"
+          },
+          {
+            "line": 40,
+            "match": "role"
+          },
+          {
+            "line": 42,
+            "match": "role"
+          },
+          {
+            "line": 42,
+            "match": "role"
+          },
+          {
+            "line": 44,
+            "match": "role"
+          },
+          {
+            "line": 46,
+            "match": "role"
+          },
+          {
+            "line": 47,
+            "match": "role"
+          },
+          {
+            "line": 48,
+            "match": "role"
+          },
+          {
+            "line": 49,
+            "match": "role"
+          },
+          {
+            "line": 50,
+            "match": "role"
+          },
+          {
+            "line": 54,
+            "match": "role"
+          },
+          {
+            "line": 56,
+            "match": "role"
+          },
+          {
+            "line": 58,
+            "match": "role"
+          },
+          {
+            "line": 62,
+            "match": "role"
+          },
+          {
+            "line": 64,
+            "match": "role"
+          },
+          {
+            "line": 66,
+            "match": "role"
+          },
+          {
+            "line": 70,
+            "match": "role"
+          },
+          {
+            "line": 72,
+            "match": "role"
+          },
+          {
+            "line": 107,
+            "match": "role"
+          },
+          {
+            "line": 177,
+            "match": "role"
+          },
+          {
+            "line": 183,
+            "match": "role"
+          },
+          {
+            "line": 187,
+            "match": "role"
+          },
+          {
+            "line": 196,
+            "match": "role"
+          },
+          {
+            "line": 200,
+            "match": "role"
+          },
+          {
+            "line": 202,
+            "match": "role"
+          },
+          {
+            "line": 202,
+            "match": "role"
+          },
+          {
+            "line": 202,
+            "match": "role"
+          },
+          {
+            "line": 204,
+            "match": "role"
+          },
+          {
+            "line": 219,
+            "match": "role"
+          },
+          {
+            "line": 219,
+            "match": "role"
+          },
+          {
+            "line": 225,
+            "match": "role"
+          },
+          {
+            "line": 227,
+            "match": "role"
+          },
+          {
+            "line": 229,
+            "match": "role"
+          },
+          {
+            "line": 231,
+            "match": "Role"
+          },
+          {
+            "line": 242,
+            "match": "role"
+          },
+          {
+            "line": 248,
+            "match": "role"
+          },
+          {
+            "line": 250,
+            "match": "role"
+          },
+          {
+            "line": 251,
+            "match": "role"
+          },
+          {
+            "line": 272,
+            "match": "role"
+          },
+          {
+            "line": 276,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 4,
+            "match": "boundary"
+          },
+          {
+            "line": 11,
+            "match": "boundaries"
+          },
+          {
+            "line": 13,
+            "match": "boundaries"
+          },
+          {
+            "line": 17,
+            "match": "boundary"
+          },
+          {
+            "line": 19,
+            "match": "boundary"
+          },
+          {
+            "line": 20,
+            "match": "boundary"
+          },
+          {
+            "line": 28,
+            "match": "boundaries"
+          },
+          {
+            "line": 30,
+            "match": "boundary"
+          },
+          {
+            "line": 30,
+            "match": "boundaries"
+          },
+          {
+            "line": 30,
+            "match": "boundary"
+          },
+          {
+            "line": 30,
+            "match": "boundaries"
+          },
+          {
+            "line": 30,
+            "match": "boundary"
+          },
+          {
+            "line": 30,
+            "match": "boundary"
+          },
+          {
+            "line": 30,
+            "match": "boundary"
+          },
+          {
+            "line": 32,
+            "match": "boundaries"
+          },
+          {
+            "line": 32,
+            "match": "boundary"
+          },
+          {
+            "line": 32,
+            "match": "boundary"
+          },
+          {
+            "line": 32,
+            "match": "boundary"
+          },
+          {
+            "line": 34,
+            "match": "boundary"
+          },
+          {
+            "line": 34,
+            "match": "boundary"
+          },
+          {
+            "line": 34,
+            "match": "boundary"
+          },
+          {
+            "line": 34,
+            "match": "boundary"
+          },
+          {
+            "line": 42,
+            "match": "boundary"
+          },
+          {
+            "line": 42,
+            "match": "boundary"
+          },
+          {
+            "line": 44,
+            "match": "Boundary"
+          },
+          {
+            "line": 54,
+            "match": "boundary"
+          },
+          {
+            "line": 56,
+            "match": "boundary"
+          },
+          {
+            "line": 60,
+            "match": "boundary"
+          },
+          {
+            "line": 60,
+            "match": "boundary"
+          },
+          {
+            "line": 64,
+            "match": "boundary"
+          },
+          {
+            "line": 68,
+            "match": "boundary"
+          },
+          {
+            "line": 84,
+            "match": "boundary"
+          },
+          {
+            "line": 87,
+            "match": "boundary"
+          },
+          {
+            "line": 89,
+            "match": "boundary"
+          },
+          {
+            "line": 89,
+            "match": "boundary"
+          },
+          {
+            "line": 89,
+            "match": "boundary"
+          },
+          {
+            "line": 93,
+            "match": "boundary"
+          },
+          {
+            "line": 101,
+            "match": "boundary"
+          },
+          {
+            "line": 102,
+            "match": "boundary"
+          },
+          {
+            "line": 104,
+            "match": "boundary"
+          },
+          {
+            "line": 126,
+            "match": "boundary"
+          },
+          {
+            "line": 126,
+            "match": "boundaries"
+          },
+          {
+            "line": 143,
+            "match": "boundary"
+          },
+          {
+            "line": 143,
+            "match": "boundary"
+          },
+          {
+            "line": 147,
+            "match": "boundary"
+          },
+          {
+            "line": 152,
+            "match": "boundaries"
+          },
+          {
+            "line": 165,
+            "match": "boundary"
+          },
+          {
+            "line": 171,
+            "match": "boundaries"
+          },
+          {
+            "line": 177,
+            "match": "boundary"
+          },
+          {
+            "line": 194,
+            "match": "boundaries"
+          },
+          {
+            "line": 202,
+            "match": "boundaries"
+          },
+          {
+            "line": 204,
+            "match": "boundary"
+          },
+          {
+            "line": 206,
+            "match": "boundary"
+          },
+          {
+            "line": 208,
+            "match": "boundaries"
+          },
+          {
+            "line": 208,
+            "match": "boundary"
+          },
+          {
+            "line": 240,
+            "match": "boundary"
+          },
+          {
+            "line": 242,
+            "match": "boundary"
+          },
+          {
+            "line": 242,
+            "match": "boundary"
+          },
+          {
+            "line": 246,
+            "match": "boundaries"
+          },
+          {
+            "line": 247,
+            "match": "boundary"
+          },
+          {
+            "line": 257,
+            "match": "boundary"
+          },
+          {
+            "line": 259,
+            "match": "boundary"
+          },
+          {
+            "line": 261,
+            "match": "boundary"
+          },
+          {
+            "line": 263,
+            "match": "boundary"
+          },
+          {
+            "line": 265,
+            "match": "boundaries"
+          },
+          {
+            "line": 268,
+            "match": "boundary"
+          },
+          {
+            "line": 276,
+            "match": "boundary"
+          },
+          {
+            "line": 279,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 116,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 167,
+          "match": "Chapter 22"
+        },
+        {
+          "line": 204,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 208,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 240,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 263,
+          "match": "Chapter 24"
+        }
+      ]
+    },
+    "manuscript/parts/part-09-persistence-and-full-systems.md": {
+      "total_words": 115,
+      "prose_words": 115,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/24-database-support-and-application-state.md": {
+      "total_words": 3857,
+      "prose_words": 3491,
+      "code_words": 366,
+      "code_content_words": 350,
+      "fence_marker_words": 16,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 10,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 10,
+      "section_prose_words": 3379,
+      "average_section_prose_words": 337.9,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 1,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 1,
+        "cpp": 5,
+        "sql": 1,
+        "text": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 30,
+            "match": "role"
+          },
+          {
+            "line": 30,
+            "match": "role"
+          },
+          {
+            "line": 114,
+            "match": "role"
+          },
+          {
+            "line": 381,
+            "match": "role"
+          },
+          {
+            "line": 441,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 13,
+            "match": "boundaries"
+          },
+          {
+            "line": 13,
+            "match": "boundaries"
+          },
+          {
+            "line": 17,
+            "match": "boundary"
+          },
+          {
+            "line": 19,
+            "match": "boundary"
+          },
+          {
+            "line": 21,
+            "match": "boundary"
+          },
+          {
+            "line": 21,
+            "match": "boundary"
+          },
+          {
+            "line": 21,
+            "match": "boundary"
+          },
+          {
+            "line": 27,
+            "match": "boundary"
+          },
+          {
+            "line": 28,
+            "match": "boundary"
+          },
+          {
+            "line": 34,
+            "match": "boundary"
+          },
+          {
+            "line": 34,
+            "match": "boundary"
+          },
+          {
+            "line": 104,
+            "match": "boundary"
+          },
+          {
+            "line": 223,
+            "match": "boundary"
+          },
+          {
+            "line": 293,
+            "match": "boundary"
+          },
+          {
+            "line": 322,
+            "match": "boundary"
+          },
+          {
+            "line": 330,
+            "match": "boundary"
+          },
+          {
+            "line": 379,
+            "match": "boundary"
+          },
+          {
+            "line": 409,
+            "match": "boundary"
+          },
+          {
+            "line": 425,
+            "match": "boundary"
+          },
+          {
+            "line": 441,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 221,
+            "match": "visible"
+          },
+          {
+            "line": 423,
+            "match": "visible"
+          },
+          {
+            "line": 433,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 69,
+            "match": "is not a"
+          },
+          {
+            "line": 104,
+            "match": "is not a"
+          },
+          {
+            "line": 221,
+            "match": "is not a"
+          },
+          {
+            "line": 303,
+            "match": "is not a"
+          },
+          {
+            "line": 425,
+            "match": "is not a"
+          },
+          {
+            "line": 443,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 379,
+          "match": "Chapter 23"
+        },
+        {
+          "line": 409,
+          "match": "Chapter 16"
+        }
+      ]
+    },
+    "manuscript/chapters/25-reading-complete-snodec-applications.md": {
+      "total_words": 2560,
+      "prose_words": 2354,
+      "code_words": 206,
+      "code_content_words": 192,
+      "fence_marker_words": 14,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 5,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 5,
+      "section_prose_words": 2267,
+      "average_section_prose_words": 453.4,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 4,
+        "cpp": 2,
+        "text": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [
+          {
+            "line": 268,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 41,
+            "match": "visible"
+          },
+          {
+            "line": 67,
+            "match": "visible"
+          },
+          {
+            "line": 266,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 123,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 178,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 178,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 195,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 249,
+          "match": "Chapter 24"
+        },
+        {
+          "line": 268,
+          "match": "Chapter 29"
+        }
+      ]
+    },
+    "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md": {
+      "total_words": 3843,
+      "prose_words": 3787,
+      "code_words": 56,
+      "code_content_words": 54,
+      "fence_marker_words": 2,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 13,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 13,
+      "section_prose_words": 3659,
+      "average_section_prose_words": 281.46,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "ini": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 12,
+            "match": "role"
+          },
+          {
+            "line": 18,
+            "match": "role"
+          },
+          {
+            "line": 20,
+            "match": "role"
+          },
+          {
+            "line": 24,
+            "match": "role"
+          },
+          {
+            "line": 24,
+            "match": "role"
+          },
+          {
+            "line": 24,
+            "match": "role"
+          },
+          {
+            "line": 26,
+            "match": "role"
+          },
+          {
+            "line": 26,
+            "match": "role"
+          },
+          {
+            "line": 26,
+            "match": "role"
+          },
+          {
+            "line": 28,
+            "match": "role"
+          },
+          {
+            "line": 32,
+            "match": "role"
+          },
+          {
+            "line": 32,
+            "match": "role"
+          },
+          {
+            "line": 32,
+            "match": "role"
+          },
+          {
+            "line": 36,
+            "match": "Role"
+          },
+          {
+            "line": 39,
+            "match": "role"
+          },
+          {
+            "line": 45,
+            "match": "role"
+          },
+          {
+            "line": 45,
+            "match": "role"
+          },
+          {
+            "line": 47,
+            "match": "role"
+          },
+          {
+            "line": 47,
+            "match": "role"
+          },
+          {
+            "line": 60,
+            "match": "role"
+          },
+          {
+            "line": 87,
+            "match": "role"
+          },
+          {
+            "line": 87,
+            "match": "role"
+          },
+          {
+            "line": 108,
+            "match": "role"
+          },
+          {
+            "line": 108,
+            "match": "role"
+          },
+          {
+            "line": 142,
+            "match": "role"
+          },
+          {
+            "line": 144,
+            "match": "role"
+          },
+          {
+            "line": 144,
+            "match": "role"
+          },
+          {
+            "line": 148,
+            "match": "role"
+          },
+          {
+            "line": 166,
+            "match": "role"
+          },
+          {
+            "line": 168,
+            "match": "role"
+          },
+          {
+            "line": 180,
+            "match": "role"
+          },
+          {
+            "line": 180,
+            "match": "role"
+          },
+          {
+            "line": 182,
+            "match": "role"
+          },
+          {
+            "line": 184,
+            "match": "role"
+          },
+          {
+            "line": 187,
+            "match": "role"
+          },
+          {
+            "line": 191,
+            "match": "role"
+          },
+          {
+            "line": 193,
+            "match": "role"
+          },
+          {
+            "line": 195,
+            "match": "role"
+          },
+          {
+            "line": 196,
+            "match": "role"
+          },
+          {
+            "line": 197,
+            "match": "role"
+          },
+          {
+            "line": 229,
+            "match": "role"
+          },
+          {
+            "line": 232,
+            "match": "role"
+          },
+          {
+            "line": 249,
+            "match": "role"
+          },
+          {
+            "line": 264,
+            "match": "role"
+          },
+          {
+            "line": 270,
+            "match": "role"
+          },
+          {
+            "line": 276,
+            "match": "role"
+          },
+          {
+            "line": 325,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 24,
+            "match": "boundary"
+          },
+          {
+            "line": 24,
+            "match": "boundaries"
+          },
+          {
+            "line": 28,
+            "match": "boundaries"
+          },
+          {
+            "line": 34,
+            "match": "boundaries"
+          },
+          {
+            "line": 45,
+            "match": "boundary"
+          },
+          {
+            "line": 47,
+            "match": "boundary"
+          },
+          {
+            "line": 61,
+            "match": "boundaries"
+          },
+          {
+            "line": 62,
+            "match": "boundaries"
+          },
+          {
+            "line": 66,
+            "match": "Boundaries"
+          },
+          {
+            "line": 68,
+            "match": "boundaries"
+          },
+          {
+            "line": 69,
+            "match": "boundaries"
+          },
+          {
+            "line": 70,
+            "match": "boundary"
+          },
+          {
+            "line": 71,
+            "match": "boundary"
+          },
+          {
+            "line": 72,
+            "match": "boundary"
+          },
+          {
+            "line": 74,
+            "match": "boundary"
+          },
+          {
+            "line": 76,
+            "match": "boundaries"
+          },
+          {
+            "line": 80,
+            "match": "boundaries"
+          },
+          {
+            "line": 108,
+            "match": "boundaries"
+          },
+          {
+            "line": 148,
+            "match": "boundary"
+          },
+          {
+            "line": 157,
+            "match": "boundaries"
+          },
+          {
+            "line": 159,
+            "match": "boundary"
+          },
+          {
+            "line": 176,
+            "match": "boundary"
+          },
+          {
+            "line": 180,
+            "match": "boundaries"
+          },
+          {
+            "line": 193,
+            "match": "boundaries"
+          },
+          {
+            "line": 235,
+            "match": "boundary"
+          },
+          {
+            "line": 237,
+            "match": "boundary"
+          },
+          {
+            "line": 280,
+            "match": "boundary"
+          },
+          {
+            "line": 282,
+            "match": "boundary"
+          },
+          {
+            "line": 288,
+            "match": "boundary"
+          },
+          {
+            "line": 316,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 108,
+            "match": "visible"
+          },
+          {
+            "line": 146,
+            "match": "visible"
+          },
+          {
+            "line": 217,
+            "match": "visible"
+          },
+          {
+            "line": 237,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 221,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 76,
+          "match": "Chapter 23"
+        },
+        {
+          "line": 97,
+          "match": "Chapter 24"
+        },
+        {
+          "line": 108,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 144,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 157,
+          "match": "Chapter 12"
+        },
+        {
+          "line": 282,
+          "match": "Chapter 24"
+        },
+        {
+          "line": 333,
+          "match": "Chapter 21"
+        }
+      ]
+    },
+    "manuscript/parts/part-10-building-porting-and-maintaining.md": {
+      "total_words": 106,
+      "prose_words": 106,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/27-cmake-components-and-linking-strategy.md": {
+      "total_words": 3748,
+      "prose_words": 3613,
+      "code_words": 135,
+      "code_content_words": 113,
+      "fence_marker_words": 22,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 11,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 11,
+      "section_prose_words": 3489,
+      "average_section_prose_words": 317.18,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 1,
+        "snodec-note": 1,
+        "snodec-warning": 0,
+        "snodec-checklist": 1,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 6,
+        "cpp": 3,
+        "sh": 1,
+        "text": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 85,
+            "match": "role"
+          },
+          {
+            "line": 140,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 164,
+            "match": "boundary"
+          },
+          {
+            "line": 210,
+            "match": "boundary"
+          },
+          {
+            "line": 245,
+            "match": "boundary"
+          },
+          {
+            "line": 245,
+            "match": "boundary"
+          }
+        ],
+        "visible": [],
+        "is not a": [
+          {
+            "line": 140,
+            "match": "is not a"
+          },
+          {
+            "line": 157,
+            "match": "is not a"
+          },
+          {
+            "line": 325,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 245,
+          "match": "Chapter 17"
+        },
+        {
+          "line": 245,
+          "match": "Chapter 20"
+        },
+        {
+          "line": 245,
+          "match": "Chapter 28"
+        },
+        {
+          "line": 247,
+          "match": "Chapter 28"
+        },
+        {
+          "line": 256,
+          "match": "Chapter 20"
+        },
+        {
+          "line": 298,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 325,
+          "match": "Chapter 29"
+        },
+        {
+          "line": 397,
+          "match": "Chapter 2"
+        }
+      ]
+    },
+    "manuscript/chapters/28-deployment-on-linux-and-openwrt.md": {
+      "total_words": 3586,
+      "prose_words": 3373,
+      "code_words": 213,
+      "code_content_words": 187,
+      "fence_marker_words": 26,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 10,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 10,
+      "section_prose_words": 3263,
+      "average_section_prose_words": 326.3,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 1,
+        "snodec-checklist": 1,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "ini": 2,
+        "sh": 9,
+        "text": 2
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 22,
+            "match": "role"
+          },
+          {
+            "line": 33,
+            "match": "role"
+          },
+          {
+            "line": 116,
+            "match": "role"
+          },
+          {
+            "line": 118,
+            "match": "role"
+          },
+          {
+            "line": 120,
+            "match": "role"
+          },
+          {
+            "line": 338,
+            "match": "role"
+          },
+          {
+            "line": 353,
+            "match": "role"
+          },
+          {
+            "line": 358,
+            "match": "role"
+          },
+          {
+            "line": 371,
+            "match": "role"
+          },
+          {
+            "line": 376,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 31,
+            "match": "boundaries"
+          },
+          {
+            "line": 225,
+            "match": "boundary"
+          },
+          {
+            "line": 241,
+            "match": "boundaries"
+          },
+          {
+            "line": 369,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [
+          {
+            "line": 116,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 237,
+            "match": "is not a"
+          },
+          {
+            "line": 281,
+            "match": "is not a"
+          },
+          {
+            "line": 351,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 31,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 126,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 225,
+          "match": "Chapter 24"
+        },
+        {
+          "line": 278,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 286,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 340,
+          "match": "Chapter 29"
+        }
+      ]
+    },
+    "manuscript/chapters/29-testing-debugging-and-benchmarking.md": {
+      "total_words": 4360,
+      "prose_words": 4104,
+      "code_words": 256,
+      "code_content_words": 240,
+      "fence_marker_words": 16,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 11,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 11,
+      "section_prose_words": 3991,
+      "average_section_prose_words": 362.82,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 1,
+        "python": 1,
+        "sh": 4,
+        "text": 2
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 323,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 4,
+            "match": "boundary"
+          },
+          {
+            "line": 22,
+            "match": "boundary"
+          },
+          {
+            "line": 95,
+            "match": "boundaries"
+          },
+          {
+            "line": 125,
+            "match": "boundary"
+          },
+          {
+            "line": 133,
+            "match": "boundary"
+          },
+          {
+            "line": 137,
+            "match": "boundaries"
+          },
+          {
+            "line": 139,
+            "match": "boundary"
+          },
+          {
+            "line": 146,
+            "match": "boundaries"
+          },
+          {
+            "line": 162,
+            "match": "boundary"
+          },
+          {
+            "line": 164,
+            "match": "boundary"
+          },
+          {
+            "line": 172,
+            "match": "boundary"
+          },
+          {
+            "line": 176,
+            "match": "boundary"
+          },
+          {
+            "line": 196,
+            "match": "boundaries"
+          },
+          {
+            "line": 283,
+            "match": "boundary"
+          },
+          {
+            "line": 313,
+            "match": "boundary"
+          },
+          {
+            "line": 318,
+            "match": "boundary"
+          },
+          {
+            "line": 325,
+            "match": "boundary"
+          },
+          {
+            "line": 333,
+            "match": "boundary"
+          },
+          {
+            "line": 335,
+            "match": "boundary"
+          },
+          {
+            "line": 337,
+            "match": "boundary"
+          },
+          {
+            "line": 341,
+            "match": "boundary"
+          },
+          {
+            "line": 349,
+            "match": "boundary"
+          },
+          {
+            "line": 399,
+            "match": "boundary"
+          },
+          {
+            "line": 401,
+            "match": "boundary"
+          },
+          {
+            "line": 414,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [],
+        "is not a": [
+          {
+            "line": 89,
+            "match": "is not a"
+          },
+          {
+            "line": 281,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [
+          {
+            "line": 301,
+            "match": "does not prove"
+          }
+        ],
+        "does not by itself": [
+          {
+            "line": 87,
+            "match": "does not by itself"
+          }
+        ]
+      },
+      "manual_chapter_references": [
+        {
+          "line": 43,
+          "match": "Chapter 2"
+        },
+        {
+          "line": 129,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 172,
+          "match": "Chapter 13"
+        },
+        {
+          "line": 293,
+          "match": "Chapter 28"
+        },
+        {
+          "line": 301,
+          "match": "Chapter 28"
+        },
+        {
+          "line": 353,
+          "match": "Chapter 28"
+        }
+      ]
+    },
+    "manuscript/parts/part-11-building-and-evaluating-minigateway.md": {
+      "total_words": 126,
+      "prose_words": 126,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 7,
+            "match": "role"
+          },
+          {
+            "line": 7,
+            "match": "role"
+          },
+          {
+            "line": 7,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 7,
+            "match": "boundaries"
+          }
+        ],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 7,
+          "match": "Chapter 30"
+        },
+        {
+          "line": 7,
+          "match": "Chapter 31"
+        },
+        {
+          "line": 7,
+          "match": "Chapter 32"
+        }
+      ]
+    },
+    "manuscript/chapters/30-building-minigateway.md": {
+      "total_words": 4587,
+      "prose_words": 2616,
+      "code_words": 1971,
+      "code_content_words": 1899,
+      "fence_marker_words": 72,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 6,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 6,
+      "section_prose_words": 2518,
+      "average_section_prose_words": 419.67,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 1,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 1,
+        "cpp": 18,
+        "markdown": 1,
+        "sh": 7,
+        "text": 9
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 36,
+            "match": "role"
+          },
+          {
+            "line": 36,
+            "match": "role"
+          },
+          {
+            "line": 52,
+            "match": "role"
+          },
+          {
+            "line": 108,
+            "match": "role"
+          },
+          {
+            "line": 133,
+            "match": "role"
+          },
+          {
+            "line": 134,
+            "match": "role"
+          },
+          {
+            "line": 140,
+            "match": "role"
+          },
+          {
+            "line": 162,
+            "match": "role"
+          },
+          {
+            "line": 162,
+            "match": "role"
+          },
+          {
+            "line": 519,
+            "match": "role"
+          },
+          {
+            "line": 525,
+            "match": "role"
+          },
+          {
+            "line": 641,
+            "match": "role"
+          },
+          {
+            "line": 701,
+            "match": "role"
+          },
+          {
+            "line": 708,
+            "match": "role"
+          },
+          {
+            "line": 1134,
+            "match": "role"
+          },
+          {
+            "line": 1134,
+            "match": "role"
+          },
+          {
+            "line": 1136,
+            "match": "role"
+          },
+          {
+            "line": 1255,
+            "match": "role"
+          },
+          {
+            "line": 1303,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 55,
+            "match": "boundary"
+          }
+        ],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 55,
+          "match": "Chapter 31"
+        },
+        {
+          "line": 193,
+          "match": "Chapter 31"
+        },
+        {
+          "line": 214,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 432,
+          "match": "Chapter 19"
+        }
+      ]
+    },
+    "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md": {
+      "total_words": 2834,
+      "prose_words": 2232,
+      "code_words": 602,
+      "code_content_words": 568,
+      "fence_marker_words": 34,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 6,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 6,
+      "section_prose_words": 2126,
+      "average_section_prose_words": 354.33,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 1,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cmake": 1,
+        "cpp": 10,
+        "sh": 3,
+        "text": 3
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 1,
+            "match": "Role"
+          },
+          {
+            "line": 1,
+            "match": "role"
+          },
+          {
+            "line": 16,
+            "match": "role"
+          },
+          {
+            "line": 16,
+            "match": "role"
+          },
+          {
+            "line": 21,
+            "match": "role"
+          },
+          {
+            "line": 23,
+            "match": "role"
+          },
+          {
+            "line": 24,
+            "match": "role"
+          },
+          {
+            "line": 30,
+            "match": "role"
+          },
+          {
+            "line": 32,
+            "match": "role"
+          },
+          {
+            "line": 34,
+            "match": "role"
+          },
+          {
+            "line": 34,
+            "match": "role"
+          },
+          {
+            "line": 38,
+            "match": "role"
+          },
+          {
+            "line": 69,
+            "match": "role"
+          },
+          {
+            "line": 143,
+            "match": "role"
+          },
+          {
+            "line": 149,
+            "match": "role"
+          },
+          {
+            "line": 149,
+            "match": "role"
+          },
+          {
+            "line": 182,
+            "match": "role"
+          },
+          {
+            "line": 186,
+            "match": "role"
+          },
+          {
+            "line": 186,
+            "match": "role"
+          },
+          {
+            "line": 192,
+            "match": "role"
+          },
+          {
+            "line": 460,
+            "match": "role"
+          },
+          {
+            "line": 509,
+            "match": "role"
+          },
+          {
+            "line": 524,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 27,
+            "match": "boundary"
+          },
+          {
+            "line": 34,
+            "match": "boundary"
+          },
+          {
+            "line": 38,
+            "match": "boundary"
+          },
+          {
+            "line": 316,
+            "match": "boundary"
+          },
+          {
+            "line": 456,
+            "match": "boundaries"
+          },
+          {
+            "line": 458,
+            "match": "boundary"
+          },
+          {
+            "line": 460,
+            "match": "boundary"
+          },
+          {
+            "line": 501,
+            "match": "boundary"
+          },
+          {
+            "line": 505,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 143,
+            "match": "visible"
+          },
+          {
+            "line": 505,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md": {
+      "total_words": 3108,
+      "prose_words": 3090,
+      "code_words": 18,
+      "code_content_words": 16,
+      "fence_marker_words": 2,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 9,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 9,
+      "section_prose_words": 2954,
+      "average_section_prose_words": 328.22,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 3,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "cpp": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 34,
+            "match": "Role"
+          },
+          {
+            "line": 51,
+            "match": "role"
+          },
+          {
+            "line": 154,
+            "match": "role"
+          },
+          {
+            "line": 156,
+            "match": "role"
+          },
+          {
+            "line": 161,
+            "match": "role"
+          },
+          {
+            "line": 166,
+            "match": "role"
+          },
+          {
+            "line": 167,
+            "match": "role"
+          },
+          {
+            "line": 175,
+            "match": "role"
+          },
+          {
+            "line": 178,
+            "match": "role"
+          },
+          {
+            "line": 178,
+            "match": "role"
+          },
+          {
+            "line": 178,
+            "match": "role"
+          },
+          {
+            "line": 191,
+            "match": "role"
+          },
+          {
+            "line": 200,
+            "match": "role"
+          },
+          {
+            "line": 210,
+            "match": "role"
+          },
+          {
+            "line": 212,
+            "match": "role"
+          },
+          {
+            "line": 232,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 1,
+            "match": "Boundary"
+          },
+          {
+            "line": 1,
+            "match": "boundary"
+          },
+          {
+            "line": 7,
+            "match": "boundary"
+          },
+          {
+            "line": 13,
+            "match": "boundaries"
+          },
+          {
+            "line": 18,
+            "match": "boundary"
+          },
+          {
+            "line": 88,
+            "match": "boundary"
+          },
+          {
+            "line": 154,
+            "match": "boundaries"
+          },
+          {
+            "line": 156,
+            "match": "boundary"
+          },
+          {
+            "line": 157,
+            "match": "boundary"
+          },
+          {
+            "line": 158,
+            "match": "boundary"
+          },
+          {
+            "line": 166,
+            "match": "boundary"
+          },
+          {
+            "line": 167,
+            "match": "boundary"
+          },
+          {
+            "line": 178,
+            "match": "boundary"
+          },
+          {
+            "line": 237,
+            "match": "boundary"
+          },
+          {
+            "line": 252,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 51,
+            "match": "visible"
+          },
+          {
+            "line": 222,
+            "match": "visible"
+          },
+          {
+            "line": 232,
+            "match": "visible"
+          },
+          {
+            "line": 235,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 76,
+          "match": "Chapter 24"
+        },
+        {
+          "line": 90,
+          "match": "Chapter 31"
+        },
+        {
+          "line": 104,
+          "match": "Chapter 12"
+        },
+        {
+          "line": 178,
+          "match": "Chapter 31"
+        }
+      ]
+    },
+    "manuscript/parts/part-13-epilogue.md": {
+      "total_words": 108,
+      "prose_words": 88,
+      "code_words": 20,
+      "code_content_words": 18,
+      "fence_marker_words": 2,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {
+        "=latex": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [
+          {
+            "line": 11,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/epilogue.md": {
+      "total_words": 1383,
+      "prose_words": 1383,
+      "code_words": 0,
+      "code_content_words": 0,
+      "fence_marker_words": 0,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 4,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 4,
+      "section_prose_words": 1350,
+      "average_section_prose_words": 337.5,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {},
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 58,
+            "match": "role"
+          },
+          {
+            "line": 97,
+            "match": "role"
+          },
+          {
+            "line": 97,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 3,
+            "match": "boundaries"
+          },
+          {
+            "line": 15,
+            "match": "boundaries"
+          },
+          {
+            "line": 18,
+            "match": "boundary"
+          },
+          {
+            "line": 26,
+            "match": "boundary"
+          },
+          {
+            "line": 67,
+            "match": "boundary"
+          },
+          {
+            "line": 71,
+            "match": "boundaries"
+          },
+          {
+            "line": 71,
+            "match": "boundaries"
+          },
+          {
+            "line": 79,
+            "match": "boundary"
+          },
+          {
+            "line": 81,
+            "match": "boundaries"
+          },
+          {
+            "line": 81,
+            "match": "boundary"
+          },
+          {
+            "line": 85,
+            "match": "boundaries"
+          },
+          {
+            "line": 87,
+            "match": "boundary"
+          },
+          {
+            "line": 97,
+            "match": "boundary"
+          },
+          {
+            "line": 99,
+            "match": "boundaries"
+          },
+          {
+            "line": 101,
+            "match": "boundaries"
+          },
+          {
+            "line": 101,
+            "match": "boundary"
+          },
+          {
+            "line": 101,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 11,
+            "match": "visible"
+          },
+          {
+            "line": 67,
+            "match": "visible"
+          },
+          {
+            "line": 85,
+            "match": "Visible"
+          },
+          {
+            "line": 101,
+            "match": "visible"
+          },
+          {
+            "line": 101,
+            "match": "visible"
+          }
+        ],
+        "is not a": [
+          {
+            "line": 81,
+            "match": "is not a"
+          }
+        ],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md": {
+      "total_words": 3968,
+      "prose_words": 3893,
+      "code_words": 75,
+      "code_content_words": 65,
+      "fence_marker_words": 10,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 10,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 10,
+      "section_prose_words": 3771,
+      "average_section_prose_words": 377.1,
+      "callout_counts_by_class": {
+        "snodec-remember": 1,
+        "snodec-rule": 2,
+        "snodec-note": 1,
+        "snodec-warning": 1,
+        "snodec-checklist": 0,
+        "snodec-exercise": 1,
+        "snodec-objectives": 1
+      },
+      "fenced_blocks_by_language": {
+        "=latex": 1,
+        "cpp": 3,
+        "sh": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [
+          {
+            "line": 112,
+            "match": "role"
+          },
+          {
+            "line": 112,
+            "match": "role"
+          },
+          {
+            "line": 133,
+            "match": "role"
+          },
+          {
+            "line": 135,
+            "match": "role"
+          },
+          {
+            "line": 178,
+            "match": "role"
+          },
+          {
+            "line": 209,
+            "match": "role"
+          },
+          {
+            "line": 209,
+            "match": "role"
+          },
+          {
+            "line": 214,
+            "match": "role"
+          },
+          {
+            "line": 220,
+            "match": "role"
+          },
+          {
+            "line": 238,
+            "match": "role"
+          },
+          {
+            "line": 244,
+            "match": "role"
+          },
+          {
+            "line": 260,
+            "match": "role"
+          },
+          {
+            "line": 260,
+            "match": "role"
+          },
+          {
+            "line": 266,
+            "match": "role"
+          },
+          {
+            "line": 275,
+            "match": "role"
+          },
+          {
+            "line": 279,
+            "match": "Role"
+          },
+          {
+            "line": 290,
+            "match": "role"
+          }
+        ],
+        "boundary/boundaries": [
+          {
+            "line": 29,
+            "match": "boundaries"
+          },
+          {
+            "line": 112,
+            "match": "boundary"
+          },
+          {
+            "line": 147,
+            "match": "boundary"
+          },
+          {
+            "line": 149,
+            "match": "boundary"
+          },
+          {
+            "line": 167,
+            "match": "boundary"
+          },
+          {
+            "line": 167,
+            "match": "boundary"
+          },
+          {
+            "line": 175,
+            "match": "boundary"
+          },
+          {
+            "line": 184,
+            "match": "boundary"
+          },
+          {
+            "line": 186,
+            "match": "boundary"
+          },
+          {
+            "line": 195,
+            "match": "boundary"
+          },
+          {
+            "line": 211,
+            "match": "Boundary"
+          },
+          {
+            "line": 220,
+            "match": "boundary"
+          },
+          {
+            "line": 262,
+            "match": "boundary"
+          },
+          {
+            "line": 275,
+            "match": "boundary"
+          },
+          {
+            "line": 286,
+            "match": "boundary"
+          },
+          {
+            "line": 300,
+            "match": "boundary"
+          },
+          {
+            "line": 302,
+            "match": "boundary"
+          },
+          {
+            "line": 320,
+            "match": "boundary"
+          },
+          {
+            "line": 346,
+            "match": "boundary"
+          },
+          {
+            "line": 347,
+            "match": "boundaries"
+          },
+          {
+            "line": 348,
+            "match": "boundary"
+          }
+        ],
+        "visible": [
+          {
+            "line": 292,
+            "match": "visible"
+          }
+        ],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 110,
+          "match": "Chapter 4"
+        },
+        {
+          "line": 135,
+          "match": "Chapter 3"
+        },
+        {
+          "line": 139,
+          "match": "Chapter 4"
+        },
+        {
+          "line": 264,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 288,
+          "match": "Chapter 14"
+        },
+        {
+          "line": 294,
+          "match": "Chapter 16"
+        },
+        {
+          "line": 300,
+          "match": "Chapter 29"
+        },
+        {
+          "line": 318,
+          "match": "Chapter 31"
+        }
+      ]
+    },
+    "manuscript/backmatter/backmatter.md": {
+      "total_words": 8,
+      "prose_words": 4,
+      "code_words": 4,
+      "code_content_words": 2,
+      "fence_marker_words": 2,
+      "heading_counts_by_level": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {
+        "=latex": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    },
+    "manuscript/backmatter/further-reading.md": {
+      "total_words": 763,
+      "prose_words": 758,
+      "code_words": 5,
+      "code_content_words": 3,
+      "fence_marker_words": 2,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 1,
+        "3": 9,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 9,
+      "section_prose_words": 666,
+      "average_section_prose_words": 74.0,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {
+        "=latex": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": [
+        {
+          "line": 14,
+          "match": "Chapter 27"
+        },
+        {
+          "line": 32,
+          "match": "Chapter 19"
+        },
+        {
+          "line": 61,
+          "match": "Chapter 28"
+        },
+        {
+          "line": 63,
+          "match": "Chapter 9"
+        }
+      ]
+    },
+    "manuscript/backmatter/index.md": {
+      "total_words": 12,
+      "prose_words": 0,
+      "code_words": 12,
+      "code_content_words": 10,
+      "fence_marker_words": 2,
+      "heading_counts_by_level": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "section_count": 0,
+      "section_prose_words": 0,
+      "average_section_prose_words": null,
+      "callout_counts_by_class": {
+        "snodec-remember": 0,
+        "snodec-rule": 0,
+        "snodec-note": 0,
+        "snodec-warning": 0,
+        "snodec-checklist": 0,
+        "snodec-exercise": 0,
+        "snodec-objectives": 0
+      },
+      "fenced_blocks_by_language": {
+        "=latex": 1
+      },
+      "closing_perspective_sections": [],
+      "forbidden_phrase_hits": {
+        "in the manuscript": [],
+        "manuscript material": [],
+        "the chapter should": [],
+        "the book should": [],
+        "this chapter should": [],
+        "published edition": [],
+        "should be presented as": [],
+        "useful for Chapter 29": [],
+        "the benchmarking tone should be": []
+      },
+      "forbidden_phrase_hit_count": 0,
+      "term_occurrences": {
+        "role": [],
+        "boundary/boundaries": [],
+        "visible": [],
+        "is not a": [],
+        "does not prove": [],
+        "does not by itself": []
+      },
+      "manual_chapter_references": []
+    }
+  }
+}

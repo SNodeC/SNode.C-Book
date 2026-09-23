@@ -438,7 +438,7 @@
         2,
         3
       ],
-      "chapter_words": 7850,
+      "chapter_words": 8597,
       "path": "manuscript/parts/part-01-getting-oriented.md"
     },
     {
@@ -449,7 +449,7 @@
         5,
         6
       ],
-      "chapter_words": 9000,
+      "chapter_words": 9292,
       "path": "manuscript/parts/part-02-the-snodec-architecture.md"
     },
     {
@@ -460,7 +460,7 @@
         8,
         9
       ],
-      "chapter_words": 11050,
+      "chapter_words": 9563,
       "path": "manuscript/parts/part-03-networking-foundations-in-snodec.md"
     },
     {
@@ -471,7 +471,7 @@
         11,
         12
       ],
-      "chapter_words": 8800,
+      "chapter_words": 7926,
       "path": "manuscript/parts/part-04-from-raw-connections-to-application-protocols.md"
     },
     {
@@ -481,7 +481,7 @@
         13,
         14
       ],
-      "chapter_words": 8150,
+      "chapter_words": 7268,
       "path": "manuscript/parts/part-05-configuration-and-operational-behavior.md"
     },
     {
@@ -491,7 +491,7 @@
         15,
         16
       ],
-      "chapter_words": 6350,
+      "chapter_words": 5954,
       "path": "manuscript/parts/part-06-secure-and-robust-communication.md"
     },
     {
@@ -503,7 +503,7 @@
         19,
         20
       ],
-      "chapter_words": 11300,
+      "chapter_words": 11002,
       "path": "manuscript/parts/part-07-web-protocols-and-web-applications.md"
     },
     {
@@ -514,7 +514,7 @@
         22,
         23
       ],
-      "chapter_words": 7400,
+      "chapter_words": 8275,
       "path": "manuscript/parts/part-08-iot-and-message-oriented-systems.md"
     },
     {
@@ -525,7 +525,7 @@
         25,
         26
       ],
-      "chapter_words": 10100,
+      "chapter_words": 10260,
       "path": "manuscript/parts/part-09-persistence-and-full-systems.md"
     },
     {
@@ -536,7 +536,7 @@
         28,
         29
       ],
-      "chapter_words": 11600,
+      "chapter_words": 11694,
       "path": "manuscript/parts/part-10-building-porting-and-maintaining.md"
     },
     {
@@ -547,7 +547,7 @@
         31,
         32
       ],
-      "chapter_words": 8900,
+      "chapter_words": 10529,
       "path": "manuscript/parts/part-11-building-and-evaluating-minigateway.md"
     }
   ],

@@ -9,8 +9,10 @@ in `review/EDITORIAL-WORK-PLAN.md`, governed by the installed specification
 `review/pedagogical-smoothing-2026-09-23/FOLLOWUP-11.md` (public 07ca9a29 pin,
 Phase R2, finish P1 from a2ecd9c, then P2–P7). Follow-ups 02–10 are historical;
 no timeout changes or test adaptations are authorized. Preserve the checkpoint
-log-read fix in 2e71f2a. The R2 framework freeze must remain identical through P7. Execute its autonomous P0a–P7
-gates on `book/pedagogical-smoothing-2026-09-23`. This pass supersedes conflicting
+log-read fix in 2e71f2a. The R2 framework freeze must remain identical through P7. The autonomous gates
+on `book/pedagogical-smoothing-2026-09-23` are complete through P7; consult this
+pass’s REPORT.md and current chapter ledger before starting further work.
+This pass supersedes conflicting
 earlier one-phase-per-session, structure-freeze and 105,000-token stretch rules:
 the new must/wish/ceiling are 107,338 / 112,338 / 115,000 tokens, and the two
 specified chapter splits are approved. The old proposal-readiness phase checkers

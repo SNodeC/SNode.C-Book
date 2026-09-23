@@ -11,7 +11,7 @@ A working socket example is only the beginning: a learner must also understand w
 | Author | Volker Christian |
 | Format | Teaching book for independent study; modern C++, Linux-oriented examples |
 | Available material | 32 chapters in 11 Parts, contributor appendix, epilogue, reference material and index; complete companion sources and public solutions |
-| Current extent | 100,916 whitespace tokens, including 8,144 fenced tokens; pages pending PDF rebuild |
+| Current extent | 110,177 whitespace tokens, including 7,838 fenced tokens; 326 pages in the rebuilt reading PDF; publisher pagination pending |
 | Length ceiling | At most 115,000 words; the 105,000 stretch target is also met |
 | **Source baseline** | SNode.C project version `2.0.0`, public commit `07ca9a2936ee72582df7d159cb06666fe23e30f8`, verified by its file manifest. |
 
@@ -47,26 +47,26 @@ These books locate the proposal on the specialist programming shelf. The distinc
 
 ## Part plan
 
-The 32-chapter structure and contributor appendix are implemented. Word counts come from the current Markdown manifest. All page counts are pending PDF rebuild; publisher trim and typesetting will also change the printed extent.
+The 32-chapter structure and contributor appendix are implemented. Word counts come from the current Markdown manifest. The rebuilt reading PDF has 326 pages. Part page ranges are not quoted here; publisher trim and typesetting will change the printed extent.
 
 | Part | Chapters | Pages |
 |--------------------------------------------------------|-------------:|------:|
-| Preliminary matter | — | pending PDF rebuild |
-| I. Getting Oriented | 1–3 | pending PDF rebuild |
-| II. The SNode.C Architecture | 4–6 | pending PDF rebuild |
-| III. Networking Foundations in SNode.C | 7–9 | pending PDF rebuild |
-| IV. From Raw Connections to Application Protocols | 10–12 | pending PDF rebuild |
-| V. Configuration and Operational Behavior | 13–14 | pending PDF rebuild |
-| VI. Secure and Robust Communication | 15–16 | pending PDF rebuild |
-| VII. Web Protocols and Web Applications | 17–20 | pending PDF rebuild |
-| VIII. IoT and Message-Oriented Systems | 21–23 | pending PDF rebuild |
-| IX. Persistence and Full Systems | 24–26 | pending PDF rebuild |
-| X. Building, Porting, and Maintaining | 27–29 | pending PDF rebuild |
-| XI. Building and Evaluating MiniGateway | 30–32 | pending PDF rebuild |
-| Epilogue — What to Take Away from SNode.C | — | pending PDF rebuild |
-| Appendix A. Reading and Extending the Framework | A | pending PDF rebuild |
-| Reference Material | — | pending PDF rebuild |
-| **Total supplied manuscript** | **32 numbered chapters + appendix** | pending PDF rebuild |
+| Preliminary matter | — | publisher pagination pending |
+| I. Getting Oriented | 1–3 | publisher pagination pending |
+| II. The SNode.C Architecture | 4–6 | publisher pagination pending |
+| III. Networking Foundations in SNode.C | 7–9 | publisher pagination pending |
+| IV. From Raw Connections to Application Protocols | 10–12 | publisher pagination pending |
+| V. Configuration and Operational Behavior | 13–14 | publisher pagination pending |
+| VI. Secure and Robust Communication | 15–16 | publisher pagination pending |
+| VII. Web Protocols and Web Applications | 17–20 | publisher pagination pending |
+| VIII. IoT and Message-Oriented Systems | 21–23 | publisher pagination pending |
+| IX. Persistence and Full Systems | 24–26 | publisher pagination pending |
+| X. Building, Porting, and Maintaining | 27–29 | publisher pagination pending |
+| XI. Building and Evaluating MiniGateway | 30–32 | publisher pagination pending |
+| Epilogue — What to Take Away from SNode.C | — | publisher pagination pending |
+| Appendix A. Reading and Extending the Framework | A | publisher pagination pending |
+| Reference Material | — | publisher pagination pending |
+| **Total supplied manuscript** | **32 numbered chapters + appendix** | publisher pagination pending |
 
 ## Chapter plan
 
@@ -115,13 +115,13 @@ The manuscript is undergoing the authorized pedagogical-smoothing pass. The 32-c
 
 | Requirement | Completed in the supplied material | Maintain through final production |
 |--------------------|----------------------------------------|----------------------------------------|
-| Length | 100,916 total whitespace tokens, including 8,144 fenced tokens | At least 107,338; wish 112,338; ceiling 115,000; retain complete code listings |
+| Length | 110,177 total whitespace tokens, including 7,838 fenced tokens | At least 107,338; wish 112,338; ceiling 115,000; retain complete code listings |
 | Section density | 252 chapter subheadings; average 334.87 prose words per section | At most 550 subheadings; average at least 250 |
-| Teaching pattern | 32 chapters and Appendix A: 99 objectives, 165 mapped exercises planned, public answers and lab solutions | 3–5 objectives, recap of at most five bullets, all three exercise tiers and full objective coverage |
+| Teaching pattern | 32 chapters and Appendix A: 99 objectives, 165 mapped exercises, public answers and lab solutions | 3–5 objectives, recap of at most five bullets, all three exercise tiers and full objective coverage |
 | Applied principles | 20 rule boxes; zero closing-perspective sections or flagged authoring notes | At most 20 applicable rules; preserve concise recaps and clean reader text |
 | Explanatory blocks | 45 text fences | At most 250; retain useful explanations and technical qualifications |
 | Learning progression | 11 runnable Part checkpoints; earlier measurement milestones lead to Chapters 30–32 | Preserve the cumulative path and the epilogue's closing-essay role |
-| Companion and production | Public 07ca9a29: fresh framework build, 185 framework tests, 62 public labs and smoke/lifetime suites pass at the R2 gate; complete listings match their sources | Rebuild and rerun affected examples after technical edits; refresh page estimates at publisher typesetting |
+| Companion and production | Public 07ca9a29: fresh framework build, 185 framework tests pass at R2; 66 public labs and smoke/lifetime suites pass at P7; complete listings match their sources | Rebuild and rerun affected examples after technical edits; refresh page estimates at publisher typesetting |
 
 **[AUTHOR TO SUPPLY]** Weeks to final manuscript after acceptance and hours per week available for revisions; agree the delivery schedule with the publisher before promising a date.
 
@@ -166,7 +166,7 @@ Method: repository metadata, one-commit pages at each captured branch head, and 
 
 The submission includes the full manuscript PDF, this proposal and evidence sheet, the five selected chapters, complete companion source trees, and public exercise solutions for all chapters and Appendix A. EchoPair and the standalone Asio comparison support the first steps. HTTP, SSE, WebSocket, MQTT, and database examples lead toward MiniGateway and MiniGateway Extended. Lab build/run commands and conceptual/design answers are in `companion/exercises/README.md` and each chapter's solution directory.
 
-All companion programs compiled and all 62 registered lab cases passed locally on 23 September 2026 against the previous source baseline. Revalidation against the newly pinned public commit is pending: its framework test suite currently fails two logging checks. Those earlier observations include byte reflection, framing, TLS trust and peer identity, SSE/WebSocket behavior, broker delivery, database persistence across a client restart, and shared-model ownership. Some cases reuse the same implementation to test a different learning objective. These are bounded local results, not Bluetooth hardware coverage, OpenWrt deployment certification, or independent validation of the reported field application. Equipped-lab requirements and reproduction commands accompany the solutions.
+All companion programs compiled and all 66 registered lab cases passed locally on 23 September 2026 against public 07ca9a29. The fresh framework build passed 185 tests. These observations include byte reflection, framing, TLS trust and peer identity, SSE/WebSocket behavior, broker delivery, database persistence across a client restart, and shared-model ownership. Some cases reuse the same implementation to test a different learning objective. These are bounded local results, not Bluetooth hardware coverage, OpenWrt deployment certification, or independent validation of the reported field application. Equipped-lab requirements and reproduction commands accompany the solutions.
 
 ## Source-version baseline
 

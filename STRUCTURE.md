@@ -160,7 +160,7 @@ The proposal source is now structured as a compact acquisition dossier rather th
 7. Companion material and technical verification
 
 The dossier and evidence sheet follow the current structure. Source metrics
-provide the word counts; page counts remain pending PDF rebuild.
+provide the word counts; the rebuilt reading PDF has 326 pages, with publisher pagination pending.
 
 The `proposal` / `proposal-pdf` target uses `production/metadata/proposal-metadata.yaml`, `documentclass: article`, and `--top-level-division=section`. The `proposal-sample-pdf` target appends Chapter 1, Chapter 3, Chapter 19, Chapter 30, and Chapter 32 after the proposal and evidence sheet. In the approved structure, those samples show the conceptual pitch, first runnable example, real protocol chapter, MiniGateway construction capstone, and final architectural synthesis. The main manuscript continues to use the book metadata and `--top-level-division=part`.
 

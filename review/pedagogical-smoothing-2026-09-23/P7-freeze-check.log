@@ -1,0 +1,8 @@
+R2 == P3 == P7 == final live record.
+{
+  "source": "/home/voc/projects/snodec/snode.c",
+  "head": "07ca9a2936ee72582df7d159cb06666fe23e30f8",
+  "status_porcelain_v1": "",
+  "diff_head_binary_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "untracked_nonignored_sha256": []
+}

@@ -1,0 +1,9 @@
+test_current_files_pass (__main__.SmoothingTests.test_current_files_pass) ... ok
+test_diagnostics_skip_objectives (__main__.SmoothingTests.test_diagnostics_skip_objectives) ... ok
+test_each_assertion_detects_file_regression (__main__.SmoothingTests.test_each_assertion_detects_file_regression) ... ok
+test_nested_fences_count_outer_listing (__main__.SmoothingTests.test_nested_fences_count_outer_listing) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 6.616s
+
+OK
