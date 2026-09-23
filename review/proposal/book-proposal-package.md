@@ -120,7 +120,7 @@ The complete manuscript is available for acquisition assessment. Condensation, t
 | Applied principles | 20 rule boxes; zero closing-perspective sections or flagged authoring notes | At most 20 applicable rules; preserve concise recaps and clean reader text |
 | Explanatory blocks | 45 text fences | At most 250; retain useful explanations and technical qualifications |
 | Learning progression | 11 runnable Part checkpoints; earlier measurement milestones lead to Chapters 28–30 | Preserve the cumulative path and the epilogue's closing-essay role |
-| Companion and production | All companion programs compile; 62 local lab cases pass; complete listings match their sources; clean PDFs | Rebuild and rerun affected examples after technical edits; refresh page estimates at publisher typesetting |
+| Companion and production | Earlier source: companion compilation and 62 local lab passes; current public pin: runtime revalidation pending; complete listings match their sources | Rebuild and rerun affected examples after technical edits; refresh page estimates at publisher typesetting |
 
 **[AUTHOR TO SUPPLY]** Weeks to final manuscript after acceptance and hours per week available for revisions; agree the delivery schedule with the publisher before promising a date.
 
@@ -165,7 +165,7 @@ Method: repository metadata, one-commit pages at each captured branch head, and 
 
 The submission includes the full manuscript PDF, this proposal and evidence sheet, the five selected chapters, complete companion source trees, and public exercise solutions for all chapters and Appendix A. EchoPair and the standalone Asio comparison support the first steps. HTTP, SSE, WebSocket, MQTT, and database examples lead toward MiniGateway and MiniGateway Extended. Lab build/run commands and conceptual/design answers are in `companion/exercises/README.md` and each chapter's solution directory.
 
-All companion programs compile against the installed SNode.C package, and all 62 registered lab cases passed locally on 23 September 2026. Observations include byte reflection, framing, TLS trust and peer identity, SSE/WebSocket behavior, broker delivery, database persistence across a client restart, and shared-model ownership. Some cases reuse the same implementation to test a different learning objective. These are bounded local results, not Bluetooth hardware coverage, OpenWrt deployment certification, or independent validation of the reported field application. Equipped-lab requirements and reproduction commands accompany the solutions.
+All companion programs compiled and all 62 registered lab cases passed locally on 23 September 2026 against the previous source baseline. Revalidation against the newly pinned public commit is pending: its framework test suite currently fails two logging checks. Those earlier observations include byte reflection, framing, TLS trust and peer identity, SSE/WebSocket behavior, broker delivery, database persistence across a client restart, and shared-model ownership. Some cases reuse the same implementation to test a different learning objective. These are bounded local results, not Bluetooth hardware coverage, OpenWrt deployment certification, or independent validation of the reported field application. Equipped-lab requirements and reproduction commands accompany the solutions.
 
 ## Source-version baseline
 

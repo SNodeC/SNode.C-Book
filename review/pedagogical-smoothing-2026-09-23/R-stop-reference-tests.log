@@ -1,0 +1,6 @@
+COMMAND: python3 ci/test-chapter-references.py
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.148s
+
+OK

@@ -1,0 +1,2 @@
+COMMAND: python3 ci/check-chapter-references.py
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 298 current references, 374 old-reference dispositions.

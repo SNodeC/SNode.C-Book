@@ -1,0 +1,1686 @@
+Source alignment passed: 31 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, base 8b8da56e0349191d4658ca8f820a490539eccd4d, working-tree digest f00e7f9c16854d70c3d2122272458c581bacd108882ed13004c7d6d2173348ee
+Source alignment passed: 31 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, base 8b8da56e0349191d4658ca8f820a490539eccd4d, working-tree digest f00e7f9c16854d70c3d2122272458c581bacd108882ed13004c7d6d2173348ee
+-- The C compiler identification is GNU 16.2.0
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Doxygen: /usr/bin/doxygen (found version "1.15.0") found components: doxygen dot
+-- GNU compiler version 16.2.0 >= 12.2: Good
+-- Build spdlog: 1.17.0
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Build type: Debug
+-- Looking for fwrite_unlocked
+-- Looking for fwrite_unlocked - found
+-- Adding compile definition 'GROUP_NAME=snodec' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/utils/Config.cpp'
+-- I/O-Multiplexer selected: 'epoll'
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.6.3")
+-- Adding compile definition 'READ_BLOCKSIZE=16384' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigConnection.cpp'
+-- Adding compile definition 'WRITE_BLOCKSIZE=16384' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigConnection.cpp'
+-- Adding compile definition 'READ_TIMEOUT=60' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigConnection.cpp'
+-- Adding compile definition 'WRITE_TIMEOUT=60' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigConnection.cpp'
+-- Adding compile definition 'TERMINATE_TIMEOUT=1' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigConnection.cpp'
+-- Adding compile definition 'MAXIMUM_WRITE_QUEUE_BYTES=0' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigConnection.cpp'
+-- Adding compile definition 'WRITE_QUEUE_HIGH_WATERMARK=0' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigConnection.cpp'
+-- Adding compile definition 'WRITE_QUEUE_LOW_WATERMARK=0' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigConnection.cpp'
+-- Adding compile definition 'ACCEPTS_PER_TICK=1' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocketServer.cpp'
+-- Adding compile definition 'BACKLOG=5' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocketServer.cpp'
+-- Adding compile definition 'RETRY=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocket.cpp'
+-- Adding compile definition 'RETRY_ON_FATAL=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocket.cpp'
+-- Adding compile definition 'RETRY_TIMEOUT=1' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocket.cpp'
+-- Adding compile definition 'RETRY_TRIES=0' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocket.cpp'
+-- Adding compile definition 'RETRY_BASE=1.8' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocket.cpp'
+-- Adding compile definition 'RETRY_JITTER=0' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocket.cpp'
+-- Adding compile definition 'RETRY_LIMIT=0' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocket.cpp'
+-- Adding compile definition 'ACCEPT_TIMEOUT=0' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocketServer.cpp'
+-- Adding compile definition 'RECONNECT=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocketClient.cpp'
+-- Adding compile definition 'RECONNECT_TIME=1' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocketClient.cpp'
+-- Adding compile definition 'CONNECT_TIMEOUT=10' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigPhysicalSocketClient.cpp'
+-- Adding compile definition 'TLS_INIT_TIMEOUT=10' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigTlsServer.cpp'
+-- Adding compile definition 'TLS_INIT_TIMEOUT=10' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigTlsClient.cpp'
+-- Adding compile definition 'TLS_SHUTDOWN_TIMEOUT=1' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigTlsServer.cpp'
+-- Adding compile definition 'TLS_SHUTDOWN_TIMEOUT=1' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/config/ConfigTlsClient.cpp'
+-- Adding compile definition 'IN_NUMERIC=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in/config/ConfigAddress.cpp'
+-- Adding compile definition 'IN_NUMERIC_REVERSE=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in/config/ConfigAddress.cpp'
+-- Adding compile definition 'IN_REUSE_ADDRESS=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in/stream/config/ConfigSocketServer.cpp'
+-- Adding compile definition 'IN_REUSE_PORT=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in/stream/config/ConfigSocketServer.cpp'
+-- Adding compile definition 'IN_SERVER_DISABLE_NAGLE_ALGORITHM=default' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in/stream/config/ConfigSocketServer.cpp'
+-- Adding compile definition 'IN_CLIENT_DISABLE_NAGLE_ALGORITHM=default' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in/stream/config/ConfigSocketClient.cpp'
+-- Adding compile definition 'IN6_NUMERIC=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in6/config/ConfigAddress.cpp'
+-- Adding compile definition 'IN6_NUMERIC_REVERSE=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in6/config/ConfigAddress.cpp'
+-- Adding compile definition 'IN6_IPV4_MAPPED=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in6/config/ConfigAddress.cpp'
+-- Adding compile definition 'IN6_REUSE_ADDRESS=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in6/stream/config/ConfigSocketServer.cpp'
+-- Adding compile definition 'IN6_REUSE_PORT=false' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in6/stream/config/ConfigSocketServer.cpp'
+-- Adding compile definition 'IN6_IPV6_ONLY=default' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in6/stream/config/ConfigSocketServer.cpp'
+-- Adding compile definition 'IN6_SERVER_DISABLE_NAGLE_ALGORITHM=default' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in6/stream/config/ConfigSocketServer.cpp'
+-- Adding compile definition 'IN6_CLIENT_DISABLE_NAGLE_ALGORITHM=default' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/net/in6/stream/config/ConfigSocketClient.cpp'
+-- Found PkgConfig: /usr/bin/pkg-config (found version "2.5.1")
+-- Checking for module 'bluez'
+--   Found bluez, version 5.87
+-- Looking for getpeereid
+-- Looking for getpeereid - not found
+-- Checking for module 'libmagic'
+--   Found libmagic, version 5.47
+-- Adding compile definition 'HTTP_REQUEST_PIPELINED=true' for '/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/web/http/client/ConfigHTTP.cpp'
+-- Looking for getentropy
+-- Looking for getentropy - found
+-- Looking for SYS_getrandom
+-- Looking for SYS_getrandom - found
+-- Checking for module 'nlohmann_json>=3.11'
+--   Found nlohmann_json, version 3.11.3
+-- Checking for module 'libmariadb'
+--   Found libmariadb, version 3.4.9
+-- Found Curses: /usr/lib/x86_64-linux-gnu/libcurses.so
+-- snodec-control: building with interactive UI support (--ui), Curses found
+-- Configuring done (6.2s)
+-- Generating done (0.4s)
+-- Build files have been written to: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/framework-gcc
+[1/968] Building CXX object src/log/CMakeFiles/logger.dir/LogScopeOwner.cpp.o
+[2/968] Building CXX object src/log/CMakeFiles/logger.dir/Logger.cpp.o
+[3/968] Building CXX object src/log/CMakeFiles/logger.dir/Log.cpp.o
+[4/968] Building CXX object src/log/CMakeFiles/logger.dir/__/utils/hexdump.cpp.o
+[5/968] Building CXX object src/log/CMakeFiles/logger.dir/SemanticLogger.cpp.o
+[6/968] Building CXX object src/utils/CMakeFiles/utils.dir/Daemon.cpp.o
+[7/968] Building CXX object src/utils/CMakeFiles/utils.dir/PreserveErrno.cpp.o
+[8/968] Building CXX object src/utils/CMakeFiles/utils.dir/Random.cpp.o
+[9/968] Building CXX object src/log/CMakeFiles/logger.dir/detail/SpdlogBackend.cpp.o
+[10/968] Linking CXX shared library src/log/libsnodec-logger.so.2.0.0
+[11/968] Creating library symlink src/log/libsnodec-logger.so.2 src/log/libsnodec-logger.so
+[12/968] Building CXX object src/utils/CMakeFiles/utils.dir/Timeval.cpp.o
+[13/968] Building CXX object src/utils/CMakeFiles/utils.dir/Formatter.cpp.o
+[14/968] Building CXX object src/utils/CMakeFiles/utils.dir/Config.cpp.o
+[15/968] Building CXX object src/utils/CMakeFiles/utils.dir/Uuid.cpp.o
+[16/968] Building CXX object src/utils/CMakeFiles/utils.dir/base64.cpp.o
+[17/968] Building CXX object src/utils/CMakeFiles/utils.dir/system/time.cpp.o
+[18/968] Building CXX object src/utils/CMakeFiles/utils.dir/sha1.cpp.o
+[19/968] Building CXX object src/utils/CMakeFiles/utils.dir/system/signal.cpp.o
+[20/968] Building CXX object src/core/CMakeFiles/core.dir/Descriptor.cpp.o
+[21/968] Building CXX object src/utils/CMakeFiles/utils.dir/SubCommand.cpp.o
+[22/968] Linking CXX shared library src/utils/libsnodec-utils.so.2.0.0
+[23/968] Creating library symlink src/utils/libsnodec-utils.so.2 src/utils/libsnodec-utils.so
+[24/968] Building CXX object src/core/multiplexer/epoll/CMakeFiles/mux-epoll.dir/DescriptorEventPublisher.cpp.o
+[25/968] Building CXX object src/core/multiplexer/epoll/CMakeFiles/mux-epoll.dir/EventMultiplexer.cpp.o
+[26/968] Linking CXX shared library src/core/multiplexer/epoll/libsnodec-core-mux-epoll.so.2.0.0
+[27/968] Building CXX object src/core/CMakeFiles/core.dir/DescriptorEventPublisher.cpp.o
+[28/968] Building CXX object src/core/CMakeFiles/core.dir/DescriptorEventReceiver.cpp.o
+[29/968] Building CXX object src/core/CMakeFiles/core.dir/DynamicLoader.cpp.o
+[30/968] Building CXX object src/core/CMakeFiles/core.dir/Event.cpp.o
+[31/968] Building CXX object src/core/CMakeFiles/core.dir/EventReceiver.cpp.o
+[32/968] Building CXX object src/core/CMakeFiles/core.dir/EventMultiplexer.cpp.o
+[33/968] Building CXX object src/core/CMakeFiles/core.dir/SNodeC.cpp.o
+[34/968] Building CXX object src/core/CMakeFiles/core.dir/State.cpp.o
+[35/968] Building CXX object src/core/CMakeFiles/core.dir/Timer.cpp.o
+[36/968] Building CXX object src/core/CMakeFiles/core.dir/TimerEventPublisher.cpp.o
+[37/968] Building CXX object src/core/CMakeFiles/core.dir/TimerEventReceiver.cpp.o
+[38/968] Building CXX object src/core/CMakeFiles/core.dir/EventLoop.cpp.o
+[39/968] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/AcceptEventReceiver.cpp.o
+[40/968] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/ConnectEventReceiver.cpp.o
+[41/968] Building CXX object src/core/CMakeFiles/core.dir/file/File.cpp.o
+[42/968] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/ExceptionalConditionEventReceiver.cpp.o
+[43/968] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/ReadEventReceiver.cpp.o
+[44/968] Building CXX object src/core/CMakeFiles/core.dir/file/FileReader.cpp.o
+[45/968] Building CXX object src/core/CMakeFiles/core.dir/pipe/Sink.cpp.o
+[46/968] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/WriteEventReceiver.cpp.o
+[47/968] Building CXX object src/core/CMakeFiles/core.dir/pipe/Source.cpp.o
+[48/968] Building CXX object src/core/CMakeFiles/core.dir/system/dlfcn.cpp.o
+[49/968] Building CXX object src/core/CMakeFiles/core.dir/system/epoll.cpp.o
+[50/968] Building CXX object src/core/CMakeFiles/core.dir/system/netdb.cpp.o
+[51/968] Building CXX object src/core/CMakeFiles/core.dir/system/poll.cpp.o
+[52/968] Building CXX object src/core/CMakeFiles/core.dir/system/select.cpp.o
+[53/968] Building CXX object src/core/CMakeFiles/core.dir/system/socket.cpp.o
+[54/968] Building CXX object src/core/CMakeFiles/core.dir/system/unistd.cpp.o
+[55/968] Building CXX object src/core/CMakeFiles/core.dir/pipe/Pipe.cpp.o
+[56/968] Building CXX object src/core/CMakeFiles/core.dir/pipe/PipeSink.cpp.o
+[57/968] Building CXX object src/core/CMakeFiles/core.dir/pipe/PipeSource.cpp.o
+[58/968] Building CXX object src/core/CMakeFiles/core.dir/timer/IntervalTimer.cpp.o
+[59/968] Creating library symlink src/core/multiplexer/epoll/libsnodec-core-mux-epoll.so.2 src/core/multiplexer/epoll/libsnodec-core-mux-epoll.so
+[60/968] Building CXX object src/core/socket/CMakeFiles/core-socket.dir/SocketAddress.cpp.o
+[61/968] Building CXX object src/core/CMakeFiles/core.dir/timer/IntervalTimerStopable.cpp.o
+[62/968] Building CXX object src/core/CMakeFiles/core.dir/timer/SingleshotTimer.cpp.o
+[63/968] Building CXX object src/core/socket/CMakeFiles/core-socket.dir/SocketContext.cpp.o
+[64/968] Building CXX object src/core/CMakeFiles/core.dir/timer/Timer.cpp.o
+[65/968] Linking CXX shared library src/core/libsnodec-core.so.2.0.0
+[66/968] Creating library symlink src/core/libsnodec-core.so.2 src/core/libsnodec-core.so
+[67/968] Building CXX object src/core/socket/CMakeFiles/core-socket.dir/State.cpp.o
+[68/968] Linking CXX shared library src/core/socket/libsnodec-core-socket.so.2.0.0
+[69/968] Creating library symlink src/core/socket/libsnodec-core-socket.so.2 src/core/socket/libsnodec-core-socket.so
+[70/968] Building CXX object src/net/CMakeFiles/net.dir/phy/PhysicalSocketOption.cpp.o
+[71/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigInstance.cpp.o
+[72/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigPhysicalSocket.cpp.o
+[73/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigConnection.cpp.o
+[74/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigLegacy.cpp.o
+[75/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigTls.cpp.o
+[76/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigSection.cpp.o
+[77/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigPhysicalSocketClient.cpp.o
+[78/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigPhysicalSocketServer.cpp.o
+[79/968] Building CXX object src/net/in6/CMakeFiles/net-in6.dir/SocketAddress.cpp.o
+[80/968] Building CXX object src/net/in6/CMakeFiles/net-in6.dir/SocketAddrInfo.cpp.o
+[81/968] Building CXX object src/net/un/CMakeFiles/net-un.dir/PeerCredentials.cpp.o
+[82/968] Building CXX object src/net/un/CMakeFiles/net-un.dir/SocketAddress.cpp.o
+[83/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigTlsClient.cpp.o
+[84/968] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigTlsServer.cpp.o
+[85/968] Linking CXX shared library src/net/libsnodec-net.so.2.0.0
+[86/968] Creating library symlink src/net/libsnodec-net.so.2 src/net/libsnodec-net.so
+[87/968] Building CXX object src/net/in/CMakeFiles/net-in.dir/SocketAddress.cpp.o
+[88/968] Building CXX object src/net/in6/CMakeFiles/net-in6.dir/config/ConfigAddress.cpp.o
+[89/968] Linking CXX shared library src/net/in6/libsnodec-net-in6.so.2.0.0
+[90/968] Building CXX object src/net/rc/CMakeFiles/net-rc.dir/SocketAddress.cpp.o
+[91/968] Building CXX object src/net/in/CMakeFiles/net-in.dir/SocketAddrInfo.cpp.o
+[92/968] Building CXX object src/net/un/CMakeFiles/net-un.dir/config/ConfigAddress.cpp.o
+[93/968] Linking CXX shared library src/net/un/libsnodec-net-un.so.2.0.0
+[94/968] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/ClientFlowController.cpp.o
+[95/968] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/ServerFlowController.cpp.o
+[96/968] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketContextFactory.cpp.o
+[97/968] Building CXX object src/net/in/CMakeFiles/net-in.dir/config/ConfigAddress.cpp.o
+[98/968] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketContext.cpp.o
+[99/968] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketReader.cpp.o
+[100/968] Linking CXX shared library src/net/in/libsnodec-net-in.so.2.0.0
+[101/968] Creating library symlink src/net/in6/libsnodec-net-in6.so.2 src/net/in6/libsnodec-net-in6.so
+[102/968] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketWriter.cpp.o
+[103/968] Building CXX object src/net/l2/CMakeFiles/net-l2.dir/SocketAddress.cpp.o
+[104/968] Building CXX object src/net/rc/CMakeFiles/net-rc.dir/config/ConfigAddress.cpp.o
+[105/968] Linking CXX shared library src/net/rc/libsnodec-net-rc.so.2.0.0
+[106/968] Creating library symlink src/net/un/libsnodec-net-un.so.2 src/net/un/libsnodec-net-un.so
+[107/968] Building CXX object src/net/in6/phy/CMakeFiles/net-in6-phy.dir/PhysicalSocket.cpp.o
+[108/968] Creating library symlink src/net/in/libsnodec-net-in.so.2 src/net/in/libsnodec-net-in.so
+[109/968] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketConnection.cpp.o
+[110/968] Building CXX object src/net/un/phy/CMakeFiles/net-un-phy.dir/PhysicalSocket.cpp.o
+[111/968] Linking CXX shared library src/net/in6/phy/libsnodec-net-in6-phy.so.2.0.0
+[112/968] Creating library symlink src/net/rc/libsnodec-net-rc.so.2 src/net/rc/libsnodec-net-rc.so
+[113/968] Linking CXX shared library src/core/socket/stream/libsnodec-core-socket-stream.so.2.0.0
+[114/968] Linking CXX shared library src/net/un/phy/libsnodec-net-un-phy.so.2.0.0
+[115/968] Creating library symlink src/core/socket/stream/libsnodec-core-socket-stream.so.2 src/core/socket/stream/libsnodec-core-socket-stream.so
+[116/968] Creating library symlink src/net/in6/phy/libsnodec-net-in6-phy.so.2 src/net/in6/phy/libsnodec-net-in6-phy.so
+[117/968] Building CXX object src/net/in/phy/CMakeFiles/net-in-phy.dir/PhysicalSocket.cpp.o
+[118/968] Linking CXX shared library src/net/in/phy/libsnodec-net-in-phy.so.2.0.0
+[119/968] Building CXX object src/net/rc/phy/CMakeFiles/net-rc-phy.dir/PhysicalSocket.cpp.o
+[120/968] Building CXX object src/net/in6/phy/stream/CMakeFiles/net-in6-phy-stream.dir/PhysicalSocket.cpp.o
+[121/968] Building CXX object src/net/in6/phy/stream/CMakeFiles/net-in6-phy-stream.dir/PhysicalSocketClient.cpp.o
+[122/968] Linking CXX shared library src/net/rc/phy/libsnodec-net-rc-phy.so.2.0.0
+[123/968] Creating library symlink src/net/un/phy/libsnodec-net-un-phy.so.2 src/net/un/phy/libsnodec-net-un-phy.so
+[124/968] Building CXX object src/net/in6/phy/stream/CMakeFiles/net-in6-phy-stream.dir/PhysicalSocketServer.cpp.o
+[125/968] Building CXX object src/net/l2/phy/CMakeFiles/net-l2-phy.dir/PhysicalSocket.cpp.o
+[126/968] Building CXX object src/net/un/phy/stream/CMakeFiles/net-un-phy-stream.dir/PhysicalSocket.cpp.o
+[127/968] Building CXX object src/net/un/phy/stream/CMakeFiles/net-un-phy-stream.dir/PhysicalSocketClient.cpp.o
+[128/968] Building CXX object src/web/http/CMakeFiles/http.dir/CiStringMap.cpp.o
+[129/968] Building CXX object src/net/un/phy/stream/CMakeFiles/net-un-phy-stream.dir/PhysicalSocketServer.cpp.o
+[130/968] Building CXX object src/web/http/CMakeFiles/http.dir/ContentDecoder.cpp.o
+[131/968] Building CXX object src/web/http/CMakeFiles/http.dir/MimeTypes.cpp.o
+[132/968] Building CXX object src/net/l2/CMakeFiles/net-l2.dir/config/ConfigAddress.cpp.o
+[133/968] Linking CXX shared library src/net/l2/libsnodec-net-l2.so.2.0.0
+[134/968] Creating library symlink src/net/l2/libsnodec-net-l2.so.2 src/net/l2/libsnodec-net-l2.so
+[135/968] Building CXX object src/web/http/CMakeFiles/http.dir/StatusCodes.cpp.o
+[136/968] Building CXX object src/web/http/CMakeFiles/http.dir/ConfigWebSocket.cpp.o
+[137/968] Building CXX object src/web/http/CMakeFiles/http.dir/ConfigHttpParser.cpp.o
+[138/968] Building CXX object src/web/http/CMakeFiles/http.dir/decoder/Chunked.cpp.o
+[139/968] Building CXX object src/web/http/CMakeFiles/http.dir/Parser.cpp.o
+[140/968] Building CXX object src/web/http/CMakeFiles/http.dir/decoder/HTTP10Response.cpp.o
+[141/968] Creating library symlink src/net/in/phy/libsnodec-net-in-phy.so.2 src/net/in/phy/libsnodec-net-in-phy.so
+[142/968] Building CXX object src/web/http/CMakeFiles/http.dir/decoder/Fields.cpp.o
+[143/968] Building CXX object src/web/http/CMakeFiles/http.dir/decoder/Identity.cpp.o
+[144/968] Building CXX object src/web/http/CMakeFiles/http.dir/http_utils.cpp.o
+[145/968] Linking CXX shared library src/net/in6/phy/stream/libsnodec-net-in6-phy-stream.so.2.0.0
+[146/968] Linking CXX shared library src/net/l2/phy/libsnodec-net-l2-phy.so.2.0.0
+[147/968] Creating library symlink src/net/rc/phy/libsnodec-net-rc-phy.so.2 src/net/rc/phy/libsnodec-net-rc-phy.so
+[148/968] Building CXX object src/net/in/phy/stream/CMakeFiles/net-in-phy-stream.dir/PhysicalSocket.cpp.o
+[149/968] Building CXX object src/net/rc/phy/stream/CMakeFiles/net-rc-phy-stream.dir/PhysicalSocket.cpp.o
+[150/968] Building CXX object src/net/rc/phy/stream/CMakeFiles/net-rc-phy-stream.dir/PhysicalSocketClient.cpp.o
+[151/968] Linking CXX shared library src/net/un/phy/stream/libsnodec-net-un-phy-stream.so.2.0.0
+[152/968] Building CXX object src/net/in/phy/stream/CMakeFiles/net-in-phy-stream.dir/PhysicalSocketClient.cpp.o
+[153/968] Linking CXX shared library snode.c/http/libsnodec-http.so.2.0.0
+[154/968] Building CXX object src/net/in/phy/stream/CMakeFiles/net-in-phy-stream.dir/PhysicalSocketServer.cpp.o
+[155/968] Building CXX object src/net/rc/phy/stream/CMakeFiles/net-rc-phy-stream.dir/PhysicalSocketServer.cpp.o
+[156/968] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/String.cpp.o
+[157/968] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/StringRaw.cpp.o
+[158/968] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/UInt16.cpp.o
+[159/968] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/UInt32.cpp.o
+[160/968] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/UIntV.cpp.o
+[161/968] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/UInt8.cpp.o
+[162/968] Creating library symlink src/net/in6/phy/stream/libsnodec-net-in6-phy-stream.so.2 src/net/in6/phy/stream/libsnodec-net-in6-phy-stream.so
+[163/968] Linking CXX shared library src/net/in/phy/stream/libsnodec-net-in-phy-stream.so.2.0.0
+[164/968] Building CXX object src/core/socket/stream/legacy/CMakeFiles/core-socket-stream-legacy.dir/SocketReader.cpp.o
+[165/968] Creating library symlink src/net/l2/phy/libsnodec-net-l2-phy.so.2 src/net/l2/phy/libsnodec-net-l2-phy.so
+[166/968] Building CXX object src/core/socket/stream/legacy/CMakeFiles/core-socket-stream-legacy.dir/SocketWriter.cpp.o
+[167/968] Building CXX object src/net/l2/phy/stream/CMakeFiles/net-l2-phy-stream.dir/PhysicalSocket.cpp.o
+[168/968] Building CXX object src/net/l2/phy/stream/CMakeFiles/net-l2-phy-stream.dir/PhysicalSocketClient.cpp.o
+[169/968] Linking CXX shared library src/net/rc/phy/stream/libsnodec-net-rc-phy-stream.so.2.0.0
+[170/968] Creating library symlink src/net/un/phy/stream/libsnodec-net-un-phy-stream.so.2 src/net/un/phy/stream/libsnodec-net-un-phy-stream.so
+[171/968] Building CXX object src/net/l2/phy/stream/CMakeFiles/net-l2-phy-stream.dir/PhysicalSocketServer.cpp.o
+[172/968] Building CXX object src/net/in6/stream/CMakeFiles/net-in6-stream.dir/config/ConfigSocketClient.cpp.o
+[173/968] Creating library symlink snode.c/http/libsnodec-http.so.2 snode.c/http/libsnodec-http.so
+[174/968] Building CXX object src/net/in6/stream/CMakeFiles/net-in6-stream.dir/config/ConfigSocketServer.cpp.o
+[175/968] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/Request.cpp.o
+[176/968] Building CXX object src/net/un/stream/CMakeFiles/net-un-stream.dir/config/ConfigSocketClient.cpp.o
+[177/968] Building CXX object src/net/un/stream/CMakeFiles/net-un-stream.dir/config/ConfigSocketServer.cpp.o
+[178/968] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/RequestParser.cpp.o
+[179/968] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/ConfigHttpServer.cpp.o
+[180/968] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/SocketContextUpgradeFactory.cpp.o
+[181/968] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/Response.cpp.o
+[182/968] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/SocketContextFactory.cpp.o
+[183/968] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/SocketContext.cpp.o
+[184/968] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/SocketContextUpgradeFactorySelector.cpp.o
+[185/968] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/EndCommand.cpp.o
+[186/968] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/SendFragmentCommand.cpp.o
+[187/968] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/SendHeaderCommand.cpp.o
+[188/968] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/SendFileCommand.cpp.o
+[189/968] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/SseCommand.cpp.o
+[190/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Connect.cpp.o
+[191/968] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/UpgradeCommand.cpp.o
+[192/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Connack.cpp.o
+[193/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Disconnect.cpp.o
+[194/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pingreq.cpp.o
+[195/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pingresp.cpp.o
+[196/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Publish.cpp.o
+[197/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Puback.cpp.o
+[198/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pubcomp.cpp.o
+[199/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pubrec.cpp.o
+[200/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pubrel.cpp.o
+[201/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Subscribe.cpp.o
+[202/968] Linking CXX static library src/iot/mqtt/types/libmqtt-types.a
+[203/968] Linking CXX shared library src/core/socket/stream/legacy/libsnodec-core-socket-stream-legacy.so.2.0.0
+[204/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Suback.cpp.o
+[205/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Unsuback.cpp.o
+[206/968] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Unsubscribe.cpp.o
+[207/968] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/system/ssl.cpp.o
+[208/968] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/ssl_utils.cpp.o
+[209/968] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/TLSHandshake.cpp.o
+[210/968] Creating library symlink src/net/in/phy/stream/libsnodec-net-in-phy-stream.so.2 src/net/in/phy/stream/libsnodec-net-in-phy-stream.so
+[211/968] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/TLSShutdown.cpp.o
+[212/968] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/SocketReader.cpp.o
+[213/968] Linking CXX shared library src/net/in6/stream/libsnodec-net-in6-stream.so.2.0.0
+[214/968] Linking CXX shared library src/net/l2/phy/stream/libsnodec-net-l2-phy-stream.so.2.0.0
+[215/968] Creating library symlink src/net/rc/phy/stream/libsnodec-net-rc-phy-stream.so.2 src/net/rc/phy/stream/libsnodec-net-rc-phy-stream.so
+[216/968] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/SocketWriter.cpp.o
+[217/968] Building CXX object src/net/in/stream/CMakeFiles/net-in-stream.dir/config/ConfigSocketClient.cpp.o
+[218/968] Linking CXX shared library src/net/un/stream/libsnodec-net-un-stream.so.2.0.0
+[219/968] Linking CXX shared library snode.c/http/libsnodec-http-server.so.2.0.0
+[220/968] Building CXX object src/net/in/stream/CMakeFiles/net-in-stream.dir/config/ConfigSocketServer.cpp.o
+[221/968] Building CXX object src/net/rc/stream/CMakeFiles/net-rc-stream.dir/config/ConfigSocketClient.cpp.o
+[222/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/RequestCommand.cpp.o
+[223/968] Building CXX object src/net/rc/stream/CMakeFiles/net-rc-stream.dir/config/ConfigSocketServer.cpp.o
+[224/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/Response.cpp.o
+[225/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/Request.cpp.o
+[226/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/ResponseParser.cpp.o
+[227/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/SocketContext.cpp.o
+[228/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/ConfigHTTP.cpp.o
+[229/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/SocketContextUpgradeFactory.cpp.o
+[230/968] Linking CXX static library src/web/http/client/commands/libhttp-client-commands.a
+[231/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/tools/EventSource.cpp.o
+[232/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/SocketContextUpgradeFactorySelector.cpp.o
+[233/968] Building CXX object src/web/websocket/CMakeFiles/websocket.dir/Receiver.cpp.o
+[234/968] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/ControlPacket.cpp.o
+[235/968] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/ControlPacketDeserializer.cpp.o
+[236/968] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/SocketContextFactory.cpp.o
+[237/968] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/FixedHeader.cpp.o
+[238/968] Building CXX object src/web/websocket/CMakeFiles/websocket.dir/SubProtocolContext.cpp.o
+[239/968] Building CXX object src/web/websocket/CMakeFiles/websocket.dir/Transmitter.cpp.o
+[240/968] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/MqttContext.cpp.o
+[241/968] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/Mqtt.cpp.o
+[242/968] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/SocketContext.cpp.o
+[243/968] Linking CXX static library src/iot/mqtt/packets/libmqtt-packets.a
+[244/968] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/SubProtocol.cpp.o
+[245/968] Creating library symlink src/core/socket/stream/legacy/libsnodec-core-socket-stream-legacy.so.2 src/core/socket/stream/legacy/libsnodec-core-socket-stream-legacy.so
+[246/968] Linking CXX shared library src/net/in/stream/libsnodec-net-in-stream.so.2.0.0
+[247/968] Creating library symlink src/net/in6/stream/libsnodec-net-in6-stream.so.2 src/net/in6/stream/libsnodec-net-in6-stream.so
+[248/968] Linking CXX shared library src/core/socket/stream/tls/libsnodec-core-socket-stream-tls.so.2.0.0
+[249/968] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/Topic.cpp.o
+[250/968] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/Session.cpp.o
+[251/968] Building CXX object src/net/in6/stream/legacy/CMakeFiles/net-in6-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[252/968] Creating library symlink src/net/l2/phy/stream/libsnodec-net-l2-phy-stream.so.2 src/net/l2/phy/stream/libsnodec-net-l2-phy-stream.so
+[253/968] Building CXX object src/net/in6/stream/legacy/CMakeFiles/net-in6-stream-legacy.dir/SocketClient.cpp.o
+[254/968] Building CXX object src/net/in6/stream/legacy/CMakeFiles/net-in6-stream-legacy.dir/SocketServer.cpp.o
+[255/968] Linking CXX shared library src/net/rc/stream/libsnodec-net-rc-stream.so.2.0.0
+[256/968] Creating library symlink src/net/un/stream/libsnodec-net-un-stream.so.2 src/net/un/stream/libsnodec-net-un-stream.so
+[257/968] Building CXX object src/net/in6/stream/legacy/CMakeFiles/net-in6-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[258/968] Building CXX object src/net/l2/stream/CMakeFiles/net-l2-stream.dir/config/ConfigSocketClient.cpp.o
+[259/968] Building CXX object src/net/l2/stream/CMakeFiles/net-l2-stream.dir/config/ConfigSocketServer.cpp.o
+[260/968] Building CXX object src/net/un/stream/legacy/CMakeFiles/net-un-stream-legacy.dir/SocketClient.cpp.o
+[261/968] Creating library symlink snode.c/http/libsnodec-http-server.so.2 snode.c/http/libsnodec-http-server.so
+[262/968] Linking CXX shared library snode.c/http/libsnodec-http-client.so.2.0.0
+[263/968] Linking CXX shared library snode.c/http/upgrade/libsnodec-websocket.so.2.0.0
+[264/968] Building CXX object src/net/un/stream/legacy/CMakeFiles/net-un-stream-legacy.dir/SocketServer.cpp.o
+[265/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/Dispatcher.cpp.o
+[266/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/Controller.cpp.o
+[267/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/MountPoint.cpp.o
+[268/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/Next.cpp.o
+[269/968] Building CXX object src/net/un/stream/legacy/CMakeFiles/net-un-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[270/968] Building CXX object src/net/un/stream/legacy/CMakeFiles/net-un-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[271/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/Request.cpp.o
+[272/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/Route.cpp.o
+[273/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/Router.cpp.o
+[274/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/RootRoute.cpp.o
+[275/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/WebApp.cpp.o
+[276/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/Response.cpp.o
+[277/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/dispatcher/regex_utils.cpp.o
+[278/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/dispatcher/MiddlewareDispatcher.cpp.o
+[279/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/dispatcher/ApplicationDispatcher.cpp.o
+[280/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/BasicAuthentication.cpp.o
+[281/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/dispatcher/RouterDispatcher.cpp.o
+[282/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/VHost.cpp.o
+[283/968] Linking CXX shared library src/iot/mqtt/libsnodec-mqtt.so.2.0.0
+[284/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Connect.cpp.o
+[285/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/JsonMiddleware.cpp.o
+[286/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Disconnect.cpp.o
+[287/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/StaticMiddleware.cpp.o
+[288/968] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/VerboseRequest.cpp.o
+[289/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Pingreq.cpp.o
+[290/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Publish.cpp.o
+[291/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Puback.cpp.o
+[292/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Pubcomp.cpp.o
+[293/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Pubrec.cpp.o
+[294/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Pubrel.cpp.o
+[295/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Subscribe.cpp.o
+[296/968] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Unsubscribe.cpp.o
+[297/968] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/Message.cpp.o
+[298/968] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/Session.cpp.o
+[299/968] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/Broker.cpp.o
+[300/968] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/SubscriptionTree.cpp.o
+Warning: include-what-you-use reported diagnostics:
+error: unknown argument: '-fno-gnu-unique'
+/usr/include/c++/16/bits/unicode-data.h:1:1: warning: no private include name for @headername mapping
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.h:85:46: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.h:105:50: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.h:116:50: warning: std::pair is defined in <iterator>, which isn't directly #included.
+
+(/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.h has correct #includes/fwd-decls)
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:118:42: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:303:42: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:324:42: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:326:46: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:335:50: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:349:41: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:350:46: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:350:64: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:355:45: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:356:124: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:356:52: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:356:93: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp should add these lines:
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp should remove these lines:
+- #include "iot/mqtt/Mqtt.h"  // lines 44-44
+
+The full include-list for /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:
+#include "iot/mqtt/server/broker/SubscriptionTree.h"
+#include "iot/mqtt/SemanticLog.h"           // for mqttBrokerLog
+#include "iot/mqtt/server/broker/Broker.h"  // for Message, Broker
+#include <algorithm>                        // for __count_fn, count
+#include <nlohmann/json.hpp>                // for basic_json
+#include <string>                           // for basic_string, string, operator<=>, operator+
+---
+
+[301/968] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Connack.cpp.o
+[302/968] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Pingresp.cpp.o
+[303/968] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Publish.cpp.o
+[304/968] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/RetainTree.cpp.o
+Warning: include-what-you-use reported diagnostics:
+error: unknown argument: '-fno-gnu-unique'
+/usr/include/c++/16/bits/unicode-data.h:1:1: warning: no private include name for @headername mapping
+
+(/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/RetainTree.h has correct #includes/fwd-decls)
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/RetainTree.cpp:128:45: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/RetainTree.cpp:129:105: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/RetainTree.cpp:129:55: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/RetainTree.cpp should add these lines:
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/RetainTree.cpp should remove these lines:
+- #include "iot/mqtt/Mqtt.h"  // lines 44-44
+
+The full include-list for /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/iot/mqtt/server/broker/RetainTree.cpp:
+#include "iot/mqtt/server/broker/RetainTree.h"
+#include "iot/mqtt/SemanticLog.h"           // for mqttBrokerLog
+#include "iot/mqtt/server/broker/Broker.h"  // for Broker
+#include <algorithm>                        // for min
+#include <nlohmann/json.hpp>                // for basic_json
+#include <utility>                          // for pair
+---
+
+[305/968] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Puback.cpp.o
+[306/968] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Pubcomp.cpp.o
+[307/968] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Pubrec.cpp.o
+[308/968] Creating library symlink src/core/socket/stream/tls/libsnodec-core-socket-stream-tls.so.2 src/core/socket/stream/tls/libsnodec-core-socket-stream-tls.so
+[309/968] Creating library symlink src/net/in/stream/libsnodec-net-in-stream.so.2 src/net/in/stream/libsnodec-net-in-stream.so
+[310/968] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Pubrel.cpp.o
+[311/968] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Suback.cpp.o
+[312/968] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Unsuback.cpp.o
+[313/968] Building CXX object src/net/in/stream/legacy/CMakeFiles/net-in-stream-legacy.dir/SocketClient.cpp.o
+[314/968] Building CXX object src/net/in/stream/legacy/CMakeFiles/net-in-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[315/968] Building CXX object src/net/in/stream/legacy/CMakeFiles/net-in-stream-legacy.dir/SocketServer.cpp.o
+[316/968] Building CXX object src/net/in/stream/legacy/CMakeFiles/net-in-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[317/968] Building CXX object src/net/in/stream/tls/CMakeFiles/net-in-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[318/968] Linking CXX shared library src/net/in6/stream/legacy/libsnodec-net-in6-stream-legacy.so.2.0.0
+[319/968] Building CXX object src/net/in/stream/tls/CMakeFiles/net-in-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[320/968] Building CXX object src/net/in/stream/tls/CMakeFiles/net-in-stream-tls.dir/SocketClient.cpp.o
+[321/968] Building CXX object src/net/in/stream/tls/CMakeFiles/net-in-stream-tls.dir/SocketServer.cpp.o
+[322/968] Building CXX object src/net/in6/stream/tls/CMakeFiles/net-in6-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[323/968] Linking CXX shared library src/net/l2/stream/libsnodec-net-l2-stream.so.2.0.0
+[324/968] Creating library symlink src/net/rc/stream/libsnodec-net-rc-stream.so.2 src/net/rc/stream/libsnodec-net-rc-stream.so
+[325/968] Building CXX object src/net/in6/stream/tls/CMakeFiles/net-in6-stream-tls.dir/SocketClient.cpp.o
+[326/968] Building CXX object src/net/in6/stream/tls/CMakeFiles/net-in6-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[327/968] Building CXX object src/net/in6/stream/tls/CMakeFiles/net-in6-stream-tls.dir/SocketServer.cpp.o
+[328/968] Building CXX object src/net/rc/stream/legacy/CMakeFiles/net-rc-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[329/968] Building CXX object src/net/rc/stream/legacy/CMakeFiles/net-rc-stream-legacy.dir/SocketClient.cpp.o
+[330/968] Building CXX object src/net/rc/stream/legacy/CMakeFiles/net-rc-stream-legacy.dir/SocketServer.cpp.o
+[331/968] Building CXX object src/net/rc/stream/legacy/CMakeFiles/net-rc-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[332/968] Building CXX object src/net/rc/stream/tls/CMakeFiles/net-rc-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[333/968] Linking CXX shared library src/net/un/stream/legacy/libsnodec-net-un-stream-legacy.so.2.0.0
+[334/968] Building CXX object src/net/rc/stream/tls/CMakeFiles/net-rc-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[335/968] Building CXX object src/net/rc/stream/tls/CMakeFiles/net-rc-stream-tls.dir/SocketClient.cpp.o
+[336/968] Building CXX object src/net/rc/stream/tls/CMakeFiles/net-rc-stream-tls.dir/SocketServer.cpp.o
+[337/968] Building CXX object src/net/un/stream/tls/CMakeFiles/net-un-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[338/968] Creating library symlink snode.c/http/libsnodec-http-client.so.2 snode.c/http/libsnodec-http-client.so
+[339/968] Creating library symlink snode.c/http/upgrade/libsnodec-websocket.so.2 snode.c/http/upgrade/libsnodec-websocket.so
+[340/968] Building CXX object src/net/un/stream/tls/CMakeFiles/net-un-stream-tls.dir/SocketClient.cpp.o
+[341/968] Building CXX object src/net/un/stream/tls/CMakeFiles/net-un-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[342/968] Building CXX object src/net/un/stream/tls/CMakeFiles/net-un-stream-tls.dir/SocketServer.cpp.o
+[343/968] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/GroupsManager.cpp.o
+[344/968] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/SocketContextUpgradeFactory.cpp.o
+[345/968] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/SubProtocol.cpp.o
+[346/968] Building CXX object src/web/websocket/client/CMakeFiles/websocket-client.dir/SocketContextUpgradeFactory.cpp.o
+[347/968] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/SocketContextUpgrade.cpp.o
+[348/968] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/SubProtocolFactorySelector.cpp.o
+[349/968] Linking CXX shared library snode.c/http/libsnodec-http-server-express.so.2.0.0
+[350/968] Creating library symlink src/iot/mqtt/libsnodec-mqtt.so.2 src/iot/mqtt/libsnodec-mqtt.so
+[351/968] Building CXX object src/web/websocket/client/CMakeFiles/websocket-client.dir/SubProtocol.cpp.o
+[352/968] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server.dir/ControlPacketDeserializer.cpp.o
+[353/968] Building CXX object src/web/websocket/client/CMakeFiles/websocket-client.dir/SocketContextUpgrade.cpp.o
+[354/968] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server.dir/Mqtt.cpp.o
+[355/968] Linking CXX static library src/iot/mqtt/server/packets/libmqtt-server-packets.a
+[356/968] Linking CXX static library src/iot/mqtt/server/broker/libmqtt-broker.a
+[357/968] Building CXX object src/iot/mqtt/client/CMakeFiles/mqtt-client.dir/ControlPacketDeserializer.cpp.o
+[358/968] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server.dir/SharedSocketContextFactory.cpp.o
+[359/968] Linking CXX static library src/iot/mqtt/client/packets/libmqtt-client-packets.a
+[360/968] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server.dir/SocketContextFactory.cpp.o
+[361/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/CommandBuilder.cpp.o
+[362/968] Building CXX object src/web/websocket/client/CMakeFiles/websocket-client.dir/SubProtocolFactorySelector.cpp.o
+[363/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigEditor.cpp.o
+[364/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigActions.cpp.o
+[365/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigModel.cpp.o
+[366/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/JsonWriter.cpp.o
+[367/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/Json.cpp.o
+[368/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/Materializer.cpp.o
+[369/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/Metadata.cpp.o
+[370/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigParser.cpp.o
+[371/968] Linking CXX shared library src/net/in/stream/legacy/libsnodec-net-in-stream-legacy.so.2.0.0
+[372/968] Building CXX object src/iot/mqtt/client/CMakeFiles/mqtt-client.dir/Mqtt.cpp.o
+[373/968] Creating library symlink src/net/in6/stream/legacy/libsnodec-net-in6-stream-legacy.so.2 src/net/in6/stream/legacy/libsnodec-net-in6-stream-legacy.so
+[374/968] Creating library symlink src/net/l2/stream/libsnodec-net-l2-stream.so.2 src/net/l2/stream/libsnodec-net-l2-stream.so
+[375/968] Linking CXX shared library src/net/in/stream/tls/libsnodec-net-in-stream-tls.so.2.0.0
+[376/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ProcessRunner.cpp.o
+[377/968] Linking CXX shared library src/net/in6/stream/tls/libsnodec-net-in6-stream-tls.so.2.0.0
+[378/968] Building CXX object src/net/l2/stream/legacy/CMakeFiles/net-l2-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[379/968] Building CXX object src/net/l2/stream/legacy/CMakeFiles/net-l2-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[380/968] Building CXX object src/net/l2/stream/legacy/CMakeFiles/net-l2-stream-legacy.dir/SocketServer.cpp.o
+[381/968] Building CXX object src/net/l2/stream/legacy/CMakeFiles/net-l2-stream-legacy.dir/SocketClient.cpp.o
+[382/968] Building CXX object src/net/l2/stream/tls/CMakeFiles/net-l2-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[383/968] Linking CXX shared library src/net/rc/stream/legacy/libsnodec-net-rc-stream-legacy.so.2.0.0
+[384/968] Linking CXX shared library src/net/rc/stream/tls/libsnodec-net-rc-stream-tls.so.2.0.0
+[385/968] Creating library symlink src/net/un/stream/legacy/libsnodec-net-un-stream-legacy.so.2 src/net/un/stream/legacy/libsnodec-net-un-stream-legacy.so
+[386/968] Building CXX object src/net/l2/stream/tls/CMakeFiles/net-l2-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[387/968] Linking CXX shared library src/net/un/stream/tls/libsnodec-net-un-stream-tls.so.2.0.0
+[388/968] Linking CXX shared library snode.c/http/upgrade/libsnodec-websocket-client.so.2.0.0
+[389/968] Creating library symlink snode.c/http/libsnodec-http-server-express.so.2 snode.c/http/libsnodec-http-server-express.so
+[390/968] Linking CXX shared library snode.c/http/upgrade/libsnodec-websocket-server.so.2.0.0
+[391/968] Building CXX object src/net/l2/stream/tls/CMakeFiles/net-l2-stream-tls.dir/SocketServer.cpp.o
+[392/968] Building CXX object src/net/l2/stream/tls/CMakeFiles/net-l2-stream-tls.dir/SocketClient.cpp.o
+[393/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBClientASyncAPI.cpp.o
+[394/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBClient.cpp.o
+[395/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBClientSyncAPI.cpp.o
+[396/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBCommand.cpp.o
+[397/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBCommandASync.cpp.o
+[398/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBCommandSync.cpp.o
+[399/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBCommandSequence.cpp.o
+[400/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBLibrary.cpp.o
+[401/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBConnection.cpp.o
+[402/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/sync/MariaDBAffectedRowsCommand.cpp.o
+[403/968] Building CXX object src/express/legacy/in6/CMakeFiles/http-server-express-legacy-in6.dir/Server.cpp.o
+[404/968] Building CXX object src/express/legacy/un/CMakeFiles/http-server-express-legacy-un.dir/Server.cpp.o
+[405/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/sync/MariaDBFieldCountCommand.cpp.o
+[406/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/sync/MariaDBUseResultCommand.cpp.o
+[407/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBCommitCommand.cpp.o
+[408/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBAutoCommitCommand.cpp.o
+[409/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBConnectCommand.cpp.o
+[410/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBExecCommand.cpp.o
+[411/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBFetchRowCommand.cpp.o
+[412/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBFreeResultCommand.cpp.o
+[413/968] Linking CXX shared library src/iot/mqtt/client/libsnodec-mqtt-client.so.2.0.0
+[414/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBQueryCommand.cpp.o
+[415/968] Linking CXX shared library src/iot/mqtt/server/libsnodec-mqtt-server.so.2.0.0
+[416/968] Linking CXX static library src/tools/snodec-control/src/libsnodec-control-core.a
+[417/968] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBRollbackCommand.cpp.o
+[418/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui-logic.dir/ui/LineEditor.cpp.o
+[419/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui-logic.dir/ui/RenderUtil.cpp.o
+[420/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui-logic.dir/ui/UiState.cpp.o
+[421/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui-logic.dir/ui/UiTree.cpp.o
+[422/968] Building CXX object src/core/multiplexer/poll/CMakeFiles/mux-poll.dir/DescriptorEventPublisher.cpp.o
+[423/968] Creating library symlink src/net/in/stream/legacy/libsnodec-net-in-stream-legacy.so.2 src/net/in/stream/legacy/libsnodec-net-in-stream-legacy.so
+[424/968] Creating library symlink src/net/in/stream/tls/libsnodec-net-in-stream-tls.so.2 src/net/in/stream/tls/libsnodec-net-in-stream-tls.so
+[425/968] Creating library symlink src/net/in6/stream/tls/libsnodec-net-in6-stream-tls.so.2 src/net/in6/stream/tls/libsnodec-net-in6-stream-tls.so
+[426/968] Linking CXX shared library src/net/l2/stream/legacy/libsnodec-net-l2-stream-legacy.so.2.0.0
+[427/968] Linking CXX shared library src/net/l2/stream/tls/libsnodec-net-l2-stream-tls.so.2.0.0
+[428/968] Creating library symlink src/net/rc/stream/legacy/libsnodec-net-rc-stream-legacy.so.2 src/net/rc/stream/legacy/libsnodec-net-rc-stream-legacy.so
+[429/968] Creating library symlink src/net/rc/stream/tls/libsnodec-net-rc-stream-tls.so.2 src/net/rc/stream/tls/libsnodec-net-rc-stream-tls.so
+[430/968] Creating library symlink src/net/un/stream/tls/libsnodec-net-un-stream-tls.so.2 src/net/un/stream/tls/libsnodec-net-un-stream-tls.so
+[431/968] Building CXX object src/core/multiplexer/poll/CMakeFiles/mux-poll.dir/EventMultiplexer.cpp.o
+[432/968] Creating library symlink snode.c/http/upgrade/libsnodec-websocket-server.so.2 snode.c/http/upgrade/libsnodec-websocket-server.so
+[433/968] Creating library symlink snode.c/http/upgrade/libsnodec-websocket-client.so.2 snode.c/http/upgrade/libsnodec-websocket-client.so
+[434/968] Building CXX object src/core/multiplexer/select/CMakeFiles/mux-select.dir/DescriptorEventPublisher.cpp.o
+[435/968] Linking CXX shared library snode.c/http/libsnodec-http-server-express-legacy-in6.so.2.0.0
+[436/968] Building CXX object src/core/multiplexer/select/CMakeFiles/mux-select.dir/EventMultiplexer.cpp.o
+[437/968] Linking CXX shared library snode.c/http/libsnodec-http-server-express-legacy-un.so.2.0.0
+[438/968] Building CXX object src/net/un/dgram/CMakeFiles/net-un-dgram.dir/Socket.cpp.o
+[439/968] Building CXX object src/express/legacy/in/CMakeFiles/http-server-express-legacy-in.dir/Server.cpp.o
+[440/968] Building CXX object src/express/legacy/rc/CMakeFiles/http-server-express-legacy-rc.dir/Server.cpp.o
+[441/968] Building CXX object src/express/tls/in/CMakeFiles/http-server-express-tls-in.dir/Server.cpp.o
+[442/968] Linking CXX shared library src/database/mariadb/libsnodec-db-mariadb.so.2.0.0
+[443/968] Creating library symlink src/iot/mqtt/server/libsnodec-mqtt-server.so.2 src/iot/mqtt/server/libsnodec-mqtt-server.so
+[444/968] Building CXX object src/express/tls/in6/CMakeFiles/http-server-express-tls-in6.dir/Server.cpp.o
+[445/968] Creating library symlink src/iot/mqtt/client/libsnodec-mqtt-client.so.2 src/iot/mqtt/client/libsnodec-mqtt-client.so
+[446/968] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server-websocket.dir/SubProtocol.cpp.o
+[447/968] Building CXX object src/iot/mqtt/client/CMakeFiles/mqtt-client-websocket.dir/SubProtocol.cpp.o
+[448/968] Building CXX object src/apps/echo/model/CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[449/968] Building CXX object src/apps/tlslegacy/CMakeFiles/tlslegacysocketcontext.dir/TlsLegacySocketContext.cpp.o
+[450/968] Building CXX object src/express/tls/rc/CMakeFiles/http-server-express-tls-rc.dir/Server.cpp.o
+[451/968] Building CXX object src/apps/websocket/subprotocol/server/echo/CMakeFiles/websocket-echo-server.dir/Echo.cpp.o
+[452/968] Building CXX object src/express/tls/un/CMakeFiles/http-server-express-tls-un.dir/Server.cpp.o
+[453/968] Linking CXX static library src/tools/snodec-control/src/libsnodec-control-ui-logic.a
+[454/968] Building CXX object src/apps/websocket/subprotocol/server/echo/CMakeFiles/websocket-echo-server.dir/EchoFactory.cpp.o
+[455/968] Building CXX object src/apps/websocket/subprotocol/client/echo/CMakeFiles/websocket-echo-client.dir/EchoFactory.cpp.o
+[456/968] Building CXX object tests/support/CMakeFiles/snodec-test-support.dir/TestResult.cpp.o
+[457/968] Building CXX object src/apps/websocket/subprotocol/client/echo/CMakeFiles/websocket-echo-client.dir/Echo.cpp.o
+[458/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui.dir/ui/CursesUi.cpp.o
+Warning: include-what-you-use reported diagnostics:
+error: unknown argument: '-fno-gnu-unique'
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/tools/snodec-control/src/ui/CursesUi.cpp:354:23: warning: ssize_t is defined in <sys/types.h>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/tools/snodec-control/src/ui/CursesUi.cpp:361:29: warning: VMIN is defined in <bits/termios-c_cc.h>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/tools/snodec-control/src/ui/CursesUi.cpp:362:29: warning: VTIME is defined in <bits/termios-c_cc.h>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/tools/snodec-control/src/ui/CursesUi.cpp:366:19: warning: ssize_t is defined in <sys/types.h>, which isn't directly #included.
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/tools/snodec-control/src/ui/CursesUi.cpp should add these lines:
+#include <sys/types.h>          // for ssize_t
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/tools/snodec-control/src/ui/CursesUi.cpp should remove these lines:
+
+The full include-list for /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/tools/snodec-control/src/ui/CursesUi.cpp:
+#include "../CommandBuilder.h"  // for formatCommandForDisplay, buildRunArgs
+#include "../ConfigActions.h"   // for SaveOutcome, formatDiff, formatMissingRequired, performSaveConfig, createTempFile, formatOptionBlock, writeFile
+#include "../ConfigEditor.h"    // for ChangeRecord, isOptionMissingRequired, missingRequiredOptions, effectiveValueDisplay, mergeChangeRecords
+#include "../ConfigModel.h"     // for ConfigOption, fullOptionKey
+#include "../Materializer.h"    // for materialize
+#include "../Metadata.h"        // for ParsedMetadata
+#include "../ProcessRunner.h"   // for ProcessResult, runProcessAttachedAsForegroundJob
+#include "LineEditor.h"         // for LineEditorBuffer
+#include "RenderUtil.h"         // for fitToWidth
+#include "Ui.h"                 // for UiOptions, UiResult, isUiAvailable, runInteractiveUi
+#include "UiState.h"            // for UiState, isBooleanLikeOption, isTristateLikeOption
+#include "UiTree.h"             // for UiNode, FlatNode, UiNodeType
+#include <curses.h>             // for mvprintw, refresh, stdscr, A_REVERSE, curs_set, erase, attroff, attron, getch, getmaxyx, cbreak, endwin, keypad, noecho, A_BOLD, KEY_END, KEY_ENTER, KEY_HOME, KEY_LEFT, KEY_RIGHT, TRUE, def_prog_mode, initscr, move, mvhline, reset_prog_mode, ACS_HLINE, KEY_BACKSPACE, KEY_DC, KEY_DOWN, KEY_F, KEY_NPAGE, KEY_PPAGE, KEY_UP
+#include <sys/types.h>          // for ssize_t
+#include <termios.h>            // for termios, tcsetattr, TCSANOW, tcgetattr, ECHO, ICANON
+#include <unistd.h>             // for STDIN_FILENO, read
+#include <algorithm>            // for min
+#include <cctype>               // for toupper
+#include <cstddef>              // for size_t
+#include <filesystem>           // for remove, path
+#include <iostream>             // for basic_ostream, operator<<, cout, basic_istream, basic_ostream::operator<<, basic_ostream::flush, flush, istringstream, ostringstream
+#include <optional>             // for optional, nullopt, nullopt_t
+#include <sstream>              // for basic_ostringstream, basic_istringstream
+#include <string>               // for basic_string, char_traits, allocator, string, operator+, operator<<, getline
+#include <utility>              // for pair
+#include <vector>               // for vector
+---
+
+[459/968] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o
+[460/968] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/color_sinks.cpp.o
+[461/968] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/file_sinks.cpp.o
+[462/968] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/async.cpp.o
+[463/968] Linking CXX shared library src/core/multiplexer/poll/libsnodec-core-mux-poll.so.2.0.0
+[464/968] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/cfg.cpp.o
+[465/968] Creating library symlink src/net/l2/stream/legacy/libsnodec-net-l2-stream-legacy.so.2 src/net/l2/stream/legacy/libsnodec-net-l2-stream-legacy.so
+[466/968] Creating library symlink src/net/l2/stream/tls/libsnodec-net-l2-stream-tls.so.2 src/net/l2/stream/tls/libsnodec-net-l2-stream-tls.so
+[467/968] Linking CXX shared library src/core/multiplexer/select/libsnodec-core-mux-select.so.2.0.0
+[468/968] Linking CXX shared library src/net/un/dgram/libsnodec-net-un-dgram.so.2.0.0
+[469/968] Creating library symlink snode.c/http/libsnodec-http-server-express-legacy-in6.so.2 snode.c/http/libsnodec-http-server-express-legacy-in6.so
+[470/968] Linking CXX shared library snode.c/http/libsnodec-http-server-express-legacy-in.so.2.0.0
+[471/968] Creating library symlink snode.c/http/libsnodec-http-server-express-legacy-un.so.2 snode.c/http/libsnodec-http-server-express-legacy-un.so
+[472/968] Linking CXX shared library snode.c/http/libsnodec-http-server-express-legacy-rc.so.2.0.0
+[473/968] Linking CXX shared library snode.c/http/libsnodec-http-server-express-tls-in.so.2.0.0
+[474/968] Linking CXX shared library snode.c/http/libsnodec-http-server-express-tls-in6.so.2.0.0
+[475/968] Linking CXX shared library snode.c/http/libsnodec-http-server-express-tls-rc.so.2.0.0
+[476/968] Creating library symlink src/database/mariadb/libsnodec-db-mariadb.so.2 src/database/mariadb/libsnodec-db-mariadb.so
+[477/968] Linking CXX shared library snode.c/http/libsnodec-http-server-express-tls-un.so.2.0.0
+[478/968] Linking CXX shared library src/iot/mqtt/server/libsnodec-mqtt-server-websocket.so.2.0.0
+[479/968] Linking CXX shared library src/iot/mqtt/client/libsnodec-mqtt-client-websocket.so.2.0.0
+[480/968] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/spdlog.cpp.o
+[481/968] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o
+[482/968] Building CXX object src/apps/CMakeFiles/testpost.dir/testpost.cpp.o
+[483/968] Building CXX object src/apps/CMakeFiles/jsonserver.dir/jsonserver.cpp.o
+[484/968] Building CXX object src/apps/CMakeFiles/snode.c.dir/main.cpp.o
+[485/968] Building CXX object src/apps/CMakeFiles/express-compat-server.dir/express_compat_server.cpp.o
+[486/968] Building CXX object src/apps/CMakeFiles/testpipe.dir/testpipe.cpp.o
+[487/968] Building CXX object src/apps/CMakeFiles/jsonclient.dir/jsonclient.cpp.o
+[488/968] Building CXX object src/apps/CMakeFiles/warema-jalousien.dir/warema-jalousien.cpp.o
+[489/968] Building CXX object src/apps/CMakeFiles/testregex.dir/testregex.cpp.o
+[490/968] Building CXX object src/apps/CMakeFiles/configtest.dir/configtest.cpp.o
+[491/968] Building CXX object src/apps/database/CMakeFiles/testmariadb.dir/testmariadb.cpp.o
+[492/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-in.dir/echoclient.cpp.o
+[493/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-in.dir/echoserver.cpp.o
+[494/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-in.dir/echoclient.cpp.o
+[495/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-in.dir/echoserver.cpp.o
+[496/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-in6.dir/echoclient.cpp.o
+[497/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-in6.dir/echoserver.cpp.o
+[498/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-in6.dir/echoclient.cpp.o
+[499/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-in6.dir/echoserver.cpp.o
+[500/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-un.dir/echoclient.cpp.o
+[501/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-un.dir/echoserver.cpp.o
+[502/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-un.dir/echoclient.cpp.o
+[503/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-un.dir/echoserver.cpp.o
+[504/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-l2.dir/echoclient.cpp.o
+[505/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-l2.dir/echoserver.cpp.o
+[506/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-l2.dir/echoclient.cpp.o
+[507/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-rc.dir/echoclient.cpp.o
+[508/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-l2.dir/echoserver.cpp.o
+[509/968] Linking CXX static library src/apps/echo/model/libechosocketcontext.a
+[510/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-rc.dir/echoserver.cpp.o
+[511/968] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-rc.dir/echoclient.cpp.o
+[512/968] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-in.dir/ConfigWWW.cpp.o
+[513/968] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-rc.dir/echoserver.cpp.o
+[514/968] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-in.dir/httpserver.cpp.o
+[515/968] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-in.dir/ConfigWWW.cpp.o
+[516/968] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-in.dir/httpserver.cpp.o
+[517/968] Building CXX object src/apps/http/CMakeFiles/httpclient-legacy-in.dir/httpclient.cpp.o
+[518/968] Building CXX object src/apps/http/CMakeFiles/httpclient-tls-in.dir/httpclient.cpp.o
+[519/968] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-in6.dir/ConfigWWW.cpp.o
+[520/968] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-in6.dir/httpserver.cpp.o
+[521/968] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-in6.dir/ConfigWWW.cpp.o
+[522/968] Building CXX object src/apps/http/CMakeFiles/httpclient-legacy-in6.dir/httpclient.cpp.o
+[523/968] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-in6.dir/httpserver.cpp.o
+[524/968] Building CXX object src/apps/http/CMakeFiles/httpclient-tls-in6.dir/httpclient.cpp.o
+[525/968] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-un.dir/ConfigWWW.cpp.o
+[526/968] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-un.dir/httpserver.cpp.o
+[527/968] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-un.dir/ConfigWWW.cpp.o
+[528/968] Building CXX object src/apps/http/CMakeFiles/httpclient-legacy-un.dir/httpclient.cpp.o
+[529/968] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-un.dir/httpserver.cpp.o
+[530/968] Building CXX object src/apps/http/CMakeFiles/httpclient-tls-un.dir/httpclient.cpp.o
+[531/968] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-rc.dir/ConfigWWW.cpp.o
+[532/968] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-rc.dir/httpserver.cpp.o
+[533/968] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-rc.dir/ConfigWWW.cpp.o
+[534/968] Building CXX object src/apps/http/CMakeFiles/httpclient-legacy-rc.dir/httpclient.cpp.o
+[535/968] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-rc.dir/httpserver.cpp.o
+[536/968] Building CXX object src/apps/http/CMakeFiles/httpclient-tls-rc.dir/httpclient.cpp.o
+[537/968] Building CXX object src/apps/http/CMakeFiles/verysimpleserver.dir/ConfigWWW.cpp.o
+[538/968] Building CXX object src/apps/http/CMakeFiles/httplowlevelclient.dir/httplowlevelclient.cpp.o
+[539/968] Building CXX object src/apps/http/CMakeFiles/verysimpleserver.dir/verysimpleserver.cpp.o
+[540/968] Building CXX object src/apps/http/CMakeFiles/vhostserver.dir/ConfigWWW.cpp.o
+[541/968] Building CXX object src/apps/http/CMakeFiles/vhostserver.dir/vhostserver.cpp.o
+[542/968] Building CXX object src/apps/http/CMakeFiles/testbasicauthentication.dir/ConfigWWW.cpp.o
+[543/968] Building CXX object src/apps/http/CMakeFiles/testbasicauthentication.dir/testbasicauthentication.cpp.o
+[544/968] Building CXX object src/apps/oauth2/client_app/CMakeFiles/client_app.dir/ClientApp.cpp.o
+[545/968] Linking CXX static library src/apps/tlslegacy/libtlslegacysocketcontext.a
+[546/968] Building CXX object src/apps/http/CMakeFiles/testexpressnext.dir/testexpressnext.cpp.o
+[547/968] Building CXX object src/apps/oauth2/authorization_server/CMakeFiles/authorization_server.dir/AuthorizationServer.cpp.o
+[548/968] Building CXX object src/apps/oauth2/resource_server/CMakeFiles/resource_server.dir/ResourceServer.cpp.o
+[549/968] Building CXX object src/apps/towercalculator/CMakeFiles/towerCalculation.dir/towerCalculation.cpp.o
+[550/968] Building CXX object src/apps/tlslegacy/CMakeFiles/tlslegacyserver.dir/tlslegacyserver.cpp.o
+[551/968] Building CXX object src/apps/towercalculator/CMakeFiles/towerCalculation.dir/KeyboardReader.cpp.o
+[552/968] Building CXX object src/apps/towercalculator/CMakeFiles/towerCalculation.dir/TowerCalculator.cpp.o
+[553/968] Linking CXX shared library snode.c/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2.0.0
+[554/968] Linking CXX shared library snode.c/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2.0.0
+[555/968] Linking CXX static library src/tools/snodec-control/src/libsnodec-control-ui.a
+[556/968] Building CXX object src/apps/tlslegacy/CMakeFiles/tlslegacyclient.dir/tlslegacyclient.cpp.o
+[557/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control.dir/main.cpp.o
+[558/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control.dir/ArgTokenizer.cpp.o
+[559/968] Linking CXX static library tests/support/libsnodec-test-support.a
+[560/968] Building CXX object tests/unit/core/CMakeFiles/SNodeCInitFreeSmokeTest.dir/SNodeCInitFreeSmokeTest.cpp.o
+[561/968] Building CXX object tests/unit/core/CMakeFiles/TLSResultClassificationTest.dir/TLSResultClassificationTest.cpp.o
+[562/968] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control.dir/Cli.cpp.o
+[563/968] Building CXX object tests/unit/core/CMakeFiles/TLSIoFatalPathTest.dir/TLSIoFatalPathTest.cpp.o
+[564/968] Building CXX object tests/unit/core/CMakeFiles/TLSLifecycleHelperOwnershipTest.dir/TLSLifecycleHelperOwnershipTest.cpp.o
+[565/968] Building CXX object src/apps/websocket/CMakeFiles/wsechoserver.dir/echoserver.cpp.o
+[566/968] Building CXX object tests/unit/core/CMakeFiles/TLSLifecycleAbiSourceCompatibilityTest.dir/TLSLifecycleAbiSourceCompatibilityTest.cpp.o
+[567/968] Building CXX object src/apps/websocket/CMakeFiles/wsechoclient.dir/echoclient.cpp.o
+[568/968] Building CXX object tests/unit/core/CMakeFiles/SocketContextLifecycleTest.dir/SocketContextLifecycleTest.cpp.o
+[569/968] Building CXX object tests/unit/core/CMakeFiles/TLSTransportStateMachineTest.dir/TLSTransportStateMachineTest.cpp.o
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/tests/unit/core/TLSTransportStateMachineTest.cpp: In function ‘EVP_PKEY* {anonymous}::makeKey()’:
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/tests/unit/core/TLSTransportStateMachineTest.cpp:260:27: warning: ‘RSA* RSA_new()’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  260 |         RSA* rsa = RSA_new();
+      |                    ~~~~~~~^~
+In file included from /usr/include/openssl/x509.h:38,
+                 from /usr/include/openssl/ssl.h:34,
+                 from /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/core/socket/stream/tls/SocketConnection.hpp:57,
+                 from /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/tests/unit/core/TLSTransportStateMachineTest.cpp:6:
+/usr/include/openssl/rsa.h:212:28: note: declared here
+  212 | OSSL_DEPRECATEDIN_3_0 RSA *RSA_new(void);
+      |                            ^~~~~~~
+/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/tests/unit/core/TLSTransportStateMachineTest.cpp:263:28: warning: ‘int RSA_generate_key_ex(RSA*, int, BIGNUM*, BN_GENCB*)’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  263 |         RSA_generate_key_ex(rsa, 2048, e, nullptr);
+      |         ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/openssl/rsa.h:270:27: note: declared here
+  270 | OSSL_DEPRECATEDIN_3_0 int RSA_generate_key_ex(RSA *rsa, int bits, BIGNUM *e,
+      |                           ^~~~~~~~~~~~~~~~~~~
+[570/968] Building CXX object tests/unit/core/CMakeFiles/SocketWriterResourcePolicyTest.dir/SocketWriterResourcePolicyTest.cpp.o
+[571/968] Building CXX object tests/unit/core/CMakeFiles/StreamFrameworkShutdownTest.dir/StreamFrameworkShutdownTest.cpp.o
+[572/968] Building CXX object tests/unit/core/CMakeFiles/TlsOpenSslLoggingTest.dir/TlsOpenSslLoggingTest.cpp.o
+[573/968] Building CXX object tests/unit/core/CMakeFiles/ListenerLifecycleTest.dir/ListenerLifecycleTest.cpp.o
+[574/968] Building CXX object tests/unit/core/CMakeFiles/EndpointLifetimeCountersTest.dir/EndpointLifetimeCountersTest.cpp.o
+[575/968] Building CXX object tests/unit/net/CMakeFiles/InetSocketAddressTest.dir/InetSocketAddressTest.cpp.o
+[576/968] Building CXX object tests/unit/net/CMakeFiles/InetSocketAddressNativeTest.dir/InetSocketAddressNativeTest.cpp.o
+[577/968] Building CXX object tests/unit/net/CMakeFiles/Inet6SocketAddressTest.dir/Inet6SocketAddressTest.cpp.o
+[578/968] Building CXX object tests/unit/net/CMakeFiles/Inet6SocketAddressNativeTest.dir/Inet6SocketAddressNativeTest.cpp.o
+[579/968] Building CXX object tests/unit/net/CMakeFiles/UnixSocketAddressTest.dir/UnixSocketAddressTest.cpp.o
+[580/968] Building CXX object tests/unit/net/CMakeFiles/UnixSocketAddressInitTest.dir/UnixSocketAddressInitTest.cpp.o
+[581/968] Building CXX object tests/unit/net/CMakeFiles/InetSocketAddressInvalidInputTest.dir/InetSocketAddressInvalidInputTest.cpp.o
+[582/968] Building CXX object tests/unit/net/CMakeFiles/Inet6SocketAddressInvalidInputTest.dir/Inet6SocketAddressInvalidInputTest.cpp.o
+[583/968] Building CXX object tests/unit/net/CMakeFiles/UnixSocketAddressPathLengthTest.dir/UnixSocketAddressPathLengthTest.cpp.o
+[584/968] Building CXX object tests/unit/core/CMakeFiles/ConnectionAttemptLifecycleTest.dir/ConnectionAttemptLifecycleTest.cpp.o
+[585/968] Building CXX object tests/unit/net/CMakeFiles/UnixPeerCredentialsTest.dir/UnixPeerCredentialsTest.cpp.o
+[586/968] Building CXX object tests/unit/net/CMakeFiles/SocketAddressFormattingTest.dir/SocketAddressFormattingTest.cpp.o
+[587/968] Building CXX object tests/unit/http/CMakeFiles/HttpRequestFormatterRawWireTest.dir/HttpRequestFormatterRawWireTest.cpp.o
+[588/968] Building CXX object tests/unit/core/CMakeFiles/TLSFrameworkShutdownTest.dir/TLSFrameworkShutdownTest.cpp.o
+[589/968] Building CXX object tests/unit/http/CMakeFiles/HttpResponseFormatterRawWireTest.dir/HttpResponseFormatterRawWireTest.cpp.o
+[590/968] Building CXX object tests/unit/http/CMakeFiles/HttpMessagePresentationTest.dir/HttpMessagePresentationTest.cpp.o
+[591/968] Building CXX object tests/unit/http/CMakeFiles/HttpMessageHeaderCasingTest.dir/HttpMessageHeaderCasingTest.cpp.o
+[592/968] Building CXX object tests/unit/http/CMakeFiles/HttpMessageParserTest.dir/HttpMessageParserTest.cpp.o
+[593/968] Building CXX object tests/unit/http/CMakeFiles/HttpMessageTargetQueryEdgeTest.dir/HttpMessageTargetQueryEdgeTest.cpp.o
+[594/968] Building CXX object tests/unit/http/CMakeFiles/HttpPolicyConfigTest.dir/HttpPolicyConfigTest.cpp.o
+[595/968] Building CXX object tests/unit/websocket/CMakeFiles/WebSocketReceiverValidationTest.dir/WebSocketReceiverValidationTest.cpp.o
+[596/968] Building CXX object tests/unit/log/CMakeFiles/PublicLogApiTest.dir/PublicLogApiTest.cpp.o
+[597/968] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerFormattingTest.dir/SemanticLoggerFormattingTest.cpp.o
+[598/968] Building CXX object tests/unit/log/CMakeFiles/LogScopeOwnerTest.dir/LogScopeOwnerTest.cpp.o
+[599/968] Building CXX object tests/unit/http/CMakeFiles/HttpServerUpgradeMissingRequestTest.dir/HttpServerUpgradeMissingRequestTest.cpp.o
+[600/968] Building CXX object tests/unit/websocket/CMakeFiles/WebSocketLimitCloseFrameTest.dir/WebSocketLimitCloseFrameTest.cpp.o
+[601/968] Building CXX object tests/unit/http/CMakeFiles/HttpStreamingSourceFailureTest.dir/HttpStreamingSourceFailureTest.cpp.o
+[602/968] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerDisabledPathTest.dir/SemanticLoggerDisabledPathTest.cpp.o
+[603/968] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerCacheTest.dir/SemanticLoggerCacheTest.cpp.o
+[604/968] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerBackendTest.dir/SemanticLoggerBackendTest.cpp.o
+[605/968] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerFilteringTest.dir/SemanticLoggerFilteringTest.cpp.o
+[606/968] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerScopeTest.dir/SemanticLoggerScopeTest.cpp.o
+[607/968] Building CXX object tests/unit/log/CMakeFiles/SemanticEndToEndOutputTest.dir/SemanticEndToEndOutputTest.cpp.o
+[608/968] Building CXX object tests/unit/mqtt/CMakeFiles/Mqtt311PacketValidationTest.dir/Mqtt311PacketValidationTest.cpp.o
+[609/968] Building CXX object tests/unit/log/CMakeFiles/SemanticTerminalColorRoutingTest.dir/SemanticTerminalColorRoutingTest.cpp.o
+[610/968] Building CXX object tests/unit/mqtt/CMakeFiles/MqttLifecycleTest.dir/MqttLifecycleTest.cpp.o
+[611/968] Building CXX object tests/unit/log/CMakeFiles/SemanticCliIntegrationTest.dir/SemanticCliIntegrationTest.cpp.o
+[612/968] Building CXX object tests/component/core/CMakeFiles/SingleshotTimerTest.dir/SingleshotTimerTest.cpp.o
+[613/968] Building CXX object tests/unit/utils/CMakeFiles/HexDumpPresentationTest.dir/HexDumpPresentationTest.cpp.o
+[614/968] Building CXX object tests/component/core/CMakeFiles/IntervalTimerStopableTest.dir/IntervalTimerStopableTest.cpp.o
+[615/968] Building CXX object tests/component/core/CMakeFiles/SNodeCStopFromCallbackTest.dir/SNodeCStopFromCallbackTest.cpp.o
+[616/968] Building CXX object tests/unit/utils/CMakeFiles/ConfigRequirementStateTest.dir/ConfigRequirementStateTest.cpp.o
+[617/968] Building CXX object tests/component/core/CMakeFiles/ShutdownReceiverNotificationTest.dir/ShutdownReceiverNotificationTest.cpp.o
+[618/968] Building CXX object tests/unit/utils/CMakeFiles/ConfigFormatterCommentMetadataTest.dir/ConfigFormatterCommentMetadataTest.cpp.o
+[619/968] Building CXX object tests/component/core/CMakeFiles/TimerCancelBeforeFireTest.dir/TimerCancelBeforeFireTest.cpp.o
+[620/968] Building CXX object tests/component/core/CMakeFiles/IntervalTimerCancelFromCallbackTest.dir/IntervalTimerCancelFromCallbackTest.cpp.o
+[621/968] Building CXX object tests/component/core/CMakeFiles/PipeBoundedQueueTest.dir/PipeBoundedQueueTest.cpp.o
+[622/968] Building CXX object tests/component/core/CMakeFiles/PipeOwnershipTest.dir/PipeOwnershipTest.cpp.o
+[623/968] Building CXX object tests/component/core/CMakeFiles/PipeImmediateCloseTest.dir/PipeImmediateCloseTest.cpp.o
+[624/968] Building CXX object tests/component/core/CMakeFiles/PipeSinkFairnessTest.dir/PipeSinkFairnessTest.cpp.o
+[625/968] Building CXX object tests/component/core/CMakeFiles/PipeTimeoutTest.dir/PipeTimeoutTest.cpp.o
+[626/968] Building CXX object tests/component/core/CMakeFiles/DescriptorRegistrationFailureTest.dir/DescriptorRegistrationFailureTest.cpp.o
+[627/968] Building CXX object tests/component/core/CMakeFiles/FileReaderTest.dir/FileReaderTest.cpp.o
+[628/968] Building CXX object tests/component/core/CMakeFiles/SNodeCReconfigureTest.dir/SNodeCReconfigureTest.cpp.o
+[629/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientCompositionTest.dir/InetLegacyServerClientCompositionTest.cpp.o
+[630/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientCompositionTest.dir/Inet6LegacyServerClientCompositionTest.cpp.o
+[631/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientCompositionTest.dir/UnixLegacyServerClientCompositionTest.cpp.o
+[632/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerMultipleClientsCompositionTest.dir/InetLegacyServerMultipleClientsCompositionTest.cpp.o
+[633/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerMultipleClientsCompositionTest.dir/Inet6LegacyServerMultipleClientsCompositionTest.cpp.o
+[634/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerMultipleClientsCompositionTest.dir/UnixLegacyServerMultipleClientsCompositionTest.cpp.o
+[635/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientMultiMessagePayloadExchangeTest.dir/InetLegacyServerClientMultiMessagePayloadExchangeTest.cpp.o
+[636/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientMultiMessagePayloadExchangeTest.dir/Inet6LegacyServerClientMultiMessagePayloadExchangeTest.cpp.o
+[637/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientMultiMessagePayloadExchangeTest.dir/UnixLegacyServerClientMultiMessagePayloadExchangeTest.cpp.o
+[638/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerMultipleClientsPayloadExchangeTest.dir/InetLegacyServerMultipleClientsPayloadExchangeTest.cpp.o
+[639/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerMultipleClientsPayloadExchangeTest.dir/Inet6LegacyServerMultipleClientsPayloadExchangeTest.cpp.o
+[640/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerMultipleClientsPayloadExchangeTest.dir/UnixLegacyServerMultipleClientsPayloadExchangeTest.cpp.o
+[641/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientPayloadExchangeTest.dir/UnixLegacyServerClientPayloadExchangeTest.cpp.o
+[642/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientDisconnectLifecycleTest.dir/UnixLegacyServerClientDisconnectLifecycleTest.cpp.o
+[643/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyClientConnectFailureTest.dir/UnixLegacyClientConnectFailureTest.cpp.o
+[644/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientPayloadExchangeTest.dir/InetLegacyServerClientPayloadExchangeTest.cpp.o
+[645/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientPayloadExchangeTest.dir/Inet6LegacyServerClientPayloadExchangeTest.cpp.o
+[646/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientDisconnectLifecycleTest.dir/Inet6LegacyServerClientDisconnectLifecycleTest.cpp.o
+[647/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientDisconnectLifecycleTest.dir/InetLegacyServerClientDisconnectLifecycleTest.cpp.o
+[648/968] Building CXX object tests/component/net/CMakeFiles/InetPhysicalServerEffectiveBindAddressTest.dir/InetPhysicalServerEffectiveBindAddressTest.cpp.o
+[649/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyClientConnectFailureTest.dir/InetLegacyClientConnectFailureTest.cpp.o
+[650/968] Building CXX object tests/component/net/CMakeFiles/UnixPhysicalSocketPathSafetyTest.dir/UnixPhysicalSocketPathSafetyTest.cpp.o
+[651/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyClientConnectFailureTest.dir/Inet6LegacyClientConnectFailureTest.cpp.o
+[652/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerEffectiveListenAddressTest.dir/InetLegacyServerEffectiveListenAddressTest.cpp.o
+[653/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientLargePayloadExchangeTest.dir/InetLegacyServerClientLargePayloadExchangeTest.cpp.o
+[654/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientFramedPayloadExchangeTest.dir/InetLegacyServerClientFramedPayloadExchangeTest.cpp.o
+[655/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientFramedPayloadExchangeTest.dir/Inet6LegacyServerClientFramedPayloadExchangeTest.cpp.o
+[656/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientFramedPayloadExchangeTest.dir/UnixLegacyServerClientFramedPayloadExchangeTest.cpp.o
+[657/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientLargePayloadExchangeTest.dir/Inet6LegacyServerClientLargePayloadExchangeTest.cpp.o
+[658/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientLargePayloadExchangeTest.dir/UnixLegacyServerClientLargePayloadExchangeTest.cpp.o
+[659/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerControlledCloseLifecycleTest.dir/InetLegacyServerControlledCloseLifecycleTest.cpp.o
+[660/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerControlledCloseLifecycleTest.dir/Inet6LegacyServerControlledCloseLifecycleTest.cpp.o
+[661/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerControlledCloseLifecycleTest.dir/UnixLegacyServerControlledCloseLifecycleTest.cpp.o
+[662/968] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerMultipleClientsDisconnectLifecycleTest.dir/InetLegacyServerMultipleClientsDisconnectLifecycleTest.cpp.o
+[663/968] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerMultipleClientsDisconnectLifecycleTest.dir/Inet6LegacyServerMultipleClientsDisconnectLifecycleTest.cpp.o
+[664/968] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerMultipleClientsDisconnectLifecycleTest.dir/UnixLegacyServerMultipleClientsDisconnectLifecycleTest.cpp.o
+[665/968] Building CXX object tests/component/net/CMakeFiles/InetPerCallFlowTest.dir/InetPerCallFlowTest.cpp.o
+[666/968] Building CXX object tests/component/http/CMakeFiles/InetHttpClientParserLimitTest.dir/InetHttpClientParserLimitTest.cpp.o
+[667/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientGetRoundTripTest.dir/InetHttpServerClientGetRoundTripTest.cpp.o
+[668/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerRequestPolicyTest.dir/InetHttpServerRequestPolicyTest.cpp.o
+[669/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerPipeliningPolicyTest.dir/InetHttpServerPipeliningPolicyTest.cpp.o
+[670/968] Building CXX object tests/component/http/CMakeFiles/Inet6HttpServerClientGetRoundTripTest.dir/Inet6HttpServerClientGetRoundTripTest.cpp.o
+[671/968] Building CXX object tests/component/http/CMakeFiles/UnixHttpServerClientGetRoundTripTest.dir/UnixHttpServerClientGetRoundTripTest.cpp.o
+[672/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientPostBodyRoundTripTest.dir/InetHttpServerClientPostBodyRoundTripTest.cpp.o
+[673/968] Building CXX object tests/component/http/CMakeFiles/Inet6HttpServerClientPostBodyRoundTripTest.dir/Inet6HttpServerClientPostBodyRoundTripTest.cpp.o
+[674/968] Building CXX object tests/component/http/CMakeFiles/UnixHttpServerClientPostBodyRoundTripTest.dir/UnixHttpServerClientPostBodyRoundTripTest.cpp.o
+[675/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientStatusVariantTest.dir/InetHttpServerClientStatusVariantTest.cpp.o
+[676/968] Building CXX object tests/component/http/CMakeFiles/Inet6HttpServerClientStatusVariantTest.dir/Inet6HttpServerClientStatusVariantTest.cpp.o
+[677/968] Building CXX object tests/component/http/CMakeFiles/UnixHttpServerClientStatusVariantTest.dir/UnixHttpServerClientStatusVariantTest.cpp.o
+[678/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientRepeatedRequestTest.dir/InetHttpServerClientRepeatedRequestTest.cpp.o
+[679/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientDisconnectLifecycleTest.dir/InetHttpServerClientDisconnectLifecycleTest.cpp.o
+[680/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientLargeResponseBodyTest.dir/InetHttpServerClientLargeResponseBodyTest.cpp.o
+[681/968] Building CXX object tests/component/http/CMakeFiles/InetHttpClientPrematureServerCloseTest.dir/InetHttpClientPrematureServerCloseTest.cpp.o
+[682/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientLargeRequestBodyTest.dir/InetHttpServerClientLargeRequestBodyTest.cpp.o
+[683/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientHeaderHeavyRequestTest.dir/InetHttpServerClientHeaderHeavyRequestTest.cpp.o
+[684/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientHeaderHeavyResponseTest.dir/InetHttpServerClientHeaderHeavyResponseTest.cpp.o
+[685/968] Building CXX object tests/component/http/CMakeFiles/InetHttpClientConnectFailureTest.dir/InetHttpClientConnectFailureTest.cpp.o
+[686/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientChunkedResponseTest.dir/InetHttpServerClientChunkedResponseTest.cpp.o
+[687/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientPipeliningTest.dir/InetHttpServerClientPipeliningTest.cpp.o
+[688/968] Building CXX object tests/component/http/CMakeFiles/InetHttpClientMalformedResponseBehaviorTest.dir/InetHttpClientMalformedResponseBehaviorTest.cpp.o
+[689/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerMalformedRequestBehaviorTest.dir/InetHttpServerMalformedRequestBehaviorTest.cpp.o
+[690/968] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientChunkedRequestTest.dir/InetHttpServerClientChunkedRequestTest.cpp.o
+[691/968] Building CXX object tests/component/express/CMakeFiles/InetExpressRoutingMiddlewareTest.dir/InetExpressRoutingMiddlewareTest.cpp.o
+[692/968] Building CXX object tests/component/express/CMakeFiles/InetExpressHttpParserLimitTest.dir/InetExpressHttpParserLimitTest.cpp.o
+[693/968] Building CXX object tests/component/express/CMakeFiles/Inet6ExpressTransportSmokeTest.dir/Inet6ExpressTransportSmokeTest.cpp.o
+[694/968] Building CXX object tests/component/express/CMakeFiles/UnixExpressTransportSmokeTest.dir/UnixExpressTransportSmokeTest.cpp.o
+[695/968] Building CXX object tests/component/express/CMakeFiles/InetExpressMiddlewareShortCircuitTest.dir/InetExpressMiddlewareShortCircuitTest.cpp.o
+[696/968] Building CXX object tests/component/express/CMakeFiles/InetExpressRoutingEdgeBasicsTest.dir/InetExpressRoutingEdgeBasicsTest.cpp.o
+[697/968] Building CXX object tests/component/express/CMakeFiles/InetExpressMountedRouterBasicsTest.dir/InetExpressMountedRouterBasicsTest.cpp.o
+[698/968] Building CXX object tests/component/express/CMakeFiles/InetExpressNestedRouterBasicsTest.dir/InetExpressNestedRouterBasicsTest.cpp.o
+[699/968] Building CXX object tests/component/express/CMakeFiles/InetExpressRouteParameterRegexTest.dir/InetExpressRouteParameterRegexTest.cpp.o
+[700/968] Building CXX object tests/component/express/CMakeFiles/InetExpressMiddlewareMountOrderTest.dir/InetExpressMiddlewareMountOrderTest.cpp.o
+[701/968] Building CXX object tests/component/express/CMakeFiles/InetExpressQueryMountInteractionTest.dir/InetExpressQueryMountInteractionTest.cpp.o
+[702/968] Building CXX object tests/component/express/CMakeFiles/InetExpressFallbackNotFoundTest.dir/InetExpressFallbackNotFoundTest.cpp.o
+[703/968] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientTextEchoTest.dir/InetWebSocketServerClientTextEchoTest.cpp.o
+[704/968] Building CXX object tests/component/websocket/CMakeFiles/Inet6WebSocketServerClientTextEchoTest.dir/Inet6WebSocketServerClientTextEchoTest.cpp.o
+[705/968] Building CXX object tests/component/websocket/CMakeFiles/UnixWebSocketServerClientTextEchoTest.dir/UnixWebSocketServerClientTextEchoTest.cpp.o
+[706/968] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientMultiTextMessageTest.dir/InetWebSocketServerClientMultiTextMessageTest.cpp.o
+[707/968] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientBinaryEchoTest.dir/InetWebSocketServerClientBinaryEchoTest.cpp.o
+[708/968] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientPingPongTest.dir/InetWebSocketServerClientPingPongTest.cpp.o
+[709/968] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientCloseHandshakeTest.dir/InetWebSocketServerClientCloseHandshakeTest.cpp.o
+[710/968] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerInitiatedCloseTest.dir/InetWebSocketServerInitiatedCloseTest.cpp.o
+[711/968] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketUnexpectedCloseLifecycleTest.dir/InetWebSocketUnexpectedCloseLifecycleTest.cpp.o
+[712/968] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketLargeTextMessageTest.dir/InetWebSocketLargeTextMessageTest.cpp.o
+[713/968] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketLargeBinaryMessageTest.dir/InetWebSocketLargeBinaryMessageTest.cpp.o
+[714/968] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceBasicEventTest.dir/InetSseEventSourceBasicEventTest.cpp.o
+[715/968] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceMultiEventSequenceTest.dir/InetSseEventSourceMultiEventSequenceTest.cpp.o
+[716/968] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceMultiLineDataTest.dir/InetSseEventSourceMultiLineDataTest.cpp.o
+[717/968] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceCommentIgnoredTest.dir/InetSseEventSourceCommentIgnoredTest.cpp.o
+[718/968] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceDefaultMessageEventTest.dir/InetSseEventSourceDefaultMessageEventTest.cpp.o
+[719/968] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceRetryFieldTest.dir/InetSseEventSourceRetryFieldTest.cpp.o
+[720/968] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceClientCloseAfterEventTest.dir/InetSseEventSourceClientCloseAfterEventTest.cpp.o
+[721/968] Building CXX object tests/policy/CMakeFiles/ParameterlessSemanticLoggerPolicyTest.dir/log/ParameterlessSemanticLoggerPolicyTest.cpp.o
+[722/968] Building CXX object tests/policy/CMakeFiles/LoggingApiSurfacePolicyTest.dir/log/LoggingApiSurfacePolicyTest.cpp.o
+[723/968] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceReconnectLifecycleTest.dir/InetSseEventSourceReconnectLifecycleTest.cpp.o
+[724/968] Building CXX object tests/policy/CMakeFiles/EpollDescriptorPublisherPolicyTest.dir/core/EpollDescriptorPublisherPolicyTest.cpp.o
+[725/968] Building CXX object tests/policy/CMakeFiles/EventLoopSyscallDisciplinePolicyTest.dir/core/EventLoopSyscallDisciplinePolicyTest.cpp.o
+[726/968] Linking CXX static library _deps/spdlog-build/libspdlogd.a
+[727/968] Creating library symlink src/core/multiplexer/poll/libsnodec-core-mux-poll.so.2 src/core/multiplexer/poll/libsnodec-core-mux-poll.so
+[728/968] Creating library symlink src/core/multiplexer/select/libsnodec-core-mux-select.so.2 src/core/multiplexer/select/libsnodec-core-mux-select.so
+[729/968] Creating library symlink src/net/un/dgram/libsnodec-net-un-dgram.so.2 src/net/un/dgram/libsnodec-net-un-dgram.so
+[730/968] Creating library symlink snode.c/http/libsnodec-http-server-express-legacy-in.so.2 snode.c/http/libsnodec-http-server-express-legacy-in.so
+[731/968] Creating library symlink snode.c/http/libsnodec-http-server-express-legacy-rc.so.2 snode.c/http/libsnodec-http-server-express-legacy-rc.so
+[732/968] Creating library symlink snode.c/http/libsnodec-http-server-express-tls-in.so.2 snode.c/http/libsnodec-http-server-express-tls-in.so
+[733/968] Creating library symlink snode.c/http/libsnodec-http-server-express-tls-in6.so.2 snode.c/http/libsnodec-http-server-express-tls-in6.so
+[734/968] Creating library symlink snode.c/http/libsnodec-http-server-express-tls-rc.so.2 snode.c/http/libsnodec-http-server-express-tls-rc.so
+[735/968] Creating library symlink snode.c/http/libsnodec-http-server-express-tls-un.so.2 snode.c/http/libsnodec-http-server-express-tls-un.so
+[736/968] Creating library symlink src/iot/mqtt/server/libsnodec-mqtt-server-websocket.so.2 src/iot/mqtt/server/libsnodec-mqtt-server-websocket.so
+[737/968] Creating library symlink src/iot/mqtt/client/libsnodec-mqtt-client-websocket.so.2 src/iot/mqtt/client/libsnodec-mqtt-client-websocket.so
+[738/968] Linking CXX executable src/apps/snode.c
+[739/968] Building CXX object tests/policy/CMakeFiles/CiWorkflowPathsPolicyTest.dir/ci/CiWorkflowPathsPolicyTest.cpp.o
+[740/968] Linking CXX executable src/apps/express-compat-server
+[741/968] Linking CXX executable src/apps/testpost
+[742/968] Linking CXX executable src/apps/jsonserver
+[743/968] Linking CXX executable src/apps/jsonclient
+[744/968] Linking CXX executable src/apps/warema-jalousien
+[745/968] Linking CXX executable src/apps/testregex
+[746/968] Linking CXX executable src/apps/testpipe
+[747/968] Linking CXX executable src/apps/configtest
+[748/968] Linking CXX executable src/apps/database/testmariadb
+[749/968] Linking CXX executable src/apps/echo/echoclient-legacy-in
+[750/968] Linking CXX executable src/apps/echo/echoserver-legacy-in
+[751/968] Building CXX object tests/policy/CMakeFiles/SensitiveLoggingPolicyTest.dir/security/SensitiveLoggingPolicyTest.cpp.o
+[752/968] Linking CXX executable src/apps/echo/echoclient-tls-in
+[753/968] Linking CXX executable src/apps/echo/echoserver-tls-in
+[754/968] Linking CXX executable src/apps/echo/echoserver-legacy-in6
+[755/968] Linking CXX executable src/apps/echo/echoclient-legacy-in6
+[756/968] Linking CXX executable src/apps/echo/echoclient-tls-in6
+[757/968] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceDestructionLifecycleTest.dir/InetSseEventSourceDestructionLifecycleTest.cpp.o
+[758/968] Linking CXX executable src/apps/echo/echoclient-legacy-un
+[759/968] Linking CXX executable src/apps/echo/echoserver-tls-in6
+[760/968] Linking CXX executable src/apps/echo/echoserver-legacy-un
+[761/968] Linking CXX executable src/apps/echo/echoclient-tls-un
+[762/968] Linking CXX executable src/apps/echo/echoclient-legacy-l2
+[763/968] Linking CXX executable src/apps/echo/echoserver-tls-un
+[764/968] Linking CXX executable src/apps/echo/echoserver-legacy-l2
+[765/968] Linking CXX executable src/apps/echo/echoserver-legacy-rc
+[766/968] Linking CXX executable src/apps/echo/echoclient-legacy-rc
+[767/968] Linking CXX executable src/apps/echo/echoclient-tls-l2
+[768/968] Linking CXX executable src/apps/echo/echoserver-tls-l2
+[769/968] Linking CXX executable src/apps/echo/echoserver-tls-rc
+[770/968] Linking CXX executable src/apps/echo/echoclient-tls-rc
+[771/968] Linking CXX executable src/apps/http/httpserver-legacy-in
+[772/968] Linking CXX executable src/apps/http/httpclient-legacy-in
+[773/968] Linking CXX executable src/apps/http/httpserver-legacy-in6
+[774/968] Linking CXX executable src/apps/http/httpclient-tls-in
+[775/968] Linking CXX executable src/apps/http/httpserver-tls-in
+[776/968] Linking CXX executable src/apps/http/httpclient-legacy-in6
+[777/968] Linking CXX executable src/apps/http/httpserver-legacy-un
+[778/968] Linking CXX executable src/apps/http/httpserver-tls-in6
+[779/968] Linking CXX executable src/apps/http/httpclient-tls-in6
+[780/968] Linking CXX executable src/apps/http/httpclient-legacy-un
+[781/968] Linking CXX executable src/apps/http/httpserver-legacy-rc
+[782/968] Linking CXX executable src/apps/http/httpserver-tls-un
+[783/968] Linking CXX executable src/apps/http/httpclient-tls-un
+[784/968] Linking CXX executable src/apps/http/httpclient-legacy-rc
+[785/968] Linking CXX executable src/apps/http/httpclient-tls-rc
+[786/968] Linking CXX executable src/apps/http/httpserver-tls-rc
+[787/968] Linking CXX executable src/apps/http/httplowlevelclient
+[788/968] Linking CXX executable src/apps/http/verysimpleserver
+[789/968] Linking CXX executable src/apps/http/testbasicauthentication
+[790/968] Linking CXX executable src/apps/http/vhostserver
+[791/968] Linking CXX executable src/apps/http/testexpressnext
+[792/968] Linking CXX executable src/apps/oauth2/authorization_server/authorization_server
+[793/968] Linking CXX executable src/apps/oauth2/client_app/client_app
+[794/968] Linking CXX executable src/apps/tlslegacy/tlslegacyserver
+[795/968] Linking CXX executable src/apps/oauth2/resource_server/resource_server
+[796/968] Linking CXX executable src/apps/tlslegacy/tlslegacyclient
+[797/968] Creating library symlink snode.c/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2 snode.c/http/upgrade/websocket/libsnodec-websocket-echo-server.so
+[798/968] Creating library symlink snode.c/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2 snode.c/http/upgrade/websocket/libsnodec-websocket-echo-client.so
+[799/968] Linking CXX executable src/apps/towercalculator/towerCalculation
+[800/968] Linking CXX executable tests/unit/core/SNodeCInitFreeSmokeTest
+[801/968] Linking CXX executable src/tools/snodec-control/src/snodec-control
+[802/968] Linking CXX executable src/apps/websocket/wsechoserver
+[803/968] Linking CXX executable src/apps/websocket/wsechoclient
+[804/968] Linking CXX executable tests/unit/core/TLSResultClassificationTest
+[805/968] Linking CXX executable tests/unit/core/TLSLifecycleAbiSourceCompatibilityTest
+[806/968] Linking CXX executable tests/unit/core/TLSIoFatalPathTest
+[807/968] Linking CXX executable tests/unit/core/TLSLifecycleHelperOwnershipTest
+[808/968] Linking CXX executable tests/unit/core/TLSTransportStateMachineTest
+[809/968] Linking CXX executable tests/unit/core/SocketContextLifecycleTest
+[810/968] Linking CXX executable tests/unit/core/SocketWriterResourcePolicyTest
+[811/968] Linking CXX executable tests/unit/core/StreamFrameworkShutdownTest
+[812/968] Linking CXX executable tests/unit/core/ListenerLifecycleTest
+[813/968] Linking CXX executable tests/unit/core/EndpointLifetimeCountersTest
+[814/968] Linking CXX executable tests/unit/core/ConnectionAttemptLifecycleTest
+[815/968] Linking CXX executable tests/unit/core/TlsOpenSslLoggingTest
+[816/968] Linking CXX executable tests/unit/net/InetSocketAddressTest
+[817/968] Linking CXX executable tests/unit/core/TLSFrameworkShutdownTest
+[818/968] Linking CXX executable tests/unit/net/InetSocketAddressNativeTest
+[819/968] Linking CXX executable tests/unit/net/Inet6SocketAddressTest
+[820/968] Linking CXX executable tests/unit/net/Inet6SocketAddressNativeTest
+[821/968] Linking CXX executable tests/unit/net/UnixSocketAddressTest
+[822/968] Linking CXX executable tests/unit/net/UnixSocketAddressInitTest
+[823/968] Linking CXX executable tests/unit/net/InetSocketAddressInvalidInputTest
+[824/968] Linking CXX executable tests/unit/net/UnixSocketAddressPathLengthTest
+[825/968] Linking CXX executable tests/unit/net/Inet6SocketAddressInvalidInputTest
+[826/968] Linking CXX executable tests/unit/net/UnixPeerCredentialsTest
+[827/968] Linking CXX executable tests/unit/net/SocketAddressFormattingTest
+[828/968] Linking CXX executable tests/unit/http/HttpMessageParserTest
+[829/968] Linking CXX executable tests/unit/http/HttpRequestFormatterRawWireTest
+[830/968] Linking CXX executable tests/unit/http/HttpPolicyConfigTest
+[831/968] Linking CXX executable tests/unit/http/HttpResponseFormatterRawWireTest
+[832/968] Linking CXX executable tests/unit/http/HttpMessagePresentationTest
+[833/968] Linking CXX executable tests/unit/http/HttpMessageHeaderCasingTest
+[834/968] Linking CXX executable tests/unit/http/HttpMessageTargetQueryEdgeTest
+[835/968] Linking CXX executable tests/unit/websocket/WebSocketReceiverValidationTest
+[836/968] Linking CXX executable tests/unit/http/HttpServerUpgradeMissingRequestTest
+[837/968] Linking CXX executable tests/unit/log/PublicLogApiTest
+[838/968] Linking CXX executable tests/unit/http/HttpStreamingSourceFailureTest
+[839/968] Linking CXX executable tests/unit/websocket/WebSocketLimitCloseFrameTest
+[840/968] Linking CXX executable tests/unit/log/SemanticLoggerFormattingTest
+[841/968] Linking CXX executable tests/unit/log/LogScopeOwnerTest
+[842/968] Linking CXX executable tests/unit/log/SemanticLoggerScopeTest
+[843/968] Linking CXX executable tests/unit/log/SemanticLoggerDisabledPathTest
+[844/968] Linking CXX executable tests/unit/log/SemanticLoggerBackendTest
+[845/968] Linking CXX executable tests/unit/log/SemanticLoggerFilteringTest
+[846/968] Linking CXX executable tests/unit/log/SemanticEndToEndOutputTest
+[847/968] Linking CXX executable tests/unit/log/SemanticLoggerCacheTest
+[848/968] Linking CXX executable tests/unit/log/SemanticTerminalColorRoutingTest
+[849/968] Linking CXX executable tests/unit/log/SemanticCliIntegrationTest
+[850/968] Linking CXX executable tests/unit/mqtt/Mqtt311PacketValidationTest
+[851/968] Linking CXX executable tests/unit/utils/ConfigFormatterCommentMetadataTest
+[852/968] Linking CXX executable tests/unit/mqtt/MqttLifecycleTest
+[853/968] Linking CXX executable tests/unit/utils/ConfigRequirementStateTest
+[854/968] Linking CXX executable tests/component/core/IntervalTimerStopableTest
+[855/968] Linking CXX executable tests/unit/utils/HexDumpPresentationTest
+[856/968] Linking CXX executable tests/component/core/SingleshotTimerTest
+[857/968] Linking CXX executable tests/component/core/SNodeCStopFromCallbackTest
+[858/968] Linking CXX executable tests/component/core/ShutdownReceiverNotificationTest
+[859/968] Linking CXX executable tests/component/core/TimerCancelBeforeFireTest
+[860/968] Linking CXX executable tests/component/core/IntervalTimerCancelFromCallbackTest
+[861/968] Linking CXX executable tests/component/core/PipeBoundedQueueTest
+[862/968] Linking CXX executable tests/component/core/SNodeCReconfigureTest
+[863/968] Linking CXX executable tests/component/core/PipeOwnershipTest
+[864/968] Linking CXX executable tests/component/core/PipeImmediateCloseTest
+[865/968] Linking CXX executable tests/component/core/PipeSinkFairnessTest
+[866/968] Linking CXX executable tests/component/core/PipeTimeoutTest
+[867/968] Linking CXX executable tests/component/core/DescriptorRegistrationFailureTest
+[868/968] Linking CXX executable tests/component/core/FileReaderTest
+[869/968] Linking CXX executable tests/component/net/InetLegacyServerClientCompositionTest
+[870/968] Linking CXX executable tests/component/net/Inet6LegacyServerClientCompositionTest
+[871/968] Linking CXX executable tests/component/net/UnixLegacyServerClientCompositionTest
+[872/968] Linking CXX executable tests/component/net/InetLegacyServerMultipleClientsCompositionTest
+[873/968] Linking CXX executable tests/component/net/Inet6LegacyServerMultipleClientsCompositionTest
+[874/968] Linking CXX executable tests/component/net/InetLegacyServerClientMultiMessagePayloadExchangeTest
+[875/968] Linking CXX executable tests/component/net/UnixLegacyServerMultipleClientsCompositionTest
+[876/968] Linking CXX executable tests/component/net/Inet6LegacyServerClientMultiMessagePayloadExchangeTest
+[877/968] Linking CXX executable tests/component/net/UnixLegacyServerClientMultiMessagePayloadExchangeTest
+[878/968] Linking CXX executable tests/component/net/Inet6LegacyServerMultipleClientsPayloadExchangeTest
+[879/968] Linking CXX executable tests/component/net/InetLegacyServerMultipleClientsPayloadExchangeTest
+[880/968] Linking CXX executable tests/component/net/UnixLegacyServerMultipleClientsPayloadExchangeTest
+[881/968] Linking CXX executable tests/component/net/UnixLegacyServerClientDisconnectLifecycleTest
+[882/968] Linking CXX executable tests/component/net/UnixLegacyClientConnectFailureTest
+[883/968] Linking CXX executable tests/component/net/UnixLegacyServerClientPayloadExchangeTest
+[884/968] Linking CXX executable tests/component/net/InetLegacyServerClientPayloadExchangeTest
+[885/968] Linking CXX executable tests/component/net/Inet6LegacyServerClientPayloadExchangeTest
+[886/968] Linking CXX executable tests/component/net/InetLegacyServerClientDisconnectLifecycleTest
+[887/968] Linking CXX executable tests/component/net/Inet6LegacyServerClientDisconnectLifecycleTest
+[888/968] Linking CXX executable tests/component/net/InetLegacyClientConnectFailureTest
+[889/968] Linking CXX executable tests/component/net/InetPhysicalServerEffectiveBindAddressTest
+[890/968] Linking CXX executable tests/component/net/UnixPhysicalSocketPathSafetyTest
+[891/968] Linking CXX executable tests/component/net/Inet6LegacyClientConnectFailureTest
+[892/968] Linking CXX executable tests/component/net/InetLegacyServerEffectiveListenAddressTest
+[893/968] Linking CXX executable tests/component/net/InetLegacyServerClientLargePayloadExchangeTest
+[894/968] Linking CXX executable tests/component/net/InetLegacyServerClientFramedPayloadExchangeTest
+[895/968] Linking CXX executable tests/component/net/Inet6LegacyServerClientFramedPayloadExchangeTest
+[896/968] Linking CXX executable tests/component/net/UnixLegacyServerClientFramedPayloadExchangeTest
+[897/968] Linking CXX executable tests/component/net/UnixLegacyServerClientLargePayloadExchangeTest
+[898/968] Linking CXX executable tests/component/net/Inet6LegacyServerClientLargePayloadExchangeTest
+[899/968] Linking CXX executable tests/component/net/InetLegacyServerControlledCloseLifecycleTest
+[900/968] Linking CXX executable tests/component/net/Inet6LegacyServerControlledCloseLifecycleTest
+[901/968] Linking CXX executable tests/component/net/UnixLegacyServerControlledCloseLifecycleTest
+[902/968] Linking CXX executable tests/component/net/InetLegacyServerMultipleClientsDisconnectLifecycleTest
+[903/968] Linking CXX executable tests/component/net/Inet6LegacyServerMultipleClientsDisconnectLifecycleTest
+[904/968] Linking CXX executable tests/component/net/UnixLegacyServerMultipleClientsDisconnectLifecycleTest
+[905/968] Linking CXX executable tests/component/net/InetPerCallFlowTest
+[906/968] Linking CXX executable tests/component/http/InetHttpServerClientGetRoundTripTest
+[907/968] Linking CXX executable tests/component/http/InetHttpClientParserLimitTest
+[908/968] Linking CXX executable tests/component/http/InetHttpServerRequestPolicyTest
+[909/968] Linking CXX executable tests/component/http/InetHttpServerPipeliningPolicyTest
+[910/968] Linking CXX executable tests/component/http/Inet6HttpServerClientGetRoundTripTest
+[911/968] Linking CXX executable tests/component/http/UnixHttpServerClientGetRoundTripTest
+[912/968] Linking CXX executable tests/component/http/InetHttpServerClientPostBodyRoundTripTest
+[913/968] Linking CXX executable tests/component/http/Inet6HttpServerClientPostBodyRoundTripTest
+[914/968] Linking CXX executable tests/component/http/UnixHttpServerClientPostBodyRoundTripTest
+[915/968] Linking CXX executable tests/component/http/InetHttpServerClientStatusVariantTest
+[916/968] Linking CXX executable tests/component/http/Inet6HttpServerClientStatusVariantTest
+[917/968] Linking CXX executable tests/component/http/UnixHttpServerClientStatusVariantTest
+[918/968] Linking CXX executable tests/component/http/InetHttpServerClientRepeatedRequestTest
+[919/968] Linking CXX executable tests/component/http/InetHttpServerClientDisconnectLifecycleTest
+[920/968] Linking CXX executable tests/component/http/InetHttpClientPrematureServerCloseTest
+[921/968] Linking CXX executable tests/component/http/InetHttpServerClientLargeResponseBodyTest
+[922/968] Linking CXX executable tests/component/http/InetHttpServerClientLargeRequestBodyTest
+[923/968] Linking CXX executable tests/component/http/InetHttpServerClientHeaderHeavyRequestTest
+[924/968] Linking CXX executable tests/component/http/InetHttpServerClientHeaderHeavyResponseTest
+[925/968] Linking CXX executable tests/component/http/InetHttpClientConnectFailureTest
+[926/968] Linking CXX executable tests/component/http/InetHttpServerClientPipeliningTest
+[927/968] Linking CXX executable tests/component/http/InetHttpServerClientChunkedResponseTest
+[928/968] Linking CXX executable tests/component/http/InetHttpServerMalformedRequestBehaviorTest
+[929/968] Linking CXX executable tests/component/http/InetHttpClientMalformedResponseBehaviorTest
+[930/968] Linking CXX executable tests/component/http/InetHttpServerClientChunkedRequestTest
+[931/968] Linking CXX executable tests/component/express/InetExpressRoutingMiddlewareTest
+[932/968] Linking CXX executable tests/component/express/InetExpressHttpParserLimitTest
+[933/968] Linking CXX executable tests/component/express/Inet6ExpressTransportSmokeTest
+[934/968] Linking CXX executable tests/component/express/UnixExpressTransportSmokeTest
+[935/968] Linking CXX executable tests/component/express/InetExpressMiddlewareShortCircuitTest
+[936/968] Linking CXX executable tests/component/express/InetExpressRoutingEdgeBasicsTest
+[937/968] Linking CXX executable tests/component/express/InetExpressNestedRouterBasicsTest
+[938/968] Linking CXX executable tests/component/express/InetExpressMountedRouterBasicsTest
+[939/968] Linking CXX executable tests/component/express/InetExpressRouteParameterRegexTest
+[940/968] Linking CXX executable tests/component/express/InetExpressMiddlewareMountOrderTest
+[941/968] Linking CXX executable tests/component/express/InetExpressQueryMountInteractionTest
+[942/968] Linking CXX executable tests/component/express/InetExpressFallbackNotFoundTest
+[943/968] Linking CXX executable tests/component/websocket/InetWebSocketServerClientTextEchoTest
+[944/968] Linking CXX executable tests/component/websocket/Inet6WebSocketServerClientTextEchoTest
+[945/968] Linking CXX executable tests/component/websocket/UnixWebSocketServerClientTextEchoTest
+[946/968] Linking CXX executable tests/component/websocket/InetWebSocketServerClientMultiTextMessageTest
+[947/968] Linking CXX executable tests/component/websocket/InetWebSocketServerClientBinaryEchoTest
+[948/968] Linking CXX executable tests/component/websocket/InetWebSocketServerClientCloseHandshakeTest
+[949/968] Linking CXX executable tests/component/websocket/InetWebSocketServerClientPingPongTest
+[950/968] Linking CXX executable tests/component/websocket/InetWebSocketServerInitiatedCloseTest
+[951/968] Linking CXX executable tests/component/websocket/InetWebSocketUnexpectedCloseLifecycleTest
+[952/968] Linking CXX executable tests/component/websocket/InetWebSocketLargeTextMessageTest
+[953/968] Linking CXX executable tests/component/websocket/InetWebSocketLargeBinaryMessageTest
+[954/968] Linking CXX executable tests/component/eventsource/InetSseEventSourceBasicEventTest
+[955/968] Linking CXX executable tests/component/eventsource/InetSseEventSourceMultiEventSequenceTest
+[956/968] Linking CXX executable tests/component/eventsource/InetSseEventSourceMultiLineDataTest
+[957/968] Linking CXX executable tests/component/eventsource/InetSseEventSourceCommentIgnoredTest
+[958/968] Linking CXX executable tests/component/eventsource/InetSseEventSourceDefaultMessageEventTest
+[959/968] Linking CXX executable tests/component/eventsource/InetSseEventSourceClientCloseAfterEventTest
+[960/968] Linking CXX executable tests/component/eventsource/InetSseEventSourceRetryFieldTest
+[961/968] Linking CXX executable tests/policy/ParameterlessSemanticLoggerPolicyTest
+[962/968] Linking CXX executable tests/policy/LoggingApiSurfacePolicyTest
+[963/968] Linking CXX executable tests/policy/EpollDescriptorPublisherPolicyTest
+[964/968] Linking CXX executable tests/component/eventsource/InetSseEventSourceReconnectLifecycleTest
+[965/968] Linking CXX executable tests/component/eventsource/InetSseEventSourceDestructionLifecycleTest
+[966/968] Linking CXX executable tests/policy/EventLoopSyscallDisciplinePolicyTest
+[967/968] Linking CXX executable tests/policy/CiWorkflowPathsPolicyTest
+[968/968] Linking CXX executable tests/policy/SensitiveLoggingPolicyTest
+Test project /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/framework-gcc
+        Start   1: StagedInstalledConsumerTest
+  1/183 Test   #1: StagedInstalledConsumerTest ................................   Passed    5.50 sec
+        Start   2: SNodeCInitFreeSmokeTest
+  2/183 Test   #2: SNodeCInitFreeSmokeTest ....................................   Passed    0.01 sec
+        Start   3: TLSResultClassificationTest
+  3/183 Test   #3: TLSResultClassificationTest ................................   Passed    0.01 sec
+        Start   4: TLSIoFatalPathTest
+  4/183 Test   #4: TLSIoFatalPathTest .........................................   Passed    0.02 sec
+        Start   5: TLSLifecycleHelperOwnershipTest
+  5/183 Test   #5: TLSLifecycleHelperOwnershipTest ............................   Passed    0.01 sec
+        Start   6: TLSTransportStateMachineTest
+  6/183 Test   #6: TLSTransportStateMachineTest ...............................   Passed    0.17 sec
+        Start   7: TLSLifecycleAbiSourceCompatibilityTest
+  7/183 Test   #7: TLSLifecycleAbiSourceCompatibilityTest .....................   Passed    0.01 sec
+        Start   8: StreamFrameworkShutdown_plain_requested_empty
+  8/183 Test   #8: StreamFrameworkShutdown_plain_requested_empty ..............   Passed    0.01 sec
+        Start   9: StreamFrameworkShutdown_plain_requested_queued
+  9/183 Test   #9: StreamFrameworkShutdown_plain_requested_queued .............   Passed    0.02 sec
+        Start  10: StreamFrameworkShutdown_plain_signal_false_veto
+ 10/183 Test  #10: StreamFrameworkShutdown_plain_signal_false_veto ............   Passed    0.01 sec
+        Start  11: StreamFrameworkShutdown_plain_no_observer
+ 11/183 Test  #11: StreamFrameworkShutdown_plain_no_observer ..................   Passed    0.01 sec
+        Start  12: StreamFrameworkShutdown_plain_noncooperating_timeout
+ 12/183 Test  #12: StreamFrameworkShutdown_plain_noncooperating_timeout .......   Passed    0.06 sec
+        Start  13: StreamFrameworkShutdown_reentrant_context_cleanup
+ 13/183 Test  #13: StreamFrameworkShutdown_reentrant_context_cleanup ..........   Passed    0.02 sec
+        Start  14: StreamFrameworkShutdown_active_detach_context_visibility
+ 14/183 Test  #14: StreamFrameworkShutdown_active_detach_context_visibility ...   Passed    0.01 sec
+        Start  15: StreamFrameworkShutdown_destruction_logging_order
+ 15/183 Test  #15: StreamFrameworkShutdown_destruction_logging_order ..........   Passed    0.02 sec
+        Start  16: SocketContextLifecycleTest
+ 16/183 Test  #16: SocketContextLifecycleTest .................................   Passed    0.01 sec
+        Start  17: SocketWriterResourcePolicyTest
+ 17/183 Test  #17: SocketWriterResourcePolicyTest .............................   Passed    0.02 sec
+        Start  18: ListenerLifecycleTest
+ 18/183 Test  #18: ListenerLifecycleTest ......................................   Passed    0.01 sec
+        Start  19: EndpointLifetimeCountersTest
+ 19/183 Test  #19: EndpointLifetimeCountersTest ...............................***Failed    0.24 sec
+FAIL: real server terminal listen ERROR emits one summary per explicit call expected=2 actual=0
+FAIL: server summary is Info framework/instance core.socket.stream with server role and instance
+FAIL: server terminal summary remains before shutdown logs and is not repeated by free
+FAIL: endpoint lifetime scenario server-terminal passes expected=0 actual=256
+FAIL: server retry is scheduled once expected=1 actual=0
+FAIL: server retry is dispatched once expected=1 actual=0
+FAIL: endpoint lifetime scenario server-retry passes expected=0 actual=256
+FAIL: server retry cancellation starts scheduled expected=1 actual=0
+FAIL: scheduled server retry is cancelled once expected=1 actual=0
+FAIL: endpoint lifetime scenario server-retry-cancelled passes expected=0 actual=256
+FAIL: real client terminal connect ERROR emits one summary per explicit call expected=2 actual=0
+FAIL: client connect summary is Info framework/instance core.socket.stream with client role and instance
+FAIL: client terminal summary remains before shutdown logs and is not repeated by free
+FAIL: endpoint lifetime scenario client-terminal passes expected=0 actual=256
+FAIL: client retry is scheduled once expected=1 actual=0
+FAIL: client retry is dispatched once expected=1 actual=0
+FAIL: endpoint lifetime scenario client-retry passes expected=0 actual=256
+FAIL: client retry cancellation starts scheduled expected=1 actual=0
+FAIL: scheduled client retry is cancelled once expected=1 actual=0
+FAIL: endpoint lifetime scenario client-retry-cancelled passes expected=0 actual=256
+FAIL: real client reconnect rejection during RUNNING emits exactly one summary expected=1 actual=0
+FAIL: client reconnect summary is Info framework/instance core.socket.stream with client role and instance
+FAIL: endpoint lifetime scenario client-disconnect-terminal passes expected=0 actual=256
+FAIL: reconnect cancellation starts scheduled expected=1 actual=0
+FAIL: scheduled reconnect is cancelled once expected=1 actual=0
+FAIL: endpoint lifetime scenario client-reconnect-cancelled passes expected=0 actual=256
+
+        Start  20: ConnectionAttemptLifecycleTest
+ 20/183 Test  #20: ConnectionAttemptLifecycleTest .............................   Passed    0.09 sec
+        Start  21: TlsOpenSslLoggingTest
+ 21/183 Test  #21: TlsOpenSslLoggingTest ......................................   Passed    0.01 sec
+        Start  22: TLSFrameworkShutdown_active_helper_requested
+ 22/183 Test  #22: TLSFrameworkShutdown_active_helper_requested ...............   Passed    0.01 sec
+        Start  23: TLSFrameworkShutdown_active_helper_no_observer
+ 23/183 Test  #23: TLSFrameworkShutdown_active_helper_no_observer .............   Passed    0.01 sec
+        Start  24: TLSFrameworkShutdown_active_helper_signal
+ 24/183 Test  #24: TLSFrameworkShutdown_active_helper_signal ..................   Passed    0.01 sec
+        Start  25: TLSFrameworkShutdown_active_helper_forced
+ 25/183 Test  #25: TLSFrameworkShutdown_active_helper_forced ..................   Passed    0.01 sec
+        Start  26: TLSFrameworkShutdown_publisher_mutation_same_list
+ 26/183 Test  #26: TLSFrameworkShutdown_publisher_mutation_same_list ..........   Passed    0.01 sec
+        Start  27: TLSFrameworkShutdown_publisher_mutation_cross_publisher
+ 27/183 Test  #27: TLSFrameworkShutdown_publisher_mutation_cross_publisher ....   Passed    0.01 sec
+        Start  28: TLSFrameworkShutdown_signal_false_tls
+ 28/183 Test  #28: TLSFrameworkShutdown_signal_false_tls ......................   Passed    1.02 sec
+        Start  29: TLSFrameworkShutdown_outer_timeout_long
+ 29/183 Test  #29: TLSFrameworkShutdown_outer_timeout_long ....................   Passed    2.02 sec
+        Start  30: TLSFrameworkShutdown_outer_timeout_multiple
+ 30/183 Test  #30: TLSFrameworkShutdown_outer_timeout_multiple ................   Passed    2.02 sec
+        Start  31: InetSocketAddressTest
+ 31/183 Test  #31: InetSocketAddressTest ......................................   Passed    0.01 sec
+        Start  32: InetSocketAddressNativeTest
+ 32/183 Test  #32: InetSocketAddressNativeTest ................................   Passed    0.01 sec
+        Start  33: Inet6SocketAddressTest
+ 33/183 Test  #33: Inet6SocketAddressTest .....................................   Passed    0.01 sec
+        Start  34: Inet6SocketAddressNativeTest
+ 34/183 Test  #34: Inet6SocketAddressNativeTest ...............................   Passed    0.01 sec
+        Start  35: UnixSocketAddressTest
+ 35/183 Test  #35: UnixSocketAddressTest ......................................   Passed    0.01 sec
+        Start  36: UnixSocketAddressInitTest
+ 36/183 Test  #36: UnixSocketAddressInitTest ..................................   Passed    0.01 sec
+        Start  37: InetSocketAddressInvalidInputTest
+ 37/183 Test  #37: InetSocketAddressInvalidInputTest ..........................   Passed    0.01 sec
+        Start  38: Inet6SocketAddressInvalidInputTest
+ 38/183 Test  #38: Inet6SocketAddressInvalidInputTest .........................   Passed    0.01 sec
+        Start  39: UnixSocketAddressPathLengthTest
+ 39/183 Test  #39: UnixSocketAddressPathLengthTest ............................   Passed    0.01 sec
+        Start  40: UnixPeerCredentialsTest
+ 40/183 Test  #40: UnixPeerCredentialsTest ....................................   Passed    0.01 sec
+        Start  41: SocketAddressFormattingTest
+ 41/183 Test  #41: SocketAddressFormattingTest ................................   Passed    0.01 sec
+        Start  42: HttpMessageParserTest
+ 42/183 Test  #42: HttpMessageParserTest ......................................   Passed    0.01 sec
+        Start  43: HttpPolicyConfigTest
+ 43/183 Test  #43: HttpPolicyConfigTest .......................................   Passed    0.01 sec
+        Start  44: HttpRequestFormatterRawWireTest
+ 44/183 Test  #44: HttpRequestFormatterRawWireTest ............................   Passed    0.01 sec
+        Start  45: HttpResponseFormatterRawWireTest
+ 45/183 Test  #45: HttpResponseFormatterRawWireTest ...........................   Passed    0.01 sec
+        Start  46: HttpMessagePresentationTest
+ 46/183 Test  #46: HttpMessagePresentationTest ................................   Passed    0.01 sec
+        Start  47: HttpMessageHeaderCasingTest
+ 47/183 Test  #47: HttpMessageHeaderCasingTest ................................   Passed    0.01 sec
+        Start  48: HttpMessageTargetQueryEdgeTest
+ 48/183 Test  #48: HttpMessageTargetQueryEdgeTest .............................   Passed    0.01 sec
+        Start  49: HttpServerUpgradeMissingRequestTest
+ 49/183 Test  #49: HttpServerUpgradeMissingRequestTest ........................   Passed    0.01 sec
+        Start  50: HttpStreamingSourceFailureTest
+ 50/183 Test  #50: HttpStreamingSourceFailureTest .............................   Passed    0.02 sec
+        Start  51: WebSocketReceiverValidationTest
+ 51/183 Test  #51: WebSocketReceiverValidationTest ............................   Passed    0.01 sec
+        Start  52: WebSocketLimitCloseFrameTest
+ 52/183 Test  #52: WebSocketLimitCloseFrameTest ...............................   Passed    0.02 sec
+        Start  53: PublicLogApiTest
+ 53/183 Test  #53: PublicLogApiTest ...........................................   Passed    0.01 sec
+        Start  54: SemanticLoggerFormattingTest
+ 54/183 Test  #54: SemanticLoggerFormattingTest ...............................   Passed    0.01 sec
+        Start  55: LogScopeOwnerTest
+ 55/183 Test  #55: LogScopeOwnerTest ..........................................   Passed    0.01 sec
+        Start  56: SemanticLoggerScopeTest
+ 56/183 Test  #56: SemanticLoggerScopeTest ....................................   Passed    0.01 sec
+        Start  57: SemanticLoggerBackendTest
+ 57/183 Test  #57: SemanticLoggerBackendTest ..................................   Passed    0.02 sec
+        Start  58: SemanticLoggerFilteringTest
+ 58/183 Test  #58: SemanticLoggerFilteringTest ................................   Passed    0.01 sec
+        Start  59: SemanticLoggerDisabledPathTest
+ 59/183 Test  #59: SemanticLoggerDisabledPathTest .............................   Passed    0.01 sec
+        Start  60: SemanticLoggerCacheTest
+ 60/183 Test  #60: SemanticLoggerCacheTest ....................................   Passed    0.01 sec
+        Start  61: SemanticEndToEndOutputTest
+ 61/183 Test  #61: SemanticEndToEndOutputTest .................................   Passed    0.01 sec
+        Start  62: SemanticTerminalColorRoutingTest
+ 62/183 Test  #62: SemanticTerminalColorRoutingTest ...........................   Passed    0.01 sec
+        Start  63: SemanticCliIntegrationTest
+ 63/183 Test  #63: SemanticCliIntegrationTest .................................   Passed    0.01 sec
+        Start  64: Mqtt311PacketValidationTest
+ 64/183 Test  #64: Mqtt311PacketValidationTest ................................   Passed    0.01 sec
+        Start  65: MqttLifecycleTest
+ 65/183 Test  #65: MqttLifecycleTest ..........................................   Passed    0.01 sec
+        Start  66: ConfigFormatterCommentMetadataTest
+ 66/183 Test  #66: ConfigFormatterCommentMetadataTest .........................   Passed    0.01 sec
+        Start  67: ConfigRequirementStateTest
+ 67/183 Test  #67: ConfigRequirementStateTest .................................   Passed    0.00 sec
+        Start  68: HexDumpPresentationTest
+ 68/183 Test  #68: HexDumpPresentationTest ....................................   Passed    0.01 sec
+        Start  69: SingleshotTimerTest
+ 69/183 Test  #69: SingleshotTimerTest ........................................   Passed    0.01 sec
+        Start  70: IntervalTimerStopableTest
+ 70/183 Test  #70: IntervalTimerStopableTest ..................................   Passed    0.01 sec
+        Start  71: SNodeCStopFromCallbackTest
+ 71/183 Test  #71: SNodeCStopFromCallbackTest .................................   Passed    0.01 sec
+        Start  72: SNodeCReconfigureTest
+ 72/183 Test  #72: SNodeCReconfigureTest ......................................   Passed    0.01 sec
+        Start  73: TimerCancelBeforeFireTest
+ 73/183 Test  #73: TimerCancelBeforeFireTest ..................................   Passed    0.01 sec
+        Start  74: IntervalTimerCancelFromCallbackTest
+ 74/183 Test  #74: IntervalTimerCancelFromCallbackTest ........................   Passed    0.01 sec
+        Start  75: PipeBoundedQueueTest
+ 75/183 Test  #75: PipeBoundedQueueTest .......................................   Passed    0.01 sec
+        Start  76: PipeOwnershipTest
+ 76/183 Test  #76: PipeOwnershipTest ..........................................   Passed    0.01 sec
+        Start  77: PipeImmediateCloseTest
+ 77/183 Test  #77: PipeImmediateCloseTest .....................................   Passed    0.01 sec
+        Start  78: PipeSinkFairnessTest
+ 78/183 Test  #78: PipeSinkFairnessTest .......................................   Passed    0.01 sec
+        Start  79: PipeTimeoutTest
+ 79/183 Test  #79: PipeTimeoutTest ............................................   Passed    0.06 sec
+        Start  80: DescriptorRegistrationFailureTest
+ 80/183 Test  #80: DescriptorRegistrationFailureTest ..........................   Passed    0.01 sec
+        Start  81: FileReaderTest
+ 81/183 Test  #81: FileReaderTest .............................................   Passed    0.01 sec
+        Start  82: ShutdownReceiverNotification_requested
+ 82/183 Test  #82: ShutdownReceiverNotification_requested .....................   Passed    0.01 sec
+        Start  83: ShutdownReceiverNotification_signal
+ 83/183 Test  #83: ShutdownReceiverNotification_signal ........................   Passed    1.01 sec
+        Start  84: InetLegacyServerClientCompositionTest
+ 84/183 Test  #84: InetLegacyServerClientCompositionTest ......................   Passed    0.02 sec
+        Start  85: Inet6LegacyServerClientCompositionTest
+ 85/183 Test  #85: Inet6LegacyServerClientCompositionTest .....................   Passed    0.02 sec
+        Start  86: UnixLegacyServerClientCompositionTest
+ 86/183 Test  #86: UnixLegacyServerClientCompositionTest ......................   Passed    0.02 sec
+        Start  87: InetLegacyServerMultipleClientsCompositionTest
+ 87/183 Test  #87: InetLegacyServerMultipleClientsCompositionTest .............   Passed    0.02 sec
+        Start  88: Inet6LegacyServerMultipleClientsCompositionTest
+ 88/183 Test  #88: Inet6LegacyServerMultipleClientsCompositionTest ............   Passed    0.03 sec
+        Start  89: UnixLegacyServerMultipleClientsCompositionTest
+ 89/183 Test  #89: UnixLegacyServerMultipleClientsCompositionTest .............   Passed    0.02 sec
+        Start  90: InetLegacyServerClientMultiMessagePayloadExchangeTest
+ 90/183 Test  #90: InetLegacyServerClientMultiMessagePayloadExchangeTest ......   Passed    0.02 sec
+        Start  91: Inet6LegacyServerClientMultiMessagePayloadExchangeTest
+ 91/183 Test  #91: Inet6LegacyServerClientMultiMessagePayloadExchangeTest .....   Passed    0.02 sec
+        Start  92: UnixLegacyServerClientMultiMessagePayloadExchangeTest
+ 92/183 Test  #92: UnixLegacyServerClientMultiMessagePayloadExchangeTest ......   Passed    0.02 sec
+        Start  93: InetLegacyServerMultipleClientsPayloadExchangeTest
+ 93/183 Test  #93: InetLegacyServerMultipleClientsPayloadExchangeTest .........   Passed    0.02 sec
+        Start  94: Inet6LegacyServerMultipleClientsPayloadExchangeTest
+ 94/183 Test  #94: Inet6LegacyServerMultipleClientsPayloadExchangeTest ........   Passed    0.03 sec
+        Start  95: UnixLegacyServerMultipleClientsPayloadExchangeTest
+ 95/183 Test  #95: UnixLegacyServerMultipleClientsPayloadExchangeTest .........   Passed    0.02 sec
+        Start  96: UnixLegacyServerClientPayloadExchangeTest
+ 96/183 Test  #96: UnixLegacyServerClientPayloadExchangeTest ..................   Passed    0.02 sec
+        Start  97: UnixLegacyServerClientDisconnectLifecycleTest
+ 97/183 Test  #97: UnixLegacyServerClientDisconnectLifecycleTest ..............   Passed    0.02 sec
+        Start  98: UnixLegacyClientConnectFailureTest
+ 98/183 Test  #98: UnixLegacyClientConnectFailureTest .........................   Passed    0.01 sec
+        Start  99: InetLegacyServerClientPayloadExchangeTest
+ 99/183 Test  #99: InetLegacyServerClientPayloadExchangeTest ..................   Passed    0.02 sec
+        Start 100: InetLegacyServerClientDisconnectLifecycleTest
+100/183 Test #100: InetLegacyServerClientDisconnectLifecycleTest ..............   Passed    0.03 sec
+        Start 101: InetLegacyClientConnectFailureTest
+101/183 Test #101: InetLegacyClientConnectFailureTest .........................***Failed    0.02 sec
+FAIL: failed connection emits one attempt start expected=1 actual=0
+FAIL: failed connection emits one terminal failure expected=1 actual=0
+
+        Start 102: Inet6LegacyServerClientPayloadExchangeTest
+102/183 Test #102: Inet6LegacyServerClientPayloadExchangeTest .................   Passed    0.02 sec
+        Start 103: Inet6LegacyServerClientDisconnectLifecycleTest
+103/183 Test #103: Inet6LegacyServerClientDisconnectLifecycleTest .............   Passed    0.02 sec
+        Start 104: Inet6LegacyClientConnectFailureTest
+104/183 Test #104: Inet6LegacyClientConnectFailureTest ........................   Passed    0.02 sec
+        Start 105: InetLegacyServerEffectiveListenAddressTest
+105/183 Test #105: InetLegacyServerEffectiveListenAddressTest .................   Passed    0.01 sec
+        Start 106: InetPhysicalServerEffectiveBindAddressTest
+106/183 Test #106: InetPhysicalServerEffectiveBindAddressTest .................   Passed    0.01 sec
+        Start 107: UnixPhysicalSocketPathSafetyTest
+107/183 Test #107: UnixPhysicalSocketPathSafetyTest ...........................   Passed    0.01 sec
+        Start 108: InetLegacyServerClientLargePayloadExchangeTest
+108/183 Test #108: InetLegacyServerClientLargePayloadExchangeTest .............   Passed    0.02 sec
+        Start 109: InetLegacyServerClientFramedPayloadExchangeTest
+109/183 Test #109: InetLegacyServerClientFramedPayloadExchangeTest ............   Passed    0.02 sec
+        Start 110: Inet6LegacyServerClientFramedPayloadExchangeTest
+110/183 Test #110: Inet6LegacyServerClientFramedPayloadExchangeTest ...........   Passed    0.03 sec
+        Start 111: UnixLegacyServerClientFramedPayloadExchangeTest
+111/183 Test #111: UnixLegacyServerClientFramedPayloadExchangeTest ............   Passed    0.03 sec
+        Start 112: Inet6LegacyServerClientLargePayloadExchangeTest
+112/183 Test #112: Inet6LegacyServerClientLargePayloadExchangeTest ............   Passed    0.04 sec
+        Start 113: UnixLegacyServerClientLargePayloadExchangeTest
+113/183 Test #113: UnixLegacyServerClientLargePayloadExchangeTest .............   Passed    0.03 sec
+        Start 114: InetLegacyServerControlledCloseLifecycleTest
+114/183 Test #114: InetLegacyServerControlledCloseLifecycleTest ...............   Passed    0.02 sec
+        Start 115: Inet6LegacyServerControlledCloseLifecycleTest
+115/183 Test #115: Inet6LegacyServerControlledCloseLifecycleTest ..............   Passed    0.03 sec
+        Start 116: UnixLegacyServerControlledCloseLifecycleTest
+116/183 Test #116: UnixLegacyServerControlledCloseLifecycleTest ...............   Passed    0.03 sec
+        Start 117: InetLegacyServerMultipleClientsDisconnectLifecycleTest
+117/183 Test #117: InetLegacyServerMultipleClientsDisconnectLifecycleTest .....   Passed    0.02 sec
+        Start 118: Inet6LegacyServerMultipleClientsDisconnectLifecycleTest
+118/183 Test #118: Inet6LegacyServerMultipleClientsDisconnectLifecycleTest ....   Passed    0.02 sec
+        Start 119: UnixLegacyServerMultipleClientsDisconnectLifecycleTest
+119/183 Test #119: UnixLegacyServerMultipleClientsDisconnectLifecycleTest .....   Passed    0.02 sec
+        Start 120: InetPerCallFlowTest
+120/183 Test #120: InetPerCallFlowTest ........................................   Passed    0.03 sec
+        Start 121: InetHttpServerClientGetRoundTripTest
+121/183 Test #121: InetHttpServerClientGetRoundTripTest .......................   Passed    0.02 sec
+        Start 122: InetHttpClientParserLimitTest
+122/183 Test #122: InetHttpClientParserLimitTest ..............................   Passed    0.02 sec
+        Start 123: InetHttpServerRequestPolicyTest
+123/183 Test #123: InetHttpServerRequestPolicyTest ............................   Passed    0.02 sec
+        Start 124: InetHttpServerPipeliningPolicyTest
+124/183 Test #124: InetHttpServerPipeliningPolicyTest .........................   Passed    0.02 sec
+        Start 125: Inet6HttpServerClientGetRoundTripTest
+125/183 Test #125: Inet6HttpServerClientGetRoundTripTest ......................   Passed    0.02 sec
+        Start 126: UnixHttpServerClientGetRoundTripTest
+126/183 Test #126: UnixHttpServerClientGetRoundTripTest .......................   Passed    0.02 sec
+        Start 127: InetHttpServerClientPostBodyRoundTripTest
+127/183 Test #127: InetHttpServerClientPostBodyRoundTripTest ..................   Passed    0.02 sec
+        Start 128: Inet6HttpServerClientPostBodyRoundTripTest
+128/183 Test #128: Inet6HttpServerClientPostBodyRoundTripTest .................   Passed    0.03 sec
+        Start 129: UnixHttpServerClientPostBodyRoundTripTest
+129/183 Test #129: UnixHttpServerClientPostBodyRoundTripTest ..................   Passed    0.03 sec
+        Start 130: InetHttpServerClientStatusVariantTest
+130/183 Test #130: InetHttpServerClientStatusVariantTest ......................   Passed    0.02 sec
+        Start 131: Inet6HttpServerClientStatusVariantTest
+131/183 Test #131: Inet6HttpServerClientStatusVariantTest .....................   Passed    0.02 sec
+        Start 132: UnixHttpServerClientStatusVariantTest
+132/183 Test #132: UnixHttpServerClientStatusVariantTest ......................   Passed    0.02 sec
+        Start 133: InetHttpServerClientRepeatedRequestTest
+133/183 Test #133: InetHttpServerClientRepeatedRequestTest ....................   Passed    0.02 sec
+        Start 134: InetHttpServerClientDisconnectLifecycleTest
+134/183 Test #134: InetHttpServerClientDisconnectLifecycleTest ................   Passed    0.02 sec
+        Start 135: InetHttpClientPrematureServerCloseTest
+135/183 Test #135: InetHttpClientPrematureServerCloseTest .....................   Passed    0.02 sec
+        Start 136: InetHttpServerClientLargeResponseBodyTest
+136/183 Test #136: InetHttpServerClientLargeResponseBodyTest ..................   Passed    0.02 sec
+        Start 137: InetHttpServerClientLargeRequestBodyTest
+137/183 Test #137: InetHttpServerClientLargeRequestBodyTest ...................   Passed    0.02 sec
+        Start 138: InetHttpServerClientHeaderHeavyRequestTest
+138/183 Test #138: InetHttpServerClientHeaderHeavyRequestTest .................   Passed    0.02 sec
+        Start 139: InetHttpServerClientHeaderHeavyResponseTest
+139/183 Test #139: InetHttpServerClientHeaderHeavyResponseTest ................   Passed    0.02 sec
+        Start 140: InetHttpClientConnectFailureTest
+140/183 Test #140: InetHttpClientConnectFailureTest ...........................   Passed    0.01 sec
+        Start 141: InetHttpServerClientChunkedResponseTest
+141/183 Test #141: InetHttpServerClientChunkedResponseTest ....................   Passed    0.02 sec
+        Start 142: InetHttpServerClientPipeliningTest
+142/183 Test #142: InetHttpServerClientPipeliningTest .........................   Passed    0.02 sec
+        Start 143: InetHttpServerMalformedRequestBehaviorTest
+143/183 Test #143: InetHttpServerMalformedRequestBehaviorTest .................   Passed    0.02 sec
+        Start 144: InetHttpClientMalformedResponseBehaviorTest
+144/183 Test #144: InetHttpClientMalformedResponseBehaviorTest ................   Passed    0.02 sec
+        Start 145: InetHttpServerClientChunkedRequestTest
+145/183 Test #145: InetHttpServerClientChunkedRequestTest .....................   Passed    0.02 sec
+        Start 146: InetExpressRoutingMiddlewareTest
+146/183 Test #146: InetExpressRoutingMiddlewareTest ...........................   Passed    0.03 sec
+        Start 147: InetExpressHttpParserLimitTest
+147/183 Test #147: InetExpressHttpParserLimitTest .............................   Passed    0.02 sec
+        Start 148: Inet6ExpressTransportSmokeTest
+148/183 Test #148: Inet6ExpressTransportSmokeTest .............................   Passed    0.02 sec
+        Start 149: UnixExpressTransportSmokeTest
+149/183 Test #149: UnixExpressTransportSmokeTest ..............................   Passed    0.03 sec
+        Start 150: InetExpressMiddlewareShortCircuitTest
+150/183 Test #150: InetExpressMiddlewareShortCircuitTest ......................   Passed    0.03 sec
+        Start 151: InetExpressRoutingEdgeBasicsTest
+151/183 Test #151: InetExpressRoutingEdgeBasicsTest ...........................   Passed    0.02 sec
+        Start 152: InetExpressMountedRouterBasicsTest
+152/183 Test #152: InetExpressMountedRouterBasicsTest .........................   Passed    0.02 sec
+        Start 153: InetExpressNestedRouterBasicsTest
+153/183 Test #153: InetExpressNestedRouterBasicsTest ..........................   Passed    0.03 sec
+        Start 154: InetExpressRouteParameterRegexTest
+154/183 Test #154: InetExpressRouteParameterRegexTest .........................   Passed    0.02 sec
+        Start 155: InetExpressMiddlewareMountOrderTest
+155/183 Test #155: InetExpressMiddlewareMountOrderTest ........................   Passed    0.02 sec
+        Start 156: InetExpressQueryMountInteractionTest
+156/183 Test #156: InetExpressQueryMountInteractionTest .......................   Passed    0.03 sec
+        Start 157: InetExpressFallbackNotFoundTest
+157/183 Test #157: InetExpressFallbackNotFoundTest ............................   Passed    0.02 sec
+        Start 158: InetWebSocketServerClientTextEchoTest
+158/183 Test #158: InetWebSocketServerClientTextEchoTest ......................   Passed    0.02 sec
+        Start 159: Inet6WebSocketServerClientTextEchoTest
+159/183 Test #159: Inet6WebSocketServerClientTextEchoTest .....................   Passed    0.02 sec
+        Start 160: UnixWebSocketServerClientTextEchoTest
+160/183 Test #160: UnixWebSocketServerClientTextEchoTest ......................   Passed    0.02 sec
+        Start 161: InetWebSocketServerClientMultiTextMessageTest
+161/183 Test #161: InetWebSocketServerClientMultiTextMessageTest ..............   Passed    0.03 sec
+        Start 162: InetWebSocketServerClientBinaryEchoTest
+162/183 Test #162: InetWebSocketServerClientBinaryEchoTest ....................   Passed    0.02 sec
+        Start 163: InetWebSocketServerClientCloseHandshakeTest
+163/183 Test #163: InetWebSocketServerClientCloseHandshakeTest ................   Passed    0.03 sec
+        Start 164: InetWebSocketServerClientPingPongTest
+164/183 Test #164: InetWebSocketServerClientPingPongTest ......................   Passed    0.02 sec
+        Start 165: InetWebSocketServerInitiatedCloseTest
+165/183 Test #165: InetWebSocketServerInitiatedCloseTest ......................   Passed    0.02 sec
+        Start 166: InetWebSocketUnexpectedCloseLifecycleTest
+166/183 Test #166: InetWebSocketUnexpectedCloseLifecycleTest ..................   Passed    0.03 sec
+        Start 167: InetWebSocketLargeTextMessageTest
+167/183 Test #167: InetWebSocketLargeTextMessageTest ..........................   Passed    0.02 sec
+        Start 168: InetWebSocketLargeBinaryMessageTest
+168/183 Test #168: InetWebSocketLargeBinaryMessageTest ........................   Passed    0.02 sec
+        Start 169: InetSseEventSourceBasicEventTest
+169/183 Test #169: InetSseEventSourceBasicEventTest ...........................   Passed    0.02 sec
+        Start 170: InetSseEventSourceMultiEventSequenceTest
+170/183 Test #170: InetSseEventSourceMultiEventSequenceTest ...................   Passed    0.03 sec
+        Start 171: InetSseEventSourceMultiLineDataTest
+171/183 Test #171: InetSseEventSourceMultiLineDataTest ........................   Passed    0.02 sec
+        Start 172: InetSseEventSourceCommentIgnoredTest
+172/183 Test #172: InetSseEventSourceCommentIgnoredTest .......................   Passed    0.02 sec
+        Start 173: InetSseEventSourceDefaultMessageEventTest
+173/183 Test #173: InetSseEventSourceDefaultMessageEventTest ..................   Passed    0.02 sec
+        Start 174: InetSseEventSourceClientCloseAfterEventTest
+174/183 Test #174: InetSseEventSourceClientCloseAfterEventTest ................   Passed    0.03 sec
+        Start 175: InetSseEventSourceRetryFieldTest
+175/183 Test #175: InetSseEventSourceRetryFieldTest ...........................   Passed    0.02 sec
+        Start 176: InetSseEventSourceReconnectLifecycleTest
+176/183 Test #176: InetSseEventSourceReconnectLifecycleTest ...................   Passed    3.05 sec
+        Start 177: InetSseEventSourceDestructionLifecycleTest
+177/183 Test #177: InetSseEventSourceDestructionLifecycleTest .................   Passed    0.05 sec
+        Start 178: ParameterlessSemanticLoggerPolicyTest
+178/183 Test #178: ParameterlessSemanticLoggerPolicyTest ......................   Passed    0.16 sec
+        Start 179: LoggingApiSurfacePolicyTest
+179/183 Test #179: LoggingApiSurfacePolicyTest ................................   Passed    0.01 sec
+        Start 180: EpollDescriptorPublisherPolicyTest
+180/183 Test #180: EpollDescriptorPublisherPolicyTest .........................   Passed    0.00 sec
+        Start 181: EventLoopSyscallDisciplinePolicyTest
+181/183 Test #181: EventLoopSyscallDisciplinePolicyTest .......................   Passed    0.00 sec
+        Start 182: SensitiveLoggingPolicyTest
+182/183 Test #182: SensitiveLoggingPolicyTest .................................   Passed    0.22 sec
+        Start 183: CiWorkflowPathsPolicyTest
+183/183 Test #183: CiWorkflowPathsPolicyTest ..................................   Passed    0.00 sec
+
+99% tests passed, 2 tests failed out of 183
+
+Label Time Summary:
+abi                   =   0.01 sec*proc (1 test)
+address               =   0.08 sec*proc (10 tests)
+api                   =   0.03 sec*proc (3 tests)
+architecture          =   0.17 sec*proc (3 tests)
+backend               =   0.02 sec*proc (1 test)
+binary                =   0.02 sec*proc (1 test)
+cache                 =   0.01 sec*proc (1 test)
+chunked               =   0.04 sec*proc (2 tests)
+ci                    =   0.00 sec*proc (1 test)
+classification        =   0.01 sec*proc (1 test)
+cli                   =   0.01 sec*proc (1 test)
+client                =   3.76 sec*proc (31 tests)
+close                 =   0.02 sec*proc (1 test)
+component             =   6.32 sec*proc (109 tests)
+composition           =   0.13 sec*proc (6 tests)
+config                =   0.03 sec*proc (4 tests)
+connect-failure       =   0.06 sec*proc (4 tests)
+connection            =   0.09 sec*proc (1 test)
+consumer              =   5.50 sec*proc (1 test)
+core                  =   7.10 sec*proc (46 tests)
+credentials           =   0.01 sec*proc (1 test)
+descriptor            =   0.01 sec*proc (1 test)
+disconnect            =   0.13 sec*proc (6 tests)
+e2e                   =   0.01 sec*proc (1 test)
+effective-address     =   0.02 sec*proc (2 tests)
+endpoint-counter      =   0.24 sec*proc (1 test)
+epoll                 =   0.00 sec*proc (1 test)
+eventsource           =   3.25 sec*proc (9 tests)
+express               =   0.29 sec*proc (12 tests)
+fatal                 =   0.02 sec*proc (1 test)
+file                  =   0.01 sec*proc (1 test)
+filter                =   0.01 sec*proc (1 test)
+flow                  =   0.03 sec*proc (1 test)
+format                =   0.05 sec*proc (7 tests)
+framed-payload        =   0.09 sec*proc (3 tests)
+headers               =   0.05 sec*proc (3 tests)
+hexdump               =   0.01 sec*proc (1 test)
+http                  =   0.65 sec*proc (35 tests)
+init                  =   0.01 sec*proc (1 test)
+install               =   5.50 sec*proc (1 test)
+integration           =   0.01 sec*proc (1 test)
+invalid               =   0.02 sec*proc (2 tests)
+io                    =   0.02 sec*proc (1 test)
+ipv4                  =   4.40 sec*proc (63 tests)
+ipv6                  =   0.40 sec*proc (18 tests)
+large                 =   0.04 sec*proc (2 tests)
+large-payload         =   0.09 sec*proc (3 tests)
+legacy                =   5.12 sec*proc (93 tests)
+lifecycle             =   9.89 sec*proc (32 tests)
+listen                =   0.02 sec*proc (2 tests)
+listener              =   0.01 sec*proc (1 test)
+log                   =   3.65 sec*proc (20 tests)
+malformed-request     =   0.02 sec*proc (1 test)
+malformed-response    =   0.02 sec*proc (1 test)
+message               =   0.05 sec*proc (6 tests)
+middleware            =   0.10 sec*proc (4 tests)
+mount-order           =   0.02 sec*proc (1 test)
+mounted-router        =   0.02 sec*proc (1 test)
+mqtt                  =   0.02 sec*proc (2 tests)
+mqtt311               =   0.01 sec*proc (1 test)
+multi-client          =   0.18 sec*proc (9 tests)
+multi-message         =   0.06 sec*proc (3 tests)
+native                =   0.02 sec*proc (2 tests)
+nested-router         =   0.03 sec*proc (1 test)
+net                   =   0.88 sec*proc (48 tests)
+not-found             =   0.02 sec*proc (1 test)
+overhead              =   0.02 sec*proc (2 tests)
+ownership             =   0.02 sec*proc (2 tests)
+parameter-regex       =   0.02 sec*proc (1 test)
+parser-limit          =   0.04 sec*proc (2 tests)
+path                  =   0.01 sec*proc (1 test)
+path-safety           =   0.01 sec*proc (1 test)
+payload               =   0.18 sec*proc (9 tests)
+pending               =   0.02 sec*proc (1 test)
+pipe                  =   0.09 sec*proc (5 tests)
+pipelining            =   0.03 sec*proc (2 tests)
+policy                =   0.41 sec*proc (7 tests)
+presentation          =   0.01 sec*proc (1 test)
+protocol              =   0.01 sec*proc (1 test)
+query                 =   0.04 sec*proc (2 tests)
+request               =   0.04 sec*proc (2 tests)
+request-policy        =   0.04 sec*proc (2 tests)
+resource-policy       =   0.04 sec*proc (2 tests)
+response              =   0.04 sec*proc (2 tests)
+routing               =   0.26 sec*proc (11 tests)
+scope                 =   0.01 sec*proc (1 test)
+security              =   0.23 sec*proc (2 tests)
+server                =   3.78 sec*proc (32 tests)
+server-close          =   0.07 sec*proc (3 tests)
+server-initiated      =   0.02 sec*proc (1 test)
+shutdown              =   6.33 sec*proc (19 tests)
+smoke                 =   0.01 sec*proc (1 test)
+sse                   =   3.25 sec*proc (9 tests)
+state-machine         =   0.17 sec*proc (1 test)
+stream                =   6.12 sec*proc (55 tests)
+streaming             =   0.03 sec*proc (2 tests)
+syscall               =   0.00 sec*proc (1 test)
+target                =   0.01 sec*proc (1 test)
+text                  =   0.02 sec*proc (1 test)
+timer                 =   0.04 sec*proc (4 tests)
+tls                   =   5.36 sec*proc (15 tests)
+unexpected-close      =   0.03 sec*proc (1 test)
+unit                  =   6.25 sec*proc (67 tests)
+unix                  =   0.38 sec*proc (20 tests)
+utils                 =   0.02 sec*proc (3 tests)
+validation            =   0.02 sec*proc (2 tests)
+websocket             =   0.28 sec*proc (13 tests)
+writer                =   0.02 sec*proc (1 test)
+
+Total Test time (real) =  18.52 sec
+
+The following tests FAILED:
+	 19 - EndpointLifetimeCountersTest (Failed)             core endpoint-counter lifecycle unit
+	101 - InetLegacyClientConnectFailureTest (Failed)       component connect-failure ipv4 legacy net stream
+Errors while running CTest

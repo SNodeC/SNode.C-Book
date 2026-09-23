@@ -26,9 +26,9 @@ The reported Hartbeespoort Dam application connects water-quality sensors and GP
 - **Manuscript:** 30 numbered chapters in 11 Parts, Appendix A, closing essay and reference material; **100,338 whitespace tokens**, of which 92,187 are prose and 8,151 occur in fences; **310 PDF pages**, including 14 preliminary pages. The Part estimates sum to this actual build.
 - **Teaching apparatus:** 93 objectives and 155 mapped exercises across 30 chapters and Appendix A. Each has two review questions, two labs and one design problem, public solutions, and a recap of at most five bullets. All 11 Parts have runnable checkpoints; the epilogue is a closing essay.
 - **Samples:** Chapters **1, 3, 18, 28 and 30**, using the same teaching pattern. Each retains at least a 20% reduction in prose from its original sample baseline. The sample guide identifies the skill and observable outcome each demonstrates.
-- **Built and run:** the companion examples and lab dependencies compile, including the standalone Asio comparison. **62/62 local lab cases passed on 23 September 2026**; the full manuscript, proposal and sample PDFs build with zero LaTeX warnings and zero bad boxes. Complete printed listings match their companion sources.
+- **Earlier build/run evidence:** the companion examples and lab dependencies compiled, including the standalone Asio comparison, and **62/62 local lab cases passed on 23 September 2026 against the previous source baseline**. Revalidation against the new public pin is pending because two framework logging tests fail. The manuscript, proposal and sample PDFs build; complete printed listings match their companion sources.
 - **Observation limits:** local tests include broker delivery and database persistence across a client restart. They do not certify Bluetooth hardware, OpenWrt deployment, the author's field application, or a new hosted build. Public lab instructions state dependencies, expected outcomes, and the scope of each observation.
-- Manuscript baseline: project version `2.0.0`, public commit `8b8da56e0349191d4658ca8f820a490539eccd4d`, with contents recorded by the edition manifest; no patch required
+- Manuscript baseline: project version `2.0.0`, public commit `8b8da56`, with contents recorded by the edition manifest; no patch required
 
 ## Items still required from the author
 

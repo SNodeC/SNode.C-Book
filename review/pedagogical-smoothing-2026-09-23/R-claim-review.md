@@ -97,8 +97,10 @@ acceptance). No driver is changed speculatively. R4 must execute all checks.
 
 ## Export detail
 
-The archive's README.md required restoration from `git show 8b8da56:README.md`
-in the build copy and forced indexing there (it is ignored by the source rules).
+The first build-copy check omitted README.md because `git add .` obeyed the
+source .gitignore despite that file being tracked upstream. Restored its bytes
+from `git show 8b8da56:README.md` and forced indexing in the build copy. This was
+a local export/index setup issue, not framework drift.
 The exported/indexed copy then passed the unchanged 1,447-file content check.
 No write, fetch or build took place in the author's tree.
 

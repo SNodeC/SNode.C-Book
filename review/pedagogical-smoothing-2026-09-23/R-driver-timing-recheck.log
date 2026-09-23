@@ -1,0 +1,42 @@
+Test project /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples
+    Start 26: exercise-ch13-part-checkpoint
+1/1 Test #26: exercise-ch13-part-checkpoint ....***Failed    5.21 sec
+PASS: source/file/CLI ports [8080, 18091, 44841]; file unchanged; inspection status 2
+PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 47, in running
+    process.wait(timeout=5)
+    ~~~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2076, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/examples/companion/examples/EchoPair/echoserver', '--config-file', '/tmp/config-lab-aduxmt9n/echo.conf', '--log-level=2', '--log-format=json', 'echoserver', 'local', '--host=127.0.0.1', '--port=44841']' timed out after 5 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py", line 96, in <module>
+    {'precedence': precedence, 'discovery': discovery, 'checkpoint': checkpoint}[mode](binary, home)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py", line 65, in checkpoint
+    with running(binary, [*args, *policy, 'echoserver', 'local', '--host=127.0.0.1',
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          f'--port={port}']) as (process, log):
+                          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "/home/voc/projects/snodec/publications/book/companion/exercises/lab_support.py", line 51, in running
+    raise RuntimeError('Process did not stop after SIGINT')
+RuntimeError: Process did not stop after SIGINT
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   5.21 sec
+
+The following tests FAILED:
+	 26 - exercise-ch13-part-checkpoint (Failed)
+Errors while running CTest

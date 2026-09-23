@@ -1,132 +1,105 @@
-# Pedagogical smoothing — stopped at P0b
+# Pedagogical smoothing — resumed under the CTest exception
 
-Date: 2026-09-23. Work branch: `book/pedagogical-smoothing-2026-09-23`.
+Active branch: `book/pedagogical-smoothing-2026-09-23`. Date: 2026-09-23.
+PROMPT.md is unchanged; FOLLOWUP-01.md authorizes the public re-baseline and
+FOLLOWUP-02.md explicitly directs continuation despite the failing CTests.
 
-The run stopped under §14: **“An entry check or lab fails for a reason other
-than the P−1 defect.”** The explicit working-tree source-alignment check failed:
-9 anchor checks (8 distinct locations) and 11 framework file-content comparisons.
-This is unrelated to the C++20 target declarations. No repair was attempted and
-P1 was not started. Evidence: `P0b-source-alignment.log:8`,
-`P0b-stop-condition.json`, and `P0b-results.json`.
+## Run history
 
-## Gates and source authority
+P0a and P−1 remain complete in 371a1b09738cb23e3981f2f15c9de9f037390e9c and
+c70d9d1ca422bf57dbb7940b5112a31896efe8c6. Original P0b stopped correctly at
+965bcbcfc15c2c3887a3f39287fbcccc3c082a79 on framework drift. Its report content
+is preserved in REPORT-P0b-stopped.md; original P0b logs and before/after metrics
+are untouched. Follow-up 01 resolves that source drift. The attempted R4 stop
+and findings are preserved in REPORT-R4-before-continuation.md; Follow-up 02
+supersedes that stop. R continues with failed checks explicitly qualified.
 
-| Gate | Status | Commit | Evidence in this directory |
-| --- | --- | --- | --- |
-| P0a | passed | `371a1b09738cb23e3981f2f15c9de9f037390e9c` | preflight.json; P0a-checks.log; framework-freeze-P0a.json |
-| P−1 | passed | `c70d9d1ca422bf57dbb7940b5112a31896efe8c6` | P-minus-1-build.log; commit diff |
-| P0b | failed; stopped under §14 | containing evidence commit, `review: stop pedagogical smoothing at P0b source-alignment gate` | P0b-results.json; P0b-stop-condition.json; all P0b logs |
-| P1, P2, P3, P4+P5, P6, P7 | not started | — | manuscript diff empty; P0b-preservation.json |
+## Gate record
 
-The containing evidence commit records a failed gate; it does not certify P0b.
-Its SHA is available in git history and the final handoff. Only the work branch
-is designated for push to origin; no merge or source-branch push is authorized.
+| Gate | Status | Commit / evidence |
+|---|---|---|
+| R0 | passed | R0-preconditions.json; public clone; identical P0a/R0 freezes |
+| R1 | complete | e67295c2dfa4e09dd2ea14cdf11e66c08d2eaf52 |
+| R2 | complete | e4f8a612695afeb957293920ea92350e4012aede |
+| R3 | local claims reconciled | fa62fa1bf554f4efa7a5c71527cb15b67ead1492; R-claim-review.md |
+| R evidence | qualified; author directs continuation | containing `review: re-baseline evidence` commit; R-results.json |
+| P0b-resume | next | new installation only |
+| P1–P7 | pending | no pedagogical smoothing edits yet |
 
-Entry was clean at `a5e51a204d79caef8c288d5e7b7cec2b8e87d09f`.
-The only difference from `c7b76c108db43de7326a1a63756cf02eed3dbb31`
-was the author-installed PROMPT.md commit. No unexpected book drift was found
-(`preflight.json`). The prompt remains byte-for-byte unchanged, SHA-256
-`c34bbab40ac13289e993af8504344f8d1435e1ec5ca87d4fb7ad6dfac8020155`.
+## Source and review
 
-The read-only framework at `/home/voc/projects/snodec/snode.c` was clean at
-`8b8da56e0349191d4658ca8f820a490539eccd4d`. Its HEAD, porcelain status,
-binary HEAD-diff digest and untracked-file hashes are identical at entry and
-stop (`framework-freeze-P0a.json`, `framework-freeze-P0b-stop.json`, and the
-corresponding untracked SHA-256 lists). The freeze did not change. The failed
-alignment is between the existing book evidence and that frozen tree, not a
-mid-run source mutation. Repository facts prevail over any expectation that
-previous source-alignment evidence still passes. Historical evidence was not
-rewritten. No substitute framework was used for source inspection.
+The clean author tree is frozen at public 8b8da56e0349191d4658ca8f820a490539eccd4d,
+version 2.0.0. A separate HTTPS clone confirmed origin/master reachability.
+R0/R4/R-stop/R-gate freezes equal P0a. No writes, fetches or builds in the author
+tree. The 1,447-file digest is
+f00e7f9c16854d70c3d2122272458c581bacd108882ed13004c7d6d2173348ee.
+The patch is empty; its check is unchanged. Readers check out the public commit.
+R2 changes exactly nine line numbers and no path/needle. The follow-up's second
+Config.cpp:1070 anchor labeled record 24 actually lives in record 26; updated
+that existing anchor, as documented in R2-anchors.md.
 
-## P−1 change and verification
+R3 corrects synchronous hex-dump rendering/output cost, clarifies caller-side
+format validation, and qualifies deferred startup and output visibility. Borrowed
+bytes are copied before return; the disabled-level early return remains true.
+R-claim-review.md records book/source evidence and byte-identical carried-forward
+contracts. The reviewed tree digest is updated after that inspection.
 
-The prescribed fix declares C++20 at each affected exercise target. It adds ten
-`target_compile_features(... PRIVATE cxx_std_20)` declarations in eight files:
+## Build and execution evidence
 
-| File | Added declaration lines |
-| --- | --- |
-| companion/exercises/ch06/CMakeLists.txt | 4 |
-| companion/exercises/ch08/CMakeLists.txt | 7 |
-| companion/exercises/ch10/CMakeLists.txt | 4 |
-| companion/exercises/ch11/CMakeLists.txt | 11 |
-| companion/exercises/ch14/CMakeLists.txt | 4, 14 |
-| companion/exercises/ch19/CMakeLists.txt | 13 |
-| companion/exercises/ch20/CMakeLists.txt | 4, 8 |
-| companion/exercises/ch21/CMakeLists.txt | 10 |
+R4-build.log records a fresh export and 968 successful framework build steps.
+Framework CTest passes **181/183** with no skips; both failures reproduce:
+EndpointLifetimeCountersTest and InetLegacyClientConnectFailureTest. Their
+in-process reads precede asynchronous record visibility. Expected attempt records
+appear after exit (R4-log-after-exit.json). No framework tests were changed.
 
-Inspected the declarations and commit diff; compiled all 14 concrete targets
-with Clang 19 whose default `__cplusplus` is 201703. All 21 targeted compilation
-commands explicitly request C++20. See `P-minus-1-build.log:1` and its final PASS
-line. The existing ch08 bluetooth-selectors declaration was retained. Production
-C++ and test-driver implementation changes: +0/−0 each. Exercise build declarations:
-+10/−0. New scripts in this review directory are evidence support only.
+Following Follow-up 02, installation completed manually after the failed CTest
+stage (R4-install.log). All **4 external echo tests pass** (R4-external-echo.log).
+The new prefix is `build/rebaseline-8b8da56/install-gcc`; all resumed runtime
+checks use it. The 2026-09-22 installation supplies no resumed evidence.
 
-## Entry checks
+R-results.json records passing metrics, references, source alignment, hygiene,
+companion compilation, package build, both checker test suites, teaching,
+behavior, lifetime and extracted-package hygiene. Source alignment reports zero
+errors, 31 records and 37 exact complete listings.
 
-Each row was executed freshly; exact commands, environment and output are in
-the linked log. `run-checks.py` collected every independent result despite the
-alignment failure; it did not advance the editorial phase.
+The companion CTest run passes **51/62** (R-labs.log). Ten failures are SIGINT
+shutdown timeouts; one is a scoped-record snapshot race. R4-shutdown-diagnosis.json
+and R4-shutdown-backtrace.log reproduce a successful echo followed by a process
+still waiting in epoll with its logging worker present after SIGINT. This is not
+an assertion that the network exchange itself failed. No shutdown timeout or
+assertion has been relaxed, and no framework workaround is added.
 
-| Check | Result | Log |
-| --- | --- | --- |
-| manuscript-metrics.py | PASS | P0b-metrics.log |
-| check-chapter-references.py | PASS | P0b-references.log |
-| check-source-alignment.py --framework /home/voc/projects/snodec/snode.c | **FAIL** | P0b-source-alignment.log |
-| check-source-hygiene.sh | PASS | P0b-hygiene.log |
-| build-companion-examples.sh | PASS | P0b-companion.log |
-| build-book-package.sh (PDFs and archive) | PASS | P0b-package.log |
-| test-chapter-references.py | PASS | P0b-test-chapter-references.log |
-| test-manuscript-metrics.py | PASS | P0b-test-manuscript-metrics.log |
-| Public labs, CTest | PASS: 62/62 | P0b-labs.log |
-| run-teaching-smoke-tests.py | PASS | P0b-teaching.log |
-| run-behavior-smoke-tests.sh | PASS | P0b-behavior.log |
-| run-example-lifetime-tests.py | PASS | P0b-lifetime.log |
-| Extracted-package source hygiene | PASS | P0b-extracted-hygiene.log |
-| check-smoothing.py | **NOT RUN; not created before stop** | P0b-stop-condition.json |
+The authorized timing correction in companion/exercises/ch12/configuration.py:71
+waits up to five seconds for the expected payload log, reading complete JSON
+lines, before running all existing semantic assertions. Its focused recheck
+(R-driver-timing-recheck.log) encountered the separate shutdown timeout before
+that observation; no passing validation is claimed for it yet. Production C++
+changes: +0/−0; test-driver change: +11/−1 (net +10 lines).
 
-Twelve of thirteen executed entry groups passed. Source hygiene uses the recorded
-snapshot and does not replace the explicit working-tree alignment check.
-Compilation and runtime checks use the previously installed package at
-`build/ci-fix-2026-09-22/install-gcc`, following the recorded Phase 5m environment.
-They demonstrate builds and runs against that installation; with source alignment
-failing, they do not certify compatibility with the frozen current framework.
-No new framework build, hosted CI run or deployment verification is claimed.
-Logs retain command output; only trailing horizontal whitespace was normalized.
+A source-reference precheck caught a new Chapter 2 mention in Further Reading;
+using the source-version document path preserves the existing register. Initial
+PDF logs exposed two overfull boxes from the full SHA in the evidence-sheet
+bullet; it now uses the short pin while authoritative declarations retain the
+full SHA. Later final LaTeX logs contain no warnings/bad boxes. Precheck failures
+remain recorded. Proposal runtime claims distinguish historical passes from the
+current qualified verification rather than claiming 62/62 for this pin.
 
-## Outcome and preservation
+## Metrics, preservation and outstanding work
 
-`metrics-before.json` and `metrics-after.json` are identical: **100,338 → 100,338
-raw whitespace tokens**, delta **0**. No manuscript prose was changed or reread
-as an editorial refinement.
+Current tokens: **100,338 → 100,323**, delta −15. Must/wish/ceiling remain
+**107,338 / 112,338 / 115,000**; the must gap is 7,015. metrics-after-R.json
+records the result. Original before/after metrics are historical and unchanged.
+No floor or cap waivers. check-smoothing.py has not yet been created/run.
 
-| Threshold | Required | Current difference |
-| --- | ---: | ---: |
-| Must | 107,338 | 7,000 below |
-| Wish | 112,338 | 12,000 below |
-| Hard ceiling | 115,000 | 14,662 below |
+Structure, 37 source markers, 1,033 index entries, 18 figures and 20 rules are
+preserved. Fenced tokens change 8,151 → 8,145 only from the two explicitly
+removed patch-application commands. No application listing was cut. The prompt
+SHA-256 remains c34bbab40ac13289e993af8504344f8d1435e1ec5ca87d4fb7ad6dfac8020155.
+D1–D6 smoothing changes remain pending; only the public-pin amendment to D3 has
+been applied. No fabricated chapter assessment or apparatus completion is claimed.
 
-`P0b-preservation.json` and the empty manuscript diff against the entry baseline
-confirm unchanged fenced tokens (8,151), exact source markers (37), index entries
-(1,033), figure IDs (18), and rule boxes (20). The manifest still has 30 numbered
-chapters plus Appendix A. All 62 existing labs pass. No listing, figure, index,
-structure-sensitive registry or historical review record was changed.
-
-## Deferred work and waivers
-
-D1–D6 are accepted scope but none was applied before the entry stop. Chapter
-splits, ranked prose additions, terminology changes, apparatus changes and
-check-smoothing.py remain unimplemented. No floor or cap waiver was requested or
-granted. Chapter budgets have not been adjudicated as completed work; no chapter
-has been declared refined. Per-file baseline measurements remain available in
-metrics-before.json. No post-pass chapter table, terminology allowlist, new
-objective/lab mapping, or 8-dimension self-assessment has been manufactured for
-work that never began.
-
-- **Blocked:** P0b source alignment, with every failed anchor and file enumerated
-  in P0b-stop-condition.json. Reconciliation is outside this stopped pass under §14.
-- **Open:** P1–P7, all pedagogical deliverables and the 7,000-token global-must gap.
-- **Qualified:** successful build/runtime evidence applies to the existing installed
-  framework package; it is not verification of the present frozen source.
-- **Completed:** P0a scope installation and the narrowly prescribed P−1 C++20 fix.
-
-This run ends at P0b; no unrelated source-evidence repair is authorized by this run.
+Open: P0b-resume and P1–P7. Qualified: framework and companion CTests as above;
+the author directs continuation, and all failures remain visible. No framework
+changes are authorized. Floor/cap waivers: none. No new hosted CI, hardware or
+deployment validation is claimed. Push only the work branch on final completion
+or a later non-overridden stop condition.

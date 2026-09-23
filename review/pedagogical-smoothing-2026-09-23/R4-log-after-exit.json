@@ -1,0 +1,9 @@
+{
+  "file": "/tmp/snodec-phase2-ipv4-attempt-failure.jsonl",
+  "collected_after": "focused failing CTest rerun exited",
+  "observed_message_counts": {
+    "connection attempt started": 1,
+    "connection attempt failed": 1
+  },
+  "conclusion": "records missing at the in-process assertion are present after process completion; not evidence of missing transport callbacks"
+}

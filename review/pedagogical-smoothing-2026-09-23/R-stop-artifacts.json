@@ -1,0 +1,9 @@
+{
+  "package_build_exit": 0,
+  "final_latex_issues": {
+    "build/proposal-readiness-phase-2/snodec-book.log": [],
+    "build/proposal-readiness-phase-2/book-proposal-sample-package.log": [],
+    "build/proposal-readiness-phase-2/book-proposal-package.log": []
+  },
+  "extracted_hygiene_exit": 0
+}

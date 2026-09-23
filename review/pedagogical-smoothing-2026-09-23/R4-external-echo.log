@@ -1,0 +1,65 @@
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Found Python3: /usr/bin/python3 (found version "3.14.7") found components: Interpreter
+-- Configuring done (0.4s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/external-echo
+[1/6] Building CXX object CMakeFiles/echo-context.dir/EchoSocketContext.cpp.o
+[2/6] Linking CXX static library libecho-context.a
+[3/6] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+[4/6] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+[5/6] Linking CXX executable echoclient
+[6/6] Linking CXX executable echoserver
+Test project /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/external-echo
+    Start 1: echo.config-surface
+1/4 Test #1: echo.config-surface ..............   Passed    0.07 sec
+    Start 2: echo.server-external-peer
+2/4 Test #2: echo.server-external-peer ........   Passed    0.11 sec
+    Start 3: echo.client-external-peer
+3/4 Test #3: echo.client-external-peer ........   Passed    0.07 sec
+    Start 4: echo.pair-smoke
+4/4 Test #4: echo.pair-smoke ..................   Passed    0.35 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+client           =   0.07 sec*proc (1 test)
+configuration    =   0.07 sec*proc (1 test)
+echo             =   0.59 sec*proc (4 tests)
+example          =   0.59 sec*proc (4 tests)
+external         =   0.59 sec*proc (4 tests)
+pair             =   0.35 sec*proc (1 test)
+payload          =   0.17 sec*proc (2 tests)
+server           =   0.11 sec*proc (1 test)
+smoke            =   0.35 sec*proc (1 test)
+
+Total Test time (real) =   0.59 sec

@@ -1,0 +1,56 @@
+Test project /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/framework-gcc
+    Start  19: EndpointLifetimeCountersTest
+1/2 Test  #19: EndpointLifetimeCountersTest .........***Failed    0.23 sec
+FAIL: real server terminal listen ERROR emits one summary per explicit call expected=2 actual=0
+FAIL: server summary is Info framework/instance core.socket.stream with server role and instance
+FAIL: server terminal summary remains before shutdown logs and is not repeated by free
+FAIL: endpoint lifetime scenario server-terminal passes expected=0 actual=256
+FAIL: server retry is scheduled once expected=1 actual=0
+FAIL: server retry is dispatched once expected=1 actual=0
+FAIL: endpoint lifetime scenario server-retry passes expected=0 actual=256
+FAIL: server retry cancellation starts scheduled expected=1 actual=0
+FAIL: scheduled server retry is cancelled once expected=1 actual=0
+FAIL: endpoint lifetime scenario server-retry-cancelled passes expected=0 actual=256
+FAIL: real client terminal connect ERROR emits one summary per explicit call expected=2 actual=0
+FAIL: client connect summary is Info framework/instance core.socket.stream with client role and instance
+FAIL: client terminal summary remains before shutdown logs and is not repeated by free
+FAIL: endpoint lifetime scenario client-terminal passes expected=0 actual=256
+FAIL: client retry is scheduled once expected=1 actual=0
+FAIL: client retry is dispatched once expected=1 actual=0
+FAIL: endpoint lifetime scenario client-retry passes expected=0 actual=256
+FAIL: client retry cancellation starts scheduled expected=1 actual=0
+FAIL: scheduled client retry is cancelled once expected=1 actual=0
+FAIL: endpoint lifetime scenario client-retry-cancelled passes expected=0 actual=256
+FAIL: reconnect is scheduled once expected=1 actual=0
+FAIL: reconnect is dispatched once expected=1 actual=0
+FAIL: endpoint lifetime scenario client-reconnect-accepted passes expected=0 actual=256
+FAIL: reconnect cancellation starts scheduled expected=1 actual=0
+FAIL: scheduled reconnect is cancelled once expected=1 actual=0
+FAIL: endpoint lifetime scenario client-reconnect-cancelled passes expected=0 actual=256
+
+    Start 101: InetLegacyClientConnectFailureTest
+2/2 Test #101: InetLegacyClientConnectFailureTest ...***Failed    0.02 sec
+FAIL: failed connection emits one attempt start expected=1 actual=0
+FAIL: failed connection emits one terminal failure expected=1 actual=0
+
+
+0% tests passed, 2 tests failed out of 2
+
+Label Time Summary:
+component           =   0.02 sec*proc (1 test)
+connect-failure     =   0.02 sec*proc (1 test)
+core                =   0.23 sec*proc (1 test)
+endpoint-counter    =   0.23 sec*proc (1 test)
+ipv4                =   0.02 sec*proc (1 test)
+legacy              =   0.02 sec*proc (1 test)
+lifecycle           =   0.23 sec*proc (1 test)
+net                 =   0.02 sec*proc (1 test)
+stream              =   0.02 sec*proc (1 test)
+unit                =   0.23 sec*proc (1 test)
+
+Total Test time (real) =   0.26 sec
+
+The following tests FAILED:
+	 19 - EndpointLifetimeCountersTest (Failed)             core endpoint-counter lifecycle unit
+	101 - InetLegacyClientConnectFailureTest (Failed)       component connect-failure ipv4 legacy net stream
+Errors while running CTest

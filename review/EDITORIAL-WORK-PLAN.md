@@ -1962,3 +1962,52 @@ PROMPT §14 apply. Push only the work branch on completion or stop.
 The original stop report is preserved in REPORT-P0b-stopped.md; original P0b logs
 and metrics remain historical. R0 passes; see R0-preconditions.json and
 framework-freeze-R0.json.
+
+### Follow-up 01 result — stopped at R4
+
+R0 passed: clean public 8b8da56, freeze equal to P0a. R1 committed in
+`e67295c2dfa4e09dd2ea14cdf11e66c08d2eaf52`; R2 in
+`e4f8a612695afeb957293920ea92350e4012aede`; local R3 logging corrections in
+`fa62fa1bf554f4efa7a5c71527cb15b67ead1492`. Source alignment now passes with
+zero errors. The former P0b source-drift stop is resolved by the authorized pin.
+
+**New stop at R4:** the exported pinned source compiles, but framework CTest
+passes 181/183 and fails EndpointLifetimeCountersTest and
+InetLegacyClientConnectFailureTest. Both reproduce. These tests read logs before
+async delivery completes; expected attempt records are visible after process
+exit. Follow-up 01 permits companion-driver timing corrections only; this
+framework test/log-visibility mismatch cannot be repaired within that scope.
+No framework code, tests or assertions were changed. The build script stopped
+before completing the new install/companion stages; 0/62 labs were run against
+the new installation. P0b-resume and P1–P7 have not started. No successful R
+evidence gate is claimed. Stop evidence commit: `review: stop re-baseline at framework logging checks`.
+
+Tokens: 100,338 → 100,323 (−15), still 7,015 below the absolute must. No waivers.
+The original prompt, P0b logs/metrics and report content are preserved; the report
+content is copied verbatim to REPORT-P0b-stopped.md. Both later freezes match R0.
+Proposal verification claims now distinguish historical lab passes from pending
+verification of the public pin. Final status/evidence:
+`review/pedagogical-smoothing-2026-09-23/REPORT.md`, `R-claim-review.md`,
+`R4-build.log`, `R4-failure-recheck.log`, `R4-log-after-exit.json`,
+`R-stop-checks.json`, `R-stop-artifacts.json`, `metrics-after-R.json`.
+Push only the existing work branch; no merge or source-branch push.
+
+### Follow-up 02 — continue past the two framework CTest failures
+
+The author explicitly instructs continuation despite the two framework CTest
+failures; verbatim instruction is in FOLLOWUP-02.md. This supersedes the R4 stop
+above for EndpointLifetimeCountersTest and InetLegacyClientConnectFailureTest.
+Preserve both failures as an accepted verification exception; do not change or
+weaken framework tests. Complete installation manually after the failed CTest
+stage, run the remaining external/companion checks against that new prefix, and
+resume R evidence, P0b-resume and P1–P7. All other scope and preservation rules
+remain. R's framework test result stays qualified rather than relabeled passing.
+
+R continuation evidence: new prefix installed; external echo 4/4, companion
+compilation and all smoke suites pass. Full companion CTest passes 51/62: ten
+SIGINT shutdown timeouts and one log snapshot race. The latter's driver now
+waits for the record without weakening assertions; its rerun encountered the
+independent shutdown failure. Following the author's explicit continuation,
+keep these CTests qualified and proceed; no framework changes or shutdown
+workarounds. R-results.json and REPORT.md distinguish every result. R evidence
+commit subject: `review: re-baseline evidence` (qualified, not all tests passed).

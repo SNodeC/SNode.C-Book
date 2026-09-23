@@ -1,0 +1,1123 @@
+-- Install configuration: "Debug"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-logger.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-logger.so.2
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-logger.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/log
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/log/Logger.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/log/LogScopeOwner.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/log/SemanticLogger.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_logger_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_logger_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-utils.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-utils.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-utils.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-utils.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/base64.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/CLI11.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/PreserveErrno.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/Formatter.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/hexdump.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/Timeval.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/SubCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/sha1.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/Config.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/Daemon.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/AttributeInjector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/Random.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/Uuid.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/system
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/system/signal.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/utils/system/time.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_utils_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_utils_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-mux-epoll.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-mux-epoll.so.2
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-mux-epoll.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mux-epoll_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mux-epoll_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-mux-poll.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-mux-poll.so.2
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-mux-poll.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mux-poll_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mux-poll_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-mux-select.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-mux-select.so.2
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-mux-select.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mux-select_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mux-select_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/Shutdown.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/DynamicLoader.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/pipe
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/pipe/Source.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/pipe/Pipe.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/pipe/PipeSink.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/pipe/PipeSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/pipe/Sink.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/Event.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/timer
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/timer/Timer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/timer/SingleshotTimer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/Timer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/DescriptorEventReceiver.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/State.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/TickStatus.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/eventreceiver
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/eventreceiver/ReadEventReceiver.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/eventreceiver/ConnectEventReceiver.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/eventreceiver/ExceptionalConditionEventReceiver.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/eventreceiver/WriteEventReceiver.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/eventreceiver/AcceptEventReceiver.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/SNodeC.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/EventReceiver.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/TimerEventReceiver.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/file
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/file/File.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/file/FileReader.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/system
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/system/netdb.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/system/poll.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/system/socket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/system/select.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/system/unistd.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/system/epoll.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/system/dlfcn.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/Descriptor.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/SocketContext.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/Socket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/State.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/Socket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/SocketAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core-socket_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core-socket_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketContext.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketContextFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketConnection.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketAcceptor.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/FlowController.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketConnection.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/ClientFlowController.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketConnector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketConnector.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/QueueResult.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketReader.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketWriter.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/FlowController.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/ServerFlowController.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/SocketAcceptor.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core-socket-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core-socket-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream-legacy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream-legacy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream-legacy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream-legacy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/legacy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/legacy/SocketConnection.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/legacy/SocketAcceptor.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/legacy/SocketConnection.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/legacy/SocketConnector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/legacy/SocketConnector.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/legacy/SocketReader.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/legacy/SocketWriter.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/legacy/SocketAcceptor.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core-socket-stream-legacy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core-socket-stream-legacy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream-tls.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream-tls.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream-tls.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-core-socket-stream-tls.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/SocketConnection.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/TLSHandshake.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/SocketAcceptor.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/TLSShutdown.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/ssl_utils.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/SocketConnection.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/SocketConnector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/SocketConnector.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/SocketReader.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/SocketWriter.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/system
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/system/ssl.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/core/socket/stream/tls/SocketAcceptor.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core-socket-stream-tls_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_core-socket-stream-tls_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/SocketAddress.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigSection.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddressReverse.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigTlsServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigPhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigPhysicalSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigInstance.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigTls.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddressReverse.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddressBase.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddressRemote.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddressBase.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigConnection.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddressLocal.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigTls.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/ConfigSocketServer.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/tls
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/tls/ConfigSocketServer.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/tls/ConfigSocketClient.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/tls/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/tls/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/ConfigSocketClient.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/legacy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/legacy/ConfigSocketServer.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/legacy/ConfigSocketClient.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/legacy/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/legacy/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/stream/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddressLocal.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigPhysicalSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigLegacy.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigTlsClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddress.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigPhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigAddressRemote.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/config/ConfigSection.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/PhysicalSocketOption.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/dgram
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/dgram/PeerSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/dgram/PeerSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/stream/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/stream/PhysicalSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/stream/PhysicalSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/stream/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/stream/PhysicalSocketClient.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/stream/PhysicalSocketServer.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/phy/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/SocketAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/config/ConfigAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/SocketAddrInfo.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/SocketAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-phy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-phy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-phy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-phy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/phy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/phy/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/phy/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-phy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-phy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-phy-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-phy-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-phy-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-phy-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/phy/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/phy/stream/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/phy/stream/PhysicalSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/phy/stream/PhysicalSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/phy/stream/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-phy-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-phy-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream-legacy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream-legacy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream-legacy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream-legacy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/legacy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/legacy/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/legacy/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/legacy/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/legacy/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/legacy/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-stream-legacy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-stream-legacy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream-tls.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream-tls.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream-tls.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in-stream-tls.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/tls
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/tls/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/tls/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/tls/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/tls/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in/stream/tls/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-stream-tls_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in-stream-tls_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/config/ConfigAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/SocketAddrInfo.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/SocketAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-phy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-phy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-phy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-phy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/phy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/phy/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/phy/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-phy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-phy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-phy-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-phy-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-phy-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-phy-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/phy/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/phy/stream/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/phy/stream/PhysicalSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/phy/stream/PhysicalSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/phy/stream/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-phy-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-phy-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream-legacy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream-legacy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream-legacy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream-legacy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/legacy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/legacy/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/legacy/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/legacy/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/legacy/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/legacy/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-stream-legacy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-stream-legacy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream-tls.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream-tls.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream-tls.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-in6-stream-tls.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/tls
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/tls/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/tls/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/tls/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/tls/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/in6/stream/tls/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-stream-tls_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-in6-stream-tls_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/config/ConfigAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/SocketAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-phy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-phy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-phy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-phy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/phy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/phy/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/phy/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-phy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-phy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-phy-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-phy-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-phy-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-phy-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/phy/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/phy/stream/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/phy/stream/PhysicalSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/phy/stream/PhysicalSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/phy/stream/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-phy-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-phy-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream-legacy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream-legacy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream-legacy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream-legacy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/legacy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/legacy/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/legacy/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/legacy/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/legacy/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/legacy/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-stream-legacy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-stream-legacy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream-tls.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream-tls.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream-tls.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-l2-stream-tls.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/tls
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/tls/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/tls/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/tls/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/tls/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/l2/stream/tls/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-stream-tls_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-l2-stream-tls_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/config/ConfigAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/SocketAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-phy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-phy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-phy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-phy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/phy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/phy/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/phy/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-phy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-phy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-phy-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-phy-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-phy-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-phy-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/phy/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/phy/stream/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/phy/stream/PhysicalSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/phy/stream/PhysicalSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/phy/stream/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-phy-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-phy-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream-legacy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream-legacy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream-legacy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream-legacy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/legacy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/legacy/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/legacy/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/legacy/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/legacy/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/legacy/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-stream-legacy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-stream-legacy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream-tls.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream-tls.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream-tls.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-rc-stream-tls.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/tls
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/tls/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/tls/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/tls/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/tls/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/rc/stream/tls/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-stream-tls_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-rc-stream-tls_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/config/ConfigAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/PeerCredentials.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/SocketAddress.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-phy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-phy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-phy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-phy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/phy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/phy/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/phy/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-phy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-phy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-phy-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-phy-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-phy-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-phy-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/phy/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/phy/stream/PhysicalSocket.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/phy/stream/PhysicalSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/phy/stream/PhysicalSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/phy/stream/PhysicalSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-phy-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-phy-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-stream_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-stream_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream-legacy.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream-legacy.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream-legacy.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream-legacy.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/legacy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/legacy/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/legacy/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/legacy/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/legacy/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/legacy/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-stream-legacy_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-stream-legacy_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream-tls.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream-tls.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream-tls.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-stream-tls.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/tls
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/tls/SocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/tls/config
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/tls/config/ConfigSocketClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/tls/config/ConfigSocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/stream/tls/SocketServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-stream-tls_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-stream-tls_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-dgram.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-dgram.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-dgram.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-net-un-dgram.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/dgram
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/net/un/dgram/Socket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-dgram_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_net-un-dgram_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/ContentType.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/TransferEncoding.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/ConnectionState.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/ConfigHttpParser.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/ConfigWebSocket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/StatusCodes.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/SocketContextUpgradeFactorySelector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/CiStringMap.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/decoder
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/decoder/Fields.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/decoder/Identity.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/decoder/HTTP10Response.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/decoder/Chunked.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/CookieOptions.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/SocketContextUpgradeFactorySelector.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/Parser.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/http_utils.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/SocketContextUpgradeFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/ParserLimits.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/SocketContextUpgradeFactory.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/MimeTypes.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/SocketContextUpgrade.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/ContentDecoder.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/SocketContext.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/Response.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/SocketContextFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/ConfigHttpServer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/Request.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/SemanticLog.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/SocketContextUpgradeFactorySelector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/RequestParser.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/server/SocketContextUpgradeFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/un
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/un/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in6
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in6/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/rc
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/rc/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/un
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/un/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in6
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in6/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/rc
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/rc/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/commands
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/commands/SendHeaderCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/commands/SendFileCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/commands/SseCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/commands/EndCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/commands/UpgradeCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/commands/SendFragmentCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/SocketContext.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/Response.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/SocketContextFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/Client.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/RequestCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/ResponseParser.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/Request.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/SemanticLog.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/SocketContextUpgradeFactorySelector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/tools
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/tools/EventSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/ConfigHTTP.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/client/SocketContextUpgradeFactory.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/un
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/un/EventSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/un/Client.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in6
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in6/EventSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in6/Client.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in/EventSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/in/Client.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/rc
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/rc/EventSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/legacy/rc/Client.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/un
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/un/EventSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/un/Client.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in6
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in6/EventSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in6/Client.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in/EventSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/in/Client.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/rc
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/rc/EventSource.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/http/tls/rc/Client.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-client.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-client.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-client.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-client.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-client_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-client_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http_Targets_Config.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/Receiver.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/SubProtocol.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/SubProtocolContext.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/Transmitter.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/SemanticLog.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/SubProtocolFactorySelector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/SubProtocol.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/SocketContextUpgrade.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/SocketContextUpgrade.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/SubProtocolFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/SubProtocolFactorySelector.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_websocket_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_websocket_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket-server.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket-server.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket-server.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket-server.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/server
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/server/GroupsManager.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/server/SubProtocol.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/server/SubProtocolFactorySelector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/server/SocketContextUpgradeFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/server/SocketContextUpgrade.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_websocket-server_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_websocket-server_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket-client.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket-client.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket-client.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/libsnodec-websocket-client.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/client
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/client/SubProtocol.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/client/SubProtocolFactorySelector.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/client/SocketContextUpgradeFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/web/websocket/client/SocketContextUpgrade.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_websocket-client_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_websocket-client_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_websocket_Targets_Config.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/Response.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/Router.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/Next.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/Route.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/Controller.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/express-compat-suite
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/express-compat-suite/node
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/express-compat-suite/snodec
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/express-compat-suite/tests
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/dispatcher
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/dispatcher/regex_utils.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/dispatcher/RouterDispatcher.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/dispatcher/MiddlewareDispatcher.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/dispatcher/ApplicationDispatcher.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/un
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/un/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/un/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in6
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in6/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in6/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/rc
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/rc/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/rc/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/Request.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/MountPoint.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/Route.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/un
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/un/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/un/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in6
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in6/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in6/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/rc
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/rc/Server.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/rc/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/Router.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/WebAppT.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/middleware
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/middleware/JsonMiddleware.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/middleware/StaticMiddleware.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/middleware/BasicAuthentication.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/middleware/VerboseRequest.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/middleware/VHost.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/Dispatcher.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/RootRoute.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-in.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-in.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-in.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-in.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in/Server.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-legacy-in_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-legacy-in_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-in6.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-in6.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-in6.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-in6.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in6
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in6/Server.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/in6/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-legacy-in6_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-legacy-in6_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-rc.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-rc.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-rc.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-rc.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/rc
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/rc/Server.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/rc/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-legacy-rc_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-legacy-rc_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-un.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-un.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-un.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-legacy-un.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/un
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/un/Server.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/legacy/un/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-legacy-un_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-legacy-un_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-in.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-in.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-in.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-in.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in/Server.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-tls-in_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-tls-in_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-in6.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-in6.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-in6.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-in6.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in6
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in6/Server.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/in6/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-tls-in6_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-tls-in6_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-rc.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-rc.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-rc.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-rc.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/rc
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/rc/Server.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/rc/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-tls-rc_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-tls-rc_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-un.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-un.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-un.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/libsnodec-http-server-express-tls-un.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/un
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/un/Server.h
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/express/tls/un/WebApp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-tls-un_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_http-server-express-tls-un_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-db-mariadb.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-db-mariadb.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-db-mariadb.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/libsnodec-db-mariadb.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_db-mariadb_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_db-mariadb_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/sync
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/sync/MariaDBUseResultCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/sync/MariaDBFieldCountCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/sync/MariaDBAffectedRowsCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/async
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/async/MariaDBFetchRowCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/async/MariaDBFreeResultCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/async/MariaDBConnectCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/async/MariaDBRollbackCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/async/MariaDBQueryCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/async/MariaDBAutoCommitCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/async/MariaDBExecCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/commands/async/MariaDBCommitCommand.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBLibrary.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBCommandSequence.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBCommandASync.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBClient.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBConnection.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBConnectionDetails.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBCommandSync.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBClientSyncAPI.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/database/mariadb/MariaDBClientASyncAPI.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Publish.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Puback.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Pingreq.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Pubcomp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Pubrel.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Subscribe.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Unsubscribe.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Connect.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Suback.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Pingresp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Connack.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Pubrec.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Unsuback.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/packets/Disconnect.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/StringPair.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/TypeBase.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/UInt32.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/UInt16.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/StringRaw.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/BinaryData.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/String.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/TypeBase.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/UInt8.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/types/UIntV.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt.so.2.0.0" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt.so
+-- Up-to-date: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/SocketContext.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/MqttContext.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/ControlPacketDeserializer.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/FixedHeader.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/SubProtocol.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/Topic.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/ControlPacket.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/SemanticLog.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/Mqtt.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/Session.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/SubProtocol.hpp
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Publish.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Puback.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Pingreq.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Pubcomp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Pubrel.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Subscribe.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Unsubscribe.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Connect.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Pubrec.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/packets/Disconnect.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/broker
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/broker/Broker.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/broker/SubscriptionTree.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/broker/RetainTree.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/broker/Session.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/broker/Message.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-server.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-server.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-server.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-server.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/Mqtt.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/SharedSocketContextFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/SocketContextFactory.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt-server_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt-server_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-server-websocket.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-server-websocket.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-server-websocket.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-server-websocket.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/server/SubProtocol.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt-server-websocket_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt-server-websocket_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets/Publish.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets/Puback.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets/Pubcomp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets/Pubrel.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets/Suback.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets/Pingresp.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets/Connack.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets/Pubrec.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/packets/Unsuback.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-client.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-client.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-client.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-client.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/Mqtt.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt-client_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt-client_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-client-websocket.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-client-websocket.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-client-websocket.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt:/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/iot/mqtt/libsnodec-mqtt-client-websocket.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/iot/mqtt/client/SubProtocol.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt-client-websocket_Targets.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodec_mqtt-client-websocket_Targets-debug.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/snode.c
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/snode.c" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/express-compat-server
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/express-compat-server" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testpost
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testpost" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/jsonserver
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/jsonserver" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/jsonclient
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/jsonclient" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testregex
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testregex" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/warema-jalousien
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/warema-jalousien" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testpipe
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testpipe" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/configtest
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/configtest" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testmariadb
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testmariadb" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-in
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-in" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-in
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-in" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-in
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-in" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-in
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-in" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-in6
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-in6" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-in6
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-in6" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-in6
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-in6" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-in6
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-in6" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-un
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-un" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-un
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-un" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-un
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-un" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-un
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-un" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-l2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-l2" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-l2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-l2" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-l2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-l2" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-l2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-l2" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-rc
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-legacy-rc" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-rc
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-legacy-rc" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-rc
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoclient-tls-rc" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-rc
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/echoserver-tls-rc" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-legacy-in
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-legacy-in" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-legacy-in
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-legacy-in" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-tls-in
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-tls-in" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-tls-in
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-tls-in" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-legacy-in6
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-legacy-in6" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-legacy-in6
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-legacy-in6" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-tls-in6
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-tls-in6" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-tls-in6
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-tls-in6" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-legacy-un
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-legacy-un" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-legacy-un
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-legacy-un" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-tls-un
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-tls-un" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-tls-un
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-tls-un" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-legacy-rc
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-legacy-rc" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-legacy-rc
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-legacy-rc" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-tls-rc
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpserver-tls-rc" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-tls-rc
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httpclient-tls-rc" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httplowlevelclient
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/httplowlevelclient" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/verysimpleserver
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/verysimpleserver" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/vhostserver
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/vhostserver" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testbasicauthentication
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testbasicauthentication" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testexpressnext
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/testexpressnext" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/authorization_server
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/authorization_server" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/client_app
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/client_app" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/resource_server
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/resource_server" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/tlslegacyserver
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/tlslegacyserver" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/tlslegacyclient
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/tlslegacyclient" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/towerCalculation
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/towerCalculation" to ""
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/wsechoserver
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/wsechoserver" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/wsechoclient
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/wsechoclient" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2.0.0
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2
+-- Set non-toolchain portion of runtime path of "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2.0.0" to "/home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade"
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/bin/snodec-control
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/lib/cmake/snodec/snodecConfigVersion.cmake
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/Log.h
+-- Installing: /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/install-gcc/include/snode.c/SemanticLog.h

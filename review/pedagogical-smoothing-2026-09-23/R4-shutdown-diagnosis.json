@@ -1,0 +1,11 @@
+[
+  {
+    "trial": 0,
+    "exit": 254
+  },
+  {
+    "trial": 1,
+    "hang": true,
+    "gdb_exit": 0
+  }
+]

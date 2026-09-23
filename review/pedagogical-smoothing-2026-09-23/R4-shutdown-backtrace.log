@@ -1,0 +1,43 @@
+[New LWP 1043575]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+__syscall_cancel_arch () at ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
+
+warning: 56	../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S: No such file or directory
+
+Thread 2 (Thread 0x7fe776bc26c0 (LWP 1043575) "echoserver"):
+#0  __syscall_cancel_arch () at ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
+#1  0x00007fe77709bc74 in __internal_syscall_cancel (a1=<optimized out>, a2=<optimized out>, a3=<optimized out>, a4=<optimized out>, a5=a5@entry=0, a6=a6@entry=4294967295, nr=202) at ./nptl/cancellation.c:49
+#2  0x00007fe77709bf2c in __futex_abstimed_wait_common64 (private=0, futex_word=0x56536c6c4578, expected=<optimized out>, op=<optimized out>, abstime=0x0, cancel=true) at ./nptl/futex-internal.c:57
+#3  __futex_abstimed_wait_common (futex_word=futex_word@entry=0x56536c6c4578, expected=<optimized out>, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0, cancel=cancel@entry=true) at ./nptl/futex-internal.c:87
+#4  0x00007fe77709bf8b in __GI___futex_abstimed_wait_cancelable64 (futex_word=futex_word@entry=0x56536c6c4578, expected=<optimized out>, clockid=clockid@entry=0, abstime=abstime@entry=0x0, private=private@entry=0) at ./nptl/futex-internal.c:139
+#5  0x00007fe77709e5c8 in __pthread_cond_wait_common (cond=0x56536c6c4558, mutex=0x56536c6c4530, clockid=0, abstime=0x0) at ./nptl/pthread_cond_wait.c:421
+#6  ___pthread_cond_wait (cond=0x56536c6c4558, mutex=0x56536c6c4530) at ./nptl/pthread_cond_wait.c:453
+#7  0x00007fe7777c1bc7 in std::condition_variable::wait<spdlog::details::mpmc_blocking_queue<spdlog::details::async_msg>::dequeue(spdlog::details::async_msg&)::{lambda()#1}>(std::unique_lock<std::mutex>&, spdlog::details::mpmc_blocking_queue<spdlog::details::async_msg>::dequeue(spdlog::details::async_msg&)::{lambda()#1}) (this=0x56536c6c4558, __lock=..., __p=...) at /usr/include/c++/16/condition_variable:107
+#8  0x00007fe7777b56f1 in spdlog::details::mpmc_blocking_queue<spdlog::details::async_msg>::dequeue (this=0x56536c6c4530, popped_item=...) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/framework-gcc/_deps/spdlog-src/include/spdlog/details/mpmc_blocking_q.h:85
+#9  0x00007fe7777a761d in spdlog::details::thread_pool::process_next_msg_ (this=0x56536c6c4530) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/framework-gcc/_deps/spdlog-src/include/spdlog/details/thread_pool-inl.h:100
+#10 0x00007fe7777a758d in spdlog::details::thread_pool::worker_loop_ (this=0x56536c6c4530) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/framework-gcc/_deps/spdlog-src/include/spdlog/details/thread_pool-inl.h:92
+#11 0x00007fe7777a6f05 in spdlog::details::thread_pool::thread_pool(unsigned long, unsigned long, std::function<void ()>, std::function<void ()>)::{lambda()#1}::operator()() const (__closure=0x56536c6ab388) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/framework-gcc/_deps/spdlog-src/include/spdlog/details/thread_pool-inl.h:29
+#12 0x00007fe777802ea7 in std::__invoke_impl<void, spdlog::details::thread_pool::thread_pool(unsigned long, unsigned long, std::function<void ()>, std::function<void ()>)::{lambda()#1}>(std::__invoke_other, spdlog::details::thread_pool::thread_pool(unsigned long, unsigned long, std::function<void ()>, std::function<void ()>)::{lambda()#1}&&) (__f=...) at /usr/include/c++/16/bits/invoke.h:63
+#13 0x00007fe777802e0c in std::__invoke<spdlog::details::thread_pool::thread_pool(unsigned long, unsigned long, std::function<void ()>, std::function<void ()>)::{lambda()#1}>(spdlog::details::thread_pool::thread_pool(unsigned long, unsigned long, std::function<void ()>, std::function<void ()>)::{lambda()#1}&&) (__fn=...) at /usr/include/c++/16/bits/invoke.h:98
+#14 0x00007fe777802bf6 in std::thread::_Invoker<std::tuple<spdlog::details::thread_pool::thread_pool(unsigned long, unsigned long, std::function<void ()>, std::function<void ()>)::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (this=0x56536c6ab388) at /usr/include/c++/16/bits/std_thread.h:303
+#15 0x00007fe7778021ac in std::thread::_Invoker<std::tuple<spdlog::details::thread_pool::thread_pool(unsigned long, unsigned long, std::function<void ()>, std::function<void ()>)::{lambda()#1}> >::operator()() (this=0x56536c6ab388) at /usr/include/c++/16/bits/std_thread.h:310
+#16 0x00007fe7777fd5f6 in std::thread::_State_impl<std::thread::_Invoker<std::tuple<spdlog::details::thread_pool::thread_pool(unsigned long, unsigned long, std::function<void ()>, std::function<void ()>)::{lambda()#1}> > >::_M_run() (this=0x56536c6ab380) at /usr/include/c++/16/bits/std_thread.h:255
+#17 0x00007fe7772ed086 in ?? () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#18 0x00007fe77709f058 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:454
+#19 0x00007fe77711cfe8 in __GI___clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+
+Thread 1 (Thread 0x7fe7774c7ec0 (LWP 1043574) "echoserver"):
+#0  __syscall_cancel_arch () at ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
+#1  0x00007fe77709bc74 in __internal_syscall_cancel (a1=<optimized out>, a2=<optimized out>, a3=<optimized out>, a4=<optimized out>, a5=<optimized out>, a6=a6@entry=8, nr=281) at ./nptl/cancellation.c:49
+#2  0x00007fe77709bcbd in __syscall_cancel (a1=<optimized out>, a2=<optimized out>, a3=<optimized out>, a4=<optimized out>, a5=<optimized out>, a6=a6@entry=8, nr=281) at ./nptl/cancellation.c:75
+#3  0x00007fe77711d25d in __GI_epoll_pwait (epfd=<optimized out>, events=<optimized out>, maxevents=<optimized out>, timeout=<optimized out>, set=<optimized out>) at ../sysdeps/unix/sysv/linux/epoll_pwait.c:40
+#4  0x00007fe777b04c20 in core::system::epoll_pwait (epfd=6, events=0x7fe7774e6a68 <EventMultiplexer()::eventMultiplexer+72>, maxevents=3, timeout=2147483647, sigMask=0x7ffd4bd8ecd0) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/core/system/epoll.cpp:64
+#5  0x00007fe7774e0330 in core::multiplexer::epoll::EventMultiplexer::monitorDescriptors (this=0x7fe7774e6a20 <EventMultiplexer()::eventMultiplexer>, tickTimeout=..., sigMask=...) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/core/multiplexer/epoll/EventMultiplexer.cpp:127
+#6  0x00007fe777af92f3 in core::EventMultiplexer::waitForEvents (this=0x7fe7774e6a20 <EventMultiplexer()::eventMultiplexer>, tickTimeOut=..., currentTime=..., sigMask=..., activeDescriptorCount=@0x7ffd4bd8ec8c: 0) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/core/EventMultiplexer.cpp:144
+#7  0x00007fe777af9055 in core::EventMultiplexer::tick (this=0x7fe7774e6a20 <EventMultiplexer()::eventMultiplexer>, tickTimeOut=..., sigMask=...) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/core/EventMultiplexer.cpp:97
+#8  0x00007fe777ac9022 in core::EventLoop::_tick (this=0x7fe777b31780 <core::EventLoop::instance()::eventLoop>, timeOut=...) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/core/EventLoop.cpp:216
+#9  0x00007fe777ac96d0 in core::EventLoop::start (timeOut=...) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/core/EventLoop.cpp:285
+#10 0x00007fe777afb30e in core::SNodeC::start (timeOut=...) at /home/voc/projects/snodec/publications/book/build/rebaseline-8b8da56/source/src/core/SNodeC.cpp:61
+#11 0x000056534032533f in main ()
+[Inferior 1 (process 1043574) detached]

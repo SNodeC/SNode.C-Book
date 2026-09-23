@@ -11,8 +11,12 @@ import tarfile
 root = Path(__file__).resolve().parents[2]
 review = Path(__file__).resolve().parent
 tag = sys.argv[1]
-build = root/'build/pedagogical-smoothing-examples'
-prefix = root/'build/ci-fix-2026-09-22/install-gcc'
+if tag == 'P0b':
+    raise SystemExit('Original P0b evidence is historical; use P0b-resume.')
+suffix = '-resume' if tag == 'P0b-resume' else ''
+label = 'P0b' if suffix else tag
+build = root/'build/rebaseline-8b8da56/examples'
+prefix = root/'build/rebaseline-8b8da56/install-gcc'
 env = os.environ | {
     'SNODEC_PREFIX':str(prefix), 'BOOK_EXAMPLES_BUILD_DIR':str(build),
     'BOOK_BUILD_DIR':'build/proposal-readiness-phase-2',
@@ -22,7 +26,7 @@ env = os.environ | {
     'LD_LIBRARY_PATH':':'.join(sorted({str(p.parent) for p in prefix.rglob('*.so*')})),
 }
 def run(name, command, cwd=root):
-    with (review/f'{tag}-{name}.log').open('w') as log:
+    with (review/f'{label}-{name}{suffix}.log').open('w') as log:
         log.write('COMMAND: '+' '.join(command)+'\n')
         for key in ['SNODEC_PREFIX','BOOK_EXAMPLES_BUILD_DIR','BOOK_BUILD_DIR','TMPDIR','LD_LIBRARY_PATH']:
             log.write(key+'='+env[key]+'\n')
