@@ -2211,3 +2211,11 @@ installation for the complete P0b check set. Then finish P1 by contextual reread
 of the snapshot changes, counts/allowlist and fresh metrics; execute P2–P7 under
 the unchanged absolute 107,338 / 112,338 / 115,000 budgets. No gate is complete
 yet in this resumed run. Push the work branch on completion or stop; do not merge.
+
+R2 result: public pin commit 4762369, anchor commit 69ac502, local dispatch claim
+commit cfd65ab. Fresh 1,448-file archive/build/install passes framework 185/185,
+external Echo 4/4, public labs 62/62 (zero skips), teaching/behavior/lifetime
+suites and the full static/package entry set. R2-results.json records outcomes;
+R2-build/ holds new runtime evidence and identical before/after source freezes.
+reviewed_tree_sha256 now records the new digest. No framework, existing driver,
+assertion or timeout changed. Separate P0b-R2-resume gate follows before P1.

@@ -1,0 +1,72 @@
+{
+  "framework-configure": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:47:00.870131+00:00",
+    "finished_utc": "2026-09-23T17:47:24.772450+00:00"
+  },
+  "framework-build": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:47:24.772695+00:00",
+    "finished_utc": "2026-09-23T17:51:25.854095+00:00"
+  },
+  "framework-inventory": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:51:25.854302+00:00",
+    "finished_utc": "2026-09-23T17:51:25.874551+00:00"
+  },
+  "framework-tests": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:51:25.874703+00:00",
+    "finished_utc": "2026-09-23T17:51:41.218223+00:00"
+  },
+  "framework-install": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:51:41.218403+00:00",
+    "finished_utc": "2026-09-23T17:51:41.502316+00:00"
+  },
+  "external-echo-configure": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:51:41.505443+00:00",
+    "finished_utc": "2026-09-23T17:51:41.846223+00:00"
+  },
+  "external-echo-build": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:51:41.846504+00:00",
+    "finished_utc": "2026-09-23T17:51:44.525875+00:00"
+  },
+  "external-echo-tests": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:51:44.526096+00:00",
+    "finished_utc": "2026-09-23T17:51:45.143741+00:00"
+  },
+  "companion-build": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:51:45.144048+00:00",
+    "finished_utc": "2026-09-23T17:52:01.974536+00:00"
+  },
+  "lab-inventory": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:52:01.974756+00:00",
+    "finished_utc": "2026-09-23T17:52:01.984539+00:00"
+  },
+  "labs": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:52:01.984679+00:00",
+    "finished_utc": "2026-09-23T17:53:07.801651+00:00"
+  },
+  "teaching-smoke": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:53:07.801834+00:00",
+    "finished_utc": "2026-09-23T17:53:07.950370+00:00"
+  },
+  "behavior-smoke": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:53:07.950639+00:00",
+    "finished_utc": "2026-09-23T17:53:09.919846+00:00"
+  },
+  "lifetime-tests": {
+    "exit_code": 0,
+    "started_utc": "2026-09-23T17:53:09.920172+00:00",
+    "finished_utc": "2026-09-23T17:53:21.562996+00:00"
+  }
+}

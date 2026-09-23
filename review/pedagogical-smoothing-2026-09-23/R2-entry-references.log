@@ -1,0 +1,7 @@
+COMMAND: python3 ci/check-chapter-references.py
+SNODEC_PREFIX=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc
+BOOK_EXAMPLES_BUILD_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples
+BOOK_BUILD_DIR=build/rebaseline-R2-07ca9a29-followup11/book
+TMPDIR=/tmp
+LD_LIBRARY_PATH=
+Chapter references passed: 30 chapters + Appendix A, 39 stable topics, 298 current references, 374 old-reference dispositions.

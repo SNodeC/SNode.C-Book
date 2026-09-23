@@ -1,0 +1,1723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="185"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="jupiter"
+	time="15"
+	timestamp="2026-09-23T19:51:25"
+	>
+	<testcase name="StagedInstalledConsumerTest" classname="StagedInstalledConsumerTest" time="4.78978" status="run">
+		<properties>
+			<property name="cmake_labels" value="consumer;install"/>
+		</properties>
+		<system-out>-- Installed consumer compile command: /usr/bin/c++ -std=c++20 /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/framework-gcc/staged-installed-consumer/consumer.cpp -I/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/framework-gcc/staged-installed-consumer/prefix/include/snode.c -L/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/framework-gcc/staged-installed-consumer/prefix/lib -L/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/framework-gcc/staged-installed-consumer/prefix/lib/snode.c/web/http -Wl,-rpath,/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/framework-gcc/staged-installed-consumer/prefix/lib -Wl,-rpath,/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/framework-gcc/staged-installed-consumer/prefix/lib/snode.c/web/http -lsnodec-core -lsnodec-core-socket -lsnodec-core-socket-stream -lsnodec-net...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="SNodeCInitFreeSmokeTest" classname="SNodeCInitFreeSmokeTest" time="0.00921343" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;smoke;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SNodeCAsyncLogDrainTest" classname="SNodeCAsyncLogDrainTest" time="0.0634161" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;log;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSResultClassificationTest" classname="TLSResultClassificationTest" time="0.00354317" status="run">
+		<properties>
+			<property name="cmake_labels" value="classification;core;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSIoFatalPathTest" classname="TLSIoFatalPathTest" time="0.0148634" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;fatal;io;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSLifecycleHelperOwnershipTest" classname="TLSLifecycleHelperOwnershipTest" time="0.0124088" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;ownership;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSTransportStateMachineTest" classname="TLSTransportStateMachineTest" time="0.1286" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;state-machine;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSLifecycleAbiSourceCompatibilityTest" classname="TLSLifecycleAbiSourceCompatibilityTest" time="0.00624149" status="run">
+		<properties>
+			<property name="cmake_labels" value="abi;core;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="StreamFrameworkShutdown_plain_requested_empty" classname="StreamFrameworkShutdown_plain_requested_empty" time="0.00864912" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;unit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:30.920Z WRN framework/system core.timer inst=SingleshotTimer — TimerEventReceiver - Enable after signal: Not enabled
+2026-09-23T17:51:30.921Z INF framework/connection core.socket.stream role=client inst=stream-framework-shutdown conn=41 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="StreamFrameworkShutdown_plain_requested_queued" classname="StreamFrameworkShutdown_plain_requested_queued" time="0.0255196" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;unit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:30.932Z WRN framework/system core.timer inst=SingleshotTimer — TimerEventReceiver - Enable after signal: Not enabled
+2026-09-23T17:51:30.945Z INF framework/connection core.socket.stream role=client inst=stream-framework-shutdown conn=41 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="StreamFrameworkShutdown_plain_signal_false_veto" classname="StreamFrameworkShutdown_plain_signal_false_veto" time="0.0114213" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;unit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:30.958Z INF framework/connection core.socket.stream role=client inst=stream-framework-shutdown conn=41 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="StreamFrameworkShutdown_plain_no_observer" classname="StreamFrameworkShutdown_plain_no_observer" time="0.00774483" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="StreamFrameworkShutdown_plain_noncooperating_timeout" classname="StreamFrameworkShutdown_plain_noncooperating_timeout" time="0.0611297" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;unit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:30.975Z WRN framework/system core.timer inst=SingleshotTimer — TimerEventReceiver - Enable after signal: Not enabled
+2026-09-23T17:51:31.026Z WRN framework/connection core.socket.stream role=client inst=stream-framework-shutdown conn=41 — Read timeout
+2026-09-23T17:51:31.026Z INF framework/connection core.socket.stream role=client inst=stream-framework-shutdown conn=41 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="StreamFrameworkShutdown_reentrant_context_cleanup" classname="StreamFrameworkShutdown_reentrant_context_cleanup" time="0.0142717" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;unit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:31.041Z WRN framework/system core.timer inst=SingleshotTimer — TimerEventReceiver - Enable after signal: Not enabled
+2026-09-23T17:51:31.041Z INF framework/connection core.socket.stream role=client inst=stream-framework-shutdown conn=41 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="StreamFrameworkShutdown_active_detach_context_visibility" classname="StreamFrameworkShutdown_active_detach_context_visibility" time="0.0138537" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;unit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:31.055Z INF framework/connection core.socket.stream role=client inst=stream-framework-shutdown conn=41 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="StreamFrameworkShutdown_destruction_logging_order" classname="StreamFrameworkShutdown_destruction_logging_order" time="0.0139746" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SocketContextLifecycleTest" classname="SocketContextLifecycleTest" time="0.00778482" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SocketWriterResourcePolicyTest" classname="SocketWriterResourcePolicyTest" time="0.0124839" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;resource-policy;stream;unit;writer"/>
+		</properties>
+		<system-out>2026-09-23T17:51:31.089Z WRN framework/connection core.socket.stream role=client inst=SocketWriterResourcePolicyTest conn=1 — Send would exceed maximum write queue: failing the connection for 5 bytes
+2026-09-23T17:51:31.089Z WRN framework/connection core.socket.stream role=client inst=SocketWriterResourcePolicyTest conn=1 — WRITE descriptor: Suspend while not enabled
+2026-09-23T17:51:31.089Z WRN framework/connection core.socket.stream role=client inst=SocketWriterResourcePolicyTest conn=1 — WRITE descriptor: Suspend while not enabled
+</system-out>
+	</testcase>
+	<testcase name="ListenerLifecycleTest" classname="ListenerLifecycleTest" time="0.00816658" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;listener;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="EndpointLifetimeCountersTest" classname="EndpointLifetimeCountersTest" time="0.177856" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;endpoint-counter;lifecycle;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="ConnectionAttemptLifecycleTest" classname="ConnectionAttemptLifecycleTest" time="0.0366901" status="run">
+		<properties>
+			<property name="cmake_labels" value="connection;core;lifecycle;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TlsOpenSslLoggingTest" classname="TlsOpenSslLoggingTest" time="0.00703019" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;log;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSFrameworkShutdown_active_helper_requested" classname="TLSFrameworkShutdown_active_helper_requested" time="0.0127242" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSFrameworkShutdown_active_helper_no_observer" classname="TLSFrameworkShutdown_active_helper_no_observer" time="0.0146881" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSFrameworkShutdown_active_helper_signal" classname="TLSFrameworkShutdown_active_helper_signal" time="0.0137919" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSFrameworkShutdown_active_helper_forced" classname="TLSFrameworkShutdown_active_helper_forced" time="0.0123341" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSFrameworkShutdown_publisher_mutation_same_list" classname="TLSFrameworkShutdown_publisher_mutation_same_list" time="0.0145321" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSFrameworkShutdown_publisher_mutation_cross_publisher" classname="TLSFrameworkShutdown_publisher_mutation_cross_publisher" time="0.00899417" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;tls;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="TLSFrameworkShutdown_signal_false_tls" classname="TLSFrameworkShutdown_signal_false_tls" time="0.0132086" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;tls;unit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:31.412Z WRN framework/system core.timer inst=SingleshotTimer — TimerEventReceiver - Enable after signal: Not enabled
+2026-09-23T17:51:31.413Z INF framework/connection core.socket.stream role=client inst=tls-framework-shutdown-1 conn=103 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="TLSFrameworkShutdown_outer_timeout_long" classname="TLSFrameworkShutdown_outer_timeout_long" time="2.01809" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;tls;unit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:33.428Z INF framework/connection core.socket.stream role=client inst=tls-framework-shutdown-1 conn=200 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="TLSFrameworkShutdown_outer_timeout_multiple" classname="TLSFrameworkShutdown_outer_timeout_multiple" time="2.01892" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;shutdown;stream;tls;unit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:35.447Z INF framework/connection core.socket.stream role=client inst=tls-framework-shutdown-1 conn=200 — transport disconnected
+2026-09-23T17:51:35.448Z INF framework/connection core.socket.stream role=client inst=tls-framework-shutdown-2 conn=201 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetSocketAddressTest" classname="InetSocketAddressTest" time="0.00917878" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;net;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetSocketAddressNativeTest" classname="InetSocketAddressNativeTest" time="0.00724729" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;ipv4;native;net;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="Inet6SocketAddressTest" classname="Inet6SocketAddressTest" time="0.00650032" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;net;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="Inet6SocketAddressNativeTest" classname="Inet6SocketAddressNativeTest" time="0.00641931" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;ipv6;native;net;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="UnixSocketAddressTest" classname="UnixSocketAddressTest" time="0.00754873" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;net;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="UnixSocketAddressInitTest" classname="UnixSocketAddressInitTest" time="0.00828801" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;init;net;unit;unix"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetSocketAddressInvalidInputTest" classname="InetSocketAddressInvalidInputTest" time="0.00836407" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;invalid;ipv4;net;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="Inet6SocketAddressInvalidInputTest" classname="Inet6SocketAddressInvalidInputTest" time="0.0070438" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;invalid;ipv6;net;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="UnixSocketAddressPathLengthTest" classname="UnixSocketAddressPathLengthTest" time="0.00504465" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;net;path;unit;unix"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="UnixPeerCredentialsTest" classname="UnixPeerCredentialsTest" time="0.00648416" status="run">
+		<properties>
+			<property name="cmake_labels" value="credentials;net;unit;unix"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SocketAddressFormattingTest" classname="SocketAddressFormattingTest" time="0.00509088" status="run">
+		<properties>
+			<property name="cmake_labels" value="address;format;net;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HttpMessageParserTest" classname="HttpMessageParserTest" time="0.00887978" status="run">
+		<properties>
+			<property name="cmake_labels" value="http;message;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HttpPolicyConfigTest" classname="HttpPolicyConfigTest" time="0.0109675" status="run">
+		<properties>
+			<property name="cmake_labels" value="config;http;policy;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HttpRequestFormatterRawWireTest" classname="HttpRequestFormatterRawWireTest" time="0.00672536" status="run">
+		<properties>
+			<property name="cmake_labels" value="format;http;message;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HttpResponseFormatterRawWireTest" classname="HttpResponseFormatterRawWireTest" time="0.00719879" status="run">
+		<properties>
+			<property name="cmake_labels" value="format;http;message;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HttpMessagePresentationTest" classname="HttpMessagePresentationTest" time="0.00705115" status="run">
+		<properties>
+			<property name="cmake_labels" value="format;http;message;presentation;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HttpMessageHeaderCasingTest" classname="HttpMessageHeaderCasingTest" time="0.00805885" status="run">
+		<properties>
+			<property name="cmake_labels" value="headers;http;message;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HttpMessageTargetQueryEdgeTest" classname="HttpMessageTargetQueryEdgeTest" time="0.00725719" status="run">
+		<properties>
+			<property name="cmake_labels" value="http;message;query;target;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HttpServerUpgradeMissingRequestTest" classname="HttpServerUpgradeMissingRequestTest" time="0.00665154" status="run">
+		<properties>
+			<property name="cmake_labels" value="http;lifecycle;log;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HttpStreamingSourceFailureTest" classname="HttpStreamingSourceFailureTest" time="0.00684245" status="run">
+		<properties>
+			<property name="cmake_labels" value="http;lifecycle;log;streaming;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="WebSocketReceiverValidationTest" classname="WebSocketReceiverValidationTest" time="0.00528259" status="run">
+		<properties>
+			<property name="cmake_labels" value="unit;validation;websocket"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="WebSocketLimitCloseFrameTest" classname="WebSocketLimitCloseFrameTest" time="0.00665103" status="run">
+		<properties>
+			<property name="cmake_labels" value="resource-policy;unit;websocket"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="PublicLogApiTest" classname="PublicLogApiTest" time="0.00168232" status="run">
+		<properties>
+			<property name="cmake_labels" value="api;format;log;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SemanticLoggerFormattingTest" classname="SemanticLoggerFormattingTest" time="0.00260835" status="run">
+		<properties>
+			<property name="cmake_labels" value="format;log;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="LogScopeOwnerTest" classname="LogScopeOwnerTest" time="0.00214568" status="run">
+		<properties>
+			<property name="cmake_labels" value="log;ownership;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SemanticLoggerScopeTest" classname="SemanticLoggerScopeTest" time="0.00455124" status="run">
+		<properties>
+			<property name="cmake_labels" value="api;log;scope;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SemanticLoggerBackendTest" classname="SemanticLoggerBackendTest" time="0.00642167" status="run">
+		<properties>
+			<property name="cmake_labels" value="backend;log;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SemanticLoggerFilteringTest" classname="SemanticLoggerFilteringTest" time="0.00668828" status="run">
+		<properties>
+			<property name="cmake_labels" value="filter;log;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SemanticLoggerDisabledPathTest" classname="SemanticLoggerDisabledPathTest" time="0.00647625" status="run">
+		<properties>
+			<property name="cmake_labels" value="log;overhead;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SemanticLoggerCacheTest" classname="SemanticLoggerCacheTest" time="0.00477358" status="run">
+		<properties>
+			<property name="cmake_labels" value="cache;log;overhead;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SemanticEndToEndOutputTest" classname="SemanticEndToEndOutputTest" time="0.00372444" status="run">
+		<properties>
+			<property name="cmake_labels" value="e2e;log;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SemanticTerminalColorRoutingTest" classname="SemanticTerminalColorRoutingTest" time="0.00682335" status="run">
+		<properties>
+			<property name="cmake_labels" value="log;routing;security;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SemanticCliIntegrationTest" classname="SemanticCliIntegrationTest" time="0.00566896" status="run">
+		<properties>
+			<property name="cmake_labels" value="cli;integration;log;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="Mqtt311PacketValidationTest" classname="Mqtt311PacketValidationTest" time="0.00626861" status="run">
+		<properties>
+			<property name="cmake_labels" value="mqtt;mqtt311;unit;validation"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="MqttLifecycleTest" classname="MqttLifecycleTest" time="0.0101293" status="run">
+		<properties>
+			<property name="cmake_labels" value="lifecycle;log;mqtt;protocol;unit"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="ConfigFormatterCommentMetadataTest" classname="ConfigFormatterCommentMetadataTest" time="0.00712825" status="run">
+		<properties>
+			<property name="cmake_labels" value="config;format;unit;utils"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="ConfigRequirementStateTest" classname="ConfigRequirementStateTest" time="0.00690128" status="run">
+		<properties>
+			<property name="cmake_labels" value="config;unit;utils"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="HexDumpPresentationTest" classname="HexDumpPresentationTest" time="0.00702466" status="run">
+		<properties>
+			<property name="cmake_labels" value="hexdump;unit;utils"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SingleshotTimerTest" classname="SingleshotTimerTest" time="0.00910415" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;timer"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="IntervalTimerStopableTest" classname="IntervalTimerStopableTest" time="0.0102151" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;timer"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SNodeCStopFromCallbackTest" classname="SNodeCStopFromCallbackTest" time="0.00884956" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;lifecycle"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SNodeCReconfigureTest" classname="SNodeCReconfigureTest" time="0.0141298" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;config;core;lifecycle"/>
+		</properties>
+		<system-out>{"v":1,"ts":"2026-09-23T17:51:35.744Z","level":"debug","origin":"framework","boundary":"system","component":"core.mux","instance":"epoll","message":"Core::multiplexer: epoll"}
+{"v":1,"ts":"2026-09-23T17:51:35.744Z","level":"error","origin":"framework","boundary":"system","component":"core.event-loop","message":"Configuration can only be reapplied while SNode.C is running"}
+{"v":1,"ts":"2026-09-23T17:51:35.746Z","level":"error","origin":"framework","boundary":"system","component":"core.event-loop","message":"Configuration can only be reapplied while SNode.C is running"}
+[FileError] /tmp/snodec-reconfigure-4WgdA4/runtime.conf was not readable (missing?)
+
+Append -h or --help to your command line for more information.
+[ValidationError] --value: Failed parsing not-an-integer as a INT
+
+Append -h or --help to your command line for more information.
+[ValidationError] --value: rejected by endpoint final validation
+
+Append -h or --help to your command line for more information.
+{"v":1,"ts":"2026-09-23T17:51:35.750Z","l...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="TimerCancelBeforeFireTest" classname="TimerCancelBeforeFireTest" time="0.00893255" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;timer"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="IntervalTimerCancelFromCallbackTest" classname="IntervalTimerCancelFromCallbackTest" time="0.00841446" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;timer"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="PipeBoundedQueueTest" classname="PipeBoundedQueueTest" time="0.00855486" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;pipe"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="PipeOwnershipTest" classname="PipeOwnershipTest" time="0.00421226" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;pipe"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="PipeImmediateCloseTest" classname="PipeImmediateCloseTest" time="0.010362" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;pipe"/>
+		</properties>
+		<system-out>2026-09-23T17:51:35.791Z WRN framework/connection core.pipe inst=immediate-close-pipe conn=1 — WRITE descriptor: Double disable
+</system-out>
+	</testcase>
+	<testcase name="PipeSinkFairnessTest" classname="PipeSinkFairnessTest" time="0.00988342" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;pipe"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="PipeTimeoutTest" classname="PipeTimeoutTest" time="0.0577522" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;pipe"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="DescriptorRegistrationFailureTest" classname="DescriptorRegistrationFailureTest" time="0.0140559" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;descriptor"/>
+		</properties>
+		<system-out>2026-09-23T17:51:35.868Z DBG framework/system core.mux inst=epoll — Core::multiplexer: epoll
+2026-09-23T17:51:35.868Z ERR framework/system core.eventreceiver inst="publisher registration probe" — rejecting test publisher descriptor registration failed: fd=42
+2026-09-23T17:51:35.869Z ERR framework/system core.eventreceiver inst="publisher registration probe" — rejecting test publisher descriptor registration failed: fd=43
+2026-09-23T17:51:35.871Z ERR framework/system core.mux inst=epoll error="9:Bad file descriptor" — core.mux epoll_ctl ADD failed: fd=8
+2026-09-23T17:51:35.871Z ERR framework/system core.eventreceiver inst="real descriptor registration probe read" — READ descriptor registration failed: fd=8
+2026-09-23T17:51:35.871Z ERR framework/system core.eventreceiver inst="real descriptor registration probe read" — READ descriptor registration failed: fd=8
+2026-09-23T17:51:35.871Z ERR framework/connection core.pipe conn=3 — READ descriptor registration failed: fd=11
+2026-09-23T17:51:35.871Z WR...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="FileReaderTest" classname="FileReaderTest" time="0.0107727" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;file;streaming"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="ShutdownReceiverNotification_requested" classname="ShutdownReceiverNotification_requested" time="0.00876918" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;lifecycle;shutdown"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="ShutdownReceiverNotification_signal" classname="ShutdownReceiverNotification_signal" time="0.00959508" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;lifecycle;shutdown"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="ShutdownReceiverNotification_signal-wait" classname="ShutdownReceiverNotification_signal-wait" time="0.107958" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;core;lifecycle;shutdown"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetLegacyServerClientCompositionTest" classname="InetLegacyServerClientCompositionTest" time="0.0193454" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;composition;ipv4;legacy;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.029Z INF framework/instance core.socket.stream role=server inst=composition-server — listener started
+2026-09-23T17:51:36.030Z INF framework/connection core.socket.stream role=server inst=composition-server conn=1 — transport connected
+2026-09-23T17:51:36.031Z INF framework/connection core.socket.stream role=client inst=composition-client conn=1 — transport connected
+2026-09-23T17:51:36.031Z INF framework/instance core.socket.stream role=server inst=composition-server — listener stopped
+2026-09-23T17:51:36.031Z INF framework/connection core.socket.stream role=server inst=composition-server conn=1 — transport disconnected
+2026-09-23T17:51:36.031Z INF framework/connection core.socket.stream role=client inst=composition-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerClientCompositionTest" classname="Inet6LegacyServerClientCompositionTest" time="0.0169893" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;composition;ipv6;legacy;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.046Z INF framework/instance core.socket.stream role=server inst=ipv6-composition-server — listener started
+2026-09-23T17:51:36.047Z INF framework/connection core.socket.stream role=server inst=ipv6-composition-server conn=1 — transport connected
+2026-09-23T17:51:36.048Z INF framework/connection core.socket.stream role=client inst=ipv6-composition-client conn=1 — transport connected
+2026-09-23T17:51:36.048Z INF framework/instance core.socket.stream role=server inst=ipv6-composition-server — listener stopped
+2026-09-23T17:51:36.048Z INF framework/connection core.socket.stream role=server inst=ipv6-composition-server conn=1 — transport disconnected
+2026-09-23T17:51:36.048Z INF framework/connection core.socket.stream role=client inst=ipv6-composition-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerClientCompositionTest" classname="UnixLegacyServerClientCompositionTest" time="0.0153282" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;composition;legacy;net;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.062Z INF framework/instance core.socket.stream role=server inst=unix-composition-server — listener started
+2026-09-23T17:51:36.063Z INF framework/connection core.socket.stream role=client inst=unix-composition-client conn=1 — transport connected
+2026-09-23T17:51:36.063Z INF framework/connection core.socket.stream role=server inst=unix-composition-server conn=1 — transport connected
+2026-09-23T17:51:36.063Z INF framework/instance core.socket.stream role=server inst=unix-composition-server — listener stopped
+2026-09-23T17:51:36.064Z INF framework/connection core.socket.stream role=server inst=unix-composition-server conn=1 — transport disconnected
+2026-09-23T17:51:36.064Z INF framework/connection core.socket.stream role=client inst=unix-composition-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetLegacyServerMultipleClientsCompositionTest" classname="InetLegacyServerMultipleClientsCompositionTest" time="0.0141982" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;composition;ipv4;legacy;multi-client;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.077Z INF framework/instance core.socket.stream role=server inst=ipv4-multi-server — listener started
+2026-09-23T17:51:36.078Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-server conn=1 — transport connected
+2026-09-23T17:51:36.078Z INF framework/connection core.socket.stream role=client inst=ipv4-multi-client-a conn=1 — transport connected
+2026-09-23T17:51:36.078Z INF framework/connection core.socket.stream role=client inst=ipv4-multi-client-b conn=1 — transport connected
+2026-09-23T17:51:36.078Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-server conn=2 — transport connected
+2026-09-23T17:51:36.078Z INF framework/instance core.socket.stream role=server inst=ipv4-multi-server — listener stopped
+2026-09-23T17:51:36.079Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-server conn=1 — transport disconnected
+2026-09-23T17:51:36.079Z INF framework/connection core.socket.stream role=client inst=ipv4-multi...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerMultipleClientsCompositionTest" classname="Inet6LegacyServerMultipleClientsCompositionTest" time="0.0188791" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;composition;ipv6;legacy;multi-client;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.096Z INF framework/instance core.socket.stream role=server inst=ipv6-multi-server — listener started
+2026-09-23T17:51:36.096Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-server conn=1 — transport connected
+2026-09-23T17:51:36.097Z INF framework/connection core.socket.stream role=client inst=ipv6-multi-client-a conn=1 — transport connected
+2026-09-23T17:51:36.097Z INF framework/connection core.socket.stream role=client inst=ipv6-multi-client-b conn=1 — transport connected
+2026-09-23T17:51:36.097Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-server conn=2 — transport connected
+2026-09-23T17:51:36.097Z INF framework/instance core.socket.stream role=server inst=ipv6-multi-server — listener stopped
+2026-09-23T17:51:36.097Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-server conn=1 — transport disconnected
+2026-09-23T17:51:36.097Z INF framework/connection core.socket.stream role=client inst=ipv6-multi...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerMultipleClientsCompositionTest" classname="UnixLegacyServerMultipleClientsCompositionTest" time="0.0184581" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;composition;legacy;multi-client;net;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.114Z INF framework/instance core.socket.stream role=server inst=unix-multi-server — listener started
+2026-09-23T17:51:36.115Z INF framework/connection core.socket.stream role=client inst=unix-multi-client-a conn=1 — transport connected
+2026-09-23T17:51:36.115Z INF framework/connection core.socket.stream role=client inst=unix-multi-client-b conn=1 — transport connected
+2026-09-23T17:51:36.115Z INF framework/connection core.socket.stream role=server inst=unix-multi-server conn=1 — transport connected
+2026-09-23T17:51:36.115Z INF framework/connection core.socket.stream role=server inst=unix-multi-server conn=2 — transport connected
+2026-09-23T17:51:36.116Z INF framework/instance core.socket.stream role=server inst=unix-multi-server — listener stopped
+2026-09-23T17:51:36.116Z INF framework/connection core.socket.stream role=client inst=unix-multi-client-a conn=1 — transport disconnected
+2026-09-23T17:51:36.116Z INF framework/connection core.socket.stream role=server inst=unix-mul...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetLegacyServerClientMultiMessagePayloadExchangeTest" classname="InetLegacyServerClientMultiMessagePayloadExchangeTest" time="0.0142211" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv4;legacy;multi-message;net;payload;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.129Z INF framework/instance core.socket.stream role=server inst=ipv4-multi-message-server — listener started
+2026-09-23T17:51:36.130Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-message-server conn=1 — transport connected
+2026-09-23T17:51:36.130Z INF framework/connection core.socket.stream role=client inst=ipv4-multi-message-client conn=1 — transport connected
+2026-09-23T17:51:36.130Z INF framework/instance core.socket.stream role=server inst=ipv4-multi-message-server — listener stopped
+2026-09-23T17:51:36.130Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-message-server conn=1 — transport disconnected
+2026-09-23T17:51:36.131Z INF framework/connection core.socket.stream role=client inst=ipv4-multi-message-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerClientMultiMessagePayloadExchangeTest" classname="Inet6LegacyServerClientMultiMessagePayloadExchangeTest" time="0.0180122" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv6;legacy;multi-message;net;payload;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.147Z INF framework/instance core.socket.stream role=server inst=ipv6-multi-message-server — listener started
+2026-09-23T17:51:36.148Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-message-server conn=1 — transport connected
+2026-09-23T17:51:36.148Z INF framework/connection core.socket.stream role=client inst=ipv6-multi-message-client conn=1 — transport connected
+2026-09-23T17:51:36.148Z INF framework/instance core.socket.stream role=server inst=ipv6-multi-message-server — listener stopped
+2026-09-23T17:51:36.148Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-message-server conn=1 — transport disconnected
+2026-09-23T17:51:36.148Z INF framework/connection core.socket.stream role=client inst=ipv6-multi-message-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerClientMultiMessagePayloadExchangeTest" classname="UnixLegacyServerClientMultiMessagePayloadExchangeTest" time="0.0167214" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;legacy;multi-message;net;payload;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.164Z INF framework/instance core.socket.stream role=server inst=unix-multi-message-server — listener started
+2026-09-23T17:51:36.165Z INF framework/connection core.socket.stream role=client inst=unix-multi-message-client conn=1 — transport connected
+2026-09-23T17:51:36.165Z INF framework/connection core.socket.stream role=server inst=unix-multi-message-server conn=1 — transport connected
+2026-09-23T17:51:36.165Z INF framework/instance core.socket.stream role=server inst=unix-multi-message-server — listener stopped
+2026-09-23T17:51:36.166Z INF framework/connection core.socket.stream role=server inst=unix-multi-message-server conn=1 — transport disconnected
+2026-09-23T17:51:36.166Z INF framework/connection core.socket.stream role=client inst=unix-multi-message-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetLegacyServerMultipleClientsPayloadExchangeTest" classname="InetLegacyServerMultipleClientsPayloadExchangeTest" time="0.0192094" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv4;legacy;multi-client;net;payload;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.182Z INF framework/instance core.socket.stream role=server inst=ipv4-multi-payload-server — listener started
+2026-09-23T17:51:36.184Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-payload-server conn=1 — transport connected
+2026-09-23T17:51:36.184Z INF framework/connection core.socket.stream role=client inst=ipv4-multi-payload-client-a conn=1 — transport connected
+2026-09-23T17:51:36.184Z INF framework/connection core.socket.stream role=client inst=ipv4-multi-payload-client-b conn=1 — transport connected
+2026-09-23T17:51:36.184Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-payload-server conn=2 — transport connected
+2026-09-23T17:51:36.185Z INF framework/instance core.socket.stream role=server inst=ipv4-multi-payload-server — listener stopped
+2026-09-23T17:51:36.185Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-payload-server conn=1 — transport disconnected
+2026-09-23T17:51:36.185Z INF framework/c...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerMultipleClientsPayloadExchangeTest" classname="Inet6LegacyServerMultipleClientsPayloadExchangeTest" time="0.018731" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv6;legacy;multi-client;net;payload;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.202Z INF framework/instance core.socket.stream role=server inst=ipv6-multi-payload-server — listener started
+2026-09-23T17:51:36.203Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-payload-server conn=1 — transport connected
+2026-09-23T17:51:36.203Z INF framework/connection core.socket.stream role=client inst=ipv6-multi-payload-client-a conn=1 — transport connected
+2026-09-23T17:51:36.203Z INF framework/connection core.socket.stream role=client inst=ipv6-multi-payload-client-b conn=1 — transport connected
+2026-09-23T17:51:36.203Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-payload-server conn=2 — transport connected
+2026-09-23T17:51:36.204Z INF framework/instance core.socket.stream role=server inst=ipv6-multi-payload-server — listener stopped
+2026-09-23T17:51:36.204Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-payload-server conn=1 — transport disconnected
+2026-09-23T17:51:36.204Z INF framework/c...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerMultipleClientsPayloadExchangeTest" classname="UnixLegacyServerMultipleClientsPayloadExchangeTest" time="0.01903" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;legacy;multi-client;net;payload;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.221Z INF framework/instance core.socket.stream role=server inst=unix-multi-payload-server — listener started
+2026-09-23T17:51:36.222Z INF framework/connection core.socket.stream role=client inst=unix-multi-payload-client-a conn=1 — transport connected
+2026-09-23T17:51:36.222Z INF framework/connection core.socket.stream role=client inst=unix-multi-payload-client-b conn=1 — transport connected
+2026-09-23T17:51:36.222Z INF framework/connection core.socket.stream role=server inst=unix-multi-payload-server conn=1 — transport connected
+2026-09-23T17:51:36.222Z INF framework/connection core.socket.stream role=server inst=unix-multi-payload-server conn=2 — transport connected
+2026-09-23T17:51:36.223Z INF framework/instance core.socket.stream role=server inst=unix-multi-payload-server — listener stopped
+2026-09-23T17:51:36.223Z INF framework/connection core.socket.stream role=server inst=unix-multi-payload-server conn=2 — transport disconnected
+2026-09-23T17:51:36.223Z INF framework/c...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerClientPayloadExchangeTest" classname="UnixLegacyServerClientPayloadExchangeTest" time="0.0161157" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;legacy;net;payload;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.239Z INF framework/instance core.socket.stream role=server inst=unix-payload-server — listener started
+2026-09-23T17:51:36.240Z INF framework/connection core.socket.stream role=client inst=unix-payload-client conn=1 — transport connected
+2026-09-23T17:51:36.240Z INF framework/connection core.socket.stream role=server inst=unix-payload-server conn=1 — transport connected
+2026-09-23T17:51:36.240Z INF framework/instance core.socket.stream role=server inst=unix-payload-server — listener stopped
+2026-09-23T17:51:36.240Z INF framework/connection core.socket.stream role=server inst=unix-payload-server conn=1 — transport disconnected
+2026-09-23T17:51:36.240Z INF framework/connection core.socket.stream role=client inst=unix-payload-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerClientDisconnectLifecycleTest" classname="UnixLegacyServerClientDisconnectLifecycleTest" time="0.0121436" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;disconnect;legacy;net;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.251Z INF framework/instance core.socket.stream role=server inst=unix-disconnect-server — listener started
+2026-09-23T17:51:36.251Z INF framework/connection core.socket.stream role=client inst=unix-disconnect-client conn=1 — transport connected
+2026-09-23T17:51:36.252Z INF framework/connection core.socket.stream role=server inst=unix-disconnect-server conn=1 — transport connected
+2026-09-23T17:51:36.252Z INF framework/instance core.socket.stream role=client inst=unix-disconnect-client — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:36.252Z INF framework/connection core.socket.stream role=client inst=unix-disconnect-client conn=1 — transport disconnected
+2026-09-23T17:51:36.252Z INF framework/connection core.socket.stream role=server inst=unix-disconnect-server conn=1 — transport disconnected
+2026-09-23T17:51:36.252Z INF framework/instance core.socket.stream role=server inst=unix-disconnect-server — listener stopped
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyClientConnectFailureTest" classname="UnixLegacyClientConnectFailureTest" time="0.0150807" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;connect-failure;legacy;net;stream;unix"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetLegacyServerClientPayloadExchangeTest" classname="InetLegacyServerClientPayloadExchangeTest" time="0.0155793" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv4;legacy;net;payload;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.282Z INF framework/instance core.socket.stream role=server inst=payload-exchange-server — listener started
+2026-09-23T17:51:36.283Z INF framework/connection core.socket.stream role=server inst=payload-exchange-server conn=1 — transport connected
+2026-09-23T17:51:36.283Z INF framework/connection core.socket.stream role=client inst=payload-exchange-client conn=1 — transport connected
+2026-09-23T17:51:36.283Z INF framework/instance core.socket.stream role=server inst=payload-exchange-server — listener stopped
+2026-09-23T17:51:36.283Z INF framework/connection core.socket.stream role=server inst=payload-exchange-server conn=1 — transport disconnected
+2026-09-23T17:51:36.283Z INF framework/connection core.socket.stream role=client inst=payload-exchange-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetLegacyServerClientDisconnectLifecycleTest" classname="InetLegacyServerClientDisconnectLifecycleTest" time="0.0225734" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;disconnect;ipv4;legacy;net;stream"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetLegacyClientConnectFailureTest" classname="InetLegacyClientConnectFailureTest" time="0.0141742" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;connect-failure;ipv4;legacy;net;stream"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerClientPayloadExchangeTest" classname="Inet6LegacyServerClientPayloadExchangeTest" time="0.0169961" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv6;legacy;net;payload;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.335Z INF framework/instance core.socket.stream role=server inst=ipv6-payload-server — listener started
+2026-09-23T17:51:36.336Z INF framework/connection core.socket.stream role=server inst=ipv6-payload-server conn=1 — transport connected
+2026-09-23T17:51:36.336Z INF framework/connection core.socket.stream role=client inst=ipv6-payload-client conn=1 — transport connected
+2026-09-23T17:51:36.337Z INF framework/instance core.socket.stream role=server inst=ipv6-payload-server — listener stopped
+2026-09-23T17:51:36.337Z INF framework/connection core.socket.stream role=server inst=ipv6-payload-server conn=1 — transport disconnected
+2026-09-23T17:51:36.337Z INF framework/connection core.socket.stream role=client inst=ipv6-payload-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerClientDisconnectLifecycleTest" classname="Inet6LegacyServerClientDisconnectLifecycleTest" time="0.0182683" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;disconnect;ipv6;legacy;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.354Z INF framework/instance core.socket.stream role=server inst=ipv6-disconnect-server — listener started
+2026-09-23T17:51:36.355Z INF framework/connection core.socket.stream role=server inst=ipv6-disconnect-server conn=1 — transport connected
+2026-09-23T17:51:36.355Z INF framework/connection core.socket.stream role=client inst=ipv6-disconnect-client conn=1 — transport connected
+2026-09-23T17:51:36.355Z INF framework/instance core.socket.stream role=client inst=ipv6-disconnect-client — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:36.355Z INF framework/connection core.socket.stream role=client inst=ipv6-disconnect-client conn=1 — transport disconnected
+2026-09-23T17:51:36.355Z INF framework/connection core.socket.stream role=server inst=ipv6-disconnect-server conn=1 — transport disconnected
+2026-09-23T17:51:36.355Z INF framework/instance core.socket.stream role=server inst=ipv6-disconnect-server — listener stopped
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyClientConnectFailureTest" classname="Inet6LegacyClientConnectFailureTest" time="0.0132186" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;connect-failure;ipv6;legacy;net;stream"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetLegacyServerEffectiveListenAddressTest" classname="InetLegacyServerEffectiveListenAddressTest" time="0.0153047" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;effective-address;ipv4;legacy;listen;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.384Z INF framework/instance core.socket.stream role=server inst=effective-listen-server — listener started
+2026-09-23T17:51:36.385Z INF framework/instance core.socket.stream role=server inst=effective-listen-server — listener stopped
+</system-out>
+	</testcase>
+	<testcase name="InetPhysicalServerEffectiveBindAddressTest" classname="InetPhysicalServerEffectiveBindAddressTest" time="0.00679378" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;effective-address;ipv4;legacy;listen;net;stream"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="UnixPhysicalSocketPathSafetyTest" classname="UnixPhysicalSocketPathSafetyTest" time="0.00743513" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;net;path-safety;stream;unix"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetLegacyServerClientLargePayloadExchangeTest" classname="InetLegacyServerClientLargePayloadExchangeTest" time="0.0169704" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv4;large-payload;legacy;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.412Z INF framework/instance core.socket.stream role=server inst=ipv4-large-payload-server — listener started
+2026-09-23T17:51:36.412Z INF framework/connection core.socket.stream role=server inst=ipv4-large-payload-server conn=1 — transport connected
+2026-09-23T17:51:36.414Z INF framework/connection core.socket.stream role=client inst=ipv4-large-payload-client conn=1 — transport connected
+2026-09-23T17:51:36.416Z INF framework/instance core.socket.stream role=server inst=ipv4-large-payload-server — listener stopped
+2026-09-23T17:51:36.417Z INF framework/connection core.socket.stream role=server inst=ipv4-large-payload-server conn=1 — transport disconnected
+2026-09-23T17:51:36.417Z INF framework/connection core.socket.stream role=client inst=ipv4-large-payload-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetLegacyServerClientFramedPayloadExchangeTest" classname="InetLegacyServerClientFramedPayloadExchangeTest" time="0.0252454" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;framed-payload;ipv4;legacy;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.432Z INF framework/instance core.socket.stream role=server inst=ipv4-framed-server — listener started
+2026-09-23T17:51:36.433Z INF framework/connection core.socket.stream role=server inst=ipv4-framed-server conn=1 — transport connected
+2026-09-23T17:51:36.433Z INF framework/connection core.socket.stream role=client inst=ipv4-framed-client conn=1 — transport connected
+2026-09-23T17:51:36.441Z INF framework/instance core.socket.stream role=server inst=ipv4-framed-server — listener stopped
+2026-09-23T17:51:36.441Z INF framework/connection core.socket.stream role=server inst=ipv4-framed-server conn=1 — transport disconnected
+2026-09-23T17:51:36.441Z INF framework/connection core.socket.stream role=client inst=ipv4-framed-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerClientFramedPayloadExchangeTest" classname="Inet6LegacyServerClientFramedPayloadExchangeTest" time="0.0266511" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;framed-payload;ipv6;legacy;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.459Z INF framework/instance core.socket.stream role=server inst=ipv6-framed-server — listener started
+2026-09-23T17:51:36.460Z INF framework/connection core.socket.stream role=server inst=ipv6-framed-server conn=1 — transport connected
+2026-09-23T17:51:36.460Z INF framework/connection core.socket.stream role=client inst=ipv6-framed-client conn=1 — transport connected
+2026-09-23T17:51:36.468Z INF framework/instance core.socket.stream role=server inst=ipv6-framed-server — listener stopped
+2026-09-23T17:51:36.469Z INF framework/connection core.socket.stream role=server inst=ipv6-framed-server conn=1 — transport disconnected
+2026-09-23T17:51:36.469Z INF framework/connection core.socket.stream role=client inst=ipv6-framed-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerClientFramedPayloadExchangeTest" classname="UnixLegacyServerClientFramedPayloadExchangeTest" time="0.0258919" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;framed-payload;legacy;net;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.485Z INF framework/instance core.socket.stream role=server inst=unix-framed-server — listener started
+2026-09-23T17:51:36.485Z INF framework/connection core.socket.stream role=client inst=unix-framed-client conn=1 — transport connected
+2026-09-23T17:51:36.486Z INF framework/connection core.socket.stream role=server inst=unix-framed-server conn=1 — transport connected
+2026-09-23T17:51:36.495Z INF framework/instance core.socket.stream role=server inst=unix-framed-server — listener stopped
+2026-09-23T17:51:36.495Z INF framework/connection core.socket.stream role=server inst=unix-framed-server conn=1 — transport disconnected
+2026-09-23T17:51:36.495Z INF framework/connection core.socket.stream role=client inst=unix-framed-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerClientLargePayloadExchangeTest" classname="Inet6LegacyServerClientLargePayloadExchangeTest" time="0.0208816" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv6;large-payload;legacy;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.512Z INF framework/instance core.socket.stream role=server inst=ipv6-large-payload-server — listener started
+2026-09-23T17:51:36.513Z INF framework/connection core.socket.stream role=server inst=ipv6-large-payload-server conn=1 — transport connected
+2026-09-23T17:51:36.515Z INF framework/connection core.socket.stream role=client inst=ipv6-large-payload-client conn=1 — transport connected
+2026-09-23T17:51:36.517Z INF framework/instance core.socket.stream role=server inst=ipv6-large-payload-server — listener stopped
+2026-09-23T17:51:36.517Z INF framework/connection core.socket.stream role=server inst=ipv6-large-payload-server conn=1 — transport disconnected
+2026-09-23T17:51:36.517Z INF framework/connection core.socket.stream role=client inst=ipv6-large-payload-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerClientLargePayloadExchangeTest" classname="UnixLegacyServerClientLargePayloadExchangeTest" time="0.0133237" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;large-payload;legacy;net;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.527Z INF framework/instance core.socket.stream role=server inst=unix-large-payload-server — listener started
+2026-09-23T17:51:36.527Z INF framework/connection core.socket.stream role=client inst=unix-large-payload-client conn=1 — transport connected
+2026-09-23T17:51:36.529Z INF framework/connection core.socket.stream role=server inst=unix-large-payload-server conn=1 — transport connected
+2026-09-23T17:51:36.530Z INF framework/instance core.socket.stream role=server inst=unix-large-payload-server — listener stopped
+2026-09-23T17:51:36.531Z INF framework/connection core.socket.stream role=server inst=unix-large-payload-server conn=1 — transport disconnected
+2026-09-23T17:51:36.531Z INF framework/connection core.socket.stream role=client inst=unix-large-payload-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetLegacyServerControlledCloseLifecycleTest" classname="InetLegacyServerControlledCloseLifecycleTest" time="0.0204447" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv4;legacy;net;server-close;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.546Z INF framework/instance core.socket.stream role=server inst=ipv4-server-close-server — listener started
+2026-09-23T17:51:36.547Z INF framework/connection core.socket.stream role=server inst=ipv4-server-close-server conn=1 — transport connected
+2026-09-23T17:51:36.548Z INF framework/connection core.socket.stream role=client inst=ipv4-server-close-client conn=1 — transport connected
+2026-09-23T17:51:36.549Z INF framework/connection core.socket.stream role=server inst=ipv4-server-close-server conn=1 — transport disconnected
+2026-09-23T17:51:36.550Z INF framework/connection core.socket.stream role=client inst=ipv4-server-close-client conn=1 — transport disconnected
+2026-09-23T17:51:36.550Z INF framework/instance core.socket.stream role=server inst=ipv4-server-close-server — listener stopped
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerControlledCloseLifecycleTest" classname="Inet6LegacyServerControlledCloseLifecycleTest" time="0.0199055" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv6;legacy;net;server-close;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.568Z INF framework/instance core.socket.stream role=server inst=ipv6-server-close-server — listener started
+2026-09-23T17:51:36.568Z INF framework/connection core.socket.stream role=server inst=ipv6-server-close-server conn=1 — transport connected
+2026-09-23T17:51:36.569Z INF framework/connection core.socket.stream role=client inst=ipv6-server-close-client conn=1 — transport connected
+2026-09-23T17:51:36.570Z INF framework/connection core.socket.stream role=server inst=ipv6-server-close-server conn=1 — transport disconnected
+2026-09-23T17:51:36.570Z INF framework/connection core.socket.stream role=client inst=ipv6-server-close-client conn=1 — transport disconnected
+2026-09-23T17:51:36.571Z INF framework/instance core.socket.stream role=server inst=ipv6-server-close-server — listener stopped
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerControlledCloseLifecycleTest" classname="UnixLegacyServerControlledCloseLifecycleTest" time="0.0139117" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;legacy;net;server-close;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.584Z INF framework/instance core.socket.stream role=server inst=unix-server-close-server — listener started
+2026-09-23T17:51:36.584Z INF framework/connection core.socket.stream role=client inst=unix-server-close-client conn=1 — transport connected
+2026-09-23T17:51:36.584Z INF framework/connection core.socket.stream role=server inst=unix-server-close-server conn=1 — transport connected
+2026-09-23T17:51:36.585Z INF framework/connection core.socket.stream role=server inst=unix-server-close-server conn=1 — transport disconnected
+2026-09-23T17:51:36.585Z INF framework/connection core.socket.stream role=client inst=unix-server-close-client conn=1 — transport disconnected
+2026-09-23T17:51:36.586Z INF framework/instance core.socket.stream role=server inst=unix-server-close-server — listener stopped
+</system-out>
+	</testcase>
+	<testcase name="InetLegacyServerMultipleClientsDisconnectLifecycleTest" classname="InetLegacyServerMultipleClientsDisconnectLifecycleTest" time="0.0201196" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;disconnect;ipv4;legacy;multi-client;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.604Z INF framework/instance core.socket.stream role=server inst=ipv4-multi-disconnect-server — listener started
+2026-09-23T17:51:36.605Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-disconnect-server conn=1 — transport connected
+2026-09-23T17:51:36.605Z INF framework/connection core.socket.stream role=client inst=ipv4-multi-disconnect-client-a conn=1 — transport connected
+2026-09-23T17:51:36.605Z INF framework/connection core.socket.stream role=client inst=ipv4-multi-disconnect-client-b conn=1 — transport connected
+2026-09-23T17:51:36.605Z INF framework/connection core.socket.stream role=server inst=ipv4-multi-disconnect-server conn=2 — transport connected
+2026-09-23T17:51:36.605Z INF framework/instance core.socket.stream role=client inst=ipv4-multi-disconnect-client-a — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:36.605Z INF framework/connection core.socket.stream role=client inst=ipv4-multi-disconnect-clien...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="Inet6LegacyServerMultipleClientsDisconnectLifecycleTest" classname="Inet6LegacyServerMultipleClientsDisconnectLifecycleTest" time="0.0205038" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;disconnect;ipv6;legacy;multi-client;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.625Z INF framework/instance core.socket.stream role=server inst=ipv6-multi-disconnect-server — listener started
+2026-09-23T17:51:36.626Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-disconnect-server conn=1 — transport connected
+2026-09-23T17:51:36.626Z INF framework/connection core.socket.stream role=client inst=ipv6-multi-disconnect-client-a conn=1 — transport connected
+2026-09-23T17:51:36.626Z INF framework/connection core.socket.stream role=client inst=ipv6-multi-disconnect-client-b conn=1 — transport connected
+2026-09-23T17:51:36.626Z INF framework/connection core.socket.stream role=server inst=ipv6-multi-disconnect-server conn=2 — transport connected
+2026-09-23T17:51:36.626Z INF framework/instance core.socket.stream role=client inst=ipv6-multi-disconnect-client-a — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:36.626Z INF framework/connection core.socket.stream role=client inst=ipv6-multi-disconnect-clien...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="UnixLegacyServerMultipleClientsDisconnectLifecycleTest" classname="UnixLegacyServerMultipleClientsDisconnectLifecycleTest" time="0.0166291" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;disconnect;legacy;multi-client;net;stream;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.642Z INF framework/instance core.socket.stream role=server inst=unix-multi-disconnect-server — listener started
+2026-09-23T17:51:36.642Z INF framework/connection core.socket.stream role=client inst=unix-multi-disconnect-client-a conn=1 — transport connected
+2026-09-23T17:51:36.643Z INF framework/connection core.socket.stream role=client inst=unix-multi-disconnect-client-b conn=1 — transport connected
+2026-09-23T17:51:36.643Z INF framework/connection core.socket.stream role=server inst=unix-multi-disconnect-server conn=1 — transport connected
+2026-09-23T17:51:36.643Z INF framework/connection core.socket.stream role=server inst=unix-multi-disconnect-server conn=2 — transport connected
+2026-09-23T17:51:36.643Z INF framework/instance core.socket.stream role=client inst=unix-multi-disconnect-client-a — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:36.643Z INF framework/connection core.socket.stream role=client inst=unix-multi-disconnect-clien...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetPerCallFlowTest" classname="InetPerCallFlowTest" time="0.0167066" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;flow;ipv4;legacy;net;stream"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.656Z INF framework/instance core.socket.stream role=server inst=per-call-server — listener started
+2026-09-23T17:51:36.657Z INF framework/instance core.socket.stream role=server inst=per-call-server — listener started
+2026-09-23T17:51:36.657Z INF framework/instance core.socket.stream role=server inst=per-call-server — Flow terminated: endpoint-connections=0 retries=0 flow=0
+2026-09-23T17:51:36.657Z INF framework/instance core.socket.stream role=server inst=per-call-server — Flow terminated: endpoint-connections=0 retries=0 flow=1
+2026-09-23T17:51:36.657Z INF framework/instance core.socket.stream role=server inst=per-call-server — listener stopped
+2026-09-23T17:51:36.657Z INF framework/instance core.socket.stream role=server inst=per-call-server — listener stopped
+2026-09-23T17:51:36.657Z INF framework/instance core.socket.stream role=server inst=per-call-server — listener started
+2026-09-23T17:51:36.658Z INF framework/instance core.socket.stream role=client inst=per-call-clie...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientGetRoundTripTest" classname="InetHttpServerClientGetRoundTripTest" time="0.0184077" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv4;legacy;server"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetHttpClientParserLimitTest" classname="InetHttpClientParserLimitTest" time="0.0125705" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv4;legacy;parser-limit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.690Z INF framework/instance core.socket.stream role=server inst=ipv4-http-parser-limit-raw-server — listener started
+2026-09-23T17:51:36.691Z INF framework/connection core.socket.stream role=server inst=ipv4-http-parser-limit-raw-server conn=1 — transport connected
+2026-09-23T17:51:36.691Z INF framework/connection core.socket.stream role=client inst=ipv4-http-parser-limit-client conn=1 — transport connected
+2026-09-23T17:51:36.691Z WRN framework/context core.socket.context inst=ipv4-http-parser-limit-client conn=1 — HTTP: Response parse error: HTTP message body too large (413) for request (0): GET /oversized-response HTTP/1.1GET /oversized-response HTTP/1.1
+2026-09-23T17:51:36.691Z INF framework/connection core.socket.stream role=client inst=ipv4-http-parser-limit-client conn=1 — transport disconnected
+2026-09-23T17:51:36.691Z INF framework/instance core.socket.stream role=server inst=ipv4-http-parser-limit-raw-server — listener stopped
+2026-09-23T17:51:36.691Z INF framework/co...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerRequestPolicyTest" classname="InetHttpServerRequestPolicyTest" time="0.0123059" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;http;ipv4;legacy;pending;request-policy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.703Z INF framework/instance core.socket.stream role=server inst=ipv4-http-server-request-policy — listener started
+2026-09-23T17:51:36.703Z INF framework/connection core.socket.stream role=server inst=ipv4-http-server-request-policy conn=1 — transport connected
+2026-09-23T17:51:36.703Z INF framework/connection core.socket.stream role=client inst=ipv4-http-server-request-policy-client conn=1 — transport connected
+2026-09-23T17:51:36.704Z WRN framework/context core.socket.context inst=ipv4-http-server-request-policy conn=1 — HTTP: Request rejected by server resource policy
+2026-09-23T17:51:36.704Z INF framework/connection core.socket.stream role=server inst=ipv4-http-server-request-policy conn=1 — transport disconnected
+2026-09-23T17:51:36.704Z INF framework/connection core.socket.stream role=client inst=ipv4-http-server-request-policy-client conn=1 — transport disconnected
+2026-09-23T17:51:36.704Z INF framework/instance core.socket.stream role=server inst=ipv4-http-server-reques...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerPipeliningPolicyTest" classname="InetHttpServerPipeliningPolicyTest" time="0.0121106" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;http;ipv4;legacy;pipelining;request-policy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.715Z INF framework/instance core.socket.stream role=server inst=ipv4-http-server-pipelining-policy — listener started
+2026-09-23T17:51:36.715Z INF framework/connection core.socket.stream role=server inst=ipv4-http-server-pipelining-policy conn=1 — transport connected
+2026-09-23T17:51:36.715Z INF framework/connection core.socket.stream role=client inst=ipv4-http-server-pipelining-policy-client conn=1 — transport connected
+2026-09-23T17:51:36.716Z INF framework/connection core.socket.stream role=server inst=ipv4-http-server-pipelining-policy conn=1 — transport disconnected
+2026-09-23T17:51:36.716Z INF framework/connection core.socket.stream role=client inst=ipv4-http-server-pipelining-policy-client conn=1 — transport disconnected
+2026-09-23T17:51:36.716Z INF framework/instance core.socket.stream role=server inst=ipv4-http-server-pipelining-policy — listener stopped
+</system-out>
+	</testcase>
+	<testcase name="Inet6HttpServerClientGetRoundTripTest" classname="Inet6HttpServerClientGetRoundTripTest" time="0.021578" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv6;legacy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.734Z INF framework/instance core.socket.stream role=server inst=ipv6-http-round-trip-server — listener started
+2026-09-23T17:51:36.735Z INF framework/connection core.socket.stream role=server inst=ipv6-http-round-trip-server conn=1 — transport connected
+2026-09-23T17:51:36.735Z INF framework/connection core.socket.stream role=client inst=ipv6-http-round-trip-client conn=1 — transport connected
+2026-09-23T17:51:36.737Z INF framework/instance core.socket.stream role=server inst=ipv6-http-round-trip-server — listener stopped
+2026-09-23T17:51:36.737Z INF framework/connection core.socket.stream role=server inst=ipv6-http-round-trip-server conn=1 — transport disconnected
+2026-09-23T17:51:36.737Z INF framework/connection core.socket.stream role=client inst=ipv6-http-round-trip-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="UnixHttpServerClientGetRoundTripTest" classname="UnixHttpServerClientGetRoundTripTest" time="0.0137591" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;legacy;server;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.750Z INF framework/instance core.socket.stream role=server inst=unix-http-round-trip-server — listener started
+2026-09-23T17:51:36.751Z INF framework/connection core.socket.stream role=client inst=unix-http-round-trip-client conn=1 — transport connected
+2026-09-23T17:51:36.751Z INF framework/connection core.socket.stream role=server inst=unix-http-round-trip-server conn=1 — transport connected
+2026-09-23T17:51:36.752Z INF framework/instance core.socket.stream role=server inst=unix-http-round-trip-server — listener stopped
+2026-09-23T17:51:36.752Z INF framework/connection core.socket.stream role=server inst=unix-http-round-trip-server conn=1 — transport disconnected
+2026-09-23T17:51:36.752Z INF framework/connection core.socket.stream role=client inst=unix-http-round-trip-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientPostBodyRoundTripTest" classname="InetHttpServerClientPostBodyRoundTripTest" time="0.0144627" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv4;legacy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.765Z INF framework/instance core.socket.stream role=server inst=ipv4-http-postbody-server — listener started
+2026-09-23T17:51:36.765Z INF framework/connection core.socket.stream role=server inst=ipv4-http-postbody-server conn=1 — transport connected
+2026-09-23T17:51:36.766Z INF framework/connection core.socket.stream role=client inst=ipv4-http-postbody-client conn=1 — transport connected
+2026-09-23T17:51:36.766Z INF framework/instance core.socket.stream role=server inst=ipv4-http-postbody-server — listener stopped
+2026-09-23T17:51:36.767Z INF framework/connection core.socket.stream role=server inst=ipv4-http-postbody-server conn=1 — transport disconnected
+2026-09-23T17:51:36.767Z INF framework/connection core.socket.stream role=client inst=ipv4-http-postbody-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="Inet6HttpServerClientPostBodyRoundTripTest" classname="Inet6HttpServerClientPostBodyRoundTripTest" time="0.0136081" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv6;legacy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.779Z INF framework/instance core.socket.stream role=server inst=ipv6-http-postbody-server — listener started
+2026-09-23T17:51:36.779Z INF framework/connection core.socket.stream role=server inst=ipv6-http-postbody-server conn=1 — transport connected
+2026-09-23T17:51:36.779Z INF framework/connection core.socket.stream role=client inst=ipv6-http-postbody-client conn=1 — transport connected
+2026-09-23T17:51:36.780Z INF framework/instance core.socket.stream role=server inst=ipv6-http-postbody-server — listener stopped
+2026-09-23T17:51:36.780Z INF framework/connection core.socket.stream role=server inst=ipv6-http-postbody-server conn=1 — transport disconnected
+2026-09-23T17:51:36.780Z INF framework/connection core.socket.stream role=client inst=ipv6-http-postbody-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="UnixHttpServerClientPostBodyRoundTripTest" classname="UnixHttpServerClientPostBodyRoundTripTest" time="0.0137665" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;legacy;server;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.793Z INF framework/instance core.socket.stream role=server inst=unix-http-postbody-server — listener started
+2026-09-23T17:51:36.793Z INF framework/connection core.socket.stream role=client inst=unix-http-postbody-client conn=1 — transport connected
+2026-09-23T17:51:36.794Z INF framework/connection core.socket.stream role=server inst=unix-http-postbody-server conn=1 — transport connected
+2026-09-23T17:51:36.794Z INF framework/instance core.socket.stream role=server inst=unix-http-postbody-server — listener stopped
+2026-09-23T17:51:36.794Z INF framework/connection core.socket.stream role=server inst=unix-http-postbody-server conn=1 — transport disconnected
+2026-09-23T17:51:36.794Z INF framework/connection core.socket.stream role=client inst=unix-http-postbody-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientStatusVariantTest" classname="InetHttpServerClientStatusVariantTest" time="0.0134082" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv4;legacy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.806Z INF framework/instance core.socket.stream role=server inst=ipv4-http-statusvariant-server — listener started
+2026-09-23T17:51:36.806Z INF framework/connection core.socket.stream role=server inst=ipv4-http-statusvariant-server conn=1 — transport connected
+2026-09-23T17:51:36.807Z INF framework/connection core.socket.stream role=client inst=ipv4-http-statusvariant-client conn=1 — transport connected
+2026-09-23T17:51:36.807Z INF framework/instance core.socket.stream role=server inst=ipv4-http-statusvariant-server — listener stopped
+2026-09-23T17:51:36.808Z INF framework/connection core.socket.stream role=server inst=ipv4-http-statusvariant-server conn=1 — transport disconnected
+2026-09-23T17:51:36.808Z INF framework/connection core.socket.stream role=client inst=ipv4-http-statusvariant-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="Inet6HttpServerClientStatusVariantTest" classname="Inet6HttpServerClientStatusVariantTest" time="0.0139328" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv6;legacy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.820Z INF framework/instance core.socket.stream role=server inst=ipv6-http-statusvariant-server — listener started
+2026-09-23T17:51:36.821Z INF framework/connection core.socket.stream role=server inst=ipv6-http-statusvariant-server conn=1 — transport connected
+2026-09-23T17:51:36.821Z INF framework/connection core.socket.stream role=client inst=ipv6-http-statusvariant-client conn=1 — transport connected
+2026-09-23T17:51:36.822Z INF framework/instance core.socket.stream role=server inst=ipv6-http-statusvariant-server — listener stopped
+2026-09-23T17:51:36.822Z INF framework/connection core.socket.stream role=server inst=ipv6-http-statusvariant-server conn=1 — transport disconnected
+2026-09-23T17:51:36.822Z INF framework/connection core.socket.stream role=client inst=ipv6-http-statusvariant-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="UnixHttpServerClientStatusVariantTest" classname="UnixHttpServerClientStatusVariantTest" time="0.0215792" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;legacy;server;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.841Z INF framework/instance core.socket.stream role=server inst=unix-http-statusvariant-server — listener started
+2026-09-23T17:51:36.841Z INF framework/connection core.socket.stream role=client inst=unix-http-statusvariant-client conn=1 — transport connected
+2026-09-23T17:51:36.842Z INF framework/connection core.socket.stream role=server inst=unix-http-statusvariant-server conn=1 — transport connected
+2026-09-23T17:51:36.843Z INF framework/instance core.socket.stream role=server inst=unix-http-statusvariant-server — listener stopped
+2026-09-23T17:51:36.843Z INF framework/connection core.socket.stream role=server inst=unix-http-statusvariant-server conn=1 — transport disconnected
+2026-09-23T17:51:36.843Z INF framework/connection core.socket.stream role=client inst=unix-http-statusvariant-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientRepeatedRequestTest" classname="InetHttpServerClientRepeatedRequestTest" time="0.0192969" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv4;legacy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.861Z INF framework/instance core.socket.stream role=server inst=ipv4-http-behavior-server — listener started
+2026-09-23T17:51:36.862Z INF framework/connection core.socket.stream role=server inst=ipv4-http-behavior-server conn=1 — transport connected
+2026-09-23T17:51:36.862Z INF framework/connection core.socket.stream role=client inst=ipv4-http-behavior-client conn=1 — transport connected
+2026-09-23T17:51:36.863Z INF framework/instance core.socket.stream role=server inst=ipv4-http-behavior-server — listener stopped
+2026-09-23T17:51:36.863Z INF framework/connection core.socket.stream role=server inst=ipv4-http-behavior-server conn=1 — transport disconnected
+2026-09-23T17:51:36.863Z INF framework/connection core.socket.stream role=client inst=ipv4-http-behavior-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientDisconnectLifecycleTest" classname="InetHttpServerClientDisconnectLifecycleTest" time="0.0141193" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv4;legacy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.876Z INF framework/instance core.socket.stream role=server inst=ipv4-http-behavior-server — listener started
+2026-09-23T17:51:36.876Z INF framework/connection core.socket.stream role=server inst=ipv4-http-behavior-server conn=1 — transport connected
+2026-09-23T17:51:36.877Z INF framework/connection core.socket.stream role=client inst=ipv4-http-behavior-client conn=1 — transport connected
+2026-09-23T17:51:36.877Z INF framework/connection core.socket.stream role=server inst=ipv4-http-behavior-server conn=1 — transport disconnected
+2026-09-23T17:51:36.877Z INF framework/connection core.socket.stream role=client inst=ipv4-http-behavior-client conn=1 — transport disconnected
+2026-09-23T17:51:36.878Z INF framework/instance core.socket.stream role=server inst=ipv4-http-behavior-server — listener stopped
+</system-out>
+	</testcase>
+	<testcase name="InetHttpClientPrematureServerCloseTest" classname="InetHttpClientPrematureServerCloseTest" time="0.0216724" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv4;legacy;server"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientLargeResponseBodyTest" classname="InetHttpServerClientLargeResponseBodyTest" time="0.0249677" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv4;legacy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.919Z INF framework/instance core.socket.stream role=server inst=ipv4-http-behavior-server — listener started
+2026-09-23T17:51:36.920Z INF framework/connection core.socket.stream role=server inst=ipv4-http-behavior-server conn=1 — transport connected
+2026-09-23T17:51:36.920Z INF framework/connection core.socket.stream role=client inst=ipv4-http-behavior-client conn=1 — transport connected
+2026-09-23T17:51:36.923Z INF framework/instance core.socket.stream role=server inst=ipv4-http-behavior-server — listener stopped
+2026-09-23T17:51:36.923Z INF framework/connection core.socket.stream role=server inst=ipv4-http-behavior-server conn=1 — transport disconnected
+2026-09-23T17:51:36.923Z INF framework/connection core.socket.stream role=client inst=ipv4-http-behavior-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientLargeRequestBodyTest" classname="InetHttpServerClientLargeRequestBodyTest" time="0.0156745" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;http;ipv4;legacy;server"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.936Z INF framework/instance core.socket.stream role=server inst=ipv4-http-behavior-server — listener started
+2026-09-23T17:51:36.937Z INF framework/connection core.socket.stream role=server inst=ipv4-http-behavior-server conn=1 — transport connected
+2026-09-23T17:51:36.937Z INF framework/connection core.socket.stream role=client inst=ipv4-http-behavior-client conn=1 — transport connected
+2026-09-23T17:51:36.939Z INF framework/instance core.socket.stream role=server inst=ipv4-http-behavior-server — listener stopped
+2026-09-23T17:51:36.939Z INF framework/connection core.socket.stream role=server inst=ipv4-http-behavior-server conn=1 — transport disconnected
+2026-09-23T17:51:36.939Z INF framework/connection core.socket.stream role=client inst=ipv4-http-behavior-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientHeaderHeavyRequestTest" classname="InetHttpServerClientHeaderHeavyRequestTest" time="0.0189679" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;headers;http;ipv4;legacy;request"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.958Z INF framework/instance core.socket.stream role=server inst=ipv4-http-header-heavy-request-server — listener started
+2026-09-23T17:51:36.958Z INF framework/connection core.socket.stream role=server inst=ipv4-http-header-heavy-request-server conn=1 — transport connected
+2026-09-23T17:51:36.958Z INF framework/connection core.socket.stream role=client inst=ipv4-http-header-heavy-request-client conn=1 — transport connected
+2026-09-23T17:51:36.959Z INF framework/instance core.socket.stream role=server inst=ipv4-http-header-heavy-request-server — listener stopped
+2026-09-23T17:51:36.960Z INF framework/connection core.socket.stream role=server inst=ipv4-http-header-heavy-request-server conn=1 — transport disconnected
+2026-09-23T17:51:36.960Z INF framework/connection core.socket.stream role=client inst=ipv4-http-header-heavy-request-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientHeaderHeavyResponseTest" classname="InetHttpServerClientHeaderHeavyResponseTest" time="0.0216291" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;headers;http;ipv4;legacy;response"/>
+		</properties>
+		<system-out>2026-09-23T17:51:36.978Z INF framework/instance core.socket.stream role=server inst=ipv4-http-header-heavy-response-server — listener started
+2026-09-23T17:51:36.979Z INF framework/connection core.socket.stream role=server inst=ipv4-http-header-heavy-response-server conn=1 — transport connected
+2026-09-23T17:51:36.980Z INF framework/connection core.socket.stream role=client inst=ipv4-http-header-heavy-response-client conn=1 — transport connected
+2026-09-23T17:51:36.981Z INF framework/instance core.socket.stream role=server inst=ipv4-http-header-heavy-response-server — listener stopped
+2026-09-23T17:51:36.981Z INF framework/connection core.socket.stream role=server inst=ipv4-http-header-heavy-response-server conn=1 — transport disconnected
+2026-09-23T17:51:36.981Z INF framework/connection core.socket.stream role=client inst=ipv4-http-header-heavy-response-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpClientConnectFailureTest" classname="InetHttpClientConnectFailureTest" time="0.0147535" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;connect-failure;http;ipv4;legacy"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientChunkedResponseTest" classname="InetHttpServerClientChunkedResponseTest" time="0.0192091" status="run">
+		<properties>
+			<property name="cmake_labels" value="chunked;component;http;ipv4;legacy;response"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.014Z INF framework/instance core.socket.stream role=server inst=ipv4-http-chunked-response-server — listener started
+2026-09-23T17:51:37.015Z INF framework/connection core.socket.stream role=server inst=ipv4-http-chunked-response-server conn=1 — transport connected
+2026-09-23T17:51:37.015Z INF framework/connection core.socket.stream role=client inst=ipv4-http-chunked-response-client conn=1 — transport connected
+2026-09-23T17:51:37.016Z INF framework/instance core.socket.stream role=server inst=ipv4-http-chunked-response-server — listener stopped
+2026-09-23T17:51:37.016Z INF framework/connection core.socket.stream role=server inst=ipv4-http-chunked-response-server conn=1 — transport disconnected
+2026-09-23T17:51:37.016Z INF framework/connection core.socket.stream role=client inst=ipv4-http-chunked-response-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientPipeliningTest" classname="InetHttpServerClientPipeliningTest" time="0.0230984" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;http;ipv4;legacy;pipelining"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.036Z INF framework/instance core.socket.stream role=server inst=ipv4-http-pipelining-server — listener started
+2026-09-23T17:51:37.037Z INF framework/connection core.socket.stream role=server inst=ipv4-http-pipelining-server conn=1 — transport connected
+2026-09-23T17:51:37.037Z INF framework/connection core.socket.stream role=client inst=ipv4-http-pipelining-client conn=1 — transport connected
+2026-09-23T17:51:37.039Z INF framework/instance core.socket.stream role=server inst=ipv4-http-pipelining-server — listener stopped
+2026-09-23T17:51:37.039Z INF framework/connection core.socket.stream role=server inst=ipv4-http-pipelining-server conn=1 — transport disconnected
+2026-09-23T17:51:37.039Z INF framework/connection core.socket.stream role=client inst=ipv4-http-pipelining-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerMalformedRequestBehaviorTest" classname="InetHttpServerMalformedRequestBehaviorTest" time="0.0169905" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;http;ipv4;legacy;malformed-request"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetHttpClientMalformedResponseBehaviorTest" classname="InetHttpClientMalformedResponseBehaviorTest" time="0.0197854" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;http;ipv4;legacy;malformed-response"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.073Z INF framework/instance core.socket.stream role=server inst=ipv4-http-raw-malformed-response-server — listener started
+2026-09-23T17:51:37.074Z INF framework/connection core.socket.stream role=server inst=ipv4-http-raw-malformed-response-server conn=1 — transport connected
+2026-09-23T17:51:37.075Z INF framework/connection core.socket.stream role=client inst=ipv4-http-malformed-response-client conn=1 — transport connected
+2026-09-23T17:51:37.075Z WRN framework/context core.socket.context inst=ipv4-http-malformed-response-client conn=1 — HTTP: Response parse error: Invalid Content-Length (400) for request (0): GET /malformed-response HTTP/1.1GET /malformed-response HTTP/1.1
+2026-09-23T17:51:37.076Z INF framework/connection core.socket.stream role=client inst=ipv4-http-malformed-response-client conn=1 — transport disconnected
+2026-09-23T17:51:37.076Z INF framework/instance core.socket.stream role=server inst=ipv4-http-raw-malformed-response-server — listener stopped
+2026-09-23...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetHttpServerClientChunkedRequestTest" classname="InetHttpServerClientChunkedRequestTest" time="0.0196219" status="run">
+		<properties>
+			<property name="cmake_labels" value="chunked;component;http;ipv4;legacy;request"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.095Z INF framework/instance core.socket.stream role=server inst=ipv4-http-chunked-request-server — listener started
+2026-09-23T17:51:37.096Z INF framework/connection core.socket.stream role=server inst=ipv4-http-chunked-request-server conn=1 — transport connected
+2026-09-23T17:51:37.096Z INF framework/connection core.socket.stream role=client inst=ipv4-http-raw-chunked-request-client conn=1 — transport connected
+2026-09-23T17:51:37.096Z INF framework/instance core.socket.stream role=server inst=ipv4-http-chunked-request-server — listener stopped
+2026-09-23T17:51:37.097Z INF framework/connection core.socket.stream role=server inst=ipv4-http-chunked-request-server conn=1 — transport disconnected
+2026-09-23T17:51:37.097Z INF framework/connection core.socket.stream role=client inst=ipv4-http-raw-chunked-request-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetExpressRoutingMiddlewareTest" classname="InetExpressRoutingMiddlewareTest" time="0.0274771" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv4;legacy;middleware;routing"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.110Z INF framework/instance core.socket.stream role=server inst=ipv4-express-routing-middleware-server — listener started
+2026-09-23T17:51:37.112Z INF framework/connection core.socket.stream role=server inst=ipv4-express-routing-middleware-server conn=1 — transport connected
+2026-09-23T17:51:37.113Z INF framework/connection core.socket.stream role=client inst=ipv4-express-routing-middleware-client-0 conn=1 — transport connected
+2026-09-23T17:51:37.115Z INF framework/connection core.socket.stream role=server inst=ipv4-express-routing-middleware-server conn=1 — transport disconnected
+2026-09-23T17:51:37.115Z INF framework/instance core.socket.stream role=client inst=ipv4-express-routing-middleware-client-0 — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:37.115Z INF framework/connection core.socket.stream role=client inst=ipv4-express-routing-middleware-client-0 conn=1 — transport disconnected
+2026-09-23T17:51:37.115Z INF framework/connecti...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetExpressHttpParserLimitTest" classname="InetExpressHttpParserLimitTest" time="0.0137391" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;http;ipv4;legacy;middleware;parser-limit"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.136Z INF framework/instance core.socket.stream role=server inst=ipv4-express-http-parser-limit-server — listener started
+2026-09-23T17:51:37.136Z INF framework/connection core.socket.stream role=server inst=ipv4-express-http-parser-limit-server conn=1 — transport connected
+2026-09-23T17:51:37.137Z INF framework/connection core.socket.stream role=client inst=ipv4-express-http-parser-limit-client conn=1 — transport connected
+2026-09-23T17:51:37.137Z ERR framework/context core.socket.context inst=ipv4-express-http-parser-limit-server conn=1 — HTTP: Request parse error: HTTP message body too large (413) 
+2026-09-23T17:51:37.138Z INF framework/connection core.socket.stream role=server inst=ipv4-express-http-parser-limit-server conn=1 — transport disconnected
+2026-09-23T17:51:37.138Z INF framework/instance core.socket.stream role=server inst=ipv4-express-http-parser-limit-server — listener stopped
+2026-09-23T17:51:37.138Z INF framework/connection core.socket.stream role=client inst=i...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="Inet6ExpressTransportSmokeTest" classname="Inet6ExpressTransportSmokeTest" time="0.0197155" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv6;legacy;routing"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.156Z INF framework/instance core.socket.stream role=server inst=ipv6-express-transport-smoke-server — listener started
+2026-09-23T17:51:37.157Z INF framework/connection core.socket.stream role=server inst=ipv6-express-transport-smoke-server conn=1 — transport connected
+2026-09-23T17:51:37.157Z INF framework/connection core.socket.stream role=client inst=ipv6-express-transport-smoke-client conn=1 — transport connected
+2026-09-23T17:51:37.158Z INF framework/instance core.socket.stream role=server inst=ipv6-express-transport-smoke-server — listener stopped
+2026-09-23T17:51:37.158Z INF framework/connection core.socket.stream role=server inst=ipv6-express-transport-smoke-server conn=1 — transport disconnected
+2026-09-23T17:51:37.158Z INF framework/connection core.socket.stream role=client inst=ipv6-express-transport-smoke-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="UnixExpressTransportSmokeTest" classname="UnixExpressTransportSmokeTest" time="0.0200174" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;legacy;routing;unix"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.175Z INF framework/instance core.socket.stream role=server inst=unix-express-transport-smoke-server — listener started
+2026-09-23T17:51:37.176Z INF framework/connection core.socket.stream role=client inst=unix-express-transport-smoke-client conn=1 — transport connected
+2026-09-23T17:51:37.177Z INF framework/connection core.socket.stream role=server inst=unix-express-transport-smoke-server conn=1 — transport connected
+2026-09-23T17:51:37.178Z INF framework/instance core.socket.stream role=server inst=unix-express-transport-smoke-server — listener stopped
+2026-09-23T17:51:37.178Z INF framework/connection core.socket.stream role=server inst=unix-express-transport-smoke-server conn=1 — transport disconnected
+2026-09-23T17:51:37.178Z INF framework/connection core.socket.stream role=client inst=unix-express-transport-smoke-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetExpressMiddlewareShortCircuitTest" classname="InetExpressMiddlewareShortCircuitTest" time="0.017543" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv4;legacy;middleware;routing"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.194Z INF framework/instance core.socket.stream role=server inst=ipv4-express-middleware-short-circuit-server — listener started
+2026-09-23T17:51:37.195Z INF framework/connection core.socket.stream role=server inst=ipv4-express-middleware-short-circuit-server conn=1 — transport connected
+2026-09-23T17:51:37.195Z INF framework/connection core.socket.stream role=client inst=ipv4-express-middleware-short-circuit-client conn=1 — transport connected
+2026-09-23T17:51:37.196Z INF framework/instance core.socket.stream role=server inst=ipv4-express-middleware-short-circuit-server — listener stopped
+2026-09-23T17:51:37.196Z INF framework/connection core.socket.stream role=server inst=ipv4-express-middleware-short-circuit-server conn=1 — transport disconnected
+2026-09-23T17:51:37.196Z INF framework/connection core.socket.stream role=client inst=ipv4-express-middleware-short-circuit-client conn=1 — transport disconnected
+</system-out>
+	</testcase>
+	<testcase name="InetExpressRoutingEdgeBasicsTest" classname="InetExpressRoutingEdgeBasicsTest" time="0.0245657" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv4;legacy;routing"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.214Z INF framework/instance core.socket.stream role=server inst=ipv4-express-routing-edge-basics-server — listener started
+2026-09-23T17:51:37.215Z INF framework/connection core.socket.stream role=server inst=ipv4-express-routing-edge-basics-server conn=1 — transport connected
+2026-09-23T17:51:37.216Z INF framework/connection core.socket.stream role=client inst=ipv4-express-routing-edge-basics-client-0 conn=1 — transport connected
+2026-09-23T17:51:37.219Z INF framework/connection core.socket.stream role=server inst=ipv4-express-routing-edge-basics-server conn=1 — transport disconnected
+2026-09-23T17:51:37.219Z INF framework/instance core.socket.stream role=client inst=ipv4-express-routing-edge-basics-client-0 — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:37.219Z INF framework/connection core.socket.stream role=client inst=ipv4-express-routing-edge-basics-client-0 conn=1 — transport disconnected
+2026-09-23T17:51:37.219Z INF framework/co...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetExpressMountedRouterBasicsTest" classname="InetExpressMountedRouterBasicsTest" time="0.0211584" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv4;legacy;mounted-router;routing"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.237Z INF framework/instance core.socket.stream role=server inst=ipv4-expressmountedrouterbasics-server — listener started
+2026-09-23T17:51:37.239Z INF framework/connection core.socket.stream role=server inst=ipv4-expressmountedrouterbasics-server conn=1 — transport connected
+2026-09-23T17:51:37.239Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport connected
+2026-09-23T17:51:37.241Z INF framework/connection core.socket.stream role=server inst=ipv4-expressmountedrouterbasics-server conn=1 — transport disconnected
+2026-09-23T17:51:37.241Z INF framework/instance core.socket.stream role=client inst=ipv4-express-continuation-client-0 — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:37.241Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport disconnected
+2026-09-23T17:51:37.241Z INF framework/connection core.socket.str...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetExpressNestedRouterBasicsTest" classname="InetExpressNestedRouterBasicsTest" time="0.0224923" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv4;legacy;nested-router;routing"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.258Z INF framework/instance core.socket.stream role=server inst=ipv4-expressnestedrouterbasics-server — listener started
+2026-09-23T17:51:37.261Z INF framework/connection core.socket.stream role=server inst=ipv4-expressnestedrouterbasics-server conn=1 — transport connected
+2026-09-23T17:51:37.261Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport connected
+2026-09-23T17:51:37.264Z INF framework/connection core.socket.stream role=server inst=ipv4-expressnestedrouterbasics-server conn=1 — transport disconnected
+2026-09-23T17:51:37.264Z INF framework/instance core.socket.stream role=client inst=ipv4-express-continuation-client-0 — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:37.264Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport disconnected
+2026-09-23T17:51:37.264Z INF framework/connection core.socket.stream...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetExpressRouteParameterRegexTest" classname="InetExpressRouteParameterRegexTest" time="0.0200993" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv4;legacy;parameter-regex;routing"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.280Z INF framework/instance core.socket.stream role=server inst=ipv4-expressrouteparameterregex-server — listener started
+2026-09-23T17:51:37.282Z INF framework/connection core.socket.stream role=server inst=ipv4-expressrouteparameterregex-server conn=1 — transport connected
+2026-09-23T17:51:37.282Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport connected
+2026-09-23T17:51:37.284Z INF framework/connection core.socket.stream role=server inst=ipv4-expressrouteparameterregex-server conn=1 — transport disconnected
+2026-09-23T17:51:37.284Z INF framework/instance core.socket.stream role=client inst=ipv4-express-continuation-client-0 — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:37.285Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport disconnected
+2026-09-23T17:51:37.285Z INF framework/connection core.socket.str...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetExpressMiddlewareMountOrderTest" classname="InetExpressMiddlewareMountOrderTest" time="0.0230213" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv4;legacy;middleware;mount-order"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.303Z INF framework/instance core.socket.stream role=server inst=ipv4-expressmiddlewaremountorder-server — listener started
+2026-09-23T17:51:37.305Z INF framework/connection core.socket.stream role=server inst=ipv4-expressmiddlewaremountorder-server conn=1 — transport connected
+2026-09-23T17:51:37.305Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport connected
+2026-09-23T17:51:37.307Z INF framework/connection core.socket.stream role=server inst=ipv4-expressmiddlewaremountorder-server conn=1 — transport disconnected
+2026-09-23T17:51:37.307Z INF framework/instance core.socket.stream role=client inst=ipv4-express-continuation-client-0 — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:37.307Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport disconnected
+2026-09-23T17:51:37.307Z INF framework/connection core.socket....
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetExpressQueryMountInteractionTest" classname="InetExpressQueryMountInteractionTest" time="0.0216302" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv4;legacy;query;routing"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.323Z INF framework/instance core.socket.stream role=server inst=ipv4-expressquerymountinteraction-server — listener started
+2026-09-23T17:51:37.326Z INF framework/connection core.socket.stream role=server inst=ipv4-expressquerymountinteraction-server conn=1 — transport connected
+2026-09-23T17:51:37.327Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport connected
+2026-09-23T17:51:37.329Z INF framework/connection core.socket.stream role=server inst=ipv4-expressquerymountinteraction-server conn=1 — transport disconnected
+2026-09-23T17:51:37.330Z INF framework/instance core.socket.stream role=client inst=ipv4-express-continuation-client-0 — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:37.330Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport disconnected
+2026-09-23T17:51:37.330Z INF framework/connection core.sock...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetExpressFallbackNotFoundTest" classname="InetExpressFallbackNotFoundTest" time="0.0226286" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;express;ipv4;legacy;not-found;routing"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.348Z INF framework/instance core.socket.stream role=server inst=ipv4-expressfallbacknotfound-server — listener started
+2026-09-23T17:51:37.350Z INF framework/connection core.socket.stream role=server inst=ipv4-expressfallbacknotfound-server conn=1 — transport connected
+2026-09-23T17:51:37.350Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport connected
+2026-09-23T17:51:37.352Z INF framework/connection core.socket.stream role=server inst=ipv4-expressfallbacknotfound-server conn=1 — transport disconnected
+2026-09-23T17:51:37.352Z INF framework/instance core.socket.stream role=client inst=ipv4-express-continuation-client-0 — Flow terminated: endpoint-connections=1 retries=0 reconnects=0 flow=0
+2026-09-23T17:51:37.352Z INF framework/connection core.socket.stream role=client inst=ipv4-express-continuation-client-0 conn=1 — transport disconnected
+2026-09-23T17:51:37.352Z INF framework/connection core.socket.stream role=...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetWebSocketServerClientTextEchoTest" classname="InetWebSocketServerClientTextEchoTest" time="0.0222424" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;ipv4;legacy;server;websocket"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.371Z INF framework/instance core.socket.stream role=server inst=ipv4-websocket-echo-server — listener started
+2026-09-23T17:51:37.372Z INF framework/connection core.socket.stream role=server inst=ipv4-websocket-echo-server conn=1 — transport connected
+2026-09-23T17:51:37.372Z INF framework/connection core.socket.stream role=client inst=ipv4-websocket-echo-client conn=1 — transport connected
+2026-09-23T17:51:37.374Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-echo-server conn=1 — websocket established: subprotocol=component-echo
+2026-09-23T17:51:37.374Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-echo-server conn=1 — subprotocol started: component-echo
+2026-09-23T17:51:37.374Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-echo-client conn=1 — websocket established: subprotocol=component-echo
+2026-09-23T17:51:37.374Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-echo-client con...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="Inet6WebSocketServerClientTextEchoTest" classname="Inet6WebSocketServerClientTextEchoTest" time="0.0253069" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;ipv6;legacy;server;websocket"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.397Z INF framework/instance core.socket.stream role=server inst=ipv6-websocket-echo-server — listener started
+2026-09-23T17:51:37.397Z INF framework/connection core.socket.stream role=server inst=ipv6-websocket-echo-server conn=1 — transport connected
+2026-09-23T17:51:37.398Z INF framework/connection core.socket.stream role=client inst=ipv6-websocket-echo-client conn=1 — transport connected
+2026-09-23T17:51:37.399Z INF framework/connection web.websocket.subprotocol inst=ipv6-websocket-echo-server conn=1 — websocket established: subprotocol=component-echo
+2026-09-23T17:51:37.399Z INF framework/connection web.websocket.subprotocol inst=ipv6-websocket-echo-server conn=1 — subprotocol started: component-echo
+2026-09-23T17:51:37.400Z INF framework/connection web.websocket.subprotocol inst=ipv6-websocket-echo-client conn=1 — websocket established: subprotocol=component-echo
+2026-09-23T17:51:37.400Z INF framework/connection web.websocket.subprotocol inst=ipv6-websocket-echo-client con...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="UnixWebSocketServerClientTextEchoTest" classname="UnixWebSocketServerClientTextEchoTest" time="0.0226297" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;legacy;server;unix;websocket"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.420Z INF framework/instance core.socket.stream role=server inst=unix-websocket-echo-server — listener started
+2026-09-23T17:51:37.421Z INF framework/connection core.socket.stream role=client inst=unix-websocket-echo-client conn=1 — transport connected
+2026-09-23T17:51:37.422Z INF framework/connection core.socket.stream role=server inst=unix-websocket-echo-server conn=1 — transport connected
+2026-09-23T17:51:37.423Z INF framework/connection web.websocket.subprotocol inst=unix-websocket-echo-server conn=1 — websocket established: subprotocol=component-echo
+2026-09-23T17:51:37.423Z INF framework/connection web.websocket.subprotocol inst=unix-websocket-echo-server conn=1 — subprotocol started: component-echo
+2026-09-23T17:51:37.423Z INF framework/connection web.websocket.subprotocol inst=unix-websocket-echo-client conn=1 — websocket established: subprotocol=component-echo
+2026-09-23T17:51:37.423Z INF framework/connection web.websocket.subprotocol inst=unix-websocket-echo-client con...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetWebSocketServerClientMultiTextMessageTest" classname="InetWebSocketServerClientMultiTextMessageTest" time="0.016609" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;ipv4;legacy;server;websocket"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.438Z INF framework/instance core.socket.stream role=server inst=ipv4-websocket-multi-text-server — listener started
+2026-09-23T17:51:37.439Z INF framework/connection core.socket.stream role=server inst=ipv4-websocket-multi-text-server conn=1 — transport connected
+2026-09-23T17:51:37.439Z INF framework/connection core.socket.stream role=client inst=ipv4-websocket-multi-text-client conn=1 — transport connected
+2026-09-23T17:51:37.440Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-multi-text-server conn=1 — websocket established: subprotocol=component-behavior
+2026-09-23T17:51:37.440Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-multi-text-server conn=1 — subprotocol started: component-behavior
+2026-09-23T17:51:37.440Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-multi-text-client conn=1 — websocket established: subprotocol=component-behavior
+2026-09-23T17:51:37.440Z INF framework/connection web.websocket...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetWebSocketServerClientBinaryEchoTest" classname="InetWebSocketServerClientBinaryEchoTest" time="0.0216219" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;ipv4;legacy;server;websocket"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.459Z INF framework/instance core.socket.stream role=server inst=ipv4-websocket-binary-echo-server — listener started
+2026-09-23T17:51:37.460Z INF framework/connection core.socket.stream role=server inst=ipv4-websocket-binary-echo-server conn=1 — transport connected
+2026-09-23T17:51:37.460Z INF framework/connection core.socket.stream role=client inst=ipv4-websocket-binary-echo-client conn=1 — transport connected
+2026-09-23T17:51:37.461Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-binary-echo-server conn=1 — websocket established: subprotocol=component-behavior
+2026-09-23T17:51:37.461Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-binary-echo-server conn=1 — subprotocol started: component-behavior
+2026-09-23T17:51:37.462Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-binary-echo-client conn=1 — websocket established: subprotocol=component-behavior
+2026-09-23T17:51:37.462Z INF framework/connection web.web...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetWebSocketServerClientCloseHandshakeTest" classname="InetWebSocketServerClientCloseHandshakeTest" time="0.032452" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;ipv4;legacy;server;websocket"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetWebSocketServerClientPingPongTest" classname="InetWebSocketServerClientPingPongTest" time="0.0153218" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;ipv4;legacy;server;websocket"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.508Z INF framework/instance core.socket.stream role=server inst=ipv4-websocket-ping-pong-server — listener started
+2026-09-23T17:51:37.509Z INF framework/connection core.socket.stream role=server inst=ipv4-websocket-ping-pong-server conn=1 — transport connected
+2026-09-23T17:51:37.509Z INF framework/connection core.socket.stream role=client inst=ipv4-websocket-ping-pong-client conn=1 — transport connected
+2026-09-23T17:51:37.510Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-ping-pong-server conn=1 — websocket established: subprotocol=component-behavior
+2026-09-23T17:51:37.510Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-ping-pong-server conn=1 — subprotocol started: component-behavior
+2026-09-23T17:51:37.510Z INF framework/connection web.websocket.subprotocol inst=ipv4-websocket-ping-pong-client conn=1 — websocket established: subprotocol=component-behavior
+2026-09-23T17:51:37.510Z INF framework/connection web.websocket.subpr...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetWebSocketServerInitiatedCloseTest" classname="InetWebSocketServerInitiatedCloseTest" time="0.0177443" status="run">
+		<properties>
+			<property name="cmake_labels" value="close;component;ipv4;legacy;server-initiated;websocket"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.527Z INF framework/instance core.socket.stream role=server inst=InetWebSocketServerInitiatedCloseTest-server — listener started
+2026-09-23T17:51:37.527Z INF framework/connection core.socket.stream role=server inst=InetWebSocketServerInitiatedCloseTest-server conn=1 — transport connected
+2026-09-23T17:51:37.527Z INF framework/connection core.socket.stream role=client inst=InetWebSocketServerInitiatedCloseTest-client conn=1 — transport connected
+2026-09-23T17:51:37.528Z INF framework/connection web.websocket.subprotocol inst=InetWebSocketServerInitiatedCloseTest-server conn=1 — websocket established: subprotocol=component-continuation
+2026-09-23T17:51:37.528Z INF framework/connection web.websocket.subprotocol inst=InetWebSocketServerInitiatedCloseTest-server conn=1 — subprotocol started: component-continuation
+2026-09-23T17:51:37.529Z INF framework/connection web.websocket.subprotocol inst=InetWebSocketServerInitiatedCloseTest-client conn=1 — websocket established: subprotocol=co...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetWebSocketUnexpectedCloseLifecycleTest" classname="InetWebSocketUnexpectedCloseLifecycleTest" time="0.0289781" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv4;legacy;lifecycle;unexpected-close;websocket"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetWebSocketLargeTextMessageTest" classname="InetWebSocketLargeTextMessageTest" time="0.0251274" status="run">
+		<properties>
+			<property name="cmake_labels" value="component;ipv4;large;legacy;text;websocket"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.579Z INF framework/instance core.socket.stream role=server inst=InetWebSocketLargeTextMessageTest-server — listener started
+2026-09-23T17:51:37.580Z INF framework/connection core.socket.stream role=server inst=InetWebSocketLargeTextMessageTest-server conn=1 — transport connected
+2026-09-23T17:51:37.580Z INF framework/connection core.socket.stream role=client inst=InetWebSocketLargeTextMessageTest-client conn=1 — transport connected
+2026-09-23T17:51:37.581Z INF framework/connection web.websocket.subprotocol inst=InetWebSocketLargeTextMessageTest-server conn=1 — websocket established: subprotocol=component-large-text
+2026-09-23T17:51:37.581Z INF framework/connection web.websocket.subprotocol inst=InetWebSocketLargeTextMessageTest-server conn=1 — subprotocol started: component-large-text
+2026-09-23T17:51:37.582Z INF framework/connection web.websocket.subprotocol inst=InetWebSocketLargeTextMessageTest-client conn=1 — websocket established: subprotocol=component-large-text
+2026-09-2...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetWebSocketLargeBinaryMessageTest" classname="InetWebSocketLargeBinaryMessageTest" time="0.0226528" status="run">
+		<properties>
+			<property name="cmake_labels" value="binary;component;ipv4;large;legacy;websocket"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.602Z INF framework/instance core.socket.stream role=server inst=InetWebSocketLargeBinaryMessageTest-server — listener started
+2026-09-23T17:51:37.603Z INF framework/connection core.socket.stream role=server inst=InetWebSocketLargeBinaryMessageTest-server conn=1 — transport connected
+2026-09-23T17:51:37.603Z INF framework/connection core.socket.stream role=client inst=InetWebSocketLargeBinaryMessageTest-client conn=1 — transport connected
+2026-09-23T17:51:37.604Z INF framework/connection web.websocket.subprotocol inst=InetWebSocketLargeBinaryMessageTest-server conn=1 — websocket established: subprotocol=component-large-binary
+2026-09-23T17:51:37.604Z INF framework/connection web.websocket.subprotocol inst=InetWebSocketLargeBinaryMessageTest-server conn=1 — subprotocol started: component-large-binary
+2026-09-23T17:51:37.605Z INF framework/connection web.websocket.subprotocol inst=InetWebSocketLargeBinaryMessageTest-client conn=1 — websocket established: subprotocol=component-larg...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetSseEventSourceBasicEventTest" classname="InetSseEventSourceBasicEventTest" time="0.0188069" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;eventsource;ipv4;legacy;server;sse"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.621Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-basic-event-server — listener started
+2026-09-23T17:51:37.623Z INF framework/connection web.http.client.eventsource — event source started: http://127.0.0.1:34507/events
+2026-09-23T17:51:37.623Z INF framework/connection core.socket.stream role=server inst=ipv4-sse-eventsource-basic-event-server conn=1 — transport connected
+2026-09-23T17:51:37.623Z INF framework/connection core.socket.stream role=client inst=EventSource conn=1 — transport connected
+2026-09-23T17:51:37.624Z INF framework/connection web.http.client.eventsource — event stream established: http://127.0.0.1:34507/events
+2026-09-23T17:51:37.624Z INF framework/connection web.http.client.eventsource — event source stopped: http://127.0.0.1:34507/events
+2026-09-23T17:51:37.624Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-basic-event-server — listener stopped
+2026-09-23T17:51:37.624Z INF framework/con...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetSseEventSourceMultiEventSequenceTest" classname="InetSseEventSourceMultiEventSequenceTest" time="0.0220453" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;eventsource;ipv4;legacy;server;sse"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.642Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-multi-event-sequence-server — listener started
+2026-09-23T17:51:37.645Z INF framework/connection web.http.client.eventsource — event source started: http://127.0.0.1:57629/events
+2026-09-23T17:51:37.645Z INF framework/connection core.socket.stream role=server inst=ipv4-sse-eventsource-multi-event-sequence-server conn=1 — transport connected
+2026-09-23T17:51:37.646Z INF framework/connection core.socket.stream role=client inst=EventSource conn=1 — transport connected
+2026-09-23T17:51:37.647Z INF framework/connection web.http.client.eventsource — event stream established: http://127.0.0.1:57629/events
+2026-09-23T17:51:37.647Z INF framework/connection web.http.client.eventsource — event source stopped: http://127.0.0.1:57629/events
+2026-09-23T17:51:37.647Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-multi-event-sequence-server — listener stopped
+2026-09-23T17:5...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetSseEventSourceMultiLineDataTest" classname="InetSseEventSourceMultiLineDataTest" time="0.016062" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;eventsource;ipv4;legacy;server;sse"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.660Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-multiline-data-server — listener started
+2026-09-23T17:51:37.662Z INF framework/connection web.http.client.eventsource — event source started: http://127.0.0.1:57175/events
+2026-09-23T17:51:37.662Z INF framework/connection core.socket.stream role=server inst=ipv4-sse-eventsource-multiline-data-server conn=1 — transport connected
+2026-09-23T17:51:37.662Z INF framework/connection core.socket.stream role=client inst=EventSource conn=1 — transport connected
+2026-09-23T17:51:37.663Z INF framework/connection web.http.client.eventsource — event stream established: http://127.0.0.1:57175/events
+2026-09-23T17:51:37.663Z INF framework/connection web.http.client.eventsource — event source stopped: http://127.0.0.1:57175/events
+2026-09-23T17:51:37.663Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-multiline-data-server — listener stopped
+2026-09-23T17:51:37.664Z INF fram...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetSseEventSourceCommentIgnoredTest" classname="InetSseEventSourceCommentIgnoredTest" time="0.0213261" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;eventsource;ipv4;legacy;server;sse"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.680Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-comment-ignored-server — listener started
+2026-09-23T17:51:37.682Z INF framework/connection web.http.client.eventsource — event source started: http://127.0.0.1:51919/events
+2026-09-23T17:51:37.683Z INF framework/connection core.socket.stream role=server inst=ipv4-sse-eventsource-comment-ignored-server conn=1 — transport connected
+2026-09-23T17:51:37.683Z INF framework/connection core.socket.stream role=client inst=EventSource conn=1 — transport connected
+2026-09-23T17:51:37.684Z INF framework/connection web.http.client.eventsource — event stream established: http://127.0.0.1:51919/events
+2026-09-23T17:51:37.684Z INF framework/connection web.http.client.eventsource — event source stopped: http://127.0.0.1:51919/events
+2026-09-23T17:51:37.684Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-comment-ignored-server — listener stopped
+2026-09-23T17:51:37.685Z INF f...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetSseEventSourceDefaultMessageEventTest" classname="InetSseEventSourceDefaultMessageEventTest" time="0.0142313" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;eventsource;ipv4;legacy;server;sse"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.697Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-default-message-event-server — listener started
+2026-09-23T17:51:37.698Z INF framework/connection web.http.client.eventsource — event source started: http://127.0.0.1:51509/events
+2026-09-23T17:51:37.698Z INF framework/connection core.socket.stream role=server inst=ipv4-sse-eventsource-default-message-event-server conn=1 — transport connected
+2026-09-23T17:51:37.699Z INF framework/connection core.socket.stream role=client inst=EventSource conn=1 — transport connected
+2026-09-23T17:51:37.699Z INF framework/connection web.http.client.eventsource — event stream established: http://127.0.0.1:51509/events
+2026-09-23T17:51:37.699Z INF framework/connection web.http.client.eventsource — event source stopped: http://127.0.0.1:51509/events
+2026-09-23T17:51:37.699Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-default-message-event-server — listener stopped
+2026-09-23T1...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetSseEventSourceClientCloseAfterEventTest" classname="InetSseEventSourceClientCloseAfterEventTest" time="0.0178523" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;eventsource;ipv4;legacy;server;sse"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetSseEventSourceRetryFieldTest" classname="InetSseEventSourceRetryFieldTest" time="0.0207618" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;eventsource;ipv4;legacy;server;sse"/>
+		</properties>
+		<system-out>2026-09-23T17:51:37.733Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-retry-field-server — listener started
+2026-09-23T17:51:37.735Z INF framework/connection web.http.client.eventsource — event source started: http://127.0.0.1:38409/events
+2026-09-23T17:51:37.736Z INF framework/connection core.socket.stream role=server inst=ipv4-sse-eventsource-retry-field-server conn=1 — transport connected
+2026-09-23T17:51:37.736Z INF framework/connection core.socket.stream role=client inst=EventSource conn=1 — transport connected
+2026-09-23T17:51:37.737Z INF framework/connection web.http.client.eventsource — event stream established: http://127.0.0.1:38409/events
+2026-09-23T17:51:37.738Z INF framework/connection web.http.client.eventsource — event source stopped: http://127.0.0.1:38409/events
+2026-09-23T17:51:37.738Z INF framework/instance core.socket.stream role=server inst=ipv4-sse-eventsource-retry-field-server — listener stopped
+2026-09-23T17:51:37.738Z INF framework/con...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="InetSseEventSourceReconnectLifecycleTest" classname="InetSseEventSourceReconnectLifecycleTest" time="3.03038" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;eventsource;ipv4;legacy;lifecycle;log;server;sse"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="InetSseEventSourceDestructionLifecycleTest" classname="InetSseEventSourceDestructionLifecycleTest" time="0.0423544" status="run">
+		<properties>
+			<property name="cmake_labels" value="client;component;eventsource;ipv4;legacy;lifecycle;log;server;sse"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="ParameterlessSemanticLoggerPolicyTest" classname="ParameterlessSemanticLoggerPolicyTest" time="0.154129" status="run">
+		<properties>
+			<property name="cmake_labels" value="architecture;log;policy"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="LoggingApiSurfacePolicyTest" classname="LoggingApiSurfacePolicyTest" time="0.00592482" status="run">
+		<properties>
+			<property name="cmake_labels" value="api;architecture;log;policy"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="EpollDescriptorPublisherPolicyTest" classname="EpollDescriptorPublisherPolicyTest" time="0.00235535" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;epoll;policy"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="EventLoopSyscallDisciplinePolicyTest" classname="EventLoopSyscallDisciplinePolicyTest" time="0.00253098" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;policy;syscall"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="SensitiveLoggingPolicyTest" classname="SensitiveLoggingPolicyTest" time="0.225822" status="run">
+		<properties>
+			<property name="cmake_labels" value="log;policy;security"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="CiWorkflowPathsPolicyTest" classname="CiWorkflowPathsPolicyTest" time="0.00915006" status="run">
+		<properties>
+			<property name="cmake_labels" value="architecture;ci;policy"/>
+		</properties>
+		<system-out></system-out>
+	</testcase>
+</testsuite>

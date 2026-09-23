@@ -1,0 +1,38 @@
+COMMAND: ["cmake", "-S", "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/examples/echo", "-B", "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/external-echo", "-G", "Ninja", "-DCMAKE_BUILD_TYPE=Debug", "-DBUILD_TESTING=ON", "-DCMAKE_PREFIX_PATH=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc"]
+SOURCE: 07ca9a2936ee72582df7d159cb06666fe23e30f8
+PREFIX: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+  net-in-stream: loading dependencies 'net-in-phy-stream'
+    net-in-phy-stream: loading dependencies 'net-in-phy'
+      net-in-phy: loading dependencies 'net-in'
+        net-in: loading dependencies 'net'
+          net: loading dependencies 'core-socket'
+            core-socket: loading dependencies 'core'
+              core: loading dependencies 'mux-epoll, utils'
+                mux-epoll: loaded
+                utils: loading dependencies 'logger'
+                  logger: loaded
+                utils: loaded
+              core: loaded
+            core-socket: loaded
+          net: loaded
+        net-in: loaded
+      net-in-phy: loaded
+    net-in-phy-stream: loaded
+  net-in-stream: loaded
+  core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+    core-socket-stream: loading dependencies 'core-socket'
+      core-socket: already loaded
+    core-socket-stream: loaded
+  core-socket-stream-legacy: loaded
+net-in-stream-legacy: loaded
+-- Found Python3: /usr/bin/python3 (found version "3.14.7") found components: Interpreter
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/external-echo

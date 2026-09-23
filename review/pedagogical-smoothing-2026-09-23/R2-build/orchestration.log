@@ -1,0 +1,15 @@
+framework-configure 0
+framework-build 0
+framework-inventory 0
+framework-tests 0
+framework-install 0
+external-echo-configure 0
+external-echo-build 0
+external-echo-tests 0
+companion-build 0
+lab-inventory 0
+labs 0
+teaching-smoke 0
+behavior-smoke 0
+lifetime-tests 0
+verification finished; no refinement performed

@@ -1,0 +1,1162 @@
+COMMAND: ["ctest", "--test-dir", "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples", "--output-on-failure", "--no-tests=error", "-V", "--output-junit", "/home/voc/projects/snodec/publications/book/review/pedagogical-smoothing-2026-09-23/R2-build/labs.xml"]
+SOURCE: 07ca9a2936ee72582df7d159cb06666fe23e30f8
+PREFIX: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc
+UpdateCTestConfiguration  from :/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/DartConfiguration.tcl
+Test project /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+      Start  1: exercise-ch01
+
+1: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/solution.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/Comparison-AsioEcho/asio-echo"
+1: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch01
+1: Test timeout computed to be: 40
+1: PASS: snodec: 20480 binary bytes unchanged; next connection also works
+1: PASS: asio: 20480 binary bytes unchanged; next connection also works
+ 1/62 Test  #1: exercise-ch01 ...........................   Passed    0.23 sec
+test 2
+      Start  2: exercise-ch01-independent-peers
+
+2: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch01/independent-peers.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/Comparison-AsioEcho/asio-echo"
+2: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch01
+2: Test timeout computed to be: 40
+2: PASS: snodec: active peer works while another is idle and after it closes
+2: PASS: asio: active peer works while another is idle and after it closes
+ 2/62 Test  #2: exercise-ch01-independent-peers .........   Passed    0.12 sec
+test 3
+      Start  3: exercise-ch02-consumer
+
+3: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch02/solution.py" "consumer"
+3: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch02
+3: Test timeout computed to be: 180
+3: -- The CXX compiler identification is GNU 16.2.0
+3: -- Detecting CXX compiler ABI info
+3: -- Detecting CXX compiler ABI info - done
+3: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+3: -- Detecting CXX compile features
+3: -- Detecting CXX compile features - done
+3: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+3:   net-in-stream: loading dependencies 'net-in-phy-stream'
+3:     net-in-phy-stream: loading dependencies 'net-in-phy'
+3:       net-in-phy: loading dependencies 'net-in'
+3:         net-in: loading dependencies 'net'
+3:           net: loading dependencies 'core-socket'
+3:             core-socket: loading dependencies 'core'
+3:               core: loading dependencies 'mux-epoll, utils'
+3:                 mux-epoll: loaded
+3:                 utils: loading dependencies 'logger'
+3:                   logger: loaded
+3:                 utils: loaded
+3:               core: loaded
+3:             core-socket: loaded
+3:           net: loaded
+3:         net-in: loaded
+3:       net-in-phy: loaded
+3:     net-in-phy-stream: loaded
+3:   net-in-stream: loaded
+3:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+3:     core-socket-stream: loading dependencies 'core-socket'
+3:       core-socket: already loaded
+3:     core-socket-stream: loaded
+3:   core-socket-stream-legacy: loaded
+3: net-in-stream-legacy: loaded
+3: -- Configuring done (0.2s)
+3: -- Generating done (0.0s)
+3: -- Build files have been written to: /tmp/snodec-environment-lab-qo1le_5o/build
+3: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+3: [ 33%] Linking CXX static library libechosocketcontext.a
+3: [ 33%] Built target echosocketcontext
+3: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+3: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+3: [ 83%] Linking CXX executable echoserver
+3: [100%] Linking CXX executable echoclient
+3: [100%] Built target echoserver
+3: [100%] Built target echoclient
+3: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+3: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+ 3/62 Test  #3: exercise-ch02-consumer ..................   Passed    3.79 sec
+test 4
+      Start  4: exercise-ch02-component
+
+4: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch02/solution.py" "component"
+4: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch02
+4: Test timeout computed to be: 180
+4: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+4:   net-in-stream: loading dependencies 'net-in-phy-stream'
+4:     net-in-phy-stream: loading dependencies 'net-in-phy'
+4:       net-in-phy: loading dependencies 'net-in'
+4:         net-in: loading dependencies 'net'
+4:           net: loading dependencies 'core-socket'
+4:             core-socket: loading dependencies 'core'
+4:               core: loading dependencies 'mux-epoll, utils'
+4:                 mux-epoll: loaded
+4:                 utils: loading dependencies 'logger'
+4:                   logger: loaded
+4:                 utils: loaded
+4:               core: loaded
+4:             core-socket: loaded
+4:           net: loaded
+4:         net-in: loaded
+4:       net-in-phy: loaded
+4:     net-in-phy-stream: loaded
+4:   net-in-stream: loaded
+4:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+4:     core-socket-stream: loading dependencies 'core-socket'
+4:       core-socket: already loaded
+4:     core-socket-stream: loaded
+4:   core-socket-stream-legacy: loaded
+4: net-in-stream-legacy: loaded
+4: -- Configuring done (0.0s)
+4: -- Generating done (0.0s)
+4: -- Build files have been written to: /tmp/snodec-environment-lab-pnof1njt/build
+4: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+4: [ 33%] Linking CXX static library libechosocketcontext.a
+4: [ 33%] Built target echosocketcontext
+4: [ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+4: [ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+4: [ 83%] Linking CXX executable echoserver
+4: [100%] Linking CXX executable echoclient
+4: [100%] Built target echoserver
+4: [100%] Built target echoclient
+4: -- The CXX compiler identification is GNU 16.2.0
+4: -- Detecting CXX compiler ABI info
+4: -- Detecting CXX compiler ABI info - done
+4: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+4: -- Detecting CXX compile features
+4: -- Detecting CXX compile features - done
+4: CMake Error at CMakeLists.txt:9 (find_package):
+4:   Found package configuration file:
+4: 
+4:     /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+4: 
+4:   but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+4:   NOT FOUND.  Reason given by package:
+4: 
+4:   Unsupported SNode.C component requested: net-in-stream-missing
+4: 
+4: 
+4: 
+4: -- Configuring incomplete, errors occurred!
+4: 
+4: PASS: missing component stops configuration before any runtime endpoint exists
+4: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+4: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+ 4/62 Test  #4: exercise-ch02-component .................   Passed    3.78 sec
+test 5
+      Start  5: exercise-ch03
+
+5: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/solution.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch03/greeting-client"
+5: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch03
+5: Test timeout computed to be: 40
+5: PASS: EchoPair receives Learning by echo
+5: PASS: independent measurement peers reflect even invalid values; closing one leaves the other usable
+5: PASS: changed greeting and unchanged binary reflection with a controlled peer
+ 5/62 Test  #5: exercise-ch03 ...........................   Passed    0.15 sec
+test 6
+      Start  6: exercise-ch03-occupied-port
+
+6: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch03/occupied-port.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver"
+6: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch03
+6: Test timeout computed to be: 40
+6: PASS: second listener reports occupied endpoint; original owner still reflects bytes
+ 6/62 Test  #6: exercise-ch03-occupied-port .............   Passed    0.12 sec
+test 7
+      Start  7: exercise-ch04-model-instances
+
+7: Test command: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch30/model-instances
+7: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch04
+7: Test timeout computed to be: 40
+7: PASS: shared inputs accept 1,2; separate model instances each accept 1
+ 7/62 Test  #7: exercise-ch04-model-instances ...........   Passed    0.00 sec
+test 8
+      Start  8: exercise-ch04-independent-peers
+
+8: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch04/../ch01/independent-peers.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver"
+8: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch04
+8: Test timeout computed to be: 40
+8: PASS: snodec: active peer works while another is idle and after it closes
+ 8/62 Test  #8: exercise-ch04-independent-peers .........   Passed    0.09 sec
+test 9
+      Start  9: exercise-ch05-deferred-work
+
+9: Test command: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch05/deferred-work
+9: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch05
+9: Environment variables: 
+9:  XDG_CONFIG_HOME=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch05/config
+9: Test timeout computed to be: 10
+9: PASS: empty trace before start; RUNNING dispatch gives 1,2,3; child sees first callback returned
+ 9/62 Test  #9: exercise-ch05-deferred-work .............   Passed    0.01 sec
+test 10
+      Start 10: exercise-ch05-model-checkpoint
+
+10: Test command: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch30/model-ownership
+10: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch05
+10: Test timeout computed to be: 10
+10: PASS: input 900,2,1 -> accepted 1,2,3; detached observer sees only 1,2
+10/62 Test #10: exercise-ch05-model-checkpoint ..........   Passed    0.00 sec
+test 11
+      Start 11: exercise-ch06-ip-families
+
+11: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py" "ipv4" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch06/endpoint-in" "ipv6" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch06/endpoint-in6"
+11: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch06
+11: Test timeout computed to be: 40
+11: IDENTITY	localhost:49567	localhost:59286
+11: ipv4: producer local=('127.0.0.1', 59286), service=('127.0.0.1', 49567)
+11: PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+11: IDENTITY	localhost:48903	localhost:41760
+11: ipv6: producer local=('::1', 41760, 0, 0), service=('::1', 48903, 0, 0)
+11: PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+11/62 Test #11: exercise-ch06-ip-families ...............   Passed    0.14 sec
+test 12
+      Start 12: exercise-ch06-unix-path
+
+12: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch06/families.py" "unix" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch06/endpoint-un"
+12: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch06
+12: Test timeout computed to be: 40
+12: IDENTITY	/tmp/endpoint-lab-vksqomld/service.sock	/tmp/endpoint-lab-vksqomld/producer.sock
+12: unix: producer local=/tmp/endpoint-lab-vksqomld/producer.sock, service=/tmp/endpoint-lab-vksqomld/service.sock
+12: PASS: unix: exact measurement bytes, matching identities, owned cleanup
+12/62 Test #12: exercise-ch06-unix-path .................   Passed    0.09 sec
+test 13
+      Start 13: exercise-ch07-independent-peers
+
+13: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/../ch01/independent-peers.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver"
+13: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch07
+13: Test timeout computed to be: 40
+13: PASS: snodec: active peer works while another is idle and after it closes
+13/62 Test #13: exercise-ch07-independent-peers .........   Passed    0.09 sec
+test 14
+      Start 14: exercise-ch07-occupied-endpoint
+
+14: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch07/../ch03/occupied-port.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver"
+14: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch07
+14: Test timeout computed to be: 40
+14: PASS: second listener reports occupied endpoint; original owner still reflects bytes
+14/62 Test #14: exercise-ch07-occupied-endpoint .........   Passed    0.13 sec
+test 15
+      Start 15: exercise-ch08-selectors
+
+15: Test command: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch08/bluetooth-selectors
+15: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch08
+15: Test timeout computed to be: 40
+15: Default: empty configured device string, zero selectors
+15: RFCOMM 10:3D:1C:AC:BA:9C:16
+15: L2CAP 10:3D:1C:AC:BA:9C:4097
+15: PASS: one device; channel 16 and PSM 4097 (0x1001); no radio operation
+15/62 Test #15: exercise-ch08-selectors .................   Passed    0.01 sec
+test 16
+      Start 16: exercise-ch08-part-checkpoint
+
+16: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch08/../ch06/families.py" "ipv4" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch06/endpoint-in" "unix" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch06/endpoint-un"
+16: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch08
+16: Test timeout computed to be: 40
+16: IDENTITY	localhost:36143	localhost:44950
+16: ipv4: producer local=('127.0.0.1', 44950), service=('127.0.0.1', 36143)
+16: PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+16: IDENTITY	/tmp/endpoint-lab-r4e3kiz9/service.sock	/tmp/endpoint-lab-r4e3kiz9/producer.sock
+16: unix: producer local=/tmp/endpoint-lab-r4e3kiz9/producer.sock, service=/tmp/endpoint-lab-r4e3kiz9/service.sock
+16: PASS: unix: exact measurement bytes, matching identities, owned cleanup
+16/62 Test #16: exercise-ch08-part-checkpoint ...........   Passed    0.13 sec
+test 17
+      Start 17: exercise-ch09-framing
+
+17: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch09/protocol.py" "framing" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/LineProtocol-Server/line-protocol-server"
+17: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch09
+17: Test timeout computed to be: 40
+17: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+17/62 Test #17: exercise-ch09-framing ...................   Passed    0.19 sec
+test 18
+      Start 18: exercise-ch09-limits
+
+18: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch09/protocol.py" "limits" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/LineProtocol-Server/line-protocol-server"
+18: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch09
+18: Test timeout computed to be: 40
+18: Overlong input: closed; diagnostic bytes delivered=0
+18: Overlong input: closed; diagnostic bytes delivered=0
+18: PASS: 4096 bytes accepted including optional CR; 4097 closes with or without delimiter
+18/62 Test #18: exercise-ch09-limits ....................   Passed    0.30 sec
+test 19
+      Start 19: exercise-ch10-isolation
+
+19: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch10/../ch09/protocol.py" "isolation" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/LineProtocol-Server/line-protocol-server"
+19: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch10
+19: Test timeout computed to be: 40
+19: PASS: independent pending buffers; replacement starts fresh; surviving peer progresses
+19/62 Test #19: exercise-ch10-isolation .................   Passed    0.20 sec
+test 20
+      Start 20: exercise-ch10-refusal
+
+20: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch10/../ch09/protocol.py" "refusal" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch10/line-refusal"
+20: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch10
+20: Test timeout computed to be: 40
+20: PASS: null factory result closes before READY; later valid context replies
+20/62 Test #20: exercise-ch10-refusal ...................   Passed    0.09 sec
+test 21
+      Start 21: exercise-ch11-part-checkpoint
+
+21: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch11/../ch09/protocol.py" "transfer" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/LineProtocol-Server/line-protocol-server" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch11/line-unix"
+21: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch11
+21: Test timeout computed to be: 40
+21: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+21: Observed ip: 39461
+21: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+21: Observed unix: /tmp/line-lab-hd0ooic6/line.sock
+21: PASS: Part IV checkpoint: identical reconstructed replies over IPv4 and Unix; owned cleanup
+21/62 Test #21: exercise-ch11-part-checkpoint ...........   Passed    0.35 sec
+test 22
+      Start 22: exercise-ch11-endpoint-failure
+
+22: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch11/../ch09/protocol.py" "endpoint-failure" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch11/line-unix"
+22: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch11
+22: Test timeout computed to be: 40
+22: PASS: missing path fails before protocol; valid peer reports command error and remains usable
+22/62 Test #22: exercise-ch11-endpoint-failure ..........   Passed    0.10 sec
+test 23
+      Start 23: exercise-ch12-precedence
+
+23: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch12/configuration.py" "precedence" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver"
+23: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch12
+23: Test timeout computed to be: 40
+23: PASS: source/file/CLI ports [8080, 18091, 18092]; file unchanged; inspection status 2
+23/62 Test #23: exercise-ch12-precedence ................   Passed    0.10 sec
+test 24
+      Start 24: exercise-ch12-discovery
+
+24: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch12/configuration.py" "discovery" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver"
+24: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch12
+24: Test timeout computed to be: 40
+24: PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+24/62 Test #24: exercise-ch12-discovery .................   Passed    0.10 sec
+test 25
+      Start 25: exercise-ch13-records
+
+25: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/records.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/SemanticLogging/semantic-logging"
+25: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch13
+25: Test timeout computed to be: 40
+25: PASS: four semantic records; component Debug overrides global Info; event and typed error; no invented peer
+25: {"v":1,"ts":"2026-09-23T17:52:12.368Z","level":"info","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","message":"Measurement example initialized"}
+25: {"v":1,"ts":"2026-09-23T17:52:12.368Z","level":"info","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","event":"measurement.accepted","message":"Accepted measurement sequence 1"}
+25: {"v":1,"ts":"2026-09-23T17:52:12.368Z","level":"debug","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","message":"Diagnostic sequence 1"}
+25: {"v":1,"ts":"2026-09-23T17:52:12.368Z","level":"warn","origin":"application","boundary":"application","component":"gateway.measurements","instance":"measurement-input","message":"Demonstration error; no file operation was attempted","error":{"code":13,"text":"Permission denied"}}
+25/62 Test #25: exercise-ch13-records ...................   Passed    0.05 sec
+test 26
+      Start 26: exercise-ch13-part-checkpoint
+
+26: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch13/../ch12/configuration.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoserver"
+26: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch13
+26: Test timeout computed to be: 40
+26: PASS: source/file/CLI ports [8080, 18091, 35325]; file unchanged; inspection status 2
+26: PASS: help narrows application/instance/local; invalid --port rejected; local help identifies its scope
+26: PASS: Part V checkpoint: CLI-selected listener echoes; narrow overrides reveal role/context records
+26: Global Error run: 0 records; scoped run: [{"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Initiating listen", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.584Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "info", "message": "listener started", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.584Z", "v": 1}, {"boundary": "application", "component": "echo", "level": "info", "message": "echoserver: listening on '127.0.0.1:35325'", "origin": "application", "ts": "2026-09-23T17:52:12.584Z", "v": 1}, {"boundary": "connection", "component": "core.socket.stream", "connection": "1", "instance": "echoserver", "level": "info", "message": "transport connected", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Connection 1 connecting", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Local: localhost:35325", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Peer: localhost:55656", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Connection 1 connected", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Local: localhost:35325", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Peer: localhost:55656", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "connection", "component": "core.socket.stream", "connection": "1", "instance": "echoserver", "level": "debug", "message": "SocketContext created successful", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "debug", "message": "Context attached", "origin": "framework", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "info", "message": "Echo context attached", "origin": "application", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "debug", "message": "Data to reflect: part-v-checkpoint", "origin": "application", "ts": "2026-09-23T17:52:12.604Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "debug", "message": "SocketContext: EOF received", "origin": "framework", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "connection", "component": "core.socket.stream", "connection": "1", "instance": "echoserver", "level": "debug", "message": "Shutdown (WR): success", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "info", "message": "Echo context detached: connection close", "origin": "application", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "context", "component": "core.socket.context", "connection": "1", "instance": "echoserver", "level": "debug", "message": "Context detached for connection close", "origin": "framework", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Connection 1 disconnected", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Local: localhost:35325", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Peer: localhost:55656", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Online Since: 2026-09-23 17:52:12 UTC", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Online Duration: 00:00:00", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Total Queued: 17", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Total Sent: 17", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Write Delta: 0", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Total Read: 17", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Total Processed: 17", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "debug", "message": "Read Delta: 0", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "connection", "component": "core.socket.stream", "connection": "1", "instance": "echoserver", "level": "info", "message": "transport disconnected", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}, {"boundary": "instance", "component": "core.socket.stream", "instance": "echoserver", "level": "info", "message": "listener stopped", "origin": "framework", "role": "server", "ts": "2026-09-23T17:52:12.605Z", "v": 1}]
+26/62 Test #26: exercise-ch13-part-checkpoint ...........   Passed    0.25 sec
+test 27
+      Start 27: exercise-ch14-trust-identity
+
+27: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py" "policy" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch14/tls-policy-lab" "/usr/bin/openssl"
+27: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch14
+27: Test timeout computed to be: 60
+27: PASS: trusted matching name; early SSL is null; ready=1
+27: PASS: trusted wrong name; early SSL is null; ready=0
+27: PASS: untrusted matching name; early SSL is null; ready=0
+27/62 Test #27: exercise-ch14-trust-identity ............   Passed    0.47 sec
+test 28
+      Start 28: exercise-ch14-secure-echo
+
+28: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch14/tls.py" "echo" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch14/tls-echo" "/usr/bin/openssl"
+28: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch14
+28: Test timeout computed to be: 60
+28: PASS: trusted sensor.example; exact binary echo; reciprocal close_notify
+28/62 Test #28: exercise-ch14-secure-echo ...............   Passed    0.21 sec
+test 29
+      Start 29: exercise-ch15-bounded-retry
+
+29: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/recovery.py" "retry" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoclient"
+29: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch15
+29: Test timeout computed to be: 80
+29: PASS: initial attempt plus one retry; two error statuses; no context attachment; natural exit
+29: {"v": 1, "ts": "2026-09-23T17:52:13.362Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:60703 (127.0.0.1): Connection refused [111]"}
+29: {"v": 1, "ts": "2026-09-23T17:52:13.564Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:60703 (127.0.0.1): Connection refused [111]"}
+29/62 Test #29: exercise-ch15-bounded-retry .............   Passed    0.28 sec
+test 30
+      Start 30: exercise-ch15-part-checkpoint
+
+30: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch15/recovery.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/EchoPair/echoclient" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch14/tls-policy-lab"
+30: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch15
+30: Test timeout computed to be: 80
+30: PASS: trusted matching name; early SSL is null; ready=1
+30: PASS: trusted wrong name; early SSL is null; ready=0
+30: PASS: untrusted matching name; early SSL is null; ready=0
+30: PASS: retry before first attachment; peer stop/restart; two connection identities; fresh greeting and exact echo
+30: {"v": 1, "ts": "2026-09-23T17:52:13.913Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:42905 (127.0.0.1): Connection refused [111]"}
+30: {"v": 1, "ts": "2026-09-23T17:52:14.115Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context attached"}
+30: {"v": 1, "ts": "2026-09-23T17:52:14.147Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Echo context detached: connection close"}
+30: {"v": 1, "ts": "2026-09-23T17:52:14.147Z", "level": "debug", "origin": "framework", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "1", "message": "Context detached for connection close"}
+30: {"v": 1, "ts": "2026-09-23T17:52:14.349Z", "level": "error", "origin": "application", "boundary": "application", "component": "echo", "message": "echoclient: 127.0.0.1:42905 (127.0.0.1): Connection refused [111]"}
+30: {"v": 1, "ts": "2026-09-23T17:52:14.550Z", "level": "info", "origin": "application", "boundary": "context", "component": "core.socket.context", "instance": "echoclient", "connection": "2", "message": "Echo context attached"}
+30/62 Test #30: exercise-ch15-part-checkpoint ...........   Passed    0.99 sec
+test 31
+      Start 31: exercise-ch16-framing
+
+31: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch16/../ch17/dispatch.py" "framing" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch17/dispatch-lab"
+31: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch16
+31: Test timeout computed to be: 30
+31: PASS: incomplete headers produce no handler/response; completing headers produces one 200
+31/62 Test #31: exercise-ch16-framing ...................   Passed    0.30 sec
+test 32
+      Start 32: exercise-ch16-limits
+
+32: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch16/../ch17/dispatch.py" "limits" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch17/dispatch-lab"
+32: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch16
+32: Test timeout computed to be: 30
+32: PASS: rejected input returns 405
+32: PASS: rejected input returns 431
+32: PASS: only valid request entered application dispatch
+32/62 Test #32: exercise-ch16-limits ....................   Passed    0.10 sec
+test 33
+      Start 33: exercise-ch17-order
+
+33: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch17/dispatch.py" "order" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch17/dispatch-lab"
+33: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch17
+33: Test timeout computed to be: 30
+33: PASS: mounted route visits app,router,handler; outside path visits only app and returns 404
+33/62 Test #33: exercise-ch17-order .....................   Passed    0.10 sec
+test 34
+      Start 34: exercise-ch17-stop
+
+34: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch17/dispatch.py" "stop" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch17/dispatch-lab"
+34: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch17
+34: Test timeout computed to be: 30
+34: PASS: middleware returns 403 and ends dispatch; following handler never runs
+34/62 Test #34: exercise-ch17-stop ......................   Passed    0.10 sec
+test 35
+      Start 35: exercise-ch18
+
+35: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch18/solution.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/SSE-Server/sse-server"
+35: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch18
+35: Test timeout computed to be: 40
+35: PASS: 406 on restricted Accept; two matching live events; reconnect starts at current state
+35/62 Test #35: exercise-ch18 ...........................   Passed    0.10 sec
+test 36
+      Start 36: exercise-ch18-observers
+
+36: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch18/observers.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/SSE-Server/sse-server"
+36: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch18
+36: Test timeout computed to be: 40
+36: PASS: both observers see the same acceptance; remaining observer continues after peer closes
+36/62 Test #36: exercise-ch18-observers .................   Passed    0.10 sec
+test 37
+      Start 37: exercise-ch19-negotiation
+
+37: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch19/solution.py" "negotiation" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch19/ws-lab-server" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch19/ws-lab-client"
+37: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch19
+37: Test timeout computed to be: 60
+37: PASS: unsupported subprotocol rejected: HTTP/1.1 404 Not Found
+37: PASS: canonical client negotiates echo, receives hello and closes; unsupported name never attaches echo
+37/62 Test #37: exercise-ch19-negotiation ...............   Passed    0.12 sec
+test 38
+      Start 38: exercise-ch19-part-checkpoint
+
+38: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch19/solution.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch19/ws-lab-server" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/SSE-Server/sse-server"
+38: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch19
+38: Test timeout computed to be: 60
+38: PASS: both observers see the same acceptance; remaining observer continues after peer closes
+38: PASS: Part VII checkpoint: shared accepted SSE state survives one observer disconnect; separate WebSocket type/bytes/fragment/control/close checks pass
+38/62 Test #38: exercise-ch19-part-checkpoint ...........   Passed    0.31 sec
+test 39
+      Start 39: exercise-ch20-wire
+
+39: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch20/mqtt.py" "wire" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch20/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch20/mqtt-broker-lab"
+39: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch20
+39: Test timeout computed to be: 40
+39: PASS: CONNECT first; no subscription/publication before acceptance; accepted session produces SUBSCRIBE/PUBLISH and receives command
+39/62 Test #39: exercise-ch20-wire ......................   Passed    0.33 sec
+test 40
+      Start 40: exercise-ch20-delivery
+
+40: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch20/mqtt.py" "delivery" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch20/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch20/mqtt-broker-lab"
+40: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch20
+40: Test timeout computed to be: 40
+40: PASS: observer session accepted by CONNACK
+40: PASS: subscriber receives SUBACK granting QoS 0
+40: PASS: independent subscriber receives exact topic sensors/temperature/value and payload 23.5
+40: PASS: broker routes command to canonical client role
+40/62 Test #40: exercise-ch20-delivery ..................   Passed    0.17 sec
+test 41
+      Start 41: exercise-ch21-binary
+
+41: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py" "binary" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch21/mqtt-ws-lab"
+41: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch21
+41: Test timeout computed to be: 40
+41: PASS: HTTP 101, mqtt selection and binary MQTT CONNECT observed
+41: PASS: fragmented binary CONNACK admits MQTT flow; binary command reaches canonical role
+41/62 Test #41: exercise-ch21-binary ....................   Passed    0.19 sec
+test 42
+      Start 42: exercise-ch21-text
+
+42: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch21/adapter.py" "text" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch21/mqtt-ws-lab"
+42: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch21
+42: Test timeout computed to be: 40
+42: PASS: HTTP 101, mqtt selection and binary MQTT CONNECT observed
+42: PASS: same packet bytes in text trigger protocol-error close 1002
+42/62 Test #42: exercise-ch21-text ......................   Passed    0.07 sec
+test 43
+      Start 43: exercise-ch22-unavailable-output
+
+43: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/../ch28/solution.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/MiniGateway/minigateway"
+43: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch22
+43: Test timeout computed to be: 60
+43: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+43/62 Test #43: exercise-ch22-unavailable-output ........   Passed    0.14 sec
+test 44
+      Start 44: exercise-ch22-part-checkpoint
+
+44: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch22/../ch20/mqtt.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch20/mqtt-role-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch20/mqtt-broker-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/MiniGateway/minigateway"
+44: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch22
+44: Test timeout computed to be: 60
+44: PASS: observer session accepted by CONNACK
+44: PASS: subscriber receives SUBACK granting QoS 0
+44: PASS: independent subscriber receives exact topic sensors/temperature/value and payload 23.5
+44: PASS: broker routes command to canonical client role
+44: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+44: PASS: Part VIII checkpoint: broker-delivery evidence and separate HTTP/status/SSE acceptance with unavailable MQTT; see README boundary map
+44/62 Test #44: exercise-ch22-part-checkpoint ...........   Passed    0.34 sec
+test 45
+      Start 45: exercise-ch23-durable
+
+45: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "durable" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch23/persistence-lab"
+45: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch23
+45: Test timeout computed to be: 90
+45: PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+45: PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+45/62 Test #45: exercise-ch23-durable ...................   Passed    1.52 sec
+test 46
+      Start 46: exercise-ch23-error
+
+46: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch23/database.py" "error" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch23/persistence-lab"
+46: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch23
+46: Test timeout computed to be: 90
+46: PASS: SQL error 1146 leaves the connection usable; the chained query completes and independent row count stays zero
+46/62 Test #46: exercise-ch23-error .....................   Passed    1.51 sec
+test 47
+      Start 47: exercise-ch24-composition
+
+47: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch17/dispatch.py" "framing" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch17/dispatch-lab"
+47: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch24
+47: Test timeout computed to be: 30
+47: PASS: incomplete headers produce no handler/response; completing headers produces one 200
+47/62 Test #47: exercise-ch24-composition ...............   Passed    0.31 sec
+test 48
+      Start 48: exercise-ch24-part-checkpoint
+
+48: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch24/../ch23/database.py" "checkpoint" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch23/persistence-lab" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/MiniGateway/minigateway"
+48: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch24
+48: Test timeout computed to be: 120
+48: PASS: autocommitted insert survives client shutdown; independent query reads temperature=23.5
+48: PASS: restarted canonical client reads the same row without adding another; committed state outlives the client
+48: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+48: PASS: Part IX checkpoint contrasts database read-back with the separate in-memory gateway restart; apply the README MQTTStore outcome map
+48/62 Test #48: exercise-ch24-part-checkpoint ...........   Passed    1.99 sec
+test 49
+      Start 49: exercise-ch25-consumer
+
+49: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch25/../ch02/solution.py" "consumer"
+49: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch25
+49: Test timeout computed to be: 180
+49: -- The CXX compiler identification is GNU 16.2.0
+49: -- Detecting CXX compiler ABI info
+49: -- Detecting CXX compiler ABI info - done
+49: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+49: -- Detecting CXX compile features
+49: -- Detecting CXX compile features - done
+49: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+49:   net-in-stream: loading dependencies 'net-in-phy-stream'
+49:     net-in-phy-stream: loading dependencies 'net-in-phy'
+49:       net-in-phy: loading dependencies 'net-in'
+49:         net-in: loading dependencies 'net'
+49:           net: loading dependencies 'core-socket'
+49:             core-socket: loading dependencies 'core'
+49:               core: loading dependencies 'mux-epoll, utils'
+49:                 mux-epoll: loaded
+49:                 utils: loading dependencies 'logger'
+49:                   logger: loaded
+49:                 utils: loaded
+49:               core: loaded
+49:             core-socket: loaded
+49:           net: loaded
+49:         net-in: loaded
+49:       net-in-phy: loaded
+49:     net-in-phy-stream: loaded
+49:   net-in-stream: loaded
+49:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+49:     core-socket-stream: loading dependencies 'core-socket'
+49:       core-socket: already loaded
+49:     core-socket-stream: loaded
+49:   core-socket-stream-legacy: loaded
+49: net-in-stream-legacy: loaded
+49: -- Configuring done (0.2s)
+49: -- Generating done (0.0s)
+49: -- Build files have been written to: /tmp/snodec-environment-lab-sy26h9ij/build
+49: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+49: [ 33%] Linking CXX static library libechosocketcontext.a
+49: [ 33%] Built target echosocketcontext
+49: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+49: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+49: [ 83%] Linking CXX executable echoserver
+49: [100%] Linking CXX executable echoclient
+49: [100%] Built target echoserver
+49: [100%] Built target echoclient
+49: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+49: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+49/62 Test #49: exercise-ch25-consumer ..................   Passed    3.80 sec
+test 50
+      Start 50: exercise-ch25-component
+
+50: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch25/../ch02/solution.py" "component"
+50: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch25
+50: Test timeout computed to be: 180
+50: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+50:   net-in-stream: loading dependencies 'net-in-phy-stream'
+50:     net-in-phy-stream: loading dependencies 'net-in-phy'
+50:       net-in-phy: loading dependencies 'net-in'
+50:         net-in: loading dependencies 'net'
+50:           net: loading dependencies 'core-socket'
+50:             core-socket: loading dependencies 'core'
+50:               core: loading dependencies 'mux-epoll, utils'
+50:                 mux-epoll: loaded
+50:                 utils: loading dependencies 'logger'
+50:                   logger: loaded
+50:                 utils: loaded
+50:               core: loaded
+50:             core-socket: loaded
+50:           net: loaded
+50:         net-in: loaded
+50:       net-in-phy: loaded
+50:     net-in-phy-stream: loaded
+50:   net-in-stream: loaded
+50:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+50:     core-socket-stream: loading dependencies 'core-socket'
+50:       core-socket: already loaded
+50:     core-socket-stream: loaded
+50:   core-socket-stream-legacy: loaded
+50: net-in-stream-legacy: loaded
+50: -- Configuring done (0.0s)
+50: -- Generating done (0.0s)
+50: -- Build files have been written to: /tmp/snodec-environment-lab-3estl202/build
+50: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+50: [ 33%] Linking CXX static library libechosocketcontext.a
+50: [ 33%] Built target echosocketcontext
+50: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+50: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+50: [ 83%] Linking CXX executable echoserver
+50: [100%] Linking CXX executable echoclient
+50: [100%] Built target echoserver
+50: [100%] Built target echoclient
+50: -- The CXX compiler identification is GNU 16.2.0
+50: -- Detecting CXX compiler ABI info
+50: -- Detecting CXX compiler ABI info - done
+50: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+50: -- Detecting CXX compile features
+50: -- Detecting CXX compile features - done
+50: CMake Error at CMakeLists.txt:9 (find_package):
+50:   Found package configuration file:
+50: 
+50:     /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+50: 
+50:   but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+50:   NOT FOUND.  Reason given by package:
+50: 
+50:   Unsupported SNode.C component requested: net-in-stream-missing
+50: 
+50: 
+50: 
+50: -- Configuring incomplete, errors occurred!
+50: 
+50: PASS: missing component stops configuration before any runtime endpoint exists
+50: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+50: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+50/62 Test #50: exercise-ch25-component .................   Passed    3.78 sec
+test 51
+      Start 51: exercise-ch26-lifecycle
+
+51: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py" "lifecycle"
+51: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch26
+51: Test timeout computed to be: 180
+51: -- The CXX compiler identification is GNU 16.2.0
+51: -- Detecting CXX compiler ABI info
+51: -- Detecting CXX compiler ABI info - done
+51: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+51: -- Detecting CXX compile features
+51: -- Detecting CXX compile features - done
+51: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+51:   net-in-stream: loading dependencies 'net-in-phy-stream'
+51:     net-in-phy-stream: loading dependencies 'net-in-phy'
+51:       net-in-phy: loading dependencies 'net-in'
+51:         net-in: loading dependencies 'net'
+51:           net: loading dependencies 'core-socket'
+51:             core-socket: loading dependencies 'core'
+51:               core: loading dependencies 'mux-epoll, utils'
+51:                 mux-epoll: loaded
+51:                 utils: loading dependencies 'logger'
+51:                   logger: loaded
+51:                 utils: loaded
+51:               core: loaded
+51:             core-socket: loaded
+51:           net: loaded
+51:         net-in: loaded
+51:       net-in-phy: loaded
+51:     net-in-phy-stream: loaded
+51:   net-in-stream: loaded
+51:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+51:     core-socket-stream: loading dependencies 'core-socket'
+51:       core-socket: already loaded
+51:     core-socket-stream: loaded
+51:   core-socket-stream-legacy: loaded
+51: net-in-stream-legacy: loaded
+51: -- Configuring done (0.2s)
+51: -- Generating done (0.0s)
+51: -- Build files have been written to: /tmp/installed-echo-j4uca4k_/build
+51: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+51: [ 33%] Linking CXX static library libechosocketcontext.a
+51: [ 33%] Built target echosocketcontext
+51: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+51: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+51: [ 83%] Linking CXX executable echoserver
+51: [100%] Linking CXX executable echoclient
+51: [100%] Built target echoserver
+51: [100%] Built target echoclient
+51: -- Install configuration: "Release"
+51: -- Installing: /tmp/installed-echo-j4uca4k_/install/bin/echoserver
+51: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-j4uca4k_/install/bin/echoserver" to "/tmp/installed-echo-j4uca4k_/install/:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib"
+51: -- Installing: /tmp/installed-echo-j4uca4k_/install/bin/echoclient
+51: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-j4uca4k_/install/bin/echoclient" to "/tmp/installed-echo-j4uca4k_/install/:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib"
+51: PASS: fresh external Release consumer installed at /tmp/installed-echo-j4uca4k_/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+51: PASS: installed process 1179250 echoed exact binary bytes and stopped; new connection refused
+51: PASS: installed process 1179252 echoed exact binary bytes and stopped; new connection refused
+51: PASS: restart changes process identity and preserves the configured echo contract; no loader environment override
+51/62 Test #51: exercise-ch26-lifecycle .................   Passed    6.43 sec
+test 52
+      Start 52: exercise-ch26-configuration
+
+52: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch26/installed.py" "configuration"
+52: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch26
+52: Test timeout computed to be: 180
+52: -- The CXX compiler identification is GNU 16.2.0
+52: -- Detecting CXX compiler ABI info
+52: -- Detecting CXX compiler ABI info - done
+52: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+52: -- Detecting CXX compile features
+52: -- Detecting CXX compile features - done
+52: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+52:   net-in-stream: loading dependencies 'net-in-phy-stream'
+52:     net-in-phy-stream: loading dependencies 'net-in-phy'
+52:       net-in-phy: loading dependencies 'net-in'
+52:         net-in: loading dependencies 'net'
+52:           net: loading dependencies 'core-socket'
+52:             core-socket: loading dependencies 'core'
+52:               core: loading dependencies 'mux-epoll, utils'
+52:                 mux-epoll: loaded
+52:                 utils: loading dependencies 'logger'
+52:                   logger: loaded
+52:                 utils: loaded
+52:               core: loaded
+52:             core-socket: loaded
+52:           net: loaded
+52:         net-in: loaded
+52:       net-in-phy: loaded
+52:     net-in-phy-stream: loaded
+52:   net-in-stream: loaded
+52:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+52:     core-socket-stream: loading dependencies 'core-socket'
+52:       core-socket: already loaded
+52:     core-socket-stream: loaded
+52:   core-socket-stream-legacy: loaded
+52: net-in-stream-legacy: loaded
+52: -- Configuring done (0.2s)
+52: -- Generating done (0.0s)
+52: -- Build files have been written to: /tmp/installed-echo-vsyh95p5/build
+52: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+52: [ 33%] Linking CXX static library libechosocketcontext.a
+52: [ 33%] Built target echosocketcontext
+52: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+52: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+52: [ 83%] Linking CXX executable echoserver
+52: [100%] Linking CXX executable echoclient
+52: [100%] Built target echoserver
+52: [100%] Built target echoclient
+52: -- Install configuration: "Release"
+52: -- Installing: /tmp/installed-echo-vsyh95p5/install/bin/echoserver
+52: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-vsyh95p5/install/bin/echoserver" to "/tmp/installed-echo-vsyh95p5/install/:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib"
+52: -- Installing: /tmp/installed-echo-vsyh95p5/install/bin/echoclient
+52: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-vsyh95p5/install/bin/echoclient" to "/tmp/installed-echo-vsyh95p5/install/:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib"
+52: PASS: fresh external Release consumer installed at /tmp/installed-echo-vsyh95p5/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+52: [ValidationError] --port: Value not-a-port not in range [0 - 65535]
+52: 
+52: Append -h or --help to your command line for more information.
+52: 
+52: PASS: invalid configured port stops startup with configuration status 2
+52: PASS: installed process 1179441 echoed exact binary bytes and stopped; new connection refused
+52: PASS: restoring the configuration restores the installed public exchange
+52/62 Test #52: exercise-ch26-configuration .............   Passed    6.36 sec
+test 53
+      Start 53: exercise-ch27-diagnosis
+
+53: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py" "diagnosis"
+53: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch27
+53: Test timeout computed to be: 300
+53: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+53:   net-in-stream: loading dependencies 'net-in-phy-stream'
+53:     net-in-phy-stream: loading dependencies 'net-in-phy'
+53:       net-in-phy: loading dependencies 'net-in'
+53:         net-in: loading dependencies 'net'
+53:           net: loading dependencies 'core-socket'
+53:             core-socket: loading dependencies 'core'
+53:               core: loading dependencies 'mux-epoll, utils'
+53:                 mux-epoll: loaded
+53:                 utils: loading dependencies 'logger'
+53:                   logger: loaded
+53:                 utils: loaded
+53:               core: loaded
+53:             core-socket: loaded
+53:           net: loaded
+53:         net-in: loaded
+53:       net-in-phy: loaded
+53:     net-in-phy-stream: loaded
+53:   net-in-stream: loaded
+53:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+53:     core-socket-stream: loading dependencies 'core-socket'
+53:       core-socket: already loaded
+53:     core-socket-stream: loaded
+53:   core-socket-stream-legacy: loaded
+53: net-in-stream-legacy: loaded
+53: -- Configuring done (0.0s)
+53: -- Generating done (0.0s)
+53: -- Build files have been written to: /tmp/snodec-environment-lab-_fcifxg2/build
+53: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+53: [ 33%] Linking CXX static library libechosocketcontext.a
+53: [ 33%] Built target echosocketcontext
+53: [ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+53: [ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+53: [ 83%] Linking CXX executable echoserver
+53: [100%] Linking CXX executable echoclient
+53: [100%] Built target echoserver
+53: [100%] Built target echoclient
+53: -- The CXX compiler identification is GNU 16.2.0
+53: -- Detecting CXX compiler ABI info
+53: -- Detecting CXX compiler ABI info - done
+53: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+53: -- Detecting CXX compile features
+53: -- Detecting CXX compile features - done
+53: CMake Error at CMakeLists.txt:9 (find_package):
+53:   Found package configuration file:
+53: 
+53:     /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+53: 
+53:   but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+53:   NOT FOUND.  Reason given by package:
+53: 
+53:   Unsupported SNode.C component requested: net-in-stream-missing
+53: 
+53: 
+53: 
+53: -- Configuring incomplete, errors occurred!
+53: 
+53: PASS: missing component stops configuration before any runtime endpoint exists
+53: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+53: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+53: -- The CXX compiler identification is GNU 16.2.0
+53: -- Detecting CXX compiler ABI info
+53: -- Detecting CXX compiler ABI info - done
+53: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+53: -- Detecting CXX compile features
+53: -- Detecting CXX compile features - done
+53: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+53:   net-in-stream: loading dependencies 'net-in-phy-stream'
+53:     net-in-phy-stream: loading dependencies 'net-in-phy'
+53:       net-in-phy: loading dependencies 'net-in'
+53:         net-in: loading dependencies 'net'
+53:           net: loading dependencies 'core-socket'
+53:             core-socket: loading dependencies 'core'
+53:               core: loading dependencies 'mux-epoll, utils'
+53:                 mux-epoll: loaded
+53:                 utils: loading dependencies 'logger'
+53:                   logger: loaded
+53:                 utils: loaded
+53:               core: loaded
+53:             core-socket: loaded
+53:           net: loaded
+53:         net-in: loaded
+53:       net-in-phy: loaded
+53:     net-in-phy-stream: loaded
+53:   net-in-stream: loaded
+53:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+53:     core-socket-stream: loading dependencies 'core-socket'
+53:       core-socket: already loaded
+53:     core-socket-stream: loaded
+53:   core-socket-stream-legacy: loaded
+53: net-in-stream-legacy: loaded
+53: -- Configuring done (0.2s)
+53: -- Generating done (0.0s)
+53: -- Build files have been written to: /tmp/installed-echo-amk3h2y0/build
+53: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+53: [ 33%] Linking CXX static library libechosocketcontext.a
+53: [ 33%] Built target echosocketcontext
+53: [ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+53: [ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+53: [ 83%] Linking CXX executable echoserver
+53: [100%] Linking CXX executable echoclient
+53: [100%] Built target echoserver
+53: [100%] Built target echoclient
+53: -- Install configuration: "Release"
+53: -- Installing: /tmp/installed-echo-amk3h2y0/install/bin/echoserver
+53: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-amk3h2y0/install/bin/echoserver" to "/tmp/installed-echo-amk3h2y0/install/:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib"
+53: -- Installing: /tmp/installed-echo-amk3h2y0/install/bin/echoclient
+53: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-amk3h2y0/install/bin/echoclient" to "/tmp/installed-echo-amk3h2y0/install/:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib"
+53: PASS: fresh external Release consumer installed at /tmp/installed-echo-amk3h2y0/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+53: PASS: wrong endpoint is refused after a successful build; correct endpoint echoes
+53/62 Test #53: exercise-ch27-diagnosis .................   Passed   10.18 sec
+test 54
+      Start 54: exercise-ch27-checkpoint
+
+54: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch27/../ch26/installed.py" "checkpoint"
+54: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch27
+54: Test timeout computed to be: 300
+54: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+54:   net-in-stream: loading dependencies 'net-in-phy-stream'
+54:     net-in-phy-stream: loading dependencies 'net-in-phy'
+54:       net-in-phy: loading dependencies 'net-in'
+54:         net-in: loading dependencies 'net'
+54:           net: loading dependencies 'core-socket'
+54:             core-socket: loading dependencies 'core'
+54:               core: loading dependencies 'mux-epoll, utils'
+54:                 mux-epoll: loaded
+54:                 utils: loading dependencies 'logger'
+54:                   logger: loaded
+54:                 utils: loaded
+54:               core: loaded
+54:             core-socket: loaded
+54:           net: loaded
+54:         net-in: loaded
+54:       net-in-phy: loaded
+54:     net-in-phy-stream: loaded
+54:   net-in-stream: loaded
+54:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+54:     core-socket-stream: loading dependencies 'core-socket'
+54:       core-socket: already loaded
+54:     core-socket-stream: loaded
+54:   core-socket-stream-legacy: loaded
+54: net-in-stream-legacy: loaded
+54: -- Configuring done (0.0s)
+54: -- Generating done (0.0s)
+54: -- Build files have been written to: /tmp/snodec-environment-lab-qmwreimk/build
+54: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+54: [ 33%] Linking CXX static library libechosocketcontext.a
+54: [ 33%] Built target echosocketcontext
+54: [ 50%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+54: [ 66%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+54: [ 83%] Linking CXX executable echoserver
+54: [100%] Linking CXX executable echoclient
+54: [100%] Built target echoserver
+54: [100%] Built target echoclient
+54: -- The CXX compiler identification is GNU 16.2.0
+54: -- Detecting CXX compiler ABI info
+54: -- Detecting CXX compiler ABI info - done
+54: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+54: -- Detecting CXX compile features
+54: -- Detecting CXX compile features - done
+54: CMake Error at CMakeLists.txt:9 (find_package):
+54:   Found package configuration file:
+54: 
+54:     /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec/snodecConfig.cmake
+54: 
+54:   but it set snodec_FOUND to FALSE so package "snodec" is considered to be
+54:   NOT FOUND.  Reason given by package:
+54: 
+54:   Unsupported SNode.C component requested: net-in-stream-missing
+54: 
+54: 
+54: 
+54: -- Configuring incomplete, errors occurred!
+54: 
+54: PASS: missing component stops configuration before any runtime endpoint exists
+54: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+54: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+54: -- The CXX compiler identification is GNU 16.2.0
+54: -- Detecting CXX compiler ABI info
+54: -- Detecting CXX compiler ABI info - done
+54: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+54: -- Detecting CXX compile features
+54: -- Detecting CXX compile features - done
+54: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+54:   net-in-stream: loading dependencies 'net-in-phy-stream'
+54:     net-in-phy-stream: loading dependencies 'net-in-phy'
+54:       net-in-phy: loading dependencies 'net-in'
+54:         net-in: loading dependencies 'net'
+54:           net: loading dependencies 'core-socket'
+54:             core-socket: loading dependencies 'core'
+54:               core: loading dependencies 'mux-epoll, utils'
+54:                 mux-epoll: loaded
+54:                 utils: loading dependencies 'logger'
+54:                   logger: loaded
+54:                 utils: loaded
+54:               core: loaded
+54:             core-socket: loaded
+54:           net: loaded
+54:         net-in: loaded
+54:       net-in-phy: loaded
+54:     net-in-phy-stream: loaded
+54:   net-in-stream: loaded
+54:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+54:     core-socket-stream: loading dependencies 'core-socket'
+54:       core-socket: already loaded
+54:     core-socket-stream: loaded
+54:   core-socket-stream-legacy: loaded
+54: net-in-stream-legacy: loaded
+54: -- Configuring done (0.2s)
+54: -- Generating done (0.0s)
+54: -- Build files have been written to: /tmp/installed-echo-w35jpv1q/build
+54: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+54: [ 33%] Linking CXX static library libechosocketcontext.a
+54: [ 33%] Built target echosocketcontext
+54: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+54: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+54: [ 83%] Linking CXX executable echoserver
+54: [ 83%] Built target echoserver
+54: [100%] Linking CXX executable echoclient
+54: [100%] Built target echoclient
+54: -- Install configuration: "Release"
+54: -- Installing: /tmp/installed-echo-w35jpv1q/install/bin/echoserver
+54: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-w35jpv1q/install/bin/echoserver" to "/tmp/installed-echo-w35jpv1q/install/:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib"
+54: -- Installing: /tmp/installed-echo-w35jpv1q/install/bin/echoclient
+54: -- Set non-toolchain portion of runtime path of "/tmp/installed-echo-w35jpv1q/install/bin/echoclient" to "/tmp/installed-echo-w35jpv1q/install/:/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib"
+54: PASS: fresh external Release consumer installed at /tmp/installed-echo-w35jpv1q/install/bin/echoserver; snodec_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+54: PASS: wrong endpoint is refused after a successful build; correct endpoint echoes
+54: {"platform": "Linux-7.1.8+deb14-amd64-x86_64-with-glibc2.43", "build": "Release", "logging": "Info / JSON to temporary file", "endpoint": "127.0.0.1:53407", "loader_override": false, "warmup": 20}
+54: samples=200 bytes=256 connections=1
+54: median_us=12.52
+54: p95_us=12.98
+54: PASS: Part X checkpoint: fresh build/install, endpoint diagnosis, 200 exact-payload latency samples; no capacity claim
+54/62 Test #54: exercise-ch27-checkpoint ................   Passed   10.25 sec
+test 55
+      Start 55: exercise-ch28
+
+55: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch28/solution.py" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/MiniGateway/minigateway"
+55: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch28
+55: Test timeout computed to be: 40
+55: PASS: HTTP/status/SSE agree without MQTT; restart resets sequence to zero
+55/62 Test #55: exercise-ch28 ...........................   Passed    0.13 sec
+test 56
+      Start 56: exercise-ch28-validation
+
+56: Test command: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch28/measurement-validation
+56: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch28
+56: Test timeout computed to be: 10000000
+56: PASS: three invalid inputs leave state and notifications unchanged; next acceptance is 2
+56/62 Test #56: exercise-ch28-validation ................   Passed    0.00 sec
+test 57
+      Start 57: exercise-ch29-framing
+
+57: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch29/gateway.py" "framing" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/MiniGateway-Extended/minigateway-extended"
+57: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch29
+57: Test timeout computed to be: 40
+57: PASS: whole/fragmented records agree; malformed records do not advance order; producer 9000 becomes local order; 4096-byte CR record accepted; both overlong forms close without suffix acceptance
+57/62 Test #57: exercise-ch29-framing ...................   Passed    0.10 sec
+test 58
+      Start 58: exercise-ch29-mixed
+
+58: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/ch29/gateway.py" "mixed" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/MiniGateway-Extended/minigateway-extended"
+58: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch29
+58: Test timeout computed to be: 40
+58: PASS: MQTT unavailable; HTTP/Unix input share order 1–4; malformed CSV adds no acceptance; surviving observer continues; reconnect gets current 3 then live 4; restart resets to zero
+58/62 Test #58: exercise-ch29-mixed .....................   Passed    0.14 sec
+test 59
+      Start 59: exercise-ch30
+
+59: Test command: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch30/model-ownership
+59: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch30
+59: Test timeout computed to be: 10000000
+59: PASS: input 900,2,1 -> accepted 1,2,3; detached observer sees only 1,2
+59/62 Test #59: exercise-ch30 ...........................   Passed    0.00 sec
+test 60
+      Start 60: exercise-ch30-model-instances
+
+60: Test command: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch30/model-instances
+60: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch30
+60: Test timeout computed to be: 10000000
+60: PASS: shared inputs accept 1,2; separate model instances each accept 1
+60/62 Test #60: exercise-ch30-model-instances ...........   Passed    0.00 sec
+test 61
+      Start 61: exercise-appendix-a-source-consumer
+
+61: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/appendix-a/../ch02/solution.py" "consumer"
+61: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/appendix-a
+61: Test timeout computed to be: 180
+61: -- The CXX compiler identification is GNU 16.2.0
+61: -- Detecting CXX compiler ABI info
+61: -- Detecting CXX compiler ABI info - done
+61: -- Check for working CXX compiler: /usr/bin/c++ - skipped
+61: -- Detecting CXX compile features
+61: -- Detecting CXX compile features - done
+61: net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+61:   net-in-stream: loading dependencies 'net-in-phy-stream'
+61:     net-in-phy-stream: loading dependencies 'net-in-phy'
+61:       net-in-phy: loading dependencies 'net-in'
+61:         net-in: loading dependencies 'net'
+61:           net: loading dependencies 'core-socket'
+61:             core-socket: loading dependencies 'core'
+61:               core: loading dependencies 'mux-epoll, utils'
+61:                 mux-epoll: loaded
+61:                 utils: loading dependencies 'logger'
+61:                   logger: loaded
+61:                 utils: loaded
+61:               core: loaded
+61:             core-socket: loaded
+61:           net: loaded
+61:         net-in: loaded
+61:       net-in-phy: loaded
+61:     net-in-phy-stream: loaded
+61:   net-in-stream: loaded
+61:   core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+61:     core-socket-stream: loading dependencies 'core-socket'
+61:       core-socket: already loaded
+61:     core-socket-stream: loaded
+61:   core-socket-stream-legacy: loaded
+61: net-in-stream-legacy: loaded
+61: -- Configuring done (0.2s)
+61: -- Generating done (0.0s)
+61: -- Build files have been written to: /tmp/snodec-environment-lab-t4fb01g3/build
+61: [ 16%] Building CXX object CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+61: [ 33%] Linking CXX static library libechosocketcontext.a
+61: [ 33%] Built target echosocketcontext
+61: [ 50%] Building CXX object CMakeFiles/echoserver.dir/echoserver.cpp.o
+61: [ 66%] Building CXX object CMakeFiles/echoclient.dir/echoclient.cpp.o
+61: [ 83%] Linking CXX executable echoserver
+61: [100%] Linking CXX executable echoclient
+61: [100%] Built target echoserver
+61: [100%] Built target echoclient
+61: PASS: snodec_DIR selects the requested installation: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc/lib/cmake/snodec
+61: PASS: canonical EchoPair builds and its server reflects environment-ready unchanged
+61/62 Test #61: exercise-appendix-a-source-consumer .....   Passed    3.85 sec
+test 62
+      Start 62: exercise-appendix-a-carrier-extension
+
+62: Test command: /usr/bin/python3 "/home/voc/projects/snodec/publications/book/companion/exercises/appendix-a/../ch09/protocol.py" "transfer" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/examples/LineProtocol-Server/line-protocol-server" "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/ch11/line-unix"
+62: Working Directory: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples/companion/exercises/appendix-a
+62: Test timeout computed to be: 40
+62: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+62: Observed ip: 45797
+62: PASS: 26 segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence
+62: Observed unix: /tmp/line-lab-imq1y3hn/line.sock
+62: PASS: Part IV checkpoint: identical reconstructed replies over IPv4 and Unix; owned cleanup
+62/62 Test #62: exercise-appendix-a-carrier-extension ...   Passed    0.38 sec
+
+100% tests passed, 0 tests failed out of 62
+
+Label Time Summary:
+equipped    =   5.03 sec*proc (3 tests)
+
+Total Test time (real) =  65.81 sec

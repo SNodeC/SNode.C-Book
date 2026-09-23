@@ -1,0 +1,1089 @@
+COMMAND: ["cmake", "--build", "/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/framework-gcc", "--parallel", "8"]
+SOURCE: 07ca9a2936ee72582df7d159cb06666fe23e30f8
+PREFIX: /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc
+[1/970] Building CXX object src/log/CMakeFiles/logger.dir/__/utils/hexdump.cpp.o
+[2/970] Building CXX object src/log/CMakeFiles/logger.dir/LogScopeOwner.cpp.o
+[3/970] Building CXX object src/log/CMakeFiles/logger.dir/Logger.cpp.o
+[4/970] Building CXX object src/utils/CMakeFiles/utils.dir/PreserveErrno.cpp.o
+[5/970] Building CXX object src/log/CMakeFiles/logger.dir/Log.cpp.o
+[6/970] Building CXX object src/utils/CMakeFiles/utils.dir/Daemon.cpp.o
+[7/970] Building CXX object src/log/CMakeFiles/logger.dir/SemanticLogger.cpp.o
+[8/970] Building CXX object src/utils/CMakeFiles/utils.dir/Timeval.cpp.o
+[9/970] Building CXX object src/utils/CMakeFiles/utils.dir/Random.cpp.o
+[10/970] Building CXX object src/utils/CMakeFiles/utils.dir/Uuid.cpp.o
+[11/970] Building CXX object src/utils/CMakeFiles/utils.dir/system/time.cpp.o
+[12/970] Building CXX object src/utils/CMakeFiles/utils.dir/base64.cpp.o
+[13/970] Building CXX object src/utils/CMakeFiles/utils.dir/system/signal.cpp.o
+[14/970] Building CXX object src/core/CMakeFiles/core.dir/Descriptor.cpp.o
+[15/970] Building CXX object src/utils/CMakeFiles/utils.dir/sha1.cpp.o
+[16/970] Building CXX object src/core/multiplexer/epoll/CMakeFiles/mux-epoll.dir/EventMultiplexer.cpp.o
+[17/970] Building CXX object src/core/multiplexer/epoll/CMakeFiles/mux-epoll.dir/DescriptorEventPublisher.cpp.o
+[18/970] Linking CXX shared library src/core/multiplexer/epoll/libsnodec-core-mux-epoll.so.2.0.0
+[19/970] Building CXX object src/core/CMakeFiles/core.dir/DescriptorEventPublisher.cpp.o
+[20/970] Building CXX object src/core/CMakeFiles/core.dir/DescriptorEventReceiver.cpp.o
+[21/970] Building CXX object src/log/CMakeFiles/logger.dir/detail/SpdlogBackend.cpp.o
+[22/970] Linking CXX shared library src/log/libsnodec-logger.so.2.0.0
+[23/970] Creating library symlink src/log/libsnodec-logger.so.2 src/log/libsnodec-logger.so
+[24/970] Building CXX object src/core/CMakeFiles/core.dir/DynamicLoader.cpp.o
+[25/970] Building CXX object src/core/CMakeFiles/core.dir/Event.cpp.o
+[26/970] Building CXX object src/utils/CMakeFiles/utils.dir/Formatter.cpp.o
+[27/970] Building CXX object src/core/CMakeFiles/core.dir/EventReceiver.cpp.o
+[28/970] Building CXX object src/utils/CMakeFiles/utils.dir/Config.cpp.o
+[29/970] Building CXX object src/core/CMakeFiles/core.dir/EventMultiplexer.cpp.o
+[30/970] Building CXX object src/utils/CMakeFiles/utils.dir/SubCommand.cpp.o
+[31/970] Linking CXX shared library src/utils/libsnodec-utils.so.2.0.0
+[32/970] Creating library symlink src/utils/libsnodec-utils.so.2 src/utils/libsnodec-utils.so
+[33/970] Building CXX object src/core/CMakeFiles/core.dir/SNodeC.cpp.o
+[34/970] Building CXX object src/core/CMakeFiles/core.dir/State.cpp.o
+[35/970] Building CXX object src/core/CMakeFiles/core.dir/Timer.cpp.o
+[36/970] Building CXX object src/core/CMakeFiles/core.dir/TimerEventPublisher.cpp.o
+[37/970] Building CXX object src/core/CMakeFiles/core.dir/file/File.cpp.o
+[38/970] Building CXX object src/core/CMakeFiles/core.dir/TimerEventReceiver.cpp.o
+[39/970] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/AcceptEventReceiver.cpp.o
+[40/970] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/ConnectEventReceiver.cpp.o
+[41/970] Building CXX object src/core/CMakeFiles/core.dir/pipe/Sink.cpp.o
+[42/970] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/ExceptionalConditionEventReceiver.cpp.o
+[43/970] Building CXX object src/core/CMakeFiles/core.dir/pipe/Source.cpp.o
+[44/970] Building CXX object src/core/CMakeFiles/core.dir/system/dlfcn.cpp.o
+[45/970] Building CXX object src/core/CMakeFiles/core.dir/file/FileReader.cpp.o
+[46/970] Building CXX object src/core/CMakeFiles/core.dir/system/epoll.cpp.o
+[47/970] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/ReadEventReceiver.cpp.o
+[48/970] Building CXX object src/core/CMakeFiles/core.dir/system/netdb.cpp.o
+[49/970] Building CXX object src/core/CMakeFiles/core.dir/eventreceiver/WriteEventReceiver.cpp.o
+[50/970] Building CXX object src/core/CMakeFiles/core.dir/system/poll.cpp.o
+[51/970] Building CXX object src/core/CMakeFiles/core.dir/system/select.cpp.o
+[52/970] Building CXX object src/core/CMakeFiles/core.dir/system/unistd.cpp.o
+[53/970] Building CXX object src/core/CMakeFiles/core.dir/system/socket.cpp.o
+[54/970] Building CXX object src/core/CMakeFiles/core.dir/EventLoop.cpp.o
+[55/970] Creating library symlink src/core/multiplexer/epoll/libsnodec-core-mux-epoll.so.2 src/core/multiplexer/epoll/libsnodec-core-mux-epoll.so
+[56/970] Building CXX object src/core/socket/CMakeFiles/core-socket.dir/SocketAddress.cpp.o
+[57/970] Building CXX object src/core/CMakeFiles/core.dir/pipe/Pipe.cpp.o
+[58/970] Building CXX object src/core/CMakeFiles/core.dir/pipe/PipeSink.cpp.o
+[59/970] Building CXX object src/core/CMakeFiles/core.dir/timer/IntervalTimer.cpp.o
+[60/970] Building CXX object src/core/CMakeFiles/core.dir/timer/IntervalTimerStopable.cpp.o
+[61/970] Building CXX object src/core/socket/CMakeFiles/core-socket.dir/State.cpp.o
+[62/970] Building CXX object src/core/CMakeFiles/core.dir/pipe/PipeSource.cpp.o
+[63/970] Building CXX object src/core/CMakeFiles/core.dir/timer/SingleshotTimer.cpp.o
+[64/970] Building CXX object src/core/CMakeFiles/core.dir/timer/Timer.cpp.o
+[65/970] Building CXX object src/core/socket/CMakeFiles/core-socket.dir/SocketContext.cpp.o
+[66/970] Linking CXX shared library src/core/libsnodec-core.so.2.0.0
+[67/970] Creating library symlink src/core/libsnodec-core.so.2 src/core/libsnodec-core.so
+[68/970] Linking CXX shared library src/core/socket/libsnodec-core-socket.so.2.0.0
+[69/970] Creating library symlink src/core/socket/libsnodec-core-socket.so.2 src/core/socket/libsnodec-core-socket.so
+[70/970] Building CXX object src/net/CMakeFiles/net.dir/phy/PhysicalSocketOption.cpp.o
+[71/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigPhysicalSocket.cpp.o
+[72/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigTls.cpp.o
+[73/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigSection.cpp.o
+[74/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigInstance.cpp.o
+[75/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigConnection.cpp.o
+[76/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigLegacy.cpp.o
+[77/970] Building CXX object src/net/un/CMakeFiles/net-un.dir/PeerCredentials.cpp.o
+[78/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigPhysicalSocketServer.cpp.o
+[79/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigPhysicalSocketClient.cpp.o
+[80/970] Building CXX object src/net/in6/CMakeFiles/net-in6.dir/SocketAddress.cpp.o
+[81/970] Building CXX object src/net/un/CMakeFiles/net-un.dir/SocketAddress.cpp.o
+[82/970] Building CXX object src/net/in/CMakeFiles/net-in.dir/SocketAddress.cpp.o
+[83/970] Building CXX object src/net/in6/CMakeFiles/net-in6.dir/SocketAddrInfo.cpp.o
+[84/970] Building CXX object src/net/rc/CMakeFiles/net-rc.dir/SocketAddress.cpp.o
+[85/970] Building CXX object src/net/in/CMakeFiles/net-in.dir/SocketAddrInfo.cpp.o
+[86/970] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/ClientFlowController.cpp.o
+[87/970] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/ServerFlowController.cpp.o
+[88/970] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketContextFactory.cpp.o
+[89/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigTlsClient.cpp.o
+[90/970] Building CXX object src/net/CMakeFiles/net.dir/config/ConfigTlsServer.cpp.o
+[91/970] Building CXX object src/net/in6/CMakeFiles/net-in6.dir/config/ConfigAddress.cpp.o
+[92/970] Linking CXX shared library src/net/libsnodec-net.so.2.0.0
+[93/970] Creating library symlink src/net/libsnodec-net.so.2 src/net/libsnodec-net.so
+[94/970] Building CXX object src/net/un/CMakeFiles/net-un.dir/config/ConfigAddress.cpp.o
+[95/970] Linking CXX shared library src/net/in6/libsnodec-net-in6.so.2.0.0
+[96/970] Creating library symlink src/net/in6/libsnodec-net-in6.so.2 src/net/in6/libsnodec-net-in6.so
+[97/970] Linking CXX shared library src/net/un/libsnodec-net-un.so.2.0.0
+[98/970] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketContext.cpp.o
+[99/970] Building CXX object src/net/in/CMakeFiles/net-in.dir/config/ConfigAddress.cpp.o
+[100/970] Linking CXX shared library src/net/in/libsnodec-net-in.so.2.0.0
+[101/970] Creating library symlink src/net/un/libsnodec-net-un.so.2 src/net/un/libsnodec-net-un.so
+[102/970] Building CXX object src/net/l2/CMakeFiles/net-l2.dir/SocketAddress.cpp.o
+[103/970] Creating library symlink src/net/in/libsnodec-net-in.so.2 src/net/in/libsnodec-net-in.so
+[104/970] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketReader.cpp.o
+[105/970] Building CXX object src/net/in6/phy/CMakeFiles/net-in6-phy.dir/PhysicalSocket.cpp.o
+[106/970] Linking CXX shared library src/net/in6/phy/libsnodec-net-in6-phy.so.2.0.0
+[107/970] Creating library symlink src/net/in6/phy/libsnodec-net-in6-phy.so.2 src/net/in6/phy/libsnodec-net-in6-phy.so
+[108/970] Building CXX object src/net/un/phy/CMakeFiles/net-un-phy.dir/PhysicalSocket.cpp.o
+[109/970] Linking CXX shared library src/net/un/phy/libsnodec-net-un-phy.so.2.0.0
+[110/970] Building CXX object src/net/rc/phy/CMakeFiles/net-rc-phy.dir/PhysicalSocket.cpp.o
+[111/970] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketWriter.cpp.o
+[112/970] Building CXX object src/net/in/phy/CMakeFiles/net-in-phy.dir/PhysicalSocket.cpp.o
+[113/970] Linking CXX shared library src/net/in/phy/libsnodec-net-in-phy.so.2.0.0
+[114/970] Creating library symlink src/net/un/phy/libsnodec-net-un-phy.so.2 src/net/un/phy/libsnodec-net-un-phy.so
+[115/970] Building CXX object src/net/in6/phy/stream/CMakeFiles/net-in6-phy-stream.dir/PhysicalSocket.cpp.o
+[116/970] Building CXX object src/net/in6/phy/stream/CMakeFiles/net-in6-phy-stream.dir/PhysicalSocketClient.cpp.o
+[117/970] Building CXX object src/net/l2/phy/CMakeFiles/net-l2-phy.dir/PhysicalSocket.cpp.o
+[118/970] Building CXX object src/net/in6/phy/stream/CMakeFiles/net-in6-phy-stream.dir/PhysicalSocketServer.cpp.o
+[119/970] Building CXX object src/net/rc/CMakeFiles/net-rc.dir/config/ConfigAddress.cpp.o
+[120/970] Linking CXX shared library src/net/rc/libsnodec-net-rc.so.2.0.0
+[121/970] Creating library symlink src/net/rc/libsnodec-net-rc.so.2 src/net/rc/libsnodec-net-rc.so
+[122/970] Building CXX object src/web/http/CMakeFiles/http.dir/CiStringMap.cpp.o
+[123/970] Linking CXX shared library src/net/rc/phy/libsnodec-net-rc-phy.so.2.0.0
+[124/970] Building CXX object src/net/un/phy/stream/CMakeFiles/net-un-phy-stream.dir/PhysicalSocket.cpp.o
+[125/970] Building CXX object src/web/http/CMakeFiles/http.dir/ContentDecoder.cpp.o
+[126/970] Building CXX object src/core/socket/stream/CMakeFiles/core-socket-stream.dir/SocketConnection.cpp.o
+[127/970] Building CXX object src/net/un/phy/stream/CMakeFiles/net-un-phy-stream.dir/PhysicalSocketClient.cpp.o
+[128/970] Linking CXX shared library src/core/socket/stream/libsnodec-core-socket-stream.so.2.0.0
+[129/970] Creating library symlink src/core/socket/stream/libsnodec-core-socket-stream.so.2 src/core/socket/stream/libsnodec-core-socket-stream.so
+[130/970] Building CXX object src/net/un/phy/stream/CMakeFiles/net-un-phy-stream.dir/PhysicalSocketServer.cpp.o
+[131/970] Building CXX object src/web/http/CMakeFiles/http.dir/StatusCodes.cpp.o
+[132/970] Building CXX object src/web/http/CMakeFiles/http.dir/MimeTypes.cpp.o
+[133/970] Building CXX object src/web/http/CMakeFiles/http.dir/decoder/Chunked.cpp.o
+[134/970] Building CXX object src/web/http/CMakeFiles/http.dir/decoder/Fields.cpp.o
+[135/970] Creating library symlink src/net/in/phy/libsnodec-net-in-phy.so.2 src/net/in/phy/libsnodec-net-in-phy.so
+[136/970] Building CXX object src/web/http/CMakeFiles/http.dir/decoder/HTTP10Response.cpp.o
+[137/970] Building CXX object src/web/http/CMakeFiles/http.dir/ConfigHttpParser.cpp.o
+[138/970] Building CXX object src/web/http/CMakeFiles/http.dir/decoder/Identity.cpp.o
+[139/970] Building CXX object src/web/http/CMakeFiles/http.dir/Parser.cpp.o
+[140/970] Creating library symlink src/net/rc/phy/libsnodec-net-rc-phy.so.2 src/net/rc/phy/libsnodec-net-rc-phy.so
+[141/970] Linking CXX shared library src/net/in6/phy/stream/libsnodec-net-in6-phy-stream.so.2.0.0
+[142/970] Building CXX object src/net/l2/CMakeFiles/net-l2.dir/config/ConfigAddress.cpp.o
+[143/970] Building CXX object src/net/in/phy/stream/CMakeFiles/net-in-phy-stream.dir/PhysicalSocket.cpp.o
+[144/970] Linking CXX shared library src/net/l2/libsnodec-net-l2.so.2.0.0
+[145/970] Creating library symlink src/net/l2/libsnodec-net-l2.so.2 src/net/l2/libsnodec-net-l2.so
+[146/970] Linking CXX shared library src/net/l2/phy/libsnodec-net-l2-phy.so.2.0.0
+[147/970] Building CXX object src/web/http/CMakeFiles/http.dir/http_utils.cpp.o
+[148/970] Linking CXX shared library src/net/un/phy/stream/libsnodec-net-un-phy-stream.so.2.0.0
+[149/970] Building CXX object src/web/http/CMakeFiles/http.dir/ConfigWebSocket.cpp.o
+[150/970] Linking CXX shared library snode.c/http/libsnodec-http.so.2.0.0
+[151/970] Building CXX object src/net/rc/phy/stream/CMakeFiles/net-rc-phy-stream.dir/PhysicalSocket.cpp.o
+[152/970] Building CXX object src/net/rc/phy/stream/CMakeFiles/net-rc-phy-stream.dir/PhysicalSocketClient.cpp.o
+[153/970] Building CXX object src/net/rc/phy/stream/CMakeFiles/net-rc-phy-stream.dir/PhysicalSocketServer.cpp.o
+[154/970] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/StringRaw.cpp.o
+[155/970] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/UInt16.cpp.o
+[156/970] Building CXX object src/net/in/phy/stream/CMakeFiles/net-in-phy-stream.dir/PhysicalSocketClient.cpp.o
+[157/970] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/String.cpp.o
+[158/970] Creating library symlink src/net/in6/phy/stream/libsnodec-net-in6-phy-stream.so.2 src/net/in6/phy/stream/libsnodec-net-in6-phy-stream.so
+[159/970] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/UInt8.cpp.o
+[160/970] Creating library symlink src/net/l2/phy/libsnodec-net-l2-phy.so.2 src/net/l2/phy/libsnodec-net-l2-phy.so
+[161/970] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/UInt32.cpp.o
+[162/970] Building CXX object src/iot/mqtt/types/CMakeFiles/mqtt-types.dir/UIntV.cpp.o
+[163/970] Building CXX object src/net/in/phy/stream/CMakeFiles/net-in-phy-stream.dir/PhysicalSocketServer.cpp.o
+[164/970] Linking CXX shared library src/net/in/phy/stream/libsnodec-net-in-phy-stream.so.2.0.0
+[165/970] Linking CXX shared library src/net/rc/phy/stream/libsnodec-net-rc-phy-stream.so.2.0.0
+[166/970] Creating library symlink src/net/un/phy/stream/libsnodec-net-un-phy-stream.so.2 src/net/un/phy/stream/libsnodec-net-un-phy-stream.so
+[167/970] Building CXX object src/net/l2/phy/stream/CMakeFiles/net-l2-phy-stream.dir/PhysicalSocket.cpp.o
+[168/970] Building CXX object src/net/l2/phy/stream/CMakeFiles/net-l2-phy-stream.dir/PhysicalSocketServer.cpp.o
+[169/970] Building CXX object src/net/l2/phy/stream/CMakeFiles/net-l2-phy-stream.dir/PhysicalSocketClient.cpp.o
+[170/970] Creating library symlink snode.c/http/libsnodec-http.so.2 snode.c/http/libsnodec-http.so
+[171/970] Building CXX object src/core/socket/stream/legacy/CMakeFiles/core-socket-stream-legacy.dir/SocketWriter.cpp.o
+[172/970] Building CXX object src/core/socket/stream/legacy/CMakeFiles/core-socket-stream-legacy.dir/SocketReader.cpp.o
+[173/970] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/Request.cpp.o
+[174/970] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/RequestParser.cpp.o
+[175/970] Building CXX object src/net/in6/stream/CMakeFiles/net-in6-stream.dir/config/ConfigSocketServer.cpp.o
+[176/970] Building CXX object src/net/in6/stream/CMakeFiles/net-in6-stream.dir/config/ConfigSocketClient.cpp.o
+[177/970] Building CXX object src/net/un/stream/CMakeFiles/net-un-stream.dir/config/ConfigSocketClient.cpp.o
+[178/970] Building CXX object src/net/un/stream/CMakeFiles/net-un-stream.dir/config/ConfigSocketServer.cpp.o
+[179/970] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/ConfigHttpServer.cpp.o
+[180/970] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/EndCommand.cpp.o
+[181/970] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/SocketContextUpgradeFactory.cpp.o
+[182/970] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/SendFragmentCommand.cpp.o
+[183/970] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/SendHeaderCommand.cpp.o
+[184/970] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/SocketContextUpgradeFactorySelector.cpp.o
+[185/970] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/SendFileCommand.cpp.o
+[186/970] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/SseCommand.cpp.o
+[187/970] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/Response.cpp.o
+[188/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Connect.cpp.o
+[189/970] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/SocketContext.cpp.o
+[190/970] Building CXX object src/web/http/client/commands/CMakeFiles/http-client-commands.dir/UpgradeCommand.cpp.o
+[191/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Connack.cpp.o
+[192/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pingresp.cpp.o
+[193/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Disconnect.cpp.o
+[194/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pingreq.cpp.o
+[195/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Publish.cpp.o
+[196/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Puback.cpp.o
+[197/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pubcomp.cpp.o
+[198/970] Linking CXX static library src/iot/mqtt/types/libmqtt-types.a
+[199/970] Linking CXX shared library src/core/socket/stream/legacy/libsnodec-core-socket-stream-legacy.so.2.0.0
+[200/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pubrec.cpp.o
+[201/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Pubrel.cpp.o
+[202/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Unsuback.cpp.o
+[203/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Subscribe.cpp.o
+[204/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Unsubscribe.cpp.o
+[205/970] Building CXX object src/web/http/server/CMakeFiles/http-server.dir/SocketContextFactory.cpp.o
+[206/970] Creating library symlink src/net/in/phy/stream/libsnodec-net-in-phy-stream.so.2 src/net/in/phy/stream/libsnodec-net-in-phy-stream.so
+[207/970] Building CXX object src/iot/mqtt/packets/CMakeFiles/mqtt-packets.dir/Suback.cpp.o
+[208/970] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/system/ssl.cpp.o
+[209/970] Linking CXX shared library src/net/in6/stream/libsnodec-net-in6-stream.so.2.0.0
+[210/970] Linking CXX shared library src/net/l2/phy/stream/libsnodec-net-l2-phy-stream.so.2.0.0
+[211/970] Creating library symlink src/net/rc/phy/stream/libsnodec-net-rc-phy-stream.so.2 src/net/rc/phy/stream/libsnodec-net-rc-phy-stream.so
+[212/970] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/ssl_utils.cpp.o
+[213/970] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/TLSHandshake.cpp.o
+[214/970] Linking CXX shared library src/net/un/stream/libsnodec-net-un-stream.so.2.0.0
+[215/970] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/TLSShutdown.cpp.o
+[216/970] Linking CXX shared library snode.c/http/libsnodec-http-server.so.2.0.0
+[217/970] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/SocketReader.cpp.o
+[218/970] Building CXX object src/core/socket/stream/tls/CMakeFiles/core-socket-stream-tls.dir/SocketWriter.cpp.o
+[219/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/Response.cpp.o
+[220/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/RequestCommand.cpp.o
+[221/970] Building CXX object src/net/in/stream/CMakeFiles/net-in-stream.dir/config/ConfigSocketServer.cpp.o
+[222/970] Building CXX object src/net/rc/stream/CMakeFiles/net-rc-stream.dir/config/ConfigSocketClient.cpp.o
+[223/970] Building CXX object src/net/in/stream/CMakeFiles/net-in-stream.dir/config/ConfigSocketClient.cpp.o
+[224/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/Request.cpp.o
+[225/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/ResponseParser.cpp.o
+[226/970] Linking CXX static library src/web/http/client/commands/libhttp-client-commands.a
+[227/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/SocketContext.cpp.o
+[228/970] Building CXX object src/net/rc/stream/CMakeFiles/net-rc-stream.dir/config/ConfigSocketServer.cpp.o
+[229/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/ConfigHTTP.cpp.o
+[230/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/SocketContextUpgradeFactory.cpp.o
+[231/970] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/ControlPacketDeserializer.cpp.o
+[232/970] Building CXX object src/web/websocket/CMakeFiles/websocket.dir/Receiver.cpp.o
+[233/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/tools/EventSource.cpp.o
+[234/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/SocketContextUpgradeFactorySelector.cpp.o
+[235/970] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/ControlPacket.cpp.o
+[236/970] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/FixedHeader.cpp.o
+[237/970] Building CXX object src/web/websocket/CMakeFiles/websocket.dir/SubProtocolContext.cpp.o
+[238/970] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/SubProtocol.cpp.o
+[239/970] Linking CXX static library src/iot/mqtt/packets/libmqtt-packets.a
+[240/970] Creating library symlink src/core/socket/stream/legacy/libsnodec-core-socket-stream-legacy.so.2 src/core/socket/stream/legacy/libsnodec-core-socket-stream-legacy.so
+[241/970] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/Topic.cpp.o
+[242/970] Linking CXX shared library src/core/socket/stream/tls/libsnodec-core-socket-stream-tls.so.2.0.0
+[243/970] Creating library symlink src/net/in6/stream/libsnodec-net-in6-stream.so.2 src/net/in6/stream/libsnodec-net-in6-stream.so
+[244/970] Building CXX object src/web/websocket/CMakeFiles/websocket.dir/Transmitter.cpp.o
+[245/970] Linking CXX shared library src/net/in/stream/libsnodec-net-in-stream.so.2.0.0
+[246/970] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/MqttContext.cpp.o
+[247/970] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/SocketContext.cpp.o
+[248/970] Creating library symlink src/net/l2/phy/stream/libsnodec-net-l2-phy-stream.so.2 src/net/l2/phy/stream/libsnodec-net-l2-phy-stream.so
+[249/970] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/Mqtt.cpp.o
+[250/970] Building CXX object src/web/http/client/CMakeFiles/http-client.dir/SocketContextFactory.cpp.o
+[251/970] Linking CXX shared library src/net/rc/stream/libsnodec-net-rc-stream.so.2.0.0
+[252/970] Creating library symlink src/net/un/stream/libsnodec-net-un-stream.so.2 src/net/un/stream/libsnodec-net-un-stream.so
+[253/970] Building CXX object src/iot/mqtt/CMakeFiles/mqtt.dir/Session.cpp.o
+[254/970] Building CXX object src/net/in6/stream/legacy/CMakeFiles/net-in6-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[255/970] Building CXX object src/net/l2/stream/CMakeFiles/net-l2-stream.dir/config/ConfigSocketClient.cpp.o
+[256/970] Building CXX object src/net/in6/stream/legacy/CMakeFiles/net-in6-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[257/970] Creating library symlink snode.c/http/libsnodec-http-server.so.2 snode.c/http/libsnodec-http-server.so
+[258/970] Linking CXX shared library snode.c/http/libsnodec-http-client.so.2.0.0
+[259/970] Building CXX object src/net/l2/stream/CMakeFiles/net-l2-stream.dir/config/ConfigSocketServer.cpp.o
+[260/970] Linking CXX shared library snode.c/http/upgrade/libsnodec-websocket.so.2.0.0
+[261/970] Building CXX object src/net/in6/stream/legacy/CMakeFiles/net-in6-stream-legacy.dir/SocketServer.cpp.o
+[262/970] Building CXX object src/net/in6/stream/legacy/CMakeFiles/net-in6-stream-legacy.dir/SocketClient.cpp.o
+[263/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/MountPoint.cpp.o
+[264/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/Dispatcher.cpp.o
+[265/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/Next.cpp.o
+[266/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/Controller.cpp.o
+[267/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/Request.cpp.o
+[268/970] Building CXX object src/net/un/stream/legacy/CMakeFiles/net-un-stream-legacy.dir/SocketClient.cpp.o
+[269/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/Route.cpp.o
+[270/970] Building CXX object src/net/un/stream/legacy/CMakeFiles/net-un-stream-legacy.dir/SocketServer.cpp.o
+[271/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/Router.cpp.o
+[272/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/RootRoute.cpp.o
+[273/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/WebApp.cpp.o
+[274/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/Response.cpp.o
+[275/970] Building CXX object src/net/un/stream/legacy/CMakeFiles/net-un-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[276/970] Building CXX object src/net/un/stream/legacy/CMakeFiles/net-un-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[277/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/BasicAuthentication.cpp.o
+[278/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/VHost.cpp.o
+[279/970] Linking CXX shared library src/iot/mqtt/libsnodec-mqtt.so.2.0.0
+[280/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/dispatcher/regex_utils.cpp.o
+[281/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Connect.cpp.o
+[282/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/dispatcher/ApplicationDispatcher.cpp.o
+[283/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/dispatcher/MiddlewareDispatcher.cpp.o
+[284/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Disconnect.cpp.o
+[285/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/dispatcher/RouterDispatcher.cpp.o
+[286/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/JsonMiddleware.cpp.o
+[287/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Pingreq.cpp.o
+[288/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/VerboseRequest.cpp.o
+[289/970] Building CXX object src/express/CMakeFiles/http-server-express.dir/middleware/StaticMiddleware.cpp.o
+[290/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Publish.cpp.o
+[291/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Puback.cpp.o
+[292/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Pubrec.cpp.o
+[293/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Pubcomp.cpp.o
+[294/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Pubrel.cpp.o
+[295/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Subscribe.cpp.o
+[296/970] Building CXX object src/iot/mqtt/server/packets/CMakeFiles/mqtt-server-packets.dir/Unsubscribe.cpp.o
+[297/970] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Connack.cpp.o
+[298/970] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Pingresp.cpp.o
+[299/970] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Publish.cpp.o
+[300/970] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/Message.cpp.o
+[301/970] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Puback.cpp.o
+[302/970] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/Session.cpp.o
+[303/970] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Pubcomp.cpp.o
+[304/970] Creating library symlink src/core/socket/stream/tls/libsnodec-core-socket-stream-tls.so.2 src/core/socket/stream/tls/libsnodec-core-socket-stream-tls.so
+[305/970] Creating library symlink src/net/in/stream/libsnodec-net-in-stream.so.2 src/net/in/stream/libsnodec-net-in-stream.so
+[306/970] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Pubrec.cpp.o
+[307/970] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/RetainTree.cpp.o
+Warning: include-what-you-use reported diagnostics:
+error: unknown argument: '-fno-gnu-unique'
+/usr/include/c++/16/bits/unicode-data.h:1:1: warning: no private include name for @headername mapping
+
+(/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/RetainTree.h has correct #includes/fwd-decls)
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/RetainTree.cpp:128:45: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/RetainTree.cpp:129:105: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/RetainTree.cpp:129:55: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/RetainTree.cpp should add these lines:
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/RetainTree.cpp should remove these lines:
+- #include "iot/mqtt/Mqtt.h"  // lines 44-44
+
+The full include-list for /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/RetainTree.cpp:
+#include "iot/mqtt/server/broker/RetainTree.h"
+#include "iot/mqtt/SemanticLog.h"           // for mqttBrokerLog
+#include "iot/mqtt/server/broker/Broker.h"  // for Broker
+#include <algorithm>                        // for min
+#include <nlohmann/json.hpp>                // for basic_json
+#include <utility>                          // for pair
+---
+
+[308/970] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Pubrel.cpp.o
+[309/970] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/SubscriptionTree.cpp.o
+Warning: include-what-you-use reported diagnostics:
+error: unknown argument: '-fno-gnu-unique'
+/usr/include/c++/16/bits/unicode-data.h:1:1: warning: no private include name for @headername mapping
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.h:85:46: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.h:105:50: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.h:116:50: warning: std::pair is defined in <iterator>, which isn't directly #included.
+
+(/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.h has correct #includes/fwd-decls)
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:118:42: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:303:42: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:324:42: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:326:46: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:335:50: warning: std::pair is defined in <iterator>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:349:41: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:350:46: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:350:64: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:355:45: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:356:124: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:356:52: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:356:93: warning: nlohmann::detail::iteration_proxy_value is defined in <nlohmann/detail/iterators/iteration_proxy.hpp>, which isn't directly #included.
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp should add these lines:
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp should remove these lines:
+- #include "iot/mqtt/Mqtt.h"  // lines 44-44
+
+The full include-list for /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/iot/mqtt/server/broker/SubscriptionTree.cpp:
+#include "iot/mqtt/server/broker/SubscriptionTree.h"
+#include "iot/mqtt/SemanticLog.h"           // for mqttBrokerLog
+#include "iot/mqtt/server/broker/Broker.h"  // for Message, Broker
+#include <algorithm>                        // for __count_fn, count
+#include <nlohmann/json.hpp>                // for basic_json
+#include <string>                           // for basic_string, string, operator<=>, operator+
+---
+
+[310/970] Building CXX object src/iot/mqtt/server/broker/CMakeFiles/mqtt-broker.dir/Broker.cpp.o
+[311/970] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Suback.cpp.o
+[312/970] Building CXX object src/iot/mqtt/client/packets/CMakeFiles/mqtt-client-packets.dir/Unsuback.cpp.o
+[313/970] Building CXX object src/net/in/stream/legacy/CMakeFiles/net-in-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[314/970] Building CXX object src/net/in/stream/legacy/CMakeFiles/net-in-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[315/970] Linking CXX shared library src/net/in6/stream/legacy/libsnodec-net-in6-stream-legacy.so.2.0.0
+[316/970] Building CXX object src/net/in/stream/legacy/CMakeFiles/net-in-stream-legacy.dir/SocketClient.cpp.o
+[317/970] Building CXX object src/net/in/stream/legacy/CMakeFiles/net-in-stream-legacy.dir/SocketServer.cpp.o
+[318/970] Building CXX object src/net/in/stream/tls/CMakeFiles/net-in-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[319/970] Linking CXX shared library src/net/l2/stream/libsnodec-net-l2-stream.so.2.0.0
+[320/970] Creating library symlink src/net/rc/stream/libsnodec-net-rc-stream.so.2 src/net/rc/stream/libsnodec-net-rc-stream.so
+[321/970] Building CXX object src/net/in/stream/tls/CMakeFiles/net-in-stream-tls.dir/SocketClient.cpp.o
+[322/970] Building CXX object src/net/in/stream/tls/CMakeFiles/net-in-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[323/970] Building CXX object src/net/in/stream/tls/CMakeFiles/net-in-stream-tls.dir/SocketServer.cpp.o
+[324/970] Building CXX object src/net/in6/stream/tls/CMakeFiles/net-in6-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[325/970] Building CXX object src/net/in6/stream/tls/CMakeFiles/net-in6-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[326/970] Building CXX object src/net/in6/stream/tls/CMakeFiles/net-in6-stream-tls.dir/SocketClient.cpp.o
+[327/970] Building CXX object src/net/in6/stream/tls/CMakeFiles/net-in6-stream-tls.dir/SocketServer.cpp.o
+[328/970] Building CXX object src/net/rc/stream/legacy/CMakeFiles/net-rc-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[329/970] Linking CXX shared library src/net/un/stream/legacy/libsnodec-net-un-stream-legacy.so.2.0.0
+[330/970] Building CXX object src/net/rc/stream/legacy/CMakeFiles/net-rc-stream-legacy.dir/SocketClient.cpp.o
+[331/970] Building CXX object src/net/rc/stream/legacy/CMakeFiles/net-rc-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[332/970] Building CXX object src/net/rc/stream/legacy/CMakeFiles/net-rc-stream-legacy.dir/SocketServer.cpp.o
+[333/970] Building CXX object src/net/rc/stream/tls/CMakeFiles/net-rc-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[334/970] Creating library symlink snode.c/http/libsnodec-http-client.so.2 snode.c/http/libsnodec-http-client.so
+[335/970] Creating library symlink snode.c/http/upgrade/libsnodec-websocket.so.2 snode.c/http/upgrade/libsnodec-websocket.so
+[336/970] Building CXX object src/net/rc/stream/tls/CMakeFiles/net-rc-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[337/970] Building CXX object src/net/rc/stream/tls/CMakeFiles/net-rc-stream-tls.dir/SocketClient.cpp.o
+[338/970] Building CXX object src/net/un/stream/tls/CMakeFiles/net-un-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[339/970] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/GroupsManager.cpp.o
+[340/970] Building CXX object src/net/rc/stream/tls/CMakeFiles/net-rc-stream-tls.dir/SocketServer.cpp.o
+[341/970] Building CXX object src/net/un/stream/tls/CMakeFiles/net-un-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[342/970] Building CXX object src/net/un/stream/tls/CMakeFiles/net-un-stream-tls.dir/SocketClient.cpp.o
+[343/970] Building CXX object src/net/un/stream/tls/CMakeFiles/net-un-stream-tls.dir/SocketServer.cpp.o
+[344/970] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/SocketContextUpgradeFactory.cpp.o
+[345/970] Linking CXX shared library snode.c/http/libsnodec-http-server-express.so.2.0.0
+[346/970] Creating library symlink src/iot/mqtt/libsnodec-mqtt.so.2 src/iot/mqtt/libsnodec-mqtt.so
+[347/970] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/SubProtocol.cpp.o
+[348/970] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server.dir/ControlPacketDeserializer.cpp.o
+[349/970] Building CXX object src/web/websocket/client/CMakeFiles/websocket-client.dir/SocketContextUpgradeFactory.cpp.o
+[350/970] Building CXX object src/web/websocket/client/CMakeFiles/websocket-client.dir/SubProtocol.cpp.o
+[351/970] Linking CXX static library src/iot/mqtt/server/packets/libmqtt-server-packets.a
+[352/970] Linking CXX static library src/iot/mqtt/server/broker/libmqtt-broker.a
+[353/970] Building CXX object src/iot/mqtt/client/CMakeFiles/mqtt-client.dir/ControlPacketDeserializer.cpp.o
+[354/970] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server.dir/SharedSocketContextFactory.cpp.o
+[355/970] Linking CXX static library src/iot/mqtt/client/packets/libmqtt-client-packets.a
+[356/970] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server.dir/Mqtt.cpp.o
+[357/970] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server.dir/SocketContextFactory.cpp.o
+[358/970] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/SocketContextUpgrade.cpp.o
+[359/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/CommandBuilder.cpp.o
+[360/970] Building CXX object src/web/websocket/server/CMakeFiles/websocket-server.dir/SubProtocolFactorySelector.cpp.o
+[361/970] Building CXX object src/web/websocket/client/CMakeFiles/websocket-client.dir/SocketContextUpgrade.cpp.o
+[362/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigEditor.cpp.o
+[363/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigModel.cpp.o
+[364/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigActions.cpp.o
+[365/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/Json.cpp.o
+[366/970] Linking CXX shared library src/net/in/stream/legacy/libsnodec-net-in-stream-legacy.so.2.0.0
+[367/970] Building CXX object src/web/websocket/client/CMakeFiles/websocket-client.dir/SubProtocolFactorySelector.cpp.o
+[368/970] Creating library symlink src/net/in6/stream/legacy/libsnodec-net-in6-stream-legacy.so.2 src/net/in6/stream/legacy/libsnodec-net-in6-stream-legacy.so
+[369/970] Linking CXX shared library src/net/in/stream/tls/libsnodec-net-in-stream-tls.so.2.0.0
+[370/970] Creating library symlink src/net/l2/stream/libsnodec-net-l2-stream.so.2 src/net/l2/stream/libsnodec-net-l2-stream.so
+[371/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/Materializer.cpp.o
+[372/970] Linking CXX shared library src/net/in6/stream/tls/libsnodec-net-in6-stream-tls.so.2.0.0
+[373/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/JsonWriter.cpp.o
+[374/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ProcessRunner.cpp.o
+[375/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/Metadata.cpp.o
+[376/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigParser.cpp.o
+[377/970] Building CXX object src/iot/mqtt/client/CMakeFiles/mqtt-client.dir/Mqtt.cpp.o
+[378/970] Building CXX object src/net/l2/stream/legacy/CMakeFiles/net-l2-stream-legacy.dir/config/ConfigSocketClient.cpp.o
+[379/970] Linking CXX shared library src/net/rc/stream/legacy/libsnodec-net-rc-stream-legacy.so.2.0.0
+[380/970] Linking CXX shared library src/net/rc/stream/tls/libsnodec-net-rc-stream-tls.so.2.0.0
+[381/970] Creating library symlink src/net/un/stream/legacy/libsnodec-net-un-stream-legacy.so.2 src/net/un/stream/legacy/libsnodec-net-un-stream-legacy.so
+[382/970] Linking CXX shared library src/net/un/stream/tls/libsnodec-net-un-stream-tls.so.2.0.0
+[383/970] Building CXX object src/net/l2/stream/legacy/CMakeFiles/net-l2-stream-legacy.dir/SocketServer.cpp.o
+[384/970] Linking CXX shared library snode.c/http/upgrade/libsnodec-websocket-server.so.2.0.0
+[385/970] Building CXX object src/net/l2/stream/legacy/CMakeFiles/net-l2-stream-legacy.dir/config/ConfigSocketServer.cpp.o
+[386/970] Creating library symlink snode.c/http/libsnodec-http-server-express.so.2 snode.c/http/libsnodec-http-server-express.so
+[387/970] Linking CXX shared library snode.c/http/upgrade/libsnodec-websocket-client.so.2.0.0
+[388/970] Building CXX object src/net/l2/stream/tls/CMakeFiles/net-l2-stream-tls.dir/config/ConfigSocketClient.cpp.o
+[389/970] Building CXX object src/net/l2/stream/legacy/CMakeFiles/net-l2-stream-legacy.dir/SocketClient.cpp.o
+[390/970] Building CXX object src/net/l2/stream/tls/CMakeFiles/net-l2-stream-tls.dir/SocketClient.cpp.o
+[391/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBClientASyncAPI.cpp.o
+[392/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBClientSyncAPI.cpp.o
+[393/970] Building CXX object src/net/l2/stream/tls/CMakeFiles/net-l2-stream-tls.dir/SocketServer.cpp.o
+[394/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBCommand.cpp.o
+[395/970] Building CXX object src/net/l2/stream/tls/CMakeFiles/net-l2-stream-tls.dir/config/ConfigSocketServer.cpp.o
+[396/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBClient.cpp.o
+[397/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBCommandASync.cpp.o
+[398/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBCommandSync.cpp.o
+[399/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBCommandSequence.cpp.o
+[400/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/sync/MariaDBAffectedRowsCommand.cpp.o
+[401/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBLibrary.cpp.o
+[402/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/sync/MariaDBUseResultCommand.cpp.o
+[403/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBAutoCommitCommand.cpp.o
+[404/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/sync/MariaDBFieldCountCommand.cpp.o
+[405/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/MariaDBConnection.cpp.o
+[406/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBCommitCommand.cpp.o
+[407/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBConnectCommand.cpp.o
+[408/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBExecCommand.cpp.o
+[409/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBFreeResultCommand.cpp.o
+[410/970] Linking CXX shared library src/iot/mqtt/client/libsnodec-mqtt-client.so.2.0.0
+[411/970] Linking CXX shared library src/iot/mqtt/server/libsnodec-mqtt-server.so.2.0.0
+[412/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBFetchRowCommand.cpp.o
+[413/970] Linking CXX static library src/tools/snodec-control/src/libsnodec-control-core.a
+[414/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui-logic.dir/ui/LineEditor.cpp.o
+[415/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBRollbackCommand.cpp.o
+[416/970] Building CXX object src/database/mariadb/CMakeFiles/db-mariadb.dir/commands/async/MariaDBQueryCommand.cpp.o
+[417/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui-logic.dir/ui/RenderUtil.cpp.o
+[418/970] Building CXX object src/express/legacy/in6/CMakeFiles/http-server-express-legacy-in6.dir/Server.cpp.o
+[419/970] Creating library symlink src/net/in/stream/legacy/libsnodec-net-in-stream-legacy.so.2 src/net/in/stream/legacy/libsnodec-net-in-stream-legacy.so
+[420/970] Creating library symlink src/net/in/stream/tls/libsnodec-net-in-stream-tls.so.2 src/net/in/stream/tls/libsnodec-net-in-stream-tls.so
+[421/970] Creating library symlink src/net/in6/stream/tls/libsnodec-net-in6-stream-tls.so.2 src/net/in6/stream/tls/libsnodec-net-in6-stream-tls.so
+[422/970] Linking CXX shared library src/net/l2/stream/legacy/libsnodec-net-l2-stream-legacy.so.2.0.0
+[423/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui-logic.dir/ui/UiState.cpp.o
+[424/970] Creating library symlink src/net/rc/stream/legacy/libsnodec-net-rc-stream-legacy.so.2 src/net/rc/stream/legacy/libsnodec-net-rc-stream-legacy.so
+[425/970] Creating library symlink src/net/rc/stream/tls/libsnodec-net-rc-stream-tls.so.2 src/net/rc/stream/tls/libsnodec-net-rc-stream-tls.so
+[426/970] Creating library symlink src/net/un/stream/tls/libsnodec-net-un-stream-tls.so.2 src/net/un/stream/tls/libsnodec-net-un-stream-tls.so
+[427/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui-logic.dir/ui/UiTree.cpp.o
+[428/970] Creating library symlink snode.c/http/upgrade/libsnodec-websocket-server.so.2 snode.c/http/upgrade/libsnodec-websocket-server.so
+[429/970] Creating library symlink snode.c/http/upgrade/libsnodec-websocket-client.so.2 snode.c/http/upgrade/libsnodec-websocket-client.so
+[430/970] Linking CXX shared library src/net/l2/stream/tls/libsnodec-net-l2-stream-tls.so.2.0.0
+[431/970] Linking CXX shared library snode.c/http/libsnodec-http-server-express-legacy-in6.so.2.0.0
+[432/970] Building CXX object src/core/multiplexer/poll/CMakeFiles/mux-poll.dir/DescriptorEventPublisher.cpp.o
+[433/970] Building CXX object src/core/multiplexer/select/CMakeFiles/mux-select.dir/DescriptorEventPublisher.cpp.o
+[434/970] Building CXX object src/express/legacy/un/CMakeFiles/http-server-express-legacy-un.dir/Server.cpp.o
+[435/970] Linking CXX shared library snode.c/http/libsnodec-http-server-express-legacy-un.so.2.0.0
+[436/970] Building CXX object src/core/multiplexer/poll/CMakeFiles/mux-poll.dir/EventMultiplexer.cpp.o
+[437/970] Building CXX object src/core/multiplexer/select/CMakeFiles/mux-select.dir/EventMultiplexer.cpp.o
+[438/970] Linking CXX shared library src/database/mariadb/libsnodec-db-mariadb.so.2.0.0
+[439/970] Creating library symlink src/iot/mqtt/server/libsnodec-mqtt-server.so.2 src/iot/mqtt/server/libsnodec-mqtt-server.so
+[440/970] Building CXX object src/net/un/dgram/CMakeFiles/net-un-dgram.dir/Socket.cpp.o
+[441/970] Creating library symlink src/iot/mqtt/client/libsnodec-mqtt-client.so.2 src/iot/mqtt/client/libsnodec-mqtt-client.so
+[442/970] Building CXX object src/iot/mqtt/client/CMakeFiles/mqtt-client-websocket.dir/SubProtocol.cpp.o
+[443/970] Building CXX object src/iot/mqtt/server/CMakeFiles/mqtt-server-websocket.dir/SubProtocol.cpp.o
+[444/970] Building CXX object src/apps/echo/model/CMakeFiles/echosocketcontext.dir/EchoSocketContext.cpp.o
+[445/970] Building CXX object src/express/legacy/in/CMakeFiles/http-server-express-legacy-in.dir/Server.cpp.o
+[446/970] Building CXX object src/express/legacy/rc/CMakeFiles/http-server-express-legacy-rc.dir/Server.cpp.o
+[447/970] Building CXX object src/apps/tlslegacy/CMakeFiles/tlslegacysocketcontext.dir/TlsLegacySocketContext.cpp.o
+[448/970] Building CXX object src/express/tls/in6/CMakeFiles/http-server-express-tls-in6.dir/Server.cpp.o
+[449/970] Linking CXX static library src/tools/snodec-control/src/libsnodec-control-ui-logic.a
+[450/970] Building CXX object src/express/tls/rc/CMakeFiles/http-server-express-tls-rc.dir/Server.cpp.o
+[451/970] Building CXX object tests/support/CMakeFiles/snodec-test-support.dir/TestResult.cpp.o
+[452/970] Building CXX object src/express/tls/un/CMakeFiles/http-server-express-tls-un.dir/Server.cpp.o
+[453/970] Building CXX object src/apps/websocket/subprotocol/server/echo/CMakeFiles/websocket-echo-server.dir/EchoFactory.cpp.o
+[454/970] Building CXX object src/apps/websocket/subprotocol/server/echo/CMakeFiles/websocket-echo-server.dir/Echo.cpp.o
+[455/970] Building CXX object src/express/tls/in/CMakeFiles/http-server-express-tls-in.dir/Server.cpp.o
+[456/970] Building CXX object src/apps/websocket/subprotocol/client/echo/CMakeFiles/websocket-echo-client.dir/EchoFactory.cpp.o
+[457/970] Building CXX object src/apps/websocket/subprotocol/client/echo/CMakeFiles/websocket-echo-client.dir/Echo.cpp.o
+[458/970] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/file_sinks.cpp.o
+[459/970] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/cfg.cpp.o
+[460/970] Linking CXX shared library src/core/multiplexer/poll/libsnodec-core-mux-poll.so.2.0.0
+[461/970] Creating library symlink src/net/l2/stream/legacy/libsnodec-net-l2-stream-legacy.so.2 src/net/l2/stream/legacy/libsnodec-net-l2-stream-legacy.so
+[462/970] Creating library symlink src/net/l2/stream/tls/libsnodec-net-l2-stream-tls.so.2 src/net/l2/stream/tls/libsnodec-net-l2-stream-tls.so
+[463/970] Linking CXX shared library src/core/multiplexer/select/libsnodec-core-mux-select.so.2.0.0
+[464/970] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o
+[465/970] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/async.cpp.o
+[466/970] Creating library symlink snode.c/http/libsnodec-http-server-express-legacy-in6.so.2 snode.c/http/libsnodec-http-server-express-legacy-in6.so
+[467/970] Creating library symlink snode.c/http/libsnodec-http-server-express-legacy-un.so.2 snode.c/http/libsnodec-http-server-express-legacy-un.so
+[468/970] Linking CXX shared library src/net/un/dgram/libsnodec-net-un-dgram.so.2.0.0
+[469/970] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/color_sinks.cpp.o
+[470/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control-ui.dir/ui/CursesUi.cpp.o
+Warning: include-what-you-use reported diagnostics:
+error: unknown argument: '-fno-gnu-unique'
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/tools/snodec-control/src/ui/CursesUi.cpp:354:23: warning: ssize_t is defined in <sys/types.h>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/tools/snodec-control/src/ui/CursesUi.cpp:361:29: warning: VMIN is defined in <bits/termios-c_cc.h>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/tools/snodec-control/src/ui/CursesUi.cpp:362:29: warning: VTIME is defined in <bits/termios-c_cc.h>, which isn't directly #included.
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/tools/snodec-control/src/ui/CursesUi.cpp:366:19: warning: ssize_t is defined in <sys/types.h>, which isn't directly #included.
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/tools/snodec-control/src/ui/CursesUi.cpp should add these lines:
+#include <sys/types.h>          // for ssize_t
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/tools/snodec-control/src/ui/CursesUi.cpp should remove these lines:
+
+The full include-list for /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/tools/snodec-control/src/ui/CursesUi.cpp:
+#include "../CommandBuilder.h"  // for formatCommandForDisplay, buildRunArgs
+#include "../ConfigActions.h"   // for SaveOutcome, formatDiff, formatMissingRequired, performSaveConfig, createTempFile, formatOptionBlock, writeFile
+#include "../ConfigEditor.h"    // for ChangeRecord, isOptionMissingRequired, missingRequiredOptions, effectiveValueDisplay, mergeChangeRecords
+#include "../ConfigModel.h"     // for ConfigOption, fullOptionKey
+#include "../Materializer.h"    // for materialize
+#include "../Metadata.h"        // for ParsedMetadata
+#include "../ProcessRunner.h"   // for ProcessResult, runProcessAttachedAsForegroundJob
+#include "LineEditor.h"         // for LineEditorBuffer
+#include "RenderUtil.h"         // for fitToWidth
+#include "Ui.h"                 // for UiOptions, UiResult, isUiAvailable, runInteractiveUi
+#include "UiState.h"            // for UiState, isBooleanLikeOption, isTristateLikeOption
+#include "UiTree.h"             // for UiNode, FlatNode, UiNodeType
+#include <curses.h>             // for mvprintw, refresh, stdscr, A_REVERSE, curs_set, erase, attroff, attron, getch, getmaxyx, cbreak, endwin, keypad, noecho, A_BOLD, KEY_END, KEY_ENTER, KEY_HOME, KEY_LEFT, KEY_RIGHT, TRUE, def_prog_mode, initscr, move, mvhline, reset_prog_mode, ACS_HLINE, KEY_BACKSPACE, KEY_DC, KEY_DOWN, KEY_F, KEY_NPAGE, KEY_PPAGE, KEY_UP
+#include <sys/types.h>          // for ssize_t
+#include <termios.h>            // for termios, tcsetattr, TCSANOW, tcgetattr, ECHO, ICANON
+#include <unistd.h>             // for STDIN_FILENO, read
+#include <algorithm>            // for min
+#include <cctype>               // for toupper
+#include <cstddef>              // for size_t
+#include <filesystem>           // for remove, path
+#include <iostream>             // for basic_ostream, operator<<, cout, basic_istream, basic_ostream::operator<<, basic_ostream::flush, flush, istringstream, ostringstream
+#include <optional>             // for optional, nullopt, nullopt_t
+#include <sstream>              // for basic_ostringstream, basic_istringstream
+#include <string>               // for basic_string, char_traits, allocator, string, operator+, operator<<, getline
+#include <utility>              // for pair
+#include <vector>               // for vector
+---
+
+[471/970] Linking CXX shared library snode.c/http/libsnodec-http-server-express-legacy-in.so.2.0.0
+[472/970] Creating library symlink src/database/mariadb/libsnodec-db-mariadb.so.2 src/database/mariadb/libsnodec-db-mariadb.so
+[473/970] Linking CXX shared library snode.c/http/libsnodec-http-server-express-tls-in.so.2.0.0
+[474/970] Linking CXX shared library snode.c/http/libsnodec-http-server-express-tls-in6.so.2.0.0
+[475/970] Linking CXX shared library snode.c/http/libsnodec-http-server-express-legacy-rc.so.2.0.0
+[476/970] Linking CXX shared library src/iot/mqtt/server/libsnodec-mqtt-server-websocket.so.2.0.0
+[477/970] Linking CXX shared library src/iot/mqtt/client/libsnodec-mqtt-client-websocket.so.2.0.0
+[478/970] Linking CXX shared library snode.c/http/libsnodec-http-server-express-tls-rc.so.2.0.0
+[479/970] Linking CXX shared library snode.c/http/libsnodec-http-server-express-tls-un.so.2.0.0
+[480/970] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o
+[481/970] Building CXX object _deps/spdlog-build/CMakeFiles/spdlog.dir/src/spdlog.cpp.o
+[482/970] Building CXX object src/apps/CMakeFiles/testpipe.dir/testpipe.cpp.o
+[483/970] Building CXX object src/apps/CMakeFiles/jsonclient.dir/jsonclient.cpp.o
+[484/970] Building CXX object src/apps/CMakeFiles/warema-jalousien.dir/warema-jalousien.cpp.o
+[485/970] Building CXX object src/apps/CMakeFiles/testpost.dir/testpost.cpp.o
+[486/970] Building CXX object src/apps/CMakeFiles/testregex.dir/testregex.cpp.o
+[487/970] Building CXX object src/apps/CMakeFiles/jsonserver.dir/jsonserver.cpp.o
+[488/970] Building CXX object src/apps/CMakeFiles/snode.c.dir/main.cpp.o
+[489/970] Building CXX object src/apps/CMakeFiles/express-compat-server.dir/express_compat_server.cpp.o
+[490/970] Building CXX object src/apps/CMakeFiles/configtest.dir/configtest.cpp.o
+[491/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-in.dir/echoclient.cpp.o
+[492/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-in.dir/echoserver.cpp.o
+[493/970] Building CXX object src/apps/database/CMakeFiles/testmariadb.dir/testmariadb.cpp.o
+[494/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-in.dir/echoclient.cpp.o
+[495/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-in6.dir/echoclient.cpp.o
+[496/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-in.dir/echoserver.cpp.o
+[497/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-in6.dir/echoserver.cpp.o
+[498/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-in6.dir/echoclient.cpp.o
+[499/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-un.dir/echoclient.cpp.o
+[500/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-un.dir/echoserver.cpp.o
+[501/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-in6.dir/echoserver.cpp.o
+[502/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-un.dir/echoclient.cpp.o
+[503/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-un.dir/echoserver.cpp.o
+[504/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-l2.dir/echoserver.cpp.o
+[505/970] Linking CXX static library src/apps/echo/model/libechosocketcontext.a
+[506/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-l2.dir/echoclient.cpp.o
+[507/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-l2.dir/echoclient.cpp.o
+[508/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-legacy-rc.dir/echoclient.cpp.o
+[509/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-legacy-rc.dir/echoserver.cpp.o
+[510/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-l2.dir/echoserver.cpp.o
+[511/970] Building CXX object src/apps/echo/CMakeFiles/echoclient-tls-rc.dir/echoclient.cpp.o
+[512/970] Building CXX object src/apps/echo/CMakeFiles/echoserver-tls-rc.dir/echoserver.cpp.o
+[513/970] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-in.dir/ConfigWWW.cpp.o
+[514/970] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-in.dir/httpserver.cpp.o
+[515/970] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-in.dir/ConfigWWW.cpp.o
+[516/970] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-in.dir/httpserver.cpp.o
+[517/970] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-in6.dir/ConfigWWW.cpp.o
+[518/970] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-in6.dir/ConfigWWW.cpp.o
+[519/970] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-in6.dir/httpserver.cpp.o
+[520/970] Building CXX object src/apps/http/CMakeFiles/httpclient-tls-in.dir/httpclient.cpp.o
+[521/970] Building CXX object src/apps/http/CMakeFiles/httpclient-legacy-in.dir/httpclient.cpp.o
+[522/970] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-in6.dir/httpserver.cpp.o
+[523/970] Building CXX object src/apps/http/CMakeFiles/httpclient-legacy-in6.dir/httpclient.cpp.o
+[524/970] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-un.dir/ConfigWWW.cpp.o
+[525/970] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-un.dir/httpserver.cpp.o
+[526/970] Building CXX object src/apps/http/CMakeFiles/httpclient-tls-in6.dir/httpclient.cpp.o
+[527/970] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-un.dir/ConfigWWW.cpp.o
+[528/970] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-rc.dir/ConfigWWW.cpp.o
+[529/970] Building CXX object src/apps/http/CMakeFiles/httpclient-legacy-un.dir/httpclient.cpp.o
+[530/970] Building CXX object src/apps/http/CMakeFiles/httpserver-legacy-rc.dir/httpserver.cpp.o
+[531/970] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-un.dir/httpserver.cpp.o
+[532/970] Building CXX object src/apps/http/CMakeFiles/httpclient-tls-un.dir/httpclient.cpp.o
+[533/970] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-rc.dir/ConfigWWW.cpp.o
+[534/970] Building CXX object src/apps/http/CMakeFiles/httpserver-tls-rc.dir/httpserver.cpp.o
+[535/970] Building CXX object src/apps/http/CMakeFiles/verysimpleserver.dir/ConfigWWW.cpp.o
+[536/970] Building CXX object src/apps/http/CMakeFiles/httpclient-legacy-rc.dir/httpclient.cpp.o
+[537/970] Building CXX object src/apps/http/CMakeFiles/vhostserver.dir/ConfigWWW.cpp.o
+[538/970] Building CXX object src/apps/http/CMakeFiles/verysimpleserver.dir/verysimpleserver.cpp.o
+[539/970] Building CXX object src/apps/http/CMakeFiles/httpclient-tls-rc.dir/httpclient.cpp.o
+[540/970] Building CXX object src/apps/http/CMakeFiles/vhostserver.dir/vhostserver.cpp.o
+[541/970] Linking CXX static library src/apps/tlslegacy/libtlslegacysocketcontext.a
+[542/970] Building CXX object src/apps/http/CMakeFiles/httplowlevelclient.dir/httplowlevelclient.cpp.o
+[543/970] Building CXX object src/apps/http/CMakeFiles/testbasicauthentication.dir/ConfigWWW.cpp.o
+[544/970] Building CXX object src/apps/http/CMakeFiles/testbasicauthentication.dir/testbasicauthentication.cpp.o
+[545/970] Building CXX object src/apps/towercalculator/CMakeFiles/towerCalculation.dir/towerCalculation.cpp.o
+[546/970] Building CXX object src/apps/towercalculator/CMakeFiles/towerCalculation.dir/KeyboardReader.cpp.o
+[547/970] Building CXX object src/apps/towercalculator/CMakeFiles/towerCalculation.dir/TowerCalculator.cpp.o
+[548/970] Building CXX object src/apps/oauth2/client_app/CMakeFiles/client_app.dir/ClientApp.cpp.o
+[549/970] Linking CXX shared library snode.c/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2.0.0
+[550/970] Linking CXX shared library snode.c/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2.0.0
+[551/970] Building CXX object src/apps/http/CMakeFiles/testexpressnext.dir/testexpressnext.cpp.o
+[552/970] Linking CXX static library src/tools/snodec-control/src/libsnodec-control-ui.a
+[553/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control.dir/main.cpp.o
+[554/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control.dir/ArgTokenizer.cpp.o
+[555/970] Linking CXX static library tests/support/libsnodec-test-support.a
+[556/970] Building CXX object tests/unit/core/CMakeFiles/SNodeCInitFreeSmokeTest.dir/SNodeCInitFreeSmokeTest.cpp.o
+[557/970] Building CXX object src/tools/snodec-control/src/CMakeFiles/snodec-control.dir/Cli.cpp.o
+[558/970] Building CXX object src/apps/tlslegacy/CMakeFiles/tlslegacyclient.dir/tlslegacyclient.cpp.o
+[559/970] Building CXX object tests/unit/core/CMakeFiles/SNodeCAsyncLogDrainTest.dir/SNodeCAsyncLogDrainTest.cpp.o
+[560/970] Building CXX object tests/unit/core/CMakeFiles/TLSResultClassificationTest.dir/TLSResultClassificationTest.cpp.o
+[561/970] Building CXX object src/apps/oauth2/authorization_server/CMakeFiles/authorization_server.dir/AuthorizationServer.cpp.o
+[562/970] Building CXX object src/apps/oauth2/resource_server/CMakeFiles/resource_server.dir/ResourceServer.cpp.o
+[563/970] Building CXX object tests/unit/core/CMakeFiles/TLSLifecycleAbiSourceCompatibilityTest.dir/TLSLifecycleAbiSourceCompatibilityTest.cpp.o
+[564/970] Building CXX object src/apps/tlslegacy/CMakeFiles/tlslegacyserver.dir/tlslegacyserver.cpp.o
+[565/970] Building CXX object tests/unit/core/CMakeFiles/TLSIoFatalPathTest.dir/TLSIoFatalPathTest.cpp.o
+[566/970] Building CXX object src/apps/websocket/CMakeFiles/wsechoserver.dir/echoserver.cpp.o
+[567/970] Building CXX object tests/unit/core/CMakeFiles/TLSLifecycleHelperOwnershipTest.dir/TLSLifecycleHelperOwnershipTest.cpp.o
+[568/970] Building CXX object src/apps/websocket/CMakeFiles/wsechoclient.dir/echoclient.cpp.o
+[569/970] Building CXX object tests/unit/core/CMakeFiles/SocketContextLifecycleTest.dir/SocketContextLifecycleTest.cpp.o
+[570/970] Building CXX object tests/unit/core/CMakeFiles/TlsOpenSslLoggingTest.dir/TlsOpenSslLoggingTest.cpp.o
+[571/970] Building CXX object tests/unit/net/CMakeFiles/InetSocketAddressTest.dir/InetSocketAddressTest.cpp.o
+[572/970] Building CXX object tests/unit/core/CMakeFiles/SocketWriterResourcePolicyTest.dir/SocketWriterResourcePolicyTest.cpp.o
+[573/970] Building CXX object tests/unit/net/CMakeFiles/InetSocketAddressNativeTest.dir/InetSocketAddressNativeTest.cpp.o
+[574/970] Building CXX object tests/unit/net/CMakeFiles/Inet6SocketAddressTest.dir/Inet6SocketAddressTest.cpp.o
+[575/970] Building CXX object tests/unit/core/CMakeFiles/TLSTransportStateMachineTest.dir/TLSTransportStateMachineTest.cpp.o
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/tests/unit/core/TLSTransportStateMachineTest.cpp: In function ‘EVP_PKEY* {anonymous}::makeKey()’:
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/tests/unit/core/TLSTransportStateMachineTest.cpp:260:27: warning: ‘RSA* RSA_new()’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  260 |         RSA* rsa = RSA_new();
+      |                    ~~~~~~~^~
+In file included from /usr/include/openssl/x509.h:38,
+                 from /usr/include/openssl/ssl.h:34,
+                 from /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/src/core/socket/stream/tls/SocketConnection.hpp:57,
+                 from /home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/tests/unit/core/TLSTransportStateMachineTest.cpp:6:
+/usr/include/openssl/rsa.h:212:28: note: declared here
+  212 | OSSL_DEPRECATEDIN_3_0 RSA *RSA_new(void);
+      |                            ^~~~~~~
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/source/tests/unit/core/TLSTransportStateMachineTest.cpp:263:28: warning: ‘int RSA_generate_key_ex(RSA*, int, BIGNUM*, BN_GENCB*)’ is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]
+  263 |         RSA_generate_key_ex(rsa, 2048, e, nullptr);
+      |         ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/openssl/rsa.h:270:27: note: declared here
+  270 | OSSL_DEPRECATEDIN_3_0 int RSA_generate_key_ex(RSA *rsa, int bits, BIGNUM *e,
+      |                           ^~~~~~~~~~~~~~~~~~~
+[576/970] Building CXX object tests/unit/net/CMakeFiles/UnixSocketAddressTest.dir/UnixSocketAddressTest.cpp.o
+[577/970] Building CXX object tests/unit/core/CMakeFiles/StreamFrameworkShutdownTest.dir/StreamFrameworkShutdownTest.cpp.o
+[578/970] Building CXX object tests/unit/net/CMakeFiles/Inet6SocketAddressNativeTest.dir/Inet6SocketAddressNativeTest.cpp.o
+[579/970] Building CXX object tests/unit/net/CMakeFiles/UnixSocketAddressInitTest.dir/UnixSocketAddressInitTest.cpp.o
+[580/970] Building CXX object tests/unit/net/CMakeFiles/InetSocketAddressInvalidInputTest.dir/InetSocketAddressInvalidInputTest.cpp.o
+[581/970] Building CXX object tests/unit/net/CMakeFiles/UnixPeerCredentialsTest.dir/UnixPeerCredentialsTest.cpp.o
+[582/970] Building CXX object tests/unit/net/CMakeFiles/Inet6SocketAddressInvalidInputTest.dir/Inet6SocketAddressInvalidInputTest.cpp.o
+[583/970] Building CXX object tests/unit/net/CMakeFiles/UnixSocketAddressPathLengthTest.dir/UnixSocketAddressPathLengthTest.cpp.o
+[584/970] Building CXX object tests/unit/net/CMakeFiles/SocketAddressFormattingTest.dir/SocketAddressFormattingTest.cpp.o
+[585/970] Building CXX object tests/unit/http/CMakeFiles/HttpResponseFormatterRawWireTest.dir/HttpResponseFormatterRawWireTest.cpp.o
+[586/970] Building CXX object tests/unit/http/CMakeFiles/HttpRequestFormatterRawWireTest.dir/HttpRequestFormatterRawWireTest.cpp.o
+[587/970] Building CXX object tests/unit/http/CMakeFiles/HttpMessagePresentationTest.dir/HttpMessagePresentationTest.cpp.o
+[588/970] Building CXX object tests/unit/http/CMakeFiles/HttpMessageHeaderCasingTest.dir/HttpMessageHeaderCasingTest.cpp.o
+[589/970] Building CXX object tests/unit/core/CMakeFiles/EndpointLifetimeCountersTest.dir/EndpointLifetimeCountersTest.cpp.o
+[590/970] Building CXX object tests/unit/core/CMakeFiles/ListenerLifecycleTest.dir/ListenerLifecycleTest.cpp.o
+[591/970] Building CXX object tests/unit/http/CMakeFiles/HttpMessageParserTest.dir/HttpMessageParserTest.cpp.o
+[592/970] Building CXX object tests/unit/core/CMakeFiles/TLSFrameworkShutdownTest.dir/TLSFrameworkShutdownTest.cpp.o
+[593/970] Building CXX object tests/unit/core/CMakeFiles/ConnectionAttemptLifecycleTest.dir/ConnectionAttemptLifecycleTest.cpp.o
+[594/970] Building CXX object tests/unit/websocket/CMakeFiles/WebSocketReceiverValidationTest.dir/WebSocketReceiverValidationTest.cpp.o
+[595/970] Building CXX object tests/unit/log/CMakeFiles/PublicLogApiTest.dir/PublicLogApiTest.cpp.o
+[596/970] Building CXX object tests/unit/http/CMakeFiles/HttpMessageTargetQueryEdgeTest.dir/HttpMessageTargetQueryEdgeTest.cpp.o
+[597/970] Building CXX object tests/unit/http/CMakeFiles/HttpPolicyConfigTest.dir/HttpPolicyConfigTest.cpp.o
+[598/970] Building CXX object tests/unit/log/CMakeFiles/LogScopeOwnerTest.dir/LogScopeOwnerTest.cpp.o
+[599/970] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerFormattingTest.dir/SemanticLoggerFormattingTest.cpp.o
+[600/970] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerCacheTest.dir/SemanticLoggerCacheTest.cpp.o
+[601/970] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerDisabledPathTest.dir/SemanticLoggerDisabledPathTest.cpp.o
+[602/970] Building CXX object tests/unit/websocket/CMakeFiles/WebSocketLimitCloseFrameTest.dir/WebSocketLimitCloseFrameTest.cpp.o
+[603/970] Building CXX object tests/unit/log/CMakeFiles/SemanticEndToEndOutputTest.dir/SemanticEndToEndOutputTest.cpp.o
+[604/970] Building CXX object tests/unit/log/CMakeFiles/SemanticTerminalColorRoutingTest.dir/SemanticTerminalColorRoutingTest.cpp.o
+[605/970] Building CXX object tests/unit/http/CMakeFiles/HttpServerUpgradeMissingRequestTest.dir/HttpServerUpgradeMissingRequestTest.cpp.o
+[606/970] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerBackendTest.dir/SemanticLoggerBackendTest.cpp.o
+[607/970] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerFilteringTest.dir/SemanticLoggerFilteringTest.cpp.o
+[608/970] Building CXX object tests/unit/http/CMakeFiles/HttpStreamingSourceFailureTest.dir/HttpStreamingSourceFailureTest.cpp.o
+[609/970] Building CXX object tests/unit/log/CMakeFiles/SemanticLoggerScopeTest.dir/SemanticLoggerScopeTest.cpp.o
+[610/970] Building CXX object tests/unit/mqtt/CMakeFiles/Mqtt311PacketValidationTest.dir/Mqtt311PacketValidationTest.cpp.o
+[611/970] Building CXX object tests/component/core/CMakeFiles/SingleshotTimerTest.dir/SingleshotTimerTest.cpp.o
+[612/970] Building CXX object tests/component/core/CMakeFiles/IntervalTimerStopableTest.dir/IntervalTimerStopableTest.cpp.o
+[613/970] Building CXX object tests/component/core/CMakeFiles/SNodeCStopFromCallbackTest.dir/SNodeCStopFromCallbackTest.cpp.o
+[614/970] Building CXX object tests/unit/utils/CMakeFiles/HexDumpPresentationTest.dir/HexDumpPresentationTest.cpp.o
+[615/970] Building CXX object tests/component/core/CMakeFiles/TimerCancelBeforeFireTest.dir/TimerCancelBeforeFireTest.cpp.o
+[616/970] Building CXX object tests/component/core/CMakeFiles/IntervalTimerCancelFromCallbackTest.dir/IntervalTimerCancelFromCallbackTest.cpp.o
+[617/970] Building CXX object tests/component/core/CMakeFiles/ShutdownReceiverNotificationTest.dir/ShutdownReceiverNotificationTest.cpp.o
+[618/970] Building CXX object tests/component/core/CMakeFiles/PipeBoundedQueueTest.dir/PipeBoundedQueueTest.cpp.o
+[619/970] Building CXX object tests/component/core/CMakeFiles/PipeOwnershipTest.dir/PipeOwnershipTest.cpp.o
+[620/970] Building CXX object tests/unit/log/CMakeFiles/SemanticCliIntegrationTest.dir/SemanticCliIntegrationTest.cpp.o
+[621/970] Building CXX object tests/unit/mqtt/CMakeFiles/MqttLifecycleTest.dir/MqttLifecycleTest.cpp.o
+[622/970] Building CXX object tests/component/core/CMakeFiles/PipeImmediateCloseTest.dir/PipeImmediateCloseTest.cpp.o
+[623/970] Building CXX object tests/component/core/CMakeFiles/PipeSinkFairnessTest.dir/PipeSinkFairnessTest.cpp.o
+[624/970] Building CXX object tests/component/core/CMakeFiles/PipeTimeoutTest.dir/PipeTimeoutTest.cpp.o
+[625/970] Building CXX object tests/component/core/CMakeFiles/DescriptorRegistrationFailureTest.dir/DescriptorRegistrationFailureTest.cpp.o
+[626/970] Building CXX object tests/component/core/CMakeFiles/FileReaderTest.dir/FileReaderTest.cpp.o
+[627/970] Building CXX object tests/unit/utils/CMakeFiles/ConfigRequirementStateTest.dir/ConfigRequirementStateTest.cpp.o
+[628/970] Building CXX object tests/unit/utils/CMakeFiles/ConfigFormatterCommentMetadataTest.dir/ConfigFormatterCommentMetadataTest.cpp.o
+[629/970] Building CXX object tests/component/core/CMakeFiles/SNodeCReconfigureTest.dir/SNodeCReconfigureTest.cpp.o
+[630/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientCompositionTest.dir/InetLegacyServerClientCompositionTest.cpp.o
+[631/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientCompositionTest.dir/Inet6LegacyServerClientCompositionTest.cpp.o
+[632/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerMultipleClientsCompositionTest.dir/InetLegacyServerMultipleClientsCompositionTest.cpp.o
+[633/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerMultipleClientsCompositionTest.dir/Inet6LegacyServerMultipleClientsCompositionTest.cpp.o
+[634/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientCompositionTest.dir/UnixLegacyServerClientCompositionTest.cpp.o
+[635/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerMultipleClientsCompositionTest.dir/UnixLegacyServerMultipleClientsCompositionTest.cpp.o
+[636/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientMultiMessagePayloadExchangeTest.dir/InetLegacyServerClientMultiMessagePayloadExchangeTest.cpp.o
+[637/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientMultiMessagePayloadExchangeTest.dir/Inet6LegacyServerClientMultiMessagePayloadExchangeTest.cpp.o
+[638/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientMultiMessagePayloadExchangeTest.dir/UnixLegacyServerClientMultiMessagePayloadExchangeTest.cpp.o
+[639/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerMultipleClientsPayloadExchangeTest.dir/InetLegacyServerMultipleClientsPayloadExchangeTest.cpp.o
+[640/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerMultipleClientsPayloadExchangeTest.dir/Inet6LegacyServerMultipleClientsPayloadExchangeTest.cpp.o
+[641/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerMultipleClientsPayloadExchangeTest.dir/UnixLegacyServerMultipleClientsPayloadExchangeTest.cpp.o
+[642/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientPayloadExchangeTest.dir/UnixLegacyServerClientPayloadExchangeTest.cpp.o
+[643/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientDisconnectLifecycleTest.dir/UnixLegacyServerClientDisconnectLifecycleTest.cpp.o
+[644/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyClientConnectFailureTest.dir/UnixLegacyClientConnectFailureTest.cpp.o
+[645/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientPayloadExchangeTest.dir/InetLegacyServerClientPayloadExchangeTest.cpp.o
+[646/970] Building CXX object tests/component/net/CMakeFiles/InetPhysicalServerEffectiveBindAddressTest.dir/InetPhysicalServerEffectiveBindAddressTest.cpp.o
+[647/970] Building CXX object tests/component/net/CMakeFiles/UnixPhysicalSocketPathSafetyTest.dir/UnixPhysicalSocketPathSafetyTest.cpp.o
+[648/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyClientConnectFailureTest.dir/Inet6LegacyClientConnectFailureTest.cpp.o
+[649/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerEffectiveListenAddressTest.dir/InetLegacyServerEffectiveListenAddressTest.cpp.o
+[650/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientPayloadExchangeTest.dir/Inet6LegacyServerClientPayloadExchangeTest.cpp.o
+[651/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientDisconnectLifecycleTest.dir/Inet6LegacyServerClientDisconnectLifecycleTest.cpp.o
+[652/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientDisconnectLifecycleTest.dir/InetLegacyServerClientDisconnectLifecycleTest.cpp.o
+[653/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyClientConnectFailureTest.dir/InetLegacyClientConnectFailureTest.cpp.o
+[654/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientLargePayloadExchangeTest.dir/InetLegacyServerClientLargePayloadExchangeTest.cpp.o
+[655/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerClientFramedPayloadExchangeTest.dir/InetLegacyServerClientFramedPayloadExchangeTest.cpp.o
+[656/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientFramedPayloadExchangeTest.dir/Inet6LegacyServerClientFramedPayloadExchangeTest.cpp.o
+[657/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientFramedPayloadExchangeTest.dir/UnixLegacyServerClientFramedPayloadExchangeTest.cpp.o
+[658/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerClientLargePayloadExchangeTest.dir/Inet6LegacyServerClientLargePayloadExchangeTest.cpp.o
+[659/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerClientLargePayloadExchangeTest.dir/UnixLegacyServerClientLargePayloadExchangeTest.cpp.o
+[660/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerControlledCloseLifecycleTest.dir/InetLegacyServerControlledCloseLifecycleTest.cpp.o
+[661/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerControlledCloseLifecycleTest.dir/Inet6LegacyServerControlledCloseLifecycleTest.cpp.o
+[662/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerControlledCloseLifecycleTest.dir/UnixLegacyServerControlledCloseLifecycleTest.cpp.o
+[663/970] Building CXX object tests/component/net/CMakeFiles/InetLegacyServerMultipleClientsDisconnectLifecycleTest.dir/InetLegacyServerMultipleClientsDisconnectLifecycleTest.cpp.o
+[664/970] Building CXX object tests/component/net/CMakeFiles/InetPerCallFlowTest.dir/InetPerCallFlowTest.cpp.o
+[665/970] Building CXX object tests/component/net/CMakeFiles/Inet6LegacyServerMultipleClientsDisconnectLifecycleTest.dir/Inet6LegacyServerMultipleClientsDisconnectLifecycleTest.cpp.o
+[666/970] Building CXX object tests/component/net/CMakeFiles/UnixLegacyServerMultipleClientsDisconnectLifecycleTest.dir/UnixLegacyServerMultipleClientsDisconnectLifecycleTest.cpp.o
+[667/970] Building CXX object tests/component/http/CMakeFiles/InetHttpClientParserLimitTest.dir/InetHttpClientParserLimitTest.cpp.o
+[668/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerRequestPolicyTest.dir/InetHttpServerRequestPolicyTest.cpp.o
+[669/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientGetRoundTripTest.dir/InetHttpServerClientGetRoundTripTest.cpp.o
+[670/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerPipeliningPolicyTest.dir/InetHttpServerPipeliningPolicyTest.cpp.o
+[671/970] Building CXX object tests/component/http/CMakeFiles/Inet6HttpServerClientGetRoundTripTest.dir/Inet6HttpServerClientGetRoundTripTest.cpp.o
+[672/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientPostBodyRoundTripTest.dir/InetHttpServerClientPostBodyRoundTripTest.cpp.o
+[673/970] Building CXX object tests/component/http/CMakeFiles/UnixHttpServerClientGetRoundTripTest.dir/UnixHttpServerClientGetRoundTripTest.cpp.o
+[674/970] Building CXX object tests/component/http/CMakeFiles/Inet6HttpServerClientPostBodyRoundTripTest.dir/Inet6HttpServerClientPostBodyRoundTripTest.cpp.o
+[675/970] Building CXX object tests/component/http/CMakeFiles/UnixHttpServerClientPostBodyRoundTripTest.dir/UnixHttpServerClientPostBodyRoundTripTest.cpp.o
+[676/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientStatusVariantTest.dir/InetHttpServerClientStatusVariantTest.cpp.o
+[677/970] Building CXX object tests/component/http/CMakeFiles/Inet6HttpServerClientStatusVariantTest.dir/Inet6HttpServerClientStatusVariantTest.cpp.o
+[678/970] Building CXX object tests/component/http/CMakeFiles/UnixHttpServerClientStatusVariantTest.dir/UnixHttpServerClientStatusVariantTest.cpp.o
+[679/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientRepeatedRequestTest.dir/InetHttpServerClientRepeatedRequestTest.cpp.o
+[680/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientDisconnectLifecycleTest.dir/InetHttpServerClientDisconnectLifecycleTest.cpp.o
+[681/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientLargeResponseBodyTest.dir/InetHttpServerClientLargeResponseBodyTest.cpp.o
+[682/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientLargeRequestBodyTest.dir/InetHttpServerClientLargeRequestBodyTest.cpp.o
+[683/970] Building CXX object tests/component/http/CMakeFiles/InetHttpClientPrematureServerCloseTest.dir/InetHttpClientPrematureServerCloseTest.cpp.o
+[684/970] Building CXX object tests/component/http/CMakeFiles/InetHttpClientConnectFailureTest.dir/InetHttpClientConnectFailureTest.cpp.o
+[685/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientHeaderHeavyRequestTest.dir/InetHttpServerClientHeaderHeavyRequestTest.cpp.o
+[686/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientHeaderHeavyResponseTest.dir/InetHttpServerClientHeaderHeavyResponseTest.cpp.o
+[687/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientChunkedResponseTest.dir/InetHttpServerClientChunkedResponseTest.cpp.o
+[688/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientPipeliningTest.dir/InetHttpServerClientPipeliningTest.cpp.o
+[689/970] Building CXX object tests/component/http/CMakeFiles/InetHttpClientMalformedResponseBehaviorTest.dir/InetHttpClientMalformedResponseBehaviorTest.cpp.o
+[690/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerClientChunkedRequestTest.dir/InetHttpServerClientChunkedRequestTest.cpp.o
+[691/970] Building CXX object tests/component/http/CMakeFiles/InetHttpServerMalformedRequestBehaviorTest.dir/InetHttpServerMalformedRequestBehaviorTest.cpp.o
+[692/970] Building CXX object tests/component/express/CMakeFiles/InetExpressHttpParserLimitTest.dir/InetExpressHttpParserLimitTest.cpp.o
+[693/970] Building CXX object tests/component/express/CMakeFiles/InetExpressRoutingMiddlewareTest.dir/InetExpressRoutingMiddlewareTest.cpp.o
+[694/970] Building CXX object tests/component/express/CMakeFiles/Inet6ExpressTransportSmokeTest.dir/Inet6ExpressTransportSmokeTest.cpp.o
+[695/970] Building CXX object tests/component/express/CMakeFiles/UnixExpressTransportSmokeTest.dir/UnixExpressTransportSmokeTest.cpp.o
+[696/970] Building CXX object tests/component/express/CMakeFiles/InetExpressMiddlewareShortCircuitTest.dir/InetExpressMiddlewareShortCircuitTest.cpp.o
+[697/970] Building CXX object tests/component/express/CMakeFiles/InetExpressRoutingEdgeBasicsTest.dir/InetExpressRoutingEdgeBasicsTest.cpp.o
+[698/970] Building CXX object tests/component/express/CMakeFiles/InetExpressMountedRouterBasicsTest.dir/InetExpressMountedRouterBasicsTest.cpp.o
+[699/970] Building CXX object tests/component/express/CMakeFiles/InetExpressNestedRouterBasicsTest.dir/InetExpressNestedRouterBasicsTest.cpp.o
+[700/970] Building CXX object tests/component/express/CMakeFiles/InetExpressRouteParameterRegexTest.dir/InetExpressRouteParameterRegexTest.cpp.o
+[701/970] Building CXX object tests/component/express/CMakeFiles/InetExpressQueryMountInteractionTest.dir/InetExpressQueryMountInteractionTest.cpp.o
+[702/970] Building CXX object tests/component/express/CMakeFiles/InetExpressMiddlewareMountOrderTest.dir/InetExpressMiddlewareMountOrderTest.cpp.o
+[703/970] Building CXX object tests/component/express/CMakeFiles/InetExpressFallbackNotFoundTest.dir/InetExpressFallbackNotFoundTest.cpp.o
+[704/970] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientTextEchoTest.dir/InetWebSocketServerClientTextEchoTest.cpp.o
+[705/970] Building CXX object tests/component/websocket/CMakeFiles/Inet6WebSocketServerClientTextEchoTest.dir/Inet6WebSocketServerClientTextEchoTest.cpp.o
+[706/970] Building CXX object tests/component/websocket/CMakeFiles/UnixWebSocketServerClientTextEchoTest.dir/UnixWebSocketServerClientTextEchoTest.cpp.o
+[707/970] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientMultiTextMessageTest.dir/InetWebSocketServerClientMultiTextMessageTest.cpp.o
+[708/970] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientBinaryEchoTest.dir/InetWebSocketServerClientBinaryEchoTest.cpp.o
+[709/970] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientPingPongTest.dir/InetWebSocketServerClientPingPongTest.cpp.o
+[710/970] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerInitiatedCloseTest.dir/InetWebSocketServerInitiatedCloseTest.cpp.o
+[711/970] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketServerClientCloseHandshakeTest.dir/InetWebSocketServerClientCloseHandshakeTest.cpp.o
+[712/970] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketLargeTextMessageTest.dir/InetWebSocketLargeTextMessageTest.cpp.o
+[713/970] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketUnexpectedCloseLifecycleTest.dir/InetWebSocketUnexpectedCloseLifecycleTest.cpp.o
+[714/970] Building CXX object tests/component/websocket/CMakeFiles/InetWebSocketLargeBinaryMessageTest.dir/InetWebSocketLargeBinaryMessageTest.cpp.o
+[715/970] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceBasicEventTest.dir/InetSseEventSourceBasicEventTest.cpp.o
+[716/970] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceMultiEventSequenceTest.dir/InetSseEventSourceMultiEventSequenceTest.cpp.o
+[717/970] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceMultiLineDataTest.dir/InetSseEventSourceMultiLineDataTest.cpp.o
+[718/970] Building CXX object tests/policy/CMakeFiles/ParameterlessSemanticLoggerPolicyTest.dir/log/ParameterlessSemanticLoggerPolicyTest.cpp.o
+[719/970] Building CXX object tests/policy/CMakeFiles/LoggingApiSurfacePolicyTest.dir/log/LoggingApiSurfacePolicyTest.cpp.o
+[720/970] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceCommentIgnoredTest.dir/InetSseEventSourceCommentIgnoredTest.cpp.o
+[721/970] Building CXX object tests/policy/CMakeFiles/EpollDescriptorPublisherPolicyTest.dir/core/EpollDescriptorPublisherPolicyTest.cpp.o
+[722/970] Building CXX object tests/policy/CMakeFiles/EventLoopSyscallDisciplinePolicyTest.dir/core/EventLoopSyscallDisciplinePolicyTest.cpp.o
+[723/970] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceDefaultMessageEventTest.dir/InetSseEventSourceDefaultMessageEventTest.cpp.o
+[724/970] Creating library symlink src/core/multiplexer/poll/libsnodec-core-mux-poll.so.2 src/core/multiplexer/poll/libsnodec-core-mux-poll.so
+[725/970] Creating library symlink src/core/multiplexer/select/libsnodec-core-mux-select.so.2 src/core/multiplexer/select/libsnodec-core-mux-select.so
+[726/970] Creating library symlink src/net/un/dgram/libsnodec-net-un-dgram.so.2 src/net/un/dgram/libsnodec-net-un-dgram.so
+[727/970] Creating library symlink snode.c/http/libsnodec-http-server-express-legacy-in.so.2 snode.c/http/libsnodec-http-server-express-legacy-in.so
+[728/970] Creating library symlink snode.c/http/libsnodec-http-server-express-legacy-rc.so.2 snode.c/http/libsnodec-http-server-express-legacy-rc.so
+[729/970] Creating library symlink snode.c/http/libsnodec-http-server-express-tls-in.so.2 snode.c/http/libsnodec-http-server-express-tls-in.so
+[730/970] Creating library symlink snode.c/http/libsnodec-http-server-express-tls-in6.so.2 snode.c/http/libsnodec-http-server-express-tls-in6.so
+[731/970] Linking CXX static library _deps/spdlog-build/libspdlogd.a
+[732/970] Creating library symlink snode.c/http/libsnodec-http-server-express-tls-rc.so.2 snode.c/http/libsnodec-http-server-express-tls-rc.so
+[733/970] Creating library symlink snode.c/http/libsnodec-http-server-express-tls-un.so.2 snode.c/http/libsnodec-http-server-express-tls-un.so
+[734/970] Creating library symlink src/iot/mqtt/server/libsnodec-mqtt-server-websocket.so.2 src/iot/mqtt/server/libsnodec-mqtt-server-websocket.so
+[735/970] Creating library symlink src/iot/mqtt/client/libsnodec-mqtt-client-websocket.so.2 src/iot/mqtt/client/libsnodec-mqtt-client-websocket.so
+[736/970] Linking CXX executable src/apps/snode.c
+[737/970] Linking CXX executable src/apps/express-compat-server
+[738/970] Building CXX object tests/policy/CMakeFiles/CiWorkflowPathsPolicyTest.dir/ci/CiWorkflowPathsPolicyTest.cpp.o
+[739/970] Linking CXX executable src/apps/jsonserver
+[740/970] Linking CXX executable src/apps/jsonclient
+[741/970] Linking CXX executable src/apps/testpost
+[742/970] Linking CXX executable src/apps/warema-jalousien
+[743/970] Linking CXX executable src/apps/testpipe
+[744/970] Linking CXX executable src/apps/testregex
+[745/970] Linking CXX executable src/apps/configtest
+[746/970] Linking CXX executable src/apps/database/testmariadb
+[747/970] Linking CXX executable src/apps/echo/echoclient-legacy-in
+[748/970] Linking CXX executable src/apps/echo/echoserver-legacy-in
+[749/970] Linking CXX executable src/apps/echo/echoclient-tls-in
+[750/970] Linking CXX executable src/apps/echo/echoserver-tls-in
+[751/970] Linking CXX executable src/apps/echo/echoclient-legacy-in6
+[752/970] Linking CXX executable src/apps/echo/echoserver-legacy-in6
+[753/970] Linking CXX executable src/apps/echo/echoclient-tls-in6
+[754/970] Linking CXX executable src/apps/echo/echoclient-legacy-un
+[755/970] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceRetryFieldTest.dir/InetSseEventSourceRetryFieldTest.cpp.o
+[756/970] Linking CXX executable src/apps/echo/echoserver-tls-in6
+[757/970] Linking CXX executable src/apps/echo/echoserver-legacy-un
+[758/970] Linking CXX executable src/apps/echo/echoclient-tls-un
+[759/970] Building CXX object tests/policy/CMakeFiles/SensitiveLoggingPolicyTest.dir/security/SensitiveLoggingPolicyTest.cpp.o
+[760/970] Linking CXX executable src/apps/echo/echoserver-tls-un
+[761/970] Linking CXX executable src/apps/echo/echoclient-legacy-l2
+[762/970] Linking CXX executable src/apps/echo/echoserver-legacy-l2
+[763/970] Linking CXX executable src/apps/echo/echoclient-tls-l2
+[764/970] Linking CXX executable src/apps/echo/echoclient-legacy-rc
+[765/970] Linking CXX executable src/apps/echo/echoserver-tls-l2
+[766/970] Linking CXX executable src/apps/echo/echoserver-legacy-rc
+[767/970] Linking CXX executable src/apps/echo/echoclient-tls-rc
+[768/970] Linking CXX executable src/apps/http/httpserver-legacy-in
+[769/970] Linking CXX executable src/apps/http/httpclient-legacy-in
+[770/970] Linking CXX executable src/apps/echo/echoserver-tls-rc
+[771/970] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceClientCloseAfterEventTest.dir/InetSseEventSourceClientCloseAfterEventTest.cpp.o
+[772/970] Linking CXX executable src/apps/http/httpserver-tls-in
+[773/970] Linking CXX executable src/apps/http/httpclient-tls-in
+[774/970] Linking CXX executable src/apps/http/httpserver-legacy-in6
+[775/970] Linking CXX executable src/apps/http/httpclient-legacy-in6
+[776/970] Linking CXX executable src/apps/http/httpserver-legacy-un
+[777/970] Linking CXX executable src/apps/http/httpserver-tls-in6
+[778/970] Linking CXX executable src/apps/http/httpclient-tls-in6
+[779/970] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceReconnectLifecycleTest.dir/InetSseEventSourceReconnectLifecycleTest.cpp.o
+[780/970] Linking CXX executable src/apps/http/httpclient-legacy-un
+[781/970] Linking CXX executable src/apps/http/httpserver-tls-un
+[782/970] Linking CXX executable src/apps/http/httpserver-legacy-rc
+[783/970] Linking CXX executable src/apps/http/httpclient-legacy-rc
+[784/970] Linking CXX executable src/apps/http/httpclient-tls-rc
+[785/970] Linking CXX executable src/apps/http/httpserver-tls-rc
+[786/970] Linking CXX executable src/apps/http/httpclient-tls-un
+[787/970] Linking CXX executable src/apps/http/httplowlevelclient
+[788/970] Linking CXX executable src/apps/http/verysimpleserver
+[789/970] Linking CXX executable src/apps/http/vhostserver
+[790/970] Linking CXX executable src/apps/http/testexpressnext
+[791/970] Linking CXX executable src/apps/http/testbasicauthentication
+[792/970] Linking CXX executable src/apps/oauth2/client_app/client_app
+[793/970] Linking CXX executable src/apps/oauth2/authorization_server/authorization_server
+[794/970] Creating library symlink snode.c/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2 snode.c/http/upgrade/websocket/libsnodec-websocket-echo-server.so
+[795/970] Creating library symlink snode.c/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2 snode.c/http/upgrade/websocket/libsnodec-websocket-echo-client.so
+[796/970] Linking CXX executable src/apps/tlslegacy/tlslegacyserver
+[797/970] Linking CXX executable src/apps/towercalculator/towerCalculation
+[798/970] Linking CXX executable src/apps/tlslegacy/tlslegacyclient
+[799/970] Linking CXX executable src/apps/oauth2/resource_server/resource_server
+[800/970] Linking CXX executable tests/unit/core/SNodeCInitFreeSmokeTest
+[801/970] Linking CXX executable tests/unit/core/SNodeCAsyncLogDrainTest
+[802/970] Linking CXX executable src/apps/websocket/wsechoclient
+[803/970] Linking CXX executable src/apps/websocket/wsechoserver
+[804/970] Linking CXX executable src/tools/snodec-control/src/snodec-control
+[805/970] Linking CXX executable tests/unit/core/TLSResultClassificationTest
+[806/970] Linking CXX executable tests/unit/core/TLSIoFatalPathTest
+[807/970] Linking CXX executable tests/unit/core/TLSLifecycleAbiSourceCompatibilityTest
+[808/970] Linking CXX executable tests/unit/core/StreamFrameworkShutdownTest
+[809/970] Linking CXX executable tests/unit/core/SocketContextLifecycleTest
+[810/970] Linking CXX executable tests/unit/core/TLSTransportStateMachineTest
+[811/970] Linking CXX executable tests/unit/core/TLSLifecycleHelperOwnershipTest
+[812/970] Linking CXX executable tests/unit/core/SocketWriterResourcePolicyTest
+[813/970] Linking CXX executable tests/unit/core/ListenerLifecycleTest
+[814/970] Linking CXX executable tests/unit/core/EndpointLifetimeCountersTest
+[815/970] Linking CXX executable tests/unit/net/InetSocketAddressTest
+[816/970] Linking CXX executable tests/unit/core/TlsOpenSslLoggingTest
+[817/970] Linking CXX executable tests/unit/core/ConnectionAttemptLifecycleTest
+[818/970] Linking CXX executable tests/unit/net/InetSocketAddressNativeTest
+[819/970] Linking CXX executable tests/unit/core/TLSFrameworkShutdownTest
+[820/970] Linking CXX executable tests/unit/net/UnixSocketAddressTest
+[821/970] Linking CXX executable tests/unit/net/Inet6SocketAddressNativeTest
+[822/970] Linking CXX executable tests/unit/net/UnixSocketAddressInitTest
+[823/970] Linking CXX executable tests/unit/net/Inet6SocketAddressTest
+[824/970] Linking CXX executable tests/unit/net/InetSocketAddressInvalidInputTest
+[825/970] Linking CXX executable tests/unit/net/Inet6SocketAddressInvalidInputTest
+[826/970] Linking CXX executable tests/unit/net/UnixSocketAddressPathLengthTest
+[827/970] Linking CXX executable tests/unit/net/SocketAddressFormattingTest
+[828/970] Linking CXX executable tests/unit/net/UnixPeerCredentialsTest
+[829/970] Linking CXX executable tests/unit/http/HttpMessageParserTest
+[830/970] Linking CXX executable tests/unit/http/HttpRequestFormatterRawWireTest
+[831/970] Linking CXX executable tests/unit/http/HttpResponseFormatterRawWireTest
+[832/970] Linking CXX executable tests/unit/http/HttpMessageHeaderCasingTest
+[833/970] Linking CXX executable tests/unit/http/HttpMessagePresentationTest
+[834/970] Linking CXX executable tests/unit/http/HttpPolicyConfigTest
+[835/970] Linking CXX executable tests/unit/http/HttpMessageTargetQueryEdgeTest
+[836/970] Linking CXX executable tests/unit/websocket/WebSocketReceiverValidationTest
+[837/970] Linking CXX executable tests/unit/log/PublicLogApiTest
+[838/970] Linking CXX executable tests/unit/http/HttpServerUpgradeMissingRequestTest
+[839/970] Linking CXX executable tests/unit/http/HttpStreamingSourceFailureTest
+[840/970] Linking CXX executable tests/unit/log/LogScopeOwnerTest
+[841/970] Linking CXX executable tests/unit/log/SemanticLoggerFormattingTest
+[842/970] Linking CXX executable tests/unit/log/SemanticLoggerScopeTest
+[843/970] Linking CXX executable tests/unit/log/SemanticLoggerCacheTest
+[844/970] Linking CXX executable tests/unit/log/SemanticLoggerBackendTest
+[845/970] Linking CXX executable tests/unit/websocket/WebSocketLimitCloseFrameTest
+[846/970] Linking CXX executable tests/unit/log/SemanticLoggerDisabledPathTest
+[847/970] Linking CXX executable tests/unit/log/SemanticEndToEndOutputTest
+[848/970] Linking CXX executable tests/unit/log/SemanticTerminalColorRoutingTest
+[849/970] Linking CXX executable tests/unit/log/SemanticLoggerFilteringTest
+[850/970] Linking CXX executable tests/unit/log/SemanticCliIntegrationTest
+[851/970] Linking CXX executable tests/unit/mqtt/Mqtt311PacketValidationTest
+[852/970] Linking CXX executable tests/unit/utils/ConfigFormatterCommentMetadataTest
+[853/970] Linking CXX executable tests/unit/mqtt/MqttLifecycleTest
+[854/970] Linking CXX executable tests/unit/utils/HexDumpPresentationTest
+[855/970] Linking CXX executable tests/component/core/SingleshotTimerTest
+[856/970] Linking CXX executable tests/component/core/SNodeCStopFromCallbackTest
+[857/970] Linking CXX executable tests/component/core/TimerCancelBeforeFireTest
+[858/970] Linking CXX executable tests/component/core/ShutdownReceiverNotificationTest
+[859/970] Linking CXX executable tests/component/core/IntervalTimerCancelFromCallbackTest
+[860/970] Linking CXX executable tests/unit/utils/ConfigRequirementStateTest
+[861/970] Linking CXX executable tests/component/core/IntervalTimerStopableTest
+[862/970] Linking CXX executable tests/component/core/SNodeCReconfigureTest
+[863/970] Linking CXX executable tests/component/core/PipeOwnershipTest
+[864/970] Linking CXX executable tests/component/core/PipeSinkFairnessTest
+[865/970] Linking CXX executable tests/component/core/PipeBoundedQueueTest
+[866/970] Linking CXX executable tests/component/core/PipeImmediateCloseTest
+[867/970] Building CXX object tests/component/eventsource/CMakeFiles/InetSseEventSourceDestructionLifecycleTest.dir/InetSseEventSourceDestructionLifecycleTest.cpp.o
+[868/970] Linking CXX executable tests/component/core/PipeTimeoutTest
+[869/970] Linking CXX executable tests/component/core/DescriptorRegistrationFailureTest
+[870/970] Linking CXX executable tests/component/core/FileReaderTest
+[871/970] Linking CXX executable tests/component/net/InetLegacyServerClientCompositionTest
+[872/970] Linking CXX executable tests/component/net/Inet6LegacyServerClientCompositionTest
+[873/970] Linking CXX executable tests/component/net/InetLegacyServerMultipleClientsCompositionTest
+[874/970] Linking CXX executable tests/component/net/Inet6LegacyServerMultipleClientsCompositionTest
+[875/970] Linking CXX executable tests/component/net/UnixLegacyServerClientCompositionTest
+[876/970] Linking CXX executable tests/component/net/InetLegacyServerClientMultiMessagePayloadExchangeTest
+[877/970] Linking CXX executable tests/component/net/Inet6LegacyServerClientMultiMessagePayloadExchangeTest
+[878/970] Linking CXX executable tests/component/net/UnixLegacyServerMultipleClientsCompositionTest
+[879/970] Linking CXX executable tests/component/net/UnixLegacyServerClientMultiMessagePayloadExchangeTest
+[880/970] Linking CXX executable tests/component/net/InetLegacyServerMultipleClientsPayloadExchangeTest
+[881/970] Linking CXX executable tests/component/net/Inet6LegacyServerMultipleClientsPayloadExchangeTest
+[882/970] Linking CXX executable tests/component/net/UnixLegacyServerMultipleClientsPayloadExchangeTest
+[883/970] Linking CXX executable tests/component/net/UnixLegacyServerClientDisconnectLifecycleTest
+[884/970] Linking CXX executable tests/component/net/UnixLegacyServerClientPayloadExchangeTest
+[885/970] Linking CXX executable tests/component/net/UnixLegacyClientConnectFailureTest
+[886/970] Linking CXX executable tests/component/net/InetLegacyServerClientPayloadExchangeTest
+[887/970] Linking CXX executable tests/component/net/InetPhysicalServerEffectiveBindAddressTest
+[888/970] Linking CXX executable tests/component/net/Inet6LegacyServerClientDisconnectLifecycleTest
+[889/970] Linking CXX executable tests/component/net/Inet6LegacyServerClientPayloadExchangeTest
+[890/970] Linking CXX executable tests/component/net/InetLegacyServerClientDisconnectLifecycleTest
+[891/970] Linking CXX executable tests/component/net/Inet6LegacyClientConnectFailureTest
+[892/970] Linking CXX executable tests/component/net/InetLegacyServerEffectiveListenAddressTest
+[893/970] Linking CXX executable tests/component/net/InetLegacyClientConnectFailureTest
+[894/970] Linking CXX executable tests/component/net/UnixPhysicalSocketPathSafetyTest
+[895/970] Linking CXX executable tests/component/net/InetLegacyServerClientLargePayloadExchangeTest
+[896/970] Linking CXX executable tests/component/net/InetLegacyServerClientFramedPayloadExchangeTest
+[897/970] Linking CXX executable tests/component/net/Inet6LegacyServerClientFramedPayloadExchangeTest
+[898/970] Linking CXX executable tests/component/net/Inet6LegacyServerClientLargePayloadExchangeTest
+[899/970] Linking CXX executable tests/component/net/UnixLegacyServerClientLargePayloadExchangeTest
+[900/970] Linking CXX executable tests/component/net/InetLegacyServerControlledCloseLifecycleTest
+[901/970] Linking CXX executable tests/component/net/UnixLegacyServerClientFramedPayloadExchangeTest
+[902/970] Linking CXX executable tests/component/net/Inet6LegacyServerControlledCloseLifecycleTest
+[903/970] Linking CXX executable tests/component/net/InetLegacyServerMultipleClientsDisconnectLifecycleTest
+[904/970] Linking CXX executable tests/component/net/UnixLegacyServerControlledCloseLifecycleTest
+[905/970] Linking CXX executable tests/component/net/UnixLegacyServerMultipleClientsDisconnectLifecycleTest
+[906/970] Linking CXX executable tests/component/net/InetPerCallFlowTest
+[907/970] Linking CXX executable tests/component/net/Inet6LegacyServerMultipleClientsDisconnectLifecycleTest
+[908/970] Linking CXX executable tests/component/http/InetHttpClientParserLimitTest
+[909/970] Linking CXX executable tests/component/http/InetHttpServerRequestPolicyTest
+[910/970] Linking CXX executable tests/component/http/InetHttpServerClientGetRoundTripTest
+[911/970] Linking CXX executable tests/component/http/InetHttpServerClientPostBodyRoundTripTest
+[912/970] Linking CXX executable tests/component/http/Inet6HttpServerClientGetRoundTripTest
+[913/970] Linking CXX executable tests/component/http/UnixHttpServerClientGetRoundTripTest
+[914/970] Linking CXX executable tests/component/http/InetHttpServerPipeliningPolicyTest
+[915/970] Linking CXX executable tests/component/http/Inet6HttpServerClientPostBodyRoundTripTest
+[916/970] Linking CXX executable tests/component/http/UnixHttpServerClientPostBodyRoundTripTest
+[917/970] Linking CXX executable tests/component/http/InetHttpServerClientStatusVariantTest
+[918/970] Linking CXX executable tests/component/http/Inet6HttpServerClientStatusVariantTest
+[919/970] Linking CXX executable tests/component/http/InetHttpServerClientDisconnectLifecycleTest
+[920/970] Linking CXX executable tests/component/http/InetHttpServerClientRepeatedRequestTest
+[921/970] Linking CXX executable tests/component/http/InetHttpServerClientLargeResponseBodyTest
+[922/970] Linking CXX executable tests/component/http/InetHttpClientPrematureServerCloseTest
+[923/970] Linking CXX executable tests/component/http/UnixHttpServerClientStatusVariantTest
+[924/970] Linking CXX executable tests/component/http/InetHttpServerClientHeaderHeavyRequestTest
+[925/970] Linking CXX executable tests/component/http/InetHttpServerClientHeaderHeavyResponseTest
+[926/970] Linking CXX executable tests/component/http/InetHttpServerClientLargeRequestBodyTest
+[927/970] Linking CXX executable tests/component/http/InetHttpClientConnectFailureTest
+[928/970] Linking CXX executable tests/component/http/InetHttpServerClientPipeliningTest
+[929/970] Linking CXX executable tests/component/http/InetHttpServerClientChunkedRequestTest
+[930/970] Linking CXX executable tests/component/http/InetHttpServerClientChunkedResponseTest
+[931/970] Linking CXX executable tests/component/http/InetHttpServerMalformedRequestBehaviorTest
+[932/970] Linking CXX executable tests/component/http/InetHttpClientMalformedResponseBehaviorTest
+[933/970] Linking CXX executable tests/component/express/InetExpressRoutingMiddlewareTest
+[934/970] Linking CXX executable tests/component/express/InetExpressHttpParserLimitTest
+[935/970] Linking CXX executable tests/component/express/Inet6ExpressTransportSmokeTest
+[936/970] Linking CXX executable tests/component/express/UnixExpressTransportSmokeTest
+[937/970] Linking CXX executable tests/component/express/InetExpressRoutingEdgeBasicsTest
+[938/970] Linking CXX executable tests/component/express/InetExpressMiddlewareShortCircuitTest
+[939/970] Linking CXX executable tests/component/express/InetExpressMountedRouterBasicsTest
+[940/970] Linking CXX executable tests/component/express/InetExpressNestedRouterBasicsTest
+[941/970] Linking CXX executable tests/component/express/InetExpressRouteParameterRegexTest
+[942/970] Linking CXX executable tests/component/express/InetExpressMiddlewareMountOrderTest
+[943/970] Linking CXX executable tests/component/express/InetExpressQueryMountInteractionTest
+[944/970] Linking CXX executable tests/component/express/InetExpressFallbackNotFoundTest
+[945/970] Linking CXX executable tests/component/websocket/InetWebSocketServerClientTextEchoTest
+[946/970] Linking CXX executable tests/component/websocket/UnixWebSocketServerClientTextEchoTest
+[947/970] Linking CXX executable tests/component/websocket/InetWebSocketServerClientMultiTextMessageTest
+[948/970] Linking CXX executable tests/component/websocket/InetWebSocketServerClientBinaryEchoTest
+[949/970] Linking CXX executable tests/component/websocket/Inet6WebSocketServerClientTextEchoTest
+[950/970] Linking CXX executable tests/component/websocket/InetWebSocketServerClientCloseHandshakeTest
+[951/970] Linking CXX executable tests/component/websocket/InetWebSocketServerClientPingPongTest
+[952/970] Linking CXX executable tests/component/websocket/InetWebSocketServerInitiatedCloseTest
+[953/970] Linking CXX executable tests/component/websocket/InetWebSocketLargeTextMessageTest
+[954/970] Linking CXX executable tests/component/websocket/InetWebSocketUnexpectedCloseLifecycleTest
+[955/970] Linking CXX executable tests/component/websocket/InetWebSocketLargeBinaryMessageTest
+[956/970] Linking CXX executable tests/component/eventsource/InetSseEventSourceMultiEventSequenceTest
+[957/970] Linking CXX executable tests/component/eventsource/InetSseEventSourceBasicEventTest
+[958/970] Linking CXX executable tests/component/eventsource/InetSseEventSourceMultiLineDataTest
+[959/970] Linking CXX executable tests/component/eventsource/InetSseEventSourceCommentIgnoredTest
+[960/970] Linking CXX executable tests/policy/ParameterlessSemanticLoggerPolicyTest
+[961/970] Linking CXX executable tests/policy/EpollDescriptorPublisherPolicyTest
+[962/970] Linking CXX executable tests/policy/LoggingApiSurfacePolicyTest
+[963/970] Linking CXX executable tests/policy/EventLoopSyscallDisciplinePolicyTest
+[964/970] Linking CXX executable tests/component/eventsource/InetSseEventSourceDefaultMessageEventTest
+[965/970] Linking CXX executable tests/component/eventsource/InetSseEventSourceClientCloseAfterEventTest
+[966/970] Linking CXX executable tests/component/eventsource/InetSseEventSourceReconnectLifecycleTest
+[967/970] Linking CXX executable tests/policy/CiWorkflowPathsPolicyTest
+[968/970] Linking CXX executable tests/policy/SensitiveLoggingPolicyTest
+[969/970] Linking CXX executable tests/component/eventsource/InetSseEventSourceDestructionLifecycleTest
+[970/970] Linking CXX executable tests/component/eventsource/InetSseEventSourceRetryFieldTest

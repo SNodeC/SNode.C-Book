@@ -1,0 +1,11 @@
+COMMAND: python3 ci/test-chapter-references.py
+SNODEC_PREFIX=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/install-gcc
+BOOK_EXAMPLES_BUILD_DIR=/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples
+BOOK_BUILD_DIR=build/rebaseline-R2-07ca9a29-followup11/book
+TMPDIR=/tmp
+LD_LIBRARY_PATH=
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.210s
+
+OK
