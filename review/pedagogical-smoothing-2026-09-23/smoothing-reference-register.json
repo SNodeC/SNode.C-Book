@@ -1007,6 +1007,16 @@
       "line": 329
     },
     {
+      "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+      "text": "Chapter 4",
+      "targets": [
+        "the-snodec-runtime-mental-model"
+      ],
+      "source_ids": [],
+      "line": 333,
+      "evidence": "Follow-up 12 P2: point the operational table to the sole runtime taxonomy and figure."
+    },
+    {
       "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
       "text": "Chapter 7",
       "targets": [

@@ -2346,3 +2346,40 @@ mutation is authorized. Complete P1–P9 in order with one commit per item,
 then the evidence commit. No companion changes or additional review items.
 The matrix is a register-row assessment (32 rows including the new verification
 register row), distinct from the historical chapter-score matrix.
+
+### Follow-up 12 — resumption delivered with one qualified condition
+
+The resumption from `9172e99` has P1–P9 commits in order:
+`f8df09d`, `40aed6c`, `be2179d`, `5cefd5c`, `505d6d6`, `7368aa0`,
+`82a908d`, `ff995b8`, `f5ba856`. The final evidence commit closes two
+in-scope omissions (Ch24 terminology and Ch18's observation-table formatting),
+refreshes the P2 reference registry and terminology inventory, and records the
+new checker, regression tests and full report. No companion, existing test,
+timeout, source pin, approved chapter structure or author instruction changed.
+
+The reader receives 110,767 raw whitespace tokens (+590 from entry), with
+all floors/caps satisfied, 1,571 below 112,338 and 4,233 below 115,000.
+The rebuilt book is 330 pages at `dist/pdf/snodec-book.pdf`; proposal and
+sample PDFs are 9 and 60 pages. The exact verification regex is back to 46.
+Both author-filtered freeze snapshots equal R2; the fresh public clone is clean
+at `07ca9a2936ee72582df7d159cb06666fe23e30f8` and passes source alignment.
+
+The new polish checker passes **8/9 groups**; all 16 existing smoothing groups,
+16 new checker mutation tests, chapter references, source alignment, hygiene,
+figure build and twice-built package checks pass. Labs were not rerun because
+companion files are unchanged.
+
+**Qualified, not fully closed:** register row 16 / C remains ◐. The Ch8 table
+is corrected, but the global taxonomy assertion also flags the existing
+Conventions glossary and Appendix A's reading-path table. Follow-up 12 P2
+only authorizes the Ch8 edit, while the governing scope requires the glossary.
+Those two tables were not changed or exempted from the checker. All other
+register cells are ● on the scoped issue-closure basis explained in
+`pedagogical-smoothing-2026-09-23/POLISH-REPORT.md`: E/D/G/X/T/L/S each 32 ●;
+C 31 ● and 1 ◐; no ○. Historical chapter ratings remain separate.
+
+`POLISH-REPORT-entry-stop.md` preserves the old report byte-for-byte;
+`POLISH-REPORT.md`, `POLISH-CLAIMS.md`, the fresh metrics and check logs now
+record the resumed outcome. Push the work branch without merging, then stop
+for the author's reading. Do not treat this qualification as permission for
+another manuscript pass or silently broaden P2.

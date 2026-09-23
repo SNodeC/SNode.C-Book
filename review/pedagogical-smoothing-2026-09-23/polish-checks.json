@@ -1,0 +1,28 @@
+{
+  "assertion_groups": 9,
+  "group_status": {
+    "1": "PASS",
+    "2": "FAIL",
+    "3": "PASS",
+    "4": "PASS",
+    "5": "PASS",
+    "6": "PASS",
+    "7": "PASS",
+    "8": "PASS",
+    "9": "PASS"
+  },
+  "verification_constructions": 46,
+  "proposal_metrics": {
+    "total": 110767,
+    "fenced": 7876,
+    "prose": 102891,
+    "pages": 330,
+    "headings": 259,
+    "section_average": 365.17,
+    "text_fences": 46
+  },
+  "errors": [
+    "2: manuscript/frontmatter/conventions.md:23: repeated taxonomy ['handle', 'instance', 'flow', 'connection', 'context', 'factory']",
+    "2: manuscript/chapters/appendix-a-reading-and-extending-the-framework.md:83: repeated taxonomy ['handle', 'instance', 'flow', 'connection', 'context', 'factory']"
+  ]
+}

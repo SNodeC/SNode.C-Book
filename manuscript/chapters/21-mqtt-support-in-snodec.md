@@ -36,7 +36,7 @@ The same care applies after a disconnect. A TCP connection is one peer relations
 
 This chapter uses **carrier** for the path beneath MQTT: either a native stream or WebSocket. It is a book term for that comparison, not a framework type. The native path supplies MQTT bytes over the stream connection. The WebSocket path first establishes its lower connection, upgrades HTTP and selects the WebSocket subprotocol. Those additional steps change how MQTT reaches its peer; CONNECT, subscription results and subscriber receipt still answer MQTT-level questions afterward.
 
-The frozen implementation uses **MQTT 3.1.1**, protocol level 4. Read its packet exchange with these fundamentals in mind:
+The MQTT implementation uses **MQTT 3.1.1**, protocol level 4. Read its packet exchange with these fundamentals in mind:
 
 - A **topic name** addresses one publication, such as `sensor/temperature`. A **topic filter** selects subscriptions: `sensor/+` matches one level after `sensor`, while `sensor/#` matches that topic and its descendants. The `+` wildcard occupies a complete level; `#` covers any remaining levels and comes last. Publish a concrete topic name, not a filter.
 - **QoS 0** sends PUBLISH without acknowledgement: delivery is best effort. **QoS 1** uses PUBACK to acknowledge receipt by the MQTT peer; retransmission can produce duplicates. **QoS 2** uses PUBREC, PUBREL and PUBCOMP to complete one delivery while suppressing duplicates. Here, the receiver holds the publication until PUBREL. These exchanges cover one MQTT hop. The broker forwards a separate publication at a QoS bounded by the incoming QoS and the granted subscription. None of these packets acknowledges a subscriber's database transaction.

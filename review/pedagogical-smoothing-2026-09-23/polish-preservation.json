@@ -1,0 +1,22 @@
+{
+  "starting_commit": "9172e99",
+  "preserved_file_sha256": {
+    "review/pedagogical-smoothing-2026-09-23/PROMPT.md": "c34bbab40ac13289e993af8504344f8d1435e1ec5ca87d4fb7ad6dfac8020155",
+    "review/pedagogical-smoothing-2026-09-23/FOLLOWUP-01.md": "ea021f8bfd7918cbdfc11a514bf55a3661c36e74755ce37f31537646401513a7",
+    "review/pedagogical-smoothing-2026-09-23/FOLLOWUP-11.md": "f08b91c4572b90ff7ed7242239c4280cb7b0a6e3eaf0b239b539e2cafcd7605c",
+    "review/pedagogical-smoothing-2026-09-23/FOLLOWUP-12.md": "61be0b0d60717b06ee4d366bb4d6ac516cb493878bab0a35495d228473fabd0d",
+    "review/pedagogical-smoothing-2026-09-23/framework-freeze-R2.json": "5a37e4c778069440712a15e2f2f4f2c60e806e179af83c7645e45fde2e4146a7",
+    "manuscript/book-files.txt": "aed24ec3d1928500019cc714acb5a250bceab647f65268fa4cc4a8756f264ead",
+    "review/pedagogical-smoothing-2026-09-23/smoothing-structure.json": "d8542c971a57e4d79771e56a32b7f5e2843ce86e99ad7c638237df691c6987d4",
+    "source-baseline/book-source-baseline.env": "d0f4505e5ed0e9d2dc7a6ea76c01e1083d6626d287b59957fe1889e34cd331b0",
+    "ci/check-source-alignment.py": "21995ae5dfda5dbeb14e4df61323cf3a4c8645473e362649a2c51126d1d395c6",
+    "ci/check-chapter-references.py": "ebd6e2149cd75026a761066711445d5b1273709920771ce98a76b4bdcd896c2e",
+    "ci/test-chapter-references.py": "bc731ca6a2018ae77997327322865a7fc0f44005c57fc38e5f4e49f7a0d35cda",
+    "review/pedagogical-smoothing-2026-09-23/check-smoothing.py": "b18142aee10579ec72de8d084bff3b19406dc96b93d04c14a8e29aea436525dc"
+  },
+  "companion_changes": false,
+  "source_baseline_changes": false,
+  "existing_test_changes": false,
+  "historical_stop_report_preserved": true,
+  "all_prior_commits_retained": true
+}

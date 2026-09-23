@@ -1,0 +1,8 @@
+{
+  "method": "HEAD; porcelain minus only ?? porting/; SHA256 git diff HEAD --binary; untracked files outside porting/",
+  "start_equals_R2": true,
+  "end_equals_R2": true,
+  "R2_record_unchanged": true,
+  "public_clone": "build/polish-07ca9a29-public",
+  "clone_origin": "https://github.com/SNodeC/snode.c.git"
+}

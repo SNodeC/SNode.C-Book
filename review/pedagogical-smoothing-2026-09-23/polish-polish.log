@@ -1,0 +1,3 @@
+ERROR: 2: manuscript/frontmatter/conventions.md:23: repeated taxonomy ['handle', 'instance', 'flow', 'connection', 'context', 'factory']
+ERROR: 2: manuscript/chapters/appendix-a-reading-and-extending-the-framework.md:83: repeated taxonomy ['handle', 'instance', 'flow', 'connection', 'context', 'factory']
+FAIL: 8/9 polish assertion groups pass; 46 verification constructions

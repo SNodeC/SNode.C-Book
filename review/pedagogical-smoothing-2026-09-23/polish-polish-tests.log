@@ -1,0 +1,21 @@
+test_1_phrase_not_excused_by_unrelated_allowlist (__main__.Guards.test_1_phrase_not_excused_by_unrelated_allowlist) ... ok
+test_1_protected_listing_does_not_excuse_another_occurrence (__main__.Guards.test_1_protected_listing_does_not_excuse_another_occurrence) ... ok
+test_2_additional_taxonomy_table (__main__.Guards.test_2_additional_taxonomy_table) ... ok
+test_3_command_required_in_each_item (__main__.Guards.test_3_command_required_in_each_item) ... ok
+test_4_running_value_in_every_section (__main__.Guards.test_4_running_value_in_every_section) ... ok
+test_5_diagram_before_classes (__main__.Guards.test_5_diagram_before_classes) ... ok
+test_5_fundamental_required (__main__.Guards.test_5_fundamental_required) ... ok
+test_6_extra_table (__main__.Guards.test_6_extra_table) ... ok
+test_7_caption_is_visible_prose (__main__.Guards.test_7_caption_is_visible_prose) ... ok
+test_7_old_case (__main__.Guards.test_7_old_case) ... ok
+test_8_bookwide_limit (__main__.Guards.test_8_bookwide_limit) ... ok
+test_9_internal_terms_in_evidence_sheet (__main__.Guards.test_9_internal_terms_in_evidence_sheet) ... ok
+test_9_stale_metric (__main__.Guards.test_9_stale_metric) ... ok
+test_9_stale_page_count (__main__.Guards.test_9_stale_page_count) ... ok
+test_current_scope_qualification_is_reported (__main__.Guards.test_current_scope_qualification_is_reported) ... ok
+test_invisible_reference_identity_is_not_prose (__main__.Guards.test_invisible_reference_identity_is_not_prose) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 9.868s
+
+OK

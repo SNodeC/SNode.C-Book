@@ -246,10 +246,8 @@ Here `SNODEC_BUILD` is a configured and built framework test tree, as establishe
 
 Read the companion `dispatch.cpp` mount-order path first; `InetExpressMiddlewareMountOrderTest.cpp` is its optional framework counterpart. Application middleware records `app-before` and calls `next()`. Router middleware appends `router-before` and calls `next()`. The router’s `/status` handler appends `handler`; the router is mounted at `/api`.
 
-| Request | Expected observation |
-|---|---|
-| `GET /api/status` | status 200; response header and body contain `app-before,router-before,handler` |
-| `GET /outside` | status 404; application middleware runs, but the mounted router and its handler do not |
+- `GET /api/status`: expect status 200; the response header and body contain `app-before,router-before,handler`.
+- `GET /outside`: expect status 404; application middleware runs, but the mounted router and its handler do not.
 
 The test counts those visits. A 200 response alone would not prove that middleware ran in the intended order.
 

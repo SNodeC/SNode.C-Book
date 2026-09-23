@@ -130,7 +130,7 @@ The `connectionName` is especially useful for diagnostics. A named database conn
 
 The credential fields deserve care. A test program may place credentials close to the example to keep the demonstration compact. A real application needs an explicit policy for configuration, secret storage, deployment, and logging.
 
-The state callback exposes connected, disconnected, unavailable, misconfigured, authentication-rejected or failed operation states. The application chooses what follows: enable persistence-dependent work, pause periodic writes, report degradation or keep other protocol roles alive. Database availability should not be hidden inside individual failed commands.
+The state callback exposes connected, disconnected, unavailable, misconfigured, authentication-rejected or failed operation states. The application chooses what follows: enable persistence-dependent work, pause periodic writes, report degradation or keep other application services alive. Database availability should not be hidden inside individual failed commands.
 
 ### A minimal MariaDB client example
 

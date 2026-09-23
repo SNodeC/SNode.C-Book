@@ -1,0 +1,17 @@
+[
+  {
+    "path": "/home/voc/projects/snodec/publications/book/dist/pdf/snodec-book.pdf",
+    "pages": 330,
+    "sha256": "7f5746f40c689d0902fc21ac0713e435221e112e4f7639ef54ec1d13208b3b44"
+  },
+  {
+    "path": "/home/voc/projects/snodec/publications/book/dist/pdf/book-proposal-package.pdf",
+    "pages": 9,
+    "sha256": "624558a3721ac009d5a8fb5baca07066ace5b69a6bc1f28901a110a0783f212a"
+  },
+  {
+    "path": "/home/voc/projects/snodec/publications/book/dist/pdf/book-proposal-sample-package.pdf",
+    "pages": 60,
+    "sha256": "cfafe5abea467eccd66f240c49bf8673955a043c9c47ff80e15512ba800e351b"
+  }
+]
