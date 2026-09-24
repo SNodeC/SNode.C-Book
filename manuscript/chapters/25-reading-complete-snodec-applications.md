@@ -288,6 +288,8 @@ We have followed one executable from target selection to an externally observabl
 
 ::: {.snodec-remember title="What to remember"}
 - Direct includes and component targets describe application choices; transitive dependencies belong to components.
+- Read target → entry point → assembled behavior; the entry point connects the application's participants.
+- Distinguish source choices from behavior established by tests.
 :::
 
 ::: {.snodec-exercise title="Exercises"}

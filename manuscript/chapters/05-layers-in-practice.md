@@ -240,6 +240,7 @@ The next step is to follow that work through the shared event loop.
 
 ::: {.snodec-remember title="What to remember"}
 - Public types, headers, and components express corresponding layer choices.
+- The runtime advances communication; the layers identify the communication being advanced.
 - A network-family change can reuse protocol behavior while changing addressing, security, and deployment obligations.
 :::
 

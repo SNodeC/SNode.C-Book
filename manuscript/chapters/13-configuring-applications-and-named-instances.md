@@ -627,11 +627,11 @@ One final distinction prevents a subtle configuration mistake. A named instance 
 :::
 
 ::: {.snodec-exercise title="Exercises"}
-Public answers, lab commands and expected observations are in `companion/exercises/ch13/README.md`.
-
 1. **Review (O1).** A server accepts a remote peer. Does that give the listener a configurable `remote` section? Locate its bind port in all three input paths.
 2. **Review (O2).** A runtime reparse returns `true` after changing a port and log level. Which effects remain unestablished? What additional risk does `false` introduce?
 3. **Lab (O1, O2).** Build EchoPair and repeat the precedence experiment using a temporary file. Expect 8080, 18091 and the CLI override; verify that inspection leaves the file unchanged.
 4. **Lab (O1, O2).** Follow application, instance and local help; supply port 70000. Expect rejection naming `--port`, and use local help to identify its owning scope before any listener starts.
 5. **Design (O2, O3).** A gateway needs two independently configurable uplinks and an optional administrative listener. Choose names, disablement and a safe configuration-change policy. Explain why two flow handles alone cannot isolate destination settings.
+
+Public answers, lab commands and expected observations are in `companion/exercises/ch13/README.md`.
 :::

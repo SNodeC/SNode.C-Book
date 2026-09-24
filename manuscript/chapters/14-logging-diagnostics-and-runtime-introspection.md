@@ -334,11 +334,11 @@ The effective configuration is the companion artifact for this reading. Record t
 :::
 
 ::: {.snodec-exercise title="Exercises"}
-Public answers, lab commands and expected observations are in `companion/exercises/ch14/README.md`.
-
 1. **Review (O1).** A context logs an accepted record while the framework logs transport attachment. Assign origin, boundary and available identity to each; explain any absent fields.
 2. **Review (O2, O3).** With global `Error` and a matching component `Debug` override, which threshold applies? Does disabling trace prevent argument evaluation or redact sensitive data?
 3. **Lab (O1, O2).** Build and run `SemanticLogging`. Expect four JSON records, including debug under the component override, a stable event and the explicitly constructed error. Verify that no connection identity is invented.
 4. **Lab (O1, O2, O3).** Complete the **Part V checkpoint** above: compare effective configuration, actual echo behavior and scoped records; locate a rejected endpoint value through local help.
 5. **Design (O3).** An MQTT publish request is queued before a connection fails. Choose event names, identities and safe diagnostic fields that distinguish submission from delivery without logging credentials or inventing a peer.
+
+Public answers, lab commands and expected observations are in `companion/exercises/ch14/README.md`.
 :::

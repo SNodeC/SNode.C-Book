@@ -84,3 +84,15 @@ not a claim that automatic recovery improves every deployment. Node.js and the
 frozen project's 2.0.0 version receive ordinary spelling. Ch26's existing
 schematic role map receives an explicit illustrative label; it is not offered
 as executable framework configuration. No listing content is changed.
+
+## G — apparatus and placement
+
+Ch5 adds the existing runtime/layer distinction to its recap. Ch25 adds reading
+order, entry-point assembly and source-versus-test evidence, reaching three
+bullets without deleting the existing component distinction. Ch20 boxes its
+unchanged header/component advice; transitions remain outside the box.
+Ch13/14 move unchanged answer pointers after their exercises. Appendix A moves
+the complete descriptor section immediately after runtime reading, preserving
+its heading (and generated anchor) and every technical claim. The frozen
+`src/core/eventreceiver/DescriptorEventReceiver.h` and descriptor publisher
+implementation retain the enable/disable and suspend/resume distinctions.

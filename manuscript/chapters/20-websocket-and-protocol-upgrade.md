@@ -388,7 +388,9 @@ The bridge from this chapter is simple: WebSocket provides the upgraded bidirect
 \index{WebSocket!public surface}
 \index{web::websocket@\texttt{web::websocket}}
 
+::: {.snodec-note title="Build note"}
 WebSocket crosses HTTP negotiation, upgraded socket context, framing, and optional subprotocol selection. The local rule is therefore to include the highest public header for the WebSocket abstraction directly named by the file and link the matching WebSocket component surface. Chapter 27 gives the consolidated component/header matrix, including the MQTT-over-WebSocket adapters.
+:::
 
 The Part VII checkpoint first observes the SSE example's accepted measurement through POST results and two event streams, then removes one observer while the other continues. Its separate WebSocket exchange checks negotiation and message behavior; an echo is not a second owner of measurement state.
 
