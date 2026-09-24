@@ -75,3 +75,12 @@ now explains SUBSCRIBE/SUBACK before asking the reader to establish the
 subscription; its protocol claim and instruction are unchanged. Ch29's former
 abstract joins the opening failure example with every sentence retained.
 These are navigation and ordering changes, not new framework behavior.
+
+## F — slips and register
+
+Ch3's grammatical repair retains the guarded debug call and echo send shown
+in the adjacent complete context listing. Retry remains an operational choice,
+not a claim that automatic recovery improves every deployment. Node.js and the
+frozen project's 2.0.0 version receive ordinary spelling. Ch26's existing
+schematic role map receives an explicit illustrative label; it is not offered
+as executable framework configuration. No listing content is changed.

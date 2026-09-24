@@ -191,7 +191,7 @@ Choose retry policy according to the role’s operational needs:
 | retry-tries | How many automatic retries may follow the initial attempt? |
 
 ::: {.snodec-warning title="Retry-policy warning"}
-Automatic retry can hide real failure if it is unbounded, invisible, or enabled in the wrong place. Retry is policy, not morality. It should be bounded, visible, and configurable.
+Automatic retry can hide real failure if it is unbounded, invisible, or enabled in the wrong place. Retry is an operational policy, not an automatic improvement. It should be bounded, visible, and configurable.
 :::
 
 Scaling spaces repeated attempts farther apart. `retry-limit` caps that delay growth before jitter is applied.

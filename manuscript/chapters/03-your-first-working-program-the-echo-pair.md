@@ -229,7 +229,7 @@ core::socket::stream::SocketContext* EchoClientSocketContextFactory::create(
 
 `onConnected()` marks attachment of this protocol context to the ready connection. Only the client sends an initial message. If the server also sent immediately, the example would no longer show the client-initiated communication pattern clearly.
 
-`onReceivedFromPeer()` reads available bytes into a local buffer. If bytes were read, the context can log them at debug level and sends the same bytes back. The semantic log scope belongs to the context; Chapter 14 explains its identity and filtering. The return value tells the framework how many bytes were consumed.
+`onReceivedFromPeer()` reads available bytes into a local buffer. If bytes were read, the context logs them at debug level and sends the same bytes back. The semantic log scope belongs to the context; Chapter 14 explains its identity and filtering. The return value tells the framework how many bytes were consumed.
 
 The factories allocate the concrete context. The framework owns the surrounding connection machinery; the user supplies the protocol object that belongs to a connection.
 

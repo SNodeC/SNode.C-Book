@@ -107,6 +107,8 @@ Configuration, diagnostics and failure behavior expose how the roles operate tog
 
 Chapter 13 introduced named instances and structured configuration. At system scale, those ideas become a role map. The following pseudo-configuration shows how names can make role boundaries visible; syntax is not the point.
 
+**Illustrative role map — not SNode.C configuration syntax**
+
 ```ini
 [admin-http]
 role = http

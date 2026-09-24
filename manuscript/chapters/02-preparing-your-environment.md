@@ -135,7 +135,7 @@ These tools are not required for the first echo example. They are mentioned here
 \index{SNode.C 2.0.0}
 
 
-SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the SNode.C\textsubscript{\texttt{2.0.0}} baseline used for this edition. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
+SNode.C is an active framework. This book describes the public architecture, component names, public include paths, examples, and package layout as they exist in the SNode.C 2.0.0 baseline used for this edition. When reading a newer repository checkout, some implementation details, component inventories, or example applications may have changed.
 
 Obtain this edition's electronic source package from the [SNode.C Book repository](https://github.com/SNodeC/SNode.C-Book) or its edition download. For a new checkout:
 
@@ -170,7 +170,7 @@ The checked-out framework source now lives in:
 ~/projects/snode.c/
 ```
 
-The book baseline is SNode.C\textsubscript{\texttt{2.0.0}}. The full commit is the checkout target; `2.0.0` is its project version. No patch is needed. The checker compares the file contents with the edition's manifest.
+The book baseline is SNode.C 2.0.0. The full commit is the checkout target; `2.0.0` is its project version. No patch is needed. The checker compares the file contents with the edition's manifest.
 
 The SNode.C repository uses `master` as its moving development line. Do not build the examples against an arbitrary newer checkout unless you deliberately want to check the book against a newer framework state. If you already have a clean clone, fetch the source and select the pinned commit explicitly:
 

@@ -158,10 +158,10 @@ The rows distinguish endpoint identity, stream transport, connection lifecycle a
 
 The separation also explains what cannot be reused unchanged. An MQTT input must interpret topics and payloads, while an HTTP route interprets requests. Both can hand a measurement to the same model, and an SSE observer can report its accepted state. A common model does not erase protocol-specific framing, permissions, or failure handling. Each layer owns a different part of the path.
 
-\index{node.js}
-\index{event loop!node.js comparison}
+\index{Node.js}
+\index{event loop!Node.js comparison}
 
-Like node.js, SNode.C advances communication through an event loop, but event-driven execution alone does not assign these responsibilities. SNode.C expresses them through C++ types, public include paths, ownership, and build components. Longer type names and explicit component choices are the cost of seeing the structure before execution; addresses and timeouts remain runtime configuration.
+Like Node.js, SNode.C advances communication through an event loop, but event-driven execution alone does not assign these responsibilities. SNode.C expresses them through C++ types, public include paths, ownership, and build components. Longer type names and explicit component choices are the cost of seeing the structure before execution; addresses and timeouts remain runtime configuration.
 
 The later MQTTSuite broker, integrator, bridge, command-line, and store roles extend this argument to a larger system. The useful question remains the same: when another communication surface is added, which responsibility changes, and which owner should remain shared?
 
