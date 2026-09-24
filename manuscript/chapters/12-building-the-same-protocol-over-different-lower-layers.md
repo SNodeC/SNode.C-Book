@@ -136,7 +136,7 @@ Bluetooth additionally needs a supported adapter and any pairing/trust required 
 
 \index{echo pair!network-family transfer}
 
-The echo application gives the smallest useful example. Echo is interesting not because it is sophisticated, but because it exposes the placement boundary.
+The complete Chapter 3 listing supplies these snippets, repeated here to show the transfer boundary. The echo application gives the smallest useful example. Echo is interesting not because it is sophisticated, but because it exposes the placement boundary.
 
 The protocol behavior lives in one context type:
 

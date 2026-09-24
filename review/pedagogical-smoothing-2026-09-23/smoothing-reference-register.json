@@ -533,95 +533,6 @@
       "line": 456
     },
     {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapter 4",
-      "targets": [
-        "the-mental-model-of-snodec"
-      ],
-      "source_ids": [
-        "R078"
-      ],
-      "line": 59
-    },
-    {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapter 14",
-      "targets": [
-        "logging-diagnostics-and-runtime-introspection"
-      ],
-      "source_ids": [
-        "R079"
-      ],
-      "line": 232
-    },
-    {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapters 8 and 16",
-      "targets": [
-        "servers-clients-and-connections",
-        "timeouts-retries-and-failure-modes"
-      ],
-      "source_ids": [
-        "R080"
-      ],
-      "line": 314
-    },
-    {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
-      "source_ids": [
-        "R081"
-      ],
-      "line": 381
-    },
-    {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
-      "source_ids": [
-        "R082"
-      ],
-      "line": 443
-    },
-    {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
-      "source_ids": [
-        "R083"
-      ],
-      "line": 452
-    },
-    {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
-      "source_ids": [
-        "R076"
-      ],
-      "line": 510
-    },
-    {
-      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
-      "text": "Chapter 29",
-      "targets": [
-        "testing-debugging-and-benchmarking"
-      ],
-      "source_ids": [
-        "R077"
-      ],
-      "line": 513
-    },
-    {
       "file": "manuscript/parts/part-02-the-snodec-architecture.md",
       "text": "Chapter 6",
       "targets": [
@@ -828,7 +739,7 @@
       "source_ids": [
         "R134"
       ],
-      "line": 407
+      "line": 409
     },
     {
       "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -839,7 +750,7 @@
         "core-runtime-and-event-processing"
       ],
       "source_ids": [],
-      "line": 414
+      "line": 416
     },
     {
       "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -848,7 +759,7 @@
         "servers-clients-and-connections"
       ],
       "source_ids": [],
-      "line": 414
+      "line": 416
     },
     {
       "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -863,7 +774,7 @@
       "source_ids": [
         "R139"
       ],
-      "line": 416
+      "line": 418
     },
     {
       "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -874,7 +785,7 @@
       "source_ids": [
         "R142"
       ],
-      "line": 432
+      "line": 434
     },
     {
       "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -885,7 +796,7 @@
       "source_ids": [
         "R137"
       ],
-      "line": 528
+      "line": 530
     },
     {
       "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -896,7 +807,7 @@
       "source_ids": [
         "R138"
       ],
-      "line": 545
+      "line": 547
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -1147,72 +1058,6 @@
         "R164"
       ],
       "line": 282
-    },
-    {
-      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 27",
-      "targets": [
-        "cmake-components-and-linking-strategy"
-      ],
-      "source_ids": [
-        "R176"
-      ],
-      "line": 203
-    },
-    {
-      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 10",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R169"
-      ],
-      "line": 205
-    },
-    {
-      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
-      "source_ids": [
-        "R170"
-      ],
-      "line": 205
-    },
-    {
-      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 13",
-      "targets": [
-        "application-and-instance-configuration-in-detail"
-      ],
-      "source_ids": [
-        "R171"
-      ],
-      "line": 249
-    },
-    {
-      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 10",
-      "targets": [
-        "writing-socketcontext-classes-well"
-      ],
-      "source_ids": [
-        "R172"
-      ],
-      "line": 277
-    },
-    {
-      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
-      "text": "Chapter 11",
-      "targets": [
-        "writing-socketcontextfactory-classes-well"
-      ],
-      "source_ids": [
-        "R175"
-      ],
-      "line": 334
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -3383,6 +3228,179 @@
       ],
       "source_ids": [],
       "line": 251
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 4",
+      "targets": [
+        "the-mental-model-of-snodec"
+      ],
+      "source_ids": [
+        "R078"
+      ],
+      "line": 59
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 14",
+      "targets": [
+        "logging-diagnostics-and-runtime-introspection"
+      ],
+      "source_ids": [
+        "R079"
+      ],
+      "line": 232
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapters 8 and 16",
+      "targets": [
+        "servers-clients-and-connections",
+        "timeouts-retries-and-failure-modes"
+      ],
+      "source_ids": [
+        "R080"
+      ],
+      "line": 314
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [
+        "R081"
+      ],
+      "line": 381
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [
+        "R082"
+      ],
+      "line": 443
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [],
+      "line": 452
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [
+        "R083"
+      ],
+      "line": 454
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [
+        "R076"
+      ],
+      "line": 512
+    },
+    {
+      "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+      "text": "Chapter 29",
+      "targets": [
+        "testing-debugging-and-benchmarking"
+      ],
+      "source_ids": [
+        "R077"
+      ],
+      "line": 515
+    },
+    {
+      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 3",
+      "targets": [
+        "your-first-working-program-the-echo-pair"
+      ],
+      "source_ids": [],
+      "line": 139
+    },
+    {
+      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 27",
+      "targets": [
+        "cmake-components-and-linking-strategy"
+      ],
+      "source_ids": [
+        "R176"
+      ],
+      "line": 203
+    },
+    {
+      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 10",
+      "targets": [
+        "writing-socketcontext-classes-well"
+      ],
+      "source_ids": [
+        "R169"
+      ],
+      "line": 205
+    },
+    {
+      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [
+        "R170"
+      ],
+      "line": 205
+    },
+    {
+      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 13",
+      "targets": [
+        "application-and-instance-configuration-in-detail"
+      ],
+      "source_ids": [
+        "R171"
+      ],
+      "line": 249
+    },
+    {
+      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 10",
+      "targets": [
+        "writing-socketcontext-classes-well"
+      ],
+      "source_ids": [
+        "R172"
+      ],
+      "line": 277
+    },
+    {
+      "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+      "text": "Chapter 11",
+      "targets": [
+        "writing-socketcontextfactory-classes-well"
+      ],
+      "source_ids": [
+        "R175"
+      ],
+      "line": 334
     }
   ],
   "migration_dispositions": [

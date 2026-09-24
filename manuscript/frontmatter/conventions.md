@@ -10,7 +10,7 @@ The companion example trees under `companion/examples/` are the checked source o
 
 The [SNode.C Book repository](https://github.com/SNodeC/SNode.C-Book) contains the electronic source package. The “Edition and source baseline” sidebar in Chapter 2 explains how to select its framework source, check alignment, and distinguish compilation from the different runtime labs. Use that setup before following later build commands.
 
-A role is a design responsibility in a system, such as a web interface or MQTT uplink. It does not imply a separate operating-system process unless the design says so.
+Role, defined in the glossary below, is a design responsibility in a system, such as a web interface or MQTT uplink. It does not imply a separate operating-system process unless the design says so.
 
 The word layer is also used deliberately. A layer is not decoration in the diagrams. It marks a boundary where one kind of responsibility should not silently collapse into another.
 

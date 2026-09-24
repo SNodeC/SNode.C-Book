@@ -449,6 +449,8 @@ find_package(snodec 2.0.0 REQUIRED COMPONENTS net-in-stream-legacy)
 The context library links publicly to `snodec::net-in-stream-legacy` because its public header derives from SNode.C stream-context types. The two executables then link to the context library. The source-side and build-side selections now agree: the application includes `<net/in/stream/legacy/SocketServer.h>` or `<net/in/stream/legacy/SocketClient.h>` for the concrete public C++ type, and the CMake target links `snodec::net-in-stream-legacy` for the corresponding binary surface.
 
 
+If you followed Chapter 2’s shortest path, this build already exists; these commands repeat it for a fresh playground.
+
 If SNode.C was installed into the local prefix from Chapter 2, configure the playground like this:
 
 ```sh

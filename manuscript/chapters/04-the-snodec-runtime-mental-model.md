@@ -149,7 +149,7 @@ This also explains why a factory is useful even when its construction function c
 \index{connection}
 \index{context}
 
-A stream application starts by preparing the framework runtime:
+The same `init()` and `start()` calls seen above now take their places in the startup sequence. A stream application starts by preparing the framework runtime:
 
 ```cpp
 core::SNodeC::init(argc, argv);
@@ -174,7 +174,7 @@ A server gains a connection by accepting a peer; a client gains one when its att
 
 The context is the protocol object attached to one connection.
 
-It should not be used as a global protocol singleton. It exists to hold per-connection protocol behavior and per-connection protocol state.
+As noted above, it should not be used as a global protocol singleton. It exists to hold per-connection protocol behavior and per-connection protocol state.
 
 The lifetime rule is:
 

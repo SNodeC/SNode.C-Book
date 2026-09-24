@@ -340,6 +340,8 @@ There are two reasonable service designs. Separate IPv4 and IPv6 listeners make 
 
 ### An IPv4/IPv6 comparison
 
+This comparison extends the earlier IPv4/IPv6 alias pair with instance names and activation calls.
+
 A minimal IPv4 server may look like this in outline:
 
 ```cpp
@@ -525,7 +527,7 @@ The optional local path describes the client's own local endpoint identity. Most
 
 For a server the path names its listener; for a client it names the service, with an optional separate local bind path.
 
-Chapter 8 develops this connection model in detail.
+Chapter 8 adds connection-lifetime reasoning to these pathname endpoints; its bind, local and remote views remain distinct.
 
 A connection can still have bind, local, and remote address views. The address family has changed, but directional endpoint thinking remains useful. This is one of the main reasons to keep the address family visible in the type system: it prevents the local/remote distinction from being flattened into an unhelpful generic string.
 

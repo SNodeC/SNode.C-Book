@@ -22,3 +22,20 @@ in `companion/examples/MiniGateway/MiniGatewayWeb.cpp` and
 are application roles. The configuration example is unchanged. These kept
 role uses retain their design meaning, and their exact revised contexts are
 recorded in the terminology inventory.
+
+## C — explicit links, no cuts
+
+Conventions names its glossary as the reference. Ch3 identifies the repeated
+shortest-path build; Ch4 identifies the repeated init/start calls and context
+scope rule; Ch7 extends its earlier aliases with names/activation and gives
+the pathname-socket pointer a lifetime purpose. Ch12 locates the complete
+echo listing and states why its excerpts recur. Ch18 connects the framework
+test to the earlier trace and its extra 404/visit-count observations. Ch29
+marks the transition from one experiment to general measurement distinctions.
+Every existing snippet, example and explanatory distinction remains.
+
+The companion chapter mappings, existing complete listings, and frozen
+`tests/component/express/InetExpressMiddlewareMountOrderTest.cpp` support the
+references and the counted-handler/404 distinction. No API behavior or code
+has changed. Row 33 can now be assessed on purposeful reinforcement and
+explicit connections, as authorized, rather than unperformed deletion.

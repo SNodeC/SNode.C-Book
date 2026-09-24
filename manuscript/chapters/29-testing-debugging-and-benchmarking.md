@@ -388,7 +388,7 @@ This measures one client's elapsed loopback request/reply time, including client
 
 Benchmarks mislead when they measure the client tool instead of the server, change logging between runs, compare build-tree and installed runs with different paths, generalize plain HTTP to TLS, generalize loopback to deployment, ignore slow subscribers, or test database-backed behavior only against an empty local database.
 
-Throughput asks how much work the system completes per time interval. Latency asks how long one operation takes. They are not interchangeable.
+Beyond this single run, the general benchmarking distinctions still apply. Throughput asks how much work the system completes per time interval. Latency asks how long one operation takes. They are not interchangeable.
 
 A system may have high throughput but poor tail latency under load. A system may respond quickly to one client but degrade when many connections stay open. A system may process MQTT packets quickly until database persistence becomes active. A system may handle many SSE clients until one slow group creates buffer pressure.
 
