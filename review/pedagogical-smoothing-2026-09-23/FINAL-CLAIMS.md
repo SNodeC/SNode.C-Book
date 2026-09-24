@@ -107,3 +107,33 @@ knowledge boundary, invariant and transition. Source inspection of the
 canonical MiniGateway CMake, MeasurementModel, configuration, state reporting
 and WebApp files confirms the same responsibilities; complete listings are
 unchanged. This group does not implement the withdrawn shortening request.
+
+## I — one companion linker policy
+
+Invariant: private-prefix companion executables must resolve the installed
+SNode.C dependency closure when CTest runs without a caller-supplied library
+path. Direct-run CTest entries bypass the Python lab environment helper.
+The workflow's bare CTest step supplies SNODEC_PREFIX but no LD_LIBRARY_PATH;
+the build script's loader-path assignment is scoped to external echo tests.
+
+Existing executable DT_RUNPATH locates direct dependencies only. On this host,
+ldd exposed indirect SNode.C libraries from `/usr/local/lib`, masking the missing
+private-prefix lookup. A mount namespace hiding that separate system installation
+reproduced missing `libsnodec-core-mux-epoll.so.2` for deferred-work and
+`libsnodec-net.so.2` for bluetooth-selectors. The author tree was not modified.
+Hosted job-log retrieval returned HTTP 403; it is not claimed as log evidence.
+
+The existing Ch28 lifecycle-lab policy selects inherited DT_RPATH via
+`--disable-new-dtags`. Applying that policy once before both companion
+subdirectories avoids per-test wrappers, duplicated environment setup and a
+CMake-version increase. The framework and standalone consumer remain unchanged.
+Ch28 now states that the shared Linux companion build follows this policy.
+No test assertion, timeout, driver logic or application implementation changed.
+Fresh workflow builds, bare CTest results and loader inspection are recorded
+separately in the final report.
+
+Focused verification before the I commit: both previously affected binaries pass
+with `/usr/local/lib` hidden and LD_LIBRARY_PATH unset. `readelf -d` confirms
+DT_RPATH now names the selected installation, with no DT_RUNPATH. These two
+checks confirm the loader policy; they do not replace the full fresh GCC/Clang
+workflow runs required by the final gate.

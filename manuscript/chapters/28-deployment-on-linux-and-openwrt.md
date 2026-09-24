@@ -77,7 +77,7 @@ A deployment should answer:
 
 RPATH can preserve intended lookup paths for installed components, but deployment still has to ensure that the files, permissions, and package dependencies are actually present on the target. The last question becomes especially important for OpenWrt and other cross-compiled environments.
 
-For the private Linux installation below, also inspect transitive library lookup. An executable’s `DT_RUNPATH` applies only to its direct dependencies. The companion lifecycle lab uses `-DCMAKE_EXE_LINKER_FLAGS=-Wl,--disable-new-dtags` to select inherited `DT_RPATH` for its private prefix. A maintained package instead needs a coherent loader policy for the complete installed dependency graph.
+For the private Linux installation below, also inspect transitive library lookup. An executable’s `DT_RUNPATH` applies only to its direct dependencies. The companion lifecycle lab uses `-DCMAKE_EXE_LINKER_FLAGS=-Wl,--disable-new-dtags` to select inherited `DT_RPATH` for its private prefix. The shared companion build selects that same inherited lookup policy for all Linux exercise targets. A maintained package instead needs a coherent loader policy for the complete installed dependency graph.
 
 ### Runtime state and service operation
 
