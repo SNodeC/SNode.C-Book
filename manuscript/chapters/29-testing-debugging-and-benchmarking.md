@@ -344,7 +344,7 @@ The final question is not how many assertions were added. It is whether the regr
 
 ### Benchmarking
 
-A benchmark asks which boundary limits a declared workload: parsing, TLS, dispatch, socket buffers, persistence, fan-out or slow-peer pressure. Record connection count/duration, message size/rate, route depth and middleware, protocol/security mode, subscribers/session state, database rate, platform/build type, logging and supervision.
+A benchmark asks which boundary limits a declared workload: parsing, TLS, dispatch, socket buffers, persistence, fan-out or slow-peer pressure. Record connection count/duration, message size/rate, route depth and middleware, protocol and connection variant, subscribers/session state, database rate, platform/build type, logging and supervision.
 
 Change one condition at a time. A single fast client, thousands of slow clients, TLS and database-backed state create different bottlenecks; keep the workload with the result.
 

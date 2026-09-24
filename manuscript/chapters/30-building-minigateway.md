@@ -1131,9 +1131,9 @@ The factory now joins one connection, its MQTT context and the application proto
 
 `MiniGatewayMqttClient` gives the native IPv4 stream client a MiniGateway-specific name and factory parameter. The startup function configures the default remote MQTT port, installs the MiniGateway MQTT configuration section, enables retry/reconnect behavior, subscribes MQTT output to the model, and starts the connection attempt.
 
-The web role is named `web`, so its endpoint can be operated through the same configuration tree: `web local --host 127.0.0.1 --port 8081` selects a local test endpoint without editing the application. Naming the existing role keeps deployment policy outside route code.
+The web role is realized by the instance named `web`, so its endpoint can be operated through the same configuration tree: `web local --host 127.0.0.1 --port 8081` selects a local test endpoint without editing the application. Naming the instance keeps deployment policy outside route code.
 
-The name `mqtt-uplink` identifies the role in configuration and diagnostics.
+The instance name `mqtt-uplink` identifies the MQTT integration role in configuration and diagnostics.
 
 \Needspace{5\baselineskip}
 

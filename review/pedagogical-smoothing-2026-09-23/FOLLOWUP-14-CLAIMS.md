@@ -12,3 +12,13 @@ respective experiments, so no solution or test edit is needed. Ch32 Ex3 now
 points to Chapter 6; Ex4 points to Chapter 4. The occurrence register preserves
 the intended topic identities with those corrections. Ch5 receives only the
 required indefinite article.
+
+## B — instance identity and connection variants
+
+The frozen IPv4 legacy/TLS public aliases select connection implementations
+independently of protocol and network family. The instance string is explicit
+in `companion/examples/MiniGateway/MiniGatewayWeb.cpp` and
+`MiniGatewayMqttClient.cpp`; the corresponding web and MQTT responsibilities
+are application roles. The configuration example is unchanged. These kept
+role uses retain their design meaning, and their exact revised contexts are
+recorded in the terminology inventory.
