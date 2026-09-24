@@ -39,3 +39,11 @@ capacity to recover; Ch16 assigns operational retry requirements to that
 responsibility. Ch16's DISABLED example instead concerns instance activation.
 Every retained role occurrence, including exact symbols and stable IDs, is
 listed with context and a reason in terminology-allowlist.md.
+
+## C — explicit transfer claim
+
+Ch7 now names the proposition being tested: protocol independence from the
+network family. This remains a comparison with the context held fixed, not a
+claim that every protocol is family-independent. The frozen
+`src/apps/echo/EchoSocketContext.cpp` consumes and reflects peer bytes, while
+`src/apps/echo/echoserver.cpp` selects the family aliases outside that context.
