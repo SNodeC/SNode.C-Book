@@ -2383,3 +2383,28 @@ C 31 ● and 1 ◐; no ○. Historical chapter ratings remain separate.
 record the resumed outcome. Push the work branch without merging, then stop
 for the author's reading. Do not treat this qualification as permission for
 another manuscript pass or silently broaden P2.
+
+### Follow-up 13 — final polish and publisher freeze gate
+
+The verbatim instruction is `pedagogical-smoothing-2026-09-23/FOLLOWUP-13.md`.
+Start from `b98eb4a` on the existing work branch; perform only A–I, one commit
+per group followed by one evidence commit, preserving all prior history. The
+initial author-tree freeze equals R2 after ignoring only `?? porting/`;
+`porting/` is outside source authority and is not read or modified. A fresh
+public clone at `build/final-polish-public-07ca9a29` supplies source verification.
+
+A–H authorize the specified local corrections, selective repetition reduction,
+apparatus placement and cadence changes. I authorizes one shared companion
+build/test loader-policy correction, with unchanged test assertions, timeouts
+and test logic, verified through the workflow commands under GCC and Clang.
+The new scope explicitly permits the two precise taxonomy-table exemptions and
+requires the final checker, current proposal figures, rebuilt PDF and a 37-row
+status matrix in FINAL-POLISH-REPORT.md. Hosted results must be observed or
+labelled pending. Push without merging, then freeze for publisher submission.
+
+The relationship between requested compression and the old chapter floors has
+been raised with the author; A–C and source/CI diagnosis can proceed meanwhile.
+No padding or unrelated expansion is authorized to compensate for these cuts.
+
+Author clarification: **keep the old floors; qualify cuts that would cross them**.
+Apply this to D and all other edits; do not pad elsewhere or waive a floor.

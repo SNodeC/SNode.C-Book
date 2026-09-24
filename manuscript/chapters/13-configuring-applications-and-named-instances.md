@@ -149,7 +149,7 @@ Sections group options by responsibility: endpoint identity, established-connect
 For the named server `echoserver` and the separate client `uplink`, examples include:
 
 ```text
-echo local --port 8080
+echoserver local --port 8080
 uplink remote --host localhost --port 8080
 ```
 

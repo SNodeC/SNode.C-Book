@@ -2555,12 +2555,13 @@
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
-      "text": "Chapter 4",
+      "text": "Chapter 5",
       "targets": [
-        "the-mental-model-of-snodec"
+        "reading-public-types-and-components"
       ],
       "source_ids": [],
-      "line": 110
+      "line": 110,
+      "evidence": "Follow-up 13 A: correct the type/header/component destination after the chapter split."
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",

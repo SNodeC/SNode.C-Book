@@ -183,7 +183,7 @@ The new role receives the same `MeasurementModel`, so its accepted measurements 
 
 ### The server and its context factory
 
-The server startup files perform the same startup work for Unix-domain input that `MiniGatewayMqttClient.*` plays for the MQTT uplink role. They hide the concrete SNode.C server-template spelling behind a small book-friendly function.
+The server startup files perform the same startup work for Unix-domain input that `MiniGatewayMqttClient.*` performs for the MQTT uplink role. They hide the concrete SNode.C server-template spelling behind a small book-friendly function.
 
 \Needspace{9\baselineskip}
 

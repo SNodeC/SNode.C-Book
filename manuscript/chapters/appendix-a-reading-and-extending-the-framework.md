@@ -107,7 +107,7 @@ When a trace reaches HTTP, WebSocket, MQTT, routing, or database support, ask wh
 \index{factory class}
 \index{SocketContextFactory@\texttt{SocketContextFactory}}
 
-For the basic type/header/component comparison, return to the source-reading introduction in Chapter 4. Here, apply that distinction while navigating the implementation.
+For the basic type/header/component comparison, return to the source-reading introduction in Chapter 5. Here, apply that distinction while navigating the implementation.
 
 Read a public header first for the class's purpose, base, aliases, dependencies, and methods. A front-door header such as `net/in/stream/legacy/SocketServer.h` selects a concrete server type and exports or composes its lower public pieces. Read the nearby CMake file for targets, links, optional dependencies, installed headers and components; then read implementation behavior and return to the header to confirm the public boundary.
 
