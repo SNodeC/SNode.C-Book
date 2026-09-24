@@ -20,11 +20,11 @@ Consider two applications and a broker. A sensor publisher reports `23.5` on a v
 
 ![MQTT publication sequence. Time runs downward; both clients establish MQTT sessions before the QoS 0 publication.](assets/figures/pdf/fig-19-mqtt-publication-sequence.pdf){#fig:mqtt-publication-sequence}
 
-Install and acknowledge the subscriber's subscription before sending the later non-retained publication. The publisher needs its own accepted MQTT connection, as the diagram shows.
-
 The initial transport connection proves only that the lower endpoint was reached. The subscriber then sends CONNECT to request an MQTT relationship with the broker. CONNECT carries protocol-level choices, including client identity and session behavior. A socket accepting bytes cannot stand in for that negotiation: an endpoint could accept TCP and then reject the MQTT request, or speak an entirely different protocol. Locate evidence at the layer whose success you want to establish.
 
 A successful CONNACK answers the session-establishment question. It does not say that the subscriber has registered interest in a topic, nor that a publisher has sent a value. If the application issues SUBSCRIBE after that point, the broker evaluates the requested topic filter and returns SUBACK with its result. Read the granted result, not merely the presence of a packet with that name. A rejected or differently granted subscription changes what the application can expect to observe.
+
+Install and acknowledge the subscriber's subscription before sending the later non-retained publication. The publisher needs its own accepted MQTT connection, as the diagram shows.
 
 With the subscription accepted, let the separate publisher submit the temperature value. PUBLISH is a protocol action with a topic, payload and delivery settings. At QoS 0, used by the compact example below, there is no publication acknowledgement. Observe delivery at the receiving application by comparing the actual topic and payload with the publication submitted by the sender. Even at an acknowledged QoS, identify what the acknowledgement covers before treating it as evidence about the subscriber's application processing.
 

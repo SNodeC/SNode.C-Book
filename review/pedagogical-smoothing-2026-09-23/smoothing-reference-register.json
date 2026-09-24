@@ -525,17 +525,6 @@
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
-      "text": "Chapter 3",
-      "targets": [
-        "your-first-working-program-the-echo-pair"
-      ],
-      "source_ids": [
-        "R075"
-      ],
-      "line": 421
-    },
-    {
-      "file": "manuscript/chapters/02-preparing-your-environment.md",
       "text": "Chapter 1",
       "targets": [
         "why-snodec-exists"

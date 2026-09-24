@@ -13,13 +13,11 @@
 
 ### Start from a failure you can distinguish
 
-The deployed program from the preceding chapter can fail even when its unit tests pass. A parser test may prove that a byte sequence is decoded correctly while an external consumer cannot find the installed component. Rebuilding that parser will not repair the package path. First identify whether the failure happens during discovery, compilation, startup or an actual exchange.
+The deployed program from the preceding chapter can fail even when its unit tests pass. A parser test may prove that a byte sequence is decoded correctly while an external consumer cannot find the installed component. Rebuilding that parser will not repair the package path. First identify whether the failure happens during discovery, compilation, startup or an actual exchange. A connection must establish, carry data, report failure and shut down according to observable contracts. SNode.C separates unit, component, source-policy and installed-consumer checks; an external echo project tests complete applications against an installation. Read each result at the boundary its assertions exercise.
 
 A second failure is more deceptive: the build succeeds and an HTTP request returns a plausible response, but another process owns the port. The observation belongs to that process, not to the program being tested. Confirm the endpoint and instance identity before interpreting the response. Then retain the request and expected result so that a repeated run asks the same question.
 
 A third mistake turns a correct local latency measurement into a capacity claim. One sequential client on loopback does not exercise concurrent clients, remote links or a deployment's resource constraints. This book reports no performance figures. It uses SNode.C to teach layered network programming; this section teaches how to measure and interpret a workload, not what capacity to expect.
-
-A connection must establish, carry data, report failure and shut down according to observable contracts. SNode.C separates unit, component, source-policy and installed-consumer checks; an external echo project tests complete applications against an installation. Read each result at the boundary its assertions exercise.
 
 ### Building and running the framework tests
 

@@ -446,7 +446,7 @@ Do not try to memorize all names at this stage. Learn the shape instead. SNode.C
 \index{install tree}
 
 
-After configuring the playground in Chapter 3, inspect its `CMakeCache.txt` for `snodec_DIR`. That entry identifies the package configuration CMake actually found. Compare its prefix with the installation you intended to use. The expected result is the package under `~/.local/snodec`, if you followed the local installation above.
+After configuring the playground in this chapter, inspect its `CMakeCache.txt` for `snodec_DIR`. That entry identifies the package configuration CMake actually found. Compare its prefix with the installation you intended to use. The expected result is the package under `~/.local/snodec`, if you followed the local installation above.
 
 This check becomes useful when a source change appears to have no effect. First rebuild and reinstall the framework into the selected prefix, then rebuild the consumer. If you intend to switch installations, use a fresh consumer build directory or explicitly correct its cached package location. Changing the source checkout alone does not change an already selected installed package.
 

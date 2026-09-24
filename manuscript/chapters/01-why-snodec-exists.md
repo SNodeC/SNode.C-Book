@@ -36,7 +36,7 @@ This sequence is the motivation for learning the structure. At each step, keep t
 
 A useful first experiment follows directly. Leave one sensor idle and let the other send twice, then disconnect the idle sensor. The surviving input should still work. Next ask the browser for the latest value after both inputs have disconnected. If the service is meant to retain accepted state while it runs, that answer should still exist. These observations turn an architectural discussion into questions a program can answer. They also prevent a misleading shortcut: a shared-state check needs several peers, each reading and updating the same accepted state. The book builds up such observations alongside the implementation, so each new responsibility arrives with a way to recognize its effect.
 
-SNode.C is interesting because it takes a different path. It is a layered, event-driven C++ framework that keeps the structure of networked applications visible without reducing networking to socket helpers, HTTP handlers, or MQTT utilities.
+SNode.C is interesting because it takes a different path from treating each protocol as an isolated utility. It is a layered, event-driven C++ framework that keeps the structure of networked applications visible without reducing networking to socket helpers, HTTP handlers, or MQTT utilities.
 
 
 > By the end of the book, you should be able to build servers and clients with SNode.C, understand why its architecture has the shape it has, and extend that architecture without breaking its conceptual boundaries.

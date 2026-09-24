@@ -66,3 +66,12 @@ sequence in `accept()` and notifies subscribers; the model-ownership and
 model-instances exercises use that canonical implementation. The Part XI
 checkpoint covers the composed boundaries beyond those model-only observations.
 No application code, lab assertion or timeout changes in this group.
+
+## E — restored references and order
+
+Ch1 names the contrast to isolated protocol utilities. Ch2's playground is
+configured in that chapter, as its installed-consumer CMake route shows. Ch21
+now explains SUBSCRIBE/SUBACK before asking the reader to establish the
+subscription; its protocol claim and instruction are unchanged. Ch29's former
+abstract joins the opening failure example with every sentence retained.
+These are navigation and ordering changes, not new framework behavior.
