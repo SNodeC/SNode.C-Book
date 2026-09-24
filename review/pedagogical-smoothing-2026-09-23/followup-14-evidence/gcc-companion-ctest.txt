@@ -1,0 +1,141 @@
+Internal ctest changing into directory: /workspace/build/ci-book-examples
+Test project /workspace/build/ci-book-examples
+      Start  1: exercise-ch01
+ 1/66 Test  #1: exercise-ch01 ...........................   Passed    0.22 sec
+      Start  2: exercise-ch01-independent-peers
+ 2/66 Test  #2: exercise-ch01-independent-peers .........   Passed    0.14 sec
+      Start  3: exercise-ch02-consumer
+ 3/66 Test  #3: exercise-ch02-consumer ..................   Passed    4.40 sec
+      Start  4: exercise-ch02-component
+ 4/66 Test  #4: exercise-ch02-component .................   Passed    4.42 sec
+      Start  5: exercise-ch03
+ 5/66 Test  #5: exercise-ch03 ...........................   Passed    0.14 sec
+      Start  6: exercise-ch03-occupied-port
+ 6/66 Test  #6: exercise-ch03-occupied-port .............   Passed    0.12 sec
+      Start  7: exercise-ch04-model-instances
+ 7/66 Test  #7: exercise-ch04-model-instances ...........   Passed    0.00 sec
+      Start  8: exercise-ch04-independent-peers
+ 8/66 Test  #8: exercise-ch04-independent-peers .........   Passed    0.10 sec
+      Start  9: exercise-ch05-layer-families
+ 9/66 Test  #9: exercise-ch05-layer-families ............   Passed    0.14 sec
+      Start 10: exercise-ch05-layer-component
+10/66 Test #10: exercise-ch05-layer-component ...........   Passed    4.31 sec
+      Start 11: exercise-ch06-deferred-work
+11/66 Test #11: exercise-ch06-deferred-work .............   Passed    0.01 sec
+      Start 12: exercise-ch06-model-checkpoint
+12/66 Test #12: exercise-ch06-model-checkpoint ..........   Passed    0.00 sec
+      Start 13: exercise-ch07-ip-families
+13/66 Test #13: exercise-ch07-ip-families ...............   Passed    0.15 sec
+      Start 14: exercise-ch07-unix-path
+14/66 Test #14: exercise-ch07-unix-path .................   Passed    0.09 sec
+      Start 15: exercise-ch08-independent-peers
+15/66 Test #15: exercise-ch08-independent-peers .........   Passed    0.09 sec
+      Start 16: exercise-ch08-occupied-endpoint
+16/66 Test #16: exercise-ch08-occupied-endpoint .........   Passed    0.12 sec
+      Start 17: exercise-ch09-selectors
+17/66 Test #17: exercise-ch09-selectors .................   Passed    0.01 sec
+      Start 18: exercise-ch09-part-checkpoint
+18/66 Test #18: exercise-ch09-part-checkpoint ...........   Passed    0.14 sec
+      Start 19: exercise-ch10-framing
+19/66 Test #19: exercise-ch10-framing ...................   Passed    0.22 sec
+      Start 20: exercise-ch10-limits
+20/66 Test #20: exercise-ch10-limits ....................   Passed    0.30 sec
+      Start 21: exercise-ch11-isolation
+21/66 Test #21: exercise-ch11-isolation .................   Passed    0.20 sec
+      Start 22: exercise-ch11-refusal
+22/66 Test #22: exercise-ch11-refusal ...................   Passed    0.09 sec
+      Start 23: exercise-ch12-part-checkpoint
+23/66 Test #23: exercise-ch12-part-checkpoint ...........   Passed    0.38 sec
+      Start 24: exercise-ch12-endpoint-failure
+24/66 Test #24: exercise-ch12-endpoint-failure ..........   Passed    0.10 sec
+      Start 25: exercise-ch13-precedence
+25/66 Test #25: exercise-ch13-precedence ................   Passed    0.11 sec
+      Start 26: exercise-ch13-discovery
+26/66 Test #26: exercise-ch13-discovery .................   Passed    0.09 sec
+      Start 27: exercise-ch14-records
+27/66 Test #27: exercise-ch14-records ...................   Passed    0.04 sec
+      Start 28: exercise-ch14-part-checkpoint
+28/66 Test #28: exercise-ch14-part-checkpoint ...........   Passed    0.25 sec
+      Start 29: exercise-ch15-trust-identity
+29/66 Test #29: exercise-ch15-trust-identity ............   Passed    1.82 sec
+      Start 30: exercise-ch15-secure-echo
+30/66 Test #30: exercise-ch15-secure-echo ...............   Passed    0.32 sec
+      Start 31: exercise-ch16-bounded-retry
+31/66 Test #31: exercise-ch16-bounded-retry .............   Passed    0.32 sec
+      Start 32: exercise-ch16-part-checkpoint
+32/66 Test #32: exercise-ch16-part-checkpoint ...........   Passed    1.19 sec
+      Start 33: exercise-ch17-framing
+33/66 Test #33: exercise-ch17-framing ...................   Passed    0.30 sec
+      Start 34: exercise-ch17-limits
+34/66 Test #34: exercise-ch17-limits ....................   Passed    0.09 sec
+      Start 35: exercise-ch18-order
+35/66 Test #35: exercise-ch18-order .....................   Passed    0.09 sec
+      Start 36: exercise-ch18-stop
+36/66 Test #36: exercise-ch18-stop ......................   Passed    0.10 sec
+      Start 37: exercise-ch19
+37/66 Test #37: exercise-ch19 ...........................   Passed    0.10 sec
+      Start 38: exercise-ch19-observers
+38/66 Test #38: exercise-ch19-observers .................   Passed    0.10 sec
+      Start 39: exercise-ch20-negotiation
+39/66 Test #39: exercise-ch20-negotiation ...............   Passed    0.12 sec
+      Start 40: exercise-ch20-part-checkpoint
+40/66 Test #40: exercise-ch20-part-checkpoint ...........   Passed    0.31 sec
+      Start 41: exercise-ch21-wire
+41/66 Test #41: exercise-ch21-wire ......................   Passed    0.33 sec
+      Start 42: exercise-ch21-delivery
+42/66 Test #42: exercise-ch21-delivery ..................   Passed    0.18 sec
+      Start 43: exercise-ch22-binary
+43/66 Test #43: exercise-ch22-binary ....................   Passed    0.18 sec
+      Start 44: exercise-ch22-text
+44/66 Test #44: exercise-ch22-text ......................   Passed    0.08 sec
+      Start 45: exercise-ch23-unavailable-output
+45/66 Test #45: exercise-ch23-unavailable-output ........   Passed    0.13 sec
+      Start 46: exercise-ch23-part-checkpoint
+46/66 Test #46: exercise-ch23-part-checkpoint ...........   Passed    0.33 sec
+      Start 47: exercise-ch24-durable
+47/66 Test #47: exercise-ch24-durable ...................   Passed    1.06 sec
+      Start 48: exercise-ch24-error
+48/66 Test #48: exercise-ch24-error .....................   Passed    1.09 sec
+      Start 49: exercise-ch25-composition
+49/66 Test #49: exercise-ch25-composition ...............   Passed    0.30 sec
+      Start 50: exercise-ch25-consumer-trace
+50/66 Test #50: exercise-ch25-consumer-trace ............   Passed    4.40 sec
+      Start 51: exercise-ch26-part-checkpoint
+51/66 Test #51: exercise-ch26-part-checkpoint ...........   Passed    1.23 sec
+      Start 52: exercise-ch26-publication-trace
+52/66 Test #52: exercise-ch26-publication-trace .........   Passed    0.18 sec
+      Start 53: exercise-ch27-consumer
+53/66 Test #53: exercise-ch27-consumer ..................   Passed    4.34 sec
+      Start 54: exercise-ch27-component
+54/66 Test #54: exercise-ch27-component .................   Passed    4.27 sec
+      Start 55: exercise-ch28-lifecycle
+55/66 Test #55: exercise-ch28-lifecycle .................   Passed    6.58 sec
+      Start 56: exercise-ch28-configuration
+56/66 Test #56: exercise-ch28-configuration .............   Passed    6.56 sec
+      Start 57: exercise-ch29-diagnosis
+57/66 Test #57: exercise-ch29-diagnosis .................   Passed   10.88 sec
+      Start 58: exercise-ch29-checkpoint
+58/66 Test #58: exercise-ch29-checkpoint ................   Passed   10.85 sec
+      Start 59: exercise-ch30
+59/66 Test #59: exercise-ch30 ...........................   Passed    0.14 sec
+      Start 60: exercise-ch30-validation
+60/66 Test #60: exercise-ch30-validation ................   Passed    0.00 sec
+      Start 61: exercise-ch31-framing
+61/66 Test #61: exercise-ch31-framing ...................   Passed    0.11 sec
+      Start 62: exercise-ch31-mixed
+62/66 Test #62: exercise-ch31-mixed .....................   Passed    0.15 sec
+      Start 63: exercise-ch32
+63/66 Test #63: exercise-ch32 ...........................   Passed    0.00 sec
+      Start 64: exercise-ch32-model-instances
+64/66 Test #64: exercise-ch32-model-instances ...........   Passed    0.00 sec
+      Start 65: exercise-appendix-a-source-consumer
+65/66 Test #65: exercise-appendix-a-source-consumer .....   Passed    4.28 sec
+      Start 66: exercise-appendix-a-carrier-extension
+66/66 Test #66: exercise-appendix-a-carrier-extension ...   Passed    0.33 sec
+
+100% tests passed, 0 tests failed out of 66
+
+Label Time Summary:
+equipped    =   3.39 sec*proc (3 tests)
+
+Total Test time (real) =  79.26 sec

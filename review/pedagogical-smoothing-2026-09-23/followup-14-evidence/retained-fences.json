@@ -1,0 +1,46 @@
+{
+  "manuscript/chapters/03-your-first-working-program-the-echo-pair.md": {
+    "fenced_blocks": 15,
+    "identical": true
+  },
+  "manuscript/chapters/04-the-snodec-runtime-mental-model.md": {
+    "fenced_blocks": 5,
+    "identical": true
+  },
+  "manuscript/chapters/05-layers-in-practice.md": {
+    "fenced_blocks": 7,
+    "identical": true
+  },
+  "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md": {
+    "fenced_blocks": 31,
+    "identical": true
+  },
+  "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md": {
+    "fenced_blocks": 17,
+    "identical": true
+  },
+  "manuscript/chapters/18-the-express-like-framework.md": {
+    "fenced_blocks": 9,
+    "identical": true
+  },
+  "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md": {
+    "fenced_blocks": 1,
+    "identical": true
+  },
+  "manuscript/chapters/29-testing-debugging-and-benchmarking.md": {
+    "fenced_blocks": 8,
+    "identical": true
+  },
+  "manuscript/chapters/30-building-minigateway.md": {
+    "fenced_blocks": 36,
+    "identical": true
+  },
+  "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md": {
+    "fenced_blocks": 1,
+    "identical": true
+  },
+  "manuscript/frontmatter/conventions.md": {
+    "fenced_blocks": 0,
+    "identical": true
+  }
+}

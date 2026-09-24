@@ -1,0 +1,15 @@
+Source: GitHub workflow job logs via GitHub connector.
+Full local log SHA-256: 32200ee8406db791fad5ee5adfd16661e5fed4ba0b119d070c140720147646f0
+
+2026-09-24T18:10:23.2784396Z -- The C compiler identification is GNU 13.3.0
+2026-09-24T18:10:25.0122828Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T18:24:43.5806001Z 100% tests passed, 0 tests failed out of 185
+2026-09-24T18:24:44.5089667Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T18:24:51.1918116Z 100% tests passed, 0 tests failed out of 4
+2026-09-24T18:24:51.2553559Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T18:28:12.3750132Z 100% tests passed, 0 tests failed out of 66
+2026-09-24T18:28:12.5529358Z PASS: Chapter 3 server reflects a controlled byte sequence
+2026-09-24T18:28:12.5529791Z PASS: Chapter 3 client initiates and reflects with a controlled peer
+2026-09-24T18:28:14.5315190Z Behavioral smoke tests passed.
+2026-09-24T18:28:14.7176585Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T18:28:40.2264344Z All selected example lifetime/echo checks passed.

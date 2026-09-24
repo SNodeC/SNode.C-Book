@@ -2471,3 +2471,33 @@ hosted results. Record the 37×8 matrix, all checks, token/page measurements,
 unchanged freeze and remaining qualifications in FOLLOWUP-14-REPORT.md. No
 aggregate-build-option changes from the preceding discussion are authorized
 by this narrow follow-up. Push without merging and end the manuscript pass.
+
+
+### Follow-up 14 — complete; publisher freeze gate passed
+
+A–D commits are `94e4838`, `d27b2ef`, `859fd61`, `ca2f768`.
+The article, exercise mappings and terminology residues are corrected; all
+seven repetition links are explicit. No teaching passage, example, listing
+or explanation was cut. All 130 fenced blocks in touched files are unchanged.
+The manuscript has 111,070 tokens (+115), within every chapter cap and the
+115,000 ceiling. PDFs: book 328 pages, proposal 9, sample 61.
+
+The matrix is now 37 ● / 0 ◐ / 0 ○ in each of eight dimensions (296 ●).
+Smoothing, polish, final regression, reference, source alignment, hygiene,
+metrics and twice-built package checks pass. All 34 editorial checker tests
+and the six hygiene tests pass. Start/end author-tree freeze records equal
+R2, ignoring only `?? porting/`; the fresh public clone is clean at 07ca9a29.
+
+Local Ubuntu 24.04 runs with GCC 13.3.0 and Clang 18.1.3 each pass 185/185
+framework tests, 4/4 external-consumer tests, 66/66 labs, and all teaching,
+behavior and lifetime suites. Hosted run 36039311975 on pushed ca2f768 passes
+both compiler jobs with those versions and results. No new companion/workflow
+change was required. Historical run 36002150169's GCC Ch7 log-interleaving
+failure is recorded, not claimed repaired; its successor and current runs pass.
+Clang 21's frozen-framework -Wnrvo compatibility issue remains outside this
+branch for the next SNode.C release, as expressly scoped by Follow-up 14.
+
+`FOLLOWUP-14-REPORT.md` contains the full matrix, changed-cell evidence,
+chapter counts, commit mapping, local/hosted logs and freeze gate. Commit and
+push this final evidence without merging, then end the manuscript pass. No
+further broad refinement is authorized; publisher-submission freeze now applies.

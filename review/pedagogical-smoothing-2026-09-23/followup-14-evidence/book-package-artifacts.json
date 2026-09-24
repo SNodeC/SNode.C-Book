@@ -1,0 +1,25 @@
+{
+  "dist/pdf/snodec-book.pdf": {
+    "bytes": 1819993,
+    "sha256": "42756698a5f20dc91ad92f130ede0f5b336caf30c59dba4a6ca88dc68b03337f",
+    "pdfinfo": "Title:           Layered Network Programming with SNode.C\nAuthor:          Volker Christian\nCreator:         LaTeX via pandoc\nProducer:        xdvipdfmx (20260317)\nCreationDate:    Thu Sep 24 20:14:15 2026 CEST\nCustom Metadata: no\nMetadata Stream: no\nTagged:          no\nUserProperties:  no\nSuspects:        no\nForm:            none\nJavaScript:      no\nPages:           328\nEncrypted:       no\nPage size:       595.28 x 841.89 pts (A4)\nPage rot:        0\nFile size:       1819993 bytes\nOptimized:       no\nPDF version:     1.7\n"
+  },
+  "dist/pdf/book-proposal-package.pdf": {
+    "bytes": 84591,
+    "sha256": "ae331f71541cfb132b1df47ebf785775b8dec635855a9c74fecb720c37e52ca3",
+    "pdfinfo": "Title:           Book Proposal: Layered Network Programming with SNode.C\nAuthor:          Volker Christian\nCreator:         LaTeX via pandoc\nProducer:        xdvipdfmx (20260317)\nCreationDate:    Thu Sep 24 20:13:34 2026 CEST\nCustom Metadata: no\nMetadata Stream: no\nTagged:          no\nUserProperties:  no\nSuspects:        no\nForm:            none\nJavaScript:      no\nPages:           9\nEncrypted:       no\nPage size:       595.28 x 841.89 pts (A4)\nPage rot:        0\nFile size:       84591 bytes\nOptimized:       no\nPDF version:     1.7\n"
+  },
+  "dist/pdf/book-proposal-sample-package.pdf": {
+    "bytes": 413686,
+    "sha256": "bea5f8d85c9490e06bff776ac503ddab552ed8b3e582f79762dc7aea427a8b42",
+    "pdfinfo": "Title:           Book Proposal: Layered Network Programming with SNode.C\nAuthor:          Volker Christian\nCreator:         LaTeX via pandoc\nProducer:        xdvipdfmx (20260317)\nCreationDate:    Thu Sep 24 20:13:41 2026 CEST\nCustom Metadata: no\nMetadata Stream: no\nTagged:          no\nUserProperties:  no\nSuspects:        no\nForm:            none\nJavaScript:      no\nPages:           61\nEncrypted:       no\nPage size:       595.28 x 841.89 pts (A4)\nPage rot:        0\nFile size:       413686 bytes\nOptimized:       no\nPDF version:     1.7\n"
+  },
+  "dist/packages/snodec-book-proposal-package.tar.gz": {
+    "bytes": 3373772,
+    "sha256": "ca75c6efb00c2f23f829aea139eba352f67475ce27321deaee3d1bf44322e8b4"
+  },
+  "build/followup-14/book-package.log": {
+    "bytes": 514203,
+    "sha256": "8682a004ee783a285c796aab5cdfdf0a583afa8c0708150fa38f450b9fea37b1"
+  }
+}

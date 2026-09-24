@@ -1,0 +1,25 @@
+Internal ctest changing into directory: /workspace/build/framework-external-echo
+Test project /workspace/build/framework-external-echo
+    Start 1: echo.config-surface
+1/4 Test #1: echo.config-surface ..............   Passed    0.06 sec
+    Start 2: echo.server-external-peer
+2/4 Test #2: echo.server-external-peer ........   Passed    0.09 sec
+    Start 3: echo.client-external-peer
+3/4 Test #3: echo.client-external-peer ........   Passed    0.05 sec
+    Start 4: echo.pair-smoke
+4/4 Test #4: echo.pair-smoke ..................   Passed    0.34 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+client           =   0.05 sec*proc (1 test)
+configuration    =   0.06 sec*proc (1 test)
+echo             =   0.55 sec*proc (4 tests)
+example          =   0.55 sec*proc (4 tests)
+external         =   0.55 sec*proc (4 tests)
+pair             =   0.34 sec*proc (1 test)
+payload          =   0.14 sec*proc (2 tests)
+server           =   0.09 sec*proc (1 test)
+smoke            =   0.34 sec*proc (1 test)
+
+Total Test time (real) =   0.55 sec

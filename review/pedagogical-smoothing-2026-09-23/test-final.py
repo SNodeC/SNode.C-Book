@@ -85,11 +85,52 @@ class FinalGuards(unittest.TestCase):
 
     def test_copied_lab_does_not_count_as_synthesis(self):
         import re
-        source = self.chapter(4).read_text()
-        old = re.search(r'^3\. (.*)$', source, re.M)[1]
+        source = self.chapter(6).read_text()
+        block = next(t for a, _, t in final.divs(source) if '.snodec-exercise' in a)
+        old = re.search(r'^4\.\s+(.*?)(?=^\d+\. |^Public |\Z)', block, re.M | re.S)[1].strip()
         p = self.chapter(32)
-        p.write_text(re.sub(r'^3\. .*$', '3. '+old, p.read_text(), count=1, flags=re.M))
+        p.write_text(re.sub(r'^3\. .*$', lambda _: '3. '+old, p.read_text(), count=1, flags=re.M))
         self.fails('repeated earlier question')
+
+    def test_swapped_model_references_are_rejected(self):
+        self.replace(self.chapter(32), 'observations from Chapter 6', 'observations from Chapter 4')
+        self.fails('model-ownership must name Chapter 6')
+        self.replace(self.chapter(32), 'Use the Chapter 4 model observations', 'Use the Chapter 6 model observations')
+        self.fails('model-instances must name Chapter 4')
+
+    def test_article_and_residual_terminology(self):
+        p = self.chapter(5)
+        p.write_text(p.read_text()+'\nA instance has a security mode. The role is named web.\n')
+        for term in ('A instance', 'security mode', 'role is named'):
+            self.fails('old terminology: '+term)
+
+    def test_link_checks_allow_synonyms_and_soft_wrapping(self):
+        self.replace(self.chapter(3), 'If you followed Chapter 2’s shortest path, this build already exists;',
+                     'Chapter 2’s shortest path has already created this build;')
+        self.replace(self.chapter(12), 'repeated here to show the transfer boundary',
+                     'shown again here\nto locate the transfer boundary')
+        errors = final.check(self.root)
+        self.assertFalse([e for e in errors if e.startswith(('Ch3:', 'Ch12:'))])
+
+    def test_each_required_link_is_guarded(self):
+        for number, old, new, message in (
+            (3, 'fresh playground', 'playground', 'Ch3: link repeated build'),
+            (4, 'The same `init()` and `start()` calls seen above now take their places in the startup sequence.',
+                'Call `init()` and `start()` during startup.', 'Ch4: identify repeated startup'),
+            (4, 'As noted above, it should', 'It should', 'Ch4: link the repeated context'),
+            (7, 'earlier IPv4/IPv6 alias pair', 'IPv4/IPv6 pair', 'Ch7: link the fuller comparison'),
+            (7, 'Chapter 8 adds connection-lifetime reasoning to these pathname endpoints; its bind, local and remote views remain distinct.',
+                'Chapter 8 develops this connection model in detail.', 'Ch7: give the later connection pointer'),
+            (12, 'complete Chapter 3 listing', 'complete listing', 'Ch12: link the repeated snippets'),
+            (18, 'trace followed above', 'trace', 'Ch18: connect framework observations'),
+            (29, 'Beyond this single run, the general benchmarking distinctions still apply.', '',
+                 'Ch29: mark the move')):
+            with self.subTest(chapter=number, guard=message):
+                p = self.chapter(number)
+                original = p.read_text()
+                self.replace(p, old, new)
+                self.fails(message)
+                p.write_text(original)
 
     def test_div_parser_ignores_code_and_preserves_nested_boxes(self):
         text = ('::: {.snodec-exercise title="Exercises"}\n'

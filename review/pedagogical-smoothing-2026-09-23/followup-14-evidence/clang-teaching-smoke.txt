@@ -1,0 +1,3 @@
+PASS: four semantic records; component Debug overrides global Info; event and typed error; no invented peer
+PASS: Chapter 3 server reflects a controlled byte sequence
+PASS: Chapter 3 client initiates and reflects with a controlled peer
