@@ -2447,3 +2447,27 @@ The publisher submission gate is not passed because fresh executable verificatio
 is incomplete. A–I were pushed; hosted run 36002150169 was in progress.
 Commit and push the final evidence without merging, then end this run. No further
 broad manuscript refinement is authorized.
+
+### Follow-up 14 — local corrections, explicit reinforcement and CI closure
+
+The verbatim authority is `pedagogical-smoothing-2026-09-23/FOLLOWUP-14.md`.
+Continue from `d4ff44d` with one commit for A–D and one evidence commit.
+No teaching passages, examples, listings or explanations may be cut. Correct
+the article and swapped exercise references, resolve the specified terminology,
+and add local links making seven repetitions explicit. Aim for 100–400 net
+new tokens while preserving chapter caps and the 115,000 ceiling.
+
+The initial author freeze matches R2, ignoring only the `?? porting/` entry;
+its contents remain unread and the author tree remains unmodified. Use a fresh
+public clone at 07ca9a29 for alignment and local verification. The known local
+Clang 21 incompatibility is explicitly outside the book; this follow-up permits
+verification with the hosted compiler version and, only if required by hosted
+framework compilation, a workflow pin to the working Ubuntu distribution Clang.
+No framework patch, warning suppression, assertion, timeout or test-logic change.
+
+Read both prior hosted runs, record compiler versions and job conclusions, run
+the workflow build and all 66 labs with GCC and matching Clang, push and inspect
+hosted results. Record the 37×8 matrix, all checks, token/page measurements,
+unchanged freeze and remaining qualifications in FOLLOWUP-14-REPORT.md. No
+aggregate-build-option changes from the preceding discussion are authorized
+by this narrow follow-up. Push without merging and end the manuscript pass.

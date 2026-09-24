@@ -3368,18 +3368,18 @@
     },
     {
       "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
-      "text": "Chapter 4",
+      "text": "Chapter 6",
       "targets": [
-        "the-snodec-runtime-mental-model"
+        "core-runtime-and-event-processing"
       ],
       "source_ids": [],
       "line": 250
     },
     {
       "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
-      "text": "Chapter 6",
+      "text": "Chapter 4",
       "targets": [
-        "core-runtime-and-event-processing"
+        "the-snodec-runtime-mental-model"
       ],
       "source_ids": [],
       "line": 251

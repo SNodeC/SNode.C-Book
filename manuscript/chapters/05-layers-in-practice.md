@@ -89,7 +89,7 @@ Layers describe where a responsibility lives, not just directory names. The prac
 | Application | What protocol behavior runs above the connection? | custom context, HTTP, WebSocket, Express-like routing, MQTT |
 
 
-The runtime tells us how progress happens: event-loop dispatch, descriptor readiness, timers, queued work, timeouts, signals, and cleanup. The layer stack tells us what kind of communication is progressing. A instance might be an IPv4 legacy client, an IPv6 TLS server, or a Unix-domain HTTP endpoint; all participate in the runtime without becoming the same communication structure.
+The runtime tells us how progress happens: event-loop dispatch, descriptor readiness, timers, queued work, timeouts, signals, and cleanup. The layer stack tells us what kind of communication is progressing. An instance might be an IPv4 legacy client, an IPv6 TLS server, or a Unix-domain HTTP endpoint; all participate in the runtime without becoming the same communication structure.
 
 These names describe SNode.C's decomposition of a program. They are not a renaming of the OSI layers or a claim that Bluetooth L2CAP and IP occupy identical positions in their respective protocol stacks. Compare the endpoint-facing surface offered to a SNode.C stream composition, while retaining the underlying protocol's own semantics for reliability, packet boundaries, security, and deployment.
 
