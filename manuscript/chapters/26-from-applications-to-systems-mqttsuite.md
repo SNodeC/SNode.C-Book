@@ -246,7 +246,7 @@ The naming matrix makes the alternatives concrete:
 
 The exact available instances depend on the build configuration and enabled roles. The naming pattern is the lesson.
 
-The names encode three dimensions: address family (`IPv4`, `IPv6`, or Unix-domain), protocol (`MQTT` or `HTTP`), and security mode (`legacy`/plain or TLS).
+The names encode three dimensions: network family (`IPv4`, `IPv6`, or Unix-domain), protocol (`MQTT` or `HTTP`), and security mode (`legacy`/plain or TLS).
 
 Constructing an endpoint handle with a name registers its instance in the configuration hierarchy; activating it creates a separate flow. That makes the broker easier to configure, log, operate, and discuss. Good instance names are part of the architecture. They are not cosmetic labels.
 

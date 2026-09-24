@@ -191,7 +191,7 @@ Can the protocol conversation stay honest when the network family changes, or ha
 
 ### A worked transfer: the line server over IPv4 and Unix sockets
 
-Changing the network family changes the public type header and the linked component when application code directly names that stream type. The protocol context can remain stable, but the source/build front door follows the selected network family and connection mode.
+Changing the network family changes the public type header and the linked component when application code directly names that stream type. The protocol context can remain stable, but the source/build front door follows the selected network family and connection variant.
 
 | Network family / connection variant | Public include | Matching component |
 |---|---|---|

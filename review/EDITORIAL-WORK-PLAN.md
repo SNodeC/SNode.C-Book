@@ -2408,3 +2408,12 @@ No padding or unrelated expansion is authorized to compensate for these cuts.
 
 Author clarification: **keep the old floors; qualify cuts that would cross them**.
 Apply this to D and all other edits; do not pad elsewhere or waive a floor.
+
+Further author clarification: **“Did i select cut down? I do not want to cut the
+manuscript down!”** This overrides Follow-up 13's requested compression.
+Do not carry out the shortening portions of D (or remove prose under E/H).
+Retain substantive explanations and listings. Continue local factual and
+terminology corrections, non-cutting synthesis/cross-reference improvements,
+apparatus, cadence, checkers and CI verification. Record the requested cuts as
+withdrawn by the author, not as completed compression or a technical blocker.
+No compression edits had been made when this instruction arrived.

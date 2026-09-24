@@ -232,7 +232,7 @@ Failure handling is easier to understand when the state vocabulary is explicit.
 | `FATAL` | severe failure |
 | `NO_RETRY` | retry-control flag attached to a state |
 
-`DISABLED` reports intentional non-participation, such as an optional role omitted from one deployment. It differs from a role that tried to participate and failed.
+`DISABLED` reports intentional non-participation, such as an optional instance disabled in one deployment. It differs from an instance that tried to become active and failed.
 
 Failure can occur at many points in the lifecycle.
 

@@ -38,7 +38,7 @@ The top level provides the project shell; module directories construct targets, 
 
 `src/CMakeLists.txt` checks the compiler baseline, sets the C++ standard and diagnostic/linker policy, defines the in-tree context, controls sanitizers and application selection, and descends into framework modules. It computes dependencies, declares supported installable components and generates the exported package configuration.
 
-Module install rules supply the matching public include surface. The supported component list spans core, stream modes, network families, HTTP, Express, WebSocket, MQTT and database support; it is an architectural inventory for consumers.
+Module install rules supply the matching public include surface. The supported component list spans core, connection variants, network families, HTTP, Express, WebSocket, MQTT and database support; it is an architectural inventory for consumers.
 
 SNode.C requires a modern compiler baseline. The build checks for sufficiently recent GNU or Clang versions and then sets:
 

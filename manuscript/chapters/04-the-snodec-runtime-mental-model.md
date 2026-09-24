@@ -203,7 +203,7 @@ The flow-controller path is what gives `listen(...)` and `connect(...)` their ru
 A flow can be started, observed, retried, terminated, and associated with runtime-visible state. This is what allows an instance to retain operational settings across attempts rather than just perform one procedural action.
 
 ::: {.snodec-rule title="Runtime-flow rule"}
-`listen(...)` and `connect(...)` register activation flows for configured instances; the runtime advances those flows and the connections they produce.
+`listen(...)` and `connect(...)` register activation flows for instances; the runtime advances those flows and the connections they produce.
 :::
 
 

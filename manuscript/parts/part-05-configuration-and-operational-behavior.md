@@ -4,4 +4,4 @@ Part IV separated protocol behavior from network-family selection. This part sho
 
 Configuration is treated as architecture, not as decoration: application-side handles, named instances, generated command lines, logging, diagnostics, and runtime introspection all make operational behavior observable. With that surface established, Part VI can discuss secure and robust communication without hiding policy inside arbitrary callbacks.
 
-The checkpoint makes the echo role reproducible and diagnosable: observe source/file/CLI precedence, run the selected endpoint, and compare narrow logging overrides. Carry those named-instance and diagnostic choices into MiniGateway as its interfaces accumulate.
+The checkpoint makes the echo instance reproducible and diagnosable: observe source/file/CLI precedence, run the selected endpoint, and compare narrow logging overrides. Carry those named-instance and diagnostic choices into MiniGateway as its interfaces accumulate.

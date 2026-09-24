@@ -76,7 +76,7 @@ net::in::stream::legacy::SocketServer
 
 Use the name to predict where to read. Replacing `in` with `in6` leads toward IPv6 addressing; replacing `legacy` with `tls` leads toward secured connection handling. Neither tells you where echo behavior lives: that still leads to the application-supplied factory and context.
 
-Aliases and templates turn generic machinery into concrete types. Ask what an alias fixes: network family, transport form, connection mode, physical socket type, and configuration type. The application still supplies protocol behavior through its factory. Long template names become readable when each fixed choice has a purpose.
+Aliases and templates turn generic machinery into concrete types. Ask what an alias fixes: network family, transport form, connection variant, physical socket type, and configuration type. The application still supplies protocol behavior through its factory. Long template names become readable when each fixed choice has a purpose.
 
 The recurring activation path is:
 
@@ -128,13 +128,13 @@ Use these reading questions together:
 
 | Object being read | Questions that locate its responsibility |
 |---|---|
-| Server/client | Which family, transport, connection mode, physical socket and configuration type? Which activation overload and factory? Where does the flow enter the runtime? |
+| Server/client | Which family, transport, connection variant, physical socket and configuration type? Which activation overload and factory? Where does the flow enter the runtime? |
 | Context | Which base, connection pointer and lifecycle overrides? Does `onConnected()` initiate behavior? How does `onReceivedFromPeer()` consume data, send replies, set timeouts or close? |
 | Factory | Which context is created? Which application purpose, configuration or shared state enters its constructor? Which ownership relationship begins here? |
 
 In Chapter 3, the `Role` enum lets one echo context serve server and client behavior. Separate context classes can also be valid. The useful distinction is per-connection protocol state versus state spread through unrelated code. The factory connects that application behavior to framework-managed connection lifetime; it is not the entire application.
 
-Variant-heavy code calls for comparison: first identify the shared structure, then the changes required by family or connection mode. RFCOMM and L2CAP keep a comparable reading path but different addressing and deployment assumptions. Do not learn every variant from zero or assume their operational requirements are identical.
+Variant-heavy code calls for comparison: first identify the shared structure, then the changes required by family or connection variant. RFCOMM and L2CAP keep a comparable reading path but different addressing and deployment assumptions. Do not learn every variant from zero or assume their operational requirements are identical.
 
 Chapter 4 established the mental model; source navigation now locates the responsibility a proposed extension changes. Trace `src/net/in/stream/legacy/SocketServer.h` through the family wrapper to `src/core/socket/stream/SocketServer.h`, locate flow creation, then return to the echo factory's `create(...)`. Name the files selecting lower machinery, activating the listener, and constructing protocol behavior without attributing all three jobs to one class.
 

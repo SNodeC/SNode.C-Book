@@ -289,7 +289,7 @@ It also carries explanatory information through functions such as `what()` and `
 
 `NO_RETRY` is especially revealing. It shows that the state object can carry more than “success” or “failure.” It can also express control information that affects retry behavior. That fits the broader theme of the chapter: retry is activation-flow recovery behavior, not protocol-context behavior.
 
-Instance callbacks inspect a concrete peer; status callbacks describe the activation attempt; context callbacks supply its application behavior. Use that distinction when deciding where diagnostics belong.
+Connection lifecycle callbacks inspect a concrete peer; status callbacks describe the activation attempt; context callbacks supply its application behavior. Use that distinction when deciding where diagnostics belong.
 
 ### Readiness and disconnect timing
 
@@ -306,10 +306,10 @@ That makes disconnect a meaningful lifecycle point, not just the end of an objec
 Copy the addresses, counters, or identifiers needed for later reporting during the callback. Retaining the pointer for later use would not keep the connection alive. In the current stream cleanup path, attached contexts have already been detached and deleted before this outer disconnect notification, so this is not a place to call back into the former protocol context.
 
 ::: {.snodec-rule title="Lifecycle responsibility rule"}
-Instance callbacks observe connection lifecycle; context callbacks implement protocol behavior.
+Connection lifecycle callbacks observe connection lifecycle; context callbacks implement protocol behavior.
 :::
 
-In the echo example, the context decides what to do when data arrives. It reads from the peer and sends data back. That is protocol behavior. It belongs in the context, not in the server-side or client-side instance callback.
+In the echo example, the context decides what to do when data arrives. It reads from the peer and sends data back. That is protocol behavior. It belongs in the context, not in the server-side or client-side connection lifecycle callback.
 
 ### Count lifetimes separately
 
@@ -336,7 +336,7 @@ Chapter 4's Figure \ref{fig:snodec-runtime-model} and “Runtime terms and lifet
 |---|---|
 | retry and reconnect policy | The instance supplies configured settings; each activation's flow controller advances its recovery. A retry after failed establishment differs from reconnect after a peer relationship ends. |
 | local, bind and remote endpoint views | Ask the connection for the requested bind address, the actual local address and the peer's remote address. Port zero in a bind request can become a concrete local port after the operating system assigns it. |
-| status and callback layers | Listen/connect status reports an attempt; instance callbacks observe the peer lifecycle; context callbacks implement protocol reactions. A failure before secure readiness need not produce a protocol callback. |
+| status and callback layers | Listen/connect status reports an attempt; connection lifecycle callbacks observe the peer lifecycle; context callbacks implement protocol reactions. A failure before secure readiness need not produce a protocol callback. |
 
 Before moving to Bluetooth, classify three events: an address cannot be bound, a TLS handshake fails, and a protocol context is replaced during upgrade. The first may produce no peer connection; the second can involve connection machinery without reaching protocol readiness; the third can detach a context while the peer connection continues. Choose diagnostics at the boundary that can distinguish those outcomes. That exercise is more useful than counting every callback as another “connection event.”
 
@@ -344,7 +344,7 @@ Before moving to Bluetooth, classify three events: an address cannot be bound, a
 ::: {.snodec-remember title="What to remember"}
 - An instance can have several activation flows and many connections; those are different counts.
 - Terminating a flow does not close an established peer, and retaining a pointer does not transfer connection ownership.
-- Status callbacks describe attempts, instance callbacks observe connections, and context methods implement the protocol.
+- Status callbacks describe attempts, connection lifecycle callbacks observe connections, and context methods implement the protocol.
 - Inspect bind, local, and remote identities separately; queued, sent, read, and processed bytes describe different stages.
 - Keep unfinished protocol state per peer and pass deliberately shared application dependencies through the factory.
 :::

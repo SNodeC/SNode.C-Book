@@ -194,7 +194,7 @@ Record three observations before modifying the application: which endpoint becam
 
 Chapter 3 introduced `EchoSocketContext` through the deliberately simplified `echoserver` and `echoclient` pair over IPv4, stream transport, and legacy connection handling.
 
-The repository echo family generalizes the same idea. The full echo application structure uses a shared echo protocol model, generated server executables, generated client executables, several network families, legacy and TLS stream modes, and compile definitions for the selected combination.
+The repository echo family generalizes the same idea. The full echo application structure uses a shared echo protocol model, generated server executables, generated client executables, several network families, legacy and TLS connection variants, and compile definitions for the selected combination.
 
 Compare one generated target’s compile definitions with the common source. The selection should change the composed stream handle aliases without introducing another echo parser.
 

@@ -13,7 +13,7 @@
 
 ### From instances to visible runtime behavior {#from-configured-roles-to-visible-runtime-behavior}
 
-Configuration describes the system that should run. Diagnostics explain the system that did run: which roles became active, which connections existed, which protocol decisions were made, and where progress stopped.
+Configuration describes the system that should run. Diagnostics explain the system that did run: which instances became active, which connections existed, which protocol decisions were made, and where progress stopped.
 
 A client may exist before connecting, TLS may still be negotiating on an established connection, and HTTP upgrade may replace a context without ending the peer connection. A useful record identifies the boundary it describes. Semantic logging records origin, boundary, component and optional runtime identity alongside severity and message. These connect the configuration from Chapter 13 to observed lifetimes.
 
@@ -220,7 +220,7 @@ A normal SNode.C application exposes this policy through its existing root confi
   mqtt-uplink remote --host 127.0.0.1 --port 1883
 ```
 
-The MQTT role still needs endpoint configuration; logging options do not supply it.
+The MQTT instance still needs endpoint configuration; logging options do not supply it.
 
 The scoped options are `--log-origin-level`, `--log-boundary-level`, `--log-component-level`, and `--log-instance-level`. Their values use `name=level` pairs; lists can contain comma-separated pairs. Named levels are suitable for these scoped pairs. Use numeric global `--log-level` values (`0` off, `1` critical, `2` error, `3` warn, `4` info, `5` debug, `6` trace). Startup can convert the global value before named-level normalization; numeric spelling avoids that ordering issue.
 

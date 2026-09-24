@@ -56,7 +56,7 @@ Before writing code, it helps to name the three participating objects.
 \index{SocketClient@\texttt{SocketClient}}
 
 
-The visible `SocketServer` or `SocketClient` object is an application-side handle. Its name identifies endpoint configuration; `listen(...)` or `connect(...)` registers work using that configuration. An established peer connection appears later. Chapter 4 develops the distinction between handle, configured instance, and activation flow.
+The visible `SocketServer` or `SocketClient` object is an application-side handle. Its name identifies endpoint configuration; `listen(...)` or `connect(...)` registers work using that configuration. An established peer connection appears later. Chapter 4 develops the distinction between handle, instance, and activation flow.
 
 For this chapter, the visible handle types are:
 
@@ -505,7 +505,7 @@ The runtime drives endpoint work; the factory supplies each connection with a
 context whose callbacks implement the echo behavior. We can follow that division
 in four source files.
 
-The framework echo application under `src/apps/echo` combines one shared model with several network families and stream modes. The four-file `EchoPair` companion selects just IPv4, stream transport, and the non-TLS `legacy` variant so the first program stays readable.
+The framework echo application under `src/apps/echo` combines one shared model with several network families and connection variants. The four-file `EchoPair` companion selects just IPv4, stream transport, and the non-TLS `legacy` variant so the first program stays readable.
 
 Here `legacy` has the same meaning introduced in Chapter 2: it denotes the non-TLS stream connection variant. It does not mean that the component is obsolete.
 

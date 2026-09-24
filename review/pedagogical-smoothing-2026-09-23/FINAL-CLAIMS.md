@@ -18,3 +18,24 @@ book. Source inspection, local execution and hosted execution are distinguished.
   configures and activates the server, paralleling MQTT startup in
   `companion/examples/MiniGateway/MiniGatewayMqttClient.cpp:19`. Meaning and
   lifetime are unchanged by the grammar correction.
+
+## B — terminology by meaning
+
+The frozen `src/net/in/stream/legacy/SocketServer.h:69` alias selects the
+network wrapper, connection variant and configuration; the corresponding TLS,
+IPv6 and Unix headers confirm the independent selections. This supports
+“network family” and “connection variant”, without changing a transport claim.
+`src/core/socket/stream/SocketServer.h:90–107` stores callbacks taking a
+`SocketConnection*`; its callbacks at 126–163 support “connection lifecycle
+callback”, aligned with Ch8's table. `src/core/socket/stream/SocketClient.h`
+and the flow controller retain activation status separately from connections.
+The three redundant “configured” adjectives are removed where the surrounding
+passage already supplies configuration. This does not remove the distinction
+between an instance and its activation flow.
+
+Retained scoped uses: Part VI assigns design responsibilities to layers and
+application roles; Ch14's warning row describes an application responsibility's
+capacity to recover; Ch16 assigns operational retry requirements to that
+responsibility. Ch16's DISABLED example instead concerns instance activation.
+Every retained role occurrence, including exact symbols and stable IDs, is
+listed with context and a reason in terminology-allowlist.md.
