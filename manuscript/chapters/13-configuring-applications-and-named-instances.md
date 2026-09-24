@@ -90,7 +90,7 @@ instancename.sectionname.optionname = value
 For example:
 
 ```ini
-echoserver.local.port = 8080
+echoserver.local.port = 18091
 uplink.remote.host = "localhost"
 uplink.remote.port = 8080
 ```
@@ -156,7 +156,7 @@ uplink remote --host localhost --port 8080
 or in configuration-file form:
 
 ```ini
-echoserver.local.port = 8080
+echoserver.local.port = 18091
 uplink.remote.host = "localhost"
 uplink.remote.port = 8080
 ```
@@ -458,7 +458,7 @@ A successful reparse is therefore only one step in a live configuration change. 
 In a configuration file, the same hierarchy becomes a dotted key:
 
 ```ini
-echoserver.local.port = 8080
+echoserver.local.port = 18091
 uplink.remote.host = "localhost"
 uplink.remote.port = 8080
 ```
@@ -581,7 +581,7 @@ Configuration files should be readable by humans, stable enough for deployment, 
 The dotted-key structure helps:
 
 ```ini
-echoserver.local.port = 8080
+echoserver.local.port = 18091
 ```
 
 For multi-instance applications, this becomes especially useful:

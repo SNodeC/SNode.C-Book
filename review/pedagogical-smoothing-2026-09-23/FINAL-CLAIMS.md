@@ -47,3 +47,22 @@ network family. This remains a comparison with the context held fixed, not a
 claim that every protocol is family-independent. The frozen
 `src/apps/echo/EchoSocketContext.cpp` consumes and reflects peer bytes, while
 `src/apps/echo/echoserver.cpp` selects the family aliases outside that context.
+
+## D — retained teaching material; non-cutting improvements
+
+The author withdrew the shortening request before any compression. The requested
+Ch1/3/4/7/8/11/12/13/18/21/29 and Conventions deletions are not performed;
+all explanations and listings remain. Ch13's four file-value examples now use
+18091 consistently, while C++ 8080 and CLI 18092 retain their separate purposes.
+Ch27 relates its preserved component tree to Ch25's preserved application tree.
+Ch32 keeps both labs and every expected observation, adding synthesis about
+acceptance authority, observer lifetime and restart against the final system.
+Its existing public solutions already explain those distinctions.
+
+Source evidence: frozen `src/apps/echo/CMakeLists.txt` defines generated echo
+targets; `src/net/in/stream/legacy/CMakeLists.txt` declares the component
+dependencies represented by Ch27. Companion `MeasurementModel.cpp` assigns
+sequence in `accept()` and notifies subscribers; the model-ownership and
+model-instances exercises use that canonical implementation. The Part XI
+checkpoint covers the composed boundaries beyond those model-only observations.
+No application code, lab assertion or timeout changes in this group.

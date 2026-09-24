@@ -89,7 +89,7 @@ A name locates a layer, server/client side or composition. `net-in-stream-tls` s
 
 ### The consumer's component subgraph
 
-The short consumer link line is supported by declared dependencies. This selected subgraph follows the application's requirement downward; repeated runtime nodes represent shared targets, not separate runtime instances. It omits system-library details and optional protocol branches that this echo consumer does not select.
+Chapter 25 showed the application tree; this consumer subgraph adds its build and component view. The short consumer link line is supported by declared dependencies. This selected subgraph follows the application's requirement downward; repeated runtime nodes represent shared targets, not separate runtime instances. It omits system-library details and optional protocol branches that this echo consumer does not select.
 
 ::: {.snodec-note title="Component reference: IPv4 legacy echo"}
 ```text

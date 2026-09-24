@@ -2159,94 +2159,6 @@
       "line": 333
     },
     {
-      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
-      "text": "Chapter 17",
-      "targets": [
-        "the-http-layer"
-      ],
-      "source_ids": [
-        "R309"
-      ],
-      "line": 245
-    },
-    {
-      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
-      "text": "Chapter 20",
-      "targets": [
-        "websocket-and-protocol-upgrade"
-      ],
-      "source_ids": [
-        "R310"
-      ],
-      "line": 245
-    },
-    {
-      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
-      "text": "Chapter 28",
-      "targets": [
-        "deployment-on-linux-and-openwrt"
-      ],
-      "source_ids": [
-        "R311"
-      ],
-      "line": 245
-    },
-    {
-      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
-      "text": "Chapter 28",
-      "targets": [
-        "deployment-on-linux-and-openwrt"
-      ],
-      "source_ids": [
-        "R312"
-      ],
-      "line": 247
-    },
-    {
-      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
-      "text": "Chapter 20",
-      "targets": [
-        "websocket-and-protocol-upgrade"
-      ],
-      "source_ids": [
-        "R313"
-      ],
-      "line": 256
-    },
-    {
-      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
-      "text": "Chapter 13",
-      "targets": [
-        "application-and-instance-configuration-in-detail"
-      ],
-      "source_ids": [
-        "R314"
-      ],
-      "line": 298
-    },
-    {
-      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
-      "text": "Chapter 29",
-      "targets": [
-        "testing-debugging-and-benchmarking"
-      ],
-      "source_ids": [
-        "R315"
-      ],
-      "line": 325
-    },
-    {
-      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
-      "text": "Chapter 2",
-      "targets": [
-        "preparing-your-environment"
-      ],
-      "source_ids": [
-        "R316"
-      ],
-      "line": 397
-    },
-    {
       "file": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
       "text": "Chapter 27",
       "targets": [
@@ -2495,54 +2407,6 @@
         "R341"
       ],
       "line": 1296
-    },
-    {
-      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
-      "text": "Chapter 24",
-      "targets": [
-        "database-support-and-application-state"
-      ],
-      "source_ids": [],
-      "line": 76
-    },
-    {
-      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
-      "text": "Chapter 31",
-      "targets": [
-        "extending-minigateway-with-a-new-network-role"
-      ],
-      "source_ids": [],
-      "line": 90
-    },
-    {
-      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
-      "text": "Chapter 12",
-      "targets": [
-        "building-the-same-protocol-over-different-lower-layers"
-      ],
-      "source_ids": [],
-      "line": 104
-    },
-    {
-      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
-      "text": "Chapter 31",
-      "targets": [
-        "extending-minigateway-with-a-new-network-role"
-      ],
-      "source_ids": [
-        "R344"
-      ],
-      "line": 178
-    },
-    {
-      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
-      "text": "Appendix A",
-      "targets": [
-        "reading-the-codebase-with-confidence",
-        "extending-the-framework-safely"
-      ],
-      "source_ids": [],
-      "line": 239
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -3367,6 +3231,169 @@
         "R058"
       ],
       "line": 30
+    },
+    {
+      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "text": "Chapter 25",
+      "targets": [
+        "reading-complete-snodec-applications"
+      ],
+      "source_ids": [],
+      "line": 92
+    },
+    {
+      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "text": "Chapter 17",
+      "targets": [
+        "the-http-layer"
+      ],
+      "source_ids": [
+        "R309"
+      ],
+      "line": 245
+    },
+    {
+      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "text": "Chapter 20",
+      "targets": [
+        "websocket-and-protocol-upgrade"
+      ],
+      "source_ids": [
+        "R310"
+      ],
+      "line": 245
+    },
+    {
+      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "text": "Chapter 28",
+      "targets": [
+        "deployment-on-linux-and-openwrt"
+      ],
+      "source_ids": [
+        "R311"
+      ],
+      "line": 245
+    },
+    {
+      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "text": "Chapter 28",
+      "targets": [
+        "deployment-on-linux-and-openwrt"
+      ],
+      "source_ids": [
+        "R312"
+      ],
+      "line": 247
+    },
+    {
+      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "text": "Chapter 20",
+      "targets": [
+        "websocket-and-protocol-upgrade"
+      ],
+      "source_ids": [
+        "R313"
+      ],
+      "line": 256
+    },
+    {
+      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "text": "Chapter 13",
+      "targets": [
+        "application-and-instance-configuration-in-detail"
+      ],
+      "source_ids": [
+        "R314"
+      ],
+      "line": 298
+    },
+    {
+      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "text": "Chapter 29",
+      "targets": [
+        "testing-debugging-and-benchmarking"
+      ],
+      "source_ids": [
+        "R315"
+      ],
+      "line": 325
+    },
+    {
+      "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+      "text": "Chapter 2",
+      "targets": [
+        "preparing-your-environment"
+      ],
+      "source_ids": [
+        "R316"
+      ],
+      "line": 397
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Chapter 24",
+      "targets": [
+        "database-support-and-application-state"
+      ],
+      "source_ids": [],
+      "line": 76
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Chapter 31",
+      "targets": [
+        "extending-minigateway-with-a-new-network-role"
+      ],
+      "source_ids": [],
+      "line": 90
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Chapter 12",
+      "targets": [
+        "building-the-same-protocol-over-different-lower-layers"
+      ],
+      "source_ids": [],
+      "line": 104
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Chapter 31",
+      "targets": [
+        "extending-minigateway-with-a-new-network-role"
+      ],
+      "source_ids": [
+        "R344"
+      ],
+      "line": 178
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Appendix A",
+      "targets": [
+        "reading-the-codebase-with-confidence",
+        "extending-the-framework-safely"
+      ],
+      "source_ids": [],
+      "line": 239
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Chapter 4",
+      "targets": [
+        "the-snodec-runtime-mental-model"
+      ],
+      "source_ids": [],
+      "line": 250
+    },
+    {
+      "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+      "text": "Chapter 6",
+      "targets": [
+        "core-runtime-and-event-processing"
+      ],
+      "source_ids": [],
+      "line": 251
     }
   ],
   "migration_dispositions": [
