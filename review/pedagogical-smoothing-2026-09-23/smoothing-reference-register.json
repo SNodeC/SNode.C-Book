@@ -466,7 +466,7 @@
         "your-first-working-program-the-echo-pair"
       ],
       "source_ids": [],
-      "line": 19
+      "line": 25
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -477,7 +477,7 @@
       "source_ids": [
         "R070"
       ],
-      "line": 260
+      "line": 276
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -488,7 +488,7 @@
       "source_ids": [
         "R071"
       ],
-      "line": 289
+      "line": 305
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -499,7 +499,7 @@
       "source_ids": [
         "R072"
       ],
-      "line": 328
+      "line": 344
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -510,7 +510,7 @@
       "source_ids": [
         "R073"
       ],
-      "line": 342
+      "line": 358
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -521,7 +521,7 @@
       "source_ids": [
         "R074"
       ],
-      "line": 374
+      "line": 402
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -530,7 +530,7 @@
         "why-snodec-exists"
       ],
       "source_ids": [],
-      "line": 428
+      "line": 456
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -938,7 +938,7 @@
       "source_ids": [
         "R111"
       ],
-      "line": 161
+      "line": 159
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -949,7 +949,7 @@
       "source_ids": [
         "R113"
       ],
-      "line": 217
+      "line": 203
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -960,7 +960,7 @@
       "source_ids": [
         "R115"
       ],
-      "line": 296
+      "line": 276
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -971,7 +971,7 @@
       "source_ids": [
         "R117"
       ],
-      "line": 322
+      "line": 302
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -982,7 +982,7 @@
       "source_ids": [
         "R118"
       ],
-      "line": 322
+      "line": 302
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -993,7 +993,7 @@
       "source_ids": [
         "R119"
       ],
-      "line": 329
+      "line": 309
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -1002,7 +1002,7 @@
         "the-snodec-runtime-mental-model"
       ],
       "source_ids": [],
-      "line": 333,
+      "line": 313,
       "evidence": "Follow-up 12 P2: point the operational table to the sole runtime taxonomy and figure."
     },
     {
@@ -1091,7 +1091,7 @@
       "source_ids": [
         "R150"
       ],
-      "line": 259
+      "line": 257
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
@@ -1102,7 +1102,7 @@
       "source_ids": [
         "R152"
       ],
-      "line": 283
+      "line": 281
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
@@ -1113,7 +1113,7 @@
       "source_ids": [
         "R153"
       ],
-      "line": 344
+      "line": 338
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
@@ -1124,7 +1124,7 @@
       "source_ids": [
         "R154"
       ],
-      "line": 373
+      "line": 367
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
@@ -1135,7 +1135,7 @@
       "source_ids": [
         "R155"
       ],
-      "line": 375
+      "line": 369
     },
     {
       "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
@@ -1243,7 +1243,7 @@
       "source_ids": [
         "R183"
       ],
-      "line": 274
+      "line": 270
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -1254,7 +1254,7 @@
       "source_ids": [
         "R186"
       ],
-      "line": 371
+      "line": 361
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -1265,7 +1265,7 @@
       "source_ids": [
         "R189"
       ],
-      "line": 440
+      "line": 430
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -1276,7 +1276,7 @@
       "source_ids": [
         "R190"
       ],
-      "line": 470
+      "line": 460
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -1290,7 +1290,7 @@
       "source_ids": [
         "R191"
       ],
-      "line": 574
+      "line": 564
     },
     {
       "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
@@ -1305,7 +1305,7 @@
       "source_ids": [
         "R192"
       ],
-      "line": 609
+      "line": 599
     },
     {
       "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
@@ -1583,7 +1583,7 @@
       "source_ids": [
         "R221"
       ],
-      "line": 128
+      "line": 217
     },
     {
       "file": "manuscript/chapters/18-the-express-like-framework.md",
@@ -1605,7 +1605,7 @@
       "source_ids": [
         "R230"
       ],
-      "line": 284
+      "line": 282
     },
     {
       "file": "manuscript/chapters/18-the-express-like-framework.md",
@@ -1616,7 +1616,7 @@
       "source_ids": [
         "R229"
       ],
-      "line": 287
+      "line": 285
     },
     {
       "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
@@ -1781,7 +1781,7 @@
       "source_ids": [
         "R247"
       ],
-      "line": 391
+      "line": 392
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1792,7 +1792,7 @@
       "source_ids": [
         "R252"
       ],
-      "line": 95
+      "line": 107
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1803,7 +1803,7 @@
       "source_ids": [
         "R255"
       ],
-      "line": 237
+      "line": 249
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1814,7 +1814,7 @@
       "source_ids": [
         "R261"
       ],
-      "line": 270
+      "line": 282
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1825,7 +1825,7 @@
       "source_ids": [
         "R260"
       ],
-      "line": 287
+      "line": 299
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1836,7 +1836,7 @@
       "source_ids": [
         "R249"
       ],
-      "line": 297
+      "line": 309
     },
     {
       "file": "manuscript/chapters/22-mqtt-over-websocket.md",
@@ -1933,7 +1933,7 @@
       "source_ids": [
         "R274"
       ],
-      "line": 167
+      "line": 161
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1946,7 +1946,7 @@
         "R275",
         "R276"
       ],
-      "line": 204
+      "line": 198
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1957,7 +1957,7 @@
       "source_ids": [
         "R277"
       ],
-      "line": 208
+      "line": 202
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1968,7 +1968,7 @@
       "source_ids": [
         "R278"
       ],
-      "line": 240
+      "line": 234
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1979,7 +1979,7 @@
       "source_ids": [
         "R279"
       ],
-      "line": 263
+      "line": 257
     },
     {
       "file": "manuscript/chapters/24-database-support-and-application-state.md",
@@ -2112,7 +2112,7 @@
       "source_ids": [
         "R299"
       ],
-      "line": 144
+      "line": 146
     },
     {
       "file": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
@@ -2123,7 +2123,7 @@
       "source_ids": [
         "R302"
       ],
-      "line": 157
+      "line": 159
     },
     {
       "file": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
@@ -2134,7 +2134,7 @@
       "source_ids": [
         "R307"
       ],
-      "line": 282
+      "line": 284
     },
     {
       "file": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",
@@ -2145,7 +2145,7 @@
       "source_ids": [
         "R308"
       ],
-      "line": 333
+      "line": 335
     },
     {
       "file": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
@@ -2218,7 +2218,7 @@
       "source_ids": [
         "R324"
       ],
-      "line": 43
+      "line": 41
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2230,7 +2230,7 @@
       "source_ids": [
         "R325"
       ],
-      "line": 125
+      "line": 123
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2241,7 +2241,7 @@
       "source_ids": [
         "R326"
       ],
-      "line": 129
+      "line": 127
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2254,7 +2254,7 @@
       "source_ids": [
         "R328"
       ],
-      "line": 156
+      "line": 154
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2265,7 +2265,7 @@
       "source_ids": [
         "R329"
       ],
-      "line": 172
+      "line": 170
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2276,7 +2276,7 @@
       "source_ids": [
         "R333"
       ],
-      "line": 293
+      "line": 291
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2287,7 +2287,7 @@
       "source_ids": [
         "R334"
       ],
-      "line": 301
+      "line": 299
     },
     {
       "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
@@ -2298,7 +2298,7 @@
       "source_ids": [
         "R335"
       ],
-      "line": 353
+      "line": 351
     },
     {
       "file": "manuscript/parts/part-11-building-and-evaluating-minigateway.md",
@@ -2404,7 +2404,7 @@
         "reading-public-types-and-components"
       ],
       "source_ids": [],
-      "line": 110
+      "line": 131
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2413,7 +2413,7 @@
         "reading-public-types-and-components"
       ],
       "source_ids": [],
-      "line": 110,
+      "line": 131,
       "evidence": "Follow-up 13 A: correct the type/header/component destination after the chapter split."
     },
     {
@@ -2425,7 +2425,7 @@
       "source_ids": [
         "R084"
       ],
-      "line": 135
+      "line": 156
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2436,7 +2436,7 @@
       "source_ids": [
         "R085"
       ],
-      "line": 139
+      "line": 160
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2447,7 +2447,7 @@
       "source_ids": [
         "R345"
       ],
-      "line": 264
+      "line": 285
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2458,7 +2458,7 @@
       "source_ids": [
         "R346"
       ],
-      "line": 288
+      "line": 309
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2469,7 +2469,7 @@
       "source_ids": [
         "R348"
       ],
-      "line": 294
+      "line": 315
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2480,7 +2480,7 @@
       "source_ids": [
         "R347"
       ],
-      "line": 300
+      "line": 321
     },
     {
       "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
@@ -2491,7 +2491,7 @@
       "source_ids": [
         "R349"
       ],
-      "line": 318
+      "line": 339
     },
     {
       "file": "manuscript/backmatter/further-reading.md",
@@ -3294,7 +3294,7 @@
       "source_ids": [
         "R314"
       ],
-      "line": 298
+      "line": 291
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -3305,7 +3305,7 @@
       "source_ids": [
         "R315"
       ],
-      "line": 325
+      "line": 318
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -3316,7 +3316,7 @@
       "source_ids": [
         "R316"
       ],
-      "line": 397
+      "line": 390
     },
     {
       "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",

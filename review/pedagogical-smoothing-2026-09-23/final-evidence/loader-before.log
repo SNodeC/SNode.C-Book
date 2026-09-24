@@ -1,0 +1,5 @@
+Diagnostic only: historical 62-test build, private installation; separate /usr/local/lib hidden.
+This is not a current 66-lab verification result. Other historical-run failures are not adjudicated.
+
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P2/companion/exercises/ch06/deferred-work: error while loading shared libraries: libsnodec-core-mux-epoll.so.2: cannot open shared object file: No such file or directory
+/home/voc/projects/snodec/publications/book/build/rebaseline-R2-07ca9a29-followup11/examples-P2/companion/exercises/ch09/bluetooth-selectors: error while loading shared libraries: libsnodec-net.so.2: cannot open shared object file: No such file or directory

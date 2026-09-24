@@ -2417,3 +2417,33 @@ terminology corrections, non-cutting synthesis/cross-reference improvements,
 apparatus, cadence, checkers and CI verification. Record the requested cuts as
 withdrawn by the author, not as completed compression or a technical blocker.
 No compression edits had been made when this instruction arrived.
+
+### Follow-up 13 — stopped at the frozen-framework Clang build
+
+A–I commits: `49c8ba7`, `f390b8c`, `7a92b21`, `e458f2d`, `ab0a145`,
+`ae145cb`, `443e24d`, `99ca720`, `f19a658`. The author withdrew compression
+before any such edit; all targeted teaching explanations and listings remain.
+Current extent is 110,955 tokens (+188), all chapter floors/caps satisfied;
+the rebuilt reading PDF is 328 pages. Local corrections, apparatus, cadence,
+precise taxonomy exceptions and the new final checker are recorded in
+`FINAL-POLISH-REPORT.md`. The checks pass: smoothing 16 groups, polish 9 groups,
+final guards, 30 editorial checker tests, reference/hygiene and frozen alignment.
+
+The shared companion configuration uses the existing lifecycle-lab inherited
+RPATH policy on Linux. Both affected binaries pass focused checks with the
+separate host installation hidden and LD_LIBRARY_PATH unset. Application code,
+existing test logic, assertions and timeouts are unchanged.
+
+The fresh Clang 21.1.8 framework build failed at
+`src/tools/snodec-control/src/ConfigActions.cpp:296` with `-Werror,-Wnrvo`.
+The GCC workflow build was stopped under the author’s framework stop rule.
+Neither fresh 66-lab run nor its smoke/lifetime suites is certified. No framework
+fix, flag change, alternate compiler experiment or behavioral investigation
+followed. Both author-tree freeze records equal R2, ignoring only `?? porting/`.
+
+The 37-row matrix has 36 ● and 1 ◐ in each dimension (288 ●, 8 ◐): row 33
+records the withdrawn compression criterion, not authorized unfinished cuts.
+The publisher submission gate is not passed because fresh executable verification
+is incomplete. A–I were pushed; hosted run 36002150169 was in progress.
+Commit and push the final evidence without merging, then end this run. No further
+broad manuscript refinement is authorized.

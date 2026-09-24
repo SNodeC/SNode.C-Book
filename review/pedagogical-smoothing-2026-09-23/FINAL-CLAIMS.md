@@ -45,7 +45,7 @@ listed with context and a reason in terminology-allowlist.md.
 Ch7 now names the proposition being tested: protocol independence from the
 network family. This remains a comparison with the context held fixed, not a
 claim that every protocol is family-independent. The frozen
-`src/apps/echo/EchoSocketContext.cpp` consumes and reflects peer bytes, while
+`src/apps/echo/model/EchoSocketContext.cpp:86` consumes and reflects peer bytes, while
 `src/apps/echo/echoserver.cpp` selects the family aliases outside that context.
 
 ## D — retained teaching material; non-cutting improvements
@@ -94,7 +94,7 @@ unchanged header/component advice; transitions remain outside the box.
 Ch13/14 move unchanged answer pointers after their exercises. Appendix A moves
 the complete descriptor section immediately after runtime reading, preserving
 its heading (and generated anchor) and every technical claim. The frozen
-`src/core/eventreceiver/DescriptorEventReceiver.h` and descriptor publisher
+`src/core/DescriptorEventReceiver.h:112–133` and descriptor publisher
 implementation retain the enable/disable and suspend/resume distinctions.
 
 ## H — cadence without compression

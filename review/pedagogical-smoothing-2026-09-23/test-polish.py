@@ -3,6 +3,7 @@
 import importlib.util
 from pathlib import Path
 import shutil
+import re
 import tempfile
 import unittest
 
@@ -41,12 +42,15 @@ class Guards(unittest.TestCase):
     def fails(self, number):
         self.assertTrue(any(e.startswith(str(number)+':') for e in self.errors()))
 
-    def test_current_scope_qualification_is_reported(self):
-        errors = self.errors()
-        self.assertEqual(len(errors), 2)
-        self.assertTrue(all(e.startswith('2:') for e in errors))
-        self.assertIn('conventions.md', errors[0])
-        self.assertIn('appendix-a-', errors[1])
+    def test_current_tables_meet_the_scoped_rule(self):
+        self.assertFalse([e for e in self.errors() if e.startswith('2:')])
+
+    def test_2_exemptions_do_not_excuse_other_tables_in_same_files(self):
+        for name in ('manuscript/frontmatter/conventions.md',
+                     'manuscript/chapters/appendix-a-reading-and-extending-the-framework.md'):
+            p = self.root/name
+            p.write_text(p.read_text()+'\n| handle | instance | flow | connection | context |\n|---|---|---|---|---|\n')
+        self.assertEqual(sum(e.startswith('2:') for e in self.errors()), 2)
 
     def test_1_phrase_not_excused_by_unrelated_allowlist(self):
         p = self.chapter(5)
@@ -61,7 +65,7 @@ class Guards(unittest.TestCase):
     def test_2_additional_taxonomy_table(self):
         p = self.chapter(8)
         p.write_text(p.read_text()+'\n| handle | instance | flow | connection | context |\n|---|---|---|---|---|\n')
-        self.assertEqual(sum(e.startswith('2:') for e in self.errors()), 3)
+        self.assertEqual(sum(e.startswith('2:') for e in self.errors()), 1)
 
     def test_3_command_required_in_each_item(self):
         p = self.chapter(2)
@@ -111,12 +115,14 @@ class Guards(unittest.TestCase):
 
     def test_9_stale_metric(self):
         p = self.root/'review/proposal/book-proposal-package.md'
-        self.replace(p, '110,767 whitespace tokens', '110,768 whitespace tokens')
+        current = re.search(r'[\d,]+ whitespace tokens', p.read_text())[0]
+        self.replace(p, current, '1 whitespace tokens')
         self.fails(9)
 
     def test_9_stale_page_count(self):
         p = self.root/'review/proposal/book-proposal-package.md'
-        self.replace(p, '330 pages', '331 pages')
+        current = re.search(r'\d+ pages', p.read_text())[0]
+        self.replace(p, current, '1 pages')
         self.fails(9)
 
     def test_9_internal_terms_in_evidence_sheet(self):

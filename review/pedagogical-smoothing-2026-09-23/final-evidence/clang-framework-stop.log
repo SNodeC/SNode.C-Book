@@ -1,0 +1,10 @@
+Local compiler: Debian clang 21.1.8. Default workflow build script; no flag overrides.
+
+FAILED: [code=1] src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigActions.cpp.o
+/usr/bin/cmake -E __run_co_compile --iwyu="/usr/bin/include-what-you-use;-Xiwyu;--verbose=3;-Xiwyu;--cxx17ns;-Xiwyu;--regex=ecmascript;-Xiwyu;--quoted_includes_first;-Xiwyu;--max_line_length=160;--driver-mode=g++" -- /usr/bin/clang++ -DSNODEC_INTREE_BUILD -I/home/voc/projects/snodec/publications/book/build/final-polish-public-07ca9a29/src/tools/snodec-control/src -g -std=c++20 -Werror -Wall -Wextra -Wconversion -Wuninitialized -Wunreachable-code -Wfloat-equal -fexec-charset=UTF-8 -ftemplate-backtrace-limit=0 -Wno-shadow -Wno-psabi -Wno-used-but-marked-unused -Weverything -Wno-c++98-compat-pedantic -Wno-exit-time-destructors -Wno-global-constructors -Wno-shadow-field -Wno-padded -Wno-documentation-unknown-command -Wno-unsafe-buffer-usage -Wno-switch-default -MD -MT src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigActions.cpp.o -MF src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigActions.cpp.o.d -o src/tools/snodec-control/src/CMakeFiles/snodec-control-core.dir/ConfigActions.cpp.o -c /home/voc/projects/snodec/publications/book/build/final-polish-public-07ca9a29/src/tools/snodec-control/src/ConfigActions.cpp
+/home/voc/projects/snodec/publications/book/build/final-polish-public-07ca9a29/src/tools/snodec-control/src/ConfigActions.cpp:296:16: error: not eliding copy on return [-Werror,-Wnrvo]
+  296 |         return path;
+      |                ^
+1 error generated.
+[364/970] Building CXX object src/iot/mqtt/client/CMakeFiles/mqtt-client.dir/Mqtt.cpp.o
+ninja: build stopped: subcommand failed.

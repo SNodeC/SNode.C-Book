@@ -11,7 +11,7 @@ A working socket example is only the beginning: a learner must also understand w
 | Author | Volker Christian |
 | Format | Teaching book for independent study; modern C++, Linux-oriented examples |
 | Available material | 32 chapters in 11 Parts, contributor appendix, epilogue, reference material and index; complete companion sources and public solutions |
-| Current extent | 110,767 whitespace tokens, including 7,876 fenced tokens; 330 pages in the rebuilt reading PDF; publisher pagination pending |
+| Current extent | 110,955 whitespace tokens, including 7,876 fenced tokens; 328 pages in the rebuilt reading PDF; publisher pagination pending |
 | Length ceiling | At most 115,000 words |
 | **Source baseline** | SNode.C project version `2.0.0`, public commit `07ca9a2936ee72582df7d159cb06666fe23e30f8`, verified by its file manifest. |
 
@@ -47,7 +47,7 @@ These books locate the proposal on the specialist programming shelf. The distinc
 
 ## Part plan
 
-The 32-chapter structure and contributor appendix are implemented. Word counts come from the current Markdown manifest. The rebuilt reading PDF has 330 pages. Part page ranges are not quoted here; publisher trim and typesetting will change the printed extent.
+The 32-chapter structure and contributor appendix are implemented. Word counts come from the current Markdown manifest. The rebuilt reading PDF has 328 pages. Part page ranges are not quoted here; publisher trim and typesetting will change the printed extent.
 
 | Part | Chapters | Pages |
 |--------------------------------------------------------|-------------:|------:|
@@ -115,8 +115,8 @@ The completed pedagogical revision gives readers a gentler opening: they meet a 
 
 | Requirement | Completed in the supplied material | Maintain through final production |
 |--------------------|----------------------------------------|----------------------------------------|
-| Length | 110,767 total whitespace tokens, including 7,876 fenced tokens | Author's ceiling: at most 115,000 words; retain complete code listings |
-| Section density | 259 chapter subheadings; average 365.17 prose words per section | At most 550 subheadings; average at least 250 |
+| Length | 110,955 total whitespace tokens, including 7,876 fenced tokens | Author's ceiling: at most 115,000 words; retain complete code listings |
+| Section density | 259 chapter subheadings; average 365.88 prose words per section | At most 550 subheadings; average at least 250 |
 | Teaching pattern | 32 chapters and Appendix A: 99 objectives, 165 mapped exercises, public answers and lab solutions | 3–5 objectives, recap of at most five bullets, all three exercise tiers and full objective coverage |
 | Applied principles | 20 rule boxes; zero closing-perspective sections or flagged authoring notes | At most 20 applicable rules; preserve concise recaps and clean reader text |
 | Explanatory blocks | 46 text fences | At most 250; retain useful explanations and technical qualifications |

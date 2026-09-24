@@ -71,6 +71,28 @@ def tables(text):
             block = []
 
 
+def taxonomy_exception(path, table):
+    """Exempt only the glossary and the two-row activation reading path."""
+    cells = [[c.strip() for c in line.strip().strip('|').split('|')]
+             for line in table.splitlines()]
+    if path == 'manuscript/frontmatter/conventions.md':
+        terms = ['**Endpoint handle**', '**Instance**', '**Named instance**',
+                 '**Anonymous instance**', '**Flow; flow handle**', '**Connection**',
+                 '**Context; factory**', '**Network family**', '**Transport form**',
+                 '**Connection variant**', '**Carrier**', '**Role**',
+                 '**Acceptance; accepted state**']
+        return (cells[0] == ['Term', 'Meaning in this book']
+                and [c[0] for c in cells[2:]] == terms
+                and all(len(c) == 2 for c in cells))
+    if path == 'manuscript/chapters/appendix-a-reading-and-extending-the-framework.md':
+        return (cells[0] == ['Endpoint handle', 'Activation', 'Subsequent reading path']
+                and len(cells) == 4 and all(len(c) == 3 for c in cells)
+                and [c[:2] for c in cells[2:]] == [
+                    ['`SocketServer`', '`listen(...)`'],
+                    ['`SocketClient`', '`connect(...)`']])
+    return False
+
+
 def chapter(texts, number):
     return next((p, t) for p, t in texts.items()
                 if p.startswith(f'manuscript/chapters/{number:02}-'))
@@ -114,7 +136,7 @@ def check(root, pdf):
         for n, table in tables(text):
             names = [name for name in ('handle', 'instance', 'flow', 'connection', 'context', 'factory')
                      if re.search(r'\b' + (r'factor(?:y|ies)' if name == 'factory' else name + 's?') + r'\b', table, re.I)]
-            need(len(names) < 5, 2, f'{path}:{n}: repeated taxonomy {names}')
+            need(len(names) < 5 or taxonomy_exception(path, table), 2, f'{path}:{n}: repeated taxonomy {names}')
 
     path, text = chapter(texts, 2)
     box = re.search(r'::: [^\n]*title="Shortest path to Chapter 3"[^\n]*\n(.*?)\n:::', text, re.S)
