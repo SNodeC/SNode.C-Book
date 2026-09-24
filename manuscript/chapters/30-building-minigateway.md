@@ -280,7 +280,7 @@ add_custom_target(
 )
 ```
 
-The target now selects the protocol and connection components used by the application without repeating their lower dependencies. It does not define measurement meaning; the next file begins that domain contract before any route or broker callback uses it.
+The target selects the application’s protocol and connection components; their lower dependencies remain with the components. Measurement meaning belongs elsewhere. Begin that domain contract in the following value definition, before any route or broker callback uses it.
 
 ### The value, codec, and acceptance model
 
@@ -514,7 +514,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-Every accepted input now replaces current state and receives one locally assigned sequence before listeners run. The model has no database or broker-delivery knowledge, so the next configuration layer can adjust communication choices without redefining acceptance.
+Before listeners run, each accepted input replaces current state and receives one locally assigned sequence. Database and broker delivery remain outside the model’s knowledge. With acceptance defined, the configuration layer can adjust communication choices without redefining it.
 
 ### Configuration, diagnostics, and the web role
 
@@ -630,7 +630,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-The options now have names, defaults and accessors in one configuration section. Reading a topic value neither subscribes nor publishes; the following diagnostic helper will likewise report communication outcomes without taking over the operation that produced them.
+One configuration section holds the options’ names, defaults and accessors. Reading a topic value neither subscribes nor publishes. Reporting needs a similar separation: the following diagnostic helper describes communication outcomes while leaving their operations with the code that performs them.
 
 **Shared socket-state reporting**
 
@@ -696,7 +696,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-The state cases now produce comparable diagnostics for successful activation and failures. Reporting does not repair a failed endpoint or validate a measurement; the web implementation that follows still owns its routes and their application-level decisions.
+Successful activation and failures receive comparable diagnostics through these state cases. Reporting leaves failed-endpoint repair and measurement validation to their owners. We can now read the web implementation, whose routes retain the application-level decisions behind those reports.
 
 **The web and SSE role**
 
@@ -842,7 +842,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-The routes now share one model, and the SSE subscription is removed when its response context disconnects. A web observation cannot guarantee MQTT delivery; the next protocol object connects the same accepted state to the broker conversation separately.
+These routes share one model; response-context disconnection removes the SSE subscription. Web observation still cannot guarantee MQTT delivery. Connecting the same accepted state to a broker conversation requires the separate MQTT protocol object developed in the following listing.
 
 ### The MQTT protocol and its connection factory
 

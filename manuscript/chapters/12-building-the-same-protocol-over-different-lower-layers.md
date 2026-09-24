@@ -350,25 +350,17 @@ The same preconfigured endpoint can be created over another network family when 
 
 Network-family transfer is useful only when it preserves clarity. There are cases where reuse should stop.
 
-A protocol may genuinely depend on a network-family detail.
+A protocol may genuinely depend on a network-family detail. For example, a Bluetooth-oriented protocol may care about device identity in a way that is not equivalent to an IP address or a Unix-domain path.
 
-For example, a Bluetooth-oriented protocol may care about device identity in a way that is not equivalent to an IP address or a Unix-domain path.
-
-A local IPC protocol may depend on path placement or local access assumptions.
-
-A network-facing protocol may treat remote address information as part of authentication, rate limiting, routing, or trust decisions.
+A local IPC protocol may depend on path placement or local access assumptions. A network-facing protocol may treat remote address information as part of authentication, rate limiting, routing, or trust decisions.
 
 If those details are part of the protocol's meaning, hiding them would be dishonest. In that case, the context should be allowed to know what it needs to know.
 
 Sometimes two deployments look similar at first but differ enough that one shared context becomes awkward. A local diagnostic Unix-domain service may have different assumptions than a network-facing service. A Bluetooth device-near endpoint may have different lifecycle expectations than an IP service.
 
-A TLS-protected network service may have different trust assumptions than a local IPC service. If one context becomes full of conditionals trying to cover all deployments, separate contexts may be clearer. This is not a failure of abstraction.
+A TLS-protected network service may have different trust assumptions than a local IPC service. If one context becomes full of conditionals trying to cover all deployments, separate contexts may be clearer. This is not a failure of abstraction. It is a sign that the protocol meaning has diverged.
 
-It is a sign that the protocol meaning has diverged.
-
-Experienced C++ developers often try to remove duplication aggressively. That is not always the right instinct here.
-
-A small amount of explicit outer-layer difference can be healthier than a giant abstraction that erases meaningful distinctions.
+Experienced C++ developers often try to remove duplication aggressively. That is not always the right instinct here. A small amount of explicit outer-layer difference can be healthier than a giant abstraction that erases meaningful distinctions.
 
 A good design may have:
 
@@ -378,9 +370,7 @@ A good design may have:
 - small role-specific factories,
 - and explicit deployment choices.
 
-This is clean factoring rather than failure. The goal is not to make all network families look identical.
-
-The goal is to keep the stable protocol core stable and the real family-specific differences visible.
+This is clean factoring rather than failure. The goal is not to make all network families look identical. The goal is to keep the stable protocol core stable and the real family-specific differences visible.
 
 \index{configuration!network-family transfer}
 

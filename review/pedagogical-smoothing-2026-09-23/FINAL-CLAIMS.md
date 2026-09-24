@@ -96,3 +96,14 @@ the complete descriptor section immediately after runtime reading, preserving
 its heading (and generated anchor) and every technical claim. The frozen
 `src/core/eventreceiver/DescriptorEventReceiver.h` and descriptor publisher
 implementation retain the enable/disable and suspend/resume distinctions.
+
+## H — cadence without compression
+
+Short adjacent paragraphs in the five specified passages are joined around one
+idea, preserving every sentence and code list. Ch27 retains all 19 compile
+definitions in a compact two-column table; no name is omitted. Five Ch30
+post-listing paragraphs vary their syntax while preserving implementation,
+knowledge boundary, invariant and transition. Source inspection of the
+canonical MiniGateway CMake, MeasurementModel, configuration, state reporting
+and WebApp files confirms the same responsibilities; complete listings are
+unchanged. This group does not implement the withdrawn shortening request.

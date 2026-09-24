@@ -154,13 +154,9 @@ The connection object carries several groups of responsibility:
 
 This table is not meant to replace API documentation. Its job is to show why the connection is a runtime object with identity, data flow, time, diagnostics, and protocol attachment.
 
-A connection object represents the managed communication relationship.
+A connection object represents the managed communication relationship. A context object represents the application protocol endpoint attached to that relationship.
 
-A context object represents the application protocol endpoint attached to that relationship.
-
-Chapter 7 explained what address objects mean.
-
-Here we see where they appear during connection lifetime.
+Chapter 7 explained what address objects mean. Here we see where they appear during connection lifetime.
 
 A `SocketConnection` exposes three address views:
 
@@ -170,19 +166,13 @@ getLocalAddress()
 getRemoteAddress()
 ```
 
-The **bind address** describes the address requested or used for binding.
-
-The **local address** describes the actual local endpoint of the connection.
-
-The **remote address** describes the peer endpoint.
+The **bind address** describes the address requested or used for binding. The **local address** describes the actual local endpoint of the connection. The **remote address** describes the peer endpoint.
 
 Keeping these separate is useful for wildcard binding, client-side automatic local endpoint selection, diagnostics, and understanding what the operating system ultimately chose.
 
 For example, a server may be configured with a wildcard bind address. A concrete accepted connection will still have an actual local endpoint and a remote peer endpoint. A client may specify a remote peer address while leaving the local side broad enough for the operating system to choose. Those distinctions should remain visible.
 
-The connection is where data flow belongs.
-
-The core operations include:
+The connection is where data flow belongs. The core operations include:
 
 ```cpp
 sendToPeer(...)
@@ -200,11 +190,7 @@ Sending bytes, reading bytes, streaming a source, signalling end of stream, shut
 
 ### Timeouts, metrics, and names
 
-Timeouts belong naturally on the connection.
-
-A server-side instance may live for a long time. A specific peer connection may be idle, slow, stalled, or temporarily write-blocked.
-
-Those are different runtime concerns.
+Timeouts belong naturally on the connection. A server-side instance may live for a long time. A specific peer connection may be idle, slow, stalled, or temporarily write-blocked. Those are different runtime concerns.
 
 Connection-level timeout operations let the framework express that difference:
 
@@ -216,9 +202,7 @@ setWriteTimeout(...)
 
 This also connects back to Chapter 6: timers and event processing make timeout behavior part of the runtime, not a manual sleep loop in protocol code.
 
-A connection is also measurable.
-
-Useful connection-level quantities include:
+A connection is also measurable. Useful connection-level quantities include:
 
 ```cpp
 getTotalSent()
@@ -238,11 +222,7 @@ getInstanceName()
 getConnectionName()
 ```
 
-The instance name connects configuration and runtime diagnostics.
-
-The connection name identifies a concrete peer relationship under that instance.
-
-This distinction helps logs and diagnostics, especially for servers that accept many peers over time.
+The instance name connects configuration and runtime diagnostics. The connection name identifies a concrete peer relationship under that instance. This distinction helps logs and diagnostics, especially for servers that accept many peers over time.
 
 A server-side instance may have one name that remains stable across the process lifetime, while many connection names appear and disappear as peers connect and disconnect. That is exactly the distinction the logging output should preserve.
 

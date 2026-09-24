@@ -219,9 +219,7 @@ Read the hierarchy from the outside inward: application-wide concerns, a named i
 
 ![A representative named-instance hierarchy: application, instance, section, and option. Options can also belong directly to application or instance scope; discovery can describe deeper or anonymous nodes.](assets/figures/pdf/fig-13-configuration-hierarchy.pdf){#fig:configuration-hierarchy width=90% latex-placement="tbp"}
 
-Application scope belongs to the executable as a whole.
-
-It contains concerns that are not specific to one network endpoint. Examples include:
+Application scope belongs to the executable as a whole. It contains concerns that are not specific to one network endpoint. Examples include:
 
 - selecting a configuration file,
 - writing a configuration file,
@@ -232,9 +230,7 @@ It contains concerns that are not specific to one network endpoint. Examples inc
 - daemonization,
 - user and group selection for daemonized runs.
 
-These options form the operational envelope in which all instances operate.
-
-They answer questions about the process as a program, not about a particular server port, peer address, Unix-domain path, Bluetooth channel, or TLS certificate used by one instance.
+These options form the operational envelope in which all instances operate. They answer questions about the process as a program, not about a particular server port, peer address, Unix-domain path, Bluetooth channel, or TLS certificate used by one instance.
 
 Instance scope belongs to one named instance. A server listens and accepts; a client connects. Their server/client side appears in help, and their endpoint sections reflect that difference.
 
@@ -296,11 +292,7 @@ For `echoserver`, 18092 belongs in `local.port`: it selects where this server li
 
 The available sections depend on the server/client side and layer combination. Use the relevant scope’s help to discover the actual options.
 
-The `local` section describes the local endpoint of the instance.
-
-For a server, it is usually the most important endpoint section because it describes where the server binds or listens.
-
-For a client, it may describe an explicit local bind side if the application does not want to leave that side wildcarded.
+The `local` section describes the local endpoint of the instance. For a server, it is usually the most important endpoint section because it describes where the server binds or listens. For a client, it may describe an explicit local bind side if the application does not want to leave that side wildcarded.
 
 The concrete fields depend on the network family.
 
@@ -315,9 +307,7 @@ For a client, `remote` supplies the peer endpoint: host and port, Unix-domain pa
 
 An accepted server connection also has a remote peer address. That observation does not give the listening server a configurable `remote` section: the listener configures its local endpoint, while each accepted connection supplies the peer information.
 
-The `connection` section describes behavior of established peer relationships.
-
-Representative concerns include:
+The `connection` section describes behavior of established peer relationships. Representative concerns include:
 
 - read timeout,
 - write timeout,

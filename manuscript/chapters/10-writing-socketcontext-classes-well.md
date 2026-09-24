@@ -254,9 +254,7 @@ Keep unfinished frames, parser state, handshake state, pending requests and sess
 
 This does not mean a context can never refer to application services. A protocol endpoint may need authentication state, a message registry, a database facade, a dispatcher, or a shared application service.
 
-The design question is how that dependency becomes visible.
-
-A context may receive references, pointers, or shared services through factory construction. That keeps the dependency visible at the creation boundary instead of hiding it behind unrelated global state. Chapter 11 will return to this point, because the factory is the natural bridge between application-level construction and per-connection protocol behavior.
+The design question is how that dependency becomes visible. A context may receive references, pointers, or shared services through factory construction. That keeps the dependency visible at the creation boundary instead of hiding it behind unrelated global state. Chapter 11 will return to this point, because the factory is the natural bridge between application-level construction and per-connection protocol behavior.
 
 A context should read data with a clear idea of what it is prepared to process. For a simple echo protocol, a fixed buffer and immediate reflection may be enough.
 
@@ -290,9 +288,7 @@ shutdownWrite();
 close();
 ```
 
-These operations should also express protocol meaning.
-
-Examples:
+These operations should also express protocol meaning. Examples:
 
 - close when the protocol conversation is finished,
 - close on invalid or unsafe peer behavior,
@@ -301,9 +297,7 @@ Examples:
 
 \index{metrics!protocol information}
 
-Connection-derived metrics can be useful inside or around a context.
-
-Examples include:
+Connection-derived metrics can be useful inside or around a context. Examples include:
 
 - total queued bytes,
 - total sent bytes,

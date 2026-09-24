@@ -273,25 +273,18 @@ External libraries can enhance an existing component, be required to build it, o
 
 The build contains a helper that appends compile definitions to specific source files. It is used to inject default values such as:
 
-- `READ_BLOCKSIZE`,
-- `WRITE_BLOCKSIZE`,
-- `READ_TIMEOUT`,
-- `WRITE_TIMEOUT`,
-- `TERMINATE_TIMEOUT`,
-- `ACCEPTS_PER_TICK`,
-- `BACKLOG`,
-- `RETRY`,
-- `RETRY_ON_FATAL`,
-- `RETRY_TIMEOUT`,
-- `RETRY_TRIES`,
-- `RETRY_BASE`,
-- `RETRY_JITTER`,
-- `RETRY_LIMIT`,
-- `ACCEPT_TIMEOUT`,
-- `RECONNECT`,
-- `RECONNECT_TIME`,
-- `CONNECT_TIMEOUT`,
-- `TLS_INIT_TIMEOUT`.
+| Compile definition | Compile definition |
+|---|---|
+| `READ_BLOCKSIZE` | `WRITE_BLOCKSIZE` |
+| `READ_TIMEOUT` | `WRITE_TIMEOUT` |
+| `TERMINATE_TIMEOUT` | `ACCEPTS_PER_TICK` |
+| `BACKLOG` | `RETRY` |
+| `RETRY_ON_FATAL` | `RETRY_TIMEOUT` |
+| `RETRY_TRIES` | `RETRY_BASE` |
+| `RETRY_JITTER` | `RETRY_LIMIT` |
+| `ACCEPT_TIMEOUT` | `RECONNECT` |
+| `RECONNECT_TIME` | `CONNECT_TIMEOUT` |
+| `TLS_INIT_TIMEOUT` |  |
 
 These definitions let packagers shape defaults for an embedded package without editing ordinary implementation text.
 
