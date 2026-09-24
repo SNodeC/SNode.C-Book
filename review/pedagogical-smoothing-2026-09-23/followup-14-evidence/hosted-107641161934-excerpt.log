@@ -1,0 +1,16 @@
+Source: GitHub workflow job logs via GitHub connector.
+Full local log SHA-256: e26af56fc5a9c153f164fad495c009615a8ae41cefe250101129ec8ecc455f60
+
+2026-09-24T12:55:39.7808116Z -- The C compiler identification is GNU 13.3.0
+2026-09-24T12:55:39.9621429Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T13:10:34.2372116Z 100% tests passed, 0 tests failed out of 185
+2026-09-24T13:10:35.0728558Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T13:10:41.6330465Z 100% tests passed, 0 tests failed out of 4
+2026-09-24T13:10:41.6928843Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T13:12:37.3793385Z IDENTITY	localhost:48157	026-09-24T13:12:37.299Z INF framework/connection core.socket.stream role=server inst=endpoint conn=1 — transport connected
+2026-09-24T13:12:37.3801449Z ValueError: invalid literal for int() with base 10: '37.299Z INF framework/connection core.socket.stream role=server inst=endpoint conn=1 — transport connected'
+2026-09-24T13:14:03.0330487Z 98% tests passed, 1 tests failed out of 66
+2026-09-24T13:14:03.0331980Z The following tests FAILED:
+2026-09-24T13:14:03.0332727Z 	 13 - exercise-ch07-ip-families (Failed)
+2026-09-24T13:14:05.1982414Z Behavioral smoke tests passed.
+2026-09-24T13:14:05.3744847Z -- The CXX compiler identification is GNU 13.3.0

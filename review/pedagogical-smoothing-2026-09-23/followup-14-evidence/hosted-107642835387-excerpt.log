@@ -1,0 +1,12 @@
+Source: GitHub workflow job logs via GitHub connector.
+Full local log SHA-256: a6087514480a59a6efa9740479a309b1aaec32b1ccca0be757efdd4328e2d38d
+
+2026-09-24T13:00:17.1802209Z -- The C compiler identification is GNU 13.3.0
+2026-09-24T13:00:18.0449836Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T13:14:39.2540451Z 100% tests passed, 0 tests failed out of 185
+2026-09-24T13:14:40.0991491Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T13:14:46.9174132Z 100% tests passed, 0 tests failed out of 4
+2026-09-24T13:14:47.2598560Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-24T13:18:02.1368008Z 100% tests passed, 0 tests failed out of 66
+2026-09-24T13:18:04.2842481Z Behavioral smoke tests passed.
+2026-09-24T13:18:04.4599993Z -- The CXX compiler identification is GNU 13.3.0

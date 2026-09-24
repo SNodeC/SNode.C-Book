@@ -1,0 +1,12 @@
+Source: GitHub workflow job logs via GitHub connector.
+Full local log SHA-256: f16588a2253e29deea5b75175dc484c39d65cec546b49996ea20e3971d138482
+
+2026-09-24T12:55:39.1909814Z -- The C compiler identification is Clang 18.1.3
+2026-09-24T12:55:39.4092059Z -- The CXX compiler identification is Clang 18.1.3
+2026-09-24T13:11:16.3326212Z 100% tests passed, 0 tests failed out of 185
+2026-09-24T13:11:17.1045743Z -- The CXX compiler identification is Clang 18.1.3
+2026-09-24T13:11:24.4199341Z 100% tests passed, 0 tests failed out of 4
+2026-09-24T13:11:24.5568785Z -- The CXX compiler identification is Clang 18.1.3
+2026-09-24T13:14:59.3877967Z 100% tests passed, 0 tests failed out of 66
+2026-09-24T13:15:01.5131938Z Behavioral smoke tests passed.
+2026-09-24T13:15:01.7613103Z -- The CXX compiler identification is Clang 18.1.3
