@@ -41,7 +41,10 @@ std::size_t LineCommandServerContext::onReceivedFromPeer() {
                 line.pop_back();
             }
 
-            processLine(line);
+            if (!processLine(line)) {
+                receiveBuffer.clear();
+                return chunkLen;
+            }
             receiveBuffer.erase(0, lineEnd + 1);
             lineEnd = receiveBuffer.find('\n');
         }
@@ -57,7 +60,7 @@ std::size_t LineCommandServerContext::onReceivedFromPeer() {
     return chunkLen;
 }
 
-void LineCommandServerContext::processLine(const std::string& line) {
+bool LineCommandServerContext::processLine(const std::string& line) {
     if (!line.empty()) {
         snode::log::application().trace() << "Line command server received '" << line << "'";
 
@@ -67,8 +70,10 @@ void LineCommandServerContext::processLine(const std::string& line) {
             sendToPeer("OK\n");
         } else if (line == "QUIT") {
             close();
+            return false;
         } else {
             sendToPeer("ERR unknown command\n");
         }
     }
+    return true;
 }

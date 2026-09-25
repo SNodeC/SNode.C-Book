@@ -22,7 +22,7 @@ private:
     bool onSignal(int signum) override;
     std::size_t onReceivedFromPeer() override;
 
-    void processLine(const std::string& line);
+    bool processLine(const std::string& line);
 
     std::string receiveBuffer;
 };

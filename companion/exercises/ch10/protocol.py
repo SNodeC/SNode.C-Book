@@ -69,6 +69,9 @@ def conversation(open_peer):
         quiet(peer)
         peer.sendall(b'NG\nSTATUS\n')
         assert receive(peer, 8) == b'PONG\nOK\n'
+    with ready(open_peer) as peer:
+        peer.sendall(b'QUIT\nPING\n')
+        assert peer.recv(1) == b'', 'Reply after coalesced QUIT; PONG must not be sent'
     print(f'PASS: {len(observed)} segmentations, CRLF/empty/unknown commands, QUIT, partial-prefix silence')
     return observed
 

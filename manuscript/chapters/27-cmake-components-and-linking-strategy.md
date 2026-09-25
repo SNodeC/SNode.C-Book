@@ -183,8 +183,7 @@ An external consumer can write:
 ```cmake
 target_link_libraries(myapp
     PRIVATE
-        snodec::http-server-express
-        snodec::net-in-stream-legacy
+        snodec::http-server-express-legacy-in
 )
 ```
 
@@ -348,8 +347,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(snodec REQUIRED
     COMPONENTS
-        http-server-express
-        net-in-stream-legacy
+        http-server-express-legacy-in
 )
 
 add_executable(my-ipv4-legacy-webapp
@@ -358,8 +356,7 @@ add_executable(my-ipv4-legacy-webapp
 
 target_link_libraries(my-ipv4-legacy-webapp
     PRIVATE
-        snodec::http-server-express
-        snodec::net-in-stream-legacy
+        snodec::http-server-express-legacy-in
 )
 ```
 

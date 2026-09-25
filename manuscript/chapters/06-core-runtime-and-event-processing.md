@@ -106,7 +106,7 @@ The public facade provides `init(int argc, char* argv[])`, `start(const utils::T
 
 For most applications, `start()` owns that progression until stopped, left without observed work, or given a terminating tick result. Its `timeOut` argument bounds a multiplexer wait within an iteration, not the application's total running time. The multiplexer takes the earlier of that bound and its next scheduled timeout, then can continue with another iteration. A service deadline needs its own timer or application policy.
 
-Use `start()` to advance these examples. It bootstraps configuration and enters `RUNNING`. The public `EventLoop::tick(...)` path calls `_tick(...)` in `INITIALIZED`, but the internal multiplexer dispatch requires `RUNNING` with no pending stop signal, or `STOPPING`. Consequently, calling public `tick()` after `init()` is not equivalent to the startup path shown here. Read the internal tick sequence to understand coordination; do not infer an external-loop integration recipe from a successful return status.
+Use `start()` to advance these examples. It bootstraps configuration and enters `RUNNING`. The internal `EventLoop::tick(...)` path reached through public `SNodeC::tick()` calls `_tick(...)` in `INITIALIZED`, but the internal multiplexer dispatch requires `RUNNING` with no pending stop signal, or `STOPPING`. Consequently, calling public `tick()` after `init()` is not equivalent to the startup path shown here. Read the internal tick sequence to understand coordination; do not infer an external-loop integration recipe from a successful return status.
 
 The coarse runtime phases are `LOADED`, `INITIALIZED`, `RUNNING`, and `STOPPING`. They describe the framework lifecycle; a listen or connect flow can advance only when the runtime processes its work. `TickStatus` instead describes one iteration:
 
@@ -117,7 +117,7 @@ The coarse runtime phases are `LOADED`, `INITIALIZED`, `RUNNING`, and `STOPPING`
 | `NOOBSERVER` | No observed participants remain for the runtime to advance. |
 | `TRACE` | A named per-tick result, not a full tracing subsystem. |
 
-A successful status alone is insufficient for the initialized public stepping path described above. Read header names as vocabulary and implementation cooperation as the contract.
+A successful status alone is insufficient for the initialized public stepping path described above. The header names the possible results; the implementation shows when an iteration actually dispatches work.
 
 The current source also makes configuration reapplication an explicit runtime operation. `reconfigure()` is called on the event-loop thread while the state is `RUNNING`; it returns whether reapplication succeeded. It does not repeat process startup or restart sockets, and failed parsing does not promise to roll back settings already changed. Chapter 13 distinguishes this operation from initial configuration and from an application's separate decision to reactivate an endpoint.
 
@@ -163,7 +163,7 @@ core::EventReceiver::atNextTick(...);
 ```
 
 ::: {.snodec-warning title="Deferred-work warning"}
-Do not do this immediately on the caller's stack. Queue it for an event-loop turn.
+`atNextTick` queues the callback for a later event-loop turn instead of running it immediately on the caller’s stack. Captured objects must remain valid until that callback executes.
 :::
 
 The implementation creates a temporary receiver, publishes its event, invokes the stored callback from `onEvent(...)`, and destroys the temporary receiver after execution. Deferral moves work into runtime progression; it does not make captured references safe automatically.

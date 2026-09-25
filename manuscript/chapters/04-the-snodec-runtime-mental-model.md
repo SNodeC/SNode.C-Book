@@ -216,7 +216,7 @@ A reconnect creates another connection; an HTTP upgrade can replace a protocol c
 
 Before continuing, use the existing EchoPair diagnostics as an observation checkpoint. “listening on” reports activation progress for the configured server; “Echo context attached” reports a protocol object attached to a connection; “Data to reflect” reports that context's receive work. A second peer can produce another attachment while the server's instance name stays the same. Predict which of those observations changes when the second peer closes, then use the independent-peers lab to check the prediction. No log message by itself establishes the lifetime of an unrelated captured object.
 
-For Exercise 2, these message bodies are extracted from the existing EchoPair output; timestamps and semantic prefixes are omitted. The port is the ephemeral port used for this run.
+For Exercise 2, these message bodies are extracted from the existing EchoPair output; timestamps and semantic prefixes are omitted. Those prefixes carry the instance name `echoserver` and, for connection/context records, `conn=1`. The port is the ephemeral port used for this run.
 
 ```text
 echoserver: listening on '127.0.0.1:45747'

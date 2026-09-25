@@ -145,7 +145,9 @@ SNI selects identity material during handshake; selecting the expected peer iden
 
 ### Trust, expected identity, and SNI are separate decisions
 
+::: {.snodec-warning title="Trust policy must be explicit"}
 The current source requires care at this point. `ssl_utils.cpp` enables peer verification when trust material or default trust paths are selected and accepting unknown certificates is disabled. With no selected trust source, its verification mode is zero. Selecting a TLS wrapper without a trust policy leaves peer authentication unresolved.
+:::
 
 SNI is a second decision. `ssl_set_sni(...)` sets the name sent to the server; it does not configure the expected certificate identity. The example hostname-checking statements in `src/apps/echo/model/clients.h` are commented out. Reading those statements as active behavior would give the example a security property it does not currently have.
 

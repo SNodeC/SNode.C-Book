@@ -64,13 +64,12 @@ target_link_libraries(
 )
 ```
 
-It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream implementation. The equivalent external form uses exported `snodec::...` targets:
+It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream implementation. For an installed consumer of `<express/legacy/in/WebApp.h>`, select the compiled `http-server-express-legacy-in` component, which owns both dependencies; the in-tree fragment above remains the framework application’s separate link choice. The external form uses its exported `snodec::...` target:
 
 ```cmake
 find_package(snodec REQUIRED
     COMPONENTS
-        http-server-express
-        net-in-stream-legacy
+        http-server-express-legacy-in
 )
 
 add_executable(my-ipv4-legacy-webapp
@@ -79,8 +78,7 @@ add_executable(my-ipv4-legacy-webapp
 
 target_link_libraries(my-ipv4-legacy-webapp
     PRIVATE
-        snodec::http-server-express
-        snodec::net-in-stream-legacy
+        snodec::http-server-express-legacy-in
 )
 ```
 
@@ -90,35 +88,36 @@ The direct link line is short, but the component-owned dependency graph is deepe
 
 ```text
 my-ipv4-legacy-webapp
-|-- snodec::http-server-express
-|   |-- snodec::http-server
-|   |   `-- snodec::http
-|   |       |-- snodec::core-socket-stream
-|   |       |   `-- snodec::core-socket
-|   |       |       `-- snodec::core
-|   |       |           `-- snodec::utils
-|   |       |               `-- snodec::logger
-|   |       `-- libmagic, if available
-|   `-- nlohmann-json support
-`-- snodec::net-in-stream-legacy
-    |-- snodec::net-in-stream
-    |   `-- snodec::net-in-phy-stream
-    |       `-- snodec::net-in-phy
-    |           `-- snodec::net-in
-    |               `-- snodec::net
-    |                   `-- snodec::core-socket
-    |                       `-- snodec::core
-    |                           `-- snodec::utils
-    |                               `-- snodec::logger
-    `-- snodec::core-socket-stream-legacy
-        `-- snodec::core-socket-stream
-            `-- snodec::core-socket
-                `-- snodec::core
-                    `-- snodec::utils
-                        `-- snodec::logger
+`-- snodec::http-server-express-legacy-in
+    |-- snodec::http-server-express
+    |   |-- snodec::http-server
+    |   |   `-- snodec::http
+    |   |       |-- snodec::core-socket-stream
+    |   |       |   `-- snodec::core-socket
+    |   |       |       `-- snodec::core
+    |   |       |           `-- snodec::utils
+    |   |       |               `-- snodec::logger
+    |   |       `-- libmagic, if available
+    |   `-- nlohmann-json support
+    `-- snodec::net-in-stream-legacy
+        |-- snodec::net-in-stream
+        |   `-- snodec::net-in-phy-stream
+        |       `-- snodec::net-in-phy
+        |           `-- snodec::net-in
+        |               `-- snodec::net
+        |                   `-- snodec::core-socket
+        |                       `-- snodec::core
+        |                           `-- snodec::utils
+        |                               `-- snodec::logger
+        `-- snodec::core-socket-stream-legacy
+            `-- snodec::core-socket-stream
+                `-- snodec::core-socket
+                    `-- snodec::core
+                        `-- snodec::utils
+                            `-- snodec::logger
 ```
 
-The two branches are the application's direct decisions. The HTTP branch supplies protocol/application support, including lower context/runtime dependencies, optional `libmagic` and the Express layer's JSON requirement. The stream branch composes IPv4, stream transport, physical network support and legacy stream operation. Their internal dependencies can overlap without requiring the application to list them again.
+The composed target owns the two branches; choosing it selects the application's HTTP and transport composition. The HTTP branch supplies protocol/application support, including lower context/runtime dependencies, optional `libmagic` and the Express layer's JSON requirement. The stream branch composes IPv4, stream transport, physical network support and legacy stream operation. Their internal dependencies can overlap without requiring the application to list them again.
 
 This is a teaching view of the component graph, not a linker command. Detailed component rules belong in Chapter 27; here use the graph to locate each application's choices.
 
@@ -174,6 +173,8 @@ int main(int argc, char* argv[]) {
     return core::SNodeC::start();
 }
 ```
+
+`APPLICATION(req, res)` expands to a lambda parameter list containing const references to shared pointers to `express::Request` and `express::Response`, each marked `[[maybe_unused]]`; it is shorthand for the callback’s parameter types.
 
 The real file adds nested routers, JSON responses, SSE, timer-driven output and listen-state handling. The assembly sequence remains initialization, application object, behavior registration, activation and runtime start. Chapter 13's configuration surfaces and Chapter 14's state/log observations become concrete at these points.
 

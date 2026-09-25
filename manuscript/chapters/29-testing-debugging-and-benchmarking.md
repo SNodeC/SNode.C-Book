@@ -324,7 +324,7 @@ A bug report is most useful when it can be reproduced at the right boundary. For
 
 A routing bug should ideally be reproducible with a small route tree. A parser bug should ideally be reproducible with a small byte sequence. A deployment bug should ideally be reproducible from package installation and service startup. A reconnect bug should ideally describe the timing of peer availability, failure, retry, and recovery.
 
-Valgrind, sanitizers, and similar tools verify architectural lifetime assumptions alongside generic C++ memory behavior.
+Valgrind, sanitizers, and similar tools can expose violations of architectural lifetime assumptions on the paths a run executes, alongside generic C++ memory errors.
 
 They help answer questions such as: does a context disappear when its connection disappears; does a callback retain something longer than intended; does a WebSocket upgrade leave old HTTP state reachable; does a reconnect loop accumulate stale objects; does a database command path leak handles; does a dynamically loaded module leave unexpected reachable memory; and does a long-running MQTT broker accumulate session or subscription state incorrectly?
 

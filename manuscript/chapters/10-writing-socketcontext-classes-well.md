@@ -188,7 +188,10 @@ private:
                     line.pop_back();
                 }
 
-                processLine(line);
+                if (!processLine(line)) {
+                    receiveBuffer.clear();
+                    return chunkLen;
+                }
                 receiveBuffer.erase(0, lineEnd + 1);
                 lineEnd = receiveBuffer.find('\n');
             }
@@ -201,16 +204,18 @@ private:
         return chunkLen;
     }
 
-    void processLine(const std::string& line) {
+    bool processLine(const std::string& line) {
         if (line == "PING") {
             sendToPeer("PONG\n");
         } else if (line == "STATUS") {
             sendToPeer("OK\n");
         } else if (line == "QUIT") {
             close();
+            return false;
         } else if (!line.empty()) {
             sendToPeer("ERR unknown command\n");
         }
+        return true;
     }
 
     std::string receiveBuffer;
@@ -224,6 +229,8 @@ The input path stays honest. `onReceivedFromPeer()` reads a chunk, appends it to
 The output path is equally narrow. The context sends protocol responses through `sendToPeer(...)`. It decides that `PING` means `PONG`, that `STATUS` means `OK`, and that an unknown command produces an error line. It does not build a second output queue or bypass the connection surface.
 
 Closure also has protocol meaning. `QUIT` closes because the peer requested the end of the conversation. A signal closes because the runtime environment asks the endpoint to stop. An overlong line closes because the input no longer fits the protocol's safety rule. The loop checks the delimiter position before interpreting a complete line, and the following check rejects an overlong incomplete line. The 4096-byte limit counts bytes before the newline, including an optional carriage return. Splitting the same input across different receive callbacks must not change that decision. Those are different reasons, and good context code makes such reasons visible.
+
+Once `QUIT` requests closure, the command handler returns false so the receive loop discards the pending suffix and stops interpreting that batch; a coalesced `QUIT\nPING\n` must not produce `PONG`.
 
 The runnable server also queues an overlong-line diagnostic before closing. Immediate closure need not deliver that queued message; the framing test requires closure before command interpretation, not receipt of the diagnostic.
 

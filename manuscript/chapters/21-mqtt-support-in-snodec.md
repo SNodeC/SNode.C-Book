@@ -42,7 +42,7 @@ The MQTT implementation uses **MQTT 3.1.1**, protocol level 4. Read its packet e
 - **QoS 0** sends PUBLISH without acknowledgement: delivery is best effort. **QoS 1** uses PUBACK to acknowledge receipt by the MQTT peer; retransmission can produce duplicates. **QoS 2** uses PUBREC, PUBREL and PUBCOMP to complete one delivery while suppressing duplicates. Here, the receiver holds the publication until PUBREL. These exchanges cover one MQTT hop. The broker forwards a separate publication at a QoS bounded by the incoming QoS and the granted subscription. None of these packets acknowledges a subscriber's database transaction.
 - A **retained message** is the broker's latest retained value for a topic, delivered to a newly matching subscription. It is not a history. A retained publication with an empty payload removes that stored value.
 - **Keep-alive** checks MQTT liveness. With a positive interval, this client sends periodic PINGREQ; the broker answers PINGRESP. The receive watchdog uses 1.5 times the interval and restarts on received packets. The client's periodic ping schedule also runs during other traffic; it is not merely an idle timer.
-- A **clean session** discards the client's stored session state; a **persistent session** can resume subscriptions and unfinished exchanges under the same client identifier. This broker queues effective QoS 1/2 publications for an inactive persistent subscriber and drops QoS 0. Session persistence across connections is distinct from disk persistence: optional file storage is loaded at startup and saved during broker destruction, not synchronously for each publication.
+- A **clean session** discards the client's stored session state; a **persistent session** can resume subscriptions and unfinished exchanges under the same client identifier. The SNode.C broker implementation queues effective QoS 1/2 publications for an inactive persistent subscriber and drops QoS 0. Session persistence across connections is distinct from disk persistence: optional file storage is loaded at startup and saved during broker destruction, not synchronously for each publication.
 
 The later example disables the implementation's optional private loop-prevention extension. That extension sets a high bit in the protocol level; it is not standard MQTT 3.1.1 negotiation. Keep it disabled with ordinary peers.
 
@@ -225,6 +225,8 @@ private:
     }
 };
 ```
+
+The four constructor arguments are the connection name used for runtime identity, the MQTT client identifier, the keep-alive interval in seconds, and the session-store filename.
 
 The example deliberately omits the concrete lower connection setup. That setup decides how the MQTT object is attached to a stream or to another carrier. The MQTT object itself shows the protocol behavior: it sends `CONNECT`, waits for `CONNACK`, subscribes, publishes, handles incoming publishes, and sends `DISCONNECT` during shutdown. The complete companion client example is named `MQTT-ClientRole`.
 

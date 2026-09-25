@@ -739,6 +739,8 @@ The web construction function receives the shared model as a dependency instead 
 
 **`MiniGatewayWeb.cpp`**
 
+The `APPLICATION(req, res)` parameter-list shorthand is explained at its first use in Chapter 25; these routes use the same request and response reference types.
+
 <!-- snodec-source: companion/examples/MiniGateway/MiniGatewayWeb.cpp -->
 ```cpp
 #include "MiniGatewayWeb.h"

@@ -239,7 +239,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-The default path supports ordinary command-line tools. Override it through `measurement-input local --sun-path` for an isolated test or deployment. The constructor passes the shared model into the server factory through the SNode.C parameter pack.
+The `/tmp/minigateway-measurements.sock` path is a teaching default that supports ordinary command-line tools; use Chapter 7’s path-ownership guidance when choosing permissions, collision handling and cleanup for a deployment. Override it through `measurement-input local --sun-path` for an isolated test or deployment. The constructor passes the shared model into the server factory through the SNode.C parameter pack.
 
 **Constructing each connection context**
 
