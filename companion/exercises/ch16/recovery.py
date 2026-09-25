@@ -11,7 +11,9 @@ from ch15.tls import policy
 
 
 def records(path):
-    return [json.loads(line) for line in path.read_text().splitlines() if line.startswith('{')]
+    text = path.read_text()
+    complete = text[:text.rfind('\n') + 1]
+    return [json.loads(line) for line in complete.splitlines() if line.startswith('{')]
 
 
 def wait_for(process, path, predicate):

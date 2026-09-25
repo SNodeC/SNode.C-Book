@@ -133,7 +133,18 @@ def check(root):
         need(n <= u['cap']*1.05,2,f"Ch{u['new']} exceeds absolute 105% cap")
     for group,lo,hi in [('frontmatter',2280,2430),('parts',1356,1456),('backmatter',781,800)]:
         n=sum(m['total_words'] for p,m in metrics['files'].items() if f'/{group}/' in p)
-        need(lo<=n<=hi,2,f'{group} {n} outside {lo}..{hi}')
+        waived = False
+        if group == 'backmatter' and hi < n <= 812:
+            p = review/'backmatter-cap-waiver.md'
+            match = re.search(r'```json\s*\n(.*?)\n```', p.read_text(), re.S) if p.exists() else None
+            try:
+                w = json.loads(match[1]) if match else {}
+                waived = (w.get('group') == group and w.get('original_cap') == hi
+                          and w.get('approved_cap') == 812 and bool(w.get('authority'))
+                          and bool(w.get('reason')))
+            except (ValueError, AttributeError):
+                waived = False
+        need(lo<=n<=hi or waived,2,f'{group} {n} outside {lo}..{hi} without the explicit 812-token author waiver')
     epilogue=next(t for p,t in texts.items() if p.endswith('/epilogue.md'))
     need(1338<=len(epilogue.split())<=1438,2,'epilogue floor/cap')
     expected=[str(n) for n in range(1,33)]+['A']
@@ -211,6 +222,9 @@ def main():
     args=parser.parse_args()
     errors,metrics,structure,texts=check(args.root.resolve())
     print(f"Total {metrics['totals']['total_words']}; distance to wish {112338-metrics['totals']['total_words']:+d}; 16 assertion groups")
+    backmatter = sum(m['total_words'] for p,m in metrics['files'].items() if '/backmatter/' in p)
+    if backmatter > 800 and not any(e.startswith('2: backmatter') for e in errors):
+        print(f'Backmatter {backmatter}/800: explicit author waiver permits at most 812; global ceiling remains 115000')
     if args.diagnostics:
         oldfiles=subprocess.check_output(['git','show','c7b76c1:manuscript/book-files.txt'],cwd=args.root,text=True).splitlines()
         records=[]

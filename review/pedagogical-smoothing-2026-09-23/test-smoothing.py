@@ -25,7 +25,7 @@ class SmoothingTests(unittest.TestCase):
         cls.review=cls.root/'review/pedagogical-smoothing-2026-09-23'
         cls.review.mkdir(parents=True)
         shutil.copyfile(HERE/'smoothing-structure.json',cls.review/'smoothing-structure.json')
-        for name in ('cap-waivers.md', 'floor-waivers.md'):
+        for name in ('cap-waivers.md', 'floor-waivers.md', 'backmatter-cap-waiver.md'):
             if (HERE/name).exists():
                 shutil.copyfile(HERE/name, cls.review/name)
         cls.structure=json.loads((HERE/'smoothing-structure.json').read_text())
@@ -36,6 +36,27 @@ class SmoothingTests(unittest.TestCase):
 
     def test_current_files_pass(self):
         self.assertEqual(smoothing.check(self.root)[0],[])
+
+    def test_backmatter_waiver_is_required_and_bounded(self):
+        waiver = self.review/'backmatter-cap-waiver.md'
+        original = waiver.read_text()
+        for replacement in (None, 'No structured approval.', original.replace('812', '813')):
+            with self.subTest(waiver=replacement):
+                try:
+                    if replacement is None:
+                        waiver.unlink()
+                    else:
+                        waiver.write_text(replacement)
+                    self.assertTrue(any(e.startswith('2: backmatter') for e in smoothing.check(self.root)[0]))
+                finally:
+                    waiver.write_text(original)
+        path = self.root/'manuscript/backmatter/further-reading.md'
+        before = path.read_text()
+        try:
+            path.write_text(before+'\nExtra\n')
+            self.assertTrue(any(e.startswith('2: backmatter 813') for e in smoothing.check(self.root)[0]))
+        finally:
+            path.write_text(before)
 
     def test_each_assertion_detects_file_regression(self):
         paths={u['new']:self.root/u['path'] for u in self.structure['chapters']}

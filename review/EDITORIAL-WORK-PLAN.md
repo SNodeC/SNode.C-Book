@@ -2564,3 +2564,15 @@ full metrics, matrix, build/run records and outstanding qualifications. After th
 evidence push, keep the manuscript frozen against broad refinement. Resume only
 an explicitly approved outstanding item or an actual technical/build/reference/
 production defect or reported HEAD drift.
+
+### Follow-up 15 — explicit author approvals, 2026-09-25
+
+The author approved the Ch16 newline-boundary reader fix and requires fresh
+66/66 local and hosted results with both GCC and Clang. Parse only completed
+records; malformed complete JSON remains an error. No assertion, timeout or
+recovery policy changes. The author also approved the narrow backmatter
+812/800 exception for C6 bibliography metadata, documented in
+`pedagogical-smoothing-2026-09-23/backmatter-cap-waiver.md`. The global ceiling
+remains 115,000; retain all manuscript content. These approvals supersede the
+pending-decision statements above. Implementation and local/hosted verification
+are in progress; close the gate only after both hosted compiler jobs pass.
