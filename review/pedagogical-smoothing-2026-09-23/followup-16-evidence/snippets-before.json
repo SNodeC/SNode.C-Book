@@ -1,0 +1,2092 @@
+[
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "line": 405,
+    "language": "cmake",
+    "before": [
+      "\nWhen an external application consumes SNode.C, it asks CMake for package components. The same application also includes public SNode.C headers. These two selections belong together: the component selection describes the binary/link surface, while the include selection describes the C++ source surface.",
+      "For the first IPv4 legacy stream example, the relevant component is:",
+      ""
+    ],
+    "text": "find_package(snodec COMPONENTS net-in-stream-legacy)"
+  },
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "line": 411,
+    "language": "cmake",
+    "before": [
+      "```cmake\nfind_package(snodec COMPONENTS net-in-stream-legacy)\n```",
+      "The executable then links against the corresponding imported target:",
+      ""
+    ],
+    "text": "target_link_libraries(echoserver PRIVATE snodec::net-in-stream-legacy)"
+  },
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "line": 417,
+    "language": "cpp",
+    "before": [
+      "```cmake\ntarget_link_libraries(echoserver PRIVATE snodec::net-in-stream-legacy)\n```",
+      "The matching public include path has the same structure, expressed with directories rather than CMake component dashes:",
+      ""
+    ],
+    "text": "#include <net/in/stream/legacy/SocketServer.h>\n#include <net/in/stream/legacy/SocketClient.h>"
+  },
+  {
+    "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+    "line": 63,
+    "language": "cpp",
+    "before": [
+      "\nThe visible `SocketServer` or `SocketClient` object is an application-side handle. Its name identifies endpoint configuration; `listen(...)` or `connect(...)` registers work using that configuration. An established peer connection appears later. Chapter 4 develops the distinction between handle, instance, and activation flow.",
+      "For this chapter, the visible handle types are:",
+      ""
+    ],
+    "text": "net::in::stream::legacy::SocketServer<...>\nnet::in::stream::legacy::SocketClient<...>"
+  },
+  {
+    "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+    "line": 451,
+    "language": "cmake",
+    "before": [
+      "include(GNUInstallDirs)\ninstall(TARGETS echoserver echoclient RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})\n```",
+      "This build file imports the installed SNode.C package and requests the component introduced in Chapter 2:",
+      ""
+    ],
+    "text": "find_package(snodec 2.0.0 REQUIRED COMPONENTS net-in-stream-legacy)"
+  },
+  {
+    "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "line": 54,
+    "language": "cpp",
+    "before": [
+      "`core::SNodeC` is not instantiated by application code. It exposes static lifecycle functions such as `init(...)`, `start(...)`, `stop()`, `tick(...)`, `free()`, and `state()`. That public surface is already enough to reveal an important design decision: initialization, event-loop progress, shutdown, and state inspection are explicit runtime concepts.",
+      "A typical application therefore begins by initializing the framework:",
+      ""
+    ],
+    "text": "core::SNodeC::init(argc, argv);"
+  },
+  {
+    "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "line": 60,
+    "language": "cpp",
+    "before": [
+      "```cpp\ncore::SNodeC::init(argc, argv);\n```",
+      "and later enters runtime processing:",
+      ""
+    ],
+    "text": "return core::SNodeC::start();"
+  },
+  {
+    "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "line": 154,
+    "language": "cpp",
+    "before": [
+      "\\index{startup flow}\n\\index{protocol flow}\n\\index{lifetime}\n\\index{handle}\n\\index{instances}\n\\index{connection}\n\\index{context}",
+      "The same `init()` and `start()` calls seen above now take their places in the startup sequence. A stream application starts by preparing the framework runtime:",
+      ""
+    ],
+    "text": "core::SNodeC::init(argc, argv);"
+  },
+  {
+    "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "line": 162,
+    "language": "cpp",
+    "before": [
+      "Create the server or client handles next. A small example may use one of each; a larger application may configure an HTTP server, an MQTT client, and a WebSocket bridge. Each handle exposes configuration and registers activation flows for its instance.",
+      "A server calls `listen(...)`; a client calls `connect(...)`. They set addresses, callbacks, backlog or peer information where appropriate and enter the flow-controller path. The application asks the runtime to advance the flow instead of performing the whole network interaction on this stack. It then enters event processing:",
+      ""
+    ],
+    "text": "core::SNodeC::start();"
+  },
+  {
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "line": 27,
+    "language": "cpp",
+    "before": [
+      "| View | IPv4, stream, non-TLS example |\n|---|---|\n| source path | `src/net/in/stream/legacy` |\n| C++ namespace | `net::in::stream::legacy` |\n| public include | `<net/in/stream/legacy/SocketServer.h>` |\n| CMake component | `net-in-stream-legacy` |",
+      "\\index{naming convention}\n\\index{names as architecture}",
+      ""
+    ],
+    "text": "net::in::stream::legacy::SocketServer"
+  },
+  {
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "line": 31,
+    "language": "cpp",
+    "before": [
+      "\\index{naming convention}\n\\index{names as architecture}",
+      "```cpp\nnet::in::stream::legacy::SocketServer\n```",
+      ""
+    ],
+    "text": "#include <net/in/stream/legacy/SocketServer.h>"
+  },
+  {
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "line": 41,
+    "language": "cpp",
+    "before": [
+      "The type selects a server or client side; its public header supplies the declaration. Include the highest public type directly named by the source, rather than every lower implementation header.",
+      "\\index{component names}\n\\index{public include paths}\n\\index{names as architecture}",
+      ""
+    ],
+    "text": "net::in::stream::legacy::SocketClient<MyFactory>"
+  },
+  {
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "line": 47,
+    "language": "cpp",
+    "before": [
+      "```cpp\nnet::in::stream::legacy::SocketClient<MyFactory>\n```",
+      "Read this as network-facing code, IPv4 family, stream transport, non-TLS connection handling, client-side handle, and factory for per-connection contexts. The handle configures the instance; its name records the stack that runtime work will use.",
+      ""
+    ],
+    "text": "net::rc::stream::tls::SocketServer<MyFactory>"
+  },
+  {
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "line": 57,
+    "language": "cpp",
+    "before": [
+      "Here the family is Bluetooth RFCOMM, connection handling is TLS, and the selected type is a server. The factory still supplies per-connection contexts.",
+      "::: {.snodec-rule title=\"Layer-reading rule\"}\nRead a SNode.C communication type as a stack description before reading it as an isolated API name.\n:::",
+      ""
+    ],
+    "text": "#include <net/in/stream/legacy/SocketServer.h>\n#include <net/in/stream/legacy/SocketClient.h>"
+  },
+  {
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "line": 163,
+    "language": "cpp",
+    "before": [
+      "A transport connection, completed handshake, and accepted peer identity are distinct observations. Chapter 15 examines those obligations and their callback timing.",
+      "Core variants are `core-socket-stream-legacy` and `core-socket-stream-tls`. Concrete components combine family and variant: `net-in-stream-legacy`, `net-in-stream-tls`, `net-in6-stream-legacy`, `net-in6-stream-tls`, `net-un-stream-legacy`, and `net-un-stream-tls`. Public type headers follow the same structure:",
+      ""
+    ],
+    "text": "#include <net/in/stream/legacy/SocketServer.h>\n#include <net/in/stream/tls/SocketServer.h>\n#include <net/in6/stream/legacy/SocketServer.h>\n#include <net/un/stream/legacy/SocketServer.h>"
+  },
+  {
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "line": 189,
+    "language": "cpp",
+    "before": [
+      "Representative components are `http`, `http-server`, `http-client`, `http-server-express`, `websocket-server`, `websocket-client`, `mqtt`, `mqtt-server`, `mqtt-client`, `mqtt-server-websocket`, and `mqtt-client-websocket`. Express server components also encode network-family and connection-variant choices: `http-server-express-legacy-in`, `-in6`, `-rc`, and `-un`; the corresponding TLS names replace `legacy` with `tls`. Read these as architectural statements rather than memorizing the inventory.",
+      "A source file naming an Express IPv4 legacy WebApp uses its public Express header:",
+      ""
+    ],
+    "text": "#include <express/legacy/in/WebApp.h>"
+  },
+  {
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "line": 49,
+    "language": "cpp",
+    "before": [
+      "\nThe implementation follows the same structure. The excerpts below are abridged from `src/core/SNodeC.cpp`, `src/core/EventLoop.cpp`, and `src/core/EventMultiplexer.cpp`.",
+      "First, the public facade really is a facade. `core::SNodeC` forwards runtime control to `core::EventLoop`:",
+      ""
+    ],
+    "text": "int SNodeC::start(const utils::Timeval& timeOut) {\n    return EventLoop::start(timeOut);\n}\n\nTickStatus SNodeC::tick(const utils::Timeval& timeOut) {\n    return EventLoop::tick(timeOut);\n}\n\nState SNodeC::state() {\n    return EventLoop::getEventLoopState();\n}"
+  },
+  {
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "line": 65,
+    "language": "cpp",
+    "before": [
+      "State SNodeC::state() {\n    return EventLoop::getEventLoopState();\n}\n```",
+      "Second, `EventLoop::start(...)` bootstraps configuration, enters the running state, and then advances the runtime through repeated calls to `_tick(...)` while the loop remains active:",
+      ""
+    ],
+    "text": "if (utils::Config::bootstrap()) {\n    eventLoopState = State::RUNNING;\n\n    do {\n        tickStatus = EventLoop::instance()._tick(timeOut);\n    } while (\n        (tickStatus == TickStatus::SUCCESS || tickStatus == TickStatus::INTERRUPTED) &&\n        eventLoopState == State::RUNNING);\n}"
+  },
+  {
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "line": 79,
+    "language": "cpp",
+    "before": [
+      "    do {\n        tickStatus = EventLoop::instance()._tick(timeOut);\n    } while (\n        (tickStatus == TickStatus::SUCCESS || tickStatus == TickStatus::INTERRUPTED) &&\n        eventLoopState == State::RUNNING);\n}\n```",
+      "Third, a multiplexer tick has the expected coordination shape: wait, publish active work, execute queued work, check timeouts, and release expired resources:",
+      ""
+    ],
+    "text": "const TickStatus tickStatus = waitForEvents(...);\n\nif (tickStatus == TickStatus::SUCCESS) {\n    spanActiveEvents(...);\n    executeEventQueue(...);\n    checkTimedOutEvents(...);\n    releaseExpiredResources(...);\n}"
+  },
+  {
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "line": 146,
+    "language": "cpp",
+    "before": [
+      "That distinction becomes concrete in the stream server and client code. The local `SocketServer` or `SocketClient` object used in application code configures an instance. Each explicit `listen(...)` or `connect(...)` creates a controller for that call. Scheduled callbacks retain the controller together with the shared endpoint configuration and context. The current source therefore has one instance that can participate in several independent activation flows, rather than one endpoint-wide controller reused for every explicit call.",
+      "The application begins with local expressions such as:",
+      ""
+    ],
+    "text": "server.listen(...);\nclient.connect(...);"
+  },
+  {
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "line": 162,
+    "language": "cpp",
+    "before": [
+      "\\index{event delivery}\n\\index{runtime intent}",
+      "The scheduling API exposes that boundary directly:",
+      ""
+    ],
+    "text": "core::EventReceiver::atNextTick(...);"
+  },
+  {
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "line": 256,
+    "language": "cpp",
+    "before": [
+      "The byte-transport checkpoint returned even an invalid measurement unchanged. We can now isolate the next responsibility: accepted state needs one owner, with observers whose lifetimes are explicit. The public solution compiles the canonical `MeasurementModel.cpp` directly; no HTTP, MQTT, or socket parser is needed to see this contract.",
+      "The relevant public interface is this excerpt from `companion/examples/MiniGateway/MeasurementModel.h`; `Subscription` names the listener token returned by `subscribe()`:",
+      ""
+    ],
+    "text": "Measurement current() const;\nMeasurement accept(Measurement measurement);\nSubscription subscribe(Listener listener);\nvoid unsubscribe(Subscription subscription);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 28,
+    "language": "cpp",
+    "before": [
+      "\\index{SocketAddress@\\texttt{SocketAddress}}\n\\index{address classes}",
+      "The common base is:",
+      ""
+    ],
+    "text": "net::SocketAddress<SockAddrT>"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 72,
+    "language": "cpp",
+    "before": [
+      "\\index{IPv4}\n\\index{net::in::SocketAddress@\\texttt{net::in::SocketAddress}}\n\\index{host and port}",
+      "The IPv4 address class is:",
+      ""
+    ],
+    "text": "net::in::SocketAddress"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 82,
+    "language": "cpp",
+    "before": [
+      "Here, *host* may mean a numeric IPv4 address or a name that has to be resolved. The port is the IP service selector. Together, they describe an endpoint in the IPv4 family.",
+      "A concrete remote endpoint may look like this:",
+      ""
+    ],
+    "text": "net::in::SocketAddress remote(\"127.0.0.1\", 8080);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 88,
+    "language": "cpp",
+    "before": [
+      "```cpp\nnet::in::SocketAddress remote(\"127.0.0.1\", 8080);\n```",
+      "A server-side address that binds to a port on the IPv4 wildcard address may be expressed as:",
+      ""
+    ],
+    "text": "net::in::SocketAddress local(8080);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 101,
+    "language": "cpp",
+    "before": [
+      "\\index{IPv6}\n\\index{net::in6::SocketAddress@\\texttt{net::in6::SocketAddress}}",
+      "The IPv6 address class is:",
+      ""
+    ],
+    "text": "net::in6::SocketAddress"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 109,
+    "language": "cpp",
+    "before": [
+      "Its surface deliberately resembles the IPv4 address class. It has the same host-plus-port teaching shape, the same need for name resolution, and the same idea that a host may be a numeric address or a resolvable name.",
+      "A concrete loopback endpoint may look like this:",
+      ""
+    ],
+    "text": "net::in6::SocketAddress remote(\"::1\", 8080);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 121,
+    "language": "cpp",
+    "before": [
+      "\\index{Unix domain sockets}\n\\index{net::un::SocketAddress@\\texttt{net::un::SocketAddress}}\n\\index{path identity}",
+      "The Unix domain socket address class is:",
+      ""
+    ],
+    "text": "net::un::SocketAddress"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 129,
+    "language": "cpp",
+    "before": [
+      "Its endpoint identity is not host plus port.",
+      "It is a local socket identity, normally represented by a path-like value:",
+      ""
+    ],
+    "text": "net::un::SocketAddress local(\"/tmp/snodec.sock\");"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 143,
+    "language": "cpp",
+    "before": [
+      "\\index{RFCOMM}\n\\index{Bluetooth!RFCOMM}\n\\index{channel}",
+      "The RFCOMM address class is:",
+      ""
+    ],
+    "text": "net::rc::SocketAddress"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 149,
+    "language": "cpp",
+    "before": [
+      "```cpp\nnet::rc::SocketAddress\n```",
+      "A concrete remote endpoint may look like this:",
+      ""
+    ],
+    "text": "net::rc::SocketAddress remote(\"00:11:22:33:44:55\", 3);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 161,
+    "language": "cpp",
+    "before": [
+      "\\index{L2CAP}\n\\index{Bluetooth!L2CAP}\n\\index{PSM}",
+      "The L2CAP address class is:",
+      ""
+    ],
+    "text": "net::l2::SocketAddress"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 167,
+    "language": "cpp",
+    "before": [
+      "```cpp\nnet::l2::SocketAddress\n```",
+      "A concrete remote endpoint may look like this:",
+      ""
+    ],
+    "text": "net::l2::SocketAddress remote(\"00:11:22:33:44:55\", 0x1001);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 202,
+    "language": "cpp",
+    "before": [
+      "PSM construction makes sense for L2CAP for the same reason, but in L2CAP vocabulary.",
+      "Full constructors express a fully specified peer or an explicitly specified local endpoint:",
+      ""
+    ],
+    "text": "net::in::SocketAddress ip4(\"127.0.0.1\", 8080);\nnet::in6::SocketAddress ip6(\"::1\", 8080);\nnet::un::SocketAddress unixAddress(\"/tmp/snodec.sock\");\nnet::rc::SocketAddress rfcommAddress(\"00:11:22:33:44:55\", 3);\nnet::l2::SocketAddress l2capAddress(\"00:11:22:33:44:55\", 0x1001);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 212,
+    "language": "cpp",
+    "before": [
+      "```cpp\nnet::in::SocketAddress ip4(\"127.0.0.1\", 8080);\nnet::in6::SocketAddress ip6(\"::1\", 8080);\nnet::un::SocketAddress unixAddress(\"/tmp/snodec.sock\");\nnet::rc::SocketAddress rfcommAddress(\"00:11:22:33:44:55\", 3);\nnet::l2::SocketAddress l2capAddress(\"00:11:22:33:44:55\", 0x1001);\n```",
+      "The fields remain available through family-specific operations such as:",
+      ""
+    ],
+    "text": "setHost(...)\nsetPort(...)\nsetSunPath(...)\nsetBtAddress(...)\nsetChannel(...)\nsetPsm(...)"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 264,
+    "language": "cpp",
+    "before": [
+      "The type names show the parallelism immediately.",
+      "For IPv4, a minimal legacy stream pair often begins like this:",
+      ""
+    ],
+    "text": "using EchoServer4 = net::in::stream::legacy::SocketServer<MyFactory>;\nusing EchoClient4 = net::in::stream::legacy::SocketClient<MyFactory>;"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 271,
+    "language": "cpp",
+    "before": [
+      "```cpp\nusing EchoServer4 = net::in::stream::legacy::SocketServer<MyFactory>;\nusing EchoClient4 = net::in::stream::legacy::SocketClient<MyFactory>;\n```",
+      "For IPv6, the corresponding pair is:",
+      ""
+    ],
+    "text": "using EchoServer6 = net::in6::stream::legacy::SocketServer<MyFactory>;\nusing EchoClient6 = net::in6::stream::legacy::SocketClient<MyFactory>;"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 319,
+    "language": "cpp",
+    "before": [
+      "\\index{address family}\n\\index{wildcard form}",
+      "The address class changes too:",
+      ""
+    ],
+    "text": "net::in::SocketAddress\nnet::in6::SocketAddress"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 347,
+    "language": "cpp",
+    "before": [
+      "This comparison extends the earlier IPv4/IPv6 alias pair with instance names and activation calls.",
+      "A minimal IPv4 server may look like this in outline:",
+      ""
+    ],
+    "text": "using EchoServer4 = net::in::stream::legacy::SocketServer<MyFactory>;\n\nEchoServer4 server(\"echo4\");\nserver.listen(8080, 5, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 356,
+    "language": "cpp",
+    "before": [
+      "EchoServer4 server(\"echo4\");\nserver.listen(8080, 5, onStatus);\n```",
+      "The matching client may look like this:",
+      ""
+    ],
+    "text": "using EchoClient4 = net::in::stream::legacy::SocketClient<MyFactory>;\n\nEchoClient4 client(\"echo4\");\nclient.connect(\"127.0.0.1\", 8080, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 367,
+    "language": "cpp",
+    "before": [
+      "The numeric loopback address keeps the family comparison explicit. A host name may also be used where name resolution is desired, but `127.0.0.1` makes it clear that this first example is deliberately IPv4.",
+      "The IPv6 version follows the same shape:",
+      ""
+    ],
+    "text": "using EchoServer6 = net::in6::stream::legacy::SocketServer<MyFactory>;\n\nEchoServer6 server(\"echo6\");\nserver.listen(8080, 5, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 376,
+    "language": "cpp",
+    "before": [
+      "EchoServer6 server(\"echo6\");\nserver.listen(8080, 5, onStatus);\n```",
+      "and:",
+      ""
+    ],
+    "text": "using EchoClient6 = net::in6::stream::legacy::SocketClient<MyFactory>;\n\nEchoClient6 client(\"echo6\");\nclient.connect(\"::1\", 8080, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 389,
+    "language": "cpp",
+    "before": [
+      "\\index{public headers}\n\\index{net::in::stream::legacy@\\texttt{net::in::stream::legacy}}\n\\index{net::in6::stream::legacy@\\texttt{net::in6::stream::legacy}}",
+      "IPv4 and IPv6 are the simplest place to see the source/build pairing. A file that directly names an IPv4 legacy stream type uses the IPv4 public type headers:",
+      ""
+    ],
+    "text": "#include <net/in/stream/legacy/SocketServer.h>\n#include <net/in/stream/legacy/SocketClient.h>"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 400,
+    "language": "cpp",
+    "before": [
+      "`net-in-stream-legacy`.",
+      "The IPv6 variant changes only the family fragment:",
+      ""
+    ],
+    "text": "#include <net/in6/stream/legacy/SocketServer.h>\n#include <net/in6/stream/legacy/SocketClient.h>"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 425,
+    "language": "cpp",
+    "before": [
+      "\\index{net::un::stream::legacy@\\texttt{net::un::stream::legacy}}\n\\index{public headers}",
+      "Unix-domain legacy stream types use the `un` family fragment on both public surfaces. Source files that directly name those public types include:",
+      ""
+    ],
+    "text": "#include <net/un/stream/legacy/SocketServer.h>\n#include <net/un/stream/legacy/SocketClient.h>"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 450,
+    "language": "cpp",
+    "before": [
+      "\\index{net::un::SocketAddress@\\texttt{net::un::SocketAddress}}\n\\index{path identity}",
+      "Return to the Unix-domain address class introduced under \u201cConcrete address types and their fields\u201d:",
+      ""
+    ],
+    "text": "net::un::SocketAddress"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 458,
+    "language": "cpp",
+    "before": [
+      "The Unix-domain class stores a path and the corresponding socket-address structure. It provides constructors for a default value, a path, or an existing socket address, plus initialization, `setSunPath(...)`, `getSunPath()` and string rendering. There is no host resolver or remote IP candidate list.",
+      "In application code this may appear as:",
+      ""
+    ],
+    "text": "net::un::SocketAddress address(\"/tmp/my-service.sock\");"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 484,
+    "language": "cpp",
+    "before": [
+      "The convenience calls set family-specific configuration and then delegate to the general `listen(onStatus)` or `connect(onStatus)` path.",
+      "A Unix-domain stream server typically looks like this in outline:",
+      ""
+    ],
+    "text": "using LocalServer = net::un::stream::legacy::SocketServer<MyFactory>;\n\nLocalServer server(\"local-service\");\nserver.listen(\"/tmp/my-service.sock\", 5, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 502,
+    "language": "cpp",
+    "before": [
+      "| Surface call | Configuration effect |\n|---|---|\n| `listen(sunPath, ...)` | `Local::setSunPath(sunPath)` |\n| `listen(sunPath, backlog, ...)` | `Local::setSunPath(sunPath)` + backlog |",
+      "A Unix-domain stream client has the same overall shape:",
+      ""
+    ],
+    "text": "using LocalClient = net::un::stream::legacy::SocketClient<MyFactory>;\n\nLocalClient client(\"local-client\");\nclient.connect(\"/tmp/my-service.sock\", onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 513,
+    "language": "cpp",
+    "before": [
+      "Here the visible `LocalClient` object is again the handle. The `connect(...)` call configures the remote Unix-domain service path and creates its connecting flow through the usual runtime path.",
+      "If the client also needs an explicit local bind path, the call can express that too:",
+      ""
+    ],
+    "text": "client.connect(\"/tmp/my-service.sock\", \"/tmp/my-client.sock\", onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 541,
+    "language": "cpp",
+    "before": [
+      "\\index{Unix domain sockets!stable model}\n\\index{SocketContext@\\texttt{SocketContext}}",
+      "A `SocketContext` implementing a small request/response or streaming protocol does not need to become fundamentally Unix-domain-specific just because it runs over:",
+      ""
+    ],
+    "text": "net::un::stream::legacy"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 579,
+    "language": "cpp",
+    "before": [
+      "\\index{Unix domain sockets!peer credentials}\n\\index{PeerCredentials@\\texttt{PeerCredentials}}",
+      "A pathname selects a local endpoint, but it does not by itself express an application's trust decision. SNode.C provides a separate credential query for a connected Unix-domain socket:",
+      ""
+    ],
+    "text": "#include <net/un/PeerCredentials.h>\n\nconst net::un::PeerCredentials peer = net::un::peerCredentials(fd);\nif (peer.status == net::un::PeerCredentialsStatus::Success) {\n    // Apply the application's policy to peer.uid and peer.gid.\n}"
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 58,
+    "language": "cpp",
+    "before": [
+      "At the application-facing level, SNode.C exposes stream server and stream client templates. Concrete user-facing handle types are formed by combining the network family, the transport form, and the connection handling variant.",
+      "Examples include:",
+      ""
+    ],
+    "text": "net::in::stream::legacy::SocketServer<MyFactory>\nnet::in::stream::legacy::SocketClient<MyFactory>\nnet::rc::stream::tls::SocketServer<MyFactory>\nnet::l2::stream::legacy::SocketClient<MyFactory>"
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 69,
+    "language": "cpp",
+    "before": [
+      "The local handle exposes the shared configuration of the instance. Active work retains endpoint state through the runtime, so its lifetime is not simply the scope of a local variable in `main()`. The protocol endpoint is the context; the peer relationship is the connection.",
+      "The returned handle lets application code name a particular operation:",
+      ""
+    ],
+    "text": "auto first = client.connect(onStatus);\nauto second = client.connect(onStatus);\nfirst->terminateFlow();"
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 153,
+    "language": "cpp",
+    "before": [
+      "Chapter 7 explained what address objects mean. Here we see where they appear during connection lifetime.",
+      "A `SocketConnection` exposes three address views:",
+      ""
+    ],
+    "text": "getBindAddress()\ngetLocalAddress()\ngetRemoteAddress()"
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 167,
+    "language": "cpp",
+    "before": [
+      "For example, a server may be configured with a wildcard bind address. A concrete accepted connection will still have an actual local endpoint and a remote peer endpoint. A client may specify a remote peer address while leaving the local side broad enough for the operating system to choose. Those distinctions should remain visible.",
+      "The connection is where data flow belongs. The core operations include:",
+      ""
+    ],
+    "text": "sendToPeer(...)\nreadFromPeer(...)\nstreamToPeer(...)\nstreamEof()\nshutdownRead()\nshutdownWrite()\nclose()"
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 187,
+    "language": "cpp",
+    "before": [
+      "Timeouts belong naturally on the connection. A server-side instance may live for a long time. A specific peer connection may be idle, slow, stalled, or temporarily write-blocked. Those are different runtime concerns.",
+      "Connection-level timeout operations let the framework express that difference:",
+      ""
+    ],
+    "text": "setTimeout(...)\nsetReadTimeout(...)\nsetWriteTimeout(...)"
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 197,
+    "language": "cpp",
+    "before": [
+      "This also connects back to Chapter 6: timers and event processing make timeout behavior part of the runtime, not a manual sleep loop in protocol code.",
+      "A connection is also measurable. Useful connection-level quantities include:",
+      ""
+    ],
+    "text": "getTotalSent()\ngetTotalQueued()\ngetTotalRead()\ngetTotalProcessed()\ngetOnlineSince()\ngetOnlineDuration()"
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 210,
+    "language": "cpp",
+    "before": [
+      "This is particularly helpful for diagnostics. A disconnection message that can include addresses, duration, queued bytes, sent bytes, read bytes, and processed bytes is much more useful than a generic \u201cpeer disconnected\u201d line.",
+      "A connection also exposes both:",
+      ""
+    ],
+    "text": "getInstanceName()\ngetConnectionName()"
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 238,
+    "language": "cpp",
+    "before": [
+      "The status callbacks used with `listen(...)` and `connect(...)` report the outcome or state of the outer communication attempt.",
+      "They receive:",
+      ""
+    ],
+    "text": "SocketAddress\ncore::socket::State"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 62,
+    "language": "cpp",
+    "before": [
+      "The address classes make the RFCOMM/L2CAP distinction concrete: their setters, getters, constructors, and string rendering expose the two pieces of endpoint identity for each family.",
+      "The RFCOMM address class is:",
+      ""
+    ],
+    "text": "net::rc::SocketAddress"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 70,
+    "language": "cpp",
+    "before": [
+      "Construction may supply a device address, channel, both, or an existing socket address. Initialization and `getBtAddress()` / `getChannel()` expose those fields; `toString()` renders them.",
+      "A compact code anchor is:",
+      ""
+    ],
+    "text": "net::rc::SocketAddress address(\"10:3D:1C:AC:BA:9C\", 16);"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 76,
+    "language": "cpp",
+    "before": [
+      "```cpp\nnet::rc::SocketAddress address(\"10:3D:1C:AC:BA:9C\", 16);\n```",
+      "The L2CAP address class is:",
+      ""
+    ],
+    "text": "net::l2::SocketAddress"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 84,
+    "language": "cpp",
+    "before": [
+      "Its construction, initialization, Bluetooth-address access, and string rendering follow the RFCOMM shape above. The family-specific operations use a PSM: construction from a PSM or Bluetooth address plus PSM, construction from an existing L2CAP socket address, and `setPsm(...)` / `getPsm()`.",
+      "A compact code anchor is:",
+      ""
+    ],
+    "text": "net::l2::SocketAddress address(\"10:3D:1C:AC:BA:9C\", 0x1001);"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 107,
+    "language": "cpp",
+    "before": [
+      "The stream Bluetooth wrappers follow the SNode.C pattern already seen for IPv4, IPv6, and Unix domain sockets. The convenience calls configure the handle and then enter the usual registration path.",
+      "A simple RFCOMM server may look like this:",
+      ""
+    ],
+    "text": "using RcServer = net::rc::stream::legacy::SocketServer<MyFactory>;\n\nRcServer server(\"echo-rc\");\nserver.listen(16, 5, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 116,
+    "language": "cpp",
+    "before": [
+      "RcServer server(\"echo-rc\");\nserver.listen(16, 5, onStatus);\n```",
+      "or with an explicit local Bluetooth address:",
+      ""
+    ],
+    "text": "server.listen(\"10:3D:1C:AC:BA:9C\", 16, 5, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 124,
+    "language": "cpp",
+    "before": [
+      "For a server, the supplied address/channel configures the local endpoint; a backlog configures pending acceptance.",
+      "A simple RFCOMM client may look like this:",
+      ""
+    ],
+    "text": "using RcClient = net::rc::stream::legacy::SocketClient<MyFactory>;\n\nRcClient client(\"echo-rc-client\");\nclient.connect(\"10:3D:1C:AC:BA:9C\", 16, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 135,
+    "language": "cpp",
+    "before": [
+      "For a client, address/channel selects the remote peer. Optional bind arguments refine the local Bluetooth address, the local channel, or both.",
+      "A simple L2CAP server may look like this:",
+      ""
+    ],
+    "text": "using L2Server = net::l2::stream::legacy::SocketServer<MyFactory>;\n\nL2Server server(\"echo-l2\");\nserver.listen(0x1001, 5, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 144,
+    "language": "cpp",
+    "before": [
+      "L2Server server(\"echo-l2\");\nserver.listen(0x1001, 5, onStatus);\n```",
+      "or with an explicit local Bluetooth address:",
+      ""
+    ],
+    "text": "server.listen(\"10:3D:1C:AC:BA:9C\", 0x1001, 5, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 152,
+    "language": "cpp",
+    "before": [
+      "The L2CAP listener uses the same local-address/backlog pattern, with a PSM instead of a channel.",
+      "A simple L2CAP client may look like this:",
+      ""
+    ],
+    "text": "using L2Client = net::l2::stream::legacy::SocketClient<MyFactory>;\n\nL2Client client(\"echo-l2-client\");\nclient.connect(\"10:3D:1C:AC:BA:9C\", 0x1001, onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 205,
+    "language": "cpp",
+    "before": [
+      "### Reusable protocol, explicit operating assumptions",
+      "A `SocketContext` implementing a stream protocol does not need to become fundamentally RFCOMM-specific or L2CAP-specific just because it is carried over:",
+      ""
+    ],
+    "text": "net::rc::stream::legacy"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 211,
+    "language": "cpp",
+    "before": [
+      "```cpp\nnet::rc::stream::legacy\n```",
+      "or:",
+      ""
+    ],
+    "text": "net::l2::stream::legacy"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 241,
+    "language": "cpp",
+    "before": [
+      "\\index{net::rc::stream::legacy@\\texttt{net::rc::stream::legacy}}\n\\index{net::l2::stream::legacy@\\texttt{net::l2::stream::legacy}}",
+      "Bluetooth stream types follow the same source/build rule, but only when the required Bluetooth development support is present. RFCOMM uses the `rc` family fragment:",
+      ""
+    ],
+    "text": "#include <net/rc/stream/legacy/SocketServer.h>\n#include <net/rc/stream/legacy/SocketClient.h>"
+  },
+  {
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "line": 252,
+    "language": "cpp",
+    "before": [
+      "`net-rc-stream-legacy`.",
+      "L2CAP uses the `l2` fragment:",
+      ""
+    ],
+    "text": "#include <net/l2/stream/legacy/SocketServer.h>\n#include <net/l2/stream/legacy/SocketClient.h>"
+  },
+  {
+    "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
+    "line": 142,
+    "language": "cpp",
+    "before": [
+      "Input accumulation, command interpretation, response writing, and protocol-driven closure all stay inside the context. Listening, connecting, retrying, reconnecting, and choosing the network family stay outside it.",
+      "An abridged context can look like this:",
+      ""
+    ],
+    "text": "#include <core/socket/stream/SocketContext.h>\n\n#include <cstddef>\n#include <string>\n\nnamespace core::socket::stream {\n    class SocketConnection;\n}\n\nclass LineCommandContext : public core::socket::stream::SocketContext {\npublic:\n    explicit LineCommandContext(\n        core::socket::stream::SocketConnection* socketConnection)\n        : core::socket::stream::SocketContext(socketConnection) {\n    }\n\nprivate:\n    static constexpr std::size_t maxLineLength = 4096;\n\n    void onConnected() override {\n        sendToPeer(\"READY\\n\");\n    }\n\n    void onDisconnected() override {\n        receiveBuffer.clear();\n    }\n\n    bool onSignal([[maybe_unused]] int signum) override {\n        close();\n        return true;\n    }\n\n    std::size_t onReceivedFromPeer() override {\n        char chunk[1024];\n        const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));\n\n        if (chunkLen > 0) {\n            receiveBuffer.append(chunk, chunkLen);\n\n            std::size_t lineEnd = receiveBuffer.find('\\n');\n            while (lineEnd != std::string::npos && lineEnd <= maxLineLength) {\n                std::string line = receiveBuffer.substr(0, lineEnd);\n                if (!line.empty() && line.back() == '\\r') {\n                    line.pop_back();\n                }\n\n                if (!processLine(line)) {\n                    receiveBuffer.clear();\n                    return chunkLen;\n                }\n                receiveBuffer.erase(0, lineEnd + 1);\n                lineEnd = receiveBuffer.find('\\n');\n            }\n\n            if (receiveBuffer.length() > maxLineLength) {\n                close();\n            }\n        }\n\n        return chunkLen;\n    }\n\n    bool processLine(const std::string& line) {\n        if (line == \"PING\") {\n            sendToPeer(\"PONG\\n\");\n        } else if (line == \"STATUS\") {\n            sendToPeer(\"OK\\n\");\n        } else if (line == \"QUIT\") {\n            close();\n            return false;\n        } else if (!line.empty()) {\n            sendToPeer(\"ERR unknown command\\n\");\n        }\n        return true;\n    }\n\n    std::string receiveBuffer;\n};"
+  },
+  {
+    "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
+    "line": 290,
+    "language": "cpp",
+    "before": [
+      "Choose the timer by the observation it must bound. A connection inactivity timeout can be refreshed by received bytes even when those bytes never complete a command. A deadline for completing a protocol message needs protocol progress and its own deadline policy, as Chapter 16 explains. Timeouts should not compensate for unclear state handling.",
+      "A context may call:",
+      ""
+    ],
+    "text": "shutdownRead();\nshutdownWrite();\nclose();"
+  },
+  {
+    "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
+    "line": 337,
+    "language": "cpp",
+    "before": [
+      "A context owns protocol meaning, and its diagnostics should add that meaning rather than repeat every lower socket event. SNode.C stream contexts provide an inherited application-origin `log()` helper and a separate framework-origin `frameworkLog()` helper. The context's owned scope preserves instance and connection identity where available.",
+      "A derived context can therefore write a local diagnostic without constructing a new backend:",
+      ""
+    ],
+    "text": "log().debug(\"Line command accepted: {}\", line);"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 24,
+    "language": "cpp",
+    "before": [
+      "\\index{SocketContextFactory@\\texttt{SocketContextFactory}}\n\\index{factory interface}",
+      "The stream factory interface is narrow. Its essential method is:",
+      ""
+    ],
+    "text": "virtual core::socket::stream::SocketContext*\ncreate(core::socket::stream::SocketConnection* socketConnection) = 0;"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 39,
+    "language": "cpp",
+    "before": [
+      "\\index{SocketConnection@\\texttt{SocketConnection}!context attachment}\n\\index{SocketContextFactory@\\texttt{SocketContextFactory}!create}",
+      "The stream-connection source in `src/core/socket/stream/SocketConnection.cpp` shows the same boundary in compact form. The connection asks the factory to create a context for `this` connection, attaches the result when creation succeeds, and closes the connection if no context can be created:",
+      ""
+    ],
+    "text": "void SocketConnection::setSocketContext(\n    const std::shared_ptr<SocketContextFactory>& socketContextFactory) {\n    SocketContext* socketContext = socketContextFactory->create(this);\n\n    if (socketContext != nullptr) {\n        setSocketContext(socketContext);\n    } else {\n        close();\n    }\n}"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 54,
+    "language": "cpp",
+    "before": [
+      "    if (socketContext != nullptr) {\n        setSocketContext(socketContext);\n    } else {\n        close();\n    }\n}\n```",
+      "The next step is equally important: the newly created context is attached to the connection. If a context already exists, the new one is staged as a replacement rather than treated as a shared global endpoint.",
+      ""
+    ],
+    "text": "void SocketConnection::setSocketContext(SocketContext* socketContext) {\n    if (this->socketContext == nullptr) {\n        this->socketContext = socketContext;\n        socketContext->attach();\n    } else {\n        newSocketContext = socketContext;\n    }\n}"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 101,
+    "language": "cpp",
+    "before": [
+      "A factory can legitimately choose which concrete context type to create. For many simple applications, there is exactly one concrete context type.",
+      "In that case, the factory is almost mechanical. In schematic form:",
+      ""
+    ],
+    "text": "SocketContext* create(SocketConnection* connection) override {\n    return new MySocketContext(connection);\n}"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 126,
+    "language": "cpp",
+    "before": [
+      "A factory is often a good place to make side-specific construction decisions.",
+      "For example, a protocol may use the same context class on both sides but pass a server/client selector:",
+      ""
+    ],
+    "text": "enum class Role { Server, Client };"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 132,
+    "language": "cpp",
+    "before": [
+      "```cpp\nenum class Role { Server, Client };\n```",
+      "Then the factory can make the selected side explicit. In schematic form:",
+      ""
+    ],
+    "text": "SocketContext* create(SocketConnection* connection) override {\n    return new EchoSocketContext(connection, Role::Server);\n}"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 140,
+    "language": "cpp",
+    "before": [
+      "```cpp\nSocketContext* create(SocketConnection* connection) override {\n    return new EchoSocketContext(connection, Role::Server);\n}\n```",
+      "A separate client-side factory might use:",
+      ""
+    ],
+    "text": "SocketContext* create(SocketConnection* connection) override {\n    return new EchoSocketContext(connection, Role::Client);\n}"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 176,
+    "language": "cpp",
+    "before": [
+      "The stream server and stream client templates make this dependency path explicit.",
+      "Both the `SocketServer` and the `SocketClient` template accept an argument pack:",
+      ""
+    ],
+    "text": "typename... Args"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 184,
+    "language": "cpp",
+    "before": [
+      "Those arguments are forwarded to the concrete `SocketContextFactory` constructor when the server/client handle is constructed.",
+      "In schematic form, the pattern is:",
+      ""
+    ],
+    "text": "std::make_shared<SocketContextFactory>(std::forward<Args>(args)...)"
+  },
+  {
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "line": 231,
+    "language": "cpp",
+    "before": [
+      "A single reusable factory type may also be appropriate.",
+      "For example, the selector or configuration object may be a constructor argument of the factory itself. In schematic form:",
+      ""
+    ],
+    "text": "class EchoSocketContextFactory : public SocketContextFactory {\npublic:\n    explicit EchoSocketContextFactory(Role role)\n        : role(role) {\n    }\n\n    SocketContext* create(SocketConnection* connection) override {\n        return new EchoSocketContext(connection, role);\n    }\n\nprivate:\n    Role role;\n};"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 77,
+    "language": "cpp",
+    "before": [
+      "The factory may also transfer. If the same context type is suitable across several network families, the factory can remain small and recognizable.",
+      "It may still create:",
+      ""
+    ],
+    "text": "new EchoSocketContext(connection, Role::Server)"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 83,
+    "language": "cpp",
+    "before": [
+      "```cpp\nnew EchoSocketContext(connection, Role::Server)\n```",
+      "or:",
+      ""
+    ],
+    "text": "new EchoSocketContext(connection, Role::Client)"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 99,
+    "language": "cpp",
+    "before": [
+      "The visible server/client handle type changes because the application chooses a different network-family specialization.",
+      "Examples include:",
+      ""
+    ],
+    "text": "net::in::stream::legacy::SocketServer<MyFactory>\nnet::in6::stream::legacy::SocketServer<MyFactory>\nnet::un::stream::legacy::SocketServer<MyFactory>\nnet::rc::stream::legacy::SocketServer<MyFactory>\nnet::l2::stream::legacy::SocketServer<MyFactory>"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 143,
+    "language": "cpp",
+    "before": [
+      "The complete Chapter 3 listing supplies these snippets, repeated here to show the transfer boundary. The echo application gives the smallest useful example. Echo is interesting not because it is sophisticated, but because it exposes the placement boundary.",
+      "The protocol behavior lives in one context type:",
+      ""
+    ],
+    "text": "EchoSocketContext::EchoSocketContext(\n    core::socket::stream::SocketConnection *socketConnection, Role role)\n    : core::socket::stream::SocketContext(socketConnection), role(role) {}"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 153,
+    "language": "cpp",
+    "before": [
+      "The server/client selector is stored in the context.",
+      "When the connection becomes ready, the client side starts the exchange:",
+      ""
+    ],
+    "text": "if (role == Role::CLIENT) {\n    sendToPeer(\"Hello peer! Nice to see you!!!\");\n}"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 161,
+    "language": "cpp",
+    "before": [
+      "```cpp\nif (role == Role::CLIENT) {\n    sendToPeer(\"Hello peer! Nice to see you!!!\");\n}\n```",
+      "When data arrives, the context reads a chunk, sends the same bytes back, and reports the processed amount:",
+      ""
+    ],
+    "text": "char chunk[4096];\n\nconst std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));\n\nif (chunkLen > 0) {\n    log().debug() << \"Data to reflect: \" << std::string(chunk, chunkLen);\n    sendToPeer(chunk, chunkLen);\n}\n\nreturn chunkLen;"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 176,
+    "language": "cpp",
+    "before": [
+      "return chunkLen;\n```",
+      "The factories then create side-specific contexts:",
+      ""
+    ],
+    "text": "return new EchoSocketContext(socketConnection, EchoSocketContext::Role::SERVER);"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 182,
+    "language": "cpp",
+    "before": [
+      "```cpp\nreturn new EchoSocketContext(socketConnection, EchoSocketContext::Role::SERVER);\n```",
+      "and:",
+      ""
+    ],
+    "text": "return new EchoSocketContext(socketConnection, EchoSocketContext::Role::CLIENT);"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 312,
+    "language": "cpp",
+    "before": [
+      "Factories are the right place to keep construction differences visible.",
+      "A server-side context may receive:",
+      ""
+    ],
+    "text": "Role::Server"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 318,
+    "language": "cpp",
+    "before": [
+      "```cpp\nRole::Server\n```",
+      "A client-side context may receive:",
+      ""
+    ],
+    "text": "Role::Client"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 324,
+    "language": "cpp",
+    "before": [
+      "```cpp\nRole::Client\n```",
+      "A publisher-side endpoint may receive:",
+      ""
+    ],
+    "text": "Role::Publisher"
+  },
+  {
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "line": 330,
+    "language": "cpp",
+    "before": [
+      "```cpp\nRole::Publisher\n```",
+      "A command-sink endpoint may receive:",
+      ""
+    ],
+    "text": "Role::CommandSink"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 34,
+    "language": "cpp",
+    "before": [
+      "Three inputs can select the port. For `echoserver.local.port`, C++ supplies 8080, the selected file supplies 18091, and a command-line override selects 18092. These inputs feed one option in the hierarchy. More generally, C++ supplies defaults, files persist deployment choices, and command lines supply invocation-specific overrides and inspection actions. The handle exposes the configuration object directly.",
+      "For an IPv4 server, a minimal example may look like:",
+      ""
+    ],
+    "text": "EchoServer echoServer(\"echoserver\");\n\nechoServer.getConfig()->Local::setPort(8080);"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 42,
+    "language": "cpp",
+    "before": [
+      "echoServer.getConfig()->Local::setPort(8080);\n```",
+      "In this case, the explicit `Local::` qualification is valid, but it is not required. The same server-side port can also be configured as:",
+      ""
+    ],
+    "text": "echoServer.getConfig()->setPort(8080);"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 52,
+    "language": "cpp",
+    "before": [
+      "C++ code can provide baseline configuration. It can also express values that are genuinely programmatic: values derived from application structure, construction-time decisions, tests, or small teaching examples.",
+      "Convenience overloads such as:",
+      ""
+    ],
+    "text": "listen(8080, onStatus)"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 58,
+    "language": "cpp",
+    "before": [
+      "```cpp\nlisten(8080, onStatus)\n```",
+      "or:",
+      ""
+    ],
+    "text": "connect(\"localhost\", 8080, onStatus)"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 68,
+    "language": "cpp",
+    "before": [
+      "Command-line configuration gives an already compiled application a way to be shaped at startup. That is especially important for named instances.",
+      "Constructing an endpoint handle with a name:",
+      ""
+    ],
+    "text": "EchoServer echoServer(\"echoserver\");"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 131,
+    "language": "cpp",
+    "before": [
+      "Externally operated servers usually benefit from named instances, because servers often need deployment-facing control over bind address, port, path, channel, enablement, and persistent configuration.",
+      "A name such as:",
+      ""
+    ],
+    "text": "EchoServer echoServer(\"echoserver\");"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 176,
+    "language": "cpp",
+    "before": [
+      "\\index{listen()@\\texttt{listen()}!parameterless}\n\\index{connect()@\\texttt{connect()}!parameterless}\n\\index{parameterless activation}",
+      "A call such as:",
+      ""
+    ],
+    "text": "echoServer.listen(onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 182,
+    "language": "cpp",
+    "before": [
+      "```cpp\nechoServer.listen(onStatus);\n```",
+      "or:",
+      ""
+    ],
+    "text": "echoClient.connect(onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 262,
+    "language": "cpp",
+    "before": [
+      "\\index{instance configuration}\n\\index{instances!configuration}\n\\index{required options}",
+      "Consider the operational name in this declaration:",
+      ""
+    ],
+    "text": "EchoServer echoServer(\"echoserver\");"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 371,
+    "language": "cpp",
+    "before": [
+      "\\index{configuration!C++ API}\n\\index{configuration!command line}\n\\index{configuration!file}",
+      "The C++ API uses section-qualified operations. Schematic examples are:",
+      ""
+    ],
+    "text": "instance.getConfig()->Local::setPort(8080);\ninstance.getConfig()->Remote::setHost(\"localhost\");\ninstance.getConfig()->Remote::setPort(8080);"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 381,
+    "language": "cpp",
+    "before": [
+      "`getConfig()` returns a pointer, so the examples use `->`. The section qualification is useful when local and remote meaning must remain visible.",
+      "In server-side cases, a shorter form may also be valid because there is no local/remote ambiguity at that call site:",
+      ""
+    ],
+    "text": "instance.getConfig()->setPort(8080);"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 483,
+    "language": "cpp",
+    "before": [
+      "\\index{required values}\n\\index{progressive disclosure}\n\\index{parameterless activation}",
+      "Return to the parameterless activation calls from the required-value walk above. The inspection experiment explains why these same calls can omit addresses:",
+      ""
+    ],
+    "text": "echoServer.listen(onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 489,
+    "language": "cpp",
+    "before": [
+      "```cpp\nechoServer.listen(onStatus);\n```",
+      "or:",
+      ""
+    ],
+    "text": "echoClient.connect(onStatus);"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 43,
+    "language": "cpp",
+    "before": [
+      "\\index{Log.h@\\texttt{Log.h}}\n\\index{snode::log@\\texttt{snode::log}}\n\\index{application logger}\n\\index{framework logger}",
+      "New application code enters through one public header:",
+      ""
+    ],
+    "text": "#include <Log.h>"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 51,
+    "language": "cpp",
+    "before": [
+      "`snode::log` provides a copyable logger value without exposing backend record machinery.",
+      "An application logger defaults to component `app`, application origin and application boundary; a framework logger defaults to component `framework` and system boundary. Larger applications can name diagnostic responsibilities explicitly:",
+      ""
+    ],
+    "text": "auto measurementLog = snode::log::application(\"gateway.measurements\");\nauto mqttLog = snode::log::application(\"gateway.mqtt\");\n\nmeasurementLog.info(\"Measurement service initialized\");\nmqttLog.debug(\"Preparing the MQTT application role\");"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 95,
+    "language": "cpp",
+    "before": [
+      "`Scope` and `Identity` own their strings, so a logger can outlive the expression that assembled its scope.",
+      "A deliberately constructed context scope can look like this:",
+      ""
+    ],
+    "text": "snode::log::Scope scope;\nscope.origin = snode::log::Origin::Application;\nscope.boundary = snode::log::Boundary::Context;\nscope.component = \"gateway.measurements\";\nscope.identity.instance = \"measurement-input\";\n\nauto log = snode::log::makeLogger(std::move(scope));\nlog.debug(\"Measurement context configured\");"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 114,
+    "language": "cpp",
+    "before": [
+      "\\index{forConnection()@\\texttt{forConnection()}}\n\\index{SocketContext!logging}\n\\index{frameworkLog()@\\texttt{frameworkLog()}}",
+      "`forConnection(...)` takes a connection reference and copies its `getInstanceName()` and `getConnectionId()` into the scope; the public connection identifier is a string. From a live stream context:",
+      ""
+    ],
+    "text": "auto log = snode::log::forConnection(\n    *getSocketConnection(),\n    \"gateway.measurements\",\n    snode::log::Origin::Application,\n    snode::log::Boundary::Context);\n\nlog.info(\"Measurement input ready\");"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 126,
+    "language": "cpp",
+    "before": [
+      "log.info(\"Measurement input ready\");\n```",
+      "The logger does not retain ownership of the connection. Stream contexts also expose inherited `log()` and `frameworkLog()` helpers with an already owned context scope. A derived context can use:",
+      ""
+    ],
+    "text": "void MeasurementContext::onConnected() {\n    log().info(\"Measurement protocol context attached\");\n}"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 163,
+    "language": "cpp",
+    "before": [
+      "Severity does not perform recovery: `critical(...)` does not stop the runtime, close a connection, or reject a request. Make that control decision explicitly.",
+      "The severity methods support both stream construction and positional `{}` formatting:",
+      ""
+    ],
+    "text": "auto log = snode::log::application(\"gateway.measurements\");\nlog.info() << \"Accepted measurement sequence \" << sequence;\nlog.info(\"Accepted measurement sequence {}\", sequence);"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 175,
+    "language": "cpp",
+    "before": [
+      "Choose either form; do not emit the event twice.",
+      "A named event separates a machine-facing classification from a human-facing explanation:",
+      ""
+    ],
+    "text": "log.event(snode::log::Level::Info,\n          \"measurement.accepted\",\n          \"Accepted measurement sequence {}\",\n          sequence);"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 186,
+    "language": "cpp",
+    "before": [
+      "`measurement.accepted` permits classification independently of wording. Name observed facts separately: publication queued, then subscriber receipt observed.",
+      "A system error should carry the error from the failing operation, not whichever `errno` happens to be visible later.",
+      ""
+    ],
+    "text": "const int errorNumber = errno;\nlog.systemError(snode::log::Level::Error,\n                errorNumber,\n                \"Unable to open measurement input\");"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 197,
+    "language": "cpp",
+    "before": [
+      "Capture `errno` immediately after failure; prefer a callback\u2019s supplied error number when available. The `std::error_code` overload also preserves the category for errors outside generic POSIX numbering.",
+      "The stream form is available as well:",
+      ""
+    ],
+    "text": "log.systemError(snode::log::Level::Error, errorNumber)\n    << \"Unable to open \" << path;"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 286,
+    "language": "cpp",
+    "before": [
+      "Quiet mode controls the console; a file sink is separate. Configure sinks, daemonization, supervision and color at application scope, without competing context-owned log files.",
+      "`hexDump(...)` borrows a `std::string_view` or `std::span<const std::byte>` synchronously. Explicit length preserves embedded NUL bytes:",
+      ""
+    ],
+    "text": "const std::string_view payload(\"A\\0B\", 3);\nlog.hexDump(snode::log::Level::Trace, \"Received payload\", payload);"
+  },
+  {
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "line": 302,
+    "language": "cpp",
+    "before": [
+      "A disabled `hexDump(...)` returns before dump formatting. A disabled formatted log call skips the logger's formatting work. It does not undo the normal C++ evaluation of arguments before the call. The same issue applies to an expensive expression supplied to a stream operator.",
+      "Guard work that exists only to prepare a diagnostic:",
+      ""
+    ],
+    "text": "if (log.enabled(snode::log::Level::Trace)) {\n    log.trace(\"Payload summary: {}\", buildDiagnosticSummary(payload));\n}"
+  },
+  {
+    "file": "manuscript/chapters/15-tls-across-the-framework.md",
+    "line": 77,
+    "language": "cpp",
+    "before": [
+      "The code shape confirms the model. The TLS server is not a completely separate hand-built server type. It reuses the ordinary IPv4 stream server shell and changes the connection-layer pieces.",
+      "In simplified form, the shape is:",
+      ""
+    ],
+    "text": "using SocketServer =\n    net::in::stream::SocketServer<core::socket::stream::tls::SocketAcceptor,\n                                  net::in::stream::tls::config::ConfigSocketServer,\n                                  SocketContextFactoryT,\n                                  Args...>;"
+  },
+  {
+    "file": "manuscript/chapters/15-tls-across-the-framework.md",
+    "line": 87,
+    "language": "cpp",
+    "before": [
+      "```cpp\nusing SocketServer =\n    net::in::stream::SocketServer<core::socket::stream::tls::SocketAcceptor,\n                                  net::in::stream::tls::config::ConfigSocketServer,\n                                  SocketContextFactoryT,\n                                  Args...>;\n```",
+      "The client has the same idea:",
+      ""
+    ],
+    "text": "using SocketClient =\n    net::in::stream::SocketClient<core::socket::stream::tls::SocketConnector,\n                                  net::in::stream::tls::config::ConfigSocketClient,\n                                  SocketContextFactoryT,\n                                  Args...>;"
+  },
+  {
+    "file": "manuscript/chapters/15-tls-across-the-framework.md",
+    "line": 156,
+    "language": "cpp",
+    "before": [
+      "SNI is a second decision. `ssl_set_sni(...)` sets the name sent to the server; it does not configure the expected certificate identity. The example hostname-checking statements in `src/apps/echo/model/clients.h` are commented out. Reading those statements as active behavior would give the example a security property it does not currently have.",
+      "For a TLS client, choose the trust source and expected peer identity before the handshake. The existing `setOnConnect(...)` callback runs after the TLS configuration has created its `SSL_CTX`, but before the connector calls `startSSL(...)` for this connection. At this boundary, `getSSL()` is still null. Configure the shared client context's verification parameters before the new `SSL` object copies them. This is endpoint policy: clients that need different expected identities should use separate endpoint configurations. The following is an application-policy sketch for a DNS identity, to be attached to an already declared TLS client:",
+      ""
+    ],
+    "text": "client.getConfig()->setCaCert(\"local-ca.pem\");\nclient.getConfig()->setCaCertAcceptUnknown(false);\nclient.setOnConnect([](auto* connection) {\n    SSL_CTX* context = connection->getConfig()->getSslCtx();\n    X509_VERIFY_PARAM* parameters = SSL_CTX_get0_param(context);\n    X509_VERIFY_PARAM_set_hostflags(parameters, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);\n    if (X509_VERIFY_PARAM_set1_host(parameters, \"sensor.example\", 0) != 1) {\n        connection->close();\n    }\n});"
+  },
+  {
+    "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
+    "line": 106,
+    "language": "cpp",
+    "before": [
+      "\\index{retry timer}\n\\index{reconnect timer}\n\\index{SocketClient@\\texttt{SocketClient}!retry and reconnect}",
+      "Choose the application policy before reading the controller internals. With the named EchoPair client `client` already constructed, the following excerpt selects one automatic retry after a failed initial attempt and disables reconnect after a successful connection ends:",
+      ""
+    ],
+    "text": "auto* config = client.getConfig();\nconfig->setRetry(true);\nconfig->setRetryOnFatal(false);\nconfig->setRetryTimeout(0.2);\nconfig->setRetryTries(1);\nconfig->setRetryBase(1.0);\nconfig->setRetryLimit(1);\nconfig->setRetryJitter(0.0);\nconfig->setReconnect(false);\nconfig->setReconnectTime(0.2);"
+  },
+  {
+    "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
+    "line": 136,
+    "language": "cpp",
+    "before": [
+      "The client-side stream source in `src/core/socket/stream/SocketClient.h` keeps both decisions inside the particular flow passed to `realConnect(...)`. The following excerpts are abridged: they omit logging and surrounding state checks while retaining the important ownership and dispatch calls.",
+      "After a disconnect, the reconnect timer retains that same flow:",
+      ""
+    ],
+    "text": "flow->armReconnectTimer(relativeReconnectTimeout,\n    [config, sharedContext, log, onStatus, flow]() {\n        if (!flow->isReconnectEnabled()) {\n            flow->cancelReconnectTimer();\n            return;\n        }\n        if (config->getReconnect()) {\n            if (flow->dispatchReconnect()) {\n                SocketClient(config, sharedContext)\n                    .realConnect(flow, onStatus, 0, config->getRetryBase());\n            }\n        } else {\n            flow->cancelReconnectTimer();\n            log.trace(\"Reconnect disabled during wait\");\n        }\n    });"
+  },
+  {
+    "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
+    "line": 157,
+    "language": "cpp",
+    "before": [
+      "```cpp\nflow->armReconnectTimer(relativeReconnectTimeout,\n    [config, sharedContext, log, onStatus, flow]() {\n        if (!flow->isReconnectEnabled()) {\n            flow->cancelReconnectTimer();\n            return;\n        }\n        if (config->getReconnect()) {\n            if (flow->dispatchReconnect()) {\n                SocketClient(config, sharedContext)\n                    .realConnect(flow, onStatus, 0, config->getRetryBase());\n            }\n        } else {\n            flow->cancelReconnectTimer();\n            log.trace(\"Reconnect disabled during wait\");\n        }\n    });\n```",
+      "A failed connect attempt uses `armRetryTimer(...)` instead. The outer branch checks the retry flag, configured enablement and attempt limit, controller enablement, and the classified error. When the timer fires, it rechecks enablement before dispatching:",
+      ""
+    ],
+    "text": "if (flow->dispatchRetry()) {\n    SocketClient(config, sharedContext)\n        .realConnect(flow, onStatus, tries + 1,\n                     retryTimeoutScale * config->getRetryBase());\n}"
+  },
+  {
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "line": 43,
+    "language": "cpp",
+    "before": [
+      "The HTTP context parses the start line, headers, content and trailers before invoking the application with a ready request and its response.",
+      "The generic HTTP server wrapper has a simple shape:",
+      ""
+    ],
+    "text": "web::http::server::Server<LowerSocketServerT>"
+  },
+  {
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "line": 51,
+    "language": "cpp",
+    "before": [
+      "The lower server template supplies the handle shape and the instance registration machinery. The HTTP wrapper supplies the HTTP context factory and the request-ready callback shape.",
+      "In simplified form:",
+      ""
+    ],
+    "text": "SocketServerT<web::http::server::SocketContextFactory,\n              std::function<void(std::shared_ptr<Request>, std::shared_ptr<Response>)>>"
+  },
+  {
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "line": 68,
+    "language": "cpp",
+    "before": [
+      "| Part | Meaning |\n|---|---|\n| `SocketServerT` | lower server shell used by the HTTP wrapper |\n| `web::http::server::SocketContextFactory` | creates HTTP server contexts |\n| `Request` | parsed HTTP request visible to the application |\n| `Response` | HTTP response object visible to the application |\n| application callback | runs when HTTP request handling can begin |",
+      "A concrete IPv4 legacy HTTP server is then one specialization of this idea:",
+      ""
+    ],
+    "text": "using Server = web::http::server::Server<net::in::stream::legacy::SocketServer>;"
+  },
+  {
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "line": 87,
+    "language": "cpp",
+    "before": [
+      "The lower client establishes and maintains the connection; the HTTP client layer coordinates requests and responses over it.",
+      "The generic HTTP client wrapper has the shape:",
+      ""
+    ],
+    "text": "web::http::client::Client<LowerSocketClientT>"
+  },
+  {
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "line": 166,
+    "language": "cpp",
+    "before": [
+      "HTTP upgrade support belongs in the HTTP layer because HTTP is where the upgrade decision is negotiated. The upgraded protocol may later be WebSocket, but the boundary itself is not WebSocket-specific. An HTTP request names an upgrade target, the HTTP layer selects a socket-context upgrade factory for that name, and the selected upgraded context takes over the same connection after the HTTP response confirms the transition.",
+      "A compact server-side upgrade route has this shape. The example uses `websocket` because that is the concrete upgrade protocol used in the following WebSocket chapter, but the call itself belongs to the HTTP/Express boundary:",
+      ""
+    ],
+    "text": "#include <express/legacy/in/WebApp.h>\n\n#include <memory>\n#include <string>\n\nusing WebApp = express::legacy::in::WebApp;\nusing Request = WebApp::Request;\nusing Response = WebApp::Response;\n\nWebApp app(\"legacy\");\n\napp.get(\"/ws\", [](const std::shared_ptr<Request> &req,\n                  const std::shared_ptr<Response> &res) {\n    res->upgrade(req, [res](const std::string& selected) {\n        if (!selected.empty()) {\n            res->end();\n        } else {\n            res->sendStatus(404);\n        }\n    });\n});"
+  },
+  {
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "line": 194,
+    "language": "cpp",
+    "before": [
+      "The HTTP route is still visible at the boundary. After a successful upgrade, the selected upgraded socket context implements protocol behavior on the connection. The route does not become the message loop of the upgraded protocol.",
+      "On the client side, the HTTP client prepares an upgrade request and names the target upgrade protocol. For WebSocket that target name is `websocket`:",
+      ""
+    ],
+    "text": "req->upgrade(\n    \"/ws\", \"websocket\",\n    [](bool success) {\n        snode::log::application().trace()\n            << \"upgrade request initiation: \" << (success ? \"accepted\" : \"rejected\");\n    },\n    [](const std::shared_ptr<Request> &, const std::shared_ptr<Response> &,\n       bool success) {\n        snode::log::application().trace()\n            << \"upgrade response: \" << (success ? \"accepted\" : \"rejected\");\n    },\n    [](const std::shared_ptr<Request> &, const std::string &message) {\n        snode::log::application().error() << \"upgrade response parse error: \" << message;\n    });"
+  },
+  {
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "line": 246,
+    "language": "cmake",
+    "before": [
+      "websocketServerSocketContextUpgradeFactory\nwebsocketClientSocketContextUpgradeFactory\n```",
+      "A linked deployment uses the same upgrade name but resolves it through the selector's linked-factory cache instead of opening the shared object later. For an application that uses the installed WebSocket upgrade components, the build-time shape is to link the HTTP component and the matching WebSocket upgrade component into the executable or into an application-loaded library:",
+      ""
+    ],
+    "text": "target_link_libraries(my_ws_server PRIVATE\n    snodec::http-server-express-legacy-in\n    snodec::websocket-server\n)\n\ntarget_link_libraries(my_ws_client PRIVATE\n    snodec::http-client\n    snodec::net-in-stream-legacy\n    snodec::websocket-client\n)"
+  },
+  {
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "line": 313,
+    "language": "cpp",
+    "before": [
+      "\\index{web::http@\\texttt{web::http}}\n\\index{HTTP components}\n\\index{public headers}",
+      "::: {.snodec-note title=\"Build note\"}\nHTTP code includes the HTTP abstraction it directly names. An IPv4 legacy HTTP server uses:",
+      ""
+    ],
+    "text": "#include <web/http/legacy/in/Server.h>"
+  },
+  {
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "line": 319,
+    "language": "cpp",
+    "before": [
+      "```cpp\n#include <web/http/legacy/in/Server.h>\n```",
+      "and the matching client side uses:",
+      ""
+    ],
+    "text": "#include <web/http/legacy/in/Client.h>"
+  },
+  {
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "line": 96,
+    "language": "cpp",
+    "before": [
+      "The core composition is visible in two steps.",
+      "First, `WebApp` is router-shaped:",
+      ""
+    ],
+    "text": "class WebApp : public Router {\n    // runtime-facing lifecycle surface\n};"
+  },
+  {
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "line": 104,
+    "language": "cpp",
+    "before": [
+      "```cpp\nclass WebApp : public Router {\n    // runtime-facing lifecycle surface\n};\n```",
+      "Second, `WebAppT` joins that application shape with a concrete HTTP server type:",
+      ""
+    ],
+    "text": "template <typename ServerT>\nclass WebAppT\n    : public WebApp\n    , public ServerT {\n    // bridge from HTTP request readiness to Express dispatch\n};"
+  },
+  {
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "line": 121,
+    "language": "cpp",
+    "before": [
+      "`WebAppT<ServerT>` is the joining point. It inherits the router-shaped `WebApp` surface and the concrete HTTP server type. When the HTTP server reports a ready request, `WebAppT` wraps that request/response pair in a `Controller` and dispatches it into the root route.",
+      "The concrete alias is not the main point; it is an example of the general pattern. An IPv4 legacy Express-like web application can be shaped as:",
+      ""
+    ],
+    "text": "using WebApp = WebAppT<web::http::legacy::in::Server>;"
+  },
+  {
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "line": 127,
+    "language": "cpp",
+    "before": [
+      "```cpp\nusing WebApp = WebAppT<web::http::legacy::in::Server>;\n```",
+      "The SNode.C source also provides the corresponding convenience alias:",
+      ""
+    ],
+    "text": "express::legacy::in::WebApp"
+  },
+  {
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "line": 270,
+    "language": "cpp",
+    "before": [
+      "\\index{Express components}\n\\index{WebApp@\\texttt{WebApp}!public surface}",
+      "::: {.snodec-note title=\"Build note\"}\nA file that directly uses the IPv4 legacy Express WebApp includes:",
+      ""
+    ],
+    "text": "#include <express/legacy/in/WebApp.h>"
+  },
+  {
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "line": 276,
+    "language": "cpp",
+    "before": [
+      "```cpp\n#include <express/legacy/in/WebApp.h>\n```",
+      "Code using the convenience server helpers includes:",
+      ""
+    ],
+    "text": "#include <express/legacy/in/Server.h>"
+  },
+  {
+    "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
+    "line": 431,
+    "language": "cpp",
+    "before": [
+      "\n\\index{EventSource@\\texttt{EventSource}!public surface}",
+      "\n::: {.snodec-note title=\"Build note\"}\nClient-side EventSource code includes the EventSource abstraction it names. For the IPv4 legacy wrapper, that front door is:",
+      ""
+    ],
+    "text": "#include <web/http/legacy/in/EventSource.h>"
+  },
+  {
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "line": 55,
+    "language": "cpp",
+    "before": [
+      "The WebSocket `SocketContextUpgrade` connects HTTP negotiation to the context that handles WebSocket framing and subprotocol behavior.",
+      "In simplified form, the generic WebSocket upgrade context has this shape:",
+      ""
+    ],
+    "text": "template <typename SubProtocolT, typename RequestT, typename ResponseT>\nclass SocketContextUpgrade\n    : public web::http::SocketContextUpgrade<RequestT, ResponseT>\n    , public SubProtocolContext {\n    // WebSocket framing and subprotocol boundary\n};"
+  },
+  {
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "line": 183,
+    "language": "cmake",
+    "before": [
+      "echoServerSubProtocolFactory\nechoClientSubProtocolFactory\n```",
+      "A linked deployment uses the same subprotocol name but resolves it from the selector's linked-factory cache. For a project that builds its own subprotocol, the CMake shape is compact:",
+      ""
+    ],
+    "text": "add_library(my-echo-server STATIC Echo.cpp EchoFactory.cpp)\ntarget_link_libraries(my-echo-server PUBLIC snodec::websocket-server)\n\ntarget_link_libraries(my_ws_server PRIVATE\n    snodec::http-server-express-legacy-in\n    snodec::websocket-server\n    my-echo-server\n)"
+  },
+  {
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "line": 196,
+    "language": "cmake",
+    "before": [
+      "target_link_libraries(my_ws_server PRIVATE\n    snodec::http-server-express-legacy-in\n    snodec::websocket-server\n    my-echo-server\n)\n```",
+      "The client side mirrors the server side:",
+      ""
+    ],
+    "text": "add_library(my-echo-client STATIC Echo.cpp EchoFactory.cpp)\ntarget_link_libraries(my-echo-client PUBLIC snodec::websocket-client)\n\ntarget_link_libraries(my_ws_client PRIVATE\n    snodec::http-client\n    snodec::net-in-stream-legacy\n    snodec::websocket-client\n    my-echo-client\n)"
+  },
+  {
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "line": 216,
+    "language": "cpp",
+    "before": [
+      "A WebSocket application is usually not written as a raw byte loop. The application supplies a subprotocol object. The WebSocket layer handles the upgraded connection, frames, messages, and control behavior; the subprotocol object receives lifecycle and message callbacks.",
+      "A minimal echo pair needs one subprotocol on each side. The server-side object collects one message and sends its bytes back with the same message type. The teaching client sends text, while an independent client may also send binary data:",
+      ""
+    ],
+    "text": "#include <web/websocket/server/SubProtocol.h>\n#include <web/websocket/SubProtocolContext.h>\n#include <Log.h>\n\n#include <cstddef>\n#include <cstdint>\n#include <string>\n\nclass EchoServer final : public web::websocket::server::SubProtocol {\npublic:\n    EchoServer(web::websocket::SubProtocolContext* context, const std::string& name)\n        : web::websocket::server::SubProtocol(context, name, 90, 3) {\n    }\n\nprivate:\n    void onConnected() override {\n        snode::log::application().trace() << \"WebSocket echo server connected\";\n    }\n\n    void onMessageStart(int opCode) override {\n        currentMessageType = static_cast<std::uint8_t>(opCode);\n        currentMessage.clear();\n    }\n\n    void onMessageData(const char* chunk, std::size_t chunkLen) override {\n        currentMessage.append(chunk, chunkLen);\n    }\n\n    void onMessageEnd() override {\n        snode::log::application().trace()\n            << \"WebSocket echo server received bytes: \" << currentMessage.size();\n        subProtocolContext->sendMessage(currentMessageType, currentMessage.data(),\n                                        currentMessage.size());\n    }\n\n    void onMessageError(uint16_t errnum) override {\n        snode::log::application().warn()\n            << \"WebSocket echo server message error: \" << errnum;\n    }\n\n    void onDisconnected() override {\n        snode::log::application().trace() << \"WebSocket echo server disconnected\";\n    }\n\n    bool onSignal(int) override {\n        sendClose();\n        return false;\n    }\n\n    std::uint8_t currentMessageType = 0;\n    std::string currentMessage;\n};"
+  },
+  {
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "line": 273,
+    "language": "cpp",
+    "before": [
+      "    std::uint8_t currentMessageType = 0;\n    std::string currentMessage;\n};\n```",
+      "The matching client-side object sends one message after the upgrade is complete, logs the echoed response, and then closes the WebSocket connection:",
+      ""
+    ],
+    "text": "#include <web/websocket/client/SubProtocol.h>\n#include <Log.h>\n\n#include <cstddef>\n#include <cstdint>\n#include <string>\n\nclass EchoClient final : public web::websocket::client::SubProtocol {\npublic:\n    EchoClient(web::websocket::SubProtocolContext* context, const std::string& name)\n        : web::websocket::client::SubProtocol(context, name, 90, 3) {\n    }\n\nprivate:\n    void onConnected() override {\n        snode::log::application().trace() << \"WebSocket echo client connected\";\n        sendMessage(\"hello\");\n    }\n\n    void onMessageStart(int) override {\n        currentMessage.clear();\n    }\n\n    void onMessageData(const char* chunk, std::size_t chunkLen) override {\n        currentMessage.append(chunk, chunkLen);\n    }\n\n    void onMessageEnd() override {\n        snode::log::application().trace()\n            << \"WebSocket echo client received: \" << currentMessage;\n        currentMessage.clear();\n        sendClose();\n    }\n\n    void onMessageError(uint16_t errnum) override {\n        snode::log::application().warn()\n            << \"WebSocket echo client message error: \" << errnum;\n        currentMessage.clear();\n    }\n\n    void onDisconnected() override {\n        snode::log::application().trace() << \"WebSocket echo client disconnected\";\n        currentMessage.clear();\n    }\n\n    bool onSignal(int) override {\n        sendClose();\n        return false;\n    }\n\n    std::string currentMessage;\n};"
+  },
+  {
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "line": 330,
+    "language": "cpp",
+    "before": [
+      "    std::string currentMessage;\n};\n```",
+      "The factories make the subprotocol selectable by name and let the WebSocket upgrade layer create protocol instances without knowing the concrete C++ type in advance. The exported symbol depends on the server/client side:",
+      ""
+    ],
+    "text": "extern \"C\" web::websocket::SubProtocolFactory<web::websocket::server::SubProtocol>*\nechoServerSubProtocolFactory() {\n    return new EchoServerFactory(\"echo\");\n}\n\nextern \"C\" web::websocket::SubProtocolFactory<web::websocket::client::SubProtocol>*\nechoClientSubProtocolFactory() {\n    return new EchoClientFactory(\"echo\");\n}"
+  },
+  {
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "line": 344,
+    "language": "cmake",
+    "before": [
+      "extern \"C\" web::websocket::SubProtocolFactory<web::websocket::client::SubProtocol>*\nechoClientSubProtocolFactory() {\n    return new EchoClientFactory(\"echo\");\n}\n```",
+      "The base subprotocol and factory shape belongs to the shared WebSocket component, while each concrete server/client module links the corresponding server/client component:",
+      ""
+    ],
+    "text": "target_link_libraries(echo-server PRIVATE snodec::websocket-server)\ntarget_link_libraries(echo-client PRIVATE snodec::websocket-client)"
+  },
+  {
+    "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "line": 181,
+    "language": "cpp",
+    "before": [
+      "\\index{MQTT!client example}\n\\index{Publish@\\texttt{Publish}}\n\\index{Connack@\\texttt{Connack}}",
+      "The following compact class expresses the MQTT side of the application: connect, subscribe, publish, receive publishes, and disconnect on shutdown.",
+      ""
+    ],
+    "text": "#include <iot/mqtt/client/Mqtt.h>\n#include <iot/mqtt/packets/Connack.h>\n#include <iot/mqtt/packets/Publish.h>\n#include <iot/mqtt/Topic.h>\n#include <Log.h>\n\n#include <string>\n\nclass SensorClient final : public iot::mqtt::client::Mqtt {\npublic:\n    SensorClient()\n        : iot::mqtt::client::Mqtt(\n              \"sensor-mqtt\", \"sensor-client-1\", 60, \"sensor-client.session\") {\n    }\n\nprivate:\n    void onConnected() override {\n        sendConnect(true,   // clean session\n                    \"\",     // will topic\n                    \"\",     // will message\n                    0,      // will QoS\n                    false,  // will retain\n                    \"\",     // username\n                    \"\",     // password\n                    false); // loop prevention\n    }\n\n    void onConnack(const iot::mqtt::packets::Connack&) override {\n        sendSubscribe({iot::mqtt::Topic(\"sensors/+/command\", 0)});\n\n        sendPublish(\"sensors/temperature/value\", \"23.5\", 0, false);\n    }\n\n    void onPublish(const iot::mqtt::packets::Publish& publish) override {\n        const std::string topic = publish.getTopic();\n        const std::string message = publish.getMessage();\n\n        snode::log::application().trace()\n            << \"MQTT command on \" << topic << \": \" << message;\n    }\n\n    bool onSignal(int) override {\n        sendDisconnect();\n        return false;\n    }\n};"
+  },
+  {
+    "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "line": 290,
+    "language": "cmake",
+    "before": [
+      "Chapter 23 uses these observations when assigning application responsibilities in a larger IoT system.",
+      "::: {.snodec-note title=\"Build note\"}\nThe corresponding native MQTT client component is:",
+      ""
+    ],
+    "text": "target_link_libraries(my_mqtt_client PRIVATE snodec::mqtt-client)"
+  },
+  {
+    "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "line": 298,
+    "language": "cpp",
+    "before": [
+      "The shared `mqtt` component is the protocol core. The `mqtt-client` component adds the client side on top of that core. The component exists only when the MQTT build prerequisites are available.",
+      "MQTT code includes the MQTT abstraction it directly names. A client-side MQTT protocol object is introduced through:",
+      ""
+    ],
+    "text": "#include <iot/mqtt/client/Mqtt.h>"
+  },
+  {
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "line": 64,
+    "language": "cpp",
+    "before": [
+      "The code-shaped center of this chapter is the generic MQTT WebSocket subprotocol type.",
+      "In simplified form, its shape is:",
+      ""
+    ],
+    "text": "template <typename WSSubProtocolRoleT>\nclass SubProtocol\n    : public WSSubProtocolRoleT\n    , private iot::mqtt::MqttContext {\n    // MQTT over WebSocket bridge\n};"
+  },
+  {
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "line": 98,
+    "language": "cpp",
+    "before": [
+      "The generic MQTT WebSocket subprotocol type is specialized through simple server/client aliases.",
+      "On the server side:",
+      ""
+    ],
+    "text": "using SubProtocol = iot::mqtt::SubProtocol<web::websocket::server::SubProtocol>;"
+  },
+  {
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "line": 104,
+    "language": "cpp",
+    "before": [
+      "```cpp\nusing SubProtocol = iot::mqtt::SubProtocol<web::websocket::server::SubProtocol>;\n```",
+      "On the client side:",
+      ""
+    ],
+    "text": "using SubProtocol = iot::mqtt::SubProtocol<web::websocket::client::SubProtocol>;"
+  },
+  {
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "line": 192,
+    "language": "cmake",
+    "before": [
+      "Reuse the MQTT protocol object from Chapter 21 when selecting the WebSocket carrier. The MQTT protocol object keeps its session and packet behavior; the WebSocket-carried variant adds the WebSocket subprotocol component that lets MQTT packets travel through an HTTP/WebSocket upgrade path.",
+      "A compact client-side build fragment therefore looks like this:",
+      ""
+    ],
+    "text": "target_link_libraries(gateway\n    PRIVATE\n        snodec::mqtt-client\n        snodec::mqtt-client-websocket\n        snodec::websocket-client)"
+  },
+  {
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "line": 202,
+    "language": "cmake",
+    "before": [
+      "```cmake\ntarget_link_libraries(gateway\n    PRIVATE\n        snodec::mqtt-client\n        snodec::mqtt-client-websocket\n        snodec::websocket-client)\n```",
+      "The three client components supply the MQTT implementation, its WebSocket adapter, and the WebSocket carrier. The corresponding server-side components are:",
+      ""
+    ],
+    "text": "target_link_libraries(gateway\n    PRIVATE\n        snodec::mqtt-server\n        snodec::mqtt-server-websocket\n        snodec::websocket-server)"
+  },
+  {
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "line": 54,
+    "language": "cpp",
+    "before": [
+      "\\index{MariaDB}\n\\index{database module}",
+      "Ordinary application use begins with the public client header:",
+      ""
+    ],
+    "text": "#include <database/mariadb/MariaDBClient.h>"
+  },
+  {
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "line": 232,
+    "language": "cmake",
+    "before": [
+      "The database is a communicating peer, but the application uses this client as its persistence boundary. The SQL work is submitted before the runtime starts, but its progress and completion belong to the event-driven execution model. The row callback receives individual rows; a `nullptr` row marks the end of that result stream. For the database case, the companion source tree is `MariaDB-Minimal`.",
+      "The corresponding build-side dependency is the MariaDB component:",
+      ""
+    ],
+    "text": "target_link_libraries(myapp PRIVATE snodec::db-mariadb)"
+  },
+  {
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "line": 304,
+    "language": "cpp",
+    "before": [
+      "Both can appear together, but they are different ideas.",
+      "The call shape is important. A chained call appends to the command sequence returned by the previous operation:",
+      ""
+    ],
+    "text": "db.exec(...).query(...);"
+  },
+  {
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "line": 312,
+    "language": "cpp",
+    "before": [
+      "Here the `query(...)` belongs to the same sequence as the preceding `exec(...)`. It is not a second immediate operation on the client object.",
+      "Starting async work from inside a callback has different meaning:",
+      ""
+    ],
+    "text": "db.exec(\n    ...,\n    [&db]() {\n        db.exec(...);\n    },\n    ...);"
+  },
+  {
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "line": 339,
+    "language": "cpp",
+    "before": [
+      "Transactions use the same ordered command mechanism but add a database consistency boundary. The application must choose whether to commit, roll back, retry, compensate or stop after an error.",
+      "The following success-path illustration shows transaction mode, queued work, commit and departure from transaction mode. Its comment-only error callbacks do not implement recovery.",
+      ""
+    ],
+    "text": "db.startTransactions(\n      []() {\n          // Transaction mode enabled.\n      },\n      [](const std::string& error, unsigned int number) {\n          // Report transaction-start error.\n      })\n    .exec(\n        \"INSERT INTO measurements(sensor, value) VALUES ('humidity', 61.0)\",\n        []() {\n            // Insert command accepted.\n        },\n        [](const std::string& error, unsigned int number) {\n            // Report insert error.\n        })\n    .commit(\n        []() {\n            // Transaction committed.\n        },\n        [](const std::string& error, unsigned int number) {\n            // Report commit error.\n        })\n    .endTransactions(\n        []() {\n            // Transaction mode disabled.\n        },\n        [](const std::string& error, unsigned int number) {\n            // Report transaction-end error.\n        });"
+  },
+  {
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "line": 56,
+    "language": "cmake",
+    "before": [
+      "Link lines select direct application-facing components, not every implementation dependency. Include blocks likewise name the public abstractions the source directly uses. For a high-level protocol application, the direct choices are usually its protocol/application component and composed stream implementation.",
+      "Consider this in-tree build fragment:",
+      ""
+    ],
+    "text": "add_executable(snode.c main.cpp)\n\ntarget_link_libraries(\n    snode.c\n    PUBLIC\n        http-server-express\n        net-in-stream-legacy\n)"
+  },
+  {
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "line": 69,
+    "language": "cmake",
+    "before": [
+      "target_link_libraries(\n    snode.c\n    PUBLIC\n        http-server-express\n        net-in-stream-legacy\n)\n```",
+      "It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream implementation. For an installed consumer of `<express/legacy/in/WebApp.h>`, select the compiled `http-server-express-legacy-in` component, which owns both dependencies; the in-tree fragment above remains the framework application\u2019s separate link choice. The external form uses its exported `snodec::...` target:",
+      ""
+    ],
+    "text": "find_package(snodec REQUIRED\n    COMPONENTS\n        http-server-express-legacy-in\n)\n\nadd_executable(my-ipv4-legacy-webapp\n    main.cpp\n)\n\ntarget_link_libraries(my-ipv4-legacy-webapp\n    PRIVATE\n        snodec::http-server-express-legacy-in\n)"
+  },
+  {
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "line": 128,
+    "language": "cmake",
+    "before": [
+      "Conditional target creation also controls which applications exist; install rules determine the deployment-facing set.",
+      "For example, the JSON server target is only built when JSON support is available:",
+      ""
+    ],
+    "text": "if(NLOHMANN_JSON_FOUND)\n    add_executable(jsonserver jsonserver.cpp)\n    target_link_libraries(\n        jsonserver\n        PRIVATE\n            http-server-express\n            net-in-stream-legacy\n    )\nendif()"
+  },
+  {
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "line": 159,
+    "language": "cpp",
+    "before": [
+      "The `snode.c` application is a good example. Here, `snode.c` refers to the application target in `src/apps`, not to the entire framework.",
+      "A compact teaching shape of its structure is:",
+      ""
+    ],
+    "text": "int main(int argc, char* argv[]) {\n    core::SNodeC::init(argc, argv);\n\n    const express::legacy::in::WebApp app;\n\n    app.use(express::middleware::VerboseRequest());\n\n    app.get(\"/health\", [] APPLICATION(req, res) {\n        res->json({{\"ok\", true}});\n    });\n\n    app.listen(8080, /* state callback */);\n\n    return core::SNodeC::start();\n}"
+  },
+  {
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "line": 227,
+    "language": "cpp",
+    "before": [
+      "`testpipe` shows the core runtime, a `Pipe`, `PipeSink` callbacks, `PipeSource::send`, and runtime start without involving a network protocol.",
+      "A simplified excerpt captures the idea:",
+      ""
+    ],
+    "text": "core::SNodeC::init(argc, argv);\n\nconst core::pipe::Pipe pipe(\n    [](core::pipe::PipeSource &source, core::pipe::PipeSink &sink) {\n        sink.setOnData([&source](const char* chunk, std::size_t len) {\n            source.send(chunk, len);\n        });\n\n        sink.setOnEof([]() {\n            snode::log::application().trace() << \"Pipe EOF\";\n        });\n\n        source.send(\"Hello World!\");\n    },\n    [](int errnum) {\n        snode::log::application().systemError(snode::log::Level::Error, errnum)\n            << \"Pipe not created\";\n    });\n\nreturn core::SNodeC::start();"
+  },
+  {
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "line": 254,
+    "language": "cmake",
+    "before": [
+      "The pipe example uses runtime-managed callbacks without a network protocol. The database demonstration is another distinct application shape: `src/apps/database/testmariadb` exercises the persistence API from Chapter 24.",
+      "It is built only when MariaDB support is available. Its build shape is compact:",
+      ""
+    ],
+    "text": "if(LIBMARIADB_FOUND)\n    add_executable(testmariadb testmariadb.cpp)\n    target_link_libraries(testmariadb PRIVATE db-mariadb)\nendif()"
+  },
+  {
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "line": 18,
+    "language": "cmake",
+    "before": [
+      "### Begin with one installed consumer",
+      "The system chapter assigned work to cooperating executables. Each executable now needs a reproducible way to consume the framework it actually uses. Start with the echo server: its source names an IPv4 legacy stream server, so the immediate build question is which component makes that public type usable. The answer should not require the application to repeat the framework's complete dependency graph.",
+      ""
+    ],
+    "text": "find_package(snodec REQUIRED COMPONENTS net-in-stream-legacy)\nadd_executable(app main.cpp)\ntarget_link_libraries(app PRIVATE snodec::net-in-stream-legacy)"
+  },
+  {
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "line": 45,
+    "language": "cmake",
+    "before": [
+      "Module install rules supply the matching public include surface. The supported component list spans core, connection variants, network families, HTTP, Express, WebSocket, MQTT and database support; it is an architectural inventory for consumers.",
+      "SNode.C requires a modern compiler baseline. The build checks for sufficiently recent GNU or Clang versions and then sets:",
+      ""
+    ],
+    "text": "set(CMAKE_CXX_STANDARD 20)\nset(CMAKE_CXX_STANDARD_REQUIRED ON)\nset(CMAKE_CXX_EXTENSIONS OFF)"
+  },
+  {
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "line": 67,
+    "language": "cmake",
+    "before": [
+      "Warnings break the build, exposing conversions, unreachable code and regressions during compiler upgrades. The strict default has selected exceptions: shadowing, Raspberry Pi ABI notes, Android/Termux deprecations and Clang-specific diagnostics have practical suppressions. Read those flags as documented policy rather than assuming that every diagnostic is useful on every platform.",
+      "The build treats compiler warnings strictly and applies a strict linker posture:",
+      ""
+    ],
+    "text": "add_link_options(LINKER:--as-needed LINKER:--no-undefined)"
+  },
+  {
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "line": 121,
+    "language": "cpp",
+    "before": [
+      "The component graph is the build-side view. The include hierarchy is the source-side view. A SNode.C source file should normally include the highest public header that owns the abstraction it directly names; it should not assemble the whole lower stack by including implementation-support headers manually.",
+      "For example, a concrete IPv4 legacy socket server is selected in source by:",
+      ""
+    ],
+    "text": "#include <net/in/stream/legacy/SocketServer.h>"
+  },
+  {
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "line": 127,
+    "language": "cpp",
+    "before": [
+      "```cpp\n#include <net/in/stream/legacy/SocketServer.h>\n```",
+      "The matching component is `net-in-stream-legacy`. At the Express level, an IPv4 legacy WebApp is selected by:",
+      ""
+    ],
+    "text": "#include <express/legacy/in/WebApp.h>"
+  },
+  {
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "line": 173,
+    "language": "cmake",
+    "before": [
+      "\\index{namespaced targets}\n\\index{exported targets}",
+      "Most library targets also receive namespaced aliases such as:",
+      ""
+    ],
+    "text": "add_library(snodec::core ALIAS core)\nadd_library(snodec::net-in-stream-legacy ALIAS net-in-stream-legacy)\nadd_library(snodec::http-server-express ALIAS http-server-express)"
+  },
+  {
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "line": 183,
+    "language": "cmake",
+    "before": [
+      "External package targets use this namespace too. It distinguishes the framework component from an application-local helper.",
+      "An external consumer can write:",
+      ""
+    ],
+    "text": "target_link_libraries(myapp\n    PRIVATE\n        snodec::http-server-express-legacy-in\n)"
+  },
+  {
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "line": 339,
+    "language": "cmake",
+    "before": [
+      "Public headers supply the corresponding source contract. Include the header for the abstraction named, without relying on an unrelated header's incidental transitive includes. Package discovery and header availability are related but independently testable.",
+      "A minimal external application that uses the Express-like HTTP layer over an IPv4 legacy stream could look like this:",
+      ""
+    ],
+    "text": "cmake_minimum_required(VERSION 3.18)\n\nproject(my-ipv4-legacy-webapp LANGUAGES CXX)\n\nset(CMAKE_CXX_STANDARD 20)\nset(CMAKE_CXX_STANDARD_REQUIRED ON)\nset(CMAKE_CXX_EXTENSIONS OFF)\n\nfind_package(snodec REQUIRED\n    COMPONENTS\n        http-server-express-legacy-in\n)\n\nadd_executable(my-ipv4-legacy-webapp\n    main.cpp\n)\n\ntarget_link_libraries(my-ipv4-legacy-webapp\n    PRIVATE\n        snodec::http-server-express-legacy-in\n)"
+  },
+  {
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "line": 365,
+    "language": "cpp",
+    "before": [
+      "target_link_libraries(my-ipv4-legacy-webapp\n    PRIVATE\n        snodec::http-server-express-legacy-in\n)\n```",
+      "A matching `main.cpp` would include the public header for the source abstraction it directly uses. For example, a file that directly uses the Express WebApp surface would include:",
+      ""
+    ],
+    "text": "#include <express/legacy/in/WebApp.h>"
+  },
+  {
+    "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
+    "line": 103,
+    "language": "cpp",
+    "before": [
+      "Use a unit test when a failure can be expressed without a deployed system: address values, parsing, packet validation, filtering or a local lifetime transition. The `core`, `net`, `http`, `websocket`, `mqtt`, `log` and `utils` groups identify areas; inspect construction and linkage before assuming a test is dependency-free.",
+      "`tests/unit/net/InetSocketAddressTest.cpp` uses the shared `TestResult` helper to check the IPv4 address interface. An abridged part of its setup is:",
+      ""
+    ],
+    "text": "tests::support::TestResult testResult;\n\nconst net::in::SocketAddress defaultSocketAddress;\ntestResult.expectTrue(defaultSocketAddress.getHost() == \"0.0.0.0\",\n                      \"default IPv4 host is 0.0.0.0\");\ntestResult.expectEqual(0, defaultSocketAddress.getPort(),\n                       \"default IPv4 port is 0\");\ntestResult.expectTrue(defaultSocketAddress.toString() == \"0.0.0.0:0\",\n                      \"default IPv4 address string includes host and port\");"
+  },
+  {
+    "file": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "line": 145,
+    "language": "cpp",
+    "before": [
+      "**Assembling the roles**",
+      "The whole architectural change is visible in `main.cpp`. MiniGateway Extended creates the same model and starts one additional preconfigured network role:",
+      ""
+    ],
+    "text": "const auto measurementInputRole =\n    minigateway::startMeasurementInputRole(measurementModel);"
+  },
+  {
+    "file": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "line": 370,
+    "language": "cpp",
+    "before": [
+      "Read the implementation in three excerpts. The complete file remains `companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.cpp`; includes, construction, trimming/splitting helpers and lifecycle diagnostics remain there. The excerpts preserve the code responsible for framing, validation and acceptance, so those decisions can be read separately without changing their implementation.",
+      "**Framing and buffering \u2014 excerpt.** The receive callback retains incomplete input in the connection's own buffer and processes only delimited lines.",
+      ""
+    ],
+    "text": "std::size_t MeasurementUnixSocketContext::onReceivedFromPeer() {\n    char chunk[4096];\n    const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));\n\n    if (chunkLen > 0) {\n        receiveBuffer.append(chunk, chunkLen);\n\n        std::size_t lineEnd = receiveBuffer.find('\\n');\n        while (lineEnd != std::string::npos && lineEnd <= 4096) {\n            std::string line = receiveBuffer.substr(0, lineEnd);\n            if (!line.empty() && line.back() == '\\r') {\n                line.pop_back();\n            }\n\n            processLine(line);\n            receiveBuffer.erase(0, lineEnd + 1);\n            lineEnd = receiveBuffer.find('\\n');\n        }\n\n        if (receiveBuffer.length() > 4096) {\n            snode::log::application().warn()\n                << \"Measurement socket line exceeds 4096 bytes; closing connection\";\n            close();\n        }\n    }\n\n    return chunkLen;\n}"
+  },
+  {
+    "file": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "line": 407,
+    "language": "cpp",
+    "before": [
+      "The callback returns the number of bytes read, leaving later progress to the runtime. The buffer belongs to this context: sharing the factory and model does not combine different peers\u2019 partial input.",
+      "**Parsing and validation \u2014 excerpt.** After the omitted `splitCsvLine()` helper separates and trims fields, the conversion functions require full-field consumption and finite floating-point values.",
+      ""
+    ],
+    "text": "double parseDouble(const std::string& value, const std::string& fieldName) {\n    std::size_t parsedLength = 0;\n    const double parsedValue = std::stod(value, &parsedLength);\n    if (parsedLength != value.length() || !std::isfinite(parsedValue)) {\n        throw std::invalid_argument(\"invalid \" + fieldName + \" value '\" + value + \"'\");\n    }\n\n    return parsedValue;\n}\n\nstd::uint64_t parseSequence(const std::string& value) {\n    std::size_t parsedLength = 0;\n    const auto parsedValue = std::stoull(value, &parsedLength);\n    if (parsedLength != value.length()) {\n        throw std::invalid_argument(\"invalid sequence value '\" + value + \"'\");\n    }\n\n    return parsedValue;\n}\n\nMeasurement parseMeasurementLine(const std::string& line) {\n    const std::vector<std::string> values = splitCsvLine(line);\n    if (values.size() != 3 && values.size() != 4) {\n        throw std::invalid_argument(\"expected temperature,humidity,voltage[,sequence]\");\n    }\n\n    Measurement measurement;\n    measurement.temperature = parseDouble(values[0], \"temperature\");\n    measurement.humidity = parseDouble(values[1], \"humidity\");\n    measurement.voltage = parseDouble(values[2], \"voltage\");\n    measurement.sequence = values.size() == 4 ? parseSequence(values[3]) : 0;\n    measurement.timestamp = std::chrono::system_clock::now();\n\n    return measurement;\n}"
+  },
+  {
+    "file": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "line": 451,
+    "language": "cpp",
+    "before": [
+      "Notice what validation does not decide. The optional producer sequence can be read syntactically, but it is not authoritative gateway order. Several producers could present the same value or disagree about ordering. That conflict cannot be resolved separately inside each context without duplicating the policy. Parsing supplies a candidate measurement; the shared model remains the place that accepts it.",
+      "**Acceptance \u2014 excerpt.** One small function connects the validated candidate to that owner.",
+      ""
+    ],
+    "text": "void MeasurementUnixSocketContext::processLine(const std::string& line) const {\n    if (!line.empty()) {\n        try {\n            measurementModel.accept(parseMeasurementLine(line));\n        } catch (const std::exception& ex) {\n            snode::log::application().warn()\n                << \"Ignoring invalid measurement line '\" << line << \"': \" << ex.what();\n        }\n    }\n}"
+  },
+  {
+    "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+    "line": 56,
+    "language": "cpp",
+    "before": [
+      "\n| Candidate owner | Why it is tempting | Cost |\n|---|---|---|\n| incoming MQTT payload | preserves producer-side numbering | each producer can define a different ordering rule |\n| HTTP simulation route | easy for the demonstration path | duplicates policy outside the real input paths |\n| Unix-domain input line | convenient for local tests and replay | lets a local tool compete with application state |\n| SSE response path | close to the browser-visible event id | turns an observation role into a state owner |\n| `MeasurementModel` | one rule for every accepted measurement | the input sequence becomes syntactic input, not authority |",
+      "The chosen design puts the authority in `MeasurementModel::accept(...)`:",
+      ""
+    ],
+    "text": "Measurement MeasurementModel::accept(Measurement measurement) {\n    measurement.sequence = currentMeasurement.sequence + 1;\n\n    currentMeasurement = std::move(measurement);\n    publish(currentMeasurement);\n\n    return currentMeasurement;\n}"
+  },
+  {
+    "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+    "line": 71,
+    "language": "cpp",
+    "before": [
+      "\\index{names as architecture}\n\\index{namespace structure}\n\\index{type aliases}\n\\index{alias types}\n\\index{roles}\n\\index{connection}\n\\index{context}\n\\index{factory}\n\\index{core@\\texttt{core}}\n\\index{runtime control}\n\\index{socket abstractions}\n\\index{flow control}\n\\index{net@\\texttt{net}}\n\\index{network families}",
+      "SNode.C names encode architectural position. Consider:",
+      ""
+    ],
+    "text": "net::in::stream::legacy::SocketServer"
+  },
+  {
+    "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+    "line": 208,
+    "language": "cpp",
+    "before": [
+      "MiniGateway Extended is an application-level extension, not a framework-level extension. It adds a new local input boundary while keeping the framework and the existing application roles unchanged.",
+      "The first boundary is construction. The factory receives the model reference and constructs the connection-local context. It does not parse measurements, register HTTP routes, publish MQTT messages, or decide deployment policy.",
+      ""
+    ],
+    "text": "core::socket::stream::SocketContext* MeasurementUnixSocketContextFactory::create(\n    core::socket::stream::SocketConnection* socketConnection) {\n    return new MeasurementUnixSocketContext(socketConnection, measurementModel);\n}"
+  },
+  {
+    "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+    "line": 217,
+    "language": "cpp",
+    "before": [
+      "```cpp\ncore::socket::stream::SocketContext* MeasurementUnixSocketContextFactory::create(\n    core::socket::stream::SocketConnection* socketConnection) {\n    return new MeasurementUnixSocketContext(socketConnection, measurementModel);\n}\n```",
+      "The second boundary is protocol endpoint behavior. The Unix-domain context owns the local line protocol and delegates accepted measurements to the model.",
+      ""
+    ],
+    "text": "void MeasurementUnixSocketContext::processLine(const std::string& line) const {\n    if (!line.empty()) {\n        try {\n            measurementModel.accept(parseMeasurementLine(line));\n        } catch (const std::exception& ex) {\n            snode::log::application().warn()\n                << \"Ignoring invalid measurement line '\" << line << \"': \" << ex.what();\n        }\n    }\n}"
+  }
+]

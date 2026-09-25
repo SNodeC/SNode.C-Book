@@ -2708,7 +2708,7 @@ Book-1.0 pins/manifest unchanged, author framework read-only, and all teaching
 statements and code behavior. Record identity of the supplied style/configuration
 files and modules before use; stop if any differ from Book-1.0. Commits A, B,
 then evidence. Record final gates and freeze the manuscript again afterwards.
-Style identity verification is the current entry gate.
+Style identity verification passed before the author styles were installed.
 
 The author approved the Ch12 generator correction during FU16: remove leading
 spaces from both port-to-path replacement strings so formatting cannot prevent
@@ -2724,3 +2724,21 @@ FU16 B gate: effective configuration value, edition-tag wording, prefix explanat
 and the specified paragraph joins are complete. All statements are retained in
 the requested joins. The proposal’s derived statistics are refreshed to 111,704
 tokens and the rebuilt 332-page reading PDF. Hosted A+B verification follows.
+
+FU16 complete: A `c39e6b0`, B `446d3e3`, pushed to main. Hosted book run
+36138689872 and companion run 36138689770 test the A+B tip and both pass;
+GCC 13.3.0 and Clang 18.1.3 each pass 66/66 labs, 185/185 framework tests,
+4/4 external Echo tests, and all smoke/lifetime steps. Local results are also
+66/66 for each compiler. All editorial, reference, source-alignment, external
+anchor, hygiene, width and formatting gates pass. The final report explicitly
+counts 75 applicable matrix cells (all met), with 221 not applicable.
+The book has 111,704 tokens and 332 PDF pages. The existing narrow backmatter
+waiver remains 810/800 within 812; no global or chapter limit was relaxed.
+
+The evidence commit completes attributed-C++ fence coverage in the editorial
+guard and updates the mutation fixture to B’s approved Ch7 sentence; its
+assertions and negative case remain unchanged. No hosted build/test input is
+changed after A+B. The author tree’s final HEAD/status record equals entry;
+Book-1.0 pins and the manifest are unchanged. See FOLLOWUP-16-REPORT.md and
+followup-16-evidence for item evidence, tool calibration and run details.
+The manuscript is frozen again; no further broad refinement is scheduled.

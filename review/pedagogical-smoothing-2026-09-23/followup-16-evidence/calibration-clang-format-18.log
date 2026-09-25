@@ -1,0 +1,834 @@
+/workspace/src/core/DynamicLoader.cpp:46:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/workspace/src/core/EventLoop.cpp:172:30: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction sact{};
+                             ^
+/workspace/src/core/EventLoop.cpp:177:36: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldPipeAct{};
+                                   ^
+/workspace/src/core/EventLoop.cpp:180:35: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldIntAct{};
+                                  ^
+/workspace/src/core/EventLoop.cpp:183:36: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldTermAct{};
+                                   ^
+/workspace/src/core/EventLoop.cpp:186:37: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldAlarmAct{};
+                                    ^
+/workspace/src/core/EventLoop.cpp:189:35: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldHupAct{};
+                                  ^
+/workspace/src/core/EventLoop.cpp:248:34: error: code should be clang-formatted [-Wclang-format-violations]
+            struct sigaction sact{};
+                                 ^
+/workspace/src/core/EventLoop.cpp:253:40: error: code should be clang-formatted [-Wclang-format-violations]
+            struct sigaction oldPipeAct{};
+                                       ^
+/workspace/src/core/EventLoop.cpp:274:30: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction sact{};
+                             ^
+/workspace/src/core/EventLoop.cpp:279:36: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldPipeAct{};
+                                   ^
+/workspace/src/core/EventLoop.cpp:284:35: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldIntAct{};
+                                  ^
+/workspace/src/core/EventLoop.cpp:287:36: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldTermAct{};
+                                   ^
+/workspace/src/core/EventLoop.cpp:290:37: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldAlarmAct{};
+                                    ^
+/workspace/src/core/EventLoop.cpp:293:35: error: code should be clang-formatted [-Wclang-format-violations]
+        struct sigaction oldHupAct{};
+                                  ^
+/workspace/src/core/eventreceiver/ReadEventReceiver.cpp:63:66: error: code should be clang-formatted [-Wclang-format-violations]
+    ReadEventReceiver::ReadEventReceiver(const std::string& name,
+                                                                 ^
+/workspace/src/core/eventreceiver/ReadEventReceiver.cpp:64:76: error: code should be clang-formatted [-Wclang-format-violations]
+                                         const snode::log::Scope& logScope,
+                                                                           ^
+/workspace/src/core/eventreceiver/WriteEventReceiver.cpp:63:68: error: code should be clang-formatted [-Wclang-format-violations]
+    WriteEventReceiver::WriteEventReceiver(const std::string& name,
+                                                                   ^
+/workspace/src/core/eventreceiver/WriteEventReceiver.cpp:64:78: error: code should be clang-formatted [-Wclang-format-violations]
+                                           const snode::log::Scope& logScope,
+                                                                             ^
+/workspace/src/core/multiplexer/poll/DescriptorEventPublisher.cpp:73:90: error: code should be clang-formatted [-Wclang-format-violations]
+    bool DescriptorEventPublisher::muxAdd(core::DescriptorEventReceiver* eventReceiver) {
+                                                                                         ^
+/workspace/src/core/multiplexer/poll/DescriptorEventPublisher.cpp:74:54: error: code should be clang-formatted [-Wclang-format-violations]
+        return pollFds.muxAdd(eventReceiver, events);
+                                                     ^
+/workspace/src/core/socket/stream/SocketAcceptor.h:75:72: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename PhysicalSocketServer, typename Config> typename SocketConnectionT>
+                                                                       ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:61:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketServerT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:83:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketServerT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:98:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketServerT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:104:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketServerT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:111:95: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " Listen: starting";
+                                                                                              ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:164:99: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("core.socket", snode::log::Boundary::Connection).systemError(snode::log::Level::Error, errnum)
+                                                                                                  ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:176:107: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " listen "
+                                                                                                          ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:176:150: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " listen "
+                                                                                                                                                     ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:177:121: error: code should be clang-formatted [-Wclang-format-violations]
+                                                                     << physicalServerSocket.getBindAddress().toString() << ": success";
+                                                                                                                        ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:180:111: error: code should be clang-formatted [-Wclang-format-violations]
+                                snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " enable "
+                                                                                                              ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:180:154: error: code should be clang-formatted [-Wclang-format-violations]
+                                snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " enable "
+                                                                                                                                                         ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:181:125: error: code should be clang-formatted [-Wclang-format-violations]
+                                                                         << physicalServerSocket.getBindAddress().toString() << ": success";
+                                                                                                                            ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:234:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketServerT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:253:99: error: code should be clang-formatted [-Wclang-format-violations]
+                    snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << "  " << socketConnection->getRemoteAddress().toString() << " -> "
+                                                                                                  ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:253:168: error: code should be clang-formatted [-Wclang-format-violations]
+                    snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << "  " << socketConnection->getRemoteAddress().toString() << " -> "
+                                                                                                                                                                       ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:268:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketServerT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketAcceptor.hpp:276:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketServerT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnection.hpp:345:95: error: code should be clang-formatted [-Wclang-format-violations]
+    void SocketConnectionT<PhysicalSocket, SocketReader, SocketWriter, Config>::shutdownEvent(
+                                                                                              ^
+/workspace/src/core/socket/stream/SocketConnector.h:70:72: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename PhysicalSocketClient, typename Config> typename SocketConnectionT>
+                                                                       ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:61:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:83:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketServerT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:99:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:105:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:112:95: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " Connect: starting";
+                                                                                              ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:143:99: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("core.socket", snode::log::Boundary::Connection).systemError(snode::log::Level::Debug, errnum)
+                                                                                                  ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:170:103: error: code should be clang-formatted [-Wclang-format-violations]
+                                snode::log::framework("core.socket", snode::log::Boundary::Connection).systemError(snode::log::Level::Debug, errnum)
+                                                                                                      ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:220:115: error: code should be clang-formatted [-Wclang-format-violations]
+                                    snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << "  " << socketConnection->getLocalAddress().toString()
+                                                                                                                  ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:220:173: error: code should be clang-formatted [-Wclang-format-violations]
+                                    snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << "  " << socketConnection->getLocalAddress().toString()
+                                                                                                                                                                            ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:221:87: error: code should be clang-formatted [-Wclang-format-violations]
+                                                                             << " -> " << socketConnection->getRemoteAddress().toString();
+                                                                                      ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:265:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:274:53: error: code should be clang-formatted [-Wclang-format-violations]
+                SocketConnection* socketConnection = new SocketConnection(std::move(physicalClientSocket), onDisconnect, allocateConnectionId(), config);
+                                                    ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:344:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:351:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:353:87: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("core.socket", snode::log::Boundary::Connection).trace() << config->getInstanceName() << " connect timeout " << remoteAddress.toString();
+                                                                                      ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:375:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:388:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:398:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/SocketConnector.hpp:407:74: error: code should be clang-formatted [-Wclang-format-violations]
+              template <typename ConfigT, typename PhysicalSocketClientT> typename SocketConnection>
+                                                                         ^
+/workspace/src/core/socket/stream/tls/SocketConnection.h:116:39: error: code should be clang-formatted [-Wclang-format-violations]
+        enum class TlsShutdownIntent {
+                                      ^
+/workspace/src/core/socket/stream/tls/SocketConnection.h:117:31: error: code should be clang-formatted [-Wclang-format-violations]
+            ContinuePlaintext,
+                              ^
+/workspace/src/core/socket/stream/tls/SocketConnection.h:118:27: error: code should be clang-formatted [-Wclang-format-violations]
+            CloseTransport
+                          ^
+/workspace/src/core/socket/stream/tls/SocketConnection.h:170:53: error: code should be clang-formatted [-Wclang-format-violations]
+        std::shared_ptr<bool> sslShutdownInProgress;
+                                                    ^
+/workspace/src/core/socket/stream/tls/TLSHandshake.cpp:163:45: error: code should be clang-formatted [-Wclang-format-violations]
+                finishError(status.sslError, status.status == detail::TlsStatus::CleanPeerShutdown ? EPROTO : detail::fatalTlsStatusToErrno(status));
+                                            ^
+/workspace/src/core/socket/stream/tls/TLSHandshake.cpp:183:47: error: code should be clang-formatted [-Wclang-format-violations]
+            return detail::TlsHandshakeResult{detail::classifyOpenSslFailure(result.returnValue, result.sslError, result.systemError, result.openSslError)};
+                                              ^
+/workspace/src/core/socket/stream/tls/TLSHandshake.h:75:6: error: code should be clang-formatted [-Wclang-format-violations]
+    }
+     ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.cpp:70:6: error: code should be clang-formatted [-Wclang-format-violations]
+    }
+     ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.cpp:238:87: error: code should be clang-formatted [-Wclang-format-violations]
+        if (completionRequirement == CompletionRequirement::CloseNotifySentIsEnough || shutdownPhase == ShutdownPhase::SendLocalCloseNotify ||
+                                                                                      ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.cpp:238:143: error: code should be clang-formatted [-Wclang-format-violations]
+        if (completionRequirement == CompletionRequirement::CloseNotifySentIsEnough || shutdownPhase == ShutdownPhase::SendLocalCloseNotify ||
+                                                                                                                                              ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.cpp:252:87: error: code should be clang-formatted [-Wclang-format-violations]
+            if (completionRequirement == CompletionRequirement::RequireFullShutdown && shutdownPhase == ShutdownPhase::FinalizeFullShutdown) {
+                                                                                      ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:58:1: error: code should be clang-formatted [-Wclang-format-violations]
+#include <functional>
+^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:76:6: error: code should be clang-formatted [-Wclang-format-violations]
+    }
+     ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:82:64: error: code should be clang-formatted [-Wclang-format-violations]
+        static void doShutdown(const std::string& instanceName,
+                                                               ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:83:42: error: code should be clang-formatted [-Wclang-format-violations]
+                                SSL* ssl,
+                                         ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:84:76: error: code should be clang-formatted [-Wclang-format-violations]
+                                const std::function<void(void)>& onSuccess,
+                                                                           ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:85:76: error: code should be clang-formatted [-Wclang-format-violations]
+                                const std::function<void(void)>& onTimeout,
+                                                                           ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:86:74: error: code should be clang-formatted [-Wclang-format-violations]
+                                const std::function<void(int)>& onStatus,
+                                                                         ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:90:34: error: code should be clang-formatted [-Wclang-format-violations]
+        enum class TypedSuccess {
+                                 ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:91:29: error: code should be clang-formatted [-Wclang-format-violations]
+            CloseNotifySent,
+                            ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:92:33: error: code should be clang-formatted [-Wclang-format-violations]
+            FullShutdownComplete
+                                ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:95:43: error: code should be clang-formatted [-Wclang-format-violations]
+        enum class CompletionRequirement {
+                                          ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:96:37: error: code should be clang-formatted [-Wclang-format-violations]
+            CloseNotifySentIsEnough,
+                                    ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:97:32: error: code should be clang-formatted [-Wclang-format-violations]
+            RequireFullShutdown
+                               ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:135:35: error: code should be clang-formatted [-Wclang-format-violations]
+        enum class ShutdownPhase {
+                                  ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:136:34: error: code should be clang-formatted [-Wclang-format-violations]
+            SendLocalCloseNotify,
+                                 ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:137:53: error: code should be clang-formatted [-Wclang-format-violations]
+            ReadPeerApplicationDataUntilCloseNotify,
+                                                    ^
+/workspace/src/core/socket/stream/tls/TLSShutdown.h:138:33: error: code should be clang-formatted [-Wclang-format-violations]
+            FinalizeFullShutdown
+                                ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:4:1: error: code should be clang-formatted [-Wclang-format-violations]
+#include "core/socket/stream/tls/TLSHandshake.h"
+^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:13:1: error: code should be clang-formatted [-Wclang-format-violations]
+#include <cerrno>
+^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:72:39: error: code should be clang-formatted [-Wclang-format-violations]
+    struct IoState : HelperStateBase {
+                                      ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:85:39: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetHandshake() { test::handshakeState().reset(); }
+                                      ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:85:71: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetHandshake() { test::handshakeState().reset(); }
+                                                                      ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:86:38: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetShutdown() { test::shutdownState().reset(); }
+                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:86:69: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetShutdown() { test::shutdownState().reset(); }
+                                                                    ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:87:36: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetReader() { test::readerState().reset(); }
+                                   ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:87:65: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetReader() { test::readerState().reset(); }
+                                                                ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:88:36: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetWriter() { test::writerState().reset(); }
+                                   ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:88:65: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetWriter() { test::writerState().reset(); }
+                                                                ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:90:74: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueHandshake(int sslError, int systemError = 0) { test::handshakeState().operations.push_back({sslError == SSL_ERROR_NONE ? 1 : -1, sslError, systemError, 0}); }
+                                                                         ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:90:184: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueHandshake(int sslError, int systemError = 0) { test::handshakeState().operations.push_back({sslError == SSL_ERROR_NONE ? 1 : -1, sslError, systemError, 0}); }
+                                                                                                                                                                                       ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:91:121: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueHandshakeResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::handshakeState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                        ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:91:210: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueHandshakeResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::handshakeState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                                                                                                                 ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:92:73: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueShutdown(int sslError, int systemError = 0) { test::shutdownState().operations.push_back({sslError == SSL_ERROR_NONE ? 1 : -1, sslError, systemError, 0}); }
+                                                                        ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:92:182: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueShutdown(int sslError, int systemError = 0) { test::shutdownState().operations.push_back({sslError == SSL_ERROR_NONE ? 1 : -1, sslError, systemError, 0}); }
+                                                                                                                                                                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:93:120: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueShutdownResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::shutdownState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                       ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:93:208: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueShutdownResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::shutdownState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                                                                                                               ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:94:118: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueReaderResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::readerState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:94:204: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueReaderResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::readerState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                                                                                                           ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:95:118: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueWriterResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::writerState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:95:204: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueWriterResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::writerState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                                                                                                           ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:97:52: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters handshakeCounters() { return test::handshakeState().counters; }
+                                                   ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:97:92: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters handshakeCounters() { return test::handshakeState().counters; }
+                                                                                           ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:98:51: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters shutdownCounters() { return test::shutdownState().counters; }
+                                                  ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:98:90: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters shutdownCounters() { return test::shutdownState().counters; }
+                                                                                         ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:99:49: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters readerCounters() { return test::readerState().counters; }
+                                                ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:99:86: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters readerCounters() { return test::readerState().counters; }
+                                                                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:100:49: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters writerCounters() { return test::writerState().counters; }
+                                                ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:100:86: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters writerCounters() { return test::writerState().counters; }
+                                                                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:101:73: error: code should be clang-formatted [-Wclang-format-violations]
+        static std::optional<TlsShutdownSuccess> lastShutdownSuccess() { return test::shutdownState().lastSuccess; }
+                                                                        ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:101:115: error: code should be clang-formatted [-Wclang-format-violations]
+        static std::optional<TlsShutdownSuccess> lastShutdownSuccess() { return test::shutdownState().lastSuccess; }
+                                                                                                                  ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:103:47: error: code should be clang-formatted [-Wclang-format-violations]
+        static TLSHandshake* lastHandshake() { return test::handshakeState().last; }
+                                              ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:103:83: error: code should be clang-formatted [-Wclang-format-violations]
+        static TLSHandshake* lastHandshake() { return test::handshakeState().last; }
+                                                                                  ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:104:45: error: code should be clang-formatted [-Wclang-format-violations]
+        static TLSShutdown* lastShutdown() { return test::shutdownState().last; }
+                                            ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:104:80: error: code should be clang-formatted [-Wclang-format-violations]
+        static TLSShutdown* lastShutdown() { return test::shutdownState().last; }
+                                                                               ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:106:61: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextHandshakeReadEnable(int error) { test::handshakeState().failNextReadEnable = error; }
+                                                            ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:106:112: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextHandshakeReadEnable(int error) { test::handshakeState().failNextReadEnable = error; }
+                                                                                                               ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:107:62: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextHandshakeWriteEnable(int error) { test::handshakeState().failNextWriteEnable = error; }
+                                                             ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:107:114: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextHandshakeWriteEnable(int error) { test::handshakeState().failNextWriteEnable = error; }
+                                                                                                                 ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:108:60: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextShutdownReadEnable(int error) { test::shutdownState().failNextReadEnable = error; }
+                                                           ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:108:110: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextShutdownReadEnable(int error) { test::shutdownState().failNextReadEnable = error; }
+                                                                                                             ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:109:61: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextShutdownWriteEnable(int error) { test::shutdownState().failNextWriteEnable = error; }
+                                                            ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:109:112: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextShutdownWriteEnable(int error) { test::shutdownState().failNextWriteEnable = error; }
+                                                                                                               ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:120:27: error: code should be clang-formatted [-Wclang-format-violations]
+            auto* helper = new TLSHandshake(
+                          ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:120:45: error: code should be clang-formatted [-Wclang-format-violations]
+            auto* helper = new TLSHandshake(
+                                            ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:151:54: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readEvent(TLSHandshake* helper) { helper->readEvent(); }
+                                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:151:75: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readEvent(TLSHandshake* helper) { helper->readEvent(); }
+                                                                          ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:152:55: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeEvent(TLSHandshake* helper) { helper->writeEvent(); }
+                                                      ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:152:77: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeEvent(TLSHandshake* helper) { helper->writeEvent(); }
+                                                                            ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:153:56: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readTimeout(TLSHandshake* helper) { helper->readTimeout(); }
+                                                       ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:153:79: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readTimeout(TLSHandshake* helper) { helper->readTimeout(); }
+                                                                              ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:154:57: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeTimeout(TLSHandshake* helper) { helper->writeTimeout(); }
+                                                        ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:154:81: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeTimeout(TLSHandshake* helper) { helper->writeTimeout(); }
+                                                                                ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:155:56: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readEnabled(TLSHandshake* helper) { return helper->ReadEventReceiver::isEnabled(); }
+                                                       ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:155:103: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readEnabled(TLSHandshake* helper) { return helper->ReadEventReceiver::isEnabled(); }
+                                                                                                      ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:156:57: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeEnabled(TLSHandshake* helper) { return helper->WriteEventReceiver::isEnabled(); }
+                                                        ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:156:105: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeEnabled(TLSHandshake* helper) { return helper->WriteEventReceiver::isEnabled(); }
+                                                                                                        ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:157:58: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readSuspended(TLSHandshake* helper) { return helper->ReadEventReceiver::isSuspended(); }
+                                                         ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:157:107: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readSuspended(TLSHandshake* helper) { return helper->ReadEventReceiver::isSuspended(); }
+                                                                                                          ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:158:59: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeSuspended(TLSHandshake* helper) { return helper->WriteEventReceiver::isSuspended(); }
+                                                          ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:158:109: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeSuspended(TLSHandshake* helper) { return helper->WriteEventReceiver::isSuspended(); }
+                                                                                                            ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:159:54: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool completed(TLSHandshake* helper) { return helper->completed; }
+                                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:159:80: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool completed(TLSHandshake* helper) { return helper->completed; }
+                                                                               ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:161:53: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readEvent(TLSShutdown* helper) { helper->readEvent(); }
+                                                    ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:161:74: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readEvent(TLSShutdown* helper) { helper->readEvent(); }
+                                                                         ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:162:54: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeEvent(TLSShutdown* helper) { helper->writeEvent(); }
+                                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:162:76: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeEvent(TLSShutdown* helper) { helper->writeEvent(); }
+                                                                           ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:163:55: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readTimeout(TLSShutdown* helper) { helper->readTimeout(); }
+                                                      ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:163:78: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readTimeout(TLSShutdown* helper) { helper->readTimeout(); }
+                                                                             ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:164:56: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeTimeout(TLSShutdown* helper) { helper->writeTimeout(); }
+                                                       ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:164:80: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeTimeout(TLSShutdown* helper) { helper->writeTimeout(); }
+                                                                               ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:165:55: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readEnabled(TLSShutdown* helper) { return helper->ReadEventReceiver::isEnabled(); }
+                                                      ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:165:102: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readEnabled(TLSShutdown* helper) { return helper->ReadEventReceiver::isEnabled(); }
+                                                                                                     ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:166:56: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeEnabled(TLSShutdown* helper) { return helper->WriteEventReceiver::isEnabled(); }
+                                                       ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:166:104: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeEnabled(TLSShutdown* helper) { return helper->WriteEventReceiver::isEnabled(); }
+                                                                                                       ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:167:57: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readSuspended(TLSShutdown* helper) { return helper->ReadEventReceiver::isSuspended(); }
+                                                        ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:167:106: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readSuspended(TLSShutdown* helper) { return helper->ReadEventReceiver::isSuspended(); }
+                                                                                                         ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:168:58: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeSuspended(TLSShutdown* helper) { return helper->WriteEventReceiver::isSuspended(); }
+                                                         ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:168:108: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeSuspended(TLSShutdown* helper) { return helper->WriteEventReceiver::isSuspended(); }
+                                                                                                           ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:169:53: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool completed(TLSShutdown* helper) { return helper->completed; }
+                                                    ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:169:79: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool completed(TLSShutdown* helper) { return helper->completed; }
+                                                                              ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:293:10: error: code should be clang-formatted [-Wclang-format-violations]
+        }
+         ^
+/workspace/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:299:10: error: code should be clang-formatted [-Wclang-format-violations]
+        }
+         ^
+/workspace/src/core/socket/stream/tls/detail/TLSResult.h:37:36: error: code should be clang-formatted [-Wclang-format-violations]
+    enum class TlsShutdownSuccess {
+                                   ^
+/workspace/src/core/socket/stream/tls/detail/TLSResult.h:38:25: error: code should be clang-formatted [-Wclang-format-violations]
+        CloseNotifySent,
+                        ^
+/workspace/src/core/socket/stream/tls/detail/TLSResult.h:39:29: error: code should be clang-formatted [-Wclang-format-violations]
+        FullShutdownComplete
+                            ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:53:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:73:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "======================= APPLICATION DISPATCH =======================";
+                                                                                   ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:77:69: error: code should be clang-formatted [-Wclang-format-violations]
+                                  snode::log::Boundary::Application)
+                                                                    ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:80:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "          Request Method: " << controller.getRequest()->method;
+                                                                                   ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:81:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "             Request Url: " << controller.getRequest()->url;
+                                                                                   ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:82:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "            Request Path: " << controller.getRequest()->path;
+                                                                                   ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:84:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "         Mountpoint Path: " << mountPoint.relativeMountPath;
+                                                                                   ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:86:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "  CaseInsensitiveRouting: " << caseInsensitiveRouting;
+                                                                                   ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:99:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- APPLICATION    MATCH -----------------------";
+                                                                                           ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:121:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- APPLICATION  NOMATCH -----------------------";
+                                                                                           ^
+/workspace/src/express/dispatcher/ApplicationDispatcher.cpp:124:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- APPLICATION  NOMATCH -----------------------";
+                                                                                       ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:53:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:73:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "======================= MIDDLEWARE  DISPATCH =======================";
+                                                                                   ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:77:69: error: code should be clang-formatted [-Wclang-format-violations]
+                                  snode::log::Boundary::Application)
+                                                                    ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:80:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "          Request Method: " << controller.getRequest()->method;
+                                                                                   ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:81:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "             Request Url: " << controller.getRequest()->url;
+                                                                                   ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:82:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "            Request Path: " << controller.getRequest()->path;
+                                                                                   ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:84:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "         Mountpoint Path: " << mountPoint.relativeMountPath;
+                                                                                   ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:86:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "  CaseInsensitiveRouting: " << caseInsensitiveRouting;
+                                                                                   ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:99:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- MIDDLEWARE     MATCH -----------------------";
+                                                                                           ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:117:104: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("express", snode::log::Boundary::Application).trace() << "Express: M - Next called - set to NO MATCH";
+                                                                                                       ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:129:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- MIDDLEWARE   NOMATCH -----------------------";
+                                                                                           ^
+/workspace/src/express/dispatcher/MiddlewareDispatcher.cpp:132:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- MIDDLEWARE   NOMATCH -----------------------";
+                                                                                       ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:53:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:72:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "======================= ROUTER      DISPATCH =======================";
+                                                                                   ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:76:69: error: code should be clang-formatted [-Wclang-format-violations]
+                                  snode::log::Boundary::Application)
+                                                                    ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:79:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "          Request Method: " << controller.getRequest()->method;
+                                                                                   ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:80:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "             Request Url: " << controller.getRequest()->url;
+                                                                                   ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:81:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "            Request Path: " << controller.getRequest()->path;
+                                                                                   ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:83:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "         Mountpoint Path: " << mountPoint.relativeMountPath;
+                                                                                   ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:85:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "  CaseInsensitiveRouting: " << this->caseInsensitiveRouting;
+                                                                                   ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:97:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- ROUTER         MATCH -----------------------";
+                                                                                           ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:120:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- ROUTER       NOMATCH -----------------------";
+                                                                                           ^
+/workspace/src/express/dispatcher/RouterDispatcher.cpp:123:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- ROUTER       NOMATCH -----------------------";
+                                                                                       ^
+/workspace/src/express/legacy/in/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/workspace/src/express/legacy/in/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/workspace/src/express/legacy/in6/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/workspace/src/express/legacy/in6/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/workspace/src/express/legacy/rc/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/workspace/src/express/legacy/rc/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/workspace/src/express/legacy/un/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/workspace/src/express/legacy/un/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/workspace/src/express/middleware/StaticMiddleware.cpp:49:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/workspace/src/express/middleware/StaticMiddleware.cpp:72:77: error: code should be clang-formatted [-Wclang-format-violations]
+                                          snode::log::Boundary::Application)
+                                                                            ^
+/workspace/src/express/middleware/StaticMiddleware.cpp:105:85: error: code should be clang-formatted [-Wclang-format-violations]
+                                                  snode::log::Boundary::Application)
+                                                                                    ^
+/workspace/src/express/middleware/StaticMiddleware.cpp:127:85: error: code should be clang-formatted [-Wclang-format-violations]
+                                                  snode::log::Boundary::Application)
+                                                                                    ^
+/workspace/src/express/middleware/StaticMiddleware.cpp:134:85: error: code should be clang-formatted [-Wclang-format-violations]
+                                                  snode::log::Boundary::Application)
+                                                                                    ^
+/workspace/src/express/tls/in/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/workspace/src/express/tls/in/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/workspace/src/express/tls/in6/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/workspace/src/express/tls/in6/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/workspace/src/express/tls/rc/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/workspace/src/express/tls/rc/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/workspace/src/express/tls/un/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/workspace/src/express/tls/un/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/workspace/src/net/config/ConfigInstance.h:45:1: error: code should be clang-formatted [-Wclang-format-violations]
+#include "utils/SubCommand.h" // IWYU pragma: export
+^
+/workspace/src/net/config/ConfigPhysicalSocket.cpp:46:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/workspace/src/net/config/stream/ConfigSocketClient.hpp:51:86: error: code should be clang-formatted [-Wclang-format-violations]
+              template <template <typename SocketAddress> typename ConfigAddressType> typename ConfigAddressRemote>
+                                                                                     ^
+/workspace/src/net/config/stream/ConfigSocketServer.h:57:87: error: code should be clang-formatted [-Wclang-format-violations]
+              template <template <typename SocketAddress> typename ConfigAddressTypeT> typename ConfigAddressRemoteT>
+                                                                                      ^
+/workspace/src/net/config/stream/ConfigSocketServer.hpp:51:86: error: code should be clang-formatted [-Wclang-format-violations]
+              template <template <typename SocketAddress> typename ConfigAddressType> typename ConfigAddressRemote>
+                                                                                     ^
+/workspace/src/net/config/stream/tls/ConfigSocketServer.hpp:45:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/workspace/src/net/config/stream/tls/ConfigSocketServer.hpp:156:97: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("net.config.tls", snode::log::Boundary::Configuration).trace() << getInstanceName() << " SSL/TLS: SNI list result:";
+                                                                                                ^
+/workspace/src/net/config/stream/tls/ConfigSocketServer.hpp:174:101: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("net.config.tls", snode::log::Boundary::Configuration).trace() << getInstanceName() << " SSL/TLS SNI:  .. " << sniPair.first.c_str();
+                                                                                                    ^
+/workspace/src/net/config/stream/tls/ConfigSocketServer.hpp:183:96: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("net.config.tls", snode::log::Boundary::Configuration).warn() << getInstanceName() << " SSL/TL SNI: not found for " << serverNameIndication;
+                                                                                               ^
+/workspace/src/web/http/MimeTypes.cpp:46:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/workspace/src/web/http/MimeTypes.cpp:250:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("web.http", snode::log::Boundary::Connection).debug() << "Cannot load magic database - " + std::string(magic_error(magic));
+                                                                                       ^
+/workspace/src/web/http/SocketContextUpgradeFactorySelector.hpp:100:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("web.http", snode::log::Boundary::Connection).trace() << "SocketContextUpgradeFactory create success: " << socketContextUpgradeName;
+                                                                                                   ^
+/workspace/src/web/http/SocketContextUpgradeFactorySelector.hpp:109:96: error: code should be clang-formatted [-Wclang-format-violations]
+                    snode::log::framework("web.http", snode::log::Boundary::Connection).error() << "SocketContextUpgradeFactory create failed: " << socketContextUpgradeName;
+                                                                                               ^
+/workspace/src/web/http/SocketContextUpgradeFactorySelector.hpp:113:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("web.http", snode::log::Boundary::Connection).error() << "Optaining function \"" << socketContextUpgradeFactoryFunctionName
+                                                                                           ^
+/workspace/src/web/http/SocketContextUpgradeFactorySelector.hpp:113:162: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("web.http", snode::log::Boundary::Connection).error() << "Optaining function \"" << socketContextUpgradeFactoryFunctionName
+                                                                                                                                                                 ^
+/workspace/src/web/http/SocketContextUpgradeFactorySelector.hpp:130:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("web.http", snode::log::Boundary::Connection).debug() << "upgrade plugin '" << socketContextUpgradeName << "' selected from dynamic cache";
+                                                                                       ^
+/workspace/src/web/http/SocketContextUpgradeFactorySelector.hpp:134:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("web.http", snode::log::Boundary::Connection).debug() << "upgrade plugin '" << socketContextUpgradeName << "' selected from static cache";
+                                                                                       ^
+/workspace/src/web/http/SocketContextUpgradeFactorySelector.hpp:141:87: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("web.http", snode::log::Boundary::Connection).warn() << "upgrade plugin '" << socketContextUpgradeName << "' not found";
+                                                                                      ^
+/workspace/src/web/http/client/SocketContext.cpp:385:130: error: code should be clang-formatted [-Wclang-format-violations]
+        frameworkLog().debug() << (getDetachReason() == DetachReason::ContextSwitch ? "HTTP: context detached for context switch"
+                                                                                                                                 ^
+/workspace/src/web/http/decoder/Chunked.cpp:168:50: error: code should be clang-formatted [-Wclang-format-violations]
+                    if (chunkSizeToken.empty() || !std::all_of(chunkSizeToken.begin(), chunkSizeToken.end(), [](unsigned char c) {
+                                                 ^
+/workspace/src/web/http/decoder/Chunked.cpp:168:87: error: code should be clang-formatted [-Wclang-format-violations]
+                    if (chunkSizeToken.empty() || !std::all_of(chunkSizeToken.begin(), chunkSizeToken.end(), [](unsigned char c) {
+                                                                                      ^
+/workspace/src/web/http/decoder/Chunked.cpp:168:109: error: code should be clang-formatted [-Wclang-format-violations]
+                    if (chunkSizeToken.empty() || !std::all_of(chunkSizeToken.begin(), chunkSizeToken.end(), [](unsigned char c) {
+                                                                                                            ^
+/workspace/src/web/http/decoder/Chunked.cpp:168:131: error: code should be clang-formatted [-Wclang-format-violations]
+                    if (chunkSizeToken.empty() || !std::all_of(chunkSizeToken.begin(), chunkSizeToken.end(), [](unsigned char c) {
+                                                                                                                                  ^
+/workspace/src/web/http/decoder/Chunked.cpp:169:58: error: code should be clang-formatted [-Wclang-format-violations]
+                            return std::isxdigit(c) != 0;
+                                                         ^
+/workspace/src/web/http/http_utils.cpp:235:21: error: code should be clang-formatted [-Wclang-format-violations]
+        struct tm tm{};
+                    ^
+/workspace/src/web/http/http_utils.cpp:246:27: error: code should be clang-formatted [-Wclang-format-violations]
+        struct stat attrib{};
+                          ^
+/workspace/src/web/http/http_utils.cpp:287:66: error: code should be clang-formatted [-Wclang-format-violations]
+            requestStream << std::setw(prefixLength) << "Request"
+                                                                 ^
+/workspace/src/web/http/http_utils.cpp:288:70: error: code should be clang-formatted [-Wclang-format-violations]
+                          << ": " << std::setw(keyLength) << "Method"
+                                                                     ^
+/workspace/src/web/http/http_utils.cpp:290:59: error: code should be clang-formatted [-Wclang-format-violations]
+            requestStream << std::setw(prefixLength) << ""
+                                                          ^
+/workspace/src/web/http/http_utils.cpp:291:67: error: code should be clang-formatted [-Wclang-format-violations]
+                          << ": " << std::setw(keyLength) << "Url"
+                                                                  ^
+/workspace/src/web/http/http_utils.cpp:293:59: error: code should be clang-formatted [-Wclang-format-violations]
+            requestStream << std::setw(prefixLength) << ""
+                                                          ^
+/workspace/src/web/http/http_utils.cpp:294:71: error: code should be clang-formatted [-Wclang-format-violations]
+                          << ": " << std::setw(keyLength) << "Version"
+                                                                      ^
+/workspace/src/web/http/http_utils.cpp:364:67: error: code should be clang-formatted [-Wclang-format-violations]
+            requestStream << std::setw(prefixLength) << "Response"
+                                                                  ^
+/workspace/src/web/http/http_utils.cpp:365:71: error: code should be clang-formatted [-Wclang-format-violations]
+                          << ": " << std::setw(keyLength) << "Version"
+                                                                      ^
+/workspace/src/web/http/http_utils.cpp:367:59: error: code should be clang-formatted [-Wclang-format-violations]
+            requestStream << std::setw(prefixLength) << ""
+                                                          ^
+/workspace/src/web/http/http_utils.cpp:368:70: error: code should be clang-formatted [-Wclang-format-violations]
+                          << ": " << std::setw(keyLength) << "Status"
+                                                                     ^
+/workspace/src/web/http/http_utils.cpp:370:59: error: code should be clang-formatted [-Wclang-format-violations]
+            requestStream << std::setw(prefixLength) << ""
+                                                          ^
+/workspace/src/web/http/http_utils.cpp:371:70: error: code should be clang-formatted [-Wclang-format-violations]
+                          << ": " << std::setw(keyLength) << "Reason"
+                                                                     ^
+/workspace/src/web/http/http_utils.cpp:390:71: error: code should be clang-formatted [-Wclang-format-violations]
+                        requestStream << std::setw(prefixLength) << ""
+                                                                      ^
+/workspace/src/web/http/http_utils.cpp:391:75: error: code should be clang-formatted [-Wclang-format-violations]
+                                      << ":" << std::setw(keyLength) << ""
+                                                                          ^
+/workspace/src/web/http/http_utils.cpp:392:67: error: code should be clang-formatted [-Wclang-format-violations]
+                                      << " : " << optionKey << "=" << optionValue << "\n";
+                                                                  ^
+/workspace/src/web/http/server/SocketContext.cpp:300:130: error: code should be clang-formatted [-Wclang-format-violations]
+        frameworkLog().debug() << (getDetachReason() == DetachReason::ContextSwitch ? "HTTP: context detached for context switch"
+                                                                                                                                 ^
+/workspace/src/web/http/server/SocketContext.h:47:43: error: code should be clang-formatted [-Wclang-format-violations]
+#include "web/http/server/RequestParser.h"    // IWYU pragma: export
+                                          ^
+/workspace/src/web/websocket/Receiver.cpp:382:49: error: code should be clang-formatted [-Wclang-format-violations]
+                    const uint16_t closeStatus = static_cast<uint16_t>(
+                                                ^
+/workspace/src/web/websocket/Receiver.cpp:382:72: error: code should be clang-formatted [-Wclang-format-violations]
+                    const uint16_t closeStatus = static_cast<uint16_t>(
+                                                                       ^
+/workspace/src/web/websocket/Receiver.cpp:383:102: error: code should be clang-formatted [-Wclang-format-violations]
+                        (static_cast<uint16_t>(static_cast<unsigned char>(controlPayload[0])) << 8) |
+                                                                                                     ^
+/workspace/src/web/websocket/SocketContextUpgrade.hpp:261:127: error: code should be clang-formatted [-Wclang-format-violations]
+            << (this->getDetachReason() == core::socket::stream::SocketContext::DetachReason::ContextSwitch ? "context switch" : "connection close");
+                                                                                                                              ^

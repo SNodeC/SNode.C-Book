@@ -242,7 +242,7 @@ def check(root):
             elif line.strip():
                 seen.clear()
     for path, text in texts.items():
-        for block in re.finditer(r'^```(?:cpp|c\+\+)\n(.*?)\n```', text, re.M | re.S):
+        for block in re.finditer(r'^ {0,3}```(?:cpp|c\+\+|\{\.cpp(?:\s+[^}\n]*)?\})\n(.*?)\n {0,3}```', text, re.M | re.S):
             for hit in right_aligned_declarations(block[1]):
                 line = text.count('\n', 0, block.start(1) + hit.start()) + 1
                 need(False, f'{path}:{line}: right-aligned pointer/reference declaration')

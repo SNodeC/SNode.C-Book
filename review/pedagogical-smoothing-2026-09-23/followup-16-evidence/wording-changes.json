@@ -1,0 +1,74 @@
+[
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 207,
+    "before": "Our running value, `echoserver.local.port = 18092`, belongs",
+    "after": "The effective value 18092 of `echoserver.local.port` belongs"
+  },
+  {
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "line": 595,
+    "before": "address-family differences",
+    "after": "network-family differences"
+  },
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "line": 71,
+    "before": "with `-Wnrvo` in `src/tools/snodec-control/src/ConfigActions.cpp:296`;",
+    "after": "with `-Wnrvo`;"
+  },
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "line": 167,
+    "before": "immutable `Book-1.0` tag",
+    "after": "edition tag `Book-1.0`"
+  },
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "line": 178,
+    "before": "do not bypass the check or move the tag.",
+    "after": "do not bypass the check."
+  },
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "line": 178,
+    "before": "the tag names the edition source. Compilation,",
+    "after": "the tag names the edition source.\n\nCompilation,"
+  },
+  {
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "line": 180,
+    "before": "an unequipped build is not an equipped run. MQTTSuite",
+    "after": "an unequipped build is not an equipped run.\n\nMQTTSuite"
+  },
+  {
+    "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "line": 228,
+    "before": "The diagnostic identifies `echoserver` throughout and `conn=1` on the connection/context records. Read the differing message subjects",
+    "after": "Read the differing message subjects"
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 524,
+    "before": "These pathname overloads apply the local/remote distinction introduced with the address fields earlier in this chapter. This keeps the local/remote distinction visible.",
+    "after": "These pathname overloads keep the local/remote distinction visible, applying the address-field distinction introduced earlier in this chapter."
+  },
+  {
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "line": 530,
+    "before": "Chapter 8 adds connection-lifetime reasoning to these pathname endpoints; its bind, local and remote views remain distinct.\n\nA connection can still have bind, local, and remote address views.",
+    "after": "A connection can still have distinct bind, local, and remote address views; Chapter 8 adds connection-lifetime reasoning to these pathname endpoints."
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 95,
+    "before": "Calling `connect(...)` registers connection intent. The remote endpoint comes from the address semantics described in Chapter 7. The runtime then advances the actual connection attempt through the selected lower layer.\n\nA client-side instance may produce one connection, no connection, or several connections over time if retry or reconnect behavior is configured. That is why the instance must not be confused with a single successful connection.\n\nClient connection callbacks have the same surface as the server callbacks, but the client initiates a connection and may later reconnect.",
+    "after": "Calling `connect(...)` registers connection intent. The remote endpoint comes from the address semantics described in Chapter 7. The runtime then advances the actual connection attempt through the selected lower layer. A client-side instance may produce one connection, no connection, or several connections over time if retry or reconnect behavior is configured. That is why the instance must not be confused with a single successful connection. Client connection callbacks have the same surface as the server callbacks, but the client initiates a connection and may later reconnect."
+  },
+  {
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "line": 258,
+    "before": "`onDisconnect` is a final opportunity to interpret the connection while its data is still available. The framework continues teardown after the callback; the received pointer is borrowed, not an ownership transfer.\n\nAt disconnect time, useful information such as addresses, online duration, queued bytes, sent bytes, read bytes, and processed bytes can be logged or inspected.\n\nThat makes disconnect a meaningful lifecycle point, not just the end of an object.",
+    "after": "`onDisconnect` is a final opportunity to interpret the connection while its data is still available. The framework continues teardown after the callback; the received pointer is borrowed, not an ownership transfer. At disconnect time, useful information such as addresses, online duration, queued bytes, sent bytes, read bytes, and processed bytes can be logged or inspected. That makes disconnect a meaningful lifecycle point, not just the end of an object."
+  }
+]

@@ -1,0 +1,11 @@
+--- a/companion/exercises/ch12/CMakeLists.txt
++++ b/companion/exercises/ch12/CMakeLists.txt
+@@ -16,7 +16,7 @@
+ string(REPLACE "net::in::stream::legacy" "net::un::stream::legacy" unix_main
+                "${unix_main}"
+ )
+-string(REPLACE "        8090," "        \"/tmp/line-transfer.sock\"," unix_main
++string(REPLACE "8090," "\"/tmp/line-transfer.sock\"," unix_main
+                "${unix_main}"
+ )
+ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/unix-main.cpp" "${unix_main}")

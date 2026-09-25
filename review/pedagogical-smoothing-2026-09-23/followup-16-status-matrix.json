@@ -1,0 +1,678 @@
+{
+  "applicable_cells": 75,
+  "not_applicable_cells": 221,
+  "dimensions": {
+    "E": {
+      "met": 6,
+      "partly_met": 0,
+      "open": 0
+    },
+    "D": {
+      "met": 9,
+      "partly_met": 0,
+      "open": 0
+    },
+    "G": {
+      "met": 8,
+      "partly_met": 0,
+      "open": 0
+    },
+    "X": {
+      "met": 9,
+      "partly_met": 0,
+      "open": 0
+    },
+    "T": {
+      "met": 15,
+      "partly_met": 0,
+      "open": 0
+    },
+    "L": {
+      "met": 9,
+      "partly_met": 0,
+      "open": 0
+    },
+    "S": {
+      "met": 8,
+      "partly_met": 0,
+      "open": 0
+    },
+    "C": {
+      "met": 11,
+      "partly_met": 0,
+      "open": 0
+    }
+  },
+  "rows": [
+    {
+      "row": 1,
+      "issue": "Canonical terminology",
+      "applicable_dimensions": [
+        "L",
+        "C"
+      ],
+      "evidence": "`manuscript/frontmatter/conventions.md:36`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "met",
+      "S": "not_applicable",
+      "C": "met"
+    },
+    {
+      "row": 2,
+      "issue": "Opening gradient",
+      "applicable_dimensions": [
+        "E",
+        "G"
+      ],
+      "evidence": "`manuscript/chapters/01-why-snodec-exists.md:35`",
+      "E": "met",
+      "D": "not_applicable",
+      "G": "met",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 3,
+      "issue": "Runtime/layer split",
+      "applicable_dimensions": [
+        "S"
+      ],
+      "evidence": "`manuscript/chapters/04-the-snodec-runtime-mental-model.md:13`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "met",
+      "C": "not_applicable"
+    },
+    {
+      "row": 4,
+      "issue": "Event-loop model before internals",
+      "applicable_dimensions": [
+        "G",
+        "D"
+      ],
+      "evidence": "`manuscript/chapters/06-core-runtime-and-event-processing.md:18`",
+      "E": "not_applicable",
+      "D": "met",
+      "G": "met",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 5,
+      "issue": "Shortest route to the first program",
+      "applicable_dimensions": [
+        "G",
+        "S"
+      ],
+      "evidence": "`manuscript/chapters/02-preparing-your-environment.md:18`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "met",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "met",
+      "C": "not_applicable"
+    },
+    {
+      "row": 6,
+      "issue": "Application/system split",
+      "applicable_dimensions": [
+        "S",
+        "C"
+      ],
+      "evidence": "`manuscript/chapters/25-reading-complete-snodec-applications.md:11`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "met",
+      "C": "met"
+    },
+    {
+      "row": 7,
+      "issue": "Express example before inventory",
+      "applicable_dimensions": [
+        "T",
+        "D"
+      ],
+      "evidence": "`manuscript/chapters/18-the-express-like-framework.md:23`",
+      "E": "not_applicable",
+      "D": "met",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 8,
+      "issue": "MQTT conversation and fundamentals",
+      "applicable_dimensions": [
+        "D",
+        "G"
+      ],
+      "evidence": "`manuscript/chapters/21-mqtt-support-in-snodec.md:23`",
+      "E": "not_applicable",
+      "D": "met",
+      "G": "met",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 9,
+      "issue": "CMake starts with a consumer",
+      "applicable_dimensions": [
+        "T",
+        "E"
+      ],
+      "evidence": "`manuscript/chapters/27-cmake-components-and-linking-strategy.md:19`",
+      "E": "met",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 10,
+      "issue": "Configuration follows one port",
+      "applicable_dimensions": [
+        "G",
+        "T"
+      ],
+      "evidence": "`manuscript/chapters/13-configuring-applications-and-named-instances.md:207`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "met",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 11,
+      "issue": "Interpretation after capstone listings",
+      "applicable_dimensions": [
+        "T",
+        "X"
+      ],
+      "evidence": "`manuscript/chapters/30-building-minigateway.md:249`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "met",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 12,
+      "issue": "Three explained extension excerpts",
+      "applicable_dimensions": [
+        "T",
+        "S"
+      ],
+      "evidence": "`manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:368`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "met",
+      "C": "not_applicable"
+    },
+    {
+      "row": 13,
+      "issue": "Expanded architectural synthesis",
+      "applicable_dimensions": [
+        "D",
+        "T"
+      ],
+      "evidence": "`manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md:38`",
+      "E": "not_applicable",
+      "D": "met",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 14,
+      "issue": "Application-facing recovery settings",
+      "applicable_dimensions": [
+        "T",
+        "D"
+      ],
+      "evidence": "`manuscript/chapters/16-timeouts-retries-and-failure-modes.md:108`",
+      "E": "not_applicable",
+      "D": "met",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 15,
+      "issue": "Chapter and Part seams",
+      "applicable_dimensions": [
+        "C",
+        "E"
+      ],
+      "evidence": "`manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md:237`",
+      "E": "met",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "met"
+    },
+    {
+      "row": 16,
+      "issue": "Taxonomy has one teaching home",
+      "applicable_dimensions": [
+        "C",
+        "L"
+      ],
+      "evidence": "`manuscript/chapters/08-servers-clients-and-connections.md:250`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "met",
+      "S": "not_applicable",
+      "C": "met"
+    },
+    {
+      "row": 17,
+      "issue": "Protocol chapters end with a transition",
+      "applicable_dimensions": [
+        "S",
+        "C"
+      ],
+      "evidence": "`manuscript/chapters/17-the-http-layer.md:309`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "met",
+      "C": "met"
+    },
+    {
+      "row": 18,
+      "issue": "Edition/verification voice contained",
+      "applicable_dimensions": [
+        "L",
+        "X"
+      ],
+      "evidence": "`manuscript/chapters/02-preparing-your-environment.md:167`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "met",
+      "T": "not_applicable",
+      "L": "met",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 19,
+      "issue": "Concrete actors replace abstraction stacks",
+      "applicable_dimensions": [
+        "X",
+        "T",
+        "L"
+      ],
+      "evidence": "`manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md:15`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "met",
+      "T": "met",
+      "L": "met",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 20,
+      "issue": "Logging explanation and current wording",
+      "applicable_dimensions": [
+        "X",
+        "L"
+      ],
+      "evidence": "`manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md:132`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "met",
+      "T": "not_applicable",
+      "L": "met",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 21,
+      "issue": "Testing starts from a problem",
+      "applicable_dimensions": [
+        "E",
+        "G"
+      ],
+      "evidence": "`manuscript/chapters/29-testing-debugging-and-benchmarking.md:14`",
+      "E": "met",
+      "D": "not_applicable",
+      "G": "met",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 22,
+      "issue": "Performance stance and limits",
+      "applicable_dimensions": [
+        "D",
+        "X"
+      ],
+      "evidence": "`manuscript/chapters/29-testing-debugging-and-benchmarking.md:391`",
+      "E": "not_applicable",
+      "D": "met",
+      "G": "not_applicable",
+      "X": "met",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 23,
+      "issue": "Appendix entry supports different readers",
+      "applicable_dimensions": [
+        "E",
+        "C"
+      ],
+      "evidence": "`manuscript/chapters/appendix-a-reading-and-extending-the-framework.md:13`",
+      "E": "met",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "met"
+    },
+    {
+      "row": 24,
+      "issue": "TLS configuration is on the page",
+      "applicable_dimensions": [
+        "T",
+        "D"
+      ],
+      "evidence": "`manuscript/chapters/15-tls-across-the-framework.md:157`",
+      "E": "not_applicable",
+      "D": "met",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 25,
+      "issue": "Experience precedes formal vocabulary",
+      "applicable_dimensions": [
+        "E",
+        "G"
+      ],
+      "evidence": "`manuscript/chapters/03-your-first-working-program-the-echo-pair.md:21`",
+      "E": "met",
+      "D": "not_applicable",
+      "G": "met",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 26,
+      "issue": "Address-comparison seam",
+      "applicable_dimensions": [
+        "S",
+        "C"
+      ],
+      "evidence": "`manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:248`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "met",
+      "C": "met"
+    },
+    {
+      "row": 27,
+      "issue": "Core mechanism readable without the lab",
+      "applicable_dimensions": [
+        "T",
+        "D"
+      ],
+      "evidence": "`manuscript/chapters/21-mqtt-support-in-snodec.md:25`",
+      "E": "not_applicable",
+      "D": "met",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 28,
+      "issue": "Part II checkpoint interface printed",
+      "applicable_dimensions": [
+        "C",
+        "T"
+      ],
+      "evidence": "`manuscript/chapters/06-core-runtime-and-event-processing.md:257`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "met"
+    },
+    {
+      "row": 29,
+      "issue": "A distinct IoT worked decision",
+      "applicable_dimensions": [
+        "X",
+        "T",
+        "L"
+      ],
+      "evidence": "`manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md:64`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "met",
+      "T": "met",
+      "L": "met",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 30,
+      "issue": "Native/composed MQTT trace",
+      "applicable_dimensions": [
+        "T",
+        "D"
+      ],
+      "evidence": "`manuscript/chapters/22-mqtt-over-websocket.md:28`",
+      "E": "not_applicable",
+      "D": "met",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 31,
+      "issue": "One-peer timeline before distinctions",
+      "applicable_dimensions": [
+        "G",
+        "T"
+      ],
+      "evidence": "`manuscript/chapters/08-servers-clients-and-connections.md:30`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "met",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 32,
+      "issue": "Verification phrasing restored to baseline",
+      "applicable_dimensions": [
+        "X",
+        "L"
+      ],
+      "evidence": "`manuscript/chapters/29-testing-debugging-and-benchmarking.md:327`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "met",
+      "T": "not_applicable",
+      "L": "met",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 33,
+      "issue": "Purposeful, explicitly linked repetition",
+      "applicable_dimensions": [
+        "T",
+        "C"
+      ],
+      "evidence": "`manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:524`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "met",
+      "L": "not_applicable",
+      "S": "not_applicable",
+      "C": "met"
+    },
+    {
+      "row": 34,
+      "issue": "References and narrative order",
+      "applicable_dimensions": [
+        "C",
+        "S"
+      ],
+      "evidence": "`manuscript/chapters/02-preparing-your-environment.md:445`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "met",
+      "C": "met"
+    },
+    {
+      "row": 35,
+      "issue": "Slips and register",
+      "applicable_dimensions": [
+        "L",
+        "X"
+      ],
+      "evidence": "`manuscript/chapters/13-configuring-applications-and-named-instances.md:595`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "met",
+      "T": "not_applicable",
+      "L": "met",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    },
+    {
+      "row": 36,
+      "issue": "Apparatus and placement",
+      "applicable_dimensions": [
+        "S",
+        "C"
+      ],
+      "evidence": "`manuscript/chapters/25-reading-complete-snodec-applications.md:284`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "not_applicable",
+      "T": "not_applicable",
+      "L": "not_applicable",
+      "S": "met",
+      "C": "met"
+    },
+    {
+      "row": 37,
+      "issue": "Cadence and style without shortening",
+      "applicable_dimensions": [
+        "L",
+        "X"
+      ],
+      "evidence": "`manuscript/chapters/08-servers-clients-and-connections.md:95`",
+      "E": "not_applicable",
+      "D": "not_applicable",
+      "G": "not_applicable",
+      "X": "met",
+      "T": "not_applicable",
+      "L": "met",
+      "S": "not_applicable",
+      "C": "not_applicable"
+    }
+  ]
+}

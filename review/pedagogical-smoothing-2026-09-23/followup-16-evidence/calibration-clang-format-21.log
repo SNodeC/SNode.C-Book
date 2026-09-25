@@ -1,0 +1,672 @@
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/DynamicLoader.cpp:46:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/eventreceiver/WriteEventReceiver.cpp:63:68: error: code should be clang-formatted [-Wclang-format-violations]
+    WriteEventReceiver::WriteEventReceiver(const std::string& name,
+                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/eventreceiver/WriteEventReceiver.cpp:64:78: error: code should be clang-formatted [-Wclang-format-violations]
+                                           const snode::log::Scope& logScope,
+                                                                             ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/eventreceiver/ReadEventReceiver.cpp:63:66: error: code should be clang-formatted [-Wclang-format-violations]
+    ReadEventReceiver::ReadEventReceiver(const std::string& name,
+                                                                 ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/eventreceiver/ReadEventReceiver.cpp:64:76: error: code should be clang-formatted [-Wclang-format-violations]
+                                         const snode::log::Scope& logScope,
+                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/multiplexer/poll/DescriptorEventPublisher.cpp:73:90: error: code should be clang-formatted [-Wclang-format-violations]
+    bool DescriptorEventPublisher::muxAdd(core::DescriptorEventReceiver* eventReceiver) {
+                                                                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/multiplexer/poll/DescriptorEventPublisher.cpp:74:54: error: code should be clang-formatted [-Wclang-format-violations]
+        return pollFds.muxAdd(eventReceiver, events);
+                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketConnection.hpp:345:95: error: code should be clang-formatted [-Wclang-format-violations]
+    void SocketConnectionT<PhysicalSocket, SocketReader, SocketWriter, Config>::shutdownEvent(
+                                                                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:111:95: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " Listen: starting";
+                                                                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:164:99: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("core.socket", snode::log::Boundary::Connection).systemError(snode::log::Level::Error, errnum)
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:176:107: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " listen "
+                                                                                                          ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:176:150: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " listen "
+                                                                                                                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:177:121: error: code should be clang-formatted [-Wclang-format-violations]
+                                                                     << physicalServerSocket.getBindAddress().toString() << ": success";
+                                                                                                                        ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:180:111: error: code should be clang-formatted [-Wclang-format-violations]
+                                snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " enable "
+                                                                                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:180:154: error: code should be clang-formatted [-Wclang-format-violations]
+                                snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " enable "
+                                                                                                                                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:181:125: error: code should be clang-formatted [-Wclang-format-violations]
+                                                                         << physicalServerSocket.getBindAddress().toString() << ": success";
+                                                                                                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:253:99: error: code should be clang-formatted [-Wclang-format-violations]
+                    snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << "  " << socketConnection->getRemoteAddress().toString() << " -> "
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketAcceptor.hpp:253:168: error: code should be clang-formatted [-Wclang-format-violations]
+                    snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << "  " << socketConnection->getRemoteAddress().toString() << " -> "
+                                                                                                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketConnector.hpp:112:95: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << config->getInstanceName() << " Connect: starting";
+                                                                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketConnector.hpp:143:99: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("core.socket", snode::log::Boundary::Connection).systemError(snode::log::Level::Debug, errnum)
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketConnector.hpp:170:103: error: code should be clang-formatted [-Wclang-format-violations]
+                                snode::log::framework("core.socket", snode::log::Boundary::Connection).systemError(snode::log::Level::Debug, errnum)
+                                                                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketConnector.hpp:220:115: error: code should be clang-formatted [-Wclang-format-violations]
+                                    snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << "  " << socketConnection->getLocalAddress().toString()
+                                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketConnector.hpp:220:173: error: code should be clang-formatted [-Wclang-format-violations]
+                                    snode::log::framework("core.socket", snode::log::Boundary::Connection).debug() << "  " << socketConnection->getLocalAddress().toString()
+                                                                                                                                                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketConnector.hpp:221:87: error: code should be clang-formatted [-Wclang-format-violations]
+                                                                             << " -> " << socketConnection->getRemoteAddress().toString();
+                                                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketConnector.hpp:274:53: error: code should be clang-formatted [-Wclang-format-violations]
+                SocketConnection* socketConnection = new SocketConnection(std::move(physicalClientSocket), onDisconnect, allocateConnectionId(), config);
+                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/SocketConnector.hpp:353:87: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("core.socket", snode::log::Boundary::Connection).trace() << config->getInstanceName() << " connect timeout " << remoteAddress.toString();
+                                                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSHandshake.h:75:6: error: code should be clang-formatted [-Wclang-format-violations]
+    }
+     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:58:1: error: code should be clang-formatted [-Wclang-format-violations]
+#include <functional>
+^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:76:6: error: code should be clang-formatted [-Wclang-format-violations]
+    }
+     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:82:64: error: code should be clang-formatted [-Wclang-format-violations]
+        static void doShutdown(const std::string& instanceName,
+                                                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:83:42: error: code should be clang-formatted [-Wclang-format-violations]
+                                SSL* ssl,
+                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:84:76: error: code should be clang-formatted [-Wclang-format-violations]
+                                const std::function<void(void)>& onSuccess,
+                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:85:76: error: code should be clang-formatted [-Wclang-format-violations]
+                                const std::function<void(void)>& onTimeout,
+                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:86:74: error: code should be clang-formatted [-Wclang-format-violations]
+                                const std::function<void(int)>& onStatus,
+                                                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:90:34: error: code should be clang-formatted [-Wclang-format-violations]
+        enum class TypedSuccess {
+                                 ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:91:29: error: code should be clang-formatted [-Wclang-format-violations]
+            CloseNotifySent,
+                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:92:33: error: code should be clang-formatted [-Wclang-format-violations]
+            FullShutdownComplete
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:95:43: error: code should be clang-formatted [-Wclang-format-violations]
+        enum class CompletionRequirement {
+                                          ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:96:37: error: code should be clang-formatted [-Wclang-format-violations]
+            CloseNotifySentIsEnough,
+                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:97:32: error: code should be clang-formatted [-Wclang-format-violations]
+            RequireFullShutdown
+                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:135:35: error: code should be clang-formatted [-Wclang-format-violations]
+        enum class ShutdownPhase {
+                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:136:34: error: code should be clang-formatted [-Wclang-format-violations]
+            SendLocalCloseNotify,
+                                 ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:137:53: error: code should be clang-formatted [-Wclang-format-violations]
+            ReadPeerApplicationDataUntilCloseNotify,
+                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.h:138:33: error: code should be clang-formatted [-Wclang-format-violations]
+            FinalizeFullShutdown
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSHandshake.cpp:163:45: error: code should be clang-formatted [-Wclang-format-violations]
+                finishError(status.sslError, status.status == detail::TlsStatus::CleanPeerShutdown ? EPROTO : detail::fatalTlsStatusToErrno(status));
+                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSHandshake.cpp:183:47: error: code should be clang-formatted [-Wclang-format-violations]
+            return detail::TlsHandshakeResult{detail::classifyOpenSslFailure(result.returnValue, result.sslError, result.systemError, result.openSslError)};
+                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/SocketConnection.h:116:39: error: code should be clang-formatted [-Wclang-format-violations]
+        enum class TlsShutdownIntent {
+                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/SocketConnection.h:117:31: error: code should be clang-formatted [-Wclang-format-violations]
+            ContinuePlaintext,
+                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/SocketConnection.h:118:27: error: code should be clang-formatted [-Wclang-format-violations]
+            CloseTransport
+                          ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/SocketConnection.h:170:53: error: code should be clang-formatted [-Wclang-format-violations]
+        std::shared_ptr<bool> sslShutdownInProgress;
+                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.cpp:70:6: error: code should be clang-formatted [-Wclang-format-violations]
+    }
+     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.cpp:238:87: error: code should be clang-formatted [-Wclang-format-violations]
+        if (completionRequirement == CompletionRequirement::CloseNotifySentIsEnough || shutdownPhase == ShutdownPhase::SendLocalCloseNotify ||
+                                                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.cpp:238:143: error: code should be clang-formatted [-Wclang-format-violations]
+        if (completionRequirement == CompletionRequirement::CloseNotifySentIsEnough || shutdownPhase == ShutdownPhase::SendLocalCloseNotify ||
+                                                                                                                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/TLSShutdown.cpp:252:87: error: code should be clang-formatted [-Wclang-format-violations]
+            if (completionRequirement == CompletionRequirement::RequireFullShutdown && shutdownPhase == ShutdownPhase::FinalizeFullShutdown) {
+                                                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSResult.h:37:36: error: code should be clang-formatted [-Wclang-format-violations]
+    enum class TlsShutdownSuccess {
+                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSResult.h:38:25: error: code should be clang-formatted [-Wclang-format-violations]
+        CloseNotifySent,
+                        ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSResult.h:39:29: error: code should be clang-formatted [-Wclang-format-violations]
+        FullShutdownComplete
+                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:4:1: error: code should be clang-formatted [-Wclang-format-violations]
+#include "core/socket/stream/tls/TLSHandshake.h"
+^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:13:1: error: code should be clang-formatted [-Wclang-format-violations]
+#include <cerrno>
+^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:72:39: error: code should be clang-formatted [-Wclang-format-violations]
+    struct IoState : HelperStateBase {
+                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:85:39: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetHandshake() { test::handshakeState().reset(); }
+                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:85:71: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetHandshake() { test::handshakeState().reset(); }
+                                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:86:38: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetShutdown() { test::shutdownState().reset(); }
+                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:86:69: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetShutdown() { test::shutdownState().reset(); }
+                                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:87:36: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetReader() { test::readerState().reset(); }
+                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:87:65: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetReader() { test::readerState().reset(); }
+                                                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:88:36: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetWriter() { test::writerState().reset(); }
+                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:88:65: error: code should be clang-formatted [-Wclang-format-violations]
+        static void resetWriter() { test::writerState().reset(); }
+                                                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:90:74: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueHandshake(int sslError, int systemError = 0) { test::handshakeState().operations.push_back({sslError == SSL_ERROR_NONE ? 1 : -1, sslError, systemError, 0}); }
+                                                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:90:184: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueHandshake(int sslError, int systemError = 0) { test::handshakeState().operations.push_back({sslError == SSL_ERROR_NONE ? 1 : -1, sslError, systemError, 0}); }
+                                                                                                                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:91:121: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueHandshakeResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::handshakeState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                        ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:91:210: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueHandshakeResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::handshakeState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                                                                                                                 ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:92:73: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueShutdown(int sslError, int systemError = 0) { test::shutdownState().operations.push_back({sslError == SSL_ERROR_NONE ? 1 : -1, sslError, systemError, 0}); }
+                                                                        ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:92:182: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueShutdown(int sslError, int systemError = 0) { test::shutdownState().operations.push_back({sslError == SSL_ERROR_NONE ? 1 : -1, sslError, systemError, 0}); }
+                                                                                                                                                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:93:120: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueShutdownResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::shutdownState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:93:208: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueShutdownResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::shutdownState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                                                                                                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:94:118: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueReaderResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::readerState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:94:204: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueReaderResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::readerState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:95:118: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueWriterResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::writerState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:95:204: error: code should be clang-formatted [-Wclang-format-violations]
+        static void enqueueWriterResult(int ret, int sslError, int systemError = 0, unsigned long openSslError = 0) { test::writerState().operations.push_back({ret, sslError, systemError, openSslError}); }
+                                                                                                                                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:97:52: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters handshakeCounters() { return test::handshakeState().counters; }
+                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:97:92: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters handshakeCounters() { return test::handshakeState().counters; }
+                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:98:51: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters shutdownCounters() { return test::shutdownState().counters; }
+                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:98:90: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters shutdownCounters() { return test::shutdownState().counters; }
+                                                                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:99:49: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters readerCounters() { return test::readerState().counters; }
+                                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:99:86: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters readerCounters() { return test::readerState().counters; }
+                                                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:100:49: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters writerCounters() { return test::writerState().counters; }
+                                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:100:86: error: code should be clang-formatted [-Wclang-format-violations]
+        static test::Counters writerCounters() { return test::writerState().counters; }
+                                                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:101:73: error: code should be clang-formatted [-Wclang-format-violations]
+        static std::optional<TlsShutdownSuccess> lastShutdownSuccess() { return test::shutdownState().lastSuccess; }
+                                                                        ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:101:115: error: code should be clang-formatted [-Wclang-format-violations]
+        static std::optional<TlsShutdownSuccess> lastShutdownSuccess() { return test::shutdownState().lastSuccess; }
+                                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:103:47: error: code should be clang-formatted [-Wclang-format-violations]
+        static TLSHandshake* lastHandshake() { return test::handshakeState().last; }
+                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:103:83: error: code should be clang-formatted [-Wclang-format-violations]
+        static TLSHandshake* lastHandshake() { return test::handshakeState().last; }
+                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:104:45: error: code should be clang-formatted [-Wclang-format-violations]
+        static TLSShutdown* lastShutdown() { return test::shutdownState().last; }
+                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:104:80: error: code should be clang-formatted [-Wclang-format-violations]
+        static TLSShutdown* lastShutdown() { return test::shutdownState().last; }
+                                                                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:106:61: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextHandshakeReadEnable(int error) { test::handshakeState().failNextReadEnable = error; }
+                                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:106:112: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextHandshakeReadEnable(int error) { test::handshakeState().failNextReadEnable = error; }
+                                                                                                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:107:62: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextHandshakeWriteEnable(int error) { test::handshakeState().failNextWriteEnable = error; }
+                                                             ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:107:114: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextHandshakeWriteEnable(int error) { test::handshakeState().failNextWriteEnable = error; }
+                                                                                                                 ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:108:60: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextShutdownReadEnable(int error) { test::shutdownState().failNextReadEnable = error; }
+                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:108:110: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextShutdownReadEnable(int error) { test::shutdownState().failNextReadEnable = error; }
+                                                                                                             ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:109:61: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextShutdownWriteEnable(int error) { test::shutdownState().failNextWriteEnable = error; }
+                                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:109:112: error: code should be clang-formatted [-Wclang-format-violations]
+        static void failNextShutdownWriteEnable(int error) { test::shutdownState().failNextWriteEnable = error; }
+                                                                                                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:120:27: error: code should be clang-formatted [-Wclang-format-violations]
+            auto* helper = new TLSHandshake(
+                          ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:120:45: error: code should be clang-formatted [-Wclang-format-violations]
+            auto* helper = new TLSHandshake(
+                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:151:54: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readEvent(TLSHandshake* helper) { helper->readEvent(); }
+                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:151:75: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readEvent(TLSHandshake* helper) { helper->readEvent(); }
+                                                                          ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:152:55: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeEvent(TLSHandshake* helper) { helper->writeEvent(); }
+                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:152:77: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeEvent(TLSHandshake* helper) { helper->writeEvent(); }
+                                                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:153:56: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readTimeout(TLSHandshake* helper) { helper->readTimeout(); }
+                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:153:79: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readTimeout(TLSHandshake* helper) { helper->readTimeout(); }
+                                                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:154:57: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeTimeout(TLSHandshake* helper) { helper->writeTimeout(); }
+                                                        ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:154:81: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeTimeout(TLSHandshake* helper) { helper->writeTimeout(); }
+                                                                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:155:56: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readEnabled(TLSHandshake* helper) { return helper->ReadEventReceiver::isEnabled(); }
+                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:155:103: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readEnabled(TLSHandshake* helper) { return helper->ReadEventReceiver::isEnabled(); }
+                                                                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:156:57: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeEnabled(TLSHandshake* helper) { return helper->WriteEventReceiver::isEnabled(); }
+                                                        ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:156:105: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeEnabled(TLSHandshake* helper) { return helper->WriteEventReceiver::isEnabled(); }
+                                                                                                        ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:157:58: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readSuspended(TLSHandshake* helper) { return helper->ReadEventReceiver::isSuspended(); }
+                                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:157:107: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readSuspended(TLSHandshake* helper) { return helper->ReadEventReceiver::isSuspended(); }
+                                                                                                          ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:158:59: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeSuspended(TLSHandshake* helper) { return helper->WriteEventReceiver::isSuspended(); }
+                                                          ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:158:109: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeSuspended(TLSHandshake* helper) { return helper->WriteEventReceiver::isSuspended(); }
+                                                                                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:159:54: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool completed(TLSHandshake* helper) { return helper->completed; }
+                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:159:80: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool completed(TLSHandshake* helper) { return helper->completed; }
+                                                                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:161:53: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readEvent(TLSShutdown* helper) { helper->readEvent(); }
+                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:161:74: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readEvent(TLSShutdown* helper) { helper->readEvent(); }
+                                                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:162:54: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeEvent(TLSShutdown* helper) { helper->writeEvent(); }
+                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:162:76: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeEvent(TLSShutdown* helper) { helper->writeEvent(); }
+                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:163:55: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readTimeout(TLSShutdown* helper) { helper->readTimeout(); }
+                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:163:78: error: code should be clang-formatted [-Wclang-format-violations]
+        static void readTimeout(TLSShutdown* helper) { helper->readTimeout(); }
+                                                                             ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:164:56: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeTimeout(TLSShutdown* helper) { helper->writeTimeout(); }
+                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:164:80: error: code should be clang-formatted [-Wclang-format-violations]
+        static void writeTimeout(TLSShutdown* helper) { helper->writeTimeout(); }
+                                                                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:165:55: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readEnabled(TLSShutdown* helper) { return helper->ReadEventReceiver::isEnabled(); }
+                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:165:102: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readEnabled(TLSShutdown* helper) { return helper->ReadEventReceiver::isEnabled(); }
+                                                                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:166:56: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeEnabled(TLSShutdown* helper) { return helper->WriteEventReceiver::isEnabled(); }
+                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:166:104: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeEnabled(TLSShutdown* helper) { return helper->WriteEventReceiver::isEnabled(); }
+                                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:167:57: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readSuspended(TLSShutdown* helper) { return helper->ReadEventReceiver::isSuspended(); }
+                                                        ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:167:106: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool readSuspended(TLSShutdown* helper) { return helper->ReadEventReceiver::isSuspended(); }
+                                                                                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:168:58: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeSuspended(TLSShutdown* helper) { return helper->WriteEventReceiver::isSuspended(); }
+                                                         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:168:108: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool writeSuspended(TLSShutdown* helper) { return helper->WriteEventReceiver::isSuspended(); }
+                                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:169:53: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool completed(TLSShutdown* helper) { return helper->completed; }
+                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:169:79: error: code should be clang-formatted [-Wclang-format-violations]
+        static bool completed(TLSShutdown* helper) { return helper->completed; }
+                                                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:293:10: error: code should be clang-formatted [-Wclang-format-violations]
+        }
+         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/core/socket/stream/tls/detail/TLSLifecycleTestAccess.h:299:10: error: code should be clang-formatted [-Wclang-format-violations]
+        }
+         ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/net/config/ConfigInstance.h:45:1: error: code should be clang-formatted [-Wclang-format-violations]
+#include "utils/SubCommand.h" // IWYU pragma: export
+^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/net/config/ConfigPhysicalSocket.cpp:46:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/net/config/stream/tls/ConfigSocketServer.hpp:45:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/net/config/stream/tls/ConfigSocketServer.hpp:156:97: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("net.config.tls", snode::log::Boundary::Configuration).trace() << getInstanceName() << " SSL/TLS: SNI list result:";
+                                                                                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/net/config/stream/tls/ConfigSocketServer.hpp:174:101: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("net.config.tls", snode::log::Boundary::Configuration).trace() << getInstanceName() << " SSL/TLS SNI:  .. " << sniPair.first.c_str();
+                                                                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/net/config/stream/tls/ConfigSocketServer.hpp:183:96: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("net.config.tls", snode::log::Boundary::Configuration).warn() << getInstanceName() << " SSL/TL SNI: not found for " << serverNameIndication;
+                                                                                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:53:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:72:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "======================= ROUTER      DISPATCH =======================";
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:76:69: error: code should be clang-formatted [-Wclang-format-violations]
+                                  snode::log::Boundary::Application)
+                                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:79:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "          Request Method: " << controller.getRequest()->method;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:80:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "             Request Url: " << controller.getRequest()->url;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:81:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "            Request Path: " << controller.getRequest()->path;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:83:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "         Mountpoint Path: " << mountPoint.relativeMountPath;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:85:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "  CaseInsensitiveRouting: " << this->caseInsensitiveRouting;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:97:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- ROUTER         MATCH -----------------------";
+                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:120:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- ROUTER       NOMATCH -----------------------";
+                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/RouterDispatcher.cpp:123:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- ROUTER       NOMATCH -----------------------";
+                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:53:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:73:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "======================= APPLICATION DISPATCH =======================";
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:77:69: error: code should be clang-formatted [-Wclang-format-violations]
+                                  snode::log::Boundary::Application)
+                                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:80:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "          Request Method: " << controller.getRequest()->method;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:81:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "             Request Url: " << controller.getRequest()->url;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:82:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "            Request Path: " << controller.getRequest()->path;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:84:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "         Mountpoint Path: " << mountPoint.relativeMountPath;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:86:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "  CaseInsensitiveRouting: " << caseInsensitiveRouting;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:99:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- APPLICATION    MATCH -----------------------";
+                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:121:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- APPLICATION  NOMATCH -----------------------";
+                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/ApplicationDispatcher.cpp:124:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- APPLICATION  NOMATCH -----------------------";
+                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:53:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:73:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "======================= MIDDLEWARE  DISPATCH =======================";
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:77:69: error: code should be clang-formatted [-Wclang-format-violations]
+                                  snode::log::Boundary::Application)
+                                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:80:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "          Request Method: " << controller.getRequest()->method;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:81:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "             Request Url: " << controller.getRequest()->url;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:82:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "            Request Path: " << controller.getRequest()->path;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:84:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "         Mountpoint Path: " << mountPoint.relativeMountPath;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:86:84: error: code should be clang-formatted [-Wclang-format-violations]
+        snode::log::framework("express", snode::log::Boundary::Application).trace() << "  CaseInsensitiveRouting: " << caseInsensitiveRouting;
+                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:99:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- MIDDLEWARE     MATCH -----------------------";
+                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:117:104: error: code should be clang-formatted [-Wclang-format-violations]
+                            snode::log::framework("express", snode::log::Boundary::Application).trace() << "Express: M - Next called - set to NO MATCH";
+                                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:129:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- MIDDLEWARE   NOMATCH -----------------------";
+                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/dispatcher/MiddlewareDispatcher.cpp:132:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("express", snode::log::Boundary::Application).trace() << "----------------------- MIDDLEWARE   NOMATCH -----------------------";
+                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/middleware/StaticMiddleware.cpp:49:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/middleware/StaticMiddleware.cpp:72:77: error: code should be clang-formatted [-Wclang-format-violations]
+                                          snode::log::Boundary::Application)
+                                                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/middleware/StaticMiddleware.cpp:105:85: error: code should be clang-formatted [-Wclang-format-violations]
+                                                  snode::log::Boundary::Application)
+                                                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/middleware/StaticMiddleware.cpp:127:85: error: code should be clang-formatted [-Wclang-format-violations]
+                                                  snode::log::Boundary::Application)
+                                                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/middleware/StaticMiddleware.cpp:134:85: error: code should be clang-formatted [-Wclang-format-violations]
+                                                  snode::log::Boundary::Application)
+                                                                                    ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/legacy/un/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/legacy/un/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/legacy/in6/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/legacy/in6/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/legacy/in/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/legacy/in/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/legacy/rc/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/legacy/rc/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/tls/un/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/tls/un/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/tls/in6/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/tls/in6/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/tls/in/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/tls/in/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/tls/rc/Server.cpp:73:99: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).info() << instanceName << ": listening on '" << socketAddress.toString() << "'";
+                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/express/tls/rc/Server.cpp:79:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("express", snode::log::Boundary::Application).error() << instanceName << ": " << socketAddress.toString() << ": " << state.what();
+                                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/websocket/Receiver.cpp:382:49: error: code should be clang-formatted [-Wclang-format-violations]
+                    const uint16_t closeStatus = static_cast<uint16_t>(
+                                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/websocket/Receiver.cpp:382:72: error: code should be clang-formatted [-Wclang-format-violations]
+                    const uint16_t closeStatus = static_cast<uint16_t>(
+                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/websocket/Receiver.cpp:383:102: error: code should be clang-formatted [-Wclang-format-violations]
+                        (static_cast<uint16_t>(static_cast<unsigned char>(controlPayload[0])) << 8) |
+                                                                                                     ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/websocket/SocketContextUpgrade.hpp:261:127: error: code should be clang-formatted [-Wclang-format-violations]
+            << (this->getDetachReason() == core::socket::stream::SocketContext::DetachReason::ContextSwitch ? "context switch" : "connection close");
+                                                                                                                              ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/MimeTypes.cpp:46:33: error: code should be clang-formatted [-Wclang-format-violations]
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+                                ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/MimeTypes.cpp:250:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("web.http", snode::log::Boundary::Connection).debug() << "Cannot load magic database - " + std::string(magic_error(magic));
+                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/SocketContextUpgradeFactorySelector.hpp:100:100: error: code should be clang-formatted [-Wclang-format-violations]
+                        snode::log::framework("web.http", snode::log::Boundary::Connection).trace() << "SocketContextUpgradeFactory create success: " << socketContextUpgradeName;
+                                                                                                   ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/SocketContextUpgradeFactorySelector.hpp:109:96: error: code should be clang-formatted [-Wclang-format-violations]
+                    snode::log::framework("web.http", snode::log::Boundary::Connection).error() << "SocketContextUpgradeFactory create failed: " << socketContextUpgradeName;
+                                                                                               ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/SocketContextUpgradeFactorySelector.hpp:113:92: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("web.http", snode::log::Boundary::Connection).error() << "Optaining function \"" << socketContextUpgradeFactoryFunctionName
+                                                                                           ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/SocketContextUpgradeFactorySelector.hpp:113:162: error: code should be clang-formatted [-Wclang-format-violations]
+                snode::log::framework("web.http", snode::log::Boundary::Connection).error() << "Optaining function \"" << socketContextUpgradeFactoryFunctionName
+                                                                                                                                                                 ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/SocketContextUpgradeFactorySelector.hpp:130:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("web.http", snode::log::Boundary::Connection).debug() << "upgrade plugin '" << socketContextUpgradeName << "' selected from dynamic cache";
+                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/SocketContextUpgradeFactorySelector.hpp:134:88: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("web.http", snode::log::Boundary::Connection).debug() << "upgrade plugin '" << socketContextUpgradeName << "' selected from static cache";
+                                                                                       ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/SocketContextUpgradeFactorySelector.hpp:141:87: error: code should be clang-formatted [-Wclang-format-violations]
+            snode::log::framework("web.http", snode::log::Boundary::Connection).warn() << "upgrade plugin '" << socketContextUpgradeName << "' not found";
+                                                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/client/SocketContext.cpp:385:130: error: code should be clang-formatted [-Wclang-format-violations]
+        frameworkLog().debug() << (getDetachReason() == DetachReason::ContextSwitch ? "HTTP: context detached for context switch"
+                                                                                                                                 ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/server/SocketContext.h:47:43: error: code should be clang-formatted [-Wclang-format-violations]
+#include "web/http/server/RequestParser.h"    // IWYU pragma: export
+                                          ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/server/SocketContext.cpp:300:130: error: code should be clang-formatted [-Wclang-format-violations]
+        frameworkLog().debug() << (getDetachReason() == DetachReason::ContextSwitch ? "HTTP: context detached for context switch"
+                                                                                                                                 ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/decoder/Chunked.cpp:168:50: error: code should be clang-formatted [-Wclang-format-violations]
+                    if (chunkSizeToken.empty() || !std::all_of(chunkSizeToken.begin(), chunkSizeToken.end(), [](unsigned char c) {
+                                                 ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/decoder/Chunked.cpp:168:87: error: code should be clang-formatted [-Wclang-format-violations]
+                    if (chunkSizeToken.empty() || !std::all_of(chunkSizeToken.begin(), chunkSizeToken.end(), [](unsigned char c) {
+                                                                                      ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/decoder/Chunked.cpp:168:109: error: code should be clang-formatted [-Wclang-format-violations]
+                    if (chunkSizeToken.empty() || !std::all_of(chunkSizeToken.begin(), chunkSizeToken.end(), [](unsigned char c) {
+                                                                                                            ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/decoder/Chunked.cpp:168:131: error: code should be clang-formatted [-Wclang-format-violations]
+                    if (chunkSizeToken.empty() || !std::all_of(chunkSizeToken.begin(), chunkSizeToken.end(), [](unsigned char c) {
+                                                                                                                                  ^
+/home/voc/projects/snodec/publications/book/build/followup-16/snode.c/src/web/http/decoder/Chunked.cpp:169:58: error: code should be clang-formatted [-Wclang-format-violations]
+                            return std::isxdigit(c) != 0;
+                                                         ^

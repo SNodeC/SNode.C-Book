@@ -1,0 +1,18 @@
+{
+  "positive": [
+    "Type &name;",
+    "Type *name;",
+    "const std::string &error",
+    "const std::shared_ptr<Request> &req"
+  ],
+  "negative": [
+    "Type&& name;",
+    "const auto& value = *x;",
+    "return *x;",
+    "return &x;",
+    "value = width * height;",
+    "const char* text = \"Type &name\";",
+    "// Type *name"
+  ],
+  "all_pass": true
+}

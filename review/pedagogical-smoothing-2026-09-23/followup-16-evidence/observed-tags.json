@@ -1,0 +1,20 @@
+{
+  "SNodeC/snode.c": {
+    "target": "Book-1.0",
+    "observed_tag_refs": [
+      "07ca9a2936ee72582df7d159cb06666fe23e30f8\trefs/tags/Book-1.0"
+    ]
+  },
+  "SNodeC/mqttsuite": {
+    "target": "Book-1.0",
+    "observed_tag_refs": [
+      "5fef5c3036928dfa40ad4f124bb237cc9c3202bb\trefs/tags/Book-1.0"
+    ]
+  },
+  "SNodeC/OpenWRT": {
+    "target": "Book-1.0",
+    "observed_tag_refs": [
+      "5bef8cca5982838a7191a148633c1058f154e5eb\trefs/tags/Book-1.0"
+    ]
+  }
+}

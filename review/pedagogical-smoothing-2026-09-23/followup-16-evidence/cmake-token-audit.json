@@ -1,0 +1,10 @@
+{
+  "files_checked": 57,
+  "token_mismatches": [],
+  "explicit_implementation_exceptions": [
+    "root formatter inclusion",
+    "new formatter modules",
+    "packaged styles/modules",
+    "author-approved Ch12 whitespace substitution"
+  ]
+}

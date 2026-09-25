@@ -160,7 +160,7 @@ class FinalGuards(unittest.TestCase):
                 'Call `init()` and `start()` during startup.', 'Ch4: identify repeated startup'),
             (4, 'As noted above, it should', 'It should', 'Ch4: link the repeated context'),
             (7, 'earlier IPv4/IPv6 alias pair', 'IPv4/IPv6 pair', 'Ch7: link the fuller comparison'),
-            (7, 'Chapter 8 adds connection-lifetime reasoning to these pathname endpoints; its bind, local and remote views remain distinct.',
+            (7, 'Chapter 8 adds connection-lifetime reasoning to these pathname endpoints.',
                 'Chapter 8 develops this connection model in detail.', 'Ch7: give the later connection pointer'),
             (12, 'complete Chapter 3 listing', 'complete listing', 'Ch12: link the repeated snippets'),
             (18, 'trace followed above', 'trace', 'Ch18: connect framework observations'),

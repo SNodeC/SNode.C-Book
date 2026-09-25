@@ -1,0 +1,30 @@
+[
+  {
+    "supplied_path": "/home/voc/projects/snodec/snode.c/.clang-format",
+    "tag_path": ".clang-format",
+    "byte_identical": true,
+    "supplied_sha256": "633441d2ab5699252d83520f001d61dc2d6dde90f76e3a99f799baf60f08aafa",
+    "tag_sha256": "633441d2ab5699252d83520f001d61dc2d6dde90f76e3a99f799baf60f08aafa"
+  },
+  {
+    "supplied_path": "/home/voc/projects/snodec/snode.c/.cmake-format.py",
+    "tag_path": ".cmake-format.py",
+    "byte_identical": true,
+    "supplied_sha256": "faed658d4b3d408b3e6769c84495406dc5fc791a92fedbbf004c30c6f9d7eee7",
+    "tag_sha256": "faed658d4b3d408b3e6769c84495406dc5fc791a92fedbbf004c30c6f9d7eee7"
+  },
+  {
+    "supplied_path": "/home/voc/projects/snodec/snode.c/cmake/clang-format.cmake",
+    "tag_path": "cmake/clang-format.cmake",
+    "byte_identical": true,
+    "supplied_sha256": "6943040545fc4647a00f02328c63148f329ad576cbd123da212d7d51272c2cc2",
+    "tag_sha256": "6943040545fc4647a00f02328c63148f329ad576cbd123da212d7d51272c2cc2"
+  },
+  {
+    "supplied_path": "/home/voc/projects/snodec/snode.c/cmake/cmake-format.cmake",
+    "tag_path": "cmake/cmake-format.cmake",
+    "byte_identical": true,
+    "supplied_sha256": "307d29b2157f9db5a9bb5bdf9bb8d5bcbde4aa456d74eb54cd506e7b21c6b13b",
+    "tag_sha256": "307d29b2157f9db5a9bb5bdf9bb8d5bcbde4aa456d74eb54cd506e7b21c6b13b"
+  }
+]

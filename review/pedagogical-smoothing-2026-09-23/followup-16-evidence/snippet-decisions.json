@@ -1,0 +1,1332 @@
+[
+  {
+    "id": 0,
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "before_line": 405,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 1,
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "before_line": 411,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 2,
+    "file": "manuscript/chapters/02-preparing-your-environment.md",
+    "before_line": 417,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 3,
+    "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+    "before_line": 63,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 4,
+    "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+    "before_line": 451,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 5,
+    "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "before_line": 54,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 6,
+    "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "before_line": 60,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 7,
+    "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "before_line": 154,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 8,
+    "file": "manuscript/chapters/04-the-snodec-runtime-mental-model.md",
+    "before_line": 162,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 9,
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "before_line": 27,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 10,
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "before_line": 31,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 11,
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "before_line": 41,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 12,
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "before_line": 47,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 13,
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "before_line": 57,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 14,
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "before_line": 163,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 15,
+    "file": "manuscript/chapters/05-layers-in-practice.md",
+    "before_line": 189,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 16,
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "before_line": 49,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 17,
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "before_line": 65,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 18,
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "before_line": 79,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 19,
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "before_line": 146,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 20,
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "before_line": 162,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 21,
+    "file": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+    "before_line": 256,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/MiniGateway/MeasurementModel.h"
+  },
+  {
+    "id": 22,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 28,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 23,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 72,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 24,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 82,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 25,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 88,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 26,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 101,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 27,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 109,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 28,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 121,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 29,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 129,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 30,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 143,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 31,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 149,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 32,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 161,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 33,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 167,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 34,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 202,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 35,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 212,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 36,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 264,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 37,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 271,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 38,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 319,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 39,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 347,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 40,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 356,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 41,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 367,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 42,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 376,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 43,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 389,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 44,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 400,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 45,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 425,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 46,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 450,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 47,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 458,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 48,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 484,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 49,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 502,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 50,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 513,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 51,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 541,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 52,
+    "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
+    "before_line": 579,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 53,
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "before_line": 58,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 54,
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "before_line": 69,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 55,
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "before_line": 153,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 56,
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "before_line": 167,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 57,
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "before_line": 187,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 58,
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "before_line": 197,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 59,
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "before_line": 210,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 60,
+    "file": "manuscript/chapters/08-servers-clients-and-connections.md",
+    "before_line": 238,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 61,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 62,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 62,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 70,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 63,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 76,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 64,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 84,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 65,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 107,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 66,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 116,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 67,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 124,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 68,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 135,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 69,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 144,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 70,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 152,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 71,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 205,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 72,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 211,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 73,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 241,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 74,
+    "file": "manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md",
+    "before_line": 252,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 75,
+    "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
+    "before_line": 142,
+    "changed": true,
+    "decision": "complete C++ unit formatted"
+  },
+  {
+    "id": 76,
+    "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
+    "before_line": 290,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 77,
+    "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
+    "before_line": 337,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 78,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 24,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 79,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 39,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 80,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 54,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 81,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 101,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 82,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 126,
+    "changed": false,
+    "decision": "complete C++ unit formatted"
+  },
+  {
+    "id": 83,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 132,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 84,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 140,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 85,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 176,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 86,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 184,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 87,
+    "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
+    "before_line": 231,
+    "changed": false,
+    "decision": "complete C++ unit formatted"
+  },
+  {
+    "id": 88,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 77,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 89,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 83,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 90,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 99,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 91,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 143,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/EchoPair/EchoSocketContext.cpp"
+  },
+  {
+    "id": 92,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 153,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/EchoPair/EchoSocketContext.cpp"
+  },
+  {
+    "id": 93,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 161,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/EchoPair/EchoSocketContext.cpp"
+  },
+  {
+    "id": 94,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 176,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/EchoPair/EchoSocketContext.cpp"
+  },
+  {
+    "id": 95,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 182,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/EchoPair/EchoSocketContext.cpp"
+  },
+  {
+    "id": 96,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 312,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 97,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 318,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 98,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 324,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 99,
+    "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
+    "before_line": 330,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 100,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 34,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 101,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 42,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 102,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 52,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 103,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 58,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 104,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 68,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 105,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 131,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 106,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 176,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 107,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 182,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 108,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 262,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 109,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 371,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 110,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 381,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 111,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 483,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 112,
+    "file": "manuscript/chapters/13-configuring-applications-and-named-instances.md",
+    "before_line": 489,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 113,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 43,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 114,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 51,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 115,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 95,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 116,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 114,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 117,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 126,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 118,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 163,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 119,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 175,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 120,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 186,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 121,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 197,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 122,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 286,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 123,
+    "file": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+    "before_line": 302,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 124,
+    "file": "manuscript/chapters/15-tls-across-the-framework.md",
+    "before_line": 77,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 125,
+    "file": "manuscript/chapters/15-tls-across-the-framework.md",
+    "before_line": 87,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 126,
+    "file": "manuscript/chapters/15-tls-across-the-framework.md",
+    "before_line": 156,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 127,
+    "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
+    "before_line": 106,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 128,
+    "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
+    "before_line": 136,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 129,
+    "file": "manuscript/chapters/16-timeouts-retries-and-failure-modes.md",
+    "before_line": 157,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 130,
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "before_line": 43,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 131,
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "before_line": 51,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 132,
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "before_line": 68,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 133,
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "before_line": 87,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 134,
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "before_line": 166,
+    "changed": true,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 135,
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "before_line": 194,
+    "changed": true,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 136,
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "before_line": 246,
+    "changed": true,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 137,
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "before_line": 313,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 138,
+    "file": "manuscript/chapters/17-the-http-layer.md",
+    "before_line": 319,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 139,
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "before_line": 96,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 140,
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "before_line": 104,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 141,
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "before_line": 121,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 142,
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "before_line": 127,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 143,
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "before_line": 270,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 144,
+    "file": "manuscript/chapters/18-the-express-like-framework.md",
+    "before_line": 276,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 145,
+    "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
+    "before_line": 431,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 146,
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "before_line": 55,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 147,
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "before_line": 183,
+    "changed": true,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 148,
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "before_line": 196,
+    "changed": true,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 149,
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "before_line": 216,
+    "changed": true,
+    "decision": "complete C++ unit formatted"
+  },
+  {
+    "id": 150,
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "before_line": 273,
+    "changed": true,
+    "decision": "complete C++ unit formatted"
+  },
+  {
+    "id": 151,
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "before_line": 330,
+    "changed": false,
+    "decision": "complete C++ unit formatted"
+  },
+  {
+    "id": 152,
+    "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+    "before_line": 344,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 153,
+    "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "before_line": 181,
+    "changed": true,
+    "decision": "complete C++ unit formatted"
+  },
+  {
+    "id": 154,
+    "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "before_line": 290,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 155,
+    "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+    "before_line": 298,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 156,
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "before_line": 64,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 157,
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "before_line": 98,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 158,
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "before_line": 104,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 159,
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "before_line": 192,
+    "changed": true,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 160,
+    "file": "manuscript/chapters/22-mqtt-over-websocket.md",
+    "before_line": 202,
+    "changed": true,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 161,
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "before_line": 54,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 162,
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "before_line": 232,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 163,
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "before_line": 304,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 164,
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "before_line": 312,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 165,
+    "file": "manuscript/chapters/24-database-support-and-application-state.md",
+    "before_line": 339,
+    "changed": true,
+    "decision": "Manual four-space callback indentation in the partial fluent-call illustration; every token retained."
+  },
+  {
+    "id": 166,
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "before_line": 56,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 167,
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "before_line": 69,
+    "changed": true,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 168,
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "before_line": 128,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 169,
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "before_line": 159,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 170,
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "before_line": 227,
+    "changed": true,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 171,
+    "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+    "before_line": 254,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 172,
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "before_line": 18,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 173,
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "before_line": 45,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 174,
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "before_line": 67,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 175,
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "before_line": 121,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 176,
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "before_line": 127,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 177,
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "before_line": 173,
+    "changed": false,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 178,
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "before_line": 183,
+    "changed": true,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 179,
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "before_line": 339,
+    "changed": true,
+    "decision": "complete CMake fragment formatted"
+  },
+  {
+    "id": 180,
+    "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
+    "before_line": 365,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 181,
+    "file": "manuscript/chapters/29-testing-debugging-and-benchmarking.md",
+    "before_line": 103,
+    "changed": false,
+    "decision": "framework-derived excerpt preserved"
+  },
+  {
+    "id": 182,
+    "file": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "before_line": 145,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/MiniGateway-Extended/main.cpp"
+  },
+  {
+    "id": 183,
+    "file": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "before_line": 370,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.cpp"
+  },
+  {
+    "id": 184,
+    "file": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "before_line": 407,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.cpp"
+  },
+  {
+    "id": 185,
+    "file": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+    "before_line": 451,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.cpp"
+  },
+  {
+    "id": 186,
+    "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
+    "before_line": 56,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/MiniGateway/MeasurementModel.cpp"
+  },
+  {
+    "id": 187,
+    "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+    "before_line": 71,
+    "changed": false,
+    "decision": "visible declaration alignment; partial snippet otherwise retained"
+  },
+  {
+    "id": 188,
+    "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+    "before_line": 208,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/MiniGateway-Extended/MeasurementUnixSocketContextFactory.cpp"
+  },
+  {
+    "id": 189,
+    "file": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+    "before_line": 217,
+    "changed": true,
+    "decision": "exact companion excerpt: companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.cpp"
+  }
+]

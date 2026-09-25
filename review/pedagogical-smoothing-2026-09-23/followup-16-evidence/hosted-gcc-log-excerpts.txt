@@ -1,0 +1,110 @@
+2026-09-25T13:04:42.7340065Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, Book-1.0 content manifest
+2026-09-25T13:05:18.9524791Z Collecting cmakelang==0.6.13
+2026-09-25T13:05:22.0916553Z Ubuntu clang-format version 18.1.3 (1ubuntu1)
+2026-09-25T13:05:22.3428600Z 0.6.13
+2026-09-25T13:05:22.5177928Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, Book-1.0 content manifest
+2026-09-25T13:05:23.9749526Z External anchors passed; source existence only, not execution.
+2026-09-25T13:05:24.0734821Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, Book-1.0 content manifest
+2026-09-25T13:05:24.2269710Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, Book-1.0 content manifest
+2026-09-25T13:05:25.4689618Z -- The C compiler identification is GNU 13.3.0
+2026-09-25T13:05:26.7903765Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T13:19:45.8405180Z 100% tests passed, 0 tests failed out of 185
+2026-09-25T13:19:45.8409862Z Label Time Summary:
+2026-09-25T13:19:45.8455148Z Total Test time (real) =  21.06 sec
+2026-09-25T13:19:46.7566676Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T13:19:53.0822600Z 100% tests passed, 0 tests failed out of 4
+2026-09-25T13:19:53.0823635Z Label Time Summary:
+2026-09-25T13:19:53.0827931Z Total Test time (real) =   0.57 sec
+2026-09-25T13:19:53.3885816Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T13:19:58.3141837Z [1/1] Checking source and CMake formatting
+2026-09-25T13:19:58.3142251Z Ubuntu clang-format version 18.1.3 (1ubuntu1)
+2026-09-25T13:19:58.3142542Z 0.6.13
+2026-09-25T13:21:29.9493609Z  1/66 Test  #1: exercise-ch01 ...........................   Passed    0.22 sec
+2026-09-25T13:21:30.0879159Z  2/66 Test  #2: exercise-ch01-independent-peers .........   Passed    0.14 sec
+2026-09-25T13:21:35.9316028Z  3/66 Test  #3: exercise-ch02-consumer ..................   Passed    5.84 sec
+2026-09-25T13:21:41.8065573Z  4/66 Test  #4: exercise-ch02-component .................   Passed    5.87 sec
+2026-09-25T13:21:41.9539706Z  5/66 Test  #5: exercise-ch03 ...........................   Passed    0.15 sec
+2026-09-25T13:21:42.0753635Z  6/66 Test  #6: exercise-ch03-occupied-port .............   Passed    0.12 sec
+2026-09-25T13:21:42.0774172Z  7/66 Test  #7: exercise-ch04-model-instances ...........   Passed    0.00 sec
+2026-09-25T13:21:42.1716962Z  8/66 Test  #8: exercise-ch04-independent-peers .........   Passed    0.09 sec
+2026-09-25T13:21:42.3085689Z  9/66 Test  #9: exercise-ch05-layer-families ............   Passed    0.14 sec
+2026-09-25T13:21:48.1313837Z 10/66 Test #10: exercise-ch05-layer-component ...........   Passed    5.82 sec
+2026-09-25T13:21:48.1413332Z 11/66 Test #11: exercise-ch06-deferred-work .............   Passed    0.01 sec
+2026-09-25T13:21:48.1431564Z 12/66 Test #12: exercise-ch06-model-checkpoint ..........   Passed    0.00 sec
+2026-09-25T13:21:48.2813222Z 13/66 Test #13: exercise-ch07-ip-families ...............   Passed    0.14 sec
+2026-09-25T13:21:48.3756714Z 14/66 Test #14: exercise-ch07-unix-path .................   Passed    0.09 sec
+2026-09-25T13:21:48.4702138Z 15/66 Test #15: exercise-ch08-independent-peers .........   Passed    0.09 sec
+2026-09-25T13:21:48.5914858Z 16/66 Test #16: exercise-ch08-occupied-endpoint .........   Passed    0.12 sec
+2026-09-25T13:21:48.5974073Z 17/66 Test #17: exercise-ch09-selectors .................   Passed    0.01 sec
+2026-09-25T13:21:48.7351067Z 18/66 Test #18: exercise-ch09-part-checkpoint ...........   Passed    0.14 sec
+2026-09-25T13:21:48.9479636Z 19/66 Test #19: exercise-ch10-framing ...................   Passed    0.21 sec
+2026-09-25T13:21:49.2484223Z 20/66 Test #20: exercise-ch10-limits ....................   Passed    0.30 sec
+2026-09-25T13:21:49.4476709Z 21/66 Test #21: exercise-ch11-isolation .................   Passed    0.20 sec
+2026-09-25T13:21:49.5445941Z 22/66 Test #22: exercise-ch11-refusal ...................   Passed    0.10 sec
+2026-09-25T13:21:49.9108465Z 23/66 Test #23: exercise-ch12-part-checkpoint ...........   Passed    0.37 sec
+2026-09-25T13:21:50.0061651Z 24/66 Test #24: exercise-ch12-endpoint-failure ..........   Passed    0.09 sec
+2026-09-25T13:21:50.1255988Z 25/66 Test #25: exercise-ch13-precedence ................   Passed    0.12 sec
+2026-09-25T13:21:50.2460658Z 26/66 Test #26: exercise-ch13-discovery .................   Passed    0.12 sec
+2026-09-25T13:21:50.3069514Z 27/66 Test #27: exercise-ch14-records ...................   Passed    0.06 sec
+2026-09-25T13:21:50.5728306Z 28/66 Test #28: exercise-ch14-part-checkpoint ...........   Passed    0.27 sec
+2026-09-25T13:21:51.8481882Z 29/66 Test #29: exercise-ch15-trust-identity ............   Passed    1.27 sec
+2026-09-25T13:21:52.3083189Z 30/66 Test #30: exercise-ch15-secure-echo ...............   Passed    0.46 sec
+2026-09-25T13:21:52.6357792Z 31/66 Test #31: exercise-ch16-bounded-retry .............   Passed    0.33 sec
+2026-09-25T13:21:54.2425943Z 32/66 Test #32: exercise-ch16-part-checkpoint ...........   Passed    1.61 sec
+2026-09-25T13:21:54.5406027Z 33/66 Test #33: exercise-ch17-framing ...................   Passed    0.30 sec
+2026-09-25T13:21:54.6391816Z 34/66 Test #34: exercise-ch17-limits ....................   Passed    0.10 sec
+2026-09-25T13:21:54.7372674Z 35/66 Test #35: exercise-ch18-order .....................   Passed    0.10 sec
+2026-09-25T13:21:54.8344874Z 36/66 Test #36: exercise-ch18-stop ......................   Passed    0.10 sec
+2026-09-25T13:21:54.9344081Z 37/66 Test #37: exercise-ch19 ...........................   Passed    0.10 sec
+2026-09-25T13:21:55.0336831Z 38/66 Test #38: exercise-ch19-observers .................   Passed    0.10 sec
+2026-09-25T13:21:55.1667589Z 39/66 Test #39: exercise-ch20-negotiation ...............   Passed    0.13 sec
+2026-09-25T13:21:55.4770458Z 40/66 Test #40: exercise-ch20-part-checkpoint ...........   Passed    0.31 sec
+2026-09-25T13:21:55.8228539Z 41/66 Test #41: exercise-ch21-wire ......................   Passed    0.35 sec
+2026-09-25T13:21:56.0102266Z 42/66 Test #42: exercise-ch21-delivery ..................   Passed    0.19 sec
+2026-09-25T13:21:56.2076109Z 43/66 Test #43: exercise-ch22-binary ....................   Passed    0.20 sec
+2026-09-25T13:21:56.2951162Z 44/66 Test #44: exercise-ch22-text ......................   Passed    0.09 sec
+2026-09-25T13:21:56.4426300Z 45/66 Test #45: exercise-ch23-unavailable-output ........   Passed    0.15 sec
+2026-09-25T13:21:56.7931462Z 46/66 Test #46: exercise-ch23-part-checkpoint ...........   Passed    0.35 sec
+2026-09-25T13:21:58.0599703Z 47/66 Test #47: exercise-ch24-durable ...................   Passed    1.27 sec
+2026-09-25T13:21:59.2827035Z 48/66 Test #48: exercise-ch24-error .....................   Passed    1.22 sec
+2026-09-25T13:21:59.5812947Z 49/66 Test #49: exercise-ch25-composition ...............   Passed    0.30 sec
+2026-09-25T13:22:05.5767828Z 50/66 Test #50: exercise-ch25-consumer-trace ............   Passed    6.00 sec
+2026-09-25T13:22:06.9989851Z 51/66 Test #51: exercise-ch26-part-checkpoint ...........   Passed    1.42 sec
+2026-09-25T13:22:07.1896572Z 52/66 Test #52: exercise-ch26-publication-trace .........   Passed    0.19 sec
+2026-09-25T13:22:13.1381446Z 53/66 Test #53: exercise-ch27-consumer ..................   Passed    5.95 sec
+2026-09-25T13:22:18.9182090Z 54/66 Test #54: exercise-ch27-component .................   Passed    5.78 sec
+2026-09-25T13:22:27.5449463Z 55/66 Test #55: exercise-ch28-lifecycle .................   Passed    8.63 sec
+2026-09-25T13:22:36.0507729Z 56/66 Test #56: exercise-ch28-configuration .............   Passed    8.51 sec
+2026-09-25T13:22:50.5230345Z 57/66 Test #57: exercise-ch29-diagnosis .................   Passed   14.47 sec
+2026-09-25T13:23:05.0467776Z 58/66 Test #58: exercise-ch29-checkpoint ................   Passed   14.52 sec
+2026-09-25T13:23:05.1959091Z 59/66 Test #59: exercise-ch30 ...........................   Passed    0.15 sec
+2026-09-25T13:23:05.1983415Z 60/66 Test #60: exercise-ch30-validation ................   Passed    0.00 sec
+2026-09-25T13:23:05.3114832Z 61/66 Test #61: exercise-ch31-framing ...................   Passed    0.11 sec
+2026-09-25T13:23:05.4742110Z 62/66 Test #62: exercise-ch31-mixed .....................   Passed    0.16 sec
+2026-09-25T13:23:05.4762907Z 63/66 Test #63: exercise-ch32 ...........................   Passed    0.00 sec
+2026-09-25T13:23:05.4780853Z 64/66 Test #64: exercise-ch32-model-instances ...........   Passed    0.00 sec
+2026-09-25T13:23:11.3718927Z 65/66 Test #65: exercise-appendix-a-source-consumer .....   Passed    5.89 sec
+2026-09-25T13:23:11.7375875Z 66/66 Test #66: exercise-appendix-a-carrier-extension ...   Passed    0.37 sec
+2026-09-25T13:23:11.7381572Z 100% tests passed, 0 tests failed out of 66
+2026-09-25T13:23:11.7382081Z Label Time Summary:
+2026-09-25T13:23:11.7382458Z equipped    =   3.91 sec*proc (3 tests)
+2026-09-25T13:23:11.7383058Z Total Test time (real) = 102.01 sec
+2026-09-25T13:23:11.9107664Z PASS: four semantic records; component Debug overrides global Info; event and typed error; no invented peer
+2026-09-25T13:23:11.9108313Z PASS: Chapter 3 server reflects a controlled byte sequence
+2026-09-25T13:23:11.9108745Z PASS: Chapter 3 client initiates and reflects with a controlled peer
+2026-09-25T13:23:13.8859622Z Behavioral smoke tests passed.
+2026-09-25T13:23:14.0658966Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T13:23:37.5377970Z PASS: SSE-Server idle FIN/RST churn wave 1, only the live observer retained
+2026-09-25T13:23:37.5448347Z PASS: SSE-Server idle FIN/RST churn wave 2, only the live observer retained
+2026-09-25T13:23:37.5521493Z PASS: SSE-Server idle FIN/RST churn wave 3, only the live observer retained
+2026-09-25T13:23:37.5537430Z PASS: SSE-Server surviving observer receives the next measurement; final idle cleanup releases all responses
+2026-09-25T13:23:37.7732110Z PASS: MiniGateway idle FIN/RST churn wave 1, only the live observer retained
+2026-09-25T13:23:37.7819063Z PASS: MiniGateway idle FIN/RST churn wave 2, only the live observer retained
+2026-09-25T13:23:37.7908148Z PASS: MiniGateway idle FIN/RST churn wave 3, only the live observer retained
+2026-09-25T13:23:37.7927837Z PASS: MiniGateway surviving observer receives the next measurement; final idle cleanup releases all responses
+2026-09-25T13:23:38.0164923Z PASS: MiniGateway-Extended idle FIN/RST churn wave 1, only the live observer retained
+2026-09-25T13:23:38.0250461Z PASS: MiniGateway-Extended idle FIN/RST churn wave 2, only the live observer retained
+2026-09-25T13:23:38.0338820Z PASS: MiniGateway-Extended idle FIN/RST churn wave 3, only the live observer retained
+2026-09-25T13:23:38.0358610Z PASS: MiniGateway-Extended surviving observer receives the next measurement; final idle cleanup releases all responses
+2026-09-25T13:23:38.2714683Z PASS: unchanged teaching client receives hello and closes
+2026-09-25T13:23:38.3570583Z PASS: WebSocket text/binary type, exact bytes, NUL/non-UTF8 binary, empty/sequential/fragmented messages, interleaved ping and close

@@ -1,0 +1,7 @@
+[
+  {
+    "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+    "line": 21,
+    "text": "Read the two executables as separate processes. In `echoserver.cpp`, `main()` initializes the framework, chooses the server type and creates the object named `echoserver`. Its `listen()` call supplies the address, port and a callback that will report the attempt. This prepares listening work. It does not wait on the current stack for a client to send a greeting. The last line calls `start()`, allowing the runtime to advance the work and eventually report a listening result."
+  }
+]

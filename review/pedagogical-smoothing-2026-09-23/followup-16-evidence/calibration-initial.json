@@ -1,0 +1,14 @@
+{
+  "clang-format-21.1.8": {
+    "exit_code": 1,
+    "files": 733
+  },
+  "cmakelang-0.6.13": {
+    "exit_code": 1,
+    "files": 8
+  },
+  "clang-format-18.1.3": {
+    "exit_code": 1,
+    "files": 733
+  }
+}

@@ -1,0 +1,10 @@
+{
+  ".clang-format": {
+    "identical": true,
+    "sha256": "633441d2ab5699252d83520f001d61dc2d6dde90f76e3a99f799baf60f08aafa"
+  },
+  ".cmake-format.py": {
+    "identical": true,
+    "sha256": "faed658d4b3d408b3e6769c84495406dc5fc791a92fedbbf004c30c6f9d7eee7"
+  }
+}

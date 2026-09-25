@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "changed_cpp_files_checked": 66,
+  "mismatches": {},
+  "normalization": "whitespace, include order, comment reflow, equivalent adjacent string literal concatenation"
+}

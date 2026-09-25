@@ -1,0 +1,37 @@
+{
+  "author style configuration": [
+    381,
+    0,
+    3
+  ],
+  "build, packaging and CI configuration": [
+    1263,
+    517,
+    65
+  ],
+  "companion production C++ (formatting only)": [
+    516,
+    385,
+    53
+  ],
+  "exercise C++ (formatting only)": [
+    123,
+    71,
+    13
+  ],
+  "manuscript listings": [
+    365,
+    383,
+    18
+  ],
+  "scope and supporting records": [
+    434,
+    165,
+    4
+  ],
+  "regression guard": [
+    20,
+    1,
+    1
+  ]
+}
