@@ -2719,3 +2719,8 @@ FU16 A gate: supplied styles/modules match Book-1.0. Calibrated fallback tools
 are clang-format 18.1.3 and cmakelang 0.6.13; framework differences recorded,
 not edited. Local format-check, 37 exact listings, 90-column width, and both
 66/66 lab runs pass. The package includes the new root styles and CMake modules.
+
+FU16 B gate: effective configuration value, edition-tag wording, prefix explanation
+and the specified paragraph joins are complete. All statements are retained in
+the requested joins. The proposal’s derived statistics are refreshed to 111,704
+tokens and the rebuilt 332-page reading PDF. Hosted A+B verification follows.

@@ -521,15 +521,13 @@ The client-side convenience overloads are also path-centered:
 | `connect(sunPath, ...)` | `Remote::setSunPath(sunPath)` |
 | `connect(sunPath, bindSunPath, ...)` | `Remote::setSunPath(sunPath)` + `Local::setSunPath(bindSunPath)` |
 
-These pathname overloads apply the local/remote distinction introduced with the address fields earlier in this chapter. This keeps the local/remote distinction visible. The remote path is the service endpoint the client wants to reach.
+These pathname overloads keep the local/remote distinction visible, applying the address-field distinction introduced earlier in this chapter. The remote path is the service endpoint the client wants to reach.
 
 The optional local path describes the client's own local endpoint identity. Most simple clients do not need to spell this out, but the overload exists because the model still distinguishes the peer being contacted from the local endpoint used for the connection.
 
 For a server the path names its listener; for a client it names the service, with an optional separate local bind path.
 
-Chapter 8 adds connection-lifetime reasoning to these pathname endpoints; its bind, local and remote views remain distinct.
-
-A connection can still have bind, local, and remote address views. The address family has changed, but directional endpoint thinking remains useful. This is one of the main reasons to keep the address family visible in the type system: it prevents the local/remote distinction from being flattened into an unhelpful generic string.
+A connection can still have distinct bind, local, and remote address views; Chapter 8 adds connection-lifetime reasoning to these pathname endpoints. The address family has changed, but directional endpoint thinking remains useful. This is one of the main reasons to keep the address family visible in the type system: it prevents the local/remote distinction from being flattened into an unhelpful generic string.
 
 A pathname socket also has a filesystem lifecycle. The current physical Unix-domain implementation checks the path before binding and keeps cleanup tied to the endpoint it owns. A regular file at the requested pathname is not disposable socket state. When a local service fails to start, distinguish an occupied live socket, a stale socket pathname, a non-socket file, and insufficient directory permissions before deciding what to remove. The source test `UnixPhysicalSocketPathSafetyTest` exercises this boundary; unconditional deletion in application startup would bypass it.
 

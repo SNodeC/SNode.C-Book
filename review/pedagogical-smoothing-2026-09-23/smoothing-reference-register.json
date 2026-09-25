@@ -633,7 +633,7 @@
       "source_ids": [
         "R111"
       ],
-      "line": 149
+      "line": 145
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -644,7 +644,7 @@
       "source_ids": [
         "R113"
       ],
-      "line": 193
+      "line": 189
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -655,7 +655,7 @@
       "source_ids": [
         "R115"
       ],
-      "line": 258
+      "line": 254
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -666,7 +666,7 @@
       "source_ids": [
         "R117"
       ],
-      "line": 284
+      "line": 276
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -677,7 +677,7 @@
       "source_ids": [
         "R118"
       ],
-      "line": 284
+      "line": 276
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -688,7 +688,7 @@
       "source_ids": [
         "R119"
       ],
-      "line": 291
+      "line": 283
     },
     {
       "file": "manuscript/chapters/08-servers-clients-and-connections.md",
@@ -697,7 +697,7 @@
         "the-snodec-runtime-mental-model"
       ],
       "source_ids": [],
-      "line": 295,
+      "line": 287,
       "evidence": "Follow-up 12 P2: point the operational table to the sole runtime taxonomy and figure."
     },
     {
@@ -3003,7 +3003,7 @@
       "source_ids": [
         "R070"
       ],
-      "line": 268
+      "line": 272
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -3014,7 +3014,7 @@
       "source_ids": [
         "R071"
       ],
-      "line": 297
+      "line": 301
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -3025,7 +3025,7 @@
       "source_ids": [
         "R072"
       ],
-      "line": 336
+      "line": 340
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -3036,7 +3036,7 @@
       "source_ids": [
         "R073"
       ],
-      "line": 350
+      "line": 354
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -3047,7 +3047,7 @@
       "source_ids": [
         "R074"
       ],
-      "line": 394
+      "line": 398
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -3056,7 +3056,7 @@
         "why-snodec-exists"
       ],
       "source_ids": [],
-      "line": 448
+      "line": 452
     },
     {
       "file": "manuscript/chapters/30-building-minigateway.md",
@@ -3283,7 +3283,7 @@
       "source_ids": [
         "R138"
       ],
-      "line": 547
+      "line": 545
     },
     {
       "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",

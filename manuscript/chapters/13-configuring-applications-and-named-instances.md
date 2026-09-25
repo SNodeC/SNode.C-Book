@@ -204,7 +204,7 @@ The following section locates these choices in the hierarchy. The echo experimen
 
 ### Application and instance configuration {#application-and-instance-configuration-in-detail}
 
-Scope tells the operator what a setting can change. Our running value, `echoserver.local.port = 18092`, belongs to the named listener’s local endpoint. A process-wide logging option belongs elsewhere in the tree. Keeping those scopes explicit lets an operator change diagnostics without confusing them with where the server listens.
+Scope tells the operator what a setting can change. The effective value 18092 of `echoserver.local.port` belongs to the named listener’s local endpoint. A process-wide logging option belongs elsewhere in the tree. Keeping those scopes explicit lets an operator change diagnostics without confusing them with where the server listens.
 
 \index{application configuration}
 \index{instance configuration}
@@ -592,7 +592,7 @@ Return to `echoserver.local.port` one final time: 8080 is the default, 18091 the
 
 Endpoint values should live in `local` or `remote`, not in random application flags.
 
-That makes address-family differences manageable. IPv4, IPv6, Unix-domain sockets, RFCOMM, and L2CAP all have different concrete endpoint fields, but the local/remote distinction remains stable.
+That makes network-family differences manageable. IPv4, IPv6, Unix-domain sockets, RFCOMM, and L2CAP all have different concrete endpoint fields, but the local/remote distinction remains stable.
 
 This is the same design lesson as Chapters 7, 8 and 9, now expressed through configuration.
 

@@ -92,11 +92,7 @@ Connection callbacks receive a `SocketConnection*` and can inspect addresses, me
 \index{SocketClient@\texttt{SocketClient}}
 \index{connect()@\texttt{connect()}}
 
-Calling `connect(...)` registers connection intent. The remote endpoint comes from the address semantics described in Chapter 7. The runtime then advances the actual connection attempt through the selected lower layer.
-
-A client-side instance may produce one connection, no connection, or several connections over time if retry or reconnect behavior is configured. That is why the instance must not be confused with a single successful connection.
-
-Client connection callbacks have the same surface as the server callbacks, but the client initiates a connection and may later reconnect.
+Calling `connect(...)` registers connection intent. The remote endpoint comes from the address semantics described in Chapter 7. The runtime then advances the actual connection attempt through the selected lower layer. A client-side instance may produce one connection, no connection, or several connections over time if retry or reconnect behavior is configured. That is why the instance must not be confused with a single successful connection. Client connection callbacks have the same surface as the server callbacks, but the client initiates a connection and may later reconnect.
 
 \index{server/client symmetry}
 \index{retry}
@@ -259,11 +255,7 @@ Connection lifecycle callbacks inspect a concrete peer; status callbacks describ
 
 For the non-TLS client, the ready callback and context attachment follow without that handshake stage. Similar-looking logs from the echo pair must not erase the distinction when the connection variant changes.
 
-`onDisconnect` is a final opportunity to interpret the connection while its data is still available. The framework continues teardown after the callback; the received pointer is borrowed, not an ownership transfer.
-
-At disconnect time, useful information such as addresses, online duration, queued bytes, sent bytes, read bytes, and processed bytes can be logged or inspected.
-
-That makes disconnect a meaningful lifecycle point, not just the end of an object.
+`onDisconnect` is a final opportunity to interpret the connection while its data is still available. The framework continues teardown after the callback; the received pointer is borrowed, not an ownership transfer. At disconnect time, useful information such as addresses, online duration, queued bytes, sent bytes, read bytes, and processed bytes can be logged or inspected. That makes disconnect a meaningful lifecycle point, not just the end of an object.
 
 Copy the addresses, counters, or identifiers needed for later reporting during the callback. Retaining the pointer for later use would not keep the connection alive. In the current stream cleanup path, attached contexts have already been detached and deleted before this outer disconnect notification, so this is not a place to call back into the former protocol context.
 

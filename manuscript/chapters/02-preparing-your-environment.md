@@ -68,7 +68,7 @@ The framework source tree remains the source of truth for the implementation. Th
 
 SNode.C is a modern C++ framework. The build system expects CMake and a C++20-capable compiler. The top-level build requires CMake 3.18 or newer, and the `src` build configures the project as C++20.
 
-The build’s minimum accepted versions are GCC 12.2 and Clang 13.0. These configuration checks are not a promise that every newer compiler builds the framework. This edition’s hosted CI verifies GCC 13.3.0 and Clang 18.1.3. Clang 21 currently fails the framework build under `-Werror`, with `-Wnrvo` in `src/tools/snodec-control/src/ConfigActions.cpp:296`; that compatibility issue is a framework follow-up.
+The build’s minimum accepted versions are GCC 12.2 and Clang 13.0. These configuration checks are not a promise that every newer compiler builds the framework. This edition’s hosted CI verifies GCC 13.3.0 and Clang 18.1.3. Clang 21 currently fails the framework build under `-Werror`, with `-Wnrvo`; that compatibility issue is a framework follow-up.
 
 This is not an arbitrary preference. SNode.C uses modern C++ internally. Building it with an older compiler is not a good way to learn the framework: the reader will spend time fighting toolchain problems instead of understanding architecture.
 
@@ -164,7 +164,7 @@ The checked-out framework source now lives in:
 
 The book baseline is SNode.C 2.0.0. Use tag `Book-1.0` as the checkout target; `2.0.0` is the project version described here. No patch is needed. The checker compares the file contents with the edition's manifest.
 
-The SNode.C repository’s immutable `Book-1.0` tag identifies this edition’s source. Before building, let the content check establish whether the checkout matches this edition. For an existing clean clone, fetch the tag and check again:
+The SNode.C repository’s edition tag `Book-1.0` identifies this edition’s source. Before building, let the content check establish whether the checkout matches this edition. For an existing clean clone, fetch the tag and check again:
 
 ```sh
 cd ~/projects/snode.c
@@ -175,7 +175,11 @@ python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 
 Use a separate clone if the existing checkout contains your own work. A tagged checkout still needs verification.
 
-If the checker reports “Book-1.0 checkout differs from the edition manifest”, inspect its changed-file list and repeat the check with a fresh clone of the edition tag. If the mismatch remains, report it to the maintainers and pause the affected examples until their claims and tests have been reviewed; do not bypass the check or move the tag. The content manifest provides the comparison, while the tag names the edition source. Compilation, runtime tests and deployment are separate evidence. The companion labs label broker, database and hardware prerequisites; an unequipped build is not an equipped run. MQTTSuite uses the separate `SNodeC/mqttsuite` repository’s `Book-1.0` tag, outside the framework manifest; its applications are a source-reading case study, not a certified deployment. Record its own build and configuration when reproducing them. No OpenWrt device run is claimed here. The source-baseline directory retains the reconstruction and verification details.
+If the checker reports “Book-1.0 checkout differs from the edition manifest”, inspect its changed-file list and repeat the check with a fresh clone of the edition tag. If the mismatch remains, report it to the maintainers and pause the affected examples until their claims and tests have been reviewed; do not bypass the check. The content manifest provides the comparison, while the tag names the edition source.
+
+Compilation, runtime tests and deployment are separate evidence. The companion labs label broker, database and hardware prerequisites; an unequipped build is not an equipped run.
+
+MQTTSuite uses the separate `SNodeC/mqttsuite` repository’s `Book-1.0` tag, outside the framework manifest; its applications are a source-reading case study, not a certified deployment. Record its own build and configuration when reproducing them. No OpenWrt device run is claimed here. The source-baseline directory retains the reconstruction and verification details.
 :::
 
 ### Use an out-of-tree build
