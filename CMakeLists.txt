@@ -6,8 +6,8 @@ option(SNODEC_BOOK_BUILD_PDFS
        "Configure book/proposal PDF and publisher-package targets" ON)
 
 option(SNODEC_BOOK_BUILD_COMPANION_EXAMPLES
-       "Configure companion C++ examples; requires an installed SNode.C CMake package"
-       OFF)
+       "Compile all companion examples and exercise programs with the book; requires installed SNode.C"
+       ON)
 
 if(SNODEC_BOOK_BUILD_PDFS)
   include("${CMAKE_CURRENT_SOURCE_DIR}/production/cmake/SNodeCBookPaths.cmake")
@@ -33,6 +33,9 @@ if(SNODEC_BOOK_BUILD_COMPANION_EXAMPLES)
   enable_language(CXX)
   enable_testing()
   add_subdirectory(companion)
+  if(TARGET pdf)
+    add_dependencies(pdf all-examples)
+  endif()
 endif()
 
 if(NOT SNODEC_BOOK_BUILD_PDFS AND NOT SNODEC_BOOK_BUILD_COMPANION_EXAMPLES)

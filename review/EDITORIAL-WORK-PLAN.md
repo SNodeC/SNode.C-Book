@@ -2630,3 +2630,31 @@ compatibility check is retained. Configuration regression tests add 70 lines;
 editorial guard/fixture updates are validation support. Local execution logs are
 build/qtcreator-configure.log, build/publication-tools-configure.log and
 build/publication-tools-package.log. No hosted run is claimed for this correction.
+
+### Root book build includes all companions — 2026-09-25
+
+Author instruction: “When the book is build from its root directory also all
+examples and labs must also be compiled!” The root companion option now defaults
+ON. The existing all-examples target gains each chapter/appendix lab target as a
+dependency, and the root pdf target depends on that aggregate when companions are
+enabled. Thus default, book, pdf and proposal-package builds compile the same
+programs without maintaining a second list of executables. Tests remain explicit
+CTest operations, with unchanged assertions/timeouts. PDF-only builds remain an
+explicit opt-out; the dedicated publication workflow selects it, while companion
+CI builds/tests all programs. Publication-tool unit fixtures also opt out of C++
+so they continue to test only their stated tool-selection boundary.
+
+Fresh default configuration verifies the companion option is ON. CMake file-API
+inspection confirms every executable is reachable from pdf: 35 executable targets
+plus all four example libraries (two static and two shared). Existing Desktop_GCC-Debug settings
+retain both PDFs and companions ON. Fresh root pdf dependencies and the IDE all-examples target compile successfully:
+all 35 executables and four libraries exist, and both configurations register
+66 labs. The fresh root pdf target also completes successfully: 330 pages. Publication
+configuration tests pass 4/4; final guards, references, source alignment and
+hygiene pass. Runtime labs were not rerun for this build-dependency-only change.
+Logs: build/root-default-{configure,build}.log and
+build/root-qtcreator-{configure,companions}.log. Build configuration grows by
+four dependency lines (three root, one lab-loop); no C++ implementation grows.
+The publication test fixture adds one explicit isolation setting. Existing OFF caches need
+one explicit ON reconfiguration, documented in README.md. No manuscript or
+framework source changes; no new executable list or build option introduced.

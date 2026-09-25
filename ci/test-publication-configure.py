@@ -30,6 +30,7 @@ class PublicationConfigure(unittest.TestCase):
     def configure(self, *options):
         return subprocess.run([
             'cmake', '-S', str(ROOT), '-B', str(self.build),
+            '-DSNODEC_BOOK_BUILD_COMPANION_EXAMPLES=OFF',
             '-DFETCHCONTENT_SOURCE_DIR_BOOK_PANDOC='+str(self.pandoc.parent.parent),
             '-DFETCHCONTENT_SOURCE_DIR_BOOK_CROSSREF='+str(self.crossref.parent),
             *options,

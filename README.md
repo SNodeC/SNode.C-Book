@@ -86,14 +86,24 @@ Manual chapter numbers are not part of chapter headings. LaTeX/Pandoc numbers pa
 
 ## Build
 
-Install Python 3.9 or newer and a XeLaTeX-capable TeX distribution. On Linux x86-64, CMake downloads the compatible Pandoc/crossref pair into the build directory on first configuration, verifies the archive hashes, and reuses it afterwards. The manuscript is built through CMake:
+Install a C++20 compiler, SNode.C with its development dependencies, standalone Asio headers (`libasio-dev`), Python 3.9 or newer and a XeLaTeX-capable TeX distribution. On Linux x86-64, CMake downloads the compatible Pandoc/crossref pair into the build directory on first configuration, verifies the archive hashes, and reuses it afterwards. The root build compiles all companion examples and exercise programs along with the manuscript:
 
 ```bash
 cmake -S . -B build
-cmake --build build --target pdf
+cmake --build build --parallel
 ```
 
 The manuscript PDF build uses LaTeX indexing support. The `pdf` target generates LaTeX, runs `xelatex`, runs `makeindex`, and then runs `xelatex` twice more so that index pages and cross-references settle.
+
+The `pdf`, `book` and `proposal-package` targets also compile all examples and
+exercise programs when companions are enabled (the default). Set
+`CMAKE_PREFIX_PATH` to your SNode.C installation if it is outside the system
+search paths. Existing build directories that cached the former OFF default need
+`-DSNODEC_BOOK_BUILD_COMPANION_EXAMPLES=ON` once. To run the 66 labs after building,
+use `ctest --test-dir build --output-on-failure`; compilation does not run them.
+An explicitly PDF-only configuration can use
+`-DSNODEC_BOOK_BUILD_COMPANION_EXAMPLES=OFF`, as the dedicated publication CI job
+does; the companion CI jobs compile and test all programs separately.
 
 To generate LaTeX only:
 

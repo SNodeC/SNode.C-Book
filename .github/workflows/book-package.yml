@@ -29,7 +29,7 @@ jobs:
           xelatex --version | grep -F 'TeX Live 2026'
 
       - name: Verify Pandoc and crossref ABI compatibility
-        run: cmake -S . -B build/ci-book -G Ninja
+        run: cmake -S . -B build/ci-book -G Ninja -DSNODEC_BOOK_BUILD_COMPANION_EXAMPLES=OFF
 
       - name: Check source hygiene
         run: bash ci/check-source-hygiene.sh
