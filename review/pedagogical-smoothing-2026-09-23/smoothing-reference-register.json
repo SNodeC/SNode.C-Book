@@ -775,7 +775,7 @@
       "source_ids": [
         "R149"
       ],
-      "line": 235
+      "line": 233
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
@@ -786,7 +786,7 @@
       "source_ids": [
         "R150"
       ],
-      "line": 262
+      "line": 260
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
@@ -797,7 +797,7 @@
       "source_ids": [
         "R152"
       ],
-      "line": 286
+      "line": 284
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
@@ -808,7 +808,7 @@
       "source_ids": [
         "R153"
       ],
-      "line": 343
+      "line": 341
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
@@ -819,7 +819,7 @@
       "source_ids": [
         "R154"
       ],
-      "line": 372
+      "line": 370
     },
     {
       "file": "manuscript/chapters/10-writing-socketcontext-classes-well.md",
@@ -830,7 +830,7 @@
       "source_ids": [
         "R155"
       ],
-      "line": 374
+      "line": 372
     },
     {
       "file": "manuscript/chapters/11-writing-socketcontextfactory-classes-well.md",
@@ -967,7 +967,7 @@
       "source_ids": [
         "R195"
       ],
-      "line": 308
+      "line": 307
     },
     {
       "file": "manuscript/chapters/15-tls-across-the-framework.md",
@@ -1146,7 +1146,7 @@
       "source_ids": [
         "R213"
       ],
-      "line": 261
+      "line": 260
     },
     {
       "file": "manuscript/chapters/17-the-http-layer.md",
@@ -1157,7 +1157,7 @@
       "source_ids": [
         "R214"
       ],
-      "line": 279
+      "line": 278
     },
     {
       "file": "manuscript/chapters/17-the-http-layer.md",
@@ -1168,7 +1168,7 @@
       "source_ids": [
         "R215"
       ],
-      "line": 279
+      "line": 278
     },
     {
       "file": "manuscript/chapters/17-the-http-layer.md",
@@ -1179,7 +1179,7 @@
       "source_ids": [
         "R216"
       ],
-      "line": 302
+      "line": 301
     },
     {
       "file": "manuscript/chapters/17-the-http-layer.md",
@@ -1190,7 +1190,7 @@
       "source_ids": [
         "R220"
       ],
-      "line": 323
+      "line": 322
     },
     {
       "file": "manuscript/chapters/17-the-http-layer.md",
@@ -1201,7 +1201,7 @@
       "source_ids": [
         "R219"
       ],
-      "line": 326
+      "line": 325
     },
     {
       "file": "manuscript/chapters/18-the-express-like-framework.md",
@@ -1212,7 +1212,7 @@
       "source_ids": [
         "R221"
       ],
-      "line": 219
+      "line": 220
     },
     {
       "file": "manuscript/chapters/18-the-express-like-framework.md",
@@ -1223,7 +1223,7 @@
       "source_ids": [
         "R225"
       ],
-      "line": 247
+      "line": 248
     },
     {
       "file": "manuscript/chapters/18-the-express-like-framework.md",
@@ -1234,7 +1234,7 @@
       "source_ids": [
         "R230"
       ],
-      "line": 286
+      "line": 287
     },
     {
       "file": "manuscript/chapters/18-the-express-like-framework.md",
@@ -1245,7 +1245,7 @@
       "source_ids": [
         "R229"
       ],
-      "line": 289
+      "line": 290
     },
     {
       "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
@@ -1267,7 +1267,7 @@
       "source_ids": [
         "R232"
       ],
-      "line": 362
+      "line": 365
     },
     {
       "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
@@ -1278,7 +1278,7 @@
       "source_ids": [
         "R233"
       ],
-      "line": 366
+      "line": 369
     },
     {
       "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
@@ -1289,7 +1289,7 @@
       "source_ids": [
         "R234"
       ],
-      "line": 379
+      "line": 382
     },
     {
       "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
@@ -1300,7 +1300,7 @@
       "source_ids": [
         "R235"
       ],
-      "line": 413
+      "line": 416
     },
     {
       "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
@@ -1311,7 +1311,7 @@
       "source_ids": [
         "R236"
       ],
-      "line": 413
+      "line": 416
     },
     {
       "file": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
@@ -1322,7 +1322,7 @@
       "source_ids": [
         "R237"
       ],
-      "line": 435
+      "line": 438
     },
     {
       "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
@@ -1377,7 +1377,7 @@
       "source_ids": [
         "R242"
       ],
-      "line": 375
+      "line": 370
     },
     {
       "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
@@ -1388,7 +1388,7 @@
       "source_ids": [
         "R243"
       ],
-      "line": 375
+      "line": 370
     },
     {
       "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
@@ -1399,7 +1399,7 @@
       "source_ids": [
         "R245"
       ],
-      "line": 390
+      "line": 385
     },
     {
       "file": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
@@ -1410,7 +1410,7 @@
       "source_ids": [
         "R247"
       ],
-      "line": 398
+      "line": 393
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1432,7 +1432,7 @@
       "source_ids": [
         "R255"
       ],
-      "line": 252
+      "line": 251
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1443,7 +1443,7 @@
       "source_ids": [
         "R261"
       ],
-      "line": 285
+      "line": 284
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1454,7 +1454,7 @@
       "source_ids": [
         "R260"
       ],
-      "line": 302
+      "line": 301
     },
     {
       "file": "manuscript/chapters/21-mqtt-support-in-snodec.md",
@@ -1465,7 +1465,7 @@
       "source_ids": [
         "R249"
       ],
-      "line": 312
+      "line": 311
     },
     {
       "file": "manuscript/chapters/22-mqtt-over-websocket.md",
@@ -1540,7 +1540,7 @@
       "source_ids": [
         "R273"
       ],
-      "line": 214
+      "line": 212
     },
     {
       "file": "manuscript/chapters/22-mqtt-over-websocket.md",
@@ -1551,7 +1551,7 @@
       "source_ids": [
         "R272"
       ],
-      "line": 217
+      "line": 215
     },
     {
       "file": "manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md",
@@ -1619,7 +1619,7 @@
       "source_ids": [
         "R281"
       ],
-      "line": 384
+      "line": 383
     },
     {
       "file": "manuscript/chapters/24-database-support-and-application-state.md",
@@ -1630,7 +1630,7 @@
       "source_ids": [
         "R282"
       ],
-      "line": 412
+      "line": 411
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -1639,7 +1639,7 @@
         "cmake-components-and-linking-strategy"
       ],
       "source_ids": [],
-      "line": 122
+      "line": 116
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -1652,7 +1652,7 @@
         "R283",
         "R284"
       ],
-      "line": 179
+      "line": 173
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -1663,7 +1663,7 @@
       "source_ids": [
         "R285"
       ],
-      "line": 179
+      "line": 173
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -1674,7 +1674,7 @@
       "source_ids": [
         "R286"
       ],
-      "line": 196
+      "line": 190
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -1685,7 +1685,7 @@
       "source_ids": [
         "R287"
       ],
-      "line": 250
+      "line": 244
     },
     {
       "file": "manuscript/chapters/25-reading-complete-snodec-applications.md",
@@ -1696,7 +1696,7 @@
       "source_ids": [
         "R291"
       ],
-      "line": 269
+      "line": 263
     },
     {
       "file": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
@@ -2724,7 +2724,7 @@
       "source_ids": [
         "R309"
       ],
-      "line": 244
+      "line": 241
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2735,7 +2735,7 @@
       "source_ids": [
         "R310"
       ],
-      "line": 244
+      "line": 241
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2746,7 +2746,7 @@
       "source_ids": [
         "R311"
       ],
-      "line": 244
+      "line": 241
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2757,7 +2757,7 @@
       "source_ids": [
         "R312"
       ],
-      "line": 246
+      "line": 243
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2768,7 +2768,7 @@
       "source_ids": [
         "R313"
       ],
-      "line": 255
+      "line": 252
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2779,7 +2779,7 @@
       "source_ids": [
         "R314"
       ],
-      "line": 290
+      "line": 287
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2790,7 +2790,7 @@
       "source_ids": [
         "R315"
       ],
-      "line": 317
+      "line": 314
     },
     {
       "file": "manuscript/chapters/27-cmake-components-and-linking-strategy.md",
@@ -2801,7 +2801,7 @@
       "source_ids": [
         "R316"
       ],
-      "line": 387
+      "line": 378
     },
     {
       "file": "manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md",
@@ -2889,7 +2889,7 @@
       "source_ids": [
         "R079"
       ],
-      "line": 230
+      "line": 231
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -2901,7 +2901,7 @@
       "source_ids": [
         "R080"
       ],
-      "line": 316
+      "line": 318
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -2912,7 +2912,7 @@
       "source_ids": [
         "R081"
       ],
-      "line": 387
+      "line": 390
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -2923,7 +2923,7 @@
       "source_ids": [
         "R082"
       ],
-      "line": 449
+      "line": 435
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -2932,7 +2932,7 @@
         "preparing-your-environment"
       ],
       "source_ids": [],
-      "line": 458
+      "line": 444
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -2943,7 +2943,7 @@
       "source_ids": [
         "R083"
       ],
-      "line": 460
+      "line": 446
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -2954,7 +2954,7 @@
       "source_ids": [
         "R076"
       ],
-      "line": 518
+      "line": 504
     },
     {
       "file": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
@@ -2965,7 +2965,7 @@
       "source_ids": [
         "R077"
       ],
-      "line": 521
+      "line": 507
     },
     {
       "file": "manuscript/chapters/02-preparing-your-environment.md",
@@ -3100,7 +3100,7 @@
       "source_ids": [
         "R339"
       ],
-      "line": 434
+      "line": 432
     },
     {
       "file": "manuscript/chapters/30-building-minigateway.md",
@@ -3109,7 +3109,7 @@
         "reading-complete-snodec-applications"
       ],
       "source_ids": [],
-      "line": 765
+      "line": 777
     },
     {
       "file": "manuscript/chapters/30-building-minigateway.md",
@@ -3120,7 +3120,7 @@
       "source_ids": [
         "R340"
       ],
-      "line": 1315
+      "line": 1331
     },
     {
       "file": "manuscript/chapters/30-building-minigateway.md",
@@ -3131,7 +3131,7 @@
       "source_ids": [
         "R341"
       ],
-      "line": 1342
+      "line": 1358
     },
     {
       "file": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
@@ -3140,7 +3140,7 @@
         "network-families-addresses-ipv4-ipv6-and-unix-sockets"
       ],
       "source_ids": [],
-      "line": 248
+      "line": 247
     },
     {
       "file": "manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md",
@@ -3312,7 +3312,7 @@
       "source_ids": [
         "R176"
       ],
-      "line": 208
+      "line": 210
     },
     {
       "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
@@ -3323,7 +3323,7 @@
       "source_ids": [
         "R169"
       ],
-      "line": 210
+      "line": 212
     },
     {
       "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
@@ -3334,7 +3334,7 @@
       "source_ids": [
         "R170"
       ],
-      "line": 210
+      "line": 212
     },
     {
       "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
@@ -3345,7 +3345,7 @@
       "source_ids": [
         "R171"
       ],
-      "line": 254
+      "line": 256
     },
     {
       "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
@@ -3356,7 +3356,7 @@
       "source_ids": [
         "R172"
       ],
-      "line": 282
+      "line": 284
     },
     {
       "file": "manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md",
@@ -3367,7 +3367,7 @@
       "source_ids": [
         "R175"
       ],
-      "line": 339
+      "line": 341
     },
     {
       "file": "manuscript/chapters/26-from-applications-to-systems-mqttsuite.md",

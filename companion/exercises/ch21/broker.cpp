@@ -8,11 +8,16 @@
 
 class Factory final : public iot::mqtt::server::SocketContextFactory {
 public:
-    Factory() : iot::mqtt::server::SocketContextFactory("") {}
+    Factory()
+        : iot::mqtt::server::SocketContextFactory("") {
+    }
+
 private:
-    core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* connection,
-        std::shared_ptr<iot::mqtt::server::broker::Broker> broker) override {
-        return new iot::mqtt::SocketContext(connection,
+    core::socket::stream::SocketContext*
+    create(core::socket::stream::SocketConnection* connection,
+           std::shared_ptr<iot::mqtt::server::broker::Broker> broker) override {
+        return new iot::mqtt::SocketContext(
+            connection,
             new iot::mqtt::server::Mqtt(connection->getConnectionName(), broker));
     }
 };
@@ -20,6 +25,7 @@ private:
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
     const net::in::stream::legacy::SocketServer<Factory> broker("broker");
-    broker.listen([](const auto&, const auto&) {});
+    broker.listen([](const auto&, const auto&) {
+    });
     return core::SNodeC::start();
 }

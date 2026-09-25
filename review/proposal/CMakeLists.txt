@@ -8,26 +8,31 @@ set(PROPOSAL_SAMPLE_CHAPTERS
     "${MANUSCRIPT_DIR}/chapters/03-your-first-working-program-the-echo-pair.md"
     "${MANUSCRIPT_DIR}/chapters/19-server-sent-events-and-real-time-http.md"
     "${MANUSCRIPT_DIR}/chapters/30-building-minigateway.md"
-    "${MANUSCRIPT_DIR}/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md")
+    "${MANUSCRIPT_DIR}/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md"
+)
 
 snodec_add_pandoc_pdf_target_with_division(
-  proposal
-  "book-proposal-package"
-  section
-  --metadata-file "${PROPOSAL_METADATA_FILE}"
-  "${PROPOSAL_SOURCE}"
-  "${EVIDENCE_SOURCE}")
+    proposal
+    "book-proposal-package"
+    section
+    --metadata-file
+    "${PROPOSAL_METADATA_FILE}"
+    "${PROPOSAL_SOURCE}"
+    "${EVIDENCE_SOURCE}"
+)
 
 # Alias with an explicit document role. The historical target name `proposal`
 # remains available for existing workflows.
 add_custom_target(proposal-pdf DEPENDS proposal)
 
 snodec_add_pandoc_pdf_target_with_division(
-  proposal-sample-pdf
-  "book-proposal-sample-package"
-  section
-  --metadata-file "${PROPOSAL_METADATA_FILE}"
-  "${PROPOSAL_SOURCE}"
-  "${EVIDENCE_SOURCE}"
-  "${SAMPLE_INTRO}"
-  ${PROPOSAL_SAMPLE_CHAPTERS})
+    proposal-sample-pdf
+    "book-proposal-sample-package"
+    section
+    --metadata-file
+    "${PROPOSAL_METADATA_FILE}"
+    "${PROPOSAL_SOURCE}"
+    "${EVIDENCE_SOURCE}"
+    "${SAMPLE_INTRO}"
+    ${PROPOSAL_SAMPLE_CHAPTERS}
+)

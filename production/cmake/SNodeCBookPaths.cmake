@@ -1,6 +1,8 @@
 # Repository layout for the SNode.C book build.
 
-get_filename_component(SNODEC_BOOK_ROOT "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+get_filename_component(
+    SNODEC_BOOK_ROOT "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE
+)
 
 set(MANUSCRIPT_DIR "${SNODEC_BOOK_ROOT}/manuscript")
 set(PRODUCTION_DIR "${SNODEC_BOOK_ROOT}/production")
@@ -15,11 +17,13 @@ set(DIST_PACKAGE_DIR "${DIST_DIR}/packages")
 
 set(BOOK_BUILD_DIR
     "${CMAKE_BINARY_DIR}"
-    CACHE PATH "Book build output directory")
+    CACHE PATH "Book build output directory"
+)
 
-# Backward-compatible alias for older local scripts that may still pass BUILD_DIR.
+# Backward-compatible alias for older local scripts that may still pass
+# BUILD_DIR.
 if(DEFINED BUILD_DIR AND NOT BUILD_DIR STREQUAL "")
-  set(BOOK_BUILD_DIR "${BUILD_DIR}")
+    set(BOOK_BUILD_DIR "${BUILD_DIR}")
 endif()
 
 file(MAKE_DIRECTORY "${BOOK_BUILD_DIR}")

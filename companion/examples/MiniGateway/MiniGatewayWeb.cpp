@@ -40,8 +40,8 @@ namespace minigateway {
             res->sendFragment("");
         }
 
-        void registerWebRoutes(const MiniGatewayWebApp &app,
-                               MeasurementModel &measurementModel) {
+        void registerWebRoutes(const MiniGatewayWebApp& app,
+                               MeasurementModel& measurementModel) {
             app.use(express::middleware::VerboseRequest());
 
             app.get("/health", [] APPLICATION(req, res) {
@@ -65,7 +65,7 @@ namespace minigateway {
                     }
 
                     const auto subscription =
-                        measurementModel.subscribe([res](const Measurement &measurement) {
+                        measurementModel.subscribe([res](const Measurement& measurement) {
                             sendMeasurement(res, measurement);
                         });
                     res->getSocketContext()->setOnDisconnected(
@@ -94,11 +94,12 @@ namespace minigateway {
 
         registerWebRoutes(app, measurementModel);
 
-        app.listen(8080, [instanceName = app.getConfig()->getInstanceName()](
-                             const MiniGatewayWebApp::SocketAddress &socketAddress,
-                             const core::socket::State &listenState) {
-            reportState(instanceName, socketAddress, listenState);
-        });
+        app.listen(8080,
+                   [instanceName = app.getConfig()->getInstanceName()](
+                       const MiniGatewayWebApp::SocketAddress& socketAddress,
+                       const core::socket::State& listenState) {
+                       reportState(instanceName, socketAddress, listenState);
+                   });
 
         return app;
     }

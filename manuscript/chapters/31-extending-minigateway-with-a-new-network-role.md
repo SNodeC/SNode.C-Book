@@ -84,9 +84,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include(GNUInstallDirs)
 find_package(nlohmann_json 3.7.0 REQUIRED)
 find_package(
-    snodec 2.0.0 REQUIRED COMPONENTS http-server-express-legacy-in
-                                     net-in-stream-legacy mqtt-client
-                                     net-un-stream-legacy
+    snodec 2.0.0 REQUIRED
+    COMPONENTS http-server-express-legacy-in net-in-stream-legacy mqtt-client
+               net-un-stream-legacy
 )
 add_executable(
     minigateway-extended
@@ -130,8 +130,8 @@ install(
 
 add_custom_target(
     deploy-minigateway-extended
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}"
-            --component MiniGatewayExtended
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component
+            MiniGatewayExtended
     DEPENDS minigateway-extended
     COMMENT "Installing minigateway-extended"
     VERBATIM
@@ -143,8 +143,8 @@ add_custom_target(
 The whole architectural change is visible in `main.cpp`. MiniGateway Extended creates the same model and starts one additional preconfigured network role:
 
 ```cpp
-const auto measurementInputRole =
-    minigateway::startMeasurementInputRole(measurementModel);
+    const auto measurementInputRole =
+        minigateway::startMeasurementInputRole(measurementModel);
 ```
 
 The web role and MQTT role do not learn anything about Unix-domain sockets.
@@ -169,8 +169,7 @@ int main(int argc, char* argv[]) {
 
     minigateway::MeasurementModel measurementModel;
 
-    const auto webRole =
-        minigateway::startWebRole(measurementModel);
+    const auto webRole = minigateway::startWebRole(measurementModel);
     const auto measurementInputRole =
         minigateway::startMeasurementInputRole(measurementModel);
     const auto mqttIntegrationRole =
@@ -228,14 +227,14 @@ The startup function creates the Unix-domain server, configures the default sock
 namespace minigateway {
 
     MeasurementSocketServer
-    startMeasurementInputRole(MeasurementModel &measurementModel) {
+    startMeasurementInputRole(MeasurementModel& measurementModel) {
         MeasurementSocketServer socketServer("measurement-input",
                                              std::ref(measurementModel));
 
         socketServer.listen(
             "/tmp/minigateway-measurements.sock",
-            [](const MeasurementSocketServer::SocketAddress &socketAddress,
-               const core::socket::State &state) {
+            [](const MeasurementSocketServer::SocketAddress& socketAddress,
+               const core::socket::State& state) {
                 reportState("measurement-input", socketAddress, state);
             });
 
@@ -270,13 +269,13 @@ namespace minigateway {
 
     class MeasurementUnixSocketContextFactory
         : public core::socket::stream::SocketContextFactory {
-      public:
+    public:
         explicit MeasurementUnixSocketContextFactory(
             std::reference_wrapper<MeasurementModel> measurementModel);
 
-      private:
-        core::socket::stream::SocketContext *
-        create(core::socket::stream::SocketConnection *socketConnection) final;
+    private:
+        core::socket::stream::SocketContext*
+        create(core::socket::stream::SocketConnection* socketConnection) final;
 
         MeasurementModel& measurementModel;
     };
@@ -300,10 +299,11 @@ namespace minigateway {
 
     MeasurementUnixSocketContextFactory::MeasurementUnixSocketContextFactory(
         std::reference_wrapper<MeasurementModel> measurementModel)
-        : measurementModel(measurementModel.get()) {}
+        : measurementModel(measurementModel.get()) {
+    }
 
-    core::socket::stream::SocketContext *MeasurementUnixSocketContextFactory::create(
-        core::socket::stream::SocketConnection *socketConnection) {
+    core::socket::stream::SocketContext* MeasurementUnixSocketContextFactory::create(
+        core::socket::stream::SocketConnection* socketConnection) {
         return new MeasurementUnixSocketContext(socketConnection, measurementModel);
     }
 
@@ -338,9 +338,9 @@ namespace minigateway {
 
     class MeasurementUnixSocketContext : public core::socket::stream::SocketContext {
     public:
-      MeasurementUnixSocketContext(
-          core::socket::stream::SocketConnection *socketConnection,
-          MeasurementModel &measurementModel);
+        MeasurementUnixSocketContext(
+            core::socket::stream::SocketConnection* socketConnection,
+            MeasurementModel& measurementModel);
 
     private:
         void onConnected() final;
@@ -368,34 +368,34 @@ Read the implementation in three excerpts. The complete file remains `companion/
 **Framing and buffering — excerpt.** The receive callback retains incomplete input in the connection's own buffer and processes only delimited lines.
 
 ```cpp
-std::size_t MeasurementUnixSocketContext::onReceivedFromPeer() {
-    char chunk[4096];
-    const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
+    std::size_t MeasurementUnixSocketContext::onReceivedFromPeer() {
+        char chunk[4096];
+        const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
 
-    if (chunkLen > 0) {
-        receiveBuffer.append(chunk, chunkLen);
+        if (chunkLen > 0) {
+            receiveBuffer.append(chunk, chunkLen);
 
-        std::size_t lineEnd = receiveBuffer.find('\n');
-        while (lineEnd != std::string::npos && lineEnd <= 4096) {
-            std::string line = receiveBuffer.substr(0, lineEnd);
-            if (!line.empty() && line.back() == '\r') {
-                line.pop_back();
+            std::size_t lineEnd = receiveBuffer.find('\n');
+            while (lineEnd != std::string::npos && lineEnd <= 4096) {
+                std::string line = receiveBuffer.substr(0, lineEnd);
+                if (!line.empty() && line.back() == '\r') {
+                    line.pop_back();
+                }
+
+                processLine(line);
+                receiveBuffer.erase(0, lineEnd + 1);
+                lineEnd = receiveBuffer.find('\n');
             }
 
-            processLine(line);
-            receiveBuffer.erase(0, lineEnd + 1);
-            lineEnd = receiveBuffer.find('\n');
+            if (receiveBuffer.length() > 4096) {
+                snode::log::application().warn()
+                    << "Measurement socket line exceeds 4096 bytes; closing connection";
+                close();
+            }
         }
 
-        if (receiveBuffer.length() > 4096) {
-            snode::log::application().warn()
-                << "Measurement socket line exceeds 4096 bytes; closing connection";
-            close();
-        }
+        return chunkLen;
     }
-
-    return chunkLen;
-}
 ```
 
 A stream read does not identify a record. The buffer combines fragments until a newline appears, then removes exactly the consumed prefix. Several lines received together can therefore produce several calls to `processLine()`, while half a line produces none yet. The size check applies to the accumulated record, not merely to one read's chunk. Closing on an oversized incomplete record prevents a later suffix from being mistaken for an independent valid measurement.
@@ -405,41 +405,43 @@ The callback returns the number of bytes read, leaving later progress to the run
 **Parsing and validation — excerpt.** After the omitted `splitCsvLine()` helper separates and trims fields, the conversion functions require full-field consumption and finite floating-point values.
 
 ```cpp
-double parseDouble(const std::string& value, const std::string& fieldName) {
-    std::size_t parsedLength = 0;
-    const double parsedValue = std::stod(value, &parsedLength);
-    if (parsedLength != value.length() || !std::isfinite(parsedValue)) {
-        throw std::invalid_argument("invalid " + fieldName + " value '" + value + "'");
-    }
+        double parseDouble(const std::string& value, const std::string& fieldName) {
+            std::size_t parsedLength = 0;
+            const double parsedValue = std::stod(value, &parsedLength);
+            if (parsedLength != value.length() || !std::isfinite(parsedValue)) {
+                throw std::invalid_argument("invalid " + fieldName + " value '" + value +
+                                            "'");
+            }
 
-    return parsedValue;
-}
+            return parsedValue;
+        }
 
-std::uint64_t parseSequence(const std::string& value) {
-    std::size_t parsedLength = 0;
-    const auto parsedValue = std::stoull(value, &parsedLength);
-    if (parsedLength != value.length()) {
-        throw std::invalid_argument("invalid sequence value '" + value + "'");
-    }
+        std::uint64_t parseSequence(const std::string& value) {
+            std::size_t parsedLength = 0;
+            const auto parsedValue = std::stoull(value, &parsedLength);
+            if (parsedLength != value.length()) {
+                throw std::invalid_argument("invalid sequence value '" + value + "'");
+            }
 
-    return parsedValue;
-}
+            return parsedValue;
+        }
 
-Measurement parseMeasurementLine(const std::string& line) {
-    const std::vector<std::string> values = splitCsvLine(line);
-    if (values.size() != 3 && values.size() != 4) {
-        throw std::invalid_argument("expected temperature,humidity,voltage[,sequence]");
-    }
+        Measurement parseMeasurementLine(const std::string& line) {
+            const std::vector<std::string> values = splitCsvLine(line);
+            if (values.size() != 3 && values.size() != 4) {
+                throw std::invalid_argument(
+                    "expected temperature,humidity,voltage[,sequence]");
+            }
 
-    Measurement measurement;
-    measurement.temperature = parseDouble(values[0], "temperature");
-    measurement.humidity = parseDouble(values[1], "humidity");
-    measurement.voltage = parseDouble(values[2], "voltage");
-    measurement.sequence = values.size() == 4 ? parseSequence(values[3]) : 0;
-    measurement.timestamp = std::chrono::system_clock::now();
+            Measurement measurement;
+            measurement.temperature = parseDouble(values[0], "temperature");
+            measurement.humidity = parseDouble(values[1], "humidity");
+            measurement.voltage = parseDouble(values[2], "voltage");
+            measurement.sequence = values.size() == 4 ? parseSequence(values[3]) : 0;
+            measurement.timestamp = std::chrono::system_clock::now();
 
-    return measurement;
-}
+            return measurement;
+        }
 ```
 
 The field-count check makes the format explicit: three measurement values and an optional sequence. Conversion is not just extracting a numeric prefix. The consumed-length check rejects trailing characters, and the finite-value check rejects non-finite sensor values. Exceptions prevent the caller from accepting a partially constructed record. The timestamp is assigned when parsing creates the value; transport arrival alone has not yet changed accepted state.
@@ -449,16 +451,16 @@ Notice what validation does not decide. The optional producer sequence can be re
 **Acceptance — excerpt.** One small function connects the validated candidate to that owner.
 
 ```cpp
-void MeasurementUnixSocketContext::processLine(const std::string& line) const {
-    if (!line.empty()) {
-        try {
-            measurementModel.accept(parseMeasurementLine(line));
-        } catch (const std::exception& ex) {
-            snode::log::application().warn()
-                << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+    void MeasurementUnixSocketContext::processLine(const std::string& line) const {
+        if (!line.empty()) {
+            try {
+                measurementModel.accept(parseMeasurementLine(line));
+            } catch (const std::exception& ex) {
+                snode::log::application().warn() << "Ignoring invalid measurement line '"
+                                                 << line << "': " << ex.what();
+            }
         }
     }
-}
 ```
 
 An empty line leaves the model unchanged. A valid line reaches `accept()` once; an exception logs the rejected input and leaves it unaccepted. The observer routes and MQTT output see the model's result rather than a special Unix-input copy. This preserves the central invariant of the extension: a new input adds framing and validation while all inputs still use the same state transition.

@@ -190,21 +190,19 @@ Reuse the MQTT protocol object from Chapter 21 when selecting the WebSocket carr
 A compact client-side build fragment therefore looks like this:
 
 ```cmake
-target_link_libraries(gateway
-    PRIVATE
-        snodec::mqtt-client
-        snodec::mqtt-client-websocket
-        snodec::websocket-client)
+target_link_libraries(
+    gateway PRIVATE snodec::mqtt-client snodec::mqtt-client-websocket
+                    snodec::websocket-client
+)
 ```
 
 The three client components supply the MQTT implementation, its WebSocket adapter, and the WebSocket carrier. The corresponding server-side components are:
 
 ```cmake
-target_link_libraries(gateway
-    PRIVATE
-        snodec::mqtt-server
-        snodec::mqtt-server-websocket
-        snodec::websocket-server)
+target_link_libraries(
+    gateway PRIVATE snodec::mqtt-server snodec::mqtt-server-websocket
+                    snodec::websocket-server
+)
 ```
 
 These are partial link fragments. A runnable application also needs its concrete HTTP stream connection, upgrade entry point, and selectable MQTT subprotocol factory. Linking an adapter library does not by itself create or register that application-specific factory.

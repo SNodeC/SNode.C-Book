@@ -9,13 +9,13 @@ namespace minigateway {
 
     class MeasurementUnixSocketContextFactory
         : public core::socket::stream::SocketContextFactory {
-      public:
+    public:
         explicit MeasurementUnixSocketContextFactory(
             std::reference_wrapper<MeasurementModel> measurementModel);
 
-      private:
-        core::socket::stream::SocketContext *
-        create(core::socket::stream::SocketConnection *socketConnection) final;
+    private:
+        core::socket::stream::SocketContext*
+        create(core::socket::stream::SocketConnection* socketConnection) final;
 
         MeasurementModel& measurementModel;
     };

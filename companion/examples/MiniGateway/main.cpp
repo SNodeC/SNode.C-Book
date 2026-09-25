@@ -9,8 +9,7 @@ int main(int argc, char* argv[]) {
 
     minigateway::MeasurementModel measurementModel;
 
-    const auto webRole =
-        minigateway::startWebRole(measurementModel);
+    const auto webRole = minigateway::startWebRole(measurementModel);
     const auto mqttIntegrationRole =
         minigateway::startMqttIntegrationRole(measurementModel);
 

@@ -9,7 +9,8 @@
 class EchoServerFactory final
     : public web::websocket::SubProtocolFactory<web::websocket::server::SubProtocol> {
 public:
-    using web::websocket::SubProtocolFactory<web::websocket::server::SubProtocol>::SubProtocolFactory;
+    using web::websocket::SubProtocolFactory<
+        web::websocket::server::SubProtocol>::SubProtocolFactory;
 
 private:
     EchoServer* create(web::websocket::SubProtocolContext* context) override;

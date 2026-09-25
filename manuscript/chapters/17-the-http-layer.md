@@ -175,8 +175,8 @@ using Response = WebApp::Response;
 
 WebApp app("legacy");
 
-app.get("/ws", [](const std::shared_ptr<Request> &req,
-                  const std::shared_ptr<Response> &res) {
+app.get("/ws", [](const std::shared_ptr<Request>& req,
+                  const std::shared_ptr<Response>& res) {
     res->upgrade(req, [res](const std::string& selected) {
         if (!selected.empty()) {
             res->end();
@@ -198,12 +198,12 @@ req->upgrade(
         snode::log::application().trace()
             << "upgrade request initiation: " << (success ? "accepted" : "rejected");
     },
-    [](const std::shared_ptr<Request> &, const std::shared_ptr<Response> &,
+    [](const std::shared_ptr<Request>&, const std::shared_ptr<Response>&,
        bool success) {
         snode::log::application().trace()
             << "upgrade response: " << (success ? "accepted" : "rejected");
     },
-    [](const std::shared_ptr<Request> &, const std::string &message) {
+    [](const std::shared_ptr<Request>&, const std::string& message) {
         snode::log::application().error() << "upgrade response parse error: " << message;
     });
 ```
@@ -244,15 +244,14 @@ websocketClientSocketContextUpgradeFactory
 A linked deployment uses the same upgrade name but resolves it through the selector's linked-factory cache instead of opening the shared object later. For an application that uses the installed WebSocket upgrade components, the build-time shape is to link the HTTP component and the matching WebSocket upgrade component into the executable or into an application-loaded library:
 
 ```cmake
-target_link_libraries(my_ws_server PRIVATE
-    snodec::http-server-express-legacy-in
-    snodec::websocket-server
+target_link_libraries(
+    my_ws_server PRIVATE snodec::http-server-express-legacy-in
+                         snodec::websocket-server
 )
 
-target_link_libraries(my_ws_client PRIVATE
-    snodec::http-client
-    snodec::net-in-stream-legacy
-    snodec::websocket-client
+target_link_libraries(
+    my_ws_client PRIVATE snodec::http-client snodec::net-in-stream-legacy
+                         snodec::websocket-client
 )
 ```
 

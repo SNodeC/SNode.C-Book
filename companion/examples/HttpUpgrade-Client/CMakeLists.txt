@@ -29,7 +29,8 @@ install(
 
 add_custom_target(
     deploy-http-upgrade-client
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component HttpUpgradeClient
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component
+            HttpUpgradeClient
     DEPENDS http-upgrade-client
     COMMENT "Installing http-upgrade-client"
     VERBATIM

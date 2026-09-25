@@ -3,8 +3,10 @@
 #include <string>
 
 EchoSocketContext::EchoSocketContext(
-    core::socket::stream::SocketConnection *socketConnection, Role role)
-    : core::socket::stream::SocketContext(socketConnection), role(role) {}
+    core::socket::stream::SocketConnection* socketConnection, Role role)
+    : core::socket::stream::SocketContext(socketConnection)
+    , role(role) {
+}
 
 void EchoSocketContext::onConnected() {
     log().info() << "Echo context attached";
@@ -16,8 +18,8 @@ void EchoSocketContext::onConnected() {
 
 void EchoSocketContext::onDisconnected() {
     log().info("Echo context detached: {}",
-               getDetachReason() == DetachReason::ContextSwitch
-                   ? "context switch" : "connection close");
+               getDetachReason() == DetachReason::ContextSwitch ? "context switch"
+                                                                : "connection close");
 }
 
 bool EchoSocketContext::onSignal([[maybe_unused]] int signum) {

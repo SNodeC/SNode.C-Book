@@ -1,27 +1,32 @@
 #include "LineCommandServerContext.h"
 
+#include <Log.h>
 #include <core/socket/SocketAddress.h>
 #include <core/socket/stream/SocketConnection.h>
-#include <Log.h>
-
 #include <string>
 
-LineCommandServerContext::LineCommandServerContext(core::socket::stream::SocketConnection* socketConnection)
+LineCommandServerContext::LineCommandServerContext(
+    core::socket::stream::SocketConnection* socketConnection)
     : core::socket::stream::SocketContext(socketConnection) {
 }
 
 void LineCommandServerContext::onConnected() {
-    snode::log::application().trace() << "Line command server connected to " << getSocketConnection()->getRemoteAddress().toString();
+    snode::log::application().trace()
+        << "Line command server connected to "
+        << getSocketConnection()->getRemoteAddress().toString();
     sendToPeer("READY\n");
 }
 
 void LineCommandServerContext::onDisconnected() {
-    snode::log::application().trace() << "Line command server disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+    snode::log::application().trace()
+        << "Line command server disconnected from "
+        << getSocketConnection()->getRemoteAddress().toString();
     receiveBuffer.clear();
 }
 
 bool LineCommandServerContext::onSignal(int signum) {
-    snode::log::application().trace() << "Line command server closing due to signal " << signum;
+    snode::log::application().trace()
+        << "Line command server closing due to signal " << signum;
     close();
 
     return true;
@@ -50,7 +55,8 @@ std::size_t LineCommandServerContext::onReceivedFromPeer() {
         }
 
         if (receiveBuffer.length() > maxLineLength) {
-            snode::log::application().warn() << "Line command server closing after overlong pending line";
+            snode::log::application().warn()
+                << "Line command server closing after overlong pending line";
             sendToPeer("ERR line too long\n");
             receiveBuffer.clear();
             close();
@@ -62,7 +68,8 @@ std::size_t LineCommandServerContext::onReceivedFromPeer() {
 
 bool LineCommandServerContext::processLine(const std::string& line) {
     if (!line.empty()) {
-        snode::log::application().trace() << "Line command server received '" << line << "'";
+        snode::log::application().trace()
+            << "Line command server received '" << line << "'";
 
         if (line == "PING") {
             sendToPeer("PONG\n");

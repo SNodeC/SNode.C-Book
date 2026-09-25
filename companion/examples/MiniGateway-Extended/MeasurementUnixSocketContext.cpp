@@ -1,5 +1,6 @@
 #include "MeasurementUnixSocketContext.h"
 
+#include <Log.h>
 #include <algorithm>
 #include <cctype>
 #include <chrono>
@@ -7,7 +8,6 @@
 #include <core/socket/SocketAddress.h>
 #include <core/socket/stream/SocketConnection.h>
 #include <exception>
-#include <Log.h>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -17,7 +17,8 @@ namespace minigateway {
     namespace {
 
         std::string trim(std::string value) {
-            value.erase(value.begin(), std::find_if(value.begin(), value.end(), [](unsigned char ch) {
+            value.erase(value.begin(),
+                        std::find_if(value.begin(), value.end(), [](unsigned char ch) {
                             return !std::isspace(ch);
                         }));
             value.erase(std::find_if(value.rbegin(),
@@ -52,7 +53,8 @@ namespace minigateway {
             std::size_t parsedLength = 0;
             const double parsedValue = std::stod(value, &parsedLength);
             if (parsedLength != value.length() || !std::isfinite(parsedValue)) {
-                throw std::invalid_argument("invalid " + fieldName + " value '" + value + "'");
+                throw std::invalid_argument("invalid " + fieldName + " value '" + value +
+                                            "'");
             }
 
             return parsedValue;
@@ -71,7 +73,8 @@ namespace minigateway {
         Measurement parseMeasurementLine(const std::string& line) {
             const std::vector<std::string> values = splitCsvLine(line);
             if (values.size() != 3 && values.size() != 4) {
-                throw std::invalid_argument("expected temperature,humidity,voltage[,sequence]");
+                throw std::invalid_argument(
+                    "expected temperature,humidity,voltage[,sequence]");
             }
 
             Measurement measurement;
@@ -86,22 +89,28 @@ namespace minigateway {
 
     } // namespace
 
-    MeasurementUnixSocketContext::MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection,
-                                                               MeasurementModel& measurementModel)
+    MeasurementUnixSocketContext::MeasurementUnixSocketContext(
+        core::socket::stream::SocketConnection* socketConnection,
+        MeasurementModel& measurementModel)
         : core::socket::stream::SocketContext(socketConnection)
         , measurementModel(measurementModel) {
     }
 
     void MeasurementUnixSocketContext::onConnected() {
-        snode::log::application().trace() << "Measurement socket connected from " << getSocketConnection()->getRemoteAddress().toString();
+        snode::log::application().trace()
+            << "Measurement socket connected from "
+            << getSocketConnection()->getRemoteAddress().toString();
     }
 
     void MeasurementUnixSocketContext::onDisconnected() {
-        snode::log::application().trace() << "Measurement socket disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+        snode::log::application().trace()
+            << "Measurement socket disconnected from "
+            << getSocketConnection()->getRemoteAddress().toString();
     }
 
     bool MeasurementUnixSocketContext::onSignal(int signum) {
-        snode::log::application().trace() << "Measurement socket disconnected due to signal " << signum;
+        snode::log::application().trace()
+            << "Measurement socket disconnected due to signal " << signum;
 
         return true;
     }
@@ -126,7 +135,8 @@ namespace minigateway {
             }
 
             if (receiveBuffer.length() > 4096) {
-                snode::log::application().warn() << "Measurement socket line exceeds 4096 bytes; closing connection";
+                snode::log::application().warn()
+                    << "Measurement socket line exceeds 4096 bytes; closing connection";
                 close();
             }
         }
@@ -139,7 +149,8 @@ namespace minigateway {
             try {
                 measurementModel.accept(parseMeasurementLine(line));
             } catch (const std::exception& ex) {
-                snode::log::application().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+                snode::log::application().warn() << "Ignoring invalid measurement line '"
+                                                 << line << "': " << ex.what();
             }
         }
     }

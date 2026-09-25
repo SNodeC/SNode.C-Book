@@ -264,7 +264,6 @@ target_link_libraries(
             snodec::mqtt-client nlohmann_json::nlohmann_json
 )
 
-
 install(
     TARGETS minigateway
     COMPONENT MiniGateway
@@ -273,7 +272,8 @@ install(
 
 add_custom_target(
     deploy-minigateway
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGateway
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component
+            MiniGateway
     DEPENDS minigateway
     COMMENT "Installing minigateway"
     VERBATIM
@@ -380,12 +380,10 @@ namespace minigateway {
     } // namespace
 
     nlohmann::json toJson(const Measurement& measurement) {
-        return {
-            {"temperature", measurement.temperature},
-            {"humidity", measurement.humidity},
-            {"voltage", measurement.voltage},
-            {"sequence", measurement.sequence}
-        };
+        return {{"temperature", measurement.temperature},
+                {"humidity", measurement.humidity},
+                {"voltage", measurement.voltage},
+                {"sequence", measurement.sequence}};
     }
 
     std::string toJsonPayload(const Measurement& measurement) {
@@ -585,34 +583,48 @@ Deployment can vary these declared MQTT settings without changing the model cont
 
 namespace minigateway {
 
-    ConfigMqtt::ConfigMqtt(utils::SubCommand *parent)
-        : utils::SubCommand(parent, this, "MiniGateway"),
-          clientIdOpt(
-              setConfigurable(addOption("--client-id", "MQTT Client-ID", "string",
-                                        "minigateway", CLI::TypeValidator<std::string>()),
-                              true)),
-          keepAliveOpt(setConfigurable(
-              addOption("--keep-alive", "MQTT keep-alive in seconds", "uint16_t", "30",
-                        CLI::TypeValidator<std::uint16_t>()),
-              true)),
-          measurementInputTopicOpt(setConfigurable(
-              addOption("--measurement-input-topic", "MQTT measurement input topic",
-                        "string", "minigateway/measurement/input",
-                        CLI::TypeValidator<std::string>()),
-              true)),
-          measurementOutputTopicOpt(setConfigurable(
-              addOption("--measurement-output-topic", "MQTT measurement output topic",
-                        "string", "minigateway/measurement/output",
-                        CLI::TypeValidator<std::string>()),
-              true)),
-          qoSOpt(setConfigurable(
-              addOption("--qos", "MQTT QoS for MiniGateway input and output topics",
-                        "uint8_t", "0", CLI::Range(0, 2)),
-              true)),
-          retainOpt(setConfigurable(
-              addFlag("--retain{true}", "Retain outgoing measurement publications",
-                      "bool", "false", CLI::IsMember({"true", "false"})),
-              true)) {}
+    ConfigMqtt::ConfigMqtt(utils::SubCommand* parent)
+        : utils::SubCommand(parent, this, "MiniGateway")
+        , clientIdOpt(setConfigurable(addOption("--client-id",
+                                                "MQTT Client-ID",
+                                                "string",
+                                                "minigateway",
+                                                CLI::TypeValidator<std::string>()),
+                                      true))
+        , keepAliveOpt(setConfigurable(addOption("--keep-alive",
+                                                 "MQTT keep-alive in seconds",
+                                                 "uint16_t",
+                                                 "30",
+                                                 CLI::TypeValidator<std::uint16_t>()),
+                                       true))
+        , measurementInputTopicOpt(
+              setConfigurable(addOption("--measurement-input-topic",
+                                        "MQTT measurement input topic",
+                                        "string",
+                                        "minigateway/measurement/input",
+                                        CLI::TypeValidator<std::string>()),
+                              true))
+        , measurementOutputTopicOpt(
+              setConfigurable(addOption("--measurement-output-topic",
+                                        "MQTT measurement output topic",
+                                        "string",
+                                        "minigateway/measurement/output",
+                                        CLI::TypeValidator<std::string>()),
+                              true))
+        , qoSOpt(setConfigurable(
+              addOption("--qos",
+                        "MQTT QoS for MiniGateway input and output topics",
+                        "uint8_t",
+                        "0",
+                        CLI::Range(0, 2)),
+              true))
+        , retainOpt(setConfigurable(addFlag("--retain{true}",
+                                            "Retain outgoing measurement publications",
+                                            "bool",
+                                            "false",
+                                            CLI::IsMember({"true", "false"})),
+                                    true)) {
+    }
 
     ConfigMqtt::~ConfigMqtt() = default;
 
@@ -668,9 +680,9 @@ One configuration section holds the options’ names, defaults and accessors. Re
 
 namespace minigateway {
 
-    void reportState(const std::string &instanceName,
-                     const core::socket::SocketAddress &socketAddress,
-                     const core::socket::State &state);
+    void reportState(const std::string& instanceName,
+                     const core::socket::SocketAddress& socketAddress,
+                     const core::socket::State& state);
 
 } // namespace minigateway
 
@@ -691,9 +703,9 @@ Both communication paths can report their state through this common declaration.
 
 namespace minigateway {
 
-    void reportState(const std::string &instanceName,
-                     const core::socket::SocketAddress &socketAddress,
-                     const core::socket::State &state) {
+    void reportState(const std::string& instanceName,
+                     const core::socket::SocketAddress& socketAddress,
+                     const core::socket::State& state) {
         switch (state) {
             case core::socket::State::OK:
                 snode::log::application().trace()
@@ -808,8 +820,8 @@ namespace minigateway {
             res->sendFragment("");
         }
 
-        void registerWebRoutes(const MiniGatewayWebApp &app,
-                               MeasurementModel &measurementModel) {
+        void registerWebRoutes(const MiniGatewayWebApp& app,
+                               MeasurementModel& measurementModel) {
             app.use(express::middleware::VerboseRequest());
 
             app.get("/health", [] APPLICATION(req, res) {
@@ -833,7 +845,7 @@ namespace minigateway {
                     }
 
                     const auto subscription =
-                        measurementModel.subscribe([res](const Measurement &measurement) {
+                        measurementModel.subscribe([res](const Measurement& measurement) {
                             sendMeasurement(res, measurement);
                         });
                     res->getSocketContext()->setOnDisconnected(
@@ -862,11 +874,12 @@ namespace minigateway {
 
         registerWebRoutes(app, measurementModel);
 
-        app.listen(8080, [instanceName = app.getConfig()->getInstanceName()](
-                             const MiniGatewayWebApp::SocketAddress &socketAddress,
-                             const core::socket::State &listenState) {
-            reportState(instanceName, socketAddress, listenState);
-        });
+        app.listen(8080,
+                   [instanceName = app.getConfig()->getInstanceName()](
+                       const MiniGatewayWebApp::SocketAddress& socketAddress,
+                       const core::socket::State& listenState) {
+                       reportState(instanceName, socketAddress, listenState);
+                   });
 
         return app;
     }
@@ -965,11 +978,11 @@ The MQTT object declares session callbacks and publication behavior while retain
 
 #include "MeasurementJsonCodec.h"
 
+#include <Log.h>
 #include <algorithm>
 #include <exception>
 #include <iot/mqtt/Topic.h>
 #include <list>
-#include <Log.h>
 #include <utility>
 #include <utils/system/signal.h>
 
@@ -1108,13 +1121,13 @@ namespace minigateway {
 
     class MiniGatewayMqttSocketContextFactory
         : public core::socket::stream::SocketContextFactory {
-      public:
+    public:
         explicit MiniGatewayMqttSocketContextFactory(
             std::reference_wrapper<MeasurementModel> measurementModel);
 
-      private:
-        core::socket::stream::SocketContext *
-        create(core::socket::stream::SocketConnection *socketConnection) final;
+    private:
+        core::socket::stream::SocketContext*
+        create(core::socket::stream::SocketConnection* socketConnection) final;
 
         MeasurementModel& measurementModel;
     };
@@ -1145,20 +1158,24 @@ namespace minigateway {
 
     MiniGatewayMqttSocketContextFactory::MiniGatewayMqttSocketContextFactory(
         std::reference_wrapper<MeasurementModel> measurementModel)
-        : measurementModel(measurementModel.get()) {}
+        : measurementModel(measurementModel.get()) {
+    }
 
-    core::socket::stream::SocketContext *MiniGatewayMqttSocketContextFactory::create(
-        core::socket::stream::SocketConnection *socketConnection) {
-        const ConfigMqtt *configMqtt =
+    core::socket::stream::SocketContext* MiniGatewayMqttSocketContextFactory::create(
+        core::socket::stream::SocketConnection* socketConnection) {
+        const ConfigMqtt* configMqtt =
             socketConnection->getConfigInstance()->getSubCommand<ConfigMqtt>();
 
         return new iot::mqtt::SocketContext(
             socketConnection,
-            new MiniGatewayMqtt(socketConnection->getConnectionName(), measurementModel,
-                                configMqtt->getClientId(), configMqtt->getKeepAlive(),
+            new MiniGatewayMqtt(socketConnection->getConnectionName(),
+                                measurementModel,
+                                configMqtt->getClientId(),
+                                configMqtt->getKeepAlive(),
                                 configMqtt->getMeasurementInputTopic(),
                                 configMqtt->getMeasurementOutputTopic(),
-                                configMqtt->getQoS(), configMqtt->getRetain()));
+                                configMqtt->getQoS(),
+                                configMqtt->getRetain()));
     }
 
 } // namespace minigateway
@@ -1227,7 +1244,7 @@ namespace minigateway {
     namespace {
 
         void
-        createMqttConfig(net::in::stream::legacy::config::ConfigSocketClient &config) {
+        createMqttConfig(net::in::stream::legacy::config::ConfigSocketClient& config) {
             config.Instance::newSubCommand<ConfigMqtt>();
         }
 
@@ -1249,8 +1266,8 @@ namespace minigateway {
             MiniGatewayMqtt::publishMeasurementToConnected(measurement);
         });
 
-        socketClient.connect([](const MiniGatewayMqttClient::SocketAddress &socketAddress,
-                                const core::socket::State &state) {
+        socketClient.connect([](const MiniGatewayMqttClient::SocketAddress& socketAddress,
+                                const core::socket::State& state) {
             reportState("mqtt-uplink", socketAddress, state);
         });
 
@@ -1289,8 +1306,7 @@ int main(int argc, char* argv[]) {
 
     minigateway::MeasurementModel measurementModel;
 
-    const auto webRole =
-        minigateway::startWebRole(measurementModel);
+    const auto webRole = minigateway::startWebRole(measurementModel);
     const auto mqttIntegrationRole =
         minigateway::startMqttIntegrationRole(measurementModel);
 

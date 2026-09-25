@@ -184,10 +184,9 @@ A linked deployment uses the same subprotocol name but resolves it from the sele
 add_library(my-echo-server STATIC Echo.cpp EchoFactory.cpp)
 target_link_libraries(my-echo-server PUBLIC snodec::websocket-server)
 
-target_link_libraries(my_ws_server PRIVATE
-    snodec::http-server-express-legacy-in
-    snodec::websocket-server
-    my-echo-server
+target_link_libraries(
+    my_ws_server PRIVATE snodec::http-server-express-legacy-in
+                         snodec::websocket-server my-echo-server
 )
 ```
 
@@ -197,11 +196,9 @@ The client side mirrors the server side:
 add_library(my-echo-client STATIC Echo.cpp EchoFactory.cpp)
 target_link_libraries(my-echo-client PUBLIC snodec::websocket-client)
 
-target_link_libraries(my_ws_client PRIVATE
-    snodec::http-client
-    snodec::net-in-stream-legacy
-    snodec::websocket-client
-    my-echo-client
+target_link_libraries(
+    my_ws_client PRIVATE snodec::http-client snodec::net-in-stream-legacy
+                         snodec::websocket-client my-echo-client
 )
 ```
 
@@ -214,13 +211,12 @@ A WebSocket application is usually not written as a raw byte loop. The applicati
 A minimal echo pair needs one subprotocol on each side. The server-side object collects one message and sends its bytes back with the same message type. The teaching client sends text, while an independent client may also send binary data:
 
 ```cpp
-#include <web/websocket/server/SubProtocol.h>
-#include <web/websocket/SubProtocolContext.h>
 #include <Log.h>
-
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <web/websocket/SubProtocolContext.h>
+#include <web/websocket/server/SubProtocol.h>
 
 class EchoServer final : public web::websocket::server::SubProtocol {
 public:
@@ -245,8 +241,8 @@ private:
     void onMessageEnd() override {
         snode::log::application().trace()
             << "WebSocket echo server received bytes: " << currentMessage.size();
-        subProtocolContext->sendMessage(currentMessageType, currentMessage.data(),
-                                        currentMessage.size());
+        subProtocolContext->sendMessage(
+            currentMessageType, currentMessage.data(), currentMessage.size());
     }
 
     void onMessageError(uint16_t errnum) override {
@@ -271,12 +267,11 @@ private:
 The matching client-side object sends one message after the upgrade is complete, logs the echoed response, and then closes the WebSocket connection:
 
 ```cpp
-#include <web/websocket/client/SubProtocol.h>
 #include <Log.h>
-
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <web/websocket/client/SubProtocol.h>
 
 class EchoClient final : public web::websocket::client::SubProtocol {
 public:

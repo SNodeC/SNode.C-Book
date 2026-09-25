@@ -16,8 +16,8 @@ find_package(
 add_executable(http-upgrade-server main.cpp)
 
 target_link_libraries(
-    http-upgrade-server
-    PRIVATE snodec::http-server-express-legacy-in snodec::websocket-server
+    http-upgrade-server PRIVATE snodec::http-server-express-legacy-in
+                                snodec::websocket-server
 )
 
 install(
@@ -28,7 +28,8 @@ install(
 
 add_custom_target(
     deploy-http-upgrade-server
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component HttpUpgradeServer
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component
+            HttpUpgradeServer
     DEPENDS http-upgrade-server
     COMMENT "Installing http-upgrade-server"
     VERBATIM

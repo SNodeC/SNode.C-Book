@@ -49,5 +49,6 @@ cmake -S . -B "$BOOK_EXAMPLES_BUILD_DIR" -G "$GENERATOR" \
   -DSNODEC_BOOK_BUILD_PDFS=OFF \
   -DSNODEC_BOOK_BUILD_COMPANION_EXAMPLES=ON \
   -DCMAKE_PREFIX_PATH="$SNODEC_PREFIX"
+cmake --build "$BOOK_EXAMPLES_BUILD_DIR" --target format-check
 cmake --build "$BOOK_EXAMPLES_BUILD_DIR" --parallel "$PARALLEL"
 echo "Companion example build passed."

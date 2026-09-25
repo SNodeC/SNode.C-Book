@@ -118,7 +118,6 @@ The context and the two factories come first.
 
 #include <core/socket/stream/SocketContext.h>
 #include <core/socket/stream/SocketContextFactory.h>
-
 #include <cstddef>
 
 namespace core::socket::stream {
@@ -179,8 +178,10 @@ The `onSignal(...)` override is included because it belongs to the context inter
 #include <string>
 
 EchoSocketContext::EchoSocketContext(
-    core::socket::stream::SocketConnection *socketConnection, Role role)
-    : core::socket::stream::SocketContext(socketConnection), role(role) {}
+    core::socket::stream::SocketConnection* socketConnection, Role role)
+    : core::socket::stream::SocketContext(socketConnection)
+    , role(role) {
+}
 
 void EchoSocketContext::onConnected() {
     log().info() << "Echo context attached";
@@ -192,8 +193,8 @@ void EchoSocketContext::onConnected() {
 
 void EchoSocketContext::onDisconnected() {
     log().info("Echo context detached: {}",
-               getDetachReason() == DetachReason::ContextSwitch
-                   ? "context switch" : "connection close");
+               getDetachReason() == DetachReason::ContextSwitch ? "context switch"
+                                                                : "connection close");
 }
 
 bool EchoSocketContext::onSignal([[maybe_unused]] int signum) {
@@ -260,9 +261,9 @@ The server entry point is small because the protocol behavior already lives in t
 ```cpp
 #include "EchoSocketContext.h"
 
+#include <Log.h>
 #include <core/SNodeC.h>
 #include <core/socket/State.h>
-#include <Log.h>
 #include <net/in/stream/legacy/SocketServer.h>
 
 int main(int argc, char* argv[]) {
@@ -273,30 +274,31 @@ int main(int argc, char* argv[]) {
 
     EchoServer server("echoserver");
 
-    server.listen(8080, 5,
+    server.listen(8080,
+                  5,
                   [instanceName = server.getConfig()->getInstanceName()](
-                      const EchoServer::SocketAddress &socketAddress,
-                      const core::socket::State &state) {
+                      const EchoServer::SocketAddress& socketAddress,
+                      const core::socket::State& state) {
                       switch (state) {
-                      case core::socket::State::OK:
-                          snode::log::application("echo").info()
-                              << instanceName << ": listening on '"
-                              << socketAddress.toString() << "'";
-                          break;
-                      case core::socket::State::DISABLED:
-                          snode::log::application("echo").info()
-                              << instanceName << ": disabled";
-                          break;
-                      case core::socket::State::ERROR:
-                          snode::log::application("echo").error()
-                              << instanceName << ": " << socketAddress.toString() << ": "
-                              << state.what();
-                          break;
-                      case core::socket::State::FATAL:
-                          snode::log::application("echo").critical()
-                              << instanceName << ": " << socketAddress.toString() << ": "
-                              << state.what();
-                          break;
+                          case core::socket::State::OK:
+                              snode::log::application("echo").info()
+                                  << instanceName << ": listening on '"
+                                  << socketAddress.toString() << "'";
+                              break;
+                          case core::socket::State::DISABLED:
+                              snode::log::application("echo").info()
+                                  << instanceName << ": disabled";
+                              break;
+                          case core::socket::State::ERROR:
+                              snode::log::application("echo").error()
+                                  << instanceName << ": " << socketAddress.toString()
+                                  << ": " << state.what();
+                              break;
+                          case core::socket::State::FATAL:
+                              snode::log::application("echo").critical()
+                                  << instanceName << ": " << socketAddress.toString()
+                                  << ": " << state.what();
+                              break;
                       }
                   });
 
@@ -329,9 +331,9 @@ The current `listen(...)` call also returns a flow handle. The echo server delib
 ```cpp
 #include "EchoSocketContext.h"
 
+#include <Log.h>
 #include <core/SNodeC.h>
 #include <core/socket/State.h>
-#include <Log.h>
 #include <net/in/stream/legacy/SocketClient.h>
 
 int main(int argc, char* argv[]) {
@@ -342,30 +344,31 @@ int main(int argc, char* argv[]) {
 
     EchoClient client("echoclient");
 
-    client.connect("localhost", 8080,
+    client.connect("localhost",
+                   8080,
                    [instanceName = client.getConfig()->getInstanceName()](
-                       const EchoClient::SocketAddress &socketAddress,
-                       const core::socket::State &state) {
+                       const EchoClient::SocketAddress& socketAddress,
+                       const core::socket::State& state) {
                        switch (state) {
-                       case core::socket::State::OK:
-                           snode::log::application("echo").info()
-                               << instanceName << ": connected to '"
-                               << socketAddress.toString() << "'";
-                           break;
-                       case core::socket::State::DISABLED:
-                           snode::log::application("echo").info()
-                               << instanceName << ": disabled";
-                           break;
-                       case core::socket::State::ERROR:
-                           snode::log::application("echo").error()
-                               << instanceName << ": " << socketAddress.toString() << ": "
-                               << state.what();
-                           break;
-                       case core::socket::State::FATAL:
-                           snode::log::application("echo").critical()
-                               << instanceName << ": " << socketAddress.toString() << ": "
-                               << state.what();
-                           break;
+                           case core::socket::State::OK:
+                               snode::log::application("echo").info()
+                                   << instanceName << ": connected to '"
+                                   << socketAddress.toString() << "'";
+                               break;
+                           case core::socket::State::DISABLED:
+                               snode::log::application("echo").info()
+                                   << instanceName << ": disabled";
+                               break;
+                           case core::socket::State::ERROR:
+                               snode::log::application("echo").error()
+                                   << instanceName << ": " << socketAddress.toString()
+                                   << ": " << state.what();
+                               break;
+                           case core::socket::State::FATAL:
+                               snode::log::application("echo").critical()
+                                   << instanceName << ": " << socketAddress.toString()
+                                   << ": " << state.what();
+                               break;
                        }
                    });
 
@@ -409,41 +412,24 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(snodec 2.0.0 REQUIRED COMPONENTS net-in-stream-legacy)
 
-add_library(echosocketcontext STATIC
-    EchoSocketContext.cpp
-    EchoSocketContext.h
-)
+add_library(echosocketcontext STATIC EchoSocketContext.cpp EchoSocketContext.h)
 
-target_include_directories(echosocketcontext
-    PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}
-)
+target_include_directories(echosocketcontext PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(echosocketcontext
-    PUBLIC
-        snodec::net-in-stream-legacy
-)
+target_link_libraries(echosocketcontext PUBLIC snodec::net-in-stream-legacy)
 
-add_executable(echoserver
-    echoserver.cpp
-)
+add_executable(echoserver echoserver.cpp)
 
-target_link_libraries(echoserver
-    PRIVATE
-        echosocketcontext
-)
+target_link_libraries(echoserver PRIVATE echosocketcontext)
 
-add_executable(echoclient
-    echoclient.cpp
-)
+add_executable(echoclient echoclient.cpp)
 
-target_link_libraries(echoclient
-    PRIVATE
-        echosocketcontext
-)
+target_link_libraries(echoclient PRIVATE echosocketcontext)
 
 include(GNUInstallDirs)
-install(TARGETS echoserver echoclient RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS echoserver echoclient
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 ```
 
 This build file imports the installed SNode.C package and requests the component introduced in Chapter 2:

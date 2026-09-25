@@ -1,11 +1,10 @@
 #ifndef SNODEC_BOOK_EXAMPLES_WEBSOCKET_ECHO_CLIENTSUBPROTOCOL_ECHOCLIENT_H
 #define SNODEC_BOOK_EXAMPLES_WEBSOCKET_ECHO_CLIENTSUBPROTOCOL_ECHOCLIENT_H
 
-#include <web/websocket/client/SubProtocol.h>
-
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <web/websocket/client/SubProtocol.h>
 
 class EchoClient final : public web::websocket::client::SubProtocol {
 public:

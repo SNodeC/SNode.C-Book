@@ -30,7 +30,8 @@ install(
 
 add_custom_target(
     deploy-mqtt-client-role
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MQTTClientRole
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component
+            MQTTClientRole
     DEPENDS mqtt-client-role
     COMMENT "Installing mqtt-client-role"
     VERBATIM

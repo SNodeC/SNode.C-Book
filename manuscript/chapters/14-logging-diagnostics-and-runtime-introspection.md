@@ -239,7 +239,6 @@ The companion `SemanticLogging` uses the standalone settings path without an eve
 <!-- snodec-source: companion/examples/SemanticLogging/main.cpp -->
 ```cpp
 #include <Log.h>
-
 #include <system_error>
 
 int main() {

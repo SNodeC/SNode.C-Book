@@ -142,8 +142,10 @@ The protocol behavior lives in one context type:
 
 ```cpp
 EchoSocketContext::EchoSocketContext(
-    core::socket::stream::SocketConnection *socketConnection, Role role)
-    : core::socket::stream::SocketContext(socketConnection), role(role) {}
+    core::socket::stream::SocketConnection* socketConnection, Role role)
+    : core::socket::stream::SocketContext(socketConnection)
+    , role(role) {
+}
 ```
 
 The server/client selector is stored in the context.
@@ -151,36 +153,36 @@ The server/client selector is stored in the context.
 When the connection becomes ready, the client side starts the exchange:
 
 ```cpp
-if (role == Role::CLIENT) {
-    sendToPeer("Hello peer! Nice to see you!!!");
-}
+    if (role == Role::CLIENT) {
+        sendToPeer("Hello peer! Nice to see you!!!");
+    }
 ```
 
 When data arrives, the context reads a chunk, sends the same bytes back, and reports the processed amount:
 
 ```cpp
-char chunk[4096];
+    char chunk[4096];
 
-const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
+    const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
 
-if (chunkLen > 0) {
-    log().debug() << "Data to reflect: " << std::string(chunk, chunkLen);
-    sendToPeer(chunk, chunkLen);
-}
+    if (chunkLen > 0) {
+        log().debug() << "Data to reflect: " << std::string(chunk, chunkLen);
+        sendToPeer(chunk, chunkLen);
+    }
 
-return chunkLen;
+    return chunkLen;
 ```
 
 The factories then create side-specific contexts:
 
 ```cpp
-return new EchoSocketContext(socketConnection, EchoSocketContext::Role::SERVER);
+    return new EchoSocketContext(socketConnection, EchoSocketContext::Role::SERVER);
 ```
 
 and:
 
 ```cpp
-return new EchoSocketContext(socketConnection, EchoSocketContext::Role::CLIENT);
+    return new EchoSocketContext(socketConnection, EchoSocketContext::Role::CLIENT);
 ```
 
 \index{protocol reuse}

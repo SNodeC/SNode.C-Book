@@ -82,19 +82,18 @@ The following complete companion example uses an application-owned measurement s
 
 <!-- snodec-source: companion/examples/SSE-Server/main.cpp -->
 ```cpp
-#include <core/socket/State.h>
-#include <express/legacy/in/WebApp.h>
-#include <nlohmann/json.hpp>
 #include <Log.h>
-#include <web/http/http_utils.h>
-#include <web/http/server/SocketContext.h>
-
+#include <core/socket/State.h>
 #include <cstdint>
+#include <express/legacy/in/WebApp.h>
 #include <functional>
 #include <list>
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <utility>
+#include <web/http/http_utils.h>
+#include <web/http/server/SocketContext.h>
 
 using WebApp = express::legacy::in::WebApp;
 using Request = WebApp::Request;
@@ -162,40 +161,44 @@ int main(int argc, char* argv[]) {
     MeasurementPublisher measurements;
     const WebApp app("legacy");
 
-    app.get("/events", [&measurements](const std::shared_ptr<Request>& req,
-                                        const std::shared_ptr<Response>& res) {
-        if (acceptsEventStream(req)) {
-            res->set("Content-Type", "text/event-stream")
-               .set("Cache-Control", "no-cache")
-               .set("Connection", "keep-alive")
-               .sendHeader();
+    app.get("/events",
+            [&measurements](const std::shared_ptr<Request>& req,
+                            const std::shared_ptr<Response>& res) {
+                if (acceptsEventStream(req)) {
+                    res->set("Content-Type", "text/event-stream")
+                        .set("Cache-Control", "no-cache")
+                        .set("Connection", "keep-alive")
+                        .sendHeader();
 
-            if (const Measurement current = measurements.current();
-                current.sequence > 0) {
-                sendMeasurement(res, current);
-            }
+                    if (const Measurement current = measurements.current();
+                        current.sequence > 0) {
+                        sendMeasurement(res, current);
+                    }
 
-            const auto subscription =
-                measurements.subscribe([res](const Measurement &measurement) {
-                    sendMeasurement(res, measurement);
-                });
-            res->getSocketContext()->setOnDisconnected([&measurements, subscription] {
-                measurements.unsubscribe(subscription);
+                    const auto subscription =
+                        measurements.subscribe([res](const Measurement& measurement) {
+                            sendMeasurement(res, measurement);
+                        });
+                    res->getSocketContext()->setOnDisconnected(
+                        [&measurements, subscription] {
+                            measurements.unsubscribe(subscription);
+                        });
+                } else {
+                    res->status(406).send("SSE requires Accept: text/event-stream");
+                }
             });
-        } else {
-            res->status(406).send("SSE requires Accept: text/event-stream");
-        }
-    });
 
-    app.post("/simulate", [&measurements](const std::shared_ptr<Request>&,
-                                          const std::shared_ptr<Response>& res) {
-        const Measurement measurement = measurements.publish("temperature", 24.0);
+    app.post("/simulate",
+             [&measurements](const std::shared_ptr<Request>&,
+                             const std::shared_ptr<Response>& res) {
+                 const Measurement measurement =
+                     measurements.publish("temperature", 24.0);
 
-        res->set("Content-Type", "application/json")
-           .send(measurement.toJson().dump());
-    });
+                 res->set("Content-Type", "application/json")
+                     .send(measurement.toJson().dump());
+             });
 
-    app.listen([](const SocketAddress &socketAddress, const core::socket::State &) {
+    app.listen([](const SocketAddress& socketAddress, const core::socket::State&) {
         snode::log::application().trace()
             << "SSE server listening on " << socketAddress.toString();
     });
@@ -220,10 +223,10 @@ The corresponding client side enters through the concrete EventSource wrapper fo
 
 <!-- snodec-source: companion/examples/SSE-EventSource-Client/main.cpp -->
 ```cpp
+#include <Log.h>
 #include <core/SNodeC.h>
 #include <net/in/SocketAddress.h>
 #include <web/http/legacy/in/EventSource.h>
-#include <Log.h>
 
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
@@ -237,7 +240,7 @@ int main(int argc, char* argv[]) {
     });
 
     events->onMessage(
-        [](const web::http::client::tools::EventSource::MessageEvent &event) {
+        [](const web::http::client::tools::EventSource::MessageEvent& event) {
             snode::log::application().trace() << "message: " << event.data;
         });
 

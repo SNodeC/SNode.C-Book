@@ -1,11 +1,10 @@
 #ifndef SNODEC_BOOK_EXAMPLES_WEBSOCKET_ECHO_SERVERSUBPROTOCOL_ECHOSERVER_H
 #define SNODEC_BOOK_EXAMPLES_WEBSOCKET_ECHO_SERVERSUBPROTOCOL_ECHOSERVER_H
 
-#include <web/websocket/server/SubProtocol.h>
-
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <web/websocket/server/SubProtocol.h>
 
 class EchoServer final : public web::websocket::server::SubProtocol {
 public:

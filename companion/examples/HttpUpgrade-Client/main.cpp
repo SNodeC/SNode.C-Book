@@ -1,11 +1,10 @@
+#include <Log.h>
 #include <core/SNodeC.h>
 #include <core/socket/State.h>
-#include <web/http/legacy/in/Client.h>
-#include <web/websocket/client/SocketContextUpgradeFactory.h>
-#include <Log.h>
-
 #include <memory>
 #include <string>
+#include <web/http/legacy/in/Client.h>
+#include <web/websocket/client/SocketContextUpgradeFactory.h>
 
 using Client = web::http::legacy::in::Client;
 using MasterRequest = Client::MasterRequest;
@@ -27,27 +26,28 @@ int main(int argc, char* argv[]) {
                 "/ws",
                 "websocket",
                 [](bool success) {
-                    snode::log::application().trace() << "upgrade request initiation: "
-                            << (success ? "accepted" : "rejected");
+                    snode::log::application().trace()
+                        << "upgrade request initiation: "
+                        << (success ? "accepted" : "rejected");
                 },
                 [](const std::shared_ptr<Request>&,
                    const std::shared_ptr<Response>&,
                    bool success) {
-                    snode::log::application().trace() << "upgrade response: "
-                            << (success ? "accepted" : "rejected");
+                    snode::log::application().trace()
+                        << "upgrade response: " << (success ? "accepted" : "rejected");
                 },
-                [](const std::shared_ptr<Request>&,
-                   const std::string& message) {
-                    snode::log::application().error() << "upgrade response parse error: " << message;
+                [](const std::shared_ptr<Request>&, const std::string& message) {
+                    snode::log::application().error()
+                        << "upgrade response parse error: " << message;
                 });
         },
         [](const std::shared_ptr<MasterRequest>&) {
             snode::log::application().trace() << "HTTP request completed or disconnected";
         });
 
-    client.connect([](const SocketAddress& socketAddress,
-                      const core::socket::State&) {
-        snode::log::application().trace() << "HTTP client connection status for " << socketAddress.toString();
+    client.connect([](const SocketAddress& socketAddress, const core::socket::State&) {
+        snode::log::application().trace()
+            << "HTTP client connection status for " << socketAddress.toString();
     });
 
     return core::SNodeC::start();

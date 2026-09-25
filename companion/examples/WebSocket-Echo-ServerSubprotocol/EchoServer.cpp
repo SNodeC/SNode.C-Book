@@ -3,7 +3,8 @@
 #include <Log.h>
 #include <web/websocket/SubProtocolContext.h>
 
-EchoServer::EchoServer(web::websocket::SubProtocolContext* context, const std::string& name)
+EchoServer::EchoServer(web::websocket::SubProtocolContext* context,
+                       const std::string& name)
     : web::websocket::server::SubProtocol(context, name, 90, 3) {
 }
 
@@ -21,8 +22,10 @@ void EchoServer::onMessageData(const char* chunk, std::size_t chunkLen) {
 }
 
 void EchoServer::onMessageEnd() {
-    snode::log::application().trace() << "WebSocket echo server received bytes: " << currentMessage.size();
-    subProtocolContext->sendMessage(currentMessageType, currentMessage.data(), currentMessage.size());
+    snode::log::application().trace()
+        << "WebSocket echo server received bytes: " << currentMessage.size();
+    subProtocolContext->sendMessage(
+        currentMessageType, currentMessage.data(), currentMessage.size());
 }
 
 void EchoServer::onMessageError(uint16_t errnum) {

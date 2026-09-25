@@ -2,7 +2,6 @@
 #define SNODEC_BOOK_EXAMPLES_LINEPROTOCOL_CLIENT_LINECOMMANDCLIENTCONTEXT_H
 
 #include <core/socket/stream/SocketContext.h>
-
 #include <cstddef>
 #include <string>
 
@@ -12,7 +11,8 @@ namespace core::socket::stream {
 
 class LineCommandClientContext final : public core::socket::stream::SocketContext {
 public:
-    explicit LineCommandClientContext(core::socket::stream::SocketConnection* socketConnection);
+    explicit LineCommandClientContext(
+        core::socket::stream::SocketConnection* socketConnection);
 
 private:
     void onConnected() override;

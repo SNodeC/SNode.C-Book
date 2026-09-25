@@ -6,9 +6,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include(GNUInstallDirs)
 find_package(nlohmann_json 3.7.0 REQUIRED)
 find_package(
-    snodec 2.0.0 REQUIRED COMPONENTS http-server-express-legacy-in
-                                     net-in-stream-legacy mqtt-client
-                                     net-un-stream-legacy
+    snodec 2.0.0 REQUIRED
+    COMPONENTS http-server-express-legacy-in net-in-stream-legacy mqtt-client
+               net-un-stream-legacy
 )
 add_executable(
     minigateway-extended
@@ -52,8 +52,8 @@ install(
 
 add_custom_target(
     deploy-minigateway-extended
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}"
-            --component MiniGatewayExtended
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component
+            MiniGatewayExtended
     DEPENDS minigateway-extended
     COMMENT "Installing minigateway-extended"
     VERBATIM

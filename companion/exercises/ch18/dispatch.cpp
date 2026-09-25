@@ -34,6 +34,7 @@ int main(int argc, char* argv[]) {
         res->set("X-Trace", trace).send(trace);
     });
     app.use("/api", router);
-    app.listen([](const auto&, const auto&) {});
+    app.listen([](const auto&, const auto&) {
+    });
     return express::WebApp::start();
 }

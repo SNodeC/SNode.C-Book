@@ -43,7 +43,6 @@ target_link_libraries(
             snodec::mqtt-client nlohmann_json::nlohmann_json
 )
 
-
 install(
     TARGETS minigateway
     COMPONENT MiniGateway
@@ -52,7 +51,8 @@ install(
 
 add_custom_target(
     deploy-minigateway
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGateway
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component
+            MiniGateway
     DEPENDS minigateway
     COMMENT "Installing minigateway"
     VERBATIM

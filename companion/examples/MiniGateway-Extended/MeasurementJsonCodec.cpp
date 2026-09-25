@@ -11,7 +11,8 @@ namespace minigateway {
         double readFiniteDouble(const nlohmann::json& json, const char* fieldName) {
             const double value = json.at(fieldName).get<double>();
             if (!std::isfinite(value)) {
-                throw std::invalid_argument(std::string("invalid ") + fieldName + " value");
+                throw std::invalid_argument(std::string("invalid ") + fieldName +
+                                            " value");
             }
 
             return value;
@@ -20,12 +21,10 @@ namespace minigateway {
     } // namespace
 
     nlohmann::json toJson(const Measurement& measurement) {
-        return {
-            {"temperature", measurement.temperature},
-            {"humidity", measurement.humidity},
-            {"voltage", measurement.voltage},
-            {"sequence", measurement.sequence}
-        };
+        return {{"temperature", measurement.temperature},
+                {"humidity", measurement.humidity},
+                {"voltage", measurement.voltage},
+                {"sequence", measurement.sequence}};
     }
 
     std::string toJsonPayload(const Measurement& measurement) {

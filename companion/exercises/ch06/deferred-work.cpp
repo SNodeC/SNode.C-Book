@@ -1,6 +1,5 @@
 #include <core/EventReceiver.h>
 #include <core/SNodeC.h>
-
 #include <iostream>
 #include <vector>
 
@@ -32,5 +31,6 @@ int main(int argc, char* argv[]) {
         std::cerr << "Deferred dispatch or callback return order differs\n";
         return 1;
     }
-    std::cout << "PASS: empty trace before start; RUNNING dispatch gives 1,2,3; child sees first callback returned\n";
+    std::cout << "PASS: empty trace before start; RUNNING dispatch gives 1,2,3; child "
+                 "sees first callback returned\n";
 }

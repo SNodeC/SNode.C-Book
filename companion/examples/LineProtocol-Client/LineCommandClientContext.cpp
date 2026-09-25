@@ -1,10 +1,9 @@
 #include "LineCommandClientContext.h"
 
+#include <Log.h>
+#include <array>
 #include <core/socket/SocketAddress.h>
 #include <core/socket/stream/SocketConnection.h>
-#include <Log.h>
-
-#include <array>
 #include <string>
 #include <string_view>
 
@@ -30,21 +29,27 @@ namespace {
 
 } // namespace
 
-LineCommandClientContext::LineCommandClientContext(core::socket::stream::SocketConnection* socketConnection)
+LineCommandClientContext::LineCommandClientContext(
+    core::socket::stream::SocketConnection* socketConnection)
     : core::socket::stream::SocketContext(socketConnection) {
 }
 
 void LineCommandClientContext::onConnected() {
-    snode::log::application().trace() << "Line command client connected to " << getSocketConnection()->getRemoteAddress().toString();
+    snode::log::application().trace()
+        << "Line command client connected to "
+        << getSocketConnection()->getRemoteAddress().toString();
 }
 
 void LineCommandClientContext::onDisconnected() {
-    snode::log::application().trace() << "Line command client disconnected from " << getSocketConnection()->getRemoteAddress().toString();
+    snode::log::application().trace()
+        << "Line command client disconnected from "
+        << getSocketConnection()->getRemoteAddress().toString();
     receiveBuffer.clear();
 }
 
 bool LineCommandClientContext::onSignal(int signum) {
-    snode::log::application().trace() << "Line command client closing due to signal " << signum;
+    snode::log::application().trace()
+        << "Line command client closing due to signal " << signum;
     close();
 
     return true;
@@ -78,19 +83,22 @@ void LineCommandClientContext::processLine(const std::string& line) {
 
     if (line == "READY") {
         if (readyReceived) {
-            snode::log::application().warn() << "Line command client received duplicate READY greeting";
+            snode::log::application().warn()
+                << "Line command client received duplicate READY greeting";
             close();
         } else {
             readyReceived = true;
             sendNextCommand();
         }
     } else if (!readyReceived) {
-        snode::log::application().warn() << "Line command client received protocol data before READY";
+        snode::log::application().warn()
+            << "Line command client received protocol data before READY";
         close();
     } else if (line == "PONG" || line == "OK" || line == "ERR unknown command") {
         sendNextCommand();
     } else {
-        snode::log::application().warn() << "Line command client received unexpected response '" << line << "'";
+        snode::log::application().warn()
+            << "Line command client received unexpected response '" << line << "'";
         close();
     }
 }
@@ -98,11 +106,13 @@ void LineCommandClientContext::processLine(const std::string& line) {
 void LineCommandClientContext::sendNextCommand() {
     if (nextCommandIndex < commandSequence.size()) {
         const std::string_view command = commandSequence[nextCommandIndex++];
-        snode::log::application().trace() << "Line command client sending '" << printableCommand(command) << "'";
+        snode::log::application().trace()
+            << "Line command client sending '" << printableCommand(command) << "'";
         sendToPeer(command.data(), command.length());
 
         if (command == "QUIT\n") {
-            snode::log::application().trace() << "Line command client waiting for server-side close";
+            snode::log::application().trace()
+                << "Line command client waiting for server-side close";
         }
     }
 }

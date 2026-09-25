@@ -1,6 +1,6 @@
-#include <net/rc/SocketAddress.h>
-#include <net/l2/SocketAddress.h>
 #include <iostream>
+#include <net/l2/SocketAddress.h>
+#include <net/rc/SocketAddress.h>
 
 int main() {
     net::rc::SocketAddress rfcomm;
@@ -21,7 +21,8 @@ int main() {
         std::cerr << "Configured Bluetooth fields did not survive initialization\n";
         return 1;
     }
-    std::cout << "RFCOMM " << rfcomm.toString() << '\n'
-              << "L2CAP " << l2cap.toString() << '\n'
-              << "PASS: one device; channel 16 and PSM 4097 (0x1001); no radio operation\n";
+    std::cout
+        << "RFCOMM " << rfcomm.toString() << '\n'
+        << "L2CAP " << l2cap.toString() << '\n'
+        << "PASS: one device; channel 16 and PSM 4097 (0x1001); no radio operation\n";
 }

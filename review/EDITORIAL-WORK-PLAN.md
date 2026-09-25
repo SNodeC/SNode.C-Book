@@ -2697,3 +2697,25 @@ sample and 461 unique package entries. Final scope audit confirms only the 19
 approved files changed. The source-alignment exact-tag helper adds validation
 support, with no production application-code changes. The only outstanding
 check is the explicitly unmodified proposal-statistics assertion described above.
+
+### Follow-up 16 — author style, wording and current CI evidence
+
+Authority: `pedagogical-smoothing-2026-09-23/FOLLOWUP-16.md` (verbatim).
+The author reopens the manuscript for A (calibrated author formatting and shared
+format/check targets, sources and listings), B (specified local wording/cadence)
+and C (fresh local/hosted build and 66-lab evidence for both compilers). Keep
+Book-1.0 pins/manifest unchanged, author framework read-only, and all teaching
+statements and code behavior. Record identity of the supplied style/configuration
+files and modules before use; stop if any differ from Book-1.0. Commits A, B,
+then evidence. Record final gates and freeze the manuscript again afterwards.
+Style identity verification is the current entry gate.
+
+The author approved the Ch12 generator correction during FU16: remove leading
+spaces from both port-to-path replacement strings so formatting cannot prevent
+the generated Unix endpoint substitution. No generated C++ behavior, assertion
+or timeout changes. This is the sole exception to item A’s no-string-change rule.
+
+FU16 A gate: supplied styles/modules match Book-1.0. Calibrated fallback tools
+are clang-format 18.1.3 and cmakelang 0.6.13; framework differences recorded,
+not edited. Local format-check, 37 exact listings, 90-column width, and both
+66/66 lab runs pass. The package includes the new root styles and CMake modules.

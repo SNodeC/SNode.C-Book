@@ -1,7 +1,6 @@
+#include <Log.h>
 #include <core/SNodeC.h>
 #include <database/mariadb/MariaDBClient.h>
-#include <Log.h>
-
 #include <mysql.h>
 #include <string>
 
@@ -20,7 +19,7 @@ int main(int argc, char* argv[]) {
     };
 
     database::mariadb::MariaDBClient db(
-        details, [](const database::mariadb::MariaDBState &state) {
+        details, [](const database::mariadb::MariaDBState& state) {
             if (state.error != 0) {
                 snode::log::application().error() << "MariaDB state error " << state.error
                                                   << ": " << state.errorMessage;
@@ -39,12 +38,12 @@ int main(int argc, char* argv[]) {
                       snode::log::application().trace()
                           << "insert affected rows: " << rows;
                   },
-                  [](const std::string &error, unsigned int number) {
+                  [](const std::string& error, unsigned int number) {
                       snode::log::application().error()
                           << "affectedRows error " << number << ": " << error;
                   });
           },
-          [](const std::string &error, unsigned int number) {
+          [](const std::string& error, unsigned int number) {
               snode::log::application().error()
                   << "insert error " << number << ": " << error;
           })
@@ -58,7 +57,7 @@ int main(int argc, char* argv[]) {
                     snode::log::application().trace() << "measurement query complete";
                 }
             },
-            [](const std::string &error, unsigned int number) {
+            [](const std::string& error, unsigned int number) {
                 snode::log::application().error()
                     << "query error " << number << ": " << error;
             });

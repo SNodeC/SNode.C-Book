@@ -23,10 +23,11 @@ set(SNODEC_BOOK_EXAMPLE_DIRS
     MQTT-ClientRole
     MariaDB-Minimal
     MiniGateway
-    MiniGateway-Extended)
+    MiniGateway-Extended
+)
 
 foreach(EXAMPLE_DIR IN LISTS SNODEC_BOOK_EXAMPLE_DIRS)
-  add_subdirectory("${EXAMPLE_DIR}")
+    add_subdirectory("${EXAMPLE_DIR}")
 endforeach()
 
 set(SNODEC_BOOK_EXAMPLE_TARGETS
@@ -45,13 +46,15 @@ set(SNODEC_BOOK_EXAMPLE_TARGETS
     mqtt-client-role
     mariadb-minimal
     minigateway
-    minigateway-extended)
+    minigateway-extended
+)
 
 add_custom_target(all-examples DEPENDS ${SNODEC_BOOK_EXAMPLE_TARGETS})
 
 add_custom_target(
-  deploy-examples
-  COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}"
-  DEPENDS ${SNODEC_BOOK_EXAMPLE_TARGETS}
-  COMMENT "Installing all SNode.C book examples"
-  VERBATIM)
+    deploy-examples
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}"
+    DEPENDS ${SNODEC_BOOK_EXAMPLE_TARGETS}
+    COMMENT "Installing all SNode.C book examples"
+    VERBATIM
+)

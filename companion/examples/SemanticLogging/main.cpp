@@ -1,5 +1,4 @@
 #include <Log.h>
-
 #include <system_error>
 
 int main() {

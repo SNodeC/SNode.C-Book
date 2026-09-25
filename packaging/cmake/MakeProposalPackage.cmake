@@ -33,6 +33,8 @@ file(MAKE_DIRECTORY "${STAGING_DIR}/dist/pdf")
 
 set(REQUIRED_SOURCE_FILES
     "CMakeLists.txt"
+    ".clang-format"
+    ".cmake-format.py"
     "README.md"
     "STRUCTURE.md"
     ".github/workflows/book-package.yml"
@@ -67,6 +69,7 @@ set(REQUIRED_SOURCE_FILES
     "source-baseline/SOURCE-VERSION.md")
 
 set(REQUIRED_SOURCE_DIRS
+    "cmake"
     "manuscript/frontmatter"
     "manuscript/chapters"
     "manuscript/parts"

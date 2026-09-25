@@ -10,9 +10,9 @@ namespace minigateway {
 
     class MeasurementUnixSocketContext : public core::socket::stream::SocketContext {
     public:
-      MeasurementUnixSocketContext(
-          core::socket::stream::SocketConnection *socketConnection,
-          MeasurementModel &measurementModel);
+        MeasurementUnixSocketContext(
+            core::socket::stream::SocketConnection* socketConnection,
+            MeasurementModel& measurementModel);
 
     private:
         void onConnected() final;

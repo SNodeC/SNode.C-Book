@@ -254,10 +254,10 @@ The byte-transport checkpoint returned even an invalid measurement unchanged. We
 The relevant public interface is this excerpt from `companion/examples/MiniGateway/MeasurementModel.h`; `Subscription` names the listener token returned by `subscribe()`:
 
 ```cpp
-Measurement current() const;
-Measurement accept(Measurement measurement);
-Subscription subscribe(Listener listener);
-void unsubscribe(Subscription subscription);
+        Measurement current() const;
+        Measurement accept(Measurement measurement);
+        Subscription subscribe(Listener listener);
+        void unsubscribe(Subscription subscription);
 ```
 
 Read the four operations as observation, acceptance, subscription and explicit removal. The protocol that eventually supplies a measurement is absent from this interface, so it cannot become a second place that orders accepted state.

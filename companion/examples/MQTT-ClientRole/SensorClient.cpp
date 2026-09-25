@@ -4,22 +4,11 @@
 
 SensorClient::SensorClient()
     : iot::mqtt::client::Mqtt(
-          "sensor-mqtt",
-          "sensor-client-1",
-          60,
-          "sensor-client.session") {
+          "sensor-mqtt", "sensor-client-1", 60, "sensor-client.session") {
 }
 
 void SensorClient::onConnected() {
-    sendConnect(
-        true,
-        "",
-        "",
-        0,
-        false,
-        "",
-        "",
-        false);
+    sendConnect(true, "", "", 0, false, "", "", false);
 }
 
 void SensorClient::onConnack(const iot::mqtt::packets::Connack&) {

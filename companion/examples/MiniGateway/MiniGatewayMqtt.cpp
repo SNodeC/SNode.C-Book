@@ -2,11 +2,11 @@
 
 #include "MeasurementJsonCodec.h"
 
+#include <Log.h>
 #include <algorithm>
 #include <exception>
 #include <iot/mqtt/Topic.h>
 #include <list>
-#include <Log.h>
 #include <utility>
 #include <utils/system/signal.h>
 

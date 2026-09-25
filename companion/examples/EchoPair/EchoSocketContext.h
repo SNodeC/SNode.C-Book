@@ -3,7 +3,6 @@
 
 #include <core/socket/stream/SocketContext.h>
 #include <core/socket/stream/SocketContextFactory.h>
-
 #include <cstddef>
 
 namespace core::socket::stream {

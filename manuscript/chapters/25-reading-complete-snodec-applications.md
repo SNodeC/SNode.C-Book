@@ -67,18 +67,12 @@ target_link_libraries(
 It tells us that the application directly selects two visible building blocks: the Express-like HTTP server layer and the IPv4 legacy stream implementation. For an installed consumer of `<express/legacy/in/WebApp.h>`, select the compiled `http-server-express-legacy-in` component, which owns both dependencies; the in-tree fragment above remains the framework application’s separate link choice. The external form uses its exported `snodec::...` target:
 
 ```cmake
-find_package(snodec REQUIRED
-    COMPONENTS
-        http-server-express-legacy-in
-)
+find_package(snodec REQUIRED COMPONENTS http-server-express-legacy-in)
 
-add_executable(my-ipv4-legacy-webapp
-    main.cpp
-)
+add_executable(my-ipv4-legacy-webapp main.cpp)
 
-target_link_libraries(my-ipv4-legacy-webapp
-    PRIVATE
-        snodec::http-server-express-legacy-in
+target_link_libraries(
+    my-ipv4-legacy-webapp PRIVATE snodec::http-server-express-legacy-in
 )
 ```
 
@@ -228,7 +222,7 @@ A simplified excerpt captures the idea:
 core::SNodeC::init(argc, argv);
 
 const core::pipe::Pipe pipe(
-    [](core::pipe::PipeSource &source, core::pipe::PipeSink &sink) {
+    [](core::pipe::PipeSource& source, core::pipe::PipeSink& sink) {
         sink.setOnData([&source](const char* chunk, std::size_t len) {
             source.send(chunk, len);
         });

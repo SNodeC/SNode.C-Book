@@ -12,9 +12,7 @@ find_package(snodec 2.0.0 REQUIRED COMPONENTS net-in-stream-legacy)
 
 add_executable(
     line-protocol-server
-    main.cpp
-    LineCommandServerContext.cpp
-    LineCommandServerContext.h
+    main.cpp LineCommandServerContext.cpp LineCommandServerContext.h
     LineCommandServerContextFactory.h
 )
 
@@ -28,7 +26,8 @@ install(
 
 add_custom_target(
     deploy-line-protocol-server
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component LineProtocolServer
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component
+            LineProtocolServer
     DEPENDS line-protocol-server
     COMMENT "Installing line-protocol-server"
     VERBATIM

@@ -179,12 +179,11 @@ and it exposes client-originated operations such as:
 The following compact class expresses the MQTT side of the application: connect, subscribe, publish, receive publishes, and disconnect on shutdown.
 
 ```cpp
+#include <Log.h>
+#include <iot/mqtt/Topic.h>
 #include <iot/mqtt/client/Mqtt.h>
 #include <iot/mqtt/packets/Connack.h>
 #include <iot/mqtt/packets/Publish.h>
-#include <iot/mqtt/Topic.h>
-#include <Log.h>
-
 #include <string>
 
 class SensorClient final : public iot::mqtt::client::Mqtt {

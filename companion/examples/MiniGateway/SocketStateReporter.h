@@ -7,9 +7,9 @@
 
 namespace minigateway {
 
-    void reportState(const std::string &instanceName,
-                     const core::socket::SocketAddress &socketAddress,
-                     const core::socket::State &state);
+    void reportState(const std::string& instanceName,
+                     const core::socket::SocketAddress& socketAddress,
+                     const core::socket::State& state);
 
 } // namespace minigateway
 

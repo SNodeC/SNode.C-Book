@@ -1,7 +1,7 @@
+#include <Log.h>
 #include <core/SNodeC.h>
 #include <net/in/SocketAddress.h>
 #include <web/http/legacy/in/EventSource.h>
-#include <Log.h>
 
 int main(int argc, char* argv[]) {
     core::SNodeC::init(argc, argv);
@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
     });
 
     events->onMessage(
-        [](const web::http::client::tools::EventSource::MessageEvent &event) {
+        [](const web::http::client::tools::EventSource::MessageEvent& event) {
             snode::log::application().trace() << "message: " << event.data;
         });
 

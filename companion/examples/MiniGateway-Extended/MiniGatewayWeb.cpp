@@ -40,7 +40,8 @@ namespace minigateway {
             res->sendFragment("");
         }
 
-        void registerWebRoutes(const MiniGatewayWebApp& app, MeasurementModel& measurementModel) {
+        void registerWebRoutes(const MiniGatewayWebApp& app,
+                               MeasurementModel& measurementModel) {
             app.use(express::middleware::VerboseRequest());
 
             app.get("/health", [] APPLICATION(req, res) {
@@ -53,7 +54,9 @@ namespace minigateway {
 
             app.get("/events", [&measurementModel] APPLICATION(req, res) {
                 if (acceptsEventStream(req)) {
-                    res->set("Content-Type", "text/event-stream").set("Cache-Control", "no-cache").set("Connection", "keep-alive");
+                    res->set("Content-Type", "text/event-stream")
+                        .set("Cache-Control", "no-cache")
+                        .set("Connection", "keep-alive");
                     res->sendHeader();
 
                     const Measurement current = measurementModel.current();
@@ -61,20 +64,24 @@ namespace minigateway {
                         sendMeasurement(res, current);
                     }
 
-                    const auto subscription = measurementModel.subscribe([res](const Measurement& measurement) {
-                        sendMeasurement(res, measurement);
-                    });
-                    res->getSocketContext()->setOnDisconnected([&measurementModel, subscription] {
-                        measurementModel.unsubscribe(subscription);
-                    });
+                    const auto subscription =
+                        measurementModel.subscribe([res](const Measurement& measurement) {
+                            sendMeasurement(res, measurement);
+                        });
+                    res->getSocketContext()->setOnDisconnected(
+                        [&measurementModel, subscription] {
+                            measurementModel.unsubscribe(subscription);
+                        });
                 } else {
                     res->status(406).send("SSE requires Accept: text/event-stream");
                 }
             });
 
             app.post("/simulate", [&measurementModel] APPLICATION(req, res) {
-                const Measurement measurement = makeSimulatedMeasurement(measurementModel.current().sequence + 1);
-                const Measurement acceptedMeasurement = measurementModel.accept(measurement);
+                const Measurement measurement =
+                    makeSimulatedMeasurement(measurementModel.current().sequence + 1);
+                const Measurement acceptedMeasurement =
+                    measurementModel.accept(measurement);
 
                 res->json(toJson(acceptedMeasurement));
             });
@@ -88,8 +95,9 @@ namespace minigateway {
         registerWebRoutes(app, measurementModel);
 
         app.listen(8080,
-                   [instanceName = app.getConfig()->getInstanceName()](const MiniGatewayWebApp::SocketAddress& socketAddress,
-                                                                       const core::socket::State& listenState) {
+                   [instanceName = app.getConfig()->getInstanceName()](
+                       const MiniGatewayWebApp::SocketAddress& socketAddress,
+                       const core::socket::State& listenState) {
                        reportState(instanceName, socketAddress, listenState);
                    });
 

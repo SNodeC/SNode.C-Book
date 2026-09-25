@@ -181,10 +181,7 @@ External package targets use this namespace too. It distinguishes the framework 
 An external consumer can write:
 
 ```cmake
-target_link_libraries(myapp
-    PRIVATE
-        snodec::http-server-express-legacy-in
-)
+target_link_libraries(myapp PRIVATE snodec::http-server-express-legacy-in)
 ```
 
 This selects Express-like HTTP over an IPv4 legacy stream implementation. Include a lower socket header only if the source directly names that socket abstraction.
@@ -345,18 +342,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(snodec REQUIRED
-    COMPONENTS
-        http-server-express-legacy-in
-)
+find_package(snodec REQUIRED COMPONENTS http-server-express-legacy-in)
 
-add_executable(my-ipv4-legacy-webapp
-    main.cpp
-)
+add_executable(my-ipv4-legacy-webapp main.cpp)
 
-target_link_libraries(my-ipv4-legacy-webapp
-    PRIVATE
-        snodec::http-server-express-legacy-in
+target_link_libraries(
+    my-ipv4-legacy-webapp PRIVATE snodec::http-server-express-legacy-in
 )
 ```
 

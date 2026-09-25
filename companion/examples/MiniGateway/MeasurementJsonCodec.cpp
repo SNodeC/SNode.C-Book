@@ -21,12 +21,10 @@ namespace minigateway {
     } // namespace
 
     nlohmann::json toJson(const Measurement& measurement) {
-        return {
-            {"temperature", measurement.temperature},
-            {"humidity", measurement.humidity},
-            {"voltage", measurement.voltage},
-            {"sequence", measurement.sequence}
-        };
+        return {{"temperature", measurement.temperature},
+                {"humidity", measurement.humidity},
+                {"voltage", measurement.voltage},
+                {"sequence", measurement.sequence}};
     }
 
     std::string toJsonPayload(const Measurement& measurement) {

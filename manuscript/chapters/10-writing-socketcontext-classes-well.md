@@ -141,7 +141,6 @@ An abridged context can look like this:
 
 ```cpp
 #include <core/socket/stream/SocketContext.h>
-
 #include <cstddef>
 #include <string>
 
@@ -151,8 +150,7 @@ namespace core::socket::stream {
 
 class LineCommandContext : public core::socket::stream::SocketContext {
 public:
-    explicit LineCommandContext(
-        core::socket::stream::SocketConnection* socketConnection)
+    explicit LineCommandContext(core::socket::stream::SocketConnection* socketConnection)
         : core::socket::stream::SocketContext(socketConnection) {
     }
 

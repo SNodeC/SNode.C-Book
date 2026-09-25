@@ -5,9 +5,11 @@
 
 #include <core/socket/stream/SocketContextFactory.h>
 
-class LineCommandClientContextFactory final : public core::socket::stream::SocketContextFactory {
+class LineCommandClientContextFactory final
+    : public core::socket::stream::SocketContextFactory {
 private:
-    core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* socketConnection) override {
+    core::socket::stream::SocketContext*
+    create(core::socket::stream::SocketConnection* socketConnection) override {
         return new LineCommandClientContext(socketConnection);
     }
 };

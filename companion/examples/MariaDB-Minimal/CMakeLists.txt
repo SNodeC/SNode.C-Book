@@ -22,7 +22,8 @@ install(
 
 add_custom_target(
     deploy-mariadb-minimal
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MariaDBMinimal
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component
+            MariaDBMinimal
     DEPENDS mariadb-minimal
     COMMENT "Installing mariadb-minimal"
     VERBATIM

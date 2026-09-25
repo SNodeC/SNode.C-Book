@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Follow-ups 13–15 regression guards over the authoritative Markdown inputs.
+"""Follow-ups 13–16 regression guards over the authoritative Markdown inputs.
 
 These checks protect the specified corrections, not a prose style template.
 Fenced code is preserved; fenced Divs are parsed independently of code fences.
@@ -35,6 +35,19 @@ def divs(text):
             yield attrs, start, '\n'.join(lines[start:n-1])
     if stack:
         raise ValueError('unclosed fenced Div')
+
+
+def right_aligned_declarations(block):
+    """Recognize declaration-shaped type names; ignore literals and expressions.
+
+    A lowercase variable beside * is not sufficient evidence of a declaration.
+    Framework/public class names, qualified types and built-in types are useful
+    unambiguous signals in these snippets. Rvalue references are excluded.
+    """
+    clean = re.sub(r'//[^\n]*|/\*[\s\S]*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'',
+                   lambda m: ''.join('\n' if c == '\n' else ' ' for c in m[0]), block)
+    types = r'(?:const\s+)?(?:(?:[A-Za-z_]\w*::)+[A-Za-z_]\w*|[A-Z][A-Za-z_]\w*|auto|char|void|int|double|float|bool|long|short|size_t|string)(?:<[^;{}()\n]*>)?'
+    return list(re.finditer(r'\b'+types+r'[ \t]+[*&](?![&*])(?=\s*(?:[A-Za-z_]|[,);]))', clean))
 
 
 def check(root):
@@ -228,6 +241,12 @@ def check(root):
                     seen.add(key)
             elif line.strip():
                 seen.clear()
+    for path, text in texts.items():
+        for block in re.finditer(r'^```(?:cpp|c\+\+)\n(.*?)\n```', text, re.M | re.S):
+            for hit in right_aligned_declarations(block[1]):
+                line = text.count('\n', 0, block.start(1) + hit.start()) + 1
+                need(False, f'{path}:{line}: right-aligned pointer/reference declaration')
+
     width_spec = importlib.util.spec_from_file_location('width', root/'ci/check-listing-width.py')
     width = importlib.util.module_from_spec(width_spec)
     width_spec.loader.exec_module(width)

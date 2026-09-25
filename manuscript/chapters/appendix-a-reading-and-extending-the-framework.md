@@ -206,25 +206,25 @@ MiniGateway Extended is an application-level extension, not a framework-level ex
 The first boundary is construction. The factory receives the model reference and constructs the connection-local context. It does not parse measurements, register HTTP routes, publish MQTT messages, or decide deployment policy.
 
 ```cpp
-core::socket::stream::SocketContext* MeasurementUnixSocketContextFactory::create(
-    core::socket::stream::SocketConnection* socketConnection) {
-    return new MeasurementUnixSocketContext(socketConnection, measurementModel);
-}
+    core::socket::stream::SocketContext* MeasurementUnixSocketContextFactory::create(
+        core::socket::stream::SocketConnection* socketConnection) {
+        return new MeasurementUnixSocketContext(socketConnection, measurementModel);
+    }
 ```
 
 The second boundary is protocol endpoint behavior. The Unix-domain context owns the local line protocol and delegates accepted measurements to the model.
 
 ```cpp
-void MeasurementUnixSocketContext::processLine(const std::string& line) const {
-    if (!line.empty()) {
-        try {
-            measurementModel.accept(parseMeasurementLine(line));
-        } catch (const std::exception& ex) {
-            snode::log::application().warn()
-                << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+    void MeasurementUnixSocketContext::processLine(const std::string& line) const {
+        if (!line.empty()) {
+            try {
+                measurementModel.accept(parseMeasurementLine(line));
+            } catch (const std::exception& ex) {
+                snode::log::application().warn() << "Ignoring invalid measurement line '"
+                                                 << line << "': " << ex.what();
+            }
         }
     }
-}
 ```
 
 This small excerpt shows the extension rule in code. The factory constructs. The context parses and reports invalid local input. The model accepts and sequences measurements. The web role, SSE observer path, and MQTT integration role do not learn anything about Unix-domain sockets.

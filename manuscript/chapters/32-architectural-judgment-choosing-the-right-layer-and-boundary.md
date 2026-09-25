@@ -54,14 +54,14 @@ MiniGateway contains a small but real contested decision: where should the autho
 The chosen design puts the authority in `MeasurementModel::accept(...)`:
 
 ```cpp
-Measurement MeasurementModel::accept(Measurement measurement) {
-    measurement.sequence = currentMeasurement.sequence + 1;
+    Measurement MeasurementModel::accept(Measurement measurement) {
+        measurement.sequence = currentMeasurement.sequence + 1;
 
-    currentMeasurement = std::move(measurement);
-    publish(currentMeasurement);
+        currentMeasurement = std::move(measurement);
+        publish(currentMeasurement);
 
-    return currentMeasurement;
-}
+        return currentMeasurement;
+    }
 ```
 
 

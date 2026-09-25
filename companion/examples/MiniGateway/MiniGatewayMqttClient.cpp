@@ -11,7 +11,7 @@ namespace minigateway {
     namespace {
 
         void
-        createMqttConfig(net::in::stream::legacy::config::ConfigSocketClient &config) {
+        createMqttConfig(net::in::stream::legacy::config::ConfigSocketClient& config) {
             config.Instance::newSubCommand<ConfigMqtt>();
         }
 
@@ -33,8 +33,8 @@ namespace minigateway {
             MiniGatewayMqtt::publishMeasurementToConnected(measurement);
         });
 
-        socketClient.connect([](const MiniGatewayMqttClient::SocketAddress &socketAddress,
-                                const core::socket::State &state) {
+        socketClient.connect([](const MiniGatewayMqttClient::SocketAddress& socketAddress,
+                                const core::socket::State& state) {
             reportState("mqtt-uplink", socketAddress, state);
         });
 
