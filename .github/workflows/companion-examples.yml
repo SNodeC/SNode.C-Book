@@ -32,7 +32,7 @@ jobs:
       - name: Check out book repository
         uses: actions/checkout@v4
 
-      - name: Read authoritative source branch
+      - name: Read authoritative source tag
         id: baseline
         shell: bash
         run: |
@@ -42,7 +42,7 @@ jobs:
           echo "repository=$SNODEC_REPOSITORY_ID" >> "$GITHUB_OUTPUT"
           echo "ref=$SNODEC_REF" >> "$GITHUB_OUTPUT"
 
-      - name: Check out SNode.C master HEAD
+      - name: Check out SNode.C edition tag
         uses: actions/checkout@v4
         with:
           repository: ${{ steps.baseline.outputs.repository }}
@@ -58,11 +58,11 @@ jobs:
             nlohmann-json3-dev mariadb-server mariadb-client \
             ${{ matrix.packages }}
 
-      - name: Verify master HEAD against the edition manifest
+      - name: Verify edition tag against the edition manifest
         shell: bash
         run: |
           source source-baseline/book-source-baseline.env
-          echo "Observed SNode.C master HEAD: $(git -C external/snode.c rev-parse HEAD)"
+          echo "SNode.C source tag: $SNODEC_REF"
           if [[ -s "$GITHUB_WORKSPACE/$SNODEC_WORKTREE_PATCH" ]]; then
             git -C external/snode.c apply "$GITHUB_WORKSPACE/$SNODEC_WORKTREE_PATCH"
           fi

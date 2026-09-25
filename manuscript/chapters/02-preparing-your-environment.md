@@ -16,7 +16,7 @@
 Before the architecture can become interesting, the toolchain must be boring. The examples in this book should build, run, and fail in understandable ways, so the first practical task is to keep the source tree, build tree, install prefix, and later playground project separate.
 
 ::: {.snodec-note title="Shortest path to Chapter 3"}
-1. Obtain the book and framework HEADs: `mkdir -p ~/projects`, `cd ~/projects`, `git clone --branch main https://github.com/SNodeC/SNode.C-Book`, then `export SNODEC_BOOK_SOURCE="$HOME/projects/SNode.C-Book"`. Run `git clone --branch master https://github.com/SNodeC/snode.c.git`, `cd snode.c`, and `python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"`.
+1. Obtain the book and tagged framework: `mkdir -p ~/projects`, `cd ~/projects`, `git clone --branch main https://github.com/SNodeC/SNode.C-Book`, then `export SNODEC_BOOK_SOURCE="$HOME/projects/SNode.C-Book"`. Run `git clone --branch Book-1.0 https://github.com/SNodeC/snode.c.git`, `cd snode.c`, and `python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"`.
 2. Configure outside the source: `cd ~/projects`, then `cmake -S snode.c -B snode.c-build -DCMAKE_INSTALL_PREFIX="$HOME/.local/snodec"`.
 3. Build: `cmake --build snode.c-build -j$(nproc)`.
 4. Install into that prefix: `cmake --install snode.c-build`.
@@ -144,14 +144,14 @@ If the package is already present, skip cloning it. Point the variable at its lo
 export SNODEC_BOOK_SOURCE="$HOME/projects/SNode.C-Book"
 ```
 
-This directory contains the manuscript, companion examples, and source-baseline record. It is separate from the framework source. Clone the framework’s default branch, `master`, and check its contents against the edition manifest.
+This directory contains the manuscript, companion examples, and source-baseline record. It is separate from the framework source. Clone the framework’s edition tag, `Book-1.0`, and check its contents against the edition manifest.
 
 Choose a directory where you keep source repositories:
 
 ```sh
 mkdir -p ~/projects
 cd ~/projects
-git clone --branch master https://github.com/SNodeC/snode.c.git
+git clone --branch Book-1.0 https://github.com/SNodeC/snode.c.git
 cd snode.c
 python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
@@ -162,20 +162,20 @@ The checked-out framework source now lives in:
 ~/projects/snode.c/
 ```
 
-The book baseline is SNode.C 2.0.0. Use `master` HEAD as the checkout target; `2.0.0` is the project version described here. No patch is needed. The checker compares the file contents with the edition's manifest.
+The book baseline is SNode.C 2.0.0. Use tag `Book-1.0` as the checkout target; `2.0.0` is the project version described here. No patch is needed. The checker compares the file contents with the edition's manifest.
 
-The SNode.C repository uses `master` as its moving development line. Before building, let the content check establish whether that HEAD still matches this edition. For an existing clean clone, update the branch and check again:
+The SNode.C repository’s immutable `Book-1.0` tag identifies this edition’s source. Before building, let the content check establish whether the checkout matches this edition. For an existing clean clone, fetch the tag and check again:
 
 ```sh
 cd ~/projects/snode.c
-git switch master
-git pull --ff-only origin master
+git fetch origin tag Book-1.0
+git switch --detach Book-1.0
 python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
 
-Use a separate clone if the existing checkout contains your own work. A current checkout still needs verification.
+Use a separate clone if the existing checkout contains your own work. A tagged checkout still needs verification.
 
-If the checker reports “master has drifted from the edition manifest”, inspect its changed-file list, update the book from `main`, and repeat the check with a fresh framework clone. If drift remains, report it to the maintainers and pause the affected examples until their claims and tests have been reviewed; do not bypass the check or choose an older commit. The content manifest provides the comparison, while observed HEADs record what was inspected. Compilation, runtime tests and deployment are separate evidence. The companion labs label broker, database and hardware prerequisites; an unequipped build is not an equipped run. MQTTSuite uses the separate `SNodeC/mqttsuite` repository’s `master` HEAD, outside the framework manifest; its applications are a source-reading case study, not a certified deployment. Record its own build and configuration when reproducing them. No OpenWrt device run is claimed here. The source-baseline directory retains the reconstruction and verification details.
+If the checker reports “Book-1.0 checkout differs from the edition manifest”, inspect its changed-file list and repeat the check with a fresh clone of the edition tag. If the mismatch remains, report it to the maintainers and pause the affected examples until their claims and tests have been reviewed; do not bypass the check or move the tag. The content manifest provides the comparison, while the tag names the edition source. Compilation, runtime tests and deployment are separate evidence. The companion labs label broker, database and hardware prerequisites; an unequipped build is not an equipped run. MQTTSuite uses the separate `SNodeC/mqttsuite` repository’s `Book-1.0` tag, outside the framework manifest; its applications are a source-reading case study, not a certified deployment. Record its own build and configuration when reproducing them. No OpenWrt device run is claimed here. The source-baseline directory retains the reconstruction and verification details.
 :::
 
 ### Use an out-of-tree build

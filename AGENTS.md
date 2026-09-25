@@ -2,9 +2,12 @@
 
 ## Active work plan
 
-Follow-up 15 is the current author instruction, recorded in
-`review/pedagogical-smoothing-2026-09-23/FOLLOWUP-15.md`. It overrides the
-older pin/freeze instructions below: work on main using default-branch HEADs,
+The author’s Book-1.0 tag instruction supersedes the HEAD-only source rule in
+`review/pedagogical-smoothing-2026-09-23/FOLLOWUP-15.md`. Pin SNodeC/snode.c,
+SNodeC/mqttsuite and SNodeC/OpenWRT to their immutable Book-1.0 tags. Use tag
+names in instructions, checks, logs and commit messages, not commit fingerprints.
+Retain historical records. Limit this update to pinning locations listed in the
+latest work-plan entry. Work on main,
 keep the author framework tree unchanged, verify before editing, and preserve
 all teaching content. Read its scope and the latest work-plan entry first.
 

@@ -43,10 +43,20 @@ class FinalGuards(unittest.TestCase):
     def fails(self, message):
         self.assertTrue(any(message in e for e in final.check(self.root)))
 
-    def test_checkout_tag_is_rejected(self):
+    def test_unapproved_checkout_tag_is_rejected(self):
         p = self.chapter(2)
         p.write_text(p.read_text() + '\ngit checkout release-example\n')
-        self.fails('non-HEAD repository target')
+        self.fails('non-edition repository target')
+
+    def test_moving_framework_checkout_is_rejected(self):
+        p = self.chapter(2)
+        self.replace(p, 'git clone --branch Book-1.0', 'git clone --branch master')
+        self.fails('non-edition repository target')
+
+    def test_edition_tag_checkout_is_accepted(self):
+        p = self.chapter(2)
+        p.write_text(p.read_text()+'\ngit checkout Book-1.0\n')
+        self.assertEqual(final.check(self.root), [])
 
     def test_fenced_width_is_checked_but_prose_is_not(self):
         p = self.chapter(2)

@@ -2658,3 +2658,42 @@ four dependency lines (three root, one lab-loop); no C++ implementation grows.
 The publication test fixture adds one explicit isolation setting. Existing OFF caches need
 one explicit ON reconfiguration, documented in README.md. No manuscript or
 framework source changes; no new executable list or build option introduced.
+
+### Book-1.0 edition pins — narrow author instruction, 2026-09-25
+
+The author authorized only the reviewed pinning inventory and prohibited changes
+elsewhere. This instruction replaces the earlier HEAD-only source rule. Select
+SNodeC/snode.c, SNodeC/mqttsuite and SNodeC/OpenWRT using their immutable Book-1.0
+tags. Use tag names in new instructions, checks, logs and commit messages, never
+commit fingerprints. The book repository's own release tag remains a separate
+release step. No external repository or tag is modified.
+
+Approved locations: the baseline environment and two baseline documents; README
+source-baseline paragraph; Preface; Chapter 2 checkout/baseline passages; Chapter
+26 source selection; Chapter 28 feed/source-selection passages; Further Reading
+edition references; proposal source-baseline statements; companion workflow and
+build script; source-alignment and external-anchor checkers; affected pinning
+regression checks/tests; AGENTS.md and this work plan. Historical reports, the
+framework manifest/patch, source-claim anchors, examples, build options and tool
+versions stay unchanged.
+
+Fresh clones of all three Book-1.0 tags pass: framework alignment covers 1,448
+files, 33 chapter/appendix records and 37 exact listings; external source anchors
+match. The checker verifies the checkout's exact tag and retains content checks.
+Pinning regression checks pass, including rejection of a moving framework branch
+and an unapproved tag. The OpenWRT tag pins the feed recipes; those recipes still
+select their existing OpenWRT source tag, a distinction retained in Chapter 28.
+
+Source-alignment unit tests pass 2/2; final regression tests pass 23/23; smoothing
+passes all 16 groups. Pin-only wording changes yield 111,729 manuscript tokens
+(10 fewer), 7,922 fenced tokens, and backmatter 810 within the explicit 812-token
+waiver. Polish passes 8/9 groups: its cached proposal statistics remain at the
+previous extent, prose/fenced counts and section average. Those statistics are
+outside the approved pinning locations and were deliberately not edited. The
+polish checker was not weakened. Runtime code and teaching listings are unchanged;
+no new runtime-test result is claimed. PDF/package verification passes both
+builds with no unresolved references: 330-page book, 9-page proposal, 61-page
+sample and 461 unique package entries. Final scope audit confirms only the 19
+approved files changed. The source-alignment exact-tag helper adds validation
+support, with no production application-code changes. The only outstanding
+check is the explicitly unmodified proposal-statistics assertion described above.

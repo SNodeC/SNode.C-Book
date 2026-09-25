@@ -253,9 +253,9 @@ A `procd` service declares the command, configuration, user/group, restart polic
 
 ### A worked OpenWrt path: verify the package before the device
 
-The first practical step is to inspect the recipe at the [SNode.C OpenWrt feed’s main HEAD](https://github.com/SNodeC/OpenWRT/tree/main), before cross-compiling. In `net/snode.c/Makefile`, check `PKG_VERSION`, compare `PKG_SOURCE_VERSION` with the framework’s `master` HEAD, inspect the logger download and its hash, and compare the module list with current CMake targets. A package version alone does not establish that the selected source matches the book’s manifest.
+The first practical step is to inspect the recipe at the [SNode.C OpenWrt feed’s Book-1.0 tag](https://github.com/SNodeC/OpenWRT/tree/Book-1.0), before cross-compiling. In `net/snode.c/Makefile`, check `PKG_VERSION`, compare `PKG_SOURCE_VERSION` with the framework’s `Book-1.0` tag, inspect the logger download and its hash, and compare the module list with current CMake targets. A package version alone does not establish that the selected source matches the book’s manifest.
 
-The recipe already describes the 2.0 package layout, supplies a checked spdlog download and lists the valid `net-un-phy` component. Source selection still needs attention: the recipe selects a tag rather than `master`. Verify these properties again at HEAD before using an SDK; the steps below rehearse a build and deployment, not a claim that a particular device has passed them.
+The recipe already describes the 2.0 package layout, supplies a checked spdlog download and lists the valid `net-un-phy` component. Source selection still needs attention: the tagged feed’s recipes select `OpenWRT`, not `Book-1.0`. Verify their selected source before using an SDK; the steps below rehearse a build and deployment, not a claim that a particular device has passed them.
 
 On a disposable target or test image, record the release, target and available space before choosing its matching SDK:
 
@@ -276,7 +276,7 @@ Add the SNode.C recipe through a local feed under your control. Review the follo
 
 | Recipe surface | Required evidence for the current source |
 |---|---|
-| Source selection | The feed currently selects a framework tag rather than `master`; compare its prepared contents with the Chapter 2 manifest and use reviewed master contents for this rehearsal |
+| Source selection | The tagged feed selects `OpenWRT`; compare its prepared contents with the Chapter 2 manifest and use the framework’s `Book-1.0` contents for this rehearsal |
 | Version and library names | The recipe declares 2.0 and derives the SONAME major; verify the staged filenames from the SDK build |
 | Component graph | Met by the inspected recipe: the module graph includes the valid `net-un-phy` target; recheck selected modules against current CMake targets |
 | Logger dependency | Met by the inspected recipe: a hashed spdlog download supplies FetchContent with networking disabled; verify the download in the SDK build |

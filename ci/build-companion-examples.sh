@@ -13,9 +13,10 @@ PARALLEL="${CMAKE_BUILD_PARALLEL_LEVEL:-2}"
 LOG_DIR="$REPO_ROOT/build/verification-logs"
 mkdir -p "$LOG_DIR"
 python3 ci/check-source-alignment.py
+source source-baseline/book-source-baseline.env
 
 if [[ -n "${SNODEC_SOURCE_DIR:-}" ]]; then
-  echo "Observed SNode.C master HEAD: $(git -C "$SNODEC_SOURCE_DIR" rev-parse HEAD)"
+  echo "SNode.C source tag: $SNODEC_REF"
   python3 ci/check-source-alignment.py --framework "$SNODEC_SOURCE_DIR"
   cmake -S "$SNODEC_SOURCE_DIR" -B "$SNODEC_BUILD_DIR" -G "$GENERATOR" \
     -DCMAKE_BUILD_TYPE=Debug \
@@ -36,7 +37,7 @@ if [[ -n "${SNODEC_SOURCE_DIR:-}" ]]; then
     ctest --test-dir "$ECHO_BUILD" --output-on-failure --no-tests=error \
     | tee "$LOG_DIR/framework-external-echo-ctest.txt"
 else
-  echo "NOTICE: using a supplied installation; this run does not verify its framework commit or run framework CTests."
+  echo "NOTICE: using a supplied installation; this run does not verify its framework tag or run framework CTests."
 fi
 
 if [[ ! -d "$SNODEC_PREFIX" ]]; then

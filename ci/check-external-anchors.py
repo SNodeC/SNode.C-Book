@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the book's external source-reading anchors at default-branch HEADs.
+"""Check the book's external source-reading anchors at the Book-1.0 tags.
 
 These are existence guards, not build, execution or deployment evidence.
 """
@@ -10,8 +10,8 @@ import subprocess
 import tempfile
 
 REPOSITORIES = {
-    'mqttsuite': ('SNodeC/mqttsuite', 'master'),
-    'OpenWRT': ('SNodeC/OpenWRT', 'main'),
+    'mqttsuite': ('SNodeC/mqttsuite', 'Book-1.0'),
+    'OpenWRT': ('SNodeC/OpenWRT', 'Book-1.0'),
 }
 ANCHORS = {
     'mqttsuite': {
@@ -55,13 +55,14 @@ def main():
         parent = args.work_dir or Path(temporary)
         parent.mkdir(parents=True, exist_ok=True)
         errors = []
-        for name, (repository, branch) in REPOSITORIES.items():
+        for name, (repository, tag) in REPOSITORIES.items():
             root = parent / name
-            subprocess.run(['git', 'clone', '--depth', '1', '--single-branch', '--branch', branch,
+            subprocess.run(['git', '-c', 'advice.detachedHead=false', 'clone', '--depth', '1', '--single-branch', '--branch', tag,
                             f'https://github.com/{repository}.git', str(root)], check=True)
-            head = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
-            print(f'Observed {repository} {branch} HEAD: {head}', flush=True)
-            errors.extend(f'{repository} {branch} has drifted from the manuscript anchors: {e}'
+            selected = subprocess.check_output(['git', '-C', str(root), 'describe', '--tags', '--exact-match',
+                                                '--match', tag, 'HEAD'], stderr=subprocess.PIPE, text=True).strip()
+            print(f'Verified {repository} tag: {selected}', flush=True)
+            errors.extend(f'{repository} {tag} differs from the manuscript anchors: {e}'
                           for e in check(name, root))
         for error in errors:
             print('ERROR: '+error)
@@ -74,4 +75,4 @@ if __name__ == '__main__':
     try:
         raise SystemExit(main())
     except (OSError, subprocess.CalledProcessError) as error:
-        raise SystemExit(f'External anchor check could not verify HEAD: {error}')
+        raise SystemExit(f'External anchor check could not verify Book-1.0: {error}')

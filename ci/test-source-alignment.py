@@ -11,6 +11,21 @@ alignment = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(alignment)
 
 class Drift(unittest.TestCase):
+    def test_checkout_must_identify_the_edition_tag(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            def git(*args):
+                return subprocess.run(['git', '-C', str(root), '-c', 'user.name=Test',
+                                       '-c', 'user.email=test@example.invalid', *args],
+                                      check=True, capture_output=True)
+            git('init', '-q')
+            git('commit', '-q', '--allow-empty', '-m', 'Edition source')
+            git('tag', 'Book-1.0')
+            self.assertEqual(alignment.checkout_tag(root, 'Book-1.0'), 'Book-1.0')
+            git('commit', '-q', '--allow-empty', '-m', 'Later source')
+            with self.assertRaises(subprocess.CalledProcessError):
+                alignment.checkout_tag(root, 'Book-1.0')
+
     def test_content_set_and_untracked_files(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

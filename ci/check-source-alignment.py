@@ -35,6 +35,12 @@ def content_drift(framework, manifest):
             if actual.get(name) != manifest["files"].get(name)]
 
 
+def checkout_tag(framework, tag):
+    return subprocess.check_output(
+        ["git", "-C", str(framework), "describe", "--tags", "--exact-match", "--match", tag, "HEAD"],
+        stderr=subprocess.PIPE, text=True).strip()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--framework", type=pathlib.Path,
@@ -52,8 +58,8 @@ def main() -> int:
     recorded_tree = "".join(f"{digest}  {name}\n" for name, digest in sorted(manifest["files"].items()))
     if hashlib.sha256(recorded_tree.encode()).hexdigest() != manifest["tree_sha256"]:
         errors.append("Framework file manifest differs from its recorded tree digest")
-    if values.get("SNODEC_REF") != "master" or "SNODEC_COMMIT" in values:
-        errors.append("Framework source must use master HEAD, not a commit/tag target")
+    if values.get("SNODEC_REF") != "Book-1.0" or "SNODEC_COMMIT" in values:
+        errors.append("Framework source must use the Book-1.0 edition tag")
     if version != "2.0.0":
         errors.append("This migration's declared project version must be 2.0.0")
     for name in ["README.md", "source-baseline/SOURCE-VERSION.md",
@@ -120,16 +126,17 @@ def main() -> int:
     if re.search(r"ref:\s*[0-9a-f]{40}", workflow):
         errors.append("Companion workflow duplicates a literal framework SHA")
     if args.framework:
+        checkout_tag(args.framework, values["SNODEC_REF"])
         cmake = (args.framework / "CMakeLists.txt").read_text()
         if not re.search(r"\bVERSION\s+" + re.escape(version) + r"\b", cmake):
             errors.append("Framework CMake project version differs from the declared version")
         for name in content_drift(args.framework, manifest):
-            errors.append(f"master has drifted from the edition manifest: {name}")
+            errors.append(f"Book-1.0 checkout differs from the edition manifest: {name}")
     if errors:
         print("\n".join("ERROR: " + error for error in errors), file=sys.stderr)
         return 1
     print(f"Source alignment passed: {len(records)} chapter/appendix evidence records, {count} exact complete listings; "
-          f"SNode.C {version}, master content manifest {manifest['tree_sha256']}")
+          f"SNode.C {version}, Book-1.0 content manifest")
     return 0
 
 

@@ -161,8 +161,8 @@ def check(root):
     need(has(distinction, r'single run|experiment', r'general|beyond'),
          'Ch29: mark the move from one run to general distinctions')
 
-    # FU15: repository identities are moving branch heads; tool release pins
-    # and observed provenance are independent of repository checkout targets.
+    # The author replaced FU15's HEAD-only rule with immutable Book-1.0 tags.
+    # The book's own release tag remains a separate release step.
     covered = [p for folder in ('manuscript', 'companion', 'ci', '.github')
                for p in (root/folder).rglob('*')
                if p.is_file() and '__pycache__' not in p.parts]
@@ -174,8 +174,7 @@ def check(root):
         except UnicodeDecodeError:
             continue
         for number, line in enumerate(text.splitlines(), 1):
-            # Literal shell reader/build instructions. Permit only HEAD or a
-            # default branch, never a release tag, detached SHA or older ref.
+            # Dependency checkouts use the edition tag; the book clone is separate.
             for match in re.finditer(r'\bgit\s+(?:-C\s+\S+\s+)?(checkout|switch|fetch|clone)\s+([^`\n;]+)', line):
                 command, args = match.groups()
                 args = args.split(' && ', 1)[0]
@@ -191,13 +190,16 @@ def check(root):
                         target = positions[-1]
                 if target:
                     target = target.strip('"\'.,')
-                    need(target in ('master', 'main', 'HEAD', 'origin/master', 'origin/main'),
-                         f'{path.relative_to(root)}:{number}: non-HEAD repository target {target}')
-            need(not re.match(r'\s*ref:\s*(?:[0-9a-f]{7,40}|refs/tags/\S+|v?\d+\.\S+)\s*$', line),
-                 f'{path.relative_to(root)}:{number}: pinned repository workflow ref')
+                    book_clone = (command == 'clone' and target == 'main' and
+                                  re.search(r'https://github\.com/SNodeC/SNode\.C-Book(?:\.git)?(?:\s|$)', args))
+                    need(target in ('Book-1.0', 'refs/tags/Book-1.0') or book_clone,
+                         f'{path.relative_to(root)}:{number}: non-edition repository target {target}')
+            literal_ref = re.match(r'\s*ref:\s*([^\s]+)\s*$', line)
+            need(not literal_ref or literal_ref[1] in ('Book-1.0', 'refs/tags/Book-1.0'),
+                 f'{path.relative_to(root)}:{number}: non-edition repository workflow ref')
     baseline = (root/'source-baseline/book-source-baseline.env').read_text()
-    need(re.search(r'^SNODEC_REF=master$', baseline, re.M) and
-         not re.search(r'^SNODEC_COMMIT=', baseline, re.M), 'baseline must target master HEAD')
+    need(re.search(r'^SNODEC_REF=Book-1\.0$', baseline, re.M) and
+         not re.search(r'^SNODEC_COMMIT=', baseline, re.M), 'baseline must target Book-1.0')
     need('Clang 13.0 or newer' not in ch(2), 'compiler minimum is not a newer-version guarantee')
     installs = re.findall(r'```sh\n(.*?)\n```', ch(2), re.S)
     need(any('apt install' in block and 'libasio-dev' in block for block in installs),

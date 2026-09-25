@@ -330,7 +330,7 @@ Focused event-driven tools and explicit roles fit constrained deployments, but d
 
 ### Trace one publication through two tools
 
-Use `SNodeC/mqttsuite` master HEAD to follow one selected publication. Start at `mqttbridge/lib/Mqtt.cpp`: the received publish is handed to the configured bridge’s publication path. Compare that with `mqttstore/lib/Mqtt.cpp` and `mqttstore/lib/MariaDbStorage.cpp`, where the same protocol event becomes a storage decision.
+Use `SNodeC/mqttsuite` tag `Book-1.0` to follow one selected publication. Start at `mqttbridge/lib/Mqtt.cpp`: the received publish is handed to the configured bridge’s publication path. Compare that with `mqttstore/lib/Mqtt.cpp` and `mqttstore/lib/MariaDbStorage.cpp`, where the same protocol event becomes a storage decision.
 
 For the bridge, identify source selection, destination selection, topic-prefix behavior, and loop policy before attempting a two-broker experiment. Its configured loop-prevention value is passed to MQTT CONNECT; Chapter 21 explains why the private protocol-level extension must not be assumed interoperable with every broker.
 
