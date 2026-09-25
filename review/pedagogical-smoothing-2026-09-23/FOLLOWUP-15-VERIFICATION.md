@@ -28,3 +28,14 @@ Evidence below was inspected before the corresponding edit. Repository HEADs are
 B1 adds a short-lived return result, not persistent state: command dispatch owns the closure decision and the receive loop owns buffer consumption. The explicit author fix authorizes the small production-code growth; final accounting distinguishes it from formatting and tests. No SSE re-entrancy change is made: that finding was refuted and dropped.
 
 B verification: the rebuilt companion passes all six selected Ch10, Ch12 and Appendix A CTests with GCC13.3.0 and Clang18.1.3, including the added coalesced QUIT case. The installed framework contents equal fresh master HEAD under the manifest; the full workflow rebuild/runs follow C. The precise TLS source is ssl_utils.cpp:204–209.
+
+## C — confirmed before editing
+
+| Item | Entry/HEAD evidence | Decision |
+|---|---|---|
+| C1 | book-package.yml:30–42 installs Pandoc3.10.1/crossref0.3.24a. Local binaries report the same mismatch: crossref built with Pandoc3.9.0.2. | Reproduced; keep crossref and select Pandoc3.9.0.2; one parsed-version guard serves CMake/local and CI paths. |
+| C2 | Wide-line scan still finds 53 code lines over100 columns; metadata.yaml:214–217 permits mid-identifier wrapping. PDF page271 has 453.543pt code content and 465.498pt outside frame; narrower boxed content is435.022pt. Embedded LMMono fonts have525-unit cells at8.9664pt, about4.707pt/cell. | Reproduced; choose90 columns (423.66pt), leaving room in both full-width and boxed listings. Reformat affected sources/listings without changing behavior. Narrow217.699pt rectangles belong to figure/side-by-side content, not these full listings. |
+| C3 | family-server.cpp:15 writes IDENTITY through std::cout; lab_support.running merges stdout/stderr into the logger file. families.py:49–54 parses that shared stream. Hosted36002150169 records an actual corrupted record. | Reproduced; use a dedicated identity file supplied by the Ch7 harness, leaving logging and every assertion intact. |
+| C4 | ch13:211/213 and appendix-a:165/167 duplicate adjacent directives; singular/plural instance keys and Unix-domain spelling split headings. | Reproduced; remove only the duplicate index commands, consolidate headings, preserve teaching prose. |
+| C5 | ch14:326 checkpoint is bold inline text; ch21:21 figure lacks neighbours'90%/tbp attributes; MiniGateway README and Ch30 copy use snodec_DIR. | Reproduced; heading, matching attributes and CMAKE_PREFIX_PATH convention; README retained. |
+| C6 | Four book entries at further-reading:12,13,20,21 lack edition/publisher/year. | Reproduced; publisher catalogues verify Stroustrup4th/Addison-Wesley2013, Meyers1st/O’Reilly2014, Stevens/Fenner/Rudoff3rd/Addison-Wesley2003, Kerrisk1st/NoStarch2010. Primary links accompany the entries. Standards and protocol specifications are not book entries. |

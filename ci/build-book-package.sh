@@ -8,6 +8,8 @@ cd "$REPO_ROOT"
 BUILD_DIR="${BOOK_BUILD_DIR:-build/ci-book}"
 GENERATOR="${CMAKE_GENERATOR:-Ninja}"
 
+python3 ci/check-listing-width.py
+
 cmake -S . -B "$BUILD_DIR" -G "$GENERATOR"
 
 # Build twice intentionally. The second build verifies that LaTeX auxiliary

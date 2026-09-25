@@ -9,16 +9,16 @@ The book is intentionally focused on SNode.C. The references below give stable b
 ### C++ and build systems {.unnumbered}
 
 - ISO/IEC 14882, *Programming Languages — C++*. The language standard is the authoritative reference for C++ itself.
-- Bjarne Stroustrup, *The C++ Programming Language*. A broad reference for the language and its design vocabulary.
-- Scott Meyers, *Effective Modern C++*. A compact guide to many C++11/14 idioms that remain relevant in framework and application code.
+- Bjarne Stroustrup, [*The C++ Programming Language*](https://www.informit.com/store/c-plus-plus-programming-language-9780321563842), 4th ed., Addison-Wesley Professional, 2013. A broad reference for the language and its design vocabulary.
+- Scott Meyers, [*Effective Modern C++*](https://www.oreilly.com/library/view/effective-modern-c/9781491908419/), 1st ed., O’Reilly Media, 2014. A compact guide to many C++11/14 idioms that remain relevant in framework and application code.
 - [CMake build-system documentation](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html), especially the manuals for `cmake-buildsystem(7)`, `cmake-packages(7)`, `cmake(1)`, and `cmake-presets(7)`. These are useful when reading Chapter 27, the installed package exports, and the example build files.
 - CMake package configuration examples and the [link-interface reference](https://cmake.org/cmake/help/latest/command/target_link_libraries.html), alongside the documentation for `find_package`, imported targets, `install(EXPORT)`, and generated config files. These are useful background for understanding how a framework becomes consumable outside its own source tree.
 
 ### POSIX, Linux, and network programming {.unnumbered}
 
 - POSIX.1, *The Open Group Base Specifications*. This is the standards background for many Unix and POSIX APIs used by Linux-oriented network software.
-- W. Richard Stevens, Bill Fenner, and Andrew M. Rudoff, *UNIX Network Programming, Volume 1: The Sockets Networking API*. Still valuable for understanding the socket model beneath higher-level abstractions.
-- Michael Kerrisk, *The Linux Programming Interface*. Useful background for Linux system calls, file descriptors, processes, signals, and deployment-oriented behavior.
+- W. Richard Stevens, Bill Fenner, and Andrew M. Rudoff, [*UNIX Network Programming, Volume 1: The Sockets Networking API*](https://www.informit.com/store/unix-network-programming-volume-1-the-sockets-networking-9780131411555), 3rd ed., Addison-Wesley Professional, 2003. Still valuable for understanding the socket model beneath higher-level abstractions.
+- Michael Kerrisk, [*The Linux Programming Interface*](https://nostarch.com/tlpi), 1st ed., No Starch Press, 2010. Useful background for Linux system calls, file descriptors, processes, signals, and deployment-oriented behavior.
 
 ### TLS and security protocols {.unnumbered}
 
@@ -55,7 +55,7 @@ The book is intentionally focused on SNode.C. The references below give stable b
 
 ### SNode.C project material {.unnumbered}
 
-- The SNode.C repository is the authoritative source for framework development beyond the version discussed in this book. This edition covers the SNode.C 2.0.0 public commit recorded in `source-baseline/SOURCE-VERSION.md` and its content manifest. A framework source reference establishes implementation behavior; a protocol standard establishes the external contract, and the two should be read together.
+- The SNode.C repository is the authoritative source for framework development beyond the version discussed in this book. This edition covers the SNode.C 2.0.0 architecture, with `master` HEAD checked against the content manifest described in `source-baseline/SOURCE-VERSION.md`. A framework source reference establishes implementation behavior; a protocol standard establishes the external contract, and the two should be read together.
 - The companion source trees under `companion/examples/` are the authoritative sources for the book's compact examples, MiniGateway, and MiniGateway Extended. Public review answers, lab commands, expected observations, and design discussions are in `companion/exercises/`, in the directory for each numbered chapter and `appendix-a/`. The shared README describes prerequisites and equipped labs. Try each exercise before consulting its solution; a local observation does not certify a deployment.
 
 The online tool manuals follow their current releases. Compare their option descriptions with the versions installed for an exercise. Chapter 28 explains how to inspect the OpenWrt feed at main HEAD separately because a feed recipe, an SDK and the framework source have independent version histories.

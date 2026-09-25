@@ -122,7 +122,6 @@ target_link_libraries(
             snodec::net-un-stream-legacy
 )
 
-
 install(
     TARGETS minigateway-extended
     COMPONENT MiniGatewayExtended
@@ -131,7 +130,8 @@ install(
 
 add_custom_target(
     deploy-minigateway-extended
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGatewayExtended
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}"
+            --component MiniGatewayExtended
     DEPENDS minigateway-extended
     COMMENT "Installing minigateway-extended"
     VERBATIM
@@ -143,7 +143,8 @@ add_custom_target(
 The whole architectural change is visible in `main.cpp`. MiniGateway Extended creates the same model and starts one additional preconfigured network role:
 
 ```cpp
-const auto measurementInputRole = minigateway::startMeasurementInputRole(measurementModel);
+const auto measurementInputRole =
+    minigateway::startMeasurementInputRole(measurementModel);
 ```
 
 The web role and MQTT role do not learn anything about Unix-domain sockets.
@@ -204,7 +205,8 @@ The header defines the concrete server alias and exposes `startMeasurementInputR
 namespace minigateway {
 
     using MeasurementSocketServer =
-        net::un::stream::legacy::SocketServer<MeasurementUnixSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
+        net::un::stream::legacy::SocketServer<MeasurementUnixSocketContextFactory,
+                                              std::reference_wrapper<MeasurementModel>>;
 
     MeasurementSocketServer startMeasurementInputRole(MeasurementModel& measurementModel);
 
@@ -225,13 +227,17 @@ The startup function creates the Unix-domain server, configures the default sock
 
 namespace minigateway {
 
-    MeasurementSocketServer startMeasurementInputRole(MeasurementModel& measurementModel) {
-        MeasurementSocketServer socketServer("measurement-input", std::ref(measurementModel));
+    MeasurementSocketServer
+    startMeasurementInputRole(MeasurementModel &measurementModel) {
+        MeasurementSocketServer socketServer("measurement-input",
+                                             std::ref(measurementModel));
 
-        socketServer.listen("/tmp/minigateway-measurements.sock",
-                            [](const MeasurementSocketServer::SocketAddress& socketAddress, const core::socket::State& state) {
-                                reportState("measurement-input", socketAddress, state);
-                            });
+        socketServer.listen(
+            "/tmp/minigateway-measurements.sock",
+            [](const MeasurementSocketServer::SocketAddress &socketAddress,
+               const core::socket::State &state) {
+                reportState("measurement-input", socketAddress, state);
+            });
 
         return socketServer;
     }
@@ -262,12 +268,15 @@ The factory declaration names the context type and stores the model reference us
 
 namespace minigateway {
 
-    class MeasurementUnixSocketContextFactory : public core::socket::stream::SocketContextFactory {
-    public:
-        explicit MeasurementUnixSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel);
+    class MeasurementUnixSocketContextFactory
+        : public core::socket::stream::SocketContextFactory {
+      public:
+        explicit MeasurementUnixSocketContextFactory(
+            std::reference_wrapper<MeasurementModel> measurementModel);
 
-    private:
-        core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* socketConnection) final;
+      private:
+        core::socket::stream::SocketContext *
+        create(core::socket::stream::SocketConnection *socketConnection) final;
 
         MeasurementModel& measurementModel;
     };
@@ -289,12 +298,12 @@ The factory implementation constructs `MeasurementUnixSocketContext` and forward
 
 namespace minigateway {
 
-    MeasurementUnixSocketContextFactory::MeasurementUnixSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel)
-        : measurementModel(measurementModel.get()) {
-    }
+    MeasurementUnixSocketContextFactory::MeasurementUnixSocketContextFactory(
+        std::reference_wrapper<MeasurementModel> measurementModel)
+        : measurementModel(measurementModel.get()) {}
 
-    core::socket::stream::SocketContext*
-    MeasurementUnixSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
+    core::socket::stream::SocketContext *MeasurementUnixSocketContextFactory::create(
+        core::socket::stream::SocketConnection *socketConnection) {
         return new MeasurementUnixSocketContext(socketConnection, measurementModel);
     }
 
@@ -329,7 +338,9 @@ namespace minigateway {
 
     class MeasurementUnixSocketContext : public core::socket::stream::SocketContext {
     public:
-        MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection, MeasurementModel& measurementModel);
+      MeasurementUnixSocketContext(
+          core::socket::stream::SocketConnection *socketConnection,
+          MeasurementModel &measurementModel);
 
     private:
         void onConnected() final;
@@ -377,7 +388,8 @@ std::size_t MeasurementUnixSocketContext::onReceivedFromPeer() {
         }
 
         if (receiveBuffer.length() > 4096) {
-            snode::log::application().warn() << "Measurement socket line exceeds 4096 bytes; closing connection";
+            snode::log::application().warn()
+                << "Measurement socket line exceeds 4096 bytes; closing connection";
             close();
         }
     }
@@ -442,7 +454,8 @@ void MeasurementUnixSocketContext::processLine(const std::string& line) const {
         try {
             measurementModel.accept(parseMeasurementLine(line));
         } catch (const std::exception& ex) {
-            snode::log::application().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+            snode::log::application().warn()
+                << "Ignoring invalid measurement line '" << line << "': " << ex.what();
         }
     }
 }

@@ -175,7 +175,8 @@ using Response = WebApp::Response;
 
 WebApp app("legacy");
 
-app.get("/ws", [](const std::shared_ptr<Request>& req, const std::shared_ptr<Response>& res) {
+app.get("/ws", [](const std::shared_ptr<Request> &req,
+                  const std::shared_ptr<Response> &res) {
     res->upgrade(req, [res](const std::string& selected) {
         if (!selected.empty()) {
             res->end();
@@ -192,15 +193,17 @@ On the client side, the HTTP client prepares an upgrade request and names the ta
 
 ```cpp
 req->upgrade(
-    "/ws",
-    "websocket",
+    "/ws", "websocket",
     [](bool success) {
-        snode::log::application().trace() << "upgrade request initiation: " << (success ? "accepted" : "rejected");
+        snode::log::application().trace()
+            << "upgrade request initiation: " << (success ? "accepted" : "rejected");
     },
-    [](const std::shared_ptr<Request>&, const std::shared_ptr<Response>&, bool success) {
-        snode::log::application().trace() << "upgrade response: " << (success ? "accepted" : "rejected");
+    [](const std::shared_ptr<Request> &, const std::shared_ptr<Response> &,
+       bool success) {
+        snode::log::application().trace()
+            << "upgrade response: " << (success ? "accepted" : "rejected");
     },
-    [](const std::shared_ptr<Request>&, const std::string& message) {
+    [](const std::shared_ptr<Request> &, const std::string &message) {
         snode::log::application().error() << "upgrade response parse error: " << message;
     });
 ```

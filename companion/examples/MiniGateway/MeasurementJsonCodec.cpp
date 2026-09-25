@@ -11,7 +11,8 @@ namespace minigateway {
         double readFiniteDouble(const nlohmann::json& json, const char* fieldName) {
             const double value = json.at(fieldName).get<double>();
             if (!std::isfinite(value)) {
-                throw std::invalid_argument(std::string("invalid ") + fieldName + " value");
+                throw std::invalid_argument(std::string("invalid ") + fieldName +
+                                            " value");
             }
 
             return value;

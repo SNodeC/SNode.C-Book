@@ -10,14 +10,14 @@
 
 \index{configuration}
 \index{configuration philosophy}
-\index{instance!configuration}
+\index{instances!configuration}
 
 Configuration is where architectural choices become adjustable by the operator. The context still implements the protocol and the factory creates contexts, but the application must choose its application roles, endpoint values, connection variants and enablement.
 
 Through a `SocketServer` or `SocketClient` handle, the application configures an instance. Giving the instance a name registers it in the configuration hierarchy. Each `listen(...)` or `connect(...)` call then starts an activation flow for that instance.
 
 \index{configuration!architecture}
-\index{instance!configuration}
+\index{instances!configuration}
 
 Keep Chapter 4's runtime model beside this configuration story. The named instance supplies one shared settings tree; each explicit activation uses it. We will track `echoserver.local.port`: C++ supplies 8080, a deployment file selects 18091, and one command line selects 18092. The effective value is what startup consumes; a file assignment alone is neither a listening socket nor proof of successful activation.
 
@@ -209,8 +209,6 @@ For our running value, `echoserver.local.port = 18092` belongs to the named list
 \index{application configuration}
 \index{instance configuration}
 \index{configuration hierarchy}
-
-\index{configuration hierarchy}
 \index{application scope}
 \index{instance scope}
 \index{section scope}
@@ -256,7 +254,7 @@ This is also a useful discovery exercise: start with a named instance’s help, 
 \index{operational envelope}
 
 \index{instance configuration}
-\index{instance!configuration}
+\index{instances!configuration}
 \index{required options}
 
 Consider the operational name in this declaration:

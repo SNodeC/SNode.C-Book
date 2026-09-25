@@ -27,13 +27,13 @@ def environment(config_home):
 
 
 @contextlib.contextmanager
-def running(executable, args):
+def running(executable, args, *, stderr=subprocess.STDOUT):
     with tempfile.TemporaryDirectory(prefix='snodec-lab-') as temp:
         env = environment(temp)
         path = Path(temp) / 'process.log'
         with path.open('wb') as output:
             process = subprocess.Popen([executable, *args], env=env, stdout=output,
-                                       stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+                                       stderr=stderr, stdin=subprocess.DEVNULL)
             try:
                 yield process, path
             except BaseException:

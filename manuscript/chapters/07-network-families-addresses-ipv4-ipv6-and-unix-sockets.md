@@ -571,7 +571,7 @@ Loopback IP is also a credible choice for communication on one machine. It may f
 
 ### Peer credentials are facts, not authorization
 
-\index{Unix-domain sockets!peer credentials}
+\index{Unix domain sockets!peer credentials}
 \index{PeerCredentials@\texttt{PeerCredentials}}
 
 A pathname selects a local endpoint, but it does not by itself express an application's trust decision. SNode.C provides a separate credential query for a connected Unix-domain socket:

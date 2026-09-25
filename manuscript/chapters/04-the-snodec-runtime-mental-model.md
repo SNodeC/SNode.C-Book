@@ -68,7 +68,7 @@ For that reason, `core::SNodeC::start()` is the point where registered communica
 ### Instances and activation flows {#configured-endpoints-and-activation-flows}
 
 \index{instances}
-\index{instance!configuration and runtime identity}
+\index{instances!configuration and runtime identity}
 
 
 An instance is the configuration-and-runtime identity created through an endpoint handle. Its activation flows participate in the runtime and use that shared configuration while listening or connecting.

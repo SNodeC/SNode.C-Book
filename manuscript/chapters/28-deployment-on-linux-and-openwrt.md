@@ -183,7 +183,8 @@ Description=SNode.C book echo rehearsal
 
 [Service]
 Type=exec
-ExecStart=%h/.local/snodec-book/bin/echoserver --config-file=%h/.config/snodec-book/echo.conf
+ExecStart=%h/.local/snodec-book/bin/echoserver \
+    --config-file=%h/.config/snodec-book/echo.conf
 WorkingDirectory=%h
 UnsetEnvironment=XDG_CONFIG_HOME
 Restart=on-failure

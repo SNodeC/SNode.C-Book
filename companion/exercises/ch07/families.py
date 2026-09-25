@@ -24,7 +24,9 @@ for mode, binary in zip(sys.argv[1::2], sys.argv[2::2]):
                 reservation.bind((host, 0))
                 address = (host, reservation.getsockname()[1])
             args = ['endpoint', 'local', f'--host={host}', f'--port={address[1]}']
-        with running(binary, args) as (process, log):
+        identity_log = base / 'identity.log'
+        identity_log.touch()
+        with identity_log.open('wb') as identities, running(binary, args, stderr=identities) as (process, log):
             deadline = time.monotonic() + 8
             while True:
                 peer = socket.socket(family)
@@ -46,11 +48,11 @@ for mode, binary in zip(sys.argv[1::2], sys.argv[2::2]):
                 peer.sendall(payload)
                 assert receive(peer, len(payload)) == payload
                 deadline = time.monotonic() + 3
-                while not any(line.startswith('IDENTITY\t') for line in log.read_text().splitlines()):
+                while not any(line.startswith('IDENTITY\t') for line in identity_log.read_text().splitlines()):
                     if time.monotonic() > deadline:
                         raise RuntimeError('Server did not report connection identities')
                     time.sleep(0.02)
-                identity = next(line for line in log.read_text().splitlines() if line.startswith('IDENTITY\t'))
+                identity = next(line for line in identity_log.read_text().splitlines() if line.startswith('IDENTITY\t'))
                 _, server_local, server_remote = identity.split('\t')
                 if mode == 'unix':
                     assert (server_local, server_remote) == (address, own)

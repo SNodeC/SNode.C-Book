@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
     Server server("endpoint");
     server.setOnConnected([](core::socket::stream::SocketConnection* connection) {
         // Copy observations while this borrowed connection pointer is valid.
-        std::cout << "IDENTITY\t" << connection->getLocalAddress().toString()
+        std::cerr << "IDENTITY\t" << connection->getLocalAddress().toString()
                   << '\t' << connection->getRemoteAddress().toString() << std::endl;
     });
     server.listen([](const Server::SocketAddress& address, const core::socket::State& state) {

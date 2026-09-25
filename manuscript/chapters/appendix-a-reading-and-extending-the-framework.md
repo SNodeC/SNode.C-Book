@@ -164,7 +164,6 @@ Chapter 4 established the mental model; source navigation now locates the respon
 \index{extension}
 \index{safe extension}
 \index{framework extension}
-\index{safe extension}
 \index{boundary preservation}
 \index{application-local extension}
 \index{reusable boundary}
@@ -221,7 +220,8 @@ void MeasurementUnixSocketContext::processLine(const std::string& line) const {
         try {
             measurementModel.accept(parseMeasurementLine(line));
         } catch (const std::exception& ex) {
-            snode::log::application().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+            snode::log::application().warn()
+                << "Ignoring invalid measurement line '" << line << "': " << ex.what();
         }
     }
 }

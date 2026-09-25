@@ -86,13 +86,15 @@ int main(int argc, char* argv[]) {
                .set("Connection", "keep-alive")
                .sendHeader();
 
-            if (const Measurement current = measurements.current(); current.sequence > 0) {
+            if (const Measurement current = measurements.current();
+                current.sequence > 0) {
                 sendMeasurement(res, current);
             }
 
-            const auto subscription = measurements.subscribe([res](const Measurement& measurement) {
-                sendMeasurement(res, measurement);
-            });
+            const auto subscription =
+                measurements.subscribe([res](const Measurement &measurement) {
+                    sendMeasurement(res, measurement);
+                });
             res->getSocketContext()->setOnDisconnected([&measurements, subscription] {
                 measurements.unsubscribe(subscription);
             });
@@ -109,9 +111,9 @@ int main(int argc, char* argv[]) {
            .send(measurement.toJson().dump());
     });
 
-    app.listen([](const SocketAddress& socketAddress,
-                  const core::socket::State&) {
-        snode::log::application().trace() << "SSE server listening on " << socketAddress.toString();
+    app.listen([](const SocketAddress &socketAddress, const core::socket::State &) {
+        snode::log::application().trace()
+            << "SSE server listening on " << socketAddress.toString();
     });
 
     return express::WebApp::start();

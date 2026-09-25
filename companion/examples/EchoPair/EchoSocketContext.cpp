@@ -2,11 +2,9 @@
 
 #include <string>
 
-EchoSocketContext::EchoSocketContext(core::socket::stream::SocketConnection* socketConnection,
-                                     Role role)
-    : core::socket::stream::SocketContext(socketConnection)
-    , role(role) {
-}
+EchoSocketContext::EchoSocketContext(
+    core::socket::stream::SocketConnection *socketConnection, Role role)
+    : core::socket::stream::SocketContext(socketConnection), role(role) {}
 
 void EchoSocketContext::onConnected() {
     log().info() << "Echo context attached";

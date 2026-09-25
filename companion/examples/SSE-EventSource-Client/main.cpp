@@ -14,9 +14,10 @@ int main(int argc, char* argv[]) {
         snode::log::application().trace() << "SSE stream opened";
     });
 
-    events->onMessage([](const web::http::client::tools::EventSource::MessageEvent& event) {
-        snode::log::application().trace() << "message: " << event.data;
-    });
+    events->onMessage(
+        [](const web::http::client::tools::EventSource::MessageEvent &event) {
+            snode::log::application().trace() << "message: " << event.data;
+        });
 
     events->addEventListener(
         "measurement",

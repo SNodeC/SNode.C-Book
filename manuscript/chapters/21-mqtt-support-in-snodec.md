@@ -18,7 +18,7 @@ MQTT is not part of the web stack. It has its own packet vocabulary, session beh
 
 Consider two applications and a broker. A sensor publisher reports `23.5` on a value topic; a subscriber wants to observe that exact topic and payload. They do not call each other's callbacks. Each establishes its own communication with the broker, which receives publications and decides which subscriptions match. The first useful diagram is therefore a conversation among those actors, not a list of framework classes.
 
-![MQTT publication sequence. Time runs downward; both clients establish MQTT sessions before the QoS 0 publication.](assets/figures/pdf/fig-19-mqtt-publication-sequence.pdf){#fig:mqtt-publication-sequence}
+![MQTT publication sequence. Time runs downward; both clients establish MQTT sessions before the QoS 0 publication.](assets/figures/pdf/fig-19-mqtt-publication-sequence.pdf){#fig:mqtt-publication-sequence width=90% latex-placement="tbp"}
 
 The initial transport connection proves only that the lower endpoint was reached. The subscriber then sends CONNECT to request an MQTT relationship with the broker. CONNECT carries protocol-level choices, including client identity and session behavior. A socket accepting bytes cannot stand in for that negotiation: an endpoint could accept TCP and then reject the MQTT request, or speak an entirely different protocol. Locate evidence at the layer whose success you want to establish.
 
@@ -216,7 +216,8 @@ private:
         const std::string topic = publish.getTopic();
         const std::string message = publish.getMessage();
 
-        snode::log::application().trace() << "MQTT command on " << topic << ": " << message;
+        snode::log::application().trace()
+            << "MQTT command on " << topic << ": " << message;
     }
 
     bool onSignal(int) override {

@@ -176,3 +176,8 @@ a beginner C++ book
 a pure IoT recipe book
 a complete TLS, HTTP, MQTT, Bluetooth, or database reference
 ```
+
+Publication builds use Pandoc **3.9.0.2** and pandoc-crossref **v0.3.24a**
+(the latter reports Pandoc3.9.0.2 as its build/ABI version). Install that pair
+or point CMake's `PANDOC` and `PANDOC_CROSSREF_FILTER` at those binaries.
+The shared compatibility guard checks the active executables before building.

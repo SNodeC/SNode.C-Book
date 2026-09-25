@@ -11,7 +11,8 @@ namespace minigateway {
         double humidity = 0.0;
         double voltage = 0.0;
         std::uint64_t sequence = 0;
-        std::chrono::system_clock::time_point timestamp = std::chrono::system_clock::now();
+        std::chrono::system_clock::time_point timestamp =
+            std::chrono::system_clock::now();
     };
 
 } // namespace minigateway

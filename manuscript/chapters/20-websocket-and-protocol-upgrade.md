@@ -144,8 +144,9 @@ Chapter 17 distinguished ordinary linked-library deployment from runtime-selecte
 For dynamically loaded subprotocols, SNode.C looks below the WebSocket subprotocol directory. The selector first checks an application-specific subdirectory and then falls back to the shared directory:
 
 ```text
-application-specific directory:
-  ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/snode.c/web/http/upgrade/websocket/<application-name>
+application-specific directory (continued on the indented line):
+  ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/snode.c/web/http/upgrade/websocket/
+    <application-name>
 
 shared WebSocket subprotocol directory:
   ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/snode.c/web/http/upgrade/websocket
@@ -242,12 +243,15 @@ private:
     }
 
     void onMessageEnd() override {
-        snode::log::application().trace() << "WebSocket echo server received bytes: " << currentMessage.size();
-        subProtocolContext->sendMessage(currentMessageType, currentMessage.data(), currentMessage.size());
+        snode::log::application().trace()
+            << "WebSocket echo server received bytes: " << currentMessage.size();
+        subProtocolContext->sendMessage(currentMessageType, currentMessage.data(),
+                                        currentMessage.size());
     }
 
     void onMessageError(uint16_t errnum) override {
-        snode::log::application().warn() << "WebSocket echo server message error: " << errnum;
+        snode::log::application().warn()
+            << "WebSocket echo server message error: " << errnum;
     }
 
     void onDisconnected() override {
@@ -295,13 +299,15 @@ private:
     }
 
     void onMessageEnd() override {
-        snode::log::application().trace() << "WebSocket echo client received: " << currentMessage;
+        snode::log::application().trace()
+            << "WebSocket echo client received: " << currentMessage;
         currentMessage.clear();
         sendClose();
     }
 
     void onMessageError(uint16_t errnum) override {
-        snode::log::application().warn() << "WebSocket echo client message error: " << errnum;
+        snode::log::application().warn()
+            << "WebSocket echo client message error: " << errnum;
         currentMessage.clear();
     }
 

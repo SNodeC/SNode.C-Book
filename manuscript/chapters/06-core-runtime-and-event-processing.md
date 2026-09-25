@@ -68,8 +68,9 @@ if (utils::Config::bootstrap()) {
 
     do {
         tickStatus = EventLoop::instance()._tick(timeOut);
-    } while ((tickStatus == TickStatus::SUCCESS || tickStatus == TickStatus::INTERRUPTED) &&
-             eventLoopState == State::RUNNING);
+    } while (
+        (tickStatus == TickStatus::SUCCESS || tickStatus == TickStatus::INTERRUPTED) &&
+        eventLoopState == State::RUNNING);
 }
 ```
 

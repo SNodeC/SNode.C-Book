@@ -44,7 +44,6 @@ target_link_libraries(
             snodec::net-un-stream-legacy
 )
 
-
 install(
     TARGETS minigateway-extended
     COMPONENT MiniGatewayExtended
@@ -53,7 +52,8 @@ install(
 
 add_custom_target(
     deploy-minigateway-extended
-    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component MiniGatewayExtended
+    COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}"
+            --component MiniGatewayExtended
     DEPENDS minigateway-extended
     COMMENT "Installing minigateway-extended"
     VERBATIM

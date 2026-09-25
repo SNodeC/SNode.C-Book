@@ -12,7 +12,7 @@ This example composes one small SNode.C application from several roles:
 Build with an installed SNode.C package:
 
 ```sh
-cmake -S . -B build -Dsnodec_DIR=/path/to/snodec/lib/cmake/snodec
+cmake -S . -B build -DCMAKE_PREFIX_PATH="$HOME/.local/snodec"
 cmake --build build --target minigateway
 ```
 

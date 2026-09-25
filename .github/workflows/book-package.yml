@@ -27,9 +27,9 @@ jobs:
           apt-get update
           apt-get install -y cmake ninja-build python3 curl ca-certificates xz-utils
 
-          # Match the Pandoc version used by the verified local PDF build.
+          # Match the Pandoc ABI reported by the fixed crossref binary.
           curl -fsSL \
-            https://github.com/jgm/pandoc/releases/download/3.10.1/pandoc-3.10.1-1-amd64.deb \
+            https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb \
             -o /tmp/pandoc.deb
           dpkg -i /tmp/pandoc.deb
 
@@ -41,6 +41,9 @@ jobs:
           pandoc --version
           pandoc-crossref --version
           xelatex --version | grep -F 'TeX Live 2026'
+
+      - name: Verify Pandoc and crossref ABI compatibility
+        run: python3 ci/check-publication-tools.py
 
       - name: Check source hygiene
         run: bash ci/check-source-hygiene.sh

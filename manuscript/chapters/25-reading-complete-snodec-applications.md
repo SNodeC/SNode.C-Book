@@ -228,8 +228,7 @@ A simplified excerpt captures the idea:
 core::SNodeC::init(argc, argv);
 
 const core::pipe::Pipe pipe(
-    [](core::pipe::PipeSource& source,
-       core::pipe::PipeSink& sink) {
+    [](core::pipe::PipeSource &source, core::pipe::PipeSink &sink) {
         sink.setOnData([&source](const char* chunk, std::size_t len) {
             source.send(chunk, len);
         });
@@ -241,7 +240,8 @@ const core::pipe::Pipe pipe(
         source.send("Hello World!");
     },
     [](int errnum) {
-        snode::log::application().systemError(snode::log::Level::Error, errnum) << "Pipe not created";
+        snode::log::application().systemError(snode::log::Level::Error, errnum)
+            << "Pipe not created";
     });
 
 return core::SNodeC::start();

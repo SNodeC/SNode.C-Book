@@ -7,7 +7,8 @@ int main() {
     settings.level = snode::log::Level::Info;
     settings.format = snode::log::Format::Json;
     settings.color = snode::log::ColorMode::Never;
-    settings.componentLevels.push_back({"gateway.measurements", snode::log::Level::Debug});
+    settings.componentLevels.push_back(
+        {"gateway.measurements", snode::log::Level::Debug});
     snode::log::configure(settings);
 
     snode::log::Identity identity;

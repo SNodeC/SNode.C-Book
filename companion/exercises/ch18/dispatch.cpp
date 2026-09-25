@@ -15,7 +15,9 @@ int main(int argc, char* argv[]) {
     });
     app.use("/blocked", [](const auto&, const auto& res, express::Next&) {
         std::cout << "STOP" << std::endl;
-        res->status(403).set("X-Trace", "app-before,stop").send("middleware stopped request");
+        res->status(403)
+            .set("X-Trace", "app-before,stop")
+            .send("middleware stopped request");
     });
     app.get("/blocked", [](const auto&, const auto& res) {
         std::cout << "UNEXPECTED-HANDLER" << std::endl;
